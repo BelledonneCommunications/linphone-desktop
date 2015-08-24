@@ -32,7 +32,8 @@ sys.path.insert(0, 'cmake-builder')
 try:
     import prepare
 except:
-    print("Could not find prepare module, probably missing cmake-builder? Try running: git submodule update --init --recursive")
+    print(
+        "Could not find prepare module, probably missing cmake-builder? Try running: git submodule update --init --recursive")
     exit(1)
 
 
@@ -76,7 +77,7 @@ def check_tools():
     #         print(error.format(glibtoolize_path, glibtoolize_path.replace("glibtoolize", "libtoolize")))
 
     # devnull = open(os.devnull, 'wb')
-    # # just ensure that JDK is installed - if not, it will automatiaclyl display a popup to user
+    # just ensure that JDK is installed - if not, it will automatiaclyl display a popup to user
     # p = Popen("java -version".split(" "), stderr=devnull, stdout=devnull)
     # p.wait()
     # if p.returncode != 0:
@@ -84,7 +85,7 @@ def check_tools():
     #     print("Please install Java JDK (not just JRE).")
     #     ret = 1
 
-    # # needed by x264
+    # needed by x264
     # check_is_installed("gas-preprocessor.pl", """it:
     #     wget --no-check-certificate https://raw.github.com/yuvi/gas-preprocessor/master/gas-preprocessor.pl
     #     chmod +x gas-preprocessor.pl
@@ -239,29 +240,31 @@ def main(argv=None):
 
     args, additional_args = argparser.parse_known_args()
 
-    additional_args += ["-DLINPHONE_BUILDER_BUILD_DEPENDENCIES=NO"]
     if args.debug_verbose:
         additional_args += ["-DENABLE_DEBUG_LOGS=YES"]
 
     if args.minimal:
-        additional_args += ["-DENABLE_AMRNB=NO"]
-        additional_args += ["-DENABLE_AMRWB=NO"]
-        additional_args += ["-DENABLE_DOC=NO"]
-        additional_args += ["-DENABLE_G729=NO"]
-        additional_args += ["-DENABLE_GSM=NO"]
-        additional_args += ["-DENABLE_H263=NO"]
-        additional_args += ["-DENABLE_H263P=NO"]
-        additional_args += ["-DENABLE_ILBC=NO"]
-        additional_args += ["-DENABLE_ISAC=NO"]
-        additional_args += ["-DENABLE_MPEG4=NO"]
-        additional_args += ["-DENABLE_OPENH264=NO"]
-        additional_args += ["-DENABLE_OPUS=NO"]
-        additional_args += ["-DENABLE_PACKAGING=NO"]
-        additional_args += ["-DENABLE_SILK=NO"]
-        additional_args += ["-DENABLE_SRTP=NO"]
-        additional_args += ["-DENABLE_VPX=NO"]
-        additional_args += ["-DENABLE_WASAPI=NO"]
-        additional_args += ["-DENABLE_ZRTP=NO"]
+        additional_args = ["-DLINPHONE_BUILDER_BUILD_DEPENDENCIES=NO",
+                           "-DENABLE_AMRNB=NO",
+                           "-DENABLE_AMRWB=NO",
+                           "-DENABLE_DOC=NO",
+                           "-DENABLE_G729=NO",
+                           "-DENABLE_GSM=NO",
+                           "-DENABLE_H263=NO",
+                           "-DENABLE_H263P=NO",
+                           "-DENABLE_ILBC=NO",
+                           "-DENABLE_ISAC=NO",
+                           "-DENABLE_MKV=NO",
+                           "-DENABLE_MPEG4=NO",
+                           "-DENABLE_OPENH264=NO",
+                           "-DENABLE_OPUS=NO",
+                           "-DENABLE_PACKAGING=NO",
+                           "-DENABLE_SILK=NO",
+                           "-DENABLE_SRTP=NO",
+                           "-DENABLE_VPX=NO",
+                           "-DENABLE_WASAPI=NO",
+                           "-DENABLE_ZRTP=NO",
+                           "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.10"] + additional_args
 
     if check_tools() != 0:
         return 1
