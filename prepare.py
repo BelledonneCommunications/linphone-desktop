@@ -170,7 +170,7 @@ def main(argv=None):
     argparser.add_argument(
         '-f', '--force', help="Force preparation, even if working directory already exist.", action='store_true')
     argparser.add_argument(
-        '-G' '--generator', help="CMake build system generator (default: Unix Makefiles).", default='Unix Makefiles', choices=['Unix Makefiles', 'Ninja'])
+        '-G' '--generator', help="CMake build system generator (default: Unix Makefiles, use cmake -h to get the complete list).", default='Unix Makefiles', dest='generator')
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
@@ -179,6 +179,8 @@ def main(argv=None):
         '-t', '--tunnel', help="Enable Tunnel.", action='store_true')
 
     args, additional_args = argparser.parse_known_args()
+
+    additional_args += ["-G", args.generator]
 
     if args.debug_verbose:
         additional_args += ["-DENABLE_DEBUG_LOGS=YES"]
@@ -220,14 +222,6 @@ def main(argv=None):
         print("Tunnel enabled, disabling GPL third parties.")
         additional_args += ["-DENABLE_TUNNEL=ON", "-DENABLE_GPL_THIRD_PARTIES=OFF"]
 
-    additional_args += ["-G", args.G__generator]
-    if args.G__generator == 'Ninja':
-        if not check_is_installed("ninja", "it"):
-            return 1
-        generator = 'ninja -C'
-    else:
-        generator = '$(MAKE) -C'
-
     # install_git_hook()
 
     target = DesktopTarget()
@@ -242,7 +236,17 @@ def main(argv=None):
                 Popen("make help-prepare-options".split(" "))
                 retcode = 0
             return retcode
-        generate_makefile(generator)
+        #only generated makefile if we are using Ninja or Makefile
+        if args.generator == 'Ninja':
+            if not check_is_installed("ninja", "it"):
+                return 1
+            generate_makefile(selected_platforms, 'ninja -C')
+        elif args.generator == "Unix Makefiles":
+            generate_makefile(selected_platforms, '$(MAKE) -C')
+        elif args.generator == "Xcode":
+            print("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
+        else:
+            print("Not generating meta-makefile for generator {}.".format(args.generator))
 
     return 0
 
