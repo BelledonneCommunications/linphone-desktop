@@ -1,9 +1,9 @@
-[submodule "belle-sip"]
-	path = belle-sip
-	url = git://git.linphone.org/belle-sip.git
-[submodule "linphone"]
-	path = linphone
-	url = git://git.linphone.org/linphone
-[submodule "cmake-builder"]
-	path = cmake-builder
+[submodule "submodules/belle-sip"]
+	path = submodules/belle-sip
+	url = git://git.linphone.org/belle-sip
+[submodule "submodules/cmake-builder"]
+	path = submodules/cmake-builder
 	url = git://git.linphone.org/linphone-cmake-builder
+[submodule "submodules/linphone"]
+	path = submodules/linphone
+	url = git://git.linphone.org/linphone
