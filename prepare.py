@@ -118,7 +118,7 @@ all-%:
 \t{generator} WORK/ios-$*/cmake
 
 package-in-list-%:
-\tif ! grep -q " $* " <<< " $(packages) "; then \\
+\tif ! echo " $(packages) " | grep -q " $* "; then \\
 \t\techo "$* not in list of available packages: $(packages)"; \\
 \t\texit 3; \\
 \tfi
@@ -240,9 +240,9 @@ def main(argv=None):
         if args.generator == 'Ninja':
             if not check_is_installed("ninja", "it"):
                 return 1
-            generate_makefile(selected_platforms, 'ninja -C')
+            generate_makefile('ninja -C')
         elif args.generator == "Unix Makefiles":
-            generate_makefile(selected_platforms, '$(MAKE) -C')
+            generate_makefile('$(MAKE) -C')
         elif args.generator == "Xcode":
             print("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
         else:
