@@ -205,8 +205,7 @@ def main(argv=None):
                            "-DENABLE_SRTP=NO",
                            "-DENABLE_VPX=NO",
                            "-DENABLE_WASAPI=NO",
-                           "-DENABLE_ZRTP=NO",
-                           "-DCMAKE_OSX_DEPLOYMENT_TARGET=10.10"] + additional_args
+                           "-DENABLE_ZRTP=NO"] + additional_args
 
     if check_tools() != 0:
         return 1
@@ -219,8 +218,8 @@ def main(argv=None):
             if p.retcode != 0:
                 print("Could not clone tunnel. Please see http://www.belledonne-communications.com/voiptunnel.html")
                 return 1
-        print("Tunnel enabled, disabling GPL third parties.")
-        additional_args += ["-DENABLE_TUNNEL=ON", "-DENABLE_GPL_THIRD_PARTIES=OFF"]
+        print("Tunnel enabled.")
+        additional_args += ["-DENABLE_TUNNEL=ON"]
 
     # install_git_hook()
 
