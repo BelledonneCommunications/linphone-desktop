@@ -170,7 +170,7 @@ def main(argv=None):
     argparser.add_argument(
         '-f', '--force', help="Force preparation, even if working directory already exist.", action='store_true')
     argparser.add_argument(
-        '-G' '--generator', help="CMake build system generator (default: Unix Makefiles, use cmake -h to get the complete list).", default='Unix Makefiles', dest='generator')
+        '-G', '--generator', help="CMake build system generator (default: Unix Makefiles, use cmake -h to get the complete list).", default='Unix Makefiles', dest='generator')
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
