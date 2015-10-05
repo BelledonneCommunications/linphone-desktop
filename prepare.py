@@ -186,26 +186,11 @@ def main(argv=None):
         additional_args += ["-DENABLE_DEBUG_LOGS=YES"]
 
     if args.minimal:
-        additional_args = ["-DLINPHONE_BUILDER_BUILD_DEPENDENCIES=NO",
-                           "-DENABLE_AMRNB=NO",
-                           "-DENABLE_AMRWB=NO",
-                           "-DENABLE_DOC=NO",
-                           "-DENABLE_G729=NO",
-                           "-DENABLE_GSM=NO",
-                           "-DENABLE_H263=NO",
-                           "-DENABLE_H263P=NO",
-                           "-DENABLE_ILBC=NO",
-                           "-DENABLE_ISAC=NO",
+        additional_args = ["-DLINPHONE_BUILDER_BUILD_ONLY_EXTERNAL_SOURCE_PATH=YES",
+                           "-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES",
                            "-DENABLE_MKV=NO",
-                           "-DENABLE_MPEG4=NO",
-                           "-DENABLE_OPENH264=NO",
-                           "-DENABLE_OPUS=NO",
-                           "-DENABLE_PACKAGING=NO",
-                           "-DENABLE_SILK=NO",
-                           "-DENABLE_SRTP=NO",
-                           "-DENABLE_VPX=NO",
-                           "-DENABLE_WASAPI=NO",
-                           "-DENABLE_ZRTP=NO"] + additional_args
+                           "-DENABLE_ZRTP=NO",
+                           "-DENABLE_PACKAGING=NO"] + additional_args
 
     if check_tools() != 0:
         return 1
