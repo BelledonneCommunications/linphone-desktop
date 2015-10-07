@@ -176,21 +176,33 @@ def main(argv=None):
     argparser.add_argument(
         '-m', '--minimal', help="Build a minimal version of Linphone.", action='store_true')
     argparser.add_argument(
+        '-os', '--only-submodules', help="Build only submodules (finding all dependencies on the system.", action='store_true')
+    argparser.add_argument(
         '-t', '--tunnel', help="Enable Tunnel.", action='store_true')
 
     args, additional_args = argparser.parse_known_args()
 
     additional_args += ["-G", args.generator]
+    additional_args += ["-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES"]
 
     if args.debug_verbose:
         additional_args += ["-DENABLE_DEBUG_LOGS=YES"]
 
+    if args.only_submodules:
+        additional_args += ["-DLINPHONE_BUILDER_BUILD_ONLY_EXTERNAL_SOURCE_PATH=YES"]
+
     if args.minimal:
-        additional_args = ["-DLINPHONE_BUILDER_BUILD_ONLY_EXTERNAL_SOURCE_PATH=YES",
-                           "-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES",
-                           "-DENABLE_MKV=NO",
-                           "-DENABLE_ZRTP=NO",
-                           "-DENABLE_PACKAGING=NO"] + additional_args
+        additional_args += ["-DENABLE_VIDEO=NO",
+                            "-DENABLE_MKV=NO",
+                            "-DENABLE_GSM=NO",
+                            "-DENABLE_ILBC=NO",
+                            "-DENABLE_ISAC=NO",
+                            "-DENABLE_OPUS=NO",
+                            "-DENABLE_SILK=NO",
+                            "-DENABLE_SPEEX=NO",
+                            "-DENABLE_SRTP=NO",
+                            "-DENABLE_ZRTP=NO",
+                            "-DENABLE_PACKAGING=NO"]
 
     if check_tools() != 0:
         return 1
