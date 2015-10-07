@@ -24,6 +24,7 @@
 
 import argparse
 import os
+import platform
 import sys
 from subprocess import Popen
 from distutils.spawn import find_executable
@@ -42,6 +43,8 @@ class DesktopTarget(prepare.Target):
     def __init__(self):
         prepare.Target.__init__(self, '')
         current_path = os.path.dirname(os.path.realpath(__file__))
+        if platform.system() == 'Windows':
+            current_path = current_path.replace('\\', '/')
         self.config_file = 'configs/config-desktop.cmake'
         self.additional_args = [
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
@@ -202,6 +205,7 @@ def main(argv=None):
                             "-DENABLE_SPEEX=NO",
                             "-DENABLE_SRTP=NO",
                             "-DENABLE_ZRTP=NO",
+                            "-DENABLE_WASAPI=NO",
                             "-DENABLE_PACKAGING=NO"]
 
     if check_tools() != 0:
