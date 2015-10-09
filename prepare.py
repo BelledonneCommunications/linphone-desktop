@@ -165,6 +165,8 @@ def main(argv=None):
     argparser = argparse.ArgumentParser(
         description="Prepare build of Linphone and its dependencies.")
     argparser.add_argument(
+        '-ac', '--all-codecs', help="Enable all codecs, including the non-free ones", action='store_true')
+    argparser.add_argument(
         '-c', '-C', '--clean', help="Clean a previous build instead of preparing a build.", action='store_true')
     argparser.add_argument(
         '-d', '--debug', help="Prepare a debug build, eg. add debug symbols and use no optimizations.", action='store_true')
@@ -197,6 +199,9 @@ def main(argv=None):
     if args.minimal:
         additional_args += ["-DENABLE_VIDEO=NO",
                             "-DENABLE_MKV=NO",
+                            "-DENABLE_AMRNB=NO",
+                            "-DENABLE_AMRWB=NO",
+                            "-DENABLE_G729=NO",
                             "-DENABLE_GSM=NO",
                             "-DENABLE_ILBC=NO",
                             "-DENABLE_ISAC=NO",
@@ -207,6 +212,16 @@ def main(argv=None):
                             "-DENABLE_ZRTP=NO",
                             "-DENABLE_WASAPI=NO",
                             "-DENABLE_PACKAGING=NO"]
+
+    if args.all_codecs:
+        additional_args += ["-DENABLE_NON_FREE_CODECS=YES",
+                            "-DENABLE_AMRNB=YES",
+                            "-DENABLE_AMRWB=YES",
+                            "-DENABLE_G729=YES",
+                            "-DENABLE_H263=YES",
+                            "-DENABLE_H263P=YES",
+                            "-DENABLE_MPEG4=YES",
+                            "-DENABLE_OPENH264=YES"]
 
     if check_tools() != 0:
         return 1
@@ -220,7 +235,7 @@ def main(argv=None):
                 print("Could not clone tunnel. Please see http://www.belledonne-communications.com/voiptunnel.html")
                 return 1
         print("Tunnel enabled.")
-        additional_args += ["-DENABLE_TUNNEL=ON"]
+        additional_args += ["-DENABLE_TUNNEL=YES"]
 
     # install_git_hook()
 
