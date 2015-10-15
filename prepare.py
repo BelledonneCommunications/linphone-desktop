@@ -203,12 +203,12 @@ def main(argv=None):
                 retcode = 0
             return retcode
         #only generated makefile if we are using Ninja or Makefile
-        if args.generator == 'Ninja':
+        if args.generator.endswith('Ninja'):
             if not check_is_installed("ninja", "it"):
                 return 1
             generate_makefile('ninja -C')
             print("You can now run 'make' to build.")
-        elif args.generator == "Unix Makefiles":
+        elif args.generator.endswith("Unix Makefiles"):
             generate_makefile('$(MAKE) -C')
             print("You can now run 'make' to build.")
         elif args.generator == "Xcode":
