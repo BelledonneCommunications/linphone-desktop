@@ -71,64 +71,19 @@ def check_tools():
     return ret
 
 def generate_makefile(generator):
-    packages = os.listdir('WORK/Build')
-    packages.sort()
     makefile = """
-packages={packages}
-
 .PHONY: all
 
 build:
-\t@for package in $(packages); do \\
-\t\t$(MAKE) build-$$package; \\
-\tdone
+\t{generator} WORK/cmake
 
-clean:
-\t@for package in $(packages); do \\
-\t\t$(MAKE) clean-$$package; \\
-\tdone
+WORK/build.done:
+\t{generator} WORK/cmake && touch WORK/build.done
 
-veryclean:
-\t@for package in $(packages); do \\
-\t\t$(MAKE) veryclean-$$package; \\
-\tdone
-
-build-%: package-in-list-%
-\techo "==== starting build of $* ===="; \\
-\trm -f WORK/Stamp/EP_$*/EP_$*-update; \\
-\t{generator} WORK/cmake EP_$*
-
-clean-%: package-in-list-%
-\techo "==== starting clean of $* ===="; \\
-\t{generator} WORK/Build/$* clean; \\
-\trm -f WORK/Stamp/EP_$*/EP_$*-build; \\
-\trm -f WORK/Stamp/EP_$*/EP_$*-install;
-
-veryclean-%: package-in-list-%
-\techo "==== starting veryclean of $* ===="; \\
-\ttest -f WORK/Build/$*/install_manifest.txt && \\
-\tcat WORK/Build/$*/install_manifest.txt | xargs rm; \\
-\trm -rf WORK/Build/$*/*; \\
-\trm -f WORK/Stamp/EP_$*/*; \\
-\techo "Run 'make build-$*' to rebuild $* correctly.";
+dev: WORK/build.done
+\t{generator} WORK/Build/linphone_builder install
 
 all: build
-
-all-%:
-\t@for package in $(packages); do \\
-\t\trm -f WORK/ios-$*/Stamp/EP_$$package/EP_$$package-update; \\
-\tdone
-\t{generator} WORK/ios-$*/cmake
-
-package-in-list-%:
-\tif ! echo " $(packages) " | grep -q " $* "; then \\
-\t\techo "$* not in list of available packages: $(packages)"; \\
-\t\texit 3; \\
-\tfi
-
-build:$(addprefix build-,$(packages))
-clean: $(addprefix clean-,$(packages))
-veryclean: $(addprefix veryclean-,$(packages))
 
 pull-transifex:
 \t$(MAKE) -C linphone pull-transifex
@@ -144,16 +99,12 @@ help: help-prepare-options
 \t@echo ""
 \t@echo "(please read the README.md file first)"
 \t@echo ""
-\t@echo "Available packages: {packages}"
-\t@echo ""
 \t@echo "Available targets:"
 \t@echo ""
-\t@echo "   * all                 : builds all packages"
-\t@echo "   * build-[package]     : builds a package"
-\t@echo "   * clean-[package]     : clean the package compilation residuals"
-\t@echo "   * veryclean-[package] : remove anything related to the package"
+\t@echo "   * all, build  : normal build"
+\t@echo "   * dev         : build only linphone related source code (used for development)"
 \t@echo ""
-""".format(options=' '.join(sys.argv), packages=' '.join(packages), generator=generator)
+""".format(options=' '.join(sys.argv), generator=generator)
     f = open('Makefile', 'w')
     f.write(makefile)
     f.close()
@@ -256,8 +207,10 @@ def main(argv=None):
             if not check_is_installed("ninja", "it"):
                 return 1
             generate_makefile('ninja -C')
+            print("You can now run 'make' to build.")
         elif args.generator == "Unix Makefiles":
             generate_makefile('$(MAKE) -C')
+            print("You can now run 'make' to build.")
         elif args.generator == "Xcode":
             print("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
         else:
