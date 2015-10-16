@@ -51,6 +51,21 @@ class DesktopTarget(prepare.Target):
             current_path + '/submodules'
         ]
 
+class PythonTarget(prepare.Target):
+
+    def __init__(self):
+        prepare.Target.__init__(self, '')
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        if platform.system() == 'Windows':
+            current_path = current_path.replace('\\', '/')
+        self.config_file = 'configs/config-python.cmake'
+        if platform.system() == 'Windows':
+            self.generator = 'Visual Studio 9 2008'
+        self.additional_args = [
+            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
+            current_path + '/submodules'
+        ]
+
 
 def check_is_installed(binary, prog=None, warn=True):
     if not find_executable(binary):
@@ -134,6 +149,8 @@ def main(argv=None):
     argparser.add_argument(
         '-os', '--only-submodules', help="Build only submodules (finding all dependencies on the system.", action='store_true')
     argparser.add_argument(
+        '--python', help="Build Python module instead of desktop application.", action='store_true')
+    argparser.add_argument(
         '-t', '--tunnel', help="Enable Tunnel.", action='store_true')
 
     args, additional_args = argparser.parse_known_args()
@@ -190,7 +207,11 @@ def main(argv=None):
 
     # install_git_hook()
 
-    target = DesktopTarget()
+    target = None
+    if args.python:
+        target = PythonTarget()
+    else:
+        target = DesktopTarget()
     if args.clean:
         target.clean()
         if os.path.isfile('Makefile'):
