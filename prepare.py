@@ -66,6 +66,18 @@ class PythonTarget(prepare.Target):
             current_path + '/submodules'
         ]
 
+class PythonRaspberryTarget(prepare.Target):
+
+    def __init__(self):
+        prepare.Target.__init__(self, '')
+        self.required_build_platforms = ['Linux']
+        self.config_file = 'configs/config-python-raspberry.cmake'
+        self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
+        self.additional_args = [
+            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
+            current_path + '/submodules'
+        ]
+
 
 def check_is_installed(binary, prog=None, warn=True):
     if not find_executable(binary):
@@ -151,6 +163,8 @@ def main(argv=None):
     argparser.add_argument(
         '--python', help="Build Python module instead of desktop application.", action='store_true')
     argparser.add_argument(
+        '--python-raspberry', help="Build Python module for raspberry pi instead of desktop application.", action='store_true')
+    argparser.add_argument(
         '-t', '--tunnel', help="Enable Tunnel.", action='store_true')
 
     args, additional_args = argparser.parse_known_args()
@@ -210,6 +224,8 @@ def main(argv=None):
     target = None
     if args.python:
         target = PythonTarget()
+    elif args.python_raspberry:
+        target = PythonRaspberryTarget()
     else:
         target = DesktopTarget()
     if args.clean:
