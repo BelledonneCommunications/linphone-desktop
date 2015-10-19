@@ -70,6 +70,7 @@ class PythonRaspberryTarget(prepare.Target):
 
     def __init__(self):
         prepare.Target.__init__(self, '')
+        current_path = os.path.dirname(os.path.realpath(__file__))
         self.required_build_platforms = ['Linux']
         self.config_file = 'configs/config-python-raspberry.cmake'
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
