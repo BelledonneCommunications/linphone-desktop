@@ -47,6 +47,7 @@ class DesktopTarget(prepare.Target):
             current_path = current_path.replace('\\', '/')
         self.config_file = 'configs/config-desktop.cmake'
         self.additional_args = [
+            '-DCMAKE_INSTALL_MESSAGE=LAZY',
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
             current_path + '/submodules'
         ]
@@ -62,6 +63,7 @@ class PythonTarget(prepare.Target):
         if platform.system() == 'Windows':
             self.generator = 'Visual Studio 9 2008'
         self.additional_args = [
+            '-DCMAKE_INSTALL_MESSAGE=LAZY',
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
             current_path + '/submodules'
         ]
@@ -75,6 +77,7 @@ class PythonRaspberryTarget(prepare.Target):
         self.config_file = 'configs/config-python-raspberry.cmake'
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
         self.additional_args = [
+            '-DCMAKE_INSTALL_MESSAGE=LAZY',
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
             current_path + '/submodules'
         ]
@@ -105,12 +108,6 @@ def generate_makefile(generator):
 build:
 \t{generator} WORK/cmake
 
-WORK/build.done:
-\t{generator} WORK/cmake && touch WORK/build.done
-
-dev: WORK/build.done
-\t{generator} WORK/Build/linphone_builder install
-
 all: build
 
 pull-transifex:
@@ -130,7 +127,6 @@ help: help-prepare-options
 \t@echo "Available targets:"
 \t@echo ""
 \t@echo "   * all, build  : normal build"
-\t@echo "   * dev         : build only linphone related source code (used for development)"
 \t@echo ""
 """.format(options=' '.join(sys.argv), generator=generator)
     f = open('Makefile', 'w')
