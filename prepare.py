@@ -26,15 +26,16 @@ import argparse
 import os
 import platform
 import sys
+from logging import error, warning, info, INFO, basicConfig
 from subprocess import Popen
 from distutils.spawn import find_executable
 sys.dont_write_bytecode = True
 sys.path.insert(0, 'submodules/cmake-builder')
 try:
     import prepare
-except:
-    print(
-        "Could not find prepare module, probably missing submodules/cmake-builder? Try running:\ngit submodule update --init --recursive")
+except Exception as e:
+    error(
+        "Could not find prepare module: {}, probably missing submodules/cmake-builder? Try running:\ngit submodule update --init --recursive".format(e))
     exit(1)
 
 
@@ -52,6 +53,7 @@ class DesktopTarget(prepare.Target):
             current_path + '/submodules'
         ]
 
+
 class PythonTarget(prepare.Target):
 
     def __init__(self):
@@ -68,6 +70,7 @@ class PythonTarget(prepare.Target):
             current_path + '/submodules'
         ]
 
+
 class PythonRaspberryTarget(prepare.Target):
 
     def __init__(self):
@@ -83,10 +86,10 @@ class PythonRaspberryTarget(prepare.Target):
         ]
 
 
-def check_is_installed(binary, prog=None, warn=True):
+def check_is_installed(binary, prog='it', warn=True):
     if not find_executable(binary):
         if warn:
-            print("Could not find {}. Please install {}.".format(binary, prog))
+            error("Could not find {}. Please install {}.".format(binary, prog))
         return False
     return True
 
@@ -94,12 +97,19 @@ def check_is_installed(binary, prog=None, warn=True):
 def check_tools():
     ret = 0
 
+    #at least FFmpeg requires no whitespace in sources path...
     if " " in os.path.dirname(os.path.realpath(__file__)):
-        print("Invalid location: path should not contain any spaces.")
+        error("Invalid location: path should not contain any spaces.")
         ret = 1
 
-    print("check_tools: todo.. (see ios)")
+    ret |= not check_is_installed('cmake')
+
+    if not os.path.isdir("submodules/linphone/mediastreamer2/src") or not os.path.isdir("submodules/linphone/oRTP/src"):
+        error("Missing some git submodules. Did you run:\n\tgit submodule update --init --recursive")
+        ret = 1
+
     return ret
+
 
 def generate_makefile(generator):
     makefile = """
@@ -135,6 +145,8 @@ help: help-prepare-options
 
 
 def main(argv=None):
+    basicConfig(format="%(levelname)s: %(message)s", level=INFO)
+
     if argv is None:
         argv = sys.argv
     argparser = argparse.ArgumentParser(
@@ -194,18 +206,19 @@ def main(argv=None):
 
     if args.tunnel or os.path.isdir("submodules/tunnel"):
         if not os.path.isdir("submodules/tunnel"):
-            print("Tunnel wanted but not found yet, trying to clone it...")
+            info("Tunnel wanted but not found yet, trying to clone it...")
             p = Popen("git clone gitosis@git.linphone.org:tunnel.git submodules/tunnel".split(" "))
             p.wait()
-            if p.retcode != 0:
-                print("Could not clone tunnel. Please see http://www.belledonne-communications.com/voiptunnel.html")
+            if p.returncode != 0:
+                error("Could not clone tunnel. Please see http://www.belledonne-communications.com/voiptunnel.html")
                 return 1
-        print("Tunnel enabled.")
+        info("Tunnel enabled.")
         additional_args += ["-DENABLE_TUNNEL=YES"]
 
     # install_git_hook()
 
     target = None
+
     if args.python:
         target = PythonTarget()
     elif args.python_raspberry:
@@ -226,19 +239,19 @@ def main(argv=None):
                 Popen("make help-prepare-options".split(" "))
                 retcode = 0
             return retcode
-        #only generated makefile if we are using Ninja or Makefile
+        # only generated makefile if we are using Ninja or Makefile
         if args.generator.endswith('Ninja'):
             if not check_is_installed("ninja", "it"):
                 return 1
             generate_makefile('ninja -C')
-            print("You can now run 'make' to build.")
+            info("You can now run 'make' to build.")
         elif args.generator.endswith("Unix Makefiles"):
             generate_makefile('$(MAKE) -C')
-            print("You can now run 'make' to build.")
+            info("You can now run 'make' to build.")
         elif args.generator == "Xcode":
-            print("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
+            info("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
         else:
-            print("Not generating meta-makefile for generator {}.".format(args.generator))
+            warning("Not generating meta-makefile for generator {}.".format(args.generator))
 
     return 0
 
