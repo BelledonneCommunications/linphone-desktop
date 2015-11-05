@@ -142,11 +142,11 @@ def main(argv=None):
     argparser.add_argument(
         '-ac', '--all-codecs', help="Enable all codecs, including the non-free ones", action='store_true')
     argparser.add_argument(
-        '-c', '-C', '--clean', help="Clean a previous build instead of preparing a build.", action='store_true')
+        '-c', '--clean', help="Clean a previous build instead of preparing a build.", action='store_true')
+    argparser.add_argument(
+        '-C', '--veryclean', help="Clean a previous build instead of preparing a build (also deleting the install prefix).", action='store_true')
     argparser.add_argument(
         '-d', '--debug', help="Prepare a debug build, eg. add debug symbols and use no optimizations.", action='store_true')
-    argparser.add_argument(
-        '-dv', '--debug-verbose', help="Activate ms_debug logs.", action='store_true')
     argparser.add_argument(
         '-f', '--force', help="Force preparation, even if working directory already exist.", action='store_true')
     argparser.add_argument(
@@ -154,9 +154,9 @@ def main(argv=None):
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
-        '-m', '--minimal', help="Build a minimal version of Linphone.", action='store_true')
-    argparser.add_argument(
         '-os', '--only-submodules', help="Build only submodules (finding all dependencies on the system.", action='store_true')
+    argparser.add_argument(
+        '-p', '--package', help="Build an installation package (only on Mac OSX and Windows).", action='store_true')
     argparser.add_argument(
         '--python', help="Build Python module instead of desktop application.", action='store_true')
     argparser.add_argument(
@@ -169,28 +169,8 @@ def main(argv=None):
     additional_args += ["-G", args.generator]
     additional_args += ["-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES"]
 
-    if args.debug_verbose:
-        additional_args += ["-DENABLE_DEBUG_LOGS=YES"]
-
     if args.only_submodules:
         additional_args += ["-DLINPHONE_BUILDER_BUILD_ONLY_EXTERNAL_SOURCE_PATH=YES"]
-
-    if args.minimal:
-        additional_args += ["-DENABLE_VIDEO=NO",
-                            "-DENABLE_MKV=NO",
-                            "-DENABLE_AMRNB=NO",
-                            "-DENABLE_AMRWB=NO",
-                            "-DENABLE_G729=NO",
-                            "-DENABLE_GSM=NO",
-                            "-DENABLE_ILBC=NO",
-                            "-DENABLE_ISAC=NO",
-                            "-DENABLE_OPUS=NO",
-                            "-DENABLE_SILK=NO",
-                            "-DENABLE_SPEEX=NO",
-                            "-DENABLE_SRTP=NO",
-                            "-DENABLE_ZRTP=NO",
-                            "-DENABLE_WASAPI=NO",
-                            "-DENABLE_PACKAGING=NO"]
 
     if args.all_codecs:
         additional_args += ["-DENABLE_NON_FREE_CODECS=YES",
@@ -199,9 +179,16 @@ def main(argv=None):
                             "-DENABLE_G729=YES",
                             "-DENABLE_H263=YES",
                             "-DENABLE_H263P=YES",
+                            "-DENABLE_ILBC=YES",
+                            "-DENABLE_ISAC=YES",
+                            "-DENABLE_MKV=YES",
                             "-DENABLE_MPEG4=YES",
-                            "-DENABLE_OPENH264=YES"]
+                            "-DENABLE_OPENH264=YES"
+                            "-DENABLE_SILK=YES"]
 
+    if args.package:
+        additional_args += ["-DENABLE_PACKAGING=YES"
+                            "-DENABLE_RELATIVE_PREFIX=YES"]
     if check_tools() != 0:
         return 1
 
@@ -225,8 +212,11 @@ def main(argv=None):
         target = PythonRaspberryTarget()
     else:
         target = DesktopTarget()
-    if args.clean:
-        target.clean()
+    if args.clean or args.veryclean:
+        if args.veryclean:
+            target.veryclean()
+        else:
+            target.clean()
         if os.path.isfile('Makefile'):
             os.remove('Makefile')
     else:
