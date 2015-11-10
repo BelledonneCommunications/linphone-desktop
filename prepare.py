@@ -199,7 +199,7 @@ def main(argv=None):
                             "-DENABLE_SILK=YES"]
 
     if args.package:
-        additional_args += ["-DENABLE_PACKAGING=YES"
+        additional_args += ["-DENABLE_PACKAGING=YES",
                             "-DENABLE_RELATIVE_PREFIX=YES"]
     if check_tools() != 0:
         return 1
