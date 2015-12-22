@@ -195,11 +195,11 @@ def main(argv=None):
                             "-DENABLE_ISAC=YES",
                             "-DENABLE_MKV=YES",
                             "-DENABLE_MPEG4=YES",
-                            "-DENABLE_OPENH264=YES"
+                            "-DENABLE_OPENH264=YES",
                             "-DENABLE_SILK=YES"]
 
     if args.package:
-        additional_args += ["-DENABLE_PACKAGING=YES"
+        additional_args += ["-DENABLE_PACKAGING=YES",
                             "-DENABLE_RELATIVE_PREFIX=YES"]
     if check_tools() != 0:
         return 1
