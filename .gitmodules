@@ -37,3 +37,9 @@
 [submodule "submodules/mswebrtc"]
 	path = submodules/mswebrtc
 	url = git://git.linphone.org/mswebrtc.git
+[submodule "submodules/belcard"]
+	path = submodules/belcard
+	url = gitosis@git.linphone.org:belcard
+[submodule "submodules/belr"]
+	path = submodules/belr
+	url = gitosis@git.linphone.org:belr
