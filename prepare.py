@@ -193,7 +193,6 @@ def main(argv=None):
                             "-DENABLE_H263P=YES",
                             "-DENABLE_ILBC=YES",
                             "-DENABLE_ISAC=YES",
-                            "-DENABLE_MKV=YES",
                             "-DENABLE_MPEG4=YES",
                             "-DENABLE_OPENH264=YES",
                             "-DENABLE_SILK=YES"]
