@@ -198,8 +198,9 @@ def main(argv=None):
                             "-DENABLE_SILK=YES"]
 
     if args.package:
-        additional_args += ["-DENABLE_PACKAGING=YES",
-                            "-DENABLE_RELATIVE_PREFIX=YES"]
+        additional_args += ["-DENABLE_PACKAGING=YES"]
+        if platform.system() != 'Windows':
+            additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"] # Already forced in all cases on Windows platform
     if check_tools() != 0:
         return 1
 
