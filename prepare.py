@@ -180,7 +180,6 @@ def main(argv=None):
 
     args, additional_args = argparser.parse_known_args()
 
-    additional_args += ["-G", args.generator]
     additional_args += ["-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES"]
 
     if args.only_submodules:
@@ -227,6 +226,8 @@ def main(argv=None):
         target = PythonRaspberryTarget()
     else:
         target = DesktopTarget()
+    if target.generator is None:
+        additional_args += ["-G", args.generator]
     if args.clean or args.veryclean:
         if args.veryclean:
             target.veryclean()
