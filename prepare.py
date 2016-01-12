@@ -47,6 +47,8 @@ class DesktopTarget(prepare.Target):
         if platform.system() == 'Windows':
             current_path = current_path.replace('\\', '/')
         self.config_file = 'configs/config-desktop.cmake'
+        if platform.system() == 'Windows':
+            self.generator = 'Visual Studio 12 2013'
         self.additional_args = [
             '-DCMAKE_INSTALL_MESSAGE=LAZY',
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
