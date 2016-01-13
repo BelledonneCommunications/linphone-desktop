@@ -228,6 +228,9 @@ def main(argv=None):
         target = DesktopTarget()
     if args.generator is not None:
         target.generator = args.generator
+    if target.generator is None:
+        # Default to "Unix Makefiles" if no target specific generator is set and the user has not defined one
+        target.generator = "Unix Makefiles"
 
     if args.clean or args.veryclean:
         if args.veryclean:
