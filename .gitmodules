@@ -37,3 +37,6 @@
 [submodule "submodules/mswebrtc"]
 	path = submodules/mswebrtc
 	url = git://git.linphone.org/mswebrtc.git
+[submodule "submodules/externals/libmatroska-c"]
+	path = submodules/externals/libmatroska-c
+	url = git://git.linphone.org/libmatroska-c.git
