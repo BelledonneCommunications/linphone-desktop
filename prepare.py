@@ -51,8 +51,8 @@ class DesktopTarget(prepare.Target):
             self.generator = 'Visual Studio 12 2013'
         self.additional_args = [
             '-DCMAKE_INSTALL_MESSAGE=LAZY',
-            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
-            current_path + '/submodules'
+            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' + current_path + '/submodules',
+            '-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES'
         ]
 
 
@@ -68,8 +68,8 @@ class PythonTarget(prepare.Target):
             self.generator = 'Visual Studio 9 2008'
         self.additional_args = [
             '-DCMAKE_INSTALL_MESSAGE=LAZY',
-            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
-            current_path + '/submodules'
+            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' + current_path + '/submodules',
+            '-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES'
         ]
 
 
@@ -83,8 +83,8 @@ class PythonRaspberryTarget(prepare.Target):
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
         self.additional_args = [
             '-DCMAKE_INSTALL_MESSAGE=LAZY',
-            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' +
-            current_path + '/submodules'
+            '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' + current_path + '/submodules',
+            '-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES'
         ]
 
 
@@ -180,23 +180,28 @@ def main(argv=None):
 
     args, additional_args = argparser.parse_known_args()
 
-    additional_args += ["-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES"]
-
     if args.only_submodules:
         additional_args += ["-DLINPHONE_BUILDER_BUILD_ONLY_EXTERNAL_SOURCE_PATH=YES"]
 
     if args.all_codecs:
-        additional_args += ["-DENABLE_NON_FREE_CODECS=YES",
-                            "-DENABLE_AMRNB=YES",
-                            "-DENABLE_AMRWB=YES",
-                            "-DENABLE_G729=YES",
-                            "-DENABLE_H263=YES",
-                            "-DENABLE_H263P=YES",
-                            "-DENABLE_ILBC=YES",
-                            "-DENABLE_ISAC=YES",
-                            "-DENABLE_MPEG4=YES",
-                            "-DENABLE_OPENH264=YES",
-                            "-DENABLE_SILK=YES"]
+        additional_args += ["-DENABLE_GPL_THIRD_PARTIES=YES"]
+        additional_args += ["-DENABLE_NON_FREE_CODECS=YES"]
+        additional_args += ["-DENABLE_AMRNB=YES"]
+        additional_args += ["-DENABLE_AMRWB=YES"]
+        additional_args += ["-DENABLE_G729=YES"]
+        additional_args += ["-DENABLE_GSM=YES"]
+        additional_args += ["-DENABLE_ILBC=YES"]
+        additional_args += ["-DENABLE_ISAC=YES"]
+        additional_args += ["-DENABLE_OPUS=YES"]
+        additional_args += ["-DENABLE_SILK=YES"]
+        additional_args += ["-DENABLE_SPEEX=YES"]
+        additional_args += ["-DENABLE_FFMPEG=YES"]
+        additional_args += ["-DENABLE_H263=YES"]
+        additional_args += ["-DENABLE_H263P=YES"]
+        additional_args += ["-DENABLE_MPEG4=YES"]
+        additional_args += ["-DENABLE_OPENH264=YES"]
+        additional_args += ["-DENABLE_VPX=YES"]
+        additional_args += ["-DENABLE_X264=YES"]
 
     if args.package:
         additional_args += ["-DENABLE_PACKAGING=YES"]
