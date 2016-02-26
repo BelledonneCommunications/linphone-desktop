@@ -201,7 +201,7 @@ def main(argv=None):
         additional_args += ["-DENABLE_MPEG4=YES"]
         additional_args += ["-DENABLE_OPENH264=YES"]
         additional_args += ["-DENABLE_VPX=YES"]
-        additional_args += ["-DENABLE_X264=YES"]
+        additional_args += ["-DENABLE_X264=NO"]
 
     if args.package:
         additional_args += ["-DENABLE_PACKAGING=YES"]
