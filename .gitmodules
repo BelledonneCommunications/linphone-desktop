@@ -31,6 +31,12 @@
 [submodule "submodules/mswebrtc"]
 	path = submodules/mswebrtc
 	url = git://git.linphone.org/mswebrtc.git
+[submodule "submodules/belcard"]
+	path = submodules/belcard
+	url = git://git.linphone.org/belcard.git
+[submodule "submodules/belr"]
+	path = submodules/belr
+	url = git://git.linphone.org/belr.git
 [submodule "submodules/externals/libmatroska-c"]
 	path = submodules/externals/libmatroska-c
 	url = git://git.linphone.org/libmatroska-c.git
