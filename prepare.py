@@ -205,7 +205,7 @@ def main(argv=None):
 
     if args.package:
         additional_args += ["-DENABLE_PACKAGING=YES"]
-        additional_args += ["-DCMAKE_SKIP_RPATH=YES"]
+	additional_args += ["-DCMAKE_SKIP_INSTALL_RPATH=YES"]
         if platform.system() != 'Windows':
             additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"] # Already forced in all cases on Windows platform
     if check_tools() != 0:
