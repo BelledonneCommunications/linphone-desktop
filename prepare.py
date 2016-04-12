@@ -35,7 +35,8 @@ try:
     import prepare
 except Exception as e:
     error(
-        "Could not find prepare module: {}, probably missing submodules/cmake-builder? Try running:\ngit submodule update --init --recursive".format(e))
+        "Could not find prepare module: {}, probably missing submodules/cmake-builder? Try running:\n"
+        "git submodule sync && git submodule update --init --recursive".format(e))
     exit(1)
 
 
@@ -99,7 +100,7 @@ def check_is_installed(binary, prog='it', warn=True):
 def check_tools():
     ret = 0
 
-    #at least FFmpeg requires no whitespace in sources path...
+    # at least FFmpeg requires no whitespace in sources path...
     if " " in os.path.dirname(os.path.realpath(__file__)):
         error("Invalid location: path should not contain any spaces.")
         ret = 1
@@ -117,10 +118,8 @@ def generate_makefile(generator):
     makefile = """
 .PHONY: all
 
-build:
+all:
 \t{generator} WORK/cmake
-
-all: build
 
 pull-transifex:
 \t$(MAKE) -C linphone pull-transifex
@@ -158,13 +157,15 @@ def main(argv=None):
     argparser.add_argument(
         '-c', '--clean', help="Clean a previous build instead of preparing a build.", action='store_true')
     argparser.add_argument(
-        '-C', '--veryclean', help="Clean a previous build instead of preparing a build (also deleting the install prefix).", action='store_true')
+        '-C', '--veryclean', help="Clean a previous build instead of preparing a build (also deleting the install prefix).",
+        action='store_true')
     argparser.add_argument(
         '-d', '--debug', help="Prepare a debug build, eg. add debug symbols and use no optimizations.", action='store_true')
     argparser.add_argument(
         '-f', '--force', help="Force preparation, even if working directory already exist.", action='store_true')
     argparser.add_argument(
-        '-G', '--generator', help="CMake build system generator (default: let CMake choose, use cmake -h to get the complete list).", default=None, dest='generator')
+        '-G', '--generator', help="CMake build system generator (default: let CMake choose, use cmake -h to get the complete list).",
+        default=None, dest='generator')
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
@@ -206,8 +207,7 @@ def main(argv=None):
     if args.package:
         additional_args += ["-DENABLE_PACKAGING=YES"]
         additional_args += ["-DCMAKE_SKIP_INSTALL_RPATH=YES"]
-        if platform.system() != 'Windows':
-            additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"] # Already forced in all cases on Windows platform
+        additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"]
     if check_tools() != 0:
         return 1
 
