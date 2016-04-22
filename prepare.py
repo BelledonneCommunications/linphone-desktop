@@ -169,7 +169,7 @@ def main(argv=None):
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
-        '-os', '--only-submodules', help="Build only submodules (finding all dependencies on the system.", action='store_true')
+        '-sys', '--use-system-dependencies', help="Find dependencies on the system.", action='store_true')
     argparser.add_argument(
         '-p', '--package', help="Build an installation package (only on Mac OSX and Windows).", action='store_true')
     argparser.add_argument(
@@ -181,8 +181,8 @@ def main(argv=None):
 
     args, additional_args = argparser.parse_known_args()
 
-    if args.only_submodules:
-        additional_args += ["-DLINPHONE_BUILDER_BUILD_ONLY_EXTERNAL_SOURCE_PATH=YES"]
+    if args.use_system_dependencies:
+        additional_args += ["-DLINPHONE_BUILDER_USE_SYSTEM_DEPENDENCIES=YES"]
 
     if args.all_codecs:
         additional_args += ["-DENABLE_GPL_THIRD_PARTIES=YES"]
