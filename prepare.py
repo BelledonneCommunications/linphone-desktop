@@ -42,7 +42,7 @@ except Exception as e:
 
 class DesktopTarget(prepare.Target):
 
-    def __init__(self):
+    def __init__(self, use_group="NO"):
         prepare.Target.__init__(self, '')
         current_path = os.path.dirname(os.path.realpath(__file__))
         if platform.system() == 'Windows':
@@ -53,7 +53,7 @@ class DesktopTarget(prepare.Target):
         self.additional_args = [
             '-DCMAKE_INSTALL_MESSAGE=LAZY',
             '-DLINPHONE_BUILDER_EXTERNAL_SOURCE_PATH=' + current_path + '/submodules',
-            '-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=YES'
+            '-DLINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS=' + use_group
         ]
 
 
@@ -165,7 +165,7 @@ def main(argv=None):
         '-f', '--force', help="Force preparation, even if working directory already exist.", action='store_true')
     argparser.add_argument(
         '-G', '--generator', help="CMake build system generator (default: let CMake choose, use cmake -h to get the complete list).",
-        default=None, dest='generator')
+        default="Unix Makefiles", dest='generator')
     argparser.add_argument(
         '-L', '--list-cmake-variables', help="List non-advanced CMake cache variables.", action='store_true', dest='list_cmake_variables')
     argparser.add_argument(
@@ -231,12 +231,13 @@ def main(argv=None):
     elif args.python_raspberry:
         target = PythonRaspberryTarget()
     else:
-        target = DesktopTarget()
-    if args.generator is not None:
-        target.generator = args.generator
-    if target.generator is None:
-        # Default to "Unix Makefiles" if no target specific generator is set and the user has not defined one
-        target.generator = "Unix Makefiles"
+        # for simple Makefile / ninja builds, we do not want to use grouped feature
+        # to ease development by having each project separated from each other
+        ungrouped_generators = [ "Unix Makefiles", "Ninja" ]
+        use_group = "NO" if any(generator in args.generator for generator in ungrouped_generators) else "YES"
+        target = DesktopTarget(use_group=use_group)
+
+    target.generator = args.generator
 
     if args.clean or args.veryclean:
         if args.veryclean:
