@@ -234,7 +234,7 @@ def main(argv=None):
         # for simple Makefile / ninja builds, we do not want to use grouped feature
         # to ease development by having each project separated from each other
         ungrouped_generators = [ "Unix Makefiles", "Ninja" ]
-        use_group = "NO" if any(generator in args.generator for generator in ungrouped_generators) else "YES"
+        use_group = "YES" if args.package or not any(generator in args.generator for generator in ungrouped_generators) else "NO"
         target = DesktopTarget(use_group=use_group)
 
     target.generator = args.generator
