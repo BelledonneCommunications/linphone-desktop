@@ -51,3 +51,6 @@
 	url = git://git.linphone.org/bv16-floatingpoint.git
 
 
+[submodule "submodules/externals/freerdp"]
+	path = submodules/externals/freerdp
+	url = git://github.com/FreeRDP/FreeRDP.git
