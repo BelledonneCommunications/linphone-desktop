@@ -42,7 +42,7 @@ except Exception as e:
 class DesktopTarget(prepare.Target):
 
     def __init__(self, group_builders=False):
-        super(DesktopTarget, self).__init__('desktop')
+        prepare.Target.__init__(self, 'desktop')
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.config_file = 'configs/config-desktop.cmake'
         self.output = 'OUTPUT/' + self.name
@@ -54,7 +54,7 @@ class DesktopTarget(prepare.Target):
 class PythonTarget(prepare.Target):
 
     def __init__(self):
-        super(PythonTarget, self).__init__('python')
+        prepare.Target.__init__(self, 'python')
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.config_file = 'configs/config-python.cmake'
         self.output = 'OUTPUT/' + self.name
@@ -66,7 +66,7 @@ class PythonTarget(prepare.Target):
 class PythonRaspberryTarget(prepare.Target):
 
     def __init__(self):
-        super(PythonRaspberryTarget, self).__init__('python-raspberry')
+        prepare.Target.__init__(self, 'python-raspberry')
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.required_build_platforms = ['Linux']
         self.config_file = 'configs/config-python-raspberry.cmake'
@@ -85,14 +85,14 @@ desktop_targets = {
 class DesktopPreparator(prepare.Preparator):
 
     def __init__(self, targets=desktop_targets, default_targets=['desktop']):
-        super(DesktopPreparator, self).__init__(targets, default_targets)
+        prepare.Preparator.__init__(self, targets, default_targets)
         self.veryclean = True
         self.argparser.add_argument('-ac', '--all-codecs', help="Enable all codecs, including the non-free ones", action='store_true')
         self.argparser.add_argument('-sys', '--use-system-dependencies', help="Find dependencies on the system.", action='store_true')
         self.argparser.add_argument('-p', '--package', help="Build an installation package (only on Mac OSX and Windows).", action='store_true')
 
     def parse_args(self):
-        super(DesktopPreparator, self).parse_args()
+        prepare.Preparator.parse_args(self)
 
         if self.args.use_system_dependencies:
             self.additional_args += ["-DLINPHONE_BUILDER_USE_SYSTEM_DEPENDENCIES=YES"]
@@ -123,35 +123,13 @@ class DesktopPreparator(prepare.Preparator):
             self.additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"]
 
     def clean(self):
-        super(DesktopPreparator, self).clean()
+        prepare.Preparator.clean(self)
         if os.path.isfile('Makefile'):
             os.remove('Makefile')
         if os.path.isdir('WORK') and not os.listdir('WORK'):
             os.rmdir('WORK')
         if os.path.isdir('OUTPUT') and not os.listdir('OUTPUT'):
             os.rmdir('OUTPUT')
-
-    def prepare(self):
-        retcode = super(DesktopPreparator, self).prepare()
-        if retcode != 0:
-            if retcode == 51:
-                if os.path.isfile('Makefile'):
-                    Popen("make help-prepare-options".split(" "))
-                retcode = 0
-            return retcode
-        # Only generated makefile if we are using Ninja or Makefile
-        if self.generator().endswith('Ninja'):
-            if not check_is_installed("ninja", "it"):
-                return 1
-            self.generate_makefile('ninja -C')
-            info("You can now run 'make' to build.")
-        elif self.generator().endswith("Unix Makefiles"):
-            self.generate_makefile('$(MAKE) -C')
-            info("You can now run 'make' to build.")
-        elif self.generator() == "Xcode":
-            info("You can now open Xcode project with: open WORK/cmake/Project.xcodeproj")
-        else:
-            warning("Not generating meta-makefile for generator {}.".format(self.generator))
 
     def generate_makefile(self, generator):
         targets = self.args.target
