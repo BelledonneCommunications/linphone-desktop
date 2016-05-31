@@ -75,3 +75,14 @@
 [submodule "submodules/cunit"]
 	path = submodules/cunit
 	url = git://git.linphone.org/cunit.git
+[submodule "submodules/externals/v4l-utils"]
+	path = submodules/externals/v4l-utils
+	url = git://linuxtv.org/v4l-utils.git
+[submodule "submodules/externals/libxml2"]
+	path = submodules/externals/libxml2
+	url = git://git.linphone.org/libxml2
+	ignore = dirty
+[submodule "submodules/externals/zlib"]
+	path = submodules/externals/zlib
+	url = git://git.linphone.org/zlib
+	ignore = dirty
