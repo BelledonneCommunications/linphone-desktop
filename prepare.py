@@ -79,7 +79,7 @@ class PythonRaspberryTarget(prepare.Target):
 desktop_targets = {
     'desktop': DesktopTarget(),
     'python': PythonTarget(),
-    'python-raspeberry': PythonRaspberryTarget()
+    'python-raspberry': PythonRaspberryTarget()
 }
 
 class DesktopPreparator(prepare.Preparator):
