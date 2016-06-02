@@ -46,8 +46,6 @@ class DesktopTarget(prepare.Target):
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.config_file = 'configs/config-desktop.cmake'
         self.output = 'OUTPUT/' + self.name
-        if platform.system() == 'Windows':
-            self.generator = 'Visual Studio 12 2013'
         self.external_source_path = os.path.join(current_path, 'submodules')
 
 
@@ -58,8 +56,6 @@ class PythonTarget(prepare.Target):
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.config_file = 'configs/config-python.cmake'
         self.output = 'OUTPUT/' + self.name
-        if platform.system() == 'Windows':
-            self.generator = 'Visual Studio 9 2008'
         self.external_source_path = os.path.join(current_path, 'submodules')
 
 
