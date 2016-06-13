@@ -118,6 +118,27 @@ class DesktopPreparator(prepare.Preparator):
             self.additional_args += ["-DCMAKE_SKIP_INSTALL_RPATH=YES"]
             self.additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"]
 
+    def check_tools(self):
+        ret = prepare.Preparator.check_tools(self)
+        if platform.system() == 'Windows':
+            ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
+        if "python" in self.args.target or "python-raspberry" in self.args.target:
+            if platform.system() == 'Windows':
+                doxygen_prog = 'doxygen (http://www.stack.nl/~dimitri/doxygen/download.html)'
+                graphviz_prog = 'graphviz (http://graphviz.org/Download.php)'
+            else:
+                doxygen_prog = 'doxygen'
+                graphviz_prog = 'graphviz'
+            ret |= not self.check_is_installed('doxygen', doxygen_prog)
+            ret |= not self.check_is_installed('dot', graphviz_prog)
+        return ret
+
+    def show_missing_dependencies(self):
+        if self.missing_dependencies:
+            error("The following binaries are missing: {}. Please install these packages:\n\t{}".format(
+                " ".join(self.missing_dependencies.keys()),
+                " ".join(self.missing_dependencies.values())))
+
     def clean(self):
         prepare.Preparator.clean(self)
         if os.path.isfile('Makefile'):
