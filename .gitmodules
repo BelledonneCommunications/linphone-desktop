@@ -86,3 +86,6 @@
 	path = submodules/externals/zlib
 	url = git://git.linphone.org/zlib
 	ignore = dirty
+[submodule "submodules/externals/openh264"]
+	path = submodules/externals/openh264
+	url = https://github.com/cisco/openh264
