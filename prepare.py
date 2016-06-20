@@ -131,6 +131,8 @@ class DesktopPreparator(prepare.Preparator):
                 graphviz_prog = 'graphviz'
             ret |= not self.check_is_installed('doxygen', doxygen_prog)
             ret |= not self.check_is_installed('dot', graphviz_prog)
+            ret |= not self.check_python_module_is_present('pystache')
+            ret |= not self.check_python_module_is_present('wheel')
         return ret
 
     def show_missing_dependencies(self):
@@ -198,6 +200,7 @@ def main():
     preparator.parse_args()
     if preparator.check_tools() != 0:
         preparator.show_missing_dependencies()
+        preparator.show_missing_python_dependencies()
         return 1
     return preparator.run()
 
