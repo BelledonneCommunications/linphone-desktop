@@ -150,7 +150,7 @@ class DesktopPreparator(prepare.Preparator):
         if os.path.isdir('OUTPUT') and not os.listdir('OUTPUT'):
             os.rmdir('OUTPUT')
 
-    def generate_makefile(self, generator):
+    def generate_makefile(self, generator, project_file=''):
         targets = self.args.target
         targets_str = ""
         for target in targets:
@@ -158,9 +158,9 @@ class DesktopPreparator(prepare.Preparator):
 {target}: {target}-build
 
 {target}-build:
-\t{generator} WORK/{target}/cmake
+\t{generator} WORK/{target}/cmake/{project_file}
 \t@echo "Done"
-""".format(target=target, generator=generator)
+""".format(target=target, generator=generator, project_file=project_file)
         makefile = """
 targets={targets}
 
