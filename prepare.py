@@ -118,8 +118,8 @@ class DesktopPreparator(prepare.Preparator):
             self.additional_args += ["-DCMAKE_SKIP_INSTALL_RPATH=YES"]
             self.additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"]
 
-    def check_tools(self):
-        ret = prepare.Preparator.check_tools(self)
+    def check_environment(self):
+        ret = prepare.Preparator.check_environment(self)
         if platform.system() == 'Windows':
             ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
         if "python" in self.args.target or "python-raspberry" in self.args.target:
@@ -198,9 +198,8 @@ help: help-prepare-options
 def main():
     preparator = DesktopPreparator()
     preparator.parse_args()
-    if preparator.check_tools() != 0:
-        preparator.show_missing_dependencies()
-        preparator.show_missing_python_dependencies()
+    if preparator.check_environment() != 0:
+        preparator.show_environment_errors()
         return 1
     return preparator.run()
 
