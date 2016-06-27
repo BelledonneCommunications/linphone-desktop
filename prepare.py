@@ -188,7 +188,7 @@ help: help-prepare-options
 \t@echo ""
 \t@echo "Available targets: {targets}"
 \t@echo ""
-""".format(targets=' '.join(targets), targets_str=targets_str, options=' '.join(sys.argv), generator=generator)
+""".format(targets=' '.join(targets), targets_str=targets_str, options=' '.join(self.argv), generator=generator)
         f = open('Makefile', 'w')
         f.write(makefile)
         f.close()
