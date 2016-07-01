@@ -75,9 +75,6 @@
 [submodule "submodules/externals/antlr3"]
 	path = submodules/externals/antlr3
 	url = git://git.linphone.org/antlr3.git
-[submodule "submodules/cunit"]
-	path = submodules/cunit
-	url = git://git.linphone.org/cunit.git
 [submodule "submodules/externals/v4l-utils"]
 	path = submodules/externals/v4l-utils
 	url = git://linuxtv.org/v4l-utils.git
@@ -89,3 +86,9 @@
 	path = submodules/externals/zlib
 	url = git://git.linphone.org/zlib
 	ignore = dirty
+[submodule "submodules/externals/openh264"]
+	path = submodules/externals/openh264
+	url = https://github.com/cisco/openh264
+[submodule "submodules/bcunit"]
+	path = submodules/bcunit
+	url = git://git.linphone.org/bcunit.git

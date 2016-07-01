@@ -118,6 +118,29 @@ class DesktopPreparator(prepare.Preparator):
             self.additional_args += ["-DCMAKE_SKIP_INSTALL_RPATH=YES"]
             self.additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"]
 
+    def check_environment(self):
+        ret = prepare.Preparator.check_environment(self)
+        if platform.system() == 'Windows':
+            ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
+        if "python" in self.args.target or "python-raspberry" in self.args.target:
+            if platform.system() == 'Windows':
+                doxygen_prog = 'doxygen (http://www.stack.nl/~dimitri/doxygen/download.html)'
+                graphviz_prog = 'graphviz (http://graphviz.org/Download.php)'
+            else:
+                doxygen_prog = 'doxygen'
+                graphviz_prog = 'graphviz'
+            ret |= not self.check_is_installed('doxygen', doxygen_prog)
+            ret |= not self.check_is_installed('dot', graphviz_prog)
+            ret |= not self.check_python_module_is_present('pystache')
+            ret |= not self.check_python_module_is_present('wheel')
+        return ret
+
+    def show_missing_dependencies(self):
+        if self.missing_dependencies:
+            error("The following binaries are missing: {}. Please install these packages:\n\t{}".format(
+                " ".join(self.missing_dependencies.keys()),
+                " ".join(self.missing_dependencies.values())))
+
     def clean(self):
         prepare.Preparator.clean(self)
         if os.path.isfile('Makefile'):
@@ -127,7 +150,7 @@ class DesktopPreparator(prepare.Preparator):
         if os.path.isdir('OUTPUT') and not os.listdir('OUTPUT'):
             os.rmdir('OUTPUT')
 
-    def generate_makefile(self, generator):
+    def generate_makefile(self, generator, project_file=''):
         targets = self.args.target
         targets_str = ""
         for target in targets:
@@ -135,9 +158,9 @@ class DesktopPreparator(prepare.Preparator):
 {target}: {target}-build
 
 {target}-build:
-\t{generator} WORK/{target}/cmake
+\t{generator} WORK/{target}/cmake/{project_file}
 \t@echo "Done"
-""".format(target=target, generator=generator)
+""".format(target=target, generator=generator, project_file=project_file)
         makefile = """
 targets={targets}
 
@@ -165,7 +188,7 @@ help: help-prepare-options
 \t@echo ""
 \t@echo "Available targets: {targets}"
 \t@echo ""
-""".format(targets=' '.join(targets), targets_str=targets_str, options=' '.join(sys.argv), generator=generator)
+""".format(targets=' '.join(targets), targets_str=targets_str, options=' '.join(self.argv), generator=generator)
         f = open('Makefile', 'w')
         f.write(makefile)
         f.close()
@@ -175,8 +198,8 @@ help: help-prepare-options
 def main():
     preparator = DesktopPreparator()
     preparator.parse_args()
-    if preparator.check_tools() != 0:
-        preparator.show_missing_dependencies()
+    if preparator.check_environment() != 0:
+        preparator.show_environment_errors()
         return 1
     return preparator.run()
 
