@@ -49,6 +49,18 @@ class DesktopTarget(prepare.Target):
         self.external_source_path = os.path.join(current_path, 'submodules')
 
 
+class DesktopRaspberryTarget(prepare.Target):
+
+    def __init__(self, group_builders=False):
+        prepare.Target.__init__(self, 'desktop-raspberry')
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        self.required_build_platforms = ['Linux']
+        self.config_file = 'configs/config-desktop-raspberry.cmake'
+        self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
+        self.output = 'OUTPUT/' + self.name
+        self.external_source_path = os.path.join(current_path, 'submodules')
+
+
 class PythonTarget(prepare.Target):
 
     def __init__(self):
@@ -75,6 +87,7 @@ class PythonRaspberryTarget(prepare.Target):
 desktop_targets = {
     'desktop': DesktopTarget(),
     'python': PythonTarget(),
+    'desktop-raspberry': DesktopRaspberryTarget(),
     'python-raspberry': PythonRaspberryTarget()
 }
 
