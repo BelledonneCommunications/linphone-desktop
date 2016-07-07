@@ -59,6 +59,8 @@ class DesktopRaspberryTarget(prepare.Target):
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'submodules')
+        self.additional_args += ['-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib']
+        self.additional_args += ['-DENABLE_RELATIVE_PREFIX=YES']
 
 
 class PythonTarget(prepare.Target):
