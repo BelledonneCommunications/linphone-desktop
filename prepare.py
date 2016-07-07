@@ -47,6 +47,10 @@ class DesktopTarget(prepare.Target):
         self.config_file = 'configs/config-desktop.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'submodules')
+        self.packaging_args = [
+            "-DCMAKE_SKIP_INSTALL_RPATH=YES",
+            "-DENABLE_RELATIVE_PREFIX=YES"
+        ]
 
 
 class DesktopRaspberryTarget(prepare.Target):
@@ -59,8 +63,10 @@ class DesktopRaspberryTarget(prepare.Target):
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'submodules')
-        self.additional_args += ['-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib']
-        self.additional_args += ['-DENABLE_RELATIVE_PREFIX=YES']
+        self.packaging_args = [
+            "-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib",
+            "-DENABLE_RELATIVE_PREFIX=YES"
+        ]
 
 
 class PythonTarget(prepare.Target):
@@ -127,11 +133,6 @@ class DesktopPreparator(prepare.Preparator):
             self.additional_args += ["-DENABLE_OPENH264=YES"]
             self.additional_args += ["-DENABLE_VPX=YES"]
             self.additional_args += ["-DENABLE_X264=NO"]
-
-        if self.args.package:
-            self.additional_args += ["-DENABLE_PACKAGING=YES"]
-            self.additional_args += ["-DCMAKE_SKIP_INSTALL_RPATH=YES"]
-            self.additional_args += ["-DENABLE_RELATIVE_PREFIX=YES"]
 
     def check_environment(self):
         ret = prepare.Preparator.check_environment(self)
