@@ -196,7 +196,7 @@ push-transifex:
 
 help-prepare-options:
 \t@echo "prepare.py was previously executed with the following options:"
-\t@echo "   {options}"
+\t@echo "   ./prepare.py {options}"
 
 help: help-prepare-options
 \t@echo ""
