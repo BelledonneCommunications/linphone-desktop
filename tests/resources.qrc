@@ -1,5 +1,10 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
+  <!-- Languages. -->
+  <file>languages/en.qm</file>
+  <file>languages/fr.qm</file>
+
+  <!-- UI. -->
   <file>ui/main_window.qml</file>
 </qresource>
 </RCC>
