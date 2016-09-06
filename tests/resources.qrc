@@ -5,7 +5,13 @@
   <file>languages/fr.qm</file>
 
   <!-- UI. -->
-  <file>ui/components/SearchBar/SearchBar.qml</file>
+  <file>ui/components/Form/Collapse.qml</file>
+  <file>ui/components/Form/RoundButton.qml</file>
+  <file>ui/components/Form/ToolBarButton.qml</file>
   <file>ui/views/main_window.qml</file>
+
+  <!-- Images. -->
+  <file>imgs/collapse.svg</file>
+  <file>imgs/start_conference.svg</file>
 </qresource>
 </RCC>

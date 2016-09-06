@@ -2,10 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>SearchBar</name>
+    <name>main_window</name>
     <message>
-        <source>helloWorld</source>
-        <translation>Bonjour le monde</translation>
+        <source>mainSearchBarPlaceholder</source>
+        <translation>Chercher contact, commencer appel ou chat...</translation>
     </message>
 </context>
 </TS>

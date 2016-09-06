@@ -4,6 +4,7 @@
 #include <QGuiApplication>
 #include <QTranslator>
 
+// TODO: Make it Singleton.
 class App : public QGuiApplication {
 public:
   App (int &argc, char **argv);
