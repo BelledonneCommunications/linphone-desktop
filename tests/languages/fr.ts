@@ -2,10 +2,10 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>main_window</name>
+    <name>SearchBar</name>
     <message>
         <source>helloWorld</source>
-        <translation>Bonjour le monde !</translation>
+        <translation>Bonjour le monde</translation>
     </message>
 </context>
 </TS>

@@ -5,6 +5,7 @@
   <file>languages/fr.qm</file>
 
   <!-- UI. -->
-  <file>ui/main_window.qml</file>
+  <file>ui/components/SearchBar/SearchBar.qml</file>
+  <file>ui/views/main_window.qml</file>
 </qresource>
 </RCC>

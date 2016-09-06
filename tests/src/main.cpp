@@ -4,12 +4,12 @@
 
 #include "app.hpp"
 
-int main (int argc, char *argv[]) {
-  // Init main window.
-  App app(argc, argv);
-  QQmlApplicationEngine engine(QUrl("qrc:/ui/main_window.qml"));
+// ===================================================================
 
-  // File not found.
+int main (int argc, char *argv[]) {
+  App app(argc, argv);
+  QQmlApplicationEngine engine(QUrl("qrc:/ui/views/main_window.qml"));
+
   if (engine.rootObjects().isEmpty())
     exit(EXIT_FAILURE);
 
