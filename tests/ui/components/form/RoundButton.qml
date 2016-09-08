@@ -7,5 +7,6 @@ Button {
     Image {
         anchors.fill: parent
         id: backgroundImage
+        fillMode: Image.PreserveAspectFit
     }
 }

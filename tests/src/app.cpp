@@ -4,7 +4,6 @@
 
 #include "app.hpp"
 
-#define APPLICATION_NAME "Linphone"
 #define LANGUAGES_PATH ":/languages/"
 
 // ===================================================================
@@ -17,7 +16,4 @@ App::App(int &argc, char **argv) : QGuiApplication(argc, argv) {
   } else {
     qWarning() << "No translation found.";
   }
-
-  // Set application name.
-  QCoreApplication::setApplicationName(APPLICATION_NAME);
 }

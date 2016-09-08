@@ -5,13 +5,21 @@
   <file>languages/fr.qm</file>
 
   <!-- UI. -->
-  <file>ui/components/Form/Collapse.qml</file>
-  <file>ui/components/Form/RoundButton.qml</file>
-  <file>ui/components/Form/ToolBarButton.qml</file>
+  <file>ui/components/form/Collapse.qml</file>
+  <file>ui/components/form/DialogButton.qml</file>
+  <file>ui/components/form/DialogComboBox.qml</file>
+  <file>ui/components/form/RoundButton.qml</file>
+  <file>ui/components/form/ToolBarButton.qml</file>
   <file>ui/views/main_window.qml</file>
+  <file>ui/views/manage_accounts.qml</file>
 
   <!-- Images. -->
   <file>imgs/collapse.svg</file>
+  <file>imgs/led_absent.svg</file>
+  <file>imgs/led_connected.svg</file>
+  <file>imgs/led_disconnected.svg</file>
+  <file>imgs/led_do_not_disturb.svg</file>
   <file>imgs/start_conference.svg</file>
+  <file>imgs/valid.svg</file>
 </qresource>
 </RCC>

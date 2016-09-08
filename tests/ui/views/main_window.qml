@@ -1,8 +1,8 @@
-import QtQuick 2.5
+import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import 'qrc:/ui/components/Form'
+import 'qrc:/ui/components/form'
 
 ApplicationWindow {
     header: ToolBar {
@@ -17,7 +17,7 @@ ApplicationWindow {
 
             // Collapse.
             Collapse {
-                image: '/imgs/collapse.svg'
+                image: 'qrc:/imgs/collapse.svg'
                 onCollapsed: {
                     mainWindow.height = collapsed ? 480 : 70
                 }
@@ -25,6 +25,15 @@ ApplicationWindow {
 
             // User info.
             // TODO
+
+            // User actions.
+            ToolBarButton {
+                onClicked: {
+                    var component = Qt.createComponent("qrc:/ui/views/manage_accounts.qml");
+                    var win = component.createObject(mainWindow);
+                    win.show();
+                }
+            }
 
             // Search.
             TextField {
@@ -42,12 +51,13 @@ ApplicationWindow {
 
             // Start conference.
             ToolBarButton {
-                image: '/imgs/start_conference.svg'
+                image: 'qrc:/imgs/start_conference.svg'
             }
         }
     }
     id: mainWindow
     minimumHeight: 70
     minimumWidth: 640
+    title: 'Linphone'
     visible: true
 }

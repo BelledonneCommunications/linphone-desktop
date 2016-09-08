@@ -6,11 +6,13 @@ TEMPLATE = app
 SOURCES = \
   src/app.cpp \
   src/main.cpp \
-  src/views/main_window.cpp
+  src/models/settings/AccountSettingsModel.cpp \
+  src/models/settings/SettingsModel.cpp
 
 HEADERS = \
   src/app.hpp \
-  src/views/main_window.hpp
+  src/models/settings/AccountSettingsModel.hpp \
+  src/models/settings/SettingsModel.hpp
 
 TRANSLATIONS = \
   languages/en.ts \
@@ -19,7 +21,7 @@ TRANSLATIONS = \
 lupdate_only{
   # Each component folder must be added explicitly.
   SOURCES = \
-    ui/components/Form/*.qml \
+    ui/components/form/*.qml \
     ui/views/*.qml
 }
 
