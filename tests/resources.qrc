@@ -5,6 +5,8 @@
   <file>languages/fr.qm</file>
 
   <!-- UI. -->
+  <file>ui/components/dialog/DialogDescription.qml</file>
+  <file>ui/components/dialog/DialogPlus.qml</file>
   <file>ui/components/form/Collapse.qml</file>
   <file>ui/components/form/DialogButton.qml</file>
   <file>ui/components/form/DialogComboBox.qml</file>

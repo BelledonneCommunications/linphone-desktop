@@ -5,7 +5,6 @@ Button {
     background: Rectangle {
         color: button.down ? '#FE5E00' : '#434343'
         implicitWidth: 120
-        implicitHeight: 30
         radius: 4
     }
     contentItem: Text {
