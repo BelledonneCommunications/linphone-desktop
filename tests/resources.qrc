@@ -12,8 +12,8 @@
   <file>ui/components/form/DialogComboBox.qml</file>
   <file>ui/components/form/RoundButton.qml</file>
   <file>ui/components/form/ToolBarButton.qml</file>
-  <file>ui/views/main_window.qml</file>
-  <file>ui/views/manage_accounts.qml</file>
+  <file>ui/views/mainWindow.qml</file>
+  <file>ui/views/manageAccounts.qml</file>
 
   <!-- Images. -->
   <file>imgs/collapse.svg</file>

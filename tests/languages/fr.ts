@@ -2,14 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
-    <name>main_window</name>
+    <name>mainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Chercher contact, commencer appel ou chat...</translation>
     </message>
 </context>
 <context>
-    <name>manage_accounts</name>
+    <name>manageAccounts</name>
     <message>
         <source>manageAccountsTitle</source>
         <translation>Présence et comptes</translation>
