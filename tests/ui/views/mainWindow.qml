@@ -36,8 +36,7 @@ ApplicationWindow {
                             console.debug('Error:' + component.errorString())
                         }
                     } else {
-                        var win = component.createObject(mainWindow);
-                        win.show();
+                        component.createObject(mainWindow).show()
                     }
                 }
             }

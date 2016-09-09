@@ -9,9 +9,9 @@
   <file>ui/components/dialog/DialogPlus.qml</file>
   <file>ui/components/form/Collapse.qml</file>
   <file>ui/components/form/DialogButton.qml</file>
-  <file>ui/components/form/DialogComboBox.qml</file>
   <file>ui/components/form/RoundButton.qml</file>
   <file>ui/components/form/ToolBarButton.qml</file>
+  <file>ui/components/form/TransparentComboBox.qml</file>
   <file>ui/views/mainWindow.qml</file>
   <file>ui/views/manageAccounts.qml</file>
 

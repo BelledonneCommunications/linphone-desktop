@@ -17,7 +17,6 @@ DialogPlus {
         text: qsTr('validate')
     }
 
-    // Accounts list.
     Item {
         id: listViewContainer
         anchors.fill: parent
@@ -136,7 +135,7 @@ DialogPlus {
                             Layout.fillHeight: parent.height
                             Layout.preferredWidth: 160
 
-                            DialogComboBox {
+                            TransparentComboBox {
                                 anchors.fill: parent
                                 model: ListModel {
                                     ListElement { key: qsTr('onlinePresence'); value: 1 }
