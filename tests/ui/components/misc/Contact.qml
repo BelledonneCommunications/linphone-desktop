@@ -27,23 +27,23 @@ Item {
             Layout.fillHeight: parent.height
             Layout.fillWidth: true
 
-            // Sip address.
+            // Username.
             Text {
                 clip: true
                 color: '#5A585B'
                 font.weight: Font.DemiBold
                 height: parent.height / 2
-                id: sipAddressText
+                id: usernameText
                 verticalAlignment: Text.AlignBottom
                 width: parent.width
             }
 
-            // Username.
+            // Sip address.
             Text {
                 clip: true
                 color: '#5A585B'
                 height: parent.height / 2
-                id: usernameText
+                id: sipAddressText
                 verticalAlignment: Text.AlignTop
                 width: parent.width
             }
