@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>SelectContact</name>
+    <message>
+        <source>contactSearch</source>
+        <translation>Rechercher un contact ou entrer une adresse SIP</translation>
+    </message>
+</context>
+<context>
     <name>mainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
@@ -61,6 +68,17 @@
     <message>
         <source>validate</source>
         <translation>VALIDER</translation>
+    </message>
+</context>
+<context>
+    <name>newCall</name>
+    <message>
+        <source>newCallTitle</source>
+        <translation>Nouvel appel</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation>ANNULER</translation>
     </message>
 </context>
 </TS>

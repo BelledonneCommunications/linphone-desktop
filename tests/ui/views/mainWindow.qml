@@ -29,7 +29,7 @@ ApplicationWindow {
             // User actions.
             ToolBarButton {
                 onClicked: {
-                    var component = Qt.createComponent('qrc:/ui/views/manageAccounts.qml');
+                    var component = Qt.createComponent('qrc:/ui/views/newCall.qml');
                     if (component.status !== Component.Ready) {
                         console.debug('Window not ready.')
                         if(component.status === Component.Error) {

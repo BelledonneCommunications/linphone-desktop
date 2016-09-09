@@ -2,14 +2,13 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 
+// ===================================================================
+
 Window {
-    default property alias contents: content.data
-
-    // Optionnal description text.
-    property alias descriptionText: description.text
-
-    // Required buttons.
-    property alias buttons: buttons.data
+    default property alias contents: content.data // Required.
+    property alias descriptionText: description.text // Optionnal.
+    property alias buttons: buttons.data // Required.
+    property bool centeredButtons // Optionnal.
 
     modality: Qt.WindowModal
 
@@ -33,10 +32,11 @@ Window {
         // Buttons.
         Item {
             Layout.fillWidth: true
-            height: 100
+            height: 60
 
             Row {
-                anchors.left: parent.left
+                anchors.left: (!centeredButtons && parent.left) || undefined
+                anchors.horizontalCenter: parent.horizontalCenter
                 anchors.leftMargin: 50
                 anchors.verticalCenter: parent.verticalCenter
                 height: 30

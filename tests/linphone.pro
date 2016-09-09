@@ -1,4 +1,4 @@
-QT = core gui quick widgets
+QT = core gui quick widgets quickcontrols2
 
 TARGET = linphone
 TEMPLATE = app
@@ -23,6 +23,8 @@ lupdate_only{
   SOURCES = \
     ui/components/dialog/*.qml \
     ui/components/form/*.qml \
+    ui/components/misc/*.qml \
+    ui/components/select/*.qml \
     ui/views/*.qml
 }
 

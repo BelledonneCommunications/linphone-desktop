@@ -1,10 +1,12 @@
 import QtQuick 2.7
 
+// ===================================================================
+
 Item {
     property alias text: description.text
     property alias fontSize: description.font.pointSize
 
-    height: 90
+    height: text ? 90 : 25
 
     Text {
         anchors.fill: parent
