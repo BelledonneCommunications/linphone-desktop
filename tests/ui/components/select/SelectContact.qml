@@ -50,50 +50,50 @@ Item {
             // TODO: Remove, use C++ model instead.
             model: ListModel {
                 ListElement {
-                    _presence: 'connected'
-                    _sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'connected'
+                    $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'connected'
-                    _sipAddress: 'toto.lala.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'connected'
+                    $sipAddress: 'toto.lala.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'disconnected'
-                    _sipAddress: 'machin.truc.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'disconnected'
+                    $sipAddress: 'machin.truc.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'absent'
-                    _sipAddress: 'hey.listen.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'absent'
+                    $sipAddress: 'hey.listen.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'do_not_disturb'
-                    _sipAddress: 'valentin.cognito.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'do$not$disturb'
+                    $sipAddress: 'valentin.cognito.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'do_not_disturb'
-                    _sipAddress: 'charles.henri.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'do$not$disturb'
+                    $sipAddress: 'charles.henri.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'disconnected'
-                    _sipAddress: 'yesyes.nono.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'disconnected'
+                    $sipAddress: 'yesyes.nono.sip.linphone.org'
+                    $username: 'Toto'
                 }
                 ListElement {
-                    _presence: 'connected'
-                    _sipAddress: 'nsa.sip.linphone.org'
-                    _username: 'Toto'
+                    $presence: 'connected'
+                    $sipAddress: 'nsa.sip.linphone.org'
+                    $username: 'Toto'
                 }
             }
 
             delegate: Contact {
-                sipAddress: _sipAddress
-                username: _username
+                sipAddress: $sipAddress
+                username: $username
                 width: parent.width
             }
         }

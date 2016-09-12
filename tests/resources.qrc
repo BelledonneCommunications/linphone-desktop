@@ -9,14 +9,14 @@
   <file>ui/components/dialog/DialogPlus.qml</file>
   <file>ui/components/form/Collapse.qml</file>
   <file>ui/components/form/DialogButton.qml</file>
-  <file>ui/components/form/RoundButton.qml</file>
   <file>ui/components/form/ToolBarButton.qml</file>
   <file>ui/components/form/TransparentComboBox.qml</file>
   <file>ui/components/misc/Contact.qml</file>
+  <file>ui/components/misc/MenuEntry.qml</file>
   <file>ui/components/select/SelectContact.qml</file>
 
   <!-- UI: Views. -->
-  <file>ui/views/mainWindow.qml</file>
+  <file>ui/views/home/home.qml</file>
   <file>ui/views/manageAccounts.qml</file>
   <file>ui/views/newCall.qml</file>
 

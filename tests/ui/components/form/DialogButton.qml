@@ -1,6 +1,8 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+// ===================================================================
+
 Button {
     background: Rectangle {
         color: button.down ? '#FE5E00' : '#434343'

@@ -6,8 +6,8 @@ import QtQuick.Window 2.2
 
 Window {
     default property alias contents: content.data // Required.
-    property alias descriptionText: description.text // Optionnal.
     property alias buttons: buttons.data // Required.
+    property alias descriptionText: description.text // Optionnal.
     property bool centeredButtons // Optionnal.
 
     modality: Qt.WindowModal

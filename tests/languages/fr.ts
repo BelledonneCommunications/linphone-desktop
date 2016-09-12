@@ -9,10 +9,18 @@
     </message>
 </context>
 <context>
-    <name>mainWindow</name>
+    <name>home</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Chercher contact, commencer appel ou chat...</translation>
+    </message>
+    <message>
+        <source>homeEntry</source>
+        <translation>Accueil</translation>
+    </message>
+    <message>
+        <source>contactsEntry</source>
+        <translation>Contacts</translation>
     </message>
 </context>
 <context>

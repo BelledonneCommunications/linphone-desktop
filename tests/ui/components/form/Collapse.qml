@@ -1,17 +1,13 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+// ===================================================================
+
 Item {
     property bool enabled: false
     property alias image: backgroundImage.source
 
     signal collapsed (bool collapsed)
-
-    id: collapse
-
-    // Default.
-    height: 50
-    width: 50
 
     function updateCollapse () {
         enabled = !enabled
