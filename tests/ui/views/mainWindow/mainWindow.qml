@@ -24,7 +24,7 @@ ApplicationWindow {
                 Layout.fillHeight: parent.height
                 image: 'qrc:/imgs/collapse.svg'
                 onCollapsed: {
-                    mainWindow.height = collapsed ? 480 : 70
+                    mainWindow.height = collapsed ? 500 : 70
                 }
             }
 
@@ -95,7 +95,7 @@ ApplicationWindow {
     }
     id: mainWindow
     minimumHeight: 70
-    minimumWidth: 640
+    minimumWidth: 780
     title: 'Linphone'
     visible: true
 
@@ -123,11 +123,13 @@ ApplicationWindow {
                 entryName: qsTr('contactsEntry')
             }
 
-            Rectangle {
+            // History.
+            Item {
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width
             }
 
+            // Logo.
             Rectangle {
                 Layout.preferredWidth: 250
                 Layout.preferredHeight: 70
@@ -136,10 +138,10 @@ ApplicationWindow {
         }
 
         // Main content.
-        Rectangle {
+        Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            color: 'blue'
+            source: 'qrc:/ui/views/mainWindow/home.qml'
         }
     }
 }

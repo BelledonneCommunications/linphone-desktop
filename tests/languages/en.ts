@@ -11,6 +11,29 @@
 <context>
     <name>home</name>
     <message>
+        <source>displayTooltip</source>
+        <translation>Display tooltips to discover Linphone Desktop</translation>
+    </message>
+    <message>
+        <source>invitContactQuestion</source>
+        <translation>Are your friends already know Linphone?</translation>
+    </message>
+    <message>
+        <source>invitContact</source>
+        <translation>INVIT YOUR FRIENDS</translation>
+    </message>
+    <message>
+        <source>addContactQuestion</source>
+        <translation>Quickly add your contacts in your notebook.</translation>
+    </message>
+    <message>
+        <source>addContact</source>
+        <translation>ADD CONTACTS</translation>
+    </message>
+</context>
+<context>
+    <name>mainWindow</name>
+    <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Search contact, start call, start chat...</translation>
     </message>

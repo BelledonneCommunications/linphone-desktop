@@ -11,6 +11,29 @@
 <context>
     <name>home</name>
     <message>
+        <source>displayTooltip</source>
+        <translation>Afficher les tooltips pour découvrir Linphone Desktop</translation>
+    </message>
+    <message>
+        <source>invitContactQuestion</source>
+        <translation>Vos amis connaissent-ils déjà Linphone ?</translation>
+    </message>
+    <message>
+        <source>invitContact</source>
+        <translation>INVITER VOS AMIS</translation>
+    </message>
+    <message>
+        <source>addContactQuestion</source>
+        <translation>Ajouter vos contacts dans votre carnet d&apos;adresses.</translation>
+    </message>
+    <message>
+        <source>addContact</source>
+        <translation>AJOUTER CONTACTS</translation>
+    </message>
+</context>
+<context>
+    <name>mainWindow</name>
+    <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Chercher contact, commencer appel ou chat...</translation>
     </message>

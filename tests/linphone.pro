@@ -26,7 +26,7 @@ lupdate_only{
     ui/components/misc/*.qml \
     ui/components/select/*.qml \
     ui/views/*.qml \
-    ui/views/home/*.qml
+    ui/views/mainWindow/*.qml
 }
 
 RESOURCES += \
