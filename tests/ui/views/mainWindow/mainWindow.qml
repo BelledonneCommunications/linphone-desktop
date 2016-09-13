@@ -142,7 +142,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/searchContact.qml'
+            source: 'qrc:/ui/views/mainWindow/contacts.qml'
         }
     }
 }

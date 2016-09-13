@@ -4,8 +4,9 @@ import QtGraphicalEffects 1.0
 // ===================================================================
 
 Item {
-    property string username
     property alias image: imageToFilter.source
+    property string presence
+    property string username
 
     Rectangle {
         anchors.fill: parent
@@ -14,6 +15,7 @@ Item {
         radius: 20
     }
 
+    // Initials.
     Text {
         anchors.centerIn: parent
         color: '#FFFFFF'
@@ -39,9 +41,27 @@ Item {
         visible: false
     }
 
+    // Avatar.
     OpacityMask {
         anchors.fill: imageToFilter
         source: imageToFilter
         maskSource: avatar
+    }
+
+    // Presence.
+    Image {
+        anchors.bottom: parent.bottom
+        anchors.right: parent.right
+        fillMode: Image.PreserveAspectFit
+        height: parent.height/ 3
+        id: presenceImage
+        source: (function () {
+            if (!presence) {
+                return ''
+            }
+
+            return 'qrc:/imgs/led_' + presence + '.svg'
+        })()
+        width: parent.width / 3
     }
 }

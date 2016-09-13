@@ -22,9 +22,9 @@
   <file>ui/components/select/SelectContact.qml</file>
 
   <!-- UI: Views. -->
+  <file>ui/views/mainWindow/contacts.qml</file>
   <file>ui/views/mainWindow/home.qml</file>
   <file>ui/views/mainWindow/mainWindow.qml</file>
-  <file>ui/views/mainWindow/searchContact.qml</file>
   <file>ui/views/manageAccounts.qml</file>
   <file>ui/views/newCall.qml</file>
 
