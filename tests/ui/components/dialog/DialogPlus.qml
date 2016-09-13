@@ -3,11 +3,14 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 
 // ===================================================================
+// Helper to build quickly dialogs.
+// ===================================================================
 
 Window {
     default property alias contents: content.data // Required.
     property alias buttons: buttons.data // Required.
     property alias descriptionText: description.text // Optionnal.
+
     property bool centeredButtons // Optionnal.
 
     modality: Qt.WindowModal

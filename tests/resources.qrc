@@ -5,20 +5,26 @@
   <file>languages/fr.qm</file>
 
   <!-- UI: Components. -->
+  <file>ui/components/collapse/Collapse.qml</file>
+  <file>ui/components/contact/Avatar.qml</file>
   <file>ui/components/dialog/DialogDescription.qml</file>
   <file>ui/components/dialog/DialogPlus.qml</file>
-  <file>ui/components/form/Collapse.qml</file>
-  <file>ui/components/form/DialogButton.qml</file>
+  <file>ui/components/form/DarkButton.qml</file>
   <file>ui/components/form/DialogCheckBox.qml</file>
+  <file>ui/components/form/ExclusiveButtons.qml</file>
+  <file>ui/components/form/LightButton.qml</file>
+  <file>ui/components/form/SmallButton.qml</file>
   <file>ui/components/form/ToolBarButton.qml</file>
   <file>ui/components/form/TransparentComboBox.qml</file>
   <file>ui/components/misc/Contact.qml</file>
   <file>ui/components/misc/MenuEntry.qml</file>
+  <file>ui/components/scrollBar/ForceScrollBar.qml</file>
   <file>ui/components/select/SelectContact.qml</file>
 
   <!-- UI: Views. -->
   <file>ui/views/mainWindow/home.qml</file>
   <file>ui/views/mainWindow/mainWindow.qml</file>
+  <file>ui/views/mainWindow/searchContact.qml</file>
   <file>ui/views/manageAccounts.qml</file>
   <file>ui/views/newCall.qml</file>
 

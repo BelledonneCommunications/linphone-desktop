@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/dialog'
 import 'qrc:/ui/components/form'
+import 'qrc:/ui/components/scrollBar'
 
 DialogPlus {
     descriptionText: qsTr('manageAccountsDescription')
@@ -11,7 +12,7 @@ DialogPlus {
     minimumWidth: 480
     title: qsTr('manageAccountsTitle')
 
-    buttons: DialogButton {
+    buttons: DarkButton {
         text: qsTr('validate')
     }
 
@@ -20,6 +21,7 @@ DialogPlus {
         anchors.fill: parent
 
         ListView {
+            ScrollBar.vertical: ForceScrollBar { }
             anchors.fill: parent
             boundsBehavior: Flickable.StopAtBounds
             clip: true

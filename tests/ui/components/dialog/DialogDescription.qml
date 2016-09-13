@@ -1,6 +1,8 @@
 import QtQuick 2.7
 
 // ===================================================================
+// Description content used by dialogs.
+// ===================================================================
 
 Item {
     property alias fontSize: description.font.pointSize

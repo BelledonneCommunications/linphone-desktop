@@ -21,6 +21,8 @@ TRANSLATIONS = \
 lupdate_only{
   # Each component folder must be added explicitly.
   SOURCES = \
+    ui/components/collapse/*.qml \
+    ui/components/contact/*.qml \
     ui/components/dialog/*.qml \
     ui/components/form/*.qml \
     ui/components/misc/*.qml \

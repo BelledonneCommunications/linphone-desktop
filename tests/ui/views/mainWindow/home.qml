@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/form'
 
-// ===================================================================
-
 ColumnLayout {
     spacing: 0
 
@@ -32,10 +30,8 @@ ColumnLayout {
                         font.pointSize: 11
                     }
 
-                    DialogButton {
-                        backgroundColor: '#D1D1D1'
+                    LightButton {
                         text: qsTr('invitContact')
-                        textColor: '#5A585B'
                     }
                 }
 
@@ -50,10 +46,8 @@ ColumnLayout {
                         font.pointSize: 11
                     }
 
-                    DialogButton {
-                        backgroundColor: '#D1D1D1'
+                    LightButton {
                         text: qsTr('addContact')
-                        textColor: '#5A585B'
                     }
                 }
             }

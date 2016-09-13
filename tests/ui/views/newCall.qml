@@ -11,7 +11,7 @@ DialogPlus {
     minimumWidth: 420
     title: qsTr('newCallTitle')
 
-    buttons: DialogButton {
+    buttons: DarkButton {
         text: qsTr('cancel')
     }
 

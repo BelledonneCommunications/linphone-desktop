@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import 'qrc:/ui/components/collapse'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/misc'
 
@@ -59,7 +60,7 @@ ApplicationWindow {
             // User actions.
             ToolBarButton {
                 onClicked: {
-                    var component = Qt.createComponent('qrc:/ui/views/newCall.qml');
+                    var component = Qt.createComponent('qrc:/ui/views/manageAccounts.qml');
                     if (component.status !== Component.Ready) {
                         console.debug('Window not ready.')
                         if(component.status === Component.Error) {
@@ -141,7 +142,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/home.qml'
+            source: 'qrc:/ui/views/mainWindow/searchContact.qml'
         }
     }
 }

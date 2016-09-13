@@ -112,4 +112,23 @@
         <translation>ANNULER</translation>
     </message>
 </context>
+<context>
+    <name>searchContact</name>
+    <message>
+        <source>searchContactPlaceholder</source>
+        <translation>Rechercher contact</translation>
+    </message>
+    <message>
+        <source>selectAllContacts</source>
+        <translation>Tous</translation>
+    </message>
+    <message>
+        <source>selectConnectedContacts</source>
+        <translation>Connectés</translation>
+    </message>
+    <message>
+        <source>addContact</source>
+        <translation>AJOUTER CONTACT</translation>
+    </message>
+</context>
 </TS>
