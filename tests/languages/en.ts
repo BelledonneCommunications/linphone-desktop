@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>DropZone</name>
+    <message>
+        <source>fileChooserTitle</source>
+        <translation>Please choose one or many files</translation>
+    </message>
+</context>
+<context>
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>

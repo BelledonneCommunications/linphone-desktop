@@ -6,7 +6,7 @@ Row {
     property int selectedButton: 0
     property variant texts
 
-    signal buttonChanged (int button)
+    signal clicked (int button)
 
     spacing: 8
 
@@ -26,7 +26,7 @@ Row {
             onClicked: {
                 if (selectedButton !== index) {
                     selectedButton = index
-                    buttonChanged(index)
+                    clicked(index)
                 }
             }
         }

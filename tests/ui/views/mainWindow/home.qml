@@ -59,7 +59,7 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.preferredHeight: 70
 
-        DialogCheckBox {
+        CheckBoxText {
             anchors.left: parent.left
             anchors.leftMargin: 50
             anchors.verticalCenter: parent.verticalCenter

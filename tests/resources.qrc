@@ -11,7 +11,8 @@
   <file>ui/components/dialog/DialogDescription.qml</file>
   <file>ui/components/dialog/DialogPlus.qml</file>
   <file>ui/components/form/DarkButton.qml</file>
-  <file>ui/components/form/DialogCheckBox.qml</file>
+  <file>ui/components/form/CheckBoxText.qml</file>
+  <file>ui/components/form/DropZone.qml</file>
   <file>ui/components/form/ExclusiveButtons.qml</file>
   <file>ui/components/form/LightButton.qml</file>
   <file>ui/components/form/SmallButton.qml</file>

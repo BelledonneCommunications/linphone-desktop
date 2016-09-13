@@ -19,7 +19,7 @@ Item {
     Text {
         anchors.centerIn: parent
         color: '#FFFFFF'
-        text: (function () {
+        text: {
             var spaceIndex = username.indexOf(' ')
             var firstLetter = username.charAt(0)
 
@@ -28,7 +28,7 @@ Item {
             }
 
             return firstLetter + username.charAt(spaceIndex + 1)
-        })()
+        }
     }
 
     Image {

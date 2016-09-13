@@ -130,6 +130,7 @@ ColumnLayout  {
         }
     }
 
+    // Send area.
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 70
@@ -140,7 +141,6 @@ ColumnLayout  {
         RowLayout {
             anchors.fill: parent
 
-            // Message to send.
             Flickable {
                 Layout.preferredHeight: parent.height
                 Layout.fillWidth: true
@@ -151,24 +151,9 @@ ColumnLayout  {
                 }
             }
 
-            // DropArea.
-            Rectangle {
+            DropZone {
                 Layout.preferredHeight: parent.height - newMessageArea.border.width * 2
                 Layout.preferredWidth: 40
-                color: '#DDDDDD'
-
-                DropArea {
-                    anchors.fill: parent
-                }
-
-                Image {
-                    anchors.right: parent.right
-                    anchors.top: parent.top
-                    fillMode: Image.PreserveAspectFit
-                    height: parent.height
-                    source: 'qrc:/imgs/chat_attachment.svg'
-                    width: parent.width
-                }
             }
         }
     }
