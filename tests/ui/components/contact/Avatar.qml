@@ -12,7 +12,7 @@ Item {
         anchors.fill: parent
         color: '#8F8F8F'
         id: avatar
-        radius: 20
+        radius: 50
     }
 
     // Initials.

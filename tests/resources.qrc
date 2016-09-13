@@ -7,6 +7,7 @@
   <!-- UI: Components. -->
   <file>ui/components/collapse/Collapse.qml</file>
   <file>ui/components/contact/Avatar.qml</file>
+  <file>ui/components/contact/ShortContactDescription.qml</file>
   <file>ui/components/dialog/DialogDescription.qml</file>
   <file>ui/components/dialog/DialogPlus.qml</file>
   <file>ui/components/form/DarkButton.qml</file>
@@ -23,6 +24,7 @@
 
   <!-- UI: Views. -->
   <file>ui/views/mainWindow/contacts.qml</file>
+  <file>ui/views/mainWindow/conversation.qml</file>
   <file>ui/views/mainWindow/home.qml</file>
   <file>ui/views/mainWindow/mainWindow.qml</file>
   <file>ui/views/manageAccounts.qml</file>
@@ -31,12 +33,13 @@
   <!-- Images. -->
   <file>imgs/avatar.svg</file>
   <file>imgs/camera.svg</file>
-  <file>imgs/phone.svg</file>
+  <file>imgs/chat_attachment.svg</file>
   <file>imgs/collapse.svg</file>
   <file>imgs/led_absent.svg</file>
   <file>imgs/led_connected.svg</file>
   <file>imgs/led_disconnected.svg</file>
   <file>imgs/led_do_not_disturb.svg</file>
+  <file>imgs/phone.svg</file>
   <file>imgs/start_conference.svg</file>
   <file>imgs/valid.svg</file>
 </qresource>

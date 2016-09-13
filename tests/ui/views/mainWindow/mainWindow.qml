@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/collapse'
+import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/misc'
 
@@ -30,31 +31,11 @@ ApplicationWindow {
             }
 
             // User info.
-            Column {
-                Layout.preferredWidth: 200
+            ShortContactDescription {
                 Layout.fillHeight: parent.height
-
-                // Username.
-                Text {
-                    clip: true
-                    color: '#5A585B'
-                    font.weight: Font.DemiBold
-                    height: parent.height / 2
-                    font.pointSize: 11
-                    text: 'Edward Miller'
-                    verticalAlignment: Text.AlignBottom
-                    width: parent.width
-                }
-
-                // Sip address.
-                Text {
-                    clip: true
-                    color: '#5A585B'
-                    height: parent.height / 2
-                    text: 'e.miller@sip-linphone.org'
-                    verticalAlignment: Text.AlignTop
-                    width: parent.width
-                }
+                Layout.preferredWidth: 200
+                sipAddress: 'e.miller@sip-linphone.org'
+                username: 'Edward Miller'
             }
 
             // User actions.
@@ -142,7 +123,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/contacts.qml'
+            source: 'qrc:/ui/views/mainWindow/conversation.qml'
         }
     }
 }

@@ -28,6 +28,21 @@
     </message>
 </context>
 <context>
+    <name>conversation</name>
+    <message>
+        <source>displayCallsAndMessages</source>
+        <translation>All</translation>
+    </message>
+    <message>
+        <source>displayCalls</source>
+        <translation>Calls</translation>
+    </message>
+    <message>
+        <source>displayMessages</source>
+        <translation>Messages</translation>
+    </message>
+</context>
+<context>
     <name>home</name>
     <message>
         <source>displayTooltip</source>
