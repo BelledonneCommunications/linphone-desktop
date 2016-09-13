@@ -48,6 +48,10 @@
         <source>displayMessages</source>
         <translation>Messages</translation>
     </message>
+    <message>
+        <source>newMessagePlaceholder</source>
+        <translation>Entrer votre message.</translation>
+    </message>
 </context>
 <context>
     <name>home</name>

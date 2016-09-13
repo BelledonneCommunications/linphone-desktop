@@ -147,6 +147,7 @@ ColumnLayout  {
                 ScrollBar.vertical: ScrollBar { }
                 TextArea.flickable: TextArea {
                     id: textArea
+                    placeholderText: qsTr('newMessagePlaceholder')
                     wrapMode: TextArea.Wrap
                 }
             }
