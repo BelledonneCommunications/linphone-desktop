@@ -35,8 +35,10 @@ ColumnLayout {
 
             ExclusiveButtons {
                 Layout.preferredHeight: parent.height
-                text1: qsTr('selectAllContacts')
-                text2: qsTr('selectConnectedContacts')
+                texts: [
+                    qsTr('selectAllContacts'),
+                    qsTr('selectConnectedContacts')
+                ]
             }
 
             LightButton {
