@@ -1,14 +1,22 @@
 import QtQuick 2.7
+import QtGraphicalEffects 1.0
 
-Rectangle {
+// ===================================================================
+
+Item {
     property string username
-    property string image
+    property alias image: imageToFilter.source
 
-    color: '#8F8F8F'
-    radius: 20
+    Rectangle {
+        anchors.fill: parent
+        color: '#8F8F8F'
+        id: avatar
+        radius: 20
+    }
 
     Text {
         anchors.centerIn: parent
+        color: '#FFFFFF'
         text: (function () {
             var spaceIndex = username.indexOf(' ')
             var firstLetter = username.charAt(0)
@@ -19,6 +27,21 @@ Rectangle {
 
             return firstLetter + username.charAt(spaceIndex + 1)
         })()
-        color: '#FFFFFF'
+    }
+
+    Image {
+        anchors.fill: parent
+        id: imageToFilter
+        fillMode: Image.PreserveAspectFit
+
+        // Image must be invisible.
+        // The only visible image is the OpacityMask!
+        visible: false
+    }
+
+    OpacityMask {
+        anchors.fill: imageToFilter
+        source: imageToFilter
+        maskSource: avatar
     }
 }

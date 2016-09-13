@@ -119,6 +119,11 @@ ColumnLayout {
                 }
                 ListElement {
                     $image: ''
+                    $presence: 'disconnected'
+                    $username: 'Toto'
+                }
+                ListElement {
+                    $image: ''
                     $presence: 'absent'
                     $username: 'Daniel Elliott'
                 }
