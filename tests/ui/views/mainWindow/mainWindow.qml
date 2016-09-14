@@ -7,19 +7,9 @@ import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/misc'
 
-ApplicationWindow {
-    function openWindow (name) {
-        var component = Qt.createComponent('qrc:/ui/views/' + name + '.qml');
-        if (component.status !== Component.Ready) {
-            console.debug('Window not ready.')
-            if(component.status === Component.Error) {
-                console.debug('Error:' + component.errorString())
-            }
-        } else {
-            component.createObject(mainWindow).show()
-        }
-    }
+import 'qrc:/ui/scripts/utils.js' as Utils
 
+ApplicationWindow {
     id: mainWindow
     minimumHeight: 70
     minimumWidth: 780
@@ -57,11 +47,11 @@ ApplicationWindow {
 
             // User actions.
             ActionButton {
-                onClicked: openWindow('manageAccounts')
+                onClicked: Utils.openWindow('manageAccounts', mainWindow)
             }
 
             ActionButton {
-                onClicked: openWindow('newCall')
+                onClicked: Utils.openWindow('newCall', mainWindow)
             }
 
             // Search.

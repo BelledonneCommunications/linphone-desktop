@@ -7,7 +7,7 @@ for filename in $(find languages/ ui/ imgs/ -type f)
 do
     extension="${filename##*.}"
 
-    if [[ "${extension}" == @(qml|svg|qm) ]]; then
+    if [[ "${extension}" == @(qml|svg|qm|js) ]]; then
         echo "    <file>$filename</file>"
     fi
 done
