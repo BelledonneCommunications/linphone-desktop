@@ -1,0 +1,16 @@
+#!/usr/bin/bash
+
+echo "<!DOCTYPE RCC><RCC version=\"1.0\">"
+echo "  <qresource prefix=\"/\">"
+
+for filename in $(find languages/ ui/ imgs/ -type f)
+do
+    extension="${filename##*.}"
+
+    if [[ "${extension}" == @(qml|svg|qm) ]]; then
+        echo "    <file>$filename</file>"
+    fi
+done
+
+echo "  </qresource>"
+echo "</RCC>"
