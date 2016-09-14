@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtGraphicalEffects 1.0
+import QtGraphicalEffects 1.0 // OpacityMask.
 
 // ===================================================================
 
@@ -44,8 +44,8 @@ Item {
     // Avatar.
     OpacityMask {
         anchors.fill: imageToFilter
-        source: imageToFilter
         maskSource: avatar
+        source: imageToFilter
     }
 
     // Presence.
@@ -55,13 +55,9 @@ Item {
         fillMode: Image.PreserveAspectFit
         height: parent.height/ 3
         id: presenceImage
-        source: (function () {
-            if (!presence) {
-                return ''
-            }
-
-            return 'qrc:/imgs/led_' + presence + '.svg'
-        })()
+        source: presence
+            ? 'qrc:/imgs/led_' + presence + '.svg'
+            : ''
         width: parent.width / 3
     }
 }

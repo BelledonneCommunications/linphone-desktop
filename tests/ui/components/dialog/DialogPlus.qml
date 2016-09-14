@@ -7,7 +7,7 @@ import QtQuick.Window 2.2
 // ===================================================================
 
 Window {
-    default property alias contents: content.data // Required.
+    default property alias content: content.data // Required.
     property alias buttons: buttons.data // Required.
     property alias descriptionText: description.text // Optionnal.
 

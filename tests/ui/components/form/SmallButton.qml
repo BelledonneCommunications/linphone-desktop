@@ -7,7 +7,12 @@ Button {
     property alias backgroundColor: background.color
 
     background: Rectangle {
-        color: button.down ? '#FE5E00' : '#8E8E8E'
+        color: button.down
+            ? '#FE5E00'
+            : (button.hovered
+               ? '#C0C0C0'
+               : '#D1D1D1'
+              )
         id: background
         implicitHeight: 22
         radius: 10
@@ -20,5 +25,6 @@ Button {
         text: button.text
         verticalAlignment: Text.AlignVCenter
     }
+    hoverEnabled: true
     id: button
 }

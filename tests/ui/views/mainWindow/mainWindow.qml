@@ -8,6 +8,24 @@ import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/misc'
 
 ApplicationWindow {
+    function openWindow (name) {
+        var component = Qt.createComponent('qrc:/ui/views/' + name + '.qml');
+        if (component.status !== Component.Ready) {
+            console.debug('Window not ready.')
+            if(component.status === Component.Error) {
+                console.debug('Error:' + component.errorString())
+            }
+        } else {
+            component.createObject(mainWindow).show()
+        }
+    }
+
+    id: mainWindow
+    minimumHeight: 70
+    minimumWidth: 780
+    title: 'Linphone'
+    visible: true
+
     header: ToolBar {
         background: Rectangle {
             color: '#EAEAEA'
@@ -24,7 +42,6 @@ ApplicationWindow {
             Collapse {
                 Layout.preferredWidth: 25
                 Layout.fillHeight: parent.height
-                image: 'qrc:/imgs/collapse.svg'
                 onCollapsed: {
                     mainWindow.height = collapsed ? 500 : 70
                 }
@@ -39,18 +56,12 @@ ApplicationWindow {
             }
 
             // User actions.
-            ToolBarButton {
-                onClicked: {
-                    var component = Qt.createComponent('qrc:/ui/views/manageAccounts.qml');
-                    if (component.status !== Component.Ready) {
-                        console.debug('Window not ready.')
-                        if(component.status === Component.Error) {
-                            console.debug('Error:' + component.errorString())
-                        }
-                    } else {
-                        component.createObject(mainWindow).show()
-                    }
-                }
+            ActionButton {
+                onClicked: openWindow('manageAccounts')
+            }
+
+            ActionButton {
+                onClicked: openWindow('newCall')
             }
 
             // Search.
@@ -68,18 +79,13 @@ ApplicationWindow {
             }
 
             // Start conference.
-            ToolBarButton {
-                Layout.fillHeight: parent.height
+            ActionButton {
                 Layout.preferredWidth: 32
-                image: 'qrc:/imgs/start_conference.svg'
+                Layout.preferredHeight: 32
+                icon: 'conference'
             }
         }
     }
-    id: mainWindow
-    minimumHeight: 70
-    minimumWidth: 780
-    title: 'Linphone'
-    visible: true
 
     RowLayout {
         anchors.fill: parent
@@ -123,7 +129,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/conversation.qml'
+            source: 'qrc:/ui/views/mainWindow/contacts.qml'
         }
     }
 }

@@ -13,6 +13,7 @@ Rectangle {
         spacing: 10
 
         Image {
+            fillMode: Image.PreserveAspectFit
             height: parent.height
             width: 30
         }
@@ -26,6 +27,7 @@ Rectangle {
         }
 
         Image {
+            fillMode: Image.PreserveAspectFit
             height: parent.height
         }
     }

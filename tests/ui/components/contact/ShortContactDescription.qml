@@ -3,8 +3,8 @@ import QtQuick 2.7
 // ===================================================================
 
 Column {
-    property string sipAddress
-    property string username
+    property alias sipAddress: sipAddress.text
+    property alias username: username.text
 
     // Username.
     Text {
@@ -13,7 +13,7 @@ Column {
         font.pointSize: 11
         font.weight: Font.DemiBold
         height: parent.height / 2
-        text: username
+        id: username
         verticalAlignment: Text.AlignBottom
         width: parent.width
     }
@@ -23,7 +23,7 @@ Column {
         clip: true
         color: '#5A585B'
         height: parent.height / 2
-        text: sipAddress
+        id: sipAddress
         verticalAlignment: Text.AlignTop
         width: parent.width
     }

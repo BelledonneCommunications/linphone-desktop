@@ -5,7 +5,6 @@ import QtQuick 2.7
 // ===================================================================
 
 Item {
-    property alias fontSize: description.font.pointSize
     property alias text: description.text
 
     height: text ? 90 : 25

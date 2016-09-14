@@ -4,7 +4,6 @@ import QtQuick 2.7
 
 Item {
     property bool enabled: false
-    property alias image: backgroundImage.source
 
     signal collapsed (bool collapsed)
 
@@ -18,6 +17,7 @@ Item {
         anchors.fill: parent
         fillMode: Image.PreserveAspectFit
         id: backgroundImage
+        source: 'qrc:/imgs/collapse.svg'
 
         MouseArea {
             anchors.fill: parent

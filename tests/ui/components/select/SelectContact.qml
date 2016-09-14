@@ -2,12 +2,13 @@ import QtGraphicalEffects 1.0
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import 'qrc:/ui/components/misc'
+import 'qrc:/ui/components/contact'
+import 'qrc:/ui/components/form'
 
 // TODO: Contacts list.
 Item {
     function setPopupVisibility (visibility) {
-        popup.visible = popupShadow.visible = visibility
+        popup.visible = true
     }
 
     function filterContacts (text) {
@@ -92,9 +93,22 @@ Item {
             }
 
             delegate: Contact {
+                presence: $presence
                 sipAddress: $sipAddress
                 username: $username
                 width: parent.width
+
+                actions: [
+                    ActionButton {
+                        icon: 'call'
+                        onClicked: console.log('clicked')
+                    },
+
+                    ActionButton {
+                        icon: 'cam'
+                        onClicked: console.log('cam clicked')
+                    }
+                ]
             }
         }
     }

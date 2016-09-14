@@ -6,6 +6,14 @@ import QtQuick.Controls 2.0
 // ===================================================================
 
 CheckBox {
+    contentItem: Text {
+        color: checkBox.down ? '#FE5E00' : '#8E8E8E'
+        font: checkBox.font
+        horizontalAlignment: Text.AlignHCenter
+        leftPadding: checkBox.indicator.width + checkBox.spacing
+        text: checkBox.text
+        verticalAlignment: Text.AlignVCenter
+    }
     id: checkBox
     indicator: Rectangle {
         border.color: checkBox.down ? '#FE5E00' : '#8E8E8E'
@@ -24,13 +32,5 @@ CheckBox {
             x: 4
             y: 4
         }
-    }
-    contentItem: Text {
-        color: checkBox.down ? '#FE5E00' : '#8E8E8E'
-        font: checkBox.font
-        horizontalAlignment: Text.AlignHCenter
-        leftPadding: checkBox.indicator.width + checkBox.spacing
-        text: checkBox.text
-        verticalAlignment: Text.AlignVCenter
     }
 }

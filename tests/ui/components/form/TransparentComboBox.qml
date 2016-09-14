@@ -14,11 +14,10 @@ ComboBox {
         background: Rectangle {
             color: delegate.down
                 ? '#FE5E00'
-                : (
-                    comboBox.currentIndex === index
-                        ? '#F0F0F0'
-                        : '#FFFFFF'
-                )
+                : (comboBox.currentIndex === index
+                   ? '#F0F0F0'
+                   : '#FFFFFF'
+                  )
             opacity: enabled ? 1 : 0.3
         }
         font.weight: comboBox.currentIndex === index

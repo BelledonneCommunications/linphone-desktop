@@ -17,7 +17,6 @@ DialogPlus {
     }
 
     Item {
-        id: listViewContainer
         anchors.fill: parent
 
         ListView {

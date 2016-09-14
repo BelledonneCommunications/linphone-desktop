@@ -48,40 +48,34 @@ ColumnLayout  {
                     height: parent.height * 0.40
                     width: parent.width
 
-                    Row {
-                        height: parent.height
-                        spacing: 10
+                    ActionBar {
+                        iconSize: 32
                         width: parent.width / 2
 
-                        Rectangle {
-                            color: 'blue'
-                            width: 32
-                            height: 32
+                        ActionButton {
+                            icon: 'cam'
+                            onClicked: console.log('clicked!!!')
                         }
 
-                        Rectangle {
-                            color: 'red'
-                            width: 32
-                            height: 32
+                        ActionButton {
+                            icon: 'call'
+                            onClicked: console.log('clicked!!!')
                         }
                     }
 
-                    Row {
-                        height: parent.height
+                    ActionBar {
+                        iconSize: 32
                         layoutDirection: Qt.RightToLeft
-                        spacing: 10
                         width: parent.width / 2
 
-                        Rectangle {
-                            color: 'green'
-                            width: 32
-                            height: 32
+                        ActionButton {
+                            icon: 'delete'
+                            onClicked: console.log('clicked!!!')
                         }
 
-                        Rectangle {
-                            color: 'orange'
-                            width: 32
-                            height: 32
+                        ActionButton {
+                            icon: 'contact'
+                            onClicked: console.log('clicked!!!')
                         }
                     }
                 }
