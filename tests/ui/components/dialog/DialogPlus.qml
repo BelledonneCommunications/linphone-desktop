@@ -10,7 +10,6 @@ Window {
     default property alias content: content.data // Required.
     property alias buttons: buttons.data // Required.
     property alias descriptionText: description.text // Optionnal.
-
     property bool centeredButtons // Optionnal.
 
     modality: Qt.WindowModal

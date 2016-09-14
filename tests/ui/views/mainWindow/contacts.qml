@@ -26,15 +26,14 @@ ColumnLayout {
 
             TextField {
                 Layout.fillWidth: true
-                Layout.preferredHeight: parent.height
                 background: Rectangle {
                     color: '#EAEAEA'
+                    implicitHeight: 30
                 }
                 placeholderText: qsTr('searchContactPlaceholder')
             }
 
             ExclusiveButtons {
-                Layout.preferredHeight: parent.height
                 texts: [
                     qsTr('selectAllContacts'),
                     qsTr('selectConnectedContacts')
@@ -42,7 +41,6 @@ ColumnLayout {
             }
 
             LightButton {
-                Layout.preferredHeight: parent.height
                 text: qsTr('addContact')
             }
         }
@@ -156,6 +154,13 @@ ColumnLayout {
                 id: contact
                 width: parent.width
 
+                MouseArea {
+                    anchors.fill: parent
+                    hoverEnabled: true
+                    onEntered: contact.state = 'hover'
+                    onExited: contact.state = ''
+                }
+
                 Item {
                     anchors.verticalCenter: parent.verticalCenter
                     height: 30
@@ -199,24 +204,46 @@ ColumnLayout {
                                 font.weight: Font.DemiBold
                                 text: $username
                                 verticalAlignment: Text.AlignVCenter
-
-                                MouseArea {
-                                    anchors.fill: parent
-                                    hoverEnabled: true
-                                    onEntered: contact.state = 'hover'
-                                    onExited: contact.state = ''
-                                }
                             }
                         }
 
                         // Actions.
-                        // TODO.
+                        Row {
+                            Layout.fillHeight: true
+                            id: actions
+                            spacing: 50
+                            visible: false
+
+                            ActionBar {
+                                iconSize: parent.height
+
+                                ActionButton {
+                                    icon: 'cam'
+                                }
+
+                                ActionButton {
+                                    icon: 'call'
+                                }
+
+                                ActionButton {
+                                    icon: 'chat'
+                                }
+                            }
+
+                            ActionButton {
+                                iconSize: parent.height
+                                icon: 'delete'
+                                onClicked: console.log('toto')
+                            }
+                        }
                     }
                 }
+
 
                 states: State {
                     name: 'hover'
                     PropertyChanges { target: contact; color: '#D1D1D1' }
+                    PropertyChanges { target: actions; visible: true }
                 }
             }
         }
