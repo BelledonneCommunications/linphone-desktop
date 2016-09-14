@@ -8,10 +8,11 @@ Item {
     property string presence
     property string username
 
+    // Image mask. (Circle)
     Rectangle {
         anchors.fill: parent
         color: '#8F8F8F'
-        id: avatar
+        id: mask
         radius: 50
     }
 
@@ -44,7 +45,7 @@ Item {
     // Avatar.
     OpacityMask {
         anchors.fill: imageToFilter
-        maskSource: avatar
+        maskSource: mask
         source: imageToFilter
     }
 
@@ -53,7 +54,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         fillMode: Image.PreserveAspectFit
-        height: parent.height/ 3
+        height: parent.height / 3
         id: presenceImage
         source: presence
             ? 'qrc:/imgs/led_' + presence + '.svg'

@@ -58,7 +58,7 @@ ColumnLayout {
             boundsBehavior: Flickable.StopAtBounds
             clip: true
             highlightRangeMode: ListView.ApplyRange
-            spacing: 1
+            spacing: 2
 
             // TODO: Remove, use C++ model instead.
             model: ListModel {
@@ -233,7 +233,7 @@ ColumnLayout {
                             ActionButton {
                                 iconSize: parent.height
                                 icon: 'delete'
-                                onClicked: console.log('toto')
+                                onClicked: console.log('action: delete')
                             }
                         }
                     }
