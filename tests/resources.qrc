@@ -4,6 +4,7 @@
     <file>languages/en.qm</file>
     <file>ui/components/scrollBar/ForceScrollBar.qml</file>
     <file>ui/components/misc/MenuEntry.qml</file>
+    <file>ui/components/timeline/Timeline.qml</file>
     <file>ui/components/select/SelectContact.qml</file>
     <file>ui/components/collapse/Collapse.qml</file>
     <file>ui/components/contact/Contact.qml</file>

@@ -71,12 +71,12 @@ Item {
                     $username: 'Toto'
                 }
                 ListElement {
-                    $presence: 'do$not$disturb'
+                    $presence: 'do_not_disturb'
                     $sipAddress: 'valentin.cognito.sip.linphone.org'
                     $username: 'Toto'
                 }
                 ListElement {
-                    $presence: 'do$not$disturb'
+                    $presence: 'do_not_disturb'
                     $sipAddress: 'charles.henri.sip.linphone.org'
                     $username: 'Toto'
                 }

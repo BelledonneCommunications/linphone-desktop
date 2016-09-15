@@ -26,6 +26,7 @@ ColumnLayout {
             spacing: 20
             width: parent.width
 
+            // TODO: Replace by top-level component.
             TextField {
                 Layout.fillWidth: true
                 background: Rectangle {

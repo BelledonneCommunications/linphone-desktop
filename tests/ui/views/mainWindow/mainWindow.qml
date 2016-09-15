@@ -6,6 +6,7 @@ import 'qrc:/ui/components/collapse'
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/misc'
+import 'qrc:/ui/components/timeline'
 
 import 'qrc:/ui/scripts/utils.js' as Utils
 
@@ -85,6 +86,7 @@ ApplicationWindow {
         ColumnLayout {
             Layout.fillHeight: true
             Layout.preferredWidth: 250
+            Layout.maximumWidth: 250
             spacing: 0
 
             MenuEntry {
@@ -102,14 +104,14 @@ ApplicationWindow {
             }
 
             // History.
-            Item {
+            Timeline {
                 Layout.fillHeight: true
                 Layout.preferredWidth: parent.width
             }
 
             // Logo.
             Rectangle {
-                Layout.preferredWidth: 250
+                Layout.preferredWidth: parent.width
                 Layout.preferredHeight: 70
                 color: '#EAEAEA'
             }
@@ -119,7 +121,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/contacts.qml'
+            source: 'qrc:/ui/views/mainWindow/conversation.qml'
         }
     }
 }
