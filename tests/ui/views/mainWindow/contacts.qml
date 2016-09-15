@@ -6,6 +6,8 @@ import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/scrollBar'
 
+import 'qrc:/ui/scripts/utils.js' as Utils
+
 ColumnLayout {
     spacing: 2
 
@@ -169,7 +171,7 @@ ColumnLayout {
                     RowLayout {
                         anchors.fill: parent
                         anchors.leftMargin: 15
-                        anchors.rightMargin: 15
+                        anchors.rightMargin: 25
                         spacing: 15
 
                         // Avatar.
@@ -233,7 +235,13 @@ ColumnLayout {
                             ActionButton {
                                 iconSize: parent.height
                                 icon: 'delete'
-                                onClicked: console.log('action: delete')
+                                onClicked: Utils.openConfirmDialog(contact, {
+                                    descriptionText: qsTr('removeContactDescription'),
+                                    exitHandler: function (status) {
+                                        console.log('remove contact', status)
+                                    },
+                                    title: qsTr('removeContactTitle')
+                                })
                             }
                         }
                     }

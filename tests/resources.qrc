@@ -9,6 +9,7 @@
     <file>ui/components/contact/Contact.qml</file>
     <file>ui/components/contact/ShortContactDescription.qml</file>
     <file>ui/components/contact/Avatar.qml</file>
+    <file>ui/components/dialog/ConfirmDialog.qml</file>
     <file>ui/components/dialog/DialogDescription.qml</file>
     <file>ui/components/dialog/DialogPlus.qml</file>
     <file>ui/components/form/CheckBoxText.qml</file>

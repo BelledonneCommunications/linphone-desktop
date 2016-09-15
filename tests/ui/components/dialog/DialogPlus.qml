@@ -12,7 +12,23 @@ Window {
     property alias descriptionText: description.text // Optionnal.
     property bool centeredButtons // Optionnal.
 
+    property bool disableExitStatus // Internal property.
+
+    signal exitStatus (int status)
+
     modality: Qt.WindowModal
+
+    // Handle normal windows close.
+    onClosing: !disableExitStatus && exitStatus(0)
+
+    // Derived class must use this function instead of close.
+    function exit (status) {
+        if (!disableExitStatus) {
+            disableExitStatus = true
+            exitStatus(status)
+            close()
+        }
+    }
 
     ColumnLayout {
         anchors.fill: parent

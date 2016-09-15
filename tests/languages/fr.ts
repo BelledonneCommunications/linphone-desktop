@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>ConfirmDialog</name>
+    <message>
+        <source>cancel</source>
+        <translation>ANNULER</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>CONFIRMER</translation>
+    </message>
+</context>
+<context>
     <name>DropZone</name>
     <message>
         <source>fileChooserTitle</source>
@@ -32,6 +43,14 @@
     <message>
         <source>addContact</source>
         <translation>AJOUTER CONTACT</translation>
+    </message>
+    <message>
+        <source>removeContactDescription</source>
+        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
+    </message>
+    <message>
+        <source>removeContactTitle</source>
+        <translation>Confirmation de la suppression</translation>
     </message>
 </context>
 <context>
