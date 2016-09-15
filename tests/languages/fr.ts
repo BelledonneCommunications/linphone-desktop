@@ -27,6 +27,13 @@
     </message>
 </context>
 <context>
+    <name>Timeline</name>
+    <message>
+        <source>timelineTitle</source>
+        <translation>Précédemment</translation>
+    </message>
+</context>
+<context>
     <name>contacts</name>
     <message>
         <source>searchContactPlaceholder</source>

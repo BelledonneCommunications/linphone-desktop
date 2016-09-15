@@ -7,6 +7,10 @@
     <file>ui/components/timeline/Timeline.qml</file>
     <file>ui/components/select/SelectContact.qml</file>
     <file>ui/components/collapse/Collapse.qml</file>
+    <file>ui/components/chat/IncomingMessage.qml</file>
+    <file>ui/components/chat/Chat.qml</file>
+    <file>ui/components/chat/OutgoingMessage.qml</file>
+    <file>ui/components/chat/Message.qml</file>
     <file>ui/components/contact/Contact.qml</file>
     <file>ui/components/contact/ShortContactDescription.qml</file>
     <file>ui/components/contact/Avatar.qml</file>

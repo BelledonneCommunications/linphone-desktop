@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/components/chat'
 
 ColumnLayout  {
     spacing: 0
@@ -112,15 +113,11 @@ ColumnLayout  {
         border.width: 1
         id: messagesArea
 
-        ListView {
+        Chat {
             ScrollBar.vertical: ForceScrollBar { }
-            anchors.fill: parent
             anchors.bottomMargin: messagesArea.border.width
+            anchors.fill: parent
             anchors.topMargin: messagesArea.border.width
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-            highlightRangeMode: ListView.ApplyRange
-            spacing: 1
         }
     }
 
