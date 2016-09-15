@@ -12,6 +12,7 @@
 // signal.
 function openWindow (window, parent, options) {
     var object
+
     if (options && options.isString) {
         object = Qt.createQmlObject(window, parent)
     } else {
@@ -36,6 +37,9 @@ function openWindow (window, parent, options) {
         console.debug('Destroy window.')
         object.destroy()
     })
+    object.exitStatus.connect(function (status) {
+        console.debug('Exit status: ' + status)
+    })
 
     if (options && options.exitHandler) {
         object.exitStatus.connect(
@@ -43,12 +47,14 @@ function openWindow (window, parent, options) {
             options.exitHandler.bind(parent)
         )
     }
+
     object.show()
 }
 
 // -------------------------------------------------------------------
 
-// Display a simple ConfirmDialog component. Wrap the openWindow function.
+// Display a simple ConfirmDialog component.
+// Wrap the openWindow function.
 function openConfirmDialog (parent, options) {
     openWindow(
         'import QtQuick 2.7;' +
