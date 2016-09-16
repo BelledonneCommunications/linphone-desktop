@@ -54,9 +54,8 @@ Window {
 
             Row {
                 anchors.left: (!centeredButtons && parent.left) || undefined
-                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.centerIn: centeredButtons ? parent : undefined
                 anchors.leftMargin: 50
-                anchors.verticalCenter: parent.verticalCenter
                 height: 30
                 id: buttons
                 spacing: 20

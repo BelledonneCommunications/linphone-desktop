@@ -1,5 +1,7 @@
 import QtQuick 2.7
 
+import 'qrc:/ui/components/image'
+
 // ===================================================================
 
 Item {
@@ -13,11 +15,10 @@ Item {
         rotate.start()
     }
 
-    Image {
+    Icon {
         anchors.fill: parent
-        fillMode: Image.PreserveAspectFit
         id: backgroundImage
-        source: 'qrc:/imgs/collapse.svg'
+        icon: 'collapse'
 
         MouseArea {
             anchors.fill: parent
