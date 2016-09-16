@@ -17,7 +17,7 @@ void createSystemTrayIcon (QQmlApplicationEngine &engine) {
   QAction *quitAction = new QAction(QObject::tr("Quit"), root);
   root->connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-  QAction *restoreAction = new QAction(QObject::tr("Restore")), root);
+  QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
   root->connect(restoreAction, SIGNAL(triggered()), root, SLOT(showNormal()));
 
   menu->addAction(restoreAction);
