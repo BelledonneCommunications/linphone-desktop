@@ -20,6 +20,25 @@
     </message>
 </context>
 <context>
+    <name>Event</name>
+    <message>
+        <source>incomingCall</source>
+        <translation>Incoming call</translation>
+    </message>
+    <message>
+        <source>hangup</source>
+        <translation>End call</translation>
+    </message>
+    <message>
+        <source>lostIncomingCall</source>
+        <translation>Lost incoming call</translation>
+    </message>
+    <message>
+        <source>lostOutgoingCall</source>
+        <translation>Lost outgoing call</translation>
+    </message>
+</context>
+<context>
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>

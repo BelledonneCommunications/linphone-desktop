@@ -8,8 +8,7 @@
 //
 // Supported options: isString, exitHandler.
 //
-// If exitHandler is used, window must implement returnedValue
-// signal.
+// If exitHandler is used, window must implement exitStatus signal.
 function openWindow (window, parent, options) {
     var object
 
@@ -68,4 +67,12 @@ function openConfirmDialog (parent, options) {
             exitHandler: options.exitHandler
         }
     )
+}
+
+// -------------------------------------------------------------------
+
+function snakeToCamel (s) {
+    return s.replace(/(\_\w)/g, function (matches) {
+        return matches[1].toUpperCase()
+    })
 }

@@ -1,6 +1,9 @@
 import QtQuick 2.7
 
+// ===================================================================
+
 Item {
+    default property alias content: content.data
     property alias backgroundColor: rectangle.color
 
     id: container
@@ -21,9 +24,17 @@ Item {
     Text {
         anchors.left: container.left
         anchors.right: container.right
-        padding: 8
         id: text
-        text: $message
+        padding: 8
+        text: $content
         wrapMode: Text.Wrap
+
+        // Little fix. Text may disappear with scrolling.
+        renderType: Text.NativeRendering
+    }
+
+    Item {
+        anchors.left: rectangle.right
+        id: content
     }
 }

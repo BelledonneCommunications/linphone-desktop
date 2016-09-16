@@ -20,6 +20,25 @@
     </message>
 </context>
 <context>
+    <name>Event</name>
+    <message>
+        <source>incomingCall</source>
+        <translation>Appel entrant</translation>
+    </message>
+    <message>
+        <source>hangup</source>
+        <translation>Fin d&apos;appel</translation>
+    </message>
+    <message>
+        <source>lostIncomingCall</source>
+        <translation>Appel entrant manqué</translation>
+    </message>
+    <message>
+        <source>lostOutgoingCall</source>
+        <translation>Appel sortant manqué</translation>
+    </message>
+</context>
+<context>
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>

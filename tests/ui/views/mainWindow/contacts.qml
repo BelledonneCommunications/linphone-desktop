@@ -248,7 +248,6 @@ ColumnLayout {
                     }
                 }
 
-
                 states: State {
                     name: 'hover'
                     PropertyChanges { target: contact; color: '#D1D1D1' }

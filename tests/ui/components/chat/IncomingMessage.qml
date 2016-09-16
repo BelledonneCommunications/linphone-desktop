@@ -3,7 +3,25 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/contact'
 
-Message {
-    backgroundColor: '#BFBFBF'
-    Layout.fillWidth: true
+// ===================================================================
+
+Item {
+    implicitHeight: message.height
+
+    RowLayout {
+        anchors.fill: parent
+        spacing: 10
+
+        Avatar {
+            Layout.alignment: Qt.AlignTop
+            Layout.preferredHeight: 30
+            Layout.preferredWidth: 30
+        }
+
+        Message {
+            Layout.fillWidth: true
+            backgroundColor: '#BFBFBF'
+            id: message
+        }
+    }
 }
