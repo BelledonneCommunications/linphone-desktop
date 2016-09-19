@@ -121,7 +121,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/conversation.qml'
+            source: 'qrc:/ui/views/mainWindow/home.qml'
         }
     }
 }

@@ -34,6 +34,7 @@
     <file>ui/views/mainWindow/mainWindow.qml</file>
     <file>ui/views/mainWindow/contacts.qml</file>
     <file>ui/views/mainWindow/home.qml</file>
+    <file>ui/views/mainWindow/contact.qml</file>
     <file>ui/views/mainWindow/conversation.qml</file>
     <file>imgs/lost_outgoing_call.svg</file>
     <file>imgs/led_disconnected.svg</file>

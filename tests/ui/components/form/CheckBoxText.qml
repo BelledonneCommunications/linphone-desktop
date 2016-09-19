@@ -9,7 +9,6 @@ CheckBox {
     contentItem: Text {
         color: checkBox.down ? '#FE5E00' : '#8E8E8E'
         font: checkBox.font
-        horizontalAlignment: Text.AlignHCenter
         leftPadding: checkBox.indicator.width + checkBox.spacing
         text: checkBox.text
         verticalAlignment: Text.AlignVCenter

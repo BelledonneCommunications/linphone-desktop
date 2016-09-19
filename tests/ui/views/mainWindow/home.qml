@@ -1,69 +1,61 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/form'
 
+// ===================================================================
+
 ColumnLayout {
     spacing: 0
 
-    Item {
-        Layout.fillWidth: true
+    ColumnLayout {
+        Layout.alignment: Qt.AlignTop
         Layout.fillHeight: true
+        Layout.fillWidth: true
+        Layout.leftMargin: 50
+        Layout.topMargin: 50
+        spacing: 30
 
-        Item {
-            anchors.fill: parent
-            anchors.leftMargin: 50
-            anchors.topMargin: 50
+        // Invit friends.
+        Column {
+            spacing: 8
 
-            Column {
-                spacing: 30
+            Text {
+                color: '#5A585B'
+                font.bold: true
+                font.pointSize: 11
+                text: qsTr('invitContactQuestion')
+            }
 
-                // Invit friends.
-                Column {
-                    spacing: 8
+            LightButton {
+                text: qsTr('invitContact')
+            }
+        }
 
-                    Text {
-                        text: qsTr('invitContactQuestion')
-                        font.weight: Font.DemiBold
-                        color: '#5A585B'
-                        font.pointSize: 11
-                    }
+        // Add contacts.
+        Column {
+            spacing: 8
 
-                    LightButton {
-                        text: qsTr('invitContact')
-                    }
-                }
+            Text {
+                color: '#5A585B'
+                font.bold: true
+                font.pointSize: 11
+                text: qsTr('addContactQuestion')
+            }
 
-                // Add contacts.
-                Column {
-                    spacing: 8
-
-                    Text {
-                        text: qsTr('addContactQuestion')
-                        font.weight: Font.DemiBold
-                        color: '#5A585B'
-                        font.pointSize: 11
-                    }
-
-                    LightButton {
-                        text: qsTr('addContact')
-                    }
-                }
+            LightButton {
+                text: qsTr('addContact')
             }
         }
     }
 
     // Tooltip checkbox area.
-    Item {
+    CheckBoxText {
+        Layout.alignment: Qt.AlignBottom
         Layout.fillWidth: true
+        Layout.leftMargin: 50
         Layout.preferredHeight: 70
 
-        CheckBoxText {
-            anchors.left: parent.left
-            anchors.leftMargin: 50
-            anchors.verticalCenter: parent.verticalCenter
-            text: qsTr('displayTooltip')
-        }
+        text: qsTr('displayTooltip')
     }
 }
