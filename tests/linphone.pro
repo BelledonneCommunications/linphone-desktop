@@ -2,6 +2,7 @@ QT = core gui quick widgets quickcontrols2
 
 TARGET = linphone
 TEMPLATE = app
+CONFIG += c++11
 
 SOURCES = \
   src/app.cpp \

@@ -2,6 +2,7 @@
 
 #include <QMenu>
 #include <QQmlApplicationEngine>
+#include <QQuickView>
 #include <QSystemTrayIcon>
 #include <QtDebug>
 
@@ -9,26 +10,37 @@
 
 // ===================================================================
 
-void createSystemTrayIcon (QQmlApplicationEngine &engine) {
-  QObject *root = engine.rootObjects().at(0);
-  QMenu *menu = new QMenu();
-  QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
+int exec (App &app, QQmlApplicationEngine &engine) {
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
+    qWarning() << "System tray not found on this system.";
+  else {
+    QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
+    QMenu *menu = new QMenu();
+    QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
 
-  QAction *quitAction = new QAction(QObject::tr("Quit"), root);
-  root->connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+    // Right click actions.
+    QAction *quitAction = new QAction(QObject::tr("Quit"), root);
+    root->connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-  QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
-  root->connect(restoreAction, SIGNAL(triggered()), root, SLOT(showNormal()));
+    QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
+    root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
 
-  menu->addAction(restoreAction);
-  menu->addSeparator();
-  menu->addAction(quitAction);
+    // Left click action.
+    root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
+        if (reason == QSystemTrayIcon::DoubleClick)
+          root->showNormal();
+      });
 
-  tray_icon->setContextMenu(menu);
-  tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
-  tray_icon->show();
+    menu->addAction(restoreAction);
+    menu->addSeparator();
+    menu->addAction(quitAction);
 
-  return;
+    tray_icon->setContextMenu(menu);
+    tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
+    tray_icon->show();
+  }
+
+  return app.exec();
 }
 
 int main (int argc, char *argv[]) {
@@ -38,10 +50,5 @@ int main (int argc, char *argv[]) {
   if (engine.rootObjects().isEmpty())
     return EXIT_FAILURE;
 
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    qWarning() << "System tray not found on this system.";
-  else
-    createSystemTrayIcon(engine);
-
-  return app.exec();
+  return exec(app, engine);
 }
