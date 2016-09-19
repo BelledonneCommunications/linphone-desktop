@@ -12,7 +12,7 @@
 // ===================================================================
 
 int exec (App &app, QQmlApplicationEngine &engine) {
-  if (QSystemTrayIcon::isSystemTrayAvailable())
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
     qWarning() << "System tray not found on this system.";
 
   QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
@@ -29,9 +29,11 @@ int exec (App &app, QQmlApplicationEngine &engine) {
   QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
   root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
 
-  // trayIcon: Left click action.
+  // trayIcon: Left click actions.
   root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
-    if (reason == QSystemTrayIcon::DoubleClick)
+    if (reason == QSystemTrayIcon::Trigger)
+      root->requestActivate();
+    else if (reason == QSystemTrayIcon::DoubleClick)
       root->showNormal();
   });
 
@@ -42,6 +44,7 @@ int exec (App &app, QQmlApplicationEngine &engine) {
 
   tray_icon->setContextMenu(menu);
   tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
+  tray_icon->setToolTip("Linphone");
   tray_icon->show();
 
   // RUN.
