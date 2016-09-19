@@ -2,6 +2,7 @@
 
 #include <QMenu>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QQuickView>
 #include <QSystemTrayIcon>
 #include <QtDebug>
@@ -11,35 +12,39 @@
 // ===================================================================
 
 int exec (App &app, QQmlApplicationEngine &engine) {
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
+  if (QSystemTrayIcon::isSystemTrayAvailable())
     qWarning() << "System tray not found on this system.";
-  else {
-    QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
-    QMenu *menu = new QMenu();
-    QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
 
-    // Right click actions.
-    QAction *quitAction = new QAction(QObject::tr("Quit"), root);
-    root->connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+  QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
+  QMenu *menu = new QMenu();
+  QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
 
-    QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
-    root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
+  // Warning: Add global context trayIcon for all views!
+  engine.rootContext()->setContextProperty("trayIcon", tray_icon);
 
-    // Left click action.
-    root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
-      if (reason == QSystemTrayIcon::DoubleClick)
-        root->showNormal();
-    });
+  // trayIcon: Right click actions.
+  QAction *quitAction = new QAction(QObject::tr("Quit"), root);
+  root->connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-    menu->addAction(restoreAction);
-    menu->addSeparator();
-    menu->addAction(quitAction);
+  QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
+  root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
 
-    tray_icon->setContextMenu(menu);
-    tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
-    tray_icon->show();
-  }
+  // trayIcon: Left click action.
+  root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
+    if (reason == QSystemTrayIcon::DoubleClick)
+      root->showNormal();
+  });
 
+  // Build trayIcon menu.
+  menu->addAction(restoreAction);
+  menu->addSeparator();
+  menu->addAction(quitAction);
+
+  tray_icon->setContextMenu(menu);
+  tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
+  tray_icon->show();
+
+  // RUN.
   return app.exec();
 }
 
