@@ -27,9 +27,9 @@ int exec (App &app, QQmlApplicationEngine &engine) {
 
     // Left click action.
     root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
-        if (reason == QSystemTrayIcon::DoubleClick)
-          root->showNormal();
-      });
+      if (reason == QSystemTrayIcon::DoubleClick)
+        root->showNormal();
+    });
 
     menu->addAction(restoreAction);
     menu->addSeparator();
