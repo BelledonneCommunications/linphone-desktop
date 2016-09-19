@@ -22,6 +22,7 @@
     <file>ui/components/form/CheckBoxText.qml</file>
     <file>ui/components/form/DropZone.qml</file>
     <file>ui/components/form/LightButton.qml</file>
+    <file>ui/components/form/ListForm.qml</file>
     <file>ui/components/form/ExclusiveButtons.qml</file>
     <file>ui/components/form/ActionBar.qml</file>
     <file>ui/components/form/ActionButton.qml</file>

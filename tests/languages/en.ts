@@ -53,6 +53,25 @@
     </message>
 </context>
 <context>
+    <name>contact</name>
+    <message>
+        <source>sipAccounts</source>
+        <translation>SIP ACCOUNT(S)</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation>ADDRESS</translation>
+    </message>
+    <message>
+        <source>emails</source>
+        <translation>E-MAIL(S)</translation>
+    </message>
+    <message>
+        <source>webSites</source>
+        <translation>WEB SITE(S)</translation>
+    </message>
+</context>
+<context>
     <name>contacts</name>
     <message>
         <source>searchContactPlaceholder</source>

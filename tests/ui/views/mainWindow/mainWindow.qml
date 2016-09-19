@@ -12,8 +12,9 @@ import 'qrc:/ui/scripts/utils.js' as Utils
 
 ApplicationWindow {
     id: mainWindow
+    maximumHeight: 70
     minimumHeight: 70
-    minimumWidth: 780
+    minimumWidth: 700
     title: 'Linphone'
     visible: true
 
@@ -33,9 +34,11 @@ ApplicationWindow {
             Collapse {
                 Layout.preferredWidth: 25
                 Layout.fillHeight: parent.height
-                onCollapsed: {
-                    mainWindow.height = collapsed ? 500 : 70
-                }
+                id: collapse
+
+                onCollapsed: mainWindowStates.state = collapsed
+                    ? 'collapsed'
+                    : ''
             }
 
             // User info.
@@ -85,33 +88,33 @@ ApplicationWindow {
         // Main menu.
         ColumnLayout {
             Layout.fillHeight: true
-            Layout.preferredWidth: 250
             Layout.maximumWidth: 250
+            Layout.preferredWidth: 250
             spacing: 0
 
             MenuEntry {
+                Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                Layout.preferredWidth: parent.width
                 entryName: qsTr('homeEntry')
             }
 
             Item { Layout.preferredHeight: 2 }
 
             MenuEntry {
+                Layout.fillWidth: true
                 Layout.preferredHeight: 50
-                Layout.preferredWidth: parent.width
                 entryName: qsTr('contactsEntry')
             }
 
             // History.
             Timeline {
                 Layout.fillHeight: true
-                Layout.preferredWidth: parent.width
+                Layout.fillWidth: true
             }
 
             // Logo.
             Rectangle {
-                Layout.preferredWidth: parent.width
+                Layout.fillWidth: true
                 Layout.preferredHeight: 70
                 color: '#EAEAEA'
             }
@@ -121,7 +124,23 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/home.qml'
+            source: 'qrc:/ui/views/mainWindow/contact.qml'
+        }
+    }
+
+    StateGroup {
+        id: mainWindowStates
+
+        states: State {
+            name: 'collapsed'
+
+            PropertyChanges {
+                height: 480
+                maximumHeight: 99999
+                maximumWidth: 99999
+                minimumHeight: 480
+                target: mainWindow
+            }
         }
     }
 }

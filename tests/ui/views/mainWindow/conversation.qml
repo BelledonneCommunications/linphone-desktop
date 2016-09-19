@@ -10,6 +10,7 @@ import 'qrc:/ui/components/chat'
 ColumnLayout  {
     spacing: 0
 
+    // Contact bar.
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 102
@@ -84,6 +85,7 @@ ColumnLayout  {
         }
     }
 
+    // Messages/Calls filter.
     Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 40

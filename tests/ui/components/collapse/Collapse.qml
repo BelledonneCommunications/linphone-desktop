@@ -5,13 +5,13 @@ import 'qrc:/ui/components/image'
 // ===================================================================
 
 Item {
-    property bool enabled: false
+    property bool isCollapsed: false
 
     signal collapsed (bool collapsed)
 
     function updateCollapse () {
-        enabled = !enabled
-        collapsed(enabled)
+        isCollapsed = !isCollapsed
+        collapsed(isCollapsed)
         rotate.start()
     }
 
@@ -29,10 +29,10 @@ Item {
     RotationAnimation {
         direction: RotationAnimation.Clockwise
         duration: 200
-        from: enabled ? 0 : 180
+        from: isCollapsed ? 0 : 180
         id: rotate
         property: 'rotation'
         target: backgroundImage
-        to: enabled ? 180 : 0
+        to: isCollapsed ? 180 : 0
     }
 }

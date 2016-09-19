@@ -13,7 +13,7 @@ ColumnLayout {
         Image {
             fillMode: Image.PreserveAspectFit
             height: parent.height
-            width: 30
+            width: 20
         }
 
         Text {
