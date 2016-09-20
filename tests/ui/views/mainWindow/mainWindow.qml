@@ -42,7 +42,7 @@ ApplicationWindow {
             }
 
             // User info.
-            ShortContactDescription {
+            ContactDescription {
                 Layout.fillHeight: parent.height
                 Layout.preferredWidth: 200
                 sipAddress: 'e.miller@sip-linphone.org'
@@ -124,7 +124,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/contact.qml'
+            source: 'qrc:/ui/views/mainWindow/conversation.qml'
         }
     }
 

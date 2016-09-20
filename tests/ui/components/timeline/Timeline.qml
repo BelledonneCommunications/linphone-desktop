@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/contact'
+import 'qrc:/ui/components/image'
 import 'qrc:/ui/components/scrollBar'
 
 ColumnLayout {
@@ -10,10 +11,8 @@ ColumnLayout {
         Layout.preferredHeight: 35
         spacing: 30
 
-        Image {
-            fillMode: Image.PreserveAspectFit
-            height: parent.height
-            width: 20
+        Icon {
+            iconSize: 20
         }
 
         Text {
@@ -26,9 +25,9 @@ ColumnLayout {
     }
 
     Rectangle {
-        color: '#DEDEDE'
         Layout.fillWidth: true
         Layout.preferredHeight: 1
+        color: '#DEDEDE'
     }
 
     ListView {

@@ -33,8 +33,8 @@ ColumnLayout  {
             }
 
             // TODO: Replace by text edit.
-            // Component: EditableShortContactDescription.
-            ShortContactDescription {
+            // Component: EditableContactDescription.
+            ContactDescription {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 username: 'Cameron Andrews' // TODO: Use C++.

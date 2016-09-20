@@ -5,7 +5,6 @@ import 'qrc:/ui/components/image'
 
 Message {
     backgroundColor: '#E4E4E4'
-    id: message
 
     Item {
         height: 30

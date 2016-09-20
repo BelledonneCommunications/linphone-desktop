@@ -28,7 +28,7 @@ Item {
             username: contact.username
         }
 
-        ShortContactDescription {
+        ContactDescription {
             Layout.fillHeight: true
             Layout.fillWidth: true
             id: contactDescription

@@ -39,6 +39,13 @@
     </message>
 </context>
 <context>
+    <name>ListForm</name>
+    <message>
+        <source>fillPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>

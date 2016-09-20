@@ -38,7 +38,7 @@ ColumnLayout  {
                 Layout.fillWidth: true
 
                 // Contact description.
-                ShortContactDescription {
+                ContactDescription {
                     height: parent.height * 0.60
                     sipAddress: 'cam.andrews@sip.linphone.org' // TODO: Use C++.
                     username: 'Cameron Andrews' // TODO: Use C++.
