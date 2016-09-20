@@ -6,15 +6,19 @@
 // ===================================================================
 
 class AccountSettingsModel : public QObject {
-  Q_OBJECT;
+  Q_OBJECT
 
-  Q_PROPERTY(QString username
-             READ getUsername
-             WRITE setUsername);
+  Q_PROPERTY(
+    QString username
+    READ getUsername
+    WRITE setUsername
+  );
 
-  Q_PROPERTY(Presence presence
-             READ getPresence
-             WRITE setPresence);
+  Q_PROPERTY(
+    Presence presence
+    READ getPresence
+    WRITE setPresence
+  );
 
 public:
   // See: https://tools.ietf.org/html/rfc4480#section-3.2

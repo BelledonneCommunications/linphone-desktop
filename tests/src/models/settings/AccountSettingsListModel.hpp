@@ -6,7 +6,7 @@
 // ===================================================================
 
 class AccountSettingsListModel : public QObject {
-  Q_OBJECT;
+  Q_OBJECT
 
   Q_PROPERTY(int index
              READ getDefaultAccount

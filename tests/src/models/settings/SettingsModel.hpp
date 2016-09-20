@@ -8,7 +8,7 @@
 // ===================================================================
 
 class SettingsModel : public QObject {
-  Q_OBJECT;
+  Q_OBJECT
 
 public:
   SettingsModel (QObject *parent = Q_NULLPTR);
