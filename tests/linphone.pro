@@ -7,11 +7,13 @@ CONFIG += c++11
 SOURCES = \
   src/app.cpp \
   src/main.cpp \
+  src/models/notification/NotificationModel.cpp \
   src/models/settings/AccountSettingsModel.cpp \
   src/models/settings/SettingsModel.cpp
 
 HEADERS = \
-  src/app.hpp \
+src/app.hpp \
+  src/models/notification/NotificationModel.hpp \
   src/models/settings/AccountSettingsModel.hpp \
   src/models/settings/SettingsModel.hpp
 

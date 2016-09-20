@@ -8,6 +8,7 @@
 #include <QtDebug>
 
 #include "app.hpp"
+#include "models/notification/NotificationModel.hpp"
 
 // ===================================================================
 
@@ -19,15 +20,12 @@ int exec (App &app, QQmlApplicationEngine &engine) {
   QMenu *menu = new QMenu();
   QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
 
-  // Warning: Add global context trayIcon for all views!
-  engine.rootContext()->setContextProperty("trayIcon", tray_icon);
-
   // trayIcon: Right click actions.
-  QAction *quitAction = new QAction(QObject::tr("Quit"), root);
-  root->connect(quitAction, &QAction::triggered, qApp, &QCoreApplication::quit);
+  QAction *quit_action = new QAction("Quit", root);
+  root->connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
 
-  QAction *restoreAction = new QAction(QObject::tr("Restore"), root);
-  root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
+  QAction *restore_action = new QAction("Restore", root);
+  root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
 
   // trayIcon: Left click actions.
   root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
@@ -40,14 +38,18 @@ int exec (App &app, QQmlApplicationEngine &engine) {
   });
 
   // Build trayIcon menu.
-  menu->addAction(restoreAction);
+  menu->addAction(restore_action);
   menu->addSeparator();
-  menu->addAction(quitAction);
+  menu->addAction(quit_action);
 
   tray_icon->setContextMenu(menu);
   tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
   tray_icon->setToolTip("Linphone");
   tray_icon->show();
+
+  // Warning: Add global context Notification for all views!
+  NotificationModel notification;
+  engine.rootContext()->setContextProperty("Notification", &notification);
 
   // Run.
   return app.exec();
