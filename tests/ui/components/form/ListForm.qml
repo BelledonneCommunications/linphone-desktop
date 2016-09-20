@@ -18,11 +18,8 @@ RowLayout {
             Layout.preferredHeight: 16
             Layout.preferredWidth: 16
             onClicked: {
-                console.log(valuesModel.get(valuesModel.count - 1).$value.length)
-
                 if (valuesModel.count === 0 ||
-                    valuesModel.get(valuesModel.count - 1).$value.length !== 0
-                   ) {
+                    valuesModel.get(valuesModel.count - 1).$value.length !== 0) {
                     valuesModel.append({ $value: '' })
                 }
             }
@@ -60,7 +57,8 @@ RowLayout {
                 color: textEdit.focus ? '#E6E6E6' : 'transparent'
                 id: background
                 implicitHeight: textEdit.height
-                implicitWidth: textEdit.contentWidth + textEdit.padding * 2
+                implicitWidth: textEdit.contentWidth +
+                    textEdit.padding * 2
             }
 
             Text {
@@ -92,6 +90,10 @@ RowLayout {
                 onEditingFinished: {
                     if (text.length === 0) {
                         valuesModel.remove(index)
+                    } else {
+                        // textEdit.text is not the same value than
+                        // valuesModel.get(index)
+                        valuesModel.set(index, { $value: text })
                     }
 
                     // Hack: The edition is finished but the focus
