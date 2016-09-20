@@ -2,6 +2,7 @@
 
 #include <QIcon>
 #include <QtDebug>
+
 #include "app.hpp"
 
 #define LANGUAGES_PATH ":/languages/"

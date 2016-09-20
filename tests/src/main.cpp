@@ -12,10 +12,7 @@
 
 // ===================================================================
 
-int exec (App &app, QQmlApplicationEngine &engine) {
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    qWarning() << "System tray not found on this system.";
-
+void setTrayIcon (QQmlApplicationEngine &engine) {
   QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
   QMenu *menu = new QMenu();
   QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
@@ -28,7 +25,7 @@ int exec (App &app, QQmlApplicationEngine &engine) {
   root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
 
   // trayIcon: Left click actions.
-  root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
+  root->connect(tray_icon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
       if (root->visibility() == QWindow::Hidden)
         root->showNormal();
@@ -46,13 +43,6 @@ int exec (App &app, QQmlApplicationEngine &engine) {
   tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
   tray_icon->setToolTip("Linphone");
   tray_icon->show();
-
-  // Warning: Add global context Notification for all views!
-  NotificationModel notification;
-  engine.rootContext()->setContextProperty("Notification", &notification);
-
-  // Run.
-  return app.exec();
 }
 
 int main (int argc, char *argv[]) {
@@ -62,5 +52,16 @@ int main (int argc, char *argv[]) {
   if (engine.rootObjects().isEmpty())
     return EXIT_FAILURE;
 
-  return exec(app, engine);
+  // Enable TrayIconSystem.
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
+    qWarning() << "System tray not found on this system.";
+  else
+    setTrayIcon(engine);
+
+  // Warning: Add global context Notification for all views!
+  NotificationModel notification;
+  engine.rootContext()->setContextProperty("Notification", &notification);
+
+  // Run!
+  return app.exec();
 }
