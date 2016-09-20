@@ -11,7 +11,7 @@ Column {
         clip: true
         color: '#5A585B'
         font.pointSize: 11
-        font.weight: Font.DemiBold
+        font.bold: true
         height: parent.height / 2
         id: username
         verticalAlignment: Text.AlignBottom

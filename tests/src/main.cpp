@@ -31,10 +31,12 @@ int exec (App &app, QQmlApplicationEngine &engine) {
 
   // trayIcon: Left click actions.
   root->connect(tray_icon, &QSystemTrayIcon::activated, [&root](QSystemTrayIcon::ActivationReason reason) {
-    if (reason == QSystemTrayIcon::Trigger)
-      root->requestActivate();
-    else if (reason == QSystemTrayIcon::DoubleClick)
-      root->showNormal();
+    if (reason == QSystemTrayIcon::Trigger) {
+      if (root->visibility() == QWindow::Hidden)
+        root->showNormal();
+      else
+        root->hide();
+    }
   });
 
   // Build trayIcon menu.
@@ -47,7 +49,7 @@ int exec (App &app, QQmlApplicationEngine &engine) {
   tray_icon->setToolTip("Linphone");
   tray_icon->show();
 
-  // RUN.
+  // Run.
   return app.exec();
 }
 
