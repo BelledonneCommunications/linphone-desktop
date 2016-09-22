@@ -6,6 +6,7 @@ import 'qrc:/ui/components/collapse'
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/misc'
+import 'qrc:/ui/components/searchBox'
 import 'qrc:/ui/components/timeline'
 
 import 'qrc:/ui/scripts/utils.js' as Utils
@@ -51,24 +52,19 @@ ApplicationWindow {
 
             // User actions.
             ActionButton {
+                Layout.preferredWidth: 16
                 onClicked: Utils.openWindow('manageAccounts', mainWindow)
             }
 
             ActionButton {
+                Layout.preferredWidth: 16
                 onClicked: Utils.openWindow('newCall', mainWindow)
             }
 
             // Search.
-            TextField {
-                signal searchTextChanged (string text)
-
-                background: Rectangle {
-                    color: '#FFFFFF'
-                    implicitHeight: 30
-                }
-                id: searchText
+            SearchBox {
                 Layout.fillWidth: true
-                onTextChanged: searchTextChanged(text)
+                maxMenuHeight: mainWindow.height - 100
                 placeholderText: qsTr('mainSearchBarPlaceholder')
             }
 
