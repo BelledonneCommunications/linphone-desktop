@@ -4,15 +4,17 @@ import 'qrc:/ui/components/form'
 import 'qrc:/ui/style'
 
 // ===================================================================
+// A simple component to build collapsed item.
+// ===================================================================
 
 Item {
-    property bool isCollapsed: false
+    property bool _isCollapsed: false
 
     signal collapsed (bool collapsed)
 
     function collapse () {
-        isCollapsed = !isCollapsed
-        collapsed(isCollapsed)
+        _isCollapsed = !_isCollapsed
+        collapsed(_isCollapsed)
         rotate.start()
     }
 
@@ -32,9 +34,9 @@ Item {
 
         direction: RotationAnimation.Clockwise
         duration: CollapseStyle.animationDuration
-        from: isCollapsed ? 0 : 180
+        from: _isCollapsed ? 0 : 180
         property: 'rotation'
         target: button
-        to: isCollapsed ? 180 : 0
+        to: _isCollapsed ? 180 : 0
     }
 }
