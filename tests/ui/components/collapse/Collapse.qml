@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/image'
 
 // ===================================================================
@@ -9,21 +10,21 @@ Item {
 
     signal collapsed (bool collapsed)
 
-    function updateCollapse () {
+    function collapse () {
         isCollapsed = !isCollapsed
         collapsed(isCollapsed)
         rotate.start()
     }
 
-    Icon {
-        anchors.fill: parent
-        id: backgroundImage
-        icon: 'collapse'
-
-        MouseArea {
-            anchors.fill: parent
-            onClicked: updateCollapse()
+    ActionButton {
+        anchors.centerIn: parent
+        background: Rectangle {
+            color: 'transparent'
         }
+        icon: 'collapse'
+        iconSize: 32
+        id: button
+        onClicked: collapse()
     }
 
     RotationAnimation {
@@ -32,7 +33,7 @@ Item {
         from: isCollapsed ? 0 : 180
         id: rotate
         property: 'rotation'
-        target: backgroundImage
+        target: button
         to: isCollapsed ? 180 : 0
     }
 }

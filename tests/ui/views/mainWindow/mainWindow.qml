@@ -15,7 +15,7 @@ ApplicationWindow {
     id: mainWindow
     maximumHeight: 70
     minimumHeight: 70
-    minimumWidth: 700
+    minimumWidth: 780
     title: 'Linphone'
     visible: true
 
@@ -64,8 +64,17 @@ ApplicationWindow {
             // Search.
             SearchBox {
                 Layout.fillWidth: true
-                maxMenuHeight: mainWindow.height - 100
+                maxMenuHeight: 300 // See Hick's law for good choice.
                 placeholderText: qsTr('mainSearchBarPlaceholder')
+
+                onMenuClosed: content.enabled = true
+
+                onMenuOpened: {
+                    if (!collapse.isCollapsed) {
+                        collapse.collapse()
+                    }
+                    content.enabled = false
+                }
             }
 
             // Start conference.
@@ -79,6 +88,7 @@ ApplicationWindow {
 
     RowLayout {
         anchors.fill: parent
+        id: content
         spacing: 0
 
         // Main menu.

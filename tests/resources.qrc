@@ -31,6 +31,7 @@
     <file>ui/components/form/TransparentComboBox.qml</file>
     <file>ui/components/form/SmallButton.qml</file>
     <file>ui/components/form/DarkButton.qml</file>
+    <file>ui/components/invertedMouseArea/InvertedMouseArea.qml</file>
     <file>ui/scripts/utils.js</file>
     <file>ui/views/newCall.qml</file>
     <file>ui/views/manageAccounts.qml</file>
