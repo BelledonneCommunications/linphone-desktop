@@ -33,6 +33,7 @@ lupdate_only{
     ui/components/scrollBar/*.qml \
     ui/components/select/*.qml \
     ui/components/timeline/*.qml \
+    ui/style/collapse/*.qml \
     ui/views/*.qml \
     ui/views/mainWindow/*.qml
 }

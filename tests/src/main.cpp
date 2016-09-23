@@ -1,5 +1,6 @@
 #include <cstdlib>
 
+#include <QQmlFileSelector>
 #include <QMenu>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
@@ -46,9 +47,15 @@ void setTrayIcon (QQmlApplicationEngine &engine) {
 }
 
 int main (int argc, char *argv[]) {
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   App app(argc, argv);
-  QQmlApplicationEngine engine(QUrl("qrc:/ui/views/mainWindow/mainWindow.qml"));
+  QQmlApplicationEngine engine;
 
+  // Provide `+custom` folders for custom components.
+  QQmlFileSelector *selector = new QQmlFileSelector(&engine);
+  selector->setExtraSelectors(QStringList("custom"));
+
+  engine.load(QUrl("qrc:/ui/views/mainWindow/mainWindow.qml"));
   if (engine.rootObjects().isEmpty())
     return EXIT_FAILURE;
 

@@ -3,6 +3,8 @@ import QtQuick 2.7
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/image'
 
+import 'qrc:/ui/style' as Style
+
 // ===================================================================
 
 Item {
@@ -18,9 +20,7 @@ Item {
 
     ActionButton {
         anchors.centerIn: parent
-        background: Rectangle {
-            color: 'transparent'
-        }
+        background: Style.CollapseStyle.background
         icon: 'collapse'
         iconSize: 32
         id: button

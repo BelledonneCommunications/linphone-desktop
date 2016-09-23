@@ -33,6 +33,8 @@
     <file>ui/components/form/DarkButton.qml</file>
     <file>ui/components/invertedMouseArea/InvertedMouseArea.qml</file>
     <file>ui/scripts/utils.js</file>
+    <file>ui/style/qmldir</file>
+    <file>ui/style/collapse/Style.qml</file>
     <file>ui/views/newCall.qml</file>
     <file>ui/views/manageAccounts.qml</file>
     <file>ui/views/mainWindow/mainWindow.qml</file>

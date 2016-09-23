@@ -17,7 +17,6 @@ Item {
         }
 
         _mouseArea.parent = (function () {
-            // Search root.
             var root = item
 
             while (root.parent != null) {
