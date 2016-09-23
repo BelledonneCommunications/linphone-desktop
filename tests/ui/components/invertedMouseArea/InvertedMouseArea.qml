@@ -18,13 +18,13 @@ Item {
 
         _mouseArea.parent = (function () {
             // Search root.
-            var p = item
+            var root = item
 
-            while (p.parent != null) {
-                p = p.parent
+            while (root.parent != null) {
+                root = root.parent
             }
 
-            return p
+            return root
         })()
     }
 
