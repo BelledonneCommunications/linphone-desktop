@@ -5,9 +5,11 @@ echo "  <qresource prefix=\"/\">"
 
 for filename in $(find languages/ ui/ imgs/ -type f)
 do
+    basename="${filename##*/}"
     extension="${filename##*.}"
 
-    if [[ "${extension}" == @(qml|svg|png|qm|js) ]]; then
+    if [[ "${extension}" == @(qml|svg|png|qm|js) ||
+          "${basename}" == "qmldir" ]]; then
         echo "    <file>$filename</file>"
     fi
 done

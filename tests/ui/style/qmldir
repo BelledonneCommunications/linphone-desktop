@@ -1,0 +1,2 @@
+module Style
+singleton CollapseStyle 1.0 collapse/Style.qml
