@@ -1,2 +1,5 @@
 module Style
+
+singleton Constants 1.0 Constants.qml
+
 singleton CollapseStyle 1.0 collapse/Style.qml

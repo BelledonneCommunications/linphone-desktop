@@ -35,6 +35,7 @@
     <file>ui/scripts/utils.js</file>
     <file>ui/style/qmldir</file>
     <file>ui/style/collapse/Style.qml</file>
+    <file>ui/style/Constants.qml</file>
     <file>ui/views/newCall.qml</file>
     <file>ui/views/manageAccounts.qml</file>
     <file>ui/views/mainWindow/mainWindow.qml</file>

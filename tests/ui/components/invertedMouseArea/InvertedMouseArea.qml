@@ -1,5 +1,7 @@
 import QtQuick 2.0
 
+import 'qrc:/ui/style'
+
 // ===================================================================
 // Helper to handle button click outside a component.
 // ===================================================================
@@ -67,7 +69,7 @@ Item {
         MouseArea {
             anchors.fill: parent
             propagateComposedEvents: true
-            z: 9999999999 // Ugly! But it's necessary in some cases...
+            z: Constants.zMax
 
             onPressed: {
                 // Propagate event.

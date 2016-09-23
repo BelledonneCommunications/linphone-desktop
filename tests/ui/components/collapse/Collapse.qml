@@ -8,14 +8,18 @@ import 'qrc:/ui/style'
 // ===================================================================
 
 Item {
-    property bool _isCollapsed: false
+    property bool _collapsed: false
 
     signal collapsed (bool collapsed)
 
     function collapse () {
-        _isCollapsed = !_isCollapsed
-        collapsed(_isCollapsed)
+        _collapsed = !_collapsed
+        collapsed(_collapsed)
         rotate.start()
+    }
+
+    function isCollapsed () {
+        return _collapsed
     }
 
     ActionButton {
@@ -34,9 +38,9 @@ Item {
 
         direction: RotationAnimation.Clockwise
         duration: CollapseStyle.animationDuration
-        from: _isCollapsed ? 0 : 180
+        from: _collapsed ? 0 : 180
         property: 'rotation'
         target: button
-        to: _isCollapsed ? 180 : 0
+        to: _collapsed ? 180 : 0
     }
 }

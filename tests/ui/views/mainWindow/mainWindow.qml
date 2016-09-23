@@ -37,7 +37,7 @@ ApplicationWindow {
                 Layout.fillHeight: parent.height
                 id: collapse
 
-                onCollapsed: mainWindowStates.state = collapsed
+                onCollapsed: mainWindowStates.state = isCollapsed()
                     ? 'collapsed'
                     : ''
             }
@@ -70,7 +70,7 @@ ApplicationWindow {
                 onMenuClosed: content.enabled = true
 
                 onMenuOpened: {
-                    if (!collapse.isCollapsed) {
+                    if (!collapse.isCollapsed()) {
                         collapse.collapse()
                     }
                     content.enabled = false
