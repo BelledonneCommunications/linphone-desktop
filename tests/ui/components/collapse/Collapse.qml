@@ -1,9 +1,7 @@
 import QtQuick 2.7
 
 import 'qrc:/ui/components/form'
-import 'qrc:/ui/components/image'
-
-import 'qrc:/ui/style' as Style
+import 'qrc:/ui/style'
 
 // ===================================================================
 
@@ -19,19 +17,22 @@ Item {
     }
 
     ActionButton {
-        anchors.centerIn: parent
-        background: Style.CollapseStyle.background
-        icon: 'collapse'
-        iconSize: 32
         id: button
+
+        anchors.centerIn: parent
+        background: CollapseStyle.background
+        icon: CollapseStyle.icon
+        iconSize: CollapseStyle.iconSize
+
         onClicked: collapse()
     }
 
     RotationAnimation {
-        direction: RotationAnimation.Clockwise
-        duration: 200
-        from: isCollapsed ? 0 : 180
         id: rotate
+
+        direction: RotationAnimation.Clockwise
+        duration: CollapseStyle.animationDuration
+        from: isCollapsed ? 0 : 180
         property: 'rotation'
         target: button
         to: isCollapsed ? 180 : 0
