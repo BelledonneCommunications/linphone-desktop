@@ -1,5 +1,7 @@
 import QtQuick 2.7
 
+import 'qrc:/ui/style'
+
 // ===================================================================
 // Description content used by dialogs.
 // ===================================================================
@@ -7,14 +9,15 @@ import QtQuick 2.7
 Item {
     property alias text: description.text
 
-    height: text ? 90 : 25
+    height: text ? DialogStyle.description.height : DialogStyle.description.minHeight
 
     Text {
-        anchors.fill: parent
-        anchors.leftMargin: 50
-        anchors.rightMargin: 50
-        font.pointSize: 12
         id: description
+
+        anchors.fill: parent
+        anchors.leftMargin: DialogStyle.leftMargin
+        anchors.rightMargin: DialogStyle.rightMargin
+        font.pointSize: DialogStyle.description.fontSize
         verticalAlignment: Text.AlignVCenter
         wrapMode: Text.WordWrap
     }

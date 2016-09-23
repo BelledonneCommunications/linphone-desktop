@@ -1,24 +1,30 @@
 import QtQuick 2.7
 
 import 'qrc:/ui/components/form'
+import 'qrc:/ui/style'
 
+// ===================================================================
+// A simple dialog with OK/Cancel buttons.
 // ===================================================================
 
 DialogPlus {
+    id: dialog
+
     buttons: [
         DarkButton {
-            onClicked: exit(0)
             text: qsTr('cancel')
+
+            onClicked: exit(0)
         },
         DarkButton {
-            onClicked: exit(1)
             text: qsTr('confirm')
+
+            onClicked: exit(1)
         }
     ]
     centeredButtons: true
-    id: dialog
-    maximumWidth: 370
-    maximumHeight: 150
-    minimumWidth: 370
-    minimumHeight: 150
+    maximumHeight: DialogStyle.confirm.height
+    maximumWidth: DialogStyle.confirm.width
+    minimumHeight: DialogStyle.confirm.height
+    minimumWidth: DialogStyle.confirm.width
 }

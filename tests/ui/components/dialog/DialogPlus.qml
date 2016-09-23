@@ -2,33 +2,35 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 
+import 'qrc:/ui/style'
+
 // ===================================================================
 // Helper to build quickly dialogs.
 // ===================================================================
 
 Window {
     default property alias content: content.data // Required.
-    property alias buttons: buttons.data // Required.
+    property alias buttons: buttons.data // Optionnal.
     property alias descriptionText: description.text // Optionnal.
-    property bool centeredButtons // Optionnal.
+    property bool centeredButtons: false
 
-    property bool disableExitStatus // Internal property.
+    property bool _disableExitStatus
 
     signal exitStatus (int status)
 
-    modality: Qt.WindowModal
-
-    // Handle normal windows close.
-    onClosing: !disableExitStatus && exitStatus(0)
-
     // Derived class must use this function instead of close.
     function exit (status) {
-        if (!disableExitStatus) {
-            disableExitStatus = true
+        if (!_disableExitStatus) {
+            _disableExitStatus = true
             exitStatus(status)
             close()
         }
     }
+
+    modality: Qt.WindowModal
+
+    // Handle normal windows close.
+    onClosing: !_disableExitStatus && exitStatus(0)
 
     ColumnLayout {
         anchors.fill: parent
@@ -36,29 +38,32 @@ Window {
 
         // Description.
         DialogDescription {
-            Layout.fillWidth: true
             id: description
+
+            Layout.fillWidth: true
         }
 
         // Content.
         Item {
+            id: content
+
             Layout.fillHeight: true
             Layout.fillWidth: true
-            id: content
         }
 
         // Buttons.
         Item {
             Layout.fillWidth: true
-            height: 60
+            Layout.preferredHeight: DialogStyle.buttonsAreaHeight
 
             Row {
+                id: buttons
+
                 anchors.left: (!centeredButtons && parent.left) || undefined
                 anchors.centerIn: centeredButtons ? parent : undefined
-                anchors.leftMargin: 50
-                height: 30
-                id: buttons
-                spacing: 20
+                anchors.leftMargin: DialogStyle.leftMargin
+                anchors.verticalCenter: (!centeredButtons && parent.verticalCenter) || undefined
+                spacing: DialogStyle.buttonsSpacing
             }
         }
     }
