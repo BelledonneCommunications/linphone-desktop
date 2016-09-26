@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/contact'
@@ -8,6 +7,8 @@ import 'qrc:/ui/components/view'
 
 import 'qrc:/ui/style/components'
 
+// ===================================================================
+
 ColumnLayout {
     id: item
 
@@ -15,16 +16,19 @@ ColumnLayout {
 
     // Legend.
     Row {
-        Layout.preferredHeight: 35
-        spacing: 30
+        Layout.topMargin: TimelineStyle.legend.topMargin
+        Layout.bottomMargin: TimelineStyle.legend.bottomMargin
+        Layout.leftMargin: TimelineStyle.legend.leftMargin
+        spacing: TimelineStyle.legend.spacing
 
         Icon {
-            iconSize: 20
+            icon: TimelineStyle.legend.icon
+            iconSize: TimelineStyle.legend.iconSize
         }
 
         Text {
-            color: '#5A585B'
-            font.pointSize: 13
+            color: TimelineStyle.legend.color
+            font.pointSize: TimelineStyle.legend.fontSize
             height: parent.height
             text: qsTr('timelineTitle')
             verticalAlignment: Text.AlignVCenter
