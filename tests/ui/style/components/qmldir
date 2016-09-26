@@ -1,0 +1,8 @@
+# See: https://wiki.qt.io/Qml_Styling
+
+module Style
+
+singleton CollapseStyle 1.0 Collapse.qml
+singleton DialogStyle 1.0 Dialog.qml
+singleton PopupStyle 1.0 Popup.qml
+singleton SearchBoxStyle 1.0 SearchBox.qml

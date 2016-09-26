@@ -1,8 +1,0 @@
-# See: https://wiki.qt.io/Qml_Styling
-
-module Style
-
-singleton Constants 1.0 Constants.qml
-
-singleton CollapseStyle 1.0 components/Collapse.qml
-singleton DialogStyle 1.0 components/Dialog.qml

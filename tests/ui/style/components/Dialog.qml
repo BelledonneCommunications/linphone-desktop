@@ -11,7 +11,7 @@ QtObject {
         property int topMargin: 15
     }
 
-    property QtObject confirm: QtObject {
+    property QtObject confirmDialog: QtObject {
         property int height: 150
         property int width: 370
     }

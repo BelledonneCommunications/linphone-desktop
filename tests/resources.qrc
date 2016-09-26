@@ -18,6 +18,8 @@
     <file>ui/components/contact/ContactDescription.qml</file>
     <file>ui/components/contact/Avatar.qml</file>
     <file>ui/components/popup/DropDownMenu.qml</file>
+    <file>ui/components/popup/PopupShadow.qml</file>
+    <file>ui/components/view/ScrollableListView.qml</file>
     <file>ui/components/dialog/ConfirmDialog.qml</file>
     <file>ui/components/dialog/DialogDescription.qml</file>
     <file>ui/components/dialog/DialogPlus.qml</file>
@@ -33,10 +35,14 @@
     <file>ui/components/form/DarkButton.qml</file>
     <file>ui/components/invertedMouseArea/InvertedMouseArea.qml</file>
     <file>ui/scripts/utils.js</file>
+    <file>ui/style/components/qmldir</file>
     <file>ui/style/components/Dialog.qml</file>
     <file>ui/style/components/Collapse.qml</file>
-    <file>ui/style/qmldir</file>
-    <file>ui/style/Constants.qml</file>
+    <file>ui/style/components/SearchBox.qml</file>
+    <file>ui/style/components/Popup.qml</file>
+    <file>ui/style/global/qmldir</file>
+    <file>ui/style/global/Colors.qml</file>
+    <file>ui/style/global/Constants.qml</file>
     <file>ui/views/newCall.qml</file>
     <file>ui/views/manageAccounts.qml</file>
     <file>ui/views/mainWindow/mainWindow.qml</file>

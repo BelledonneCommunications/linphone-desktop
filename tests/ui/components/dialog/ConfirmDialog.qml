@@ -1,7 +1,8 @@
 import QtQuick 2.7
 
 import 'qrc:/ui/components/form'
-import 'qrc:/ui/style'
+
+import 'qrc:/ui/style/components'
 
 // ===================================================================
 // A simple dialog with OK/Cancel buttons.
@@ -23,8 +24,8 @@ DialogPlus {
         }
     ]
     centeredButtons: true
-    maximumHeight: DialogStyle.confirm.height
-    maximumWidth: DialogStyle.confirm.width
-    minimumHeight: DialogStyle.confirm.height
-    minimumWidth: DialogStyle.confirm.width
+    maximumHeight: DialogStyle.confirmDialog.height
+    maximumWidth: DialogStyle.confirmDialog.width
+    minimumHeight: DialogStyle.confirmDialog.height
+    minimumWidth: DialogStyle.confirmDialog.width
 }

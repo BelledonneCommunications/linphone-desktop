@@ -1,9 +1,11 @@
-import QtGraphicalEffects 1.0
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
 import 'qrc:/ui/components/invertedMouseArea'
 import 'qrc:/ui/components/popup'
+
+import 'qrc:/ui/style/components'
+import 'qrc:/ui/style/global'
 
 // ===================================================================
 
@@ -15,57 +17,47 @@ Item {
     signal menuOpened ()
     signal searchTextChanged (string text)
 
-    implicitHeight: searchField.height
-
-    function hideMenu () {
+    function _hideMenu () {
         menu.hide()
         shadow.visible = false
         searchField.focus = false
+
         menuClosed()
     }
 
-    function showMenu () {
+    function _showMenu () {
         menu.show()
         shadow.visible = true
+
         menuOpened()
     }
+
+    implicitHeight: searchField.height
 
     Item {
         implicitHeight: searchField.height + menu.height
         width: parent.width
 
         TextField {
-            background: Rectangle {
-                implicitHeight: 30
-            }
             id: searchField
+
+            background: SearchBoxStyle.searchFieldBackground
             width: parent.width
 
-            Keys.onEscapePressed: hideMenu()
+            Keys.onEscapePressed: _hideMenu()
 
-            onActiveFocusChanged: activeFocus && showMenu()
+            onActiveFocusChanged: activeFocus && _showMenu()
             onTextChanged: searchTextChanged(text)
         }
 
         DropDownMenu {
-            anchors.top: searchField.bottom
             id: menu
+
+            anchors.top: searchField.bottom
             width: searchField.width
-            z: 999 // Menu must be above any component.
+            z: Constants.zPopup
 
-            Keys.onEscapePressed: hideMenu()
-        }
-
-        DropShadow {
-            anchors.fill: searchField
-            color: "#80000000"
-            horizontalOffset: 2
-            id: shadow
-            radius: 8.0
-            samples: 15
-            source: searchField
-            verticalOffset: 2
-            visible: false
+            Keys.onEscapePressed: _hideMenu()
         }
 
         InvertedMouseArea {
@@ -74,7 +66,15 @@ Item {
             parent: parent
             width: parent.width
 
-            onPressed: hideMenu()
+            onPressed: _hideMenu()
+        }
+
+        PopupShadow {
+            id: shadow
+
+            anchors.fill: searchField
+            source: searchField
+            visible: false
         }
     }
 }

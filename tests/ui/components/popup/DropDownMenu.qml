@@ -5,6 +5,7 @@ import QtQuick.Controls 2.0
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/style'
 
 Rectangle {
     readonly property int entryHeight: 50
@@ -150,14 +151,9 @@ Rectangle {
         }
     }
 
-    DropShadow {
+    PopupShadow {
         anchors.fill: listContainer
-        color: "#80000000"
-        horizontalOffset: 2
-        radius: 8.0
-        samples: 15
         source: listContainer
-        verticalOffset: 2
         visible: true
     }
 }

@@ -6,7 +6,7 @@ QtObject {
     property int iconSize: 32
     property string icon: 'collapse'
 
-    property var background: Rectangle {
+    property Rectangle background: Rectangle {
         color: 'transparent'
     }
 }
