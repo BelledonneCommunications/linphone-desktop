@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-import 'qrc:/ui/components/form'
+import Linphone 1.0
 
 // ===================================================================
 

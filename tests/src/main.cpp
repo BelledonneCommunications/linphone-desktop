@@ -56,7 +56,7 @@ int main (int argc, char *argv[]) {
   selector->setExtraSelectors(QStringList("custom"));
 
   // Set modules paths.
-  engine.addImportPath(":/ui/style");
+  engine.addImportPath(":/ui/");
 
   engine.load(QUrl("qrc:/ui/views/mainWindow/mainWindow.qml"));
   if (engine.rootObjects().isEmpty())

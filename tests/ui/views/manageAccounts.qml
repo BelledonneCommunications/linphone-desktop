@@ -2,9 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import 'qrc:/ui/components/dialog'
-import 'qrc:/ui/components/form'
-import 'qrc:/ui/components/view'
+import Linphone 1.0
 
 DialogPlus {
     descriptionText: qsTr('manageAccountsDescription')

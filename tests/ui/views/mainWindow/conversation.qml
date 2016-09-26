@@ -2,10 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-import 'qrc:/ui/components/contact'
-import 'qrc:/ui/components/form'
-import 'qrc:/ui/components/scrollBar'
-import 'qrc:/ui/components/chat'
+import Linphone 1.0
 
 ColumnLayout  {
     spacing: 0

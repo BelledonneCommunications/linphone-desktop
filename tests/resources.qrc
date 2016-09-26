@@ -2,49 +2,7 @@
   <qresource prefix="/">
     <file>languages/fr.qm</file>
     <file>languages/en.qm</file>
-    <file>ui/components/scrollBar/ForceScrollBar.qml</file>
-    <file>ui/components/searchBox/SearchBox.qml</file>
-    <file>ui/components/misc/MenuEntry.qml</file>
-    <file>ui/components/timeline/Timeline.qml</file>
-    <file>ui/components/image/Icon.qml</file>
-    <file>ui/components/select/SelectContact.qml</file>
-    <file>ui/components/collapse/Collapse.qml</file>
-    <file>ui/components/chat/IncomingMessage.qml</file>
-    <file>ui/components/chat/Chat.qml</file>
-    <file>ui/components/chat/OutgoingMessage.qml</file>
-    <file>ui/components/chat/Event.qml</file>
-    <file>ui/components/chat/Message.qml</file>
-    <file>ui/components/contact/Contact.qml</file>
-    <file>ui/components/contact/ContactDescription.qml</file>
-    <file>ui/components/contact/Avatar.qml</file>
-    <file>ui/components/popup/DropDownMenu.qml</file>
-    <file>ui/components/popup/PopupShadow.qml</file>
-    <file>ui/components/view/ScrollableListView.qml</file>
-    <file>ui/components/dialog/ConfirmDialog.qml</file>
-    <file>ui/components/dialog/DialogDescription.qml</file>
-    <file>ui/components/dialog/DialogPlus.qml</file>
-    <file>ui/components/form/CheckBoxText.qml</file>
-    <file>ui/components/form/DropZone.qml</file>
-    <file>ui/components/form/LightButton.qml</file>
-    <file>ui/components/form/ListForm.qml</file>
-    <file>ui/components/form/ExclusiveButtons.qml</file>
-    <file>ui/components/form/ActionBar.qml</file>
-    <file>ui/components/form/ActionButton.qml</file>
-    <file>ui/components/form/TransparentComboBox.qml</file>
-    <file>ui/components/form/SmallButton.qml</file>
-    <file>ui/components/form/DarkButton.qml</file>
-    <file>ui/components/invertedMouseArea/InvertedMouseArea.qml</file>
     <file>ui/scripts/utils.js</file>
-    <file>ui/style/ComponentsStyle/qmldir</file>
-    <file>ui/style/ComponentsStyle/DialogStyle.qml</file>
-    <file>ui/style/ComponentsStyle/ScrollBarStyle.qml</file>
-    <file>ui/style/ComponentsStyle/TimelineStyle.qml</file>
-    <file>ui/style/ComponentsStyle/SearchBoxStyle.qml</file>
-    <file>ui/style/ComponentsStyle/CollapseStyle.qml</file>
-    <file>ui/style/ComponentsStyle/PopupStyle.qml</file>
-    <file>ui/style/AppStyle/qmldir</file>
-    <file>ui/style/AppStyle/Colors.qml</file>
-    <file>ui/style/AppStyle/Constants.qml</file>
     <file>ui/views/newCall.qml</file>
     <file>ui/views/manageAccounts.qml</file>
     <file>ui/views/mainWindow/mainWindow.qml</file>
@@ -52,6 +10,47 @@
     <file>ui/views/mainWindow/home.qml</file>
     <file>ui/views/mainWindow/contact.qml</file>
     <file>ui/views/mainWindow/conversation.qml</file>
+    <file>ui/Linphone/Popup/DropDownMenu.qml</file>
+    <file>ui/Linphone/Popup/PopupShadow.qml</file>
+    <file>ui/Linphone/qmldir</file>
+    <file>ui/Linphone/ScrollBar/ForceScrollBar.qml</file>
+    <file>ui/Linphone/Chat/IncomingMessage.qml</file>
+    <file>ui/Linphone/Chat/Chat.qml</file>
+    <file>ui/Linphone/Chat/OutgoingMessage.qml</file>
+    <file>ui/Linphone/Chat/Event.qml</file>
+    <file>ui/Linphone/Chat/Message.qml</file>
+    <file>ui/Linphone/SearchBox/SearchBox.qml</file>
+    <file>ui/Linphone/Form/CheckBoxText.qml</file>
+    <file>ui/Linphone/Form/DropZone.qml</file>
+    <file>ui/Linphone/Form/LightButton.qml</file>
+    <file>ui/Linphone/Form/ListForm.qml</file>
+    <file>ui/Linphone/Form/ExclusiveButtons.qml</file>
+    <file>ui/Linphone/Form/ActionBar.qml</file>
+    <file>ui/Linphone/Form/ActionButton.qml</file>
+    <file>ui/Linphone/Form/TransparentComboBox.qml</file>
+    <file>ui/Linphone/Form/SmallButton.qml</file>
+    <file>ui/Linphone/Form/DarkButton.qml</file>
+    <file>ui/Linphone/View/ScrollableListView.qml</file>
+    <file>ui/Linphone/Collapse/Collapse.qml</file>
+    <file>ui/Linphone/Styles/qmldir</file>
+    <file>ui/Linphone/Styles/DialogStyle.qml</file>
+    <file>ui/Linphone/Styles/ScrollBarStyle.qml</file>
+    <file>ui/Linphone/Styles/TimelineStyle.qml</file>
+    <file>ui/Linphone/Styles/SearchBoxStyle.qml</file>
+    <file>ui/Linphone/Styles/CollapseStyle.qml</file>
+    <file>ui/Linphone/Styles/PopupStyle.qml</file>
+    <file>ui/Linphone/Timeline/Timeline.qml</file>
+    <file>ui/Linphone/Misc/MenuEntry.qml</file>
+    <file>ui/Linphone/InvertedMouseArea/InvertedMouseArea.qml</file>
+    <file>ui/Linphone/Select/SelectContact.qml</file>
+    <file>ui/Linphone/Contact/Contact.qml</file>
+    <file>ui/Linphone/Contact/ContactDescription.qml</file>
+    <file>ui/Linphone/Contact/Avatar.qml</file>
+    <file>ui/Linphone/Constants.qml</file>
+    <file>ui/Linphone/Dialog/ConfirmDialog.qml</file>
+    <file>ui/Linphone/Dialog/DialogDescription.qml</file>
+    <file>ui/Linphone/Dialog/DialogPlus.qml</file>
+    <file>ui/Linphone/Image/Icon.qml</file>
     <file>imgs/lost_outgoing_call.svg</file>
     <file>imgs/led_disconnected.svg</file>
     <file>imgs/valid.svg</file>
