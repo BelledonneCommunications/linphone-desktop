@@ -9,7 +9,9 @@ import 'qrc:/ui/style/components'
 Item {
     property alias text: description.text
 
-    height: text ? DialogStyle.description.height : DialogStyle.description.minHeight
+    height: (!text && DialogStyle.description.verticalMargin) || undefined
+    implicitHeight: (text && (description.implicitHeight + DialogStyle.description.verticalMargin)) ||
+        0
 
     Text {
         id: description
