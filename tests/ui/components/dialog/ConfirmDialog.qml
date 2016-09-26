@@ -5,7 +5,7 @@ import 'qrc:/ui/components/form'
 import 'qrc:/ui/style/components'
 
 // ===================================================================
-// A simple dialog with OK/Cancel buttons.
+// A dialog with OK/Cancel buttons.
 // ===================================================================
 
 DialogPlus {

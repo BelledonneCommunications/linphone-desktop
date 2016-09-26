@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.7
 
 import 'qrc:/ui/style/global'
 
@@ -49,9 +49,9 @@ Item {
     // See: http://doc.qt.io/qt-5/qml-qtqml-component.html#completed-signal
     //
     // The creation order of components in a view is undefined,
-    // so the mouse area mustt be created only when `enabled == true`.
+    // so the mouse area must be created only when `enabled == true`.
     //
-    // In the first view render, `enabled` must equal false.
+    // In the first render, `enabled` must be equal to false.
     Component.onCompleted: enabled && _createMouseArea()
     Component.onDestruction: _deleteMouseArea()
 
