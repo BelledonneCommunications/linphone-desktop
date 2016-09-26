@@ -1,17 +1,18 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import 'qrc:/ui/style/components'
+
 // ===================================================================
 
 ScrollBar {
-    background: Rectangle {
-        color: '#F4F4F4'
-    }
+    background: ScrollBarStyle.background
     contentItem: Rectangle {
-        color: scrollBar.pressed ? '#5E5E5F' : '#C5C5C5'
-        implicitHeight: 100
-        implicitWidth: 8
-        radius: 10
+        color: pressed
+            ? ScrollBarStyle.pressedColor
+            : ScrollBarStyle.color
+        implicitHeight: ScrollBarStyle.contentItem.implicitHeight
+        implicitWidth: ScrollBarStyle.contentItem.implicitWidth
+        radius: ScrollBarStyle.contentItem.radius
     }
-    id: scrollBar
 }

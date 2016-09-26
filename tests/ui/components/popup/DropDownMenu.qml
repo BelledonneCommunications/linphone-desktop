@@ -12,10 +12,6 @@ Rectangle {
 
     property int maxMenuHeight
 
-    border {
-        color: '#CCCCCC'
-        width: 2
-    }
     implicitHeight: {
         var height = model.count * entryHeight
         return height > maxMenuHeight ? maxMenuHeight : height

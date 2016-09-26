@@ -36,10 +36,11 @@
     <file>ui/components/invertedMouseArea/InvertedMouseArea.qml</file>
     <file>ui/scripts/utils.js</file>
     <file>ui/style/components/qmldir</file>
-    <file>ui/style/components/Dialog.qml</file>
-    <file>ui/style/components/Collapse.qml</file>
-    <file>ui/style/components/SearchBox.qml</file>
-    <file>ui/style/components/Popup.qml</file>
+    <file>ui/style/components/DialogStyle.qml</file>
+    <file>ui/style/components/ScrollBarStyle.qml</file>
+    <file>ui/style/components/SearchBoxStyle.qml</file>
+    <file>ui/style/components/CollapseStyle.qml</file>
+    <file>ui/style/components/PopupStyle.qml</file>
     <file>ui/style/global/qmldir</file>
     <file>ui/style/global/Colors.qml</file>
     <file>ui/style/global/Constants.qml</file>

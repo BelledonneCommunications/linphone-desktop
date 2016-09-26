@@ -2,7 +2,8 @@
 
 module Style
 
-singleton CollapseStyle 1.0 Collapse.qml
-singleton DialogStyle 1.0 Dialog.qml
-singleton PopupStyle 1.0 Popup.qml
-singleton SearchBoxStyle 1.0 SearchBox.qml
+singleton CollapseStyle 1.0 CollapseStyle.qml
+singleton DialogStyle 1.0 DialogStyle.qml
+singleton PopupStyle 1.0 PopupStyle.qml
+singleton SearchBoxStyle 1.0 SearchBoxStyle.qml
+singleton ScrollBarStyle 1.0 ScrollBarStyle.qml
