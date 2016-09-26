@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+lupdate-qt5 -verbose $1/linphone.pro
+lrelease-qt5 $1/linphone.pro

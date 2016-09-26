@@ -1,0 +1,44 @@
+#!/usr/bin/bash
+
+PRO_FILE="linphone.pro"
+
+cd $1
+
+echo "QT = core gui quick widgets quickcontrols2
+
+TARGET = linphone
+TEMPLATE = app
+CONFIG += c++11
+
+RESOURCES = resources.qrc" > $PRO_FILE
+
+echo "
+SOURCES = \\" >> $PRO_FILE
+for filename in $(find src/ -name \*.cpp -type f | sort)
+do
+    echo "  $filename \\" >> $PRO_FILE
+done
+
+echo "
+HEADERS = \\" >> $PRO_FILE
+for filename in $(find src/ -name \*.hpp -type f | sort)
+do
+    echo "  $filename \\" >> $PRO_FILE
+done
+
+echo "
+TRANSLATIONS = \\" >> $PRO_FILE
+for filename in $(find languages/ -name \*.ts -type f | sort)
+do
+    echo "  $filename \\" >> $PRO_FILE
+done
+
+echo "
+lupdate_only{
+  SOURCES = \\" >> $PRO_FILE
+for filename in $(find ui/ -type f -name \*.qml -printf '%h\n' | sort -u)
+do
+    echo "    $filename/*.qml \\" >> $PRO_FILE
+done
+echo "
+}" >> $PRO_FILE

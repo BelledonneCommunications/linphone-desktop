@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+RESOURCE_FILE="resources.qrc"
+
+cd $1
+
+echo "<!DOCTYPE RCC><RCC version=\"1.0\">
+  <qresource prefix=\"/\">" > $RESOURCE_FILE
+
+for filename in $(find languages/ ui/ imgs/ -type f | sort)
+do
+    basename="${filename##*/}"
+    extension="${filename##*.}"
+
+    if [[ "${extension}" == @(qml|svg|png|qm|js) ||
+          "${basename}" == "qmldir" ]]; then
+        echo "    <file>$filename</file>" >> $RESOURCE_FILE
+    fi
+done
+
+echo "  </qresource>
+</RCC>" >> $RESOURCE_FILE
