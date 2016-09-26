@@ -13,54 +13,7 @@
     </message>
 </context>
 <context>
-    <name>DropZone</name>
-    <message>
-        <source>fileChooserTitle</source>
-        <translation>Please choose one or many files</translation>
-    </message>
-</context>
-<context>
-    <name>Event</name>
-    <message>
-        <source>incomingCall</source>
-        <translation>Incoming call</translation>
-    </message>
-    <message>
-        <source>hangup</source>
-        <translation>End call</translation>
-    </message>
-    <message>
-        <source>lostIncomingCall</source>
-        <translation>Lost incoming call</translation>
-    </message>
-    <message>
-        <source>lostOutgoingCall</source>
-        <translation>Lost outgoing call</translation>
-    </message>
-</context>
-<context>
-    <name>ListForm</name>
-    <message>
-        <source>fillPlaceholder</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SelectContact</name>
-    <message>
-        <source>contactSearch</source>
-        <translation>Search contact or enter SIP address</translation>
-    </message>
-</context>
-<context>
-    <name>Timeline</name>
-    <message>
-        <source>timelineTitle</source>
-        <translation>Previously</translation>
-    </message>
-</context>
-<context>
-    <name>contact</name>
+    <name>Contact</name>
     <message>
         <source>sipAccounts</source>
         <translation>SIP ACCOUNT(S)</translation>
@@ -79,7 +32,7 @@
     </message>
 </context>
 <context>
-    <name>contacts</name>
+    <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
         <translation>Search contact</translation>
@@ -106,7 +59,7 @@
     </message>
 </context>
 <context>
-    <name>conversation</name>
+    <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
         <translation>All</translation>
@@ -125,11 +78,33 @@
     </message>
 </context>
 <context>
-    <name>home</name>
+    <name>DropZone</name>
     <message>
-        <source>displayTooltip</source>
-        <translation>Display tooltips to discover Linphone Desktop</translation>
+        <source>fileChooserTitle</source>
+        <translation>Please choose one or many files</translation>
     </message>
+</context>
+<context>
+    <name>Event</name>
+    <message>
+        <source>incomingCall</source>
+        <translation>Incoming call</translation>
+    </message>
+    <message>
+        <source>hangup</source>
+        <translation>End call</translation>
+    </message>
+    <message>
+        <source>lostIncomingCall</source>
+        <translation>Lost incoming call</translation>
+    </message>
+    <message>
+        <source>lostOutgoingCall</source>
+        <translation>Lost outgoing call</translation>
+    </message>
+</context>
+<context>
+    <name>Home</name>
     <message>
         <source>invitContactQuestion</source>
         <translation>Are your friends already know Linphone?</translation>
@@ -144,11 +119,22 @@
     </message>
     <message>
         <source>addContact</source>
-        <translation>ADD CONTACTS</translation>
+        <translation></translation>
+    </message>
+    <message>
+        <source>displayTooltip</source>
+        <translation>Display tooltips to discover Linphone Desktop</translation>
     </message>
 </context>
 <context>
-    <name>mainWindow</name>
+    <name>ListForm</name>
+    <message>
+        <source>fillPlaceholder</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Search contact, start call, start chat...</translation>
@@ -163,26 +149,42 @@
     </message>
 </context>
 <context>
-    <name>manageAccounts</name>
-    <message>
-        <source>manageAccountsTitle</source>
-        <translation>Presence and accounts</translation>
-    </message>
+    <name>ManageAccounts</name>
     <message>
         <source>manageAccountsDescription</source>
         <translation>Select your active account and choose all necessary presence status.</translation>
     </message>
     <message>
-        <source>awayPresence</source>
-        <translation>Away</translation>
+        <source>manageAccountsTitle</source>
+        <translation>Presence and accounts</translation>
+    </message>
+    <message>
+        <source>validate</source>
+        <translation>VALIDATE</translation>
+    </message>
+    <message>
+        <source>onlinePresence</source>
+        <translation>Connected</translation>
+    </message>
+    <message>
+        <source>busyPresence</source>
+        <translation>Busy</translation>
     </message>
     <message>
         <source>beRightBackPresence</source>
         <translation>Be right back</translation>
     </message>
     <message>
-        <source>busyPresence</source>
-        <translation>Busy</translation>
+        <source>awayPresence</source>
+        <translation>Away</translation>
+    </message>
+    <message>
+        <source>onThePhonePresence</source>
+        <translation>On the phone</translation>
+    </message>
+    <message>
+        <source>outToLunchPresence</source>
+        <translation>Out to lunch</translation>
     </message>
     <message>
         <source>doNotDisturbPresence</source>
@@ -193,32 +195,16 @@
         <translation>Moved</translation>
     </message>
     <message>
-        <source>offlinePresence</source>
-        <translation>Disconnected</translation>
-    </message>
-    <message>
-        <source>onThePhonePresence</source>
-        <translation>On the phone</translation>
-    </message>
-    <message>
-        <source>onlinePresence</source>
-        <translation>Connected</translation>
-    </message>
-    <message>
-        <source>outToLunchPresence</source>
-        <translation>Out to lunch</translation>
-    </message>
-    <message>
         <source>usingAnotherMessagingServicePresence</source>
         <translation>Using another messaging service</translation>
     </message>
     <message>
-        <source>validate</source>
-        <translation>VALIDATE</translation>
+        <source>offlinePresence</source>
+        <translation>Disconnected</translation>
     </message>
 </context>
 <context>
-    <name>newCall</name>
+    <name>NewCall</name>
     <message>
         <source>newCallTitle</source>
         <translation>New call</translation>
@@ -226,6 +212,20 @@
     <message>
         <source>cancel</source>
         <translation>CANCEL</translation>
+    </message>
+</context>
+<context>
+    <name>SelectContact</name>
+    <message>
+        <source>contactSearch</source>
+        <translation>Search contact or enter SIP address</translation>
+    </message>
+</context>
+<context>
+    <name>Timeline</name>
+    <message>
+        <source>timelineTitle</source>
+        <translation>Previously</translation>
     </message>
 </context>
 </TS>
