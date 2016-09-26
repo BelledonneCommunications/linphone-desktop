@@ -1,11 +1,11 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import AppStyle 1.0
+import ComponentsStyle 1.0
+
 import 'qrc:/ui/components/invertedMouseArea'
 import 'qrc:/ui/components/popup'
-
-import 'qrc:/ui/style/components'
-import 'qrc:/ui/style/global'
 
 // ===================================================================
 

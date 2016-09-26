@@ -1,11 +1,11 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import ComponentsStyle 1.0
+
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/image'
 import 'qrc:/ui/components/view'
-
-import 'qrc:/ui/style/components'
 
 // ===================================================================
 

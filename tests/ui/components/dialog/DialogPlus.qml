@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 
-import 'qrc:/ui/style/components'
+import ComponentsStyle 1.0
 
 // ===================================================================
 // Helper to build quickly dialogs.

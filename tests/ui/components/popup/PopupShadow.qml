@@ -1,6 +1,6 @@
 import QtGraphicalEffects 1.0
 
-import 'qrc:/ui/style/components'
+import ComponentsStyle 1.0
 
 // ===================================================================
 

@@ -1,8 +1,8 @@
 import QtQuick 2.7
 
-import 'qrc:/ui/components/form'
+import ComponentsStyle 1.0
 
-import 'qrc:/ui/style/components'
+import 'qrc:/ui/components/form'
 
 // ===================================================================
 // A simple component to build collapsed item.

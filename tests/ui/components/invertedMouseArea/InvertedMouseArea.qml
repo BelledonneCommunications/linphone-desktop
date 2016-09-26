@@ -1,6 +1,6 @@
 import QtQuick 2.7
 
-import 'qrc:/ui/style/global'
+import AppStyle 1.0
 
 // ===================================================================
 // Helper to handle button click outside a component.

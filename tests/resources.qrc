@@ -35,16 +35,16 @@
     <file>ui/components/form/DarkButton.qml</file>
     <file>ui/components/invertedMouseArea/InvertedMouseArea.qml</file>
     <file>ui/scripts/utils.js</file>
-    <file>ui/style/components/qmldir</file>
-    <file>ui/style/components/DialogStyle.qml</file>
-    <file>ui/style/components/ScrollBarStyle.qml</file>
-    <file>ui/style/components/TimelineStyle.qml</file>
-    <file>ui/style/components/SearchBoxStyle.qml</file>
-    <file>ui/style/components/CollapseStyle.qml</file>
-    <file>ui/style/components/PopupStyle.qml</file>
-    <file>ui/style/global/qmldir</file>
-    <file>ui/style/global/Colors.qml</file>
-    <file>ui/style/global/Constants.qml</file>
+    <file>ui/style/ComponentsStyle/qmldir</file>
+    <file>ui/style/ComponentsStyle/DialogStyle.qml</file>
+    <file>ui/style/ComponentsStyle/ScrollBarStyle.qml</file>
+    <file>ui/style/ComponentsStyle/TimelineStyle.qml</file>
+    <file>ui/style/ComponentsStyle/SearchBoxStyle.qml</file>
+    <file>ui/style/ComponentsStyle/CollapseStyle.qml</file>
+    <file>ui/style/ComponentsStyle/PopupStyle.qml</file>
+    <file>ui/style/AppStyle/qmldir</file>
+    <file>ui/style/AppStyle/Colors.qml</file>
+    <file>ui/style/AppStyle/Constants.qml</file>
     <file>ui/views/newCall.qml</file>
     <file>ui/views/manageAccounts.qml</file>
     <file>ui/views/mainWindow/mainWindow.qml</file>

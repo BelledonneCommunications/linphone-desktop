@@ -1,7 +1,7 @@
 pragma Singleton
 import QtQuick 2.7
 
-import 'qrc:/ui/style/global'
+import AppStyle 1.0
 
 QtObject {
     property QtObject legend: QtObject {

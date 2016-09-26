@@ -55,6 +55,9 @@ int main (int argc, char *argv[]) {
   QQmlFileSelector *selector = new QQmlFileSelector(&engine);
   selector->setExtraSelectors(QStringList("custom"));
 
+  // Set modules paths.
+  engine.addImportPath(":/ui/style");
+
   engine.load(QUrl("qrc:/ui/views/mainWindow/mainWindow.qml"));
   if (engine.rootObjects().isEmpty())
     return EXIT_FAILURE;

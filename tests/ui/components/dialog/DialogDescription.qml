@@ -1,6 +1,6 @@
 import QtQuick 2.7
 
-import 'qrc:/ui/style/components'
+import ComponentsStyle 1.0
 
 // ===================================================================
 // Description content used by dialogs.
