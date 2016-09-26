@@ -19,6 +19,7 @@ Window {
     signal exitStatus (int status)
 
     // Derived class must use this function instead of close.
+    // Destroy the component and send signal to caller.
     function exit (status) {
         if (!_disableExitStatus) {
             _disableExitStatus = true
@@ -52,19 +53,14 @@ Window {
         }
 
         // Buttons.
-        Item {
-            Layout.fillWidth: true
-            Layout.preferredHeight: DialogStyle.buttonsAreaHeight
+        Row {
+            id: buttons
 
-            Row {
-                id: buttons
-
-                anchors.left: (!centeredButtons && parent.left) || undefined
-                anchors.centerIn: centeredButtons ? parent : undefined
-                anchors.leftMargin: DialogStyle.leftMargin
-                anchors.verticalCenter: (!centeredButtons && parent.verticalCenter) || undefined
-                spacing: DialogStyle.buttonsSpacing
-            }
+            Layout.alignment: (centeredButtons && Qt.AlignHCenter) || Qt.AlignLeft
+            Layout.bottomMargin: DialogStyle.buttons.bottomMargin
+            Layout.leftMargin: (!centeredButtons && DialogStyle.leftMargin) || undefined
+            Layout.topMargin: DialogStyle.buttons.topMargin
+            spacing: DialogStyle.buttons.spacing
         }
     }
 }

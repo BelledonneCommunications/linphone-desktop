@@ -116,8 +116,50 @@ ApplicationWindow {
             Timeline {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
-            }
 
+                model: ListModel {
+                    ListElement {
+                        $presence: 'connected'
+                        $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'connected'
+                        $sipAddress: 'toto.lala.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'disconnected'
+                        $sipAddress: 'machin.truc.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'absent'
+                        $sipAddress: 'hey.listen.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'do_not_disturb'
+                        $sipAddress: 'valentin.cognito.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'do_not_disturb'
+                        $sipAddress: 'charles.henri.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'disconnected'
+                        $sipAddress: 'yesyes.nono.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                    ListElement {
+                        $presence: 'connected'
+                        $sipAddress: 'nsa.sip.linphone.org'
+                        $username: 'Toto'
+                    }
+                }
+            }
             // Logo.
             Rectangle {
                 Layout.fillWidth: true

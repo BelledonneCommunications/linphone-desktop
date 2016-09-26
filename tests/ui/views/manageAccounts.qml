@@ -19,6 +19,7 @@ DialogPlus {
     Item {
         anchors.fill: parent
 
+        // TODO: Compute list max.
         ListView {
             ScrollBar.vertical: ForceScrollBar { }
             anchors.fill: parent
