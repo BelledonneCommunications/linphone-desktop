@@ -18,7 +18,7 @@ QtObject {
 
     property QtObject description: QtObject {
         property int fontSize: 12
-        property int height: 90
-        property int minHeight: 25
+        property int height: 90    // Height with text.
+        property int minHeight: 25 // Height without text.
     }
 }

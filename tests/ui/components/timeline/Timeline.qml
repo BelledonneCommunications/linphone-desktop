@@ -6,11 +6,14 @@ import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/image'
 import 'qrc:/ui/components/view'
 
+import 'qrc:/ui/style/components'
+
 ColumnLayout {
     id: item
 
     property var model
 
+    // Legend.
     Row {
         Layout.preferredHeight: 35
         spacing: 30
@@ -28,12 +31,14 @@ ColumnLayout {
         }
     }
 
+    // Separator.
     Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 1
-        color: '#DEDEDE'
+        Layout.preferredHeight: TimelineStyle.separator.height
+        color: TimelineStyle.separator.color
     }
 
+    // History.
     ScrollableListView {
         Layout.fillHeight: true
         Layout.fillWidth: true

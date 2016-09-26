@@ -7,3 +7,4 @@ singleton DialogStyle 1.0 DialogStyle.qml
 singleton PopupStyle 1.0 PopupStyle.qml
 singleton SearchBoxStyle 1.0 SearchBoxStyle.qml
 singleton ScrollBarStyle 1.0 ScrollBarStyle.qml
+singleton TimelineStyle 1.0 TimelineStyle.qml

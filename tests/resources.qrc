@@ -38,6 +38,7 @@
     <file>ui/style/components/qmldir</file>
     <file>ui/style/components/DialogStyle.qml</file>
     <file>ui/style/components/ScrollBarStyle.qml</file>
+    <file>ui/style/components/TimelineStyle.qml</file>
     <file>ui/style/components/SearchBoxStyle.qml</file>
     <file>ui/style/components/CollapseStyle.qml</file>
     <file>ui/style/components/PopupStyle.qml</file>
