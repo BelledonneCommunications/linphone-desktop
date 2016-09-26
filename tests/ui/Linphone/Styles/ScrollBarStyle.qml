@@ -8,7 +8,7 @@ QtObject {
     property string pressedColor: Constants.colors.b
 
     property Rectangle background: Rectangle {
-        color: Constants.colors.d
+        color: Constants.colors.a
     }
 
     property Rectangle contentItem: Rectangle {
