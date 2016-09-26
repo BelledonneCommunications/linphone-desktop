@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/dialog'
 import 'qrc:/ui/components/form'
-import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/components/view'
 
 DialogPlus {
     descriptionText: qsTr('manageAccountsDescription')
@@ -20,14 +20,9 @@ DialogPlus {
         anchors.fill: parent
 
         // TODO: Compute list max.
-        ListView {
-            ScrollBar.vertical: ForceScrollBar { }
+        ScrollableListView {
             anchors.fill: parent
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-            highlightRangeMode: ListView.ApplyRange
             id: accountsList
-            spacing: 0
 
             // TODO: Remove, use C++ model instead.
             model: ListModel {

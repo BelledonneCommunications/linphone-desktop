@@ -4,15 +4,9 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/form'
 import 'qrc:/ui/components/image'
-import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/components/view'
 
-ListView {
-    ScrollBar.vertical: ForceScrollBar { }
-    boundsBehavior: Flickable.StopAtBounds
-    clip: true
-    highlightRangeMode: ListView.ApplyRange
-    spacing: 0
-
+ScrollableListView {
     model: ListModel {
         ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: 'This is it: fefe efzzzzzzzzzz aaaaaaaaa erfeezffeefzfzefzefzezfefez wfef efef  e efeffefe fee efefefeefef fefefefefe eff fefefe fefeffww.linphone.org' }
         ListElement { $dateSection: 1465389121000; $timestamp: 1465389121000; $type: 'event'; $content: 'incoming_call' }

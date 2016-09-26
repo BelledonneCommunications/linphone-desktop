@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
-import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/components/view'
 
 import 'qrc:/ui/scripts/utils.js' as Utils
 
@@ -55,12 +55,8 @@ ColumnLayout {
         Layout.fillHeight: true
         color: '#F5F5F5'
 
-        ListView {
-            ScrollBar.vertical: ForceScrollBar { }
+        ScrollableListView {
             anchors.fill: parent
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-            highlightRangeMode: ListView.ApplyRange
             spacing: 2
 
             // TODO: Remove, use C++ model instead.

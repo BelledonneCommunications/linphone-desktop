@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/image'
-import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/components/view'
 
 ColumnLayout {
     id: item
@@ -34,14 +34,9 @@ ColumnLayout {
         color: '#DEDEDE'
     }
 
-    ListView {
+    ScrollableListView {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        ScrollBar.vertical: ForceScrollBar { }
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
-        highlightRangeMode: ListView.ApplyRange
-        spacing: 0
 
         model: item.model
 

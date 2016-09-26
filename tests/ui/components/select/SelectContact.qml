@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
+import 'qrc:/ui/components/view'
 
 // TODO: Contacts list.
 Item {
@@ -40,13 +41,9 @@ Item {
         visible: false
         width: parent.width
 
-        ListView {
+        ScrollableListView {
             anchors.fill: parent
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-            highlightRangeMode: ListView.ApplyRange
             id: contactsList
-            spacing: 0
 
             // TODO: Remove, use C++ model instead.
             model: ListModel {

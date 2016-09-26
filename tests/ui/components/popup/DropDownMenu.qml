@@ -4,7 +4,7 @@ import QtQuick.Controls 2.0
 
 import 'qrc:/ui/components/contact'
 import 'qrc:/ui/components/form'
-import 'qrc:/ui/components/scrollBar'
+import 'qrc:/ui/components/view'
 import 'qrc:/ui/style'
 
 Rectangle {
@@ -30,14 +30,9 @@ Rectangle {
         anchors.fill: parent
         id: listContainer
 
-        ListView {
-            ScrollBar.vertical: ForceScrollBar { }
+        ScrollableListView {
             anchors.fill: parent
-            boundsBehavior: Flickable.StopAtBounds
-            clip: true
-            highlightRangeMode: ListView.ApplyRange
             id: list
-            spacing: 0
             height: console.log(model.count) || count
 
             // TODO: Remove, use C++ model instead.
