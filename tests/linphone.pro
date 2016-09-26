@@ -24,18 +24,23 @@ TRANSLATIONS = \
 lupdate_only{
   # Each component folder must be added explicitly.
   SOURCES = \
-    ui/components/chat/*.qml \
-    ui/components/collapse/*.qml \
-    ui/components/contact/*.qml \
-    ui/components/dialog/*.qml \
-    ui/components/form/*.qml \
-    ui/components/misc/*.qml \
-    ui/components/scrollBar/*.qml \
-    ui/components/select/*.qml \
-    ui/components/timeline/*.qml \
-    ui/views/*.qml \
-    ui/views/mainWindow/*.qml
+    ui/Linphone/Chat/*.qml \
+    ui/Linphone/Collapse/*.qml \
+    ui/Linphone/Contact/*.qml \
+    ui/Linphone/Dialog/*.qml \
+    ui/Linphone/Form/*.qml \
+    ui/Linphone/Image/*.qml \
+    ui/Linphone/InvertedMouseArea/*.qml \
+    ui/Linphone/Misc/*.qml \
+    ui/Linphone/Popup/*.qml \
+    ui/Linphone/ScrollBar/*.qml \
+    ui/Linphone/SearchBox/*.qml \
+    ui/Linphone/Select/*.qml \
+    ui/Linphone/Styles/*.qml \
+    ui/Linphone/Timeline/*.qml \
+    ui/Linphone/View/*.qml \
+    ui/Views/*.qml \
+    ui/Views/MainWindow/*.qml
 }
 
-RESOURCES += \
-  resources.qrc
+RESOURCES = resources.qrc

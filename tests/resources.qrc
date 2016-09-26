@@ -2,14 +2,14 @@
   <qresource prefix="/">
     <file>languages/fr.qm</file>
     <file>languages/en.qm</file>
+    <file>ui/Views/MainWindow/Contact.qml</file>
+    <file>ui/Views/MainWindow/Contacts.qml</file>
+    <file>ui/Views/MainWindow/Conversation.qml</file>
+    <file>ui/Views/MainWindow/MainWindow.qml</file>
+    <file>ui/Views/MainWindow/Home.qml</file>
+    <file>ui/Views/ManageAccounts.qml</file>
+    <file>ui/Views/NewCall.qml</file>
     <file>ui/scripts/utils.js</file>
-    <file>ui/views/newCall.qml</file>
-    <file>ui/views/manageAccounts.qml</file>
-    <file>ui/views/mainWindow/mainWindow.qml</file>
-    <file>ui/views/mainWindow/contacts.qml</file>
-    <file>ui/views/mainWindow/home.qml</file>
-    <file>ui/views/mainWindow/contact.qml</file>
-    <file>ui/views/mainWindow/conversation.qml</file>
     <file>ui/Linphone/Popup/DropDownMenu.qml</file>
     <file>ui/Linphone/Popup/PopupShadow.qml</file>
     <file>ui/Linphone/qmldir</file>

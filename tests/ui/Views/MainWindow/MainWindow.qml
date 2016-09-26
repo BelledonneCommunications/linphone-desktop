@@ -48,12 +48,12 @@ ApplicationWindow {
             // User actions.
             ActionButton {
                 Layout.preferredWidth: 16
-                onClicked: Utils.openWindow('manageAccounts', mainWindow)
+                onClicked: Utils.openWindow('ManageAccounts', mainWindow)
             }
 
             ActionButton {
                 Layout.preferredWidth: 16
-                onClicked: Utils.openWindow('newCall', mainWindow)
+                onClicked: Utils.openWindow('NewCall', mainWindow)
             }
 
             // Search.
@@ -167,7 +167,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/views/mainWindow/contacts.qml'
+            source: 'qrc:/ui/Views/MainWindow/Contacts.qml'
         }
     }
 

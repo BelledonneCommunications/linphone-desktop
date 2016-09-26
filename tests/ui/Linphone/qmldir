@@ -1,19 +1,26 @@
 module Linphone
 
-# Constants.
+# Constants ----------------------------------------------------------
+
 singleton Constants 1.0 Constants.qml
 
-# Components.
+# Components ---------------------------------------------------------
+
+# Chat
 Chat                1.0 Chat/Chat.qml
 
+# Collapse
 Collapse            1.0 Collapse/Collapse.qml
 
+# Contact
 Avatar              1.0 Contact/Avatar.qml
 Contact             1.0 Contact/Contact.qml
 ContactDescription  1.0 Contact/ContactDescription.qml
 
+# Dialog
 DialogPlus          1.0 Dialog/DialogPlus.qml
 
+# Form
 ActionBar           1.0 Form/ActionBar.qml
 ActionButton        1.0 Form/ActionButton.qml
 DarkButton          1.0 Form/DarkButton.qml
@@ -21,19 +28,30 @@ ExclusiveButtons    1.0 Form/ExclusiveButtons.qml
 LightButton         1.0 Form/LightButton.qml
 TransparentComboBox 1.0 Form/TransparentComboBox.qml
 
+# Image
 Icon                1.0 Image/Icon.qml
 
+# InvertedMouseArea
 InvertedMouseArea   1.0 InvertedMouseArea/InvertedMouseArea.qml
 
+# Misc
 MenuEntry           1.0 Misc/MenuEntry.qml
 
+# Popup
 DropDownMenu        1.0 Popup/DropDownMenu.qml
 PopupShadow         1.0 Popup/PopupShadow.qml
 
-SearchBox           1.0 SearchBox/SearchBox.qml
-
+# ScrollBar
 ForceScrollBar      1.0 ScrollBar/ForceScrollBar.qml
 
+# SearchBox
+SearchBox           1.0 SearchBox/SearchBox.qml
+
+# Select
+SelectContact       1.0 Select/SelectContact.qml
+
+# Timeline
 Timeline            1.0 Timeline/Timeline.qml
 
+# View
 ScrollableListView  1.0 View/ScrollableListView.qml
