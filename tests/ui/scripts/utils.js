@@ -57,7 +57,7 @@ function openWindow (window, parent, options) {
 function openConfirmDialog (parent, options) {
     openWindow(
         'import QtQuick 2.7;' +
-        'import \'qrc:/ui/components/dialog\';' +
+        'import \'qrc:/ui/Linphone/Dialog\';' +
         'ConfirmDialog {' +
         'descriptionText: \'' + options.descriptionText + '\';' +
         'title: \'' + options.title + '\'' +
