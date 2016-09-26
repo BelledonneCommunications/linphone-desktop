@@ -23,9 +23,12 @@ DialogPlus          1.0 Dialog/DialogPlus.qml
 # Form
 ActionBar           1.0 Form/ActionBar.qml
 ActionButton        1.0 Form/ActionButton.qml
+CheckBoxText        1.0 Form/CheckBoxText.qml
 DarkButton          1.0 Form/DarkButton.qml
+DropZone            1.0 Form/DropZone.qml
 ExclusiveButtons    1.0 Form/ExclusiveButtons.qml
 LightButton         1.0 Form/LightButton.qml
+ListForm            1.0 Form/ListForm.qml
 TransparentComboBox 1.0 Form/TransparentComboBox.qml
 
 # Image
