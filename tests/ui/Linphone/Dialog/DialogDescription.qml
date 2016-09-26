@@ -10,8 +10,9 @@ Item {
     property alias text: description.text
 
     height: (!text && DialogStyle.description.verticalMargin) || undefined
-    implicitHeight: (text && (description.implicitHeight + DialogStyle.description.verticalMargin * 2)) ||
-        0
+    implicitHeight: (text && (
+        description.implicitHeight + DialogStyle.description.verticalMargin * 2
+    )) || 0
 
     Text {
         id: description

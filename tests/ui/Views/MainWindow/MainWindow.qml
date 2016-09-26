@@ -167,7 +167,7 @@ ApplicationWindow {
         Loader {
             Layout.fillHeight: true
             Layout.fillWidth: true
-            source: 'qrc:/ui/Views/MainWindow/Conversation.qml'
+            source: 'qrc:/ui/Views/MainWindow/Contacts.qml'
         }
     }
 
