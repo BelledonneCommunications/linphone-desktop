@@ -27,23 +27,23 @@ TRANSLATIONS = \
 
 lupdate_only{
   SOURCES = \
-    ui/Linphone/*.qml \
-    ui/Linphone/Chat/*.qml \
-    ui/Linphone/Collapse/*.qml \
-    ui/Linphone/Contact/*.qml \
-    ui/Linphone/Dialog/*.qml \
-    ui/Linphone/Form/*.qml \
-    ui/Linphone/Image/*.qml \
-    ui/Linphone/InvertedMouseArea/*.qml \
-    ui/Linphone/Misc/*.qml \
-    ui/Linphone/Popup/*.qml \
-    ui/Linphone/ScrollBar/*.qml \
-    ui/Linphone/SearchBox/*.qml \
-    ui/Linphone/Select/*.qml \
-    ui/Linphone/Styles/*.qml \
-    ui/Linphone/Timeline/*.qml \
-    ui/Linphone/View/*.qml \
-    ui/Views/*.qml \
-    ui/Views/MainWindow/*.qml \
+    ui/modules/Linphone/*.qml \
+    ui/modules/Linphone/Chat/*.qml \
+    ui/modules/Linphone/Collapse/*.qml \
+    ui/modules/Linphone/Contact/*.qml \
+    ui/modules/Linphone/Dialog/*.qml \
+    ui/modules/Linphone/Form/*.qml \
+    ui/modules/Linphone/Image/*.qml \
+    ui/modules/Linphone/InvertedMouseArea/*.qml \
+    ui/modules/Linphone/Misc/*.qml \
+    ui/modules/Linphone/Popup/*.qml \
+    ui/modules/Linphone/ScrollBar/*.qml \
+    ui/modules/Linphone/SearchBox/*.qml \
+    ui/modules/Linphone/Select/*.qml \
+    ui/modules/Linphone/Styles/*.qml \
+    ui/modules/Linphone/Timeline/*.qml \
+    ui/modules/Linphone/View/*.qml \
+    ui/views/*.qml \
+    ui/views/MainWindow/*.qml \
 
 }
