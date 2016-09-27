@@ -33,7 +33,6 @@ lupdate_only{
     ui/modules/Linphone/Dialog/*.qml \
     ui/modules/Linphone/Form/*.qml \
     ui/modules/Linphone/Image/*.qml \
-    ui/modules/Linphone/Misc/*.qml \
     ui/modules/Linphone/Popup/*.qml \
     ui/modules/Linphone/Select/*.qml \
     ui/modules/Linphone/Styles/*.qml \

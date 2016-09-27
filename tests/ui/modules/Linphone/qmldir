@@ -40,8 +40,8 @@ Icon                 1.0 Image/Icon.qml
 # InvertedMouseArea
 InvertedMouseArea    1.0 InvertedMouseArea.qml
 
-# Misc
-MenuEntry            1.0 Misc/MenuEntry.qml
+# Menu
+Menu                 1.0 Menu.qml
 
 # Popup
 DropDownMenu         1.0 Popup/DropDownMenu.qml

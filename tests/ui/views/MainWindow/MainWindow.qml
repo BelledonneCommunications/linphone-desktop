@@ -93,18 +93,21 @@ ApplicationWindow {
             Layout.preferredWidth: 250
             spacing: 0
 
-            MenuEntry {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                entryName: qsTr('homeEntry')
-            }
+            Menu {
+                entryHeight: 50
+                entryWidth: parent.width
 
-            Item { Layout.preferredHeight: 2 }
+                entries: [{
+                    entryName: qsTr('homeEntry'),
+                    icon: 'home'
+                }, {
+                    entryName: qsTr('contactsEntry'),
+                    icon: 'contacts_list'
+                }]
 
-            MenuEntry {
-                Layout.fillWidth: true
-                Layout.preferredHeight: 50
-                entryName: qsTr('contactsEntry')
+                onEntrySelected: {
+                    console.log('entry', entry)
+                }
             }
 
             // History.
