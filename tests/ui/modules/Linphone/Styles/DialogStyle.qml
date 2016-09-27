@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.7
 
+import Linphone 1.0
+
 QtObject {
     property int leftMargin: 50
     property int rightMargin: 50
@@ -19,5 +21,6 @@ QtObject {
     property QtObject description: QtObject {
         property int fontSize: 12
         property int verticalMargin: 25
+        property string color: Constants.colors.l
     }
 }

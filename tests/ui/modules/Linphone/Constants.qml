@@ -22,5 +22,6 @@ QtObject {
         property string j: '#434343' // MenuEntry Selected.
 
         property string k: '#FFFFFF' // Text color.
+        property string l: '#000000' // Text color.
     }
 }

@@ -56,9 +56,13 @@ Window {
         Row {
             id: buttons
 
-            Layout.alignment: (centeredButtons && Qt.AlignHCenter) || Qt.AlignLeft
+            Layout.alignment: centeredButtons
+                ? Qt.AlignHCenter
+                : Qt.AlignLeft
             Layout.bottomMargin: DialogStyle.buttons.bottomMargin
-            Layout.leftMargin: (!centeredButtons && DialogStyle.leftMargin) || undefined
+            Layout.leftMargin: !centeredButtons
+                ? DialogStyle.leftMargin
+                : undefined
             Layout.topMargin: DialogStyle.buttons.topMargin
             spacing: DialogStyle.buttons.spacing
         }
