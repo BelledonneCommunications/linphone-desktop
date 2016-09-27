@@ -59,6 +59,7 @@
     <file>ui/modules/Linphone/Styles/CollapseStyle.qml</file>
     <file>ui/modules/Linphone/Styles/DialogStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ForceScrollBarStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/MenuStyle.qml</file>
     <file>ui/modules/Linphone/Styles/PopupStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/SearchBoxStyle.qml</file>

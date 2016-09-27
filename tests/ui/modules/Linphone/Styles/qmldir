@@ -3,9 +3,10 @@
 module Linphone.Style
 
 # Components styles.
-singleton CollapseStyle 1.0 CollapseStyle.qml
-singleton DialogStyle 1.0 DialogStyle.qml
+singleton CollapseStyle       1.0 CollapseStyle.qml
+singleton DialogStyle         1.0 DialogStyle.qml
 singleton ForceScrollBarStyle 1.0 ForceScrollBarStyle.qml
-singleton PopupStyle 1.0 PopupStyle.qml
-singleton SearchBoxStyle 1.0 SearchBoxStyle.qml
-singleton TimelineStyle 1.0 TimelineStyle.qml
+singleton MenuStyle           1.0 MenuStyle.qml
+singleton PopupStyle          1.0 PopupStyle.qml
+singleton SearchBoxStyle      1.0 SearchBoxStyle.qml
+singleton TimelineStyle       1.0 TimelineStyle.qml

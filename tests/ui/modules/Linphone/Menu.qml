@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Linphone 1.0
+import Linphone.Styles 1.0
 
 // ===================================================================
 // Responsive flat menu with visual indicators.
@@ -18,19 +19,19 @@ ColumnLayout {
 
     signal entrySelected (int entry)
 
-    spacing: 2
+    spacing: MenuStyle.spacing
 
     Repeater {
         model: entries
 
         Rectangle {
             color: _selectedEntry === index
-                ? '#434343'
+                ? MenuStyle.entry.color.selected
                 : (mouseArea.pressed
-                   ? '#FE5E00'
+                   ? MenuStyle.entry.color.pressed
                    : (mouseArea.containsMouse
-                      ? '#707070'
-                      : '#8E8E8E'
+                      ? MenuStyle.entry.color.hovered
+                      : MenuStyle.entry.color.normal
                      )
                   )
             height: item.entryHeight
@@ -38,22 +39,22 @@ ColumnLayout {
 
             RowLayout {
                 anchors.left: parent.left
-                anchors.leftMargin: 20
+                anchors.leftMargin: MenuStyle.entry.leftMargin
                 anchors.right: parent.right
-                anchors.rightMargin: 20
+                anchors.rightMargin: MenuStyle.entry.rightMargin
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 18
+                spacing: MenuStyle.entry.spacing
 
                 Icon {
-                    Layout.preferredHeight: 24
-                    Layout.preferredWidth: 24
+                    Layout.preferredHeight: MenuStyle.entry.iconSize
+                    Layout.preferredWidth: MenuStyle.entry.iconSize
                     icon: modelData.icon
                 }
 
                 Text {
                     Layout.fillWidth: true
-                    color: '#FFFFFF'
-                    font.pointSize: 13
+                    color: MenuStyle.entry.textColor
+                    font.pointSize: MenuStyle.entry.fontSize
                     height: parent.height
                     text: modelData.entryName
                     verticalAlignment: Text.AlignVCenter
@@ -61,9 +62,11 @@ ColumnLayout {
 
                 Icon {
                     Layout.alignment: Qt.AlignRight
-                    Layout.preferredHeight: 12
-                    Layout.preferredWidth: 12
-                    icon: _selectedEntry === index ? 'right_arrow' : ''
+                    Layout.preferredHeight: MenuStyle.entry.selectionIconSize
+                    Layout.preferredWidth: MenuStyle.entry.selectionIconSize
+                    icon: _selectedEntry === index
+                        ? MenuStyle.entry.selectionIcon
+                        : ''
                 }
             }
 
