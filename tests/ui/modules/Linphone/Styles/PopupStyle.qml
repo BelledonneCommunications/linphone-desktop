@@ -7,9 +7,8 @@ QtObject {
   property string backgroundColor: Colors.k
 
   property QtObject shadow: QtObject {
-    property double radius: 8.0
-
     property int horizontalOffset: 0
+    property int radius: 8
     property int samples: 15
     property int verticalOffset: 2
 

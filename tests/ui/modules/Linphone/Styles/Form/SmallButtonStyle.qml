@@ -17,6 +17,7 @@ QtObject {
 
   property QtObject text: QtObject {
     property int fontSize: 8
+
     property string color: '#FFFFFF'
   }
 }

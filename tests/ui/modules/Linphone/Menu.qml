@@ -53,8 +53,8 @@ ColumnLayout {
 
                 Text {
                     Layout.fillWidth: true
-                    color: MenuStyle.entry.textColor
-                    font.pointSize: MenuStyle.entry.fontSize
+                    color: MenuStyle.entry.text.color
+                    font.pointSize: MenuStyle.entry.text.fontSize
                     height: parent.height
                     text: modelData.entryName
                     verticalAlignment: Text.AlignVCenter
