@@ -39,15 +39,16 @@
     <file>ui/modules/Linphone/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogPlus.qml</file>
     <file>ui/modules/Linphone/ForceScrollBar.qml</file>
+    <file>ui/modules/Linphone/Form/AbstractTextButton.qml</file>
     <file>ui/modules/Linphone/Form/ActionBar.qml</file>
     <file>ui/modules/Linphone/Form/ActionButton.qml</file>
     <file>ui/modules/Linphone/Form/CheckBoxText.qml</file>
-    <file>ui/modules/Linphone/Form/DarkButton.qml</file>
     <file>ui/modules/Linphone/Form/DropZone.qml</file>
     <file>ui/modules/Linphone/Form/ExclusiveButtons.qml</file>
-    <file>ui/modules/Linphone/Form/LightButton.qml</file>
     <file>ui/modules/Linphone/Form/ListForm.qml</file>
     <file>ui/modules/Linphone/Form/SmallButton.qml</file>
+    <file>ui/modules/Linphone/Form/TextButtonA.qml</file>
+    <file>ui/modules/Linphone/Form/TextButtonB.qml</file>
     <file>ui/modules/Linphone/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Linphone/Image/Icon.qml</file>
     <file>ui/modules/Linphone/InvertedMouseArea.qml</file>
@@ -60,8 +61,11 @@
     <file>ui/modules/Linphone/Styles/CollapseStyle.qml</file>
     <file>ui/modules/Linphone/Styles/DialogStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ForceScrollBarStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Form/AbstractTextButtonStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/ExclusiveButtonsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/SmallButtonStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Form/TextButtonAStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Form/TextButtonBStyle.qml</file>
     <file>ui/modules/Linphone/Styles/MenuStyle.qml</file>
     <file>ui/modules/Linphone/Styles/PopupStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>

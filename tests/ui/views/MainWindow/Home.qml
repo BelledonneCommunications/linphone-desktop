@@ -27,7 +27,7 @@ ColumnLayout {
                 text: qsTr('invitContactQuestion')
             }
 
-            LightButton {
+            TextButtonB {
                 text: qsTr('invitContact')
             }
         }
@@ -43,7 +43,7 @@ ColumnLayout {
                 text: qsTr('addContactQuestion')
             }
 
-            LightButton {
+            TextButtonB {
                 text: qsTr('addContact')
             }
         }

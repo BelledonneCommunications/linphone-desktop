@@ -10,7 +10,7 @@ DialogPlus {
     minimumWidth: 480
     title: qsTr('manageAccountsTitle')
 
-    buttons: DarkButton {
+    buttons: TextButtonA {
         text: qsTr('validate')
     }
 

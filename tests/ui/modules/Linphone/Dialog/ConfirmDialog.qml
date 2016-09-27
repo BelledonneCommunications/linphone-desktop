@@ -9,12 +9,12 @@ DialogPlus {
     id: dialog
 
     buttons: [
-        DarkButton {
+        TextButtonA {
             text: qsTr('cancel')
 
             onClicked: exit(0)
         },
-        DarkButton {
+        TextButtonA {
             text: qsTr('confirm')
 
             onClicked: exit(1)

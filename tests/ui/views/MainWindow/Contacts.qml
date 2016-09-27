@@ -41,7 +41,7 @@ ColumnLayout {
                 ]
             }
 
-            LightButton {
+            TextButtonB {
                 text: qsTr('addContact')
             }
         }
@@ -198,7 +198,7 @@ ColumnLayout {
                                 anchors.fill: parent
                                 clip: true
                                 color: '#5A585B'
-                                font.weight: Font.DemiBold
+                                font.bold: true
                                 text: $username
                                 verticalAlignment: Text.AlignVCenter
                             }
