@@ -2,59 +2,59 @@ module Linphone
 
 # Constants ----------------------------------------------------------
 
-singleton Constants 1.0 Constants.qml
+singleton Constants  1.0 Constants.qml
 
 # Components ---------------------------------------------------------
 
 # Chat
-Chat                1.0 Chat/Chat.qml
+Chat                 1.0 Chat/Chat.qml
 
 # Collapse
-Collapse            1.0 Collapse/Collapse.qml
+Collapse             1.0 Collapse.qml
 
 # Contact
-Avatar              1.0 Contact/Avatar.qml
-Contact             1.0 Contact/Contact.qml
-ContactDescription  1.0 Contact/ContactDescription.qml
+Avatar               1.0 Contact/Avatar.qml
+Contact              1.0 Contact/Contact.qml
+ContactDescription   1.0 Contact/ContactDescription.qml
 
 # Dialog
-DialogPlus          1.0 Dialog/DialogPlus.qml
+DialogPlus           1.0 Dialog/DialogPlus.qml
+
+# ForceScrollBar
+ForceScrollBar       1.0 ForceScrollBar.qml
 
 # Form
-ActionBar           1.0 Form/ActionBar.qml
-ActionButton        1.0 Form/ActionButton.qml
-CheckBoxText        1.0 Form/CheckBoxText.qml
-DarkButton          1.0 Form/DarkButton.qml
-DropZone            1.0 Form/DropZone.qml
-ExclusiveButtons    1.0 Form/ExclusiveButtons.qml
-LightButton         1.0 Form/LightButton.qml
-ListForm            1.0 Form/ListForm.qml
-TransparentComboBox 1.0 Form/TransparentComboBox.qml
+ActionBar            1.0 Form/ActionBar.qml
+ActionButton         1.0 Form/ActionButton.qml
+CheckBoxText         1.0 Form/CheckBoxText.qml
+DarkButton           1.0 Form/DarkButton.qml
+DropZone             1.0 Form/DropZone.qml
+ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
+LightButton          1.0 Form/LightButton.qml
+ListForm             1.0 Form/ListForm.qml
+TransparentComboBox  1.0 Form/TransparentComboBox.qml
 
 # Image
-Icon                1.0 Image/Icon.qml
+Icon                 1.0 Image/Icon.qml
 
 # InvertedMouseArea
-InvertedMouseArea   1.0 InvertedMouseArea/InvertedMouseArea.qml
+InvertedMouseArea    1.0 InvertedMouseArea.qml
 
 # Misc
-MenuEntry           1.0 Misc/MenuEntry.qml
+MenuEntry            1.0 Misc/MenuEntry.qml
 
 # Popup
-DropDownMenu        1.0 Popup/DropDownMenu.qml
-PopupShadow         1.0 Popup/PopupShadow.qml
-
-# ScrollBar
-ForceScrollBar      1.0 ScrollBar/ForceScrollBar.qml
+DropDownMenu         1.0 Popup/DropDownMenu.qml
+PopupShadow          1.0 Popup/PopupShadow.qml
 
 # SearchBox
-SearchBox           1.0 SearchBox/SearchBox.qml
+SearchBox            1.0 SearchBox.qml
 
 # Select
-SelectContact       1.0 Select/SelectContact.qml
+SelectContact        1.0 Select/SelectContact.qml
 
 # Timeline
-Timeline            1.0 Timeline/Timeline.qml
+Timeline             1.0 Timeline.qml
 
 # View
-ScrollableListView  1.0 View/ScrollableListView.qml
+ScrollableListView   1.0 View/ScrollableListView.qml

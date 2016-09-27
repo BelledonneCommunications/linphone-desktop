@@ -29,19 +29,14 @@ lupdate_only{
   SOURCES = \
     ui/modules/Linphone/*.qml \
     ui/modules/Linphone/Chat/*.qml \
-    ui/modules/Linphone/Collapse/*.qml \
     ui/modules/Linphone/Contact/*.qml \
     ui/modules/Linphone/Dialog/*.qml \
     ui/modules/Linphone/Form/*.qml \
     ui/modules/Linphone/Image/*.qml \
-    ui/modules/Linphone/InvertedMouseArea/*.qml \
     ui/modules/Linphone/Misc/*.qml \
     ui/modules/Linphone/Popup/*.qml \
-    ui/modules/Linphone/ScrollBar/*.qml \
-    ui/modules/Linphone/SearchBox/*.qml \
     ui/modules/Linphone/Select/*.qml \
     ui/modules/Linphone/Styles/*.qml \
-    ui/modules/Linphone/Timeline/*.qml \
     ui/modules/Linphone/View/*.qml \
     ui/views/*.qml \
     ui/views/MainWindow/*.qml \
