@@ -9,10 +9,14 @@ ScrollBar {
     background: ForceScrollBarStyle.background
     contentItem: Rectangle {
         color: pressed
-            ? ForceScrollBarStyle.pressedColor
-            : ForceScrollBarStyle.color
+            ? ForceScrollBarStyle.color.pressed
+            : (hovered
+               ? ForceScrollBarStyle.color.hovered
+               : ForceScrollBarStyle.color.normal
+              )
         implicitHeight: ForceScrollBarStyle.contentItem.implicitHeight
         implicitWidth: ForceScrollBarStyle.contentItem.implicitWidth
         radius: ForceScrollBarStyle.contentItem.radius
     }
+    hoverEnabled: true
 }
