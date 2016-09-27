@@ -1,38 +1,39 @@
 import QtQuick 2.7
 
+import Linphone.Styles 1.0
+
 // ===================================================================
 
 Row {
-    property int selectedButton: 0
-    property variant texts
+  property int _selectedButton: 0
+  property variant texts
 
-    signal clicked (int button)
+  signal clicked (int button)
 
-    spacing: 8
+  spacing: ExclusiveButtonsStyle.buttonsSpacing
 
-    Repeater {
-        model: texts
+  Repeater {
+    model: texts
 
-        SmallButton {
-            anchors.verticalCenter: parent.verticalCenter
-            backgroundColor: selectedButton === index
-                ? '#8E8E8E'
-                : (button.down
-                   ? '#FE5E00'
-                   : (button.hovered
-                      ? '#C0C0C0'
-                      : '#D1D1D1'
-                     )
-                  )
-            id: button
-            text: modelData
+    SmallButton {
+      anchors.verticalCenter: parent.verticalCenter
+      backgroundColor: _selectedButton === index
+        ? ExclusiveButtonsStyle.button.color.selected
+        : (down
+           ? ExclusiveButtonsStyle.button.color.pressed
+           : (hovered
+              ? ExclusiveButtonsStyle.button.color.hovered
+              : ExclusiveButtonsStyle.button.color.normal
+             )
+          )
+      text: modelData
 
-            onClicked: {
-                if (selectedButton !== index) {
-                    selectedButton = index
-                    clicked(index)
-                }
-            }
+      onClicked: {
+        if (_selectedButton !== index) {
+          _selectedButton = index
+          clicked(index)
         }
+      }
     }
+  }
 }
