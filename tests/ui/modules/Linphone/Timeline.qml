@@ -7,50 +7,50 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 ColumnLayout {
-    id: item
+  id: item
 
-    property var model
+  property var model
 
-    // Legend.
-    Row {
-        Layout.topMargin: TimelineStyle.legend.topMargin
-        Layout.bottomMargin: TimelineStyle.legend.bottomMargin
-        Layout.leftMargin: TimelineStyle.legend.leftMargin
-        spacing: TimelineStyle.legend.spacing
+  // Legend.
+  Row {
+    Layout.bottomMargin: TimelineStyle.legend.bottomMargin
+    Layout.leftMargin: TimelineStyle.legend.leftMargin
+    Layout.topMargin: TimelineStyle.legend.topMargin
+    spacing: TimelineStyle.legend.spacing
 
-        Icon {
-            icon: TimelineStyle.legend.icon
-            iconSize: TimelineStyle.legend.iconSize
-        }
-
-        Text {
-            color: TimelineStyle.legend.color
-            font.pointSize: TimelineStyle.legend.fontSize
-            height: parent.height
-            text: qsTr('timelineTitle')
-            verticalAlignment: Text.AlignVCenter
-        }
+    Icon {
+      icon: TimelineStyle.legend.icon
+      iconSize: TimelineStyle.legend.iconSize
     }
 
-    // Separator.
-    Rectangle {
-        Layout.fillWidth: true
-        Layout.preferredHeight: TimelineStyle.separator.height
-        color: TimelineStyle.separator.color
+    Text {
+      color: TimelineStyle.legend.color
+      font.pointSize: TimelineStyle.legend.fontSize
+      height: parent.height
+      text: qsTr('timelineTitle')
+      verticalAlignment: Text.AlignVCenter
     }
+  }
 
-    // History.
-    ScrollableListView {
-        Layout.fillHeight: true
-        Layout.fillWidth: true
+  // Separator.
+  Rectangle {
+    Layout.fillWidth: true
+    Layout.preferredHeight: TimelineStyle.separator.height
+    color: TimelineStyle.separator.color
+  }
 
-        model: item.model
+  // History.
+  ScrollableListView {
+    Layout.fillHeight: true
+    Layout.fillWidth: true
 
-        delegate: Contact {
-            presence: $presence
-            sipAddress: $sipAddress
-            username: $username
-            width: parent.width
-        }
+    model: item.model
+
+    delegate: Contact {
+      presence: $presence
+      sipAddress: $sipAddress
+      username: $username
+      width: parent.width
     }
+  }
 }
