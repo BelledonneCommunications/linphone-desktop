@@ -7,71 +7,82 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 Item {
-    property alias placeholderText: searchField.placeholderText
-    property alias maxMenuHeight: menu.maxMenuHeight
+  id: item
 
-    signal menuClosed ()
-    signal menuOpened ()
-    signal searchTextChanged (string text)
+  property alias delegate: list.delegate
+  property alias entryHeight: menu.entryHeight
+  property alias maxMenuHeight: menu.maxMenuHeight
+  property alias model: list.model
+  property alias placeholderText: searchField.placeholderText
 
-    function _hideMenu () {
-        menu.hide()
-        shadow.visible = false
-        searchField.focus = false
+  signal menuClosed ()
+  signal menuOpened ()
+  signal searchTextChanged (string text)
 
-        menuClosed()
+  function _hideMenu () {
+    menu.hide()
+    shadow.visible = false
+    searchField.focus = false
+
+    menuClosed()
+  }
+
+  function _showMenu () {
+    menu.show()
+    shadow.visible = true
+
+    menuOpened()
+  }
+
+  implicitHeight: searchField.height
+
+  Item {
+    implicitHeight: searchField.height + menu.height
+    width: parent.width
+
+    TextField {
+      id: searchField
+
+      background: SearchBoxStyle.searchFieldBackground
+      width: parent.width
+
+      Keys.onEscapePressed: _hideMenu()
+
+      onActiveFocusChanged: activeFocus && _showMenu()
+      onTextChanged: searchTextChanged(text)
     }
 
-    function _showMenu () {
-        menu.show()
-        shadow.visible = true
+    DropDownMenu {
+      id: menu
 
-        menuOpened()
+      anchors.top: searchField.bottom
+      width: searchField.width
+      z: Constants.zPopup
+
+      Keys.onEscapePressed: _hideMenu()
+
+      ScrollableListView {
+        id: list
+
+        anchors.fill: parent
+      }
     }
 
-    implicitHeight: searchField.height
+    InvertedMouseArea {
+      enabled: menu.visible
+      height: parent.height
+      parent: parent
+      width: parent.width
 
-    Item {
-        implicitHeight: searchField.height + menu.height
-        width: parent.width
-
-        TextField {
-            id: searchField
-
-            background: SearchBoxStyle.searchFieldBackground
-            width: parent.width
-
-            Keys.onEscapePressed: _hideMenu()
-
-            onActiveFocusChanged: activeFocus && _showMenu()
-            onTextChanged: searchTextChanged(text)
-        }
-
-        DropDownMenu {
-            id: menu
-
-            anchors.top: searchField.bottom
-            width: searchField.width
-            z: Constants.zPopup
-
-            Keys.onEscapePressed: _hideMenu()
-        }
-
-        InvertedMouseArea {
-            enabled: menu.visible
-            height: parent.height
-            parent: parent
-            width: parent.width
-
-            onPressed: _hideMenu()
-        }
-
-        PopupShadow {
-            id: shadow
-
-            anchors.fill: searchField
-            source: searchField
-            visible: false
-        }
+      onPressed: _hideMenu()
     }
+
+    PopupShadow {
+      id: shadow
+
+      anchors.fill: searchField
+      source: searchField
+      visible: false
+    }
+  }
 }

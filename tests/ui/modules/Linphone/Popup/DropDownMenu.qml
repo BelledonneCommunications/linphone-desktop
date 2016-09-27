@@ -1,148 +1,39 @@
-import QtGraphicalEffects 1.0
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 
-import Linphone 1.0
 import Linphone.Styles 1.0
 
+// ===================================================================
+// Low component to display a list/menu in a popup.
+// ===================================================================
+
 Rectangle {
-    readonly property int entryHeight: 50
+  default property alias content: content.data
+  property int entryHeight
+  property int maxMenuHeight
 
-    property int maxMenuHeight
+  // Ugly. Just ugly.
+  // `model` is a reference on a unknown component!
+  // See usage with SearchBox.
+  implicitHeight: {
+    var height = model.count * entryHeight
+    return height > maxMenuHeight ? maxMenuHeight : height
+  }
+  visible: false
 
-    implicitHeight: {
-        var height = model.count * entryHeight
-        return height > maxMenuHeight ? maxMenuHeight : height
-    }
-    visible: false
+  function show () {
+    visible = true
+  }
 
-    function show () {
-        visible = true
-    }
+  function hide () {
+    visible = false
+  }
 
-    function hide () {
-        visible = false
-    }
+  Rectangle {
+    id: content
 
-    Rectangle {
-        anchors.fill: parent
-        id: listContainer
-
-        ScrollableListView {
-            anchors.fill: parent
-            id: list
-            height: console.log(model.count) || count
-
-            // TODO: Remove, use C++ model instead.
-            model: ListModel {
-                id: model
-
-                ListElement {
-                    $presence: 'connected'
-                    $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'connected'
-                    $sipAddress: 'toto.lala.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'disconnected'
-                    $sipAddress: 'machin.truc.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'absent'
-                    $sipAddress: 'hey.listen.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'do_not_disturb'
-                    $sipAddress: 'valentin.cognito.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'do_not_disturb'
-                    $sipAddress: 'charles.henri.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'disconnected'
-                    $sipAddress: 'yesyes.nono.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'connected'
-                    $sipAddress: 'nsa.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'connected'
-                    $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'connected'
-                    $sipAddress: 'toto.lala.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'disconnected'
-                    $sipAddress: 'machin.truc.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'absent'
-                    $sipAddress: 'hey.listen.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'do_not_disturb'
-                    $sipAddress: 'valentin.cognito.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'do_not_disturb'
-                    $sipAddress: 'charles.henri.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'disconnected'
-                    $sipAddress: 'yesyes.nono.sip.linphone.org'
-                    $username: 'Toto'
-                }
-                ListElement {
-                    $presence: 'connected'
-                    $sipAddress: 'nsa.sip.linphone.org'
-                    $username: 'Toto'
-                }
-            }
-
-            delegate: Contact {
-                presence: $presence
-                sipAddress: $sipAddress
-                username: $username
-                width: parent.width
-
-                actions: [
-                    ActionButton {
-                        icon: 'call'
-                        onClicked: console.log('clicked')
-                    },
-
-                    ActionButton {
-                        icon: 'cam'
-                        onClicked: console.log('cam clicked')
-                    }
-                ]
-            }
-        }
-    }
-
-    PopupShadow {
-        anchors.fill: listContainer
-        source: listContainer
-        visible: true
-    }
+    anchors.fill: parent
+    color: PopupStyle.backgroundColor
+    layer.enabled: true
+    layer.effect: PopupShadow { }
+  }
 }
