@@ -8,16 +8,19 @@ import Linphone 1.0
 // ===================================================================
 
 Button {
-    property int iconSize
-    property alias icon: icon.icon
+  property alias icon: icon.icon
+  property int iconSize
 
-    // Ugly hack, use current size, ActionBar size,
-    // or other parent height.
-    height: iconSize || parent.iconSize || parent.height
-    width: iconSize || parent.iconSize || parent.height
+  flat: true
 
-    Icon {
-        anchors.fill: parent
-        id: icon
-    }
+  // Ugly hack, use current size, ActionBar size,
+  // or other parent height.
+  height: iconSize || parent.iconSize || parent.height
+  width: iconSize || parent.iconSize || parent.height
+
+  Icon {
+    id: icon
+
+    anchors.fill: parent
+  }
 }
