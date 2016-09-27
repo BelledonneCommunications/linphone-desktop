@@ -11,6 +11,6 @@ QtObject {
         property int samples: 15
         property int verticalOffset: 2
 
-        property string color: Constants.colors.f
+        property string color: Colors.f
     }
 }

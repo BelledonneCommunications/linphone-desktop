@@ -15,13 +15,13 @@ QtObject {
         property int spacing: 18
 
         property string selectionIcon: 'right_arrow'
-        property string textColor: Constants.colors.k
+        property string textColor: Colors.k
 
         property QtObject color: QtObject {
-            property string normal: Constants.colors.g
-            property string hovered: Constants.colors.h
-            property string pressed: Constants.colors.i
-            property string selected: Constants.colors.j
+            property string normal: Colors.g
+            property string hovered: Colors.h
+            property string pressed: Colors.i
+            property string selected: Colors.j
         }
     }
 }

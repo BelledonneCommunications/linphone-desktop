@@ -12,13 +12,13 @@ QtObject {
         property int spacing: 16
         property int topMargin: 10
 
-        property string color: Constants.colors.d
+        property string color: Colors.d
         property string icon: 'history'
     }
 
     property QtObject separator: QtObject {
         property int height: 1
 
-        property string color: Constants.colors.e
+        property string color: Colors.e
     }
 }

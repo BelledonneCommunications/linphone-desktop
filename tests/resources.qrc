@@ -30,6 +30,7 @@
     <file>ui/modules/Linphone/Chat/Message.qml</file>
     <file>ui/modules/Linphone/Chat/OutgoingMessage.qml</file>
     <file>ui/modules/Linphone/Collapse.qml</file>
+    <file>ui/modules/Linphone/Colors.qml</file>
     <file>ui/modules/Linphone/Constants.qml</file>
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>

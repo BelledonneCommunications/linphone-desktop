@@ -2,6 +2,7 @@ module Linphone
 
 # Constants ----------------------------------------------------------
 
+singleton Colors     1.0 Colors.qml
 singleton Constants  1.0 Constants.qml
 
 # Components ---------------------------------------------------------

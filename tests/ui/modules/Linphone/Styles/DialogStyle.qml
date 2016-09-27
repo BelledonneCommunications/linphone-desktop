@@ -22,6 +22,6 @@ QtObject {
         property int fontSize: 12
         property int verticalMargin: 25
 
-        property string color: Constants.colors.l
+        property string color: Colors.l
     }
 }

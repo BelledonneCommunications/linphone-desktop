@@ -5,7 +5,7 @@ import Linphone 1.0
 
 QtObject {
     property Rectangle background: Rectangle {
-        color: Constants.colors.a
+        color: Colors.a
     }
 
     property Rectangle contentItem: Rectangle {
@@ -15,8 +15,8 @@ QtObject {
     }
 
     property QtObject color: QtObject {
-        property string hovered: Constants.colors.h
-        property string normal: Constants.colors.c
-        property string pressed: Constants.colors.b
+        property string hovered: Colors.h
+        property string normal: Colors.c
+        property string pressed: Colors.b
     }
 }
