@@ -5,14 +5,14 @@ import Linphone 1.0
 
 QtObject {
   property QtObject backgroundColor: QtObject {
-    property color hovered: '#B1B1B1'
-    property color pressed: '#FE5E00'
-    property color normal: '#D1D1D1'
+    property color hovered: Colors.p
+    property color pressed: Colors.i
+    property color normal: Colors.m
   }
 
   property QtObject textColor: QtObject {
-    property color hovered: '#5A585B'
-    property color pressed: '#FFFFFF'
-    property color normal: '#5A585B'
+    property color hovered: Colors.d
+    property color pressed: Colors.k
+    property color normal: Colors.d
   }
 }

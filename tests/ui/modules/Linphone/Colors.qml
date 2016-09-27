@@ -2,24 +2,27 @@ pragma Singleton
 import QtQuick 2.7
 
 QtObject {
-  property string a: 'transparent'
-  property string b: '#5E5E5F' // Pressed toolbar.
-  property string c: '#C5C5C5' // Released toolbar.
+  property color a: 'transparent'
+  property color b: '#5E5E5F' // Pressed toolbar.
+  property color c: '#C5C5C5' // Released toolbar.
 
-  property string d: '#5A585B' // Text color.
+  property color d: '#5A585B' // Text color.
 
-  property string e: '#DEDEDE' // Timeline separator
+  property color e: '#DEDEDE' // Timeline separator
 
-  property string f: '#808080' // Popup shadow.
+  property color f: '#808080' // Popup shadow.
 
-  property string g: '#8E8E8E' // MenuEntry Normal.
-  property string h: '#707070' // MenuEntry Hovered.
-  property string i: '#FE5E00' // MenuEntry Pressed.
-  property string j: '#434343' // MenuEntry Selected.
+  property color g: '#8E8E8E' // MenuEntry Normal.
+  property color h: '#707070' // MenuEntry Hovered.
+  property color i: '#FE5E00' // MenuEntry Pressed.
+  property color j: '#434343' // MenuEntry Selected.
 
-  property string k: '#FFFFFF' // Text color.
-  property string l: '#000000' // Text color.
+  property color k: '#FFFFFF' // Text color.
+  property color l: '#000000' // Text color.
 
-  property string m: '#D1D1D1' // SmallButton Normal.
-  property string n: '#C0C0C0' // SmallButton Hovered.
+  property color m: '#D1D1D1' // SmallButton Normal.
+  property color n: '#C0C0C0' // SmallButton Hovered.
+
+  property color o: '#232323' // TextButtonA Hovered.
+  property color p: '#B1B1B1' // TextButtonB text Hovered.
 }

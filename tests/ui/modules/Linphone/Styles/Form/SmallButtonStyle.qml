@@ -9,15 +9,15 @@ QtObject {
     property int radius: 10
 
     property QtObject color: QtObject {
-      property string hovered: Colors.n
-      property string normal: Colors.m
-      property string pressed: Colors.i
+      property color hovered: Colors.n
+      property color normal: Colors.m
+      property color pressed: Colors.i
     }
   }
 
   property QtObject text: QtObject {
-    property int fontSize: 8
+    property color color: Colors.k
 
-    property string color: Colors.k
+    property int fontSize: 8
   }
 }

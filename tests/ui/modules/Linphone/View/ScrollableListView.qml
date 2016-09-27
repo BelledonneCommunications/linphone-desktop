@@ -6,9 +6,9 @@ import Linphone 1.0
 // ===================================================================
 
 ListView {
-    ScrollBar.vertical: ForceScrollBar { }
-    boundsBehavior: Flickable.StopAtBounds
-    clip: true
-    highlightRangeMode: ListView.ApplyRange
-    spacing: 0
+  ScrollBar.vertical: ForceScrollBar { }
+  boundsBehavior: Flickable.StopAtBounds
+  clip: true
+  highlightRangeMode: ListView.ApplyRange
+  spacing: 0
 }

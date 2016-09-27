@@ -7,22 +7,22 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 Item {
-    property alias text: description.text
+  property alias text: description.text
 
-    height: !text ? DialogStyle.description.verticalMargin : undefined
-    implicitHeight: text
-        ? description.implicitHeight + DialogStyle.description.verticalMargin * 2
-        : 0
+  height: !text ? DialogStyle.description.verticalMargin : undefined
+  implicitHeight: text
+    ? description.implicitHeight + DialogStyle.description.verticalMargin * 2
+    : 0
 
-    Text {
-        id: description
+  Text {
+    id: description
 
-        anchors.fill: parent
-        anchors.leftMargin: DialogStyle.leftMargin
-        anchors.rightMargin: DialogStyle.rightMargin
-        color: DialogStyle.description.color
-        font.pointSize: DialogStyle.description.fontSize
-        verticalAlignment: Text.AlignVCenter
-        wrapMode: Text.WordWrap
-    }
+    anchors.fill: parent
+    anchors.leftMargin: DialogStyle.leftMargin
+    anchors.rightMargin: DialogStyle.rightMargin
+    color: DialogStyle.description.color
+    font.pointSize: DialogStyle.description.fontSize
+    verticalAlignment: Text.AlignVCenter
+    wrapMode: Text.WordWrap
+  }
 }

@@ -5,6 +5,8 @@ import Linphone 1.0
 
 QtObject {
   property QtObject legend: QtObject {
+    property color color: Colors.d
+
     property int bottomMargin: 10
     property int fontSize: 13
     property int iconSize: 26
@@ -12,13 +14,12 @@ QtObject {
     property int spacing: 16
     property int topMargin: 10
 
-    property string color: Colors.d
     property string icon: 'history'
   }
 
   property QtObject separator: QtObject {
-    property int height: 1
+    property color color: Colors.e
 
-    property string color: Colors.e
+    property int height: 1
   }
 }

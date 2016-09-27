@@ -16,16 +16,16 @@ QtObject {
     property string selectionIcon: 'right_arrow'
 
     property QtObject color: QtObject {
-      property string normal: Colors.g
-      property string hovered: Colors.h
-      property string pressed: Colors.i
-      property string selected: Colors.j
+      property color normal: Colors.g
+      property color hovered: Colors.h
+      property color pressed: Colors.i
+      property color selected: Colors.j
     }
 
     property QtObject text: QtObject {
-      property int fontSize: 13
+      property color color: Colors.k
 
-      property string color: Colors.k
+      property int fontSize: 13
     }
   }
 }

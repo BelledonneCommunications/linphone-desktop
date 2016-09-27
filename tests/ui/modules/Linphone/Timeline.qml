@@ -1,15 +1,12 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-import Linphone 1.0
 import Linphone.Styles 1.0
 
 // ===================================================================
 
 ColumnLayout {
-  id: item
-
-  property var model
+  property alias model: view.model
 
   // Legend.
   Row {
@@ -41,10 +38,10 @@ ColumnLayout {
 
   // History.
   ScrollableListView {
+    id: view
+
     Layout.fillHeight: true
     Layout.fillWidth: true
-
-    model: item.model
 
     delegate: Contact {
       presence: $presence
