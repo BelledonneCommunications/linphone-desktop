@@ -1,5 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
   <qresource prefix="/">
+    <file>imgs/add_field.svg</file>
     <file>imgs/call.svg</file>
     <file>imgs/cam.svg</file>
     <file>imgs/chat_attachment.svg</file>
@@ -38,12 +39,12 @@
     <file>ui/modules/Linphone/Dialog/ConfirmDialog.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogPlus.qml</file>
+    <file>ui/modules/Linphone/DropZone.qml</file>
     <file>ui/modules/Linphone/ForceScrollBar.qml</file>
     <file>ui/modules/Linphone/Form/AbstractTextButton.qml</file>
     <file>ui/modules/Linphone/Form/ActionBar.qml</file>
     <file>ui/modules/Linphone/Form/ActionButton.qml</file>
     <file>ui/modules/Linphone/Form/CheckBoxText.qml</file>
-    <file>ui/modules/Linphone/Form/DropZone.qml</file>
     <file>ui/modules/Linphone/Form/ExclusiveButtons.qml</file>
     <file>ui/modules/Linphone/Form/ListForm.qml</file>
     <file>ui/modules/Linphone/Form/SmallButton.qml</file>
@@ -65,6 +66,7 @@
     <file>ui/modules/Linphone/Styles/Form/ActionBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/CheckBoxTextStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/ExclusiveButtonsStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Form/ListFormStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/SmallButtonStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/TextButtonAStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/TextButtonBStyle.qml</file>

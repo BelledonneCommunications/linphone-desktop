@@ -11,6 +11,14 @@ Rectangle {
   property int entryHeight
   property int maxMenuHeight
 
+  function show () {
+    visible = true
+  }
+
+  function hide () {
+    visible = false
+  }
+
   // Ugly. Just ugly.
   // `model` is a reference on a unknown component!
   // See usage with SearchBox.
@@ -19,14 +27,6 @@ Rectangle {
     return height > maxMenuHeight ? maxMenuHeight : height
   }
   visible: false
-
-  function show () {
-    visible = true
-  }
-
-  function hide () {
-    visible = false
-  }
 
   Rectangle {
     id: content

@@ -2,6 +2,8 @@ import QtQuick 2.7
 
 import Linphone 1.0
 
+import 'qrc:/ui/scripts/utils.js' as Utils
+
 // ===================================================================
 // Helper to handle button click outside a component.
 // ===================================================================
@@ -39,9 +41,9 @@ Item {
   function _isInItem (point) {
     return (
       point.x >= item.x &&
-        point.y >= item.y &&
-        point.x <= item.x + item.width &&
-        point.y <= item.y + item.height
+      point.y >= item.y &&
+      point.x <= item.x + item.width &&
+      point.y <= item.y + item.height
     )
   }
 
@@ -49,7 +51,7 @@ Item {
   // See: http://doc.qt.io/qt-5/qml-qtqml-component.html#completed-signal
   //
   // The creation order of components in a view is undefined,
-  // so the mouse area must be created only when `enabled == true`.
+  // so the mouse area must be created only when `enabled === true`.
   //
   // In the first render, `enabled` must be equal to false.
   Component.onCompleted: enabled && _createMouseArea()
@@ -67,6 +69,8 @@ Item {
     id: builder
 
     MouseArea {
+      property var _timeout
+
       anchors.fill: parent
       propagateComposedEvents: true
       z: Constants.zMax
@@ -75,11 +79,23 @@ Item {
         // Propagate event.
         mouse.accepted = false
 
+        // Click is outside or not.
         if (!_isInItem(
           mapToItem(item.parent, mouse.x, mouse.y)
         )) {
-          // Outside!!!
-          item.pressed()
+          if (_timeout != null) {
+            Utils.clearTimeout(_timeout)
+          }
+
+          // Use a asynchronous call that is executed
+          // after the propagated event.
+          //
+          // It's useful to ensure the window's context is not
+          // modified with the mouse event before the `onPressed`
+          // function.
+          //
+          // The timeout is destroyed with the `MouseArea` component.
+          _timeout = Utils.setTimeout.call(this, 0, item.pressed.bind(this))
         }
       }
     }

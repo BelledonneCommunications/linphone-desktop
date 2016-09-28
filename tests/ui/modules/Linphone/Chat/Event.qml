@@ -9,7 +9,7 @@ Text {
         // Never created.
         // Private data for `lupdate`.
         Item {
-            property variant i18n: [
+            property var i18n: [
                 QT_TR_NOOP('hangup'),
                 QT_TR_NOOP('incomingCall'),
                 QT_TR_NOOP('lostIncomingCall'),

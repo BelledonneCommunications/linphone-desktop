@@ -1,9 +1,9 @@
 #include <cstdlib>
 
-#include <QQmlFileSelector>
 #include <QMenu>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QQmlFileSelector>
 #include <QQuickView>
 #include <QSystemTrayIcon>
 #include <QtDebug>

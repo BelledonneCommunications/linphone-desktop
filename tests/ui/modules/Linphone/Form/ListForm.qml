@@ -1,106 +1,123 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Linphone 1.0
+import Linphone.Styles 1.0
+
+// ===================================================================
+
 RowLayout {
-    readonly property int lineHeight: 30
+  property alias model: values.model
+  property alias title: text.text
 
-    property alias title: text.text
+  function _addValue (value) {
+    if (model.count === 0 ||
+        model.get(model.count - 1).$value.length !== 0) {
+      model.append({ $value: value })
+    }
+  }
 
-    spacing: 0
+  function _handleEditionFinished (index, text) {
+    if (text.length === 0) {
+      model.remove(index)
+    } else {
+      model.set(index, { $value: text })
+    }
+  }
 
-    RowLayout {
-        Layout.alignment: Qt.AlignTop
-        Layout.preferredHeight: lineHeight
-        spacing: 20
+  spacing: 0
 
-        // Add item in list.
-        ActionButton {
-            Layout.preferredHeight: 16
-            Layout.preferredWidth: 16
-            onClicked: {
-                if (valuesModel.count === 0 ||
-                    valuesModel.get(valuesModel.count - 1).$value.length !== 0) {
-                    valuesModel.append({ $value: '' })
-                }
-            }
-        }
+  // Title area.
+  RowLayout {
+    Layout.alignment: Qt.AlignTop
+    Layout.preferredHeight: ListFormStyle.lineHeight
+    spacing: ListFormStyle.titleArea.spacing
 
-        // List title.
-        Text {
-            Layout.preferredWidth: 130
-            id: text
-        }
+    // Button: Add item in list.
+    ActionButton {
+      Layout.preferredHeight: ListFormStyle.titleArea.iconSize
+      Layout.preferredWidth: ListFormStyle.titleArea.iconSize
+      icon: ListFormStyle.titleArea.icon
+
+      onClicked: _addValue('')
     }
 
-    // Content list.
-    ListView {
-        Layout.fillWidth: true
-        Layout.preferredHeight: values.count * lineHeight
-        id: values
-        interactive: false
+    // Title text.
+    Text {
+      id: text
 
-        model: ListModel {
-            id: valuesModel
-
-            ListElement { $value: 'toto' }
-            ListElement { $value: 'abc' }
-            ListElement { $value: 'machin' }
-            ListElement { $value: 'bidule' }
-            ListElement { $value: 'truc' }
-        }
-
-        delegate: Item {
-            implicitHeight: textEdit.height
-            width: parent.width
-
-            Rectangle {
-                color: textEdit.focus ? '#E6E6E6' : 'transparent'
-                id: background
-                implicitHeight: textEdit.height
-                implicitWidth: textEdit.contentWidth +
-                    textEdit.padding * 2
-            }
-
-            Text {
-                anchors.fill: textEdit
-                color: '#5A585B'
-                font.italic: true
-                padding: textEdit.padding
-                text: textEdit.text.length === 0 && !textEdit.focus
-                    ? qsTr('fillPlaceholder')
-                    : ''
-                verticalAlignment: Text.AlignVCenter
-            }
-
-            TextEdit {
-                color: focus ? '#000000' : '#5A585B'
-                font.bold: !focus
-                height: lineHeight
-                id: textEdit
-                padding: 10
-                selectByMouse: true
-                text: $value
-                verticalAlignment: TextEdit.AlignVCenter
-                width: parent.width
-
-                // To handle editingFinished, it's necessary to set
-                // focus on another component.
-                Keys.onReturnPressed: parent.forceActiveFocus()
-
-                onEditingFinished: {
-                    if (text.length === 0) {
-                        valuesModel.remove(index)
-                    } else {
-                        // textEdit.text is not the same value than
-                        // valuesModel.get(index)
-                        valuesModel.set(index, { $value: text })
-                    }
-
-                    // Hack: The edition is finished but the focus
-                    // can be set.
-                    focus = false
-                }
-            }
-        }
+      Layout.preferredWidth: ListFormStyle.titleArea.text.width
+      color: ListFormStyle.titleArea.text.color
+      font.pointSize: ListFormStyle.titleArea.text.fontSize
     }
+  }
+
+  // Values.
+  ListView {
+    id: values
+
+    Layout.fillWidth: true
+    Layout.preferredHeight: count * ListFormStyle.lineHeight
+    interactive: false
+
+    delegate: Item {
+      implicitHeight: textEdit.height
+      width: parent.width
+
+      // Background.
+      Rectangle {
+        color: textEdit.activeFocus
+          ? ListFormStyle.value.backgroundColor.focused
+          : ListFormStyle.value.backgroundColor.normal
+        implicitHeight: textEdit.height
+        implicitWidth: textEdit.width
+      }
+
+      // Placeholder.
+      Text {
+        anchors.fill: textEdit
+        color: ListFormStyle.value.placeholder.color
+        font.italic: true
+        font.pointSize: ListFormStyle.value.placeholder.fontSize
+        padding: textEdit.padding
+        text: textEdit.text.length === 0 && !textEdit.activeFocus
+          ? qsTr('fillPlaceholder')
+          : ''
+        verticalAlignment: Text.AlignVCenter
+      }
+
+      // Input.
+      TextEdit {
+        id: textEdit
+
+        color: activeFocus
+          ? ListFormStyle.value.text.color.focused
+          : ListFormStyle.value.text.color.normal
+        font.bold: !activeFocus
+        height: ListFormStyle.lineHeight
+        padding: ListFormStyle.value.text.padding
+        selectByMouse: true
+        text: $value
+        verticalAlignment: TextEdit.AlignVCenter
+        width: !activeFocus
+          ? parent.width
+          : contentWidth + padding * 2
+
+        Keys.onEscapePressed: focus = false
+        Keys.onReturnPressed: focus = false
+
+        onEditingFinished: _handleEditionFinished(index, text)
+      }
+
+      // Handle click outside `TextEdit` instance.
+      InvertedMouseArea {
+        enabled: textEdit.activeFocus
+        height: textEdit.height
+        parent: parent
+        width: textEdit.width
+
+        onPressed: textEdit.focus = false
+      }
+    }
+  }
 }

@@ -4,7 +4,7 @@ import QtQuick.Dialogs 1.2
 // ===================================================================
 
 Rectangle {
-    signal dropped (variant files)
+    signal dropped (var files)
 
     color: '#DDDDDD'
     id: dropZone

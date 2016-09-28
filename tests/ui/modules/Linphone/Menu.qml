@@ -12,7 +12,7 @@ ColumnLayout {
 
   property int entryHeight
   property int entryWidth
-  property variant entries
+  property var entries
 
   property int _selectedEntry: 0
 

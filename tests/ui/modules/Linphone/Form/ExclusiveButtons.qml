@@ -5,8 +5,9 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 Row {
+  property var texts
+
   property int _selectedButton: 0
-  property variant texts
 
   signal clicked (int button)
 

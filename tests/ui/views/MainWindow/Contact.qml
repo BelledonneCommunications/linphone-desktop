@@ -72,18 +72,33 @@ ColumnLayout  {
 
       ListForm {
         title: qsTr('sipAccounts')
+        model: ListModel {
+          ListElement { $value: 'merinos@sip.linphone.org' }
+          ListElement { $value: 'elisabeth.pro@sip.linphone.org' }
+        }
       }
 
       ListForm {
         title: qsTr('address')
+        model: ListModel {
+          ListElement { $value: '312 East 10th Street - New York, NY 1009' }
+        }
       }
 
       ListForm {
         title: qsTr('emails')
+        model: ListModel {
+          ListElement { $value: 'e.meri@gmail.com' }
+          ListElement { $value: 'toto@truc.machin' }
+        }
       }
 
       ListForm {
         title: qsTr('webSites')
+        model: ListModel {
+          ListElement { $value: 'www.totogro.com' }
+          ListElement { $value: 'www.404.unknown' }
+        }
       }
     }
   }
