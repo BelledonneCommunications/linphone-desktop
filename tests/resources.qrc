@@ -63,6 +63,7 @@
     <file>ui/modules/Linphone/Styles/ForceScrollBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/AbstractTextButtonStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/ActionBarStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Form/CheckBoxTextStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/ExclusiveButtonsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/SmallButtonStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/TextButtonAStyle.qml</file>

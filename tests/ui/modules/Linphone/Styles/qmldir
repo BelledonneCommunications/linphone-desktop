@@ -13,6 +13,7 @@ singleton TimelineStyle           1.0 TimelineStyle.qml
 
 singleton AbstractTextButtonStyle 1.0 Form/AbstractTextButtonStyle.qml
 singleton ActionBarStyle          1.0 Form/ActionBarStyle.qml
+singleton CheckBoxTextStyle       1.0 Form/CheckBoxTextStyle.qml
 singleton ExclusiveButtonsStyle   1.0 Form/ExclusiveButtonsStyle.qml
 singleton SmallButtonStyle        1.0 Form/SmallButtonStyle.qml
 singleton TextButtonAStyle        1.0 Form/TextButtonAStyle.qml
