@@ -8,8 +8,8 @@ QtObject {
   property int size: 18
 
   property QtObject color: QtObject {
-    property color pressed: '#FE5E00'
-    property color hovered: '#6E6E6E'
-    property color normal: '#8E8E8E'
+    property color pressed: Colors.i
+    property color hovered: Colors.h
+    property color normal: Colors.g
   }
 }
