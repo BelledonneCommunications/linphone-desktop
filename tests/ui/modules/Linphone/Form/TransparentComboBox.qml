@@ -1,30 +1,31 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import Linphone.Styles 1.0
+
 // ===================================================================
-// Discrete ComboBox which can be integrated in text.
+// Discrete ComboBox that can be integrated in text.
 // ===================================================================
 
 ComboBox {
+  id: comboBox
+
+  background: Rectangle {
+    color: 'transparent' // No Style constant, see component name.
+  }
+  delegate: ItemDelegate {
+    id: item
+
     background: Rectangle {
-        color: 'transparent'
+      color: item.down
+        ? TransparentComboBoxStyle.item.color.pressed
+        : (comboBox.currentIndex === index
+           ? TransparentComboBoxStyle.item.color.selected
+           : TransparentComboBoxStyle.item.color.normal
+          )
     }
-    id: comboBox
-    delegate: ItemDelegate {
-        background: Rectangle {
-            color: delegate.down
-                ? '#FE5E00'
-                : (comboBox.currentIndex === index
-                   ? '#F0F0F0'
-                   : '#FFFFFF'
-                  )
-            opacity: enabled ? 1 : 0.3
-        }
-        font.weight: comboBox.currentIndex === index
-            ? Font.DemiBold
-            : Font.Normal
-        id: delegate
-        text: key || modelData
-        width: comboBox.width
-    }
+    font.bold: comboBox.currentIndex === index
+    text: key || modelData
+    width: comboBox.width
+  }
 }

@@ -68,6 +68,7 @@
     <file>ui/modules/Linphone/Styles/Form/SmallButtonStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/TextButtonAStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/TextButtonBStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Form/TransparentComboBoxStyle.qml</file>
     <file>ui/modules/Linphone/Styles/MenuStyle.qml</file>
     <file>ui/modules/Linphone/Styles/PopupStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
