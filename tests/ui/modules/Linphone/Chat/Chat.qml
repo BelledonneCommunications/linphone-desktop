@@ -118,10 +118,10 @@ ScrollableListView {
                 id: loader
                 source: $type === 'message'
                     ? (
-                        'qrc:/ui/Linphone/Chat/' +
+                        'qrc:/ui/modules/Linphone/Chat/' +
                             ($outgoing ? 'Outgoing' : 'Incoming') +
                             'Message.qml'
-                    ) : 'qrc:/ui/Linphone/Chat/Event.qml'
+                    ) : 'qrc:/ui/modules/Linphone/Chat/Event.qml'
             }
         }
 

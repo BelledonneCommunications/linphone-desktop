@@ -6,56 +6,56 @@ import Linphone 1.0
 // ===================================================================
 
 ColumnLayout {
-    spacing: 0
+  spacing: 0
 
-    ColumnLayout {
-        Layout.alignment: Qt.AlignTop
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        Layout.leftMargin: 50
-        Layout.topMargin: 50
-        spacing: 30
+  ColumnLayout {
+    Layout.alignment: Qt.AlignTop
+    Layout.fillHeight: true
+    Layout.fillWidth: true
+    Layout.leftMargin: 50
+    Layout.topMargin: 50
+    spacing: 30
 
-        // Invit friends.
-        Column {
-            spacing: 8
+    // Invit friends.
+    Column {
+      spacing: 8
 
-            Text {
-                color: '#5A585B'
-                font.bold: true
-                font.pointSize: 11
-                text: qsTr('invitContactQuestion')
-            }
+      Text {
+        color: '#5A585B'
+        font.bold: true
+        font.pointSize: 11
+        text: qsTr('invitContactQuestion')
+      }
 
-            TextButtonB {
-                text: qsTr('invitContact')
-            }
-        }
-
-        // Add contacts.
-        Column {
-            spacing: 8
-
-            Text {
-                color: '#5A585B'
-                font.bold: true
-                font.pointSize: 11
-                text: qsTr('addContactQuestion')
-            }
-
-            TextButtonB {
-                text: qsTr('addContact')
-            }
-        }
+      TextButtonB {
+        text: qsTr('invitContact')
+      }
     }
 
-    // Tooltip checkbox area.
-    CheckBoxText {
-        Layout.alignment: Qt.AlignBottom
-        Layout.fillWidth: true
-        Layout.leftMargin: 50
-        Layout.preferredHeight: 70
+    // Add contacts.
+    Column {
+      spacing: 8
 
-        text: qsTr('displayTooltip')
+      Text {
+        color: '#5A585B'
+        font.bold: true
+        font.pointSize: 11
+        text: qsTr('addContactQuestion')
+      }
+
+      TextButtonB {
+        text: qsTr('addContact')
+      }
     }
+  }
+
+  // Tooltip checkbox area.
+  CheckBoxText {
+    Layout.alignment: Qt.AlignBottom
+    Layout.fillWidth: true
+    Layout.leftMargin: 50
+    Layout.preferredHeight: 70
+
+    text: qsTr('displayTooltip')
+  }
 }

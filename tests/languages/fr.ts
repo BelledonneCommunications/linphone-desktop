@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>addContact</source>
-        <translation></translation>
+        <translation>AJOUTER CONTACTS</translation>
     </message>
     <message>
         <source>displayTooltip</source>

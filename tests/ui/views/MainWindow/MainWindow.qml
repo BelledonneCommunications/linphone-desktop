@@ -7,7 +7,12 @@ import Linphone 1.0
 import 'qrc:/ui/scripts/utils.js' as Utils
 
 ApplicationWindow {
-  id: mainWindow
+  id: window
+
+  function setView (view) {
+    loaderContent.source = 'qrc:/ui/views/MainWindow/' + view + '.qml'
+  }
+
   maximumHeight: 70
   minimumHeight: 70
   minimumWidth: 780
@@ -32,7 +37,7 @@ ApplicationWindow {
         Layout.fillHeight: parent.height
         id: collapse
 
-        onCollapsed: mainWindowStates.state = isCollapsed()
+        onCollapsed: windowStates.state = isCollapsed()
           ? 'collapsed'
           : ''
       }
@@ -48,12 +53,12 @@ ApplicationWindow {
       // User actions.
       ActionButton {
         Layout.preferredWidth: 16
-        onClicked: Utils.openWindow('ManageAccounts', mainWindow)
+        onClicked: Utils.openWindow('ManageAccounts', window)
       }
 
       ActionButton {
         Layout.preferredWidth: 16
-        onClicked: Utils.openWindow('NewCall', mainWindow)
+        onClicked: Utils.openWindow('NewCall', window)
       }
 
       // Search.
@@ -212,6 +217,12 @@ ApplicationWindow {
 
         onEntrySelected: {
           console.log('entry', entry)
+
+          if (entry === 0) {
+            setView('Home')
+          } else if (entry === 1) {
+            setView('Contacts')
+          }
         }
       }
 
@@ -273,6 +284,8 @@ ApplicationWindow {
 
     // Main content.
     Loader {
+      id: loaderContent
+
       Layout.fillHeight: true
       Layout.fillWidth: true
       source: 'qrc:/ui/views/MainWindow/Home.qml'
@@ -280,7 +293,7 @@ ApplicationWindow {
   }
 
   StateGroup {
-    id: mainWindowStates
+    id: windowStates
 
     states: State {
       name: 'collapsed'
@@ -290,7 +303,7 @@ ApplicationWindow {
         maximumHeight: 99999
         maximumWidth: 99999
         minimumHeight: 480
-        target: mainWindow
+        target: window
       }
     }
   }

@@ -24,10 +24,10 @@ ColumnLayout {
     model: entries
 
     Rectangle {
-      color: _selectedEntry === index
-        ? MenuStyle.entry.color.selected
-        : (mouseArea.pressed
-           ? MenuStyle.entry.color.pressed
+      color: mouseArea.pressed
+        ? MenuStyle.entry.color.pressed
+        : (_selectedEntry === index
+           ? MenuStyle.entry.color.selected
            : (mouseArea.containsMouse
               ? MenuStyle.entry.color.hovered
               : MenuStyle.entry.color.normal
@@ -76,10 +76,8 @@ ColumnLayout {
         hoverEnabled: true
 
         onClicked: {
-          if (_selectedEntry !== index) {
-            _selectedEntry = index
-            entrySelected(index)
-          }
+          _selectedEntry = index
+          entrySelected(index)
         }
       }
     }
