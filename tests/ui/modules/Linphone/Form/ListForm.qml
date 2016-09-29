@@ -7,12 +7,17 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 RowLayout {
+  id: listForm
+
   property alias model: values.model
   property alias title: text.text
+  property string placeholder
 
   function _addValue (value) {
-    if (model.count === 0 ||
-        model.get(model.count - 1).$value.length !== 0) {
+    if (
+      model.count === 0 ||
+      model.get(model.count - 1).$value.length !== 0
+    ) {
       model.append({ $value: value })
     }
   }
@@ -81,7 +86,7 @@ RowLayout {
         font.pointSize: ListFormStyle.value.placeholder.fontSize
         padding: textEdit.padding
         text: textEdit.text.length === 0 && !textEdit.activeFocus
-          ? qsTr('fillPlaceholder')
+          ? listForm.placeholder
           : ''
         verticalAlignment: Text.AlignVCenter
       }

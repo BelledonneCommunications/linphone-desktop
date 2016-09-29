@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.3
 
 import Linphone 1.0
 
+import 'qrc:/ui/scripts/utils.js' as Utils
+
 ColumnLayout  {
   spacing: 0
 
@@ -49,7 +51,15 @@ ColumnLayout  {
 
         ActionButton {
           icon: 'delete'
-          onClicked: console.log('clicked!!!')
+          onClicked: Utils.openConfirmDialog(this, {
+            descriptionText: qsTr('removeContactDescription'),
+            exitHandler: function (status) {
+              if (status) {
+                window.setView('Home')
+              }
+            },
+            title: qsTr('removeContactTitle')
+          })
         }
       }
     }
@@ -76,6 +86,7 @@ ColumnLayout  {
           ListElement { $value: 'merinos@sip.linphone.org' }
           ListElement { $value: 'elisabeth.pro@sip.linphone.org' }
         }
+        placeholder: qsTr('sipAccountsInput')
       }
 
       ListForm {
@@ -83,6 +94,7 @@ ColumnLayout  {
         model: ListModel {
           ListElement { $value: '312 East 10th Street - New York, NY 1009' }
         }
+        placeholder: qsTr('addressInput')
       }
 
       ListForm {
@@ -91,6 +103,7 @@ ColumnLayout  {
           ListElement { $value: 'e.meri@gmail.com' }
           ListElement { $value: 'toto@truc.machin' }
         }
+        placeholder: qsTr('emailsInput')
       }
 
       ListForm {
@@ -99,6 +112,7 @@ ColumnLayout  {
           ListElement { $value: 'www.totogro.com' }
           ListElement { $value: 'www.404.unknown' }
         }
+        placeholder: qsTr('webSitesInput')
       }
     }
   }

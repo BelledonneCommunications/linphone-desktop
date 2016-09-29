@@ -44,15 +44,22 @@ ApplicationWindow {
 
       // User info.
       ContactDescription {
+        id: contactDescription
+
         Layout.fillHeight: parent.height
         Layout.preferredWidth: 200
         sipAddress: 'e.miller@sip-linphone.org'
         username: 'Edward Miller'
       }
 
+      MouseArea {
+        anchors.fill: contactDescription
+        onClicked: Utils.openWindow('ManageAccounts', window)
+      }
+
       // User actions.
       ActionButton {
-        Layout.preferredWidth: 16
+        Layout.preferredWidth: 1
         onClicked: Utils.openWindow('ManageAccounts', window)
       }
 

@@ -30,6 +30,30 @@
         <source>webSites</source>
         <translation>WEB SITE(S)</translation>
     </message>
+    <message>
+        <source>sipAccountsInput</source>
+        <translation>SIP Address</translation>
+    </message>
+    <message>
+        <source>emailsInput</source>
+        <translation>E-mail address</translation>
+    </message>
+    <message>
+        <source>addressInput</source>
+        <translation>Address</translation>
+    </message>
+    <message>
+        <source>webSitesInput</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>removeContactDescription</source>
+        <translation>Do you really want remove this contact from your book?</translation>
+    </message>
+    <message>
+        <source>removeContactTitle</source>
+        <translation>Delete confirmation</translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -124,13 +148,6 @@
     <message>
         <source>displayTooltip</source>
         <translation>Display tooltips to discover Linphone Desktop</translation>
-    </message>
-</context>
-<context>
-    <name>ListForm</name>
-    <message>
-        <source>fillPlaceholder</source>
-        <translation></translation>
     </message>
 </context>
 <context>
