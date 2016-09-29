@@ -12,6 +12,10 @@ ApplicationWindow {
     loaderContent.source = 'qrc:/ui/views/MainWindow/' + view + '.qml'
   }
 
+  function _manageAccounts () {
+    Utils.openWindow('ManageAccounts', window)
+  }
+
   maximumHeight: 70
   minimumHeight: 70
   minimumWidth: 780
@@ -53,13 +57,13 @@ ApplicationWindow {
 
       MouseArea {
         anchors.fill: contactDescription
-        onClicked: Utils.openWindow('ManageAccounts', window)
+        onClicked: _manageAccounts()
       }
 
       // User actions.
       ActionButton {
         Layout.preferredWidth: 1
-        onClicked: Utils.openWindow('ManageAccounts', window)
+        onClicked: _manageAccounts()
       }
 
       ActionButton {

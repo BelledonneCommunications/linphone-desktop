@@ -83,6 +83,8 @@ Item {
           mapToItem(item.parent, mouse.x, mouse.y)
         )) {
           if (_timeout != null) {
+            // Remove existing timeout to avoid the creation of
+            // many children.
             Utils.clearTimeout(_timeout)
           }
 
@@ -91,7 +93,7 @@ Item {
           //
           // It's useful to ensure the window's context is not
           // modified with the mouse event before the `onPressed`
-          // function.
+          // call.
           //
           // The timeout is destroyed with the `MouseArea` component.
           _timeout = Utils.setTimeout.call(this, 0, item.pressed.bind(this))
