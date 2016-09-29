@@ -1,6 +1,6 @@
 import QtQuick 2.7
 
-import 'qrc:/ui/scripts/utils.js' as Utils
+import Utils 1.0
 
 // ===================================================================
 

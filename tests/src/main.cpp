@@ -57,6 +57,7 @@ int main (int argc, char *argv[]) {
 
   // Set modules paths.
   engine.addImportPath(":/ui/modules");
+  engine.addImportPath(":/ui/scripts");
 
   engine.load(QUrl("qrc:/ui/views/MainWindow/MainWindow.qml"));
   if (engine.rootObjects().isEmpty())

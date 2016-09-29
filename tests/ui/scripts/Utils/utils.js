@@ -79,16 +79,14 @@ function snakeToCamel (s) {
 
 // -------------------------------------------------------------------
 
-function Timer (parent) {
-  return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
-}
-
 // A copy of `Window.setTimeout` from js.
 // Use setTimeout.call(parentContext, delayTime, cb) to use it.
 //
 // delay is in milliseconds.
 function setTimeout (delay, cb) {
-  var timer = new Timer(this)
+  var timer = new (function (parent) {
+    return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
+  })(this)
 
   timer.interval = delay
   timer.repeat = false

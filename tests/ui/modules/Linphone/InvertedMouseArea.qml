@@ -1,8 +1,7 @@
 import QtQuick 2.7
 
 import Linphone 1.0
-
-import 'qrc:/ui/scripts/utils.js' as Utils
+import Utils 1.0
 
 // ===================================================================
 // Helper to handle button click outside a component.

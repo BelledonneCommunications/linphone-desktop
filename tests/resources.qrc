@@ -78,7 +78,8 @@
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/modules/Linphone/View/ScrollableListView.qml</file>
-    <file>ui/scripts/utils.js</file>
+    <file>ui/scripts/Utils/qmldir</file>
+    <file>ui/scripts/Utils/utils.js</file>
     <file>ui/views/MainWindow/Contact.qml</file>
     <file>ui/views/MainWindow/Contacts.qml</file>
     <file>ui/views/MainWindow/Conversation.qml</file>
