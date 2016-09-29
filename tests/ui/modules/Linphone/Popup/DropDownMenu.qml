@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import Linphone 1.0
 import Linphone.Styles 1.0
 
 // ===================================================================
@@ -27,6 +28,7 @@ Rectangle {
     return height > maxMenuHeight ? maxMenuHeight : height
   }
   visible: false
+  z: Constants.zPopup
 
   Rectangle {
     id: content

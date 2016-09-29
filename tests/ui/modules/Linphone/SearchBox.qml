@@ -1,7 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
-import Linphone 1.0
 import Linphone.Styles 1.0
 
 // ===================================================================
@@ -57,7 +56,6 @@ Item {
 
       anchors.top: searchField.bottom
       width: searchField.width
-      z: Constants.zPopup
 
       Keys.onEscapePressed: _hideMenu()
 
