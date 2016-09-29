@@ -26,7 +26,7 @@ Item {
 
     anchors.centerIn: parent
     background: CollapseStyle.background
-    icon: CollapseStyle.icon
+    icon: 'collapse'
     iconSize: CollapseStyle.iconSize
 
     onClicked: collapse()

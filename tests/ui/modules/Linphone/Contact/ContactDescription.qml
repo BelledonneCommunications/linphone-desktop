@@ -1,30 +1,35 @@
 import QtQuick 2.7
 
+import Linphone.Styles 1.0
+
 // ===================================================================
 
 Column {
-    property alias sipAddress: sipAddress.text
-    property alias username: username.text
+  property alias sipAddress: sipAddress.text
+  property alias username: username.text
 
-    // Username.
-    Text {
-        clip: true
-        color: '#5A585B'
-        font.pointSize: 11
-        font.bold: true
-        height: parent.height / 2
-        id: username
-        verticalAlignment: Text.AlignBottom
-        width: parent.width
-    }
+  // Username.
+  Text {
+    id: username
 
-    // Sip address.
-    Text {
-        clip: true
-        color: '#5A585B'
-        height: parent.height / 2
-        id: sipAddress
-        verticalAlignment: Text.AlignTop
-        width: parent.width
-    }
+    clip: true
+    color: ContactDescriptionStyle.username.color
+    font.bold: true
+    font.pointSize: ContactDescriptionStyle.username.fontSize
+    height: parent.height / 2
+    verticalAlignment: Text.AlignBottom
+    width: parent.width
+  }
+
+  // Sip address.
+  Text {
+    id: sipAddress
+
+    clip: true
+    color: ContactDescriptionStyle.sipAddress.color
+    font.pointSize: ContactDescriptionStyle.sipAddress.fontSize
+    height: parent.height / 2
+    verticalAlignment: Text.AlignTop
+    width: parent.width
+  }
 }

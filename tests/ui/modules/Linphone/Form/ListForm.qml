@@ -42,7 +42,7 @@ RowLayout {
     ActionButton {
       Layout.preferredHeight: ListFormStyle.titleArea.iconSize
       Layout.preferredWidth: ListFormStyle.titleArea.iconSize
-      icon: ListFormStyle.titleArea.icon
+      icon: 'add_field'
 
       onClicked: _addValue('')
     }

@@ -13,8 +13,6 @@ QtObject {
     property int leftMargin: 18
     property int spacing: 16
     property int topMargin: 10
-
-    property string icon: 'history'
   }
 
   property QtObject separator: QtObject {

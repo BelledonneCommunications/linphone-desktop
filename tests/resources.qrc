@@ -60,6 +60,9 @@
     <file>ui/modules/Linphone/SearchBox.qml</file>
     <file>ui/modules/Linphone/Select/SelectContact.qml</file>
     <file>ui/modules/Linphone/Styles/CollapseStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
     <file>ui/modules/Linphone/Styles/DialogStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ForceScrollBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Form/AbstractTextButtonStyle.qml</file>

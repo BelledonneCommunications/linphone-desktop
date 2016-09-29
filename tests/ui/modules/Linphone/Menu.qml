@@ -64,7 +64,7 @@ ColumnLayout {
           Layout.preferredHeight: MenuStyle.entry.selectionIconSize
           Layout.preferredWidth: MenuStyle.entry.selectionIconSize
           icon: _selectedEntry === index
-            ? MenuStyle.entry.selectionIcon
+            ? 'right_arrow'
             : ''
         }
       }

@@ -13,8 +13,6 @@ QtObject {
     property int selectionIconSize: 12
     property int spacing: 18
 
-    property string selectionIcon: 'right_arrow'
-
     property QtObject color: QtObject {
       property color normal: Colors.g
       property color hovered: Colors.h

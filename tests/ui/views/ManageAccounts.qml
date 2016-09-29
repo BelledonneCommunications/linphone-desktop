@@ -15,92 +15,65 @@ DialogPlus {
     onClicked: exit(0)
   }
 
-  Item {
+  // TODO: Compute list max.
+  ScrollableListView {
+    id: accounts
+
     anchors.fill: parent
+    model: model1 // TMP
 
-    // TODO: Compute list max.
-    ScrollableListView {
-      id: accounts
+    delegate: Item {
+      function isDefaultAccount () {
+        return accounts.currentIndex === index
+      }
 
-      anchors.fill: parent
+      height: 34
+      width: parent.width
 
-      // TODO: Remove, use C++ model instead.
-      model: model1
+      Rectangle {
+        anchors.fill: parent
+        color: isDefaultAccount() ? '#EAEAEA' : 'transparent'
 
-      delegate: Item {
-        function isDefaultAccount () {
-          return accounts.currentIndex === index
-        }
-
-        height: 34
-        width: parent.width
-
-        Rectangle {
+        RowLayout {
           anchors.fill: parent
-          color: isDefaultAccount() ? '#EAEAEA' : 'transparent'
-          id: accountLine
+          anchors.leftMargin: 15
+          anchors.rightMargin: 15
+          spacing: 15
 
-          RowLayout {
-            anchors.fill: parent
-            spacing: 15
-            anchors.leftMargin: 15
-            anchors.rightMargin: 15
+          // Is default account?
+          Icon {
+            Layout.preferredHeight: 20
+            Layout.preferredWidth: 20
+            icon: isDefaultAccount() ? 'valid' : ''
+          }
 
-            // Default account.
-            Item {
-              Layout.fillHeight: parent.height
-              Layout.preferredWidth: 20
+          // Sip account.
+          Text {
+            Layout.fillWidth: true
+            clip: true
+            color: '#59575A'
+            text: $sipAddress
+            verticalAlignment: Text.AlignVCenter
 
-              Image {
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-                source: isDefaultAccount() ? 'qrc:/imgs/valid.svg' : ''
-              }
+            MouseArea {
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              onClicked: accounts.currentIndex = index
             }
+          }
 
-            // Sip account.
-            Item {
-              Layout.fillHeight: parent.height
-              Layout.fillWidth: true
+          // Presence.
+          Icon {
+            Layout.preferredHeight: 20
+            Layout.preferredWidth: 20
+            icon: 'led_' + $presence
+          }
 
-              Text {
-                anchors.fill: parent
-                clip: true
-                color: '#59575A'
-                text: sipAddress;
-                verticalAlignment: Text.AlignVCenter
-
-                MouseArea {
-                  anchors.fill: parent
-                  cursorShape: Qt.PointingHandCursor
-                  onClicked: accounts.currentIndex = index
-                }
-              }
-            }
-
-            // Presence.
-            Item {
-              Layout.fillHeight: parent.height
-              Layout.preferredWidth: 20
-
-              Image {
-                anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-                source: 'qrc:/imgs/led_' + presence + '.svg'
-              }
-            }
-
-            // Update presence.
-            Item {
-              Layout.fillHeight: parent.height
-              Layout.preferredWidth: 160
-
-              TransparentComboBox {
-                anchors.fill: parent
-                model: model2
-                textRole: 'key'
-              }
-            }
+          // Update presence.
+          TransparentComboBox {
+            Layout.preferredWidth: 160
+            model: model2 // TMP.
+            textRole: 'key'
           }
         }
       }
@@ -115,36 +88,36 @@ DialogPlus {
     id: model1
 
     ListElement {
-      presence: 'connected'
-      sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
+      $presence: 'connected'
+      $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
     }
     ListElement {
-      presence: 'connected'
-      sipAddress: 'toto.lala.sip.linphone.org'
+      $presence: 'connected'
+      $sipAddress: 'toto.lala.sip.linphone.org'
     }
     ListElement {
-      presence: 'disconnected'
-      sipAddress: 'machin.truc.sip.linphone.org'
+      $presence: 'disconnected'
+      $sipAddress: 'machin.truc.sip.linphone.org'
     }
     ListElement {
-      presence: 'absent'
-      sipAddress: 'hey.listen.sip.linphone.org'
+      $presence: 'absent'
+      $sipAddress: 'hey.listen.sip.linphone.org'
     }
     ListElement {
-      presence: 'do_not_disturb'
-      sipAddress: 'valentin.cognito.sip.linphone.org'
+      $presence: 'do_not_disturb'
+      $sipAddress: 'valentin.cognito.sip.linphone.org'
     }
     ListElement {
-      presence: 'do_not_disturb'
-      sipAddress: 'charles.henri.sip.linphone.org'
+      $presence: 'do_not_disturb'
+      $sipAddress: 'charles.henri.sip.linphone.org'
     }
     ListElement {
-      presence: 'disconnected'
-      sipAddress: 'yesyes.nono.sip.linphone.org'
+      $presence: 'disconnected'
+      $sipAddress: 'yesyes.nono.sip.linphone.org'
     }
     ListElement {
-      presence: 'connected'
-      sipAddress: 'nsa.sip.linphone.org'
+      $presence: 'connected'
+      $sipAddress: 'nsa.sip.linphone.org'
     }
   }
 

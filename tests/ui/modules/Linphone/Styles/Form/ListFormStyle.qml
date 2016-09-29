@@ -32,8 +32,6 @@ QtObject {
     property int spacing: 10
     property int iconSize: 16
 
-    property string icon: 'add_field'
-
     property QtObject text: QtObject {
       property color color: '#000000'
 

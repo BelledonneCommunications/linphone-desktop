@@ -11,6 +11,10 @@ singleton PopupStyle               1.0 PopupStyle.qml
 singleton SearchBoxStyle           1.0 SearchBoxStyle.qml
 singleton TimelineStyle            1.0 TimelineStyle.qml
 
+singleton AvatarStyle              1.0 Contact/AvatarStyle.qml
+singleton ContactDescriptionStyle  1.0 Contact/ContactDescriptionStyle.qml
+singleton ContactStyle             1.0 Contact/ContactStyle.qml
+
 singleton AbstractTextButtonStyle  1.0 Form/AbstractTextButtonStyle.qml
 singleton ActionBarStyle           1.0 Form/ActionBarStyle.qml
 singleton CheckBoxTextStyle        1.0 Form/CheckBoxTextStyle.qml

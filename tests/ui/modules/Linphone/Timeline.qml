@@ -16,7 +16,7 @@ ColumnLayout {
     spacing: TimelineStyle.legend.spacing
 
     Icon {
-      icon: TimelineStyle.legend.icon
+      icon: 'history'
       iconSize: TimelineStyle.legend.iconSize
     }
 

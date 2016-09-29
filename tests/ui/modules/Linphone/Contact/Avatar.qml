@@ -1,64 +1,69 @@
 import QtQuick 2.7
 import QtGraphicalEffects 1.0
 
+import Linphone 1.0
+import Linphone.Styles 1.0
+
 // ===================================================================
 
 Item {
-    property alias image: imageToFilter.source
-    property string presence
-    property string username
+  property alias image: imageToFilter.source
+  property string presence
+  property string username
 
-    // Image mask. (Circle)
-    Rectangle {
-        anchors.fill: parent
-        color: '#8F8F8F'
-        id: mask
-        radius: 50
+  function _computeInitials () {
+    var spaceIndex = username.indexOf(' ')
+    var firstLetter = username.charAt(0)
+
+    if (spaceIndex === -1) {
+      return firstLetter
     }
 
-    // Initials.
-    Text {
-        anchors.centerIn: parent
-        color: '#FFFFFF'
-        text: {
-            var spaceIndex = username.indexOf(' ')
-            var firstLetter = username.charAt(0)
+    return firstLetter + username.charAt(spaceIndex + 1)
+  }
 
-            if (spaceIndex === -1) {
-                return firstLetter
-            }
+  // Image mask. (Circle)
+  Rectangle {
+    id: mask
 
-            return firstLetter + username.charAt(spaceIndex + 1)
-        }
-    }
+    anchors.fill: parent
+    color: AvatarStyle.mask.color
+    radius: AvatarStyle.mask.radius
+  }
 
-    Image {
-        anchors.fill: parent
-        id: imageToFilter
-        fillMode: Image.PreserveAspectFit
+  // Initials.
+  Text {
+    anchors.centerIn: parent
+    color: AvatarStyle.initials.color
+    font.pointSize: AvatarStyle.initials.fontSize
+    text: _computeInitials()
+  }
 
-        // Image must be invisible.
-        // The only visible image is the OpacityMask!
-        visible: false
-    }
+  Image {
+    anchors.fill: parent
+    id: imageToFilter
+    fillMode: Image.PreserveAspectFit
 
-    // Avatar.
-    OpacityMask {
-        anchors.fill: imageToFilter
-        maskSource: mask
-        source: imageToFilter
-    }
+    // Image must be invisible.
+    // The only visible image is the OpacityMask!
+    visible: false
+  }
 
-    // Presence.
-    Image {
-        anchors.bottom: parent.bottom
-        anchors.right: parent.right
-        fillMode: Image.PreserveAspectFit
-        height: parent.height / 3
-        id: presenceImage
-        source: presence
-            ? 'qrc:/imgs/led_' + presence + '.svg'
-            : ''
-        width: parent.width / 3
-    }
+  // Avatar.
+  OpacityMask {
+    anchors.fill: imageToFilter
+    maskSource: mask
+    source: imageToFilter
+  }
+
+  // Presence.
+  Icon {
+    anchors.bottom: parent.bottom
+    anchors.right: parent.right
+    height: parent.height / 3
+    icon: presence
+      ? 'led_' + presence
+      : ''
+    width: parent.width / 3
+  }
 }
