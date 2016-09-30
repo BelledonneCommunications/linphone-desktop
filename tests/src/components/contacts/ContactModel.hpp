@@ -76,14 +76,14 @@ public:
     m_sip_addresses = sip_addresses;
   }
 
-signals:
-  void contactUpdated ();
-
-private:
   QString getUsername () const {
     return m_username;
   }
 
+signals:
+  void contactUpdated ();
+
+private:
   void setUsername (const QString &username) {
     m_username = username;
   }

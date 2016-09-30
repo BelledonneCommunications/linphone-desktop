@@ -9,8 +9,8 @@
 #include <QtDebug>
 
 #include "app.hpp"
-#include "models/contacts/ContactsListModel.hpp"
-#include "models/notification/NotificationModel.hpp"
+#include "components/contacts/ContactsListProxyModel.hpp"
+#include "components/notification/Notification.hpp"
 
 // ===================================================================
 
@@ -56,8 +56,8 @@ void registerTypes () {
 void addContextProperties (QQmlApplicationEngine &engine) {
   QQmlContext *context = engine.rootContext();
 
-  context->setContextProperty("Notification", new NotificationModel());
-  context->setContextProperty("ContactsList", new ContactsListModel());
+  context->setContextProperty("Notification", new Notification());
+  context->setContextProperty("ContactsListModel", new ContactsListProxyModel());
 }
 
 int main (int argc, char *argv[]) {

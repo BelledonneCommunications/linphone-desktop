@@ -1,15 +1,15 @@
-#ifndef NOTIFICATION_MODEL_H_
-#define NOTIFICATION_MODEL_H_
+#ifndef NOTIFICATION_H_
+#define NOTIFICATION_H_
 
 #include <QObject>
 
 // ===================================================================
 
-class NotificationModel : public QObject {
+class Notification : public QObject {
   Q_OBJECT
 
 public:
-  NotificationModel (QObject *parent = Q_NULLPTR);
+  Notification (QObject *parent = Q_NULLPTR);
 
 public slots:
   void showMessage (
@@ -20,4 +20,4 @@ public slots:
   );
 };
 
-#endif // NOTIFICATION_MODEL_H_
+#endif // NOTIFICATION_H_

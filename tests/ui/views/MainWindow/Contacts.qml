@@ -31,6 +31,10 @@ ColumnLayout {
           implicitHeight: 30
         }
         placeholderText: qsTr('searchContactPlaceholder')
+
+        Component.onCompleted: ContactsListModel.setFilterRegExp('')
+
+        onTextChanged: ContactsListModel.setFilterRegExp(text)
       }
 
       ExclusiveButtons {
@@ -58,17 +62,19 @@ ColumnLayout {
       anchors.fill: parent
       spacing: 2
 
-      model: ContactsList
+      model: ContactsListModel
 
       delegate: Rectangle {
+        id: contact
+
         color: '#FFFFFF'
         height: 50
-        id: contact
         width: parent.width
 
         MouseArea {
           anchors.fill: parent
           hoverEnabled: true
+
           onEntered: contact.state = 'hover'
           onExited: contact.state = ''
         }
@@ -104,24 +110,21 @@ ColumnLayout {
             }
 
             // Username.
-            Item {
+            Text {
               Layout.fillHeight: parent.height
               Layout.fillWidth: true
-
-              Text {
-                anchors.fill: parent
-                clip: true
-                color: '#5A585B'
-                font.bold: true
-                text: $contact.username
-                verticalAlignment: Text.AlignVCenter
-              }
+              clip: true
+              color: '#5A585B'
+              font.bold: true
+              text: $contact.username
+              verticalAlignment: Text.AlignVCenter
             }
 
             // Actions.
             Row {
-              Layout.fillHeight: true
               id: actions
+
+              Layout.fillHeight: true
               spacing: 50
               visible: false
 

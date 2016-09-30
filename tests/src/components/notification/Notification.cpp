@@ -1,14 +1,14 @@
 #include <QtDebug>
 
-#include "NotificationModel.hpp"
+#include "Notification.hpp"
 
 // ===================================================================
 
-NotificationModel::NotificationModel (QObject *parent) :
+Notification::Notification (QObject *parent) :
   QObject(parent) {
 }
 
-void NotificationModel::showMessage (
+void Notification::showMessage (
   const QString &summary,
   const QString &body,
   const QString &icon,
