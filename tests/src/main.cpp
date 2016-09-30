@@ -9,6 +9,7 @@
 #include <QtDebug>
 
 #include "app.hpp"
+#include "models/contacts/ContactsListModel.hpp"
 #include "models/notification/NotificationModel.hpp"
 
 // ===================================================================
@@ -46,7 +47,22 @@ void setTrayIcon (QQmlApplicationEngine &engine) {
   tray_icon->show();
 }
 
+void registerTypes () {
+  qmlRegisterUncreatableType<ContactModel>(
+    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
+  );
+}
+
+void addContextProperties (QQmlApplicationEngine &engine) {
+  QQmlContext *context = engine.rootContext();
+
+  context->setContextProperty("Notification", new NotificationModel());
+  context->setContextProperty("ContactsList", new ContactsListModel());
+}
+
 int main (int argc, char *argv[]) {
+  registerTypes();
+
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   App app(argc, argv);
   QQmlApplicationEngine engine;
@@ -69,9 +85,7 @@ int main (int argc, char *argv[]) {
   else
     setTrayIcon(engine);
 
-  // Warning: Add global context Notification for all views!
-  NotificationModel notification;
-  engine.rootContext()->setContextProperty("Notification", &notification);
+  addContextProperties(engine);
 
   // Run!
   return app.exec();

@@ -9,6 +9,8 @@ RESOURCES = resources.qrc
 SOURCES = \
   src/app.cpp \
   src/main.cpp \
+  src/models/contacts/ContactModel.cpp \
+  src/models/contacts/ContactsListModel.cpp \
   src/models/notification/NotificationModel.cpp \
   src/models/settings/AccountSettingsListModel.cpp \
   src/models/settings/AccountSettingsModel.cpp \
@@ -16,6 +18,8 @@ SOURCES = \
 
 HEADERS = \
   src/app.hpp \
+  src/models/contacts/ContactModel.hpp \
+  src/models/contacts/ContactsListModel.hpp \
   src/models/notification/NotificationModel.hpp \
   src/models/settings/AccountSettingsListModel.hpp \
   src/models/settings/AccountSettingsModel.hpp \

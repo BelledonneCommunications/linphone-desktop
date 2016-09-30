@@ -8,7 +8,7 @@ import Linphone.Styles 1.0
 
 Item {
   property alias image: imageToFilter.source
-  property string presence
+  property alias presenceLevel: presenceLevel.level
   property string username
 
   function _computeInitials () {
@@ -57,13 +57,12 @@ Item {
   }
 
   // Presence.
-  Icon {
+  PresenceLevel {
+    id: presenceLevel
+
     anchors.bottom: parent.bottom
     anchors.right: parent.right
     height: parent.height / 3
-    icon: presence
-      ? 'led_' + presence
-      : ''
     width: parent.width / 3
   }
 }

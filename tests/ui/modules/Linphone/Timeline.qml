@@ -44,7 +44,7 @@ ColumnLayout {
     Layout.fillWidth: true
 
     delegate: Contact {
-      presence: $presence
+      presenceLevel: $presence
       sipAddress: $sipAddress
       username: $username
       width: parent.width

@@ -21,6 +21,7 @@ Collapse             1.0 Collapse.qml
 Avatar               1.0 Contact/Avatar.qml
 Contact              1.0 Contact/Contact.qml
 ContactDescription   1.0 Contact/ContactDescription.qml
+PresenceLevel        1.0 Contact/PresenceLevel.qml
 
 # Dialog
 DialogPlus           1.0 Dialog/DialogPlus.qml

@@ -58,94 +58,8 @@ ColumnLayout {
       anchors.fill: parent
       spacing: 2
 
-      // TODO: Remove, use C++ model instead.
-      model: ListModel {
-        ListElement {
-          $image: ''
-          $presence: 'connected'
-          $username: 'Isabella Ahornton'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'connected'
-          $username: 'Mary Boreno'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'disconnected'
-          $username: 'Cecelia Cyler'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'absent'
-          $username: 'Daniel Elliott'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'do_not_disturb'
-          $username: 'Effie Forton'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'do_not_disturb'
-          $username: 'Agnes Hurner'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'disconnected'
-          $username: 'Luke Leming'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'connected'
-          $username: 'Olga Manning'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'connected'
-          $username: 'Isabella Ahornton'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'connected'
-          $username: 'Mary Boreno'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'disconnected'
-          $username: 'Cecelia Cyler'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'disconnected'
-          $username: 'Toto'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'absent'
-          $username: 'Daniel Elliott'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'do_not_disturb'
-          $username: 'Effie Forton'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'do_not_disturb'
-          $username: 'Agnes Hurner'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'disconnected'
-          $username: 'Luke Leming'
-        }
-        ListElement {
-          $image: ''
-          $presence: 'connected'
-          $username: 'Olga Manning'
-        }
-      }
+      model: ContactsList
+
       delegate: Rectangle {
         color: '#FFFFFF'
         height: 50
@@ -174,8 +88,8 @@ ColumnLayout {
             Avatar {
               Layout.fillHeight: parent.height
               Layout.preferredWidth: 30
-              image: $image
-              username: $username
+              image: $contact.avatar
+              username: $contact.username
             }
 
             // Presence.
@@ -183,10 +97,9 @@ ColumnLayout {
               Layout.fillHeight: parent.height
               Layout.preferredWidth: 20
 
-              Image {
+              PresenceLevel {
                 anchors.fill: parent
-                fillMode: Image.PreserveAspectFit
-                source: 'qrc:/imgs/led_' + $presence + '.svg'
+                level: $contact.presenceLevel
               }
             }
 
@@ -200,7 +113,7 @@ ColumnLayout {
                 clip: true
                 color: '#5A585B'
                 font.bold: true
-                text: $username
+                text: $contact.username
                 verticalAlignment: Text.AlignVCenter
               }
             }

@@ -90,7 +90,7 @@ ApplicationWindow {
         model: model1
 
         delegate: Contact {
-          presence: $presence
+          presenceLevel: $presence
           sipAddress: $sipAddress
           username: $username
           width: parent.width
@@ -160,42 +160,42 @@ ApplicationWindow {
 
         model: ListModel {
           ListElement {
-            $presence: 'connected'
+            $presence: 0
             $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'connected'
+            $presence: 0
             $sipAddress: 'toto.lala.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'disconnected'
+            $presence: 0
             $sipAddress: 'machin.truc.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'absent'
+            $presence: 0
             $sipAddress: 'hey.listen.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'do_not_disturb'
+            $presence: 0
             $sipAddress: 'valentin.cognito.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'do_not_disturb'
+            $presence: 0
             $sipAddress: 'charles.henri.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'disconnected'
+            $presence: 0
             $sipAddress: 'yesyes.nono.sip.linphone.org'
             $username: 'Toto'
           }
           ListElement {
-            $presence: 'connected'
+            $presence: 0
             $sipAddress: 'nsa.sip.linphone.org'
             $username: 'Toto'
           }
@@ -239,82 +239,82 @@ ApplicationWindow {
     id: model1
 
     ListElement {
-      $presence: 'connected'
+      $presence: 0
       $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'connected'
+      $presence: 0
       $sipAddress: 'toto.lala.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'disconnected'
+      $presence: 0
       $sipAddress: 'machin.truc.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'absent'
+      $presence: 0
       $sipAddress: 'hey.listen.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'do_not_disturb'
+      $presence: 0
       $sipAddress: 'valentin.cognito.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'do_not_disturb'
+      $presence: 0
       $sipAddress: 'charles.henri.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'disconnected'
+      $presence: 0
       $sipAddress: 'yesyes.nono.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'connected'
+      $presence: 0
       $sipAddress: 'nsa.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'connected'
+      $presence: 0
       $sipAddress: 'jim.williams.zzzz.yyyy.kkkk.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'connected'
+      $presence: 0
       $sipAddress: 'toto.lala.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'disconnected'
+      $presence: 0
       $sipAddress: 'machin.truc.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'absent'
+      $presence: 0
       $sipAddress: 'hey.listen.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'do_not_disturb'
+      $presence: 0
       $sipAddress: 'valentin.cognito.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'do_not_disturb'
+      $presence: 0
       $sipAddress: 'charles.henri.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'disconnected'
+      $presence: 0
       $sipAddress: 'yesyes.nono.sip.linphone.org'
       $username: 'Toto'
     }
     ListElement {
-      $presence: 'connected'
+      $presence: 0
       $sipAddress: 'nsa.sip.linphone.org'
       $username: 'Toto'
     }

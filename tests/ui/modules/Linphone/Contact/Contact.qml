@@ -9,7 +9,7 @@ import Linphone.Styles 1.0
 Item {
   property alias actions: actionBar.data
   property alias image: avatar.image
-  property alias presence: avatar.presence
+  property alias presenceLevel: avatar.presenceLevel
   property alias sipAddress: description.sipAddress
   property alias username: avatar.username
 

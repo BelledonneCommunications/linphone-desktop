@@ -14,10 +14,10 @@
     <file>imgs/history.svg</file>
     <file>imgs/home.svg</file>
     <file>imgs/incoming_call.svg</file>
-    <file>imgs/led_absent.svg</file>
-    <file>imgs/led_connected.svg</file>
-    <file>imgs/led_disconnected.svg</file>
-    <file>imgs/led_do_not_disturb.svg</file>
+    <file>imgs/led_green.svg</file>
+    <file>imgs/led_orange.svg</file>
+    <file>imgs/led_red.svg</file>
+    <file>imgs/led_white.svg</file>
     <file>imgs/linphone.png</file>
     <file>imgs/lost_incoming_call.svg</file>
     <file>imgs/lost_outgoing_call.svg</file>
@@ -36,6 +36,7 @@
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
+    <file>ui/modules/Linphone/Contact/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/Dialog/ConfirmDialog.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogPlus.qml</file>
