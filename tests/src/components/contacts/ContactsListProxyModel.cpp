@@ -2,9 +2,9 @@
 
 #include "ContactsListProxyModel.hpp"
 
-#define USERNAME_WEIGHT 0.5
-#define MAIN_SIP_ADDRESS_WEIGHT 0.3
-#define OTHER_SIP_ADDRESSES_WEIGHT 0.2
+#define USERNAME_WEIGHT 50.0
+#define MAIN_SIP_ADDRESS_WEIGHT 30.0
+#define OTHER_SIP_ADDRESSES_WEIGHT 20.0
 
 // ===================================================================
 
@@ -12,7 +12,6 @@ ContactsListModel *ContactsListProxyModel::m_list = nullptr;
 
 ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(m_list);
-  setDynamicSortFilter(true);
   setFilterCaseSensitivity(Qt::CaseInsensitive);
 
   foreach (const ContactModel *contact, m_list->m_list)
@@ -56,7 +55,7 @@ bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelInde
   );
 }
 
-float ContactsListProxyModel::computeContactWeight (const ContactModel &contact) const {
+int ContactsListProxyModel::computeContactWeight (const ContactModel &contact) const {
   float weight = 0;
 
   if (filterRegExp().indexIn(contact.m_username) != -1)
@@ -74,5 +73,5 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
       if (filterRegExp().indexIn(*it) != -1)
         weight += OTHER_SIP_ADDRESSES_WEIGHT / size;
 
-  return weight;
+  return static_cast<int>(weight);
 }

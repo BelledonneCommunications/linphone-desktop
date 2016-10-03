@@ -19,7 +19,7 @@ protected:
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const;
 
 private:
-  float computeContactWeight (const ContactModel &contact) const;
+  int computeContactWeight (const ContactModel &contact) const;
 
   // The contacts list is shared between `ContactsListProxyModel`
   // it's necessary to initialize it with `initContactsListModel`.
@@ -27,7 +27,7 @@ private:
 
   // It's just a cache to save values computed by `filterAcceptsRow`
   // and reused by `lessThan`.
-  mutable QHash<const ContactModel *, float> m_weights;
+  mutable QHash<const ContactModel *, int> m_weights;
 };
 
 #endif // CONTACTS_LIST_PROXY_MODEL_H
