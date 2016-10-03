@@ -10,6 +10,19 @@
 
 ContactsListModel *ContactsListProxyModel::m_list = nullptr;
 
+// Notes:
+//
+// - First `^` is necessary to search two words with one separator
+// between them like `Claire Manning`.
+//
+// - [^_.-;@ ] is used to search patterns which starts with
+// a separator like ` word`.
+//
+// - [_.-;@ ] is the main pattern.
+const QRegExp ContactsListProxyModel::search_separators("^[^_.-;@ ][_.-;@ ]");
+
+// -------------------------------------------------------------------
+
 ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(m_list);
   setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -33,7 +46,7 @@ bool ContactsListProxyModel::filterAcceptsRow (int source_row, const QModelIndex
     index.data(ContactsListModel::ContactRole)
   );
 
-  int weight = m_weights[contact] = computeContactWeight(*contact);
+  int weight = m_weights[contact] = static_cast<int>(computeContactWeight(*contact));
   return weight > 0;
 }
 
@@ -55,23 +68,51 @@ bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelInde
   );
 }
 
-int ContactsListProxyModel::computeContactWeight (const ContactModel &contact) const {
-  float weight = 0;
+// -------------------------------------------------------------------
 
-  if (filterRegExp().indexIn(contact.m_username) != -1)
-    weight += USERNAME_WEIGHT;
+float ContactsListProxyModel::computeStringWeight (const QString &string, float percentage) const {
+  const static int max = std::numeric_limits<int>::max();
+
+  int index = -1;
+  int offset = -1;
+
+  // Search pattern.
+  while ((index = filterRegExp().indexIn(string, index + 1)) != -1) {
+    // Search n chars between one separator and index.
+    int tmp_offset = index - string.lastIndexOf(search_separators, index) - 1;
+
+    qDebug() << string << string.lastIndexOf(search_separators, index) << tmp_offset;
+    if ((tmp_offset != -1 && tmp_offset < offset) || offset == -1)
+      offset = tmp_offset;
+  }
+
+  if (offset == -1)
+    return 0;
+
+  switch (offset) {
+    case 0: return percentage;
+    case 1: return percentage * 0.90;
+    case 2: return percentage * 0.80;
+    case 3: return percentage * 0.70;
+    default: break;
+  }
+
+  return percentage * 0.60;
+}
+
+float ContactsListProxyModel::computeContactWeight (const ContactModel &contact) const {
+  float weight = computeStringWeight(contact.m_username, USERNAME_WEIGHT);
 
   const QStringList &addresses = contact.m_sip_addresses;
-
-  if (filterRegExp().indexIn(addresses[0]) != -1)
-    weight += MAIN_SIP_ADDRESS_WEIGHT;
+  weight += computeStringWeight(addresses[0], MAIN_SIP_ADDRESS_WEIGHT);
 
   int size = addresses.size();
 
   if (size > 1)
     for (auto it = ++addresses.constBegin(); it != addresses.constEnd(); ++it)
-      if (filterRegExp().indexIn(*it) != -1)
-        weight += OTHER_SIP_ADDRESSES_WEIGHT / size;
+      weight += computeStringWeight(*it, OTHER_SIP_ADDRESSES_WEIGHT / size);
 
-  return static_cast<int>(weight);
+  qDebug() << contact.m_username << weight;
+
+  return weight;
 }

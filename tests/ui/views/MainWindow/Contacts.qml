@@ -34,6 +34,7 @@ ColumnLayout {
 
         onTextChanged: {
           contacts.setFilterFixedString(text)
+          contacts.invalidate()
         }
       }
 

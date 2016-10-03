@@ -19,7 +19,10 @@ protected:
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const;
 
 private:
-  int computeContactWeight (const ContactModel &contact) const;
+  float computeStringWeight (const QString &string, float percentage) const;
+  float computeContactWeight (const ContactModel &contact) const;
+
+  static const QRegExp search_separators;
 
   // The contacts list is shared between `ContactsListProxyModel`
   // it's necessary to initialize it with `initContactsListModel`.

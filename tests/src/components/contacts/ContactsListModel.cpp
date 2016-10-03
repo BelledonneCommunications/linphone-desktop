@@ -9,10 +9,13 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
   m_list << new ContactModel("Daniel Elliott", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
   m_list << new ContactModel("Effie Forton", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
   m_list << new ContactModel("Agnes Hurner", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Luke Lemin", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Olga Manning", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Luke  Lemin", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Claire Manning", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
   m_list << new ContactModel("Isabella Ahornton", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
   m_list << new ContactModel("Mary Boreno", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Aman Than", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("  abdoul", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+
 }
 
 int ContactsListModel::rowCount (const QModelIndex &) const {
