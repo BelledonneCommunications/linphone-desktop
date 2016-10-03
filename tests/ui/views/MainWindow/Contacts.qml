@@ -32,7 +32,9 @@ ColumnLayout {
         }
         placeholderText: qsTr('searchContactPlaceholder')
 
-        onTextChanged: contacts.setFilterRegExp(text)
+        onTextChanged: {
+          contacts.setFilterFixedString(text)
+        }
       }
 
       ExclusiveButtons {

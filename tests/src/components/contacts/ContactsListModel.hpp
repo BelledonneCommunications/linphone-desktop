@@ -8,6 +8,8 @@
 // ===================================================================
 
 class ContactsListModel : public QAbstractListModel {
+  friend class ContactsListProxyModel;
+
   Q_OBJECT;
 
 public:

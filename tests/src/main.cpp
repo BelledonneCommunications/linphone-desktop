@@ -10,6 +10,8 @@
 
 #include "app.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
+
+#include "components/contacts/ContactsListModel.hpp"
 #include "components/notification/Notification.hpp"
 
 // ===================================================================

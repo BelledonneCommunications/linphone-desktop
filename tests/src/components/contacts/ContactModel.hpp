@@ -6,6 +6,8 @@
 // ===================================================================
 
 class ContactModel : public QObject {
+  friend class ContactsListProxyModel;
+
   Q_OBJECT;
 
   Q_PROPERTY(
@@ -76,14 +78,14 @@ public:
     m_sip_addresses = sip_addresses;
   }
 
-  QString getUsername () const {
-    return m_username;
-  }
-
 signals:
   void contactUpdated ();
 
 private:
+  QString getUsername () const {
+    return m_username;
+  }
+
   void setUsername (const QString &username) {
     m_username = username;
   }
