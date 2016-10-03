@@ -32,9 +32,7 @@ ColumnLayout {
         }
         placeholderText: qsTr('searchContactPlaceholder')
 
-        Component.onCompleted: ContactsListModel.setFilterRegExp('')
-
-        onTextChanged: ContactsListModel.setFilterRegExp(text)
+        onTextChanged: contacts.setFilterRegExp(text)
       }
 
       ExclusiveButtons {
@@ -62,7 +60,9 @@ ColumnLayout {
       anchors.fill: parent
       spacing: 2
 
-      model: ContactsListModel
+      model: ContactsListModel {
+        id: contacts
+      }
 
       delegate: Rectangle {
         id: contact

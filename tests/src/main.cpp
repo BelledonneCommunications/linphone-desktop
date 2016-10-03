@@ -51,6 +51,9 @@ void registerTypes () {
   qmlRegisterUncreatableType<ContactModel>(
     "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
   );
+
+  ContactsListProxyModel::initContactsListModel(new ContactsListModel());
+  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListModel");
 }
 
 void addContextProperties (QQmlApplicationEngine &engine) {

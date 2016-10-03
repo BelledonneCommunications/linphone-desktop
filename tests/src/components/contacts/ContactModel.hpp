@@ -100,16 +100,7 @@ private:
     return m_presence;
   }
 
-  PresenceLevel getPresenceLevel () const {
-    if (m_presence == Online)
-      return Green;
-    if (m_presence == DoNotDisturb)
-      return Red;
-    if (m_presence == Offline)
-      return White;
-
-    return Orange;
-  }
+  PresenceLevel getPresenceLevel () const;
 
   QStringList getSipAddresses () const {
     return m_sip_addresses;
