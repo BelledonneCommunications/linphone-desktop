@@ -8,16 +8,16 @@ Icon {
   property int level: -1
 
   function _getColorString () {
-    if (level === ContactModel.Green) {
+    if (level === Presence.Green) {
       return 'green'
     }
-    if (level === ContactModel.Orange) {
+    if (level === Presence.Orange) {
       return 'orange'
     }
-    if (level === ContactModel.Red) {
+    if (level === Presence.Red) {
       return 'red'
     }
-    if (level === ContactModel.White) {
+    if (level === Presence.White) {
       return 'white'
     }
   }

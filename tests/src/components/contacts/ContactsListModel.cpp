@@ -3,18 +3,19 @@
 // ===================================================================
 
 ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(parent) {
-  m_list << new ContactModel("Toto Roi", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Mary Boreno", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Cecelia Cyler", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Daniel Elliott", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Effie Forton", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Agnes Hurner", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Luke  Lemin", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Claire Manning", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Isabella Ahornton", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Mary Boreno", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Aman Than", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("  abdoul", "", ContactModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  // TMP.
+  m_list << new ContactModel("Toto Roi", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Mary Boreno", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Cecelia Cyler", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Daniel Elliott", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Effie Forton", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Agnes Hurner", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Luke  Lemin", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Claire Manning", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Isabella Ahornton", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Mary Boreno", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Aman Than", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("  abdoul", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
 
 }
 
@@ -24,7 +25,7 @@ int ContactsListModel::rowCount (const QModelIndex &) const {
 
 QHash<int, QByteArray> ContactsListModel::roleNames () const {
   QHash<int, QByteArray> roles;
-  roles[ContactRole] = "$contact";
+  roles[Qt::DisplayRole] = "$contact";
   return roles;
 }
 
@@ -34,7 +35,7 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
   if (row < 0 || row >= m_list.count())
     return QVariant();
 
-  if (role == ContactRole)
+  if (role == Qt::DisplayRole)
     return QVariant::fromValue(m_list[row]);
 
   return QVariant();

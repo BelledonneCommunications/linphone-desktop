@@ -50,8 +50,8 @@ void setTrayIcon (QQmlApplicationEngine &engine) {
 }
 
 void registerTypes () {
-  qmlRegisterUncreatableType<ContactModel>(
-    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
+  qmlRegisterUncreatableType<PresenceModel>(
+    "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
 
   ContactsListProxyModel::initContactsListModel(new ContactsListModel());

@@ -13,10 +13,6 @@ class ContactsListModel : public QAbstractListModel {
   Q_OBJECT;
 
 public:
-  enum Roles {
-    ContactRole = Qt::UserRole + 1
-  };
-
   ContactsListModel (QObject *parent = Q_NULLPTR);
 
   int rowCount (const QModelIndex &) const;

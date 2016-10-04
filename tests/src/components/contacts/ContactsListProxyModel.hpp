@@ -22,7 +22,7 @@ private:
   float computeStringWeight (const QString &string, float percentage) const;
   float computeContactWeight (const ContactModel &contact) const;
 
-  static const QRegExp search_separators;
+  static const QRegExp m_search_separators;
 
   // The contacts list is shared between `ContactsListProxyModel`
   // it's necessary to initialize it with `initContactsListModel`.

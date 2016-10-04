@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "../presence/PresenceModel.hpp"
+
 // ===================================================================
 
 class ContactModel : public QObject {
@@ -25,13 +27,13 @@ class ContactModel : public QObject {
   );
 
   Q_PROPERTY(
-    Presence presence
+    PresenceModel::Presence presence
     READ getPresence
     CONSTANT
   );
 
   Q_PROPERTY(
-    PresenceLevel presenceLevel
+    PresenceModel::PresenceLevel presenceLevel
     READ getPresenceLevel
     CONSTANT
   );
@@ -44,32 +46,11 @@ class ContactModel : public QObject {
   );
 
 public:
-  enum Presence {
-    Online,
-    BeRightBack,
-    Away,
-    OnThePhone,
-    OutToLunch,
-    DoNotDisturb,
-    Moved,
-    UsingAnotherMessagingService,
-    Offline
-  };
-  Q_ENUM(Presence);
-
-  enum PresenceLevel {
-    Green,
-    Orange,
-    Red,
-    White
-  };
-  Q_ENUM(PresenceLevel);
-
   ContactModel (QObject *parent = Q_NULLPTR) : QObject(parent) { }
   ContactModel (
     const QString &username,
     const QString &avatar,
-    const Presence &presence,
+    const PresenceModel::Presence &presence,
     const QStringList &sip_addresses
   ): ContactModel() {
     m_username = username;
@@ -98,11 +79,13 @@ private:
     m_avatar = avatar;
   }
 
-  Presence getPresence () const {
+  PresenceModel::Presence getPresence () const {
     return m_presence;
   }
 
-  PresenceLevel getPresenceLevel () const;
+  PresenceModel::PresenceLevel getPresenceLevel () const {
+    return PresenceModel::getPresenceLevel(m_presence);
+  }
 
   QStringList getSipAddresses () const {
     return m_sip_addresses;
@@ -114,7 +97,7 @@ private:
 
   QString m_username;
   QString m_avatar;
-  Presence m_presence = Online;
+  PresenceModel::Presence m_presence = PresenceModel::Online;
   QStringList m_sip_addresses;
 };
 
