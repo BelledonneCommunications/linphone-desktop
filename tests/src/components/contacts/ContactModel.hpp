@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-#include "../presence/PresenceModel.hpp"
+#include "../presence/Presence.hpp"
 
 // ===================================================================
 
@@ -27,13 +27,13 @@ class ContactModel : public QObject {
   );
 
   Q_PROPERTY(
-    PresenceModel::Presence presence
-    READ getPresence
+    Presence::PresenceStatus presenceStatus
+    READ getPresenceStatus
     CONSTANT
   );
 
   Q_PROPERTY(
-    PresenceModel::PresenceLevel presenceLevel
+    Presence::PresenceLevel presenceLevel
     READ getPresenceLevel
     CONSTANT
   );
@@ -50,12 +50,12 @@ public:
   ContactModel (
     const QString &username,
     const QString &avatar,
-    const PresenceModel::Presence &presence,
+    const Presence::PresenceStatus &presence_status,
     const QStringList &sip_addresses
-  ): ContactModel() {
+  ): ContactModel () {
     m_username = username;
     m_avatar = avatar;
-    m_presence = presence;
+    m_presence_status = presence_status;
     m_sip_addresses = sip_addresses;
   }
 
@@ -63,41 +63,21 @@ signals:
   void contactUpdated ();
 
 private:
-  QString getUsername () const {
-    return m_username;
-  }
+  QString getUsername () const;
+  void setUsername (const QString &username);
 
-  void setUsername (const QString &username) {
-    m_username = username;
-  }
+  QString getAvatar () const;
+  void setAvatar (const QString &avatar);
 
-  QString getAvatar () const {
-    return m_avatar;
-  }
+  Presence::PresenceStatus getPresenceStatus () const;
+  Presence::PresenceLevel getPresenceLevel () const;
 
-  void setAvatar (const QString &avatar) {
-    m_avatar = avatar;
-  }
-
-  PresenceModel::Presence getPresence () const {
-    return m_presence;
-  }
-
-  PresenceModel::PresenceLevel getPresenceLevel () const {
-    return PresenceModel::getPresenceLevel(m_presence);
-  }
-
-  QStringList getSipAddresses () const {
-    return m_sip_addresses;
-  }
-
-  void setSipAddresses (const QStringList &sip_addresses) {
-    m_sip_addresses = sip_addresses;
-  }
+  QStringList getSipAddresses () const;
+  void setSipAddresses (const QStringList &sip_addresses);
 
   QString m_username;
   QString m_avatar;
-  PresenceModel::Presence m_presence = PresenceModel::Online;
+  Presence::PresenceStatus m_presence_status = Presence::Offline;
   QStringList m_sip_addresses;
 };
 

@@ -1,4 +1,3 @@
-#include <cstdlib>
 
 #include <QMenu>
 #include <QQmlApplicationEngine>
@@ -10,8 +9,6 @@
 
 #include "app.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
-
-#include "components/contacts/ContactsListModel.hpp"
 #include "components/notification/Notification.hpp"
 
 // ===================================================================
@@ -50,7 +47,7 @@ void setTrayIcon (QQmlApplicationEngine &engine) {
 }
 
 void registerTypes () {
-  qmlRegisterUncreatableType<PresenceModel>(
+  qmlRegisterUncreatableType<Presence>(
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
 
@@ -62,7 +59,6 @@ void addContextProperties (QQmlApplicationEngine &engine) {
   QQmlContext *context = engine.rootContext();
 
   context->setContextProperty("Notification", new Notification());
-  context->setContextProperty("ContactsListModel", new ContactsListProxyModel());
 }
 
 int main (int argc, char *argv[]) {

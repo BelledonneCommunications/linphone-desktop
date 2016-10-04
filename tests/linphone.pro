@@ -23,7 +23,7 @@ HEADERS = \
   src/components/contacts/ContactsListModel.hpp \
   src/components/contacts/ContactsListProxyModel.hpp \
   src/components/notification/Notification.hpp \
-  src/components/presence/PresenceModel.hpp \
+  src/components/presence/Presence.hpp \
   src/components/settings/AccountSettingsListModel.hpp \
   src/components/settings/AccountSettingsModel.hpp \
   src/components/settings/SettingsModel.hpp \

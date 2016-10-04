@@ -4,18 +4,18 @@
 
 ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(parent) {
   // TMP.
-  m_list << new ContactModel("Toto Roi", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Mary Boreno", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Cecelia Cyler", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Daniel Elliott", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Effie Forton", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Agnes Hurner", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Luke  Lemin", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Claire Manning", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Isabella Ahornton", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Mary Boreno", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Aman Than", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("  abdoul", "", PresenceModel::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Toto Roi", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Mary Boreno", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Cecelia Cyler", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Daniel Elliott", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Effie Forton", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Agnes Hurner", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Luke  Lemin", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Claire Manning", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Isabella Ahornton", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Mary Boreno", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("Aman Than", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  m_list << new ContactModel("  abdoul", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
 
 }
 
