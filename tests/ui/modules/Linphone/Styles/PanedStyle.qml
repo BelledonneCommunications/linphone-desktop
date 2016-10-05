@@ -5,7 +5,7 @@ import Linphone 1.0
 
 QtObject {
   property QtObject handle: QtObject {
-    property int width: 8
+    property int width: 10
 
     property QtObject color: QtObject {
       property color hovered: Colors.h

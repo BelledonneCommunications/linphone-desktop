@@ -23,10 +23,14 @@ Item {
 
   property alias childA: contentA.data
   property alias childB: contentB.data
+  property int closingEdge: Qt.LeftEdge
 
   // User limits: string or int values.
   property var leftLimit: 0
   property var rightLimit: 0
+
+  property bool _isClosed
+  property int _savedContentAWidth
 
   // Internal limits.
   property var _leftLimit
@@ -53,7 +57,7 @@ Item {
     }
   }
 
-  onWidthChanged: {
+  function _applyLimits () {
     var rightLimit = _getLimitValue(_rightLimit)
     var leftLimit = _getLimitValue(_leftLimit)
 
@@ -67,6 +71,8 @@ Item {
       contentA.width = width - handle.width - rightLimit
     }
   }
+
+  onWidthChanged: !_isClosed && _applyLimits()
 
   Component.onCompleted: {
     _leftLimit = _parseLimit(leftLimit)
@@ -92,9 +98,28 @@ Item {
     hoverEnabled: true
     width: PanedStyle.handle.width
 
+    onDoubleClicked: {
+      // Save state and close.
+      if (!_isClosed) {
+        _isClosed = true
+        _savedContentAWidth = contentA.width
+
+        contentA.width = (closingEdge !== Qt.LeftEdge)
+          ? container.width - width
+          : 0
+
+        return
+      }
+
+      // Restore old state.
+      _isClosed = false
+      contentA.width = _savedContentAWidth
+
+      _applyLimits()
+    }
+
     onMouseXChanged: {
-      // Necessary because `hoverEnabled` is used.
-      if (!pressed) {
+      if (!pressed || _isClosed) {
         return
       }
 
