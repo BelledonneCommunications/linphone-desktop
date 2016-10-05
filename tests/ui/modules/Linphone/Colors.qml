@@ -25,4 +25,8 @@ QtObject {
 
   property color o: '#232323' // TextButtonA Hovered.
   property color p: '#B1B1B1' // TextButtonB text Hovered.
+
+  property color q: '#E6E6E6'
+
+  property color r: '#8F8F8F'
 }

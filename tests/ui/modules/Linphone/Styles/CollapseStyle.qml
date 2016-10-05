@@ -6,7 +6,7 @@ QtObject {
   property int iconSize: 32
 
   property Rectangle background: Rectangle {
-    // Do not use Constants.colors.
+    // Do not use `Colors` singleton.
     // Collapse uses an icon without background color.
     color: 'transparent'
   }

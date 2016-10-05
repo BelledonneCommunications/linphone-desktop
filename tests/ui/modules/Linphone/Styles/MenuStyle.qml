@@ -14,8 +14,8 @@ QtObject {
     property int spacing: 18
 
     property QtObject color: QtObject {
-      property color normal: Colors.g
       property color hovered: Colors.h
+      property color normal: Colors.g
       property color pressed: Colors.i
       property color selected: Colors.j
     }
