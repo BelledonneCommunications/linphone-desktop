@@ -8,19 +8,26 @@ Item {
   property alias childA: contentA.data
   property alias childB: contentB.data
 
-  onWidthChanged: {
-    console.log('RESIZE', width, handleLimitRight)
-    if (contentB.width < handleLimitRight) {
-      console.log('lala', width, handleLimitRight, width - handle.width - handleLimitRight)
-      contentA.width = width - handle.width - handleLimitRight
-    } else if (contentA.width < handleLimitLeft) {
-      console.log('zaza', width, handleLimitLeft)
+  property bool useDynamicLimits: true
 
+  function updateContentA () {
+    // width(A) < minimum width(A)
+    if (contentA.width < handleLimitLeft) {
       contentA.width = handleLimitLeft
-    } else if (contentA.width >= width - handleLimitRight - 20) {
-      console.log('FUCK', contentA.width , width - handleLimitRight - 20)
-      contentA.width - handle.width - handleLimitRight
     }
+
+    // width(B) < minimum width(B)
+    else if (width - contentA.width - handle.width < handleLimitRight) {
+      contentA.width = width - handle.width - handleLimitRight
+    }
+  }
+
+  onHandleLimitLeftChanged: updateContentA()
+  onHandleLimitRightChanged: updateContentA()
+  onWidthChanged: !useDynamicLimits && updateContentA()
+
+  Component.onCompleted: {
+    contentA.width = handleLimitLeft
   }
 
   Rectangle {
@@ -49,11 +56,16 @@ Item {
 
       var offset = mouseX - _mouseStart
 
+      // width(B) < minimum width(B)
       if (container.width - offset - contentA.width - width < handleLimitRight) {
         contentA.width = container.width - width - handleLimitRight
-      } else if (contentA.width + offset < handleLimitLeft) {
+      }
+      // width(A) < minimum width(A)
+      else if (contentA.width + offset < handleLimitLeft) {
         contentA.width = handleLimitLeft
-      } else {
+      }
+      // Resize A/B.
+      else {
         contentA.width = contentA.width + offset
       }
     }
