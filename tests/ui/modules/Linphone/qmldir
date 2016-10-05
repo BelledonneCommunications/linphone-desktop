@@ -52,6 +52,9 @@ InvertedMouseArea    1.0 InvertedMouseArea.qml
 # Menu
 Menu                 1.0 Menu.qml
 
+# Paned
+Paned                1.0 Paned.qml
+
 # Popup
 DropDownMenu         1.0 Popup/DropDownMenu.qml
 PopupShadow          1.0 Popup/PopupShadow.qml

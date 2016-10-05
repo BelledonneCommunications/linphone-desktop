@@ -55,6 +55,7 @@
     <file>ui/modules/Linphone/Image/Icon.qml</file>
     <file>ui/modules/Linphone/InvertedMouseArea.qml</file>
     <file>ui/modules/Linphone/Menu.qml</file>
+    <file>ui/modules/Linphone/Paned.qml</file>
     <file>ui/modules/Linphone/Popup/DropDownMenu.qml</file>
     <file>ui/modules/Linphone/Popup/PopupShadow.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
@@ -84,6 +85,7 @@
     <file>ui/modules/Linphone/View/ScrollableListView.qml</file>
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/utils.js</file>
+    <file>ui/views/Calls/Calls.qml</file>
     <file>ui/views/MainWindow/Contact.qml</file>
     <file>ui/views/MainWindow/Contacts.qml</file>
     <file>ui/views/MainWindow/Conversation.qml</file>

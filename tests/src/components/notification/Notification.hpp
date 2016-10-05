@@ -6,7 +6,7 @@
 // ===================================================================
 
 class Notification : public QObject {
-  Q_OBJECT
+  Q_OBJECT;
 
 public:
   Notification (QObject *parent = Q_NULLPTR);

@@ -6,7 +6,7 @@
 #include <QQuickView>
 #include <QSystemTrayIcon>
 #include <QtDebug>
-
+ #include <QQmlComponent>
 #include "app.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
 #include "components/notification/Notification.hpp"
@@ -57,8 +57,10 @@ void registerTypes () {
 
 void addContextProperties (QQmlApplicationEngine &engine) {
   QQmlContext *context = engine.rootContext();
+  QQmlComponent component(&engine, QUrl("qrc:/ui/views/Calls/Calls.qml"));
 
   context->setContextProperty("Notification", new Notification());
+  context->setContextProperty("CallsWindow", component.create());
 }
 
 int main (int argc, char *argv[]) {
@@ -77,8 +79,10 @@ int main (int argc, char *argv[]) {
   engine.addImportPath(":/ui/scripts");
 
   engine.load(QUrl("qrc:/ui/views/MainWindow/MainWindow.qml"));
-  if (engine.rootObjects().isEmpty())
+  if (engine.rootObjects().isEmpty()) {
+    qWarning() << "Unable to open main window.";
     return EXIT_FAILURE;
+  }
 
   // Enable TrayIconSystem.
   if (!QSystemTrayIcon::isSystemTrayAvailable())

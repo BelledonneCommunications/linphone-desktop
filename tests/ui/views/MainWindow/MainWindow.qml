@@ -98,7 +98,8 @@ ApplicationWindow {
           actions: [
             ActionButton {
               icon: 'call'
-              onClicked: console.log('clicked')
+              onClicked: CallsWindow.show()
+
             },
 
             ActionButton {

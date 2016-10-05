@@ -47,6 +47,7 @@ lupdate_only{
     ui/modules/Linphone/Styles/Form/*.qml \
     ui/modules/Linphone/View/*.qml \
     ui/views/*.qml \
+    ui/views/Calls/*.qml \
     ui/views/MainWindow/*.qml \
 
 }
