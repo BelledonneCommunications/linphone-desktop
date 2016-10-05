@@ -72,6 +72,26 @@ Item {
     }
   }
 
+  function _updateClosing () {
+    // Save state and close.
+    if (!_isClosed) {
+      _isClosed = true
+      _savedContentAWidth = contentA.width
+
+      contentA.width = (closingEdge !== Qt.LeftEdge)
+        ? container.width - handle.width
+        : 0
+
+      return
+    }
+
+    // Restore old state.
+    _isClosed = false
+    contentA.width = _savedContentAWidth
+
+    _applyLimits()
+  }
+
   onWidthChanged: !_isClosed && _applyLimits()
 
   Component.onCompleted: {
@@ -98,28 +118,11 @@ Item {
     hoverEnabled: true
     width: PanedStyle.handle.width
 
-    onDoubleClicked: {
-      // Save state and close.
-      if (!_isClosed) {
-        _isClosed = true
-        _savedContentAWidth = contentA.width
-
-        contentA.width = (closingEdge !== Qt.LeftEdge)
-          ? container.width - width
-          : 0
-
-        return
-      }
-
-      // Restore old state.
-      _isClosed = false
-      contentA.width = _savedContentAWidth
-
-      _applyLimits()
-    }
+    onDoubleClicked: _updateClosing()
 
     onMouseXChanged: {
-      if (!pressed || _isClosed) {
+      // Mouse is not pressed.
+      if (!pressed) {
         return
       }
 
@@ -128,13 +131,38 @@ Item {
       var rightLimit = _getLimitValue(_rightLimit)
       var leftLimit = _getLimitValue(_leftLimit)
 
+      // One area is closed.
+      if (_isClosed) {
+        if (closingEdge === Qt.LeftEdge) {
+          if (offset > leftLimit / 2) {
+            _updateClosing()
+          }
+        } else {
+          if (-offset > rightLimit / 2) {
+            _updateClosing()
+          }
+        }
+
+        return
+      }
+
+      // Check limits.
+
       // width(B) < minimum width(B).
       if (container.width - offset - contentA.width - width < rightLimit) {
         contentA.width = container.width - width - rightLimit
+
+        if (closingEdge === Qt.RightEdge && offset > rightLimit / 2) {
+          _updateClosing()
+        }
       }
       // width(A) < minimum width(A).
       else if (contentA.width + offset < leftLimit) {
         contentA.width = leftLimit
+
+        if (closingEdge === Qt.LeftEdge && -offset > leftLimit / 2) {
+          _updateClosing()
+        }
       }
       // Resize A/B.
       else {
