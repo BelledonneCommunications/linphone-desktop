@@ -13,15 +13,25 @@ Window {
 
   Paned {
     anchors.fill: parent
-    handleLimitLeft: parent.width *0.66
-    handleLimitRight: 50
+    rightLimit: 50
+    leftLimit: 100
 
-    childA: Text {
-      text: 'hello'
+    childA: Rectangle {
+
+      anchors.fill: parent
+      color: 'orange'
+
+      Text {
+        text: 'hello'
+      }
     }
 
-    childB: Text {
-      text: 'hello2'
+    childB: Rectangle {
+      anchors.fill: parent
+      color: 'green'
+      Text {
+        text: 'hello2'
+      }
     }
   }
 }

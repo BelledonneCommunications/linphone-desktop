@@ -1,39 +1,83 @@
 import QtQuick 2.7
 
+import Linphone.Styles 1.0
+import Utils 1.0
+
+// ===================================================================
+//
+// Paned is one container divided in two areas.
+// The division between the areas can be modified with a handle.
+//
+// Each area can have a fixed or dynamic minimum width.
+// See `leftLimit` and `rightLimit` attributes.
+//
+// To create a dynamic minimum width, it's necessary to give
+// a percentage to `leftLimit` or `rightLimit` like:
+// `leftLimit: '0.66%'`.
+// The percentage is relative to the container width.
+//
+// ===================================================================
+
 Item {
   id: container
 
-  property int handleLimitLeft: 0
-  property int handleLimitRight: 0
   property alias childA: contentA.data
   property alias childB: contentB.data
 
-  property bool useDynamicLimits: true
+  // User limits: string or int values.
+  property var leftLimit: 0
+  property var rightLimit: 0
 
-  function updateContentA () {
-    // width(A) < minimum width(A)
-    if (contentA.width < handleLimitLeft) {
-      contentA.width = handleLimitLeft
+  // Internal limits.
+  property var _leftLimit
+  property var _rightLimit
+
+  function _getLimitValue (limit) {
+    return limit.isDynamic
+      ? width * limit.value
+      : limit.value
+  }
+
+  function _parseLimit (limit) {
+    if (Utils.isString(limit)) {
+      var arr = limit.split('%')
+
+      return {
+        isDynamic: arr[1] === '',
+        value: +arr[0]
+      }
     }
 
-    // width(B) < minimum width(B)
-    else if (width - contentA.width - handle.width < handleLimitRight) {
-      contentA.width = width - handle.width - handleLimitRight
+    return {
+      value: limit
     }
   }
 
-  onHandleLimitLeftChanged: updateContentA()
-  onHandleLimitRightChanged: updateContentA()
-  onWidthChanged: !useDynamicLimits && updateContentA()
+  onWidthChanged: {
+    var rightLimit = _getLimitValue(_rightLimit)
+    var leftLimit = _getLimitValue(_leftLimit)
+
+    // width(A) < minimum width(A).
+    if (contentA.width < leftLimit) {
+      contentA.width = leftLimit
+    }
+
+    // width(B) < minimum width(B).
+    else if (width - contentA.width - handle.width < rightLimit) {
+      contentA.width = width - handle.width - rightLimit
+    }
+  }
 
   Component.onCompleted: {
-    contentA.width = handleLimitLeft
+    _leftLimit = _parseLimit(leftLimit)
+    _rightLimit = _parseLimit(rightLimit)
+
+    contentA.width = _getLimitValue(_leftLimit)
   }
 
-  Rectangle {
+  Item {
     id: contentA
 
-    color: '#FFFFFF'
     height: parent.height
   }
 
@@ -46,7 +90,7 @@ Item {
     cursorShape: Qt.SplitHCursor
     height: parent.height
     hoverEnabled: true
-    width: 8
+    width: PanedStyle.handle.width
 
     onMouseXChanged: {
       // Necessary because `hoverEnabled` is used.
@@ -56,13 +100,16 @@ Item {
 
       var offset = mouseX - _mouseStart
 
-      // width(B) < minimum width(B)
-      if (container.width - offset - contentA.width - width < handleLimitRight) {
-        contentA.width = container.width - width - handleLimitRight
+      var rightLimit = _getLimitValue(_rightLimit)
+      var leftLimit = _getLimitValue(_leftLimit)
+
+      // width(B) < minimum width(B).
+      if (container.width - offset - contentA.width - width < rightLimit) {
+        contentA.width = container.width - width - rightLimit
       }
-      // width(A) < minimum width(A)
-      else if (contentA.width + offset < handleLimitLeft) {
-        contentA.width = handleLimitLeft
+      // width(A) < minimum width(A).
+      else if (contentA.width + offset < leftLimit) {
+        contentA.width = leftLimit
       }
       // Resize A/B.
       else {
@@ -75,24 +122,19 @@ Item {
     Rectangle {
       anchors.fill: parent
       color: parent.pressed
-        ? '#5E5E5E'
+        ? PanedStyle.handle.color.pressed
         : (parent.containsMouse
-           ? '#707070'
-           : '#C5C5C5'
-        )
+           ? PanedStyle.handle.color.hovered
+           : PanedStyle.handle.color.normal
+          )
     }
   }
 
-  Rectangle {
+  Item {
     id: contentB
 
     anchors.left: handle.right
-    color: '#EAEAEA'
     height: parent.height
-    width: {
-
-      console.log('toto',  container.width, contentA.width, container.width - contentA.width - handle.width)
-     return  container.width - contentA.width - handle.width
-    }
+    width: container.width - contentA.width - handle.width
   }
 }

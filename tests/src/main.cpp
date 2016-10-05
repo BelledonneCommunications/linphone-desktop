@@ -60,7 +60,12 @@ void addContextProperties (QQmlApplicationEngine &engine) {
   QQmlComponent component(&engine, QUrl("qrc:/ui/views/Calls/Calls.qml"));
 
   context->setContextProperty("Notification", new Notification());
-  context->setContextProperty("CallsWindow", component.create());
+
+  if (component.isError()) {
+    qWarning() << component.errors();
+  } else {
+    context->setContextProperty("CallsWindow", component.create());
+  }
 }
 
 int main (int argc, char *argv[]) {
