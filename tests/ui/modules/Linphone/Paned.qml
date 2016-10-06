@@ -26,8 +26,10 @@ Item {
 
   property alias childA: contentA.data
   property alias childB: contentB.data
-  property bool defaultClosed
+  property bool defaultClosed: false
   property int closingEdge: Qt.LeftEdge
+  property int defaultChildAWidth
+  property bool resizeAInPriority: false
 
   // User limits: string or int values.
   // By default: no limits.
@@ -107,6 +109,8 @@ Item {
     // width(B) > maximum width(B).
     else if (maximumRightLimit != null && theoreticalBWidth > maximumRightLimit) {
       contentA.width = container.width - handle.width - maximumRightLimit
+    } else if (resizeAInPriority) {
+      contentA.width = container.width - handle.width - contentB.width
     }
   }
 
@@ -210,10 +214,12 @@ Item {
     _minimumLeftLimit = _parseLimit(minimumLeftLimit)
     _minimumRightLimit = _parseLimit(minimumRightLimit)
 
-    _isClosed = defaultClosed
-    contentA.width = _getLimitValue(_minimumLeftLimit)
+    contentA.width = (defaultChildAWidth == null)
+      ? _getLimitValue(_minimumLeftLimit)
+      : defaultChildAWidth
 
-    _applyLimits()
+    _isClosed = defaultClosed
+    _savedContentAWidth = contentA.width
   }
 
   Item {

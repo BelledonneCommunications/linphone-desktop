@@ -6,16 +6,18 @@ import QtQuick.Controls 2.0
 import Linphone 1.0
 
 Window {
-  minimumHeight: 480
-  minimumWidth: 780
-
   id: window
+
+  minimumHeight: 480
+  minimumWidth: 960
 
   Paned {
     anchors.fill: parent
+    defaultChildAWidth: 250
     maximumLeftLimit: 300
     minimumLeftLimit: 50
 
+    // Calls list.
     childA: Rectangle {
       anchors.fill: parent
       color: 'yellow'
@@ -25,13 +27,17 @@ Window {
       }
     }
 
+    // Call / Chat.
     childB: Paned {
       anchors.fill: parent
       closingEdge: Qt.RightEdge
+      defaultChildAWidth: 300
       defaultClosed: true
-      minimumLeftLimit: '40%'
-      minimumRightLimit: 200
+      minimumLeftLimit: 250
+      minimumRightLimit: 350
+      resizeAInPriority: true
 
+      // Call.
       childA: Rectangle {
         anchors.fill: parent
         color: 'orange'
@@ -41,9 +47,11 @@ Window {
         }
       }
 
+      // Chat.
       childB: Rectangle {
         anchors.fill: parent
         color: 'green'
+
         Text {
           text: 'hello2'
         }
