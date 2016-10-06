@@ -28,6 +28,7 @@ Window {
     childB: Paned {
       anchors.fill: parent
       closingEdge: Qt.RightEdge
+      defaultClosed: true
       minimumLeftLimit: '40%'
       minimumRightLimit: 200
 

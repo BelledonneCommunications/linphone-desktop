@@ -26,6 +26,7 @@ Item {
 
   property alias childA: contentA.data
   property alias childB: contentB.data
+  property bool defaultClosed
   property int closingEdge: Qt.LeftEdge
 
   // User limits: string or int values.
@@ -209,7 +210,10 @@ Item {
     _minimumLeftLimit = _parseLimit(minimumLeftLimit)
     _minimumRightLimit = _parseLimit(minimumRightLimit)
 
+    _isClosed = defaultClosed
     contentA.width = _getLimitValue(_minimumLeftLimit)
+
+    _applyLimits()
   }
 
   Item {
