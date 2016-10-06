@@ -40,7 +40,7 @@ ApplicationWindow {
         Layout.fillHeight: parent.height
         id: collapse
 
-        onCollapsed: windowStates.state = isCollapsed()
+        onCollapsed: windowStates.state = collapsed
           ? 'collapsed'
           : ''
       }

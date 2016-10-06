@@ -54,7 +54,11 @@ bool ContactsListProxyModel::filterAcceptsRow (int source_row, const QModelIndex
   int weight = m_weights[contact] = static_cast<int>(
     computeContactWeight(*contact)
   );
-  return weight > 0;
+
+  return weight > 0 && (
+    !m_use_connected_filter ||
+    contact->getPresenceLevel() != Presence::PresenceLevel::White
+  );
 }
 
 bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -123,4 +127,16 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
       weight += computeStringWeight(*it, OTHER_SIP_ADDRESSES_WEIGHT / size);
 
   return weight;
+}
+
+// -------------------------------------------------------------------
+
+bool ContactsListProxyModel::isConnectedFilterUsed () const {
+  return m_use_connected_filter;
+}
+
+void ContactsListProxyModel::setConnectedFilter (bool useConnectedFilter) {
+  m_use_connected_filter = useConnectedFilter;
+  qDebug() << useConnectedFilter;
+  invalidate();
 }

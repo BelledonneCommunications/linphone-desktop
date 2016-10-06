@@ -5,6 +5,8 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 Row {
+  id: item
+
   property var texts
 
   property int _selectedButton: 0
@@ -32,7 +34,7 @@ Row {
       onClicked: {
         if (_selectedButton !== index) {
           _selectedButton = index
-          clicked(index)
+          item.clicked(index)
         }
       }
     }

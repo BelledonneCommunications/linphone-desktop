@@ -26,7 +26,7 @@ ColumnLayout  {
       Avatar {
         Layout.fillHeight: true
         Layout.preferredWidth: 80
-        presence: 'connected' // TODO: Use C++.
+        presenceLevel: Presence.Green // TODO: Use C++.
         username: 'Cameron Andrews' // TODO: Use C++.
       }
 

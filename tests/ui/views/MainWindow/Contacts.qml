@@ -43,6 +43,8 @@ ColumnLayout {
           qsTr('selectAllContacts'),
           qsTr('selectConnectedContacts')
         ]
+
+        onClicked: contacts.useConnectedFilter = (button === 1)
       }
 
       TextButtonB {
