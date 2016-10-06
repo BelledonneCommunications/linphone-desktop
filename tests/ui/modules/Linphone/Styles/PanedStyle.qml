@@ -4,6 +4,8 @@ import QtQuick 2.7
 import Linphone 1.0
 
 QtObject {
+  property int transitionDuration: 200
+
   property QtObject handle: QtObject {
     property int width: 10
 

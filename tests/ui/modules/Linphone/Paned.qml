@@ -11,6 +11,9 @@ import Utils 1.0
 // Each area can have a fixed or dynamic minimum width.
 // See `minimumLeftLimit` and `minimumRightLimit` attributes.
 //
+// Note: Paned supports too `maximumLeftLimit` and
+// `maximumRightLimit`.
+//
 // To create a dynamic minimum width, it's necessary to give
 // a percentage to `minmimumLeftLimit` or `minimumRightLimit` like:
 // `minimumLeftLimit: '66%'`.
@@ -40,6 +43,8 @@ Item {
   property var _maximumRightLimit
   property var _minimumLeftLimit
   property var _minimumRightLimit
+
+  // -----------------------------------------------------------------
 
   function _getLimitValue (limit) {
     if (limit == null) {
@@ -104,6 +109,8 @@ Item {
     }
   }
 
+  // -----------------------------------------------------------------
+
   function _applyLimitsOnUserMove (offset) {
     var minimumRightLimit = _getLimitValue(_minimumRightLimit)
     var minimumLeftLimit = _getLimitValue(_minimumLeftLimit)
@@ -112,11 +119,11 @@ Item {
     if (_isClosed) {
       if (closingEdge === Qt.LeftEdge) {
         if (offset > minimumLeftLimit / 2) {
-          _updateClosing()
+          _open()
         }
       } else {
         if (-offset > minimumRightLimit / 2) {
-          _updateClosing()
+          _open()
         }
       }
 
@@ -134,7 +141,11 @@ Item {
       contentA.width = minimumLeftLimit
 
       if (closingEdge === Qt.LeftEdge && -offset > minimumLeftLimit / 2) {
-        _updateClosing()
+        if (_isClosed) {
+          _open()
+        } else {
+          _close()
+        }
       }
     }
     // width(A) > maximum width(A).
@@ -146,7 +157,11 @@ Item {
       contentA.width = container.width - handle.width - minimumRightLimit
 
       if (closingEdge === Qt.RightEdge && offset > minimumRightLimit / 2) {
-        _updateClosing()
+        if (_isClosed) {
+          _open()
+        } else {
+          _close()
+        }
       }
     }
     // width(B) > maximum width(B).
@@ -159,27 +174,30 @@ Item {
     }
   }
 
-  function _updateClosing () {
-    // Save state and close.
-    if (!_isClosed) {
-      _isClosed = true
-      _savedContentAWidth = contentA.width
+  // -----------------------------------------------------------------
 
-      if (closingEdge === Qt.LeftEdge) {
-        closingTransitionA.running = true
-      } else {
-        closingTransitionB.running = true
-      }
-
-      return
-    }
-
-    // Restore old state.
+  function _open () {
     _isClosed = false
-    contentA.width = _savedContentAWidth
-
     _applyLimits()
   }
+
+  function _close () {
+    _isClosed = true
+    _savedContentAWidth = contentA.width
+    closingTransition.running = true
+  }
+
+  function _inverseClosingState () {
+    if (!_isClosed) {
+      // Save state and close.
+      _close()
+    } else {
+      // Restore old state.
+      openingTransition.running = true
+    }
+  }
+
+  // -----------------------------------------------------------------
 
   onWidthChanged: _applyLimits()
 
@@ -211,7 +229,7 @@ Item {
     hoverEnabled: true
     width: PanedStyle.handle.width
 
-    onDoubleClicked: _updateClosing()
+    onDoubleClicked: _inverseClosingState()
     onMouseXChanged: pressed &&
       _applyLimitsOnUserMove(handle.mouseX - _mouseStart)
 
@@ -237,20 +255,22 @@ Item {
   }
 
   PropertyAnimation {
-    id: closingTransitionA
+    id: openingTransition
 
-    target: contentA
+    duration: PanedStyle.transitionDuration
     property: 'width'
-    to: 0
-    duration: 200
+    target: contentA
+    to: _savedContentAWidth
+
+    onRunningChanged: !running && _open()
   }
 
   PropertyAnimation {
-    id: closingTransitionB
+    id: closingTransition
 
-    duration: 200
+    duration: PanedStyle.transitionDuration
     property: 'width'
     target: contentA
-    to: container.width - handle.width
+    to: closingEdge === Qt.LeftEdge ? 0 : container.width - handle.width
   }
 }
