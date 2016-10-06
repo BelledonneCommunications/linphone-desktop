@@ -9,11 +9,11 @@ import Utils 1.0
 // The division between the areas can be modified with a handle.
 //
 // Each area can have a fixed or dynamic minimum width.
-// See `leftLimit` and `rightLimit` attributes.
+// See `minimumLeftLimit` and `minimumRightLimit` attributes.
 //
 // To create a dynamic minimum width, it's necessary to give
-// a percentage to `leftLimit` or `rightLimit` like:
-// `leftLimit: '0.66%'`.
+// a percentage to `minmimumLeftLimit` or `minimumRightLimit` like:
+// `minimumLeftLimit: '66%'`.
 // The percentage is relative to the container width.
 //
 // ===================================================================
@@ -26,29 +26,44 @@ Item {
   property int closingEdge: Qt.LeftEdge
 
   // User limits: string or int values.
-  property var leftLimit: 0
-  property var rightLimit: 0
+  // By default: no limits.
+  property var maximumLeftLimit
+  property var maximumRightLimit
+  property var minimumLeftLimit: 0
+  property var minimumRightLimit: 0
 
   property bool _isClosed
   property int _savedContentAWidth
 
   // Internal limits.
-  property var _leftLimit
-  property var _rightLimit
+  property var _maximumLeftLimit
+  property var _maximumRightLimit
+  property var _minimumLeftLimit
+  property var _minimumRightLimit
 
   function _getLimitValue (limit) {
+    if (limit == null) {
+      return
+    }
+
     return limit.isDynamic
       ? width * limit.value
       : limit.value
   }
 
   function _parseLimit (limit) {
+    if (limit == null) {
+      return
+    }
+
     if (Utils.isString(limit)) {
       var arr = limit.split('%')
 
-      return {
-        isDynamic: arr[1] === '',
-        value: +arr[0]
+      if (arr[1] === '') {
+        return {
+          isDynamic: true,
+          value: +arr[0] / 100
+        }
       }
     }
 
@@ -58,17 +73,89 @@ Item {
   }
 
   function _applyLimits () {
-    var rightLimit = _getLimitValue(_rightLimit)
-    var leftLimit = _getLimitValue(_leftLimit)
+    var maximumLeftLimit = _getLimitValue(_maximumLeftLimit)
+    var maximumRightLimit = _getLimitValue(_maximumRightLimit)
+    var minimumLeftLimit = _getLimitValue(_minimumLeftLimit)
+    var minimumRightLimit = _getLimitValue(_minimumRightLimit)
 
+    var theoreticalBWidth = container.width - contentA.width - handle.width
+
+    // If closed, set correctly the handle position to left or right.
+    if (_isClosed) {
+      contentA.width = (closingEdge === Qt.RightEdge)
+        ? container.width - handle.width
+        : 0
+    }
     // width(A) < minimum width(A).
-    if (contentA.width < leftLimit) {
-      contentA.width = leftLimit
+    else if (contentA.width < minimumLeftLimit) {
+      contentA.width = minimumLeftLimit
+    }
+    // width(A) > maximum width(A).
+    else if (maximumLeftLimit != null && contentA.width > maximumLeftLimit) {
+      contentA.width = maximumLeftLimit
+    }
+    // width(B) < minimum width(B).
+    else if (theoreticalBWidth < minimumRightLimit) {
+      contentA.width = container.width - handle.width - minimumRightLimit
+    }
+    // width(B) > maximum width(B).
+    else if (maximumRightLimit != null && theoreticalBWidth > maximumRightLimit) {
+      contentA.width = container.width - handle.width - maximumRightLimit
+    }
+  }
+
+  function _applyLimitsOnUserMove (offset) {
+    var minimumRightLimit = _getLimitValue(_minimumRightLimit)
+    var minimumLeftLimit = _getLimitValue(_minimumLeftLimit)
+
+    // One area is closed.
+    if (_isClosed) {
+      if (closingEdge === Qt.LeftEdge) {
+        if (offset > minimumLeftLimit / 2) {
+          _updateClosing()
+        }
+      } else {
+        if (-offset > minimumRightLimit / 2) {
+          _updateClosing()
+        }
+      }
+
+      return
     }
 
+    // Check limits.
+    var maximumLeftLimit = _getLimitValue(_maximumLeftLimit)
+    var maximumRightLimit = _getLimitValue(_maximumRightLimit)
+
+    var theoreticalBWidth = container.width - offset - contentA.width - handle.width
+
+    // width(A) < minimum width(A).
+    if (contentA.width + offset < minimumLeftLimit) {
+      contentA.width = minimumLeftLimit
+
+      if (closingEdge === Qt.LeftEdge && -offset > minimumLeftLimit / 2) {
+        _updateClosing()
+      }
+    }
+    // width(A) > maximum width(A).
+    else if (maximumLeftLimit != null && contentA.width + offset > maximumLeftLimit) {
+      contentA.width = maximumLeftLimit
+    }
     // width(B) < minimum width(B).
-    else if (width - contentA.width - handle.width < rightLimit) {
-      contentA.width = width - handle.width - rightLimit
+    else if (theoreticalBWidth < minimumRightLimit) {
+      contentA.width = container.width - handle.width - minimumRightLimit
+
+      if (closingEdge === Qt.RightEdge && offset > minimumRightLimit / 2) {
+        _updateClosing()
+      }
+    }
+    // width(B) > maximum width(B).
+    else if (maximumRightLimit != null && theoreticalBWidth > maximumRightLimit) {
+      contentA.width = container.width - handle.width - maximumRightLimit
+    }
+    // Resize A/B.
+    else {
+      contentA.width = contentA.width + offset
     }
   }
 
@@ -78,9 +165,11 @@ Item {
       _isClosed = true
       _savedContentAWidth = contentA.width
 
-      contentA.width = (closingEdge !== Qt.LeftEdge)
-        ? container.width - handle.width
-        : 0
+      if (closingEdge === Qt.LeftEdge) {
+        closingTransitionA.running = true
+      } else {
+        closingTransitionB.running = true
+      }
 
       return
     }
@@ -92,13 +181,17 @@ Item {
     _applyLimits()
   }
 
-  onWidthChanged: !_isClosed && _applyLimits()
+  onWidthChanged: _applyLimits()
 
   Component.onCompleted: {
-    _leftLimit = _parseLimit(leftLimit)
-    _rightLimit = _parseLimit(rightLimit)
+    // Unable to modify this properties after creation.
+    // It's a desired choice.
+    _maximumLeftLimit = _parseLimit(maximumLeftLimit)
+    _maximumRightLimit = _parseLimit(maximumRightLimit)
+    _minimumLeftLimit = _parseLimit(minimumLeftLimit)
+    _minimumRightLimit = _parseLimit(minimumRightLimit)
 
-    contentA.width = _getLimitValue(_leftLimit)
+    contentA.width = _getLimitValue(_minimumLeftLimit)
   }
 
   Item {
@@ -119,56 +212,8 @@ Item {
     width: PanedStyle.handle.width
 
     onDoubleClicked: _updateClosing()
-
-    onMouseXChanged: {
-      // Mouse is not pressed.
-      if (!pressed) {
-        return
-      }
-
-      var offset = mouseX - _mouseStart
-
-      var rightLimit = _getLimitValue(_rightLimit)
-      var leftLimit = _getLimitValue(_leftLimit)
-
-      // One area is closed.
-      if (_isClosed) {
-        if (closingEdge === Qt.LeftEdge) {
-          if (offset > leftLimit / 2) {
-            _updateClosing()
-          }
-        } else {
-          if (-offset > rightLimit / 2) {
-            _updateClosing()
-          }
-        }
-
-        return
-      }
-
-      // Check limits.
-
-      // width(B) < minimum width(B).
-      if (container.width - offset - contentA.width - width < rightLimit) {
-        contentA.width = container.width - width - rightLimit
-
-        if (closingEdge === Qt.RightEdge && offset > rightLimit / 2) {
-          _updateClosing()
-        }
-      }
-      // width(A) < minimum width(A).
-      else if (contentA.width + offset < leftLimit) {
-        contentA.width = leftLimit
-
-        if (closingEdge === Qt.LeftEdge && -offset > leftLimit / 2) {
-          _updateClosing()
-        }
-      }
-      // Resize A/B.
-      else {
-        contentA.width = contentA.width + offset
-      }
-    }
+    onMouseXChanged: pressed &&
+      _applyLimitsOnUserMove(handle.mouseX - _mouseStart)
 
     onPressed: _mouseStart = mouseX
 
@@ -189,5 +234,23 @@ Item {
     anchors.left: handle.right
     height: parent.height
     width: container.width - contentA.width - handle.width
+  }
+
+  PropertyAnimation {
+    id: closingTransitionA
+
+    target: contentA
+    property: 'width'
+    to: 0
+    duration: 200
+  }
+
+  PropertyAnimation {
+    id: closingTransitionB
+
+    duration: 200
+    property: 'width'
+    target: contentA
+    to: container.width - handle.width
   }
 }
