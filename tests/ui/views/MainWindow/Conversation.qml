@@ -105,47 +105,29 @@ ColumnLayout  {
     }
   }
 
-  Rectangle {
+  Borders {
     Layout.fillHeight: true
     Layout.fillWidth: true
-    border.color: '#C7C7C7'
-    border.width: 1
-    id: messagesArea
+    borderColor: '#C7C7C7'
+    bottomWidth: 1
+    leftWidth: 1
+    topWidth: 1
 
     Chat {
       ScrollBar.vertical: ForceScrollBar { }
-      anchors.bottomMargin: messagesArea.border.width
       anchors.fill: parent
-      anchors.topMargin: messagesArea.border.width
     }
   }
 
-  // Send area.
-  Rectangle {
+  Borders {
     Layout.fillWidth: true
     Layout.preferredHeight: 70
-    border.color: textArea.activeFocus ? '#8E8E8E' : '#C7C7C7'
-    border.width: 1
-    id: newMessageArea
+    borderColor: '#C7C7C7'
+    leftWidth: 1
 
-    RowLayout {
+    DroppableTextArea {
       anchors.fill: parent
-
-      Flickable {
-        Layout.preferredHeight: parent.height
-        Layout.fillWidth: true
-        ScrollBar.vertical: ScrollBar { }
-        TextArea.flickable: TextArea {
-          id: textArea
-          placeholderText: qsTr('newMessagePlaceholder')
-          wrapMode: TextArea.Wrap
-        }
-      }
-
-      DropZone {
-        Layout.preferredHeight: parent.height - newMessageArea.border.width * 2
-        Layout.preferredWidth: 40
-      }
+      placeholderText: qsTr('newMessagePlaceholder')
     }
   }
 }

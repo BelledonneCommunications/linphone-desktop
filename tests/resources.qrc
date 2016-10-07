@@ -25,6 +25,7 @@
     <file>imgs/valid.svg</file>
     <file>languages/en.qm</file>
     <file>languages/fr.qm</file>
+    <file>ui/modules/Linphone/Borders.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
     <file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
@@ -40,6 +41,7 @@
     <file>ui/modules/Linphone/Dialog/ConfirmDialog.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Linphone/Dialog/DialogPlus.qml</file>
+    <file>ui/modules/Linphone/DroppableTextArea.qml</file>
     <file>ui/modules/Linphone/DropZone.qml</file>
     <file>ui/modules/Linphone/ForceScrollBar.qml</file>
     <file>ui/modules/Linphone/Form/AbstractTextButton.qml</file>
