@@ -22,7 +22,9 @@
     <file>imgs/linphone.png</file>
     <file>imgs/lost_incoming_call.svg</file>
     <file>imgs/lost_outgoing_call.svg</file>
+    <file>imgs/micro.svg</file>
     <file>imgs/right_arrow.svg</file>
+    <file>imgs/speaker.svg</file>
     <file>imgs/valid.svg</file>
     <file>languages/en.qm</file>
     <file>languages/fr.qm</file>

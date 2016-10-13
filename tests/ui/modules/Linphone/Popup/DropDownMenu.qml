@@ -35,7 +35,10 @@ Rectangle {
 
     anchors.fill: parent
     color: PopupStyle.backgroundColor
-    layer.enabled: true
-    layer.effect: PopupShadow { }
+
+    layer {
+      enabled: true
+      effect: PopupShadow { }
+    }
   }
 }

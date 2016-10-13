@@ -38,7 +38,7 @@ Window {
       resizeAInPriority: true
 
       // Call.
-      childA: StartingIncomingCall {
+      childA: StartingOutgoingCall {
         anchors.fill: parent
       }
 
