@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 

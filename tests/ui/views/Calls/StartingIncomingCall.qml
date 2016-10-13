@@ -1,3 +1,4 @@
+import Common 1.0
 import Linphone 1.0
 
 StartingCall {

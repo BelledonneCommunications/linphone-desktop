@@ -4,21 +4,10 @@
 
 module Linphone
 
-# Constants ----------------------------------------------------------
-
-singleton Colors     1.0 Colors.qml
-singleton Constants  1.0 Constants.qml
-
 # Components ---------------------------------------------------------
 
 # Chat
-Borders              1.0 Borders.qml
-
-# Chat
 Chat                 1.0 Chat/Chat.qml
-
-# Collapse
-Collapse             1.0 Collapse.qml
 
 # Contact
 Avatar               1.0 Contact/Avatar.qml
@@ -26,54 +15,8 @@ Contact              1.0 Contact/Contact.qml
 ContactDescription   1.0 Contact/ContactDescription.qml
 PresenceLevel        1.0 Contact/PresenceLevel.qml
 
-# Dialog
-DialogPlus           1.0 Dialog/DialogPlus.qml
-
-# DropZone
-DropZone             1.0 DropZone.qml
-
-# DroppableTextArea
-DroppableTextArea    1.0 DroppableTextArea.qml
-
-# ForceScrollBar
-ForceScrollBar       1.0 ForceScrollBar.qml
-
-# Form
-ActionBar            1.0 Form/ActionBar.qml
-ActionButton         1.0 Form/ActionButton.qml
-CheckBoxText         1.0 Form/CheckBoxText.qml
-ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
-LightButton          1.0 Form/LightButton.qml
-ListForm             1.0 Form/ListForm.qml
-TextButtonA          1.0 Form/TextButtonA.qml
-TextButtonB          1.0 Form/TextButtonB.qml
-TransparentComboBox  1.0 Form/TransparentComboBox.qml
-
-# Image
-Icon                 1.0 Image/Icon.qml
-RoundedImage         1.0 Image/RoundedImage.qml
-
-# InvertedMouseArea
-InvertedMouseArea    1.0 InvertedMouseArea.qml
-
-# Menu
-Menu                 1.0 Menu.qml
-
-# Paned
-Paned                1.0 Paned.qml
-
-# Popup
-DropDownMenu         1.0 Popup/DropDownMenu.qml
-PopupShadow          1.0 Popup/PopupShadow.qml
-
-# SearchBox
-SearchBox            1.0 SearchBox.qml
-
 # Select
 SelectContact        1.0 Select/SelectContact.qml
 
 # Timeline
 Timeline             1.0 Timeline.qml
-
-# View
-ScrollableListView   1.0 View/ScrollableListView.qml

@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Linphone 1.0
 import Utils 1.0
 

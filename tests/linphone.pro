@@ -34,18 +34,20 @@ TRANSLATIONS = \
 
 lupdate_only{
   SOURCES = \
+    ui/modules/Common/*.qml \
+    ui/modules/Common/Dialog/*.qml \
+    ui/modules/Common/Form/*.qml \
+    ui/modules/Common/Image/*.qml \
+    ui/modules/Common/Popup/*.qml \
+    ui/modules/Common/Styles/*.qml \
+    ui/modules/Common/Styles/Form/*.qml \
+    ui/modules/Common/View/*.qml \
     ui/modules/Linphone/*.qml \
     ui/modules/Linphone/Chat/*.qml \
     ui/modules/Linphone/Contact/*.qml \
-    ui/modules/Linphone/Dialog/*.qml \
-    ui/modules/Linphone/Form/*.qml \
-    ui/modules/Linphone/Image/*.qml \
-    ui/modules/Linphone/Popup/*.qml \
     ui/modules/Linphone/Select/*.qml \
     ui/modules/Linphone/Styles/*.qml \
     ui/modules/Linphone/Styles/Contact/*.qml \
-    ui/modules/Linphone/Styles/Form/*.qml \
-    ui/modules/Linphone/View/*.qml \
     ui/views/*.qml \
     ui/views/Calls/*.qml \
     ui/views/MainWindow/*.qml \

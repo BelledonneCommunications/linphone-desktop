@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Linphone 1.0
 import Utils 1.0
 
@@ -27,7 +28,7 @@ ColumnLayout  {
         Layout.fillHeight: true
         Layout.preferredWidth: 80
         Layout.rightMargin: 30
-        presence: 'connected' // TODO: Use C++.
+        presenceLevel: Presence.Online // TODO: Use C++.
         username: 'Cameron Andrews' // TODO: Use C++.
       }
 

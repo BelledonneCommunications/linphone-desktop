@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.0
 
+import Common 1.0
 import Linphone 1.0
 
 Window {

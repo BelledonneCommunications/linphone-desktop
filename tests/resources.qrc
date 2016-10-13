@@ -28,68 +28,70 @@
     <file>imgs/valid.svg</file>
     <file>languages/en.qm</file>
     <file>languages/fr.qm</file>
-    <file>ui/modules/Linphone/Borders.qml</file>
+    <file>ui/modules/Common/Borders.qml</file>
+    <file>ui/modules/Common/Collapse.qml</file>
+    <file>ui/modules/Common/Colors.qml</file>
+    <file>ui/modules/Common/Constants.qml</file>
+    <file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>
+    <file>ui/modules/Common/Dialog/DialogDescription.qml</file>
+    <file>ui/modules/Common/Dialog/DialogPlus.qml</file>
+    <file>ui/modules/Common/DroppableTextArea.qml</file>
+    <file>ui/modules/Common/DropZone.qml</file>
+    <file>ui/modules/Common/ForceScrollBar.qml</file>
+    <file>ui/modules/Common/Form/AbstractTextButton.qml</file>
+    <file>ui/modules/Common/Form/ActionBar.qml</file>
+    <file>ui/modules/Common/Form/ActionButton.qml</file>
+    <file>ui/modules/Common/Form/CheckBoxText.qml</file>
+    <file>ui/modules/Common/Form/ExclusiveButtons.qml</file>
+    <file>ui/modules/Common/Form/ListForm.qml</file>
+    <file>ui/modules/Common/Form/SmallButton.qml</file>
+    <file>ui/modules/Common/Form/TextButtonA.qml</file>
+    <file>ui/modules/Common/Form/TextButtonB.qml</file>
+    <file>ui/modules/Common/Form/TransparentComboBox.qml</file>
+    <file>ui/modules/Common/Image/Icon.qml</file>
+    <file>ui/modules/Common/Image/RoundedImage.qml</file>
+    <file>ui/modules/Common/InvertedMouseArea.qml</file>
+    <file>ui/modules/Common/Menu.qml</file>
+    <file>ui/modules/Common/Paned.qml</file>
+    <file>ui/modules/Common/Popup/DropDownMenu.qml</file>
+    <file>ui/modules/Common/Popup/PopupShadow.qml</file>
+    <file>ui/modules/Common/qmldir</file>
+    <file>ui/modules/Common/SearchBox.qml</file>
+    <file>ui/modules/Common/Styles/CollapseStyle.qml</file>
+    <file>ui/modules/Common/Styles/DialogStyle.qml</file>
+    <file>ui/modules/Common/Styles/ForceScrollBarStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/AbstractTextButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/ExclusiveButtonsStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/ListFormStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/SmallButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/TextButtonBStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/TransparentComboBoxStyle.qml</file>
+    <file>ui/modules/Common/Styles/MenuStyle.qml</file>
+    <file>ui/modules/Common/Styles/PanedStyle.qml</file>
+    <file>ui/modules/Common/Styles/PopupStyle.qml</file>
+    <file>ui/modules/Common/Styles/qmldir</file>
+    <file>ui/modules/Common/Styles/SearchBoxStyle.qml</file>
+    <file>ui/modules/Common/View/ScrollableListView.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
     <file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
     <file>ui/modules/Linphone/Chat/Message.qml</file>
     <file>ui/modules/Linphone/Chat/OutgoingMessage.qml</file>
-    <file>ui/modules/Linphone/Collapse.qml</file>
-    <file>ui/modules/Linphone/Colors.qml</file>
-    <file>ui/modules/Linphone/Constants.qml</file>
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
     <file>ui/modules/Linphone/Contact/PresenceLevel.qml</file>
-    <file>ui/modules/Linphone/Dialog/ConfirmDialog.qml</file>
-    <file>ui/modules/Linphone/Dialog/DialogDescription.qml</file>
-    <file>ui/modules/Linphone/Dialog/DialogPlus.qml</file>
-    <file>ui/modules/Linphone/DroppableTextArea.qml</file>
-    <file>ui/modules/Linphone/DropZone.qml</file>
-    <file>ui/modules/Linphone/ForceScrollBar.qml</file>
-    <file>ui/modules/Linphone/Form/AbstractTextButton.qml</file>
-    <file>ui/modules/Linphone/Form/ActionBar.qml</file>
-    <file>ui/modules/Linphone/Form/ActionButton.qml</file>
-    <file>ui/modules/Linphone/Form/CheckBoxText.qml</file>
-    <file>ui/modules/Linphone/Form/ExclusiveButtons.qml</file>
-    <file>ui/modules/Linphone/Form/ListForm.qml</file>
-    <file>ui/modules/Linphone/Form/SmallButton.qml</file>
-    <file>ui/modules/Linphone/Form/TextButtonA.qml</file>
-    <file>ui/modules/Linphone/Form/TextButtonB.qml</file>
-    <file>ui/modules/Linphone/Form/TransparentComboBox.qml</file>
-    <file>ui/modules/Linphone/Image/Icon.qml</file>
-    <file>ui/modules/Linphone/Image/RoundedImage.qml</file>
-    <file>ui/modules/Linphone/InvertedMouseArea.qml</file>
-    <file>ui/modules/Linphone/Menu.qml</file>
-    <file>ui/modules/Linphone/Paned.qml</file>
-    <file>ui/modules/Linphone/Popup/DropDownMenu.qml</file>
-    <file>ui/modules/Linphone/Popup/PopupShadow.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
-    <file>ui/modules/Linphone/SearchBox.qml</file>
     <file>ui/modules/Linphone/Select/SelectContact.qml</file>
-    <file>ui/modules/Linphone/Styles/CollapseStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/DialogStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/ForceScrollBarStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/AbstractTextButtonStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/ActionBarStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/CheckBoxTextStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/ExclusiveButtonsStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/ListFormStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/SmallButtonStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/TextButtonAStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/TextButtonBStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Form/TransparentComboBoxStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/MenuStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/PanedStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/PopupStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
-    <file>ui/modules/Linphone/Styles/SearchBoxStyle.qml</file>
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/Timeline.qml</file>
-    <file>ui/modules/Linphone/View/ScrollableListView.qml</file>
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/utils.js</file>
     <file>ui/views/Calls/Calls.qml</file>

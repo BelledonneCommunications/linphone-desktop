@@ -1,12 +1,12 @@
-
 #include <QMenu>
 #include <QQmlApplicationEngine>
+#include <QQmlComponent>
 #include <QQmlContext>
 #include <QQmlFileSelector>
 #include <QQuickView>
 #include <QSystemTrayIcon>
 #include <QtDebug>
- #include <QQmlComponent>
+
 #include "app.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
 #include "components/notification/Notification.hpp"
