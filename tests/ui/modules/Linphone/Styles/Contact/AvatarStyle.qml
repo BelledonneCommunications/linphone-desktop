@@ -13,6 +13,6 @@ QtObject {
   property QtObject mask: QtObject {
     property color color: Colors.r
 
-    property int radius: 50
+    property int radius: 500
   }
 }

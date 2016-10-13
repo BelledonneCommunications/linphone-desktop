@@ -3,6 +3,7 @@
     <file>imgs/add_field.svg</file>
     <file>imgs/call.svg</file>
     <file>imgs/cam.svg</file>
+    <file>imgs/cat_contact.jpg</file>
     <file>imgs/chat_attachment.svg</file>
     <file>imgs/chat.svg</file>
     <file>imgs/collapse.svg</file>
@@ -55,6 +56,7 @@
     <file>ui/modules/Linphone/Form/TextButtonB.qml</file>
     <file>ui/modules/Linphone/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Linphone/Image/Icon.qml</file>
+    <file>ui/modules/Linphone/Image/RoundedImage.qml</file>
     <file>ui/modules/Linphone/InvertedMouseArea.qml</file>
     <file>ui/modules/Linphone/Menu.qml</file>
     <file>ui/modules/Linphone/Paned.qml</file>
@@ -89,6 +91,9 @@
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/utils.js</file>
     <file>ui/views/Calls/Calls.qml</file>
+    <file>ui/views/Calls/StartingCall.qml</file>
+    <file>ui/views/Calls/StartingIncomingCall.qml</file>
+    <file>ui/views/Calls/StartingOutgoingCall.qml</file>
     <file>ui/views/MainWindow/Contact.qml</file>
     <file>ui/views/MainWindow/Contacts.qml</file>
     <file>ui/views/MainWindow/Conversation.qml</file>

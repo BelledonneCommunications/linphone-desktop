@@ -12,7 +12,7 @@ do
     basename="${filename##*/}"
     extension="${filename##*.}"
 
-    if [[ "${extension}" == @(qml|svg|png|qm|js) ||
+    if [[ "${extension}" == @(qml|svg|png|jpg|qm|js) ||
           "${basename}" == "qmldir" ]]; then
         echo "    <file>$filename</file>" >> $RESOURCE_FILE
     fi

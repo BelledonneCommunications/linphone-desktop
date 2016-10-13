@@ -51,6 +51,7 @@ TransparentComboBox  1.0 Form/TransparentComboBox.qml
 
 # Image
 Icon                 1.0 Image/Icon.qml
+RoundedImage         1.0 Image/RoundedImage.qml
 
 # InvertedMouseArea
 InvertedMouseArea    1.0 InvertedMouseArea.qml

@@ -38,13 +38,8 @@ Window {
       resizeAInPriority: true
 
       // Call.
-      childA: Rectangle {
+      childA: StartingIncomingCall {
         anchors.fill: parent
-        color: 'orange'
-
-        Text {
-          text: 'hello'
-        }
       }
 
       // Chat.
