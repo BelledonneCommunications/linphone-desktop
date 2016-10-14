@@ -26,8 +26,6 @@
     <file>imgs/right_arrow.svg</file>
     <file>imgs/speaker.svg</file>
     <file>imgs/valid.svg</file>
-    <file>languages/en.qm</file>
-    <file>languages/fr.qm</file>
     <file>ui/modules/Common/Borders.qml</file>
     <file>ui/modules/Common/Collapse.qml</file>
     <file>ui/modules/Common/Colors.qml</file>

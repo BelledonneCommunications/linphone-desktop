@@ -1,7 +1,0 @@
-#!/usr/bin/bash
-
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-$SCRIPT_DIR/scripts/update_linphone $SCRIPT_DIR
-$SCRIPT_DIR/scripts/build_resources_file $SCRIPT_DIR
-$SCRIPT_DIR/scripts/update_languages $SCRIPT_DIR

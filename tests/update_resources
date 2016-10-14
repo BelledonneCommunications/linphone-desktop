@@ -1,18 +1,19 @@
 #!/usr/bin/bash
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 RESOURCE_FILE="resources.qrc"
 
-cd $1
+cd $SCRIPT_DIR
 
 echo "<!DOCTYPE RCC><RCC version=\"1.0\">
   <qresource prefix=\"/\">" > $RESOURCE_FILE
 
-for filename in $(find languages/ ui/ imgs/ -type f | sort)
+for filename in $(find ui/ imgs/ -type f | sort)
 do
     basename="${filename##*/}"
     extension="${filename##*.}"
 
-    if [[ "${extension}" == @(qml|svg|png|jpg|qm|js) ||
+    if [[ "${extension}" == @(qml|svg|png|jpg|js) ||
           "${basename}" == "qmldir" ]]; then
         echo "    <file>$filename</file>" >> $RESOURCE_FILE
     fi
