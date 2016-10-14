@@ -4,6 +4,8 @@ import QtQuick.Dialogs 1.2
 
 import Common.Styles 1.0
 
+// ===================================================================
+
 Item {
   signal dropped (var files)
 
@@ -34,7 +36,9 @@ Item {
     TextArea.flickable: TextArea {
       id: textArea
 
-      rightPadding: fileChooserButton.width + fileChooserButton.anchors.rightMargin + 6
+      rightPadding: fileChooserButton.width +
+        fileChooserButton.anchors.rightMargin +
+        DroppableTextAreaStyle.fileChooserButton.margins
       wrapMode: TextArea.Wrap
     }
     anchors.fill: parent
@@ -46,11 +50,12 @@ Item {
 
     anchors {
       right: parent.right
-      rightMargin: scrollBar.width + 6
+      rightMargin: scrollBar.width +
+        DroppableTextAreaStyle.fileChooserButton.margins
     }
 
     height: parent.height
-    width: 40
+    width: DroppableTextAreaStyle.fileChooserButton.width
 
     onClicked: fileDialog.open()
 
@@ -75,14 +80,14 @@ Item {
     id: hoverContent
 
     anchors.fill: parent
-    color: '#FFFFFF'
+    color: DroppableTextAreaStyle.hoverContent.backgroundColor
     visible: false
 
     Text {
       anchors.centerIn: parent
-      color: '#FE5E00'
-      font.pointSize: 11
-      text: qsTr('DROP YOUR ATTACHMENT')
+      color: DroppableTextAreaStyle.hoverContent.text.color
+      font.pointSize: DroppableTextAreaStyle.hoverContent.text.fontSize
+      text: qsTr('dropYourAttachment')
     }
   }
 

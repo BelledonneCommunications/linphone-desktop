@@ -56,6 +56,7 @@
     <file>ui/modules/Common/SearchBox.qml</file>
     <file>ui/modules/Common/Styles/CollapseStyle.qml</file>
     <file>ui/modules/Common/Styles/DialogStyle.qml</file>
+    <file>ui/modules/Common/Styles/DroppableTextAreaStyle.qml</file>
     <file>ui/modules/Common/Styles/ForceScrollBarStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/AbstractTextButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
