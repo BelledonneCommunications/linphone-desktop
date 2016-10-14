@@ -37,11 +37,14 @@ ColumnLayout {
       width: menu.entryWidth
 
       RowLayout {
-        anchors.left: parent.left
-        anchors.leftMargin: MenuStyle.entry.leftMargin
-        anchors.right: parent.right
-        anchors.rightMargin: MenuStyle.entry.rightMargin
-        anchors.verticalCenter: parent.verticalCenter
+        anchors {
+          left: parent.left
+          leftMargin: MenuStyle.entry.leftMargin
+          right: parent.right
+          rightMargin: MenuStyle.entry.rightMargin
+          verticalCenter: parent.verticalCenter
+        }
+
         spacing: MenuStyle.entry.spacing
 
         Icon {

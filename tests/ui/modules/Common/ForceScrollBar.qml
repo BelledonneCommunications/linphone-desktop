@@ -4,6 +4,8 @@ import QtQuick.Controls 2.0
 import Common.Styles 1.0
 
 // ===================================================================
+// A simple custom vertical scrollbar.
+// ===================================================================
 
 ScrollBar {
   id: scrollBar

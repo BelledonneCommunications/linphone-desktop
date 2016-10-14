@@ -3,6 +3,8 @@ import QtQuick 2.7
 
 import Common 1.0
 
+// ===================================================================
+
 QtObject {
   property QtObject background: QtObject {
     property int height: 22

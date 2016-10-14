@@ -35,8 +35,12 @@ Button {
          ? textColorHovered
          : textColorNormal
         )
-    font.bold: true
-    font.pointSize: AbstractTextButtonStyle.text.fontSize
+
+    font {
+      bold: true
+      pointSize: AbstractTextButtonStyle.text.fontSize
+    }
+
     horizontalAlignment: Text.AlignHCenter
     text: button.text
     verticalAlignment: Text.AlignVCenter

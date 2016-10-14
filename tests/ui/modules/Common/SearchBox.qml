@@ -4,6 +4,9 @@ import QtQuick.Controls 2.0
 import Common.Styles 1.0
 
 // ===================================================================
+// A reusable search input which display a entries model in a menu.
+// Each entry can be filtered with the search input.
+// ===================================================================
 
 Item {
   id: item
@@ -11,12 +14,15 @@ Item {
   property alias delegate: list.delegate
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
+
+  // This property must implement `setFilterFixedString` and/or
+  // `invalidate` functions.
   property alias model: list.model
+
   property alias placeholderText: searchField.placeholderText
 
   signal menuClosed ()
   signal menuOpened ()
-  signal searchTextChanged (string text)
 
   function _hideMenu () {
     menu.hide()
@@ -48,7 +54,13 @@ Item {
       Keys.onEscapePressed: _hideMenu()
 
       onActiveFocusChanged: activeFocus && _showMenu()
-      onTextChanged: searchTextChanged(text)
+      onTextChanged: {
+        model.setFilterFixedString(text)
+
+        if (model.invalidate) {
+          model.invalidate()
+        }
+      }
     }
 
     DropDownMenu {

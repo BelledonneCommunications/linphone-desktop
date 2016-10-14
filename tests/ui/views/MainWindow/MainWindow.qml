@@ -100,7 +100,6 @@ ApplicationWindow {
             ActionButton {
               icon: 'call'
               onClicked: CallsWindow.show()
-
             },
 
             ActionButton {

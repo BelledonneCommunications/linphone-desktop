@@ -47,8 +47,8 @@ CheckBox {
       radius: CheckBoxTextStyle.radius
       visible: checkBox.checked
       width: parent.width - x * 2
-      x: 4 // Fixed, no style.
-      y: 4 // Fixed, no style.
+      x: 4 // Fixed, no needed to use style file.
+      y: 4 // Same thing.
     }
   }
 }

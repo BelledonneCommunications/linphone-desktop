@@ -82,8 +82,12 @@ RowLayout {
       Text {
         anchors.fill: textEdit
         color: ListFormStyle.value.placeholder.color
-        font.italic: true
-        font.pointSize: ListFormStyle.value.placeholder.fontSize
+
+        font {
+          italic: true
+          pointSize: ListFormStyle.value.placeholder.fontSize
+        }
+
         padding: textEdit.padding
         text: textEdit.text.length === 0 && !textEdit.activeFocus
           ? listForm.placeholder

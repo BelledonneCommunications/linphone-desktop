@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.7
 
+// ===================================================================
+
 QtObject {
   property QtObject background: QtObject {
     property int height: 30

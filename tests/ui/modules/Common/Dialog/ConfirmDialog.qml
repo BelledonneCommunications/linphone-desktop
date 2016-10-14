@@ -6,8 +6,6 @@ import Common.Styles 1.0
 // ===================================================================
 
 DialogPlus {
-  id: dialog
-
   buttons: [
     TextButtonA {
       text: qsTr('cancel')
