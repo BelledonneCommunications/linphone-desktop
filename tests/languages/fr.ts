@@ -105,7 +105,18 @@
     <name>DropZone</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation>Merci de choisir un ou plusieurs fichiers</translation>
+        <translation type="vanished">Merci de choisir un ou plusieurs fichiers</translation>
+    </message>
+</context>
+<context>
+    <name>DroppableTextArea</name>
+    <message>
+        <source>fileChooserTitle</source>
+        <translation type="unfinished">Merci de choisir un ou plusieurs fichiers</translation>
+    </message>
+    <message>
+        <source>DROP YOUR ATTACHMENT</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

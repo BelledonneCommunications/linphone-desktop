@@ -21,9 +21,6 @@ Collapse             1.0 Collapse.qml
 ConfirmDialog        1.0 Dialog/ConfirmDialog.qml
 DialogPlus           1.0 Dialog/DialogPlus.qml
 
-# DropZone
-DropZone             1.0 DropZone.qml
-
 # DroppableTextArea
 DroppableTextArea    1.0 DroppableTextArea.qml
 

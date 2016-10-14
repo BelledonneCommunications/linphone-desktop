@@ -34,7 +34,6 @@
     <file>ui/modules/Common/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Common/Dialog/DialogPlus.qml</file>
     <file>ui/modules/Common/DroppableTextArea.qml</file>
-    <file>ui/modules/Common/DropZone.qml</file>
     <file>ui/modules/Common/ForceScrollBar.qml</file>
     <file>ui/modules/Common/Form/AbstractTextButton.qml</file>
     <file>ui/modules/Common/Form/ActionBar.qml</file>

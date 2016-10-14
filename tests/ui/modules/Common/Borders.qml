@@ -1,6 +1,10 @@
 import QtQuick 2.7
 
 // ===================================================================
+// Alternative to rectangle border which is a limited feature.
+// Allow the use of different borders (size, color...) for each
+// rectangle side.
+// ===================================================================
 
 Item {
   default property alias content: content.data
