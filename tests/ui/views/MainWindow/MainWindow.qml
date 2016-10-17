@@ -205,7 +205,7 @@ ApplicationWindow {
       // Logo.
       Rectangle {
         Layout.fillWidth: true
-        Layout.preferredHeight: 70
+        Layout.preferredHeight: 80
         color: '#EAEAEA'
       }
     }
