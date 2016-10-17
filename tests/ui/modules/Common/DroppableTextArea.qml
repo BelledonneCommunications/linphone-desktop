@@ -36,12 +36,20 @@ Item {
     TextArea.flickable: TextArea {
       id: textArea
 
+      background: Rectangle {
+        color: '#FFFFFF'
+        border.color: '#D0D8DE'
+      }
+
       rightPadding: fileChooserButton.width +
         fileChooserButton.anchors.rightMargin +
         DroppableTextAreaStyle.fileChooserButton.margins
       wrapMode: TextArea.Wrap
     }
     anchors.fill: parent
+
+    // Necessary, else `placeHolderText` can get out of the component.
+    clip: true
   }
 
   // Handle click to select files.

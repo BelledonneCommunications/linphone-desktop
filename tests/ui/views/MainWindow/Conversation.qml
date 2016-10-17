@@ -120,14 +120,14 @@ ColumnLayout  {
     }
   }
 
-  Borders {
+  Rectangle {
     Layout.fillWidth: true
-    Layout.preferredHeight: 70
-    borderColor: '#C7C7C7'
-    leftWidth: 1
+    Layout.preferredHeight: 80
+    color: '#E2E9EF'
 
     DroppableTextArea {
       anchors.fill: parent
+      anchors.margins: 10
       placeholderText: qsTr('newMessagePlaceholder')
     }
   }
