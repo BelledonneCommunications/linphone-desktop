@@ -207,6 +207,7 @@ ApplicationWindow {
         Layout.fillWidth: true
         Layout.preferredHeight: 80
         color: '#EAEAEA'
+        //a: qsTr("ooo")
       }
     }
 

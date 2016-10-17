@@ -47,33 +47,37 @@ set(QRC_RESOURCES
 )
 
 set(LANGUAGES_DIRECTORY languages)
+set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES en fr)
+
+# --------------------------------------------------------------------
+
+function (PREPEND list prefix)
+  set(new_list "")
+
+  foreach (elem ${${list}})
+    list(APPEND new_list "${prefix}${elem}")
+  endforeach ()
+
+  set(${list} ${new_list} PARENT_SCOPE)
+endfunction ()
+
+# Force absolute paths.
+PREPEND(SOURCES "${CMAKE_SOURCE_DIR}/")
+PREPEND(HEADERS "${CMAKE_SOURCE_DIR}/")
 
 # --------------------------------------------------------------------
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES})
 
-# Build languages resource file.
-set(TS_FILES)
-set(I18N_CONTENT "<!DOCTYPE RCC>\n<RCC version=\"1.0\">\n  <qresource prefix=\"/\">\n")
-foreach (lang ${LANGUAGES})
-  list(APPEND TS_FILES "${LANGUAGES_DIRECTORY}/${lang}.ts")
-
-  # Note: the below `languages/` path is not the same as the `${LANGUAGES_DIRECTORY}` value.
-  # It's the symbolic path used by the linphone binary in the qrc model.
-  set(I18N_CONTENT "${I18N_CONTENT}    <file alias=\"languages/${lang}\">${lang}.qm</file>\n")
-endforeach ()
-set(I18N_CONTENT "${I18N_CONTENT}  </qresource>\n</RCC>\n")
-
-set(I18N_RESOURCE i18n.qrc)
-file(WRITE "${CMAKE_BINARY_DIR}/${I18N_RESOURCE}" "${I18N_CONTENT}")
-
-# Create `qm` files from `ts` files.
-qt5_create_translation(QM_FILES ${TS_FILES} src ui)
+# Add languages support.
+add_subdirectory(${LANGUAGES_DIRECTORY})
+list(APPEND QRC_RESOURCES "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
 # Add qrc. (images, qml, translations...)
-qt5_add_resources(RESOURCES ${QRC_RESOURCES} "${CMAKE_BINARY_DIR}/${I18N_RESOURCE}")
+qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 
 # Build.
 add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
+add_dependencies(${LINPHONE_EXEC} update_translations)
 target_link_libraries(${LINPHONE_EXEC} ${LIBS})
