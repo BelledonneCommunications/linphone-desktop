@@ -70,7 +70,6 @@ Item {
 
     Icon {
       anchors.fill: parent
-      fillMode: Image.PreserveAspectFit
       icon: 'chat_attachment'
     }
   }
