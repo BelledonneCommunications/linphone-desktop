@@ -115,7 +115,7 @@
         <translation type="unfinished">Merci de choisir un ou plusieurs fichiers</translation>
     </message>
     <message>
-        <source>DROP YOUR ATTACHMENT</source>
+        <source>dropYourAttachment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

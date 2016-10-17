@@ -1,3 +1,7 @@
+# ====================================================================
+# CMakeLists.txt
+# ====================================================================
+
 cmake_minimum_required(VERSION 3.0)
 project(linphone)
 
@@ -6,6 +10,10 @@ set(LINPHONE_EXEC linphone)
 # Use automatically moc from Qt5.
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+# --------------------------------------------------------------------
+# Define packages, libs, sources, headers, resources and languages
+# --------------------------------------------------------------------
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 LinguistTools)
 
@@ -65,6 +73,7 @@ endfunction ()
 # Force absolute paths.
 PREPEND(SOURCES "${CMAKE_SOURCE_DIR}/")
 PREPEND(HEADERS "${CMAKE_SOURCE_DIR}/")
+PREPEND(QRC_RESOURCES "${CMAKE_SOURCE_DIR}/")
 
 # --------------------------------------------------------------------
 
