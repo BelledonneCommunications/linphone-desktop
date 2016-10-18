@@ -1,23 +1,33 @@
 #!/usr/bin/sh
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-RESOURCE_FILE="resources.qrc"
+# ====================================================================
+# Tool to build automatically `resources.qrc`.
+#
+# It should be used sparingly, it adds all `.qml`, `.svg`, `.png`,
+# `.jpg` and `.js` (contained in `ui` and `imgs` folders)
+# in the resources file.
+#
+# If you don't want to add a particular file, do not use this script!
+# ====================================================================
 
+RESOURCES_FILE="resources.qrc"
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR/..
 
 echo "<!DOCTYPE RCC><RCC version=\"1.0\">
-  <qresource prefix=\"/\">" > $RESOURCE_FILE
+  <qresource prefix=\"/\">" > $RESOURCES_FILE
 
 for filename in $(find ui/ imgs/ -type f | sort)
 do
     basename="${filename##*/}"
     extension="${filename##*.}"
 
-    if [[ "${extension}" == @(qml|svg|png|jpg|js) ||
-          "${basename}" == "qmldir" ]]; then
-        echo "    <file>$filename</file>" >> $RESOURCE_FILE
+    if [[ ${extension} == @(qml|svg|png|jpg|js) ||
+          ${basename} == qmldir ]]; then
+        echo "    <file>$filename</file>" >> $RESOURCES_FILE
     fi
 done
 
 echo "  </qresource>
-</RCC>" >> $RESOURCE_FILE
+</RCC>" >> $RESOURCES_FILE
