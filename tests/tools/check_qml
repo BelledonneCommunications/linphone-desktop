@@ -1,7 +1,7 @@
 #!/usr/bin/sh
 
 # ====================================================================
-# Tool to check the syntax of `.qml` files.
+# Tool to check the syntax of `.qml`/`.js` files.
 # ====================================================================
 
 RESOURCES_FILE="resources.qrc"
@@ -34,9 +34,8 @@ while read line
 do
     result=$(
         printf "$line" |
-        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.qml\)\s*<\s*\/file\s*>\s*$/\1/p'
+        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/file\s*>\s*$/\1/p'
     )
-
     if [[ ! -z  $result ]] && ! $LINTER "$result"; then
         so_far_so_good=1
     fi
