@@ -7,13 +7,25 @@
 RESOURCES_FILE="resources.qrc"
 LINTER=qmllint-qt5
 
-SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $SCRIPT_DIR/..
-
 RED='\e[1;31m'
 GREEN='\e[1;32m'
 BLUE='\e[1;34m'
 NC='\e[0m'
+
+function go_to_source_file_dir {
+    # See: http://stackoverflow.com/questions/59895/can-a-bash-script-tell-which-directory-it-is-stored-in
+    SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$SOURCE" ]; do
+        DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+        SOURCE="$(readlink "$SOURCE")"
+        [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+    done
+    SCRIPT_DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+
+    cd $SCRIPT_DIR/..
+}
+
+go_to_source_file_dir
 
 printf "${BLUE}Checking qml files...${NC}\n"
 
