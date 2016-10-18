@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>Chat</name>
+    <message>
+        <source>newMessagePlaceholder</source>
+        <translation type="unfinished">Entrer votre message.</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
@@ -98,7 +105,7 @@
     </message>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>Entrer votre message.</translation>
+        <translation type="vanished">Entrer votre message.</translation>
     </message>
 </context>
 <context>

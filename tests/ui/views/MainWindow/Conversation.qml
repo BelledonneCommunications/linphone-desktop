@@ -110,25 +110,11 @@ ColumnLayout  {
     Layout.fillHeight: true
     Layout.fillWidth: true
     borderColor: '#C7C7C7'
-    bottomWidth: 1
     leftWidth: 1
     topWidth: 1
 
     Chat {
-      ScrollBar.vertical: ForceScrollBar { }
       anchors.fill: parent
-    }
-  }
-
-  Rectangle {
-    Layout.fillWidth: true
-    Layout.preferredHeight: 80
-    color: '#E2E9EF'
-
-    DroppableTextArea {
-      anchors.fill: parent
-      anchors.margins: 10
-      placeholderText: qsTr('newMessagePlaceholder')
     }
   }
 }

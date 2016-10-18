@@ -44,13 +44,8 @@ Window {
       }
 
       // Chat.
-      childB: Rectangle {
+      childB: Chat {
         anchors.fill: parent
-        color: 'green'
-
-        Text {
-          text: 'hello2'
-        }
       }
     }
   }
