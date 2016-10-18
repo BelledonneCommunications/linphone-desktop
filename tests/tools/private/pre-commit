@@ -1,0 +1,5 @@
+#!/usr/bin/sh
+
+sh "./tests/tools/check_qml"
+
+exit $?

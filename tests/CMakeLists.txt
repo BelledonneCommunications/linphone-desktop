@@ -76,6 +76,17 @@ PREPEND(HEADERS "${CMAKE_SOURCE_DIR}/")
 PREPEND(QRC_RESOURCES "${CMAKE_SOURCE_DIR}/")
 
 # --------------------------------------------------------------------
+# Init git hooks.
+# --------------------------------------------------------------------
+
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy
+  "${CMAKE_SOURCE_DIR}/tools/private/pre-commit"
+  "${CMAKE_SOURCE_DIR}/../.git/hooks/pre-commit"
+)
+
+# --------------------------------------------------------------------
+# Build.
+# --------------------------------------------------------------------
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES})
 
