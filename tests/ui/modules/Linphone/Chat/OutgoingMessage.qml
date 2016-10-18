@@ -4,18 +4,23 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 
-Message {
-  backgroundColor: '#E4E4E4'
+RowLayout {
+  implicitHeight: message.height
+  spacing: 10
 
-  Item {
-    height: 30
-    width: 30
+  Message {
+    id: message
 
-    // TODO: Success and re-send icon.
-    Icon {
-      anchors.centerIn: parent
-      icon: 'valid'
-      iconSize: 16
-    }
+    Layout.fillWidth: true
+    backgroundColor: '#E4E4E4'
+  }
+
+  // TODO: Success and re-send icon.
+  Icon {
+    Layout.alignment: Qt.AlignTop
+    Layout.preferredHeight: 16
+    Layout.preferredWidth: 16
+
+    icon: 'valid'
   }
 }
