@@ -40,9 +40,4 @@ Item {
 
     anchors.left: rectangle.right
   }
-
-  // In some case the initial `implicitHeight`
-  // state is incorrect. This line is a workaround that forces
-  // the `height` attribute.
-  Component.onCompleted: height = text.contentHeight + text.padding * 2
 }

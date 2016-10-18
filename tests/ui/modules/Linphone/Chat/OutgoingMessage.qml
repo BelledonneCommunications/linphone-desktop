@@ -12,6 +12,10 @@ RowLayout {
     id: message
 
     Layout.fillWidth: true
+
+    // Not a style. Workaround to avoid a 0 width.
+    Layout.minimumWidth: 20
+
     backgroundColor: '#E4E4E4'
   }
 
