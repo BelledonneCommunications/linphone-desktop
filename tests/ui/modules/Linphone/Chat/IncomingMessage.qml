@@ -5,23 +5,20 @@ import Linphone 1.0
 
 // ===================================================================
 
-Item {
+RowLayout {
   implicitHeight: message.height
+  spacing: 10
 
-  RowLayout {
-    anchors.fill: parent
-    spacing: 10
+  Avatar {
+    Layout.alignment: Qt.AlignTop
+    Layout.preferredHeight: 30
+    Layout.preferredWidth: 30
+  }
 
-    Avatar {
-      Layout.alignment: Qt.AlignTop
-      Layout.preferredHeight: 30
-      Layout.preferredWidth: 30
-    }
+  Message {
+    id: message
 
-    Message {
-      Layout.fillWidth: true
-      backgroundColor: '#BFBFBF'
-      id: message
-    }
+    Layout.fillWidth: true
+    backgroundColor: '#BFBFBF'
   }
 }

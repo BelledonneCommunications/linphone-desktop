@@ -16,7 +16,7 @@ ColumnLayout {
     model: ListModel {
       ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: 'This is it: fefe efzzzzzzzzzz aaaaaaaaa erfeezffeefzfzefzefzezfefez wfef efef  e efeffefe fee efefefeefef fefefefefe eff fefefe fefeffww.linphone.org' }
       ListElement { $dateSection: 1465389121000; $timestamp: 1465389133000; $type: 'event'; $content: 'incoming_call' }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389439000; $type: 'message'; $content: 'Perfect!' }
+      ListElement { $dateSection: 1465389121000; $timestamp: 1465389439000; $type: 'message'; $content: 'Perfect! bg  g vg gv v g v hgv gv gv   jhb jh b  jb jh hg vg    cfcy f  v u  uyg   f tf tf  ft f tf t  t  fy ft f tu  ty f  rd rd  d d   uu gu y  gg y f  r dr   ' }
       ListElement { $dateSection: 1465389121000; $timestamp: 1465389500000; $type: 'event'; $content: 'hangup' }
       ListElement { $dateSection: 1465994221000; $outgoing: true; $timestamp: 1465924321000; $type: 'message'; $content: 'You\'ve heard the expression, "Just believe it and it will come." Well, technically, that is true, however, \'believing\' is not just thinking that you can have it...' }
       ListElement { $dateSection: 1465994221000; $timestamp: 1465924391000; $type: 'event'; $content: 'lost_incoming_call' }
@@ -58,15 +58,15 @@ ColumnLayout {
     section.property: '$dateSection'
 
     delegate: Rectangle {
-      anchors.left: parent.left
+      anchors.left: parent ? parent.left : undefined
       anchors.leftMargin: 18
-      anchors.right: parent.right
+      anchors.right: parent ? parent.right : undefined
       anchors.rightMargin: 18
 
       // Unable to use `height` property.
       // The height is given by message height.
       implicitHeight: layout.height + 10
-      width: parent.width
+      width: parent ? parent.width : 0
 
       MouseArea {
         anchors.fill: parent
@@ -77,6 +77,7 @@ ColumnLayout {
 
       RowLayout {
         id: layout
+
         spacing: 0
 
         // The height is computed with the message height.
@@ -122,8 +123,10 @@ ColumnLayout {
 
         // Display content.
         Loader {
-          Layout.fillWidth: true
           id: loader
+
+          Layout.fillWidth: true
+
           source: $type === 'message'
             ? (
               'qrc:/ui/modules/Linphone/Chat/' +
