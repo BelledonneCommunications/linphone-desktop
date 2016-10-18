@@ -1,0 +1,40 @@
+#!/usr/bin/sh
+
+# ====================================================================
+# Tool to check the syntax of `.qml` files.
+# ====================================================================
+
+RESOURCES_FILE="resources.qrc"
+LINTER=qmllint-qt5
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $SCRIPT_DIR/..
+
+RED='\e[1;31m'
+GREEN='\e[1;32m'
+BLUE='\e[1;34m'
+NC='\e[0m'
+
+printf "${BLUE}Checking qml files...${NC}\n"
+
+so_far_so_good=0
+while read line
+do
+    result=$(
+        printf "$line" |
+        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.qml\)\s*<\s*\/file\s*>\s*$/\1/p'
+    )
+
+    if [[ ! -z  $result ]] && ! $LINTER "$result"; then
+        so_far_so_good=1
+    fi
+done < $RESOURCES_FILE
+
+if [[ $so_far_so_good == 0 ]]; then
+    printf "${GREEN}Done. No qml error found.\n"
+else
+    printf "${RED}One or more errors were found.\n"
+fi
+printf "${NC}"
+
+exit $so_far_so_good
