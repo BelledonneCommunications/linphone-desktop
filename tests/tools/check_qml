@@ -45,7 +45,7 @@ done < $RESOURCES_FILE
 if [[ $so_far_so_good == 0 ]]; then
     printf "${GREEN}Done. No qml error found.\n"
 else
-    printf "${RED}One or more errors were found.\n"
+    printf "${RED}One or more errors were found. Please to fix them.\n"
 fi
 printf "${NC}"
 
