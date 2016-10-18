@@ -14,7 +14,6 @@ class ContactsListProxyModel : public QSortFilterProxyModel {
     bool useConnectedFilter
     READ isConnectedFilterUsed
     WRITE setConnectedFilter
-    CONSTANT
   );
 
 public:
