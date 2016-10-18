@@ -46,7 +46,10 @@ qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES}
 # Translations target must be called by `make`|`make all`.
 add_custom_target(update_translations DEPENDS ${QM_FILES})
 
-# Remove *.qm when `clean` is called.
+# Remove `*.qm` when `clean` is called.
+set_directory_properties(ADDITIONAL_MAKE_CLEAN_FILES ${QM_FILES})
+
+# Command to just remove `.qm` files.
 add_custom_target(remove_qm_files
-  COMMAND ${CMAKE_COMMAND} -E remove "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/*.qm"
+  COMMAND ${CMAKE_COMMAND} -E remove ${QM_FILES}
 )
