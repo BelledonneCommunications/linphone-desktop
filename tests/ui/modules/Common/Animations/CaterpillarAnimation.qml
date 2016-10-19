@@ -3,44 +3,91 @@ import QtQuick 2.7
 Row {
   id: container
 
-  property int sphereSize: 10
+  property int duration: 200
   property int nSpheres: 3
+  property color sphereColor: '#8F8F8F'
+  property int sphereSize: 10
+  property int sphereSpaceSize: 10
 
   spacing: 6
 
   Repeater {
+    id: repeater
+
     model: nSpheres
 
     Rectangle {
-      id: ymovingBox
+      id: sphere
 
-      color: '#8F8F8F'
-      height: container.sphereSize
-      radius: container.sphereSize / 2
+      property bool forceRunning: false
+      property int previousY: 0
+
+      function startAnimation () {
+        if (!animator.running) {
+          animator.running = true
+        } else {
+          forceRunning = true
+        }
+      }
+
+      color: sphereColor
+      height: width
+      radius: width / 2
       width: container.sphereSize
 
-      onYChanged: console.log('y changed', y)
+      onYChanged: {
+        // No call executed by last sphere.
+        if (index === nSpheres - 1) {
+          return
+        }
+
+        if (y === (sphereSpaceSize / 2) && previousY === 0) {
+          repeater.itemAt(index + 1).startAnimation()
+        }
+
+        previousY = y
+      }
+
+      Component.onCompleted: {
+        // Only start first sphere.
+        if (index === 0) {
+          animator.running = true
+        }
+      }
 
       YAnimator on y {
+        duration: container.duration
+        from: 0
         id: animator
-
-        duration: 500
-        from: 10
-        running: true
-        to: 0
+        running: false
+        to: sphereSpaceSize / 2
 
         onRunningChanged: {
-          if (!running) {
-            if (to === 0) {
-              to = 10
-              from = 0
-            } else {
-              to = 0
-              from = 10
-            }
-
-            animator.running = true
+          if (running) {
+            return
           }
+
+          var mid = sphereSpaceSize / 2
+          if (from === sphereSpaceSize && to === mid) {
+            from = mid
+            to = 0
+          } else if (from === mid && to === 0) {
+            from = 0
+            to = mid
+
+            if (index !== 0 && !forceRunning) {
+              return
+            }
+          } else if (from === 0 && to === mid) {
+            from = mid
+            to = sphereSpaceSize
+          } else {
+            from = sphereSpaceSize
+            to = mid
+          }
+
+          forceRunning = false
+          animator.running = true
         }
       }
     }
