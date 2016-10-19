@@ -26,6 +26,7 @@
     <file>imgs/right_arrow.svg</file>
     <file>imgs/speaker.svg</file>
     <file>imgs/valid.svg</file>
+    <file>ui/modules/Common/Animations/CaterpillarAnimation.qml</file>
     <file>ui/modules/Common/Borders.qml</file>
     <file>ui/modules/Common/Collapse.qml</file>
     <file>ui/modules/Common/Colors.qml</file>
@@ -92,6 +93,7 @@
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/utils.js</file>
+    <file>ui/scripts/Utils/utils.spec.qml</file>
     <file>ui/views/Calls/Calls.qml</file>
     <file>ui/views/Calls/StartingCall.qml</file>
     <file>ui/views/Calls/StartingIncomingCall.qml</file>

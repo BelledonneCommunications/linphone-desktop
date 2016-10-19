@@ -11,6 +11,9 @@ singleton Constants  1.0 Constants.qml
 
 # Components ---------------------------------------------------------
 
+# Animations
+CaterpillarAnimation 1.0 Animations/CaterpillarAnimation.qml
+
 # Chat
 Borders              1.0 Borders.qml
 

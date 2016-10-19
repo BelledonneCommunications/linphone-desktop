@@ -35,13 +35,8 @@ Rectangle {
         width: parent.width
       }
 
-      Text {
-        color: '#8E8E8E'
-        font.bold: true
-        font.pointSize: 17
-        horizontalAlignment: Text.AlignHCenter
-        text: '...'
-        width: parent.width
+      CaterpillarAnimation {
+        anchors.horizontalCenter: parent.horizontalCenter
       }
     }
 
