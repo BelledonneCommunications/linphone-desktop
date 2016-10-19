@@ -97,7 +97,7 @@ function setTimeout (delay, cb) {
 }
 
 function clearTimeout (timer) {
-  timer.destroy() // Not necessary: `timer.stop()`
+  timer.destroy() // Unnecessary call: `timer.stop()`
 }
 
 // -------------------------------------------------------------------
