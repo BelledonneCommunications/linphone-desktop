@@ -27,7 +27,7 @@ Item {
   property alias childA: contentA.data
   property alias childB: contentB.data
   property bool defaultClosed: false
-  property int closingEdge: Qt.LeftEdge
+  property int closingEdge: Qt.LeftEdge // `LeftEdge` or `RightEdge`.
   property int defaultChildAWidth
   property bool resizeAInPriority: false
 
@@ -90,7 +90,7 @@ Item {
 
     // If closed, set correctly the handle position to left or right.
     if (_isClosed) {
-      contentA.width = (closingEdge === Qt.RightEdge)
+      contentA.width = (closingEdge !== Qt.LeftEdge)
         ? container.width - handle.width
         : 0
     }
@@ -161,7 +161,7 @@ Item {
     else if (theoreticalBWidth < minimumRightLimit) {
       contentA.width = container.width - handle.width - minimumRightLimit
 
-      if (closingEdge === Qt.RightEdge && offset > minimumRightLimit / 2) {
+      if (closingEdge !== Qt.LeftEdge && offset > minimumRightLimit / 2) {
         if (_isClosed) {
           _open()
         } else {
@@ -202,6 +202,14 @@ Item {
     }
   }
 
+  function _isVisible (edge) {
+    return (
+      !_isClosed ||
+      openingTransition.running ||
+      closingTransition.running
+    ) || closingEdge !== edge
+  }
+
   // -----------------------------------------------------------------
 
   onWidthChanged: _applyLimits()
@@ -226,6 +234,7 @@ Item {
     id: contentA
 
     height: parent.height
+    visible: _isVisible(Qt.LeftEdge)
   }
 
   MouseArea {
@@ -241,7 +250,7 @@ Item {
 
     onDoubleClicked: _inverseClosingState()
     onMouseXChanged: pressed &&
-      _applyLimitsOnUserMove(handle.mouseX - _mouseStart)
+      _applyLimitsOnUserMove(mouseX - _mouseStart)
 
     onPressed: _mouseStart = mouseX
 
@@ -261,6 +270,7 @@ Item {
 
     anchors.left: handle.right
     height: parent.height
+    visible: _isVisible(Qt.RightEdge)
     width: container.width - contentA.width - handle.width
   }
 
