@@ -78,6 +78,7 @@ function _computeOptimizedCb (func, context) {
 
 // -------------------------------------------------------------------
 
+// Convert a snake_case string to a lowerCamelCase string.
 function snakeToCamel (s) {
   return s.replace(/(\_\w)/g, function (matches) {
     return matches[1].toUpperCase()
@@ -103,6 +104,7 @@ function setTimeout (delay, cb) {
   return timer
 }
 
+// Destroy timeout.
 function clearTimeout (timer) {
   timer.stop() // NECESSARY.
   timer.destroy()
@@ -110,6 +112,8 @@ function clearTimeout (timer) {
 
 // -------------------------------------------------------------------
 
+// Invoke a `cb` function with each value of the interval: `[0, n[`.
+// Return a mapped array created with the returned values of `cb`.
 function times (n, cb, context) {
   var arr = Array(Math.max(0, n))
   cb = _computeOptimizedCb(cb, context, 1)
@@ -123,6 +127,7 @@ function times (n, cb, context) {
 
 // -------------------------------------------------------------------
 
+// Test if a var is a string.
 function isString (string) {
   return typeof string === 'string' || string instanceof String
 }
