@@ -76,6 +76,30 @@ PREPEND(HEADERS "${CMAKE_SOURCE_DIR}/")
 PREPEND(QRC_RESOURCES "${CMAKE_SOURCE_DIR}/")
 
 # --------------------------------------------------------------------
+# Compute QML files list.
+# --------------------------------------------------------------------
+
+set(QML_SOURCES)
+file(STRINGS ${QRC_RESOURCES} QRC_RESOURCES_CONTENT)
+foreach (line ${QRC_RESOURCES_CONTENT})
+  set(result)
+  string(REGEX REPLACE
+    "^[ \t]*<[ \t]*file[ \t]*>[ \t]*(.+\\.qml)[ \t]*<[ \t]*/[ \t]*file[ \t]*>[ \t]*$"
+    "\\1"
+    result
+    ${line})
+  string(REGEX MATCH "qml$" isQml ${result})
+  if (NOT ${isQml} STREQUAL "")
+    list(APPEND QML_SOURCES "${CMAKE_SOURCE_DIR}/${result}")
+  endif ()
+endforeach ()
+
+add_custom_target(
+  check_qml DEPENDS ${QML_SOURCES}
+  COMMAND "${CMAKE_SOURCE_DIR}/tools/check_qml"
+)
+
+# --------------------------------------------------------------------
 # Init git hooks.
 # --------------------------------------------------------------------
 
@@ -98,6 +122,8 @@ list(APPEND QRC_RESOURCES "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FIL
 qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 
 # Build.
+# Note: `update_translations` is provided by `languages/CMakeLists.txt`.
 add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
 add_dependencies(${LINPHONE_EXEC} update_translations)
+add_dependencies(update_translations check_qml)
 target_link_libraries(${LINPHONE_EXEC} ${LIBS})

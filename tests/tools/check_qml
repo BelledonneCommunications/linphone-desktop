@@ -22,7 +22,7 @@ while read line
 do
     result=$(
         printf "$line" |
-        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/file\s*>\s*$/\1/p'
+        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/\s*file\s*>\s*$/\1/p'
     )
     if [[ ! -z  $result ]] && ! $LINTER "$result"; then
         so_far_so_good=1

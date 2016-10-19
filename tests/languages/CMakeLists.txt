@@ -24,22 +24,6 @@ set(I18N_CONTENT "${I18N_CONTENT}  </qresource>\n</RCC>\n")
 
 file(WRITE "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}" "${I18N_CONTENT}")
 
-# Compute QML files list.
-set(QML_SOURCES)
-file(STRINGS ${QRC_RESOURCES} QRC_RESOURCES_CONTENT)
-foreach (line ${QRC_RESOURCES_CONTENT})
-  set(result)
-  string(REGEX REPLACE
-    "^[ \t]+<file>[ \t]*(.+\\.qml)[ \t]*</file>[ \t]*$"
-    "\\1"
-    result
-    ${line})
-  string(REGEX MATCH "qml$" isQml ${result})
-  if (NOT ${isQml} STREQUAL "")
-    list(APPEND QML_SOURCES "${CMAKE_SOURCE_DIR}/${result}")
-  endif ()
-endforeach ()
-
 # Create `qm` files from `ts` files.
 qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES})
 
