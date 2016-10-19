@@ -95,6 +95,33 @@ TestCase {
 
   // -----------------------------------------------------------------
 
+  function test_times1_data () {
+    return [
+      {
+        cb: function (n) { return n * 2 },
+        n: 10,
+        output: [ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 ]
+      },
+      {
+        cb: function (n) { return n % 2 ? 1 : 0 },
+        n: 10,
+        output: [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ]
+      }
+    ]
+  }
+
+  function test_times1 (data) {
+    compare(Utils.times(data.n, data.cb), data.output)
+  }
+
+  function test_times2 () {
+    var sum = 0
+    Utils.times(5, function (i) { sum += (i + 1) })
+    compare(sum, 15)
+  }
+
+  // -----------------------------------------------------------------
+
   function test_isString_data () {
     return [
       { input: 'foo', output: true },
