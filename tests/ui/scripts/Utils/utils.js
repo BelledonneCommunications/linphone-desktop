@@ -50,8 +50,6 @@ function openWindow (window, parent, options) {
   object.show()
 }
 
-// -------------------------------------------------------------------
-
 // Display a simple ConfirmDialog component.
 // Wrap the openWindow function.
 function openConfirmDialog (parent, options) {
@@ -67,6 +65,15 @@ function openConfirmDialog (parent, options) {
       exitHandler: options.exitHandler
     }
   )
+}
+
+// -------------------------------------------------------------------
+
+function _computeOptimizedCb (func, context) {
+  return (context != null)
+    ? (function () {
+      return func.apply(context, arguments)
+    }) : func
 }
 
 // -------------------------------------------------------------------
@@ -97,7 +104,21 @@ function setTimeout (delay, cb) {
 }
 
 function clearTimeout (timer) {
-  timer.destroy() // Unnecessary call: `timer.stop()`
+  timer.stop() // NECESSARY.
+  timer.destroy()
+}
+
+// -------------------------------------------------------------------
+
+function times (n, cb, context) {
+  var arr = Array(Math.max(0, n))
+  cb = _computeOptimizedCb(cb, context, 1)
+
+  for (var i = 0; i < n; i++) {
+    arr[i] = cb(i)
+  }
+
+  return arr
 }
 
 // -------------------------------------------------------------------
