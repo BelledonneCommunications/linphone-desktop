@@ -2,6 +2,8 @@ import QtQuick 2.7
 
 import Common.Styles 1.0
 
+// ===================================================================
+
 Row {
   id: container
 
@@ -37,6 +39,7 @@ Row {
       radius: width / 2
       width: container.sphereSize
 
+      // y can be: `0`, `animationSpace` or `animationSpace / 2`
       onYChanged: {
         // No call executed by last sphere.
         if (index === nSpheres - 1) {
