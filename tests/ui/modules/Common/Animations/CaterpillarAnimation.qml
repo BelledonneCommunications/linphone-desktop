@@ -61,9 +61,10 @@ Row {
       }
 
       YAnimator on y {
+        id: animator
+
         duration: container.animationDuration
         from: 0
-        id: animator
         running: false
         to: animationSpace / 2
 
