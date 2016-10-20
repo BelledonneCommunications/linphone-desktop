@@ -50,7 +50,7 @@ do
     fi
 done < $RESOURCES_FILE
 
-printf "\n"
+printf "${NC}\n"
 if [[ $so_far_so_good == 0 ]]; then
     printf "${GREEN}Done. All tests have succeeded.\n"
 else

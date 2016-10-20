@@ -23,8 +23,9 @@ do
     basename="${filename##*/}"
     extension="${filename##*.}"
 
-    if [[ ${extension} == @(qml|svg|png|jpg|js) ||
-          ${basename} == qmldir ]]; then
+    if [[ $extension == @(svg|png|jpg|js) ||
+          $basename == qmldir ||
+          ($extension == qml && $basename != *\.spec\.qml) ]]; then
         echo "    <file>$filename</file>" >> $RESOURCES_FILE
     fi
 done
