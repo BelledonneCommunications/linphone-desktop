@@ -17,7 +17,7 @@ TestCase {
       { input: 'foo_bar', output: 'fooBar' },
       { input: 'george_abitbol', output: 'georgeAbitbol' },
       { input: 'billTremendousAndHubert', output: 'billTremendousAndHubert' },
-      { input: 'foo_bAr_BAZ', output: 'fooBArBAZ' },
+      { input: 'foo_bAr_BAZ', output: 'fooBArBAZ' }
     ]
   }
 

@@ -21,7 +21,7 @@ function openWindow (window, parent, options) {
 
     if (component.status !== Component.Ready) {
       console.debug('Window not ready.')
-      if(component.status === Component.Error) {
+      if (component.status === Component.Error) {
         console.debug('Error:' + component.errorString())
       }
       return // Error.
