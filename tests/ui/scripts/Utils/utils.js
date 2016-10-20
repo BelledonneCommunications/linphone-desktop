@@ -48,12 +48,14 @@ function openWindow (window, parent, options) {
   }
 
   object.show()
+
+  return object
 }
 
 // Display a simple ConfirmDialog component.
 // Wrap the openWindow function.
 function openConfirmDialog (parent, options) {
-  openWindow(
+  return openWindow(
     'import QtQuick 2.7;' +
       'import Common 1.0;' +
       'ConfirmDialog {' +

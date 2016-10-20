@@ -7,6 +7,7 @@
 RESOURCES_FILE='resources.qrc'
 TEST_RUNNER='qmltestrunner-qt5'
 TEST_FILE_EXTENSION='spec.qml'
+MODULES_PATH='./ui/modules'
 
 RED='\e[1;31m'
 GREEN='\e[1;32m'
@@ -20,7 +21,7 @@ cd $SCRIPT_DIR/..
 printf "${BLUE}Testing scripts lib...${NC}\n"
 
 so_far_so_good=0
-$TEST_RUNNER -input './ui/scripts/Utils/utils.spec.qml'
+$TEST_RUNNER -import $MODULES_PATH -input './ui/scripts/Utils/utils.spec.qml'
 
 if [[ $? == 0 ]]; then
     printf "${GREEN}Done. No error found in scripts lib.\n"
@@ -42,7 +43,7 @@ do
 
         if [ -f $spec_qml_file ]; then
             printf "${BLUE}Running unit qml tests of '${qml_file}'...${NC}\n"
-            $TEST_RUNNER -import './ui/modules/' -input "$spec_qml_file"
+            $TEST_RUNNER -import $MODULES_PATH -input "$spec_qml_file"
 
             if [[ $? == 0 ]]; then
                 printf "${GREEN}All unit tests have succeeded for '${spec_qml_file}'.\n"

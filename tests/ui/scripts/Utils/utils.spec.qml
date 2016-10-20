@@ -12,6 +12,25 @@ TestCase {
 
   name: 'UtilsTests'
 
+  // Test only if a confirm dialog can be opened.
+  // The other tests are launched by `ConfirmDialog.spec.qml`.
+  function test_openConfirmDialog () {
+    var dialog
+
+    try {
+      dialog = Utils.openConfirmDialog(testCase, {
+        descriptionText: '',
+        title: ''
+      })
+    } catch (e) {
+      fail(e)
+    }
+
+    dialog.close()
+  }
+
+  // -----------------------------------------------------------------
+
   function test_snakeToCamel_data () {
     return [
       { input: 'foo_bar', output: 'fooBar' },
