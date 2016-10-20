@@ -4,7 +4,7 @@
 # Tool to check the syntax of `.qml`/`.js` files.
 # ====================================================================
 
-RESOURCES_FILE="resources.qrc"
+RESOURCES_FILE='resources.qrc'
 LINTER=qmllint-qt5
 
 RED='\e[1;31m'

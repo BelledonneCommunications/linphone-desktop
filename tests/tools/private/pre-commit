@@ -1,29 +1,15 @@
 #!/usr/bin/sh
 
-RED='\e[1;31m'
-GREEN='\e[1;32m'
-BLUE='\e[1;34m'
-NC='\e[0m'
-
 # Check QML files, quit on failure.
-sh "./tests/tools/check_qml"
+sh './tests/tools/check_qml_syntax'
 
 if [[ $? != 0 ]] ; then
     exit 1
 fi
 
-# Check JS lib.
-printf "${BLUE}Testing scripts lib...${NC}\n"
+printf '\n'
 
-so_far_so_good=0
-qmltestrunner -input "./tests/ui/scripts/Utils/utils.spec.qml"
+# Run unit tests.
+sh './tests/tools/test_qml'
 
-if [[ $? == 0 ]]; then
-    printf "${GREEN}Done. No error found in scripts lib.\n"
-else
-    printf "${RED}One or more errors were found. Please to fix them.\n"
-    so_far_so_good=1
-fi
-printf "${NC}"
-
-exit $so_far_so_good
+exit $?

@@ -26,7 +26,6 @@ TestCase {
     return dialog
   }
 
-
   function test_exitStatusViaButtons_data () {
     return [
       { button: 0, expectedStatus: 0 },

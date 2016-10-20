@@ -96,7 +96,7 @@ endforeach ()
 
 add_custom_target(
   check_qml DEPENDS ${QML_SOURCES}
-  COMMAND "${CMAKE_SOURCE_DIR}/tools/check_qml"
+  COMMAND "${CMAKE_SOURCE_DIR}/tools/check_qml_syntax"
 )
 
 # --------------------------------------------------------------------

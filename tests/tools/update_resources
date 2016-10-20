@@ -10,13 +10,13 @@
 # If you don't want to add a particular file, do not use this script!
 # ====================================================================
 
-RESOURCES_FILE="resources.qrc"
+RESOURCES_FILE='resources.qrc'
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR/..
 
-echo "<!DOCTYPE RCC><RCC version=\"1.0\">
-  <qresource prefix=\"/\">" > $RESOURCES_FILE
+echo '<!DOCTYPE RCC><RCC version="1.0">
+  <qresource prefix="/">' > $RESOURCES_FILE
 
 for filename in $(find ui/ imgs/ -type f | sort)
 do
@@ -29,5 +29,5 @@ do
     fi
 done
 
-echo "  </qresource>
-</RCC>" >> $RESOURCES_FILE
+echo '  </qresource>
+</RCC>' >> $RESOURCES_FILE

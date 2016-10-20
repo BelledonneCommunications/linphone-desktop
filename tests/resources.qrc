@@ -1,5 +1,5 @@
 <!DOCTYPE RCC><RCC version="1.0">
-  <qresource prefix="/">
+  <qresource prefix="">
     <file>imgs/add_field.svg</file>
     <file>imgs/call.svg</file>
     <file>imgs/cam.svg</file>
@@ -32,6 +32,7 @@
     <file>ui/modules/Common/Colors.qml</file>
     <file>ui/modules/Common/Constants.qml</file>
     <file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>
+    <file>ui/modules/Common/Dialog/ConfirmDialog.spec.qml</file>
     <file>ui/modules/Common/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Common/Dialog/DialogPlus.qml</file>
     <file>ui/modules/Common/DroppableTextArea.qml</file>
