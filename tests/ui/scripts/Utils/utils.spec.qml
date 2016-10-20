@@ -26,6 +26,10 @@ TestCase {
       fail(e)
     }
 
+    if (dialog == null) {
+      fail('`dialog` is not returned')
+    }
+
     dialog.close()
   }
 
@@ -70,13 +74,13 @@ TestCase {
     })
 
     if (!failed) {
-      fail('`setTimeout` callback was called before `wait`')
+      fail('`setTimeout` callback was called before `wait`.')
     }
 
     wait(200)
 
     if (failed) {
-      fail('`setTimeout` failed because callback it was not called in due course')
+      fail('`setTimeout` failed because callback it was not called in due course.')
     }
   }
 
@@ -101,14 +105,14 @@ TestCase {
     })
 
     if (failed) {
-      fail('`setTimeout` callback was called')
+      fail('`setTimeout` callback was called before `wait`.')
     }
 
     Utils.clearTimeout(timeout)
     wait(100)
 
     if (failed) {
-      fail('`setTimeout` callback was called')
+      fail('`setTimeout` callback was called after `wait`.')
     }
   }
 
