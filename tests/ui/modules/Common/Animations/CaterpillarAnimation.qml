@@ -1,13 +1,15 @@
 import QtQuick 2.7
 
+import Common.Styles 1.0
+
 Row {
   id: container
 
-  property int duration: 200
-  property int nSpheres: 3
-  property color sphereColor: '#8F8F8F'
-  property int sphereSize: 10
-  property int sphereSpaceSize: 10
+  property color sphereColor: CaterpillarAnimationStyle.sphere.color
+  property int animationDuration: CaterpillarAnimationStyle.animation.duration
+  property int nSpheres: CaterpillarAnimationStyle.nSpheres
+  property int sphereSize: CaterpillarAnimationStyle.sphere.size
+  property int animationSpace: CaterpillarAnimationStyle.animation.space
 
   spacing: 6
 
@@ -41,7 +43,7 @@ Row {
           return
         }
 
-        if (y === (sphereSpaceSize / 2) && previousY === 0) {
+        if (y === (animationSpace / 2) && previousY === 0) {
           repeater.itemAt(index + 1).startAnimation()
         }
 
@@ -56,19 +58,19 @@ Row {
       }
 
       YAnimator on y {
-        duration: container.duration
+        duration: container.animationDuration
         from: 0
         id: animator
         running: false
-        to: sphereSpaceSize / 2
+        to: animationSpace / 2
 
         onRunningChanged: {
           if (running) {
             return
           }
 
-          var mid = sphereSpaceSize / 2
-          if (from === sphereSpaceSize && to === mid) {
+          var mid = animationSpace / 2
+          if (from === animationSpace && to === mid) {
             from = mid
             to = 0
           } else if (from === mid && to === 0) {
@@ -80,9 +82,9 @@ Row {
             }
           } else if (from === 0 && to === mid) {
             from = mid
-            to = sphereSpaceSize
+            to = animationSpace
           } else {
-            from = sphereSpaceSize
+            from = animationSpace
             to = mid
           }
 

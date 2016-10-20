@@ -55,6 +55,7 @@
     <file>ui/modules/Common/Popup/PopupShadow.qml</file>
     <file>ui/modules/Common/qmldir</file>
     <file>ui/modules/Common/SearchBox.qml</file>
+    <file>ui/modules/Common/Styles/Animations/CaterpillarAnimationStyle.qml</file>
     <file>ui/modules/Common/Styles/CollapseStyle.qml</file>
     <file>ui/modules/Common/Styles/DialogStyle.qml</file>
     <file>ui/modules/Common/Styles/DroppableTextAreaStyle.qml</file>
