@@ -1,6 +1,10 @@
 pragma Singleton
 import QtQuick 2.7
 
+import Common.Styles 1.0
+
+// ===================================================================
+
 QtObject {
   property int nSpheres: 3
 
@@ -10,7 +14,7 @@ QtObject {
   }
 
   property QtObject sphere: QtObject {
-    property color color: '#8F8F8F'
+    property color color: Colors.r
 
     property int size: 10
   }
