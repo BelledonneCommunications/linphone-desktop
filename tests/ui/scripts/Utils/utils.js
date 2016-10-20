@@ -52,6 +52,8 @@ function openWindow (window, parent, options) {
   return object
 }
 
+// -------------------------------------------------------------------
+
 // Display a simple ConfirmDialog component.
 // Wrap the openWindow function.
 function openConfirmDialog (parent, options) {

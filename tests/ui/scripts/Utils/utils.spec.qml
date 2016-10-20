@@ -127,8 +127,8 @@ TestCase {
       },
       {
         cb: function (n) { return n % 2 },
-        n: 10,
-        output: [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ]
+        n: 6,
+        output: [ 0, 1, 0, 1, 0, 1 ]
       }
     ]
   }
