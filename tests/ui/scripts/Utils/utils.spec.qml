@@ -103,7 +103,7 @@ TestCase {
         output: [ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 ]
       },
       {
-        cb: function (n) { return n % 2 ? 1 : 0 },
+        cb: function (n) { return n % 2 },
         n: 10,
         output: [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ]
       }
