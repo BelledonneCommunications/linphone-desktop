@@ -1,5 +1,9 @@
 #!/usr/bin/sh
 
+# ====================================================================
+# Tool to run unit tests on all `*.spec.qml` files.
+# ====================================================================
+
 RESOURCES_FILE='resources.qrc'
 TEST_RUNNER='qmltestrunner-qt5'
 TEST_FILE_EXTENSION='spec.qml'
