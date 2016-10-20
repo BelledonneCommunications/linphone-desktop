@@ -30,7 +30,7 @@ TestCase {
   function test_exitStatusViaButtons_data () {
     return [
       { button: 0, expectedStatus: 0 },
-      { button: 1, expectedStatus: 1 },
+      { button: 1, expectedStatus: 1 }
     ]
   }
 
@@ -41,7 +41,6 @@ TestCase {
       compare(status, data.expectedStatus)
     })
 
-    dialog.show()
     mouseClick(dialog.buttons[data.button])
   }
 
@@ -51,6 +50,7 @@ TestCase {
     dialog.exitStatus.connect(function (status) {
       compare(status, 0)
     })
+
     dialog.close()
   }
 }
