@@ -32,18 +32,17 @@ Rectangle {
     id: spy
 
     signalName: 'pressed'
+    target: invertedMouseArea
   }
 
   TestCase {
     when: windowShown
 
-    function test_randomInsideMouseArea () {
-      var failFun = function () {
-        fail('`pressed` signal was emitted.')
-      }
+    function init () {
+      spy.clear()
+    }
 
-      invertedMouseArea.pressed.connect(failFun)
-
+    function test_randomClickInsideMouseArea () {
       Utils.times(100, function () {
         var x = Math.floor(Utils.genRandomNumber(item.x, item.x + width))
         var y = Math.floor(Utils.genRandomNumber(item.y, item.y + height))
@@ -52,12 +51,12 @@ Rectangle {
       })
 
       wait(100)
-      invertedMouseArea.pressed.disconnect(failFun)
+      compare(spy.count, 0, '`pressed` signal was emitted')
     }
 
-    function test_randomOutsideMouseArea () {
-      spy.target = invertedMouseArea
+    // ---------------------------------------------------------------
 
+    function test_randomClickOutsideMouseArea () {
       Utils.times(50, function () {
         var x = Math.floor(Utils.genRandomNumberBetweenIntervals([
           [ 0, item.x ], [ item.x + item.width, root.width ]
@@ -79,6 +78,40 @@ Rectangle {
         mouseClick(root, x, y)
         spy.wait(100)
       })
+    }
+
+    // ---------------------------------------------------------------
+
+    function test_clickInsideMouseArea_data () {
+      return [
+        { x: item.x, y: item.y },
+        { x: item.x + item.width - 1, y: item.y },
+        { x: item.x, y: item.y + item.height - 1},
+        { x: item.x + item.width - 1, y: item.y + item.height - 1 },
+        { } // item center.
+      ]
+    }
+
+    function test_clickInsideMouseArea (data) {
+      mouseClick(root, data.x, data.y)
+      wait(100)
+      compare(spy.count, 0, '`pressed` signal was emitted')
+    }
+
+    // ---------------------------------------------------------------
+
+    function test_clickOutsideMouseArea_data () {
+      return [
+        { x: item.x - 1, y: item.y - 1},
+        { x: item.x + item.width, y: item.y },
+        { x: item.x, y: item.y + item.height },
+        { x: item.x + item.width, y: item.y + item.height }
+      ]
+    }
+
+    function test_clickOutsideMouseArea (data) {
+      mouseClick(root, data.x, data.y)
+      spy.wait(100)
     }
   }
 }
