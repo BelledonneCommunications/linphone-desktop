@@ -11,14 +11,28 @@ TestCase {
   Component {
     id: builder
 
-    ConfirmDialog {}
+    Item {
+      ConfirmDialog {
+        id: confirmDialog
+      }
+
+      SignalSpy {
+        id: spy
+
+        signalName: 'exitStatus'
+        target: confirmDialog
+      }
+    }
   }
 
   function buildConfirmDialog () {
-    var dialog = builder.createObject(testCase)
-    verify(dialog)
+    var container = builder.createObject(testCase)
+    verify(container)
+
+    var dialog = container.data[0]
     dialog.closing.connect(dialog.destroy.bind(dialog))
-    return dialog
+
+    return container
   }
 
   function test_exitStatusViaButtons_data () {
@@ -29,22 +43,22 @@ TestCase {
   }
 
   function test_exitStatusViaButtons (data) {
-    var dialog = buildConfirmDialog()
-
-    dialog.exitStatus.connect(function (status) {
-      compare(status, data.expectedStatus)
-    })
+    var container = buildConfirmDialog()
+    var dialog = container.data[0]
+    var spy = container.data[1]
 
     mouseClick(dialog.buttons[data.button])
+    spy.wait(100)
+    compare(spy.signalArguments[0][0], data.expectedStatus)
   }
 
   function test_exitStatusViaClose () {
-    var dialog = buildConfirmDialog()
-
-    dialog.exitStatus.connect(function (status) {
-      compare(status, 0)
-    })
+    var container = buildConfirmDialog()
+    var dialog = container.data[0]
+    var spy = container.data[1]
 
     dialog.close()
+    spy.wait(100)
+    compare(spy.signalArguments[0][0], 0)
   }
 }
