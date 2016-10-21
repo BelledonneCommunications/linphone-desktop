@@ -6,6 +6,10 @@ import QtTest 1.1
 Item {
   id: root
 
+  // Avoid `Test 'XXX' has invalid size QSize(0, 0), resizing.` warning.
+  height: 100
+  width: 300
+
   Component {
     id: builder
 
