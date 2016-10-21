@@ -10,8 +10,6 @@ import './utils.js' as Utils
 TestCase {
   id: testCase
 
-  name: 'UtilsTests'
-
   // Test only if a confirm dialog can be opened.
   // The other tests are launched by `ConfirmDialog.spec.qml`.
   function test_openConfirmDialog () {

@@ -6,6 +6,14 @@ import QtTest 1.1
 Item {
   id: root
 
+  function buildExclusiveButtons (defaultSelectedButton) {
+    var container = builder.createObject(root)
+    testCase.verify(container)
+
+    container.data[0].selectedButton = defaultSelectedButton
+    return container
+  }
+
   // Avoid `Test 'XXX' has invalid size QSize(0, 0), resizing.` warning.
   height: 100
   width: 300
@@ -35,17 +43,10 @@ Item {
     }
   }
 
-  function buildExclusiveButtons (defaultSelectedButton) {
-    var container = builder.createObject(root)
-    testCase.verify(container)
-    container.data[0].selectedButton = defaultSelectedButton
-    return container
-  }
+  // -----------------------------------------------------------------
 
   TestCase {
     id: testCase
-
-    name: 'ExclusiveButtonsTests'
     when: windowShown
 
     function test_signals_data () {

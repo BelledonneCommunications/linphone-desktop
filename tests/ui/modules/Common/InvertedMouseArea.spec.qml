@@ -88,7 +88,7 @@ Rectangle {
         { x: item.x + item.width - 1, y: item.y },
         { x: item.x, y: item.y + item.height - 1},
         { x: item.x + item.width - 1, y: item.y + item.height - 1 },
-        { } // item center.
+        { } // (x, y) = item center.
       ]
     }
 
