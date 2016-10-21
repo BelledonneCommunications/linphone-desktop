@@ -51,11 +51,11 @@ do
                 printf "${RED}Unit tests have failed for '${spec_qml_file}'.\n"
                 so_far_so_good=1
             fi
+            printf "${NC}\n"
         fi
     fi
 done < $RESOURCES_FILE
 
-printf "${NC}\n"
 if [[ $so_far_so_good == 0 ]]; then
     printf "${GREEN}Done. All tests have succeeded.\n"
 else
