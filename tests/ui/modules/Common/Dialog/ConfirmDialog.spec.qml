@@ -8,20 +8,15 @@ TestCase {
 
   name: 'ConfirmDialogTests'
 
-  function createDialog () {
-    var component = Qt.createComponent(
-      './ConfirmDialog.qml'
-    )
+  Component {
+    id: builder
 
-    if (component.status !== Component.Ready) {
-      if(component.status === Component.Error) {
-        fail('Error:' + component.errorString())
-      } else {
-        fail('Dialog not ready.')
-      }
-    }
+    ConfirmDialog {}
+  }
 
-    var dialog = component.createObject(testCase)
+  function buildConfirmDialog () {
+    var dialog = builder.createObject(testCase)
+    verify(dialog)
     dialog.closing.connect(dialog.destroy.bind(dialog))
     return dialog
   }
@@ -34,7 +29,7 @@ TestCase {
   }
 
   function test_exitStatusViaButtons (data) {
-    var dialog = createDialog()
+    var dialog = buildConfirmDialog()
 
     dialog.exitStatus.connect(function (status) {
       compare(status, data.expectedStatus)
@@ -44,7 +39,7 @@ TestCase {
   }
 
   function test_exitStatusViaClose () {
-    var dialog = createDialog()
+    var dialog = buildConfirmDialog()
 
     dialog.exitStatus.connect(function (status) {
       compare(status, 0)

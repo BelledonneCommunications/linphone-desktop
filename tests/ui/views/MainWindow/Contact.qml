@@ -68,7 +68,7 @@ ColumnLayout  {
   Flickable {
     Layout.fillHeight: true
     Layout.fillWidth: true
-    ScrollBar.vertical: ForceScrollBar { }
+    ScrollBar.vertical: ForceScrollBar {}
     boundsBehavior: Flickable.StopAtBounds
     clip: true
     contentHeight: content.height

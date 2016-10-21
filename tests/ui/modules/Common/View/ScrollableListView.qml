@@ -6,7 +6,7 @@ import Common 1.0
 // ===================================================================
 
 ListView {
-  ScrollBar.vertical: ForceScrollBar { }
+  ScrollBar.vertical: ForceScrollBar {}
   boundsBehavior: Flickable.StopAtBounds
   clip: true
   spacing: 0

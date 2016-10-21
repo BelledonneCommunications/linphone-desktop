@@ -38,7 +38,7 @@ Rectangle {
 
     layer {
       enabled: true
-      effect: PopupShadow { }
+      effect: PopupShadow {}
     }
   }
 }

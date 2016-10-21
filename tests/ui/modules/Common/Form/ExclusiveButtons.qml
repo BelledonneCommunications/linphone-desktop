@@ -9,7 +9,7 @@ Row {
 
   property var texts
 
-  property int _selectedButton: 0
+  property int selectedButton: 0
 
   signal clicked (int button)
 
@@ -20,7 +20,7 @@ Row {
 
     SmallButton {
       anchors.verticalCenter: parent.verticalCenter
-      backgroundColor: _selectedButton === index
+      backgroundColor: selectedButton === index
         ? ExclusiveButtonsStyle.button.color.selected
         : (down
            ? ExclusiveButtonsStyle.button.color.pressed
@@ -32,8 +32,8 @@ Row {
       text: modelData
 
       onClicked: {
-        if (_selectedButton !== index) {
-          _selectedButton = index
+        if (selectedButton !== index) {
+          selectedButton = index
           item.clicked(index)
         }
       }

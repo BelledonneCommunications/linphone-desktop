@@ -16,7 +16,7 @@ Item {
 
   function _createMouseArea () {
     if (_mouseArea == null) {
-      _mouseArea = builder.createObject(this)
+      _mouseArea = builder.createObject()
     }
 
     _mouseArea.parent = (function () {

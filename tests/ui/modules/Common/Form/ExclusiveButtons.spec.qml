@@ -1,0 +1,80 @@
+import QtQuick 2.7
+import QtTest 1.1
+
+// ===================================================================
+
+Item {
+  id: root
+
+  Component {
+    id: builder
+
+    Item {
+      ExclusiveButtons {
+        id: exclusiveButtons
+
+        texts: [
+          qsTr('A'),
+          qsTr('B'),
+          qsTr('C'),
+          qsTr('D'),
+          qsTr('E')
+        ]
+      }
+
+      SignalSpy {
+        id: spy
+
+        signalName: 'clicked'
+        target: exclusiveButtons
+      }
+    }
+  }
+
+  function buildExclusiveButtons (defaultSelectedButton) {
+    var container = builder.createObject(root)
+    testCase.verify(container)
+    container.data[0].selectedButton = defaultSelectedButton
+    return container
+  }
+
+  TestCase {
+    id: testCase
+
+    name: 'ExclusiveButtonsTests'
+    when: windowShown
+
+    function test_signals_data () {
+      return [
+        { defaultSelectedButton: 0, buttonToClick: 2 },
+        { defaultSelectedButton: 1, buttonToClick: 4 },
+        { defaultSelectedButton: 3, buttonToClick: 1 },
+        { defaultSelectedButton: 4, buttonToClick: 0 }
+      ]
+    }
+
+    function test_signals (data) {
+      var container = buildExclusiveButtons(data.defaultSelectedButton)
+      var spy = container.data[1]
+      var exclusiveButtons = container.data[0]
+
+      var buttonToClick = data.buttonToClick
+
+      // Test default selected button.
+      compare(exclusiveButtons.selectedButton, data.defaultSelectedButton)
+
+      // Test a click to change the selected button.
+      mouseClick(exclusiveButtons.data[buttonToClick])
+      spy.wait(100)
+      compare(spy.signalArguments[0][0], buttonToClick)
+      compare(exclusiveButtons.selectedButton, buttonToClick)
+
+      // No signal must be emitted.
+      mouseClick(exclusiveButtons.data[buttonToClick])
+      wait(100)
+      compare(spy.count, 1)
+
+      container.destroy()
+    }
+  }
+}
