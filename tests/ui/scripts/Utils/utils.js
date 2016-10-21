@@ -142,6 +142,10 @@ function genRandomNumber (min, max) {
 // The `intervals` param must be orderer like this:
 // `[ [ 1, 4 ], [ 8, 16 ], [ 22, 25 ] ]`
 function genRandomNumberBetweenIntervals (intervals) {
+  if (intervals.length === 1) {
+    return genRandomNumber(intervals[0][0], intervals[0][1])
+  }
+
   // Compute the number of values.
   var size = 0
   intervals.forEach(function (interval) {
