@@ -99,11 +99,6 @@ TestCase {
       failed = true
     })
 
-    // Simulate time
-    Utils.times(500000, function (i) {
-      // Nothing.
-    })
-
     if (failed) {
       fail('`setTimeout` callback was called before `wait`.')
     }
@@ -159,5 +154,63 @@ TestCase {
 
   function test_isString (data) {
     compare(Utils.isString(data.input), data.output)
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_genRandomNumber_data () {
+    return [
+      { min: 42, max: 3600 },
+      { min: 10, max: 100 },
+      { min: 58, max: 61 },
+      { min: 2, max: 3 }
+    ]
+  }
+
+  function test_genRandomNumber (data) {
+    Utils.times(10, function () {
+      var n = Utils.genRandomNumber(data.min, data.max)
+      compare(n >= data.min && n < data.max, true)
+    })
+  }
+
+  function test_genRandomNumberId () {
+    compare(Utils.genRandomNumber(42, 42), 42)
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_genRandomNumberBetweenIntervals_data () {
+    return [
+      { intervals: [ [ 1, 5 ] ] },
+      { intervals: [ [ 8, 9 ], [ 10, 15 ] ] },
+      { intervals: [ [ 1, 4 ], [ 8, 16 ], [ 22, 25 ] ] },
+      { intervals: [ [ 11, 12 ], [ 50, 80 ], [ 92, 93 ], [ 1000, 1100 ] ] },
+      { intervals: [ [ -5, -2 ] ] },
+      { intervals: [ [ -5, -2 ], [ 12, 14 ] ] },
+      { intervals: [ [ -127, -111 ], [ -35, -14 ], [ 1256, 1270 ], [ 10000, 10020 ] ] }
+    ]
+  }
+
+  function test_genRandomNumberBetweenIntervals (data) {
+    var intervals = data.intervals
+
+    Utils.times(10, function () {
+      var n = Utils.genRandomNumberBetweenIntervals(intervals)
+
+      var soFarSoGood = false
+      for (var i = 0; i < intervals.length; i++) {
+        if (n >= intervals[i][0] && n < intervals[i][1]) {
+          soFarSoGood = true
+          break
+        }
+      }
+
+      compare(
+        soFarSoGood,
+        true,
+        'The generated number cannot be found in a interval.'
+      )
+    })
   }
 }

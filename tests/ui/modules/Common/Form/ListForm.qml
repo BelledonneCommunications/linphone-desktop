@@ -122,7 +122,6 @@ RowLayout {
       InvertedMouseArea {
         enabled: textEdit.activeFocus
         height: textEdit.height
-        parent: parent
         width: textEdit.width
 
         onPressed: textEdit.focus = false

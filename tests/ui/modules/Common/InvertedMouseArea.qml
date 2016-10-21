@@ -41,8 +41,8 @@ Item {
     return (
       point.x >= item.x &&
       point.y >= item.y &&
-      point.x <= item.x + item.width &&
-      point.y <= item.y + item.height
+      point.x < item.x + item.width &&
+      point.y < item.y + item.height
     )
   }
 
@@ -50,9 +50,8 @@ Item {
   // See: http://doc.qt.io/qt-5/qml-qtqml-component.html#completed-signal
   //
   // The creation order of components in a view is undefined,
-  // so the mouse area must be created only when `enabled === true`.
-  //
-  // In the first render, `enabled` must be equal to false.
+  // so the mouse area must be created only when the target component
+  // was completed.
   Component.onCompleted: enabled && _createMouseArea()
   Component.onDestruction: _deleteMouseArea()
 

@@ -79,10 +79,8 @@ Item {
     }
 
     InvertedMouseArea {
+      anchors.fill: parent
       enabled: menu.visible
-      height: parent.height
-      parent: parent
-      width: parent.width
 
       onPressed: _hideMenu()
     }

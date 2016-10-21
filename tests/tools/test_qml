@@ -4,10 +4,13 @@
 # Tool to run unit tests on all `*.spec.qml` files.
 # ====================================================================
 
-RESOURCES_FILE='resources.qrc'
 TEST_RUNNER='qmltestrunner-qt5'
+
+RESOURCES_FILE='resources.qrc'
 TEST_FILE_EXTENSION='spec.qml'
+
 MODULES_PATH='./ui/modules'
+SCRIPTS_PATH='./ui/scripts'
 
 RED='\e[1;31m'
 GREEN='\e[1;32m'
@@ -43,7 +46,7 @@ do
 
         if [ -f $spec_qml_file ]; then
             printf "${BLUE}Running unit qml tests of '${qml_file}'...${NC}\n"
-            $TEST_RUNNER -import $MODULES_PATH -input "$spec_qml_file"
+            $TEST_RUNNER -import $MODULES_PATH -import $SCRIPTS_PATH -input "$spec_qml_file"
 
             if [[ $? == 0 ]]; then
                 printf "${GREEN}All unit tests have succeeded for '${spec_qml_file}'.\n"

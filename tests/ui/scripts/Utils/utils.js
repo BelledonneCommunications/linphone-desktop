@@ -30,15 +30,7 @@ function openWindow (window, parent, options) {
     object = component.createObject(parent)
   }
 
-  console.debug('Open window.')
-
-  object.closing.connect(function () {
-    console.debug('Destroy window.')
-    object.destroy()
-  })
-  object.exitStatus.connect(function (status) {
-    console.debug('Exit status: ' + status)
-  })
+  object.closing.connect(object.destroy.bind(object))
 
   if (options && options.exitHandler) {
     object.exitStatus.connect(
@@ -134,4 +126,40 @@ function times (n, cb, context) {
 // Test if a var is a string.
 function isString (string) {
   return typeof string === 'string' || string instanceof String
+}
+
+// -------------------------------------------------------------------
+
+// Generate a random number in the [min, max[ interval.
+// Uniform distrib.
+function genRandomNumber (min, max) {
+  return Math.random() * (max - min) + min
+}
+
+// -------------------------------------------------------------------
+
+// Generate a random number between a set of intervals.
+// The `intervals` param must be orderer like this:
+// `[ [ 1, 4 ], [ 8, 16 ], [ 22, 25 ] ]`
+function genRandomNumberBetweenIntervals (intervals) {
+  // Compute the number of values.
+  var size = 0
+  intervals.forEach(function (interval) {
+    size += interval[1] - interval[0]
+  })
+
+  // Generate a value in the interval: `[0, size[`
+  var n = genRandomNumber(0, size)
+
+  // Map the value in the right interval.
+  n += intervals[0][0]
+  for (var i = 0; i < intervals.length - 1; i++) {
+    if (n < intervals[i][1]) {
+      break
+    }
+
+    n += intervals[i + 1][0] - intervals[i][1]
+  }
+
+  return n
 }
