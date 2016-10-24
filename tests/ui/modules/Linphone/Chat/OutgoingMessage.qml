@@ -1,30 +1,26 @@
 import QtQuick 2.7
-import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
 
-RowLayout {
+Item {
   implicitHeight: message.height
-  spacing: 10
+  width: parent.width - 16
 
   Message {
     id: message
 
-    Layout.fillWidth: true
-
-    // Not a style. Workaround to avoid a 0 width.
-    Layout.minimumWidth: 20
+    anchors {
+      left: parent.left
+      right: parent.right
+    }
 
     backgroundColor: '#E4E4E4'
-  }
 
-  // TODO: Success and re-send icon.
-  Icon {
-    Layout.alignment: Qt.AlignTop
-    Layout.preferredHeight: 16
-    Layout.preferredWidth: 16
-
-    icon: 'valid'
+    // TODO: Success and re-send icon.
+    Icon {
+      iconSize: 16
+      icon: 'valid'
+    }
   }
 }

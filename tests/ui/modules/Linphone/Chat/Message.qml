@@ -25,8 +25,11 @@ Item {
   Text {
     id: text
 
-    anchors.left: container.left
-    anchors.right: container.right
+    anchors {
+      left: container.left
+      right: container.right
+    }
+
     padding: 8
     text: $content
     wrapMode: Text.Wrap
@@ -37,7 +40,6 @@ Item {
 
   Item {
     id: content
-
     anchors.left: rectangle.right
   }
 }

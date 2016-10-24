@@ -21,7 +21,7 @@ RowLayout {
     Layout.fillWidth: true
 
     // Not a style. Workaround to avoid a 0 width.
-    Layout.minimumWidth: 0
+    Layout.minimumWidth: 20
 
     backgroundColor: '#BFBFBF'
   }
