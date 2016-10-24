@@ -95,7 +95,7 @@ Item {
           // call.
           //
           // The timeout is destroyed with the `MouseArea` component.
-          _timeout = Utils.setTimeout.call(
+          _timeout = Utils.setTimeout(
             this, 0, item.pressed.bind(this)
           )
         }

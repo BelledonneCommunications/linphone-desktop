@@ -50,7 +50,7 @@ TestCase {
 
   function test_setTimeoutWithoutParent () {
     try {
-      Utils.setTimeout(0, function () {
+      Utils.setTimeout(null, 0, function () {
         fail('`setTimeout` was called without parent.')
       })
     } catch (e) {
@@ -67,7 +67,7 @@ TestCase {
 
   function test_setTimeout (data) {
     var failed = true
-    Utils.setTimeout.call(testCase, data.time, function () {
+    Utils.setTimeout(testCase, data.time, function () {
       failed = false
     })
 
@@ -93,7 +93,7 @@ TestCase {
 
   function test_clearTimeout (data) {
     var failed = false
-    var timeout = Utils.setTimeout.call(testCase, data.time, function () {
+    var timeout = Utils.setTimeout(testCase, data.time, function () {
       failed = true
     })
 
