@@ -106,15 +106,32 @@ function clearTimeout (timer) {
 
 // -------------------------------------------------------------------
 
-// Returns the top (root) parent of one component.
-function getTopParent (component) {
-  var parent = component.parent
+// Returns the top (root) parent of one object.
+function getTopParent (object) {
+  var parent = object.parent
 
   while (parent.parent != null) {
     parent = parent.parent
   }
 
   return parent
+}
+
+// -------------------------------------------------------------------
+
+// Test the type of a qml object.
+// Warning: this function is probably not portable
+// on new versions of Qt.
+//
+// So, if you want to use it on a specific `className`, please to add
+// a test in `test_qmlTypeof_data` of `utils.spec.qml`.
+function qmlTypeof (object, className) {
+  var str = object.toString()
+
+  return (
+    str.indexOf(className + '(') == 0 ||
+    str.indexOf(className + '_QML') == 0
+  )
 }
 
 // -------------------------------------------------------------------

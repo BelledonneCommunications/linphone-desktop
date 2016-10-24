@@ -16,22 +16,35 @@ Rectangle {
 
   default property alias _content: content.data
 
-  function show () {
+  signal menuClosed
+  signal menuOpened
+
+  function showMenu () {
+    if (visible) {
+      return
+    }
+
     if (drawOnRoot) {
       this.x = relativeTo.mapToItem(null, relativeTo.width, 0).x
       this.y = relativeTo.mapToItem(null, relativeTo.width, 0).y
     }
 
     visible = true
+    menuOpened()
   }
 
-  function hide () {
+  function hideMenu () {
+    if (!visible) {
+      return
+    }
+
     visible = false
+    menuClosed()
   }
 
   function _computeHeight () {
     var model = _content[0].model
-    if (model == null) {
+    if (model == null || !Utils.qmlTypeof(model, 'QQmlListModel')) {
       return content.height
     }
 
@@ -44,6 +57,8 @@ Rectangle {
   implicitHeight: _computeHeight()
   visible: false
   z: Constants.zPopup
+
+  Keys.onEscapePressed: hideMenu()
 
   Component.onCompleted: {
     if (drawOnRoot) {
@@ -61,5 +76,12 @@ Rectangle {
       enabled: true
       effect: PopupShadow {}
     }
+  }
+
+  InvertedMouseArea {
+    anchors.fill: parent
+    enabled: parent.visible
+
+    onPressed: hideMenu()
   }
 }

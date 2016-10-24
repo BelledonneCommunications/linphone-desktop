@@ -111,6 +111,25 @@ TestCase {
 
   // -----------------------------------------------------------------
 
+  function test_qmlTypeof_data () {
+    return [
+      {
+        component: 'import QtQuick 2.7; ListModel {}',
+        result: true,
+        type: 'QQmlListModel'
+      }
+    ]
+  }
+
+  function test_qmlTypeof (data) {
+    var object = Qt.createQmlObject(data.component, testCase)
+    verify(object)
+
+    compare(Utils.qmlTypeof(object, data.type), data.result)
+  }
+
+  // -----------------------------------------------------------------
+
   function test_times1_data () {
     return [
       {

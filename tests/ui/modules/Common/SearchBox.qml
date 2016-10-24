@@ -25,7 +25,7 @@ Item {
   signal menuOpened ()
 
   function _hideMenu () {
-    menu.hide()
+    menu.hideMenu()
     shadow.visible = false
     searchField.focus = false
 
@@ -33,7 +33,7 @@ Item {
   }
 
   function _showMenu () {
-    menu.show()
+    menu.showMenu()
     shadow.visible = true
 
     menuOpened()
@@ -69,20 +69,13 @@ Item {
       anchors.top: searchField.bottom
       width: searchField.width
 
-      Keys.onEscapePressed: _hideMenu()
+      onMenuClosed: _hideMenu()
 
       ScrollableListView {
         id: list
 
         anchors.fill: parent
       }
-    }
-
-    InvertedMouseArea {
-      anchors.fill: parent
-      enabled: menu.visible
-
-      onPressed: _hideMenu()
     }
 
     PopupShadow {

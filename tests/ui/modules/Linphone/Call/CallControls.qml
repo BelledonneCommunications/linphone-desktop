@@ -44,7 +44,7 @@ RowLayout {
       hoverEnabled: true
 
       onClicked: {
-        menu.show()
+        menu.showMenu()
       }
     }
   }
@@ -56,7 +56,6 @@ RowLayout {
     height: 100
     width: 120
     relativeTo: button
-    Keys.onEscapePressed: hide()
 
     Rectangle {
       color: 'red'
