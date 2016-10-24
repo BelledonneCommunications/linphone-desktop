@@ -41,6 +41,7 @@ Button {
       pointSize: AbstractTextButtonStyle.text.fontSize
     }
 
+    elide: Text.ElideRight
     horizontalAlignment: Text.AlignHCenter
     text: button.text
     verticalAlignment: Text.AlignVCenter

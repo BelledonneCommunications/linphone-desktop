@@ -2,10 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>Calls</name>
+    <message>
+        <source>newCall</source>
+        <translation type="vanished">NOUVEL APPEL</translation>
+    </message>
+    <message>
+        <source>newConference</source>
+        <translation type="vanished">NOUVELLE CONFERENCE</translation>
+    </message>
+</context>
+<context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished">Entrer votre message.</translation>
+        <translation>Entrer votre message.</translation>
     </message>
 </context>
 <context>
@@ -119,11 +130,11 @@
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished">Merci de choisir un ou plusieurs fichiers</translation>
+        <translation>Merci de choisir un ou plusieurs fichiers</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"></translation>
+        <translation>Déposez votre pièce jointe</translation>
     </message>
 </context>
 <context>

@@ -19,12 +19,36 @@ Window {
     minimumLeftLimit: 50
 
     // Calls list.
-    childA: Rectangle {
+    childA: ColumnLayout {
       anchors.fill: parent
-      color: 'yellow'
+      spacing: 0
 
-      Text {
-        text: 'calls'
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: 50
+        color: '#FFFFFF'
+
+        ActionBar {
+          anchors.verticalCenter: parent.verticalCenter
+          anchors.leftMargin: 10
+          anchors.left: parent.left
+          iconSize: 30
+          spacing: 16
+
+          ActionButton {
+            icon: 'call'
+          }
+
+          ActionButton {
+            icon: 'conference'
+          }
+        }
+      }
+
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.fillHeight: true
+        color: 'red'
       }
     }
 
