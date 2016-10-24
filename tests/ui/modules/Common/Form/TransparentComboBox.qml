@@ -11,7 +11,9 @@ ComboBox {
   id: comboBox
 
   background: Rectangle {
-    color: 'transparent' // No Style constant, see component name.
+    // No Style constant, see component name.
+    // It's a `transparent` ComboBox.
+    color: 'transparent'
   }
   delegate: ItemDelegate {
     id: item
