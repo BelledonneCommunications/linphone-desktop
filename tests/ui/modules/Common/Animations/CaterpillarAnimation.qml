@@ -13,7 +13,7 @@ Row {
   property int sphereSize: CaterpillarAnimationStyle.sphere.size
   property int animationSpace: CaterpillarAnimationStyle.animation.space
 
-  spacing: 6
+  spacing: CaterpillarAnimationStyle.spacing
 
   Repeater {
     id: repeater

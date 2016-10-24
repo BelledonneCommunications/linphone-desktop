@@ -7,6 +7,7 @@ import Common 1.0
 
 QtObject {
   property int nSpheres: 3
+  property int spacing: 6
 
   property QtObject animation: QtObject {
     property int duration: 200
