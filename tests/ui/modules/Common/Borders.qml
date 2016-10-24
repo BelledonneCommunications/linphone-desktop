@@ -7,8 +7,6 @@ import QtQuick 2.7
 // ===================================================================
 
 Item {
-  default property alias content: content.data
-
   property var borderColor
   property var borderWidth
 
@@ -21,6 +19,8 @@ Item {
   property int leftWidth: 0
   property int rightWidth: 0
   property int topWidth: 0
+
+  default property alias _content: content.data
 
   Rectangle {
     id: bottomBorder

@@ -19,15 +19,7 @@ Item {
       _mouseArea = builder.createObject()
     }
 
-    _mouseArea.parent = (function () {
-      var root = item
-
-      while (root.parent != null) {
-        root = root.parent
-      }
-
-      return root
-    })()
+    _mouseArea.parent = Utils.getTopParent(item)
   }
 
   function _deleteMouseArea () {

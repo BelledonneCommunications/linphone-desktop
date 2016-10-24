@@ -5,11 +5,12 @@ import Common 1.0
 import Linphone 1.0
 
 Rectangle {
-  default property alias actionArea: actionArea.data
   property alias callType: callType.text
   property alias sipAddress: contactDescription.sipAddress
   property alias username: contactDescription.username
   property alias avatarImage: image.source
+
+  default property alias _actionArea: actionArea.data
 
   color: '#EAEAEA'
 

@@ -22,26 +22,30 @@ Item {
 
   Rectangle {
     anchors.fill: parent
-    layer.enabled: true
-    layer.samplerName: 'mask'
-    radius: parent.width / 2
 
-    layer.effect: ShaderEffect {
-      property var image: imageContainer
+    layer {
+      effect: ShaderEffect {
+        property var image: imageContainer
 
-      fragmentShader: "
-        uniform lowp sampler2D image;
-        uniform lowp sampler2D mask;
-        uniform lowp float qt_Opacity;
+        fragmentShader: "
+          uniform lowp sampler2D image;
+          uniform lowp sampler2D mask;
+          uniform lowp float qt_Opacity;
 
-        varying highp vec2 qt_TexCoord0;
+          varying highp vec2 qt_TexCoord0;
 
-        void main () {
-          gl_FragColor = texture2D(image, qt_TexCoord0) *
-            texture2D(mask, qt_TexCoord0).a *
-            qt_Opacity;
-        }
-      "
+          void main () {
+            gl_FragColor = texture2D(image, qt_TexCoord0) *
+              texture2D(mask, qt_TexCoord0).a *
+              qt_Opacity;
+          }
+        "
+      }
+
+      enabled: true
+      samplerName: 'mask'
     }
+
+    radius: parent.width / 2
   }
 }

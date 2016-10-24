@@ -12,7 +12,9 @@ Item {
   property alias image: avatar.image
   property alias presenceLevel: avatar.presenceLevel
   property alias sipAddress: description.sipAddress
+  property alias sipAddressColor: description.sipAddressColor
   property alias username: avatar.username
+  property alias usernameColor: description.usernameColor
 
   height: ContactStyle.height
 

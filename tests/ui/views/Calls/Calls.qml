@@ -16,7 +16,7 @@ Window {
     anchors.fill: parent
     defaultChildAWidth: 250
     maximumLeftLimit: 300
-    minimumLeftLimit: 50
+    minimumLeftLimit: 150
 
     // Calls list.
     childA: ColumnLayout {
@@ -45,10 +45,95 @@ Window {
         }
       }
 
-      Rectangle {
+      ScrollableListView {
         Layout.fillWidth: true
         Layout.fillHeight: true
-        color: 'red'
+        spacing: 1
+        delegate: CallControls {
+          width: parent.width
+        }
+
+        model: ListModel {
+          ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }
+                    ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }          ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }          ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }          ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }          ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }          ListElement {
+            $presence: 'do_not_disturb'
+            $sipAddress: 'charles.henri.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'disconnected'
+            $sipAddress: 'yesyes.nono.sip.linphone.org'
+          }
+          ListElement {
+            $presence: 'connected'
+            $sipAddress: 'nsa.sip.linphone.org'
+          }
+        }
       }
     }
 

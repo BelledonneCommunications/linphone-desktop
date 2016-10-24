@@ -106,6 +106,19 @@ function clearTimeout (timer) {
 
 // -------------------------------------------------------------------
 
+// Returns the top (root) parent of one component.
+function getTopParent (component) {
+  var parent = component.parent
+
+  while (parent.parent != null) {
+    parent = parent.parent
+  }
+
+  return parent
+}
+
+// -------------------------------------------------------------------
+
 // Invoke a `cb` function with each value of the interval: `[0, n[`.
 // Return a mapped array created with the returned values of `cb`.
 function times (n, cb, context) {
@@ -144,7 +157,7 @@ function genRandomNumberBetweenIntervals (intervals) {
     return genRandomNumber(intervals[0][0], intervals[0][1])
   }
 
-  // Compute the number of values.
+  // Compute the intervals size.
   var size = 0
   intervals.forEach(function (interval) {
     size += interval[1] - interval[0]

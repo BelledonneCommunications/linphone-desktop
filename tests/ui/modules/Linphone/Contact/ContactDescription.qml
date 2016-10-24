@@ -7,6 +7,8 @@ import Linphone.Styles 1.0
 Column {
   property alias sipAddress: sipAddress.text
   property alias username: username.text
+  property color sipAddressColor: ContactDescriptionStyle.sipAddress.color
+  property color usernameColor: ContactDescriptionStyle.username.color
   property int horizontalTextAlignment
 
   // Username.
@@ -14,7 +16,8 @@ Column {
     id: username
 
     clip: true
-    color: ContactDescriptionStyle.username.color
+    color: usernameColor
+    elide: Text.ElideRight
     font.bold: true
     font.pointSize: ContactDescriptionStyle.username.fontSize
     height: parent.height / 2
@@ -27,8 +30,8 @@ Column {
   Text {
     id: sipAddress
 
-    clip: true
-    color: ContactDescriptionStyle.sipAddress.color
+    color: sipAddressColor
+    elide: Text.ElideRight
     font.pointSize: ContactDescriptionStyle.sipAddress.fontSize
     height: parent.height / 2
     horizontalAlignment: horizontalTextAlignment

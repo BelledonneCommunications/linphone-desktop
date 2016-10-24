@@ -9,11 +9,11 @@ import Common.Styles 1.0
 // ===================================================================
 
 Window {
-  default property alias content: content.data // Required.
   property alias buttons: buttons.data // Optionnal.
   property alias descriptionText: description.text // Optionnal.
   property bool centeredButtons: false
 
+  default property alias _content: content.data // Required.
   property bool _disableExitStatus
 
   signal exitStatus (int status)

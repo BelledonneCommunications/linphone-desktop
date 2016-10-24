@@ -5,8 +5,9 @@ import QtQuick 2.7
 Item {
   id: container
 
-  default property alias content: content.data
   property alias backgroundColor: rectangle.color
+
+  default property alias _content: content.data
 
   implicitHeight: text.contentHeight + text.padding * 2
 

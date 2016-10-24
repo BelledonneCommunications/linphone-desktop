@@ -6,6 +6,9 @@ module Linphone
 
 # Components ---------------------------------------------------------
 
+# Call
+CallControls         1.0 Call/CallControls.qml
+
 # Chat
 Chat                 1.0 Chat/Chat.qml
 

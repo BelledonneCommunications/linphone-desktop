@@ -9,7 +9,7 @@ QtObject {
   property int transitionDuration: 200
 
   property QtObject handle: QtObject {
-    property int width: 10
+    property int width: 5
 
     property QtObject color: QtObject {
       property color hovered: Colors.h
