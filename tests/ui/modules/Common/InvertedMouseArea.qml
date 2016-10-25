@@ -54,16 +54,12 @@ Item {
     MouseArea {
       property var _timeout
 
-      anchors.fill: parent
-      propagateComposedEvents: true
-      z: Constants.zMax
-
-      onPressed: {
+      function _checkPosition (positionEvent) {
         // Propagate event.
-        mouse.accepted = false
+        positionEvent.accepted = false
 
         // Click is outside or not.
-        if (!Utils.pointIsInItem(this, item, mouse)) {
+        if (!Utils.pointIsInItem(this, item, positionEvent)) {
           if (_timeout != null) {
             // Remove existing timeout to avoid the creation of
             // many children.
@@ -74,7 +70,7 @@ Item {
           // after the propagated event.
           //
           // It's useful to ensure the window's context is not
-          // modified with the mouse event before the `onPressed`
+          // modified with the positionEvent before the `onPressed`
           // call.
           //
           // The timeout is destroyed with the `MouseArea` component.
@@ -82,10 +78,17 @@ Item {
             this,
             (function (point, item) {
               return Utils.pointIsInItem(this, item, point)
-            }).bind(this, { x: mouse.x, y: mouse.y })
+            }).bind(this, { x: positionEvent.x, y: positionEvent.y })
           ))
         }
       }
+
+      anchors.fill: parent
+      propagateComposedEvents: true
+      z: Constants.zMax
+
+      onPressed: _checkPosition.call(this, mouse)
+      onWheel: _checkPosition.call(this, wheel)
     }
   }
 }
