@@ -6,14 +6,12 @@ module Common.Styles
 singleton CaterpillarAnimationStyle 1.0 Animations/CaterpillarAnimationStyle.qml
 
 singleton CollapseStyle             1.0 CollapseStyle.qml
+
 singleton DialogStyle               1.0 DialogStyle.qml
+
 singleton DroppableTextAreaStyle    1.0 DroppableTextAreaStyle.qml
 
 singleton ForceScrollBarStyle       1.0 ForceScrollBarStyle.qml
-singleton MenuStyle                 1.0 MenuStyle.qml
-singleton PanedStyle                1.0 PanedStyle.qml
-singleton PopupStyle                1.0 PopupStyle.qml
-singleton SearchBoxStyle            1.0 SearchBoxStyle.qml
 
 singleton AbstractTextButtonStyle   1.0 Form/AbstractTextButtonStyle.qml
 singleton ActionBarStyle            1.0 Form/ActionBarStyle.qml
@@ -24,3 +22,12 @@ singleton SmallButtonStyle          1.0 Form/SmallButtonStyle.qml
 singleton TextButtonAStyle          1.0 Form/TextButtonAStyle.qml
 singleton TextButtonBStyle          1.0 Form/TextButtonBStyle.qml
 singleton TransparentComboBoxStyle  1.0 Form/TransparentComboBoxStyle.qml
+
+singleton ActionMenuStyle           1.0 Menu/ActionMenuStyle.qml
+singleton MenuStyle                 1.0 Menu/MenuStyle.qml
+
+singleton PanedStyle                1.0 PanedStyle.qml
+
+singleton PopupStyle                1.0 PopupStyle.qml
+
+singleton SearchBoxStyle            1.0 SearchBoxStyle.qml

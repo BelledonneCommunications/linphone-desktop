@@ -52,32 +52,23 @@ RowLayout {
   DropDownMenu {
     id: menu
 
-    implicitHeight: toto.height
     launcher: button
     relativeTo: button
     relativeX: button.width + 1
-    width: 120
+    implicitWidth: actionMenu.width
 
-    Menu {
-      id: toto
+    ActionMenu {
+      id: actionMenu
+
       entryHeight: 22
-      entryWidth: 98
-      fontSize: 11
-      entries: [{
-        entryName: qsTr('homeEntry')
-      }, {
-        entryName: qsTr('contactsEntry')
-      }]
+      entryWidth: 120
+      entries: [
+        qsTr('acceptAudioCall'),
+        qsTr('acceptVideoCall'),
+        qsTr('hangup')
+      ]
 
-      onEntrySelected: {
-        console.log('entry', entry)
-
-        if (entry === 0) {
-          setView('Home')
-        } else if (entry === 1) {
-          setView('Contacts')
-        }
-      }
+      onClicked: console.log('entry', entry)
     }
   }
 }

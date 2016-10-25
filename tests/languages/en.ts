@@ -5,11 +5,23 @@
     <name>CallControls</name>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished">Home</translation>
+        <translation type="obsolete">Home</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation type="unfinished">Contacts</translation>
+        <translation type="obsolete">Contacts</translation>
+    </message>
+    <message>
+        <source>acceptAudioCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acceptVideoCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hangup</source>
+        <translation type="unfinished">End call</translation>
     </message>
 </context>
 <context>

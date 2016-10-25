@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Common.Styles 1.0
 
 // ===================================================================
@@ -13,8 +14,6 @@ ColumnLayout {
   property int entryHeight
   property int entryWidth
   property var entries
-
-  property int fontSize: MenuStyle.entry.text.fontSize
 
   property int _selectedEntry: 0
 
@@ -50,23 +49,15 @@ ColumnLayout {
         spacing: MenuStyle.entry.spacing
 
         Icon {
-          Layout.preferredHeight: modelData.icon
-            ? (modelData.iconSize != null
-               ? modelData.iconSize
-               : MenuStyle.entry.iconSize
-              ) : 0
-          Layout.preferredWidth: modelData.icon
-            ? (modelData.iconSize != null
-               ? modelData.iconSize
-               : MenuStyle.entry.iconSize
-              ) : 0
-          icon: modelData.icon || ''
+          Layout.preferredHeight: MenuStyle.entry.iconSize
+          Layout.preferredWidth: MenuStyle.entry.iconSize
+          icon: modelData.icon
         }
 
         Text {
           Layout.fillWidth: true
           color: MenuStyle.entry.text.color
-          font.pointSize: menu.fontSize
+          font.pointSize: MenuStyle.entry.text.fontSize
           height: parent.height
           text: modelData.entryName
           verticalAlignment: Text.AlignVCenter

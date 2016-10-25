@@ -49,7 +49,8 @@
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
     <file>ui/modules/Common/InvertedMouseArea.qml</file>
-    <file>ui/modules/Common/Menu.qml</file>
+    <file>ui/modules/Common/Menu/ActionMenu.qml</file>
+    <file>ui/modules/Common/Menu/Menu.qml</file>
     <file>ui/modules/Common/Paned.qml</file>
     <file>ui/modules/Common/Popup/AbstractDropDownMenu.qml</file>
     <file>ui/modules/Common/Popup/DropDownDynamicMenu.qml</file>
@@ -71,7 +72,8 @@
     <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonBStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentComboBoxStyle.qml</file>
-    <file>ui/modules/Common/Styles/MenuStyle.qml</file>
+    <file>ui/modules/Common/Styles/Menu/ActionMenuStyle.qml</file>
+    <file>ui/modules/Common/Styles/Menu/MenuStyle.qml</file>
     <file>ui/modules/Common/Styles/PanedStyle.qml</file>
     <file>ui/modules/Common/Styles/PopupStyle.qml</file>
     <file>ui/modules/Common/Styles/qmldir</file>

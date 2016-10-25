@@ -9,9 +9,9 @@ Row {
 
   property color sphereColor: CaterpillarAnimationStyle.sphere.color
   property int animationDuration: CaterpillarAnimationStyle.animation.duration
-  property int animationSpace: CaterpillarAnimationStyle.animation.space
   property int nSpheres: CaterpillarAnimationStyle.nSpheres
   property int sphereSize: CaterpillarAnimationStyle.sphere.size
+  property int animationSpace: CaterpillarAnimationStyle.animation.space
 
   spacing: CaterpillarAnimationStyle.spacing
 

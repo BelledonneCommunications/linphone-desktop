@@ -1,5 +1,5 @@
 AbstractDropDownMenu {
   function _computeHeight () {
-    return content.height
+    return _content[0].height
   }
 }
