@@ -12,6 +12,7 @@ Rectangle {
   property bool drawOnRoot: false
   property int entryHeight // Only with a ListView child.
   property int maxMenuHeight // Only with a ListView child.
+  property var launcher
   property var relativeTo
 
   default property alias _content: content.data
@@ -82,6 +83,11 @@ Rectangle {
     anchors.fill: parent
     enabled: parent.visible
 
-    onPressed: hideMenu()
+    onPressed: {
+      if (launcher != null && pointIsInItem(launcher)) {
+        return
+      }
+      hideMenu()
+    }
   }
 }

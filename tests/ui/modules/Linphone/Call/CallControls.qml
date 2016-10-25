@@ -55,6 +55,7 @@ RowLayout {
     entryHeight: 22
     height: 100
     width: 120
+    launcher: button
     relativeTo: button
 
     Rectangle {

@@ -136,6 +136,24 @@ function qmlTypeof (object, className) {
 
 // -------------------------------------------------------------------
 
+// Test if a point is in a item.
+//
+// `source` is the item that generated the point.
+// `target` is the item to test.
+// `point` is the point to test.
+function pointIsInItem (source, target, point) {
+  point = source.mapToItem(target.parent, point.x, point.y)
+
+  return (
+    point.x >= target.x &&
+    point.y >= target.y &&
+    point.x < target.x + target.width &&
+    point.y < target.y + target.height
+  )
+}
+
+// -------------------------------------------------------------------
+
 // Invoke a `cb` function with each value of the interval: `[0, n[`.
 // Return a mapped array created with the returned values of `cb`.
 function times (n, cb, context) {

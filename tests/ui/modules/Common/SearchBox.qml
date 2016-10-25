@@ -67,6 +67,7 @@ Item {
       id: menu
 
       anchors.top: searchField.bottom
+      launcher: searchField
       width: searchField.width
 
       onMenuClosed: _hideMenu()

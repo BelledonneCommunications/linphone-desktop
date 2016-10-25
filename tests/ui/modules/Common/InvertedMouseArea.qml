@@ -4,7 +4,7 @@ import Common 1.0
 import Utils 1.0
 
 // ===================================================================
-// Helper to handle button click outside a component.
+// Helper to handle button click outside an item.
 // ===================================================================
 
 Item {
@@ -12,7 +12,9 @@ Item {
 
   property var _mouseArea
 
-  signal pressed
+  // When emitted, returns a function to test if the click
+  // is on a specific item. It takes only a item parameter.
+  signal pressed (var pointIsInItem)
 
   function _createMouseArea () {
     if (_mouseArea == null) {
@@ -27,15 +29,6 @@ Item {
       _mouseArea.destroy()
       _mouseArea = null
     }
-  }
-
-  function _isInItem (point) {
-    return (
-      point.x >= item.x &&
-      point.y >= item.y &&
-      point.x < item.x + item.width &&
-      point.y < item.y + item.height
-    )
   }
 
   // It's necessary to use a `enabled` variable.
@@ -70,9 +63,7 @@ Item {
         mouse.accepted = false
 
         // Click is outside or not.
-        if (!_isInItem(
-          mapToItem(item.parent, mouse.x, mouse.y)
-        )) {
+        if (!Utils.pointIsInItem(this, item, mouse)) {
           if (_timeout != null) {
             // Remove existing timeout to avoid the creation of
             // many children.
@@ -87,9 +78,12 @@ Item {
           // call.
           //
           // The timeout is destroyed with the `MouseArea` component.
-          _timeout = Utils.setTimeout(
-            this, 0, item.pressed.bind(this)
-          )
+          _timeout = Utils.setTimeout(this, 0, item.pressed.bind(
+            this,
+            (function (point, item) {
+              return Utils.pointIsInItem(this, item, point)
+            }).bind(this, { x: mouse.x, y: mouse.y })
+          ))
         }
       }
     }
