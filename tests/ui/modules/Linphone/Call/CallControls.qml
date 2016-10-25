@@ -52,7 +52,6 @@ RowLayout {
   DropDownMenu {
     id: menu
 
-    entryHeight: 22
     implicitHeight: toto.height
     launcher: button
     relativeTo: button

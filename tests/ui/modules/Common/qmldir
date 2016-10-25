@@ -55,6 +55,7 @@ Menu                 1.0 Menu.qml
 Paned                1.0 Paned.qml
 
 # Popup
+DropDownDynamicMenu  1.0 Popup/DropDownDynamicMenu.qml
 DropDownMenu         1.0 Popup/DropDownMenu.qml
 PopupShadow          1.0 Popup/PopupShadow.qml
 

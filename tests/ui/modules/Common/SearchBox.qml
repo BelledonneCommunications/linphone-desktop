@@ -63,7 +63,7 @@ Item {
       }
     }
 
-    DropDownMenu {
+    DropDownDynamicMenu {
       id: menu
 
       anchors.top: searchField.bottom
