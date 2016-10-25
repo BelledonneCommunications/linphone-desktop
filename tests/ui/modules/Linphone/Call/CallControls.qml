@@ -52,10 +52,10 @@ RowLayout {
   DropDownMenu {
     id: menu
 
+    implicitWidth: actionMenu.width
     launcher: button
     relativeTo: button
     relativeX: button.width + 1
-    implicitWidth: actionMenu.width
 
     ActionMenu {
       id: actionMenu
@@ -68,7 +68,10 @@ RowLayout {
         qsTr('hangup')
       ]
 
-      onClicked: console.log('entry', entry)
+      onClicked: {
+        console.log('entry', entry)
+        menu.hideMenu()
+      }
     }
   }
 }
