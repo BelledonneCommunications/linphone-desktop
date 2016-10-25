@@ -11,6 +11,8 @@ Row {
 
   property int selectedButton: 0
 
+  // Emitted when the selected button is changed.
+  // Gives the selected button id.
   signal clicked (int button)
 
   spacing: ExclusiveButtonsStyle.buttonsSpacing
