@@ -16,7 +16,6 @@ QtObject {
 
     property QtObject placeholder: QtObject {
       property color color: Colors.d
-
       property int fontSize: 10
     }
 
@@ -36,7 +35,6 @@ QtObject {
 
     property QtObject text: QtObject {
       property color color: Colors.l
-
       property int fontSize: 10
       property int width: 130
     }

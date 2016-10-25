@@ -1,3 +1,7 @@
+// ===================================================================
+// Menu which supports `ListView`.
+// ===================================================================
+
 AbstractDropDownMenu {
   property int entryHeight
   property int maxMenuHeight

@@ -35,6 +35,7 @@ ColumnLayout {
         }
 
         color: ActionMenuStyle.entry.text.color
+        elide: Text.ElideRight
         font.pointSize: ActionMenuStyle.entry.text.fontSize
         height: parent.height
         text: modelData
