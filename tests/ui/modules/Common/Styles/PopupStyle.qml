@@ -11,7 +11,7 @@ QtObject {
   property QtObject shadow: QtObject {
     property color color: Colors.f
 
-    property int horizontalOffset: 0
+    property int horizontalOffset: 2
     property int radius: 8
     property int samples: 15
     property int verticalOffset: 2

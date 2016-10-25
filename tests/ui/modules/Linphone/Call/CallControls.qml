@@ -31,7 +31,7 @@ RowLayout {
 
     Layout.preferredHeight: contact.height
     Layout.preferredWidth: 42
-    color: '#434343'
+    color: menu.isOpen() ? '#FE5E00' : '#434343'
 
     Text {
       anchors.centerIn: parent
@@ -56,7 +56,7 @@ RowLayout {
     height: 100
     launcher: button
     relativeTo: button
-    relativeX: button.width
+    relativeX: button.width + 1
     width: 120
 
     Rectangle {

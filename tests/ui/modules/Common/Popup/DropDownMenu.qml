@@ -28,6 +28,10 @@ Rectangle {
   signal menuClosed
   signal menuOpened
 
+  function isOpen () {
+    return visible
+  }
+
   function showMenu () {
     if (visible) {
       return
