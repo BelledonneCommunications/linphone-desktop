@@ -53,15 +53,32 @@ RowLayout {
     id: menu
 
     entryHeight: 22
-    height: 100
+    implicitHeight: toto.height
     launcher: button
     relativeTo: button
     relativeX: button.width + 1
     width: 120
 
-    Rectangle {
-      color: 'red'
-      anchors.fill: parent
+    Menu {
+      id: toto
+      entryHeight: 22
+      entryWidth: 98
+      fontSize: 11
+      entries: [{
+        entryName: qsTr('homeEntry')
+      }, {
+        entryName: qsTr('contactsEntry')
+      }]
+
+      onEntrySelected: {
+        console.log('entry', entry)
+
+        if (entry === 0) {
+          setView('Home')
+        } else if (entry === 1) {
+          setView('Contacts')
+        }
+      }
     }
   }
 }

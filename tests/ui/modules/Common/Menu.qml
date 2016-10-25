@@ -14,6 +14,8 @@ ColumnLayout {
   property int entryWidth
   property var entries
 
+  property int fontSize: MenuStyle.entry.text.fontSize
+
   property int _selectedEntry: 0
 
   signal entrySelected (int entry)
@@ -48,15 +50,23 @@ ColumnLayout {
         spacing: MenuStyle.entry.spacing
 
         Icon {
-          Layout.preferredHeight: MenuStyle.entry.iconSize
-          Layout.preferredWidth: MenuStyle.entry.iconSize
-          icon: modelData.icon
+          Layout.preferredHeight: modelData.icon
+            ? (modelData.iconSize != null
+               ? modelData.iconSize
+               : MenuStyle.entry.iconSize
+              ) : 0
+          Layout.preferredWidth: modelData.icon
+            ? (modelData.iconSize != null
+               ? modelData.iconSize
+               : MenuStyle.entry.iconSize
+              ) : 0
+          icon: modelData.icon || ''
         }
 
         Text {
           Layout.fillWidth: true
           color: MenuStyle.entry.text.color
-          font.pointSize: MenuStyle.entry.text.fontSize
+          font.pointSize: menu.fontSize
           height: parent.height
           text: modelData.entryName
           verticalAlignment: Text.AlignVCenter

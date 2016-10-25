@@ -2,6 +2,17 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>CallControls</name>
+    <message>
+        <source>homeEntry</source>
+        <translation type="unfinished">Home</translation>
+    </message>
+    <message>
+        <source>contactsEntry</source>
+        <translation type="unfinished">Contacts</translation>
+    </message>
+</context>
+<context>
     <name>Calls</name>
     <message>
         <source>newCall</source>
