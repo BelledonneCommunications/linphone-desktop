@@ -27,9 +27,9 @@ Item {
   property alias childA: contentA.data
   property alias childB: contentB.data
   property bool defaultClosed: false
+  property bool resizeAInPriority: false
   property int closingEdge: Qt.LeftEdge // `LeftEdge` or `RightEdge`.
   property int defaultChildAWidth
-  property bool resizeAInPriority: false
 
   // User limits: string or int values.
   // By default: no limits.
@@ -251,7 +251,6 @@ Item {
     onDoubleClicked: _inverseClosingState()
     onMouseXChanged: pressed &&
       _applyLimitsOnUserMove(mouseX - _mouseStart)
-
     onPressed: _mouseStart = mouseX
 
     Rectangle {

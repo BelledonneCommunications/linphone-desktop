@@ -21,8 +21,8 @@ Item {
 
   property alias placeholderText: searchField.placeholderText
 
-  signal menuClosed ()
-  signal menuOpened ()
+  signal menuClosed
+  signal menuOpened
 
   function _hideMenu () {
     menu.hideMenu()

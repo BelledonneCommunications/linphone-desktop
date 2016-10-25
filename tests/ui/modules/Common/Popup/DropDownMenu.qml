@@ -9,11 +9,19 @@ import Utils 1.0
 // ===================================================================
 
 Rectangle {
-  property bool drawOnRoot: false
-  property int entryHeight // Only with a ListView child.
-  property int maxMenuHeight // Only with a ListView child.
+  // Attributes used only with a ListView child.
+  property int entryHeight
+  property int maxMenuHeight
+
+  // Optionnal parameter, if defined and if a click is detected
+  // on it, menu is not closed.
   property var launcher
+
+  // Optionnal parameters, set the position of Menu relative
+  // to this item.
   property var relativeTo
+  property int relativeX: 0
+  property int relativeY: 0
 
   default property alias _content: content.data
 
@@ -25,9 +33,9 @@ Rectangle {
       return
     }
 
-    if (drawOnRoot) {
-      this.x = relativeTo.mapToItem(null, relativeTo.width, 0).x
-      this.y = relativeTo.mapToItem(null, relativeTo.width, 0).y
+    if (relativeTo != null) {
+      this.x = relativeTo.mapToItem(null, relativeX, relativeY).x
+      this.y = relativeTo.mapToItem(null, relativeX, relativeY).y
     }
 
     visible = true
@@ -49,6 +57,11 @@ Rectangle {
       return content.height
     }
 
+    console.assert(
+      entryHeight != null,
+      '`entryHeight` must be defined when used with `ListView`.'
+    )
+
     var height = model.count * entryHeight
     return (maxMenuHeight !== undefined && height > maxMenuHeight)
       ? maxMenuHeight
@@ -61,12 +74,14 @@ Rectangle {
 
   Keys.onEscapePressed: hideMenu()
 
+  // Set parent menu to root.
   Component.onCompleted: {
-    if (drawOnRoot) {
+    if (relativeTo != null) {
       parent = Utils.getTopParent(this)
     }
   }
 
+  // Menu content.
   Rectangle {
     id: content
 
@@ -79,6 +94,7 @@ Rectangle {
     }
   }
 
+  // Inverted mouse area to detect click outside menu.
   InvertedMouseArea {
     anchors.fill: parent
     enabled: parent.visible

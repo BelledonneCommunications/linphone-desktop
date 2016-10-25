@@ -50,13 +50,14 @@ RowLayout {
   }
 
   DropDownMenu {
-    drawOnRoot: true
     id: menu
+
     entryHeight: 22
     height: 100
-    width: 120
     launcher: button
     relativeTo: button
+    relativeX: button.width
+    width: 120
 
     Rectangle {
       color: 'red'
