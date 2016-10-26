@@ -148,7 +148,6 @@ function qmlTypeof (object, className) {
 function pointIsInItem (source, target, point) {
   point = source.mapToItem(target.parent, point.x, point.y)
 
-  console.log('mapped point', point.x, point.y, target.x, target.y)
   return (
     point.x >= target.x &&
     point.y >= target.y &&

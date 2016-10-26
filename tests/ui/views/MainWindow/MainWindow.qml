@@ -71,24 +71,6 @@ ApplicationWindow {
         onClicked: Utils.openWindow('NewCall', window)
       }
 
-      DesktopPopup {
-        id: desktopPopup
-
-        property point coords: {
-          var point = searchBox.mapToItem(null, 0, searchBox.height)
-          point.x += window.x
-          point.y += window.y
-
-          return point
-        }
-
-        content: searchBox.getMenuInstance()
-        popupX: coords.x
-        popupY: coords.y
-
-        onVisibleChanged: !visible && searchBox._hideMenu()
-      }
-
       // Search.
       SearchBox {
         id: searchBox
@@ -97,15 +79,6 @@ ApplicationWindow {
         maxMenuHeight: 300 // See Hick's law for good choice.
         placeholderText: qsTr('mainSearchBarPlaceholder')
         entryHeight: 50
-
-        onMenuClosed: {
-          console.log('close')
-          desktopPopup.hide()
-        }
-
-        onMenuOpened: {
-          desktopPopup.show()
-        }
 
         model: model1
 

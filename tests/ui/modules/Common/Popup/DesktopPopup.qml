@@ -1,16 +1,15 @@
 import QtQuick 2.7
 import QtQuick.Window 2.2
 
-import Utils 1.0
+// ===================================================================
 
 Item {
   id: wrapper
 
-  // Not a private property. Can be used with an id.
-  default property alias content: content.data
-
   property alias popupX: popup.x
   property alias popupY: popup.y
+
+  default property alias _content: content.data
 
   function show () {
     popup.show()
@@ -20,18 +19,23 @@ Item {
     popup.hide()
   }
 
-  x: 0
-  y: 0
+  // DO NOT TOUCH THIS PROPERTIES.
+
+  // No visible.
+  visible: false
+
+  // No size, no position.
   height: 0
   width: 0
-  visible: false
+  x: 0
+  y: 0
 
   Window {
     id: popup
 
     flags: Qt.SplashScreen
-    height: wrapper.content[0] != null ? wrapper.content[0].height : 0
-    width: wrapper.content[0] != null ? wrapper.content[0].width : 0
+    height: _content[0] != null ? _content[0].height : 0
+    width: _content[0] != null ? _content[0].width : 0
 
     Item {
       id: content

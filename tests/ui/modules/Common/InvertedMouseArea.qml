@@ -57,7 +57,7 @@ Item {
       function _checkPosition (positionEvent) {
         // Propagate event.
         positionEvent.accepted = false
-        console.log('click', positionEvent.x, positionEvent.y)
+
         // Click is outside or not.
         if (!Utils.pointIsInItem(this, item, positionEvent)) {
           if (_timeout != null) {
