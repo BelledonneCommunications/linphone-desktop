@@ -74,6 +74,13 @@ Item {
     }
   }
 
+  // Block clicks, wheel... below menu.
+  MouseArea {
+    anchors.fill: content
+    hoverEnabled: true
+    onWheel: {}
+  }
+
   // Menu content.
   Rectangle {
     id: content
@@ -102,19 +109,17 @@ Item {
 
   // -----------------------------------------------------------------
 
-  states: [
-    State {
-      name: 'opened'
-      when: _isOpen
+  states: State {
+    name: 'opened'
+    when: _isOpen
 
-      PropertyChanges {
-        focus: true // Necessary to use `Keys.onEscapePressed`.
-        opacity: 1
-        target: menu
-        visible: true
-      }
+    PropertyChanges {
+      focus: true // Necessary to use `Keys.onEscapePressed`.
+      opacity: 1
+      target: menu
+      visible: true
     }
-  ]
+  }
 
   transitions: [
     Transition {

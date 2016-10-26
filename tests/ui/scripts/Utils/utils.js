@@ -108,10 +108,14 @@ function clearTimeout (timer) {
 
 // Returns the top (root) parent of one object.
 function getTopParent (object) {
-  var parent = object.parent
+  function _getTopParent (object) {
+    return object.$parent || object.parent
+  }
 
-  while (parent.parent != null) {
-    parent = parent.parent
+  var parent = _getTopParent(object)
+
+  while (_getTopParent(parent) != null) {
+    parent = _getTopParent(parent)
   }
 
   return parent
@@ -144,6 +148,7 @@ function qmlTypeof (object, className) {
 function pointIsInItem (source, target, point) {
   point = source.mapToItem(target.parent, point.x, point.y)
 
+  console.log('mapped point', point.x, point.y, target.x, target.y)
   return (
     point.x >= target.x &&
     point.y >= target.y &&

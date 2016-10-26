@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 
 import Common.Styles 1.0
-
+import Utils 1.0
 // ===================================================================
 // A reusable search input which display a entries model in a menu.
 // Each entry can be filtered with the search input.
@@ -41,6 +41,12 @@ Item {
     menuOpened()
   }
 
+  function getMenuInstance () {
+    console.log('instance parent', Utils.getTopParent(item))
+
+    return menu
+  }
+
   implicitHeight: searchField.height
 
   Item {
@@ -70,7 +76,7 @@ Item {
     DropDownDynamicMenu {
       id: menu
 
-      anchors.top: searchField.bottom
+      //anchors.top: searchField.bottom
       launcher: searchField
       width: searchField.width
 
