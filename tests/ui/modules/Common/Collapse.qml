@@ -18,10 +18,6 @@ Item {
 
   // -----------------------------------------------------------------
 
-  function collapse () {
-    _collapsed = !_collapsed
-  }
-
   function isCollapsed () {
     return _collapsed
   }
@@ -36,7 +32,7 @@ Item {
     icon: 'collapse'
     iconSize: CollapseStyle.iconSize
 
-    onClicked: collapse.collapse()
+    onClicked: _collapsed = !_collapsed
   }
 
   // -----------------------------------------------------------------

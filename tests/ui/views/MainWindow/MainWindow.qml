@@ -82,7 +82,7 @@ ApplicationWindow {
 
         onMenuOpened: {
           if (!collapse.isCollapsed()) {
-            collapse.collapse()
+            // TODO, open desktop popup.
           }
           content.enabled = false
         }
