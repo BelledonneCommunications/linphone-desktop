@@ -22,7 +22,12 @@ ColumnLayout {
     model: entries
 
     Rectangle {
-      color: ActionMenuStyle.entry.color
+      color: mouseArea.pressed
+        ? ActionMenuStyle.entry.color.pressed
+        : (mouseArea.containsMouse
+           ? ActionMenuStyle.entry.color.hovered
+           : ActionMenuStyle.entry.color.normal
+          )
       height: menu.entryHeight
       width: menu.entryWidth
 
@@ -43,6 +48,8 @@ ColumnLayout {
       }
 
       MouseArea {
+        id: mouseArea
+
         anchors.fill: parent
         hoverEnabled: true
 

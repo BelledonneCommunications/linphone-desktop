@@ -42,6 +42,9 @@ Item {
 
     visible = true
     menuOpened()
+
+    // Necessary to use `Keys.onEscapePressed`.
+    focus = true
   }
 
   function hideMenu () {

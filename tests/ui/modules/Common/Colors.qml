@@ -29,4 +29,8 @@ QtObject {
   property color q: '#E6E6E6'
 
   property color r: '#8F8F8F'
+
+  property color s: '#D64D00'
+
+  property color t: '#FF8600'
 }
