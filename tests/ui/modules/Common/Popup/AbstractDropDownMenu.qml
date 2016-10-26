@@ -9,6 +9,8 @@ import Utils 1.0
 // ===================================================================
 
 Item {
+  id: menu
+
   // Optionnal parameter, if defined and if a click is detected
   // on it, menu is not closed.
   property var launcher
@@ -20,6 +22,7 @@ Item {
   property int relativeY: 0
 
   default property alias _content: content.data
+  property bool _isOpen: false
 
   signal menuClosed
   signal menuOpened
@@ -27,11 +30,11 @@ Item {
   // -----------------------------------------------------------------
 
   function isOpen () {
-    return visible
+    return _isOpen
   }
 
   function showMenu () {
-    if (visible) {
+    if (_isOpen) {
       return
     }
 
@@ -40,20 +43,15 @@ Item {
       this.y = relativeTo.mapToItem(null, relativeX, relativeY).y
     }
 
-    visible = true
-    menuOpened()
-
-    // Necessary to use `Keys.onEscapePressed`.
-    focus = true
+    _isOpen = true
   }
 
   function hideMenu () {
-    if (!visible) {
+    if (!_isOpen) {
       return
     }
 
-    visible = false
-    menuClosed()
+    _isOpen = false
   }
 
   function _computeHeight () {
@@ -63,6 +61,7 @@ Item {
   // -----------------------------------------------------------------
 
   implicitHeight: _computeHeight()
+  opacity: 0
   visible: false
   z: Constants.zPopup
 
@@ -100,4 +99,73 @@ Item {
       hideMenu()
     }
   }
+
+  // -----------------------------------------------------------------
+
+  states: [
+    State {
+      name: 'Opened'
+      when: _isOpen
+
+      PropertyChanges {
+        focus: true // Necessary to use `Keys.onEscapePressed`.
+        opacity: 1
+        target: menu
+        visible: true
+      }
+    }
+  ]
+
+  transitions: [
+    Transition {
+      from: ''
+      to: 'Opened'
+
+      NumberAnimation {
+        duration: 250
+        easing.type: Easing.InOutQuad
+        property: 'opacity'
+        target: menu
+      }
+
+      SequentialAnimation {
+        PauseAnimation {
+          duration: 250
+        }
+
+        ScriptAction {
+          script: menuOpened()
+        }
+      }
+    },
+
+    Transition {
+      from: 'Opened'
+      to: ''
+
+      NumberAnimation {
+        duration: 250
+        easing.type: Easing.InOutQuad
+        property: 'opacity'
+        target: menu
+      }
+
+      NumberAnimation {
+        duration: 250
+        easing.type: Easing.InOutQuad
+        property: 'visible' // Ugly, use `NumberAnimation` on bool.
+        target: menu
+      }
+
+      SequentialAnimation {
+        PauseAnimation {
+          duration: 250
+        }
+
+        ScriptAction {
+          script: menuClosed()
+        }
+      }
+    }
+  ]
 }
