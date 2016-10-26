@@ -122,7 +122,7 @@ Item {
       to: 'Opened'
 
       NumberAnimation {
-        duration: 250
+        duration: PopupStyle.animation.openingDuration
         easing.type: Easing.InOutQuad
         property: 'opacity'
         target: menu
@@ -130,7 +130,7 @@ Item {
 
       SequentialAnimation {
         PauseAnimation {
-          duration: 250
+          duration: PopupStyle.animation.closingDuration
         }
 
         ScriptAction {
@@ -144,22 +144,22 @@ Item {
       to: ''
 
       NumberAnimation {
-        duration: 250
+        duration: PopupStyle.animation.openingDuration
         easing.type: Easing.InOutQuad
         property: 'opacity'
         target: menu
       }
 
       NumberAnimation {
-        duration: 250
+        duration: PopupStyle.animation.closingDuration
         easing.type: Easing.InOutQuad
-        property: 'visible' // Ugly, use `NumberAnimation` on bool.
+        property: 'visible' // Ugly, use `NumberAnimation` with a bool.
         target: menu
       }
 
       SequentialAnimation {
         PauseAnimation {
-          duration: 250
+          duration: PopupStyle.animation.closingDuration
         }
 
         ScriptAction {

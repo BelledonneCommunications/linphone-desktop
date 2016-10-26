@@ -21,6 +21,8 @@ Item {
 
   property alias placeholderText: searchField.placeholderText
 
+  property bool _isOpen: false
+
   signal menuClosed
   signal menuOpened
 

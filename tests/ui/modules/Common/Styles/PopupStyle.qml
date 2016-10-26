@@ -8,6 +8,11 @@ import Common 1.0
 QtObject {
   property color backgroundColor: Colors.k
 
+  property QtObject animation: QtObject {
+    property int openingDuration: 250
+    property int closingDuration: 250
+  }
+
   property QtObject shadow: QtObject {
     property color color: Colors.f
     property int horizontalOffset: 2
