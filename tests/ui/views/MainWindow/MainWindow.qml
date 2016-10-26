@@ -37,13 +37,11 @@ ApplicationWindow {
 
       // Collapse.
       Collapse {
-        Layout.preferredWidth: 25
-        Layout.fillHeight: parent.height
         id: collapse
 
-        onCollapsed: windowStates.state = collapsed
-          ? 'collapsed'
-          : ''
+        Layout.fillHeight: parent.height
+        Layout.preferredWidth: 25
+        target: window
       }
 
       // User info.
@@ -218,22 +216,6 @@ ApplicationWindow {
       Layout.fillHeight: true
       Layout.fillWidth: true
       source: 'qrc:/ui/views/MainWindow/Home.qml'
-    }
-  }
-
-  StateGroup {
-    id: windowStates
-
-    states: State {
-      name: 'collapsed'
-
-      PropertyChanges {
-        height: 480
-        maximumHeight: 99999
-        maximumWidth: 99999
-        minimumHeight: 480
-        target: window
-      }
     }
   }
 

@@ -7,6 +7,10 @@ import Common.Styles 1.0
 // ===================================================================
 
 Item {
+  id: collapse
+
+  property var target
+
   property bool _collapsed: false
 
   signal collapsed (bool collapsed)
@@ -31,22 +35,30 @@ Item {
     icon: 'collapse'
     iconSize: CollapseStyle.iconSize
 
-    onClicked: collapse()
+    onClicked: collapse.collapse()
   }
 
   // -----------------------------------------------------------------
 
-  states: [
-    State {
-      name: 'Collapsed'
-      when: _collapsed
+  states: State {
+    name: 'Collapsed'
+    when: _collapsed
 
-      PropertyChanges {
-        target: button
-        rotation: 180
-      }
+    PropertyChanges {
+      target: button
+      rotation: 180
     }
-  ]
+
+    PropertyChanges {
+      target: collapse.target
+
+        height: 480
+        maximumHeight: 99999
+        maximumWidth: 99999
+        minimumHeight: 480
+
+    }
+  }
 
   transitions: Transition {
     RotationAnimation {

@@ -104,7 +104,7 @@ Item {
 
   states: [
     State {
-      name: 'Opened'
+      name: 'opened'
       when: _isOpen
 
       PropertyChanges {
@@ -119,7 +119,7 @@ Item {
   transitions: [
     Transition {
       from: ''
-      to: 'Opened'
+      to: 'opened'
 
       NumberAnimation {
         duration: PopupStyle.animation.openingDuration
@@ -134,13 +134,13 @@ Item {
         }
 
         ScriptAction {
-          script: menuOpened()
+          script: menuopened()
         }
       }
     },
 
     Transition {
-      from: 'Opened'
+      from: 'opened'
       to: ''
 
       NumberAnimation {
