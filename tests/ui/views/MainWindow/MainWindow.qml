@@ -42,6 +42,7 @@ ApplicationWindow {
         Layout.fillHeight: parent.height
         Layout.preferredWidth: 25
         target: window
+        targetHeight: 480
       }
 
       // User info.

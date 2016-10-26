@@ -134,7 +134,7 @@ Item {
         }
 
         ScriptAction {
-          script: menuopened()
+          script: menuOpened()
         }
       }
     },

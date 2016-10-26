@@ -9,7 +9,8 @@ import Common.Styles 1.0
 Item {
   id: collapse
 
-  property var target
+  property alias target: targetChanges.target
+  property int targetHeight
 
   property bool _collapsed: false
 
@@ -50,13 +51,12 @@ Item {
     }
 
     PropertyChanges {
-      target: collapse.target
+      id: targetChanges
 
-        height: 480
-        maximumHeight: 99999
-        maximumWidth: 99999
-        minimumHeight: 480
-
+      height: collapse.targetHeight
+      maximumHeight: 99999
+      maximumWidth: 99999
+      minimumHeight: collapse.targetHeight
     }
   }
 
