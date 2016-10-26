@@ -38,12 +38,12 @@ Item {
   // -----------------------------------------------------------------
 
   states: State {
-    name: 'Collapsed'
+    name: 'collapsed'
     when: _collapsed
 
     PropertyChanges {
-      target: button
       rotation: 180
+      target: button
     }
 
     PropertyChanges {
