@@ -11,4 +11,9 @@ QtObject {
   property Rectangle searchFieldBackground: Rectangle {
     implicitHeight: 30
   }
+
+  property QtObject text: QtObject {
+    property color color: Colors.d
+    property int fontSize: 11
+  }
 }

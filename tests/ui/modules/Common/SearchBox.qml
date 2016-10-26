@@ -49,6 +49,8 @@ Item {
       id: searchField
 
       background: SearchBoxStyle.searchFieldBackground
+      color: SearchBoxStyle.text.color
+      font.pointSize: SearchBoxStyle.text.fontSize
       width: parent.width
 
       Keys.onEscapePressed: _hideMenu()
