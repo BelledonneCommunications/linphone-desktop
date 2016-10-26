@@ -11,15 +11,17 @@ Item {
 
   signal collapsed (bool collapsed)
 
+  // -----------------------------------------------------------------
+
   function collapse () {
     _collapsed = !_collapsed
-    collapsed(_collapsed)
-    rotate.start()
   }
 
   function isCollapsed () {
     return _collapsed
   }
+
+  // -----------------------------------------------------------------
 
   ActionButton {
     id: button
@@ -32,14 +34,36 @@ Item {
     onClicked: collapse()
   }
 
-  RotationAnimation {
-    id: rotate
+  // -----------------------------------------------------------------
 
-    direction: RotationAnimation.Clockwise
-    duration: CollapseStyle.animationDuration
-    from: _collapsed ? 0 : 180
-    property: 'rotation'
-    target: button
-    to: _collapsed ? 180 : 0
+  states: [
+    State {
+      name: 'Collapsed'
+      when: _collapsed
+
+      PropertyChanges {
+        target: button
+        rotation: 180
+      }
+    }
+  ]
+
+  transitions: Transition {
+    RotationAnimation {
+      direction: RotationAnimation.Clockwise
+      duration: CollapseStyle.animationDuration
+      property: 'rotation'
+      target: button
+    }
+
+    SequentialAnimation {
+      PauseAnimation {
+        duration: CollapseStyle.animationDuration
+      }
+
+      ScriptAction {
+        script: collapsed(_collapsed)
+      }
+    }
   }
 }
