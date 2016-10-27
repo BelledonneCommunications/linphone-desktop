@@ -26,7 +26,7 @@ Item {
   signal menuClosed
   signal menuOpened
 
-  function _hideMenu () {
+  function hideMenu () {
     menu.hideMenu()
     shadow.visible = false
     searchField.focus = false
@@ -35,7 +35,7 @@ Item {
     menuClosed()
   }
 
-  function _showMenu () {
+  function showMenu () {
     menu.showMenu()
     shadow.visible = true
     desktopPopup.show()
@@ -57,9 +57,9 @@ Item {
       font.pointSize: SearchBoxStyle.text.fontSize
       width: parent.width
 
-      Keys.onEscapePressed: _hideMenu()
+      Keys.onEscapePressed: searchBox.hideMenu()
 
-      onActiveFocusChanged: activeFocus && _showMenu()
+      onActiveFocusChanged: activeFocus && searchBox.showMenu()
       onTextChanged: {
         model.setFilterFixedString(text)
 
@@ -91,7 +91,7 @@ Item {
       popupX: coords.x
       popupY: coords.y
 
-      onVisibleChanged: !visible && searchBox._hideMenu()
+      onVisibleChanged: !visible && searchBox.hideMenu()
 
       DropDownDynamicMenu {
         id: menu
@@ -99,7 +99,7 @@ Item {
         launcher: searchField
         width: searchField.width
 
-        onMenuClosed: _hideMenu()
+        onMenuClosed: searchBox.hideMenu()
 
         ScrollableListView {
           id: list

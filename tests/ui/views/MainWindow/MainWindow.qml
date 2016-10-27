@@ -111,6 +111,9 @@ ApplicationWindow {
     }
   }
 
+  onActiveFocusItemChanged: activeFocusItem == null &&
+    searchBox.hideMenu()
+
   RowLayout {
     anchors.fill: parent
     spacing: 0
@@ -193,12 +196,12 @@ ApplicationWindow {
           }
         }
       }
+
       // Logo.
       Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: 80
         color: '#EAEAEA'
-        //a: qsTr("ooo")
       }
     }
 
