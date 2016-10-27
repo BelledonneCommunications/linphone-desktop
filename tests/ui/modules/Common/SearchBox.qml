@@ -9,7 +9,7 @@ import Common.Styles 1.0
 // ===================================================================
 
 Item {
-  id: item
+  id: searchBox
 
   property alias delegate: list.delegate
   property alias entryHeight: menu.entryHeight
@@ -26,22 +26,25 @@ Item {
   signal menuClosed
   signal menuOpened
 
-  function hideMenu () {
-    menu.hideMenu()
-    shadow.visible = false
-    searchField.focus = false
-    desktopPopup.hide()
+  // -----------------------------------------------------------------
 
-    menuClosed()
+  function hideMenu () {
+    if (!_isOpen) {
+      return
+    }
+
+    _isOpen = false
   }
 
   function showMenu () {
-    menu.showMenu()
-    shadow.visible = true
-    desktopPopup.show()
+    if (_isOpen) {
+      return
+    }
 
-    menuOpened()
+    _isOpen = true
   }
+
+  // -----------------------------------------------------------------
 
   implicitHeight: searchField.height
 
@@ -61,6 +64,11 @@ Item {
 
       onActiveFocusChanged: activeFocus && searchBox.showMenu()
       onTextChanged: {
+        console.assert(
+          model.setFilterFixedString != null,
+          '`model.setFilterFixedString` must be defined.'
+        )
+
         model.setFilterFixedString(text)
 
         if (model.invalidate) {
@@ -69,17 +77,11 @@ Item {
       }
     }
 
-    PopupShadow {
-      id: shadow
-
-      anchors.fill: searchField
-      source: searchField
-      visible: false
-    }
-
+    // Wrap the search box menu in a window.
     DesktopPopup {
       id: desktopPopup
 
+      // The menu is always below the search field.
       property point coords: {
         var point = searchBox.mapToItem(null, 0, searchBox.height)
         point.x += window.x
@@ -109,4 +111,42 @@ Item {
       }
     }
   }
+
+  // -----------------------------------------------------------------
+
+  states: State {
+    name: 'opened'
+    when: _isOpen
+  }
+
+  transitions: [
+    Transition {
+      from: ''
+      to: 'opened'
+
+      ScriptAction {
+        script: {
+          menu.showMenu()
+          desktopPopup.show()
+
+          menuOpened()
+        }
+      }
+    },
+
+    Transition {
+      from: 'opened'
+      to: ''
+
+      ScriptAction {
+        script: {
+          menu.hideMenu()
+          searchField.focus = false
+          desktopPopup.hide()
+
+          menuClosed()
+        }
+      }
+    }
+  ]
 }

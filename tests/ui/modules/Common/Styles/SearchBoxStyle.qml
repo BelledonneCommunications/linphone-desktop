@@ -9,7 +9,14 @@ QtObject {
   property color shadowColor: Colors.f
 
   property Rectangle searchFieldBackground: Rectangle {
-    implicitHeight: 30
+    implicitHeight: 40
+
+    border {
+      color: '#CBCBCB'
+      width: 1
+    }
+
+    radius: 4
   }
 
   property QtObject text: QtObject {
