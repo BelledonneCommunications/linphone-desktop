@@ -44,6 +44,18 @@ Item {
     _isOpen = true
   }
 
+  function _filter (text) {
+    console.assert(
+      model.setFilterFixedString != null,
+      '`model.setFilterFixedString` must be defined.'
+    )
+
+    model.setFilterFixedString(text)
+    if (model.invalidate) {
+      model.invalidate()
+    }
+  }
+
   // -----------------------------------------------------------------
 
   implicitHeight: searchField.height
@@ -63,18 +75,7 @@ Item {
       Keys.onEscapePressed: searchBox.hideMenu()
 
       onActiveFocusChanged: activeFocus && searchBox.showMenu()
-      onTextChanged: {
-        console.assert(
-          model.setFilterFixedString != null,
-          '`model.setFilterFixedString` must be defined.'
-        )
-
-        model.setFilterFixedString(text)
-
-        if (model.invalidate) {
-          model.invalidate()
-        }
-      }
+      onTextChanged: _filter()
     }
 
     // Wrap the search box menu in a window.
