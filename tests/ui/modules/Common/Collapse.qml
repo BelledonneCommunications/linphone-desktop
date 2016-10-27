@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import Common 1.0
 import Common.Styles 1.0
 
 // ===================================================================
@@ -50,8 +51,8 @@ Item {
       id: targetChanges
 
       height: collapse.targetHeight
-      maximumHeight: 99999
-      maximumWidth: 99999
+      maximumHeight: Constants.sizeMax
+      maximumWidth: Constants.sizeMax
       minimumHeight: collapse.targetHeight
     }
   }
