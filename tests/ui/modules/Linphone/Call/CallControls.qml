@@ -64,19 +64,19 @@ RowLayout {
       entryWidth: 120
 
       ActionMenuEntry {
-        text: qsTr('acceptAudioCall')
+        entryName: qsTr('acceptAudioCall')
 
         onClicked: menu.hideMenu()
       }
 
       ActionMenuEntry {
-        text: qsTr('acceptVideoCall')
+        entryName: qsTr('acceptVideoCall')
 
         onClicked: menu.hideMenu()
       }
 
       ActionMenuEntry {
-        text: qsTr('hangup')
+        entryName: qsTr('hangup')
 
         onClicked: menu.hideMenu()
       }

@@ -7,7 +7,7 @@ import Common.Styles 1.0
 Rectangle {
   id: entry
 
-  property alias text: text.text
+  property alias entryName: text.text
 
   signal clicked
 

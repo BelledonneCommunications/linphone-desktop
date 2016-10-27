@@ -57,16 +57,12 @@ Item {
   }
 
   transitions: Transition {
-    RotationAnimation {
-      direction: RotationAnimation.Clockwise
-      duration: CollapseStyle.animationDuration
-      property: 'rotation'
-      target: button
-    }
-
     SequentialAnimation {
-      PauseAnimation {
+      RotationAnimation {
+        direction: RotationAnimation.Clockwise
         duration: CollapseStyle.animationDuration
+        property: 'rotation'
+        target: button
       }
 
       ScriptAction {
