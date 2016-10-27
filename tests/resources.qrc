@@ -49,6 +49,7 @@
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
     <file>ui/modules/Common/InvertedMouseArea.qml</file>
+    <file>ui/modules/Common/Menu/ActionMenuEntry.qml</file>
     <file>ui/modules/Common/Menu/ActionMenu.qml</file>
     <file>ui/modules/Common/Menu/Menu.qml</file>
     <file>ui/modules/Common/Paned.qml</file>

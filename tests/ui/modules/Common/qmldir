@@ -50,6 +50,7 @@ InvertedMouseArea    1.0 InvertedMouseArea.qml
 
 # Menu
 ActionMenu           1.0 Menu/ActionMenu.qml
+ActionMenuEntry      1.0 Menu/ActionMenuEntry.qml
 Menu                 1.0 Menu/Menu.qml
 
 # Paned

@@ -62,15 +62,23 @@ RowLayout {
 
       entryHeight: 22
       entryWidth: 120
-      entries: [
-        qsTr('acceptAudioCall'),
-        qsTr('acceptVideoCall'),
-        qsTr('hangup')
-      ]
 
-      onClicked: {
-        console.log('entry', entry)
-        menu.hideMenu()
+      ActionMenuEntry {
+        text: qsTr('acceptAudioCall')
+
+        onClicked: menu.hideMenu()
+      }
+
+      ActionMenuEntry {
+        text: qsTr('acceptVideoCall')
+
+        onClicked: menu.hideMenu()
+      }
+
+      ActionMenuEntry {
+        text: qsTr('hangup')
+
+        onClicked: menu.hideMenu()
       }
     }
   }
