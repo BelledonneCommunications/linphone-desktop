@@ -60,7 +60,7 @@ Item {
 
   // -----------------------------------------------------------------
 
-  implicitHeight: _computeHeight()
+  implicitHeight: 0
   opacity: 0
   visible: false
   z: Constants.zPopup
@@ -76,7 +76,7 @@ Item {
 
   // Block clicks, wheel... below menu.
   MouseArea {
-    anchors.fill: content
+    anchors.fill: parent
     hoverEnabled: true
     onWheel: {}
   }
@@ -115,6 +115,7 @@ Item {
 
     PropertyChanges {
       focus: true // Necessary to use `Keys.onEscapePressed`.
+      implicitHeight: _computeHeight()
       opacity: 1.0
       target: menu
     }
@@ -138,11 +139,25 @@ Item {
         property: 'opacity'
         target: menu
       }
+
+      NumberAnimation {
+        duration: PopupStyle.animation.openingDuration
+        easing.type: Easing.InOutQuad
+        property: 'implicitHeight'
+        target: menu
+      }
     },
 
     Transition {
       from: 'opened'
       to: ''
+
+      NumberAnimation {
+        duration: PopupStyle.animation.closingDuration
+        easing.type: Easing.InOutQuad
+        property: 'implicitHeight'
+        target: menu
+      }
 
       SequentialAnimation {
         ScriptAction {
