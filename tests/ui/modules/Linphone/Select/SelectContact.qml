@@ -2,6 +2,7 @@ import QtGraphicalEffects 1.0
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 
+import Common 1.0
 import Linphone 1.0
 
 // TODO: Contacts list.
@@ -88,7 +89,7 @@ Item {
             }
 
             delegate: Contact {
-                presence: $presence
+                presenceLevel: $presence
                 sipAddress: $sipAddress
                 username: $username
                 width: parent.width
