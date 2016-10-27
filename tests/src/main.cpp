@@ -13,6 +13,30 @@
 
 // ===================================================================
 
+void qmlLogger (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+  QByteArray localMsg = msg.toLocal8Bit();
+
+  switch (type) {
+    case QtDebugMsg:
+      fprintf(stderr, "[Debug]%s:%u: %s\n", context.file, context.line, localMsg.constData());
+      break;
+    case QtInfoMsg:
+      fprintf(stderr, "[Info]%s:%u: %s\n", context.file, context.line, localMsg.constData());
+      break;
+    case QtWarningMsg:
+      fprintf(stderr, "[Warning]%s:%u: %s\n", context.file, context.line, localMsg.constData());
+      break;
+    case QtCriticalMsg:
+      fprintf(stderr, "[Critical]%s:%u: %s\n", context.file, context.line, localMsg.constData());
+      break;
+    case QtFatalMsg:
+      fprintf(stderr, "[Fatal]%s:%u: %s\n", context.file, context.line, localMsg.constData());
+      abort();
+  }
+}
+
+// ===================================================================
+
 void setTrayIcon (QQmlApplicationEngine &engine) {
   QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
   QMenu *menu = new QMenu();
@@ -68,7 +92,11 @@ void addContextProperties (QQmlApplicationEngine &engine) {
   }
 }
 
+// ===================================================================
+
 int main (int argc, char *argv[]) {
+  qInstallMessageHandler(qmlLogger);
+
   registerTypes();
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);

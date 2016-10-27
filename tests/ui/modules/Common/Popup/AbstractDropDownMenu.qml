@@ -55,7 +55,7 @@ Item {
   }
 
   function _computeHeight () {
-    console.exception('Virtual method must be implemented.')
+    throw new Error('Virtual method must be implemented.')
   }
 
   // -----------------------------------------------------------------

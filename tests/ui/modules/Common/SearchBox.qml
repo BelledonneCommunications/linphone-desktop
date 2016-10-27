@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 
 import Common.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 // A reusable search input which display a entries model in a menu.
@@ -45,7 +46,7 @@ Item {
   }
 
   function _filter (text) {
-    console.assert(
+    Utils.assert(
       model.setFilterFixedString != null,
       '`model.setFilterFixedString` must be defined.'
     )

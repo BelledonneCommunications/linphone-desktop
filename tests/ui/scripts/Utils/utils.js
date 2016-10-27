@@ -106,6 +106,15 @@ function clearTimeout (timer) {
 
 // -------------------------------------------------------------------
 
+// Basic assert function.
+function assert (condition, message) {
+  if (!condition) {
+    throw new Error('Assert: ' + message)
+  }
+}
+
+// -------------------------------------------------------------------
+
 // Returns the top (root) parent of one object.
 function getTopParent (object, useFakeParent) {
   function _getTopParent (object, useFakeParent) {
