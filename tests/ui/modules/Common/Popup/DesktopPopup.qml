@@ -82,16 +82,12 @@ Item {
       from: 'opened'
       to: ''
 
-      NumberAnimation {
-        duration: PopupStyle.animation.closingDuration
-        easing.type: Easing.InOutQuad
-        property: 'opacity'
-        target: popup
-      }
-
       SequentialAnimation {
-        PauseAnimation {
+        NumberAnimation {
           duration: PopupStyle.animation.closingDuration
+          easing.type: Easing.InOutQuad
+          property: 'opacity'
+          target: popup
         }
 
         ScriptAction {

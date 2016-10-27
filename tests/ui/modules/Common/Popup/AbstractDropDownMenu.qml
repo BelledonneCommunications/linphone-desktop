@@ -126,7 +126,10 @@ Item {
       to: 'opened'
 
       ScriptAction {
-        script: menu.visible = true
+        script: {
+          menu.visible = true
+          menuOpened()
+        }
       }
 
       NumberAnimation {
@@ -135,39 +138,26 @@ Item {
         property: 'opacity'
         target: menu
       }
-
-      SequentialAnimation {
-        PauseAnimation {
-          duration: PopupStyle.animation.openingDuration
-        }
-
-        ScriptAction {
-          script: menuOpened()
-        }
-      }
     },
 
     Transition {
       from: 'opened'
       to: ''
 
-      NumberAnimation {
-        duration: PopupStyle.animation.closingDuration
-        easing.type: Easing.InOutQuad
-        property: 'opacity'
-        target: menu
-      }
-
       SequentialAnimation {
-        PauseAnimation {
+        ScriptAction {
+          script: menuClosed()
+        }
+
+        NumberAnimation {
           duration: PopupStyle.animation.closingDuration
+          easing.type: Easing.InOutQuad
+          property: 'opacity'
+          target: menu
         }
 
         ScriptAction {
-          script: {
-            visible = false
-            menuClosed()
-          }
+          script: visible = false
         }
       }
     }
