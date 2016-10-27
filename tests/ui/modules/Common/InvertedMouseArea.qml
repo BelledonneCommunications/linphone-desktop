@@ -10,6 +10,7 @@ import Utils 1.0
 Item {
   id: item
 
+  property bool _mouseAlwaysOutside
   property var _mouseArea
 
   // When emitted, returns a function to test if the click
@@ -21,7 +22,9 @@ Item {
       _mouseArea = builder.createObject()
     }
 
-    _mouseArea.parent = Utils.getTopParent(item)
+    _mouseArea.parent = Utils.getTopParent(item, true)
+    _mouseAlwaysOutside =
+      _mouseArea.parent !== Utils.getTopParent(item)
   }
 
   function _deleteMouseArea () {
@@ -59,7 +62,7 @@ Item {
         positionEvent.accepted = false
 
         // Click is outside or not.
-        if (!Utils.pointIsInItem(this, item, positionEvent)) {
+        if (_mouseAlwaysOutside || !Utils.pointIsInItem(this, item, positionEvent)) {
           if (_timeout != null) {
             // Remove existing timeout to avoid the creation of
             // many children.

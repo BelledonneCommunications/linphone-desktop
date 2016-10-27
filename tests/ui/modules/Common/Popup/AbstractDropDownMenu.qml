@@ -115,9 +115,8 @@ Item {
 
     PropertyChanges {
       focus: true // Necessary to use `Keys.onEscapePressed`.
-      opacity: 1
+      opacity: 1.0
       target: menu
-      visible: true
     }
   }
 
@@ -125,6 +124,10 @@ Item {
     Transition {
       from: ''
       to: 'opened'
+
+      ScriptAction {
+        script: menu.visible = true
+      }
 
       NumberAnimation {
         duration: PopupStyle.animation.openingDuration
@@ -135,7 +138,7 @@ Item {
 
       SequentialAnimation {
         PauseAnimation {
-          duration: PopupStyle.animation.closingDuration
+          duration: PopupStyle.animation.openingDuration
         }
 
         ScriptAction {
@@ -149,16 +152,9 @@ Item {
       to: ''
 
       NumberAnimation {
-        duration: PopupStyle.animation.openingDuration
-        easing.type: Easing.InOutQuad
-        property: 'opacity'
-        target: menu
-      }
-
-      NumberAnimation {
         duration: PopupStyle.animation.closingDuration
         easing.type: Easing.InOutQuad
-        property: 'visible' // Ugly, use `NumberAnimation` with a bool.
+        property: 'opacity'
         target: menu
       }
 
@@ -168,7 +164,10 @@ Item {
         }
 
         ScriptAction {
-          script: menuClosed()
+          script: {
+            visible = false
+            menuClosed()
+          }
         }
       }
     }

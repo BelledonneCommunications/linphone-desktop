@@ -107,15 +107,16 @@ function clearTimeout (timer) {
 // -------------------------------------------------------------------
 
 // Returns the top (root) parent of one object.
-function getTopParent (object) {
-  function _getTopParent (object) {
-    return object.$parent || object.parent
+function getTopParent (object, useFakeParent) {
+  function _getTopParent (object, useFakeParent) {
+    return (useFakeParent && object.$parent) || object.parent
   }
 
-  var parent = _getTopParent(object)
+  var parent = _getTopParent(object, useFakeParent)
+  var p
 
-  while (_getTopParent(parent) != null) {
-    parent = _getTopParent(parent)
+  while ((p = _getTopParent(parent, useFakeParent)) != null) {
+    parent = p
   }
 
   return parent
