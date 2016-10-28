@@ -35,6 +35,7 @@ set(SOURCES
   src/components/settings/AccountSettingsListModel.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
+  src/logger.cpp
   src/main.cpp
 )
 
@@ -48,6 +49,7 @@ set(HEADERS
   src/components/settings/AccountSettingsListModel.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
+  src/logger.hpp
 )
 
 set(QRC_RESOURCES

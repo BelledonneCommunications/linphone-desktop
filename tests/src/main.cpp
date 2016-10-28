@@ -10,30 +10,7 @@
 #include "app.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
 #include "components/notification/Notification.hpp"
-
-// ===================================================================
-
-void qmlLogger (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-  QByteArray localMsg = msg.toLocal8Bit();
-
-  switch (type) {
-    case QtDebugMsg:
-      fprintf(stderr, "[Debug]%s:%u: %s\n", context.file, context.line, localMsg.constData());
-      break;
-    case QtInfoMsg:
-      fprintf(stderr, "[Info]%s:%u: %s\n", context.file, context.line, localMsg.constData());
-      break;
-    case QtWarningMsg:
-      fprintf(stderr, "[Warning]%s:%u: %s\n", context.file, context.line, localMsg.constData());
-      break;
-    case QtCriticalMsg:
-      fprintf(stderr, "[Critical]%s:%u: %s\n", context.file, context.line, localMsg.constData());
-      break;
-    case QtFatalMsg:
-      fprintf(stderr, "[Fatal]%s:%u: %s\n", context.file, context.line, localMsg.constData());
-      abort();
-  }
-}
+#include "logger.hpp"
 
 // ===================================================================
 
