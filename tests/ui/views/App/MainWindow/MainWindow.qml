@@ -100,7 +100,7 @@ ApplicationWindow {
       Layout.fillHeight: true
       Layout.maximumWidth: MainWindowStyle.menu.width
       Layout.preferredWidth: MainWindowStyle.menu.width
-      spacing: MainWindowStyle.menu.spacing
+      spacing: 0
 
       Menu {
         entryHeight: MainWindowStyle.menu.entryHeight

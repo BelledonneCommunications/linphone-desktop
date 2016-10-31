@@ -10,7 +10,10 @@ import Common.Styles 1.0
 ScrollBar {
   id: scrollBar
 
-  background: ForceScrollBarStyle.background
+  background: Rectangle {
+    anchors.fill: parent
+    color: ForceScrollBarStyle.backgroundColor
+  }
   contentItem: Rectangle {
     color: scrollBar.pressed
       ? ForceScrollBarStyle.color.pressed

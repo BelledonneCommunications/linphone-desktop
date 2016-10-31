@@ -9,8 +9,9 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property alias model: view.model
 
+  spacing: 0
+
   Rectangle {
-    Layout.bottomMargin: TimelineStyle.legend.bottomMargin
     Layout.fillWidth: true
     Layout.preferredHeight: TimelineStyle.legend.height
     color: TimelineStyle.legend.backgroundColor
@@ -48,7 +49,11 @@ ColumnLayout {
     Layout.fillWidth: true
 
     delegate: Contact {
+      color: index % 2 == 0
+        ? TimelineStyle.contact.colorA
+        : TimelineStyle.contact.colorB
       contact: $contact
+      height: TimelineStyle.contact.height
       width: parent.width
     }
   }

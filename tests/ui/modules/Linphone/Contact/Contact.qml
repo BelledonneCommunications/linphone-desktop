@@ -7,13 +7,14 @@ import Linphone.Styles 1.0
 
 // ===================================================================
 
-Item {
+Rectangle {
   property alias actions: actionBar.data
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
 
   property var contact
 
+  color: 'transparent' // No color by default.
   height: ContactStyle.height
 
   RowLayout {

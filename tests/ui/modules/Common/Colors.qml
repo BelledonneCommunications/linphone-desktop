@@ -4,15 +4,12 @@ import QtQuick 2.7
 QtObject {
   property color a: 'transparent'
   property color b: '#5E5E5F' // Pressed toolbar.
-  property color c: '#C5C5C5' // Released toolbar.
 
   property color d: '#5A585B' // Text color.
 
   property color e: '#DEDEDE' // Timeline separator
 
   property color f: '#808080' // Popup shadow.
-
-
 
   property color l: '#000000' // Text color.
 
@@ -35,6 +32,8 @@ QtObject {
   // -----------------------------------------------------------------
 
   property color g: '#6B7A86'
+  property color g10: '#1A6b7a86'
+  property color g20: '#336b7a86'
   property color h: '#687680'
   property color i: '#FE5E00'
   property color j: '#4B5964'

@@ -6,9 +6,7 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property Rectangle background: Rectangle {
-    color: Colors.a
-  }
+  property color backgroundColor: Colors.g20
 
   property Rectangle contentItem: Rectangle {
     implicitHeight: 100
@@ -18,7 +16,7 @@ QtObject {
 
   property QtObject color: QtObject {
     property color hovered: Colors.h
-    property color normal: Colors.c
+    property color normal: Colors.g20
     property color pressed: Colors.b
   }
 }
