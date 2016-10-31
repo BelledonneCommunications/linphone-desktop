@@ -31,14 +31,16 @@ QtObject {
   // OK.
   // -----------------------------------------------------------------
 
-  property color g: '#6B7A86'
-  property color g10: '#1A6b7a86'
-  property color g20: '#336b7a86'
-  property color h: '#687680'
-  property color i: '#FE5E00'
-  property color j: '#4B5964'
+  property color c:   '#CBCBCB'
+  property color g:   '#6B7A86'
+  property color g10: '#1A6B7A86'
+  property color g20: '#336B7A86'
+  property color h:   '#687680'
+  property color i:   '#FE5E00'
+  property color j:   '#4B5964'
   property color j75: '#BF4B5964'
-  property color k: '#FFFFFF'
+  property color k:   '#FFFFFF'
   property color k50: '#32FFFFFF'
-  property color u: '#B1B1B1'
+  property color u:   '#B1B1B1'
+  property color v:   '#E2E2E2'
 }

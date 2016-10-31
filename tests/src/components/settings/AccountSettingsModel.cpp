@@ -26,3 +26,7 @@ Presence::PresenceStatus AccountSettingsModel::getPresenceStatus () const {
 QString AccountSettingsModel::getSipAddress () const {
   return QString("e.miller@sip-linphone.org");
 }
+
+bool AccountSettingsModel::getAutoAnswerStatus () const {
+  return true;
+}

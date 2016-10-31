@@ -57,6 +57,29 @@ ApplicationWindow {
         Layout.preferredWidth: MainWindowStyle.accountStatus.width
       }
 
+      Column {
+        width: MainWindowStyle.autoAnswerStatus.width
+
+        Icon {
+          icon: AccountSettingsModel.autoAnswerStatus
+            ? 'auto_answer_active'
+            : 'auto_answer_inactive'
+          iconSize: MainWindowStyle.autoAnswerStatus.iconSize
+        }
+
+        Text {
+          clip: true
+          font {
+            pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
+          }
+          text: qsTr('autoAnswerStatus')
+          width: parent.width
+          color: AccountSettingsModel.autoAnswerStatus
+            ? MainWindowStyle.autoAnswerStatus.text.color.enabled
+            : MainWindowStyle.autoAnswerStatus.text.color.disabled
+        }
+      }
+
       SearchBox {
         id: searchBox
 
@@ -127,7 +150,7 @@ ApplicationWindow {
       Timeline {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        model: ContactsListModel {}
+        model: ContactsListModel {} // Use History list.
       }
     }
 

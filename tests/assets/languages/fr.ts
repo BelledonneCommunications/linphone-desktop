@@ -216,6 +216,10 @@
         <source>contactsEntry</source>
         <translation>Contacts</translation>
     </message>
+    <message>
+        <source>autoAnswerStatus</source>
+        <translation>auto</translation>
+    </message>
 </context>
 <context>
     <name>ManageAccounts</name>

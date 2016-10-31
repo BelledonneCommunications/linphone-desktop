@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.7
 
+import Common 1.0
+
 // ===================================================================
 
 QtObject {
@@ -10,6 +12,20 @@ QtObject {
 
   property QtObject accountStatus: QtObject {
     property int width: 200
+  }
+
+  property QtObject autoAnswerStatus: QtObject {
+    property int iconSize: 13
+    property int width: 24
+
+    property QtObject text: QtObject {
+      property int fontSize: 8
+
+      property QtObject color: QtObject {
+        property color enabled: Colors.i
+        property color disabled: Colors.c
+      }
+    }
   }
 
   property QtObject menu: QtObject {
@@ -29,7 +45,7 @@ QtObject {
     property int spacing: 20
 
     property var background: Rectangle {
-      color: '#E2E2E2'
+      color: Colors.v
     }
   }
 }

@@ -1,5 +1,5 @@
 # ====================================================================
-# languages/CMakeLists.txt
+# assets/languages/CMakeLists.txt
 # ====================================================================
 
 # This line prevent `.ts` files deletion.

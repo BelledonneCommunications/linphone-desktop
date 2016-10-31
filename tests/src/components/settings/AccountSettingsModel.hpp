@@ -34,6 +34,12 @@ class AccountSettingsModel : public QObject {
     CONSTANT
   );
 
+  Q_PROPERTY(
+    bool autoAnswerStatus
+    READ getAutoAnswerStatus
+    CONSTANT
+  );
+
 public:
   AccountSettingsModel (QObject *parent = Q_NULLPTR);
 
@@ -45,6 +51,8 @@ private:
   Presence::PresenceStatus getPresenceStatus () const;
 
   QString getSipAddress () const;
+
+  bool getAutoAnswerStatus () const;
 };
 
 #endif // ACCOUNT_SETTINGS_MODEL_H_
