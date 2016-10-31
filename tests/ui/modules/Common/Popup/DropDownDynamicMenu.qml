@@ -5,6 +5,8 @@ import Utils 1.0
 // ===================================================================
 
 AbstractDropDownMenu {
+  // Can be computed, but for performance usage, it must be given
+  // in attribute.
   property int entryHeight
   property int maxMenuHeight
 

@@ -50,6 +50,10 @@ Item {
 
   MouseArea {
     anchors.fill: parent
+    hoverEnabled: true
+    cursorShape: containsMouse
+      ? Qt.PointingHandCursor
+      : Qt.ArrowCursor
     onClicked: Utils.openWindow('ManageAccounts', this)
   }
 }

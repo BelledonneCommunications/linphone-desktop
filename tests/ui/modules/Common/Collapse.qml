@@ -25,8 +25,8 @@ Item {
 
   // -----------------------------------------------------------------
 
-  implicitWidth: button.iconSize
   implicitHeight: button.iconSize
+  implicitWidth: button.iconSize
 
   ActionButton {
     id: button
@@ -43,7 +43,6 @@ Item {
   // -----------------------------------------------------------------
 
   states: State {
-    name: 'collapsed'
     when: _collapsed
 
     PropertyChanges {

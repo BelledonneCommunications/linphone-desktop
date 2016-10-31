@@ -61,7 +61,7 @@ ApplicationWindow {
         id: searchBox
 
         Layout.fillWidth: true
-        entryHeight: 50 // TODO: Remove.
+        entryHeight: MainWindowStyle.searchBox.entryHeight
         maxMenuHeight: MainWindowStyle.searchBox.maxHeight
         placeholderText: qsTr('mainSearchBarPlaceholder')
 

@@ -19,6 +19,7 @@ QtObject {
   }
 
   property QtObject searchBox: QtObject {
+    property int entryHeight: 50
     property int maxHeight: 300 // See Hick's law for good choice.
   }
 
