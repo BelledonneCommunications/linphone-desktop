@@ -3,6 +3,7 @@ import QtGraphicalEffects 1.0
 
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 
@@ -11,15 +12,22 @@ Item {
   property alias presenceLevel: presenceLevel.level
   property string username
 
+  property var _initialsRegex: /^\s*([^\s]+)(?:\s+([^\s]+))?/
+
   function _computeInitials () {
-    var spaceIndex = username.indexOf(' ')
-    var firstLetter = username.charAt(0)
+    var result = username.match(_initialsRegex)
 
-    if (spaceIndex === -1) {
-      return firstLetter
-    }
+    Utils.assert(
+      result != null,
+      'Unable to get initials of: \'' + username + '\''
+    )
 
-    return firstLetter + username.charAt(spaceIndex + 1)
+    return result[1].charAt(0).toUpperCase() +
+      (
+        result[2] != null
+          ? result[2].charAt(0).toUpperCase()
+          : ''
+      )
   }
 
   // Image mask. (Circle)

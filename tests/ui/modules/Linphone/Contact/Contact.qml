@@ -17,9 +17,11 @@ Item {
   height: ContactStyle.height
 
   RowLayout {
-    anchors.fill: parent
-    anchors.leftMargin: ContactStyle.leftMargin
-    anchors.rightMargin: ContactStyle.rightMargin
+    anchors {
+      fill: parent
+      leftMargin: ContactStyle.leftMargin
+      rightMargin: ContactStyle.rightMargin
+    }
     spacing: ContactStyle.spacing
 
     Avatar {
@@ -27,7 +29,7 @@ Item {
 
       Layout.preferredHeight: ContactStyle.contentHeight
       Layout.preferredWidth: ContactStyle.contentHeight
-      image: contact.image
+      image: contact.avatar
       presenceLevel: contact.presenceLevel
       username: contact.username
     }
@@ -37,7 +39,7 @@ Item {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      sipAddress: contact.sipAddress
+      sipAddress: contact.sipAddresses[0]
       username: avatar.username
     }
 

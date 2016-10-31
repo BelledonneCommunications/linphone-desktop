@@ -25,9 +25,9 @@ ColumnLayout {
       spacing: TimelineStyle.legend.spacing
 
       Icon {
+        anchors.verticalCenter: parent.verticalCenter
         icon: 'history'
         iconSize: TimelineStyle.legend.iconSize
-        anchors.verticalCenter: parent.verticalCenter
       }
 
       Text {

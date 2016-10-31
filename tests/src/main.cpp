@@ -65,7 +65,7 @@ void addContextProperties (QQmlApplicationEngine &engine) {
   if (component.isError()) {
     qWarning() << component.errors();
   } else {
-    context->setContextProperty("CallsWindow", component.create());
+    //  context->setContextProperty("CallsWindow", component.create());
   }
 
   // Models.
