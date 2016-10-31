@@ -14,6 +14,7 @@ QtObject {
 
   property QtObject menu: QtObject {
     property int entryHeight: 50
+    property int spacing: 0
     property int width: 250
   }
 

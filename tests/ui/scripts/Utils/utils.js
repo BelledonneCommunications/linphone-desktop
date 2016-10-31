@@ -16,7 +16,7 @@ function openWindow (window, parent, options) {
     object = Qt.createQmlObject(window, parent)
   } else {
     var component = Qt.createComponent(
-      'qrc:/ui/views/' + window + '.qml'
+      'qrc:/ui/views/App/' + window + '.qml'
     )
 
     if (component.status !== Component.Ready) {

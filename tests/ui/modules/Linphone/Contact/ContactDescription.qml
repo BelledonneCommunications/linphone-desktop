@@ -15,7 +15,6 @@ Column {
   Text {
     id: username
 
-    clip: true
     color: usernameColor
     elide: Text.ElideRight
     font.bold: true

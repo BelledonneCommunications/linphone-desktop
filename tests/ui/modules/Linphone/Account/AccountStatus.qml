@@ -1,5 +1,7 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
+import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -9,16 +11,30 @@ Item {
   Column {
     anchors.fill: parent
 
-    Text {
-      clip: true
-      color: AccountStatusStyle.username.color
-      elide: Text.ElideRight
-      font.bold: true
-      font.pointSize: AccountStatusStyle.username.fontSize
+    RowLayout {
       height: parent.height / 2
-      text: AccountSettingsModel.username
-      verticalAlignment: Text.AlignBottom
+      spacing: AccountStatusStyle.horizontalSpacing
       width: parent.width
+
+      PresenceLevel {
+        Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
+        Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
+        icon: 'chevron'
+        level: AccountSettingsModel.presenceLevel
+        Layout.alignment: Qt.AlignBottom
+        Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottoMargin
+      }
+
+      Text {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        color: AccountStatusStyle.username.color
+        elide: Text.ElideRight
+        font.bold: true
+        font.pointSize: AccountStatusStyle.username.fontSize
+        text: AccountSettingsModel.username
+        verticalAlignment: Text.AlignBottom
+      }
     }
 
     Text {
