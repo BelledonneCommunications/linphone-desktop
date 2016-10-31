@@ -1,31 +1,60 @@
 <!DOCTYPE RCC><RCC version="1.0">
   <qresource prefix="/">
-    <file>imgs/add_field.svg</file>
-    <file>imgs/call.svg</file>
-    <file>imgs/cam.svg</file>
-    <file>imgs/cat_contact.jpg</file>
-    <file>imgs/chat_attachment.svg</file>
-    <file>imgs/chat.svg</file>
-    <file>imgs/collapse.svg</file>
-    <file>imgs/conference.svg</file>
-    <file>imgs/contacts_list.svg</file>
-    <file>imgs/contact.svg</file>
-    <file>imgs/delete.svg</file>
-    <file>imgs/hangup.svg</file>
-    <file>imgs/history.svg</file>
-    <file>imgs/home.svg</file>
-    <file>imgs/incoming_call.svg</file>
-    <file>imgs/led_green.svg</file>
-    <file>imgs/led_orange.svg</file>
-    <file>imgs/led_red.svg</file>
-    <file>imgs/led_white.svg</file>
-    <file>imgs/linphone.png</file>
-    <file>imgs/lost_incoming_call.svg</file>
-    <file>imgs/lost_outgoing_call.svg</file>
-    <file>imgs/micro.svg</file>
-    <file>imgs/right_arrow.svg</file>
-    <file>imgs/speaker.svg</file>
-    <file>imgs/valid.svg</file>
+    <file>assets/images/auto_answer_active.svg</file>
+    <file>assets/images/auto_answer_inactive.svg</file>
+    <file>assets/images/call_hovered.svg</file>
+    <file>assets/images/call_normal.svg</file>
+    <file>assets/images/call_pressed.svg</file>
+    <file>assets/images/chevron_green.svg</file>
+    <file>assets/images/chevron_orange.svg</file>
+    <file>assets/images/chevron_red.svg</file>
+    <file>assets/images/chevron_white.svg</file>
+    <file>assets/images/collapse.svg</file>
+    <file>assets/images/contact_normal.svg</file>
+    <file>assets/images/contact_selected.svg</file>
+    <file>assets/images/history.svg</file>
+    <file>assets/images/home_normal.svg</file>
+    <file>assets/images/home_selected.svg</file>
+    <file>assets/images/led_green.svg</file>
+    <file>assets/images/led_orange.svg</file>
+    <file>assets/images/led_red.svg</file>
+    <file>assets/images/led_white.svg</file>
+    <file>assets/images/linphone.png</file>
+    <file>assets/images/search.svg</file>
+    <file>assets/images/video_call_hovered.svg</file>
+    <file>assets/images/video_call_normal.svg</file>
+    <file>assets/images/video_call_pressed.svg</file>
+    <file>assets/old_images/add_field.svg</file>
+    <file>assets/old_images/call.svg</file>
+    <file>assets/old_images/cam.svg</file>
+    <file>assets/old_images/cat_contact.jpg</file>
+    <file>assets/old_images/chat_attachment.svg</file>
+    <file>assets/old_images/chat.svg</file>
+    <file>assets/old_images/collapse.svg</file>
+    <file>assets/old_images/conference.svg</file>
+    <file>assets/old_images/contacts_list.svg</file>
+    <file>assets/old_images/contact.svg</file>
+    <file>assets/old_images/delete.svg</file>
+    <file>assets/old_images/hangup.svg</file>
+    <file>assets/old_images/history.svg</file>
+    <file>assets/old_images/home.svg</file>
+    <file>assets/old_images/incoming_call.svg</file>
+    <file>assets/old_images/led_green.svg</file>
+    <file>assets/old_images/led_orange.svg</file>
+    <file>assets/old_images/led_red.svg</file>
+    <file>assets/old_images/led_white.svg</file>
+    <file>assets/old_images/lost_incoming_call.svg</file>
+    <file>assets/old_images/lost_outgoing_call.svg</file>
+    <file>assets/old_images/micro.svg</file>
+    <file>assets/old_images/right_arrow.svg</file>
+    <file>assets/old_images/speaker.svg</file>
+    <file>assets/old_images/valid.svg</file>
+    <file>assets/ressources_svg/avatar_L.svg</file>
+    <file>assets/ressources_svg/avatar_s.svg</file>
+    <file>assets/ressources_svg/avatar_xs.svg</file>
+    <file>assets/ressources_svg/chat_clic.svg</file>
+    <file>assets/ressources_svg/chat_default.svg</file>
+    <file>assets/ressources_svg/chat_over.svg</file>
     <file>ui/modules/Common/Animations/CaterpillarAnimation.qml</file>
     <file>ui/modules/Common/Borders.qml</file>
     <file>ui/modules/Common/Collapse.qml</file>
@@ -81,6 +110,7 @@
     <file>ui/modules/Common/Styles/qmldir</file>
     <file>ui/modules/Common/Styles/SearchBoxStyle.qml</file>
     <file>ui/modules/Common/View/ScrollableListView.qml</file>
+    <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Call/CallControls.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
@@ -93,6 +123,7 @@
     <file>ui/modules/Linphone/Contact/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
     <file>ui/modules/Linphone/Select/SelectContact.qml</file>
+    <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
@@ -101,16 +132,19 @@
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/utils.js</file>
-    <file>ui/views/Calls/Calls.qml</file>
-    <file>ui/views/Calls/StartingCall.qml</file>
-    <file>ui/views/Calls/StartingIncomingCall.qml</file>
-    <file>ui/views/Calls/StartingOutgoingCall.qml</file>
-    <file>ui/views/MainWindow/Contact.qml</file>
-    <file>ui/views/MainWindow/Contacts.qml</file>
-    <file>ui/views/MainWindow/Conversation.qml</file>
-    <file>ui/views/MainWindow/Home.qml</file>
-    <file>ui/views/MainWindow/MainWindow.qml</file>
-    <file>ui/views/ManageAccounts.qml</file>
-    <file>ui/views/NewCall.qml</file>
+    <file>ui/views/App/Calls/Calls.qml</file>
+    <file>ui/views/App/Calls/StartingCall.qml</file>
+    <file>ui/views/App/Calls/StartingIncomingCall.qml</file>
+    <file>ui/views/App/Calls/StartingOutgoingCall.qml</file>
+    <file>ui/views/App/MainWindow/Contact.qml</file>
+    <file>ui/views/App/MainWindow/Contacts.qml</file>
+    <file>ui/views/App/MainWindow/Conversation.qml</file>
+    <file>ui/views/App/MainWindow/Home.qml</file>
+    <file>ui/views/App/MainWindow/MainWindow.qml</file>
+    <file>ui/views/App/ManageAccounts.qml</file>
+    <file>ui/views/App/NewCall.qml</file>
+    <file>ui/views/App/qmldir</file>
+    <file>ui/views/App/Styles/MainWindow/MainWindowStyle.qml</file>
+    <file>ui/views/App/Styles/qmldir</file>
   </qresource>
 </RCC>

@@ -1,5 +1,7 @@
 import QtQuick 2.7
 
+import Common 1.0
+
 // ===================================================================
 // An icon image properly resized.
 // ===================================================================
@@ -13,6 +15,6 @@ Image {
 
   fillMode: Image.PreserveAspectFit
   source: icon
-    ? 'qrc:/imgs/' + icon + '.svg'
+    ? Constants.imagesPath + icon + Constants.imagesFormat
     : ''
 }

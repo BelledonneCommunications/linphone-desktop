@@ -117,6 +117,11 @@ TestCase {
         component: 'import QtQuick 2.7; ListModel {}',
         result: true,
         type: 'QQmlListModel'
+      },
+      {
+        component: 'import QtQuick 2.7; ListView {}',
+        result: true,
+        type: 'QQuickListView'
       }
     ]
   }

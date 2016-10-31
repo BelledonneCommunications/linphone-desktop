@@ -32,7 +32,6 @@ set(SOURCES
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
   src/components/notification/Notification.cpp
-  src/components/settings/AccountSettingsListModel.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/logger.cpp
@@ -46,7 +45,6 @@ set(HEADERS
   src/components/contacts/ContactsListProxyModel.hpp
   src/components/notification/Notification.hpp
   src/components/presence/Presence.hpp
-  src/components/settings/AccountSettingsListModel.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/logger.hpp
@@ -56,7 +54,7 @@ set(QRC_RESOURCES
   resources.qrc
 )
 
-set(LANGUAGES_DIRECTORY languages)
+set(LANGUAGES_DIRECTORY assets/languages)
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES en fr)
 

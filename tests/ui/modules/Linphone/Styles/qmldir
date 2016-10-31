@@ -2,9 +2,11 @@
 
 module Linphone.Style
 
-# Components styles.
-singleton TimelineStyle            1.0 TimelineStyle.qml
+# Components styles --------------------------------------------------
 
-singleton AvatarStyle              1.0 Contact/AvatarStyle.qml
-singleton ContactDescriptionStyle  1.0 Contact/ContactDescriptionStyle.qml
-singleton ContactStyle             1.0 Contact/ContactStyle.qml
+singleton AccountStatusStyle      1.0 Account/AccountStatusStyle.qml
+singleton AvatarStyle             1.0 Contact/AvatarStyle.qml
+singleton ContactDescriptionStyle 1.0 Contact/ContactDescriptionStyle.qml
+singleton ContactStyle            1.0 Contact/ContactStyle.qml
+
+singleton TimelineStyle           1.0 TimelineStyle.qml

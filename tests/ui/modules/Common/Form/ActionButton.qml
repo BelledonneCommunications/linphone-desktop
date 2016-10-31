@@ -4,14 +4,35 @@ import QtQuick.Controls 2.0
 import Common 1.0
 
 // ===================================================================
-// An animated small button with an image.
+// An animated (or not) button with image(s).
 // ===================================================================
 
 Button {
-  property alias icon: icon.icon
+  id: button
+
+  property bool useStates: true
   property int iconSize
 
-  flat: true
+  // If `useStates` = true, the used icons are:
+  // `icon`_pressed, `icon`_hovered and `icon`_normal.
+  property string icon
+
+  function _getIcon () {
+    if (!useStates) {
+      return button.icon
+    }
+
+    return button.icon + (
+      button.down
+        ? '_pressed'
+        : (button.hovered ? '_hovered' : '_normal')
+    )
+  }
+
+  background: Rectangle {
+    color: 'transparent'
+  }
+  hoverEnabled: true
 
   // Ugly hack, use current size, ActionBar size,
   // or other parent height.
@@ -22,5 +43,6 @@ Button {
     id: icon
 
     anchors.fill: parent
+    icon: _getIcon()
   }
 }

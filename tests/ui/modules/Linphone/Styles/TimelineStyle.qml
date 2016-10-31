@@ -5,19 +5,14 @@ import Common 1.0
 
 QtObject {
   property QtObject legend: QtObject {
-    property color color: Colors.d
-
+    property color backgroundColor: Colors.u
+    property color color: Colors.k
     property int bottomMargin: 10
-    property int fontSize: 13
-    property int iconSize: 26
-    property int leftMargin: 18
-    property int spacing: 16
-    property int topMargin: 10
-  }
-
-  property QtObject separator: QtObject {
-    property color color: Colors.e
-
-    property int height: 1
+    property int fontSize: 12
+    property int height: 30
+    property int iconSize: 10
+    property int leftMargin: 17
+    property int rightMargin: 17
+    property int spacing: 8
   }
 }

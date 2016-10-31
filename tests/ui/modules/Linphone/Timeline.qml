@@ -9,32 +9,35 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property alias model: view.model
 
-  // Legend.
-  Row {
-    Layout.bottomMargin: TimelineStyle.legend.bottomMargin
-    Layout.leftMargin: TimelineStyle.legend.leftMargin
-    Layout.topMargin: TimelineStyle.legend.topMargin
-    spacing: TimelineStyle.legend.spacing
-
-    Icon {
-      icon: 'history'
-      iconSize: TimelineStyle.legend.iconSize
-    }
-
-    Text {
-      color: TimelineStyle.legend.color
-      font.pointSize: TimelineStyle.legend.fontSize
-      height: parent.height
-      text: qsTr('timelineTitle')
-      verticalAlignment: Text.AlignVCenter
-    }
-  }
-
-  // Separator.
   Rectangle {
+    Layout.bottomMargin: TimelineStyle.legend.bottomMargin
     Layout.fillWidth: true
-    Layout.preferredHeight: TimelineStyle.separator.height
-    color: TimelineStyle.separator.color
+    Layout.preferredHeight: TimelineStyle.legend.height
+    color: TimelineStyle.legend.backgroundColor
+
+    // Legend.
+    Row {
+      anchors {
+        fill: parent
+        leftMargin: TimelineStyle.legend.leftMargin
+        rightMargin: TimelineStyle.legend.rightMargin
+      }
+      spacing: TimelineStyle.legend.spacing
+
+      Icon {
+        icon: 'history'
+        iconSize: TimelineStyle.legend.iconSize
+        anchors.verticalCenter: parent.verticalCenter
+      }
+
+      Text {
+        color: TimelineStyle.legend.color
+        font.pointSize: TimelineStyle.legend.fontSize
+        height: parent.height
+        text: qsTr('timelineTitle')
+        verticalAlignment: Text.AlignVCenter
+      }
+    }
   }
 
   // History.
@@ -45,9 +48,7 @@ ColumnLayout {
     Layout.fillWidth: true
 
     delegate: Contact {
-      presenceLevel: $presence
-      sipAddress: $sipAddress
-      username: $username
+      contact: $contact
       width: parent.width
     }
   }

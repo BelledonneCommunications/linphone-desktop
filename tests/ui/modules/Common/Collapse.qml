@@ -25,6 +25,9 @@ Item {
 
   // -----------------------------------------------------------------
 
+  implicitWidth: button.iconSize
+  implicitHeight: button.iconSize
+
   ActionButton {
     id: button
 
@@ -32,6 +35,7 @@ Item {
     background: CollapseStyle.background
     icon: 'collapse'
     iconSize: CollapseStyle.iconSize
+    useStates: false
 
     onClicked: _collapsed = !_collapsed
   }

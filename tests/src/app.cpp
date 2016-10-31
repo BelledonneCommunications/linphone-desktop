@@ -18,5 +18,5 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
     qWarning() << "No translation found.";
   }
 
-  this->setWindowIcon(QIcon(":/imgs/linphone.png"));
+  this->setWindowIcon(QIcon(":/assets/images/linphone.png"));
 }

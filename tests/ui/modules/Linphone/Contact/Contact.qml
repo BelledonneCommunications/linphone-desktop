@@ -9,12 +9,10 @@ import Linphone.Styles 1.0
 
 Item {
   property alias actions: actionBar.data
-  property alias image: avatar.image
-  property alias presenceLevel: avatar.presenceLevel
-  property alias sipAddress: description.sipAddress
   property alias sipAddressColor: description.sipAddressColor
-  property alias username: avatar.username
   property alias usernameColor: description.usernameColor
+
+  property var contact
 
   height: ContactStyle.height
 
@@ -29,6 +27,9 @@ Item {
 
       Layout.preferredHeight: ContactStyle.contentHeight
       Layout.preferredWidth: ContactStyle.contentHeight
+      image: contact.image
+      presenceLevel: contact.presenceLevel
+      username: contact.username
     }
 
     ContactDescription {
@@ -36,6 +37,7 @@ Item {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
+      sipAddress: contact.sipAddress
       username: avatar.username
     }
 

@@ -1,7 +1,5 @@
 #include "AccountSettingsModel.hpp"
 
-typedef AccountSettingsModel::Presence Presence;
-
 // ===================================================================
 
 AccountSettingsModel::AccountSettingsModel (QObject *parent) :
@@ -9,7 +7,7 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) :
 }
 
 QString AccountSettingsModel::getUsername () const {
-  return "Toto";
+  return "Edward Miller ";
 }
 
 void AccountSettingsModel::setUsername (const QString &username) {
@@ -17,12 +15,14 @@ void AccountSettingsModel::setUsername (const QString &username) {
   (void)username;
 }
 
-
-Presence AccountSettingsModel::getPresence () const {
-  return Presence::Away;
+Presence::PresenceLevel AccountSettingsModel::getPresenceLevel () const {
+  return Presence::Green;
 }
 
-void AccountSettingsModel::setPresence (Presence presence) {
-  // NOTHING TODO.
-  (void)presence;
+Presence::PresenceStatus AccountSettingsModel::getPresenceStatus () const {
+  return Presence::Online;
+}
+
+QString AccountSettingsModel::getSipAddress () const {
+  return QString("e.miller@sip-linphone.org");
 }

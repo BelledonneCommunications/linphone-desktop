@@ -77,6 +77,18 @@ Item {
 
       onActiveFocusChanged: activeFocus && searchBox.showMenu()
       onTextChanged: _filter()
+
+      Icon {
+        anchors {
+          right: parent.right
+          rightMargin: parent.rightPadding
+          verticalCenter: parent.verticalCenter
+        }
+
+        icon: 'search'
+        iconSize: parent.contentHeight
+        visible: !parent.text
+      }
     }
 
     // Wrap the search box menu in a window.

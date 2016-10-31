@@ -51,26 +51,35 @@ ColumnLayout {
         Icon {
           Layout.preferredHeight: MenuStyle.entry.iconSize
           Layout.preferredWidth: MenuStyle.entry.iconSize
-          icon: modelData.icon
+          icon: modelData.icon + (
+            _selectedEntry === index
+              ? '_selected'
+              : '_normal'
+          )
         }
 
         Text {
           Layout.fillWidth: true
-          color: MenuStyle.entry.text.color
+          color: _selectedEntry === index
+            ? MenuStyle.entry.text.color.selected
+            : MenuStyle.entry.text.color.normal
           font.pointSize: MenuStyle.entry.text.fontSize
           height: parent.height
           text: modelData.entryName
           verticalAlignment: Text.AlignVCenter
         }
+      }
 
-        Icon {
-          Layout.alignment: Qt.AlignRight
-          Layout.preferredHeight: MenuStyle.entry.selectionIconSize
-          Layout.preferredWidth: MenuStyle.entry.selectionIconSize
-          icon: _selectedEntry === index
-            ? 'right_arrow'
-            : ''
+      Rectangle {
+        anchors {
+          left: parent.left
         }
+
+        height: parent.height
+        color: _selectedEntry === index
+          ? MenuStyle.entry.indicator.color
+          : 'transparent'
+        width: MenuStyle.entry.indicator.width
       }
 
       MouseArea {

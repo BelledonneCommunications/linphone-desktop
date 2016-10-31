@@ -10,6 +10,7 @@
 #include "app.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
 #include "components/notification/Notification.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "logger.hpp"
 
 // ===================================================================
@@ -42,7 +43,7 @@ void setTrayIcon (QQmlApplicationEngine &engine) {
   menu->addAction(quit_action);
 
   tray_icon->setContextMenu(menu);
-  tray_icon->setIcon(QIcon(":/imgs/linphone.png"));
+  tray_icon->setIcon(QIcon(":/assets/images/linphone.png"));
   tray_icon->setToolTip("Linphone");
   tray_icon->show();
 }
@@ -58,15 +59,20 @@ void registerTypes () {
 
 void addContextProperties (QQmlApplicationEngine &engine) {
   QQmlContext *context = engine.rootContext();
-  QQmlComponent component(&engine, QUrl("qrc:/ui/views/Calls/Calls.qml"));
+  QQmlComponent component(&engine, QUrl("qrc:/ui/views/App/Calls/Calls.qml"));
 
-  context->setContextProperty("Notification", new Notification());
-
+  // Windows.
   if (component.isError()) {
     qWarning() << component.errors();
   } else {
     context->setContextProperty("CallsWindow", component.create());
   }
+
+  // Models.
+  context->setContextProperty("AccountSettingsModel", new AccountSettingsModel());
+
+  // Other.
+  context->setContextProperty("Notification", new Notification());
 }
 
 // ===================================================================
@@ -87,8 +93,13 @@ int main (int argc, char *argv[]) {
   // Set modules paths.
   engine.addImportPath(":/ui/modules");
   engine.addImportPath(":/ui/scripts");
+  engine.addImportPath(":/ui/views");
 
-  engine.load(QUrl("qrc:/ui/views/MainWindow/MainWindow.qml"));
+  // Load context properties.
+  addContextProperties(engine);
+
+  // Load main view.
+  engine.load(QUrl("qrc:/ui/views/App/MainWindow/MainWindow.qml"));
   if (engine.rootObjects().isEmpty()) {
     qWarning() << "Unable to open main window.";
     return EXIT_FAILURE;
@@ -99,8 +110,6 @@ int main (int argc, char *argv[]) {
     qWarning() << "System tray not found on this system.";
   else
     setTrayIcon(engine);
-
-  addContextProperties(engine);
 
   // Run!
   return app.exec();

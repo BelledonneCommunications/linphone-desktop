@@ -6,20 +6,23 @@ module Linphone
 
 # Components ---------------------------------------------------------
 
+# Account
+AccountStatus       1.0 Account/AccountStatus.qml
+
 # Call
-CallControls         1.0 Call/CallControls.qml
+CallControls        1.0 Call/CallControls.qml
 
 # Chat
-Chat                 1.0 Chat/Chat.qml
+Chat                1.0 Chat/Chat.qml
 
 # Contact
-Avatar               1.0 Contact/Avatar.qml
-Contact              1.0 Contact/Contact.qml
-ContactDescription   1.0 Contact/ContactDescription.qml
-PresenceLevel        1.0 Contact/PresenceLevel.qml
+Avatar              1.0 Contact/Avatar.qml
+Contact             1.0 Contact/Contact.qml
+ContactDescription  1.0 Contact/ContactDescription.qml
+PresenceLevel       1.0 Contact/PresenceLevel.qml
 
 # Select
-SelectContact        1.0 Select/SelectContact.qml
+SelectContact       1.0 Select/SelectContact.qml
 
 # Timeline
-Timeline             1.0 Timeline.qml
+Timeline            1.0 Timeline.qml

@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include "../presence/Presence.hpp"
+
 // ===================================================================
 
 class AccountSettingsModel : public QObject {
@@ -15,35 +17,34 @@ class AccountSettingsModel : public QObject {
   );
 
   Q_PROPERTY(
-    Presence presence
-    READ getPresence
-    WRITE setPresence
+    QString sipAddress
+    READ getSipAddress
+    CONSTANT
+  );
+
+  Q_PROPERTY(
+    Presence::PresenceLevel presenceLevel
+    READ getPresenceLevel
+    CONSTANT
+  );
+
+  Q_PROPERTY(
+    Presence::PresenceStatus presenceStatus
+    READ getPresenceStatus
+    CONSTANT
   );
 
 public:
-  // See: https://tools.ietf.org/html/rfc4480#section-3.2
-  // Activities, section 3.2 of RFC 4480
-  enum Presence {
-    Away,
-    BeRightBack,
-    Busy,
-    DoNotDisturb,
-    Moved,
-    Offline,
-    OnThePhone,
-    Online,
-    OutToLunch,
-    UsingAnotherMessagingService
-  };
-
   AccountSettingsModel (QObject *parent = Q_NULLPTR);
 
 private:
   QString getUsername () const;
   void setUsername (const QString &username);
 
-  Presence getPresence () const;
-  void setPresence (Presence presence);
+  Presence::PresenceLevel getPresenceLevel () const;
+  Presence::PresenceStatus getPresenceStatus () const;
+
+  QString getSipAddress () const;
 };
 
 #endif // ACCOUNT_SETTINGS_MODEL_H_

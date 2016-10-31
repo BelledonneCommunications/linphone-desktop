@@ -18,10 +18,7 @@ RowLayout {
       id: contact
 
       anchors.fill: parent
-      presenceLevel: Presence.Green
-      sipAddress: 'math.hart@sip-linphone.org'
       sipAddressColor: '#FFFFFF'
-      username: 'Mathilda Hart'
       usernameColor: '#FFFFFF'
     }
   }

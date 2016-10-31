@@ -12,12 +12,8 @@ QtObject {
 
   property color f: '#808080' // Popup shadow.
 
-  property color g: '#8E8E8E' // MenuEntry Normal.
-  property color h: '#707070' // MenuEntry Hovered.
-  property color i: '#FE5E00' // MenuEntry Pressed.
-  property color j: '#434343' // MenuEntry Selected.
 
-  property color k: '#FFFFFF' // Text color.
+
   property color l: '#000000' // Text color.
 
   property color m: '#D1D1D1' // SmallButton Normal.
@@ -33,4 +29,17 @@ QtObject {
   property color s: '#D64D00'
 
   property color t: '#FF8600'
+
+  // -----------------------------------------------------------------
+  // OK.
+  // -----------------------------------------------------------------
+
+  property color g: '#6B7A86'
+  property color h: '#687680'
+  property color i: '#FE5E00'
+  property color j: '#4B5964'
+  property color j75: '#BF4B5964'
+  property color k: '#FFFFFF'
+  property color k50: '#32FFFFFF'
+  property color u: '#B1B1B1'
 }
