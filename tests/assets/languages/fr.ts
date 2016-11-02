@@ -288,6 +288,49 @@
     </message>
 </context>
 <context>
+    <name>PresenceString</name>
+    <message>
+        <source>presenceOnline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceOutToLunch</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceDoNotDisturb</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceMoved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceUsingAnotherMessagingService</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceOffline</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceUnknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceBeRightBack</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceOnThePhone</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>

@@ -20,8 +20,9 @@ Avatar              1.0 Contact/Avatar.qml
 Contact             1.0 Contact/Contact.qml
 ContactDescription  1.0 Contact/ContactDescription.qml
 
-# PresenceLevel
-PresenceLevel       1.0 PresenceLevel.qml
+# Presence
+PresenceLevel       1.0 Presence/PresenceLevel.qml
+PresenceString      1.0 Presence/PresenceString.qml
 
 # Select
 SelectContact       1.0 Select/SelectContact.qml

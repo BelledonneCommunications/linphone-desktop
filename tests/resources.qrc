@@ -122,13 +122,15 @@
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
-    <file>ui/modules/Linphone/PresenceLevel.qml</file>
+    <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
+    <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
     <file>ui/modules/Linphone/Select/SelectContact.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Presence/PresenceStringStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/Timeline.qml</file>

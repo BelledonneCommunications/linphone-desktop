@@ -1,0 +1,11 @@
+pragma Singleton
+import QtQuick 2.7
+
+import Common 1.0
+
+// ===================================================================
+
+QtObject {
+  property color color: '#A1A1A1'
+  property int fontSize: 10
+}

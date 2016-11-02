@@ -108,108 +108,107 @@ ColumnLayout {
           anchors.fill: parent
           color: ContactsStyle.contact.backgroundColor.normal
 
-          RowLayout {
-            anchors {
-              fill: parent
-              leftMargin: ContactsStyle.contact.leftMargin
-              rightMargin: ContactsStyle.contact.rightMargin
-            }
-            spacing: ContactsStyle.contact.spacing
-
-            // Avatar.
-            Avatar {
-              Layout.preferredHeight: ContactsStyle.contact.avatarSize
-              Layout.preferredWidth: ContactsStyle.contact.avatarSize
-              image: $contact.avatar
-              username: $contact.username
-            }
-
-            // Username.
-            Text {
-              Layout.preferredWidth: ContactsStyle.contact.username.width
-              color: ContactsStyle.contact.username.color
-              elide: Text.ElideRight
-              font.bold: true
-              text: $contact.username
-            }
-
-            // Container.
-            Item {
-              Layout.fillWidth: true
-              Layout.fillHeight: true
-
-              Item {
-                id: container1
-
-                anchors.fill: parent
-
-                PresenceLevel {
-                  anchors {
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                  }
-                  height: ContactsStyle.contact.presenceLevelSize
-                  width: ContactsStyle.contact.presenceLevelSize
-
-                  level: $contact.presenceLevel
-                }
-              }
-
-              Item {
-                id: container2
-
-                anchors.fill: parent
-                visible: false
-
-                ActionBar {
-                  anchors {
-                    left: parent.left
-                    verticalCenter: parent.verticalCenter
-                  }
-                  iconSize: ContactsStyle.contact.actionButtonsSize
-
-                  ActionButton {
-                    icon: 'video_call'
-                    onClicked: CallsWindow.show()
-                  }
-
-                  ActionButton {
-                    icon: 'call'
-                    onClicked: CallsWindow.show()
-                  }
-
-                  ActionButton {
-                    icon: 'chat'
-                    onClicked: window.setView('Conversation')
-                  }
-                }
-
-                ActionButton {
-                  anchors {
-                    right: parent.right
-                    verticalCenter: parent.verticalCenter
-                  }
-                  icon: 'delete'
-                  iconSize: ContactsStyle.contact.deleteButtonSize
-
-                  onClicked: _removeContact($contact)
-                }
-              }
-            }
-          }
-
           MouseArea {
+            id: mouseArea
+
             anchors.fill: parent
             hoverEnabled: true
 
-            onEntered: contact.state = 'hover'
-            onExited: contact.state = ''
+            RowLayout {
+              anchors {
+                fill: parent
+                leftMargin: ContactsStyle.contact.leftMargin
+                rightMargin: ContactsStyle.contact.rightMargin
+              }
+              spacing: ContactsStyle.contact.spacing
+
+              // Avatar.
+              Avatar {
+                Layout.preferredHeight: ContactsStyle.contact.avatarSize
+                Layout.preferredWidth: ContactsStyle.contact.avatarSize
+                image: $contact.avatar
+                username: $contact.username
+              }
+
+              // Username.
+              Text {
+                Layout.preferredWidth: ContactsStyle.contact.username.width
+                color: ContactsStyle.contact.username.color
+                elide: Text.ElideRight
+                font.bold: true
+                text: $contact.username
+              }
+
+              // Container.
+              Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                RowLayout {
+                  id: container1
+
+                  anchors.fill: parent
+
+                  PresenceLevel {
+                    Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize
+                    Layout.preferredWidth: ContactsStyle.contact.presenceLevelSize
+                    level: $contact.presenceLevel
+                  }
+
+                  PresenceString {
+                    Layout.fillWidth: true
+                    status: $contact.presenceStatus
+                  }
+                }
+
+                Item {
+                  id: container2
+
+                  anchors.fill: parent
+                  visible: false
+
+                  ActionBar {
+                    anchors {
+                      left: parent.left
+                      verticalCenter: parent.verticalCenter
+                    }
+                    iconSize: ContactsStyle.contact.actionButtonsSize
+
+                    ActionButton {
+                      icon: 'video_call'
+                      onClicked: CallsWindow.show()
+                    }
+
+                    ActionButton {
+                      icon: 'call'
+                      onClicked: CallsWindow.show()
+                    }
+
+                    ActionButton {
+                      icon: 'chat'
+                      onClicked: window.setView('Conversation')
+                    }
+                  }
+
+                  ActionButton {
+                    anchors {
+                      right: parent.right
+                      verticalCenter: parent.verticalCenter
+                    }
+                    icon: 'delete'
+                    iconSize: ContactsStyle.contact.deleteButtonSize
+
+                    onClicked: _removeContact($contact)
+                  }
+                }
+              }
+            }
           }
 
-          // -----------------------------------------------------------
+          // ---------------------------------------------------------
 
           states: State {
-            name: 'hover'
+            when: mouseArea.containsMouse
 
             PropertyChanges {
               color: ContactsStyle.contact.backgroundColor.hovered
