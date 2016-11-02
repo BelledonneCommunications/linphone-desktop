@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.7
 
+// ===================================================================
+
 QtObject {
   property color a: 'transparent'
   property color b: '#5E5E5F' // Pressed toolbar.
@@ -21,9 +23,6 @@ QtObject {
 
   property color q: '#E6E6E6'
 
-  property color r: '#8F8F8F'
-
-
 
   // -----------------------------------------------------------------
   // OK.
@@ -39,8 +38,10 @@ QtObject {
   property color j75: '#BF4B5964'
   property color k:   '#FFFFFF'
   property color k50: '#32FFFFFF'
+  property color r:   '#595759'
   property color s:   '#D64D00'
   property color t:   '#FF8600'
   property color u:   '#B1B1B1'
   property color v:   '#E2E2E2'
+  property color w:   '#A1A1A1'
 }

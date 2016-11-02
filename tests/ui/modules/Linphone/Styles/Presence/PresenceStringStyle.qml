@@ -6,6 +6,6 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property color color: '#A1A1A1'
+  property color color: Colors.w
   property int fontSize: 10
 }

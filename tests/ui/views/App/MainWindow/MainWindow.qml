@@ -55,6 +55,8 @@ ApplicationWindow {
 
         Layout.fillHeight: parent.height
         Layout.preferredWidth: MainWindowStyle.accountStatus.width
+
+        onClicked: Utils.openWindow('ManageAccounts', window)
       }
 
       Column {

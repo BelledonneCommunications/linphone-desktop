@@ -3,11 +3,14 @@ import QtQuick.Layouts 1.3
 
 import Linphone 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
 
 // ===================================================================
 
 Item {
+  id: accountStatus
+
+  signal clicked
+
   Column {
     anchors.fill: parent
 
@@ -17,12 +20,12 @@ Item {
       width: parent.width
 
       PresenceLevel {
+        Layout.alignment: Qt.AlignBottom
+        Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottoMargin
         Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
         Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
         icon: 'chevron'
         level: AccountSettingsModel.presenceLevel
-        Layout.alignment: Qt.AlignBottom
-        Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottoMargin
       }
 
       Text {
@@ -55,6 +58,6 @@ Item {
       : Qt.ArrowCursor
     hoverEnabled: true
 
-    onClicked: Utils.openWindow('ManageAccounts', this)
+    onClicked: accountStatus.clicked()
   }
 }

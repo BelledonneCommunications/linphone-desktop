@@ -148,6 +148,7 @@ ColumnLayout {
                   id: container1
 
                   anchors.fill: parent
+                  spacing: ContactsStyle.contact.spacing
 
                   PresenceLevel {
                     Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize

@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQuick 2.7
 
+// ===================================================================
+
 QtObject {
   property int contentHeight: 32
   property int height: 50
