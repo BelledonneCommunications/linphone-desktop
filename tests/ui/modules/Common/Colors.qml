@@ -15,9 +15,6 @@ QtObject {
 
   property color l: '#000000' // Text color.
 
-  property color m: '#D1D1D1' // SmallButton Normal.
-  property color n: '#C0C0C0' // SmallButton Hovered.
-
   property color o: '#232323' // TextButtonA Hovered.
   property color p: '#B1B1B1' // TextButtonB text Hovered.
 
@@ -38,6 +35,8 @@ QtObject {
   property color j75: '#BF4B5964'
   property color k:   '#FFFFFF'
   property color k50: '#32FFFFFF'
+  property color m:   '#D1D1D1'
+  property color n:   '#C0C0C0'
   property color r:   '#595759'
   property color s:   '#D64D00'
   property color t:   '#FF8600'

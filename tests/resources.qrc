@@ -1,7 +1,6 @@
 <!DOCTYPE RCC><RCC version="1.0">
   <qresource prefix="/">
-    <file>assets/images/auto_answer_active.svg</file>
-    <file>assets/images/auto_answer_inactive.svg</file>
+    <file>assets/images/auto_answer.svg</file>
     <file>assets/images/call_hovered.svg</file>
     <file>assets/images/call_normal.svg</file>
     <file>assets/images/call_pressed.svg</file>

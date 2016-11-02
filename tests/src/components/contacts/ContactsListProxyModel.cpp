@@ -137,6 +137,5 @@ bool ContactsListProxyModel::isConnectedFilterUsed () const {
 
 void ContactsListProxyModel::setConnectedFilter (bool useConnectedFilter) {
   m_use_connected_filter = useConnectedFilter;
-  qDebug() << useConnectedFilter;
   invalidate();
 }

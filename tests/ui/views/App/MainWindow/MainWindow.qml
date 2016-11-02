@@ -64,8 +64,8 @@ ApplicationWindow {
 
         Icon {
           icon: AccountSettingsModel.autoAnswerStatus
-            ? 'auto_answer_active'
-            : 'auto_answer_inactive'
+            ? 'auto_answer'
+            : ''
           iconSize: MainWindowStyle.autoAnswerStatus.iconSize
         }
 
@@ -76,9 +76,7 @@ ApplicationWindow {
           }
           text: qsTr('autoAnswerStatus')
           width: parent.width
-          color: AccountSettingsModel.autoAnswerStatus
-            ? MainWindowStyle.autoAnswerStatus.text.color.enabled
-            : MainWindowStyle.autoAnswerStatus.text.color.disabled
+          color: MainWindowStyle.autoAnswerStatus.text.color
         }
       }
 

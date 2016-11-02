@@ -7,7 +7,7 @@ import Common.Styles 1.0
 // ===================================================================
 
 Controls.TextField {
-  property string icon
+  property alias icon: icon.icon
 
   background: Rectangle {
     border {

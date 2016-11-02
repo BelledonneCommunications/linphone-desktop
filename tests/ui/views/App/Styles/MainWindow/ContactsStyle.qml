@@ -19,9 +19,9 @@ QtObject {
   property QtObject contact: QtObject {
     property int actionButtonsSize: 36
     property int avatarSize: 30
-    property int deleteButtonSize: 16
+    property int deleteButtonSize: 18
     property int height: 50
-    property int leftMargin: 15
+    property int leftMargin: 40
     property int presenceLevelSize: 12
     property int rightMargin: 25
     property int spacing: 15
