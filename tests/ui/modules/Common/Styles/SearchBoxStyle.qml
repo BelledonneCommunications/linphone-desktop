@@ -6,5 +6,5 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property color shadowColor: Colors.f
+  property color shadowColor: Colors.l
 }

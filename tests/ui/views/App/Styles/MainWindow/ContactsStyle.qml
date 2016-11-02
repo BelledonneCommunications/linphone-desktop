@@ -6,11 +6,11 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property color backgroundColor: '#FFFFFF'
+  property color backgroundColor: Colors.k
   property int spacing: 20
 
   property QtObject bar: QtObject {
-    property color backgroundColor: '#F3F3F3'
+    property color backgroundColor: Colors.e
     property int height: 60
     property int leftMargin: 18
     property int rightMargin: 18
@@ -27,12 +27,12 @@ QtObject {
     property int spacing: 15
 
     property QtObject backgroundColor: QtObject {
-      property color normal: '#FFFFFF'
-      property color hovered: '#E2E9EF'
+      property color normal: Colors.k
+      property color hovered: Colors.p
     }
 
     property QtObject border: QtObject {
-      property color color: '#E8E8E8'
+      property color color: Colors.f
       property int width: 1
     }
 
@@ -42,7 +42,7 @@ QtObject {
     }
 
     property QtObject username: QtObject {
-      property color color: '#4B5964'
+      property color color: Colors.j
       property int width: 220
     }
   }
