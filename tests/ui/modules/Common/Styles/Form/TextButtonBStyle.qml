@@ -7,14 +7,14 @@ import Common 1.0
 
 QtObject {
   property QtObject backgroundColor: QtObject {
-    property color hovered: Colors.p
-    property color normal: Colors.m
-    property color pressed: Colors.i
+    property color hovered: Colors.s
+    property color normal: Colors.i
+    property color pressed: Colors.t
   }
 
   property QtObject textColor: QtObject {
-    property color hovered: Colors.d
-    property color normal: Colors.d
+    property color hovered: Colors.k
+    property color normal: Colors.k
     property color pressed: Colors.k
   }
 }

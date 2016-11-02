@@ -1,6 +1,6 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 
+import Common 1.0
 import Common.Styles 1.0
 import Utils 1.0
 
@@ -68,27 +68,13 @@ Item {
     TextField {
       id: searchField
 
-      background: SearchBoxStyle.searchFieldBackground
-      color: SearchBoxStyle.text.color
-      font.pointSize: SearchBoxStyle.text.fontSize
+      icon: 'search'
       width: parent.width
 
       Keys.onEscapePressed: searchBox.hideMenu()
 
       onActiveFocusChanged: activeFocus && searchBox.showMenu()
       onTextChanged: _filter()
-
-      Icon {
-        anchors {
-          right: parent.right
-          rightMargin: parent.rightPadding
-          verticalCenter: parent.verticalCenter
-        }
-
-        icon: 'search'
-        iconSize: parent.contentHeight
-        visible: !parent.text
-      }
     }
 
     // Wrap the search box menu in a window.

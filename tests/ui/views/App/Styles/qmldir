@@ -4,4 +4,5 @@ module App.Styles
 
 # Views styles -------------------------------------------------------
 
+singleton ContactsStyle   1.0 MainWindow/ContactsStyle.qml
 singleton MainWindowStyle 1.0 MainWindow/MainWindowStyle.qml

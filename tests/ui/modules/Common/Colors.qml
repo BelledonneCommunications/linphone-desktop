@@ -23,9 +23,7 @@ QtObject {
 
   property color r: '#8F8F8F'
 
-  property color s: '#D64D00'
 
-  property color t: '#FF8600'
 
   // -----------------------------------------------------------------
   // OK.
@@ -41,6 +39,8 @@ QtObject {
   property color j75: '#BF4B5964'
   property color k:   '#FFFFFF'
   property color k50: '#32FFFFFF'
+  property color s:   '#D64D00'
+  property color t:   '#FF8600'
   property color u:   '#B1B1B1'
   property color v:   '#E2E2E2'
 }

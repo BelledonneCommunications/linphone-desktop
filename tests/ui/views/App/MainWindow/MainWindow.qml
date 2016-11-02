@@ -151,6 +151,8 @@ ApplicationWindow {
         Layout.fillHeight: true
         Layout.fillWidth: true
         model: ContactsListModel {} // Use History list.
+
+        onClicked: setView('Conversation')
       }
     }
 

@@ -1,36 +1,37 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
 
-ColumnLayout {
-  spacing: 2
+import App.Styles 1.0
 
-  // Search bar.
-  Item {
+// ===================================================================
+
+ColumnLayout {
+  spacing: 0
+
+  // -----------------------------------------------------------------
+  // Search Bar & actions.
+  // -----------------------------------------------------------------
+
+  Rectangle {
     Layout.fillWidth: true
-    Layout.preferredHeight: 50
-    anchors.left: parent.left
-    anchors.leftMargin: 18
-    anchors.right: parent.right
-    anchors.rightMargin: 18
+    Layout.preferredHeight: ContactsStyle.bar.height
+
+    color: ContactsStyle.bar.color
 
     RowLayout {
-      anchors.verticalCenter: parent.verticalCenter
-      height: 30
-      spacing: 20
-      width: parent.width
+      anchors.fill: parent
+      anchors.leftMargin: ContactsStyle.bar.leftMargin
+      anchors.rightMargin: ContactsStyle.bar.rightMargin
 
-      // TODO: Replace by top-level component.
+      spacing: 20
+
       TextField {
         Layout.fillWidth: true
-        background: Rectangle {
-          color: '#EAEAEA'
-          implicitHeight: 30
-        }
+        icon: 'filter'
         placeholderText: qsTr('searchContactPlaceholder')
 
         onTextChanged: {
@@ -50,21 +51,23 @@ ColumnLayout {
 
       TextButtonB {
         text: qsTr('addContact')
-
         onClicked: window.setView('Contact')
       }
     }
   }
 
+  // -----------------------------------------------------------------
   // Contacts list.
+  // -----------------------------------------------------------------
+
   Rectangle {
     Layout.fillWidth: true
     Layout.fillHeight: true
-    color: '#F5F5F5'
+    color: ContactsStyle.backgroundColor
 
     ScrollableListView {
       anchors.fill: parent
-      spacing: 2
+      spacing: ContactsStyle.contacts.spacing
 
       model: ContactsListModel {
         id: contacts
@@ -138,16 +141,17 @@ ColumnLayout {
                 iconSize: parent.height
 
                 ActionButton {
-                  icon: 'cam'
+                  icon: 'video_call'
+                  onClicked: CallsWindow.show()
                 }
 
                 ActionButton {
                   icon: 'call'
+                  onClicked: CallsWindow.show()
                 }
 
                 ActionButton {
                   icon: 'chat'
-
                   onClicked: window.setView('Conversation')
                 }
               }

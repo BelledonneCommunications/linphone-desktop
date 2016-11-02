@@ -17,4 +17,7 @@ Image {
   source: icon
     ? Constants.imagesPath + icon + Constants.imagesFormat
     : ''
+
+  // Warning: Perfomance cost.
+  mipmap: true
 }

@@ -32,7 +32,6 @@ Item {
     id: button
 
     anchors.centerIn: parent
-    background: CollapseStyle.background
     icon: 'collapse'
     iconSize: CollapseStyle.iconSize
     useStates: false

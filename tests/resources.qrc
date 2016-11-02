@@ -5,6 +5,9 @@
     <file>assets/images/call_hovered.svg</file>
     <file>assets/images/call_normal.svg</file>
     <file>assets/images/call_pressed.svg</file>
+    <file>assets/images/chat_hovered.svg</file>
+    <file>assets/images/chat_normal.svg</file>
+    <file>assets/images/chat_pressed.svg</file>
     <file>assets/images/chevron_green.svg</file>
     <file>assets/images/chevron_orange.svg</file>
     <file>assets/images/chevron_red.svg</file>
@@ -12,6 +15,10 @@
     <file>assets/images/collapse.svg</file>
     <file>assets/images/contact_normal.svg</file>
     <file>assets/images/contact_selected.svg</file>
+    <file>assets/images/delete_hovered.svg</file>
+    <file>assets/images/delete_normal.svg</file>
+    <file>assets/images/delete_pressed.svg</file>
+    <file>assets/images/filter.svg</file>
     <file>assets/images/history.svg</file>
     <file>assets/images/home_normal.svg</file>
     <file>assets/images/home_selected.svg</file>
@@ -39,10 +46,6 @@
     <file>assets/old_images/history.svg</file>
     <file>assets/old_images/home.svg</file>
     <file>assets/old_images/incoming_call.svg</file>
-    <file>assets/old_images/led_green.svg</file>
-    <file>assets/old_images/led_orange.svg</file>
-    <file>assets/old_images/led_red.svg</file>
-    <file>assets/old_images/led_white.svg</file>
     <file>assets/old_images/lost_incoming_call.svg</file>
     <file>assets/old_images/lost_outgoing_call.svg</file>
     <file>assets/old_images/micro.svg</file>
@@ -52,9 +55,6 @@
     <file>assets/ressources_svg/avatar_L.svg</file>
     <file>assets/ressources_svg/avatar_s.svg</file>
     <file>assets/ressources_svg/avatar_xs.svg</file>
-    <file>assets/ressources_svg/chat_clic.svg</file>
-    <file>assets/ressources_svg/chat_default.svg</file>
-    <file>assets/ressources_svg/chat_over.svg</file>
     <file>ui/modules/Common/Animations/CaterpillarAnimation.qml</file>
     <file>ui/modules/Common/Borders.qml</file>
     <file>ui/modules/Common/Collapse.qml</file>
@@ -74,6 +74,7 @@
     <file>ui/modules/Common/Form/SmallButton.qml</file>
     <file>ui/modules/Common/Form/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/TextButtonB.qml</file>
+    <file>ui/modules/Common/Form/TextField.qml</file>
     <file>ui/modules/Common/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
@@ -102,6 +103,7 @@
     <file>ui/modules/Common/Styles/Form/SmallButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonBStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/TextFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentComboBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/ActionMenuStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/MenuStyle.qml</file>
@@ -144,6 +146,7 @@
     <file>ui/views/App/ManageAccounts.qml</file>
     <file>ui/views/App/NewCall.qml</file>
     <file>ui/views/App/qmldir</file>
+    <file>ui/views/App/Styles/MainWindow/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
   </qresource>

@@ -7,7 +7,11 @@ import Linphone.Styles 1.0
 // ===================================================================
 
 ColumnLayout {
+  id: timeline
+
   property alias model: view.model
+
+  signal clicked (var contact)
 
   spacing: 0
 
@@ -48,13 +52,27 @@ ColumnLayout {
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    delegate: Contact {
-      color: index % 2 == 0
-        ? TimelineStyle.contact.colorA
-        : TimelineStyle.contact.colorB
-      contact: $contact
+    delegate: Item {
       height: TimelineStyle.contact.height
       width: parent.width
+
+      Contact {
+        anchors.fill: parent
+        color: index % 2 == 0
+          ? TimelineStyle.contact.colorA
+          : TimelineStyle.contact.colorB
+        contact: $contact
+      }
+
+      MouseArea {
+        anchors.fill: parent
+        cursorShape: containsMouse
+          ? Qt.PointingHandCursor
+          : Qt.ArrowCursor
+        hoverEnabled: true
+
+        onClicked: timeline.clicked($contact)
+      }
     }
   }
 }

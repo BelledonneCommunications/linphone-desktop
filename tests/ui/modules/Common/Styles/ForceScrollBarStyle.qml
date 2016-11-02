@@ -8,10 +8,10 @@ import Common 1.0
 QtObject {
   property color backgroundColor: Colors.g20
 
-  property Rectangle contentItem: Rectangle {
-    implicitHeight: 100
-    implicitWidth: 8
-    radius: 10
+  property QtObject contentItem: QtObject {
+    property int implicitHeight: 100
+    property int implicitWidth: 8
+    property int radius: 10
   }
 
   property QtObject color: QtObject {
