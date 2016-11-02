@@ -44,7 +44,7 @@ Item {
     id: rightBorder
 
     anchors.right: parent.right
-    color: borderColor != null ? borderColor : rigthColor
+    color: borderColor != null ? borderColor : rightColor
     height: parent.height
     width: borderWidth != null ? borderWidth : rightWidth
   }

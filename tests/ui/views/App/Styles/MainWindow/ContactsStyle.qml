@@ -36,6 +36,11 @@ QtObject {
       property int width: 1
     }
 
+    property QtObject indicator: QtObject {
+      property color color: Colors.i
+      property int width: 5
+    }
+
     property QtObject username: QtObject {
       property color color: '#4B5964'
       property int width: 220

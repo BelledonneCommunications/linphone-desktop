@@ -26,7 +26,7 @@ ColumnLayout {
   }
 
   function _removeContact (contact) {
-    Utils.openConfirmDialog(contact, {
+    Utils.openConfirmDialog(window, {
       descriptionText: qsTr('removeContactDescription'),
       exitHandler: function (status) {
         console.log('remove contact', status)
@@ -97,7 +97,7 @@ ColumnLayout {
       }
 
       delegate: Borders {
-        borderColor: ContactsStyle.contact.border.color
+        bottomColor: ContactsStyle.contact.border.color
         bottomWidth: ContactsStyle.contact.border.width
         height: ContactsStyle.contact.height
         width: parent.width
@@ -107,6 +107,15 @@ ColumnLayout {
 
           anchors.fill: parent
           color: ContactsStyle.contact.backgroundColor.normal
+
+          Rectangle {
+            id: indicator
+
+            anchors.left: parent.left
+            color: 'transparent'
+            height: parent.height
+            width: ContactsStyle.contact.indicator.width
+          }
 
           MouseArea {
             id: mouseArea
@@ -215,6 +224,12 @@ ColumnLayout {
               color: ContactsStyle.contact.backgroundColor.hovered
               target: contact
             }
+
+            PropertyChanges {
+              color: ContactsStyle.contact.indicator.color
+              target: indicator
+            }
+
             PropertyChanges { target: container1; visible: false }
             PropertyChanges { target: container2; visible: true }
           }
