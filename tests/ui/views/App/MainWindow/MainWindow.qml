@@ -138,6 +138,8 @@ ApplicationWindow {
         }]
 
         onEntrySelected: {
+          timeline.resetSelectedItem()
+
           if (entry === 0) {
             setView('Home')
           } else if (entry === 1) {
@@ -148,6 +150,8 @@ ApplicationWindow {
 
       // History.
       Timeline {
+        id: timeline
+
         Layout.fillHeight: true
         Layout.fillWidth: true
         model: ContactsListModel {} // Use History list.

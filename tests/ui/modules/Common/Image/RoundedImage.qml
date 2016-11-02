@@ -27,7 +27,7 @@ Item {
       effect: ShaderEffect {
         property var image: imageContainer
 
-        fragmentShader: "
+        fragmentShader: '
           uniform lowp sampler2D image;
           uniform lowp sampler2D mask;
           uniform lowp float qt_Opacity;
@@ -39,7 +39,7 @@ Item {
               texture2D(mask, qt_TexCoord0).a *
               qt_Opacity;
           }
-        "
+        '
       }
 
       enabled: true

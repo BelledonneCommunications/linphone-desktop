@@ -13,6 +13,14 @@ ColumnLayout {
 
   signal clicked (var contact)
 
+  // -----------------------------------------------------------------
+
+  function resetSelectedItem () {
+    view.currentIndex = -1
+  }
+
+  // -----------------------------------------------------------------
+
   spacing: 0
 
   Rectangle {
@@ -51,6 +59,7 @@ ColumnLayout {
 
     Layout.fillHeight: true
     Layout.fillWidth: true
+    currentIndex: -1
 
     delegate: Item {
       height: TimelineStyle.contact.height
@@ -58,10 +67,20 @@ ColumnLayout {
 
       Contact {
         anchors.fill: parent
-        color: index % 2 == 0
-          ? TimelineStyle.contact.colorA
-          : TimelineStyle.contact.colorB
+        color: view.currentIndex === index
+          ? TimelineStyle.contact.backgroundColor.selected
+          : (
+            index % 2 == 0
+              ? TimelineStyle.contact.backgroundColor.a
+              : TimelineStyle.contact.backgroundColor.b
+          )
         contact: $contact
+        sipAddressColor: view.currentIndex === index
+          ? TimelineStyle.contact.sipAddress.color.selected
+          : TimelineStyle.contact.sipAddress.color.normal
+        usernameColor: view.currentIndex === index
+          ? TimelineStyle.contact.username.color.selected
+          : TimelineStyle.contact.username.color.normal
       }
 
       MouseArea {
@@ -71,7 +90,10 @@ ColumnLayout {
           : Qt.ArrowCursor
         hoverEnabled: true
 
-        onClicked: timeline.clicked($contact)
+        onClicked: {
+          view.currentIndex = index
+          timeline.clicked($contact)
+        }
       }
     }
   }
