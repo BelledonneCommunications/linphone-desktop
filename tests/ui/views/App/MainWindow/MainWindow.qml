@@ -126,8 +126,10 @@ ApplicationWindow {
       spacing: 0
 
       Menu {
+        id: menu
+
         entryHeight: MainWindowStyle.menu.entryHeight
-        entryWidth: parent.width
+        entryWidth: MainWindowStyle.menu.width
 
         entries: [{
           entryName: qsTr('homeEntry'),
@@ -156,7 +158,10 @@ ApplicationWindow {
         Layout.fillWidth: true
         model: ContactsListModel {} // Use History list.
 
-        onClicked: setView('Conversation')
+        onClicked: {
+          menu.resetSelectedEntry()
+          setView('Conversation')
+        }
       }
     }
 

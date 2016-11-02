@@ -6,7 +6,8 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property int spacing: 0
+  property int spacing: 1
+  property color backgroundColor: Colors.x
 
   property QtObject entry: QtObject {
     property int iconSize: 24
