@@ -102,6 +102,8 @@ ColumnLayout {
         height: ContactsStyle.contact.height
         width: parent.width
 
+        // -----------------------------------------------------------
+
         Rectangle {
           id: contact
 
@@ -149,68 +151,73 @@ ColumnLayout {
               }
 
               // Container.
-              Item {
+              Loader {
+                id: loader
+
                 Layout.fillWidth: true
                 Layout.fillHeight: true
+                sourceComponent: container1
+              }
+            }
+          }
 
-                RowLayout {
-                  id: container1
+          // ---------------------------------------------------------
 
-                  anchors.fill: parent
-                  spacing: ContactsStyle.contact.spacing
+          Component {
+            id: container1
 
-                  PresenceLevel {
-                    Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize
-                    Layout.preferredWidth: ContactsStyle.contact.presenceLevelSize
-                    level: $contact.presenceLevel
-                  }
+            RowLayout {
+              spacing: ContactsStyle.contact.spacing
 
-                  PresenceString {
-                    Layout.fillWidth: true
-                    status: $contact.presenceStatus
-                  }
+              PresenceLevel {
+                Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize
+                Layout.preferredWidth: ContactsStyle.contact.presenceLevelSize
+                level: $contact.presenceLevel
+              }
+
+              PresenceString {
+                Layout.fillWidth: true
+                status: $contact.presenceStatus
+              }
+            }
+          }
+
+          Component {
+            id: container2
+
+            Item {
+              ActionBar {
+                anchors {
+                  left: parent.left
+                  verticalCenter: parent.verticalCenter
+                }
+                iconSize: ContactsStyle.contact.actionButtonsSize
+
+                ActionButton {
+                  icon: 'video_call'
+                  onClicked: CallsWindow.show()
                 }
 
-                Item {
-                  id: container2
-
-                  anchors.fill: parent
-                  visible: false
-
-                  ActionBar {
-                    anchors {
-                      left: parent.left
-                      verticalCenter: parent.verticalCenter
-                    }
-                    iconSize: ContactsStyle.contact.actionButtonsSize
-
-                    ActionButton {
-                      icon: 'video_call'
-                      onClicked: CallsWindow.show()
-                    }
-
-                    ActionButton {
-                      icon: 'call'
-                      onClicked: CallsWindow.show()
-                    }
-
-                    ActionButton {
-                      icon: 'chat'
-                      onClicked: window.setView('Conversation')
-                    }
-                  }
-
-                  ActionButton {
-                    anchors {
-                      right: parent.right
-                      verticalCenter: parent.verticalCenter
-                    }
-                    icon: 'delete'
-                    iconSize: ContactsStyle.contact.deleteButtonSize
-
-                    onClicked: _removeContact($contact)
-                  }
+                ActionButton {
+                  icon: 'call'
+                  onClicked: CallsWindow.show()
                 }
+
+                ActionButton {
+                  icon: 'chat'
+                  onClicked: window.setView('Conversation')
+                }
+              }
+
+              ActionButton {
+                anchors {
+                  right: parent.right
+                  verticalCenter: parent.verticalCenter
+                }
+                icon: 'delete'
+                iconSize: ContactsStyle.contact.deleteButtonSize
+
+                onClicked: _removeContact($contact)
               }
             }
           }
@@ -230,8 +237,10 @@ ColumnLayout {
               target: indicator
             }
 
-            PropertyChanges { target: container1; visible: false }
-            PropertyChanges { target: container2; visible: true }
+            PropertyChanges {
+              sourceComponent: container2
+              target: loader
+            }
           }
         }
       }
