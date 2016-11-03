@@ -13,8 +13,8 @@ import App.Styles 1.0
 ApplicationWindow {
   id: window
 
-  function setView (view) {
-    contentLoader.source = view + '.qml'
+  function setView (view, props) {
+    contentLoader.setSource(view + '.qml', props || {})
   }
 
   // -----------------------------------------------------------------
@@ -158,9 +158,9 @@ ApplicationWindow {
         Layout.fillWidth: true
         model: ContactsListModel {} // Use History list.
 
-        onClicked: {
+        onContactSelected: {
           menu.resetSelectedEntry()
-          setView('Conversation')
+          setView('Conversation', { contact: contact })
         }
       }
     }

@@ -1,120 +1,123 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
 
+import App.Styles 1.0
+
+// ===================================================================
+
 ColumnLayout  {
+  property var contact
+
   spacing: 0
 
+  // -----------------------------------------------------------------
   // Contact bar.
+  // -----------------------------------------------------------------
+
   Rectangle {
     Layout.fillWidth: true
-    Layout.preferredHeight: 102
-    color: '#D1D1D1'
+    Layout.preferredHeight: ConversationStyle.bar.height
+    color: ConversationStyle.bar.backgroundColor
 
     RowLayout {
-      anchors.left: parent.left
-      anchors.leftMargin: 40
-      anchors.right: parent.right
-      anchors.rightMargin: 40
-      anchors.verticalCenter: parent.verticalCenter
-      height: 80
-      spacing: 50
-      width: parent.width
+      anchors {
+        fill: parent
+        leftMargin: ConversationStyle.bar.leftMargin
+        rightMargin: ConversationStyle.bar.rightMargin
+      }
+      spacing: ConversationStyle.bar.spacing
 
       Avatar {
-        Layout.fillHeight: true
-        Layout.preferredWidth: 80
-        presenceLevel: Presence.Green // TODO: Use C++.
-        username: 'Cameron Andrews' // TODO: Use C++.
+        Layout.preferredHeight: ConversationStyle.bar.avatarSize
+        Layout.preferredWidth: ConversationStyle.bar.avatarSize
+        presenceLevel: contact.presenceLevel
+        username: contact.username
       }
 
-      Column {
+      ContactDescription {
         Layout.fillHeight: true
         Layout.fillWidth: true
+        sipAddress: contact.sipAddresses[0]
+        sipAddressColor: ConversationStyle.bar.description.sipAddressColor
+        username: contact.username
+        usernameColor: ConversationStyle.bar.description.usernameColor
+      }
 
-        // Contact description.
-        ContactDescription {
-          height: parent.height * 0.60
-          sipAddress: 'cam.andrews@sip.linphone.org' // TODO: Use C++.
-          username: 'Cameron Andrews' // TODO: Use C++.
-          width: parent.width
-        }
+      Row {
+        Layout.fillHeight: true
+        spacing: ConversationStyle.bar.actions.spacing
 
-        // Contact actions.
-        Row {
-          height: parent.height * 0.40
-          width: parent.width
+        ActionBar {
+          anchors.verticalCenter: parent.verticalCenter
+          iconSize: ConversationStyle.bar.actions.call.iconSize
 
-          ActionBar {
-            iconSize: 32
-            width: parent.width / 2
-
-            ActionButton {
-              icon: 'cam'
-              onClicked: console.log('clicked!!!')
-            }
-
-            ActionButton {
-              icon: 'call'
-              onClicked: console.log('clicked!!!')
-            }
+          ActionButton {
+            icon: 'video_call'
+            onClicked: CallsWindow.show()
           }
 
-          ActionBar {
-            iconSize: 32
-            layoutDirection: Qt.RightToLeft
-            width: parent.width / 2
+          ActionButton {
+            icon: 'call'
+            onClicked: CallsWindow.show()
+          }
+        }
 
-            ActionButton {
-              icon: 'delete'
-              onClicked: console.log('clicked!!!')
-            }
+        ActionBar {
+          anchors.verticalCenter: parent.verticalCenter
 
-            ActionButton {
-              icon: 'contact'
-              onClicked: window.setView('Contact')
-            }
+          ActionButton {
+            icon: 'contact_edit'
+            iconSize: ConversationStyle.bar.actions.edit.contactIconSize
+
+            onClicked: console.log('clicked!!!') // TODO.
+          }
+
+          ActionButton {
+            icon: 'delete'
+            iconSize: ConversationStyle.bar.actions.edit.deleteIconSize
+
+            onClicked: window.setView('Contact') // TODO.
           }
         }
       }
     }
   }
 
-  // Messages/Calls filter.
-  Rectangle {
-    Layout.fillWidth: true
-    Layout.preferredHeight: 40
-    color: '#C7C7C7'
-
-    Rectangle {
-      anchors.fill: parent
-      anchors.leftMargin: 1
-
-      ExclusiveButtons {
-        anchors.left: parent.left
-        anchors.leftMargin: 40
-        anchors.verticalCenter: parent.verticalCenter
-        texts: [
-          qsTr('displayCallsAndMessages'),
-          qsTr('displayCalls'),
-          qsTr('displayMessages')
-        ]
-      }
-    }
-  }
+  // -----------------------------------------------------------------
+  // Messages/Calls filters.
+  // -----------------------------------------------------------------
 
   Borders {
-    Layout.fillHeight: true
     Layout.fillWidth: true
-    borderColor: '#C7C7C7'
-    leftWidth: 1
-    topWidth: 1
+    Layout.preferredHeight: ConversationStyle.filters.height
+    borderColor: ConversationStyle.filters.border.color
+    bottomWidth: ConversationStyle.filters.border.bottomWidth
+    color: ConversationStyle.filters.backgroundColor
+    topWidth: ConversationStyle.filters.border.topWidth
 
-    Chat {
-      anchors.fill: parent
+    ExclusiveButtons {
+      anchors {
+        left: parent.left
+        leftMargin: ConversationStyle.filters.leftMargin
+        verticalCenter: parent.verticalCenter
+      }
+      texts: [
+        qsTr('displayCallsAndMessages'),
+        qsTr('displayCalls'),
+        qsTr('displayMessages')
+      ]
     }
+  }
+
+  // -----------------------------------------------------------------
+  // Chat.
+  // -----------------------------------------------------------------
+
+  Chat {
+    Layout.fillWidth: true
+    Layout.fillHeight: true
   }
 }

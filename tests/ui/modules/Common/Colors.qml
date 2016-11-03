@@ -9,6 +9,7 @@ QtObject {
   property color o: '#232323' // TextButtonA Hovered.
 
   property color q: '#E6E6E6'
+  property color d:   '#5A585B'
 
   // -----------------------------------------------------------------
   // OK.
@@ -16,7 +17,6 @@ QtObject {
 
   property color b:   '#5E5E5F'
   property color c:   '#CBCBCB'
-  property color d:   '#5A585B'
   property color e:   '#F3F3F3'
   property color f:   '#E8E8E8'
   property color g:   '#6B7A86'

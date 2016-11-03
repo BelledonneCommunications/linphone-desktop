@@ -11,7 +11,7 @@ ColumnLayout {
 
   property alias model: view.model
 
-  signal clicked (var contact)
+  signal contactSelected (var contact)
 
   // -----------------------------------------------------------------
 
@@ -92,7 +92,7 @@ ColumnLayout {
 
         onClicked: {
           view.currentIndex = index
-          timeline.clicked($contact)
+          timeline.contactSelected($contact)
         }
       }
     }

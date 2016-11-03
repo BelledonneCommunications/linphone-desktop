@@ -6,7 +6,7 @@ import QtQuick 2.7
 // rectangle side.
 // ===================================================================
 
-Item {
+Rectangle {
   property var borderColor
   property var borderWidth
 
@@ -21,6 +21,8 @@ Item {
   property int topWidth: 0
 
   default property alias _content: content.data
+
+  color: 'transparent'
 
   Rectangle {
     id: bottomBorder

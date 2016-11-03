@@ -33,7 +33,7 @@ QtObject {
   property QtObject legend: QtObject {
     property color backgroundColor: Colors.u
     property color color: Colors.k
-    property int fontSize: 12
+    property int fontSize: 11
     property int height: 30
     property int iconSize: 10
     property int leftMargin: 17

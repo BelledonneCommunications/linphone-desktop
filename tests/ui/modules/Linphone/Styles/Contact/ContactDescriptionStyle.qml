@@ -12,7 +12,7 @@ QtObject {
   }
 
   property QtObject username: QtObject {
-    property color color: Colors.d
+    property color color: Colors.j
     property int fontSize: 11
   }
 }
