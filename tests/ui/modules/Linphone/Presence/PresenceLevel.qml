@@ -11,7 +11,7 @@ Item {
   property string icon: 'led'
 
   Icon {
-    anchors.fill: parent
+    anchors.centerIn: parent
 
     function _getColorString () {
       if (level === Presence.Green) {
@@ -34,5 +34,8 @@ Item {
         ? parent.icon + '_' + level
         : ''
     }
+    iconSize: parent.height > parent.width
+      ? parent.width
+      : parent.height
   }
 }

@@ -37,8 +37,7 @@ Item {
       id: textArea
 
       background: Rectangle {
-        color: '#FFFFFF'
-        border.color: '#D0D8DE'
+        color: DroppableTextAreaStyle.backgroundColor
       }
 
       rightPadding: fileChooserButton.width +
@@ -53,17 +52,17 @@ Item {
   }
 
   // Handle click to select files.
-  MouseArea {
+  ActionButton {
     id: fileChooserButton
 
     anchors {
       right: parent.right
       rightMargin: scrollBar.width +
         DroppableTextAreaStyle.fileChooserButton.margins
+      verticalCenter: parent.verticalCenter
     }
-
-    height: parent.height
-    width: DroppableTextAreaStyle.fileChooserButton.width
+    icon: 'attachment'
+    iconSize: DroppableTextAreaStyle.fileChooserButton.size
 
     onClicked: fileDialog.open()
 
@@ -74,11 +73,6 @@ Item {
       title: qsTr('fileChooserTitle')
 
       onAccepted: _emitFiles(fileDialog.fileUrls)
-    }
-
-    Icon {
-      anchors.fill: parent
-      icon: 'chat_attachment'
     }
   }
 

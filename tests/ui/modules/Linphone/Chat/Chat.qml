@@ -4,46 +4,60 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import Linphone.Styles 1.0
+
+// ===================================================================
 
 ColumnLayout {
+  property var contact
+
   spacing: 0
 
   ScrollableListView {
-    id: chat
-
     Layout.fillHeight: true
     Layout.fillWidth: true
-    model: ListModel {
-      ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: 'This is it: fefe efzzzzzzzzzz aaaaaaaaa erfeezffeefzfzefzefzezfefez wfef efef  e efeffefe fee efefefeefef fefefefefe eff fefefe fefeffww.linphone.org' }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389133000; $type: 'event'; $content: 'incoming_call' }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389439000; $type: 'message'; $content: 'Perfect! bg  g vg gv v g v hgv gv gv   jhb jh b  jb jh hg vg    cfcy f  v u  uyg   f tf tf  ft f tf t  t  fy ft f tu  ty f  rd rd  d d   uu gu y  gg y f  r dr   ' }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389500000; $type: 'event'; $content: 'hangup' }
-      ListElement { $dateSection: 1465994221000; $outgoing: true; $timestamp: 1465924321000; $type: 'message'; $content: 'You\'ve heard the expression, "Just believe it and it will come." Well, technically, that is true, however, \'believing\' is not just thinking that you can have it...' }
-      ListElement { $dateSection: 1465994221000; $timestamp: 1465924391000; $type: 'event'; $content: 'lost_incoming_call' }
+
+    section {
+      criteria: ViewSection.FullString
+      delegate: sectionHeading
+      property: '$dateSection'
     }
+
+    // ---------------------------------------------------------------
+    // Heading.
+    // ---------------------------------------------------------------
 
     Component {
       id: sectionHeading
 
       Item {
-        implicitHeight: text.height +
-          container.anchors.topMargin +
-          container.anchors.bottomMargin
+        implicitHeight: container.height + ChatStyle.sectionHeading.bottomMargin
         width: parent.width
 
-        Item {
-          anchors.bottomMargin: 10
-          anchors.fill: parent
-          anchors.leftMargin: 18
-          anchors.topMargin: 20
+        Borders {
           id: container
 
+          borderColor: ChatStyle.sectionHeading.border.color
+          bottomWidth: ChatStyle.sectionHeading.border.width
+          implicitHeight: text.contentHeight +
+            ChatStyle.sectionHeading.padding * 2 +
+            ChatStyle.sectionHeading.border.width * 2
+          topWidth: ChatStyle.sectionHeading.border.width
+          width: parent.width
+
           Text {
-            color: '#434343'
-            font.bold: true
             id: text
 
-            // Cast section to integer because Qt convert the
+            anchors.fill: parent
+            color: ChatStyle.sectionHeading.text.color
+            font {
+              bold: true
+              pointSize: ChatStyle.sectionHeading.text.fontSize
+            }
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+
+            // Cast section to integer because Qt converts the
             // $dateSection in string!!!
             text: new Date(+section).toLocaleDateString(
               Qt.locale()
@@ -53,105 +67,149 @@ ColumnLayout {
       }
     }
 
-    section.criteria: ViewSection.FullString
-    section.delegate: sectionHeading
-    section.property: '$dateSection'
+    // ---------------------------------------------------------------
+    // Message/Event renderer.
+    // ---------------------------------------------------------------
 
     delegate: Rectangle {
-      anchors.left: parent ? parent.left : undefined
-      anchors.leftMargin: 18
-      anchors.right: parent ? parent.right : undefined
-      anchors.rightMargin: 18
+      id: entry
 
-      // Unable to use `height` property.
-      // The height is given by message height.
-      implicitHeight: layout.height + 10
-      width: parent ? parent.width : 0
+      function isHoverEntry () {
+        return mouseArea.containsMouse
+      }
+
+      function deleteEntry () {
+        console.log('delete entry', index)
+      }
+
+      anchors {
+        left: parent.left
+        leftMargin: ChatStyle.entry.leftMargin
+        right: parent.right
+
+        // Ugly. I admit it, but it exists a problem, without these
+        // lines the extra content message is truncated.
+        // I have no other solution at this moment with `anchors`
+        // properties... The messages use the `implicitWidth/Height`
+        // and `width/Height` attrs and is not easy to found a fix.
+        rightMargin: ChatStyle.entry.deleteIconSize +
+          ChatStyle.entry.message.extraContent.spacing +
+          ChatStyle.entry.message.extraContent.rightMargin +
+          ChatStyle.entry.message.extraContent.leftMargin +
+          ChatStyle.entry.message.outgoing.sendIconSize
+      }
+      implicitHeight: layout.height + ChatStyle.entry.bottomMargin
+      width: parent.width
+
+      // -------------------------------------------------------------
+
+      // Avoid the use of explicit qrc paths.
+      Component {
+        id: event
+        Event {}
+      }
+
+      Component {
+        id: incomingMessage
+        IncomingMessage {}
+      }
+
+      Component {
+        id: outgoingMessage
+        OutgoingMessage {}
+      }
+
+      // -------------------------------------------------------------
 
       MouseArea {
-        anchors.fill: parent
+        id: mouseArea
+
         hoverEnabled: true
-        onEntered: parent.state = 'hover'
-        onExited: parent.state = ''
-      }
+        implicitHeight: layout.height
+        width: parent.width + parent.anchors.rightMargin
 
-      RowLayout {
-        id: layout
+        RowLayout {
+          id: layout
 
-        spacing: 0
+          spacing: 0
+          width: entry.width
 
-        // The height is computed with the message height.
-        // Unable to use `height` and `implicitHeight` property.
-        width: parent.width
-
-        // Display time.
-        Text {
-          Layout.alignment: Qt.AlignTop
-          Layout.preferredHeight: 30
-          Layout.preferredWidth: 50
-          color: '#898989'
-          font.bold: $type === 'event'
-          text: new Date($timestamp).toLocaleString(
-            Qt.locale(),
-            'hh:mm'
-          )
-          verticalAlignment: Text.AlignVCenter
-        }
-
-        // Icons area.
-        Row {
-          Layout.alignment: Qt.AlignTop
-          Layout.preferredHeight: 30
-          Layout.preferredWidth: 54
-          spacing: 10
-
-          Icon {
-            anchors.verticalCenter: parent.verticalCenter
-            icon: ($type === 'event' && $content) || ''
-            iconSize: 16
+          // Display time.
+          Text {
+            Layout.alignment: Qt.AlignTop
+            Layout.preferredHeight: ChatStyle.entry.lineHeight
+            Layout.preferredWidth: ChatStyle.entry.time.width
+            color: ChatStyle.entry.time.color
+            font.pointSize: ChatStyle.entry.time.fontSize
+            text: new Date($timestamp).toLocaleString(
+              Qt.locale(),
+              'hh:mm'
+            )
+            verticalAlignment: Text.AlignVCenter
           }
 
-          ActionButton {
-            anchors.verticalCenter: parent.verticalCenter
-            icon: 'delete'
-            iconSize: 16
-            id: removeAction
-            onClicked: chat.model.remove(index)
-            visible: false
+          // Display content.
+          Loader {
+            Layout.fillWidth: true
+            sourceComponent: $type === 'message'
+              ? ($outgoing ? outgoingMessage : incomingMessage)
+            : event
           }
         }
 
-        // Display content.
-        Loader {
-          id: loader
-
-          Layout.fillWidth: true
-
-          source: $type === 'message'
-            ? (
-              'qrc:/ui/modules/Linphone/Chat/' +
-                ($outgoing ? 'Outgoing' : 'Incoming') +
-                'Message.qml'
-            ) : 'qrc:/ui/modules/Linphone/Chat/Event.qml'
-        }
       }
+    }
 
-      states: State {
-        name: 'hover'
-        PropertyChanges { target: removeAction; visible: true }
-      }
+    // TMP
+    model: ListModel {
+      ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: 'This is it: fefe efzzzzzzzzzz aaaaaaaaa erfeezffeefzfzefzefzezfefez wfef efef  e efeffefe fee efefefeefef fefefefefe eff fefefe fefeffww.linphone.org' }
+      ListElement { $dateSection: 1465389121000; $timestamp: 1465389133000; $type: 'event'; $content: 'incoming_call' }
+      ListElement { $dateSection: 1465389121000; $timestamp: 1465389439000; $type: 'message'; $content: 'Perfect! bg  g vg gv v g v hgv gv gv   jhb jh b  jb jh hg vg    cfcy f  v u  uyg   f tf tf  ft f tf t  t  fy ft f tu  ty f  rd rd  d d   uu gu y  gg y f  r dr   ' }
+      ListElement { $dateSection: 1465389121000; $timestamp: 1465389500000; $type: 'event'; $content: 'end_call' }
+      ListElement { $dateSection: 1465994221000; $outgoing: true; $timestamp: 1465924321000; $type: 'message'; $content: 'You\'ve heard the expression, "Just believe it and it will come." Well, technically, that is true, however, \'believing\' is not just thinking that you can have it...' }
+      ListElement { $dateSection: 1465994221000; $timestamp: 1465924391000; $type: 'event'; $content: 'lost_incoming_call' }
     }
   }
 
-  Rectangle {
+  // -----------------------------------------------------------------
+  // Send area.
+  // -----------------------------------------------------------------
+
+  Borders {
     Layout.fillWidth: true
-    Layout.preferredHeight: 80
-    color: '#E2E9EF'
+    Layout.preferredHeight: ChatStyle.sendArea.height +
+      ChatStyle.sendArea.border.width
+    borderColor: ChatStyle.sendArea.border.color
+    topWidth: ChatStyle.sendArea.border.width
 
     DroppableTextArea {
       anchors.fill: parent
-      anchors.margins: 10
       placeholderText: qsTr('newMessagePlaceholder')
     }
   }
 }
+
+
+
+        // Icons area.
+        /* Row { */
+        /*   Layout.alignment: Qt.AlignTop */
+        /*   Layout.preferredHeight: 30 */
+        /*   Layout.preferredWidth: 54 */
+        /*   spacing: 10 */
+
+        /*   Icon { */
+        /*     anchors.verticalCenter: parent.verticalCenter */
+        /*     icon: ($type === 'event' && $content) || '' */
+        /*     iconSize: 16 */
+        /*   } */
+
+        /*   ActionButton { */
+        /*     anchors.verticalCenter: parent.verticalCenter */
+        /*     icon: 'delete' */
+        /*     iconSize: 16 */
+        /*     id: removeAction */
+        /*     onClicked: chat.model.remove(index) */
+        /*     visible: false */
+        /*   } */
+        /* } */

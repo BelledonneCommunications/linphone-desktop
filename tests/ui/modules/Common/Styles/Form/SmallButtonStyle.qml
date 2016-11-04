@@ -6,6 +6,9 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
+  property int leftPadding: 5
+  property int rightPadding: 5
+
   property QtObject background: QtObject {
     property int height: 22
     property int radius: 10

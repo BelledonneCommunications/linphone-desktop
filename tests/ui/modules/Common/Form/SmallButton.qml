@@ -28,6 +28,8 @@ Button {
     horizontalAlignment: Text.AlignHCenter
     text: button.text
     verticalAlignment: Text.AlignVCenter
+    leftPadding: SmallButtonStyle.leftPadding
+    rightPadding: SmallButtonStyle.rightPadding
   }
   hoverEnabled: true
 }

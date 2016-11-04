@@ -22,8 +22,7 @@ QtObject {
       }
 
       property QtObject edit: QtObject {
-        property int contactIconSize: 22
-        property int deleteIconSize: 17
+        property int iconSize: 22
       }
     }
 

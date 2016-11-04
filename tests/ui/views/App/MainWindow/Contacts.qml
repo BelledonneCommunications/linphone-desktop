@@ -111,57 +111,6 @@ ColumnLayout {
           anchors.fill: parent
           color: ContactsStyle.contact.backgroundColor.normal
 
-          Rectangle {
-            id: indicator
-
-            anchors.left: parent.left
-            color: 'transparent'
-            height: parent.height
-            width: ContactsStyle.contact.indicator.width
-          }
-
-          MouseArea {
-            id: mouseArea
-
-            anchors.fill: parent
-            hoverEnabled: true
-
-            RowLayout {
-              anchors {
-                fill: parent
-                leftMargin: ContactsStyle.contact.leftMargin
-                rightMargin: ContactsStyle.contact.rightMargin
-              }
-              spacing: ContactsStyle.contact.spacing
-
-              // Avatar.
-              Avatar {
-                Layout.preferredHeight: ContactsStyle.contact.avatarSize
-                Layout.preferredWidth: ContactsStyle.contact.avatarSize
-                image: $contact.avatar
-                username: $contact.username
-              }
-
-              // Username.
-              Text {
-                Layout.preferredWidth: ContactsStyle.contact.username.width
-                color: ContactsStyle.contact.username.color
-                elide: Text.ElideRight
-                font.bold: true
-                text: $contact.username
-              }
-
-              // Container.
-              Loader {
-                id: loader
-
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                sourceComponent: container1
-              }
-            }
-          }
-
           // ---------------------------------------------------------
 
           Component {
@@ -219,6 +168,59 @@ ColumnLayout {
                 iconSize: ContactsStyle.contact.deleteButtonSize
 
                 onClicked: _removeContact($contact)
+              }
+            }
+          }
+
+          // ---------------------------------------------------------
+
+          Rectangle {
+            id: indicator
+
+            anchors.left: parent.left
+            color: 'transparent'
+            height: parent.height
+            width: ContactsStyle.contact.indicator.width
+          }
+
+          MouseArea {
+            id: mouseArea
+
+            anchors.fill: parent
+            hoverEnabled: true
+
+            RowLayout {
+              anchors {
+                fill: parent
+                leftMargin: ContactsStyle.contact.leftMargin
+                rightMargin: ContactsStyle.contact.rightMargin
+              }
+              spacing: ContactsStyle.contact.spacing
+
+              // Avatar.
+              Avatar {
+                Layout.preferredHeight: ContactsStyle.contact.avatarSize
+                Layout.preferredWidth: ContactsStyle.contact.avatarSize
+                image: $contact.avatar
+                username: $contact.username
+              }
+
+              // Username.
+              Text {
+                Layout.preferredWidth: ContactsStyle.contact.username.width
+                color: ContactsStyle.contact.username.color
+                elide: Text.ElideRight
+                font.bold: true
+                text: $contact.username
+              }
+
+              // Container.
+              Loader {
+                id: loader
+
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                sourceComponent: container1
               }
             }
           }

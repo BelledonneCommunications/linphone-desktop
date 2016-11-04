@@ -6,9 +6,11 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
+  property color backgroundColor: Colors.k
+
   property QtObject fileChooserButton: QtObject {
     property int margins: 6
-    property int width: 40
+    property int size: 20
   }
 
   property QtObject hoverContent: QtObject {

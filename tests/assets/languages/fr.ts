@@ -168,7 +168,7 @@
     </message>
     <message>
         <source>hangup</source>
-        <translation>Fin d&apos;appel</translation>
+        <translation type="vanished">Fin d&apos;appel</translation>
     </message>
     <message>
         <source>lostIncomingCall</source>
@@ -177,6 +177,10 @@
     <message>
         <source>lostOutgoingCall</source>
         <translation>Appel sortant manqué</translation>
+    </message>
+    <message>
+        <source>endCall</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -70,14 +70,14 @@ ColumnLayout  {
 
           ActionButton {
             icon: 'contact_edit'
-            iconSize: ConversationStyle.bar.actions.edit.contactIconSize
+            iconSize: ConversationStyle.bar.actions.edit.iconSize
 
             onClicked: console.log('clicked!!!') // TODO.
           }
 
           ActionButton {
             icon: 'delete'
-            iconSize: ConversationStyle.bar.actions.edit.deleteIconSize
+            iconSize: ConversationStyle.bar.actions.edit.iconSize
 
             onClicked: window.setView('Contact') // TODO.
           }
@@ -117,7 +117,8 @@ ColumnLayout  {
   // -----------------------------------------------------------------
 
   Chat {
-    Layout.fillWidth: true
     Layout.fillHeight: true
+    Layout.fillWidth: true
+    contact: parent.contact
   }
 }

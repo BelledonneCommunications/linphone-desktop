@@ -11,7 +11,7 @@ Button {
   id: button
 
   property bool useStates: true
-  property int iconSize
+  property int iconSize // Optionnal.
 
   // If `useStates` = true, the used icons are:
   // `icon`_pressed, `icon`_hovered and `icon`_normal.
@@ -42,7 +42,10 @@ Button {
   Icon {
     id: icon
 
-    anchors.fill: parent
+    anchors.centerIn: parent
     icon: _getIcon()
+    iconSize: parent.iconSize || (
+      parent.width > parent.height ? parent.height : parent.width
+    )
   }
 }

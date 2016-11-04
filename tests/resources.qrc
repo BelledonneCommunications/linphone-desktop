@@ -1,12 +1,17 @@
 <!DOCTYPE RCC><RCC version="1.0">
   <qresource prefix="/">
+    <file>assets/images/attachment_hovered.svg</file>
+    <file>assets/images/attachment_normal.svg</file>
+    <file>assets/images/attachment_pressed.svg</file>
     <file>assets/images/auto_answer.svg</file>
     <file>assets/images/call_hovered.svg</file>
     <file>assets/images/call_normal.svg</file>
     <file>assets/images/call_pressed.svg</file>
+    <file>assets/images/chat_error.svg</file>
     <file>assets/images/chat_hovered.svg</file>
     <file>assets/images/chat_normal.svg</file>
     <file>assets/images/chat_pressed.svg</file>
+    <file>assets/images/chat_send.svg</file>
     <file>assets/images/chevron_green.svg</file>
     <file>assets/images/chevron_orange.svg</file>
     <file>assets/images/chevron_red.svg</file>
@@ -20,38 +25,24 @@
     <file>assets/images/delete_hovered.svg</file>
     <file>assets/images/delete_normal.svg</file>
     <file>assets/images/delete_pressed.svg</file>
+    <file>assets/images/end_call.svg</file>
     <file>assets/images/filter.svg</file>
     <file>assets/images/history.svg</file>
     <file>assets/images/home_normal.svg</file>
     <file>assets/images/home_selected.svg</file>
+    <file>assets/images/incoming_call.svg</file>
     <file>assets/images/led_green.svg</file>
     <file>assets/images/led_orange.svg</file>
     <file>assets/images/led_red.svg</file>
     <file>assets/images/led_white.svg</file>
     <file>assets/images/linphone.png</file>
+    <file>assets/images/lost_incoming_call.svg</file>
+    <file>assets/images/lost_outgoing_call.svg</file>
+    <file>assets/images/outgoing_call.svg</file>
     <file>assets/images/search.svg</file>
     <file>assets/images/video_call_hovered.svg</file>
     <file>assets/images/video_call_normal.svg</file>
     <file>assets/images/video_call_pressed.svg</file>
-    <file>assets/old_images/add_field.svg</file>
-    <file>assets/old_images/cat_contact.jpg</file>
-    <file>assets/old_images/chat_attachment.svg</file>
-    <file>assets/old_images/collapse.svg</file>
-    <file>assets/old_images/conference.svg</file>
-    <file>assets/old_images/contacts_list.svg</file>
-    <file>assets/old_images/contact.svg</file>
-    <file>assets/old_images/hangup.svg</file>
-    <file>assets/old_images/home.svg</file>
-    <file>assets/old_images/incoming_call.svg</file>
-    <file>assets/old_images/lost_incoming_call.svg</file>
-    <file>assets/old_images/lost_outgoing_call.svg</file>
-    <file>assets/old_images/micro.svg</file>
-    <file>assets/old_images/right_arrow.svg</file>
-    <file>assets/old_images/speaker.svg</file>
-    <file>assets/old_images/valid.svg</file>
-    <file>assets/ressources_svg/avatar_L.svg</file>
-    <file>assets/ressources_svg/avatar_s.svg</file>
-    <file>assets/ressources_svg/avatar_xs.svg</file>
     <file>ui/modules/Common/Animations/CaterpillarAnimation.qml</file>
     <file>ui/modules/Common/Borders.qml</file>
     <file>ui/modules/Common/Collapse.qml</file>
@@ -124,6 +115,7 @@
     <file>ui/modules/Linphone/qmldir</file>
     <file>ui/modules/Linphone/Select/SelectContact.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>

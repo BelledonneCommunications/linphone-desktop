@@ -1,18 +1,27 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Linphone 1.0
+import Linphone.Styles 1.0
 
 // ===================================================================
 
 RowLayout {
   implicitHeight: message.height
-  spacing: 10
+  spacing: 0
 
-  Avatar {
+  Item {
     Layout.alignment: Qt.AlignTop
-    Layout.preferredHeight: 30
-    Layout.preferredWidth: 30
+    Layout.preferredHeight: ChatStyle.entry.lineHeight
+    Layout.preferredWidth: ChatStyle.entry.metaWidth
+
+    Avatar {
+      anchors.centerIn: parent
+      username: contact.username
+      width: ChatStyle.entry.lineHeight
+      height: ChatStyle.entry.lineHeight
+    }
   }
 
   Message {
@@ -21,8 +30,20 @@ RowLayout {
     Layout.fillWidth: true
 
     // Not a style. Workaround to avoid a 0 width.
+    // Arbitrary value.
     Layout.minimumWidth: 20
 
-    backgroundColor: '#BFBFBF'
+    backgroundColor: ChatStyle.entry.message.incoming.backgroundColor
+    color: ChatStyle.entry.message.incoming.text.color
+    fontSize: ChatStyle.entry.message.incoming.text.fontSize
+
+    ActionButton {
+      height: ChatStyle.entry.lineHeight
+      icon: 'delete'
+      iconSize: ChatStyle.entry.deleteIconSize
+      visible: isHoverEntry()
+
+      onClicked: deleteEntry()
+    }
   }
 }

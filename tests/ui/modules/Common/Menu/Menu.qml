@@ -65,13 +65,13 @@ Rectangle {
           spacing: MenuStyle.entry.spacing
 
           Icon {
-            Layout.preferredHeight: MenuStyle.entry.iconSize
-            Layout.preferredWidth: MenuStyle.entry.iconSize
             icon: modelData.icon + (
               _selectedEntry === index
                 ? '_selected'
                 : '_normal'
             )
+            iconSize: MenuStyle.entry.iconSize
+            Layout.preferredWidth: iconSize
           }
 
           Text {
