@@ -33,3 +33,5 @@ singleton PanedStyle                1.0 PanedStyle.qml
 singleton PopupStyle                1.0 PopupStyle.qml
 
 singleton SearchBoxStyle            1.0 SearchBoxStyle.qml
+
+singleton TooltipStyle              1.0 TooltipStyle.qml

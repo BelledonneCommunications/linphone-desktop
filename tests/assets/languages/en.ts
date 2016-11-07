@@ -159,6 +159,10 @@
         <source>dropYourAttachment</source>
         <translation>Drop your attachment</translation>
     </message>
+    <message>
+        <source>attachmentTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Event</name>

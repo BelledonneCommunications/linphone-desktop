@@ -74,6 +74,10 @@ Item {
 
       onAccepted: _emitFiles(fileDialog.fileUrls)
     }
+
+    TooltipArea {
+      text: qsTr('attachmentTooltip')
+    }
   }
 
   // Hover style.
