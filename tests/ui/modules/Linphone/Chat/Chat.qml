@@ -188,28 +188,3 @@ ColumnLayout {
     }
   }
 }
-
-
-
-        // Icons area.
-        /* Row { */
-        /*   Layout.alignment: Qt.AlignTop */
-        /*   Layout.preferredHeight: 30 */
-        /*   Layout.preferredWidth: 54 */
-        /*   spacing: 10 */
-
-        /*   Icon { */
-        /*     anchors.verticalCenter: parent.verticalCenter */
-        /*     icon: ($type === 'event' && $content) || '' */
-        /*     iconSize: 16 */
-        /*   } */
-
-        /*   ActionButton { */
-        /*     anchors.verticalCenter: parent.verticalCenter */
-        /*     icon: 'delete' */
-        /*     iconSize: 16 */
-        /*     id: removeAction */
-        /*     onClicked: chat.model.remove(index) */
-        /*     visible: false */
-        /*   } */
-        /* } */

@@ -7,17 +7,22 @@ import Linphone.Styles 1.0
 
 // ===================================================================
 
-RowLayout {
+Item {
   implicitHeight: message.height
-  spacing: 0
+  width: parent.width
 
   Message {
     id: message
 
-    Layout.fillWidth: true
+    anchors {
+      left: parent.left
+      leftMargin: ChatStyle.entry.metaWidth
+      right: parent.right
+    }
     backgroundColor: ChatStyle.entry.message.outgoing.backgroundColor
     color: ChatStyle.entry.message.outgoing.text.color
     fontSize: ChatStyle.entry.message.outgoing.text.fontSize
+    width: parent.width
 
     Row {
       spacing: ChatStyle.entry.message.extraContent.spacing

@@ -8,6 +8,7 @@ import Utils 1.0
 
 Row {
   height: ChatStyle.entry.lineHeight
+  spacing: ChatStyle.entry.message.extraContent.spacing
 
   Icon {
     height: parent.height
@@ -38,5 +39,14 @@ Row {
     height: parent.height
     text: qsTr(Utils.snakeToCamel($content))
     verticalAlignment: Text.AlignVCenter
+  }
+
+  ActionButton {
+    height: ChatStyle.entry.lineHeight
+    icon: 'delete'
+    iconSize: ChatStyle.entry.deleteIconSize
+    visible: isHoverEntry()
+
+    onClicked: deleteEntry()
   }
 }

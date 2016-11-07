@@ -43,7 +43,16 @@ Item {
   Text {
     anchors.centerIn: parent
     color: AvatarStyle.initials.color
-    font.pointSize: AvatarStyle.initials.fontSize
+    font.pointSize: {
+      var width
+
+      if (parent.width > 0) {
+        width = parent.width / AvatarStyle.initials.ratio
+      }
+
+      return AvatarStyle.initials.fontSize * (width || 1)
+    }
+
     text: _computeInitials()
   }
 

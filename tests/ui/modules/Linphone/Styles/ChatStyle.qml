@@ -58,6 +58,7 @@ QtObject {
 
       property QtObject incoming: QtObject {
         property color backgroundColor: '#D0D8DE'
+        property int avatarSize: 20
 
         property QtObject text: QtObject {
           property color color: '#595759'

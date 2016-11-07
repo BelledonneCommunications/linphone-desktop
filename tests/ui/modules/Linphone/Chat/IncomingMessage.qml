@@ -18,9 +18,9 @@ RowLayout {
 
     Avatar {
       anchors.centerIn: parent
+      height: ChatStyle.entry.message.incoming.avatarSize
       username: contact.username
-      width: ChatStyle.entry.lineHeight
-      height: ChatStyle.entry.lineHeight
+      width: ChatStyle.entry.message.incoming.avatarSize
     }
   }
 

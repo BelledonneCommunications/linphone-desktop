@@ -9,6 +9,7 @@ QtObject {
   property QtObject initials: QtObject {
     property color color: Colors.k
     property int fontSize: 10
+    property int ratio: 30
   }
 
   property QtObject mask: QtObject {
