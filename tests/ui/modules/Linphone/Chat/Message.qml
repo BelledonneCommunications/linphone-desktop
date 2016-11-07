@@ -35,7 +35,6 @@ Item {
       left: container.left
       right: container.right
     }
-
     padding: ChatStyle.entry.message.padding
     text: $content
     wrapMode: Text.Wrap

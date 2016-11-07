@@ -39,4 +39,5 @@ QtObject {
   property color v:   '#E2E2E2'
   property color w:   '#A1A1A1'
   property color x:   '#96A5B1'
+  property color y:   '#D0D8DE'
 }

@@ -11,13 +11,13 @@ QtObject {
     property int bottomMargin: 20
 
     property QtObject border: QtObject {
-      property color color: '#E2E9EF'
+      property color color: Colors.p
       property int width: 1
     }
 
     property QtObject text: QtObject {
       property int fontSize: 10
-      property color color: '#6B7A86'
+      property color color: Colors.g
     }
   }
 
@@ -25,7 +25,7 @@ QtObject {
     property int height: 80
 
     property QtObject border: QtObject {
-      property color color: '#B1B1B1'
+      property color color: Colors.u
       property int width: 1
     }
   }
@@ -41,7 +41,7 @@ QtObject {
       property int iconSize: 18
 
       property QtObject text: QtObject {
-        property color color: '#595759'
+        property color color: Colors.r
         property int fontSize: 10
       }
     }
@@ -57,28 +57,28 @@ QtObject {
       }
 
       property QtObject incoming: QtObject {
-        property color backgroundColor: '#D0D8DE'
+        property color backgroundColor: Colors.y
         property int avatarSize: 20
 
         property QtObject text: QtObject {
-          property color color: '#595759'
+          property color color: Colors.r
           property int fontSize: 10
         }
       }
 
       property QtObject outgoing: QtObject {
-        property color backgroundColor: '#F3F3F3'
+        property color backgroundColor: Colors.e
         property int sendIconSize: 12
 
         property QtObject text: QtObject {
-          property color color: '#595759'
+          property color color: Colors.r
           property int fontSize: 10
         }
       }
     }
 
     property QtObject time: QtObject {
-      property color color: '#96A5B1'
+      property color color: Colors.x
       property int fontSize: 10
       property int width: 44
     }
