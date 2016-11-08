@@ -3,22 +3,31 @@ import QtQuick.Controls 2.0
 
 import Common 1.0
 import Common.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 
 ToolTip {
   id: tooltip
 
+  property string _edge: 'left'
+
+  // -----------------------------------------------------------------
+
   function _getArrowHeightMargin () {
-    return icon.height > icon.implicitHeight
-      ? (icon.height - icon.implicitHeight) / 2
-      : icon.height
+    Utils.assert(
+      icon.height >= icon.implicitHeight,
+      '`icon.height` must be lower than `icon.implicitHeight`.'
+    )
+    return (icon.height - icon.implicitHeight) / 2
   }
 
   function _getArrowWidthMargin () {
-    return icon.width > icon.implicitWidth
-      ? (icon.width - icon.implicitWidth) / 2
-      : icon.width
+    Utils.assert(
+      icon.width >= icon.implicitWidth,
+      '`icon.width` must be lower than `icon.implicitWidth`.'
+    )
+    return (icon.width - icon.implicitWidth) / 2
   }
 
   function _getRelativeXArrowCenter () {
@@ -29,37 +38,40 @@ ToolTip {
     return tooltip.parent.height / 2 - icon.height / 2
   }
 
+  function _setArrowEdge () {
+    var a = container.mapToItem(null, 0, 0)
+    var b = tooltip.parent.mapToItem(null, 0, 0)
+
+    if (a.x + container.width < b.x) {
+      _edge = 'left'
+    } else if (a.x > b.x + container.width) {
+      _edge = 'right'
+    } else if (a.y + container.height < b.y) {
+      _edge = 'top'
+    } else if (a.y > b.y + b.height) {
+      _edge = 'bottom'
+    } else {
+      console.warn('Unable to get the tooltip arrow position.')
+    }
+  }
+
+  // Called when new image is loaded. (When the is edge is updated.)
   function _setArrowPosition () {
     var a = container.mapToItem(null, 0, 0)
     var b = tooltip.parent.mapToItem(null, 0, 0)
 
-    // Left.
-    if (a.x + container.width < b.x) {
+    if (_edge === 'left') {
       icon.x = container.width - TooltipStyle.margins - _getArrowWidthMargin()
       icon.y =  b.y - a.y + _getRelativeYArrowCenter()
-    }
-
-    // Right.
-    else if (a.x > b.x + container.width) {
+    } else if (_edge === 'right') {
       icon.x = container.width + TooltipStyle.margins + _getArrowWidthMargin()
       icon.y =  b.y - a.y + _getRelativeYArrowCenter()
-    }
-
-    // Top.
-    else if (a.y + container.height < b.y) {
+    } else if (_edge === 'top') {
       icon.x =  b.x - a.x + _getRelativeXArrowCenter()
       icon.y = container.height - TooltipStyle.margins - _getArrowHeightMargin()
-    }
-
-    // Bottom.
-    else if (a.y > b.y + b.height) {
+    } else if (_edge === 'bottom') {
       icon.x =  b.x - a.x + _getRelativeXArrowCenter()
       icon.y = container.height + TooltipStyle.margins + _getArrowHeightMargin()
-    }
-
-    // Error?
-    else {
-      throw new Error('Unable to get the tooltip arrow position')
     }
   }
 
@@ -84,10 +96,14 @@ ToolTip {
 
       fillMode: Image.PreserveAspectFit
       height: TooltipStyle.arrowSize
-      source: Constants.imagesPath + 'tooltip_arrow' + Constants.imagesFormat
-      visible: tooltip.visible
+      source: Constants.imagesPath +
+        'tooltip_arrow_' + _edge +
+        Constants.imagesFormat
+      visible: tooltip.visible && _edge
       width: TooltipStyle.arrowSize
       z: Constants.zMax
+
+      onStatusChanged: status === Image.Ready && _setArrowPosition()
     }
   }
 
@@ -102,5 +118,5 @@ ToolTip {
 
   delay: TooltipStyle.delay
 
-  onVisibleChanged: visible && _setArrowPosition()
+  onVisibleChanged: visible && _setArrowEdge()
 }

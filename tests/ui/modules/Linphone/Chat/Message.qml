@@ -41,6 +41,16 @@ Item {
 
     // Little fix. Text may disappear with scrolling.
     renderType: Text.NativeRendering
+
+    onLinkActivated: Qt.openUrlExternally(link)
+
+    MouseArea {
+      anchors.fill: parent
+      acceptedButtons: Qt.NoButton
+      cursorShape: parent.hoveredLink
+        ? Qt.PointingHandCursor
+        : Qt.ArrowCursor
+    }
   }
 
   Item {
