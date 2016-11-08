@@ -20,32 +20,25 @@ var URI_HOST = '(' +
   ')*' +
 ')'
 
-var URI_PCHAR = '(' +
+var URI_PCHAR = '(?:' +
   URI_UNRESERVED +
   '|' + URI_PCT_ENCODED +
   '|' + URI_SUB_DELIMS +
   '|' + '[:@]' +
 ')'
 
-
-var URI_USERINFO = '(' +
-  '(' +
-    URI_UNRESERVED +
-    '|' + URI_PCT_ENCODED +
-    '|' + URI_SUB_DELIMS +
-    '|' + ':' +
-  ')*' +
-')'
+var URI_USERINFO = '(?:' +
+  URI_UNRESERVED +
+  '|' + URI_PCT_ENCODED +
+  '|' + URI_SUB_DELIMS +
+  '|' + ':' +
+')*'
 
 // Level 2. ----------------------------------------------------------
 
-var URI_AUTHORITY = '(' +
-  '(' +
-    URI_USERINFO + '@' +
-  ')?' + URI_HOST + '(' +
-    ':' + URI_PORT +
-  ')?' +
-')'
+var URI_AUTHORITY = '(?:' + URI_USERINFO + '@' + ')?' +
+  URI_HOST +
+  '(?:' + ':' + URI_PORT + ')?'
 
 var URI_FRAGMENT = '(?:' +
   URI_PCHAR +
@@ -62,21 +55,17 @@ var URI_SEGMENT_NZ = URI_PCHAR + '+'
 
 // Level 3. ----------------------------------------------------------
 
-var URI_PATH_ABEMPTY = '(' + '(' + '/' + URI_SEGMENT + ')*' + ')'
+var URI_PATH_ABEMPTY = '(?:' + '/' + URI_SEGMENT + ')*'
 
-var URI_PATH_ABSOLUTE = '(' +
-  '/' + '(' +
-    URI_SEGMENT_NZ + '(' + '/' + URI_SEGMENT + ')*' +
-  ')?' +
-')'
+var URI_PATH_ABSOLUTE = '/' +
+  '(?:' + URI_SEGMENT_NZ + '(?:' + '/' + URI_SEGMENT + ')*' + ')?'
 
-var URI_PATH_ROOTLESS = '(' +
-  URI_SEGMENT_NZ + '(' + '/' + URI_SEGMENT + ')*' +
-')'
+var URI_PATH_ROOTLESS =
+  URI_SEGMENT_NZ + '(?:' + '/' + URI_SEGMENT + ')*'
 
 // Level 4. ----------------------------------------------------------
 
-var URI_HIER_PART = '(' +
+var URI_HIER_PART = '(?:' +
   '//' + URI_AUTHORITY + URI_PATH_ABEMPTY +
   '|' + URI_PATH_ABSOLUTE +
   '|' + URI_PATH_ROOTLESS +
@@ -100,8 +89,7 @@ function test () {
 }
 test()
 
-/*
-
+/* TODO: Supports:
    hier-part     = "//" authority path-abempty
                  / path-absolute
                  / path-rootless
@@ -118,10 +106,6 @@ test()
                  / path-noscheme
                  / path-empty
 
-   scheme        = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
-
-   authority     = [ userinfo "@" ] host [ ":" port ]
-   userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
    host          = IP-literal / IPv4address / reg-name
 
    IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
@@ -156,18 +140,12 @@ test()
                  / path-rootless   ; begins with a segment
                  / path-empty      ; zero characters
 
-   path-abempty  = *( "/" segment )
-   path-absolute = "/" [ segment-nz *( "/" segment ) ]
    path-noscheme = segment-nz-nc *( "/" segment )
-   path-rootless = segment-nz *( "/" segment )
    path-empty    = 0<pchar>
 
    segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
                  ; non-zero-length segment without any colon ":"
 
-   pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
-
    reserved      = gen-delims / sub-delims
    gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
-
 */
