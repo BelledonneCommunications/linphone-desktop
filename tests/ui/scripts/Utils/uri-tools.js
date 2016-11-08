@@ -4,11 +4,11 @@
 
 // Level 0. ----------------------------------------------------------
 
-var URI_PCT_ENCODED = '%[A-Fa-f0-9]{2}'
-var URI_PORT =  '[0-9]*'
-var URI_SCHEME = '[a-zA-Z][a-zA-Z0-9+\-\.]*'
+var URI_PCT_ENCODED = '%[A-Fa-f\\d]{2}'
+var URI_PORT =  '\d*'
+var URI_SCHEME = '[a-zA-Z][\\w+\-\.]*'
 var URI_SUB_DELIMS = '[!$&\'()*+,;=]'
-var URI_UNRESERVED = '[a-zA-Z0-9\-\._~]'
+var URI_UNRESERVED = '[\\w\-\._~]'
 
 // Level 1. ----------------------------------------------------------
 
@@ -65,6 +65,7 @@ var URI_PATH_ROOTLESS =
 
 // Level 4. ----------------------------------------------------------
 
+// `path-empty` not used.
 var URI_HIER_PART = '(?:' +
   '//' + URI_AUTHORITY + URI_PATH_ABEMPTY +
   '|' + URI_PATH_ABSOLUTE +
@@ -90,10 +91,6 @@ function test () {
 test()
 
 /* TODO: Supports:
-   hier-part     = "//" authority path-abempty
-                 / path-absolute
-                 / path-rootless
-                 / path-empty
 
    URI-reference = URI / relative-ref
 
@@ -141,7 +138,6 @@ test()
                  / path-empty      ; zero characters
 
    path-noscheme = segment-nz-nc *( "/" segment )
-   path-empty    = 0<pchar>
 
    segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
                  ; non-zero-length segment without any colon ":"
