@@ -131,6 +131,7 @@
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/scripts/Utils/qmldir</file>
+    <file>ui/scripts/Utils/uri-tools.js</file>
     <file>ui/scripts/Utils/utils.js</file>
     <file>ui/views/App/Calls/Calls.qml</file>
     <file>ui/views/App/Calls/StartingCall.qml</file>
