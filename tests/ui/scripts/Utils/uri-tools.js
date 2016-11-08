@@ -47,23 +47,18 @@ var URI_AUTHORITY = '(' +
   ')?' +
 ')'
 
-var URI_FRAGMENT = '(' +
-  '(' +
-    URI_PCHAR +
-    '|' + '[/?]' +
-  ')*' +
-')'
+var URI_FRAGMENT = '(?:' +
+  URI_PCHAR +
+  '|' + '[/?]' +
+')*'
 
+var URI_QUERY = '(?:' +
+  URI_PCHAR +
+  '|' + '[/?]' +
+')*'
 
-var URI_QUERY = '(' +
-  '(' +
-    URI_PCHAR +
-    '|' + '[/?]' +
-  ')*' +
-')'
-
-var URI_SEGMENT = '(' + URI_PCHAR + '*' + ')'
-var URI_SEGMENT_NZ = '(' + URI_PCHAR + '+' + ')'
+var URI_SEGMENT = URI_PCHAR + '*'
+var URI_SEGMENT_NZ = URI_PCHAR + '+'
 
 // Level 3. ----------------------------------------------------------
 
@@ -91,11 +86,9 @@ var URI_HIER_PART = '(' +
 
 // Regex to match URI. It respects the RFC 3986.
 // But many features are not supported like IP format.
-var URI = '(' +
-  URI_SCHEME + ':' + URI_HIER_PART + '(' +
-    '\\?' + URI_QUERY +
-  ')?' + '(' + '#' + URI_FRAGMENT + ')?' +
-')'
+var URI = URI_SCHEME + ':' + URI_HIER_PART + '(?:' +
+  '\\?' + URI_QUERY +
+')?' + '(?:' + '#' + URI_FRAGMENT + ')?'
 
 var URI_REGEX = new RegExp(URI, 'g')
 
@@ -103,12 +96,11 @@ var URI_REGEX = new RegExp(URI, 'g')
 
 function test () {
   console.log('TOTO', URI_REGEX)
-  console.log('http://99w-w*w.test.com'.match(URI_REGEX))
+  console.log('fe ef ef ef feff eff e fefefefe http://99w-w*w.test.com  efeffe effe f ffe eef'.match(URI_REGEX))
 }
 test()
 
 /*
-   URI           = scheme ":" hier-part [ "?" query ] [ "#" fragment ]
 
    hier-part     = "//" authority path-abempty
                  / path-absolute
@@ -131,7 +123,6 @@ test()
    authority     = [ userinfo "@" ] host [ ":" port ]
    userinfo      = *( unreserved / pct-encoded / sub-delims / ":" )
    host          = IP-literal / IPv4address / reg-name
-   port          = *DIGIT
 
    IP-literal    = "[" ( IPv6address / IPvFuture  ) "]"
 
@@ -150,18 +141,6 @@ test()
    h16           = 1*4HEXDIG
    ls32          = ( h16 ":" h16 ) / IPv4address
    IPv4address   = dec-octet "." dec-octet "." dec-octet "." dec-octet
-
-
-
-
-
-
-
-Berners-Lee, et al.         Standards Track                    [Page 49]
-
-
-RFC 3986                   URI Generic Syntax               January 2005
-
 
    dec-octet     = DIGIT                 ; 0-9
                  / %x31-39 DIGIT         ; 10-99
@@ -183,23 +162,12 @@ RFC 3986                   URI Generic Syntax               January 2005
    path-rootless = segment-nz *( "/" segment )
    path-empty    = 0<pchar>
 
-   segment       = *pchar
-   segment-nz    = 1*pchar
    segment-nz-nc = 1*( unreserved / pct-encoded / sub-delims / "@" )
                  ; non-zero-length segment without any colon ":"
 
    pchar         = unreserved / pct-encoded / sub-delims / ":" / "@"
 
-   query         = *( pchar / "/" / "?" )
-
-   fragment      = *( pchar / "/" / "?" )
-
-   pct-encoded   = "%" HEXDIG HEXDIG
-
-   unreserved    = ALPHA / DIGIT / "-" / "." / "_" / "~"
    reserved      = gen-delims / sub-delims
    gen-delims    = ":" / "/" / "?" / "#" / "[" / "]" / "@"
-   sub-delims    = "!" / "$" / "&" / "'" / "(" / ")"
-                 / "*" / "+" / "," / ";" / "="
 
 */
