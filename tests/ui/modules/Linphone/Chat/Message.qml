@@ -1,6 +1,7 @@
 import QtQuick 2.7
 
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 
@@ -36,11 +37,15 @@ Item {
       right: container.right
     }
     padding: ChatStyle.entry.message.padding
-    text: $content
+    text: Utils.encodeUrisToQmlFormat($content)
     wrapMode: Text.Wrap
 
     // Little fix. Text may disappear with scrolling.
     renderType: Text.NativeRendering
+
+    // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
+    // and http://doc.qt.io/qt-5/richtext-html-subset.html
+    textFormat: Text.StyledText
 
     onLinkActivated: Qt.openUrlExternally(link)
 

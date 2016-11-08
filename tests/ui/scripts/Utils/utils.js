@@ -2,6 +2,8 @@
 // Contains many common helpers.
 // ===================================================================
 
+.import 'uri-tools.js' as UriTools
+
 // Load by default a window in the ui/views folder.
 // If options.isString is equals to true, a marshalling component can
 // be used.
@@ -239,4 +241,15 @@ function genRandomNumberBetweenIntervals (intervals) {
   }
 
   return n
+}
+
+// -------------------------------------------------------------------
+
+function encodeUrisToQmlFormat (text) {
+  return text
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(UriTools.URI_REGEX, function (match) {
+      return '<a href="' + match + '">' + match + '</a>'
+    })
 }

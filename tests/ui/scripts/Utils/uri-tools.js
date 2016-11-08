@@ -2,6 +2,8 @@
 // Library to deal with URI.
 // ===================================================================
 
+.pragma library
+
 // Level 0. ----------------------------------------------------------
 
 var URI_PCT_ENCODED = '%[A-Fa-f\\d]{2}'
@@ -83,12 +85,6 @@ var URI = URI_SCHEME + ':' + URI_HIER_PART + '(?:' +
 var URI_REGEX = new RegExp(URI, 'g')
 
 // ===================================================================
-
-function test () {
-  console.log('TOTO', URI_REGEX)
-  console.log('fe ef ef ef feff eff e fefefefe http://99w-w*w.test.com  efeffe effe f ffe eef'.match(URI_REGEX))
-}
-test()
 
 /* TODO: Supports:
 
