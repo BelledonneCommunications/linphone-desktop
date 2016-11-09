@@ -161,14 +161,14 @@ function encodeUrisToQmlFormat (text, options) {
       var ext = getExtension(match)
       if (includes([ 'jpg', 'jpeg', 'gif', 'png', 'svg' ], ext)) {
         images += '<a href="' + match + '"><img' + (
-          options.imageWidth != null
+          options.imagesWidth != null
             ? ' width="' + options.imagesWidth + '"'
             : ''
         ) + (
-          options.imageHeight != null
+          options.imagesHeight != null
             ? ' height="' + options.imagesHeight + '"'
             : ''
-        ) + 'src="' + match + '" /></a>'
+        ) + ' src="' + match + '" /></a>'
       }
 
       return '<a href="' + match + '">' + match + '</a>'
@@ -178,7 +178,7 @@ function encodeUrisToQmlFormat (text, options) {
     images = '<div>' + images + '</div>'
   }
 
-  return images.concat(text)
+  return images.concat('<p>' + text + '</p>')
 }
 
 // -------------------------------------------------------------------
