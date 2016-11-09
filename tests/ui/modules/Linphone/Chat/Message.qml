@@ -36,12 +36,13 @@ Item {
       left: container.left
       right: container.right
     }
+    clip: true
     padding: ChatStyle.entry.message.padding
     readOnly: true
     selectByMouse: true
     text: Utils.encodeUrisToQmlFormat($content, {
-      imagesHeight: ChatStyle.entry.message.imagesHeight,
-      imagesWidth: 'auto'
+      imagesHeight: ChatStyle.entry.message.images.height,
+      imagesWidth: ChatStyle.entry.message.images.width
     })
     wrapMode: Text.Wrap
 
