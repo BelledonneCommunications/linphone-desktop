@@ -4,6 +4,12 @@
 
 .pragma library
 
+// Options.
+
+// If true, strings starting with `www.` can be detected.
+// Not standard but helpful.
+var SUPPORTS_URL = true
+
 // Level 0. ----------------------------------------------------------
 
 var URI_PCT_ENCODED = '%[A-Fa-f\\d]{2}'
@@ -78,9 +84,11 @@ var URI_HIER_PART = '(?:' +
 
 // Regex to match URI. It respects the RFC 3986.
 // But many features are not supported like IP format.
-var URI = URI_SCHEME + ':' + URI_HIER_PART + '(?:' +
-  '\\?' + URI_QUERY +
-')?' + '(?:' + '#' + URI_FRAGMENT + ')?'
+var URI = (SUPPORTS_URL
+  ? '(?:' + URI_SCHEME + ':' + '|' + 'www\\.' + ')'
+  :  URI_SCHEME + ':'
+) + URI_HIER_PART + '(?:' + '\\?' + URI_QUERY + ')?' +
+'(?:' + '#' + URI_FRAGMENT + ')?'
 
 var URI_REGEX = new RegExp(URI, 'g')
 

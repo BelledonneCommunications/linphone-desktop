@@ -45,7 +45,7 @@ Item {
 
     // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
-    textFormat: Text.StyledText
+    textFormat: Text.RichText
 
     onLinkActivated: Qt.openUrlExternally(link)
 

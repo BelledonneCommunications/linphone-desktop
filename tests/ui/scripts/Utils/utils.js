@@ -4,6 +4,10 @@
 
 .import 'uri-tools.js' as UriTools
 
+// ===================================================================
+// QML helpers.
+// ===================================================================
+
 // Load by default a window in the ui/views folder.
 // If options.isString is equals to true, a marshalling component can
 // be used.
@@ -67,24 +71,6 @@ function openConfirmDialog (parent, options) {
 
 // -------------------------------------------------------------------
 
-function _computeOptimizedCb (func, context) {
-  return (context != null)
-    ? (function () {
-      return func.apply(context, arguments)
-    }) : func
-}
-
-// -------------------------------------------------------------------
-
-// Convert a snake_case string to a lowerCamelCase string.
-function snakeToCamel (s) {
-  return s.replace(/(\_\w)/g, function (matches) {
-    return matches[1].toUpperCase()
-  })
-}
-
-// -------------------------------------------------------------------
-
 // A copy of `Window.setTimeout` from js.
 // delay is in milliseconds.
 function setTimeout (parent, delay, cb) {
@@ -117,15 +103,6 @@ function connectOnce (signal, cb) {
 
   signal.connect(func)
   return func
-}
-
-// -------------------------------------------------------------------
-
-// Basic assert function.
-function assert (condition, message) {
-  if (!condition) {
-    throw new Error('Assert: ' + message)
-  }
 }
 
 // -------------------------------------------------------------------
@@ -165,6 +142,36 @@ function qmlTypeof (object, className) {
 
 // -------------------------------------------------------------------
 
+function encodeUrisToQmlFormat (text) {
+  var images = ''
+
+  text = text
+    .replace(/</g, '\u2063&lt;')
+    .replace(/>/g, '\u2063&gt;')
+    .replace(UriTools.URI_REGEX, function (match) {
+      // If it's a simple URL, transforms it in URI.
+      if (startsWith(match, 'www.')) {
+        match = 'http://' + match
+      }
+
+      var ext = getExtension(match)
+      if (includes([ 'jpg', 'jpeg', 'gif', 'png', 'svg' ], ext)) {
+        images += '<a href="' + match +
+          '"><img width="auto" height="48" src="' + match + '" /></a>'
+      }
+
+      return '<a href="' + match + '">' + match + '</a>'
+    })
+
+  if (images.length > 0) {
+    images = '<div>' + images + '</div>'
+  }
+
+  return images.concat(text)
+}
+
+// -------------------------------------------------------------------
+
 // Test if a point is in a item.
 //
 // `source` is the item that generated the point.
@@ -179,6 +186,55 @@ function pointIsInItem (source, target, point) {
     point.x < target.x + target.width &&
     point.y < target.y + target.height
   )
+}
+
+// ===================================================================
+// GENERIC.
+// ===================================================================
+
+function _computeOptimizedCb (func, context) {
+  return (context != null)
+    ? (function () {
+      return func.apply(context, arguments)
+    }) : func
+}
+
+// -------------------------------------------------------------------
+
+// Convert a snake_case string to a lowerCamelCase string.
+function snakeToCamel (s) {
+  return s.replace(/(\_\w)/g, function (matches) {
+    return matches[1].toUpperCase()
+  })
+}
+
+// -------------------------------------------------------------------
+
+// Basic assert function.
+function assert (condition, message) {
+  if (!condition) {
+    throw new Error('Assert: ' + message)
+  }
+}
+
+// -------------------------------------------------------------------
+
+// Returns the extension of a filename.
+function getExtension (str) {
+  var index = str.lastIndexOf('.')
+
+  if (index === -1) {
+    return ''
+  }
+
+  return str.slice(index + 1)
+}
+
+// -------------------------------------------------------------------
+
+// Test if a string starts by a given string.
+function startsWith (str, searchStr) {
+  return str.slice(0, searchStr.length) === searchStr
 }
 
 // -------------------------------------------------------------------
@@ -198,7 +254,12 @@ function times (n, cb, context) {
 
 // -------------------------------------------------------------------
 
-// Test if a var is a string.
+function isArray (array) {
+  return (array instanceof Array)
+}
+
+// -------------------------------------------------------------------
+
 function isString (string) {
   return typeof string === 'string' || string instanceof String
 }
@@ -245,11 +306,40 @@ function genRandomNumberBetweenIntervals (intervals) {
 
 // -------------------------------------------------------------------
 
-function encodeUrisToQmlFormat (text) {
-  return text
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(UriTools.URI_REGEX, function (match) {
-      return '<a href="' + match + '">' + match + '</a>'
-    })
+// Returns an array from a `object` or `array` argument.
+function ensureArray (obj) {
+  if (isArray(obj)) {
+    return obj
+  }
+
+  var keys = Object.keys(obj)
+  var length = keys.length
+  var values = Array(length)
+
+  for (var i = 0; i < length; i++) {
+    values[i] = obj[keys[i]]
+  }
+
+  return values
+}
+
+// -------------------------------------------------------------------
+
+// Test if a value is included in an array or object.
+function includes (obj, value, startIndex) {
+  obj = ensureArray(obj)
+
+  if (startIndex == null) {
+    startIndex = 0
+  }
+
+  var length = obj.length
+
+  for (var i = startIndex; i < length; i++) {
+    if (value === obj[i]) {
+      return true
+    }
+  }
+
+  return false
 }
