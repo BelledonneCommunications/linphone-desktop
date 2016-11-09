@@ -20,38 +20,28 @@ NC='\e[0m'
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR/..
 
-# Check JS lib.
-printf "${BLUE}Testing scripts lib...${NC}\n"
+# ====================================================================
 
 so_far_so_good=0
-$TEST_RUNNER -import $MODULES_PATH -input './ui/scripts/Utils/utils.spec.qml'
 
-if [[ $? == 0 ]]; then
-    printf "${GREEN}Done. No error found in scripts lib.\n"
-else
-    printf "${RED}One or more errors were found. Please to fix them.\n"
-    so_far_so_good=1
-fi
-printf "${NC}\n"
-
-# Check all `*.spec.qml` files
+# Check all `*.spec.qml` files.
 while read line
 do
-    qml_file=$(
+    source_file=$(
         printf "$line" |
-        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.qml\)\s*<\s*\/\s*file\s*>\s*$/\1/p'
+        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/\s*file\s*>\s*$/\1/p'
     )
-    if [[ ! -z  $qml_file ]]; then
-        spec_qml_file="${qml_file%.*}.${TEST_FILE_EXTENSION}"
+    if [[ ! -z  $source_file ]]; then
+        spec_file="${source_file%.*}.${TEST_FILE_EXTENSION}"
 
-        if [ -f $spec_qml_file ]; then
-            printf "${BLUE}Running unit qml tests of '${qml_file}'...${NC}\n"
-            $TEST_RUNNER -import $MODULES_PATH -import $SCRIPTS_PATH -input "$spec_qml_file"
+        if [ -f $spec_file ]; then
+            printf "${BLUE}Running unit qml tests of '${source_file}'...${NC}\n"
+            $TEST_RUNNER -import $MODULES_PATH -import $SCRIPTS_PATH -input "$spec_file"
 
             if [[ $? == 0 ]]; then
-                printf "${GREEN}All unit tests have succeeded for '${spec_qml_file}'.\n"
+                printf "${GREEN}All unit tests have succeeded for '${spec_file}'.\n"
             else
-                printf "${RED}Unit tests have failed for '${spec_qml_file}'.\n"
+                printf "${RED}Unit tests have failed for '${spec_file}'.\n"
                 so_far_so_good=1
             fi
             printf "${NC}\n"

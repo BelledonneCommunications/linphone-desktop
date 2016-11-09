@@ -13,7 +13,7 @@ var SUPPORTS_URL = true
 // Level 0. ----------------------------------------------------------
 
 var URI_PCT_ENCODED = '%[A-Fa-f\\d]{2}'
-var URI_PORT =  '\d*'
+var URI_PORT =  '\\d*'
 var URI_SCHEME = '[a-zA-Z][\\w+\-\.]*'
 var URI_SUB_DELIMS = '[!$&\'()*+,;=]'
 var URI_UNRESERVED = '[\\w\-\._~]'
