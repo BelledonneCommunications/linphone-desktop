@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import Common 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -58,6 +59,16 @@ Item {
       cursorShape: parent.hoveredLink
         ? Qt.PointingHandCursor
         : Qt.ArrowCursor
+    }
+
+    InvertedMouseArea {
+      anchors.fill: parent
+      enabled: parent.activeFocus
+
+      onPressed: {
+        parent.deselect()
+        parent.focus = false
+      }
     }
   }
 

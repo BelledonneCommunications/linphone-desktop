@@ -11,6 +11,8 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property var contact
 
+  // -----------------------------------------------------------------
+
   spacing: 0
 
   ScrollableListView {
@@ -156,7 +158,6 @@ ColumnLayout {
             : event
           }
         }
-
       }
     }
 
