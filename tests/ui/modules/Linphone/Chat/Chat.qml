@@ -162,7 +162,7 @@ ColumnLayout {
 
     // TMP
     model: ListModel {
-      ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: "<img src='http://html.com/wp-content/uploads/html-com-1.png' width='50%' height='50%' />www.google.fr" }
+      ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: "https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg <img src='http://html.com/wp-content/uploads/html-com-1.png' width='50%' height='50%' />www.google.fr" }
       ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: "<a href='mailto:qq1@qqpart.com'>Contact mail</a>" }
       ListElement { $dateSection: 1465389121000; $timestamp: 1465389133000; $type: 'event'; $content: 'incoming_call' }
       ListElement { $dateSection: 1465389121000; $timestamp: 1465389439000; $type: 'message'; $content: 'www.test.fr<blink>Perfect!</blink> bg  g vg gv v g v hgv gv gv   jhb jh b  jb jh hg vg    cfcy f  v u  uyg   f tf tf  ft f tf t  t  fy ft f tu  ty f  rd rd  d d   uu gu y  gg y f  r dr   ' }

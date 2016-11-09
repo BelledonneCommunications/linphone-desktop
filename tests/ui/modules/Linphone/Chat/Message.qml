@@ -29,7 +29,7 @@ Item {
     ) + text.padding * 2
   }
 
-  Text {
+  TextEdit {
     id: text
 
     anchors {
@@ -37,11 +37,10 @@ Item {
       right: container.right
     }
     padding: ChatStyle.entry.message.padding
+    readOnly: true
+    selectByMouse: true
     text: Utils.encodeUrisToQmlFormat($content)
     wrapMode: Text.Wrap
-
-    // Little fix. Text may disappear with scrolling.
-    renderType: Text.NativeRendering
 
     // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
