@@ -142,8 +142,12 @@ function qmlTypeof (object, className) {
 
 // -------------------------------------------------------------------
 
-function encodeUrisToQmlFormat (text) {
+function encodeUrisToQmlFormat (text, options) {
   var images = ''
+
+  if (options == null) {
+    options = {}
+  }
 
   text = text
     .replace(/</g, '\u2063&lt;')
@@ -156,8 +160,15 @@ function encodeUrisToQmlFormat (text) {
 
       var ext = getExtension(match)
       if (includes([ 'jpg', 'jpeg', 'gif', 'png', 'svg' ], ext)) {
-        images += '<a href="' + match +
-          '"><img width="auto" height="48" src="' + match + '" /></a>'
+        images += '<a href="' + match + '"><img' + (
+          options.imageWidth != null
+            ? ' width="' + options.imagesWidth + '"'
+            : ''
+        ) + (
+          options.imageHeight != null
+            ? ' height="' + options.imagesHeight + '"'
+            : ''
+        ) + 'src="' + match + '" /></a>'
       }
 
       return '<a href="' + match + '">' + match + '</a>'

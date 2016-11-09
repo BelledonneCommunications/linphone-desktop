@@ -39,12 +39,15 @@ Item {
     padding: ChatStyle.entry.message.padding
     readOnly: true
     selectByMouse: true
-    text: Utils.encodeUrisToQmlFormat($content)
+    text: Utils.encodeUrisToQmlFormat($content, {
+      imagesHeight: ChatStyle.entry.message.imagesHeight,
+      imagesWidth: 'auto'
+    })
     wrapMode: Text.Wrap
 
     // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
-    textFormat: Text.RichText
+    textFormat: Text.RichText // To supports links and imgs.
 
     onLinkActivated: Qt.openUrlExternally(link)
 

@@ -47,6 +47,7 @@ QtObject {
     }
 
     property QtObject message: QtObject {
+      property int imagesHeight: 48
       property int padding: 8
       property int radius: 4
 
