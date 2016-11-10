@@ -181,6 +181,21 @@ TestCase {
 
   // -----------------------------------------------------------------
 
+  function test_getExtension_data () {
+    return [
+      { input: 'foobar.baz', output: 'baz' },
+      { input: 'classe.george.abitbol', output: 'abitbol' },
+      { input: '', output: '' },
+      { input: 'cotcotcot', output: '' }
+    ]
+  }
+
+  function test_getExtension (data) {
+    compare(Utils.getExtension(data.input), data.output)
+  }
+
+  // -----------------------------------------------------------------
+
   function test_includes_data () {
     return [
       // Test arrays.
