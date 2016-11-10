@@ -39,9 +39,11 @@ ApplicationWindow {
     height: MainWindowStyle.toolBar.height
 
     RowLayout {
-      anchors.fill: parent
-      anchors.leftMargin: MainWindowStyle.toolBar.leftMargin
-      anchors.rightMargin: MainWindowStyle.toolBar.rightMargin
+      anchors {
+        fill: parent
+        leftMargin: MainWindowStyle.toolBar.leftMargin
+        rightMargin: MainWindowStyle.toolBar.rightMargin
+      }
       spacing: MainWindowStyle.toolBar.spacing
 
       Collapse {
