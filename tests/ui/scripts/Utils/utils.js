@@ -343,7 +343,11 @@ function includes (obj, value, startIndex) {
   var length = obj.length
 
   for (var i = startIndex; i < length; i++) {
-    if (value === obj[i]) {
+    if (
+      value === obj[i] ||
+      // Check `NaN`.
+      (value !== value && obj[i] !== obj[i])
+    ) {
       return true
     }
   }

@@ -181,7 +181,40 @@ TestCase {
 
   // -----------------------------------------------------------------
 
-    function test_isArray_data () {
+  function test_includes_data () {
+    return [
+      // Test arrays.
+      { input: [], value: 0, output: false },
+      { input: [ 1, 2, 3 ], value: 4, output: false },
+      { input: [ 6 ], value: 6, output: true },
+      { input: [ 4, 8, 'foo' ], value: 8, output: true },
+      { input: [ 12, NaN, 47 ], value: NaN, output: true },
+      { input: Array(1), value: undefined, output: true },
+      { input: [ 'a', 'b', 'c' ], startIndex: 1, value: 'a', output: false },
+      { input: [ 6, 5, 4, 9 ], startIndex: 3, value: 9, output: true },
+
+      // Test objects.
+      { input: {}, value: 0, output: false },
+      { input: { a: 1, b: 2, c: 3 }, value: 4, output: false },
+      { input: { a: 6 }, value: 6, output: true },
+      { input: { a: 4, b: 8, c: 'foo' }, value: 8, output: true },
+      { input: { a: 12, b: NaN, c: 47 }, value: NaN, output: true },
+      { input: new Object(), value: undefined, output: false },
+      { input: { a: 'a', b: 'b', c: 'c' }, startIndex: 1, value: 'a', output: false },
+      { input: { a: 6, b: 5, c: 4, d: 9 }, startIndex: 3, value: 9, output: true },
+    ]
+  }
+
+  function test_includes (data) {
+    compare(
+      Utils.includes(data.input, data.value, data.startIndex),
+      data.output
+    )
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_isArray_data () {
     return [
       { input: [], output: true },
       { input: {}, output: false },
@@ -190,7 +223,8 @@ TestCase {
       { input: new Error, output: false },
       { input: true, output: false },
       { input: 42, output: false },
-      { input: new Array(), output: true }
+      { input: new Array(), output: true },
+      { input: [ 15, new Date(), 'ij' ], output: true }
     ]
   }
 
