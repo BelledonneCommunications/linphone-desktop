@@ -33,21 +33,6 @@ TestCase {
 
   // -----------------------------------------------------------------
 
-  function test_snakeToCamel_data () {
-    return [
-      { input: 'foo_bar', output: 'fooBar' },
-      { input: 'george_abitbol', output: 'georgeAbitbol' },
-      { input: 'billTremendousAndHubert', output: 'billTremendousAndHubert' },
-      { input: 'foo_bAr_BAZ', output: 'fooBArBAZ' }
-    ]
-  }
-
-  function test_snakeToCamel (data) {
-    compare(Utils.snakeToCamel(data.input), data.output)
-  }
-
-  // -----------------------------------------------------------------
-
   function test_setTimeoutWithoutParent () {
     try {
       Utils.setTimeout(null, 0, function () {
@@ -138,24 +123,6 @@ TestCase {
 
   // -----------------------------------------------------------------
 
-  function test_isString_data () {
-    return [
-      { input: 'foo', output: true },
-      { input: Object('bar'), output: true },
-      { input: [ 0 ], output: false },
-      { input: /baz/, output: false },
-      { input: new Error, output: false },
-      { input: true, output: false },
-      { input: 42, output: false }
-    ]
-  }
-
-  function test_isString (data) {
-    compare(Utils.isString(data.input), data.output)
-  }
-
-  // -----------------------------------------------------------------
-
   function test_genRandomNumber_data () {
     return [
       { min: 42, max: 3600 },
@@ -210,6 +177,58 @@ TestCase {
         'The generated number cannot be found in a interval.'
       )
     })
+  }
+
+  // -----------------------------------------------------------------
+
+    function test_isArray_data () {
+    return [
+      { input: [], output: true },
+      { input: {}, output: false },
+      { input: [ 6 ], output: true },
+      { input: /bar/, output: false },
+      { input: new Error, output: false },
+      { input: true, output: false },
+      { input: 42, output: false },
+      { input: new Array(), output: true }
+    ]
+  }
+
+  function test_isArray (data) {
+    compare(Utils.isArray(data.input), data.output)
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_isString_data () {
+    return [
+      { input: 'foo', output: true },
+      { input: Object('bar'), output: true },
+      { input: [ 0 ], output: false },
+      { input: /baz/, output: false },
+      { input: new Error, output: false },
+      { input: true, output: false },
+      { input: 42, output: false }
+    ]
+  }
+
+  function test_isString (data) {
+    compare(Utils.isString(data.input), data.output)
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_snakeToCamel_data () {
+    return [
+      { input: 'foo_bar', output: 'fooBar' },
+      { input: 'george_abitbol', output: 'georgeAbitbol' },
+      { input: 'billTremendousAndHubert', output: 'billTremendousAndHubert' },
+      { input: 'foo_bAr_BAZ', output: 'fooBArBAZ' }
+    ]
+  }
+
+  function test_snakeToCamel (data) {
+    compare(Utils.snakeToCamel(data.input), data.output)
   }
 
   // -----------------------------------------------------------------
