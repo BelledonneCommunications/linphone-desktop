@@ -35,6 +35,9 @@ Item {
     }
 
     _mouseArea.parent = parent
+
+    // Must be true if a fake parent is used and if `mouseArea`
+    // is not in the same window that `item`.
     _mouseAlwaysOutside =
       _mouseArea.parent !== Utils.getTopParent(item)
   }
@@ -74,7 +77,10 @@ Item {
         positionEvent.accepted = false
 
         // Click is outside or not.
-        if (_mouseAlwaysOutside || !Utils.pointIsInItem(this, item, positionEvent)) {
+        if (
+          _mouseAlwaysOutside ||
+          !Utils.pointIsInItem(this, item, positionEvent)
+        ) {
           if (_timeout != null) {
             // Remove existing timeout to avoid the creation of
             // many children.

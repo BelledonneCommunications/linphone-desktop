@@ -212,13 +212,28 @@ function _computeOptimizedCb (func, context) {
     }) : func
 }
 
-// -------------------------------------------------------------------
+function _indexFinder (array, cb, context) {
+  var length = array.length
 
-// Convert a snake_case string to a lowerCamelCase string.
-function snakeToCamel (s) {
-  return s.replace(/(\_\w)/g, function (matches) {
-    return matches[1].toUpperCase()
-  })
+  for (var i = 0; i < length; i++) {
+    if (cb(array[index], index, array)) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+function _keyFinder (obj, cb, context) {
+  var keys = Object.keys(obj)
+  var length = keys.length
+
+  for (var i = 0; i < length; i++) {
+    var key = keys[i]
+    if (cb(obj[key], key, obj)) {
+      return key
+    }
+  }
 }
 
 // -------------------------------------------------------------------
@@ -232,49 +247,34 @@ function assert (condition, message) {
 
 // -------------------------------------------------------------------
 
-// Returns the extension of a filename.
-function getExtension (str) {
-  var index = str.lastIndexOf('.')
-
-  if (index === -1) {
-    return ''
+// Returns an array from a `object` or `array` argument.
+function ensureArray (obj) {
+  if (isArray(obj)) {
+    return obj
   }
 
-  return str.slice(index + 1)
-}
+  var keys = Object.keys(obj)
+  var length = keys.length
+  var values = Array(length)
 
-// -------------------------------------------------------------------
-
-// Test if a string starts by a given string.
-function startsWith (str, searchStr) {
-  return str.slice(0, searchStr.length) === searchStr
-}
-
-// -------------------------------------------------------------------
-
-// Invoke a `cb` function with each value of the interval: `[0, n[`.
-// Return a mapped array created with the returned values of `cb`.
-function times (n, cb, context) {
-  var arr = Array(Math.max(0, n))
-  cb = _computeOptimizedCb(cb, context, 1)
-
-  for (var i = 0; i < n; i++) {
-    arr[i] = cb(i)
+  for (var i = 0; i < length; i++) {
+    values[i] = obj[keys[i]]
   }
 
-  return arr
+  return values
 }
 
 // -------------------------------------------------------------------
 
-function isArray (array) {
-  return (array instanceof Array)
-}
+// Get the first matching value in a array or object.
+// The matching value is obtained if `cb` returns true.
+function find (obj, cb, context) {
+  cb = _computeOptimizedCb(cb, context)
 
-// -------------------------------------------------------------------
+  var finder = isArray(obj) ? _indexFinder : _keyFinder
+  var key = finder(obj, cb, context)
 
-function isString (string) {
-  return typeof string === 'string' || string instanceof String
+  return key != null && key !== -1 ? obj[key] : null
 }
 
 // -------------------------------------------------------------------
@@ -319,21 +319,15 @@ function genRandomNumberBetweenIntervals (intervals) {
 
 // -------------------------------------------------------------------
 
-// Returns an array from a `object` or `array` argument.
-function ensureArray (obj) {
-  if (isArray(obj)) {
-    return obj
+// Returns the extension of a filename.
+function getExtension (str) {
+  var index = str.lastIndexOf('.')
+
+  if (index === -1) {
+    return ''
   }
 
-  var keys = Object.keys(obj)
-  var length = keys.length
-  var values = Array(length)
-
-  for (var i = 0; i < length; i++) {
-    values[i] = obj[keys[i]]
-  }
-
-  return values
+  return str.slice(index + 1)
 }
 
 // -------------------------------------------------------------------
@@ -359,37 +353,43 @@ function includes (obj, value, startIndex) {
 
 // -------------------------------------------------------------------
 
-function _indexFinder (array, cb, context) {
-  var length = array.length
-
-  for (var i = 0; i < length; i++) {
-    if (cb(array[index], index, array)) {
-      return i
-    }
-  }
-
-  return -1
+function isArray (array) {
+  return (array instanceof Array)
 }
 
-function _keyFinder (obj, cb, context) {
-  var keys = Object.keys(obj)
-  var length = keys.length
+// -------------------------------------------------------------------
 
-  for (var i = 0; i < length; i++) {
-    var key = keys[i]
-    if (cb(obj[key], key, obj)) {
-      return key
-    }
-  }
+function isString (string) {
+  return typeof string === 'string' || string instanceof String
 }
 
-// Get the first matching value in a array or object.
-// The matching value is obtained if `cb` returns true.
-function find (obj, cb, context) {
-  cb = _computeOptimizedCb(cb, context)
+// -------------------------------------------------------------------
 
-  var finder = isArray(obj) ? _indexFinder : _keyFinder
-  var key = finder(obj, cb, context)
+// Convert a snake_case string to a lowerCamelCase string.
+function snakeToCamel (s) {
+  return s.replace(/(\_\w)/g, function (matches) {
+    return matches[1].toUpperCase()
+  })
+}
 
-  return key != null && key !== -1 ? obj[key] : null
+// -------------------------------------------------------------------
+
+// Test if a string starts by a given string.
+function startsWith (str, searchStr) {
+  return str.slice(0, searchStr.length) === searchStr
+}
+
+// -------------------------------------------------------------------
+
+// Invoke a `cb` function with each value of the interval: `[0, n[`.
+// Return a mapped array created with the returned values of `cb`.
+function times (n, cb, context) {
+  var arr = Array(Math.max(0, n))
+  cb = _computeOptimizedCb(cb, context, 1)
+
+  for (var i = 0; i < n; i++) {
+    arr[i] = cb(i)
+  }
+
+  return arr
 }
