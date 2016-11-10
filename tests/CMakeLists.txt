@@ -34,6 +34,7 @@ set(SOURCES
   src/components/notification/Notification.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
+  src/components/timeline/TimelineModel.cpp
   src/logger.cpp
   src/main.cpp
 )
@@ -47,6 +48,7 @@ set(HEADERS
   src/components/presence/Presence.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
+  src/components/timeline/TimelineModel.hpp
   src/logger.hpp
 )
 

@@ -8,7 +8,7 @@
 // ===================================================================
 
 class AccountSettingsModel : public QObject {
-  Q_OBJECT
+  Q_OBJECT;
 
   Q_PROPERTY(
     QString username
