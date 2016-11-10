@@ -129,6 +129,24 @@ TestCase {
   // GENERIC.
   // =================================================================
 
+  function test_ensureArray_data () {
+    return [
+      { input: [ 1, 2, 3 ], output: [ 1, 2, 3 ] },
+      { input: { toto: 4, ro: 5 }, output: [ 4, 5 ] },
+      { input: new Object(), output: [] },
+      { input: new Array(), output: [] },
+      { input: { a: 0, b: 1, c: 0 }, output: [ 0, 1, 0 ] }
+    ]
+  }
+
+  function test_ensureArray (data) {
+    // Use `sort` because transform a object in array hasn't a
+    // guarantee order.
+    compare(Utils.ensureArray(data.input).sort(), data.output.sort())
+  }
+
+  // -----------------------------------------------------------------
+
   function test_genRandomNumber_data () {
     return [
       { min: 42, max: 3600 },
