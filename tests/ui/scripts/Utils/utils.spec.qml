@@ -138,33 +138,6 @@ TestCase {
 
   // -----------------------------------------------------------------
 
-  function test_times1_data () {
-    return [
-      {
-        cb: function (n) { return n * 2 },
-        n: 10,
-        output: [ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 ]
-      },
-      {
-        cb: function (n) { return n % 2 },
-        n: 6,
-        output: [ 0, 1, 0, 1, 0, 1 ]
-      }
-    ]
-  }
-
-  function test_times1 (data) {
-    compare(Utils.times(data.n, data.cb), data.output)
-  }
-
-  function test_times2 () {
-    var sum = 0
-    Utils.times(5, function (i) { sum += (i + 1) })
-    compare(sum, 15)
-  }
-
-  // -----------------------------------------------------------------
-
   function test_isString_data () {
     return [
       { input: 'foo', output: true },
@@ -237,5 +210,57 @@ TestCase {
         'The generated number cannot be found in a interval.'
       )
     })
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_startsWith_data () {
+    return [
+      { string: 'foo', searchStr: undefined, result: true },
+      { string: 'bar', searchStr: null, result: true },
+      { string: 'abitbol', searchStr: 'abitboll', result: false },
+      { string: '', searchStr: NaN, result: false },
+      { string: '', searchStr: '', result: true },
+      { string: '', searchStr: Infinity, result: false },
+      { string: '', searchStr: 0, result: false },
+      { string: 'george', searchStr: 'geo', result: true },
+      { string: 'george', searchStr: 'george', result: true },
+      { string: 'george', searchStr: 'georg', result: true },
+      { string: 'ruby', searchStr: '', result: true }
+    ]
+  }
+
+  function test_startsWith (data) {
+    compare(
+      Utils.startsWith(data.string, data.searchStr),
+      data.result
+    )
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_times1_data () {
+    return [
+      {
+        cb: function (n) { return n * 2 },
+        n: 10,
+        output: [ 0, 2, 4, 6, 8, 10, 12, 14, 16, 18 ]
+      },
+      {
+        cb: function (n) { return n % 2 },
+        n: 6,
+        output: [ 0, 1, 0, 1, 0, 1 ]
+      }
+    ]
+  }
+
+  function test_times1 (data) {
+    compare(Utils.times(data.n, data.cb), data.output)
+  }
+
+  function test_times2 () {
+    var sum = 0
+    Utils.times(5, function (i) { sum += (i + 1) })
+    compare(sum, 15)
   }
 }

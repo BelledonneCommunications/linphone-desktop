@@ -376,6 +376,10 @@ function snakeToCamel (s) {
 
 // Test if a string starts by a given string.
 function startsWith (str, searchStr) {
+  if (searchStr == null) {
+    searchStr = ''
+  }
+
   return str.slice(0, searchStr.length) === searchStr
 }
 
