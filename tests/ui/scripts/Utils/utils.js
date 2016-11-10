@@ -153,23 +153,6 @@ function openWindow (window, parent, options) {
 
 // -------------------------------------------------------------------
 
-// A copy of `Window.setTimeout` from js.
-// delay is in milliseconds.
-function setTimeout (parent, delay, cb) {
-  var timer = new (function (parent) {
-    return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
-  })(parent)
-
-  timer.interval = delay
-  timer.repeat = false
-  timer.triggered.connect(cb)
-  timer.start()
-
-  return timer
-}
-
-// -------------------------------------------------------------------
-
 // Test if a point is in a item.
 //
 // `source` is the item that generated the point.
@@ -201,6 +184,23 @@ function qmlTypeof (object, className) {
     str.indexOf(className + '(') == 0 ||
     str.indexOf(className + '_QML') == 0
   )
+}
+
+// -------------------------------------------------------------------
+
+// A copy of `Window.setTimeout` from js.
+// delay is in milliseconds.
+function setTimeout (parent, delay, cb) {
+  var timer = new (function (parent) {
+    return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
+  })(parent)
+
+  timer.interval = delay
+  timer.repeat = false
+  timer.triggered.connect(cb)
+  timer.start()
+
+  return timer
 }
 
 // ===================================================================

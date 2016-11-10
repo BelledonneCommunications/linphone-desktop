@@ -10,6 +10,37 @@ import './utils.js' as Utils
 TestCase {
   id: testCase
 
+  // =================================================================
+  // QML helpers.
+  // =================================================================
+
+  function test_clearTimeout_data () {
+    return [
+      { time: 0 },
+      { time: 100 }
+    ]
+  }
+
+  function test_clearTimeout (data) {
+    var failed = false
+    var timeout = Utils.setTimeout(testCase, data.time, function () {
+      failed = true
+    })
+
+    if (failed) {
+      fail('`setTimeout` callback was called before `wait`.')
+    }
+
+    Utils.clearTimeout(timeout)
+    wait(100)
+
+    if (failed) {
+      fail('`setTimeout` callback was called after `wait`.')
+    }
+  }
+
+  // -----------------------------------------------------------------
+
   // Test only if a confirm dialog can be opened.
   // The other tests are launched by `ConfirmDialog.spec.qml`.
   function test_openConfirmDialog () {
@@ -29,6 +60,33 @@ TestCase {
     }
 
     dialog.close()
+  }
+
+  // -----------------------------------------------------------------
+
+  function test_qmlTypeof_data () {
+    return [
+      {
+        component: 'import QtQuick 2.7; ListModel {}',
+        result: true,
+        type: 'QQmlListModel'
+      }, {
+        component: 'import QtQuick 2.7; ListView {}',
+        result: true,
+        type: 'QQuickListView'
+      }, {
+        component: 'import QtQuick 2.7; MouseArea {}',
+        result: true,
+        type: 'QQuickMouseArea'
+      }
+    ]
+  }
+
+  function test_qmlTypeof (data) {
+    var object = Qt.createQmlObject(data.component, testCase)
+    verify(object)
+
+    compare(Utils.qmlTypeof(object, data.type), data.result)
   }
 
   // -----------------------------------------------------------------
@@ -67,61 +125,9 @@ TestCase {
     }
   }
 
-  // -----------------------------------------------------------------
-
-  function test_clearTimeout_data () {
-    return [
-      { time: 0 },
-      { time: 100 }
-    ]
-  }
-
-  function test_clearTimeout (data) {
-    var failed = false
-    var timeout = Utils.setTimeout(testCase, data.time, function () {
-      failed = true
-    })
-
-    if (failed) {
-      fail('`setTimeout` callback was called before `wait`.')
-    }
-
-    Utils.clearTimeout(timeout)
-    wait(100)
-
-    if (failed) {
-      fail('`setTimeout` callback was called after `wait`.')
-    }
-  }
-
-  // -----------------------------------------------------------------
-
-  function test_qmlTypeof_data () {
-    return [
-      {
-        component: 'import QtQuick 2.7; ListModel {}',
-        result: true,
-        type: 'QQmlListModel'
-      }, {
-        component: 'import QtQuick 2.7; ListView {}',
-        result: true,
-        type: 'QQuickListView'
-      }, {
-        component: 'import QtQuick 2.7; MouseArea {}',
-        result: true,
-        type: 'QQuickMouseArea'
-      }
-    ]
-  }
-
-  function test_qmlTypeof (data) {
-    var object = Qt.createQmlObject(data.component, testCase)
-    verify(object)
-
-    compare(Utils.qmlTypeof(object, data.type), data.result)
-  }
-
-  // -----------------------------------------------------------------
+  // =================================================================
+  // GENERIC.
+  // =================================================================
 
   function test_genRandomNumber_data () {
     return [
