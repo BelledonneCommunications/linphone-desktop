@@ -11,18 +11,30 @@ Item {
   id: item
 
   property bool _mouseAlwaysOutside
-  property var _mouseArea
+  property var _mouseArea: null
 
   // When emitted, returns a function to test if the click
   // is on a specific item. It takes only a item parameter.
   signal pressed (var pointIsInItem)
 
   function _createMouseArea () {
+    var parent = Utils.getTopParent(item, true)
+    var mouseArea = Utils.find(parent.children, function (element) {
+      return Utils.qmlTypeof(element, 'QQuickMouseArea')
+    })
+
+    Utils.assert(
+      _mouseArea === mouseArea,
+      'It already exists a different `MouseArea` at window root. (' +
+      '`local mouse area`=' + _mouseArea + ', `root mouse area`=' +
+      mouseArea + ')'
+    )
+
     if (_mouseArea == null) {
       _mouseArea = builder.createObject()
     }
 
-    _mouseArea.parent = Utils.getTopParent(item, true)
+    _mouseArea.parent = parent
     _mouseAlwaysOutside =
       _mouseArea.parent !== Utils.getTopParent(item)
   }

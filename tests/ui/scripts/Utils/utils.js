@@ -2,6 +2,8 @@
 // Contains many common helpers.
 // ===================================================================
 
+.pragma library
+
 .import 'uri-tools.js' as UriTools
 
 // ===================================================================
@@ -353,4 +355,41 @@ function includes (obj, value, startIndex) {
   }
 
   return false
+}
+
+// -------------------------------------------------------------------
+
+function _indexFinder (array, cb, context) {
+  var length = array.length
+
+  for (var i = 0; i < length; i++) {
+    if (cb(array[index], index, array)) {
+      return i
+    }
+  }
+
+  return -1
+}
+
+function _keyFinder (obj, cb, context) {
+  var keys = Object.keys(obj)
+  var length = keys.length
+
+  for (var i = 0; i < length; i++) {
+    var key = keys[i]
+    if (cb(obj[key], key, obj)) {
+      return key
+    }
+  }
+}
+
+// Get the first matching value in a array or object.
+// The matching value is obtained if `cb` returns true.
+function find (obj, cb, context) {
+  cb = _computeOptimizedCb(cb, context)
+
+  var finder = isArray(obj) ? _indexFinder : _keyFinder
+  var key = finder(obj, cb, context)
+
+  return key != null && key !== -1 ? obj[key] : null
 }

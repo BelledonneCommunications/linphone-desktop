@@ -22,7 +22,6 @@ Item {
     var children = root.children
 
     // Can be the `invertedMouseArea` of other message.
-    // Or another? It's a problem in this case...
     var mouseArea = children[children.length - 1]
 
     if (Utils.qmlTypeof(mouseArea, 'QQuickMouseArea')) {
