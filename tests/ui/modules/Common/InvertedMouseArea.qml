@@ -17,6 +17,8 @@ Item {
   // is on a specific item. It takes only a item parameter.
   signal pressed (var pointIsInItem)
 
+  // -----------------------------------------------------------------
+
   function _createMouseArea () {
     var parent = Utils.getTopParent(item, true)
     var mouseArea = Utils.find(parent.children, function (element) {
@@ -48,6 +50,8 @@ Item {
       _mouseArea = null
     }
   }
+
+  // -----------------------------------------------------------------
 
   // It's necessary to use a `enabled` variable.
   // See: http://doc.qt.io/qt-5/qml-qtqml-component.html#completed-signal
