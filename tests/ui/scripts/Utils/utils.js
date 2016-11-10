@@ -10,84 +10,6 @@
 // QML helpers.
 // ===================================================================
 
-// Load by default a window in the ui/views folder.
-// If options.isString is equals to true, a marshalling component can
-// be used.
-//
-// Supported options: isString, exitHandler.
-//
-// If exitHandler is used, window must implement exitStatus signal.
-function openWindow (window, parent, options) {
-  var object
-
-  if (options && options.isString) {
-    object = Qt.createQmlObject(window, parent)
-  } else {
-    var component = Qt.createComponent(
-      'qrc:/ui/views/App/' + window + '.qml'
-    )
-
-    if (component.status !== Component.Ready) {
-      console.debug('Window not ready.')
-      if (component.status === Component.Error) {
-        console.debug('Error:' + component.errorString())
-      }
-      return // Error.
-    }
-
-    object = component.createObject(parent)
-  }
-
-  object.closing.connect(object.destroy.bind(object))
-
-  if (options && options.exitHandler) {
-    object.exitStatus.connect(
-      // Bind to access parent properties.
-      options.exitHandler.bind(parent)
-    )
-  }
-
-  object.show()
-
-  return object
-}
-
-// -------------------------------------------------------------------
-
-// Display a simple ConfirmDialog component.
-// Wrap the openWindow function.
-function openConfirmDialog (parent, options) {
-  return openWindow(
-    'import QtQuick 2.7;' +
-      'import Common 1.0;' +
-      'ConfirmDialog {' +
-      'descriptionText: \'' + options.descriptionText + '\';' +
-      'title: \'' + options.title + '\'' +
-      '}',
-    parent, {
-      isString: true,
-      exitHandler: options.exitHandler
-    }
-  )
-}
-
-// -------------------------------------------------------------------
-
-// A copy of `Window.setTimeout` from js.
-// delay is in milliseconds.
-function setTimeout (parent, delay, cb) {
-  var timer = new (function (parent) {
-    return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
-  })(parent)
-
-  timer.interval = delay
-  timer.repeat = false
-  timer.triggered.connect(cb)
-  timer.start()
-
-  return timer
-}
-
 // Destroy timeout.
 function clearTimeout (timer) {
   timer.stop() // NECESSARY.
@@ -105,41 +27,6 @@ function connectOnce (signal, cb) {
 
   signal.connect(func)
   return func
-}
-
-// -------------------------------------------------------------------
-
-// Returns the top (root) parent of one object.
-function getTopParent (object, useFakeParent) {
-  function _getTopParent (object, useFakeParent) {
-    return (useFakeParent && object.$parent) || object.parent
-  }
-
-  var parent = _getTopParent(object, useFakeParent)
-  var p
-
-  while ((p = _getTopParent(parent, useFakeParent)) != null) {
-    parent = p
-  }
-
-  return parent
-}
-
-// -------------------------------------------------------------------
-
-// Test the type of a qml object.
-// Warning: this function is probably not portable
-// on new versions of Qt.
-//
-// So, if you want to use it on a specific `className`, please to add
-// a test in `test_qmlTypeof_data` of `utils.spec.qml`.
-function qmlTypeof (object, className) {
-  var str = object.toString()
-
-  return (
-    str.indexOf(className + '(') == 0 ||
-    str.indexOf(className + '_QML') == 0
-  )
 }
 
 // -------------------------------------------------------------------
@@ -185,6 +72,104 @@ function encodeUrisToQmlFormat (text, options) {
 
 // -------------------------------------------------------------------
 
+// Returns the top (root) parent of one object.
+function getTopParent (object, useFakeParent) {
+  function _getTopParent (object, useFakeParent) {
+    return (useFakeParent && object.$parent) || object.parent
+  }
+
+  var parent = _getTopParent(object, useFakeParent)
+  var p
+
+  while ((p = _getTopParent(parent, useFakeParent)) != null) {
+    parent = p
+  }
+
+  return parent
+}
+
+// -------------------------------------------------------------------
+
+// Display a simple ConfirmDialog component.
+// Wrap the openWindow function.
+function openConfirmDialog (parent, options) {
+  return openWindow(
+    'import QtQuick 2.7;' +
+      'import Common 1.0;' +
+      'ConfirmDialog {' +
+      'descriptionText: \'' + options.descriptionText + '\';' +
+      'title: \'' + options.title + '\'' +
+      '}',
+    parent, {
+      isString: true,
+      exitHandler: options.exitHandler
+    }
+  )
+}
+
+// -------------------------------------------------------------------
+
+// Load by default a window in the ui/views folder.
+// If options.isString is equals to true, a marshalling component can
+// be used.
+//
+// Supported options: isString, exitHandler.
+//
+// If exitHandler is used, window must implement exitStatus signal.
+function openWindow (window, parent, options) {
+  var object
+
+  if (options && options.isString) {
+    object = Qt.createQmlObject(window, parent)
+  } else {
+    var component = Qt.createComponent(
+      'qrc:/ui/views/App/' + window + '.qml'
+    )
+
+    if (component.status !== Component.Ready) {
+      console.debug('Window not ready.')
+      if (component.status === Component.Error) {
+        console.debug('Error:' + component.errorString())
+      }
+      return // Error.
+    }
+
+    object = component.createObject(parent)
+  }
+
+  object.closing.connect(object.destroy.bind(object))
+
+  if (options && options.exitHandler) {
+    object.exitStatus.connect(
+      // Bind to access parent properties.
+      options.exitHandler.bind(parent)
+    )
+  }
+
+  object.show()
+
+  return object
+}
+
+// -------------------------------------------------------------------
+
+// A copy of `Window.setTimeout` from js.
+// delay is in milliseconds.
+function setTimeout (parent, delay, cb) {
+  var timer = new (function (parent) {
+    return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
+  })(parent)
+
+  timer.interval = delay
+  timer.repeat = false
+  timer.triggered.connect(cb)
+  timer.start()
+
+  return timer
+}
+
+// -------------------------------------------------------------------
+
 // Test if a point is in a item.
 //
 // `source` is the item that generated the point.
@@ -198,6 +183,23 @@ function pointIsInItem (source, target, point) {
     point.y >= target.y &&
     point.x < target.x + target.width &&
     point.y < target.y + target.height
+  )
+}
+
+// -------------------------------------------------------------------
+
+// Test the type of a qml object.
+// Warning: this function is probably not portable
+// on new versions of Qt.
+//
+// So, if you want to use it on a specific `className`, please to add
+// a test in `test_qmlTypeof_data` of `utils.spec.qml`.
+function qmlTypeof (object, className) {
+  var str = object.toString()
+
+  return (
+    str.indexOf(className + '(') == 0 ||
+    str.indexOf(className + '_QML') == 0
   )
 }
 
