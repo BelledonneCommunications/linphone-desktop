@@ -22,9 +22,11 @@ Item {
     var children = root.children
 
     // Can be the `invertedMouseArea` of other message.
-    var mouseArea = children[children.length - 1]
+    var mouseArea = Utils.find(children, function (element) {
+      return Utils.qmlTypeof(element, 'QQuickMouseArea')
+    })
 
-    if (Utils.qmlTypeof(mouseArea, 'QQuickMouseArea')) {
+    if (mouseArea != null) {
       mouseArea.cursorShape = hoveredLink
         ? Qt.PointingHandCursor
         : Qt.ArrowCursor

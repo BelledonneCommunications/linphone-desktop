@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
+#include <QSystemTrayIcon>
 #include <QTranslator>
 
 // ===================================================================
@@ -20,6 +21,7 @@ private:
 
   QQmlApplicationEngine m_engine;
   QQmlFileSelector *m_file_selector;
+  QSystemTrayIcon *m_tray_icon;
   QTranslator m_translator;
 };
 

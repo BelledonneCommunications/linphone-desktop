@@ -2,7 +2,6 @@
 #include <QQmlComponent>
 #include <QQmlContext>
 #include <QQuickView>
-#include <QSystemTrayIcon>
 #include <QtDebug>
 
 #include "../components/contacts/ContactsListProxyModel.hpp"
@@ -84,7 +83,7 @@ void App::addContextProperties () {
   if (component.isError()) {
     qWarning() << component.errors();
   } else {
-    // context->setContextProperty("CallsWindow", component.create());
+    context->setContextProperty("CallsWindow", component.create());
   }
 
   // Models.
@@ -99,7 +98,7 @@ void App::addContextProperties () {
 void App::setTrayIcon () {
   QQuickWindow *root = qobject_cast<QQuickWindow *>(m_engine.rootObjects().at(0));
   QMenu *menu = new QMenu();
-  QSystemTrayIcon *tray_icon = new QSystemTrayIcon(root);
+  m_tray_icon = new QSystemTrayIcon(root);
 
   // trayIcon: Right click actions.
   QAction *quit_action = new QAction("Quit", root);
@@ -109,7 +108,7 @@ void App::setTrayIcon () {
   root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
 
   // trayIcon: Left click actions.
-  root->connect(tray_icon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
+  root->connect(m_tray_icon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
       if (root->visibility() == QWindow::Hidden)
         root->showNormal();
@@ -123,8 +122,8 @@ void App::setTrayIcon () {
   menu->addSeparator();
   menu->addAction(quit_action);
 
-  tray_icon->setContextMenu(menu);
-  tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
-  tray_icon->setToolTip("Linphone");
-  tray_icon->show();
+  m_tray_icon->setContextMenu(menu);
+  m_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
+  m_tray_icon->setToolTip("Linphone");
+  m_tray_icon->show();
 }
