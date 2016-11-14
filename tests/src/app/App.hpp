@@ -2,7 +2,11 @@
 #define APP_H_
 
 #include <QApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlFileSelector>
 #include <QTranslator>
+
+// ===================================================================
 
 class App : public QApplication {
 public:
@@ -10,6 +14,12 @@ public:
   virtual ~App () {}
 
 private:
+  void registerTypes ();
+  void addContextProperties ();
+  void setTrayIcon ();
+
+  QQmlApplicationEngine m_engine;
+  QQmlFileSelector *m_file_selector;
   QTranslator m_translator;
 };
 
