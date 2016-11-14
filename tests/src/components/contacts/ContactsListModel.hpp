@@ -19,6 +19,9 @@ public:
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;
 
+public slots:
+  static ContactModel *mapSipAddressToContact (const QString &sipAddress);
+
 private:
   QList<ContactModel *> m_list;
 };

@@ -131,10 +131,6 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
 
 // -------------------------------------------------------------------
 
-bool ContactsListProxyModel::isConnectedFilterUsed () const {
-  return m_use_connected_filter;
-}
-
 void ContactsListProxyModel::setConnectedFilter (bool useConnectedFilter) {
   m_use_connected_filter = useConnectedFilter;
   invalidate();

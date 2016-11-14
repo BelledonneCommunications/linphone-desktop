@@ -90,7 +90,7 @@ ApplicationWindow {
         maxMenuHeight: MainWindowStyle.searchBox.maxHeight
         placeholderText: qsTr('mainSearchBarPlaceholder')
 
-        model: ContactsListModel {}
+        model: ContactsListProxyModel {}
 
         delegate: Contact {
           contact: $contact
@@ -158,7 +158,7 @@ ApplicationWindow {
 
         Layout.fillHeight: true
         Layout.fillWidth: true
-        model: ContactsListModel {} // Use History list.
+        model: TimelineModel
 
         onContactSelected: {
           menu.resetSelectedEntry()

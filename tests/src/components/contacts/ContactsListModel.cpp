@@ -40,3 +40,10 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
 
   return QVariant();
 }
+
+// -------------------------------------------------------------------
+
+ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) {
+  static ContactModel *a = new ContactModel("Aman Than", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  return a;
+}

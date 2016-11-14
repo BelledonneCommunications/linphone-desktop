@@ -7,11 +7,13 @@
 #include <QSystemTrayIcon>
 #include <QtDebug>
 
-#include "app.hpp"
+#include "app/App.hpp"
+#include "app/Logger.hpp"
 #include "components/contacts/ContactsListProxyModel.hpp"
+#include "components/linphone/LinphoneCore.hpp"
 #include "components/notification/Notification.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
-#include "logger.hpp"
+#include "components/timeline/TimelineModel.hpp"
 
 // ===================================================================
 
@@ -54,7 +56,18 @@ void registerTypes () {
   );
 
   ContactsListProxyModel::initContactsListModel(new ContactsListModel());
-  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListModel");
+  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
+
+  // Expose the static functions of ContactsListModel.
+  qmlRegisterSingletonType<ContactsListModel>(
+    "Linphone", 1, 0, "ContactsListModel",
+    [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject *{
+      Q_UNUSED(engine);
+      Q_UNUSED(scriptEngine);
+
+      return ContactsListProxyModel::getContactsListModel();
+    }
+  );
 }
 
 void addContextProperties (QQmlApplicationEngine &engine) {
@@ -65,13 +78,15 @@ void addContextProperties (QQmlApplicationEngine &engine) {
   if (component.isError()) {
     qWarning() << component.errors();
   } else {
-    //  context->setContextProperty("CallsWindow", component.create());
+    // context->setContextProperty("CallsWindow", component.create());
   }
 
   // Models.
   context->setContextProperty("AccountSettingsModel", new AccountSettingsModel());
+  context->setContextProperty("TimelineModel", new TimelineModel());
 
   // Other.
+  context->setContextProperty("LinphoneCore", LinphoneCore::getInstance());
   context->setContextProperty("Notification", new Notification());
 }
 

@@ -93,7 +93,7 @@ ColumnLayout {
       anchors.fill: parent
       spacing: 0
 
-      model: ContactsListModel {
+      model: ContactsListProxyModel {
         id: contacts
       }
 

@@ -19,6 +19,9 @@ class ContactsListProxyModel : public QSortFilterProxyModel {
 public:
   ContactsListProxyModel (QObject *parent = Q_NULLPTR);
   static void initContactsListModel (ContactsListModel *list);
+  static ContactsListModel *getContactsListModel () {
+    return m_list;
+  }
 
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
@@ -28,7 +31,9 @@ private:
   float computeStringWeight (const QString &string, float percentage) const;
   float computeContactWeight (const ContactModel &contact) const;
 
-  bool isConnectedFilterUsed () const;
+  bool isConnectedFilterUsed () const {
+      return m_use_connected_filter;
+  }
   void setConnectedFilter (bool useConnectedFilter);
 
   static const QRegExp m_search_separators;

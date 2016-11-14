@@ -1,6 +1,6 @@
 #include <QDateTime>
 
-#include "logger.hpp"
+#include "Logger.hpp"
 
 #ifdef __linux__
   #define BLUE "\x1B[1;34m"

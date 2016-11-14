@@ -27,29 +27,33 @@ foreach (package ${QT5_PACKAGES})
 endforeach ()
 
 set(SOURCES
-  src/app.cpp
+  src/app/App.cpp
+  src/app/Logger.cpp
+  src/components/chat/ChatModel.cpp
   src/components/contacts/ContactModel.cpp
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
+  src/components/linphone/LinphoneCore.cpp
   src/components/notification/Notification.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/components/timeline/TimelineModel.cpp
-  src/logger.cpp
   src/main.cpp
 )
 
 set(HEADERS
-  src/app.hpp
+  src/app/App.hpp
+  src/app/Logger.hpp
+  src/components/chat/ChatModel.hpp
   src/components/contacts/ContactModel.hpp
   src/components/contacts/ContactsListModel.hpp
   src/components/contacts/ContactsListProxyModel.hpp
+  src/components/linphone/LinphoneCore.hpp
   src/components/notification/Notification.hpp
   src/components/presence/Presence.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/components/timeline/TimelineModel.hpp
-  src/logger.hpp
 )
 
 set(QRC_RESOURCES

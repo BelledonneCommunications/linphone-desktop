@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Linphone 1.0
 import Linphone.Styles 1.0
 
 // ===================================================================
@@ -62,6 +63,10 @@ ColumnLayout {
     currentIndex: -1
 
     delegate: Item {
+      property var contact: ContactsListModel.mapSipAddressToContact(
+        $timelineEntry
+      )
+
       height: TimelineStyle.contact.height
       width: parent.width
 
@@ -74,7 +79,7 @@ ColumnLayout {
               ? TimelineStyle.contact.backgroundColor.a
               : TimelineStyle.contact.backgroundColor.b
           )
-        contact: $contact
+        contact: parent.contact
         sipAddressColor: view.currentIndex === index
           ? TimelineStyle.contact.sipAddress.color.selected
           : TimelineStyle.contact.sipAddress.color.normal
@@ -92,7 +97,7 @@ ColumnLayout {
 
         onClicked: {
           view.currentIndex = index
-          timeline.contactSelected($contact)
+          timeline.contactSelected(parent.contact)
         }
       }
     }
