@@ -11,6 +11,9 @@ Item {
   property alias popupX: popup.x
   property alias popupY: popup.y
 
+  readonly property alias popupWidth: popup.width
+  readonly property alias popupHeight: popup.height
+
   default property alias _content: content.data
   property bool _isOpen: false
 

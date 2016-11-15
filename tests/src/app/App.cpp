@@ -1,3 +1,4 @@
+#include <QDesktopWidget>
 #include <QMenu>
 #include <QQmlComponent>
 #include <QQmlContext>
@@ -6,7 +7,6 @@
 
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/linphone/LinphoneCore.hpp"
-#include "../components/notification/Notification.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 
@@ -16,6 +16,8 @@
 #define WINDOW_ICON_PATH ":/assets/images/linphone.png"
 
 // ===================================================================
+
+App *App::m_instance = nullptr;
 
 App::App (int &argc, char **argv) : QApplication(argc, argv) {
   // Try to use default locale. Otherwise use english.
@@ -36,7 +38,11 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
   m_engine.addImportPath(":/ui/modules");
   m_engine.addImportPath(":/ui/scripts");
   m_engine.addImportPath(":/ui/views");
+}
 
+// -------------------------------------------------------------------
+
+void App::initContentApp () {
   // Register types and load context properties.
   registerTypes();
   addContextProperties();
@@ -51,9 +57,10 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
     qWarning("System tray not found on this system.");
   else
     setTrayIcon();
-}
 
-// -------------------------------------------------------------------
+  // Set notification attr.
+  setNotificationAttributes();
+}
 
 void App::registerTypes () {
   qmlRegisterUncreatableType<Presence>(
@@ -92,13 +99,16 @@ void App::addContextProperties () {
 
   // Other.
   context->setContextProperty("LinphoneCore", LinphoneCore::getInstance());
-  context->setContextProperty("Notification", new Notification());
+
+  m_notification = new Notification();
+  context->setContextProperty("Notification", m_notification);
 }
 
 void App::setTrayIcon () {
   QQuickWindow *root = qobject_cast<QQuickWindow *>(m_engine.rootObjects().at(0));
   QMenu *menu = new QMenu();
-  m_tray_icon = new QSystemTrayIcon(root);
+
+  m_system_tray_icon = new QSystemTrayIcon(root);
 
   // trayIcon: Right click actions.
   QAction *quit_action = new QAction("Quit", root);
@@ -108,7 +118,7 @@ void App::setTrayIcon () {
   root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
 
   // trayIcon: Left click actions.
-  root->connect(m_tray_icon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
+  root->connect(m_system_tray_icon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
     if (reason == QSystemTrayIcon::Trigger) {
       if (root->visibility() == QWindow::Hidden)
         root->showNormal();
@@ -122,8 +132,32 @@ void App::setTrayIcon () {
   menu->addSeparator();
   menu->addAction(quit_action);
 
-  m_tray_icon->setContextMenu(menu);
-  m_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
-  m_tray_icon->setToolTip("Linphone");
-  m_tray_icon->show();
+  m_system_tray_icon->setContextMenu(menu);
+  m_system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
+  m_system_tray_icon->setToolTip("Linphone");
+  m_system_tray_icon->show();
+}
+
+void App::setNotificationAttributes () {
+  QDesktopWidget *desktop = QApplication::desktop();
+
+  // The primary screen is the default given by Qt or the screen of
+  // system tray icon.
+  int primary_screen = desktop->primaryScreen();
+  if (m_system_tray_icon) {
+    // primary_screen = QDesktopWidget::screenNumber(m_system_tray_icon);
+
+    QRect icon_rect = m_system_tray_icon->geometry();
+    QRect screen_rect = desktop->screenGeometry(primary_screen);
+
+    int x = icon_rect.x() + icon_rect.width() / 2;
+    int y = icon_rect.y() + icon_rect.height() / 2;
+
+    Qt::Edges edge = (x < screen_rect.width() / 2) ? Qt::LeftEdge : Qt::RightEdge;
+    edge |= (y < screen_rect.height() / 2) ? Qt::TopEdge : Qt::BottomEdge;
+
+    m_notification->setEdge(edge);
+  }
+
+  m_notification->setScreenNumber(primary_screen);
 }

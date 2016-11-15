@@ -1,7 +1,9 @@
 #ifndef NOTIFICATION_H_
 #define NOTIFICATION_H_
 
+#include <QMutex>
 #include <QObject>
+#include <QQmlComponent>
 
 // ===================================================================
 
@@ -10,14 +12,33 @@ class Notification : public QObject {
 
 public:
   Notification (QObject *parent = Q_NULLPTR);
+  virtual ~Notification ();
+
+  enum Type {
+    Call,
+    MaxNbTypes
+  };
+  Q_ENUM(Type);
+
+  void setEdge (Qt::Edges edge) {
+    m_edge = edge;
+  }
+
+  void setScreenNumber (int screen_number) {
+    m_screen_number = screen_number;
+  }
 
 public slots:
-  void showMessage (
-    const QString &summary,
-    const QString &body,
-    const QString &icon = "",
-    int timeout = 10000
-  );
+  void showCallMessage (int timeout, const QString &sip_address);
+
+private:
+  Qt::Edges m_edge = Qt::RightEdge | Qt::TopEdge;
+  QQmlComponent *m_components[MaxNbTypes];
+
+  int m_screen_number = 0;
+
+  int m_n_instances = 0;
+  QMutex m_mutex;
 };
 
 #endif // NOTIFICATION_H_
