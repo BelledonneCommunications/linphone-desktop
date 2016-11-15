@@ -24,18 +24,12 @@ public:
     m_edge = edge;
   }
 
-  void setScreenNumber (int screen_number) {
-    m_screen_number = screen_number;
-  }
-
 public slots:
   void showCallMessage (int timeout, const QString &sip_address);
 
 private:
   Qt::Edges m_edge = Qt::RightEdge | Qt::TopEdge;
   QQmlComponent *m_components[MaxNbTypes];
-
-  int m_screen_number = 0;
 
   int m_n_instances = 0;
   QMutex m_mutex;

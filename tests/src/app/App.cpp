@@ -139,25 +139,20 @@ void App::setTrayIcon () {
 }
 
 void App::setNotificationAttributes () {
-  QDesktopWidget *desktop = QApplication::desktop();
-
-  // The primary screen is the default given by Qt or the screen of
-  // system tray icon.
-  int primary_screen = desktop->primaryScreen();
-  if (m_system_tray_icon) {
-    // primary_screen = QDesktopWidget::screenNumber(m_system_tray_icon);
-
-    QRect icon_rect = m_system_tray_icon->geometry();
-    QRect screen_rect = desktop->screenGeometry(primary_screen);
-
-    int x = icon_rect.x() + icon_rect.width() / 2;
-    int y = icon_rect.y() + icon_rect.height() / 2;
-
-    Qt::Edges edge = (x < screen_rect.width() / 2) ? Qt::LeftEdge : Qt::RightEdge;
-    edge |= (y < screen_rect.height() / 2) ? Qt::TopEdge : Qt::BottomEdge;
-
-    m_notification->setEdge(edge);
+  if (!m_system_tray_icon) {
+    return;
   }
 
-  m_notification->setScreenNumber(primary_screen);
+  QDesktopWidget *desktop = QApplication::desktop();
+
+  QRect icon_rect = m_system_tray_icon->geometry();
+  QRect screen_rect = desktop->screenGeometry();
+
+  int x = icon_rect.x() + icon_rect.width() / 2;
+  int y = icon_rect.y() + icon_rect.height() / 2;
+
+  Qt::Edges edge = (x < screen_rect.width() / 2) ? Qt::LeftEdge : Qt::RightEdge;
+  edge |= (y < screen_rect.height() / 2) ? Qt::TopEdge : Qt::BottomEdge;
+
+  m_notification->setEdge(edge);
 }
