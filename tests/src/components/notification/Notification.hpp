@@ -31,6 +31,7 @@ private:
   Qt::Edges m_edge = Qt::RightEdge | Qt::TopEdge;
   QQmlComponent *m_components[MaxNbTypes];
 
+  int m_offset = 0;
   int m_n_instances = 0;
   QMutex m_mutex;
 };

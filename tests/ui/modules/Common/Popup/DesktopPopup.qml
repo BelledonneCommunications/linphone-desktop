@@ -12,6 +12,9 @@ Item {
   property int popupY: 0
 
   property int edge: 0
+  property int edgeOffset: 0
+
+  property int flags: Qt.Popup
 
   readonly property alias popupWidth: popup.width
   readonly property alias popupHeight: popup.height
@@ -27,7 +30,7 @@ Item {
     _isOpen = false
   }
 
-  function _applyXEdge (edge) {
+  function _applyXEdge () {
     var screen = popup.Screen
 
     if (screen == null) {
@@ -35,13 +38,13 @@ Item {
     }
 
     if (edge & Qt.LeftEdge) {
-      return 0
+      return PopupStyle.desktop.edgeMargin
     }
 
-    return screen.width - popup.width
+    return screen.width - popup.width - PopupStyle.desktop.edgeMargin
   }
 
-  function _applyYEdge (edge) {
+  function _applyYEdge () {
     var screen = popup.Screen
 
     if (screen == null) {
@@ -49,10 +52,10 @@ Item {
     }
 
     if (edge & Qt.TopEdge) {
-      return 0
+      return edgeOffset + PopupStyle.desktop.edgeMargin
     }
 
-    return screen.height - popup.height
+    return screen.height - popup.height - edgeOffset - PopupStyle.desktop.edgeMargin
   }
 
   // -----------------------------------------------------------------
@@ -71,7 +74,7 @@ Item {
   Window {
     id: popup
 
-    flags: Qt.SplashScreen
+    flags: wrapper.flags
     opacity: 0
     height: _content[0] != null ? _content[0].height : 0
     width: _content[0] != null ? _content[0].width : 0

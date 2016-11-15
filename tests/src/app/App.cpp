@@ -148,8 +148,8 @@ void App::setNotificationAttributes () {
   QRect icon_rect = m_system_tray_icon->geometry();
   QRect screen_rect = desktop->screenGeometry();
 
-  int x = icon_rect.x() + icon_rect.width() / 2;
-  int y = icon_rect.y() + icon_rect.height() / 2;
+  int x = icon_rect.x() / 2 + icon_rect.width() / 2;
+  int y = icon_rect.y() / 2 + icon_rect.height() / 2;
 
   Qt::Edges edge = (x < screen_rect.width() / 2) ? Qt::LeftEdge : Qt::RightEdge;
   edge |= (y < screen_rect.height() / 2) ? Qt::TopEdge : Qt::BottomEdge;
