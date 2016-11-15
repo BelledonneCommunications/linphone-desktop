@@ -5,8 +5,8 @@
 #include "Notification.hpp"
 
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
-#define NOTIFICATION_EDGE_PROPERTY_NAME "edge"
 
+#define NOTIFICATION_EDGE_PROPERTY_NAME "edge"
 #define NOTIFICATION_HEIGHT_PROPERTY "popupHeight"
 #define NOTIFICATION_WIDTH_PROPERTY "popupWidth"
 
@@ -72,15 +72,37 @@ void Notification::showCallMessage (
   qDebug() << "Show call notification message. (addr=" <<
     sip_address << ")";
 
+  m_mutex.lock();
+
+  // Check existing instances.
+  if (m_n_instances + 1 >= N_MAX_NOTIFICATIONS) {
+    qWarning() << "Unable to create another notification";
+    m_mutex.unlock();
+    return;
+  }
+
+  // Create instance and set attributes.
   QObject *object = m_components[Notification::Call]->create();
 
   if (!setNotificationEdge(*object, m_edge)) {
     delete object;
+    m_mutex.unlock();
     return;
   }
 
+  m_n_instances++;
+
+  m_mutex.unlock();
+
+  // Display popup.
   QMetaObject::invokeMethod(object, "show", Qt::DirectConnection);
-  QTimer::singleShot(timeout, object, [object]() {
+
+  // Destroy it after timeout.
+  QTimer::singleShot(timeout, this, [object,this]() {
     delete object;
+
+    m_mutex.lock();
+    m_n_instances--;
+    m_mutex.unlock();
   });
 }
