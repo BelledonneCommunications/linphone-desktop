@@ -4,14 +4,16 @@
 #include "../../app/App.hpp"
 #include "Notifier.hpp"
 
+// Notifications QML properties/methods.
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
 
 #define NOTIFICATION_EDGE_PROPERTY_NAME "edge"
 #define NOTIFICATION_HEIGHT_PROPERTY "popupHeight"
 #define NOTIFICATION_OFFSET_PROPERTY_NAME "edgeOffset"
 
+// Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
-
+#define NOTIFICATION_START_OFFSET 30
 #define N_MAX_NOTIFICATIONS 3
 
 // ===================================================================
@@ -45,7 +47,7 @@ bool setProperty (QObject &object, const char *property, const T &value) {
 // -------------------------------------------------------------------
 
 Notifier::Notifier (QObject *parent) :
-  QObject(parent) {
+  QObject(parent), m_offset(NOTIFICATION_START_OFFSET) {
   QQmlEngine *engine = App::getInstance()->getEngine();
 
   // Build components.
@@ -101,7 +103,7 @@ void Notifier::showCallMessage (
     return;
   }
 
-  m_offset = (m_n_instances == 0 ? offset : offset + m_offset) + NOTIFICATION_SPACING;
+  m_offset = (offset + m_offset) + NOTIFICATION_SPACING;
   m_n_instances++;
 
   m_mutex.unlock();
@@ -117,7 +119,7 @@ void Notifier::showCallMessage (
     m_n_instances--;
 
     if (m_n_instances == 0)
-      m_offset = 0;
+      m_offset = NOTIFICATION_START_OFFSET;
 
     m_mutex.unlock();
   });

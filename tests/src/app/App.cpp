@@ -14,6 +14,10 @@
 #define LANGUAGES_PATH ":/languages/"
 #define WINDOW_ICON_PATH ":/assets/images/linphone.png"
 
+// The two main windows of Linphone desktop.
+#define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/MainWindow/MainWindow.qml"
+#define QML_VIEW_CALL_WINDOW "qrc:/ui/views/App/Calls/Calls.qml"
+
 // ===================================================================
 
 App *App::m_instance = nullptr;
@@ -47,7 +51,7 @@ void App::initContentApp () {
   addContextProperties();
 
   // Load main view.
-  m_engine.load(QUrl("qrc:/ui/views/App/MainWindow/MainWindow.qml"));
+  m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
@@ -80,7 +84,7 @@ void App::registerTypes () {
 
 void App::addContextProperties () {
   QQmlContext *context = m_engine.rootContext();
-  QQmlComponent component(&m_engine, QUrl("qrc:/ui/views/App/Calls/Calls.qml"));
+  QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
 
   // Windows.
   if (component.isError()) {
