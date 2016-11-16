@@ -7,7 +7,7 @@
 #include <QSystemTrayIcon>
 #include <QTranslator>
 
-#include "../components/notification/Notification.hpp"
+#include "../components/notifier/Notifier.hpp"
 
 // ===================================================================
 
@@ -37,14 +37,12 @@ private:
   void addContextProperties ();
   void setTrayIcon ();
 
-  void setNotificationAttributes ();
-
   QQmlApplicationEngine m_engine;
   QQmlFileSelector *m_file_selector = nullptr;
   QSystemTrayIcon *m_system_tray_icon = nullptr;
   QTranslator m_translator;
 
-  Notification *m_notification = nullptr;
+  Notifier *m_notifier = nullptr;
 
   static App *m_instance;
 };

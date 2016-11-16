@@ -1,5 +1,5 @@
-#ifndef NOTIFICATION_H_
-#define NOTIFICATION_H_
+#ifndef NOTIFIER_H_
+#define NOTIFIER_H_
 
 #include <QMutex>
 #include <QObject>
@@ -7,12 +7,12 @@
 
 // ===================================================================
 
-class Notification : public QObject {
+class Notifier : public QObject {
   Q_OBJECT;
 
 public:
-  Notification (QObject *parent = Q_NULLPTR);
-  virtual ~Notification ();
+  Notifier (QObject *parent = Q_NULLPTR);
+  virtual ~Notifier ();
 
   enum Type {
     Call,
@@ -20,15 +20,12 @@ public:
   };
   Q_ENUM(Type);
 
-  void setEdge (Qt::Edges edge) {
-    m_edge = edge;
-  }
-
 public slots:
   void showCallMessage (int timeout, const QString &sip_address);
 
 private:
-  Qt::Edges m_edge = Qt::RightEdge | Qt::TopEdge;
+  void computePositions ();
+
   QQmlComponent *m_components[MaxNbTypes];
 
   int m_offset = 0;
@@ -36,4 +33,4 @@ private:
   QMutex m_mutex;
 };
 
-#endif // NOTIFICATION_H_
+#endif // NOTIFIER_H_

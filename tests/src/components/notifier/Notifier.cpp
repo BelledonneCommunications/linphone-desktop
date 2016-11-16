@@ -2,7 +2,7 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
-#include "Notification.hpp"
+#include "Notifier.hpp"
 
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
 
@@ -18,7 +18,7 @@
 
 // Helpers.
 inline int getNotificationSize (const QObject &object, const char *property) {
-  QVariant variant = object.property(property);
+  QVariant variant(object.property(property));
   bool so_far_so_good;
 
   int size = variant.toInt(&so_far_so_good);
@@ -44,17 +44,17 @@ bool setProperty (QObject &object, const char *property, const T &value) {
 
 // -------------------------------------------------------------------
 
-Notification::Notification (QObject *parent) :
+Notifier::Notifier (QObject *parent) :
   QObject(parent) {
   QQmlEngine *engine = App::getInstance()->getEngine();
 
   // Build components.
-  m_components[Notification::Call] = new QQmlComponent(
+  m_components[Notifier::Call] = new QQmlComponent(
     engine, QUrl("qrc:/ui/modules/Linphone/Notifications/CallNotification.qml")
   );
 
   // Check errors.
-  for (int i = 0; i < Notification::MaxNbTypes; i++) {
+  for (int i = 0; i < Notifier::MaxNbTypes; i++) {
     QQmlComponent &component = *m_components[i];
     if (component.isError()) {
       qWarning() << "Errors found in `Notification` component "
@@ -64,14 +64,14 @@ Notification::Notification (QObject *parent) :
   }
 }
 
-Notification::~Notification () {
-  for (int i = 0; i < Notification::MaxNbTypes; i++)
+Notifier::~Notifier () {
+  for (int i = 0; i < Notifier::MaxNbTypes; i++)
     delete m_components[i];
 }
 
 // -------------------------------------------------------------------
 
-void Notification::showCallMessage (
+void Notifier::showCallMessage (
   int timeout,
   const QString &sip_address
 ) {
@@ -88,12 +88,12 @@ void Notification::showCallMessage (
   }
 
   // Create instance and set attributes.
-  QObject *object = m_components[Notification::Call]->create();
+  QObject *object = m_components[Notifier::Call]->create();
   int offset = getNotificationSize(*object, NOTIFICATION_HEIGHT_PROPERTY);
 
   if (
     offset == -1 ||
-    !::setProperty(*object, NOTIFICATION_EDGE_PROPERTY_NAME, m_edge) ||
+    !::setProperty(*object, NOTIFICATION_EDGE_PROPERTY_NAME, Qt::TopEdge | Qt::RightEdge) ||
     !::setProperty(*object, NOTIFICATION_OFFSET_PROPERTY_NAME, m_offset)
   ) {
     delete object;

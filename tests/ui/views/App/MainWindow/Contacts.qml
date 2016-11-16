@@ -36,7 +36,7 @@ ColumnLayout {
     })
   }
 
-  spacing: Notification.showCallMessage(5000, "toto@toto.com") || 0
+  spacing: Notifier.showCallMessage(5000, "toto@toto.com") || 0
 
   // -----------------------------------------------------------------
   // Search Bar & actions.

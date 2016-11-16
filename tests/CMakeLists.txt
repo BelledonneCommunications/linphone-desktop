@@ -34,7 +34,7 @@ set(SOURCES
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
   src/components/linphone/LinphoneCore.cpp
-  src/components/notification/Notification.cpp
+  src/components/notifier/Notifier.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/components/timeline/TimelineModel.cpp
@@ -49,7 +49,7 @@ set(HEADERS
   src/components/contacts/ContactsListModel.hpp
   src/components/contacts/ContactsListProxyModel.hpp
   src/components/linphone/LinphoneCore.hpp
-  src/components/notification/Notification.hpp
+  src/components/notifier/Notifier.hpp
   src/components/presence/Presence.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp

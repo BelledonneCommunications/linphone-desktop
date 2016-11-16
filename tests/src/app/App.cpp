@@ -1,4 +1,3 @@
-#include <QDesktopWidget>
 #include <QMenu>
 #include <QQmlComponent>
 #include <QQmlContext>
@@ -57,9 +56,6 @@ void App::initContentApp () {
     qWarning("System tray not found on this system.");
   else
     setTrayIcon();
-
-  // Set notification attr.
-  setNotificationAttributes();
 }
 
 void App::registerTypes () {
@@ -100,8 +96,8 @@ void App::addContextProperties () {
   // Other.
   context->setContextProperty("LinphoneCore", LinphoneCore::getInstance());
 
-  m_notification = new Notification();
-  context->setContextProperty("Notification", m_notification);
+  m_notifier = new Notifier();
+  context->setContextProperty("Notifier", m_notifier);
 }
 
 void App::setTrayIcon () {
@@ -136,23 +132,4 @@ void App::setTrayIcon () {
   m_system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
   m_system_tray_icon->setToolTip("Linphone");
   m_system_tray_icon->show();
-}
-
-void App::setNotificationAttributes () {
-  if (!m_system_tray_icon) {
-    return;
-  }
-
-  QDesktopWidget *desktop = QApplication::desktop();
-
-  QRect icon_rect = m_system_tray_icon->geometry();
-  QRect screen_rect = desktop->screenGeometry();
-
-  int x = icon_rect.x() / 2 + icon_rect.width() / 2;
-  int y = icon_rect.y() / 2 + icon_rect.height() / 2;
-
-  Qt::Edges edge = (x < screen_rect.width() / 2) ? Qt::LeftEdge : Qt::RightEdge;
-  edge |= (y < screen_rect.height() / 2) ? Qt::TopEdge : Qt::BottomEdge;
-
-  m_notification->setEdge(edge);
 }
