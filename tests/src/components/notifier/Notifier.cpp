@@ -115,18 +115,18 @@ void Notifier::showNotification (QObject *notification, int timeout) {
     Qt::DirectConnection
   );
 
+  QQuickWindow *window = notification->findChild<QQuickWindow *>();
+
+  if (!window)
+    qFatal("Cannot found a `QQuickWindow` instance in `notification`.");
+
   // Called explicitly (by a click on notification for example)
   // or when single shot happen and if notification is visible.
-  QObject::connect(
-    notification->findChild<QQuickWindow *>(),
-    &QQuickWindow::visibleChanged,
-    [this](const bool &value) {
+  QObject::connect(window, &QQuickWindow::visibleChanged, [this](const bool &value) {
       qDebug() << "Update notifications counter, hidden notification detected.";
 
-      if (value) {
+      if (value)
         qFatal("A notification cannot be visible twice!");
-        return;
-      }
 
       m_mutex.lock();
 
