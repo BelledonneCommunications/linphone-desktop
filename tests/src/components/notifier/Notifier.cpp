@@ -112,7 +112,7 @@ void Notifier::showCallMessage (
   );
 
   // Destroy it after timeout.
-  QTimer::singleShot(timeout, this, [object,this]() {
+  QTimer::singleShot(timeout, this, [object, this]() {
     delete object;
 
     m_mutex.lock();

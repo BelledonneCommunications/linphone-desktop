@@ -365,6 +365,18 @@ function isArray (array) {
 
 // -------------------------------------------------------------------
 
+function isFunction (func) {
+  return typeof func === 'function'
+}
+
+// -------------------------------------------------------------------
+
+function isInteger (integer) {
+  return integer === parseInt(integer, 10)
+}
+
+// -------------------------------------------------------------------
+
 function isString (string) {
   return typeof string === 'string' || string instanceof String
 }
