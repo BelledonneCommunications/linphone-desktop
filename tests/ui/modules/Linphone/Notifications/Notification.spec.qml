@@ -13,7 +13,7 @@ TestCase {
 
   function test_notificationHeightProperty () {
     compare(Utils.isInteger(notification.notificationHeight), true)
- }
+  }
 
   function test_notificationOffsetProperty () {
     compare(Utils.isInteger(notification.notificationOffset), true)
@@ -21,5 +21,9 @@ TestCase {
 
   function test_notificationShowMethod () {
     compare(Utils.isFunction(notification.show), true)
+  }
+
+  function test_childWindow () {
+    compare(Utils.qmlTypeof(notification.data[0], 'QQuickWindowQmlImpl'), true)
   }
 }

@@ -1,3 +1,4 @@
+#include <QQuickWindow>
 #include <QTimer>
 #include <QtDebug>
 
@@ -13,6 +14,7 @@
 // Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
 #define N_MAX_NOTIFICATIONS 15
+#define MAX_TIMEOUT 60000
 
 // ===================================================================
 
@@ -71,24 +73,18 @@ Notifier::~Notifier () {
 
 // -------------------------------------------------------------------
 
-void Notifier::showCallMessage (
-  int timeout,
-  const QString &sip_address
-) {
-  qDebug() << "Show call notification message. (addr=" <<
-    sip_address << ")";
-
+QObject *Notifier::createNotification (Notifier::NotificationType type) {
   m_mutex.lock();
 
   // Check existing instances.
   if (m_n_instances >= N_MAX_NOTIFICATIONS) {
     qWarning() << "Unable to create another notification";
     m_mutex.unlock();
-    return;
+    return nullptr;
   }
 
   // Create instance and set attributes.
-  QObject *object = m_components[Notifier::Call]->create();
+  QObject *object = m_components[type]->create();
   int offset = getNotificationSize(*object, NOTIFICATION_HEIGHT_PROPERTY);
 
   if (
@@ -97,7 +93,7 @@ void Notifier::showCallMessage (
   ) {
     delete object;
     m_mutex.unlock();
-    return;
+    return nullptr;
   }
 
   m_offset = (offset + m_offset) + NOTIFICATION_SPACING;
@@ -105,22 +101,63 @@ void Notifier::showCallMessage (
 
   m_mutex.unlock();
 
+  return object;
+}
+
+void Notifier::showNotification (QObject *notification, int timeout) {
+  if (timeout > MAX_TIMEOUT) {
+    timeout = MAX_TIMEOUT;
+  }
+
   // Display notification.
   QMetaObject::invokeMethod(
-    object, NOTIFICATION_SHOW_METHOD_NAME,
+    notification, NOTIFICATION_SHOW_METHOD_NAME,
     Qt::DirectConnection
   );
 
+  // Called explicitly (by a click on notification for example)
+  // or when single shot happen and if notification is visible.
+  QObject::connect(
+    notification->findChild<QQuickWindow *>(),
+    &QQuickWindow::visibleChanged,
+    [this](const bool &value) {
+      qDebug() << "Update notifications counter, hidden notification detected.";
+
+      if (value) {
+        qFatal("A notification cannot be visible twice!");
+        return;
+      }
+
+      m_mutex.lock();
+
+      m_n_instances--;
+
+      if (m_n_instances == 0)
+        m_offset = 0;
+
+      m_mutex.unlock();
+    }
+  );
+
   // Destroy it after timeout.
-  QTimer::singleShot(timeout, this, [object, this]() {
-    delete object;
-
-    m_mutex.lock();
-    m_n_instances--;
-
-    if (m_n_instances == 0)
-      m_offset = 0;
-
-    m_mutex.unlock();
+  QTimer::singleShot(timeout, this, [notification]() {
+    delete notification;
   });
+}
+
+// -------------------------------------------------------------------
+
+void Notifier::showCallMessage (
+  int timeout,
+  const QString &sip_address
+) {
+  qDebug() << "Show call notification message. (addr=" <<
+    sip_address << ")";
+
+  QObject *object = createNotification(Notifier::Call);
+
+  if (!object)
+    return;
+
+  showNotification(object, timeout);
 }
