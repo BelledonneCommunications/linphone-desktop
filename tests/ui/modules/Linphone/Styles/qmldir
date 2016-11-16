@@ -12,6 +12,8 @@ singleton AvatarStyle             1.0 Contact/AvatarStyle.qml
 singleton ContactDescriptionStyle 1.0 Contact/ContactDescriptionStyle.qml
 singleton ContactStyle            1.0 Contact/ContactStyle.qml
 
+singleton NotificationStyle       1.0 NotificationStyle.qml
+
 singleton PresenceStringStyle     1.0 Presence/PresenceStringStyle.qml
 
 singleton TimelineStyle           1.0 TimelineStyle.qml

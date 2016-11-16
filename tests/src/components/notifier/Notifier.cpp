@@ -7,14 +7,12 @@
 // Notifications QML properties/methods.
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
 
-#define NOTIFICATION_EDGE_PROPERTY_NAME "edge"
-#define NOTIFICATION_HEIGHT_PROPERTY "popupHeight"
-#define NOTIFICATION_OFFSET_PROPERTY_NAME "edgeOffset"
+#define NOTIFICATION_HEIGHT_PROPERTY "notificationHeight"
+#define NOTIFICATION_OFFSET_PROPERTY_NAME "notificationOffset"
 
 // Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
-#define NOTIFICATION_START_OFFSET 30
-#define N_MAX_NOTIFICATIONS 3
+#define N_MAX_NOTIFICATIONS 15
 
 // ===================================================================
 
@@ -47,7 +45,7 @@ bool setProperty (QObject &object, const char *property, const T &value) {
 // -------------------------------------------------------------------
 
 Notifier::Notifier (QObject *parent) :
-  QObject(parent), m_offset(NOTIFICATION_START_OFFSET) {
+  QObject(parent) {
   QQmlEngine *engine = App::getInstance()->getEngine();
 
   // Build components.
@@ -95,7 +93,6 @@ void Notifier::showCallMessage (
 
   if (
     offset == -1 ||
-    !::setProperty(*object, NOTIFICATION_EDGE_PROPERTY_NAME, Qt::TopEdge | Qt::RightEdge) ||
     !::setProperty(*object, NOTIFICATION_OFFSET_PROPERTY_NAME, m_offset)
   ) {
     delete object;
@@ -108,7 +105,7 @@ void Notifier::showCallMessage (
 
   m_mutex.unlock();
 
-  // Display popup.
+  // Display notification.
   QMetaObject::invokeMethod(object, "show", Qt::DirectConnection);
 
   // Destroy it after timeout.
@@ -119,7 +116,7 @@ void Notifier::showCallMessage (
     m_n_instances--;
 
     if (m_n_instances == 0)
-      m_offset = NOTIFICATION_START_OFFSET;
+      m_offset = 0;
 
     m_mutex.unlock();
   });

@@ -90,7 +90,6 @@ Item {
         return point
       }
 
-      flags: Qt.SplashScreen
       popupX: coords.x
       popupY: coords.y
 

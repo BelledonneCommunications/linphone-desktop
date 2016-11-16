@@ -118,6 +118,7 @@
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
     <file>ui/modules/Linphone/Notifications/CallNotification.qml</file>
+    <file>ui/modules/Linphone/Notifications/Notification.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
@@ -127,6 +128,7 @@
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/NotificationStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Presence/PresenceStringStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>

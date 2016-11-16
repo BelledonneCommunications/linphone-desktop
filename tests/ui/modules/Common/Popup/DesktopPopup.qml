@@ -8,13 +8,10 @@ import Common.Styles 1.0
 Item {
   id: wrapper
 
-  property int popupX: 0
-  property int popupY: 0
+  property alias popupX: popup.x
+  property alias popupY: popup.y
 
-  property int edge: 0
-  property int edgeOffset: 0
-
-  property int flags: Qt.Popup
+  property int flags: Qt.SplashScreen
 
   readonly property alias popupWidth: popup.width
   readonly property alias popupHeight: popup.height
@@ -28,34 +25,6 @@ Item {
 
   function hide () {
     _isOpen = false
-  }
-
-  function _applyXEdge () {
-    var screen = popup.Screen
-
-    if (screen == null) {
-      return popupX
-    }
-
-    if (edge & Qt.LeftEdge) {
-      return PopupStyle.desktop.edgeMargin
-    }
-
-    return screen.width - popup.width - PopupStyle.desktop.edgeMargin
-  }
-
-  function _applyYEdge () {
-    var screen = popup.Screen
-
-    if (screen == null) {
-      return popupY
-    }
-
-    if (edge & Qt.TopEdge) {
-      return edgeOffset + PopupStyle.desktop.edgeMargin
-    }
-
-    return screen.height - popup.height - edgeOffset - PopupStyle.desktop.edgeMargin
   }
 
   // -----------------------------------------------------------------
@@ -78,9 +47,6 @@ Item {
     opacity: 0
     height: _content[0] != null ? _content[0].height : 0
     width: _content[0] != null ? _content[0].width : 0
-
-    x: edge ? _applyXEdge() : popupX
-    y: edge ? _applyYEdge() : popupY
 
     Item {
       id: content

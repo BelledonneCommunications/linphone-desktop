@@ -24,8 +24,6 @@ public slots:
   void showCallMessage (int timeout, const QString &sip_address);
 
 private:
-  void computePositions ();
-
   QQmlComponent *m_components[MaxNbTypes];
 
   int m_offset = 0;

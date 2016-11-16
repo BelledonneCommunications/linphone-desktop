@@ -1,8 +1,6 @@
 import QtQuick 2.7
 
-import Common 1.0
-
-DesktopPopup {
+Notification {
   Rectangle {
     color: 'red'
 

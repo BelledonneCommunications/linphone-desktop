@@ -78,6 +78,10 @@ TestCase {
         component: 'import QtQuick 2.7; MouseArea {}',
         result: true,
         type: 'QQuickMouseArea'
+      }, {
+        component: 'import QtQuick 2.7; import QtQuick.Window 2.2; Window {}',
+        result: true,
+        type: 'QQuickWindowQmlImpl'
       }
     ]
   }

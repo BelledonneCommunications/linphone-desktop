@@ -13,10 +13,6 @@ QtObject {
     property int closingDuration: 250
   }
 
-  property QtObject desktop: QtObject {
-    property int edgeMargin: 10
-  }
-
   property QtObject shadow: QtObject {
     property color color: Colors.l
     property int horizontalOffset: 4
