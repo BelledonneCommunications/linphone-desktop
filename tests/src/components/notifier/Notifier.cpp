@@ -106,7 +106,10 @@ void Notifier::showCallMessage (
   m_mutex.unlock();
 
   // Display notification.
-  QMetaObject::invokeMethod(object, "show", Qt::DirectConnection);
+  QMetaObject::invokeMethod(
+    object, NOTIFICATION_SHOW_METHOD_NAME,
+    Qt::DirectConnection
+  );
 
   // Destroy it after timeout.
   QTimer::singleShot(timeout, this, [object,this]() {

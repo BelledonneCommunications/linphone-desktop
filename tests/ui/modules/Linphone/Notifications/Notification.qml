@@ -35,9 +35,13 @@ DesktopPopup {
 
     window.y = Qt.binding(function () {
       var screen = window.Screen
-      return screen != null
-        ? screen.desktopAvailableHeight - window.height - notificationOffset
-        : 0
+
+      if (screen == null) {
+        return 0
+      }
+
+      var height = screen.desktopAvailableHeight - window.height
+      return height - notificationOffset % height
     })
   }
 }
