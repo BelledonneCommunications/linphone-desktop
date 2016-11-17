@@ -1,3 +1,7 @@
 WORK
 OUTPUT
 Makefile
+submodules/tunnel
+record_for_lc_*.wav
+.bc_tester_utils.tmp
+prepare.conf.user
