@@ -5,7 +5,7 @@
 #include <QtDebug>
 
 #include "../components/contacts/ContactsListProxyModel.hpp"
-#include "../components/linphone/LinphoneCore.hpp"
+#include "../components/core/CoreManager.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 
@@ -98,7 +98,7 @@ void App::addContextProperties () {
   context->setContextProperty("TimelineModel", new TimelineModel());
 
   // Other.
-  context->setContextProperty("LinphoneCore", LinphoneCore::getInstance());
+  context->setContextProperty("CoreManager", CoreManager::getInstance());
 
   m_notifier = new Notifier();
   context->setContextProperty("Notifier", m_notifier);

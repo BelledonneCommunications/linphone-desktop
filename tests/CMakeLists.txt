@@ -26,6 +26,8 @@ foreach (package ${QT5_PACKAGES})
   endif ()
 endforeach ()
 
+list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
+
 set(SOURCES
   src/app/App.cpp
   src/app/Logger.cpp
@@ -33,7 +35,7 @@ set(SOURCES
   src/components/contacts/ContactModel.cpp
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
-  src/components/linphone/LinphoneCore.cpp
+  src/components/core/CoreManager.cpp
   src/components/notifier/Notifier.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
@@ -48,7 +50,7 @@ set(HEADERS
   src/components/contacts/ContactModel.hpp
   src/components/contacts/ContactsListModel.hpp
   src/components/contacts/ContactsListProxyModel.hpp
-  src/components/linphone/LinphoneCore.hpp
+  src/components/core/CoreManager.hpp
   src/components/notifier/Notifier.hpp
   src/components/presence/Presence.hpp
   src/components/settings/AccountSettingsModel.hpp
@@ -132,4 +134,5 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
 add_dependencies(${LINPHONE_EXEC} update_translations)
 add_dependencies(update_translations check_qml)
+target_include_directories(${LINPHONE_EXEC} PRIVATE "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/include/")
 target_link_libraries(${LINPHONE_EXEC} ${LIBS})
