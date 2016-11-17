@@ -20,12 +20,18 @@ public:
     return m_instance;
   }
 
+  std::shared_ptr<linphone::Core> getCore () {
+    return m_core;
+  }
+
 private:
   CoreManager (QObject *parent = Q_NULLPTR);
 
-  std::shared_ptr<linphone::Core> m_core;
+  void setDatabasesPaths ();
 
   static CoreManager *m_instance;
+
+  std::shared_ptr<linphone::Core> m_core;
 };
 
 #endif // CORE_MANAGER_H_

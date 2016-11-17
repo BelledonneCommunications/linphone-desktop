@@ -1,26 +1,16 @@
+#include "../core/CoreManager.hpp"
+#include "ContactsListProxyModel.hpp"
+
 #include "ContactsListModel.hpp"
 
 // ===================================================================
 
 ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(parent) {
-  // TMP.
-  m_list << new ContactModel("Toto Roi", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Mary Boreno", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Cecelia Cyler", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Daniel Elliott", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Effie Forton", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Agnes Hurner", "", Presence::Offline, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Luke  Lemin", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Claire Manning", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Isabella Ahornton", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Mary Boreno", "", Presence::Offline, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("Aman Than", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  m_list << new ContactModel("  abdoul", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
+  std::shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
 
-}
-
-int ContactsListModel::rowCount (const QModelIndex &) const {
-  return m_list.count();
+  for (auto friend_ : core->getFriendsLists().front()->getFriends()) {
+    m_list << new ContactModel(friend_);
+  }
 }
 
 QHash<int, QByteArray> ContactsListModel::roleNames () const {
@@ -44,6 +34,5 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
 // -------------------------------------------------------------------
 
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) {
-  static ContactModel *a = new ContactModel("Aman Than", "", Presence::Online, QStringList("toto.linphone.sip.linphone.org"));
-  return a;
+  return ContactsListProxyModel::getContactsListModel()->m_list.front();
 }

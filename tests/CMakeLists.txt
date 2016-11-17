@@ -2,7 +2,7 @@
 # CMakeLists.txt
 # ====================================================================
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 project(linphone)
 
 set(LINPHONE_EXEC linphone)
@@ -30,6 +30,7 @@ list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
 
 set(SOURCES
   src/app/App.cpp
+  src/app/Database.cpp
   src/app/Logger.cpp
   src/components/chat/ChatModel.cpp
   src/components/contacts/ContactModel.cpp
@@ -45,6 +46,7 @@ set(SOURCES
 
 set(HEADERS
   src/app/App.hpp
+  src/app/Database.hpp
   src/app/Logger.hpp
   src/components/chat/ChatModel.hpp
   src/components/contacts/ContactModel.hpp

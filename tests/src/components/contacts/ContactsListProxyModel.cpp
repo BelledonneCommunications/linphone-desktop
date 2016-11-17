@@ -32,7 +32,7 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
   setSourceModel(m_list);
   setFilterCaseSensitivity(Qt::CaseInsensitive);
 
-  foreach (const ContactModel *contact, m_list->m_list)
+  for (const ContactModel *contact : m_list->m_list)
     m_weights[contact] = 0;
 
   sort(0);

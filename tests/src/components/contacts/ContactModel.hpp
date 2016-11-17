@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include <linphone++/linphone.hh>
+
 #include "../presence/Presence.hpp"
 
 // ===================================================================
@@ -46,17 +48,9 @@ class ContactModel : public QObject {
   );
 
 public:
-  ContactModel (QObject *parent = Q_NULLPTR) : QObject(parent) { }
-  ContactModel (
-    const QString &username,
-    const QString &avatar,
-    const Presence::PresenceStatus &presence_status,
-    const QStringList &sip_addresses
-  ): ContactModel () {
-    m_username = username;
-    m_avatar = avatar;
-    m_presence_status = presence_status;
-    m_sip_addresses = sip_addresses;
+  ContactModel (std::shared_ptr<linphone::Friend> linphone_friend) {
+    m_linphone_friend = linphone_friend;
+    m_sip_addresses << "jiiji";
   }
 
 signals:
@@ -79,6 +73,8 @@ private:
   QString m_avatar;
   Presence::PresenceStatus m_presence_status = Presence::Offline;
   QStringList m_sip_addresses;
+
+  std::shared_ptr<linphone::Friend> m_linphone_friend;
 };
 
 Q_DECLARE_METATYPE(ContactModel*);

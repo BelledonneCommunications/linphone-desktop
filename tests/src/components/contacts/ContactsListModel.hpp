@@ -6,7 +6,7 @@
 #include "ContactModel.hpp"
 
 // ===================================================================
-
+#include <QtDebug>
 class ContactsListModel : public QAbstractListModel {
   friend class ContactsListProxyModel;
 
@@ -15,7 +15,10 @@ class ContactsListModel : public QAbstractListModel {
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
 
-  int rowCount (const QModelIndex &) const;
+  int rowCount (const QModelIndex &) const {
+    return m_list.count();
+  }
+
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;
 

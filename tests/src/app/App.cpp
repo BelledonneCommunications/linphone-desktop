@@ -46,6 +46,9 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 // -------------------------------------------------------------------
 
 void App::initContentApp () {
+  // Init core.
+  CoreManager::init();
+
   // Register types and load context properties.
   registerTypes();
   addContextProperties();
@@ -90,7 +93,7 @@ void App::addContextProperties () {
   if (component.isError()) {
     qWarning() << component.errors();
   } else {
-    context->setContextProperty("CallsWindow", component.create());
+    //context->setContextProperty("CallsWindow", component.create());
   }
 
   // Models.
