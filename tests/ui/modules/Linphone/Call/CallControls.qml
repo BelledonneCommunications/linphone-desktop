@@ -5,14 +5,23 @@ import QtQuick.Controls 2.0
 import Linphone 1.0
 import Common 1.0
 
+// ===================================================================
+
 RowLayout {
+  property string sipAddress
+
+  // TODO.
+  property var contact: ContactsListModel.mapSipAddressToContact(
+    sipAddress
+  )
+
   implicitHeight: contact.height
   spacing: 1
 
   Rectangle {
     Layout.fillWidth: true
     color: '#434343'
-    implicitHeight: contact.height
+    implicitHeight: _contact.height
 
     Contact {
       id: contact

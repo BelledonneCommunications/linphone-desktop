@@ -4,6 +4,8 @@ module App.Styles
 
 # Views styles -------------------------------------------------------
 
+singleton CallsStyle        1.0 Calls/CallsStyle.qml
+
 singleton ContactsStyle     1.0 MainWindow/ContactsStyle.qml
 singleton ConversationStyle 1.0 MainWindow/ConversationStyle.qml
 singleton MainWindowStyle   1.0 MainWindow/MainWindowStyle.qml
