@@ -6,7 +6,7 @@
 	url = git://git.linphone.org/linphone-cmake-builder
 [submodule "submodules/linphone"]
 	path = submodules/linphone
-	url = gitosis@git.linphone.org:linphone-private
+	url = git://git.linphone.org/linphone
 [submodule "submodules/bcg729"]
 	path = submodules/bcg729
 	url = git://git.linphone.org/bcg729.git
