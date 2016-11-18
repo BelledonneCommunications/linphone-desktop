@@ -12,7 +12,7 @@ Item {
   property alias presenceLevel: presenceLevel.level
   property string username
 
-  property var _initialsRegex: /^\s*([^\s]+)(?:\s+([^\s]+))?/
+  property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
 
   function _computeInitials () {
     var result = username.match(_initialsRegex)
@@ -22,12 +22,11 @@ Item {
       'Unable to get initials of: \'' + username + '\''
     )
 
-    return result[1].charAt(0).toUpperCase() +
-      (
-        result[2] != null
-          ? result[2].charAt(0).toUpperCase()
-          : ''
-      )
+    return result[1].charAt(0).toUpperCase() + (
+      result[2] != null
+        ? result[2].charAt(0).toUpperCase()
+        : ''
+    )
   }
 
   // Image mask. (Circle)

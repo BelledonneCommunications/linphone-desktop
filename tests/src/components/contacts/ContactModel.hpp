@@ -17,14 +17,12 @@ class ContactModel : public QObject {
   Q_PROPERTY(
     QString username
     READ getUsername
-    WRITE setUsername
     NOTIFY contactUpdated
   );
 
   Q_PROPERTY(
     QString avatar
     READ getAvatar
-    WRITE setAvatar
     NOTIFY contactUpdated
   );
 
@@ -55,26 +53,25 @@ signals:
   void contactUpdated ();
 
 private:
-  QString getUsername () const;
-  void setUsername (const QString &username);
+  QString getUsername () const {
+    return Utils::linphoneStringToQString(
+      m_linphone_friend->getName()
+    );
+  }
 
-  QString getAvatar () const;
-  void setAvatar (const QString &avatar);
+  QString getAvatar () const {
+    return "";
+  }
 
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
 
   QString getSipAddress () const {
-    // FIXME.
-    return "toto@linphone.org";
-
     return Utils::linphoneStringToQString(
       m_linphone_friend->getAddress()->asString()
     );
   }
 
-  QString m_username;
-  QString m_avatar;
   Presence::PresenceStatus m_presence_status = Presence::Offline;
 
   std::shared_ptr<linphone::Friend> m_linphone_friend;

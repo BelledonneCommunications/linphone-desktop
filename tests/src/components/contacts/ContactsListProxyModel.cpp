@@ -45,7 +45,9 @@ void ContactsListProxyModel::initContactsListModel (ContactsListModel *list) {
     qWarning() << "Contacts list model is already defined.";
 }
 
-bool ContactsListProxyModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
+bool ContactsListProxyModel::filterAcceptsRow (
+  int source_row, const QModelIndex &source_parent
+) const {
   QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
   const ContactModel *contact = qvariant_cast<ContactModel *>(
     index.data()
@@ -74,7 +76,7 @@ bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelInde
   return (
     weight_a > weight_b || (
       weight_a == weight_b &&
-      contact_a->m_username <= contact_b->m_username
+      contact_a->m_linphone_friend->getName() <= contact_b->m_linphone_friend->getName()
     )
   );
 }
@@ -112,26 +114,28 @@ float ContactsListProxyModel::computeStringWeight (const QString &string, float 
 }
 
 float ContactsListProxyModel::computeContactWeight (const ContactModel &contact) const {
-  float weight = computeStringWeight(contact.m_username, USERNAME_WEIGHT);
+  float weight = computeStringWeight(contact.getUsername(), USERNAME_WEIGHT);
 
-  // It exists at least one sip address.
+  // Get all contact's addresses.
   const std::list<std::shared_ptr<linphone::Address> > addresses =
     contact.m_linphone_friend->getAddresses();
 
-  // FIXME.
-  return 0;
-  weight += computeStringWeight(contact.getSipAddress(), MAIN_SIP_ADDRESS_WEIGHT);
+  auto it = addresses.cbegin();
+
+  // It exists at least one sip address.
+  weight += computeStringWeight(
+    Utils::linphoneStringToQString((*it)->asString()),
+    MAIN_SIP_ADDRESS_WEIGHT
+  );
 
   // Compute for other addresses.
   int size = addresses.size();
 
-  return 0;
-  if (size > 1)
-    for (auto it = ++addresses.cbegin(); it != addresses.cend(); ++it)
-      weight += computeStringWeight(
-        Utils::linphoneStringToQString((*it)->asString()),
-        OTHER_SIP_ADDRESSES_WEIGHT / size
-      );
+  for (++it; it != addresses.cend(); ++it)
+    weight += computeStringWeight(
+      Utils::linphoneStringToQString((*it)->asString()),
+      OTHER_SIP_ADDRESSES_WEIGHT / size
+    );
 
   return weight;
 }
