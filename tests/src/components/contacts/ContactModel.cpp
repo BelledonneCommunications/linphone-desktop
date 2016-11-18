@@ -25,11 +25,3 @@ Presence::PresenceStatus ContactModel::getPresenceStatus () const {
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(m_presence_status);
 }
-
-QStringList ContactModel::getSipAddresses () const {
-  return m_sip_addresses;
-}
-
-void ContactModel::setSipAddresses (const QStringList &sip_addresses) {
-  m_sip_addresses = sip_addresses;
-}

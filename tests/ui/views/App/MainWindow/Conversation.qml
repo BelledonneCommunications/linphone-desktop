@@ -40,7 +40,7 @@ ColumnLayout  {
       ContactDescription {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        sipAddress: contact.sipAddresses[0]
+        sipAddress: contact.sipAddress
         sipAddressColor: ConversationStyle.bar.description.sipAddressColor
         username: contact.username
         usernameColor: ConversationStyle.bar.description.usernameColor

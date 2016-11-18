@@ -51,9 +51,7 @@ bool ContactsListProxyModel::filterAcceptsRow (int source_row, const QModelIndex
     index.data()
   );
 
-  int weight = m_weights[contact] = static_cast<int>(
-    computeContactWeight(*contact)
-  );
+  int weight = m_weights[contact] = computeContactWeight(*contact);
 
   return weight > 0 && (
     !m_use_connected_filter ||
@@ -117,14 +115,23 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
   float weight = computeStringWeight(contact.m_username, USERNAME_WEIGHT);
 
   // It exists at least one sip address.
-  const QStringList &addresses = contact.m_sip_addresses;
-  weight += computeStringWeight(addresses[0], MAIN_SIP_ADDRESS_WEIGHT);
+  const std::list<std::shared_ptr<linphone::Address> > addresses =
+    contact.m_linphone_friend->getAddresses();
 
+  // FIXME.
+  return 0;
+  weight += computeStringWeight(contact.getSipAddress(), MAIN_SIP_ADDRESS_WEIGHT);
+
+  // Compute for other addresses.
   int size = addresses.size();
 
+  return 0;
   if (size > 1)
-    for (auto it = ++addresses.constBegin(); it != addresses.constEnd(); ++it)
-      weight += computeStringWeight(*it, OTHER_SIP_ADDRESSES_WEIGHT / size);
+    for (auto it = ++addresses.cbegin(); it != addresses.cend(); ++it)
+      weight += computeStringWeight(
+        Utils::linphoneStringToQString((*it)->asString()),
+        OTHER_SIP_ADDRESSES_WEIGHT / size
+      );
 
   return weight;
 }

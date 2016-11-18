@@ -40,7 +40,7 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      sipAddress: contact.sipAddresses[0]
+      sipAddress: contact.sipAddress
       username: avatar.username
     }
 

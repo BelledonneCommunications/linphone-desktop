@@ -58,6 +58,7 @@ set(HEADERS
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/components/timeline/TimelineModel.hpp
+  src/utils.hpp
 )
 
 set(QRC_RESOURCES
@@ -136,5 +137,7 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
 add_dependencies(${LINPHONE_EXEC} update_translations)
 add_dependencies(update_translations check_qml)
+
 target_include_directories(${LINPHONE_EXEC} PRIVATE "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/include/")
+
 target_link_libraries(${LINPHONE_EXEC} ${LIBS})

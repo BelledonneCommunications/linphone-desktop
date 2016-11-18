@@ -2,9 +2,9 @@
 #define CONTACT_MODEL_H
 
 #include <QObject>
-
 #include <linphone++/linphone.hh>
 
+#include "../../utils.hpp"
 #include "../presence/Presence.hpp"
 
 // ===================================================================
@@ -41,16 +41,14 @@ class ContactModel : public QObject {
   );
 
   Q_PROPERTY(
-    QStringList sipAddresses
-    READ getSipAddresses
-    WRITE setSipAddresses
+    QString sipAddress
+    READ getSipAddress
     NOTIFY contactUpdated
   );
 
 public:
   ContactModel (std::shared_ptr<linphone::Friend> linphone_friend) {
     m_linphone_friend = linphone_friend;
-    m_sip_addresses << "jiiji";
   }
 
 signals:
@@ -66,13 +64,18 @@ private:
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
 
-  QStringList getSipAddresses () const;
-  void setSipAddresses (const QStringList &sip_addresses);
+  QString getSipAddress () const {
+    // FIXME.
+    return "toto@linphone.org";
+
+    return Utils::linphoneStringToQString(
+      m_linphone_friend->getAddress()->asString()
+    );
+  }
 
   QString m_username;
   QString m_avatar;
   Presence::PresenceStatus m_presence_status = Presence::Offline;
-  QStringList m_sip_addresses;
 
   std::shared_ptr<linphone::Friend> m_linphone_friend;
 };
