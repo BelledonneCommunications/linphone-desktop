@@ -16,7 +16,11 @@ public:
   QVariant data (const QModelIndex &index, int role) const;
 
 private:
-  QStringList m_addresses;
+  // A timeline enty is a object that contains:
+  // - A QDateTime `timestamp`.
+  // - A `sipAddresses` value, if it exists only one address, it's
+  //   a string, otherwise it's a string array.
+  QList<QVariantMap> m_entries;
 };
 
 #endif // TIMELINE_MODEL_H_

@@ -3,14 +3,16 @@
 
 #include "ContactsListModel.hpp"
 
+using namespace std;
+
 // ===================================================================
 
 ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(parent) {
-  std::shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
+  shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
 
   // Init contacts with linphone friends list.
-  for (auto friend_ : core->getFriendsLists().front()->getFriends()) {
-    m_list << new ContactModel(friend_);
+  for (auto&& contact : core->getFriendsLists().front()->getFriends()) {
+    m_list << new ContactModel(contact);
   }
 }
 

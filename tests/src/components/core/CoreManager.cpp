@@ -28,7 +28,5 @@ void CoreManager::setDatabasesPaths () {
   database_path = Database::getMessageHistoryPath();
   if (database_path.length() == 0)
     qFatal("Unable to get message history database path.");
-
-  // FIXME.
-  // m_core->setChatDatabasePath(database_path);
+  m_core->setChatDatabasePath(database_path);
 }

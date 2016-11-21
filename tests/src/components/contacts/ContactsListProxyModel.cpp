@@ -11,6 +11,8 @@
 #define FACTOR_POS_3 0.70
 #define FACTOR_POS_OTHER 0.60
 
+using namespace std;
+
 // ===================================================================
 
 ContactsListModel *ContactsListProxyModel::m_list = nullptr;
@@ -117,10 +119,10 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
   float weight = computeStringWeight(contact.getUsername(), USERNAME_WEIGHT);
 
   // Get all contact's addresses.
-  const std::list<std::shared_ptr<linphone::Address> > addresses =
+  const list<shared_ptr<linphone::Address> > addresses =
     contact.m_linphone_friend->getAddresses();
 
-  auto it = addresses.cbegin();
+  auto&& it = addresses.cbegin();
 
   // It exists at least one sip address.
   weight += computeStringWeight(

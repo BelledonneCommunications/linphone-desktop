@@ -6,7 +6,7 @@
 #include "ContactModel.hpp"
 
 // ===================================================================
-#include <QtDebug>
+
 class ContactsListModel : public QAbstractListModel {
   friend class ContactsListProxyModel;
 

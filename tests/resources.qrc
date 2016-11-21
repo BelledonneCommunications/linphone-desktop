@@ -109,6 +109,10 @@
     <file>ui/modules/Common/View/ScrollableListView.qml</file>
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Call/CallControls.qml</file>
+    <file>ui/modules/Linphone/Call/ConnectedCallsControl.qml</file>
+    <file>ui/modules/Linphone/Call/IncomingCallControls.qml</file>
+    <file>ui/modules/Linphone/Call/OutgoingCallControls.qml</file>
+    <file>ui/modules/Linphone/Call/PausedCallControls.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
     <file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
