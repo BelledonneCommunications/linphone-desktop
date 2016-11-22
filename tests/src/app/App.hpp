@@ -50,7 +50,7 @@ private:
   QTranslator m_translator;
 
   Notifier *m_notifier = nullptr;
-  QString m_locale;
+  QString m_locale = "en";
 
   static App *m_instance;
 };

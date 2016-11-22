@@ -23,12 +23,16 @@
 App *App::m_instance = nullptr;
 
 App::App (int &argc, char **argv) : QApplication(argc, argv) {
+  QString current_locale = QLocale::system().name();
+
   // Try to use default locale. Otherwise use english.
-  if (m_translator.load(QString(LANGUAGES_PATH) + QLocale::system().name()) ||
-      m_translator.load(LANGUAGES_PATH "en")) {
+  if (m_translator.load(QString(LANGUAGES_PATH) + current_locale)) {
+    installTranslator(&m_translator);
+    m_locale = current_locale;
+  } else if (m_translator.load(LANGUAGES_PATH "en")) {
     installTranslator(&m_translator);
   } else {
-    qWarning("No translation found.");
+    qFatal("No translation found.");
   }
 
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
