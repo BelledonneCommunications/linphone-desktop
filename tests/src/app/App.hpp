@@ -12,6 +12,8 @@
 // ===================================================================
 
 class App : public QApplication {
+  Q_OBJECT;
+
 public:
   static void init (int &argc, char **argv) {
     if (!m_instance) {
@@ -26,6 +28,11 @@ public:
 
   QQmlEngine *getEngine () {
     return &m_engine;
+  }
+
+public slots:
+  QString locale () const {
+    return m_locale;
   }
 
 private:
@@ -43,6 +50,7 @@ private:
   QTranslator m_translator;
 
   Notifier *m_notifier = nullptr;
+  QString m_locale;
 
   static App *m_instance;
 };

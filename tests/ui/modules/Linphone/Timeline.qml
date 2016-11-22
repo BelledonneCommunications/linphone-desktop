@@ -97,13 +97,17 @@ ColumnLayout {
           : TimelineStyle.contact.username.color.normal
       }
 
+      Loader {
+        anchors.fill: parent
+        sourceComponent: TooltipArea {
+          text: $timelineEntry.timestamp.toLocaleString(
+            Qt.locale(App.locale()), Locale.ShortFormat
+          )
+        }
+      }
+
       MouseArea {
         anchors.fill: parent
-        cursorShape: containsMouse
-          ? Qt.PointingHandCursor
-          : Qt.ArrowCursor
-        hoverEnabled: true
-
         onClicked: {
           view.currentIndex = index
           timeline.entrySelected(parent.contact)

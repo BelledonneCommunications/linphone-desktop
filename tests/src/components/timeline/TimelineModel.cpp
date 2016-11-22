@@ -80,7 +80,11 @@ TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
       m_entries.insert(search_entry(map), map);
     else if (map["timestamp"] > (*it)["timestamp"]) {
       // Remove old entry and insert.
-      it = m_entries.erase(it) - 1;
+      it = m_entries.erase(it);
+
+      if (it != m_entries.cbegin())
+        it--;
+
       m_entries.insert(search_entry(map, &it), map);
     }
   }

@@ -4,7 +4,7 @@ import QtQuick 2.7
 
 MouseArea {
   property alias text: tooltip.text
-  property var toolTipParent: this
+  property var tooltipParent: this
 
   anchors.fill: parent
   hoverEnabled: true
@@ -14,7 +14,7 @@ MouseArea {
   Tooltip {
     id: tooltip
 
-    parent: toolTipParent
+    parent: tooltipParent
     visible: containsMouse
   }
 }

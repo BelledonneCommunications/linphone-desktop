@@ -70,17 +70,41 @@ void App::registerTypes () {
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
 
+  qmlRegisterSingletonType<App>(
+    "Linphone", 1, 0, "App",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return App::getInstance();
+    }
+  );
+
+  qmlRegisterSingletonType<CoreManager>(
+    "Linphone", 1, 0, "CoreManager",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return CoreManager::getInstance();
+    }
+  );
+
   ContactsListProxyModel::initContactsListModel(new ContactsListModel());
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
 
-  // Expose the static functions of ContactsListModel.
   qmlRegisterSingletonType<ContactsListModel>(
     "Linphone", 1, 0, "ContactsListModel",
-    [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject *{
-      Q_UNUSED(engine);
-      Q_UNUSED(scriptEngine);
-
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
       return ContactsListProxyModel::getContactsListModel();
+    }
+  );
+
+  qmlRegisterSingletonType<AccountSettingsModel>(
+    "Linphone", 1, 0, "AccountSettingsModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new AccountSettingsModel();
+    }
+  );
+
+  qmlRegisterSingletonType<TimelineModel>(
+    "Linphone", 1, 0, "TimelineModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new TimelineModel();
     }
   );
 }
@@ -95,13 +119,6 @@ void App::addContextProperties () {
   } else {
     //context->setContextProperty("CallsWindow", component.create());
   }
-
-  // Models.
-  context->setContextProperty("AccountSettingsModel", new AccountSettingsModel());
-  context->setContextProperty("TimelineModel", new TimelineModel());
-
-  // Other.
-  context->setContextProperty("CoreManager", CoreManager::getInstance());
 
   m_notifier = new Notifier();
   context->setContextProperty("Notifier", m_notifier);
