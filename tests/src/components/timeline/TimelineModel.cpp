@@ -21,7 +21,7 @@ TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
     return lower_bound(
       start ? *start : m_entries.begin(), m_entries.end(), map,
       [](const QVariantMap &a, const QVariantMap &b) {
-        return a["timestamp"] < b["timestamp"];
+        return a["timestamp"] > b["timestamp"];
       }
     );
   };
