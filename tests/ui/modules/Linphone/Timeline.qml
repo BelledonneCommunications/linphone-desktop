@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 
@@ -12,7 +13,7 @@ ColumnLayout {
 
   property alias model: view.model
 
-  signal contactSelected (var contact)
+  signal entrySelected (var entry)
 
   // -----------------------------------------------------------------
 
@@ -63,9 +64,16 @@ ColumnLayout {
     currentIndex: -1
 
     delegate: Item {
-      property var contact: ContactsListModel.mapSipAddressToContact(
-        $timelineEntry.sipAddresses
-      )
+      property var contact: {
+        Utils.assert(
+          !Utils.isArray($timelineEntry.sipAddresses),
+          'Conferences are not supported at this moment.'
+        )
+
+        return ContactsListModel.mapSipAddressToContact(
+          $timelineEntry.sipAddresses
+        ) || $timelineEntry.sipAddresses
+      }
 
       height: TimelineStyle.contact.height
       width: parent.width
@@ -97,7 +105,7 @@ ColumnLayout {
 
         onClicked: {
           view.currentIndex = index
-          timeline.contactSelected(parent.contact)
+          timeline.entrySelected(parent.contact)
         }
       }
     }

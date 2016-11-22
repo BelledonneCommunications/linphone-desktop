@@ -160,9 +160,9 @@ ApplicationWindow {
         Layout.fillWidth: true
         model: TimelineModel
 
-        onContactSelected: {
+        onEntrySelected: {
           menu.resetSelectedEntry()
-          setView('Conversation', { contact: contact })
+          setView('Conversation', { contact: entry })
         }
       }
     }

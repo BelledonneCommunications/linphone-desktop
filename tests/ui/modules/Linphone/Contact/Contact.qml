@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 
@@ -12,6 +13,7 @@ Rectangle {
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
 
+  // Can be a contact object or just a sip address.
   property var contact
 
   color: 'transparent' // No color by default.
@@ -30,9 +32,11 @@ Rectangle {
 
       Layout.preferredHeight: ContactStyle.contentHeight
       Layout.preferredWidth: ContactStyle.contentHeight
-      image: contact.avatar
-      presenceLevel: contact.presenceLevel
-      username: contact.username
+      image: contact.avatar || ''
+      presenceLevel: contact.presenceLevel || Presence.White
+      username: Utils.isString(contact)
+        ? contact.substring(4, contact.indexOf('@')) // 4 = length("sip:")
+        : contact.username
     }
 
     ContactDescription {
@@ -40,7 +44,9 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      sipAddress: contact.sipAddress
+      sipAddress: Utils.isString(contact)
+        ? contact
+        : contact.sipAddress
       username: avatar.username
     }
 
