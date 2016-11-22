@@ -3,6 +3,6 @@
 
 #include <QtGlobal>
 
-void qmlLogger (QtMsgType type, const QMessageLogContext &context, const QString &msg);
+void logger (QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
 #endif // LOGGER_H_

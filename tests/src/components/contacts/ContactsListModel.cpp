@@ -1,3 +1,5 @@
+#include <QtDebug>
+
 #include "../core/CoreManager.hpp"
 #include "ContactsListProxyModel.hpp"
 
@@ -38,10 +40,14 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
 
 // -------------------------------------------------------------------
 
-ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) {
-  return m_friend_to_contact[
+ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
+  ContactModel *contact = m_friend_to_contact[
     CoreManager::getInstance()->getCore()->getFriendsLists().front()->findFriendByUri(
       sipAddress.toStdString()
     ).get()
   ];
+
+  qInfo() << "Map sip address to contact:" << sipAddress << "->" << contact;
+
+  return contact;
 }

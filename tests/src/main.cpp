@@ -4,7 +4,7 @@
 // ===================================================================
 
 int main (int argc, char *argv[]) {
-  qInstallMessageHandler(qmlLogger);
+  qInstallMessageHandler(logger);
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   App::init(argc, argv);

@@ -18,33 +18,39 @@
 
 // ===================================================================
 
-void qmlLogger (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+void logger (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
   QByteArray local_msg = msg.toLocal8Bit();
   QByteArray date_time = QDateTime::currentDateTime()
     .toString("HH:mm:ss").toLocal8Bit();
 
-  const char *context_file = context.file ?: "cpp";
+  const char *context_file = "cpp";
+  int context_line = 0;
+
+  if (context.file && !context.function) {
+    context_file = context.file;
+    context_line = context.line;
+  }
 
   switch (type) {
     case QtDebugMsg:
       fprintf(stderr, GREEN "[%s][Debug]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context.line, local_msg.constData());
+        date_time.constData(), context_file, context_line, local_msg.constData());
       break;
     case QtInfoMsg:
       fprintf(stderr, BLUE "[%s][Info]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context.line, local_msg.constData());
+        date_time.constData(), context_file, context_line, local_msg.constData());
       break;
     case QtWarningMsg:
       fprintf(stderr, RED "[%s][Warning]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context.line, local_msg.constData());
+        date_time.constData(), context_file, context_line, local_msg.constData());
       break;
     case QtCriticalMsg:
       fprintf(stderr, RED "[%s][Critical]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context.line, local_msg.constData());
+        date_time.constData(), context_file, context_line, local_msg.constData());
       break;
     case QtFatalMsg:
       fprintf(stderr, RED "[%s][Fatal]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context.line, local_msg.constData());
+        date_time.constData(), context_file, context_line, local_msg.constData());
       abort();
   }
 }

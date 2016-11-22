@@ -23,11 +23,11 @@ public:
   QVariant data (const QModelIndex &index, int role) const;
 
 public slots:
-  ContactModel *mapSipAddressToContact (const QString &sipAddress);
+  ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
 
 private:
   QList<ContactModel *> m_list;
-  QHash<linphone::Friend *, ContactModel* > m_friend_to_contact;
+  QHash<const linphone::Friend *, ContactModel* > m_friend_to_contact;
 };
 
 #endif // CONTACTS_LIST_MODEL_H
