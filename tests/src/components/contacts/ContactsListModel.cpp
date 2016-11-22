@@ -11,8 +11,10 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
   shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
 
   // Init contacts with linphone friends list.
-  for (auto&& contact : core->getFriendsLists().front()->getFriends()) {
-    m_list << new ContactModel(contact);
+  for (const auto &friend_ : core->getFriendsLists().front()->getFriends()) {
+    ContactModel *contact = new ContactModel(friend_);
+    m_friend_to_contact[friend_.get()] = contact;
+    m_list << contact;
   }
 }
 
@@ -37,5 +39,9 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
 // -------------------------------------------------------------------
 
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) {
-  return ContactsListProxyModel::getContactsListModel()->m_list.front();
+  return m_friend_to_contact[
+    CoreManager::getInstance()->getCore()->getFriendsLists().front()->findFriendByUri(
+      sipAddress.toStdString()
+    ).get()
+  ];
 }

@@ -29,7 +29,7 @@ TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
   shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
 
   // Insert chat rooms events.
-  for (auto&& chat_room : core->getChatRooms()) {
+  for (const auto &chat_room : core->getChatRooms()) {
     list<shared_ptr<linphone::ChatMessage> > history = chat_room->getHistory(0);
 
     if (history.size() == 0)
@@ -50,7 +50,7 @@ TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
 
   // Insert calls events.
   QHash<QString, bool> address_done;
-  for (auto&& call_log : core->getCallLogs()) {
+  for (const auto &call_log : core->getCallLogs()) {
     // Get a sip uri to check.
     QString address = Utils::linphoneStringToQString(
       call_log->getRemoteAddress()->asString()
@@ -69,7 +69,7 @@ TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
     map["sipAddresses"] = address;
 
     // Search existing entry.
-    auto&& it = find_if(
+    auto it = find_if(
       m_entries.begin(), m_entries.end(), [&address](const QVariantMap &map) {
         return address == map["sipAddresses"].toString();
       }

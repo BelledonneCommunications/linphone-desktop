@@ -122,7 +122,7 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
   const list<shared_ptr<linphone::Address> > addresses =
     contact.m_linphone_friend->getAddresses();
 
-  auto&& it = addresses.cbegin();
+  auto it = addresses.cbegin();
 
   // It exists at least one sip address.
   weight += computeStringWeight(

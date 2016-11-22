@@ -64,7 +64,7 @@ ColumnLayout {
 
     delegate: Item {
       property var contact: ContactsListModel.mapSipAddressToContact(
-        $timelineEntry
+        $timelineEntry.sipAddresses
       )
 
       height: TimelineStyle.contact.height
