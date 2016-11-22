@@ -14,7 +14,7 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
 
   // Init contacts with linphone friends list.
   for (const auto &friend_ : m_linphone_friends->getFriends()) {
-    ContactModel *contact = new ContactModel(friend_);
+    ContactModel *contact = new ContactModel(this, friend_);
     m_friend_to_contact[friend_.get()] = contact;
     m_list << contact;
   }
@@ -40,18 +40,13 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
 
 // -------------------------------------------------------------------
 
-ContactModel *ContactsListModel::mapLinphoneFriendToContact (
-  const shared_ptr<linphone::Friend> &friend_
-) const {
-  return m_friend_to_contact[friend_.get()];
-}
-
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
-  ContactModel *contact = m_friend_to_contact[
+  // Maybe use a hashtable in future version to get a lower cost?
+  ContactModel *contact = m_friend_to_contact.value(
     m_linphone_friends->findFriendByUri(
       sipAddress.toStdString()
     ).get()
-  ];
+  );
 
   qInfo() << "Map sip address to contact:" << sipAddress << "->" << contact;
 

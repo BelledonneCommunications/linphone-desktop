@@ -31,6 +31,9 @@ const QRegExp ContactsListProxyModel::m_search_separators("^[^_.-;@ ][_.-;@ ]");
 // -------------------------------------------------------------------
 
 ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+  if (m_list == nullptr)
+    qFatal("Contacts list model is undefined.");
+
   setSourceModel(m_list);
   setFilterCaseSensitivity(Qt::CaseInsensitive);
 

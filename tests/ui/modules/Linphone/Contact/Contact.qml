@@ -9,12 +9,17 @@ import Utils 1.0
 // ===================================================================
 
 Rectangle {
+  id: item
+
   property alias actions: actionBar.data
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
 
   // Can be a contact object or just a sip address.
   property var contact
+
+  // Override contact.sipAddress if used.
+  property var sipAddress
 
   color: 'transparent' // No color by default.
   height: ContactStyle.height
@@ -46,7 +51,7 @@ Rectangle {
       Layout.fillWidth: true
       sipAddress: Utils.isString(contact)
         ? contact
-        : contact.sipAddress
+        : item.sipAddress || contact.sipAddress
       username: avatar.username
     }
 

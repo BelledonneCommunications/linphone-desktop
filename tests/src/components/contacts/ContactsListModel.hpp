@@ -22,10 +22,6 @@ public:
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;
 
-  ContactModel *mapLinphoneFriendToContact (
-    const std::shared_ptr<linphone::Friend> &friend_
-  ) const;
-
 public slots:
   ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
 
