@@ -10,10 +10,10 @@ using namespace std;
 // ===================================================================
 
 ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(parent) {
-  shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
+  m_linphone_friends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 
   // Init contacts with linphone friends list.
-  for (const auto &friend_ : core->getFriendsLists().front()->getFriends()) {
+  for (const auto &friend_ : m_linphone_friends->getFriends()) {
     ContactModel *contact = new ContactModel(friend_);
     m_friend_to_contact[friend_.get()] = contact;
     m_list << contact;
@@ -40,9 +40,15 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
 
 // -------------------------------------------------------------------
 
+ContactModel *ContactsListModel::mapLinphoneFriendToContact (
+  const shared_ptr<linphone::Friend> &friend_
+) const {
+  return m_friend_to_contact[friend_.get()];
+}
+
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
   ContactModel *contact = m_friend_to_contact[
-    CoreManager::getInstance()->getCore()->getFriendsLists().front()->findFriendByUri(
+    m_linphone_friends->findFriendByUri(
       sipAddress.toStdString()
     ).get()
   ];
