@@ -215,6 +215,16 @@ ColumnLayout {
                 elide: Text.ElideRight
                 font.bold: true
                 text: $contact.username
+
+                MouseArea {
+                  anchors.fill: parent
+                  cursorShape: containsMouse
+                    ? Qt.PointingHandCursor
+                    : Qt.ArrowCursor
+                  hoverEnabled: true
+
+                  onClicked: window.setView('Contact')
+                }
               }
 
               // Container.

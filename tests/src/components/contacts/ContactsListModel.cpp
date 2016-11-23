@@ -60,7 +60,7 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 
     m_list.removeAt(row);
     m_friend_to_contact.remove(contact->m_linphone_friend.get());
-    // m_linphone_friends->removeFriend(contact->m_linphone_friend);
+    m_linphone_friends->removeFriend(contact->m_linphone_friend);
 
     contact->deleteLater();
   }

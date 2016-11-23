@@ -72,7 +72,7 @@ ColumnLayout  {
             icon: 'contact_edit'
             iconSize: ConversationStyle.bar.actions.edit.iconSize
 
-            onClicked: console.log('clicked!!!') // TODO.
+            onClicked: window.setView('Contact')
           }
 
           ActionButton {

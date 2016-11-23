@@ -16,6 +16,7 @@ TimelineModel::TimelineModel (const ContactsListModel *contacts_list) {
   init_entries();
 
   // Invalidate model if a contact is removed.
+  // Better than compare each sip address.
   connect(
     contacts_list, &ContactsListModel::rowsRemoved, this,
     [this](const QModelIndex &, int, int) {
