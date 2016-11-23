@@ -29,8 +29,9 @@ ColumnLayout {
     Utils.openConfirmDialog(window, {
       descriptionText: qsTr('removeContactDescription'),
       exitHandler: function (status) {
-        // TODO
-        console.log('remove contact', status)
+        if (status) {
+          ContactsListModel.removeContact(contact)
+        }
       },
       title: qsTr('removeContactTitle')
     })

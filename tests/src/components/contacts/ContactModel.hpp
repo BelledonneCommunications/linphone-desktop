@@ -45,10 +45,7 @@ class ContactModel : public QObject {
   );
 
 public:
-  ContactModel (
-    QObject *parent,
-    std::shared_ptr<linphone::Friend> linphone_friend
-  ) : QObject(parent) {
+  ContactModel (std::shared_ptr<linphone::Friend> linphone_friend) {
     m_linphone_friend = linphone_friend;
   }
 

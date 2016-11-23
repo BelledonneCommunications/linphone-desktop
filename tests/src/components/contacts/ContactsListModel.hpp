@@ -15,15 +15,23 @@ class ContactsListModel : public QAbstractListModel {
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
 
-  int rowCount (const QModelIndex &) const {
+  int rowCount (const QModelIndex &index = QModelIndex()) const {
     return m_list.count();
   }
 
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;
 
+  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
+  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex());
+
+
 public slots:
+  // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
+  // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
   ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
+
+  void removeContact (ContactModel *contact);
 
 private:
   QList<ContactModel *> m_list;
