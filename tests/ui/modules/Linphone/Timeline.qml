@@ -95,14 +95,14 @@ ColumnLayout {
         usernameColor: view.currentIndex === index
           ? TimelineStyle.contact.username.color.selected
           : TimelineStyle.contact.username.color.normal
-      }
 
-      Loader {
-        anchors.fill: parent
-        sourceComponent: TooltipArea {
-          text: $timelineEntry.timestamp.toLocaleString(
-            Qt.locale(App.locale()), Locale.ShortFormat
-          )
+        Loader {
+          anchors.fill: parent
+          sourceComponent: TooltipArea {
+            text: $timelineEntry.timestamp.toLocaleString(
+              Qt.locale(App.locale()), Locale.ShortFormat
+            )
+          }
         }
       }
 

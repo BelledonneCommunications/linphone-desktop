@@ -80,6 +80,11 @@ ToolTip {
   background: Item {
     id: container
 
+    layer {
+      enabled: true
+      effect: PopupShadow {}
+    }
+
     Rectangle {
       anchors {
         fill: parent

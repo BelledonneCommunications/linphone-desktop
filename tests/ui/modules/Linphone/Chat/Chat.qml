@@ -62,7 +62,7 @@ ColumnLayout {
             // Cast section to integer because Qt converts the
             // $dateSection in string!!!
             text: new Date(+section).toLocaleDateString(
-              Qt.locale()
+              Qt.locale(App.locale())
             )
           }
         }
@@ -144,7 +144,7 @@ ColumnLayout {
             color: ChatStyle.entry.time.color
             font.pointSize: ChatStyle.entry.time.fontSize
             text: new Date($timestamp).toLocaleString(
-              Qt.locale(),
+              Qt.locale(App.locale()),
               'hh:mm'
             )
             verticalAlignment: Text.AlignVCenter
