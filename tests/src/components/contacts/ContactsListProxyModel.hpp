@@ -1,5 +1,5 @@
-#ifndef CONTACTS_LIST_PROXY_MODEL_H
-#define CONTACTS_LIST_PROXY_MODEL_H
+#ifndef CONTACTS_LIST_PROXY_MODEL_H_
+#define CONTACTS_LIST_PROXY_MODEL_H_
 
 #include <QSortFilterProxyModel>
 
@@ -49,4 +49,4 @@ private:
   bool m_use_connected_filter;
 };
 
-#endif // CONTACTS_LIST_PROXY_MODEL_H
+#endif // CONTACTS_LIST_PROXY_MODEL_H_

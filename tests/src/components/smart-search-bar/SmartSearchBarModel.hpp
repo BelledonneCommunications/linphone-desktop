@@ -6,4 +6,4 @@ class SmartSearchBarModel {
 
 };
 
-#endif
+#endif // SMART_SEARCH_BAR_MODEL_H_

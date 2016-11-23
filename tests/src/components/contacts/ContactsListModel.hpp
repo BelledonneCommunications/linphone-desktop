@@ -1,5 +1,5 @@
-#ifndef CONTACTS_LIST_MODEL_H
-#define CONTACTS_LIST_MODEL_H
+#ifndef CONTACTS_LIST_MODEL_H_
+#define CONTACTS_LIST_MODEL_H_
 
 #include <QAbstractListModel>
 
@@ -39,4 +39,4 @@ private:
   std::shared_ptr<linphone::FriendList> m_linphone_friends;
 };
 
-#endif // CONTACTS_LIST_MODEL_H
+#endif // CONTACTS_LIST_MODEL_H_

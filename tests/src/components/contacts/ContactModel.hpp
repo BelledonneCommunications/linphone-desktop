@@ -1,5 +1,5 @@
-#ifndef CONTACT_MODEL_H
-#define CONTACT_MODEL_H
+#ifndef CONTACT_MODEL_H_
+#define CONTACT_MODEL_H_
 
 #include <QObject>
 #include <linphone++/linphone.hh>
@@ -80,4 +80,4 @@ private:
 
 Q_DECLARE_METATYPE(ContactModel*);
 
-#endif // CONTACT_MODEL_H
+#endif // CONTACT_MODEL_H_
