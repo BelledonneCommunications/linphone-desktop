@@ -25,7 +25,6 @@ public:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex());
 
-
 public slots:
   // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
   // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.

@@ -127,6 +127,7 @@
     <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
     <file>ui/modules/Linphone/Select/SelectContact.qml</file>
+    <file>ui/modules/Linphone/SmartSearchBar.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>

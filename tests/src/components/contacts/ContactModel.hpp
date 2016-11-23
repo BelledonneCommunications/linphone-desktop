@@ -10,6 +10,7 @@
 // ===================================================================
 
 class ContactModel : public QObject {
+  friend class ContactsListModel;
   friend class ContactsListProxyModel;
 
   Q_OBJECT;

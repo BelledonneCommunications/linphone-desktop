@@ -28,7 +28,7 @@ ApplicationWindow {
   visible: true
 
   onActiveFocusItemChanged: activeFocusItem == null &&
-    searchBox.hideMenu()
+    smartSearchBar.hideMenu()
 
   // -----------------------------------------------------------------
   // Toolbar properties.
@@ -82,32 +82,14 @@ ApplicationWindow {
         }
       }
 
-      SearchBox {
-        id: searchBox
+      SmartSearchBar {
+        id: smartSearchBar
 
         Layout.fillWidth: true
         entryHeight: MainWindowStyle.searchBox.entryHeight
         maxMenuHeight: MainWindowStyle.searchBox.maxHeight
-        placeholderText: qsTr('mainSearchBarPlaceholder')
-
         model: ContactsListProxyModel {}
-
-        delegate: Contact {
-          contact: $contact
-          width: parent.width
-
-          actions: [
-            ActionButton {
-              icon: 'call'
-              onClicked: CallsWindow.show()
-            },
-
-            ActionButton {
-              icon: 'video_call'
-              onClicked: CallsWindow.show()
-            }
-          ]
-        }
+        placeholderText: qsTr('mainSearchBarPlaceholder')
       }
     }
   }

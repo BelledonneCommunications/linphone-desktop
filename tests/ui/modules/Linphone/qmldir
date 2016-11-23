@@ -27,5 +27,8 @@ PresenceString      1.0 Presence/PresenceString.qml
 # Select
 SelectContact       1.0 Select/SelectContact.qml
 
+# SmartSearchBar
+SmartSearchBar      1.0 SmartSearchBar.qml
+
 # Timeline
 Timeline            1.0 Timeline.qml
