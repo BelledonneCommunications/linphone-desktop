@@ -12,7 +12,45 @@ using namespace std;
 
 // ===================================================================
 
-TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
+TimelineModel::TimelineModel (const ContactsListModel *contacts_list) {
+  init_entries();
+
+  // Invalidate model if a contact is removed.
+  connect(
+    contacts_list, &ContactsListModel::rowsRemoved, this,
+    [this](const QModelIndex &, int, int) {
+      beginResetModel();
+      // Nothing.
+      endResetModel();
+    }
+  );
+}
+
+int TimelineModel::rowCount (const QModelIndex &) const {
+  return m_entries.count();
+}
+
+QHash<int, QByteArray> TimelineModel::roleNames () const {
+  QHash<int, QByteArray> roles;
+  roles[Qt::DisplayRole] = "$timelineEntry";
+  return roles;
+}
+
+QVariant TimelineModel::data (const QModelIndex &index, int role) const {
+  int row = index.row();
+
+  if (row < 0 || row >= m_entries.count())
+    return QVariant();
+
+  if (role == Qt::DisplayRole)
+    return m_entries[row];
+
+  return QVariant();
+}
+
+// -------------------------------------------------------------------
+
+void TimelineModel::init_entries () {
   // Returns an iterator entry position to insert a new entry.
   auto search_entry = [this](
     const QVariantMap &map,
@@ -88,26 +126,4 @@ TimelineModel::TimelineModel (QObject *parent): QAbstractListModel(parent) {
       m_entries.insert(search_entry(map, &it), map);
     }
   }
-}
-
-int TimelineModel::rowCount (const QModelIndex &) const {
-  return m_entries.count();
-}
-
-QHash<int, QByteArray> TimelineModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$timelineEntry";
-  return roles;
-}
-
-QVariant TimelineModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (row < 0 || row >= m_entries.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return m_entries[row];
-
-  return QVariant();
 }

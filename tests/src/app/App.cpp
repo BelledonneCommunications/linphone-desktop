@@ -108,7 +108,7 @@ void App::registerTypes () {
   qmlRegisterSingletonType<TimelineModel>(
     "Linphone", 1, 0, "TimelineModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new TimelineModel();
+      return new TimelineModel(ContactsListProxyModel::getContactsListModel());
     }
   );
 }
