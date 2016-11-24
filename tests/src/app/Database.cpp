@@ -2,6 +2,8 @@
 #include <QFile>
 #include <QStandardPaths>
 
+#include "../utils.hpp"
+
 #include "Database.hpp"
 
 #ifdef _WIN32
@@ -35,7 +37,7 @@ inline string getDatabaseFilePath (const QString &filename) {
   QString path(DATABASES_PATH + "/");
   path += filename;
   return ensureDatabaseFilePathExists(path)
-    ? QDir::toNativeSeparators(path).toStdString()
+    ? Utils::qStringToLinphoneString(QDir::toNativeSeparators(path))
     : "";
 }
 

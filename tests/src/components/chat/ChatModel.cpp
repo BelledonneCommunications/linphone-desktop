@@ -1,4 +1,5 @@
 #include "../../utils.hpp"
+#include "../core/CoreManager.hpp"
 
 #include "ChatModel.hpp"
 
@@ -34,5 +35,13 @@ QString ChatModel::getSipAddress () const {
 }
 
 void ChatModel::setSipAddress (const QString &sip_address) {
+  if (sip_address == getSipAddress())
+    return;
+
+  std::shared_ptr<linphone::ChatRoom> chat_room =
+    CoreManager::getInstance()->getCore()->getChatRoomFromUri(
+      Utils::qStringToLinphoneString(sip_address)
+    );
+
   emit sipAddressChanged(sip_address);
 }

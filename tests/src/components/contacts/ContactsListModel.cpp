@@ -1,6 +1,7 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
+#include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 #include "ContactModel.hpp"
 #include "ContactsListProxyModel.hpp"
@@ -77,7 +78,7 @@ ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddre
   // Maybe use a hashtable in future version to get a lower cost?
   ContactModel *contact = m_friend_to_contact.value(
     m_linphone_friends->findFriendByUri(
-      sipAddress.toStdString()
+      Utils::qStringToLinphoneString(sipAddress)
     ).get()
   );
 
