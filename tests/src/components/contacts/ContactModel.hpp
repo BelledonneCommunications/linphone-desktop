@@ -46,6 +46,7 @@ class ContactModel : public QObject {
 
 public:
   ContactModel (std::shared_ptr<linphone::Friend> linphone_friend) {
+    linphone_friend->setData("contact-model", *this);
     m_linphone_friend = linphone_friend;
   }
 

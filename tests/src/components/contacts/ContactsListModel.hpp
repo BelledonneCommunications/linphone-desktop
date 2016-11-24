@@ -35,8 +35,6 @@ public slots:
 
 private:
   QList<ContactModel *> m_list;
-  QHash<const linphone::Friend *, ContactModel *> m_friend_to_contact;
-
   std::shared_ptr<linphone::FriendList> m_linphone_friends;
 };
 

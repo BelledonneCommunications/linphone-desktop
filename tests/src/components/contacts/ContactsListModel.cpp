@@ -22,7 +22,6 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
       contact, QQmlEngine::CppOwnership
     );
 
-    m_friend_to_contact[friend_.get()] = contact;
     m_list << contact;
   }
 }
@@ -61,7 +60,6 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
     ContactModel *contact = m_list[row];
 
     m_list.removeAt(row);
-    m_friend_to_contact.remove(contact->m_linphone_friend.get());
     m_linphone_friends->removeFriend(contact->m_linphone_friend);
 
     contact->deleteLater();
@@ -76,15 +74,19 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
   // Maybe use a hashtable in future version to get a lower cost?
-  ContactModel *contact = m_friend_to_contact.value(
-    m_linphone_friends->findFriendByUri(
-      Utils::qStringToLinphoneString(sipAddress)
-    ).get()
+  std::shared_ptr<linphone::Friend> friend_ = m_linphone_friends->findFriendByUri(
+    Utils::qStringToLinphoneString(sipAddress)
   );
 
-  qInfo() << "Map sip address to contact:" << sipAddress << "->" << contact;
+  if (!friend_) {
+    qInfo() << "Map sip address to contact:" << sipAddress << "-> nullptr";
+    return nullptr;
+  }
 
-  return contact;
+  ContactModel &contact = friend_->getData<ContactModel>("contact-model");
+  qInfo() << "Map sip address to contact:" << sipAddress << "->" << &contact;
+
+  return &contact;
 }
 
 void ContactsListModel::removeContact (ContactModel *contact) {
