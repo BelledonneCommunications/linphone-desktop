@@ -21,10 +21,10 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
     return QVariant();
 
   switch (role) {
-    case: Roles::ChatEntry
+    case Roles::ChatEntry:
       return QVariant::fromValue(m_entries[row]);
-    case: Roles::SectionDate
-      return QVariant::fromValue(m_entries[row]["sectionDate"]);
+    case Roles::SectionDate:
+      return QVariant::fromValue(m_entries[row]["timestamp"].toDate());
   }
 
   return QVariant();
@@ -58,7 +58,7 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   for (auto &message : chat_room->getHistory(0)) {
     QVariantMap map;
 
-    map["sectionDate"] = 1465389121;
+    // UTC format.
     map["timestamp"] = QDateTime::fromTime_t(message->getTime());
     map["type"] = "message";
     map["content"] = Utils::linphoneStringToQString(

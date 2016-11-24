@@ -65,7 +65,7 @@ ColumnLayout {
 
             // Cast section to integer because Qt converts the
             // sectionDate in string!!!
-            text: new Date(+section).toLocaleDateString(
+            text: new Date(section).toLocaleDateString(
               Qt.locale(App.locale())
             )
           }
