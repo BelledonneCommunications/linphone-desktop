@@ -110,7 +110,7 @@ ColumnLayout {
         anchors.fill: parent
         onClicked: {
           view.currentIndex = index
-          timeline.entrySelected(parent.contact)
+          timeline.entrySelected($timelineEntry.sipAddresses)
         }
       }
     }

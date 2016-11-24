@@ -3,13 +3,20 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 
 // ===================================================================
 
 ColumnLayout  {
-  property var contact
+  id: conversation
+
+  property string sipAddress
+
+  property var _contact: ContactsListModel.mapSipAddressToContact(
+    sipAddress
+  ) || sipAddress
 
   spacing: 0
 
@@ -31,18 +38,22 @@ ColumnLayout  {
       spacing: ConversationStyle.bar.spacing
 
       Avatar {
+        id: avatar
+
         Layout.preferredHeight: ConversationStyle.bar.avatarSize
         Layout.preferredWidth: ConversationStyle.bar.avatarSize
-        presenceLevel: contact.presenceLevel
-        username: contact.username
+        presenceLevel: _contact.presenceLevel || Presence.White
+        username: Utils.isString(_contact)
+          ? _contact.substring(4, _contact.indexOf('@')) // 4 = length("sip:")
+          : _contact.username
       }
 
       ContactDescription {
         Layout.fillHeight: true
         Layout.fillWidth: true
-        sipAddress: contact.sipAddress
+        sipAddress: conversation.sipAddress
         sipAddressColor: ConversationStyle.bar.description.sipAddressColor
-        username: contact.username
+        username: avatar.username
         usernameColor: ConversationStyle.bar.description.usernameColor
       }
 
@@ -119,6 +130,9 @@ ColumnLayout  {
   Chat {
     Layout.fillHeight: true
     Layout.fillWidth: true
-    contact: parent.contact
+    contact: parent._contact
+    model: ChatModel {
+      sipAddress: conversation.sipAddress
+    }
   }
 }

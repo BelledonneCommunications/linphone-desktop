@@ -11,18 +11,22 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property var contact
 
+  property alias model: listView.model
+
   // -----------------------------------------------------------------
 
   spacing: 0
 
   ScrollableListView {
+    id: listView
+
     Layout.fillHeight: true
     Layout.fillWidth: true
 
     section {
       criteria: ViewSection.FullString
       delegate: sectionHeading
-      property: '$dateSection'
+      property: '$chatEntry.sectionDate'
     }
 
     // ---------------------------------------------------------------
@@ -60,7 +64,7 @@ ColumnLayout {
             verticalAlignment: Text.AlignVCenter
 
             // Cast section to integer because Qt converts the
-            // $dateSection in string!!!
+            // sectionDate in string!!!
             text: new Date(+section).toLocaleDateString(
               Qt.locale(App.locale())
             )
@@ -143,7 +147,7 @@ ColumnLayout {
             Layout.preferredWidth: ChatStyle.entry.time.width
             color: ChatStyle.entry.time.color
             font.pointSize: ChatStyle.entry.time.fontSize
-            text: new Date($timestamp).toLocaleString(
+            text: $chatEntry.timestamp.toLocaleString(
               Qt.locale(App.locale()),
               'hh:mm'
             )
@@ -153,23 +157,12 @@ ColumnLayout {
           // Display content.
           Loader {
             Layout.fillWidth: true
-            sourceComponent: $type === 'message'
-              ? ($outgoing ? outgoingMessage : incomingMessage)
+            sourceComponent: $chatEntry.type === 'message'
+              ? ($chatEntry.isOutgoing ? outgoingMessage : incomingMessage)
             : event
           }
         }
       }
-    }
-
-    // TMP
-    model: ListModel {
-      ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: "https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg <img src='http://html.com/wp-content/uploads/html-com-1.png' width='50%' height='50%' />www.google.fr" }
-      ListElement { $dateSection: 1465389121000; $outgoing: true; $timestamp: 1465389121000; $type: 'message'; $content: "<a href='mailto:qq1@qqpart.com'>Contact mail</a>" }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389133000; $type: 'event'; $content: 'incoming_call' }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389439000; $type: 'message'; $content: 'www.test.fr<blink>Perfect!</blink> bg  g vg gv v g v hgv gv gv   jhb jh b  jb jh hg vg    cfcy f  v u  uyg   f tf tf  ft f tf t  t  fy ft f tu  ty f  rd rd  d d   uu gu y  gg y f  r dr   ' }
-      ListElement { $dateSection: 1465389121000; $timestamp: 1465389500000; $type: 'event'; $content: 'end_call' }
-      ListElement { $dateSection: 1465994221000; $outgoing: true; $timestamp: 1465924321000; $type: 'message'; $content: 'http://mithril94.free.fr/sigbarfactory/fonts/show/tribal.gif https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg You\'ve heard the expression, "Just believe it and http://writm.com/wp-content/uploads/2016/08/Cat-hd-wallpapers.jpg it will https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg come." http://html.com/wp-content/uploads/html-com-1.png Well, technically, that is true, https://cdn.pixabay.com/photo/2014/03/29/09/17/cat-300572_960_720.jpg however, \'believing\' is not just thinking that you can have it...' }
-      ListElement { $dateSection: 1465994221000; $timestamp: 1465924391000; $type: 'event'; $content: 'lost_incoming_call' }
     }
   }
 

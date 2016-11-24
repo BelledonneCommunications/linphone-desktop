@@ -144,7 +144,7 @@ ApplicationWindow {
 
         onEntrySelected: {
           menu.resetSelectedEntry()
-          setView('Conversation', { contact: entry })
+          setView('Conversation', { sipAddress: entry })
         }
       }
     }

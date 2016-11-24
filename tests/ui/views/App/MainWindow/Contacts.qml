@@ -157,7 +157,7 @@ ColumnLayout {
                 ActionButton {
                   icon: 'chat'
                   onClicked: window.setView('Conversation', {
-                    contact: $contact
+                    sipAddress: $contact.sipAddress
                   })
                 }
               }
