@@ -3,7 +3,8 @@
 
 #include <QSortFilterProxyModel>
 
-#include "ContactsListModel.hpp"
+class ContactModel;
+class ContactsListModel;
 
 // ===================================================================
 

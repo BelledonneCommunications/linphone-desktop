@@ -2,8 +2,9 @@
 #define CONTACTS_LIST_MODEL_H_
 
 #include <QAbstractListModel>
+#include <linphone++/linphone.hh>
 
-#include "ContactModel.hpp"
+class ContactModel;
 
 // ===================================================================
 

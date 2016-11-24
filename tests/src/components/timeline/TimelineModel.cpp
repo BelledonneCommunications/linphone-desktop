@@ -4,6 +4,7 @@
 #include <linphone++/linphone.hh>
 
 #include "../../utils.hpp"
+#include "../contacts/ContactsListModel.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "TimelineModel.hpp"

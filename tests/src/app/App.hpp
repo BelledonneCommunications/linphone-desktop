@@ -7,7 +7,7 @@
 #include <QSystemTrayIcon>
 #include <QTranslator>
 
-#include "../components/notifier/Notifier.hpp"
+class Notifier;
 
 // ===================================================================
 

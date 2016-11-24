@@ -1,5 +1,9 @@
 #include <QDebug>
 
+#include "../../utils.hpp"
+#include "ContactModel.hpp"
+#include "ContactsListModel.hpp"
+
 #include "ContactsListProxyModel.hpp"
 
 #define USERNAME_WEIGHT 50.0

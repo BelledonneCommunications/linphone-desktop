@@ -3,6 +3,7 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
+
 #include "Notifier.hpp"
 
 // Notifications QML properties/methods.

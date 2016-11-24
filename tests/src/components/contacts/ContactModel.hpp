@@ -4,7 +4,6 @@
 #include <QObject>
 #include <linphone++/linphone.hh>
 
-#include "../../utils.hpp"
 #include "../presence/Presence.hpp"
 
 // ===================================================================
@@ -54,11 +53,7 @@ signals:
   void contactUpdated ();
 
 private:
-  QString getUsername () const {
-    return Utils::linphoneStringToQString(
-      m_linphone_friend->getName()
-    );
-  }
+  QString getUsername () const;
 
   QString getAvatar () const {
     return "";
@@ -67,11 +62,7 @@ private:
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
 
-  QString getSipAddress () const {
-    return Utils::linphoneStringToQString(
-      m_linphone_friend->getAddress()->asString()
-    );
-  }
+  QString getSipAddress () const;
 
   Presence::PresenceStatus m_presence_status = Presence::Offline;
 

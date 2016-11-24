@@ -5,8 +5,11 @@
 #include <QtDebug>
 
 #include "../components/chat/ChatModel.hpp"
+#include "../components/contacts/ContactModel.hpp"
+#include "../components/contacts/ContactsListModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
+#include "../components/notifier/Notifier.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 

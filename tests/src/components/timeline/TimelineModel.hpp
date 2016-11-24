@@ -1,7 +1,9 @@
 #ifndef TIMELINE_MODEL_H_
 #define TIMELINE_MODEL_H_
 
-#include "../contacts/ContactsListModel.hpp"
+#include <QAbstractListModel>
+
+class ContactsListModel;
 
 // ===================================================================
 
