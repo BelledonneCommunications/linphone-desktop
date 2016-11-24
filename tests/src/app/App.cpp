@@ -4,6 +4,7 @@
 #include <QQuickView>
 #include <QtDebug>
 
+#include "../components/chat/ChatModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
@@ -70,10 +71,12 @@ void App::initContentApp () {
 }
 
 void App::registerTypes () {
+  // Register meta types.
   qmlRegisterUncreatableType<Presence>(
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
 
+  // Register Application/Core.
   qmlRegisterSingletonType<App>(
     "Linphone", 1, 0, "App",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
@@ -88,9 +91,13 @@ void App::registerTypes () {
     }
   );
 
+  // Register models.
   ContactsListProxyModel::initContactsListModel(new ContactsListModel());
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
 
+  qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
+
+  // Register singletons.
   qmlRegisterSingletonType<ContactsListModel>(
     "Linphone", 1, 0, "ContactsListModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
