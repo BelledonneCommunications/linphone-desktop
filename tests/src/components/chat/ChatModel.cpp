@@ -9,7 +9,8 @@
 
 QHash<int, QByteArray> ChatModel::roleNames () const {
   QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$chatEntry";
+  roles[Roles::ChatEntry] = "$chatEntry";
+  roles[Roles::SectionDate] = "$sectionDate";
   return roles;
 }
 
@@ -19,8 +20,12 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   if (row < 0 || row >= m_entries.count())
     return QVariant();
 
-  if (role == Qt::DisplayRole)
-    return QVariant::fromValue(m_entries[row]);
+  switch (role) {
+    case: Roles::ChatEntry
+      return QVariant::fromValue(m_entries[row]);
+    case: Roles::SectionDate
+      return QVariant::fromValue(m_entries[row]["sectionDate"]);
+  }
 
   return QVariant();
 }

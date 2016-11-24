@@ -26,7 +26,7 @@ ColumnLayout {
     section {
       criteria: ViewSection.FullString
       delegate: sectionHeading
-      property: '$chatEntry.sectionDate'
+      property: '$sectionDate'
     }
 
     // ---------------------------------------------------------------

@@ -17,6 +17,11 @@ class ChatModel : public QAbstractListModel {
   );
 
 public:
+  enum Roles {
+    ChatEntry = Qt::DisplayRole,
+    SectionDate
+  };
+
   ChatModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
   int rowCount (const QModelIndex &index = QModelIndex()) const {
