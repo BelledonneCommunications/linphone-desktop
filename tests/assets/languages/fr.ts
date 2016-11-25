@@ -141,6 +141,14 @@
         <source>newMessagePlaceholder</source>
         <translation type="vanished">Entrer votre message.</translation>
     </message>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>removeAllEntriesTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DropZone</name>

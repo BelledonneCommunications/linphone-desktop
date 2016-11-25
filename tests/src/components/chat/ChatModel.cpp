@@ -46,18 +46,8 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
   beginRemoveRows(parent, row, limit);
 
   for (int i = 0; i < count; ++i) {
-    QPair<QVariantMap, shared_ptr<void> > pair = m_entries.takeAt(row);
-
-    switch (pair.first["type"].toInt()) {
-      case ChatModel::MessageEntry:
-        m_chat_room->deleteMessage(
-          static_pointer_cast<linphone::ChatMessage>(pair.second)
-        );
-        break;
-      case ChatModel::CallEntry:
-
-        break;
-    }
+    removeEntry(m_entries[row]);
+    m_entries.removeAt(row);
   }
 
   endRemoveRows();
@@ -74,7 +64,37 @@ void ChatModel::removeEntry (int id) {
     qWarning() << "Unable to remove chat entry:" << id;
 }
 
+void ChatModel::removeAllEntries () {
+  qInfo() << "Removing all chat entries of:" << getSipAddress();
+
+  beginResetModel();
+
+  for (auto &entry : m_entries)
+    removeEntry(entry);
+
+  m_entries.clear();
+
+  endResetModel();
+}
+
 // -------------------------------------------------------------------
+
+void ChatModel::removeEntry (ChatEntryData &pair) {
+  int type = pair.first["type"].toInt();
+
+  switch (type) {
+    case ChatModel::MessageEntry:
+      m_chat_room->deleteMessage(
+        static_pointer_cast<linphone::ChatMessage>(pair.second)
+      );
+      break;
+    case ChatModel::CallEntry:
+
+      break;
+    default:
+      qWarning() << "Unknown chat entry type:" << type;
+  }
+}
 
 QString ChatModel::getSipAddress () const {
   if (!m_chat_room)

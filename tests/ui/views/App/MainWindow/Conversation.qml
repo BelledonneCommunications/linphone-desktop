@@ -18,6 +18,20 @@ ColumnLayout  {
     sipAddress
   ) || sipAddress
 
+  function _removeAllEntries () {
+    Utils.openConfirmDialog(window, {
+      descriptionText: qsTr('removeAllEntriesDescription'),
+      exitHandler: function (status) {
+        if (status) {
+          chatModel.removeAllEntries()
+        }
+      },
+      title: qsTr('removeAllEntriesTitle')
+    })
+  }
+
+  // -----------------------------------------------------------------
+
   spacing: 0
 
   // -----------------------------------------------------------------
@@ -90,7 +104,7 @@ ColumnLayout  {
             icon: 'delete'
             iconSize: ConversationStyle.bar.actions.edit.iconSize
 
-            onClicked: window.setView('Contact') // TODO.
+            onClicked: _removeAllEntries()
           }
         }
       }
@@ -132,6 +146,8 @@ ColumnLayout  {
     Layout.fillWidth: true
     contact: parent._contact
     model: ChatModel {
+      id: chatModel
+
       sipAddress: conversation.sipAddress
     }
   }

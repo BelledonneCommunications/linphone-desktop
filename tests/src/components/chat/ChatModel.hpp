@@ -42,15 +42,20 @@ public:
 
 public slots:
   void removeEntry (int id);
+  void removeAllEntries ();
 
 signals:
   void sipAddressChanged (const QString &sipAddress);
 
 private:
+  typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
+
+  void removeEntry (ChatEntryData &pair);
+
   QString getSipAddress () const;
   void setSipAddress (const QString &sip_address);
 
-  QList<QPair<QVariantMap, std::shared_ptr<void> > > m_entries;
+  QList<ChatEntryData> m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;
 };
 
