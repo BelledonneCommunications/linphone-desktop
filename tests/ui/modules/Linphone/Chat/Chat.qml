@@ -11,14 +11,14 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property var contact
 
-  property alias model: listView.model
+  property alias model: chat.model
 
   // -----------------------------------------------------------------
 
   spacing: 0
 
   ScrollableListView {
-    id: listView
+    id: chat
 
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -84,8 +84,8 @@ ColumnLayout {
         return mouseArea.containsMouse
       }
 
-      function deleteEntry () {
-        console.log('delete entry', index)
+      function removeEntry () {
+        chat.model.removeEntry(index)
       }
 
       anchors {
@@ -157,7 +157,7 @@ ColumnLayout {
           // Display content.
           Loader {
             Layout.fillWidth: true
-            sourceComponent: $chatEntry.type === 'message'
+            sourceComponent: $chatEntry.type === ChatModel.MessageEntry
               ? ($chatEntry.isOutgoing ? outgoingMessage : incomingMessage)
             : event
           }

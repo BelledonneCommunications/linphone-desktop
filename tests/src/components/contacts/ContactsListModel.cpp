@@ -57,11 +57,9 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
   beginRemoveRows(parent, row, limit);
 
   for (int i = 0; i < count; ++i) {
-    ContactModel *contact = m_list[row];
+    ContactModel *contact = m_list.takeAt(row);
 
-    m_list.removeAt(row);
     m_linphone_friends->removeFriend(contact->m_linphone_friend);
-
     contact->deleteLater();
   }
 
@@ -94,5 +92,5 @@ void ContactsListModel::removeContact (ContactModel *contact) {
 
   int index = m_list.indexOf(contact);
   if (index == -1 || !removeRow(index))
-    qWarning() << "Unable to remove contact:" << index;
+    qWarning() << "Unable to remove contact:" << contact;
 }

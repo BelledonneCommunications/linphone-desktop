@@ -43,7 +43,7 @@ RowLayout {
       iconSize: ChatStyle.entry.deleteIconSize
       visible: isHoverEntry()
 
-      onClicked: deleteEntry()
+      onClicked: removeEntry()
     }
   }
 }

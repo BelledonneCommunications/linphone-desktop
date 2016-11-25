@@ -22,6 +22,12 @@ public:
     SectionDate
   };
 
+  enum EntryType {
+    MessageEntry,
+    CallEntry
+  };
+  Q_ENUM(EntryType);
+
   ChatModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
   int rowCount (const QModelIndex &index = QModelIndex()) const {
@@ -31,6 +37,12 @@ public:
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;
 
+  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
+  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex());
+
+public slots:
+  void removeEntry (int id);
+
 signals:
   void sipAddressChanged (const QString &sipAddress);
 
@@ -38,7 +50,7 @@ private:
   QString getSipAddress () const;
   void setSipAddress (const QString &sip_address);
 
-  QList<QVariantMap> m_entries;
+  QList<QPair<QVariantMap, std::shared_ptr<void> > > m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;
 };
 

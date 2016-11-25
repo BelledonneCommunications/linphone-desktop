@@ -1,9 +1,12 @@
 #include <QDateTime>
+#include <QtDebug>
 
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ChatModel.hpp"
+
+using namespace std;
 
 // ===================================================================
 
@@ -22,12 +25,53 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
 
   switch (role) {
     case Roles::ChatEntry:
-      return QVariant::fromValue(m_entries[row]);
+      return QVariant::fromValue(m_entries[row].first);
     case Roles::SectionDate:
-      return QVariant::fromValue(m_entries[row]["timestamp"].toDate());
+      return QVariant::fromValue(m_entries[row].first["timestamp"].toDate());
   }
 
   return QVariant();
+}
+
+bool ChatModel::removeRow (int row, const QModelIndex &) {
+  return removeRows(row, 1);
+}
+
+bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
+  int limit = row + count - 1;
+
+  if (row < 0 || count < 0 || limit >= m_entries.count())
+    return false;
+
+  beginRemoveRows(parent, row, limit);
+
+  for (int i = 0; i < count; ++i) {
+    QPair<QVariantMap, shared_ptr<void> > pair = m_entries.takeAt(row);
+
+    switch (pair.first["type"].toInt()) {
+      case ChatModel::MessageEntry:
+        m_chat_room->deleteMessage(
+          static_pointer_cast<linphone::ChatMessage>(pair.second)
+        );
+        break;
+      case ChatModel::CallEntry:
+
+        break;
+    }
+  }
+
+  endRemoveRows();
+
+  return true;
+}
+
+// -------------------------------------------------------------------
+
+void ChatModel::removeEntry (int id) {
+  qInfo() << "Removing chat entry:" << id << "of:" << getSipAddress();
+
+  if (!removeRow(id))
+    qWarning() << "Unable to remove chat entry:" << id;
 }
 
 // -------------------------------------------------------------------
@@ -50,24 +94,27 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   // Invalid old sip address entries.
   m_entries.clear();
 
-  std::shared_ptr<linphone::ChatRoom> chat_room =
+  m_chat_room =
     CoreManager::getInstance()->getCore()->getChatRoomFromUri(
       Utils::qStringToLinphoneString(sip_address)
     );
 
-  for (auto &message : chat_room->getHistory(0)) {
+  // Get messages.
+  for (auto &message : m_chat_room->getHistory(0)) {
     QVariantMap map;
 
-    // UTC format.
+    map["type"] = EntryType::MessageEntry;
     map["timestamp"] = QDateTime::fromTime_t(message->getTime());
-    map["type"] = "message";
     map["content"] = Utils::linphoneStringToQString(
       message->getText()
     );
     map["isOutgoing"] = message->isOutgoing();
 
-    m_entries << map;
+    m_entries << qMakePair(map, static_pointer_cast<void>(message));
   }
+
+  // Get calls.
+  // TODO.
 
   endResetModel();
 
