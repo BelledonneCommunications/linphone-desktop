@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include <QDateTime>
 #include <QtDebug>
 
@@ -79,6 +81,38 @@ void ChatModel::removeAllEntries () {
 
 // -------------------------------------------------------------------
 
+void ChatModel::fillMessageEntry (
+  QVariantMap &dest,
+  const shared_ptr<linphone::ChatMessage> &message
+) {
+  dest["type"] = EntryType::MessageEntry;
+  dest["timestamp"] = QDateTime::fromTime_t(message->getTime());
+  dest["content"] = Utils::linphoneStringToQString(
+    message->getText()
+  );
+  dest["isOutgoing"] = message->isOutgoing();
+}
+
+void ChatModel::fillCallStartEntry (
+  QVariantMap &dest,
+  const std::shared_ptr<linphone::CallLog> &call_log
+) {
+  QDateTime timestamp = QDateTime::fromTime_t(call_log->getStartDate());
+
+  dest["type"] = EntryType::CallEntry;
+  dest["timestamp"] = timestamp;
+  dest["isOutgoing"] = call_log->getDir() == linphone::CallDirOutgoing;
+  dest["status"] = call_log->getStatus();
+}
+
+void ChatModel::fillCallEndEntry (
+  QVariantMap &dest,
+  const std::shared_ptr<linphone::CallLog> &call_log
+) {
+
+
+}
+
 void ChatModel::removeEntry (ChatEntryData &pair) {
   int type = pair.first["type"].toInt();
 
@@ -89,7 +123,9 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
       );
       break;
     case ChatModel::CallEntry:
-
+      CoreManager::getInstance()->getCore()->removeCallLog(
+        static_pointer_cast<linphone::CallLog>(pair.second)
+      );
       break;
     default:
       qWarning() << "Unknown chat entry type:" << type;
@@ -114,29 +150,42 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   // Invalid old sip address entries.
   m_entries.clear();
 
-  m_chat_room =
-    CoreManager::getInstance()->getCore()->getChatRoomFromUri(
-      Utils::qStringToLinphoneString(sip_address)
-    );
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  string std_sip_address = Utils::qStringToLinphoneString(sip_address);
+
+  m_chat_room = core->getChatRoomFromUri(std_sip_address);
 
   // Get messages.
   for (auto &message : m_chat_room->getHistory(0)) {
     QVariantMap map;
 
-    map["type"] = EntryType::MessageEntry;
-    map["timestamp"] = QDateTime::fromTime_t(message->getTime());
-    map["content"] = Utils::linphoneStringToQString(
-      message->getText()
-    );
-    map["isOutgoing"] = message->isOutgoing();
-
+    fillMessageEntry(map, message);
     m_entries << qMakePair(map, static_pointer_cast<void>(message));
   }
 
   // Get calls.
-  // TODO.
+  for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
+    QVariantMap start, end;
+    fillCallStartEntry(start, call_log);
+
+    ChatEntryData pair = qMakePair(start, static_pointer_cast<void>(call_log));
+
+    auto it = lower_bound(
+      m_entries.begin(), m_entries.end(), pair,
+      [](const ChatEntryData &a, const ChatEntryData &b) {
+         return a.first["timestamp"] < b.first["timestamp"];
+       }
+    );
+
+    m_entries.insert(it, pair);
+  }
 
   endResetModel();
 
   emit sipAddressChanged(sip_address);
 }
+
+          // QT_TR_NOOP('endCall'),
+          // QT_TR_NOOP('incomingCall'),
+          // QT_TR_NOOP('lostIncomingCall'),
+          // QT_TR_NOOP('lostOutgoingCall')

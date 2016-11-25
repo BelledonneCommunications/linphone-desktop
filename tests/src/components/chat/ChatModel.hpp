@@ -7,6 +7,8 @@
 // ===================================================================
 
 class ChatModel : public QAbstractListModel {
+  friend class ChatProxyModel;
+
   Q_OBJECT;
 
   Q_PROPERTY(
@@ -15,6 +17,9 @@ class ChatModel : public QAbstractListModel {
     WRITE setSipAddress
     NOTIFY sipAddressChanged
   );
+
+signals:
+  void sipAddressChanged (const QString &sipAddress);
 
 public:
   enum Roles {
@@ -27,6 +32,13 @@ public:
     CallEntry
   };
   Q_ENUM(EntryType);
+
+  enum CallStatus {
+    CallStatusDeclined = linphone::CallStatusDeclined,
+    CallStatusMissed = linphone::CallStatusMissed,
+    CallStatusSuccess = linphone::CallStatusSuccess
+  };
+  Q_ENUM(CallStatus);
 
   ChatModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
@@ -44,11 +56,23 @@ public slots:
   void removeEntry (int id);
   void removeAllEntries ();
 
-signals:
-  void sipAddressChanged (const QString &sipAddress);
-
 private:
   typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
+
+  void fillMessageEntry (
+    QVariantMap &dest,
+    const std::shared_ptr<linphone::ChatMessage> &message
+  );
+
+  void fillCallStartEntry (
+    QVariantMap &dest,
+    const std::shared_ptr<linphone::CallLog> &call_log
+  );
+
+  void fillCallEndEntry (
+    QVariantMap &dest,
+    const std::shared_ptr<linphone::CallLog> &call_log
+  );
 
   void removeEntry (ChatEntryData &pair);
 

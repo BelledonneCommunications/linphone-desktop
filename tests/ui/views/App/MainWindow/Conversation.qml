@@ -23,7 +23,7 @@ ColumnLayout  {
       descriptionText: qsTr('removeAllEntriesDescription'),
       exitHandler: function (status) {
         if (status) {
-          chatModel.removeAllEntries()
+          chatProxyModel.removeAllEntries()
         }
       },
       title: qsTr('removeAllEntriesTitle')
@@ -145,8 +145,8 @@ ColumnLayout  {
     Layout.fillHeight: true
     Layout.fillWidth: true
     contact: parent._contact
-    model: ChatModel {
-      id: chatModel
+    model: ChatProxyModel {
+      id: chatProxyModel
 
       sipAddress: conversation.sipAddress
     }

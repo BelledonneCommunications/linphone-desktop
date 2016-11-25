@@ -4,7 +4,7 @@
 #include <QQuickView>
 #include <QtDebug>
 
-#include "../components/chat/ChatModel.hpp"
+#include "../components/chat/ChatProxyModel.hpp"
 #include "../components/contacts/ContactModel.hpp"
 #include "../components/contacts/ContactsListModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
@@ -99,6 +99,7 @@ void App::registerTypes () {
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
 
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
+  qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
 
   // Register singletons.
   qmlRegisterSingletonType<ContactsListModel>(

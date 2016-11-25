@@ -34,6 +34,7 @@ set(SOURCES
   src/app/Database.cpp
   src/app/Logger.cpp
   src/components/chat/ChatModel.cpp
+  src/components/chat/ChatProxyModel.cpp
   src/components/contacts/ContactModel.cpp
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
@@ -52,6 +53,7 @@ set(HEADERS
   src/app/Database.hpp
   src/app/Logger.hpp
   src/components/chat/ChatModel.hpp
+  src/components/chat/ChatProxyModel.hpp
   src/components/contacts/ContactModel.hpp
   src/components/contacts/ContactsListModel.hpp
   src/components/contacts/ContactsListProxyModel.hpp

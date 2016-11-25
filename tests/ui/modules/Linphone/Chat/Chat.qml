@@ -11,6 +11,7 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property var contact
 
+  // Can be a model or a proxy chat model.
   property alias model: chat.model
 
   // -----------------------------------------------------------------
@@ -80,12 +81,18 @@ ColumnLayout {
     delegate: Rectangle {
       id: entry
 
+      // Chat supports model and proxy model.
+      function getModel () {
+        var model = chat.model
+        return model.getChatModel ? model.getChatModel() : model
+      }
+
       function isHoverEntry () {
         return mouseArea.containsMouse
       }
 
       function removeEntry () {
-        chat.model.removeEntry(index)
+        getModel().removeEntry(index)
       }
 
       anchors {
