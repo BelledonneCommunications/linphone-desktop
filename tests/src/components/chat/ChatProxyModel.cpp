@@ -1,5 +1,6 @@
 #include "ChatProxyModel.hpp"
 
+#include <QtDebug>
 // ===================================================================
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
@@ -9,5 +10,12 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
 }
 
 bool ChatProxyModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
+  QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+  const QVariantMap &data = qvariant_cast<QVariantMap>(
+    index.data()
+  );
+
+  qDebug() << data["type"];
+
   return true; // TODO.
 }

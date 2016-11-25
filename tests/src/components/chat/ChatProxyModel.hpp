@@ -26,6 +26,10 @@ public slots:
     return &m_chat_model;
   }
 
+  void setEntryTypeFilter (ChatModel::EntryType type) {
+    // TODO.
+  }
+
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
 

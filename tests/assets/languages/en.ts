@@ -184,11 +184,11 @@
     </message>
     <message>
         <source>lostIncomingCall</source>
-        <translation>Lost incoming call</translation>
+        <translation type="vanished">Lost incoming call</translation>
     </message>
     <message>
         <source>lostOutgoingCall</source>
-        <translation>Lost outgoing call</translation>
+        <translation type="vanished">Lost outgoing call</translation>
     </message>
     <message>
         <source>endCall</source>

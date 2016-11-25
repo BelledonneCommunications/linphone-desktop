@@ -35,7 +35,7 @@ private:
   bool isConnectedFilterUsed () const {
       return m_use_connected_filter;
   }
-  void setConnectedFilter (bool useConnectedFilter);
+  void setConnectedFilter (bool use_connected_filter);
 
   static const QRegExp m_search_separators;
 

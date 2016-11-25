@@ -22,12 +22,15 @@ signals:
   void sipAddressChanged (const QString &sipAddress);
 
 public:
+  typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
+
   enum Roles {
     ChatEntry = Qt::DisplayRole,
     SectionDate
   };
 
   enum EntryType {
+    BaseEntry,
     MessageEntry,
     CallEntry
   };
@@ -57,8 +60,6 @@ public slots:
   void removeAllEntries ();
 
 private:
-  typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
-
   void fillMessageEntry (
     QVariantMap &dest,
     const std::shared_ptr<linphone::ChatMessage> &message

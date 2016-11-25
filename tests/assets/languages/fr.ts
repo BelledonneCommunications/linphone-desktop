@@ -184,11 +184,11 @@
     </message>
     <message>
         <source>lostIncomingCall</source>
-        <translation>Appel entrant manqué</translation>
+        <translation type="vanished">Appel entrant manqué</translation>
     </message>
     <message>
         <source>lostOutgoingCall</source>
-        <translation>Appel sortant manqué</translation>
+        <translation type="vanished">Appel sortant manqué</translation>
     </message>
     <message>
         <source>endCall</source>
