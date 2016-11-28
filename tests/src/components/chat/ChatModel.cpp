@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include <QDateTime>
+#include <QTimer>
 #include <QtDebug>
 
 #include "../../utils.hpp"
@@ -104,15 +105,25 @@ void ChatModel::fillCallStartEntry (
   dest["timestamp"] = timestamp;
   dest["isOutgoing"] = call_log->getDir() == linphone::CallDirOutgoing;
   dest["status"] = call_log->getStatus();
+  dest["isStart"] = true;
 }
 
 void ChatModel::fillCallEndEntry (
   QVariantMap &dest,
   const std::shared_ptr<linphone::CallLog> &call_log
 ) {
+  QDateTime timestamp = QDateTime::fromTime_t(
+    call_log->getStartDate() + call_log->getDuration()
+  );
 
-
+  dest["type"] = EntryType::CallEntry;
+  dest["timestamp"] = timestamp;
+  dest["isOutgoing"] = call_log->getDir() == linphone::CallDirOutgoing;
+  dest["status"] = call_log->getStatus();
+  dest["isStart"] = false;
 }
+
+// -------------------------------------------------------------------
 
 void ChatModel::removeEntry (ChatEntryData &pair) {
   int type = pair.first["type"].toInt();
@@ -124,12 +135,32 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
       );
       break;
     case ChatModel::CallEntry:
+      if (pair.first["status"].toInt() == linphone::CallStatusSuccess) {
+        // WARNING: Unable to remove symmetric call here. (start/end)
+        // We are between `beginRemoveRows` and `endRemoveRows`.
+        // A solution is to schedule a `removeEntry` call in the Qt main loop.
+        std::shared_ptr<void> linphone_ptr = pair.second;
+        QTimer::singleShot(0, this, [this, linphone_ptr]() {
+          auto it = find_if(
+            m_entries.begin(), m_entries.end(),
+            [linphone_ptr](const ChatEntryData &pair) {
+              return pair.second == linphone_ptr;
+            }
+          );
+
+          if (it == m_entries.end())
+            qWarning("Unable to find symmetric call.");
+          else
+            removeEntry(distance(m_entries.begin(), it));
+        });
+      }
+
       CoreManager::getInstance()->getCore()->removeCallLog(
         static_pointer_cast<linphone::CallLog>(pair.second)
       );
       break;
     default:
-      qWarning() << "Unknown chat entry type:" << type;
+      qWarning() << QStringLiteral("Unknown chat entry type: %1.").arg(type);
   }
 }
 
@@ -165,28 +196,38 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   }
 
   // Get calls.
+  auto insert_entry = [this](
+    const ChatEntryData &pair,
+    const QList<ChatEntryData>::iterator *start = NULL
+  ) {
+     auto it = lower_bound(
+       start ? *start : m_entries.begin(), m_entries.end(), pair,
+       [](const ChatEntryData &a, const ChatEntryData &b) {
+         return a.first["timestamp"] < b.first["timestamp"];
+       }
+     );
+
+     return m_entries.insert(it, pair);
+  };
+
   for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
+    linphone::CallStatus status = call_log->getStatus();
+
     // Ignore aborted calls.
-    if (call_log->getStatus() == linphone::CallStatusAborted)
+    if (status == linphone::CallStatusAborted)
       continue;
 
     // Add start call.
     QVariantMap start;
     fillCallStartEntry(start, call_log);
-
-    ChatEntryData pair = qMakePair(start, static_pointer_cast<void>(call_log));
-
-    auto it = lower_bound(
-      m_entries.begin(), m_entries.end(), pair,
-      [](const ChatEntryData &a, const ChatEntryData &b) {
-         return a.first["timestamp"] < b.first["timestamp"];
-       }
-    );
-
-    m_entries.insert(it, pair);
+    auto it = insert_entry(qMakePair(start, static_pointer_cast<void>(call_log)));
 
     // Add end call. (if necessary)
-
+    if (status == linphone::CallStatusSuccess) {
+      QVariantMap end;
+      fillCallEndEntry(end, call_log);
+      insert_entry(qMakePair(end, static_pointer_cast<void>(call_log)), &it);
+    }
   }
 
   endResetModel();

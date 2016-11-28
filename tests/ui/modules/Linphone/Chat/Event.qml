@@ -11,19 +11,20 @@ Row {
   property string _type: {
     var status = $chatEntry.status
 
-    if ($chatEntry.status === ChatModel.CallStatusSuccess) {
+    if (status === ChatModel.CallStatusSuccess) {
+      if (!$chatEntry.isStart) {
+        return 'ended_call'
+      }
       return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
     }
-
-    if ($chatEntry.status === ChatModel.CallStatusDeclined) {
+    if (status === ChatModel.CallStatusDeclined) {
       return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
     }
-
-    if ($chatEntry.status === ChatModel.CallStatusMissed) {
+    if (status === ChatModel.CallStatusMissed) {
       return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
     }
 
-    return 'ended_call'
+    return 'unknown_call_event'
   }
 
   height: ChatStyle.entry.lineHeight

@@ -14,7 +14,7 @@ DefaultTranslator::DefaultTranslator () {
       QString basename = info.baseName();
 
       if (m_contexts.contains(basename))
-        qWarning() << QStringLiteral("QML file `%1` already exists in context list.").arg(basename);
+        qWarning() << QStringLiteral("QML context `%1` already exists in contexts list.").arg(basename);
       else
         m_contexts << basename;
     }
@@ -33,7 +33,7 @@ QString DefaultTranslator::translate (
   QString translation = QTranslator::translate(context, source_text, disambiguation, n);
 
   if (translation.length() == 0)
-    qWarning() << QStringLiteral("Unable to found a translation. (context=%1, label=%2)")
+    qWarning() << QStringLiteral("Unable to find a translation. (context=%1, label=%2)")
       .arg(context).arg(source_text);
 
   return translation;
