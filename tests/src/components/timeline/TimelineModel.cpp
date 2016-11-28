@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include <QDateTime>
+#include <QSet>
 #include <linphone++/linphone.hh>
 
 #include "../../utils.hpp"
@@ -89,17 +90,17 @@ void TimelineModel::init_entries () {
   }
 
   // Insert calls events.
-  QHash<QString, bool> address_done;
+  QSet<QString> address_done;
   for (const auto &call_log : core->getCallLogs()) {
     // Get a sip uri to check.
     QString address = Utils::linphoneStringToQString(
       call_log->getRemoteAddress()->asString()
     );
 
-    if (address_done.value(address))
+    if (address_done.contains(address))
       continue; // Already used.
 
-    address_done[address] = true;
+    address_done << address;
 
     // Make a new map.
     QVariantMap map;

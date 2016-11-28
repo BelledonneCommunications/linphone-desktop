@@ -38,6 +38,7 @@ public slots:
 
 private:
   App (int &argc, char **argv);
+  ~App () = default;
 
   void initContentApp ();
 
