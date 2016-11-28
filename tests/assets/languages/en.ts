@@ -127,15 +127,15 @@
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation>All</translation>
+        <translation>ALL</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation>Calls</translation>
+        <translation>CALLS</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation>Messages</translation>
+        <translation>MESSAGES</translation>
     </message>
     <message>
         <source>newMessagePlaceholder</source>
@@ -234,11 +234,11 @@
     </message>
     <message>
         <source>homeEntry</source>
-        <translation>Home</translation>
+        <translation>HOME</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation>Contacts</translation>
+        <translation>CONTACTS</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>

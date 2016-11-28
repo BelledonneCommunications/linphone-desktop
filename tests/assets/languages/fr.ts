@@ -4,14 +4,6 @@
 <context>
     <name>CallControls</name>
     <message>
-        <source>homeEntry</source>
-        <translation type="obsolete">Accueil</translation>
-    </message>
-    <message>
-        <source>contactsEntry</source>
-        <translation type="obsolete">Contacts</translation>
-    </message>
-    <message>
         <source>acceptAudioCall</source>
         <translation type="unfinished"></translation>
     </message>
@@ -127,15 +119,15 @@
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation>Tout</translation>
+        <translation>TOUT</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation>Appels</translation>
+        <translation>APPELS</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation>Messages</translation>
+        <translation>MESSAGES</translation>
     </message>
     <message>
         <source>newMessagePlaceholder</source>
@@ -246,11 +238,11 @@
     </message>
     <message>
         <source>homeEntry</source>
-        <translation>Accueil</translation>
+        <translation>ACCUEIL</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation>Contacts</translation>
+        <translation>CONTACTS</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
