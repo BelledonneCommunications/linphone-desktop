@@ -12,7 +12,7 @@ ColumnLayout {
   property var contact
 
   // Can be a model or a proxy chat model.
-  property alias model: chat.model
+  property alias proxyModel: chat.model
 
   // -----------------------------------------------------------------
 
@@ -81,18 +81,12 @@ ColumnLayout {
     delegate: Rectangle {
       id: entry
 
-      // Chat supports model and proxy model.
-      function getModel () {
-        var model = chat.model
-        return model.getChatModel ? model.getChatModel() : model
-      }
-
       function isHoverEntry () {
         return mouseArea.containsMouse
       }
 
       function removeEntry () {
-        getModel().removeEntry(index)
+        proxyModel.removeEntry(index)
       }
 
       anchors {

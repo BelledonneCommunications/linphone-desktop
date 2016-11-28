@@ -134,6 +134,16 @@ ColumnLayout  {
         qsTr('displayCalls'),
         qsTr('displayMessages')
       ]
+
+      onClicked: {
+        if (button === 0) {
+          chatProxyModel.setEntryTypeFilter(ChatModel.GenericEntry)
+        } else if (button === 1) {
+          chatProxyModel.setEntryTypeFilter(ChatModel.CallEntry)
+        } else {
+          chatProxyModel.setEntryTypeFilter(ChatModel.MessageEntry)
+        }
+      }
     }
   }
 
@@ -145,7 +155,7 @@ ColumnLayout  {
     Layout.fillHeight: true
     Layout.fillWidth: true
     contact: parent._contact
-    model: ChatProxyModel {
+    proxyModel: ChatProxyModel {
       id: chatProxyModel
 
       sipAddress: conversation.sipAddress

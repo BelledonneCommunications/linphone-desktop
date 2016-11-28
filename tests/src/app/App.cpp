@@ -78,6 +78,7 @@ void App::registerTypes () {
   qmlRegisterUncreatableType<Presence>(
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
+  qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
   // Register Application/Core.
   qmlRegisterSingletonType<App>(

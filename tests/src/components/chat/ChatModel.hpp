@@ -30,7 +30,7 @@ public:
   };
 
   enum EntryType {
-    BaseEntry,
+    GenericEntry,
     MessageEntry,
     CallEntry
   };

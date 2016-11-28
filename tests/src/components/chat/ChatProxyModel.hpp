@@ -5,6 +5,8 @@
 
 #include "ChatModel.hpp"
 
+// ===================================================================
+
 class ChatProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
@@ -22,12 +24,15 @@ public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
 
 public slots:
-  ChatModel *getChatModel () {
-    return &m_chat_model;
+  void removeEntry (int id);
+
+  void removeAllEntries () {
+    m_chat_model.removeAllEntries();
   }
 
   void setEntryTypeFilter (ChatModel::EntryType type) {
-    // TODO.
+    m_entry_type_filter = type;
+    invalidateFilter();
   }
 
 protected:
@@ -43,6 +48,7 @@ private:
   }
 
   ChatModel m_chat_model;
+  ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
 };
 
 #endif // CHAT_PROXY_MODEL_H_
