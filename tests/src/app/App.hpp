@@ -5,7 +5,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
 #include <QSystemTrayIcon>
-#include <QTranslator>
+
+#include "DefaultTranslator.hpp"
 
 class Notifier;
 
@@ -47,7 +48,9 @@ private:
   QQmlApplicationEngine m_engine;
   QQmlFileSelector *m_file_selector = nullptr;
   QSystemTrayIcon *m_system_tray_icon = nullptr;
-  QTranslator m_translator;
+
+  DefaultTranslator m_default_translator;
+  QTranslator m_english_translator;
 
   Notifier *m_notifier = nullptr;
   QString m_locale = "en";

@@ -179,40 +179,28 @@
         <translation>Incoming call</translation>
     </message>
     <message>
-        <source>hangup</source>
-        <translation type="vanished">End call</translation>
-    </message>
-    <message>
-        <source>lostIncomingCall</source>
-        <translation type="vanished">Lost incoming call</translation>
-    </message>
-    <message>
-        <source>lostOutgoingCall</source>
-        <translation type="vanished">Lost outgoing call</translation>
-    </message>
-    <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Outgoing call</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Declined incoming call</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Declined outgoing call</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Ended call</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Missed incoming call</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Missed outgoing call</translation>
     </message>
 </context>
 <context>

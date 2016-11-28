@@ -32,6 +32,7 @@ list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
 set(SOURCES
   src/app/App.cpp
   src/app/Database.cpp
+  src/app/DefaultTranslator.cpp
   src/app/Logger.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
@@ -51,6 +52,7 @@ set(SOURCES
 set(HEADERS
   src/app/App.hpp
   src/app/Database.hpp
+  src/app/DefaultTranslator.hpp
   src/app/Logger.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
