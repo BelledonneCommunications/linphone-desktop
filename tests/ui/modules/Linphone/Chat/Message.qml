@@ -18,13 +18,14 @@ Item {
   // -----------------------------------------------------------------
 
   function _handleHoveredLink (hoveredLink) {
-    var root = Utils.getTopParent(container)
-    var children = root.children
-
     // Can be the `invertedMouseArea` of other message.
-    var mouseArea = Utils.find(children, function (element) {
-      return Utils.qmlTypeof(element, 'QQuickMouseArea')
-    })
+    // Or another mouse area. Dangerous?
+    var mouseArea = Utils.find(
+      Utils.getTopParent(container).children,
+      function (element) {
+        return Utils.qmlTypeof(element, 'QQuickMouseArea')
+      }
+    )
 
     if (mouseArea != null) {
       mouseArea.cursorShape = hoveredLink
