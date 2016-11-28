@@ -9,11 +9,21 @@ import Utils 1.0
 
 Row {
   property string _type: {
+    var status = $chatEntry.status
+
     if ($chatEntry.status === ChatModel.CallStatusSuccess) {
       return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
     }
 
-    return ''
+    if ($chatEntry.status === ChatModel.CallStatusDeclined) {
+      return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
+    }
+
+    if ($chatEntry.status === ChatModel.CallStatusMissed) {
+      return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
+    }
+
+    return 'ended_call'
   }
 
   height: ChatStyle.entry.lineHeight
@@ -32,8 +42,12 @@ Row {
       // Private data for `lupdate`.
       Item {
         property var i18n: [
-          QT_TR_NOOP('endCall'),
+          QT_TR_NOOP('declinedIncomingCall'),
+          QT_TR_NOOP('declinedOutgoingCall'),
+          QT_TR_NOOP('endedCall'),
           QT_TR_NOOP('incomingCall'),
+          QT_TR_NOOP('missedIncomingCall'),
+          QT_TR_NOOP('missedOutgoingCall'),
           QT_TR_NOOP('outgoingCall')
         ]
       }

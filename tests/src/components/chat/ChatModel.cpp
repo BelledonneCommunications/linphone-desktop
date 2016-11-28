@@ -60,14 +60,15 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 // -------------------------------------------------------------------
 
 void ChatModel::removeEntry (int id) {
-  qInfo() << "Removing chat entry:" << id << "of:" << getSipAddress();
+  qInfo() << QStringLiteral("Removing chat entry: %1 of %2.")
+    .arg(id).arg(getSipAddress());
 
   if (!removeRow(id))
-    qWarning() << "Unable to remove chat entry:" << id;
+    qWarning() << QStringLiteral("Unable to remove chat entry: %1").arg(id);
 }
 
 void ChatModel::removeAllEntries () {
-  qInfo() << "Removing all chat entries of:" << getSipAddress();
+  qInfo() << QStringLiteral("Removing all chat entries of: %1.").arg(getSipAddress());
 
   beginResetModel();
 
@@ -165,7 +166,12 @@ void ChatModel::setSipAddress (const QString &sip_address) {
 
   // Get calls.
   for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
-    QVariantMap start, end;
+    // Ignore aborted calls.
+    if (call_log->getStatus() == linphone::CallStatusAborted)
+      continue;
+
+    // Add start call.
+    QVariantMap start;
     fillCallStartEntry(start, call_log);
 
     ChatEntryData pair = qMakePair(start, static_pointer_cast<void>(call_log));
@@ -178,14 +184,12 @@ void ChatModel::setSipAddress (const QString &sip_address) {
     );
 
     m_entries.insert(it, pair);
+
+    // Add end call. (if necessary)
+
   }
 
   endResetModel();
 
   emit sipAddressChanged(sip_address);
 }
-
-          // QT_TR_NOOP('endCall'),
-          // QT_TR_NOOP('incomingCall'),
-          // QT_TR_NOOP('lostIncomingCall'),
-          // QT_TR_NOOP('lostOutgoingCall')

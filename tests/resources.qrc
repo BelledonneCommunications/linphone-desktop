@@ -22,6 +22,8 @@
     <file>assets/images/contact_edit_pressed.svg</file>
     <file>assets/images/contact_normal.svg</file>
     <file>assets/images/contact_selected.svg</file>
+    <file>assets/images/declined_incoming_call.svg</file>
+    <file>assets/images/declined_outgoing_call.svg</file>
     <file>assets/images/delete_hovered.svg</file>
     <file>assets/images/delete_normal.svg</file>
     <file>assets/images/delete_pressed.svg</file>
@@ -36,8 +38,8 @@
     <file>assets/images/led_red.svg</file>
     <file>assets/images/led_white.svg</file>
     <file>assets/images/linphone.png</file>
-    <file>assets/images/lost_incoming_call.svg</file>
-    <file>assets/images/lost_outgoing_call.svg</file>
+    <file>assets/images/missed_incoming_call.svg</file>
+    <file>assets/images/missed_outgoing_call.svg</file>
     <file>assets/images/outgoing_call.svg</file>
     <file>assets/images/search.svg</file>
     <file>assets/images/tooltip_arrow_bottom.svg</file>

@@ -5,7 +5,6 @@
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   m_chat_model.setParent(this);
   setSourceModel(&m_chat_model);
-  setFilterCaseSensitivity(Qt::CaseInsensitive);
 }
 
 void ChatProxyModel::removeEntry (int id) {
@@ -23,5 +22,5 @@ bool ChatProxyModel::filterAcceptsRow (int source_row, const QModelIndex &source
     index.data()
   );
 
-  return (data["type"].toInt() == m_entry_type_filter);
+  return data["type"].toInt() == m_entry_type_filter;
 }

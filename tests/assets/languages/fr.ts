@@ -191,11 +191,27 @@
         <translation type="vanished">Appel sortant manqué</translation>
     </message>
     <message>
-        <source>endCall</source>
+        <source>outgoingCall</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outgoingCall</source>
+        <source>declinedIncomingCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declinedOutgoingCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>endedCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missedIncomingCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missedOutgoingCall</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
