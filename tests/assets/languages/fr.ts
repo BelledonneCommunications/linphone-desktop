@@ -135,11 +135,11 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir supprimer cet historique ?</translation>
     </message>
     <message>
         <source>removeAllEntriesTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Suppression de l'historique</translation>
     </message>
 </context>
 <context>
@@ -161,7 +161,7 @@
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Envoyer un fichier</translation>
     </message>
 </context>
 <context>
@@ -171,40 +171,28 @@
         <translation>Appel entrant</translation>
     </message>
     <message>
-        <source>hangup</source>
-        <translation type="vanished">Fin d&apos;appel</translation>
-    </message>
-    <message>
-        <source>lostIncomingCall</source>
-        <translation type="vanished">Appel entrant manqué</translation>
-    </message>
-    <message>
-        <source>lostOutgoingCall</source>
-        <translation type="vanished">Appel sortant manqué</translation>
-    </message>
-    <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Appel sortant</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Appel entrant refusé</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Appel sortant refusé</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin d'appel</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Appel entrant manqué</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Appel sortant sans réponse</translation>
     </message>
 </context>
 <context>
@@ -319,7 +307,7 @@
     <name>PresenceString</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"></translation>
+        <translation>En ligne</translation>
     </message>
     <message>
         <source>presenceOutToLunch</source>
@@ -339,7 +327,7 @@
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"></translation>
+        <translation>Hors-ligne</translation>
     </message>
     <message>
         <source>presenceUnknown</source>

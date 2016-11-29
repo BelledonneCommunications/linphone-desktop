@@ -80,7 +80,6 @@ function getTopParent (object, useFakeParent) {
 
   var parent = _getTopParent(object, useFakeParent)
   var p
-
   while ((p = _getTopParent(parent, useFakeParent)) != null) {
     parent = p
   }
@@ -97,8 +96,8 @@ function openConfirmDialog (parent, options) {
     'import QtQuick 2.7;' +
       'import Common 1.0;' +
       'ConfirmDialog {' +
-      'descriptionText: \'' + options.descriptionText + '\';' +
-      'title: \'' + options.title + '\'' +
+      'descriptionText: \'' + escapeQuotes(options.descriptionText) + '\';' +
+      'title: \'' + escapeQuotes(options.title) + '\'' +
       '}',
     parent, {
       isString: true,
@@ -264,6 +263,14 @@ function ensureArray (obj) {
   }
 
   return values
+}
+
+// -------------------------------------------------------------------
+
+function escapeQuotes (str) {
+  return str != null
+    ? str.replace(/([^'\\]*(?:\\.[^'\\]*)*)'/g, '$1\\\'')
+    : ''
 }
 
 // -------------------------------------------------------------------
