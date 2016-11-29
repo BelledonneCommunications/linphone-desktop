@@ -18,6 +18,7 @@ class App : public QApplication {
 public:
   static void init (int &argc, char **argv) {
     if (!m_instance) {
+      // Instance must be exists before content.
       m_instance = new App(argc, argv);
       m_instance->initContentApp();
     }

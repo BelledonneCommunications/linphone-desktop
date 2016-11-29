@@ -90,9 +90,9 @@ ColumnLayout {
       }
 
       anchors {
-        left: parent.left
+        left: parent ? parent.left : undefined
         leftMargin: ChatStyle.entry.leftMargin
-        right: parent.right
+        right: parent ? parent.right : undefined
 
         // Ugly. I admit it, but it exists a problem, without these
         // lines the extra content message is truncated.
@@ -106,7 +106,6 @@ ColumnLayout {
           ChatStyle.entry.message.outgoing.sendIconSize
       }
       implicitHeight: layout.height + ChatStyle.entry.bottomMargin
-      width: parent.width
 
       // -------------------------------------------------------------
 
