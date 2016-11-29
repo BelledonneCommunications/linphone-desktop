@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>removeAllEntriesTitle</source>
-        <translation>Suppression de l'historique</translation>
+        <translation>Suppression de l&apos;historique</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@
     </message>
     <message>
         <source>endedCall</source>
-        <translation>Fin d'appel</translation>
+        <translation>Fin d&apos;appel</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>

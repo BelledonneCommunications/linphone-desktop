@@ -21,6 +21,18 @@ ColumnLayout {
   ScrollableListView {
     id: chat
 
+    property bool _tryToLoadMoreEntries: false
+
+    function _loadMoreEntries () {
+      if (chat.contentY > 500 || _tryToLoadMoreEntries) {
+        return
+      }
+
+      _tryToLoadMoreEntries = true
+
+      proxyModel.loadMoreEntries()
+    }
+
     Layout.fillHeight: true
     Layout.fillWidth: true
 
@@ -164,6 +176,8 @@ ColumnLayout {
         }
       }
     }
+
+    onContentYChanged: _loadMoreEntries()
   }
 
   // -----------------------------------------------------------------

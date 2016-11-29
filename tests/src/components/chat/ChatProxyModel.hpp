@@ -1,10 +1,10 @@
 #ifndef CHAT_PROXY_MODEL_H_
 #define CHAT_PROXY_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include "ChatModelFilter.hpp"
 
-#include "ChatModel.hpp"
-
+// ===================================================================
+// Fetch the L last filtered chat entries.
 // ===================================================================
 
 class ChatProxyModel : public QSortFilterProxyModel {
@@ -23,32 +23,38 @@ signals:
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
 
+  int rowCount (const QModelIndex &parent = QModelIndex()) const override;
+  QVariant data (const QModelIndex &index, int role) const override;
+
 public slots:
+  void loadMoreEntries ();
+
+  void setEntryTypeFilter (ChatModel::EntryType type) {
+    m_chat_model_filter.setEntryTypeFilter(type);
+  }
+
   void removeEntry (int id);
 
   void removeAllEntries () {
-    m_chat_model.removeAllEntries();
+    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->removeAllEntries();
   }
-
-  void setEntryTypeFilter (ChatModel::EntryType type) {
-    m_entry_type_filter = type;
-    invalidateFilter();
-  }
-
-protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
 
 private:
   QString getSipAddress () const {
-    return m_chat_model.getSipAddress();
+    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->getSipAddress();
   }
 
   void setSipAddress (const QString &sip_address) {
-    m_chat_model.setSipAddress(sip_address);
+    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->setSipAddress(
+      sip_address
+    );
   }
 
-  ChatModel m_chat_model;
-  ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
+  ChatModelFilter m_chat_model_filter;
+
+  unsigned int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
+
+  static const unsigned int ENTRIES_CHUNK_SIZE;
 };
 
 #endif // CHAT_PROXY_MODEL_H_
