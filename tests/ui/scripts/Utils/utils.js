@@ -31,7 +31,7 @@ function connectOnce (signal, cb) {
 
 // -------------------------------------------------------------------
 
-function encodeUrisToQmlFormat (text, options) {
+function encodeTextToQmlRichFormat (text, options) {
   var images = ''
 
   if (options == null) {
@@ -39,8 +39,12 @@ function encodeUrisToQmlFormat (text, options) {
   }
 
   text = text
+    .replace(/&/g, '&#38;')
     .replace(/</g, '\u2063&lt;')
     .replace(/>/g, '\u2063&gt;')
+    .replace(/\r\n|\n/g, '<br/>')
+    .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
+    .replace(/ /g, '&nbsp;')
     .replace(UriTools.URI_REGEX, function (match) {
       // If it's a simple URL, transforms it in URI.
       if (startsWith(match, 'www.')) {

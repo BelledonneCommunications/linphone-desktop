@@ -61,7 +61,7 @@ Item {
     padding: ChatStyle.entry.message.padding
     readOnly: true
     selectByMouse: true
-    text: Utils.encodeUrisToQmlFormat($chatEntry.content, {
+    text: Utils.encodeTextToQmlRichFormat($chatEntry.content, {
       imagesHeight: ChatStyle.entry.message.images.height,
       imagesWidth: ChatStyle.entry.message.images.width
     })
