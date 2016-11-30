@@ -35,7 +35,6 @@ set(SOURCES
   src/app/DefaultTranslator.cpp
   src/app/Logger.cpp
   src/components/chat/ChatModel.cpp
-  src/components/chat/ChatModelFilter.cpp
   src/components/chat/ChatProxyModel.cpp
   src/components/contacts/ContactModel.cpp
   src/components/contacts/ContactsListModel.cpp
@@ -56,7 +55,6 @@ set(HEADERS
   src/app/DefaultTranslator.hpp
   src/app/Logger.hpp
   src/components/chat/ChatModel.hpp
-  src/components/chat/ChatModelFilter.hpp
   src/components/chat/ChatProxyModel.hpp
   src/components/contacts/ContactModel.hpp
   src/components/contacts/ContactsListModel.hpp

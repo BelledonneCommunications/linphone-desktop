@@ -148,9 +148,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
             }
           );
 
-          if (it == m_entries.end())
-            qWarning("Unable to find symmetric call.");
-          else
+          if (it != m_entries.end())
             removeEntry(distance(m_entries.begin(), it));
         });
       }

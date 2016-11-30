@@ -1,10 +1,33 @@
 #ifndef CHAT_PROXY_MODEL_H_
 #define CHAT_PROXY_MODEL_H_
 
-#include "ChatModelFilter.hpp"
+#include <QSortFilterProxyModel>
+
+#include "ChatModel.hpp"
 
 // ===================================================================
 // Fetch the L last filtered chat entries.
+// ===================================================================
+
+// Cannot be used as a nested class by Qt and `Q_OBJECTY` macro
+// must be used in header c++ file.
+class ChatModelFilter : public QSortFilterProxyModel {
+  friend class ChatProxyModel;
+  Q_OBJECT;
+
+public:
+  ChatModelFilter (QObject *parent = Q_NULLPTR);
+
+protected:
+  bool filterAcceptsRow (int source_row, const QModelIndex &parent) const;
+
+private:
+  void setEntryTypeFilter (ChatModel::EntryType type);
+
+  ChatModel m_chat_model;
+  ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
+};
+
 // ===================================================================
 
 class ChatProxyModel : public QSortFilterProxyModel {
@@ -23,9 +46,6 @@ signals:
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
 
-  int rowCount (const QModelIndex &parent = QModelIndex()) const override;
-  QVariant data (const QModelIndex &index, int role) const override;
-
 public slots:
   void loadMoreEntries ();
 
@@ -38,6 +58,9 @@ public slots:
   void removeAllEntries () {
     static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->removeAllEntries();
   }
+
+protected:
+  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
 
 private:
   QString getSipAddress () const {

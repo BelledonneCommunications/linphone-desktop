@@ -5,6 +5,8 @@
 #include <linphone++/linphone.hh>
 
 // ===================================================================
+// Fetch all N messages of a ChatRoom.
+// ===================================================================
 
 class ChatModel : public QAbstractListModel {
   friend class ChatProxyModel;
