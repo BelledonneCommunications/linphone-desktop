@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // ===================================================================
 
@@ -16,7 +17,7 @@ ColumnLayout {
 
   // Set the offset position to load more entries.
   // Not a style property.
-  property int _loadMoreEntriesAtPosition: 1
+  property int _loadMoreEntriesAtPosition: 25
 
   // -----------------------------------------------------------------
 
@@ -27,11 +28,11 @@ ColumnLayout {
 
     property bool _tryToLoadMoreEntries: true
 
-    function _loadMoreEntries () {
-      if (
+    function _loadMoreEntries (force) {
+      if ((
         chat.visibleArea.yPosition * chat.height <= _loadMoreEntriesAtPosition &&
-          !_tryToLoadMoreEntries
-      ) {
+        !_tryToLoadMoreEntries
+      ) || force) {
         _tryToLoadMoreEntries = true
         proxyModel.loadMoreEntries()
       }
@@ -181,16 +182,35 @@ ColumnLayout {
       }
     }
 
-    onContentYChanged: _loadMoreEntries()
-
     Component.onCompleted: {
-      positionViewAtEnd()
-      _tryToLoadMoreEntries = false
-
-      proxyModel.moreEntriesLoaded.connect(function () {
+      var initView = function () {
+        positionViewAtEnd()
         _tryToLoadMoreEntries = false
+      }
+
+      // Received only if more entries was loaded.
+      proxyModel.moreEntriesLoaded.connect(function () {
+        if (ScrollBar.vertical.pressed && atYBeginning) {
+          // Use a timeout to not increase call stack.
+          Utils.setTimeout(chat, 0, function () {
+            _loadMoreEntries(true)
+            positionViewAtIndex(1, ListView.Beginning)
+          })
+        } else {
+          _tryToLoadMoreEntries = false
+        }
       })
+
+      // When the view is changed (for example `Calls` -> `Messages`),
+      // the position is set at end and it can be possible to load
+      // more entries.
+      proxyModel.entryTypeFilterChanged.connect(initView)
+
+      // First render.
+      initView()
     }
+
+    onContentYChanged: _loadMoreEntries()
   }
 
   // -----------------------------------------------------------------

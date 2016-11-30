@@ -43,6 +43,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
 signals:
   void sipAddressChanged (const QString &sipAddress);
   void moreEntriesLoaded ();
+  void entryTypeFilterChanged (ChatModel::EntryType type);
 
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
@@ -50,9 +51,7 @@ public:
 public slots:
   void loadMoreEntries ();
 
-  void setEntryTypeFilter (ChatModel::EntryType type) {
-    m_chat_model_filter.setEntryTypeFilter(type);
-  }
+  void setEntryTypeFilter (ChatModel::EntryType type);
 
   void removeEntry (int id);
 
