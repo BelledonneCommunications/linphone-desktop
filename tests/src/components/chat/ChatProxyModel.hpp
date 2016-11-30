@@ -9,7 +9,7 @@
 // Fetch the L last filtered chat entries.
 // ===================================================================
 
-// Cannot be used as a nested class by Qt and `Q_OBJECTY` macro
+// Cannot be used as a nested class by Qt and `Q_OBJECT` macro
 // must be used in header c++ file.
 class ChatModelFilter : public QSortFilterProxyModel {
   friend class ChatProxyModel;
@@ -42,6 +42,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
 
 signals:
   void sipAddressChanged (const QString &sipAddress);
+  void moreEntriesLoaded ();
 
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);

@@ -14,6 +14,10 @@ ColumnLayout {
   // Can be a model or a proxy chat model.
   property alias proxyModel: chat.model
 
+  // Set the offset position to load more entries.
+  // Not a style property.
+  property int _loadMoreEntriesAtPosition: 1
+
   // -----------------------------------------------------------------
 
   spacing: 0
@@ -21,16 +25,16 @@ ColumnLayout {
   ScrollableListView {
     id: chat
 
-    property bool _tryToLoadMoreEntries: false
+    property bool _tryToLoadMoreEntries: true
 
     function _loadMoreEntries () {
-      if (chat.contentY > 500 || _tryToLoadMoreEntries) {
-        return
+      if (
+        chat.visibleArea.yPosition * chat.height <= _loadMoreEntriesAtPosition &&
+          !_tryToLoadMoreEntries
+      ) {
+        _tryToLoadMoreEntries = true
+        proxyModel.loadMoreEntries()
       }
-
-      _tryToLoadMoreEntries = true
-
-      proxyModel.loadMoreEntries()
     }
 
     Layout.fillHeight: true
@@ -178,6 +182,15 @@ ColumnLayout {
     }
 
     onContentYChanged: _loadMoreEntries()
+
+    Component.onCompleted: {
+      positionViewAtEnd()
+      _tryToLoadMoreEntries = false
+
+      proxyModel.moreEntriesLoaded.connect(function () {
+        _tryToLoadMoreEntries = false
+      })
+    }
   }
 
   // -----------------------------------------------------------------

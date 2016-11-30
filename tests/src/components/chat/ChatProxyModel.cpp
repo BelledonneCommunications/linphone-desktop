@@ -1,5 +1,7 @@
 #include "ChatProxyModel.hpp"
 
+// ===================================================================
+
 ChatModelFilter::ChatModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(&m_chat_model);
 }
@@ -30,7 +32,13 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
 }
 
 void ChatProxyModel::loadMoreEntries () {
-  // TODO.
+  int count = rowCount();
+  m_n_max_displayed_entries += ENTRIES_CHUNK_SIZE;
+
+  invalidateFilter();
+
+  if (count < rowCount())
+    emit moreEntriesLoaded();
 }
 
 void ChatProxyModel::removeEntry (int id) {
