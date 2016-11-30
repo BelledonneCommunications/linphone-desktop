@@ -7,8 +7,8 @@
 #include "ContactsListProxyModel.hpp"
 
 #define USERNAME_WEIGHT 50.0
-#define MAIN_SIP_ADDRESS_WEIGHT 30.0
-#define OTHER_SIP_ADDRESSES_WEIGHT 20.0
+#define MAIN_SIP_ADDRESS_WEIGHT 25.0
+#define OTHER_SIP_ADDRESSES_WEIGHT 25.0
 
 #define FACTOR_POS_1 0.90
 #define FACTOR_POS_2 0.80
@@ -44,6 +44,7 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
   for (const ContactModel *contact : m_list->m_list)
     m_weights[contact] = 0;
 
+  setDynamicSortFilter(false);
   sort(0);
 }
 

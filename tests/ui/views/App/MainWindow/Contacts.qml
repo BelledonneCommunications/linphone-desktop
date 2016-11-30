@@ -10,21 +10,6 @@ import App.Styles 1.0
 // ===================================================================
 
 ColumnLayout {
-  function _filter (text) {
-    Utils.assert(
-      contacts.setFilterFixedString != null,
-      '`contacts.setFilterFixedString` must be defined.'
-    )
-
-    Utils.assert(
-      contacts.invalidate != null,
-      '`contacts.invalidate` must be defined.'
-    )
-
-    contacts.setFilterFixedString(text)
-    contacts.invalidate()
-  }
-
   function _removeContact (contact) {
     Utils.openConfirmDialog(window, {
       descriptionText: qsTr('removeContactDescription'),
@@ -62,7 +47,7 @@ ColumnLayout {
         icon: 'filter'
         placeholderText: qsTr('searchContactPlaceholder')
 
-        onTextChanged: _filter(text)
+        onTextChanged: contacts.setFilter(text)
       }
 
       ExclusiveButtons {
@@ -71,7 +56,7 @@ ColumnLayout {
           qsTr('selectConnectedContacts')
         ]
 
-        onClicked: contacts.useConnectedFilter = (button === 1)
+        onClicked: contacts.useConnectedFilter = !!button
       }
 
       TextButtonB {

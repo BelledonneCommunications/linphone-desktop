@@ -24,6 +24,12 @@ public:
     return m_list;
   }
 
+public slots:
+  void setFilter (const QString &pattern) {
+    setFilterFixedString(pattern);
+    sort(0);
+  }
+
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const;
