@@ -15,10 +15,6 @@ ColumnLayout {
   // Can be a model or a proxy chat model.
   property alias proxyModel: chat.model
 
-  // Set the offset position to load more entries.
-  // Not a style property.
-  property int _loadMoreEntriesAtPosition: 25
-
   // -----------------------------------------------------------------
 
   spacing: 0
@@ -28,12 +24,10 @@ ColumnLayout {
 
     property bool _tryToLoadMoreEntries: true
 
-    function _loadMoreEntries (force) {
-      if ((
-        chat.visibleArea.yPosition * chat.height <= _loadMoreEntriesAtPosition &&
-        !_tryToLoadMoreEntries
-      ) || force) {
+    function _loadMoreEntries () {
+      if (atYBeginning && !_tryToLoadMoreEntries) {
         _tryToLoadMoreEntries = true
+        positionViewAtIndex(0, ListView.Beginning)
         proxyModel.loadMoreEntries()
       }
     }
@@ -189,16 +183,9 @@ ColumnLayout {
       }
 
       // Received only if more entries was loaded.
-      proxyModel.moreEntriesLoaded.connect(function () {
-        if (ScrollBar.vertical.pressed && atYBeginning) {
-          // Use a timeout to not increase call stack.
-          Utils.setTimeout(chat, 0, function () {
-            _loadMoreEntries(true)
-            positionViewAtIndex(1, ListView.Beginning)
-          })
-        } else {
-          _tryToLoadMoreEntries = false
-        }
+      proxyModel.moreEntriesLoaded.connect(function (n) {
+        positionViewAtIndex(n - 1, ListView.Beginning)
+        _tryToLoadMoreEntries = false
       })
 
       // When the view is changed (for example `Calls` -> `Messages`),

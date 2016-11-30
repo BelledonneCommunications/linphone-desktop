@@ -42,7 +42,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
 
 signals:
   void sipAddressChanged (const QString &sipAddress);
-  void moreEntriesLoaded ();
+  void moreEntriesLoaded (int n);
   void entryTypeFilterChanged (ChatModel::EntryType type);
 
 public:

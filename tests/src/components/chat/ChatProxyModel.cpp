@@ -25,7 +25,7 @@ void ChatModelFilter::setEntryTypeFilter (ChatModel::EntryType type) {
 
 // ===================================================================
 
-const unsigned int ChatProxyModel::ENTRIES_CHUNK_SIZE = 25;
+const unsigned int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(&m_chat_model_filter);
@@ -43,8 +43,10 @@ void ChatProxyModel::loadMoreEntries () {
 
     invalidateFilter();
 
-    if (count < rowCount())
-      emit moreEntriesLoaded();
+    count = rowCount() - count;
+
+    if (count > 0)
+      emit moreEntriesLoaded(count);
   }
 }
 
