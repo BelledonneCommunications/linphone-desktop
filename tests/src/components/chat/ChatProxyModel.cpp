@@ -32,18 +32,20 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
 }
 
 void ChatProxyModel::loadMoreEntries () {
-  // Do not increase `m_n_max_displayed_entries` if it's not necessary...
-  // Limit qml calls.
-  if (m_chat_model_filter.rowCount() <= m_n_max_displayed_entries)
-    return;
-
   int count = rowCount();
-  m_n_max_displayed_entries += ENTRIES_CHUNK_SIZE;
+  int parent_count = m_chat_model_filter.rowCount();
 
-  invalidateFilter();
+  if (count < parent_count) {
+    // Do not increase `m_n_max_displayed_entries` if it's not necessary...
+    // Limit qml calls.
+    if (count == m_n_max_displayed_entries)
+      m_n_max_displayed_entries += ENTRIES_CHUNK_SIZE;
 
-  if (count < rowCount())
-    emit moreEntriesLoaded();
+    invalidateFilter();
+
+    if (count < rowCount())
+      emit moreEntriesLoaded();
+  }
 }
 
 void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
