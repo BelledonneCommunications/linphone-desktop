@@ -3,8 +3,6 @@
 #include "../../app/App.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
-#include "ContactModel.hpp"
-#include "ContactsListProxyModel.hpp"
 
 #include "ContactsListModel.hpp"
 

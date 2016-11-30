@@ -4,7 +4,7 @@
 #include <QAbstractListModel>
 #include <linphone++/linphone.hh>
 
-class ContactModel;
+#include "ContactModel.hpp"
 
 // ===================================================================
 

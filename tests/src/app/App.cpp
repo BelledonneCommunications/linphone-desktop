@@ -5,7 +5,6 @@
 #include <QtDebug>
 
 #include "../components/chat/ChatProxyModel.hpp"
-#include "../components/contacts/ContactModel.hpp"
 #include "../components/contacts/ContactsListModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
@@ -134,11 +133,10 @@ void App::addContextProperties () {
   QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
 
   // Windows.
-  if (component.isError()) {
+  if (component.isError())
     qWarning() << component.errors();
-  } else {
-    //context->setContextProperty("CallsWindow", component.create());
-  }
+  else
+    context->setContextProperty("CallsWindow", component.create());
 
   m_notifier = new Notifier();
   context->setContextProperty("Notifier", m_notifier);
