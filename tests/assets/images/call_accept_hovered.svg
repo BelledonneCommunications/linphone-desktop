@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>call_accept_over</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="call_accept_over">
+            <circle fill="#7D9F21" cx="20" cy="20" r="20"></circle>
+            <g id="call_icon" transform="translate(9.000000, 9.000000)" stroke-width="1.5" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M0.797831313,3.39639949 C-0.629468455,7.43554002 1.37064325,13.2080051 4.60766925,16.445894 L4.67554581,16.5133156 C7.9118623,19.7504948 13.6842079,21.7511398 17.7208528,20.3234595 L20.7828661,16.3084488 L16.6121235,12.1370674 L12.7966095,15.3645475 L9.30959911,11.8770806 L9.24266856,11.8096591 L5.75613117,8.32219216 L8.98204149,4.50424154 L4.81295445,0.333333333 L0.797831313,3.39639949 L0.797831313,3.39639949 Z"></path>
+            </g>
+        </g>
+    </g>
+</svg>

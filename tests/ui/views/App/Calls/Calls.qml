@@ -78,14 +78,13 @@ Window {
       closingEdge: Qt.RightEdge
       defaultChildAWidth: 300
       defaultClosed: true
-      minimumLeftLimit: 250
-      minimumRightLimit: 350
+      minimumLeftLimit: 350
+      minimumRightLimit: 250
       resizeAInPriority: true
 
       // Call.
-      childA: AbstractCall {
+      childA: IncomingCall {
         anchors.fill: parent
-        callTypeLabel: 'INCOMING VIDEO CALL'
         sipAddress: 'sip:erwan.croze@sip.linphone.org'
       }
 

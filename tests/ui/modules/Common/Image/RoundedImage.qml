@@ -34,6 +34,7 @@ Item {
         property color foregroundColor: item.foregroundColor
         property var image: imageContainer
 
+        // See: https://www.opengl.org/sdk/docs/man/html/mix.xhtml
         fragmentShader: '
           uniform lowp sampler2D image;
           uniform lowp sampler2D mask;

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>hangup_over</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="hangup_over">
+            <circle fill="#DC4100" cx="20" cy="20" r="20"></circle>
+            <path d="M30.5377049,16.8536881 C28.9534689,13.3895361 24.237941,11 20.3101049,11 L20.2283082,11 C16.299941,11 11.5833508,13.390831 10,16.8540581 L10.5777115,21.3393637 L15.6386623,21.3393637 L15.9968328,16.8753322 L24.5417574,16.8753322 L24.8990426,21.3393637 L29.9599934,21.3393637 L30.5377049,16.8536881 L30.5377049,16.8536881 Z M16.6905115,25.7612171 L20.0360328,29.2560777 L20.2692066,29.4991567 L16.6905115,25.7612171 Z M23.8477246,25.7647319 L20.2692066,29.4991567 L23.8477246,25.7647319 Z M20.2692066,29.1152992 L20.2692066,21.7137866 L20.2692066,29.1152992 Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>

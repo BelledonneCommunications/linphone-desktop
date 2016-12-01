@@ -24,9 +24,9 @@ Item {
   Image {
     function _checkIconSize () {
       Utils.assert(
-        iconSize != null && iconSize > 0,
+        iconSize != null && iconSize >= 0,
         '`iconSize` must be defined and must be positive. (icon=`' +
-          icon + '`)'
+          icon + '`, iconSize=' + iconSize + ')'
       )
     }
 

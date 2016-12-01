@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>video_call_accept_default</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="video_call_accept_default">
+            <path d="M20,40 C31.045695,40 40,31.045695 40,20 C40,8.954305 31.045695,0 20,0 C8.954305,0 0,8.954305 0,20 C0,31.045695 8.954305,40 20,40 Z" fill="#9ECD1D"></path>
+            <g id="videocall_icon" transform="translate(9.000000, 13.000000)" stroke-linecap="round" stroke-width="1.5" stroke="#FFFFFF" stroke-linejoin="round">
+                <polygon points="21.9033897 6.53341215 21.9033897 0.673601511 16.1289093 5.25958769 16.1289093 0.333333333 0.333333333 0.333333333 0.333333333 12.9483398 16.1289093 12.9483398 16.1289093 8.02208543 21.9033897 12.6080716"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

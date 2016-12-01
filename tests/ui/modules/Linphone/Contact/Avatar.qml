@@ -9,8 +9,11 @@ import Utils 1.0
 // ===================================================================
 
 Item {
+  id: avatar
+
   property alias image: roundedImage.source
   property alias presenceLevel: presenceLevel.level
+  property color backgroundColor: AvatarStyle.backgroundColor
   property string username
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
@@ -34,6 +37,13 @@ Item {
 
   // -----------------------------------------------------------------
 
+  RoundedImage {
+    id: roundedImage
+
+    anchors.fill: parent
+    backgroundColor: avatar.backgroundColor
+  }
+
   Text {
     anchors.centerIn: parent
     color: AvatarStyle.initials.color
@@ -50,18 +60,14 @@ Item {
     text: _computeInitials()
   }
 
-  RoundedImage {
-    id: roundedImage
-
-    anchors.fill: parent
-    backgroundColor: AvatarStyle.backgroundColor
-  }
-
   PresenceLevel {
     id: presenceLevel
 
-    anchors.bottom: parent.bottom
-    anchors.right: parent.right
+    anchors {
+      bottom: parent.bottom
+      right: parent.right
+    }
+
     height: parent.height / 3
     width: parent.width / 3
   }
