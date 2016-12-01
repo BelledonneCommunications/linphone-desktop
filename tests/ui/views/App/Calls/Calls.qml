@@ -86,6 +86,7 @@ Window {
       childA: AbstractCall {
         anchors.fill: parent
         callTypeLabel: 'INCOMING VIDEO CALL'
+        sipAddress: 'sip:erwan.croze@sip.linphone.org'
       }
 
       childB: Rectangle {

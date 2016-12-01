@@ -16,13 +16,13 @@ class ContactsListModel : public QAbstractListModel {
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
 
-  int rowCount (const QModelIndex &index = QModelIndex()) const;
+  int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
-  QHash<int, QByteArray> roleNames () const;
-  QVariant data (const QModelIndex &index, int role) const;
+  QHash<int, QByteArray> roleNames () const override;
+  QVariant data (const QModelIndex &index, int role) const override;
 
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex());
+  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 public slots:
   // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership

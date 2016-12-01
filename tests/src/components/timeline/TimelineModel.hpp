@@ -13,9 +13,9 @@ class TimelineModel : public QAbstractListModel {
 public:
   TimelineModel (const ContactsListModel *contacts_list);
 
-  int rowCount (const QModelIndex &) const;
-  QHash<int, QByteArray> roleNames () const;
-  QVariant data (const QModelIndex &index, int role) const;
+  int rowCount (const QModelIndex &) const override;
+  QHash<int, QByteArray> roleNames () const override;
+  QVariant data (const QModelIndex &index, int role) const override;
 
 private:
   void init_entries ();

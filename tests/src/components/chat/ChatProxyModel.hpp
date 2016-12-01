@@ -19,7 +19,7 @@ public:
   ChatModelFilter (QObject *parent = Q_NULLPTR);
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &parent) const;
+  bool filterAcceptsRow (int source_row, const QModelIndex &parent) const override;
 
 private:
   void setEntryTypeFilter (ChatModel::EntryType type);
@@ -60,7 +60,7 @@ public slots:
   }
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const;
+  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
 
 private:
   QString getSipAddress () const {

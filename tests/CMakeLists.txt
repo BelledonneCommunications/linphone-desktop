@@ -25,6 +25,8 @@ set(CUSTOM_FLAGS "\
 -Wpointer-arith \
 -Wuninitialized \
 -Wunused \
+-Wsuggest-override \
+-Werror=suggest-override \
 ")
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
 
