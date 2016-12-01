@@ -15,7 +15,7 @@ QtObject {
   }
 
   property QtObject sphere: QtObject {
-    property color color: Colors.r
+    property color color: Colors.x
     property int size: 10
   }
 }
