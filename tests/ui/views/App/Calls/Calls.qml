@@ -26,43 +26,48 @@ Window {
     // Calls list.
     // ---------------------------------------------------------------
 
-    childA: ColumnLayout {
+    childA: Rectangle {
       anchors.fill: parent
-      spacing: 0
-
-      Rectangle {
-        Layout.fillWidth: true
-        Layout.preferredHeight: 50
-        color: '#FFFFFF'
-
-        ActionBar {
-          anchors.verticalCenter: parent.verticalCenter
-          anchors.leftMargin: 10
-          anchors.left: parent.left
-          iconSize: 30
-          spacing: 16
-
-          ActionButton {
-            icon: 'call'
-          }
-
-          ActionButton {
-            icon: 'conference'
-          }
-        }
-      }
-
-      ScrollableListView {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        spacing: 1
-        delegate: CallControls {
-          width: parent.width
-        }
-
-        model: callsList
-      }
+      color: 'yellow'
     }
+
+    /* childA: ColumnLayout { */
+    /*   anchors.fill: parent */
+    /*   spacing: 0 */
+
+    /*   Rectangle { */
+    /*     Layout.fillWidth: true */
+    /*     Layout.preferredHeight: 50 */
+    /*     color: '#FFFFFF' */
+
+    /*     ActionBar { */
+    /*       anchors.verticalCenter: parent.verticalCenter */
+    /*       anchors.leftMargin: 10 */
+    /*       anchors.left: parent.left */
+    /*       iconSize: 30 */
+    /*       spacing: 16 */
+
+    /*       ActionButton { */
+    /*         icon: 'call' */
+    /*       } */
+
+    /*       ActionButton { */
+    /*         icon: 'conference' */
+    /*       } */
+    /*     } */
+    /*   } */
+
+    /*   ScrollableListView { */
+    /*     Layout.fillWidth: true */
+    /*     Layout.fillHeight: true */
+    /*     spacing: 1 */
+    /*     delegate: CallControls { */
+    /*       width: parent.width */
+    /*     } */
+
+    /*     model: callsList */
+    /*   } */
+    /* } */
 
     // ---------------------------------------------------------------
     // Content.
@@ -78,14 +83,20 @@ Window {
       resizeAInPriority: true
 
       // Call.
-      childA: Rectangle {
+      childA: AbstractCall {
         anchors.fill: parent
+        callTypeLabel: 'INCOMING VIDEO CALL'
+      }
+
+      childB: Rectangle {
+        anchors.fill: parent
+        color: 'green'
       }
 
       // Chat.
-      childB: Chat {
-        anchors.fill: parent
-      }
+      //childB: Chat {
+      //  anchors.fill: parent
+      //}
     }
   }
 

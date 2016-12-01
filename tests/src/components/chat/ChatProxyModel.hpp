@@ -75,7 +75,7 @@ private:
 
   ChatModelFilter m_chat_model_filter;
 
-  unsigned int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
+  int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
 
   static const unsigned int ENTRIES_CHUNK_SIZE;
 };

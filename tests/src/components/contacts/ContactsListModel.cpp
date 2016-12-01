@@ -24,6 +24,10 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
   }
 }
 
+int ContactsListModel::rowCount (const QModelIndex &) const {
+  return m_list.count();
+}
+
 QHash<int, QByteArray> ContactsListModel::roleNames () const {
   QHash<int, QByteArray> roles;
   roles[Qt::DisplayRole] = "$contact";

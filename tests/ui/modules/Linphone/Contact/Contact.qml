@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneUtils 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -39,9 +40,7 @@ Rectangle {
       Layout.preferredWidth: ContactStyle.contentHeight
       image: contact.avatar || ''
       presenceLevel: contact.presenceLevel || Presence.White
-      username: Utils.isString(contact)
-        ? contact.substring(4, contact.indexOf('@')) // 4 = length("sip:")
-        : contact.username
+      username: LinphoneUtils.getContactUsername(contact)
     }
 
     ContactDescription {

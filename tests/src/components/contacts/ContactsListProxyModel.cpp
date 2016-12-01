@@ -6,14 +6,14 @@
 
 #include "ContactsListProxyModel.hpp"
 
-#define USERNAME_WEIGHT 50.0
-#define MAIN_SIP_ADDRESS_WEIGHT 25.0
-#define OTHER_SIP_ADDRESSES_WEIGHT 25.0
+#define USERNAME_WEIGHT 50.0f
+#define MAIN_SIP_ADDRESS_WEIGHT 25.0f
+#define OTHER_SIP_ADDRESSES_WEIGHT 25.0f
 
-#define FACTOR_POS_1 0.90
-#define FACTOR_POS_2 0.80
-#define FACTOR_POS_3 0.70
-#define FACTOR_POS_OTHER 0.60
+#define FACTOR_POS_1 0.90f
+#define FACTOR_POS_2 0.80f
+#define FACTOR_POS_3 0.70f
+#define FACTOR_POS_OTHER 0.60f
 
 using namespace std;
 
@@ -63,7 +63,9 @@ bool ContactsListProxyModel::filterAcceptsRow (
     index.data()
   );
 
-  int weight = m_weights[contact] = computeContactWeight(*contact);
+  unsigned int weight = m_weights[contact] = static_cast<unsigned int>(
+    computeContactWeight(*contact)
+  );
 
   return weight > 0 && (
     !m_use_connected_filter ||
@@ -79,8 +81,8 @@ bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelInde
     sourceModel()->data(right)
   );
 
-  float weight_a = m_weights[contact_a];
-  float weight_b = m_weights[contact_b];
+  unsigned int weight_a = m_weights[contact_a];
+  unsigned int weight_b = m_weights[contact_b];
 
   // Sort by weight and name.
   return (
@@ -139,8 +141,7 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
   );
 
   // Compute for other addresses.
-  int size = addresses.size();
-
+  float size = static_cast<float>(addresses.size());
   for (++it; it != addresses.cend(); ++it)
     weight += computeStringWeight(
       Utils::linphoneStringToQString((*it)->asString()),

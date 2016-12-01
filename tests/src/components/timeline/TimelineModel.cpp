@@ -81,7 +81,9 @@ void TimelineModel::init_entries () {
 
     // Insert event message in timeline entries.
     QVariantMap map;
-    map["timestamp"] = QDateTime::fromTime_t(message->getTime());
+    map["timestamp"] = QDateTime::fromMSecsSinceEpoch(
+       static_cast<qint64>(message->getTime()) * 1000
+    );
     map["sipAddresses"] = Utils::linphoneStringToQString(
       chat_room->getPeerAddress()->asString()
     );
@@ -104,8 +106,8 @@ void TimelineModel::init_entries () {
 
     // Make a new map.
     QVariantMap map;
-    map["timestamp"] = QDateTime::fromTime_t(
-      call_log->getStartDate() + call_log->getDuration()
+    map["timestamp"] = QDateTime::fromMSecsSinceEpoch(
+      static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
     );
     map["sipAddresses"] = address;
 

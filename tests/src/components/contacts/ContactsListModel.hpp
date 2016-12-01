@@ -16,9 +16,7 @@ class ContactsListModel : public QAbstractListModel {
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
 
-  int rowCount (const QModelIndex &index = QModelIndex()) const {
-    return m_list.count();
-  }
+  int rowCount (const QModelIndex &index = QModelIndex()) const;
 
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;

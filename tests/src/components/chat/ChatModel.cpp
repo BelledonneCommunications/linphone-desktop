@@ -20,6 +20,10 @@ QHash<int, QByteArray> ChatModel::roleNames () const {
   return roles;
 }
 
+int ChatModel::rowCount (const QModelIndex &) const {
+  return m_entries.count();
+}
+
 QVariant ChatModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
@@ -88,7 +92,9 @@ void ChatModel::fillMessageEntry (
   const shared_ptr<linphone::ChatMessage> &message
 ) {
   dest["type"] = EntryType::MessageEntry;
-  dest["timestamp"] = QDateTime::fromTime_t(message->getTime());
+  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(
+     static_cast<qint64>(message->getTime()) * 1000
+  );
   dest["content"] = Utils::linphoneStringToQString(
     message->getText()
   );
@@ -97,9 +103,11 @@ void ChatModel::fillMessageEntry (
 
 void ChatModel::fillCallStartEntry (
   QVariantMap &dest,
-  const std::shared_ptr<linphone::CallLog> &call_log
+  const shared_ptr<linphone::CallLog> &call_log
 ) {
-  QDateTime timestamp = QDateTime::fromTime_t(call_log->getStartDate());
+  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(
+    static_cast<qint64>(call_log->getStartDate()) * 1000
+  );
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;
@@ -110,10 +118,10 @@ void ChatModel::fillCallStartEntry (
 
 void ChatModel::fillCallEndEntry (
   QVariantMap &dest,
-  const std::shared_ptr<linphone::CallLog> &call_log
+  const shared_ptr<linphone::CallLog> &call_log
 ) {
-  QDateTime timestamp = QDateTime::fromTime_t(
-    call_log->getStartDate() + call_log->getDuration()
+  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(
+    static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
   );
 
   dest["type"] = EntryType::CallEntry;
@@ -139,7 +147,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
         // WARNING: Unable to remove symmetric call here. (start/end)
         // We are between `beginRemoveRows` and `endRemoveRows`.
         // A solution is to schedule a `removeEntry` call in the Qt main loop.
-        std::shared_ptr<void> linphone_ptr = pair.second;
+        shared_ptr<void> linphone_ptr = pair.second;
         QTimer::singleShot(0, this, [this, linphone_ptr]() {
           auto it = find_if(
             m_entries.begin(), m_entries.end(),
@@ -149,7 +157,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
           );
 
           if (it != m_entries.end())
-            removeEntry(distance(m_entries.begin(), it));
+            removeEntry(static_cast<int>(distance(m_entries.begin(), it)));
         });
       }
 

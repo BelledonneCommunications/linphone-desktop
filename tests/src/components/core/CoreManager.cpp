@@ -6,7 +6,7 @@
 
 CoreManager *CoreManager::m_instance = nullptr;
 
-CoreManager::CoreManager (QObject *parent) : m_core(
+CoreManager::CoreManager (QObject *parent) : QObject(parent), m_core(
   linphone::Factory::get()->createCore(nullptr, "", "", nullptr)
 ) {
   setDatabasesPaths();

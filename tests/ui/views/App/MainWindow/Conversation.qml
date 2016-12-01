@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneUtils 1.0
 import Utils 1.0
 
 import App.Styles 1.0
@@ -57,9 +58,7 @@ ColumnLayout  {
         Layout.preferredHeight: ConversationStyle.bar.avatarSize
         Layout.preferredWidth: ConversationStyle.bar.avatarSize
         presenceLevel: _contact.presenceLevel || Presence.White
-        username: Utils.isString(_contact)
-          ? _contact.substring(4, _contact.indexOf('@')) // 4 = length("sip:")
-          : _contact.username
+        username: LinphoneUtils.getContactUsername(_contact)
       }
 
       ContactDescription {

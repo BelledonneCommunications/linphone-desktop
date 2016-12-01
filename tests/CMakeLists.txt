@@ -12,6 +12,22 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# -Wold-style-cast \
+set(CUSTOM_FLAGS "\
+-Wcast-align \
+-Wconversion \
+-Wextra \
+-Wfloat-equal \
+-Winit-self \
+-Winline \
+-Wlogical-op \
+-Woverloaded-virtual \
+-Wpointer-arith \
+-Wuninitialized \
+-Wunused \
+")
+set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
+
 # --------------------------------------------------------------------
 # Define packages, libs, sources, headers, resources and languages
 # --------------------------------------------------------------------

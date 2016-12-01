@@ -50,7 +50,7 @@ private:
 
   // It's just a cache to save values computed by `filterAcceptsRow`
   // and reused by `lessThan`.
-  mutable QHash<const ContactModel *, int> m_weights;
+  mutable QHash<const ContactModel *, unsigned int> m_weights;
 
   bool m_use_connected_filter;
 };

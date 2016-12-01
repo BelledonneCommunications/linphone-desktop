@@ -47,9 +47,7 @@ public:
 
   ChatModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
-  int rowCount (const QModelIndex &index = QModelIndex()) const {
-    return m_entries.count();
-  }
+  int rowCount (const QModelIndex &index = QModelIndex()) const;
 
   QHash<int, QByteArray> roleNames () const;
   QVariant data (const QModelIndex &index, int role) const;
