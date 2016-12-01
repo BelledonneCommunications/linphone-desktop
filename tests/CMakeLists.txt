@@ -12,21 +12,22 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-# -Wold-style-cast \
+#
 set(CUSTOM_FLAGS "\
 -Wcast-align \
 -Wconversion \
+-Werror=suggest-override \
 -Wextra \
 -Wfloat-equal \
 -Winit-self \
 -Winline \
 -Wlogical-op \
+-Wold-style-cast \
 -Woverloaded-virtual \
 -Wpointer-arith \
+-Wsuggest-override \
 -Wuninitialized \
 -Wunused \
--Wsuggest-override \
--Werror=suggest-override \
 ")
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
 
