@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtGraphicalEffects 1.0
 
+import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
@@ -8,11 +9,13 @@ import Utils 1.0
 // ===================================================================
 
 Item {
-  property alias image: imageToFilter.source
+  property alias image: roundedImage.source
   property alias presenceLevel: presenceLevel.level
   property string username
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
+
+  // -----------------------------------------------------------------
 
   function _computeInitials () {
     var result = username.match(_initialsRegex)
@@ -29,16 +32,8 @@ Item {
     )
   }
 
-  // Image mask. (Circle)
-  Rectangle {
-    id: mask
+  // -----------------------------------------------------------------
 
-    anchors.fill: parent
-    color: AvatarStyle.mask.color
-    radius: AvatarStyle.mask.radius
-  }
-
-  // Initials.
   Text {
     anchors.centerIn: parent
     color: AvatarStyle.initials.color
@@ -55,24 +50,13 @@ Item {
     text: _computeInitials()
   }
 
-  Image {
+  RoundedImage {
+    id: roundedImage
+
     anchors.fill: parent
-    id: imageToFilter
-    fillMode: Image.PreserveAspectFit
-
-    // Image must be invisible.
-    // The only visible image is the OpacityMask!
-    visible: false
+    backgroundColor: AvatarStyle.backgroundColor
   }
 
-  // Avatar.
-  OpacityMask {
-    anchors.fill: imageToFilter
-    maskSource: mask
-    source: imageToFilter
-  }
-
-  // Presence.
   PresenceLevel {
     id: presenceLevel
 
