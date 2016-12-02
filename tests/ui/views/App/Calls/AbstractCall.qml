@@ -5,6 +5,8 @@ import Common 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 
+import App.Styles 1.0
+
 // ===================================================================
 
 Rectangle {
@@ -22,12 +24,12 @@ Rectangle {
 
   // -----------------------------------------------------------------
 
-  color: '#E8E8E8'
+  color: StartingCallStyle.backgroundColor
 
   ColumnLayout {
     anchors {
       fill: parent
-      topMargin: 26
+      topMargin: StartingCallStyle.header.topMargin
     }
 
     spacing: 0
@@ -37,18 +39,17 @@ Rectangle {
     // ---------------------------------------------------------------
 
     Column {
-      spacing: 10
-
       Layout.fillWidth: true
+      spacing: StartingCallStyle.header.spacing
 
       Text {
         id: callType
 
-        color: '#96A5B1'
+        color: StartingCallStyle.callType.color
 
         font {
           bold: true
-          pointSize: 17
+          pointSize: StartingCallStyle.callType.fontSize
         }
 
         horizontalAlignment: Text.AlignHCenter
@@ -58,6 +59,16 @@ Rectangle {
       CaterpillarAnimation {
         anchors.horizontalCenter: parent.horizontalCenter
         visible: abstractCall.isOutgoing
+      }
+
+      ContactDescription {
+        id: contactDescription
+
+        username: LinphoneUtils.getContactUsername(_contact)
+        sipAddress: abstractCall.sipAddress
+        height: StartingCallStyle.contactDescriptionHeight
+        horizontalTextAlignment: Text.AlignHCenter
+        width: parent.width
       }
     }
 
@@ -70,46 +81,28 @@ Rectangle {
 
       Layout.fillWidth: true
       Layout.fillHeight: true
-      Layout.margins: 20
+      Layout.margins: StartingCallStyle.containerMargins
 
-      Item {
-        anchors.verticalCenter: parent.verticalCenter
-        implicitHeight: contactDescription.height + avatar.height
-        width: parent.width
+      Avatar {
+        id: avatar
 
-        ContactDescription {
-          id: contactDescription
+        function _computeAvatarSize () {
+          var height = container.height
+          var width = container.width
 
-          username: LinphoneUtils.getContactUsername(_contact)
-          sipAddress: abstractCall.sipAddress
-          height: 60
-          horizontalTextAlignment: Text.AlignHCenter
-          width: parent.width
+          var size = height < StartingCallStyle.avatar.maxSize && height > 0
+              ? height
+              : StartingCallStyle.avatar.maxSize
+          return size < width ? size : width
         }
 
-        Avatar {
-          id: avatar
+        anchors.centerIn: parent
+        backgroundColor: StartingCallStyle.avatar.backgroundColor
+        image: _contact.avatar
+        username: contactDescription.username
 
-          function _computeAvatarSize () {
-            var height = container.height - contactDescription.height
-            var width = container.width
-
-            var size = height < 250 && height > 0 ? height : 250
-            return size < width ? size : width
-          }
-
-          anchors {
-            top: contactDescription.bottom
-            horizontalCenter: parent.horizontalCenter
-          }
-
-          backgroundColor: '#A1A1A1'
-          image: _contact.avatar
-          username: contactDescription.username
-
-          height: _computeAvatarSize()
-          width: height
-        }
+        height: _computeAvatarSize()
+        width: height
       }
     }
 
@@ -120,9 +113,8 @@ Rectangle {
     Item {
       id: actionArea
 
-      Layout.alignment: Qt.AlignHCenter
       Layout.fillWidth: true
-      Layout.preferredHeight: 100
+      Layout.preferredHeight: StartingCallStyle.actionAreaHeight
     }
   }
 }

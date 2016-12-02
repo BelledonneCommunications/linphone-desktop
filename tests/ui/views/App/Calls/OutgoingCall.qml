@@ -5,6 +5,7 @@ import Common 1.0
 // ===================================================================
 
 AbstractCall {
+  isOutgoing: true
   callTypeLabel: isVideoCall
     ? 'OUTGOING VIDEO CALL'
     : 'OUTGOING AUDIO CALL'

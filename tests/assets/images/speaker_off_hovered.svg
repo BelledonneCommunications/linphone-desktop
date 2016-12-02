@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>speaker_on</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="speaker_on">
+            <path d="M20,40 C31.045695,40 40,31.045695 40,20 C40,8.954305 31.045695,0 20,0 C8.954305,0 0,8.954305 0,20 C0,31.045695 8.954305,40 20,40 Z" fill="#4B5964"></path>
+            <path d="M10.1559954,23.7737278 L15.8840871,23.7737278 L22.3361811,29 L22.3361811,11 L15.8840871,16.2259714 L10,16.2259714 L10,23.7737278 L10.1559954,23.7737278 L10.1559954,23.7737278 Z M25.5099238,21.7675107 C26.548364,20.7459012 26.548364,19.0898471 25.5099238,18.0688393 M27.9740401,23.254199 C29.8472089,21.4119328 29.8475148,18.4241163 27.9740401,16.5818501" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </g>
+    </g>
+</svg>
