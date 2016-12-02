@@ -89,3 +89,6 @@
 [submodule "submodules/bcunit"]
 	path = submodules/bcunit
 	url = git://git.linphone.org/bcunit.git
+[submodule "submodules/belle-msrp"]
+	path = submodules/belle-msrp
+	url = git://git.linphone.org/belle-msrp.git
