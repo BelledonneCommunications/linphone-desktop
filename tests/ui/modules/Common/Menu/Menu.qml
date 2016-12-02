@@ -71,7 +71,6 @@ Rectangle {
                 : '_normal'
             )
             iconSize: MenuStyle.entry.iconSize
-            Layout.preferredWidth: iconSize
           }
 
           Text {

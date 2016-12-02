@@ -2,21 +2,23 @@ import QtQuick 2.7
 
 import Common 1.0
 
+import App.Styles 1.0
+
 // ===================================================================
 
-AbstractCall {
+AbstractStartingCall {
   isOutgoing: true
   callTypeLabel: isVideoCall
-    ? 'OUTGOING VIDEO CALL'
-    : 'OUTGOING AUDIO CALL'
+    ? qsTr('outgoingVideoCall')
+    : qsTr('outgoingAudioCall')
 
   ActionBar {
     anchors {
       left: parent.left
-      leftMargin: 50
+      leftMargin: StartingCallStyle.leftButtonsGroupMargin
       verticalCenter: parent.verticalCenter
     }
-    iconSize: 40
+    iconSize: StartingCallStyle.iconSize
 
     ActionSwitch {
       icon: 'micro'
@@ -32,18 +34,18 @@ AbstractCall {
   Rectangle {
     anchors.centerIn: parent
     color: 'red'
-    width: 130
-    height: 80
+    height: StartingCallStyle.userVideo.height
     visible: isVideoCall
+    width: StartingCallStyle.userVideo.width
   }
 
   ActionBar {
     anchors {
       verticalCenter: parent.verticalCenter
       right: parent.right
-      rightMargin: 85
+      rightMargin: StartingCallStyle.rightButtonsGroupMargin
     }
-    iconSize: 40
+    iconSize: StartingCallStyle.iconSize
 
     ActionButton {
       icon: 'hangup'

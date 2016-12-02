@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import LinphoneUtils 1.0
 
 // ===================================================================
 
@@ -19,7 +20,7 @@ RowLayout {
     Avatar {
       anchors.centerIn: parent
       height: ChatStyle.entry.message.incoming.avatarSize
-      username: contact.username
+      username: LinphoneUtils.getContactUsername(_contact)
       width: ChatStyle.entry.message.incoming.avatarSize
     }
   }

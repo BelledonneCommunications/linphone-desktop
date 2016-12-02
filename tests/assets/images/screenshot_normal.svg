@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>screenshot_default</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="8.5" y="12" width="23" height="16" rx="1"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="23" height="16" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="screenshot_default">
+            <path d="M20,40 C31.045695,40 40,31.045695 40,20 C40,8.954305 31.045695,0 20,0 C8.954305,0 0,8.954305 0,20 C0,31.045695 8.954305,40 20,40 Z" fill="#E8E8E8" opacity="0.85"></path>
+            <path d="M9.5,14.5 L30.523796,14.5" stroke="#6B7A86" stroke-linecap="square"></path>
+            <use stroke="#6B7A86" mask="url(#mask-2)" stroke-width="2" xlink:href="#path-1"></use>
+            <path d="M20,16.3333333 L20,18.3333333" stroke="#6B7A86" stroke-linecap="square"></path>
+            <path d="M20,23.6666667 L20,25.6666667" stroke="#6B7A86" stroke-linecap="square"></path>
+            <path d="M23.6666667,20 L23.6666667,22" stroke="#6B7A86" stroke-linecap="square" transform="translate(23.666667, 21.000000) rotate(-270.000000) translate(-23.666667, -21.000000) "></path>
+            <path d="M16.3333333,20 L16.3333333,22" stroke="#6B7A86" stroke-linecap="square" transform="translate(16.333333, 21.000000) rotate(-270.000000) translate(-16.333333, -21.000000) "></path>
+            <circle stroke="#6B7A86" cx="20" cy="21" r="3.66666667"></circle>
+        </g>
+    </g>
+</svg>

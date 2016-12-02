@@ -12,7 +12,6 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#
 set(CUSTOM_FLAGS "\
 -Wcast-align \
 -Wconversion \
@@ -166,6 +165,6 @@ add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
 add_dependencies(${LINPHONE_EXEC} update_translations)
 add_dependencies(update_translations check_qml)
 
-target_include_directories(${LINPHONE_EXEC} PRIVATE "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/include/")
+target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/include/")
 
 target_link_libraries(${LINPHONE_EXEC} ${LIBS})

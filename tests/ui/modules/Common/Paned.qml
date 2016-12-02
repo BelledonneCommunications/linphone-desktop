@@ -39,7 +39,6 @@ Item {
   property var minimumRightLimit: 0
 
   property bool _isClosed
-  property int _savedContentAWidth
 
   // Internal limits.
   property var _maximumLeftLimit
@@ -47,6 +46,28 @@ Item {
   property var _minimumLeftLimit
   property var _minimumRightLimit
 
+  // -----------------------------------------------------------------
+  // Public functions.
+  // -----------------------------------------------------------------
+
+  function isClosed () {
+    return _isClosed
+  }
+
+  function open () {
+    if (_isClosed) {
+      openingTransition.running = true
+    }
+  }
+
+  function close () {
+    if (!_isClosed) {
+      _close()
+    }
+  }
+
+  // -----------------------------------------------------------------
+  // Private functions.
   // -----------------------------------------------------------------
 
   function _getLimitValue (limit) {
@@ -188,7 +209,6 @@ Item {
 
   function _close () {
     _isClosed = true
-    _savedContentAWidth = contentA.width
     closingTransition.running = true
   }
 
@@ -227,7 +247,6 @@ Item {
       : defaultChildAWidth
 
     _isClosed = defaultClosed
-    _savedContentAWidth = contentA.width
   }
 
   Item {
@@ -279,7 +298,9 @@ Item {
     duration: PanedStyle.transitionDuration
     property: 'width'
     target: contentA
-    to: _savedContentAWidth
+    to: closingEdge === Qt.LeftEdge
+      ? minimumLeftLimit
+      : container.width - minimumRightLimit - handle.width
 
     onRunningChanged: !running && _open()
   }

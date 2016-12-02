@@ -10,10 +10,11 @@ import Utils 1.0
 // ===================================================================
 
 ColumnLayout {
-  property var contact
-
-  // Can be a model or a proxy chat model.
   property alias proxyModel: chat.model
+
+  property var _contact: ContactsListModel.mapSipAddressToContact(
+    proxyModel.sipAddress
+  ) || proxyModel.sipAddress
 
   // -----------------------------------------------------------------
 

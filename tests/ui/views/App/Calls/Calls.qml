@@ -19,8 +19,8 @@ Window {
   Paned {
     anchors.fill: parent
     defaultChildAWidth: 250
-    maximumLeftLimit: 300
-    minimumLeftLimit: 150
+    maximumLeftLimit: 250
+    minimumLeftLimit: 110
 
     // ---------------------------------------------------------------
     // Calls list.
@@ -76,120 +76,26 @@ Window {
     childB: Paned {
       anchors.fill: parent
       closingEdge: Qt.RightEdge
-      defaultChildAWidth: 300
       defaultClosed: true
-      minimumLeftLimit: 350
-      minimumRightLimit: 250
+      minimumLeftLimit: 380
+      minimumRightLimit: 300
       resizeAInPriority: true
 
       // Call.
-      childA: OutgoingCall {
+      childA: Incall {
         anchors.fill: parent
         sipAddress: 'sip:erwan.croze@sip.linphone.org'
       }
 
-      childB: Rectangle {
-        anchors.fill: parent
-        color: 'green'
-      }
-
       // Chat.
-      //childB: Chat {
-      //  anchors.fill: parent
-      //}
-    }
-  }
+      childB: Chat {
+        anchors.fill: parent
+        proxyModel: ChatProxyModel {
+          id: chatProxyModel
 
-  // -----------------------------------------------------------------
-  // TMP
-  // -----------------------------------------------------------------
-
-  ListModel {
-    id: callsList
-
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'do_not_disturb'
-      $sipAddress: 'charles.henri.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'disconnected'
-      $sipAddress: 'yesyes.nono.sip.linphone.org'
-    }
-    ListElement {
-      $presence: 'connected'
-      $sipAddress: 'nsa.sip.linphone.org'
+          sipAddress: 'sip:erwan.croze@sip.linphone.org'
+        }
+      }
     }
   }
 }

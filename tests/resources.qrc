@@ -10,9 +10,25 @@
     <file>assets/images/call_hovered.svg</file>
     <file>assets/images/call_normal.svg</file>
     <file>assets/images/call_pressed.svg</file>
+    <file>assets/images/call_quality_0.svg</file>
+    <file>assets/images/call_quality_1.svg</file>
+    <file>assets/images/call_quality_2.svg</file>
+    <file>assets/images/call_quality_3.svg</file>
+    <file>assets/images/camera_off_hovered.svg</file>
+    <file>assets/images/camera_off_normal.svg</file>
+    <file>assets/images/camera_off_pressed.svg</file>
+    <file>assets/images/camera_on_hovered.svg</file>
+    <file>assets/images/camera_on_normal.svg</file>
+    <file>assets/images/camera_on_pressed.svg</file>
     <file>assets/images/chat_error.svg</file>
     <file>assets/images/chat_hovered.svg</file>
     <file>assets/images/chat_normal.svg</file>
+    <file>assets/images/chat_off_hovered.svg</file>
+    <file>assets/images/chat_off_normal.svg</file>
+    <file>assets/images/chat_off_pressed.svg</file>
+    <file>assets/images/chat_on_hovered.svg</file>
+    <file>assets/images/chat_on_normal.svg</file>
+    <file>assets/images/chat_on_pressed.svg</file>
     <file>assets/images/chat_pressed.svg</file>
     <file>assets/images/chat_send.svg</file>
     <file>assets/images/chevron_green.svg</file>
@@ -32,6 +48,9 @@
     <file>assets/images/delete_pressed.svg</file>
     <file>assets/images/ended_call.svg</file>
     <file>assets/images/filter.svg</file>
+    <file>assets/images/fullscreen_hovered.svg</file>
+    <file>assets/images/fullscreen_normal.svg</file>
+    <file>assets/images/fullscreen_pressed.svg</file>
     <file>assets/images/hangup_hovered.svg</file>
     <file>assets/images/hangup_normal.svg</file>
     <file>assets/images/hangup_pressed.svg</file>
@@ -52,7 +71,22 @@
     <file>assets/images/micro_on_pressed.svg</file>
     <file>assets/images/missed_incoming_call.svg</file>
     <file>assets/images/missed_outgoing_call.svg</file>
+    <file>assets/images/options_hovered.svg</file>
+    <file>assets/images/options_normal.svg</file>
+    <file>assets/images/options_pressed.svg</file>
     <file>assets/images/outgoing_call.svg</file>
+    <file>assets/images/pause_off_hovered.svg</file>
+    <file>assets/images/pause_off_normal.svg</file>
+    <file>assets/images/pause_off_pressed.svg</file>
+    <file>assets/images/pause_on_hovered.svg</file>
+    <file>assets/images/pause_on_normal.svg</file>
+    <file>assets/images/pause_on_pressed.svg</file>
+    <file>assets/images/record_hovered.svg</file>
+    <file>assets/images/record_normal.svg</file>
+    <file>assets/images/record_pressed.svg</file>
+    <file>assets/images/screenshot_hovered.svg</file>
+    <file>assets/images/screenshot_normal.svg</file>
+    <file>assets/images/screenshot_pressed.svg</file>
     <file>assets/images/search.svg</file>
     <file>assets/images/speaker_off_hovered.svg</file>
     <file>assets/images/speaker_off_normal.svg</file>
@@ -167,8 +201,9 @@
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/uri-tools.js</file>
     <file>ui/scripts/Utils/utils.js</file>
-    <file>ui/views/App/Calls/AbstractCall.qml</file>
+    <file>ui/views/App/Calls/AbstractStartingCall.qml</file>
     <file>ui/views/App/Calls/Calls.qml</file>
+    <file>ui/views/App/Calls/Incall.qml</file>
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/MainWindow/Contact.qml</file>

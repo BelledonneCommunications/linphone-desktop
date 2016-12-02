@@ -64,10 +64,10 @@ Rectangle {
       ContactDescription {
         id: contactDescription
 
-        username: LinphoneUtils.getContactUsername(_contact)
-        sipAddress: abstractCall.sipAddress
         height: StartingCallStyle.contactDescriptionHeight
         horizontalTextAlignment: Text.AlignHCenter
+        sipAddress: abstractCall.sipAddress
+        username: LinphoneUtils.getContactUsername(_contact)
         width: parent.width
       }
     }
@@ -79,8 +79,8 @@ Rectangle {
     Item {
       id: container
 
-      Layout.fillWidth: true
       Layout.fillHeight: true
+      Layout.fillWidth: true
       Layout.margins: StartingCallStyle.containerMargins
 
       Avatar {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>fullscreen_default</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="fullscreen_default">
+            <path d="M20,40 C31.045695,40 40,31.045695 40,20 C40,8.954305 31.045695,0 20,0 C8.954305,0 0,8.954305 0,20 C0,31.045695 8.954305,40 20,40 Z" fill="#E8E8E8" opacity="0.85"></path>
+            <path d="M24.1451842,19.6252119 L27.839042,15.779058 M24.1482844,11.9329042 L27.839042,15.779058 M27.4600456,15.779058 L20.1467343,15.779058" stroke="#6B7A86" stroke-linecap="round" stroke-linejoin="round" transform="translate(23.992888, 15.779058) rotate(-45.000000) translate(-23.992888, -15.779058) "></path>
+            <path d="M15.7839802,27.8085179 L19.4778379,23.9623641 M15.7870803,20.1162102 L19.4778379,23.9623641 M19.0988416,23.9623641 L11.7855303,23.9623641" stroke="#6B7A86" stroke-linecap="round" stroke-linejoin="round" transform="translate(15.631684, 23.962364) rotate(-225.000000) translate(-15.631684, -23.962364) "></path>
+        </g>
+    </g>
+</svg>

@@ -11,15 +11,8 @@ Item {
   property var iconSize // Required.
   property string icon
 
-  Component.onCompleted: {
-    if (width == null) {
-      width = iconSize
-    }
-
-    if (height == null) {
-      height = iconSize
-    }
-  }
+  height: iconSize
+  width: iconSize
 
   Image {
     function _checkIconSize () {

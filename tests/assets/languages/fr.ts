@@ -219,6 +219,17 @@
     </message>
 </context>
 <context>
+    <name>IncomingCall</name>
+    <message>
+        <source>incomingVideoCall</source>
+        <translation>APPEL VIDEO ENTRANT</translation>
+    </message>
+    <message>
+        <source>incomingAudioCall</source>
+        <translation>APPEL AUDIO ENTRANT</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
@@ -301,6 +312,17 @@
     <message>
         <source>cancel</source>
         <translation>ANNULER</translation>
+    </message>
+</context>
+<context>
+    <name>OutgoingCall</name>
+    <message>
+        <source>outgoingVideoCall</source>
+        <translation>APPEL VIDEO SORTANT</translation>
+    </message>
+    <message>
+        <source>outgoingAudioCall</source>
+        <translation>APPEL AUDIO SORTANT</translation>
     </message>
 </context>
 <context>

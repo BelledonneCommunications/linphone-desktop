@@ -65,8 +65,8 @@ DialogPlus {
 
           // Presence.
           Icon {
-            Layout.preferredHeight: 20
-            Layout.preferredWidth: 20
+            Layout.preferredHeight: 20 // TMP
+            Layout.preferredWidth: 20 // TMP
             icon: 'led_' + $presence
           }
 

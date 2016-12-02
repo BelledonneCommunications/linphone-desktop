@@ -1,15 +1,17 @@
 import Common 1.0
 
+import App.Styles 1.0
+
 // ===================================================================
 
-AbstractCall {
+AbstractStartingCall {
   callTypeLabel: isVideoCall
-    ? 'INCOMING VIDEO CALL'
-    : 'INCOMING AUDIO CALL'
+    ? qsTr('incomingVideoCall')
+    : qsTr('incomingAudioCall')
 
   ActionBar {
     anchors.centerIn: parent
-    iconSize: 40
+    iconSize: StartingCallStyle.iconSize
 
     ActionButton {
       icon: 'video_call_accept'
@@ -24,9 +26,9 @@ AbstractCall {
     anchors {
       verticalCenter: parent.verticalCenter
       right: parent.right
-      rightMargin: 85
+      rightMargin: StartingCallStyle.rightButtonsGroupMargin
     }
-    iconSize: 40
+    iconSize: StartingCallStyle.iconSize
 
     ActionButton {
       icon: 'hangup'

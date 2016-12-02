@@ -64,7 +64,7 @@ protected:
 
 private:
   QString getSipAddress () const {
-    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->getSipAddress();
+    return static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->getSipAddress();
   }
 
   void setSipAddress (const QString &sip_address) {

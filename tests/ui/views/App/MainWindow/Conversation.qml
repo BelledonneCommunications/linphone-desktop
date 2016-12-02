@@ -153,7 +153,6 @@ ColumnLayout  {
   Chat {
     Layout.fillHeight: true
     Layout.fillWidth: true
-    contact: parent._contact
     proxyModel: ChatProxyModel {
       id: chatProxyModel
 
