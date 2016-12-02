@@ -1,3 +1,5 @@
+import QtQuick 2.7
+
 import Common 1.0
 
 // ===================================================================
@@ -9,19 +11,29 @@ AbstractCall {
 
   ActionBar {
     anchors {
-			left: parent.left
-			leftMargin: 50
-			verticalCenter: parent.verticalCenter
-		}
-		iconSize: 40
+      left: parent.left
+      leftMargin: 50
+      verticalCenter: parent.verticalCenter
+    }
+    iconSize: 40
 
     ActionSwitch {
       icon: 'micro'
+      onClicked: enabled = !enabled
     }
 
     ActionSwitch {
       icon: 'speaker'
+      onClicked: enabled = !enabled
     }
+  }
+
+  Rectangle {
+    anchors.centerIn: parent
+    color: 'red'
+    width: 130
+    height: 80
+    visible: isVideoCall
   }
 
   ActionBar {

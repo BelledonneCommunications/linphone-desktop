@@ -58,6 +58,7 @@ Item {
     }
 
     text: _computeInitials()
+    visible: roundedImage.status !== Image.Ready
   }
 
   PresenceLevel {
@@ -68,7 +69,7 @@ Item {
       right: parent.right
     }
 
-    height: parent.height / 3
-    width: parent.width / 3
+    height: parent.height / 4
+    width: parent.width / 4
   }
 }
