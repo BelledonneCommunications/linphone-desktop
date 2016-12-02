@@ -83,7 +83,7 @@ Window {
       resizeAInPriority: true
 
       // Call.
-      childA: IncomingCall {
+      childA: OutgoingCall {
         anchors.fill: parent
         sipAddress: 'sip:erwan.croze@sip.linphone.org'
       }

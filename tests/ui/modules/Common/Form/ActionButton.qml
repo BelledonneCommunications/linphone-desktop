@@ -17,6 +17,8 @@ Button {
   // `icon`_pressed, `icon`_hovered and `icon`_normal.
   property string icon
 
+	// -----------------------------------------------------------------
+
   function _getIcon () {
     if (!useStates) {
       return button.icon
@@ -28,6 +30,8 @@ Button {
         : (button.hovered ? '_hovered' : '_normal')
     )
   }
+
+	// -----------------------------------------------------------------
 
   background: Rectangle {
     color: 'transparent'

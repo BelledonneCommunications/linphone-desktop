@@ -44,10 +44,16 @@
     <file>assets/images/led_red.svg</file>
     <file>assets/images/led_white.svg</file>
     <file>assets/images/linphone.png</file>
+    <file>assets/images/micro_on_hovered.svg</file>
+    <file>assets/images/micro_on_normal.svg</file>
+    <file>assets/images/micro_on_pressed.svg</file>
     <file>assets/images/missed_incoming_call.svg</file>
     <file>assets/images/missed_outgoing_call.svg</file>
     <file>assets/images/outgoing_call.svg</file>
     <file>assets/images/search.svg</file>
+    <file>assets/images/speaker_on_hovered.svg</file>
+    <file>assets/images/speaker_on_normal.svg</file>
+    <file>assets/images/speaker_on_pressed.svg</file>
     <file>assets/images/tooltip_arrow_bottom.svg</file>
     <file>assets/images/tooltip_arrow_left.svg</file>
     <file>assets/images/tooltip_arrow_right.svg</file>
@@ -71,6 +77,7 @@
     <file>ui/modules/Common/Form/AbstractTextButton.qml</file>
     <file>ui/modules/Common/Form/ActionBar.qml</file>
     <file>ui/modules/Common/Form/ActionButton.qml</file>
+    <file>ui/modules/Common/Form/ActionSwitch.qml</file>
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
     <file>ui/modules/Common/Form/ExclusiveButtons.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>

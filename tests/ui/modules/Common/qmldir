@@ -33,6 +33,7 @@ ForceScrollBar       1.0 ForceScrollBar.qml
 # Form
 ActionBar            1.0 Form/ActionBar.qml
 ActionButton         1.0 Form/ActionButton.qml
+ActionSwitch         1.0 Form/ActionSwitch.qml
 CheckBoxText         1.0 Form/CheckBoxText.qml
 ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
 LightButton          1.0 Form/LightButton.qml

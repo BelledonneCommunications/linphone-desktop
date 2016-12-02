@@ -8,15 +8,19 @@ AbstractCall {
     : 'OUTGOING AUDIO CALL'
 
   ActionBar {
-    anchors.centerIn: parent
-    iconSize: 40
+    anchors {
+			left: parent.left
+			leftMargin: 50
+			verticalCenter: parent.verticalCenter
+		}
+		iconSize: 40
 
-    ActionButton {
-      icon: 'video_call_accept'
+    ActionSwitch {
+      icon: 'micro'
     }
 
-    ActionButton {
-      icon: 'call_accept'
+    ActionSwitch {
+      icon: 'speaker'
     }
   }
 
