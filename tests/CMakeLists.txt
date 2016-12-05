@@ -46,6 +46,7 @@ foreach (package ${QT5_PACKAGES})
 endforeach ()
 
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
+list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbelcard.so")
 
 set(SOURCES
   src/app/App.cpp

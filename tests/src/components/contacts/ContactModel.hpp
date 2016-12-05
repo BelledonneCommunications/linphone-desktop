@@ -23,19 +23,20 @@ class ContactModel : public QObject {
   Q_PROPERTY(
     QString avatar
     READ getAvatar
+    WRITE setAvatar
     NOTIFY contactUpdated
   );
 
   Q_PROPERTY(
     Presence::PresenceStatus presenceStatus
     READ getPresenceStatus
-    CONSTANT
+    NOTIFY contactUpdated
   );
 
   Q_PROPERTY(
     Presence::PresenceLevel presenceLevel
     READ getPresenceLevel
-    CONSTANT
+    NOTIFY contactUpdated
   );
 
   Q_PROPERTY(
@@ -59,6 +60,8 @@ private:
   QString getAvatar () const {
     return "";
   }
+
+  bool setAvatar (const QString &path);
 
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;

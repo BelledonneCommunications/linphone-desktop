@@ -9,7 +9,7 @@ QtObject {
   property color backgroundColor: Colors.g20
 
   property QtObject contentItem: QtObject {
-    property int implicitHeight: 100
+    property int implicitHeight: 8
     property int implicitWidth: 8
     property int radius: 10
   }

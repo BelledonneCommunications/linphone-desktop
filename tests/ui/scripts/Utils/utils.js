@@ -388,6 +388,12 @@ function isInteger (integer) {
 
 // -------------------------------------------------------------------
 
+function isObject (object) {
+  return object !== null && typeof object === 'object'
+}
+
+// -------------------------------------------------------------------
+
 function isString (string) {
   return typeof string === 'string' || string instanceof String
 }

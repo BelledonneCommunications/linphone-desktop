@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -20,10 +21,12 @@ ColumnLayout  {
     sipAddress
   ) || sipAddress
 
+  property var _info: {}
+
   // -----------------------------------------------------------------
 
   function _removeContact () {
-    Utils.openConfirmDialog(this, {
+    Utils.openConfirmDialog(window, {
       descriptionText: qsTr('removeContactDescription'),
       exitHandler: function (status) {
         if (status) {
@@ -35,9 +38,30 @@ ColumnLayout  {
     })
   }
 
+  function _setAvatar (path) {
+    if (!path) {
+      return
+    }
+
+    if (Utils.isObject(_contact)) {
+      _contact.avatar = path.match(/^(?:file:\/\/)?(.*)$/)[1]
+    }
+
+    // TODO: Not registered contact.
+  }
+
   // -----------------------------------------------------------------
 
   spacing: 0
+
+  FileDialog {
+    id: avatarChooser
+
+    folder: shortcuts.home
+    title: qsTr('avatarChooserTitle')
+
+    onAccepted: _setAvatar(fileUrls[0])
+  }
 
   // -----------------------------------------------------------------
   // Info bar.
@@ -64,6 +88,22 @@ ColumnLayout  {
         width: ContactEditStyle.infoBar.avatarSize
 
         username: LinphoneUtils.getContactUsername(_contact)
+        visible: isLoaded()
+
+        MouseArea {
+          anchors.fill: parent
+          onClicked: avatarChooser.open()
+        }
+      }
+
+      ActionButton {
+        Layout.preferredHeight: ContactEditStyle.infoBar.avatarSize
+        Layout.preferredWidth: ContactEditStyle.infoBar.avatarSize
+
+        icon: 'contact_card_photo'
+        visible: !avatar.isLoaded()
+
+        onClicked: avatarChooser.open()
       }
 
       Text {
@@ -83,6 +123,7 @@ ColumnLayout  {
         Layout.alignment: Qt.AlignRight
         iconSize: ContactEditStyle.infoBar.buttons.size
         spacing: ContactEditStyle.infoBar.buttons.spacing
+        visible: Utils.isObject(_contact)
 
         ActionButton {
           icon: 'history'
@@ -107,16 +148,17 @@ ColumnLayout  {
     Layout.fillHeight: true
     Layout.fillWidth: true
     ScrollBar.vertical: ForceScrollBar {}
+
     boundsBehavior: Flickable.StopAtBounds
     clip: true
-    contentHeight: content.height
+    contentHeight: infoList.height
     flickableDirection: Flickable.VerticalFlick
 
     ColumnLayout {
       anchors.left: parent.left
-      anchors.margins: 20
+      anchors.margins: 40
       anchors.right: parent.right
-      id: content
+      id: infoList
 
       ListForm {
         title: qsTr('sipAccounts')

@@ -9,8 +9,10 @@ namespace Database {
   // Returns the databases paths.
   // If files cannot be created or are unavailable, a empty string is returned.
   // Use the directories separator of used OS.
-  std::string getFriendsListPath ();
+  std::string getAvatarsPath ();
+
   std::string getCallHistoryPath ();
+  std::string getFriendsListPath ();
   std::string getMessageHistoryPath ();
 };
 

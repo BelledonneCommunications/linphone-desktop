@@ -130,6 +130,10 @@
         <source>webSitesInput</source>
         <translation type="unfinished">URL</translation>
     </message>
+    <message>
+        <source>avatarChooserTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>

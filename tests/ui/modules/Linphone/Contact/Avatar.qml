@@ -20,6 +20,10 @@ Item {
 
   // -----------------------------------------------------------------
 
+  function isLoaded () {
+    return roundedImage.status === Image.Ready
+  }
+
   function _computeInitials () {
     var result = username.match(_initialsRegex)
 
