@@ -50,6 +50,7 @@ list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbelcard.so")
 
 set(SOURCES
   src/app/App.cpp
+  src/app/AvatarProvider.cpp
   src/app/Database.cpp
   src/app/DefaultTranslator.cpp
   src/app/Logger.cpp
@@ -70,6 +71,7 @@ set(SOURCES
 
 set(HEADERS
   src/app/App.hpp
+  src/app/AvatarProvider.hpp
   src/app/Database.hpp
   src/app/DefaultTranslator.hpp
   src/app/Logger.hpp
