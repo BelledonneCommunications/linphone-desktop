@@ -42,6 +42,9 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
       .arg(current_locale.name());
   }
 
+  // Provide avatars loader.
+  m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, &m_avatar_provider);
+
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
   // Provide `+custom` folders for custom components.

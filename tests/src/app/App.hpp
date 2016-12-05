@@ -6,6 +6,7 @@
 #include <QQmlFileSelector>
 #include <QSystemTrayIcon>
 
+#include "AvatarProvider.hpp"
 #include "DefaultTranslator.hpp"
 
 class Notifier;
@@ -51,6 +52,7 @@ private:
   QQmlFileSelector *m_file_selector = nullptr;
   QSystemTrayIcon *m_system_tray_icon = nullptr;
 
+  AvatarProvider m_avatar_provider;
   DefaultTranslator m_default_translator;
   QTranslator m_english_translator;
 

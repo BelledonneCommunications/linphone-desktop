@@ -16,6 +16,7 @@ public:
     const QSize &requested_size
   ) override;
 
+  static const QString PROVIDER_ID;
 private:
   QString m_avatars_path;
 };

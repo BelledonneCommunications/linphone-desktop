@@ -5,6 +5,8 @@
 
 // ===================================================================
 
+const QString AvatarProvider::PROVIDER_ID = "avatar";
+
 AvatarProvider::AvatarProvider () :
   QQuickImageProvider(
     QQmlImageProviderBase::Image,
@@ -15,8 +17,8 @@ AvatarProvider::AvatarProvider () :
 
 QImage AvatarProvider::requestImage (
   const QString &id,
-  QSize *size,
-  const QSize &requested_size
+  QSize *,
+  const QSize &
 ) {
-  // TODO: use a shared image from contact.
+  return QImage(m_avatars_path + id);
 }
