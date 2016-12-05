@@ -21,6 +21,7 @@ Item {
 
     anchors.fill: parent
     icon: parent.icon + (parent.enabled ? '_on' : '_off')
+    iconSize: parent.iconSize
 
     onClicked: parent.clicked()
   }

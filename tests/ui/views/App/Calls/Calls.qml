@@ -77,7 +77,7 @@ Window {
       anchors.fill: parent
       closingEdge: Qt.RightEdge
       defaultClosed: true
-      minimumLeftLimit: 380
+      minimumLeftLimit: 395
       minimumRightLimit: 300
       resizeAInPriority: true
 
@@ -85,6 +85,7 @@ Window {
       childA: Incall {
         anchors.fill: parent
         sipAddress: 'sip:erwan.croze@sip.linphone.org'
+        isVideoCall: true
       }
 
       // Chat.

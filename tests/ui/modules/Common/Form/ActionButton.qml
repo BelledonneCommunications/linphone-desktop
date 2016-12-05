@@ -38,8 +38,6 @@ Button {
   }
   hoverEnabled: true
 
-  // Ugly hack, use current size, ActionBar size,
-  // or other parent height.
   height: iconSize || parent.iconSize || parent.height
   width: iconSize || parent.iconSize || parent.height
 

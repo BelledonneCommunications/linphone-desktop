@@ -12,7 +12,7 @@ QtObject {
   property int containerMargins: 20
   property int iconSize: 40
   property int leftButtonsGroupMargin: 50
-  property int rightButtonsGroupMargin: 85
+  property int rightButtonsGroupMargin: 50
 
   property QtObject avatar: QtObject {
     property color backgroundColor: Colors.w
