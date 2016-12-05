@@ -77,6 +77,12 @@
     <file>assets/images/micro_on_pressed.svg</file>
     <file>assets/images/missed_incoming_call.svg</file>
     <file>assets/images/missed_outgoing_call.svg</file>
+    <file>assets/images/new_call_hovered.svg</file>
+    <file>assets/images/new_call_normal.svg</file>
+    <file>assets/images/new_call_pressed.svg</file>
+    <file>assets/images/new_conference_hovered.svg</file>
+    <file>assets/images/new_conference_normal.svg</file>
+    <file>assets/images/new_conference_pressed.svg</file>
     <file>assets/images/options_hovered.svg</file>
     <file>assets/images/options_normal.svg</file>
     <file>assets/images/options_pressed.svg</file>

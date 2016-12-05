@@ -1,3 +1,4 @@
+import QtGraphicalEffects 1.0
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
@@ -28,7 +29,52 @@ Window {
 
     childA: Rectangle {
       anchors.fill: parent
-      color: 'yellow'
+      color: '#FFFFFF'
+
+      ColumnLayout {
+        anchors.fill: parent
+
+        Item {
+          Layout.fillWidth: true
+          Layout.preferredHeight: 60
+
+          LinearGradient {
+            anchors.fill: parent
+
+            start: Qt.point(0, 0)
+            end: Qt.point(0, height)
+
+            gradient: Gradient {
+              GradientStop { position: 0.0; color: '#FFFFFF' }
+              GradientStop { position: 1.0; color: '#E3E3E3' }
+            }
+          }
+
+          ActionBar {
+            anchors {
+              left: parent.left
+              leftMargin: 10
+              verticalCenter: parent.verticalCenter
+            }
+
+            iconSize: 40
+
+            ActionButton {
+              icon: 'new_call'
+            }
+
+            ActionButton {
+              icon: 'new_conference'
+            }
+          }
+        }
+
+        ListView {
+          Layout.fillWidth: true
+          Layout.fillHeight: true
+          spacing: 0
+        }
+      }
     }
 
     /* childA: ColumnLayout { */

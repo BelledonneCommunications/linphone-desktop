@@ -198,7 +198,12 @@ ColumnLayout {
                 Layout.preferredWidth: ContactsStyle.contact.username.width
                 color: ContactsStyle.contact.username.color
                 elide: Text.ElideRight
-                font.bold: true
+
+                font {
+                  bold: true
+                  pointSize: ContactsStyle.contact.username.fontSize
+                }
+
                 text: $contact.username
 
                 MouseArea {
