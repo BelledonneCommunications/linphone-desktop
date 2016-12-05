@@ -57,43 +57,86 @@
     <name>Contact</name>
     <message>
         <source>sipAccounts</source>
-        <translation>SIP ACCOUNT(S)</translation>
+        <translation type="vanished">SIP ACCOUNT(S)</translation>
     </message>
     <message>
         <source>address</source>
-        <translation>ADDRESS</translation>
+        <translation type="vanished">ADDRESS</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation>E-MAIL(S)</translation>
+        <translation type="vanished">E-MAIL(S)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation>WEB SITE(S)</translation>
+        <translation type="vanished">WEB SITE(S)</translation>
     </message>
     <message>
         <source>sipAccountsInput</source>
-        <translation>SIP Address</translation>
+        <translation type="vanished">SIP Address</translation>
     </message>
     <message>
         <source>emailsInput</source>
-        <translation>E-mail address</translation>
+        <translation type="vanished">E-mail address</translation>
     </message>
     <message>
         <source>addressInput</source>
-        <translation>Address</translation>
+        <translation type="vanished">Address</translation>
     </message>
     <message>
         <source>webSitesInput</source>
-        <translation>URL</translation>
+        <translation type="vanished">URL</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation>Do you really want remove this contact from your book?</translation>
+        <translation type="vanished">Do you really want remove this contact from your book?</translation>
     </message>
     <message>
         <source>removeContactTitle</source>
-        <translation>Delete confirmation</translation>
+        <translation type="vanished">Delete confirmation</translation>
+    </message>
+</context>
+<context>
+    <name>ContactEdit</name>
+    <message>
+        <source>removeContactDescription</source>
+        <translation type="unfinished">Do you really want remove this contact from your book?</translation>
+    </message>
+    <message>
+        <source>removeContactTitle</source>
+        <translation type="unfinished">Delete confirmation</translation>
+    </message>
+    <message>
+        <source>sipAccounts</source>
+        <translation type="unfinished">SIP ACCOUNT(S)</translation>
+    </message>
+    <message>
+        <source>sipAccountsInput</source>
+        <translation type="unfinished">SIP Address</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished">ADDRESS</translation>
+    </message>
+    <message>
+        <source>addressInput</source>
+        <translation type="unfinished">Address</translation>
+    </message>
+    <message>
+        <source>emails</source>
+        <translation type="unfinished">E-MAIL(S)</translation>
+    </message>
+    <message>
+        <source>emailsInput</source>
+        <translation type="unfinished">E-mail address</translation>
+    </message>
+    <message>
+        <source>webSites</source>
+        <translation type="unfinished">WEB SITE(S)</translation>
+    </message>
+    <message>
+        <source>webSitesInput</source>
+        <translation type="unfinished">URL</translation>
     </message>
 </context>
 <context>

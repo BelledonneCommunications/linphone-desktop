@@ -61,7 +61,7 @@ ColumnLayout {
 
       TextButtonB {
         text: qsTr('addContact')
-        onClicked: window.setView('Contact')
+        onClicked: window.setView('ContactEdit')
       }
     }
   }
@@ -208,7 +208,9 @@ ColumnLayout {
                     : Qt.ArrowCursor
                   hoverEnabled: true
 
-                  onClicked: window.setView('Contact')
+                  onClicked: window.setView('ContactEdit', {
+                    sipAddress: $contact.sipAddress
+                  })
                 }
               }
 

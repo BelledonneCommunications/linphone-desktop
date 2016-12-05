@@ -6,6 +6,7 @@ module App.Styles
 
 singleton StartingCallStyle 1.0 Calls/StartingCallStyle.qml
 
+singleton ContactEditStyle  1.0 MainWindow/ContactEditStyle.qml
 singleton ContactsStyle     1.0 MainWindow/ContactsStyle.qml
 singleton ConversationStyle 1.0 MainWindow/ConversationStyle.qml
 singleton MainWindowStyle   1.0 MainWindow/MainWindowStyle.qml

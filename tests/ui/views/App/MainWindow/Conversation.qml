@@ -96,7 +96,9 @@ ColumnLayout  {
             icon: 'contact_edit'
             iconSize: ConversationStyle.bar.actions.edit.iconSize
 
-            onClicked: window.setView('Contact')
+            onClicked: window.setView('ContactEdit', {
+              sipAddress: conversation.sipAddress
+            })
           }
 
           ActionButton {

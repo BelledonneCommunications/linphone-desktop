@@ -49,43 +49,86 @@
     <name>Contact</name>
     <message>
         <source>sipAccounts</source>
-        <translation>COMPTE(S) SIP</translation>
+        <translation type="vanished">COMPTE(S) SIP</translation>
     </message>
     <message>
         <source>address</source>
-        <translation>ADRESSE(S)</translation>
+        <translation type="vanished">ADRESSE(S)</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation>EMAIL(S)</translation>
+        <translation type="vanished">EMAIL(S)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation>SITE(S) WEB</translation>
+        <translation type="vanished">SITE(S) WEB</translation>
     </message>
     <message>
         <source>sipAccountsInput</source>
-        <translation>Adresse SIP</translation>
+        <translation type="vanished">Adresse SIP</translation>
     </message>
     <message>
         <source>emailsInput</source>
-        <translation>Adresse e-mail</translation>
+        <translation type="vanished">Adresse e-mail</translation>
     </message>
     <message>
         <source>addressInput</source>
-        <translation>Adresse</translation>
+        <translation type="vanished">Adresse</translation>
     </message>
     <message>
         <source>webSitesInput</source>
-        <translation>URL</translation>
+        <translation type="vanished">URL</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
+        <translation type="vanished">Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
     </message>
     <message>
         <source>removeContactTitle</source>
-        <translation>Confirmation de la suppression</translation>
+        <translation type="vanished">Confirmation de la suppression</translation>
+    </message>
+</context>
+<context>
+    <name>ContactEdit</name>
+    <message>
+        <source>removeContactDescription</source>
+        <translation type="unfinished">Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
+    </message>
+    <message>
+        <source>removeContactTitle</source>
+        <translation type="unfinished">Confirmation de la suppression</translation>
+    </message>
+    <message>
+        <source>sipAccounts</source>
+        <translation type="unfinished">COMPTE(S) SIP</translation>
+    </message>
+    <message>
+        <source>sipAccountsInput</source>
+        <translation type="unfinished">Adresse SIP</translation>
+    </message>
+    <message>
+        <source>address</source>
+        <translation type="unfinished">ADRESSE(S)</translation>
+    </message>
+    <message>
+        <source>addressInput</source>
+        <translation type="unfinished">Adresse</translation>
+    </message>
+    <message>
+        <source>emails</source>
+        <translation type="unfinished">EMAIL(S)</translation>
+    </message>
+    <message>
+        <source>emailsInput</source>
+        <translation type="unfinished">Adresse e-mail</translation>
+    </message>
+    <message>
+        <source>webSites</source>
+        <translation type="unfinished">SITE(S) WEB</translation>
+    </message>
+    <message>
+        <source>webSitesInput</source>
+        <translation type="unfinished">URL</translation>
     </message>
 </context>
 <context>
