@@ -38,7 +38,7 @@ Rectangle {
 
       Layout.preferredHeight: ContactStyle.contentHeight
       Layout.preferredWidth: ContactStyle.contentHeight
-      image: contact.avatar || ''
+      image: contact.avatar
       presenceLevel: contact.presenceLevel || Presence.White
       username: LinphoneUtils.getContactUsername(contact)
     }

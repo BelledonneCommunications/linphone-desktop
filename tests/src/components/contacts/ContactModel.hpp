@@ -57,10 +57,7 @@ signals:
 private:
   QString getUsername () const;
 
-  QString getAvatar () const {
-    return "";
-  }
-
+  QString getAvatar () const;
   bool setAvatar (const QString &path);
 
   Presence::PresenceStatus getPresenceStatus () const;

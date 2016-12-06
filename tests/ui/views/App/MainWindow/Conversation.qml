@@ -57,6 +57,7 @@ ColumnLayout  {
 
         Layout.preferredHeight: ConversationStyle.bar.avatarSize
         Layout.preferredWidth: ConversationStyle.bar.avatarSize
+        image: _contact.avatar
         presenceLevel: _contact.presenceLevel || Presence.White
         username: LinphoneUtils.getContactUsername(_contact)
       }

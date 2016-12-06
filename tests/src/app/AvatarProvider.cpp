@@ -1,3 +1,5 @@
+#include <QtDebug>
+
 #include "Database.hpp"
 #include "../utils.hpp"
 
@@ -20,5 +22,10 @@ QImage AvatarProvider::requestImage (
   QSize *,
   const QSize &
 ) {
-  return QImage(m_avatars_path + id);
+  QImage image(m_avatars_path + id);
+
+  if (image.isNull())
+    qWarning() << QStringLiteral("Unable to load: `%1`.").arg(id);
+
+  return image;
 }

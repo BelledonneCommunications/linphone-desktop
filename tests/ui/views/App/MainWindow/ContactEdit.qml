@@ -81,29 +81,23 @@ ColumnLayout  {
 
       spacing: ContactEditStyle.infoBar.spacing
 
-      Avatar {
-        id: avatar
-
-        height: ContactEditStyle.infoBar.avatarSize
-        width: ContactEditStyle.infoBar.avatarSize
-
-        username: LinphoneUtils.getContactUsername(_contact)
-        visible: isLoaded()
-
-        MouseArea {
-          anchors.fill: parent
-          onClicked: avatarChooser.open()
-        }
-      }
-
       ActionButton {
         Layout.preferredHeight: ContactEditStyle.infoBar.avatarSize
         Layout.preferredWidth: ContactEditStyle.infoBar.avatarSize
 
         icon: 'contact_card_photo'
-        visible: !avatar.isLoaded()
 
         onClicked: avatarChooser.open()
+
+        Avatar {
+          id: avatar
+
+          anchors.fill: parent
+
+          image: _contact.avatar
+          username: LinphoneUtils.getContactUsername(_contact)
+          visible: isLoaded() && !parent.hovered
+        }
       }
 
       Text {

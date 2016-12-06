@@ -5,23 +5,17 @@
 
 #include <belcard/belcard.hpp>
 
+#include "../../app/AvatarProvider.hpp"
 #include "../../app/Database.hpp"
 #include "../../utils.hpp"
 
 #include "ContactModel.hpp"
 
+#define VCARD_SCHEME "linphone-desktop:/"
+
 using namespace std;
 
 // ===================================================================
-
-inline shared_ptr<belcard::BelCard> getBelCard (
-  const shared_ptr<linphone::Friend> &linphone_friend
-) {
-  shared_ptr<linphone::Vcard> vcard = linphone_friend->getVcard();
-  return *reinterpret_cast<shared_ptr<belcard::BelCard> *>(vcard.get());
-}
-
-// -------------------------------------------------------------------
 
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {
   return m_presence_status;
@@ -37,15 +31,40 @@ QString ContactModel::getUsername () const {
   );
 }
 
+QString ContactModel::getAvatar () const {
+  // Find desktop avatar.
+  list<shared_ptr<belcard::BelCardPhoto> > photos =
+    m_linphone_friend->getVcard()->getBelcard()->getPhotos();
+  auto it = find_if(
+    photos.begin(), photos.end(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
+      return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
+    }
+  );
+
+  // Returns right path.
+  if (it == photos.end())
+    return "";
+
+  return QStringLiteral("image://%1/%2")
+    .arg(AvatarProvider::PROVIDER_ID)
+    .arg(Utils::linphoneStringToQString(
+      (*it)->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+    ));
+}
+
 bool ContactModel::setAvatar (const QString &path) {
-  // Try to copy photo in avatars folder.
+  // 1. Try to copy photo in avatars folder.
   QFile file(path);
 
   if (!file.exists() || QImageReader::imageFormat(path).size() == 0)
     return false;
 
   QFileInfo info(file);
-  QString file_id = QUuid::createUuid().toString() + "." + info.suffix();
+  QString uuid = QUuid::createUuid().toString();
+  QString file_id = QStringLiteral("%1.%2")
+    .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
+    .arg(info.suffix());
+
   QString dest = Utils::linphoneStringToQString(Database::getAvatarsPath()) +
     file_id;
 
@@ -55,22 +74,38 @@ bool ContactModel::setAvatar (const QString &path) {
   qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)")
     .arg(getUsername()).arg(dest);
 
-  // Remove oldest photos.
-  shared_ptr<belcard::BelCard> belCard = getBelCard(m_linphone_friend);
+  // 2. Edit vcard.
+  m_linphone_friend->edit();
 
-  for (const auto &photo : belCard->getPhotos()) {
-    qDebug() << Utils::linphoneStringToQString(photo->getValue());
-    belCard->removePhoto(photo);
+  shared_ptr<belcard::BelCard> belCard = m_linphone_friend->getVcard()->getBelcard();
+  list<shared_ptr<belcard::BelCardPhoto> > photos = belCard->getPhotos();
+
+  // 3. Remove oldest photo.
+  auto it = find_if(
+    photos.begin(), photos.end(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
+      return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
+    }
+  );
+
+  if (it != photos.end()) {
+    QString image_path(Utils::linphoneStringToQString(
+      Database::getAvatarsPath() + (*it)->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+    ));
+    if (!QFile::remove(image_path))
+      qWarning() << QStringLiteral("Unable to remove `%1`.").arg(image_path);
+    belCard->removePhoto(*it);
   }
 
-  // Update.
+  // 4. Update.
   shared_ptr<belcard::BelCardPhoto> photo =
     belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
-  photo->setValue(Utils::qStringToLinphoneString(file_id));
+  photo->setValue(VCARD_SCHEME + Utils::qStringToLinphoneString(file_id));
   belCard->addPhoto(photo);
 
+  m_linphone_friend->done();
 
   emit contactUpdated();
+
   return true;
 }
 

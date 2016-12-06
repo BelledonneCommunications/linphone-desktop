@@ -6,9 +6,9 @@ Item {
   id: item
 
   property alias source: image.source
+  property alias status: image.status // READONLY!!!
   property color backgroundColor: '#00000000'
   property color foregroundColor: '#00000000'
-  // vec4(0.812, 0.843, 0.866, 1.0) 0.9
 
   Item {
     id: imageContainer

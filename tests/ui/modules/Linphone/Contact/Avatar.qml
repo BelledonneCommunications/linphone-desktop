@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtGraphicalEffects 1.0
 
 import Common 1.0
 import Linphone 1.0
@@ -11,10 +10,10 @@ import Utils 1.0
 Item {
   id: avatar
 
-  property alias image: roundedImage.source
   property alias presenceLevel: presenceLevel.level
   property color backgroundColor: AvatarStyle.backgroundColor
   property string username
+  property var image
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
 
@@ -46,6 +45,7 @@ Item {
 
     anchors.fill: parent
     backgroundColor: avatar.backgroundColor
+    source: avatar.image || ''
   }
 
   Text {
