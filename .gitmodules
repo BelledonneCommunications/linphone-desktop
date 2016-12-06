@@ -92,3 +92,6 @@
 [submodule "submodules/belle-msrp"]
 	path = submodules/belle-msrp
 	url = git://git.linphone.org/belle-msrp.git
+[submodule "submodules/externals/libjpeg-turbo"]
+	path = submodules/externals/libjpeg-turbo
+	url = gitosis@git.linphone.org:libjpeg-turbo/libjpeg-turbo.git
