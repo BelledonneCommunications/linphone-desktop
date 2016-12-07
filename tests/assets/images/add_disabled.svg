@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>add_disabled</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
+        <g id="add_disabled" stroke="#D0D8DE">
+            <path d="M9,17.5 C4.305875,17.5 0.5,13.694125 0.5,9 C0.5,4.3056625 4.305875,0.5 9,0.5 C13.694975,0.5 17.5,4.3056625 17.5,9 C17.5,13.694125 13.694975,17.5 9,17.5 Z" stroke-linejoin="round"></path>
+            <path d="M9.01666657,6 L9.01666657,11.8333333"></path>
+            <path d="M6.0999999,8.91666667 L11.9333332,8.91666667"></path>
+        </g>
+    </g>
+</svg>

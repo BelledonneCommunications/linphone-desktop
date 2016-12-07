@@ -7,24 +7,32 @@ import Common 1.0
 // An animated (or not) button with image(s).
 // ===================================================================
 
-Button {
-  id: button
+Item {
+  id: wrappedButton
 
+  property bool enabled: true
   property bool useStates: true
   property int iconSize // Optionnal.
+  readonly property alias hovered: button.hovered
 
   // If `useStates` = true, the used icons are:
   // `icon`_pressed, `icon`_hovered and `icon`_normal.
   property string icon
 
+  signal clicked
+
   // -----------------------------------------------------------------
 
   function _getIcon () {
     if (!useStates) {
-      return button.icon
+      return wrappedButton.icon
     }
 
-    return button.icon + (
+    if (!wrappedButton.enabled) {
+      return wrappedButton.icon + '_disabled'
+    }
+
+    return wrappedButton.icon + (
       button.down
         ? '_pressed'
         : (button.hovered ? '_hovered' : '_normal')
@@ -33,21 +41,28 @@ Button {
 
   // -----------------------------------------------------------------
 
-  background: Rectangle {
-    color: 'transparent'
-  }
-  hoverEnabled: true
-
   height: iconSize || parent.iconSize || parent.height
   width: iconSize || parent.iconSize || parent.height
 
-  Icon {
-    id: icon
+  Button {
+    id: button
 
-    anchors.centerIn: parent
-    icon: _getIcon()
-    iconSize: parent.iconSize || (
-      parent.width > parent.height ? parent.height : parent.width
-    )
+    anchors.fill: parent
+    background: Rectangle {
+      color: 'transparent'
+    }
+    hoverEnabled: true
+
+    onClicked: wrappedButton.enabled && wrappedButton.clicked()
+
+    Icon {
+      id: icon
+
+      anchors.centerIn: parent
+      icon: _getIcon()
+      iconSize: parent.iconSize || (
+        parent.width > parent.height ? parent.height : parent.width
+      )
+    }
   }
 }

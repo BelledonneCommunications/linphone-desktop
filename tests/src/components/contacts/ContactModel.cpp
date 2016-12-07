@@ -31,6 +31,15 @@ QString ContactModel::getUsername () const {
   );
 }
 
+bool ContactModel::setUsername (const QString &username) {
+  if (username.length() == 0)
+    return false;
+
+  return !m_linphone_friend->setName(
+    Utils::qStringToLinphoneString(username)
+  );
+}
+
 QString ContactModel::getAvatar () const {
   // Find desktop avatar.
   list<shared_ptr<belcard::BelCardPhoto> > photos =

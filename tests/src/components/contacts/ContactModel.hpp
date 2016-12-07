@@ -17,6 +17,7 @@ class ContactModel : public QObject {
   Q_PROPERTY(
     QString username
     READ getUsername
+    WRITE setUsername
     NOTIFY contactUpdated
   );
 
@@ -56,6 +57,7 @@ signals:
 
 private:
   QString getUsername () const;
+  bool setUsername (const QString &username);
 
   QString getAvatar () const;
   bool setAvatar (const QString &path);

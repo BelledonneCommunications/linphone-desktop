@@ -10,15 +10,16 @@ RowLayout {
   id: listForm
 
   property alias model: values.model
+  property alias placeholder: placeholder.text
   property alias title: text.text
-  property string placeholder
+
+  // -----------------------------------------------------------------
 
   function _addValue (value) {
-    if (
-      model.count === 0 ||
-      model.get(model.count - 1).$value.length !== 0
-    ) {
-      model.append({ $value: value })
+    model.append({ $value: value })
+
+    if (value.length === 0) {
+      addButton.enabled = false
     }
   }
 
@@ -28,86 +29,102 @@ RowLayout {
     } else {
       model.set(index, { $value: text })
     }
+
+    addButton.enabled = true
   }
+
+  // -----------------------------------------------------------------
 
   spacing: 0
 
+  // -----------------------------------------------------------------
   // Title area.
+  // -----------------------------------------------------------------
+
   RowLayout {
     Layout.alignment: Qt.AlignTop
     Layout.preferredHeight: ListFormStyle.lineHeight
     spacing: ListFormStyle.titleArea.spacing
 
-    // Button: Add item in list.
     ActionButton {
-      Layout.preferredHeight: ListFormStyle.titleArea.iconSize
-      Layout.preferredWidth: ListFormStyle.titleArea.iconSize
-      icon: 'add_field'
+      id: addButton
+
+      icon: 'add'
+      iconSize: ListFormStyle.titleArea.iconSize
 
       onClicked: _addValue('')
     }
 
-    // Title text.
     Text {
       id: text
 
       Layout.preferredWidth: ListFormStyle.titleArea.text.width
       color: ListFormStyle.titleArea.text.color
-      font.pointSize: ListFormStyle.titleArea.text.fontSize
+      elide: Text.ElideRight
+
+      font {
+        bold: true
+        pointSize: ListFormStyle.titleArea.text.fontSize
+      }
     }
   }
 
+  // -----------------------------------------------------------------
+  // Placeholder.
+  // -----------------------------------------------------------------
+
+  Text {
+    id: placeholder
+
+    Layout.fillWidth: true
+    Layout.preferredHeight: ListFormStyle.lineHeight
+    color: ListFormStyle.value.placeholder.color
+
+    font {
+      italic: true
+      pointSize: ListFormStyle.value.placeholder.fontSize
+    }
+
+    padding:  ListFormStyle.value.text.padding
+    visible: model.count === 0
+    verticalAlignment: Text.AlignVCenter
+  }
+
+  // -----------------------------------------------------------------
   // Values.
+  // -----------------------------------------------------------------
+
   ListView {
     id: values
 
     Layout.fillWidth: true
     Layout.preferredHeight: count * ListFormStyle.lineHeight
     interactive: false
+    visible: count > 0
 
     delegate: Item {
       implicitHeight: textEdit.height
       width: parent.width
 
-      // Background.
       Rectangle {
         color: textEdit.activeFocus
           ? ListFormStyle.value.backgroundColor.focused
           : ListFormStyle.value.backgroundColor.normal
-        implicitHeight: textEdit.height
-        implicitWidth: textEdit.width
-      }
-
-      // Placeholder.
-      Text {
         anchors.fill: textEdit
-        color: ListFormStyle.value.placeholder.color
-
-        font {
-          italic: true
-          pointSize: ListFormStyle.value.placeholder.fontSize
-        }
-
-        padding: textEdit.padding
-        text: textEdit.text.length === 0 && !textEdit.activeFocus
-          ? listForm.placeholder
-          : ''
-        verticalAlignment: Text.AlignVCenter
       }
 
-      // Input.
       TextEdit {
         id: textEdit
 
         color: activeFocus
           ? ListFormStyle.value.text.color.focused
           : ListFormStyle.value.text.color.normal
-        font.bold: !activeFocus
-        height: ListFormStyle.lineHeight
         padding: ListFormStyle.value.text.padding
         selectByMouse: true
         text: $value
         verticalAlignment: TextEdit.AlignVCenter
+
+        height: ListFormStyle.lineHeight
         width: !activeFocus
           ? parent.width
           : contentWidth + padding * 2
@@ -116,15 +133,18 @@ RowLayout {
         Keys.onReturnPressed: focus = false
 
         onEditingFinished: _handleEditionFinished(index, text)
+
+        InvertedMouseArea {
+          anchors.fill: parent
+          enabled: textEdit.activeFocus
+          onPressed: textEdit.focus = false
+        }
       }
 
-      // Handle click outside `TextEdit` instance.
-      InvertedMouseArea {
-        enabled: textEdit.activeFocus
-        height: textEdit.height
-        width: textEdit.width
-
-        onPressed: textEdit.focus = false
+      Component.onCompleted: {
+        if ($value.length === 0) {
+          textEdit.forceActiveFocus()
+        }
       }
     }
   }

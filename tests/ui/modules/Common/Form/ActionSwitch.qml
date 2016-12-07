@@ -4,10 +4,9 @@ import QtQuick 2.7
 
 Item {
   property alias useStates: actionButton.useStates
+  property bool enabled: true
   property int iconSize // Optionnal.
   property string icon
-
-  property bool enabled: true
 
   signal clicked
 

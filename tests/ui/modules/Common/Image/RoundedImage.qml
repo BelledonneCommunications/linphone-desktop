@@ -6,9 +6,9 @@ Item {
   id: item
 
   property alias source: image.source
-  property alias status: image.status // READONLY!!!
   property color backgroundColor: '#00000000'
   property color foregroundColor: '#00000000'
+  readonly property alias status: image.status
 
   Item {
     id: imageContainer

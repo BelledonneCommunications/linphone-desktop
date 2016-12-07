@@ -15,7 +15,7 @@ QtObject {
     }
 
     property QtObject placeholder: QtObject {
-      property color color: Colors.d
+      property color color: Colors.w
       property int fontSize: 10
     }
 
@@ -24,18 +24,18 @@ QtObject {
 
       property QtObject color: QtObject {
         property color focused: Colors.l
-        property color normal: Colors.d
+        property color normal: Colors.r
       }
     }
   }
 
   property QtObject titleArea: QtObject  {
     property int spacing: 10
-    property int iconSize: 16
+    property int iconSize: 18
 
     property QtObject text: QtObject {
-      property color color: Colors.l
-      property int fontSize: 10
+      property color color: Colors.j
+      property int fontSize: 9
       property int width: 130
     }
   }

@@ -21,8 +21,6 @@ ColumnLayout  {
     sipAddress
   ) || sipAddress
 
-  property var _info: {}
-
   // -----------------------------------------------------------------
 
   function _removeContact () {
@@ -82,10 +80,8 @@ ColumnLayout  {
       spacing: ContactEditStyle.infoBar.spacing
 
       ActionButton {
-        Layout.preferredHeight: ContactEditStyle.infoBar.avatarSize
-        Layout.preferredWidth: ContactEditStyle.infoBar.avatarSize
-
         icon: 'contact_card_photo'
+        iconSize: ContactEditStyle.infoBar.avatarSize
 
         onClicked: avatarChooser.open()
 
@@ -141,6 +137,7 @@ ColumnLayout  {
   Flickable {
     Layout.fillHeight: true
     Layout.fillWidth: true
+    Layout.topMargin: 40
     ScrollBar.vertical: ForceScrollBar {}
 
     boundsBehavior: Flickable.StopAtBounds

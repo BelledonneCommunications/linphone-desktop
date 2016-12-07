@@ -1,5 +1,9 @@
 <!DOCTYPE RCC><RCC version="1.0">
   <qresource prefix="/">
+    <file>assets/images/add_disabled.svg</file>
+    <file>assets/images/add_hovered.svg</file>
+    <file>assets/images/add_normal.svg</file>
+    <file>assets/images/add_pressed.svg</file>
     <file>assets/images/attachment_hovered.svg</file>
     <file>assets/images/attachment_normal.svg</file>
     <file>assets/images/attachment_pressed.svg</file>
