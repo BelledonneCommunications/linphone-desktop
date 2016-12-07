@@ -96,10 +96,9 @@ ColumnLayout  {
         }
       }
 
-      Text {
+      TextEdit {
         Layout.fillWidth: true
         color: ContactEditStyle.infoBar.username.color
-        elide: Text.ElideRight
 
         font {
           bold: true
@@ -138,6 +137,7 @@ ColumnLayout  {
     Layout.fillHeight: true
     Layout.fillWidth: true
     ScrollBar.vertical: ForceScrollBar {}
+
     boundsBehavior: Flickable.StopAtBounds
     clip: true
     contentHeight: infoList.height
@@ -154,33 +154,27 @@ ColumnLayout  {
       anchors.right: parent.right
 
       ListForm {
+        defaultData: _contact.sipAddresses
         placeholder: qsTr('sipAccountsInput')
         title: qsTr('sipAccounts')
-
-        defaultData: _contact.sipAddresses
       }
 
       ListForm {
-        title: qsTr('emails')
-        placeholder: qsTr('emailsInput')
-
         defaultData: _contact.emails
+        placeholder: qsTr('emailsInput')
+        title: qsTr('emails')
+      }
+
+      ListForm {
+        defaultData: _contact.urls
+        placeholder: qsTr('webSitesInput')
+        title: qsTr('webSites')
       }
     }
   }
 }
 
-
- /************************************************/
-
- /*      ListForm {                              */
- /*        title: qsTr('address')                */
- /*        placeholder: qsTr('addressInput')     */
- /*      }                                       */
- /*                                              */
- /*                                              */
- /*      ListForm {                              */
- /*        title: qsTr('webSites')               */
- /*        placeholder: qsTr('webSitesInput')    */
- /*      }                                       */
- /************************************************/
+/*      ListForm {                              */
+/*        title: qsTr('address')                */
+/*        placeholder: qsTr('addressInput')     */
+/*      }                                       */

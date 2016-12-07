@@ -40,6 +40,7 @@ LightButton          1.0 Form/LightButton.qml
 ListForm             1.0 Form/ListForm.qml
 TextButtonA          1.0 Form/TextButtonA.qml
 TextButtonB          1.0 Form/TextButtonB.qml
+TextEdit             1.0 Form/TextEdit.qml
 TextField            1.0 Form/TextField.qml
 TransparentComboBox  1.0 Form/TransparentComboBox.qml
 

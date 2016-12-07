@@ -22,6 +22,7 @@ singleton ListFormStyle             1.0 Form/ListFormStyle.qml
 singleton SmallButtonStyle          1.0 Form/SmallButtonStyle.qml
 singleton TextButtonAStyle          1.0 Form/TextButtonAStyle.qml
 singleton TextButtonBStyle          1.0 Form/TextButtonBStyle.qml
+singleton TextEditStyle             1.0 Form/TextEditStyle.qml
 singleton TextFieldStyle            1.0 Form/TextFieldStyle.qml
 singleton TransparentComboBoxStyle  1.0 Form/TransparentComboBoxStyle.qml
 

@@ -140,6 +140,7 @@
     <file>ui/modules/Common/Form/SmallButton.qml</file>
     <file>ui/modules/Common/Form/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/TextButtonB.qml</file>
+    <file>ui/modules/Common/Form/TextEdit.qml</file>
     <file>ui/modules/Common/Form/TextField.qml</file>
     <file>ui/modules/Common/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
@@ -169,6 +170,7 @@
     <file>ui/modules/Common/Styles/Form/SmallButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonBStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/TextEditStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentComboBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/ActionMenuStyle.qml</file>

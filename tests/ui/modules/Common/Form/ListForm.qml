@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Common.Styles 1.0
 import Utils 1.0
+
 // ===================================================================
 
 RowLayout {
@@ -88,6 +89,11 @@ RowLayout {
     padding: ListFormStyle.value.text.padding
     visible: values.model.count === 0
     verticalAlignment: Text.AlignVCenter
+
+    MouseArea {
+      anchors.fill: parent
+      onClicked: _addValue('')
+    }
   }
 
   // -----------------------------------------------------------------
@@ -106,39 +112,13 @@ RowLayout {
       implicitHeight: textEdit.height
       width: parent.width
 
-      Rectangle {
-        color: textEdit.activeFocus
-          ? ListFormStyle.value.backgroundColor.focused
-          : ListFormStyle.value.backgroundColor.normal
-        anchors.fill: textEdit
-      }
-
       TextEdit {
         id: textEdit
 
-        color: activeFocus
-          ? ListFormStyle.value.text.color.focused
-          : ListFormStyle.value.text.color.normal
-        padding: ListFormStyle.value.text.padding
-        selectByMouse: true
         text: $value
-        verticalAlignment: TextEdit.AlignVCenter
-
         height: ListFormStyle.lineHeight
-        width: !activeFocus
-          ? parent.width
-          : contentWidth + padding * 2
-
-        Keys.onEscapePressed: focus = false
-        Keys.onReturnPressed: focus = false
 
         onEditingFinished: _handleEditionFinished(index, text)
-
-        InvertedMouseArea {
-          anchors.fill: parent
-          enabled: textEdit.activeFocus
-          onPressed: textEdit.focus = false
-        }
       }
 
       Component.onCompleted: {

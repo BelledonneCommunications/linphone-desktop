@@ -9,11 +9,6 @@ QtObject {
   property int lineHeight: 30
 
   property QtObject value: QtObject {
-    property QtObject backgroundColor: QtObject {
-      property color focused: Colors.q
-      property color normal: 'transparent'
-    }
-
     property QtObject placeholder: QtObject {
       property color color: Colors.w
       property int fontSize: 10
@@ -21,11 +16,6 @@ QtObject {
 
     property QtObject text: QtObject {
       property int padding: 10
-
-      property QtObject color: QtObject {
-        property color focused: Colors.l
-        property color normal: Colors.r
-      }
     }
   }
 

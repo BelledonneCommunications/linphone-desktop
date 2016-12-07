@@ -132,11 +132,11 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="obsolete">WEB SITE(S)</translation>
+        <translation type="unfinished">WEB SITE(S)</translation>
     </message>
     <message>
         <source>webSitesInput</source>
-        <translation type="obsolete">URL</translation>
+        <translation type="unfinished">URL</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
