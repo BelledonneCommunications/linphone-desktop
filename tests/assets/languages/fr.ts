@@ -108,11 +108,11 @@
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished">ADRESSE(S)</translation>
+        <translation type="obsolete">ADRESSE(S)</translation>
     </message>
     <message>
         <source>addressInput</source>
-        <translation type="unfinished">Adresse</translation>
+        <translation type="obsolete">Adresse</translation>
     </message>
     <message>
         <source>emails</source>
@@ -124,11 +124,11 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished">SITE(S) WEB</translation>
+        <translation type="obsolete">SITE(S) WEB</translation>
     </message>
     <message>
         <source>webSitesInput</source>
-        <translation type="unfinished">URL</translation>
+        <translation type="obsolete">URL</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>

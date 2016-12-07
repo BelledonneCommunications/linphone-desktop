@@ -116,11 +116,11 @@
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished">ADDRESS</translation>
+        <translation type="obsolete">ADDRESS</translation>
     </message>
     <message>
         <source>addressInput</source>
-        <translation type="unfinished">Address</translation>
+        <translation type="obsolete">Address</translation>
     </message>
     <message>
         <source>emails</source>
@@ -132,11 +132,11 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished">WEB SITE(S)</translation>
+        <translation type="obsolete">WEB SITE(S)</translation>
     </message>
     <message>
         <source>webSitesInput</source>
-        <translation type="unfinished">URL</translation>
+        <translation type="obsolete">URL</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>

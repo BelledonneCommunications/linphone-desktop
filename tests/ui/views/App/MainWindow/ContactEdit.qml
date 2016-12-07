@@ -154,24 +154,33 @@ ColumnLayout  {
       anchors.right: parent.right
 
       ListForm {
-        title: qsTr('sipAccounts')
         placeholder: qsTr('sipAccountsInput')
-      }
+        title: qsTr('sipAccounts')
 
-      ListForm {
-        title: qsTr('address')
-        placeholder: qsTr('addressInput')
+        defaultData: _contact.sipAddresses
       }
 
       ListForm {
         title: qsTr('emails')
         placeholder: qsTr('emailsInput')
-      }
 
-      ListForm {
-        title: qsTr('webSites')
-        placeholder: qsTr('webSitesInput')
+        defaultData: _contact.emails
       }
     }
   }
 }
+
+
+ /************************************************/
+
+ /*      ListForm {                              */
+ /*        title: qsTr('address')                */
+ /*        placeholder: qsTr('addressInput')     */
+ /*      }                                       */
+ /*                                              */
+ /*                                              */
+ /*      ListForm {                              */
+ /*        title: qsTr('webSites')               */
+ /*        placeholder: qsTr('webSitesInput')    */
+ /*      }                                       */
+ /************************************************/

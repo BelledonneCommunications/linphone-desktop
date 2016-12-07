@@ -11,6 +11,7 @@ RowLayout {
 
   property alias placeholder: placeholder.text
   property alias title: text.text
+  property var defaultData: []
 
   // -----------------------------------------------------------------
 
@@ -24,10 +25,8 @@ RowLayout {
 
   function _handleEditionFinished (index, text) {
     if (text.length === 0) {
-      console.log('edition end')
       values.model.remove(index)
     } else {
-      console.log('edition end (text exists)')
       values.model.set(index, { $value: text })
     }
 
@@ -87,10 +86,7 @@ RowLayout {
     }
 
     padding: ListFormStyle.value.text.padding
-    visible: {
-      console.log('placeholder', values.model.count)
-      return values.model.count === 0
-    }
+    visible: values.model.count === 0
     verticalAlignment: Text.AlignVCenter
   }
 
@@ -104,10 +100,7 @@ RowLayout {
     Layout.fillWidth: true
     Layout.preferredHeight: count * ListFormStyle.lineHeight
     interactive: false
-    visible: {
-      console.log('values', model.count)
-      return model.count > 0
-    }
+    visible: model.count > 0
 
     delegate: Item {
       implicitHeight: textEdit.height
@@ -150,14 +143,33 @@ RowLayout {
 
       Component.onCompleted: {
         if ($value.length === 0) {
+          // Magic code. If it's the first inserted value,
+          // an event or a callback steal the item focus.
+          // I suppose it's an internal Qt qml event...
+          //
+          // So, I choose to run a callback executed after this
+          // internal event.
+          Utils.setTimeout(listForm, 0, function () {
             textEdit.forceActiveFocus()
+          })
         }
       }
     }
 
-    model: ListModel {
-      ListElement { $value: 'merinos@sip.linphone.org' }
-      ListElement { $value: 'elisabeth.pro@sip.linphone.org' }
+    model: ListModel {}
+
+    // ---------------------------------------------------------------
+    // Init values.
+    // ---------------------------------------------------------------
+
+    Component.onCompleted: {
+      if (!defaultData) {
+        return
+      }
+
+      defaultData.forEach(function (data) {
+        model.append({ $value: data })
+      })
     }
   }
 }

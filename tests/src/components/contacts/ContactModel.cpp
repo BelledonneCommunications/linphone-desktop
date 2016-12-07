@@ -22,13 +22,7 @@ ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
   m_linphone_friend = linphone_friend;
 }
 
-Presence::PresenceStatus ContactModel::getPresenceStatus () const {
-  return m_presence_status;
-}
-
-Presence::PresenceLevel ContactModel::getPresenceLevel () const {
-  return Presence::getPresenceLevel(m_presence_status);
-}
+// -------------------------------------------------------------------
 
 QString ContactModel::getUsername () const {
   return Utils::linphoneStringToQString(
@@ -44,6 +38,8 @@ bool ContactModel::setUsername (const QString &username) {
     Utils::qStringToLinphoneString(username)
   );
 }
+
+// -------------------------------------------------------------------
 
 QString ContactModel::getAvatar () const {
   // Find desktop avatar.
@@ -123,6 +119,8 @@ bool ContactModel::setAvatar (const QString &path) {
   return true;
 }
 
+// -------------------------------------------------------------------
+
 QVariantList ContactModel::getSipAddresses () const {
   QVariantList list;
 
@@ -133,9 +131,73 @@ QVariantList ContactModel::getSipAddresses () const {
 }
 
 void ContactModel::setSipAddresses (const QVariantList &sip_addresses) {
+  // TODO.
+}
+
+// -------------------------------------------------------------------
+
+QVariantList ContactModel::getCompanies () const {
+  QVariantList list;
+
+  for (const auto &company : m_linphone_friend->getVcard()->getBelcard()->getOrganizations())
+    list.append(Utils::linphoneStringToQString(company->getValue()));
+
+  return list;
+}
+
+void ContactModel::setCompanies (const QVariantList &companies) {
+  // TODO.
+}
+
+// -------------------------------------------------------------------
+
+QVariantList ContactModel::getEmails () const {
+  QVariantList list;
+
+  for (const auto &email : m_linphone_friend->getVcard()->getBelcard()->getEmails())
+    list.append(Utils::linphoneStringToQString(email->getValue()));
+
+  return list;
+}
+
+void ContactModel::setEmails (const QVariantList &emails) {
+  // TODO.
+}
+
+// -------------------------------------------------------------------
+
+QVariantList ContactModel::getUrls () const {
+  QVariantList list;
+
+  for (const auto &url : m_linphone_friend->getVcard()->getBelcard()->getURLs())
+    list.append(Utils::linphoneStringToQString(url->getValue()));
+
+  return list;
+}
+
+void ContactModel::setUrls (const QVariantList &urls) {
+  // TODO.
+}
+
+// -------------------------------------------------------------------
+
+QList<QVariantMap> ContactModel::getAddresses () const {
 
 }
 
+void ContactModel::setAddresses (const QList<QVariantMap> &addresses) {
+
+}
+
+// -------------------------------------------------------------------
+
+Presence::PresenceStatus ContactModel::getPresenceStatus () const {
+  return m_presence_status;
+}
+
+Presence::PresenceLevel ContactModel::getPresenceLevel () const {
+  return Presence::getPresenceLevel(m_presence_status);
+}
 QString ContactModel::getSipAddress () const {
   return Utils::linphoneStringToQString(
     m_linphone_friend->getAddress()->asString()

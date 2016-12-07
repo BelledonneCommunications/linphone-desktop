@@ -36,6 +36,34 @@ class ContactModel : public QObject {
   );
 
   Q_PROPERTY(
+    QVariantList companies
+    READ getCompanies
+    WRITE setCompanies
+    NOTIFY contactUpdated
+  );
+
+  Q_PROPERTY(
+    QVariantList emails
+    READ getEmails
+    WRITE setEmails
+    NOTIFY contactUpdated
+  );
+
+  Q_PROPERTY(
+    QVariantList urls
+    READ getUrls
+    WRITE setUrls
+    NOTIFY contactUpdated
+  );
+
+  Q_PROPERTY(
+    QList<QVariantMap> addresses
+    READ getAddresses
+    WRITE setAddresses
+    NOTIFY contactUpdated
+  );
+
+  Q_PROPERTY(
     Presence::PresenceStatus presenceStatus
     READ getPresenceStatus
     NOTIFY contactUpdated
@@ -68,6 +96,18 @@ private:
 
   QVariantList getSipAddresses () const;
   void setSipAddresses (const QVariantList &sip_addresses);
+
+  QVariantList getCompanies () const;
+  void setCompanies (const QVariantList &companies);
+
+  QVariantList getEmails () const;
+  void setEmails (const QVariantList &emails);
+
+  QVariantList getUrls () const;
+  void setUrls (const QVariantList &urls);
+
+  QList<QVariantMap> getAddresses () const;
+  void setAddresses (const QList<QVariantMap> &addresses);
 
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
