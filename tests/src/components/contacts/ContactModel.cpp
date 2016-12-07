@@ -17,6 +17,11 @@ using namespace std;
 
 // ===================================================================
 
+ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
+  linphone_friend->setData("contact-model", *this);
+  m_linphone_friend = linphone_friend;
+}
+
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {
   return m_presence_status;
 }
@@ -116,6 +121,19 @@ bool ContactModel::setAvatar (const QString &path) {
   emit contactUpdated();
 
   return true;
+}
+
+QVariantList ContactModel::getSipAddresses () const {
+  QVariantList list;
+
+  for (const auto &address : m_linphone_friend->getAddresses())
+    list.append(Utils::linphoneStringToQString(address->asString()));
+
+  return list;
+}
+
+void ContactModel::setSipAddresses (const QVariantList &sip_addresses) {
+
 }
 
 QString ContactModel::getSipAddress () const {

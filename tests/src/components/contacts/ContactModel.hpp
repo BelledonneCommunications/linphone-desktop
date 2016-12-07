@@ -29,6 +29,13 @@ class ContactModel : public QObject {
   );
 
   Q_PROPERTY(
+    QVariantList sipAddresses
+    READ getSipAddresses
+    WRITE setSipAddresses
+    NOTIFY contactUpdated
+  );
+
+  Q_PROPERTY(
     Presence::PresenceStatus presenceStatus
     READ getPresenceStatus
     NOTIFY contactUpdated
@@ -47,10 +54,7 @@ class ContactModel : public QObject {
   );
 
 public:
-  ContactModel (std::shared_ptr<linphone::Friend> linphone_friend) {
-    linphone_friend->setData("contact-model", *this);
-    m_linphone_friend = linphone_friend;
-  }
+  ContactModel (std::shared_ptr<linphone::Friend> linphone_friend);
 
 signals:
   void contactUpdated ();
@@ -61,6 +65,9 @@ private:
 
   QString getAvatar () const;
   bool setAvatar (const QString &path);
+
+  QVariantList getSipAddresses () const;
+  void setSipAddresses (const QVariantList &sip_addresses);
 
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;

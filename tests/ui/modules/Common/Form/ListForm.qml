@@ -3,20 +3,19 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
-
+import Utils 1.0
 // ===================================================================
 
 RowLayout {
   id: listForm
 
-  property alias model: values.model
   property alias placeholder: placeholder.text
   property alias title: text.text
 
   // -----------------------------------------------------------------
 
   function _addValue (value) {
-    model.append({ $value: value })
+    values.model.append({ $value: value })
 
     if (value.length === 0) {
       addButton.enabled = false
@@ -25,9 +24,11 @@ RowLayout {
 
   function _handleEditionFinished (index, text) {
     if (text.length === 0) {
-      model.remove(index)
+      console.log('edition end')
+      values.model.remove(index)
     } else {
-      model.set(index, { $value: text })
+      console.log('edition end (text exists)')
+      values.model.set(index, { $value: text })
     }
 
     addButton.enabled = true
@@ -85,8 +86,11 @@ RowLayout {
       pointSize: ListFormStyle.value.placeholder.fontSize
     }
 
-    padding:  ListFormStyle.value.text.padding
-    visible: model.count === 0
+    padding: ListFormStyle.value.text.padding
+    visible: {
+      console.log('placeholder', values.model.count)
+      return values.model.count === 0
+    }
     verticalAlignment: Text.AlignVCenter
   }
 
@@ -100,7 +104,10 @@ RowLayout {
     Layout.fillWidth: true
     Layout.preferredHeight: count * ListFormStyle.lineHeight
     interactive: false
-    visible: count > 0
+    visible: {
+      console.log('values', model.count)
+      return model.count > 0
+    }
 
     delegate: Item {
       implicitHeight: textEdit.height
@@ -143,9 +150,14 @@ RowLayout {
 
       Component.onCompleted: {
         if ($value.length === 0) {
-          textEdit.forceActiveFocus()
+            textEdit.forceActiveFocus()
         }
       }
+    }
+
+    model: ListModel {
+      ListElement { $value: 'merinos@sip.linphone.org' }
+      ListElement { $value: 'elisabeth.pro@sip.linphone.org' }
     }
   }
 }
