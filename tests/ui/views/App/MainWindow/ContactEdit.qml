@@ -96,7 +96,7 @@ ColumnLayout  {
         }
       }
 
-      ScrollableTextEdit {
+      TransparentTextInput {
         id: editUsername
 
         Layout.fillWidth: true

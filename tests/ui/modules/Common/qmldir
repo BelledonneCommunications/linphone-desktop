@@ -41,9 +41,9 @@ ListForm             1.0 Form/ListForm.qml
 ScrollableTextEdit   1.0 Form/ScrollableTextEdit.qml
 TextButtonA          1.0 Form/TextButtonA.qml
 TextButtonB          1.0 Form/TextButtonB.qml
-TextEdit             1.0 Form/TextEdit.qml
 TextField            1.0 Form/TextField.qml
 TransparentComboBox  1.0 Form/TransparentComboBox.qml
+TransparentTextInput 1.0 Form/TransparentTextInput.qml
 
 # Image
 Icon                 1.0 Image/Icon.qml

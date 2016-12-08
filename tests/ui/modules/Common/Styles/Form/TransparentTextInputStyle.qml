@@ -6,13 +6,11 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property QtObject backgroundColor: QtObject {
-    property color focused: Colors.q
-    property color normal: Colors.a
-  }
+  property color backgroundColor: Colors.q
+  property int padding: 10
 
   property QtObject textColor: QtObject {
-    property color focused:  Colors.l
+    property color focused: Colors.l
     property color normal: Colors.r
   }
 }

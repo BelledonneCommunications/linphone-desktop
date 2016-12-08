@@ -6,7 +6,7 @@ import Common 1.0
 // ===================================================================
 
 QtObject {
-  property int lineHeight: 30
+  property int lineHeight: 35
 
   property QtObject value: QtObject {
     property QtObject placeholder: QtObject {

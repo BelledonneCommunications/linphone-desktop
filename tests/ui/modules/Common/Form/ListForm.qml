@@ -109,14 +109,14 @@ RowLayout {
     visible: model.count > 0
 
     delegate: Item {
-      implicitHeight: textEdit.height
+      implicitHeight: textInput.height
       width: parent.width
 
-     TextEdit {
-        id: textEdit
+     TransparentTextInput {
+        id: textInput
 
         text: $value
-        width: 300
+        width: parent.width
         height: ListFormStyle.lineHeight
 
         onEditingFinished: _handleEditionFinished(index, text)
@@ -131,7 +131,7 @@ RowLayout {
           // So, I choose to run a callback executed after this
           // internal event.
           Utils.setTimeout(listForm, 0, function () {
-            textEdit.forceActiveFocus()
+            textInput.forceActiveFocus()
           })
         }
       }

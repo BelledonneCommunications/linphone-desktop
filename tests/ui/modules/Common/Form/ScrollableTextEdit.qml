@@ -25,8 +25,8 @@ Item {
   Rectangle {
     anchors.fill: flick
     color: textEdit.activeFocus && !textEdit.readOnly
-      ? TextEditStyle.backgroundColor.focused
-      : TextEditStyle.backgroundColor.normal
+      ? TransparentTextInputStyle.backgroundColor.focused
+      : 'transparent'
 
     InvertedMouseArea {
       anchors.fill: parent
@@ -64,8 +64,8 @@ Item {
       id: textEdit
 
       color: activeFocus && !readOnly
-        ? TextEditStyle.textColor.focused
-        : TextEditStyle.textColor.normal
+        ? TransparentTextInputStyle.textColor.focused
+        : TransparentTextInputStyle.textColor.normal
       selectByMouse: true
       width: flick.width
       wrapMode: Text.Wrap
