@@ -18,6 +18,12 @@ Item {
 
   // -----------------------------------------------------------------
 
+  onActiveFocusChanged: {
+    if (activeFocus) {
+      textInput.focus = true
+    }
+  }
+
   Rectangle {
     anchors.fill: parent
     color: textInput.activeFocus && !readOnly

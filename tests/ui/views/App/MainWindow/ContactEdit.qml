@@ -145,6 +145,8 @@ ColumnLayout  {
   // -----------------------------------------------------------------
 
   Flickable {
+    id: flick
+
     Layout.fillHeight: true
     Layout.fillWidth: true
     ScrollBar.vertical: ForceScrollBar {}
@@ -152,18 +154,17 @@ ColumnLayout  {
     boundsBehavior: Flickable.StopAtBounds
     clip: true
     contentHeight: infoList.height
+    contentWidth: width - ScrollBar.vertical.width - leftMargin - rightMargin
     flickableDirection: Flickable.VerticalFlick
 
     leftMargin: 40
-    rightMargin: 40
+    rightMargin: 20
     topMargin: 40
 
     ColumnLayout {
       id: infoList
 
-      anchors.left: parent.left
-      anchors.right: parent.right
-
+      width: flick.contentWidth
       ListForm {
         defaultData: _contact.sipAddresses
         placeholder: qsTr('sipAccountsInput')
