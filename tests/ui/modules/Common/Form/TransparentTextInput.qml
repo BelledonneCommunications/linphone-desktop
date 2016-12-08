@@ -4,6 +4,8 @@ import Common 1.0
 import Common.Styles 1.0
 
 // ===================================================================
+// A editable text that become the content of a box on focus.
+// ===================================================================
 
 Item {
   property alias color: textInput.color
