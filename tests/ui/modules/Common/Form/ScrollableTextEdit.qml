@@ -11,13 +11,13 @@ Item {
   property alias font: textEdit.font
   property alias color: textEdit.color
 
-  signal editionFinished
+  signal editingFinished
 
   // -----------------------------------------------------------------
 
-  function _handleEditionFinished () {
+  function _handleEditingFinished () {
     textEdit.cursorPosition = 0
-    editionFinished()
+    editingFinished()
   }
 
   // -----------------------------------------------------------------
@@ -66,7 +66,6 @@ Item {
       color: activeFocus && !readOnly
         ? TextEditStyle.textColor.focused
         : TextEditStyle.textColor.normal
-      padding: ListFormStyle.value.text.padding
       selectByMouse: true
       width: flick.width
       wrapMode: Text.Wrap
@@ -75,7 +74,7 @@ Item {
       Keys.onReturnPressed: focus = false
 
       onCursorRectangleChanged: flick._ensureVisible(cursorRectangle)
-      onEditingFinished: _handleEditionFinished()
+      onEditingFinished: _handleEditingFinished()
     }
   }
 }

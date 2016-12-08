@@ -111,8 +111,10 @@ ColumnLayout  {
 
         text: avatar.username
 
-        onEditionFinished: {
+        onEditingFinished: {
           _contact.username = text
+
+          // Update current text with new username.
           text = _contact.username
         }
       }

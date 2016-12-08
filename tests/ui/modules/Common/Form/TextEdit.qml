@@ -5,16 +5,16 @@ import Common.Styles 1.0
 
 // ===================================================================
 
-TextEdit {
+TextInput {
   id: textEdit
 
+  clip: true
   color: activeFocus && !readOnly
     ? TextEditStyle.textColor.focused
     : TextEditStyle.textColor.normal
   padding: ListFormStyle.value.text.padding
   selectByMouse: true
   verticalAlignment: TextEdit.AlignVCenter
-  wrapMode: Text.Wrap
 
   Keys.onEscapePressed: focus = false
   Keys.onReturnPressed: focus = false

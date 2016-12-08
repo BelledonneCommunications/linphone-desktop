@@ -112,10 +112,11 @@ RowLayout {
       implicitHeight: textEdit.height
       width: parent.width
 
-      TextEdit {
+     TextEdit {
         id: textEdit
 
         text: $value
+        width: 300
         height: ListFormStyle.lineHeight
 
         onEditingFinished: _handleEditionFinished(index, text)
