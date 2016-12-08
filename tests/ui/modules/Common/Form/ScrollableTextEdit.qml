@@ -68,13 +68,11 @@ Item {
         : TextEditStyle.textColor.normal
       padding: ListFormStyle.value.text.padding
       selectByMouse: true
+      width: flick.width
       wrapMode: Text.Wrap
 
       Keys.onEscapePressed: focus = false
       Keys.onReturnPressed: focus = false
-
-      height: flick.height
-      width: flick.width
 
       onCursorRectangleChanged: flick._ensureVisible(cursorRectangle)
       onEditingFinished: _handleEditionFinished()
