@@ -89,10 +89,10 @@ signals:
 
 private:
   QString getUsername () const;
-  bool setUsername (const QString &username);
+  void setUsername (const QString &username);
 
   QString getAvatar () const;
-  bool setAvatar (const QString &path);
+  void setAvatar (const QString &path);
 
   QVariantList getSipAddresses () const;
   void setSipAddresses (const QVariantList &sip_addresses);

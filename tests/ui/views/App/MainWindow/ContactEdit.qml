@@ -96,8 +96,12 @@ ColumnLayout  {
         }
       }
 
-      TextEdit {
+      ScrollableTextEdit {
+        id: editUsername
+
         Layout.fillWidth: true
+        Layout.preferredHeight: ContactEditStyle.infoBar.buttons.size
+
         color: ContactEditStyle.infoBar.username.color
 
         font {
@@ -106,6 +110,11 @@ ColumnLayout  {
         }
 
         text: avatar.username
+
+        onEditionFinished: {
+          _contact.username = text
+          text = _contact.username
+        }
       }
 
       ActionBar {

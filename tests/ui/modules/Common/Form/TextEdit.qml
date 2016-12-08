@@ -8,16 +8,13 @@ import Common.Styles 1.0
 TextEdit {
   id: textEdit
 
-  color: activeFocus
+  color: activeFocus && !readOnly
     ? TextEditStyle.textColor.focused
     : TextEditStyle.textColor.normal
   padding: ListFormStyle.value.text.padding
   selectByMouse: true
   verticalAlignment: TextEdit.AlignVCenter
-
-  width: !activeFocus
-    ? parent.width
-    : contentWidth + padding * 2
+  wrapMode: Text.Wrap
 
   Keys.onEscapePressed: focus = false
   Keys.onReturnPressed: focus = false
@@ -29,9 +26,10 @@ TextEdit {
   }
 
   Rectangle {
-    color: parent.activeFocus
+    anchors.fill: textEdit
+    color: textEdit.activeFocus && !readOnly
       ? TextEditStyle.backgroundColor.focused
       : TextEditStyle.backgroundColor.normal
-    anchors.fill: parent
+    z: -1
   }
 }

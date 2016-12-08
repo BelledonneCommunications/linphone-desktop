@@ -70,8 +70,6 @@ Item {
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
     textFormat: Text.RichText // To supports links and imgs.
 
-    wrapMode: Text.Wrap
-
     onHoveredLinkChanged: _handleHoveredLink(hoveredLink)
     onLinkActivated: Qt.openUrlExternally(link)
 

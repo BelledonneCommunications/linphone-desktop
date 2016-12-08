@@ -30,13 +30,12 @@ QString ContactModel::getUsername () const {
   );
 }
 
-bool ContactModel::setUsername (const QString &username) {
-  if (username.length() == 0)
-    return false;
+void ContactModel::setUsername (const QString &username) {
+  if (username.length() == 0 || username == getUsername())
+    return;
 
-  return !m_linphone_friend->setName(
-    Utils::qStringToLinphoneString(username)
-  );
+  if (!m_linphone_friend->setName(Utils::qStringToLinphoneString(username)))
+    emit contactUpdated();
 }
 
 // -------------------------------------------------------------------
@@ -62,12 +61,12 @@ QString ContactModel::getAvatar () const {
     ));
 }
 
-bool ContactModel::setAvatar (const QString &path) {
+void ContactModel::setAvatar (const QString &path) {
   // 1. Try to copy photo in avatars folder.
   QFile file(path);
 
   if (!file.exists() || QImageReader::imageFormat(path).size() == 0)
-    return false;
+    return;
 
   QFileInfo info(file);
   QString uuid = QUuid::createUuid().toString();
@@ -79,7 +78,7 @@ bool ContactModel::setAvatar (const QString &path) {
     file_id;
 
   if (!file.copy(dest))
-    return false;
+    return;
 
   qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)")
     .arg(getUsername()).arg(dest);
@@ -116,7 +115,7 @@ bool ContactModel::setAvatar (const QString &path) {
 
   emit contactUpdated();
 
-  return true;
+  return;
 }
 
 // -------------------------------------------------------------------
