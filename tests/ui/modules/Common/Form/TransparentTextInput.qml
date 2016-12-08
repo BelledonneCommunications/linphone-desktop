@@ -25,13 +25,16 @@ Item {
   }
 
   Rectangle {
-    anchors.fill: parent
-    color: textInput.activeFocus && !readOnly
+    color: textInput.activeFocus && !textInput.readOnly
       ? TransparentTextInputStyle.backgroundColor
       : // No Style constant, see component name.
         // It's a `transparent` TextInput.
-        'transparent'
-    z: -1
+       'transparent'
+    height: parent.height
+    width: {
+      var width = textInput.contentWidth + parent.padding * 2
+      return width < parent.width ? width : parent.width
+    }
   }
 
   TextInput {

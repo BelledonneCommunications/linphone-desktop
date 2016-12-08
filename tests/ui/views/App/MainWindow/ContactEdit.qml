@@ -165,6 +165,7 @@ ColumnLayout  {
       id: infoList
 
       width: flick.contentWidth
+
       ListForm {
         defaultData: _contact.sipAddresses
         placeholder: qsTr('sipAccountsInput')
