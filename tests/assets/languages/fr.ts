@@ -142,6 +142,14 @@
         <source>companies</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">ANNULER</translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>

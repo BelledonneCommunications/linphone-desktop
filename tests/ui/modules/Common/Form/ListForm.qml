@@ -14,22 +14,31 @@ RowLayout {
   property alias title: text.text
   property var defaultData: []
 
-  signal changed (int id, string default_value, string new_value)
-  signal removed (int id, string value)
+  signal changed (int index, string default_value, string new_value)
+  signal removed (int index, string value)
 
   // -----------------------------------------------------------------
+
+  function setInvalid (index, status) {
+    Utils.assert(
+      index >= 0 && index < values.model.count,
+      'Index ' + index + 'not exists.'
+    )
+
+    values.model.setProperty(index, '$isInvalid', status)
+  }
 
   function setData (data) {
     var model = values.model
 
     model.clear()
     data.forEach(function (data) {
-      model.append({ $value: data })
+      model.append({ $value: data, $isInvalid: false })
     })
   }
 
   function _addValue (value) {
-    values.model.append({ $value: value })
+    values.model.append({ $value: value, $isInvalid: false })
 
     if (value.length === 0) {
       addButton.enabled = false
@@ -46,7 +55,10 @@ RowLayout {
       }
     } else {
       var default_value = values.model.get(index).$value
-      listForm.changed(index, default_value, text)
+
+      if (text !== default_value) {
+        listForm.changed(index, default_value, text)
+      }
     }
 
     addButton.enabled = true
@@ -130,12 +142,14 @@ RowLayout {
       implicitHeight: textInput.height
       width: parent.width
 
-     TransparentTextInput {
+      TransparentTextInput {
         id: textInput
 
+        isInvalid: $isInvalid
         text: $value
-        width: parent.width
+
         height: ListFormStyle.lineHeight
+        width: parent.width
 
         onEditingFinished: _handleEditionFinished(index, text)
       }

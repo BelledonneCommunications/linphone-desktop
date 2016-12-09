@@ -8,7 +8,7 @@ Item {
   property bool _connected: false
 
   function connect (emitter, signalName, handler) {
-    Utils.assert(!_connected, 'Smart connect is already connected!')
+    Utils.assert(!_connected, 'SmartConnect is already connected!')
 
     emitter[signalName].connect(handler)
     _connected = true

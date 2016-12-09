@@ -74,6 +74,13 @@ function encodeTextToQmlRichFormat (text, options) {
   return images.concat('<p>' + text + '</p>')
 }
 
+function extractFirstUri (str) {
+  var res = str.match(UriTools.URI_REGEX)
+  return res == null || startsWith(res[0], 'www')
+    ? undefined
+    : res[0]
+}
+
 // -------------------------------------------------------------------
 
 // Returns the top (root) parent of one object.

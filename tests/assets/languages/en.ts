@@ -144,11 +144,19 @@
     </message>
     <message>
         <source>companiesInput</source>
-        <translation type="unfinished"></translation>
+        <translation>Company</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"></translation>
+        <translation>COMPANIES</translation>
+    </message>
+    <message>
+        <source>save</source>
+        <translation>SAVE</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation>CANCEL</translation>
     </message>
 </context>
 <context>

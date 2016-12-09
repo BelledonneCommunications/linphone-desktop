@@ -12,6 +12,7 @@ Item {
   property alias font: textInput.font
   property alias readOnly: textInput.readOnly
   property alias text: textInput.text
+  property bool isInvalid: false
   property int padding: TransparentTextInputStyle.padding
 
   signal editingFinished
@@ -25,6 +26,8 @@ Item {
   }
 
   Rectangle {
+    id: background
+
     color: textInput.activeFocus && !textInput.readOnly
       ? TransparentTextInputStyle.backgroundColor
       : // No Style constant, see component name.
@@ -42,6 +45,16 @@ Item {
 
       onPressed: textInput.focus = false
     }
+  }
+
+  Icon {
+    id: icon
+
+    anchors.left: background.right
+    height: background.height
+    icon: 'generic_error'
+    iconSize: 12
+    visible: parent.isInvalid
   }
 
   TextInput {

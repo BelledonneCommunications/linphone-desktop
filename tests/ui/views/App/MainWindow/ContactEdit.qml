@@ -49,6 +49,39 @@ ColumnLayout  {
     }
   }
 
+  function _handleSipAddressChanged (index, default_value, new_value) {
+    if (!Utils.startsWith(new_value, 'sip:')) {
+      new_value = 'sip:' + new_value
+
+      if (new_value === default_value) {
+        return
+      }
+    }
+
+    var so_far_so_good = (default_value.length === 0)
+      ? _contact.addSipAddress(new_value)
+      : _contact.updateSipAddress(default_value, new_value)
+
+    if (!so_far_so_good) {
+      addresses.setInvalid(index, true)
+    }
+  }
+
+  function _handleUrlChanged (index, default_value, new_value) {
+    var url = Utils.extractFirstUri(new_value)
+    if (url === default_value) {
+      return
+    }
+
+    var so_far_so_good = (default_value.length === 0)
+      ? url && _contact.addUrl(new_value)
+      : url && _contact.updateUrl(default_value, new_value)
+
+    if (!so_far_so_good) {
+      urls.setInvalid(index, true)
+    }
+  }
+
   // -----------------------------------------------------------------
 
   spacing: 0
@@ -168,12 +201,8 @@ ColumnLayout  {
     boundsBehavior: Flickable.StopAtBounds
     clip: true
     contentHeight: infoList.height
-    contentWidth: width - ScrollBar.vertical.width - leftMargin - rightMargin
+    contentWidth: width - ScrollBar.vertical.width
     flickableDirection: Flickable.VerticalFlick
-
-    leftMargin: ContactEditStyle.values.leftMargin
-    rightMargin: ContactEditStyle.values.rightMargin
-    topMargin: ContactEditStyle.values.topMargin
 
     ColumnLayout {
       id: infoList
@@ -187,18 +216,29 @@ ColumnLayout  {
       ListForm {
         id: addresses
 
+        Layout.leftMargin: ContactEditStyle.values.leftMargin
+        Layout.rightMargin: ContactEditStyle.values.rightMargin
+        Layout.topMargin: ContactEditStyle.values.topMargin
+
         defaultData: _contact.sipAddresses
         placeholder: qsTr('sipAccountsInput')
         title: qsTr('sipAccounts')
 
-        onChanged: default_value.length === 0
-          ? _contact.addSipAddress(new_value)
-          : _contact.updateSipAddress(default_value, new_value)
+        onChanged: _handleSipAddressChanged(index, default_value, new_value)
         onRemoved: _contact.removeSipAddress(value)
+      }
+
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ContactEditStyle.values.separator.height
+        color: ContactEditStyle.values.separator.color
       }
 
       ListForm {
         id: companies
+
+        Layout.leftMargin: ContactEditStyle.values.leftMargin
+        Layout.rightMargin: ContactEditStyle.values.rightMargin
 
         defaultData: _contact.companies
         placeholder: qsTr('companiesInput')
@@ -210,8 +250,17 @@ ColumnLayout  {
         onRemoved: _contact.removeCompany(value)
       }
 
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ContactEditStyle.values.separator.height
+        color: ContactEditStyle.values.separator.color
+      }
+
       ListForm {
         id: emails
+
+        Layout.leftMargin: ContactEditStyle.values.leftMargin
+        Layout.rightMargin: ContactEditStyle.values.rightMargin
 
         defaultData: _contact.emails
         placeholder: qsTr('emailsInput')
@@ -223,23 +272,52 @@ ColumnLayout  {
         onRemoved: _contact.removeEmail(value)
       }
 
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ContactEditStyle.values.separator.height
+        color: ContactEditStyle.values.separator.color
+      }
+
       ListForm {
         id: urls
+
+        Layout.leftMargin: ContactEditStyle.values.leftMargin
+        Layout.rightMargin: ContactEditStyle.values.rightMargin
 
         defaultData: _contact.urls
         placeholder: qsTr('webSitesInput')
         title: qsTr('webSites')
 
-        onChanged: default_value.length === 0
-          ? _contact.addUrl(new_value)
-          : _contact.updateUrl(default_value, new_value)
+        onChanged: _handleUrlChanged(index, default_value, new_value)
         onRemoved: _contact.removeUrl(value)
+      }
+
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: ContactEditStyle.values.separator.height
+        color: ContactEditStyle.values.separator.color
+      }
+
+      Loader {
+        Layout.alignment: Qt.AlignHCenter
+        Layout.topMargin: ContactEditStyle.buttons.topMargin
+
+        sourceComponent: Row {
+          spacing: ContactEditStyle.buttons.spacing
+
+          TextButtonB {
+            text: qsTr('save')
+          }
+
+          TextButtonA {
+            text: qsTr('cancel')
+          }
+        }
+      }
+
+      Item {
+        Layout.bottomMargin: ContactEditStyle.values.bottomMargin
       }
     }
   }
 }
-
-/*      ListForm {                              */
-/*        title: qsTr('address')                */
-/*        placeholder: qsTr('addressInput')     */
-/*      }                                       */
