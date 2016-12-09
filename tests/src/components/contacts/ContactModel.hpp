@@ -14,43 +14,12 @@ class ContactModel : public QObject {
 
   Q_OBJECT;
 
-  Q_PROPERTY(
-    QString username
-    READ getUsername
-    WRITE setUsername
-    NOTIFY contactUpdated
-  );
-
-  Q_PROPERTY(
-    QString avatar
-    READ getAvatar
-    WRITE setAvatar
-    NOTIFY contactUpdated
-  );
-
-  Q_PROPERTY(
-    QVariantList sipAddresses
-    READ getSipAddresses
-    NOTIFY contactUpdated
-  );
-
-  Q_PROPERTY(
-    QVariantList companies
-    READ getCompanies
-    NOTIFY contactUpdated
-  );
-
-  Q_PROPERTY(
-    QVariantList emails
-    READ getEmails
-    NOTIFY contactUpdated
-  );
-
-  Q_PROPERTY(
-    QVariantList urls
-    READ getUrls
-    NOTIFY contactUpdated
-  );
+  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY contactUpdated);
+  Q_PROPERTY(QString avatar READ getAvatar WRITE setAvatar NOTIFY contactUpdated);
+  Q_PROPERTY(QVariantList sipAddresses READ getSipAddresses NOTIFY contactUpdated);
+  Q_PROPERTY(QVariantList companies READ getCompanies NOTIFY contactUpdated);
+  Q_PROPERTY(QVariantList emails READ getEmails NOTIFY contactUpdated);
+  Q_PROPERTY(QVariantList urls READ getUrls NOTIFY contactUpdated);
 
   Q_PROPERTY(
     QList<QVariantMap> addresses
@@ -84,9 +53,17 @@ public slots:
   bool removeSipAddress (const QString &sip_address);
   void updateSipAddress (const QString &old_sip_address, const QString &sip_address);
 
+  void addCompany (const QString &company);
+  bool removeCompany (const QString &company);
+  void updateCompany (const QString &old_company, const QString &company);
+
   void addEmail (const QString &email);
   bool removeEmail (const QString &email);
   void updateEmail (const QString &old_email, const QString &email);
+
+  void addUrl (const QString &url);
+  bool removeUrl (const QString &url);
+  void updateUrl (const QString &old_url, const QString &url);
 
 signals:
   void contactUpdated ();
@@ -99,14 +76,9 @@ private:
   void setAvatar (const QString &path);
 
   QVariantList getSipAddresses () const;
-
   QVariantList getCompanies () const;
-  void setCompanies (const QVariantList &companies);
-
   QVariantList getEmails () const;
-
   QVariantList getUrls () const;
-  void setUrls (const QVariantList &urls);
 
   QList<QVariantMap> getAddresses () const;
   void setAddresses (const QList<QVariantMap> &addresses);

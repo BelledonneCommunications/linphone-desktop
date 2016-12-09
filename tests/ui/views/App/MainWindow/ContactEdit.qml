@@ -203,6 +203,11 @@ ColumnLayout  {
         defaultData: _contact.companies
         placeholder: qsTr('companiesInput')
         title: qsTr('companies')
+
+        onChanged: default_value.length === 0
+          ? _contact.addCompany(new_value)
+          : _contact.updateCompany(default_value, new_value)
+        onRemoved: _contact.removeCompany(value)
       }
 
       ListForm {
@@ -224,6 +229,11 @@ ColumnLayout  {
         defaultData: _contact.urls
         placeholder: qsTr('webSitesInput')
         title: qsTr('webSites')
+
+        onChanged: default_value.length === 0
+          ? _contact.addUrl(new_value)
+          : _contact.updateUrl(default_value, new_value)
+        onRemoved: _contact.removeUrl(value)
       }
     }
   }
