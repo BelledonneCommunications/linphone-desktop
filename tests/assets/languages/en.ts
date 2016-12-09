@@ -142,6 +142,14 @@
         <source>avatarChooserTitle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>companiesInput</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>companies</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>

@@ -14,7 +14,19 @@ RowLayout {
   property alias title: text.text
   property var defaultData: []
 
+  signal changed (int id, string default_value, string new_value)
+  signal removed (int id, string value)
+
   // -----------------------------------------------------------------
+
+  function setData (data) {
+    var model = values.model
+
+    model.clear()
+    data.forEach(function (data) {
+      model.append({ $value: data })
+    })
+  }
 
   function _addValue (value) {
     values.model.append({ $value: value })
@@ -26,9 +38,15 @@ RowLayout {
 
   function _handleEditionFinished (index, text) {
     if (text.length === 0) {
+      var default_value = values.model.get(index).$value
       values.model.remove(index)
+
+      if (default_value.length !== 0) {
+        listForm.removed(index, default_value)
+      }
     } else {
-      values.model.set(index, { $value: text })
+      var default_value = values.model.get(index).$value
+      listForm.changed(index, default_value, text)
     }
 
     addButton.enabled = true
@@ -148,9 +166,7 @@ RowLayout {
         return
       }
 
-      defaultData.forEach(function (data) {
-        model.append({ $value: data })
-      })
+      setData(defaultData)
     }
   }
 }

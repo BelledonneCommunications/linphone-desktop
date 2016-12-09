@@ -17,9 +17,7 @@ ColumnLayout  {
 
   property string sipAddress: ''
 
-  property var _contact: ContactsListModel.mapSipAddressToContact(
-    sipAddress
-  ) || sipAddress
+  property var _contact
 
   // -----------------------------------------------------------------
 
@@ -37,20 +35,42 @@ ColumnLayout  {
   }
 
   function _setAvatar (path) {
-    if (!path) {
-      return
-    }
-
-    if (Utils.isObject(_contact)) {
+    if (Utils.isObject(_contact) && path) {
       _contact.avatar = path.match(/^(?:file:\/\/)?(.*)$/)[1]
     }
+  }
 
-    // TODO: Not registered contact.
+  function _setUsername (username) {
+    if (Utils.isObject(_contact)) {
+      _contact.username = username
+
+      // Update current text with new username.
+      usernameInput.text = _contact.username
+    }
   }
 
   // -----------------------------------------------------------------
 
   spacing: 0
+
+  Component.onCompleted:  {
+    var contact = ContactsListModel.mapSipAddressToContact(sipAddress)
+
+    if (contact) {
+      infoUpdater.connect(contact, 'onContactUpdated', function () {
+        addresses.setData(contact.sipAddresses)
+        companies.setData(contact.companies)
+        emails.setData(contact.emails)
+        urls.setData(contact.urls)
+      })
+
+      _contact = contact
+    } else {
+      _contact = sipAddress
+    }
+  }
+
+  // -----------------------------------------------------------------
 
   FileDialog {
     id: avatarChooser
@@ -89,15 +109,14 @@ ColumnLayout  {
           id: avatar
 
           anchors.fill: parent
-
           image: _contact.avatar
-          username: LinphoneUtils.getContactUsername(_contact)
+          username: LinphoneUtils.getContactUsername(_contact) || 'John Doe'
           visible: isLoaded() && !parent.hovered
         }
       }
 
       TransparentTextInput {
-        id: editUsername
+        id: usernameInput
 
         Layout.fillWidth: true
         Layout.preferredHeight: ContactEditStyle.infoBar.buttons.size
@@ -111,12 +130,7 @@ ColumnLayout  {
 
         text: avatar.username
 
-        onEditingFinished: {
-          _contact.username = text
-
-          // Update current text with new username.
-          text = _contact.username
-        }
+        onEditingFinished: _setUsername(text)
       }
 
       ActionBar {
@@ -157,28 +171,56 @@ ColumnLayout  {
     contentWidth: width - ScrollBar.vertical.width - leftMargin - rightMargin
     flickableDirection: Flickable.VerticalFlick
 
-    leftMargin: 40
-    rightMargin: 20
-    topMargin: 40
+    leftMargin: ContactEditStyle.values.leftMargin
+    rightMargin: ContactEditStyle.values.rightMargin
+    topMargin: ContactEditStyle.values.topMargin
 
     ColumnLayout {
       id: infoList
 
       width: flick.contentWidth
 
+      SmartConnect {
+        id: infoUpdater
+      }
+
       ListForm {
+        id: addresses
+
         defaultData: _contact.sipAddresses
         placeholder: qsTr('sipAccountsInput')
         title: qsTr('sipAccounts')
+
+        onChanged: default_value.length === 0
+          ? _contact.addSipAddress(new_value)
+          : _contact.updateSipAddress(default_value, new_value)
+        onRemoved: _contact.removeSipAddress(value)
       }
 
       ListForm {
+        id: companies
+
+        defaultData: _contact.companies
+        placeholder: qsTr('companiesInput')
+        title: qsTr('companies')
+      }
+
+      ListForm {
+        id: emails
+
         defaultData: _contact.emails
         placeholder: qsTr('emailsInput')
         title: qsTr('emails')
+
+        onChanged: default_value.length === 0
+          ? _contact.addEmail(new_value)
+          : _contact.updateEmail(default_value, new_value)
+        onRemoved: _contact.removeEmail(value)
       }
 
       ListForm {
+        id: urls
+
         defaultData: _contact.urls
         placeholder: qsTr('webSitesInput')
         title: qsTr('webSites')

@@ -68,6 +68,9 @@ PopupShadow          1.0 Popup/PopupShadow.qml
 # SearchBox
 SearchBox            1.0 SearchBox.qml
 
+# SmartConnect
+SmartConnect         1.0 SmartConnect.qml
+
 # Tooltip
 TooltipArea          1.0 Tooltip/TooltipArea.qml
 

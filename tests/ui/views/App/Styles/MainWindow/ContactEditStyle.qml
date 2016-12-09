@@ -24,4 +24,10 @@ QtObject {
       property int fontSize: 13
     }
   }
+
+  property QtObject values: QtObject {
+    property int leftMargin: 40
+    property int rightMargin: 20
+    property int topMargin: 40
+  }
 }

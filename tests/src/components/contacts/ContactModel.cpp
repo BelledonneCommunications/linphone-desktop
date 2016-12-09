@@ -8,6 +8,7 @@
 #include "../../app/AvatarProvider.hpp"
 #include "../../app/Database.hpp"
 #include "../../utils.hpp"
+#include "../core/CoreManager.hpp"
 
 #include "ContactModel.hpp"
 
@@ -34,8 +35,12 @@ void ContactModel::setUsername (const QString &username) {
   if (username.length() == 0 || username == getUsername())
     return;
 
+  m_linphone_friend->edit();
+
   if (!m_linphone_friend->setName(Utils::qStringToLinphoneString(username)))
     emit contactUpdated();
+
+  m_linphone_friend->done();
 }
 
 // -------------------------------------------------------------------
@@ -45,15 +50,16 @@ QString ContactModel::getAvatar () const {
   list<shared_ptr<belcard::BelCardPhoto> > photos =
     m_linphone_friend->getVcard()->getBelcard()->getPhotos();
   auto it = find_if(
-    photos.begin(), photos.end(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
+    photos.cbegin(), photos.cend(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
       return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
     }
   );
 
-  // Returns right path.
-  if (it == photos.end())
+  // No path found.
+  if (it == photos.cend())
     return "";
 
+  // Returns right path.
   return QStringLiteral("image://%1/%2")
     .arg(AvatarProvider::PROVIDER_ID)
     .arg(Utils::linphoneStringToQString(
@@ -129,8 +135,65 @@ QVariantList ContactModel::getSipAddresses () const {
   return list;
 }
 
-void ContactModel::setSipAddresses (const QVariantList &sip_addresses) {
-  // TODO.
+void ContactModel::addSipAddress (const QString &sip_address) {
+  shared_ptr<linphone::Address> address =
+    CoreManager::getInstance()->getCore()->createAddress(
+      Utils::qStringToLinphoneString(sip_address)
+    );
+
+  if (!address) {
+    qWarning() << QStringLiteral("Unable to add invalid sip address: `%1`.").arg(sip_address);
+    return;
+  }
+
+  qInfo() << QStringLiteral("Add new sip address: `%1`.").arg(sip_address);
+
+  m_linphone_friend->edit();
+  m_linphone_friend->addAddress(address);
+  m_linphone_friend->done();
+
+  emit contactUpdated();
+}
+
+bool ContactModel::removeSipAddress (const QString &sip_address) {
+  list<shared_ptr<linphone::Address> > addresses = m_linphone_friend->getAddresses();
+  string match = Utils::qStringToLinphoneString(sip_address);
+
+  auto it = find_if(
+    addresses.cbegin(), addresses.cend(),
+    [&match](const shared_ptr<linphone::Address> &address) {
+      return match == address->asString();
+    }
+  );
+
+  if (it == addresses.cend()) {
+    qWarning() << QStringLiteral("Unable to found sip address: `%1`.")
+      .arg(sip_address);
+    return false;
+  }
+
+  if (addresses.size() == 1) {
+    qWarning() << QStringLiteral("Unable to remove the only existing sip address: `%1`.")
+      .arg(sip_address);
+    return false;
+  }
+
+  qInfo() << QStringLiteral("Remove sip address: `%1`.").arg(sip_address);
+
+  m_linphone_friend->edit();
+  m_linphone_friend->removeAddress(*it);
+  m_linphone_friend->done();
+
+  emit contactUpdated();
+
+  return true;
+}
+
+void ContactModel::updateSipAddress (const QString &old_sip_address, const QString &sip_address) {
+  if (old_sip_address == sip_address || !removeSipAddress(old_sip_address))
+    return;
+
+  addSipAddress(sip_address);
 }
 
 // -------------------------------------------------------------------
@@ -144,10 +207,6 @@ QVariantList ContactModel::getCompanies () const {
   return list;
 }
 
-void ContactModel::setCompanies (const QVariantList &companies) {
-  // TODO.
-}
-
 // -------------------------------------------------------------------
 
 QVariantList ContactModel::getEmails () const {
@@ -159,8 +218,55 @@ QVariantList ContactModel::getEmails () const {
   return list;
 }
 
-void ContactModel::setEmails (const QVariantList &emails) {
-  // TODO.
+void ContactModel::addEmail (const QString &email) {
+  shared_ptr<belcard::BelCard> belCard = m_linphone_friend->getVcard()->getBelcard();
+  shared_ptr<belcard::BelCardEmail> belCardEmail =
+    belcard::BelCardGeneric::create<belcard::BelCardEmail>();
+  belCardEmail->setValue(Utils::qStringToLinphoneString(email));
+
+  qInfo() << QStringLiteral("Add new email: `%1`.").arg(email);
+
+  m_linphone_friend->edit();
+  belCard->addEmail(belCardEmail);
+  m_linphone_friend->done();
+
+  emit contactUpdated();
+}
+
+bool ContactModel::removeEmail (const QString &email) {
+  shared_ptr<belcard::BelCard> belCard = m_linphone_friend->getVcard()->getBelcard();
+  list<shared_ptr<belcard::BelCardEmail> > emails = belCard->getEmails();
+  string match = Utils::qStringToLinphoneString(email);
+
+  auto it = find_if(
+    emails.cbegin(), emails.cend(),
+    [&match](const shared_ptr<belcard::BelCardEmail> &email) {
+      return match == email->getValue();
+    }
+  );
+
+  if (it == emails.cend()) {
+    qWarning() << QStringLiteral("Unable to remove email: `%1`.")
+      .arg(email);
+    return false;
+  }
+
+  qInfo() << QStringLiteral("Remove email: `%1`.").arg(email);
+
+  m_linphone_friend->edit();
+  belCard->removeEmail(*it);
+  m_linphone_friend->done();
+
+  emit contactUpdated();
+
+  return true;
+}
+
+void ContactModel::updateEmail (const QString &old_email, const QString &email) {
+  if (old_email == email || !removeEmail(old_email))
+    return;
+
+  addEmail(email);
 }
 
 // -------------------------------------------------------------------
@@ -174,17 +280,9 @@ QVariantList ContactModel::getUrls () const {
   return list;
 }
 
-void ContactModel::setUrls (const QVariantList &urls) {
-  // TODO.
-}
-
 // -------------------------------------------------------------------
 
 QList<QVariantMap> ContactModel::getAddresses () const {
-
-}
-
-void ContactModel::setAddresses (const QList<QVariantMap> &addresses) {
 
 }
 

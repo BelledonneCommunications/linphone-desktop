@@ -4,7 +4,7 @@ import Common 1.0
 import Common.Styles 1.0
 
 // ===================================================================
-// A editable text that become the content of a box on focus.
+// A editable text that has a background color on focus.
 // ===================================================================
 
 Item {
@@ -35,6 +35,13 @@ Item {
       var width = textInput.contentWidth + parent.padding * 2
       return width < parent.width ? width : parent.width
     }
+
+    InvertedMouseArea {
+      anchors.fill: parent
+      enabled: textInput.activeFocus
+
+      onPressed: textInput.focus = false
+    }
   }
 
   TextInput {
@@ -57,12 +64,6 @@ Item {
     onEditingFinished: {
       cursorPosition = 0
       parent.editingFinished()
-    }
-
-    InvertedMouseArea {
-      anchors.fill: parent
-      enabled: textInput.activeFocus
-      onPressed: textInput.focus = false
     }
   }
 }
