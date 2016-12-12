@@ -4,6 +4,7 @@
 #include <QQuickView>
 #include <QtDebug>
 
+#include "../components/camera/Camera.hpp"
 #include "../components/chat/ChatProxyModel.hpp"
 #include "../components/contacts/ContactsListModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
@@ -21,7 +22,7 @@
 #define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/MainWindow/MainWindow.qml"
 #define QML_VIEW_CALL_WINDOW "qrc:/ui/views/App/Calls/Calls.qml"
 
-// ===================================================================
+// =============================================================================
 
 App *App::m_instance = nullptr;
 
@@ -102,6 +103,8 @@ void App::registerTypes () {
   );
 
   // Register models.
+  qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
+
   qmlRegisterUncreatableType<ContactModel>(
     "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
   );
@@ -163,14 +166,17 @@ void App::setTrayIcon () {
   root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
 
   // trayIcon: Left click actions.
-  root->connect(m_system_tray_icon, &QSystemTrayIcon::activated, [root](QSystemTrayIcon::ActivationReason reason) {
-    if (reason == QSystemTrayIcon::Trigger) {
-      if (root->visibility() == QWindow::Hidden)
-        root->showNormal();
-      else
-        root->hide();
+  root->connect(
+    m_system_tray_icon, &QSystemTrayIcon::activated, [root](
+      QSystemTrayIcon::ActivationReason reason) {
+      if (reason == QSystemTrayIcon::Trigger) {
+        if (root->visibility() == QWindow::Hidden)
+          root->showNormal();
+        else
+          root->hide();
+      }
     }
-  });
+  );
 
   // Build trayIcon menu.
   menu->addAction(restore_action);

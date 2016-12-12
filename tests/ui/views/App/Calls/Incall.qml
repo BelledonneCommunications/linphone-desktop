@@ -8,7 +8,7 @@ import LinphoneUtils 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Rectangle {
   id: call
@@ -20,7 +20,7 @@ Rectangle {
     sipAddress
   ) || sipAddress
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   color: StartingCallStyle.backgroundColor
 
@@ -32,11 +32,11 @@ Rectangle {
 
     spacing: 0
 
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Call info.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-    RowLayout {
+    Item {
       id: info
 
       Layout.fillWidth: true
@@ -45,15 +45,29 @@ Rectangle {
       Layout.preferredHeight: StartingCallStyle.contactDescriptionHeight
 
       Icon {
-        iconSize: 40
+        id: callQuality
+
+        anchors.left: parent.left
         icon: 'call_quality_' + 2
+        iconSize: 40
       }
 
-      Item {
-        Layout.fillWidth: true
+      ContactDescription {
+        id: contactDescription
+
+        anchors.centerIn: parent
+        horizontalTextAlignment: Text.AlignHCenter
+        sipAddress: call.sipAddress
+        username: LinphoneUtils.getContactUsername(_contact)
+
+        height: parent.height
+        width: parent.width - cameraActions.width - callQuality.width - 150
       }
 
       ActionBar {
+        id: cameraActions
+
+        anchors.right: parent.right
         iconSize: 40
 
         ActionButton {
@@ -70,18 +84,9 @@ Rectangle {
       }
     }
 
-    ContactDescription {
-      id: contactDescription
-
-      anchors.fill: info
-      username: LinphoneUtils.getContactUsername(_contact)
-      sipAddress: call.sipAddress
-      horizontalTextAlignment: Text.AlignHCenter
-    }
-
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Contact visual.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     Item {
       id: container
@@ -90,26 +95,41 @@ Rectangle {
       Layout.fillHeight: true
       Layout.margins: StartingCallStyle.containerMargins
 
-      Avatar {
+      Component {
         id: avatar
 
-        function _computeAvatarSize () {
-          var height = container.height
-          var width = container.width
+        Avatar {
+          function _computeAvatarSize () {
+            var height = container.height
+            var width = container.width
 
-          var size = height < StartingCallStyle.avatar.maxSize && height > 0
-              ? height
-              : StartingCallStyle.avatar.maxSize
-          return size < width ? size : width
+            var size = height < StartingCallStyle.avatar.maxSize && height > 0
+            ? height
+            : StartingCallStyle.avatar.maxSize
+            return size < width ? size : width
+          }
+
+          backgroundColor: StartingCallStyle.avatar.backgroundColor
+          image: _contact.avatar
+          username: contactDescription.username
+
+          height: _computeAvatarSize()
+          width: height
         }
+      }
 
+      Component {
+        id: camera
+
+        Camera {
+          height: container.height
+          width: container.width
+        }
+      }
+
+      Loader {
         anchors.centerIn: parent
-        backgroundColor: StartingCallStyle.avatar.backgroundColor
-        image: _contact.avatar
-        username: contactDescription.username
-
-        height: _computeAvatarSize()
-        width: height
+        sourceComponent: isVideoCall ? camera : avatar
       }
     }
 

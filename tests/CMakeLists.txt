@@ -55,6 +55,7 @@ set(SOURCES
   src/app/Database.cpp
   src/app/DefaultTranslator.cpp
   src/app/Logger.cpp
+  src/components/camera/Camera.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
   src/components/contacts/ContactModel.cpp
@@ -76,6 +77,7 @@ set(HEADERS
   src/app/Database.hpp
   src/app/DefaultTranslator.hpp
   src/app/Logger.hpp
+  src/components/camera/Camera.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
   src/components/contacts/ContactModel.hpp
