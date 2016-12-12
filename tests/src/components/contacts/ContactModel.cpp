@@ -37,9 +37,25 @@ inline shared_ptr<T> findBelCardValue (
 
 // -------------------------------------------------------------------
 
-ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
+ContactModel::ContactModel (
+  shared_ptr<linphone::Friend> linphone_friend,
+  bool is_detached
+) {
   linphone_friend->setData("contact-model", *this);
   m_linphone_friend = linphone_friend;
+  m_is_detached = is_detached;
+}
+
+// -------------------------------------------------------------------
+
+void ContactModel::edit () {
+  if (!m_is_detached)
+    m_linphone_friend->edit();
+}
+
+void ContactModel::done () {
+  if (!m_is_detached)
+    m_linphone_friend->done();
 }
 
 // -------------------------------------------------------------------
@@ -54,12 +70,12 @@ void ContactModel::setUsername (const QString &username) {
   if (username.length() == 0 || username == getUsername())
     return;
 
-  m_linphone_friend->edit();
+  edit();
 
   if (!m_linphone_friend->setName(Utils::qStringToLinphoneString(username)))
     emit contactUpdated();
 
-  m_linphone_friend->done();
+  done();
 }
 
 // -------------------------------------------------------------------
@@ -109,7 +125,7 @@ void ContactModel::setAvatar (const QString &path) {
     .arg(getUsername()).arg(dest);
 
   // 2. Edit vcard.
-  m_linphone_friend->edit();
+  edit();
 
   shared_ptr<belcard::BelCard> belCard = m_linphone_friend->getVcard()->getBelcard();
   list<shared_ptr<belcard::BelCardPhoto> > photos = belCard->getPhotos();
@@ -136,7 +152,7 @@ void ContactModel::setAvatar (const QString &path) {
   photo->setValue(VCARD_SCHEME + Utils::qStringToLinphoneString(file_id));
   belCard->addPhoto(photo);
 
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 
@@ -167,9 +183,9 @@ bool ContactModel::addSipAddress (const QString &sip_address) {
 
   qInfo() << QStringLiteral("Add new sip address: `%1`.").arg(sip_address);
 
-  m_linphone_friend->edit();
+  edit();
   m_linphone_friend->addAddress(address);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 
@@ -201,9 +217,9 @@ void ContactModel::removeSipAddress (const QString &sip_address) {
 
   qInfo() << QStringLiteral("Remove sip address: `%1`.").arg(sip_address);
 
-  m_linphone_friend->edit();
+  edit();
   m_linphone_friend->removeAddress(*it);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 
@@ -238,9 +254,9 @@ void ContactModel::addCompany (const QString &company) {
 
   qInfo() << QStringLiteral("Add new company: `%1`.").arg(company);
 
-  m_linphone_friend->edit();
+  edit();
   belCard->addRole(value);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 }
@@ -256,9 +272,9 @@ void ContactModel::removeCompany (const QString &company) {
 
   qInfo() << QStringLiteral("Remove company: `%1`.").arg(company);
 
-  m_linphone_friend->edit();
+  edit();
   belCard->removeRole(value);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 }
@@ -290,9 +306,9 @@ bool ContactModel::addEmail (const QString &email) {
 
   qInfo() << QStringLiteral("Add new email: `%1`.").arg(email);
 
-  m_linphone_friend->edit();
+  edit();
   belCard->addEmail(value);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 
@@ -311,9 +327,9 @@ void ContactModel::removeEmail (const QString &email) {
 
   qInfo() << QStringLiteral("Remove email: `%1`.").arg(email);
 
-  m_linphone_friend->edit();
+  edit();
   belCard->removeEmail(value);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 }
@@ -332,6 +348,8 @@ bool ContactModel::updateEmail (const QString &old_email, const QString &email) 
 QVariantList ContactModel::getUrls () const {
   QVariantList list;
 
+  qDebug() << "card" << m_linphone_friend->getVcard().get();
+
   for (const auto &url : m_linphone_friend->getVcard()->getBelcard()->getURLs())
     list.append(Utils::linphoneStringToQString(url->getValue()));
 
@@ -346,9 +364,9 @@ bool ContactModel::addUrl (const QString &url) {
 
   qInfo() << QStringLiteral("Add new url: `%1`.").arg(url);
 
-  m_linphone_friend->edit();
+  edit();
   belCard->addURL(value);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 
@@ -367,9 +385,9 @@ void ContactModel::removeUrl (const QString &url) {
 
   qInfo() << QStringLiteral("Remove url: `%1`.").arg(url);
 
-  m_linphone_friend->edit();
+  edit();
   belCard->removeURL(value);
-  m_linphone_friend->done();
+  done();
 
   emit contactUpdated();
 }

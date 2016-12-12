@@ -41,9 +41,13 @@ class ContactModel : public QObject {
   );
 
 public:
-  ContactModel (std::shared_ptr<linphone::Friend> linphone_friend);
+  ContactModel (
+    std::shared_ptr<linphone::Friend> linphone_friend,
+    bool is_detached = false
+  );
 
 public slots:
+
   bool addSipAddress (const QString &sip_address);
   void removeSipAddress (const QString &sip_address);
   bool updateSipAddress (const QString &old_sip_address, const QString &sip_address);
@@ -64,6 +68,9 @@ signals:
   void contactUpdated ();
 
 private:
+  void edit ();
+  void done ();
+
   QString getUsername () const;
   void setUsername (const QString &username);
 
@@ -83,6 +90,8 @@ private:
 
   // TODO: Remove!!!
   QString getSipAddress () const;
+
+  bool m_is_detached;
 
   Presence::PresenceStatus m_presence_status = Presence::Offline;
 

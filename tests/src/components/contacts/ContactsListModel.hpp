@@ -25,12 +25,10 @@ public:
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 public slots:
-  // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
-  // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
+  ContactModel *createDetachedContact () const;
   ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
 
   void removeContact (ContactModel *contact);
-
 private:
   QList<ContactModel *> m_list;
   std::shared_ptr<linphone::FriendList> m_linphone_friends;

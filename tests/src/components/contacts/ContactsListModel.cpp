@@ -16,6 +16,9 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
   // Init contacts with linphone friends list.
   for (const auto &friend_ : m_linphone_friends->getFriends()) {
     ContactModel *contact = new ContactModel(friend_);
+
+    // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
+    // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
     App::getInstance()->getEngine()->setObjectOwnership(
       contact, QQmlEngine::CppOwnership
     );
@@ -71,6 +74,13 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 }
 
 // -------------------------------------------------------------------
+
+ContactModel *ContactsListModel::createDetachedContact () const {
+  return new ContactModel(
+    CoreManager::getInstance()->getCore()->createFriend(),
+    true
+  );
+}
 
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
   // Maybe use a hashtable in future version to get a lower cost?

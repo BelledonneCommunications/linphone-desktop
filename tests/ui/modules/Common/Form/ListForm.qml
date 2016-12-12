@@ -12,7 +12,9 @@ RowLayout {
 
   property alias placeholder: placeholder.text
   property alias title: text.text
+  property int inputMethodHints
   property var defaultData: []
+  property var minValues
 
   signal changed (int index, string default_value, string new_value)
   signal removed (int index, string value)
@@ -47,15 +49,31 @@ RowLayout {
 
   function _handleEditionFinished (index, text) {
     if (text.length === 0) {
+      // Remove.
       var default_value = values.model.get(index).$value
+
+      if (minValues != null && minValues >= values.model.count) {
+        var model = values.model
+
+        // Unable to set property directly. Qt uses a cache of the value.
+        model.remove(index)
+        model.insert(index, {
+          $isInvalid: false,
+          $value: default_value
+        })
+        return
+      }
+
       values.model.remove(index)
 
       if (default_value.length !== 0) {
         listForm.removed(index, default_value)
       }
     } else {
+      // Update.
       var default_value = values.model.get(index).$value
 
+      // If no changes, no signal.
       if (text !== default_value) {
         listForm.changed(index, default_value, text)
       }
@@ -145,6 +163,7 @@ RowLayout {
       TransparentTextInput {
         id: textInput
 
+        inputMethodHints: listForm.inputMethodHints
         isInvalid: $isInvalid
         text: $value
 

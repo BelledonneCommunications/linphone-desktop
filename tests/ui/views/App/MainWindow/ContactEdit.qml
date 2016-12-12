@@ -62,9 +62,7 @@ ColumnLayout  {
       ? _contact.addSipAddress(new_value)
       : _contact.updateSipAddress(default_value, new_value)
 
-    if (!so_far_so_good) {
-      addresses.setInvalid(index, true)
-    }
+    addresses.setInvalid(index, !so_far_so_good)
   }
 
   function _handleUrlChanged (index, default_value, new_value) {
@@ -77,30 +75,16 @@ ColumnLayout  {
       ? url && _contact.addUrl(new_value)
       : url && _contact.updateUrl(default_value, new_value)
 
-    if (!so_far_so_good) {
-      urls.setInvalid(index, true)
-    }
+    urls.setInvalid(index, !so_far_so_good)
   }
 
   // -----------------------------------------------------------------
 
   spacing: 0
 
-  Component.onCompleted:  {
-    var contact = ContactsListModel.mapSipAddressToContact(sipAddress)
-
-    if (contact) {
-      infoUpdater.connect(contact, 'onContactUpdated', function () {
-        addresses.setData(contact.sipAddresses)
-        companies.setData(contact.companies)
-        emails.setData(contact.emails)
-        urls.setData(contact.urls)
-      })
-
-      _contact = contact
-    } else {
-      _contact = sipAddress
-    }
+  Component.onCompleted: {
+    _contact = ContactsListModel.mapSipAddressToContact(sipAddress)
+      || ContactsListModel.createDetachedContact()
   }
 
   // -----------------------------------------------------------------
@@ -209,10 +193,6 @@ ColumnLayout  {
 
       width: flick.contentWidth
 
-      SmartConnect {
-        id: infoUpdater
-      }
-
       ListForm {
         id: addresses
 
@@ -221,6 +201,7 @@ ColumnLayout  {
         Layout.topMargin: ContactEditStyle.values.topMargin
 
         defaultData: _contact.sipAddresses
+        minValues: 1
         placeholder: qsTr('sipAccountsInput')
         title: qsTr('sipAccounts')
 
@@ -263,6 +244,7 @@ ColumnLayout  {
         Layout.rightMargin: ContactEditStyle.values.rightMargin
 
         defaultData: _contact.emails
+        inputMethodHints: Qt.ImhEmailCharactersOnly
         placeholder: qsTr('emailsInput')
         title: qsTr('emails')
 
@@ -285,6 +267,7 @@ ColumnLayout  {
         Layout.rightMargin: ContactEditStyle.values.rightMargin
 
         defaultData: _contact.urls
+        inputMethodHints: Qt.ImhUrlCharactersOnly
         placeholder: qsTr('webSitesInput')
         title: qsTr('webSites')
 

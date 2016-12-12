@@ -10,11 +10,11 @@ import Common.Styles 1.0
 Item {
   property alias color: textInput.color
   property alias font: textInput.font
+  property alias inputMethodHints: textInput.inputMethodHints
   property alias readOnly: textInput.readOnly
   property alias text: textInput.text
   property bool isInvalid: false
   property int padding: TransparentTextInputStyle.padding
-
   signal editingFinished
 
   // -----------------------------------------------------------------
