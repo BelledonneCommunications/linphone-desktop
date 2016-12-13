@@ -86,8 +86,8 @@ void VcardModel::setAvatar (const QString &path) {
   qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
 
   // 2. Edit vcard.
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
-  list<shared_ptr<belcard::BelCardPhoto> > photos = belCard->getPhotos();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  list<shared_ptr<belcard::BelCardPhoto> > photos = belcard->getPhotos();
 
   // 3. Remove oldest photo.
   auto it = find_if(
@@ -105,14 +105,14 @@ void VcardModel::setAvatar (const QString &path) {
 
     if (!QFile::remove(image_path))
       qWarning() << QStringLiteral("Unable to remove `%1`.").arg(image_path);
-    belCard->removePhoto(*it);
+    belcard->removePhoto(*it);
   }
 
   // 4. Update.
   shared_ptr<belcard::BelCardPhoto> photo =
     belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
   photo->setValue(VCARD_SCHEME + ::Utils::qStringToLinphoneString(file_id));
-  belCard->addPhoto(photo);
+  belcard->addPhoto(photo);
 
   emit vcardUpdated();
 }
@@ -120,11 +120,39 @@ void VcardModel::setAvatar (const QString &path) {
 // -----------------------------------------------------------------------------
 
 QVariantMap VcardModel::getAddress () const {
-  // TODO
+  list<shared_ptr<belcard::BelCardAddress> > addresses = m_vcard->getBelcard()->getAddresses();
+  QVariantMap map;
+
+  if (addresses.empty())
+    return map;
+
+  shared_ptr<belcard::BelCardAddress> address = addresses.front();
+  map["street"] = ::Utils::linphoneStringToQString(address->getStreet());
+  map["locality"] = ::Utils::linphoneStringToQString(address->getLocality());
+  map["postalCode"] = ::Utils::linphoneStringToQString(address->getPostalCode());
+  map["country"] = ::Utils::linphoneStringToQString(address->getCountry());
+
+  return map;
 }
 
 void VcardModel::setAddress (const QVariantMap &address) {
-  // TODO
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  list<shared_ptr<belcard::BelCardAddress> > addresses = belcard->getAddresses();
+
+  while (!addresses.empty())
+    belcard->removeAddress(addresses.front());
+
+  shared_ptr<belcard::BelCardAddress> belcard_address =
+    belcard::BelCardGeneric::create<belcard::BelCardAddress>();
+
+  belcard_address->setStreet(::Utils::qStringToLinphoneString(address["street"].toString()));
+  belcard_address->setLocality(::Utils::qStringToLinphoneString(address["locality"].toString()));
+  belcard_address->setPostalCode(::Utils::qStringToLinphoneString(address["postalCode"].toString()));
+  belcard_address->setCountry(::Utils::qStringToLinphoneString(address["country"].toString()));
+
+  belcard->addAddress(belcard_address);
+
+  emit vcardUpdated();
 }
 
 QVariantList VcardModel::getSipAddresses () const {
@@ -194,12 +222,12 @@ QVariantList VcardModel::getCompanies () const {
 }
 
 bool VcardModel::addCompany (const QString &company) {
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
   value->setValue(::Utils::qStringToLinphoneString(company));
 
   qInfo() << QStringLiteral("Add new company: `%1`.").arg(company);
-  belCard->addRole(value);
+  belcard->addRole(value);
 
   emit vcardUpdated();
 
@@ -207,8 +235,8 @@ bool VcardModel::addCompany (const QString &company) {
 }
 
 void VcardModel::removeCompany (const QString &company) {
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
-  shared_ptr<belcard::BelCardRole> value = findBelCardValue(belCard->getRoles(), company);
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCardRole> value = findBelCardValue(belcard->getRoles(), company);
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove company: `%1`.").arg(company);
@@ -216,7 +244,7 @@ void VcardModel::removeCompany (const QString &company) {
   }
 
   qInfo() << QStringLiteral("Remove company: `%1`.").arg(company);
-  belCard->removeRole(value);
+  belcard->removeRole(value);
 
   emit vcardUpdated();
 }
@@ -242,13 +270,13 @@ QVariantList VcardModel::getEmails () const {
 }
 
 bool VcardModel::addEmail (const QString &email) {
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
   shared_ptr<belcard::BelCardEmail> value =
     belcard::BelCardGeneric::create<belcard::BelCardEmail>();
   value->setValue(::Utils::qStringToLinphoneString(email));
 
   qInfo() << QStringLiteral("Add new email: `%1`.").arg(email);
-  belCard->addEmail(value);
+  belcard->addEmail(value);
 
   emit vcardUpdated();
 
@@ -256,8 +284,8 @@ bool VcardModel::addEmail (const QString &email) {
 }
 
 void VcardModel::removeEmail (const QString &email) {
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
-  shared_ptr<belcard::BelCardEmail> value = findBelCardValue(belCard->getEmails(), email);
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCardEmail> value = findBelCardValue(belcard->getEmails(), email);
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove email: `%1`.").arg(email);
@@ -265,7 +293,7 @@ void VcardModel::removeEmail (const QString &email) {
   }
 
   qInfo() << QStringLiteral("Remove email: `%1`.").arg(email);
-  belCard->removeEmail(value);
+  belcard->removeEmail(value);
 
   emit vcardUpdated();
 }
@@ -291,12 +319,12 @@ QVariantList VcardModel::getUrls () const {
 }
 
 bool VcardModel::addUrl (const QString &url) {
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
   value->setValue(::Utils::qStringToLinphoneString(url));
 
   qInfo() << QStringLiteral("Add new url: `%1`.").arg(url);
-  belCard->addURL(value);
+  belcard->addURL(value);
 
   emit vcardUpdated();
 
@@ -304,8 +332,8 @@ bool VcardModel::addUrl (const QString &url) {
 }
 
 void VcardModel::removeUrl (const QString &url) {
-  shared_ptr<belcard::BelCard> belCard = m_vcard->getBelcard();
-  shared_ptr<belcard::BelCardURL> value = findBelCardValue(belCard->getURLs(), url);
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCardURL> value = findBelCardValue(belcard->getURLs(), url);
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove url: `%1`.").arg(url);
@@ -313,7 +341,7 @@ void VcardModel::removeUrl (const QString &url) {
   }
 
   qInfo() << QStringLiteral("Remove url: `%1`.").arg(url);
-  belCard->removeURL(value);
+  belcard->removeURL(value);
 
   emit vcardUpdated();
 }
