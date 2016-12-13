@@ -58,7 +58,8 @@ set(SOURCES
   src/components/camera/Camera.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
-  src/components/contacts/ContactModel.cpp
+  src/components/contact/ContactModel.cpp
+  src/components/contact/VcardModel.cpp
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
   src/components/core/CoreManager.cpp
@@ -80,7 +81,8 @@ set(HEADERS
   src/components/camera/Camera.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
-  src/components/contacts/ContactModel.hpp
+  src/components/contact/ContactModel.hpp
+  src/components/contact/VcardModel.hpp
   src/components/contacts/ContactsListModel.hpp
   src/components/contacts/ContactsListProxyModel.hpp
   src/components/core/CoreManager.hpp

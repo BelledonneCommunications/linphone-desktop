@@ -109,6 +109,10 @@ void App::registerTypes () {
     "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
   );
 
+  qmlRegisterUncreatableType<VcardModel>(
+    "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable"
+  );
+
   ContactsListProxyModel::initContactsListModel(new ContactsListModel());
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
 

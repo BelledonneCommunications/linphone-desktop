@@ -39,8 +39,9 @@ private:
   float computeContactWeight (const ContactModel &contact) const;
 
   bool isConnectedFilterUsed () const {
-      return m_use_connected_filter;
+    return m_use_connected_filter;
   }
+
   void setConnectedFilter (bool use_connected_filter);
 
   static const QRegExp m_search_separators;

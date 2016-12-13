@@ -8,9 +8,9 @@
 
 using namespace std;
 
-// ===================================================================
+// =============================================================================
 
-ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(parent) {
+ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(parent) {
   m_linphone_friends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 
   // Init contacts with linphone friends list.
@@ -27,7 +27,7 @@ ContactsListModel::ContactsListModel (QObject *parent): QAbstractListModel(paren
   }
 }
 
-int ContactsListModel::rowCount (const QModelIndex &) const {
+int ContactsListModel::rowCount (const QModelIndex&) const {
   return m_list.count();
 }
 
@@ -49,7 +49,7 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-bool ContactsListModel::removeRow (int row, const QModelIndex &) {
+bool ContactsListModel::removeRow (int row, const QModelIndex&) {
   return removeRows(row, 1);
 }
 
@@ -73,30 +73,20 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
   return true;
 }
 
-// -------------------------------------------------------------------
-
-ContactModel *ContactsListModel::createDetachedContact () const {
-  return new ContactModel(
-    CoreManager::getInstance()->getCore()->createFriend(),
-    true
-  );
-}
+// -----------------------------------------------------------------------------
 
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
-  // Maybe use a hashtable in future version to get a lower cost?
-  std::shared_ptr<linphone::Friend> friend_ = m_linphone_friends->findFriendByUri(
-    Utils::qStringToLinphoneString(sipAddress)
-  );
+  // TODO: Maybe use a hashtable in future version to get a lower cost?
+  shared_ptr<linphone::Friend> friend_ = m_linphone_friends->findFriendByUri(
+      ::Utils::qStringToLinphoneString(sipAddress)
+    );
 
   if (!friend_) {
-    qInfo() << "Map sip address to contact:" << sipAddress << "-> nullptr";
+    qInfo() << QStringLiteral("Unable to map sip address: `%1`.").arg(sipAddress);
     return nullptr;
   }
 
-  ContactModel &contact = friend_->getData<ContactModel>("contact-model");
-  qInfo() << "Map sip address to contact:" << sipAddress << "->" << &contact;
-
-  return &contact;
+  return &friend_->getData<ContactModel>(ContactModel::NAME);
 }
 
 void ContactsListModel::removeContact (ContactModel *contact) {
