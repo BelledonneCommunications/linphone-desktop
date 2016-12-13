@@ -168,7 +168,8 @@ void App::setTrayIcon () {
   // trayIcon: Left click actions.
   root->connect(
     m_system_tray_icon, &QSystemTrayIcon::activated, [root](
-      QSystemTrayIcon::ActivationReason reason) {
+      QSystemTrayIcon::ActivationReason reason
+    ) {
       if (reason == QSystemTrayIcon::Trigger) {
         if (root->visibility() == QWindow::Hidden)
           root->showNormal();
