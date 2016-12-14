@@ -7,7 +7,7 @@ SearchBox {
   id: searchBox
 
   delegate: Contact {
-    contact: $contact
+    // contact: $contact
     width: parent.width
 
     actions: [

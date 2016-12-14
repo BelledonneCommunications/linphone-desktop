@@ -49,10 +49,10 @@ private:
   void setUsername (const QString &username);
 
   QString getAvatar () const;
-  void setAvatar (const QString &path);
+  bool setAvatar (const QString &path);
 
   QVariantMap getAddress () const;
-  void setAddress (const QVariantMap &address);
+  bool setAddress (const QVariantMap &address);
 
   QVariantList getSipAddresses () const;
   QVariantList getCompanies () const;

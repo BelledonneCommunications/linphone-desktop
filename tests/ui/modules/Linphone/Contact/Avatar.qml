@@ -5,7 +5,7 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 
 Item {
   id: avatar
@@ -17,7 +17,7 @@ Item {
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   function isLoaded () {
     return roundedImage.status === Image.Ready
@@ -28,7 +28,7 @@ Item {
 
     Utils.assert(
       result != null,
-      'Unable to get initials of: \'' + username + '\''
+      'Unable to get initials of: `' + username + '`.'
     )
 
     return result[1].charAt(0).toUpperCase() + (
@@ -38,7 +38,7 @@ Item {
     )
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   RoundedImage {
     id: roundedImage

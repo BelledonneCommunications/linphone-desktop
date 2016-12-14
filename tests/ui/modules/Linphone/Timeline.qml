@@ -87,7 +87,6 @@ ColumnLayout {
               ? TimelineStyle.contact.backgroundColor.a
               : TimelineStyle.contact.backgroundColor.b
           )
-        contact: parent.contact
         sipAddress: $timelineEntry.sipAddresses
         sipAddressColor: view.currentIndex === index
           ? TimelineStyle.contact.sipAddress.color.selected
@@ -100,7 +99,8 @@ ColumnLayout {
           anchors.fill: parent
           sourceComponent: TooltipArea {
             text: $timelineEntry.timestamp.toLocaleString(
-              Qt.locale(App.locale()), Locale.ShortFormat
+              Qt.locale(App.locale()),
+              Locale.ShortFormat
             )
           }
         }

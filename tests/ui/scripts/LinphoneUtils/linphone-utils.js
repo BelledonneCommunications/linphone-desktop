@@ -10,5 +10,5 @@
 function getContactUsername (contact) {
   return Utils.isString(contact)
     ? contact.substring(4, contact.indexOf('@')) // 4 = length("sip:")
-    : contact.username
+    : contact.vcard.username
 }

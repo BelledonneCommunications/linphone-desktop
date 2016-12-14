@@ -2,7 +2,7 @@ import QtQuick 2.7
 
 import Linphone.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Column {
   property alias sipAddress: sipAddress.text
@@ -11,7 +11,6 @@ Column {
   property color usernameColor: ContactDescriptionStyle.username.color
   property int horizontalTextAlignment
 
-  // Username.
   Text {
     id: username
 
@@ -25,7 +24,6 @@ Column {
     width: parent.width
   }
 
-  // Sip address.
   Text {
     id: sipAddress
 

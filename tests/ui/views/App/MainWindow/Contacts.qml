@@ -7,7 +7,7 @@ import Utils 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 ColumnLayout {
   function _removeContact (contact) {
@@ -24,9 +24,9 @@ ColumnLayout {
 
   spacing: 0
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Search Bar & actions.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Rectangle {
     Layout.fillWidth: true
@@ -66,9 +66,9 @@ ColumnLayout {
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Contacts list.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Rectangle {
     Layout.fillWidth: true
@@ -89,7 +89,7 @@ ColumnLayout {
         height: ContactsStyle.contact.height
         width: parent.width
 
-        // -----------------------------------------------------------
+        // ---------------------------------------------------------------------
 
         Rectangle {
           id: contact
@@ -97,7 +97,7 @@ ColumnLayout {
           anchors.fill: parent
           color: ContactsStyle.contact.backgroundColor.normal
 
-          // ---------------------------------------------------------
+          // -------------------------------------------------------------------
 
           Component {
             id: container1
@@ -142,7 +142,7 @@ ColumnLayout {
                 ActionButton {
                   icon: 'chat'
                   onClicked: window.setView('Conversation', {
-                    sipAddress: $contact.sipAddress
+                    sipAddress: $contact.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
                   })
                 }
               }
@@ -160,7 +160,7 @@ ColumnLayout {
             }
           }
 
-          // ---------------------------------------------------------
+          // -------------------------------------------------------------------
 
           Rectangle {
             id: indicator
@@ -185,15 +185,13 @@ ColumnLayout {
               }
               spacing: ContactsStyle.contact.spacing
 
-              // Avatar.
               Avatar {
                 Layout.preferredHeight: ContactsStyle.contact.avatarSize
                 Layout.preferredWidth: ContactsStyle.contact.avatarSize
-                image: $contact.avatar
-                username: $contact.username
+                image: $contact.vcard.avatar
+                username: $contact.vcard.username
               }
 
-              // Username.
               Text {
                 Layout.preferredWidth: ContactsStyle.contact.username.width
                 color: ContactsStyle.contact.username.color
@@ -204,7 +202,7 @@ ColumnLayout {
                   pointSize: ContactsStyle.contact.username.fontSize
                 }
 
-                text: $contact.username
+                text: $contact.vcard.username
 
                 MouseArea {
                   anchors.fill: parent
@@ -214,7 +212,7 @@ ColumnLayout {
                   hoverEnabled: true
 
                   onClicked: window.setView('ContactEdit', {
-                    sipAddress: $contact.sipAddress
+                    sipAddress: $contact.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
                   })
                 }
               }
@@ -230,7 +228,7 @@ ColumnLayout {
             }
           }
 
-          // ---------------------------------------------------------
+          // -------------------------------------------------------------------
 
           states: State {
             when: mouseArea.containsMouse

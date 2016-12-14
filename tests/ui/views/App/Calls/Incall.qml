@@ -110,7 +110,7 @@ Rectangle {
           }
 
           backgroundColor: StartingCallStyle.avatar.backgroundColor
-          image: _contact.avatar
+          image: _contact.vcard.avatar
           username: contactDescription.username
 
           height: _computeAvatarSize()
