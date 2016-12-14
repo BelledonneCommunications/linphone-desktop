@@ -11,7 +11,7 @@ RowLayout {
   property string sipAddress
 
   // TODO.
-  property var contact: ContactsListModel.mapSipAddressToContact(
+  property var contact: ContactsListModel.mapSipAddressTocd (
     sipAddress
   )
 

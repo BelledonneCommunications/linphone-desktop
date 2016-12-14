@@ -20,7 +20,7 @@ QHash<int, QByteArray> ChatModel::roleNames () const {
   return roles;
 }
 
-int ChatModel::rowCount (const QModelIndex &) const {
+int ChatModel::rowCount (const QModelIndex&) const {
   return m_entries.count();
 }
 
@@ -40,7 +40,7 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-bool ChatModel::removeRow (int row, const QModelIndex &) {
+bool ChatModel::removeRow (int row, const QModelIndex&) {
   return removeRows(row, 1);
 }
 
@@ -92,12 +92,8 @@ void ChatModel::fillMessageEntry (
   const shared_ptr<linphone::ChatMessage> &message
 ) {
   dest["type"] = EntryType::MessageEntry;
-  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(
-     static_cast<qint64>(message->getTime()) * 1000
-  );
-  dest["content"] = Utils::linphoneStringToQString(
-    message->getText()
-  );
+  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(message->getTime()) * 1000);
+  dest["content"] = ::Utils::linphoneStringToQString(message->getText());
   dest["isOutgoing"] = message->isOutgoing();
 }
 
@@ -105,9 +101,7 @@ void ChatModel::fillCallStartEntry (
   QVariantMap &dest,
   const shared_ptr<linphone::CallLog> &call_log
 ) {
-  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(
-    static_cast<qint64>(call_log->getStartDate()) * 1000
-  );
+  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(call_log->getStartDate()) * 1000);
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;
@@ -121,8 +115,8 @@ void ChatModel::fillCallEndEntry (
   const shared_ptr<linphone::CallLog> &call_log
 ) {
   QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(
-    static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
-  );
+      static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
+    );
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;
@@ -138,9 +132,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
 
   switch (type) {
     case ChatModel::MessageEntry:
-      m_chat_room->deleteMessage(
-        static_pointer_cast<linphone::ChatMessage>(pair.second)
-      );
+      m_chat_room->deleteMessage(static_pointer_cast<linphone::ChatMessage>(pair.second));
       break;
     case ChatModel::CallEntry:
       if (pair.first["status"].toInt() == linphone::CallStatusSuccess) {
@@ -148,22 +140,21 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
         // We are between `beginRemoveRows` and `endRemoveRows`.
         // A solution is to schedule a `removeEntry` call in the Qt main loop.
         shared_ptr<void> linphone_ptr = pair.second;
-        QTimer::singleShot(0, this, [this, linphone_ptr]() {
-          auto it = find_if(
-            m_entries.begin(), m_entries.end(),
-            [linphone_ptr](const ChatEntryData &pair) {
-              return pair.second == linphone_ptr;
-            }
-          );
+        QTimer::singleShot(
+          0, this, [this, linphone_ptr]() {
+            auto it = find_if(
+                m_entries.begin(), m_entries.end(), [linphone_ptr](const ChatEntryData &pair) {
+                  return pair.second == linphone_ptr;
+                }
+              );
 
-          if (it != m_entries.end())
-            removeEntry(static_cast<int>(distance(m_entries.begin(), it)));
-        });
+            if (it != m_entries.end())
+              removeEntry(static_cast<int>(distance(m_entries.begin(), it)));
+          }
+        );
       }
 
-      CoreManager::getInstance()->getCore()->removeCallLog(
-        static_pointer_cast<linphone::CallLog>(pair.second)
-      );
+      CoreManager::getInstance()->getCore()->removeCallLog(static_pointer_cast<linphone::CallLog>(pair.second));
       break;
     default:
       qWarning() << QStringLiteral("Unknown chat entry type: %1.").arg(type);
@@ -174,7 +165,7 @@ QString ChatModel::getSipAddress () const {
   if (!m_chat_room)
     return "";
 
-  return Utils::linphoneStringToQString(
+  return ::Utils::linphoneStringToQString(
     m_chat_room->getPeerAddress()->asString()
   );
 }
@@ -189,7 +180,7 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   m_entries.clear();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  string std_sip_address = Utils::qStringToLinphoneString(sip_address);
+  string std_sip_address = ::Utils::qStringToLinphoneString(sip_address);
 
   m_chat_room = core->getChatRoomFromUri(std_sip_address);
 
@@ -203,18 +194,18 @@ void ChatModel::setSipAddress (const QString &sip_address) {
 
   // Get calls.
   auto insert_entry = [this](
-    const ChatEntryData &pair,
-    const QList<ChatEntryData>::iterator *start = NULL
-  ) {
-     auto it = lower_bound(
-       start ? *start : m_entries.begin(), m_entries.end(), pair,
-       [](const ChatEntryData &a, const ChatEntryData &b) {
-         return a.first["timestamp"] < b.first["timestamp"];
-       }
-     );
+      const ChatEntryData &pair,
+      const QList<ChatEntryData>::iterator *start = NULL
+    ) {
+      auto it = lower_bound(
+          start ? *start : m_entries.begin(), m_entries.end(), pair,
+          [](const ChatEntryData &a, const ChatEntryData &b) {
+            return a.first["timestamp"] < b.first["timestamp"];
+          }
+        );
 
-     return m_entries.insert(it, pair);
-  };
+      return m_entries.insert(it, pair);
+    };
 
   for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
     linphone::CallStatus status = call_log->getStatus();

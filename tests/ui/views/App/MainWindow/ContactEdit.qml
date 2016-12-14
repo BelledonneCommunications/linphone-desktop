@@ -18,6 +18,7 @@ ColumnLayout  {
   property string sipAddress: ''
 
   property var _contact
+  property var _vcard
 
   // -----------------------------------------------------------------
 
@@ -35,18 +36,14 @@ ColumnLayout  {
   }
 
   function _setAvatar (path) {
-    if (Utils.isObject(_contact) && path) {
-      _contact.avatar = path.match(/^(?:file:\/\/)?(.*)$/)[1]
-    }
+    _vcard.avatar = path.match(/^(?:file:\/\/)?(.*)$/)[1]
   }
 
   function _setUsername (username) {
-    if (Utils.isObject(_contact)) {
-      _contact.username = username
+    _vcard.username = username
 
-      // Update current text with new username.
-      usernameInput.text = _contact.username
-    }
+    // Update current text with new username.
+    usernameInput.text = _vcard.username
   }
 
   function _handleSipAddressChanged (index, default_value, new_value) {
@@ -59,8 +56,8 @@ ColumnLayout  {
     }
 
     var so_far_so_good = (default_value.length === 0)
-      ? _contact.addSipAddress(new_value)
-      : _contact.updateSipAddress(default_value, new_value)
+      ? _vcard.addSipAddress(new_value)
+      : _vcard.updateSipAddress(default_value, new_value)
 
     addresses.setInvalid(index, !so_far_so_good)
   }
@@ -72,8 +69,8 @@ ColumnLayout  {
     }
 
     var so_far_so_good = (default_value.length === 0)
-      ? url && _contact.addUrl(new_value)
-      : url && _contact.updateUrl(default_value, new_value)
+      ? url && _vcard.addUrl(new_value)
+      : url && _vcard.updateUrl(default_value, new_value)
 
     urls.setInvalid(index, !so_far_so_good)
   }
@@ -84,7 +81,7 @@ ColumnLayout  {
 
   Component.onCompleted: {
     _contact = ContactsListModel.mapSipAddressToContact(sipAddress)
-      || ContactsListModel.createDetachedContact()
+    _vcard = _contact.vcard
   }
 
   // -----------------------------------------------------------------
@@ -126,7 +123,7 @@ ColumnLayout  {
           id: avatar
 
           anchors.fill: parent
-          image: _contact.avatar
+          image: _vcard.avatar
           username: LinphoneUtils.getContactUsername(_contact) || 'John Doe'
           visible: isLoaded() && !parent.hovered
         }
@@ -154,7 +151,7 @@ ColumnLayout  {
         Layout.alignment: Qt.AlignRight
         iconSize: ContactEditStyle.infoBar.buttons.size
         spacing: ContactEditStyle.infoBar.buttons.spacing
-        visible: Utils.isObject(_contact)
+        visible: _contact != null
 
         ActionButton {
           icon: 'history'
@@ -200,13 +197,13 @@ ColumnLayout  {
         Layout.rightMargin: ContactEditStyle.values.rightMargin
         Layout.topMargin: ContactEditStyle.values.topMargin
 
-        defaultData: _contact.sipAddresses
+      defaultData: _vcard.sipAddresses
         minValues: 1
         placeholder: qsTr('sipAccountsInput')
         title: qsTr('sipAccounts')
 
         onChanged: _handleSipAddressChanged(index, default_value, new_value)
-        onRemoved: _contact.removeSipAddress(value)
+        onRemoved: _vcard.removeSipAddress(value)
       }
 
       Rectangle {
@@ -221,14 +218,14 @@ ColumnLayout  {
         Layout.leftMargin: ContactEditStyle.values.leftMargin
         Layout.rightMargin: ContactEditStyle.values.rightMargin
 
-        defaultData: _contact.companies
+        defaultData: _vcard.companies
         placeholder: qsTr('companiesInput')
         title: qsTr('companies')
 
         onChanged: default_value.length === 0
-          ? _contact.addCompany(new_value)
-          : _contact.updateCompany(default_value, new_value)
-        onRemoved: _contact.removeCompany(value)
+          ? _vcard.addCompany(new_value)
+          : _vcard.updateCompany(default_value, new_value)
+        onRemoved: _vcard.removeCompany(value)
       }
 
       Rectangle {
@@ -243,15 +240,15 @@ ColumnLayout  {
         Layout.leftMargin: ContactEditStyle.values.leftMargin
         Layout.rightMargin: ContactEditStyle.values.rightMargin
 
-        defaultData: _contact.emails
+        defaultData: _vcard.emails
         inputMethodHints: Qt.ImhEmailCharactersOnly
         placeholder: qsTr('emailsInput')
         title: qsTr('emails')
 
         onChanged: default_value.length === 0
-          ? _contact.addEmail(new_value)
-          : _contact.updateEmail(default_value, new_value)
-        onRemoved: _contact.removeEmail(value)
+          ? _vcard.addEmail(new_value)
+          : _vcard.updateEmail(default_value, new_value)
+        onRemoved: _vcard.removeEmail(value)
       }
 
       Rectangle {
@@ -266,13 +263,13 @@ ColumnLayout  {
         Layout.leftMargin: ContactEditStyle.values.leftMargin
         Layout.rightMargin: ContactEditStyle.values.rightMargin
 
-        defaultData: _contact.urls
+        defaultData: _vcard.urls
         inputMethodHints: Qt.ImhUrlCharactersOnly
         placeholder: qsTr('webSitesInput')
         title: qsTr('webSites')
 
         onChanged: _handleUrlChanged(index, default_value, new_value)
-        onRemoved: _contact.removeUrl(value)
+        onRemoved: _vcard.removeUrl(value)
       }
 
       Rectangle {
