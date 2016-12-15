@@ -11,11 +11,12 @@ using namespace std;
 const char *ContactModel::NAME = "contact-model";
 
 ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
-  linphone_friend->setData(NAME, *this);
   m_linphone_friend = linphone_friend;
+  m_linphone_friend->setData(NAME, *this);
   m_vcard = make_shared<VcardModel>(linphone_friend->getVcard());
 
   App::getInstance()->getEngine()->setObjectOwnership(m_vcard.get(), QQmlEngine::CppOwnership);
+  QObject::connect(m_vcard.get(), &VcardModel::vcardUpdated, this, &ContactModel::contactUpdated);
 }
 
 ContactModel::ContactModel (VcardModel *vcard) {
@@ -28,6 +29,7 @@ ContactModel::ContactModel (VcardModel *vcard) {
   m_vcard.reset(vcard);
 
   engine->setObjectOwnership(vcard, QQmlEngine::CppOwnership);
+  QObject::connect(vcard, &VcardModel::vcardUpdated, this, &ContactModel::contactUpdated);
 }
 
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {

@@ -323,6 +323,10 @@ ColumnLayout  {
         color: ContactEditStyle.values.separator.color
       }
 
+      // -----------------------------------------------------------------------
+      // Edition buttons.
+      // -----------------------------------------------------------------------
+
       Row {
         Layout.alignment: Qt.AlignHCenter
         Layout.topMargin: ContactEditStyle.buttons.topMargin
