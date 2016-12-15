@@ -5,21 +5,23 @@ import Common 1.0
 import Common.Styles 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 
 RowLayout {
   id: listForm
 
   property alias placeholder: placeholder.text
   property alias title: text.text
+  property bool readOnly: false
   property int inputMethodHints
   property var defaultData: []
   property var minValues
+  readonly property int count: values.count
 
-  signal changed (int index, string default_value, string new_value)
+  signal changed (int index, string defaultValue, string newValue)
   signal removed (int index, string value)
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   function setInvalid (index, status) {
     Utils.assert(
@@ -48,47 +50,41 @@ RowLayout {
   }
 
   function _handleEditionFinished (index, text) {
+    var model = values.model
+    var defaultValue = model.get(index).$value
+
     if (text.length === 0) {
-      // Remove.
-      var default_value = values.model.get(index).$value
-
-      if (minValues != null && minValues >= values.model.count) {
-        var model = values.model
-
+      // No changes. It must exists at least n min values.
+      if (minValues != null && minValues >= model.count) {
         // Unable to set property directly. Qt uses a cache of the value.
         model.remove(index)
         model.insert(index, {
           $isInvalid: false,
-          $value: default_value
+          $value: defaultValue
         })
         return
       }
 
-      values.model.remove(index)
+      model.remove(index)
 
-      if (default_value.length !== 0) {
-        listForm.removed(index, default_value)
+      if (defaultValue.length !== 0) {
+        listForm.removed(index, defaultValue)
       }
-    } else {
-      // Update.
-      var default_value = values.model.get(index).$value
-
-      // If no changes, no signal.
-      if (text !== default_value) {
-        listForm.changed(index, default_value, text)
-      }
+    } else if (text !== defaultValue) {
+      // Update changes.
+      listForm.changed(index, defaultValue, text)
     }
 
     addButton.enabled = true
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   spacing: 0
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Title area.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   RowLayout {
     Layout.alignment: Qt.AlignTop
@@ -100,8 +96,9 @@ RowLayout {
 
       icon: 'add'
       iconSize: ListFormStyle.titleArea.iconSize
+      opacity: _edition ? 1 : 0
 
-      onClicked: _addValue('')
+      onClicked: _edition && _addValue('')
     }
 
     Text {
@@ -118,9 +115,9 @@ RowLayout {
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Placeholder.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Text {
     id: placeholder
@@ -135,7 +132,7 @@ RowLayout {
     }
 
     padding: ListFormStyle.value.text.padding
-    visible: values.model.count === 0
+    visible: values.model.count === 0 && !listForm.readOnly
     verticalAlignment: Text.AlignVCenter
 
     MouseArea {
@@ -144,9 +141,9 @@ RowLayout {
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Values.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   ListView {
     id: values
@@ -165,6 +162,7 @@ RowLayout {
 
         inputMethodHints: listForm.inputMethodHints
         isInvalid: $isInvalid
+        readOnly: listForm.readOnly
         text: $value
 
         height: ListFormStyle.lineHeight
@@ -190,16 +188,14 @@ RowLayout {
 
     model: ListModel {}
 
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Init values.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     Component.onCompleted: {
-      if (!defaultData) {
-        return
+      if (defaultData) {
+        setData(defaultData)
       }
-
-      setData(defaultData)
     }
   }
 }

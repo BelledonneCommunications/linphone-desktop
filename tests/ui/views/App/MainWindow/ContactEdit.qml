@@ -5,22 +5,45 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 import Utils 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 ColumnLayout  {
   id: contactEdit
 
-  property string sipAddress: ''
+  property string sipAddress
 
+  property bool _edition: false
   property var _contact
   property var _vcard
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+
+  function _editContact () {
+    _contact.startEdit()
+    _edition = true
+  }
+
+  function _save () {
+    if (_contact) {
+      _contact.endEdit()
+      _edition = false
+    } else {
+      _contact = ContactsListModel.addContact(_vcard)
+    }
+  }
+
+  function _cancel () {
+    if (_contact) {
+      _contact.abortEdit()
+      _edition = false
+    } else {
+      window.setView('Contacts')
+    }
+  }
 
   function _removeContact () {
     Utils.openConfirmDialog(window, {
@@ -46,45 +69,55 @@ ColumnLayout  {
     usernameInput.text = _vcard.username
   }
 
-  function _handleSipAddressChanged (index, default_value, new_value) {
-    if (!Utils.startsWith(new_value, 'sip:')) {
-      new_value = 'sip:' + new_value
+  function _handleSipAddressChanged (index, defaultValue, newValue) {
+    if (!Utils.startsWith(newValue, 'sip:')) {
+      newValue = 'sip:' + newValue
 
-      if (new_value === default_value) {
+      if (newValue === defaultValue) {
         return
       }
     }
 
-    var so_far_so_good = (default_value.length === 0)
-      ? _vcard.addSipAddress(new_value)
-      : _vcard.updateSipAddress(default_value, new_value)
+    var so_far_so_good = (defaultValue.length === 0)
+      ? _vcard.addSipAddress(newValue)
+      : _vcard.updateSipAddress(defaultValue, newValue)
 
     addresses.setInvalid(index, !so_far_so_good)
   }
 
-  function _handleUrlChanged (index, default_value, new_value) {
-    var url = Utils.extractFirstUri(new_value)
-    if (url === default_value) {
+  function _handleUrlChanged (index, defaultValue, newValue) {
+    var url = Utils.extractFirstUri(newValue)
+    if (url === defaultValue) {
       return
     }
 
-    var so_far_so_good = (default_value.length === 0)
-      ? url && _vcard.addUrl(new_value)
-      : url && _vcard.updateUrl(default_value, new_value)
+    var so_far_so_good = (defaultValue.length === 0)
+      ? url && _vcard.addUrl(newValue)
+      : url && _vcard.updateUrl(defaultValue, newValue)
 
     urls.setInvalid(index, !so_far_so_good)
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   spacing: 0
 
   Component.onCompleted: {
     _contact = ContactsListModel.mapSipAddressToContact(sipAddress)
-    _vcard = _contact.vcard
+
+    if (!_contact) {
+      _vcard = CoreManager.createDetachedVcardModel()
+      _edition = true
+    } else {
+      _vcard = _contact.vcard
+    }
   }
 
-  // -----------------------------------------------------------------
+  Component.onDestruction: {
+    // TODO: Remove photo if contact not created.
+  }
+
+  // ---------------------------------------------------------------------------
 
   FileDialog {
     id: avatarChooser
@@ -95,9 +128,9 @@ ColumnLayout  {
     onAccepted: _setAvatar(fileUrls[0])
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Info bar.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Rectangle {
     Layout.fillWidth: true
@@ -124,7 +157,7 @@ ColumnLayout  {
 
           anchors.fill: parent
           image: _vcard.avatar
-          username: LinphoneUtils.getContactUsername(_contact) || 'John Doe'
+          username: _vcard.username
           visible: isLoaded() && !parent.hovered
         }
       }
@@ -155,22 +188,30 @@ ColumnLayout  {
 
         ActionButton {
           icon: 'history'
+
           onClicked: window.setView('Conversation', {
             sipAddress: contactEdit.sipAddress
           })
         }
 
         ActionButton {
+          icon: 'edit'
+          visible: !_edition
+          onClicked: _editContact()
+        }
+
+        ActionButton {
           icon: 'delete'
+
           onClicked: _removeContact()
         }
       }
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Info list.
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Flickable {
     id: flick
@@ -197,12 +238,13 @@ ColumnLayout  {
         Layout.rightMargin: ContactEditStyle.values.rightMargin
         Layout.topMargin: ContactEditStyle.values.topMargin
 
-      defaultData: _vcard.sipAddresses
-        minValues: 1
+        defaultData: _vcard.sipAddresses
+        minValues: _contact ? 1 : 0
         placeholder: qsTr('sipAccountsInput')
+        readOnly: !_edition
         title: qsTr('sipAccounts')
 
-        onChanged: _handleSipAddressChanged(index, default_value, new_value)
+        onChanged: _handleSipAddressChanged(index, defaultValue, newValue)
         onRemoved: _vcard.removeSipAddress(value)
       }
 
@@ -220,11 +262,12 @@ ColumnLayout  {
 
         defaultData: _vcard.companies
         placeholder: qsTr('companiesInput')
+        readOnly: !_edition
         title: qsTr('companies')
 
-        onChanged: default_value.length === 0
-          ? _vcard.addCompany(new_value)
-          : _vcard.updateCompany(default_value, new_value)
+        onChanged: defaultValue.length === 0
+          ? _vcard.addCompany(newValue)
+          : _vcard.updateCompany(defaultValue, newValue)
         onRemoved: _vcard.removeCompany(value)
       }
 
@@ -243,11 +286,12 @@ ColumnLayout  {
         defaultData: _vcard.emails
         inputMethodHints: Qt.ImhEmailCharactersOnly
         placeholder: qsTr('emailsInput')
+        readOnly: !_edition
         title: qsTr('emails')
 
-        onChanged: default_value.length === 0
-          ? _vcard.addEmail(new_value)
-          : _vcard.updateEmail(default_value, new_value)
+        onChanged: defaultValue.length === 0
+          ? _vcard.addEmail(newValue)
+          : _vcard.updateEmail(defaultValue, newValue)
         onRemoved: _vcard.removeEmail(value)
       }
 
@@ -266,9 +310,10 @@ ColumnLayout  {
         defaultData: _vcard.urls
         inputMethodHints: Qt.ImhUrlCharactersOnly
         placeholder: qsTr('webSitesInput')
+        readOnly: !_edition
         title: qsTr('webSites')
 
-        onChanged: _handleUrlChanged(index, default_value, new_value)
+        onChanged: _handleUrlChanged(index, defaultValue, newValue)
         onRemoved: _vcard.removeUrl(value)
       }
 
@@ -278,20 +323,21 @@ ColumnLayout  {
         color: ContactEditStyle.values.separator.color
       }
 
-      Loader {
+      Row {
         Layout.alignment: Qt.AlignHCenter
         Layout.topMargin: ContactEditStyle.buttons.topMargin
+        spacing: ContactEditStyle.buttons.spacing
+        visible: _edition
 
-        sourceComponent: Row {
-          spacing: ContactEditStyle.buttons.spacing
+        TextButtonB {
+          enabled: _vcard.sipAddresses.length > 0
+          text: qsTr('save')
+          onClicked: _save()
+        }
 
-          TextButtonB {
-            text: qsTr('save')
-          }
-
-          TextButtonA {
-            text: qsTr('cancel')
-          }
+        TextButtonA {
+          text: qsTr('cancel')
+          onClicked: _cancel()
         }
       }
 

@@ -53,6 +53,9 @@
     <file>assets/images/delete_hovered.svg</file>
     <file>assets/images/delete_normal.svg</file>
     <file>assets/images/delete_pressed.svg</file>
+    <file>assets/images/edit_hovered.svg</file>
+    <file>assets/images/edit_normal.svg</file>
+    <file>assets/images/edit_pressed.svg</file>
     <file>assets/images/ended_call.svg</file>
     <file>assets/images/filter.svg</file>
     <file>assets/images/fullscreen_hovered.svg</file>

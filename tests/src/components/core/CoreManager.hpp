@@ -4,6 +4,8 @@
 #include <QObject>
 #include <linphone++/linphone.hh>
 
+#include "../contact/VcardModel.hpp"
+
 // ===================================================================
 
 class CoreManager : public QObject {
@@ -24,14 +26,16 @@ public:
     return m_core;
   }
 
+public slots:
+  VcardModel *createDetachedVcardModel ();
+
 private:
   CoreManager (QObject *parent = Q_NULLPTR);
 
   void setDatabasesPaths ();
 
-  static CoreManager *m_instance;
-
   std::shared_ptr<linphone::Core> m_core;
+  static CoreManager *m_instance;
 };
 
 #endif // CORE_MANAGER_H_

@@ -22,6 +22,7 @@ class ContactModel : public QObject {
 
 public:
   ContactModel (std::shared_ptr<linphone::Friend> linphone_friend);
+  ContactModel (VcardModel *vcard);
 
   static const char *NAME;
 

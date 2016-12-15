@@ -6,10 +6,13 @@
 
 CoreManager *CoreManager::m_instance = nullptr;
 
-CoreManager::CoreManager (QObject *parent) : QObject(parent), m_core(
-  linphone::Factory::get()->createCore(nullptr, "", "", nullptr)
-) {
+CoreManager::CoreManager (QObject *parent) : QObject(parent),
+  m_core(linphone::Factory::get()->createCore(nullptr, "", "", nullptr)) {
   setDatabasesPaths();
+}
+
+VcardModel *CoreManager::createDetachedVcardModel () {
+  return new VcardModel(linphone::Factory::get()->createVcard());
 }
 
 void CoreManager::setDatabasesPaths () {

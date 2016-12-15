@@ -27,7 +27,7 @@ ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(pare
   }
 }
 
-int ContactsListModel::rowCount (const QModelIndex&) const {
+int ContactsListModel::rowCount (const QModelIndex &) const {
   return m_list.count();
 }
 
@@ -49,8 +49,8 @@ QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-bool ContactsListModel::removeRow (int row, const QModelIndex&) {
-  return removeRows(row, 1);
+bool ContactsListModel::removeRow (int row, const QModelIndex &parent) {
+  return removeRows(row, 1, parent);
 }
 
 bool ContactsListModel::removeRows (int row, int count, const QModelIndex &parent) {
@@ -76,17 +76,36 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 // -----------------------------------------------------------------------------
 
 ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
-  // TODO: Maybe use a hashtable in future version to get a lower cost?
   shared_ptr<linphone::Friend> friend_ = m_linphone_friends->findFriendByUri(
       ::Utils::qStringToLinphoneString(sipAddress)
     );
 
-  if (!friend_) {
-    qInfo() << QStringLiteral("Unable to map sip address: `%1`.").arg(sipAddress);
+  if (!friend_)
     return nullptr;
-  }
 
   return &friend_->getData<ContactModel>(ContactModel::NAME);
+}
+
+void ContactsListModel::addContact (VcardModel *vcard) {
+  ContactModel *contact = new ContactModel(vcard);
+  App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
+
+  qInfo() << "Add contact:" << contact;
+
+  if (
+    m_linphone_friends->addFriend(contact->m_linphone_friend) !=
+    linphone::FriendListStatus::FriendListStatusOK
+  ) {
+    qWarning() << "Unable to add friend from vcard:" << vcard;
+    delete contact;
+    return;
+  }
+
+  int row = rowCount();
+
+  beginInsertRows(QModelIndex(), row, row);
+  m_list << contact;
+  endInsertRows();
 }
 
 void ContactsListModel::removeContact (ContactModel *contact) {

@@ -17,10 +17,12 @@ class VcardModel : public QObject {
   Q_PROPERTY(QVariantList emails READ getEmails NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList urls READ getUrls NOTIFY vcardUpdated);
 
-  friend class ContactsListProxyModel;
+  friend class ContactModel;
 
 public:
   VcardModel (std::shared_ptr<linphone::Vcard> vcard) : m_vcard(vcard) {}
+
+  QString getUsername () const;
 
   ~VcardModel () = default;
 
@@ -45,7 +47,6 @@ signals:
   void vcardUpdated ();
 
 private:
-  QString getUsername () const;
   void setUsername (const QString &username);
 
   QString getAvatar () const;
