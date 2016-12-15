@@ -340,7 +340,7 @@ ColumnLayout  {
         visible: _edition
 
         TextButtonB {
-          enabled: _vcard.sipAddresses.length > 0
+          enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
           text: qsTr('save')
           onClicked: _save()
         }

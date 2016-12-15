@@ -159,18 +159,35 @@ bool VcardModel::setAddress (const QVariantMap &address) {
 }
 
 QVariantList VcardModel::getSipAddresses () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QVariantList list;
 
-  for (const auto &address : m_vcard->getBelcard()->getImpp())
-    list.append(::Utils::linphoneStringToQString(address->getValue()));
+  for (const auto &address : m_vcard->getBelcard()->getImpp()) {
+    string value = address->getValue();
+    shared_ptr<linphone::Address> l_address = core->createAddress(value);
+
+    if (l_address)
+      list.append(::Utils::linphoneStringToQString(l_address->asStringUriOnly()));
+  }
 
   return list;
 }
 
 bool VcardModel::addSipAddress (const QString &sip_address) {
+  // Check sip address format.
+  shared_ptr<linphone::Address> l_address = CoreManager::getInstance()->getCore()->interpretUrl(
+      ::Utils::qStringToLinphoneString(sip_address)
+    );
+
+  if (!l_address) {
+    qWarning() << QStringLiteral("Unable to add invalid sip address: `%1`.").arg(sip_address);
+    return false;
+  }
+
+  // Add sip address in belcard.
   shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
-  value->setValue(::Utils::qStringToLinphoneString(sip_address));
+  value->setValue(l_address->asStringUriOnly());
 
   qInfo() << QStringLiteral("Add new sip address: `%1`.").arg(sip_address);
 
