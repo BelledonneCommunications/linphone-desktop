@@ -28,7 +28,7 @@ public:
 public slots:
   ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
 
-  void addContact (VcardModel *vcard);
+  ContactModel *addContact (VcardModel *vcard);
   void removeContact (ContactModel *contact);
 
 private:

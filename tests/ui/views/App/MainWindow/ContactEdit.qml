@@ -30,10 +30,11 @@ ColumnLayout  {
   function _save () {
     if (_contact) {
       _contact.endEdit()
-      _edition = false
     } else {
       _contact = ContactsListModel.addContact(_vcard)
     }
+
+    _edition = false
   }
 
   function _cancel () {
@@ -50,8 +51,8 @@ ColumnLayout  {
       descriptionText: qsTr('removeContactDescription'),
       exitHandler: function (status) {
         if (status) {
+          window.setView('Contacts')
           ContactsListModel.removeContact(_contact)
-          window.setView('Home')
         }
       },
       title: qsTr('removeContactTitle')
@@ -65,7 +66,7 @@ ColumnLayout  {
   function _setUsername (username) {
     _vcard.username = username
 
-    // Update current text with new username.
+    // Update current text with new/old username.
     usernameInput.text = _vcard.username
   }
 
@@ -114,6 +115,10 @@ ColumnLayout  {
   }
 
   Component.onDestruction: {
+    if (_edition && _contact) {
+      _contact.abortEdit()
+    }
+
     // TODO: Remove photo if contact not created.
   }
 
@@ -174,7 +179,8 @@ ColumnLayout  {
           bold: true
           pointSize: ContactEditStyle.infoBar.username.fontSize
         }
-
+        forceFocus: true
+        readOnly: !_edition
         text: avatar.username
 
         onEditingFinished: _setUsername(text)

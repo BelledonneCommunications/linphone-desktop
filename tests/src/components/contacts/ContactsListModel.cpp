@@ -86,7 +86,7 @@ ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddre
   return &friend_->getData<ContactModel>(ContactModel::NAME);
 }
 
-void ContactsListModel::addContact (VcardModel *vcard) {
+ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   ContactModel *contact = new ContactModel(vcard);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
@@ -98,7 +98,7 @@ void ContactsListModel::addContact (VcardModel *vcard) {
   ) {
     qWarning() << "Unable to add friend from vcard:" << vcard;
     delete contact;
-    return;
+    return nullptr;
   }
 
   int row = rowCount();
@@ -106,6 +106,8 @@ void ContactsListModel::addContact (VcardModel *vcard) {
   beginInsertRows(QModelIndex(), row, row);
   m_list << contact;
   endInsertRows();
+
+  return contact;
 }
 
 void ContactsListModel::removeContact (ContactModel *contact) {
