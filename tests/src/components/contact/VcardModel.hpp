@@ -22,9 +22,9 @@ class VcardModel : public QObject {
 public:
   VcardModel (std::shared_ptr<linphone::Vcard> vcard) : m_vcard(vcard) {}
 
-  QString getUsername () const;
-
   ~VcardModel () = default;
+
+  QString getUsername () const;
 
 public slots:
   bool addSipAddress (const QString &sip_address);

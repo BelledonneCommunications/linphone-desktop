@@ -6,12 +6,18 @@
 
 #include "../contact/VcardModel.hpp"
 
-// ===================================================================
+// =============================================================================
 
 class CoreManager : public QObject {
   Q_OBJECT;
 
 public:
+  ~CoreManager () = default;
+
+  std::shared_ptr<linphone::Core> getCore () {
+    return m_core;
+  }
+
   static void init () {
     if (!m_instance) {
       m_instance = new CoreManager();
@@ -22,11 +28,9 @@ public:
     return m_instance;
   }
 
-  std::shared_ptr<linphone::Core> getCore () {
-    return m_core;
-  }
-
 public slots:
+  // Must be used in a qml scene.
+  // The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
   VcardModel *createDetachedVcardModel ();
 
 private:

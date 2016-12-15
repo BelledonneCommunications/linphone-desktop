@@ -2,7 +2,9 @@
 
 #include "CoreManager.hpp"
 
-// ===================================================================
+using namespace std;
+
+// =============================================================================
 
 CoreManager *CoreManager::m_instance = nullptr;
 
@@ -16,7 +18,7 @@ VcardModel *CoreManager::createDetachedVcardModel () {
 }
 
 void CoreManager::setDatabasesPaths () {
-  std::string database_path;
+  string database_path;
 
   database_path = Database::getFriendsListPath();
   if (database_path.length() == 0)

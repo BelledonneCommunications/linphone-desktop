@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-// ===================================================================
+// =============================================================================
 
 class Presence : public QObject {
   Q_OBJECT;
@@ -20,6 +20,7 @@ public:
     UsingAnotherMessagingService,
     Offline
   };
+
   Q_ENUM(PresenceStatus);
 
   enum PresenceLevel {
@@ -28,9 +29,12 @@ public:
     Red,
     White
   };
+
   Q_ENUM(PresenceLevel);
 
-  Presence (QObject *parent = Q_NULLPTR): QObject(parent) { }
+  Presence (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+
+  ~Presence () = default;
 
   static PresenceLevel getPresenceLevel (const PresenceStatus &presenceStatus) {
     if (presenceStatus == Online)

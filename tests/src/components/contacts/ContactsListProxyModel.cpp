@@ -1,8 +1,6 @@
 #include <QDebug>
 
 #include "../../utils.hpp"
-#include "../contact/ContactModel.hpp"
-#include "ContactsListModel.hpp"
 
 #include "ContactsListProxyModel.hpp"
 
@@ -131,7 +129,7 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
   return weight;
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 void ContactsListProxyModel::setConnectedFilter (bool use_connected_filter) {
   if (use_connected_filter != m_use_connected_filter) {

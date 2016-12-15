@@ -5,14 +5,14 @@
 #include <QObject>
 #include <QQmlComponent>
 
-// ===================================================================
+// =============================================================================
 
 class Notifier : public QObject {
   Q_OBJECT;
 
 public:
   Notifier (QObject *parent = Q_NULLPTR);
-  virtual ~Notifier ();
+  ~Notifier ();
 
   enum NotificationType {
     Call,

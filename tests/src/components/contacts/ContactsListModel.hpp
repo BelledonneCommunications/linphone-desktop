@@ -15,6 +15,7 @@ class ContactsListModel : public QAbstractListModel {
 
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
+  ~ContactsListModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
