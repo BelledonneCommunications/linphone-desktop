@@ -12,6 +12,16 @@ RowLayout {
   property bool readOnly: false
   property var fields
 
+  signal changed (int index, string value)
+
+  // ---------------------------------------------------------------------------
+
+  function _handleEditionFinished (index, text) {
+    if (text !== fields[index].text) {
+      form.changed(index, text)
+    }
+  }
+
   // ---------------------------------------------------------------------------
 
 	spacing: 0
@@ -48,7 +58,9 @@ RowLayout {
         placeholder: modelData.placeholder || ''
         readOnly: form.readOnly
         text: modelData.text || ''
+
+        onEditingFinished: _handleEditionFinished(index, text)
       }
     }
-	}
+  }
 }

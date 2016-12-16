@@ -11,7 +11,7 @@ class VcardModel : public QObject {
 
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY vcardUpdated);
   Q_PROPERTY(QString avatar READ getAvatar WRITE setAvatar NOTIFY vcardUpdated);
-  Q_PROPERTY(QVariantMap address READ getAddress WRITE setAddress NOTIFY vcardUpdated);
+  Q_PROPERTY(QVariantMap address READ getAddress NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList sipAddresses READ getSipAddresses NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList companies READ getCompanies NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList emails READ getEmails NOTIFY vcardUpdated);
@@ -43,6 +43,11 @@ public slots:
   void removeUrl (const QString &url);
   bool updateUrl (const QString &old_url, const QString &url);
 
+  void setStreet (const QString &street);
+  void setLocality (const QString &locality);
+  void setPostalCode (const QString &postal_code);
+  void setCountry (const QString &country);
+
 signals:
   void vcardUpdated ();
 
@@ -53,8 +58,6 @@ private:
   bool setAvatar (const QString &path);
 
   QVariantMap getAddress () const;
-  bool setAddress (const QVariantMap &address);
-
   QVariantList getSipAddresses () const;
   QVariantList getCompanies () const;
   QVariantList getEmails () const;

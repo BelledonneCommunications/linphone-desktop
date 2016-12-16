@@ -76,7 +76,7 @@ Item {
     width: textInput.width
 
     verticalAlignment: Text.AlignVCenter
-    visible: textInput.text.length === 0 && !textInput.activeFocus && !textInput.readOnly
+    visible: textInput.text.length === 0 && (!textInput.activeFocus || textInput.readOnly)
   }
 
   TextInput {

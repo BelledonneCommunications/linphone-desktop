@@ -149,6 +149,20 @@ bool VcardModel::setAvatar (const QString &path) {
 
 // -----------------------------------------------------------------------------
 
+inline shared_ptr<belcard::BelCardAddress> getOrCreateBelCardAddress (shared_ptr<belcard::BelCard> belcard) {
+  list<shared_ptr<belcard::BelCardAddress> > addresses = belcard->getAddresses();
+  shared_ptr<belcard::BelCardAddress> address;
+
+  if (addresses.empty()) {
+    address = belcard::BelCardGeneric::create<belcard::BelCardAddress>();
+    if (!belcard->addAddress(address))
+      qWarning() << "Unable to create a new address.";
+  } else
+    address = addresses.front();
+
+  return address;
+}
+
 QVariantMap VcardModel::getAddress () const {
   list<shared_ptr<belcard::BelCardAddress> > addresses = m_vcard->getBelcard()->getAddresses();
   QVariantMap map;
@@ -165,26 +179,31 @@ QVariantMap VcardModel::getAddress () const {
   return map;
 }
 
-bool VcardModel::setAddress (const QVariantMap &address) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
-  list<shared_ptr<belcard::BelCardAddress> > addresses = belcard->getAddresses();
-
-  while (!addresses.empty())
-    belcard->removeAddress(addresses.front());
-
-  shared_ptr<belcard::BelCardAddress> belcard_address = belcard::BelCardGeneric::create<belcard::BelCardAddress>();
-
-  belcard_address->setStreet(::Utils::qStringToLinphoneString(address["street"].toString()));
-  belcard_address->setLocality(::Utils::qStringToLinphoneString(address["locality"].toString()));
-  belcard_address->setPostalCode(::Utils::qStringToLinphoneString(address["postalCode"].toString()));
-  belcard_address->setCountry(::Utils::qStringToLinphoneString(address["country"].toString()));
-
-  if (!belcard->addAddress(belcard_address))
-    return false;
-
+void VcardModel::setStreet (const QString &street) {
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  address->setStreet(::Utils::qStringToLinphoneString(street));
   emit vcardUpdated();
-  return true;
 }
+
+void VcardModel::setLocality (const QString &locality) {
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  address->setLocality(::Utils::qStringToLinphoneString(locality));
+  emit vcardUpdated();
+}
+
+void VcardModel::setPostalCode (const QString &postal_code) {
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  address->setPostalCode(::Utils::qStringToLinphoneString(postal_code));
+  emit vcardUpdated();
+}
+
+void VcardModel::setCountry (const QString &country) {
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  address->setCountry(::Utils::qStringToLinphoneString(country));
+  emit vcardUpdated();
+}
+
+// -----------------------------------------------------------------------------
 
 QVariantList VcardModel::getSipAddresses () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();

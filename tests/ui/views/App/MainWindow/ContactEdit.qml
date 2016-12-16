@@ -237,11 +237,25 @@ ColumnLayout  {
           return
         }
 
-        var so_far_so_good = (defaultValue.length === 0)
-          ? url && _vcard.addUrl(newValue)
-          : url && _vcard.updateUrl(defaultValue, newValue)
+        var so_far_so_good = url && (
+          defaultValue.length === 0
+            ? _vcard.addUrl(newValue)
+            : _vcard.updateUrl(defaultValue, newValue)
+        )
 
         urls.setInvalid(index, !so_far_so_good)
+      }
+
+      function _handleAddressChanged (index, value) {
+        if (index === 0) { // Street.
+          _vcard.setStreet(value)
+        } else if (index === 1) { // Locality.
+          _vcard.setLocality(value)
+        } else if (index === 2) { // Postal code.
+          _vcard.setPostalCode(value)
+        } else if (index === 3) { // Country.
+          _vcard.setCountry(value)
+        }
       }
 
       // -----------------------------------------------------------------------
@@ -371,6 +385,8 @@ ColumnLayout  {
 
           readOnly: !_edition
           title: qsTr('address')
+
+          onChanged: _handleAddressChanged(index, value)
         }
 
         // ---------------------------------------------------------------------
