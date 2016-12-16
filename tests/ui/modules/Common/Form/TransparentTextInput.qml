@@ -55,7 +55,7 @@ Item {
     anchors.left: background.right
     height: background.height
     icon: 'generic_error'
-    iconSize: 12
+    iconSize: TransparentTextInputStyle.iconSize
     visible: parent.isInvalid
   }
 

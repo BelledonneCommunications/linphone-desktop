@@ -22,7 +22,7 @@ class VcardModel : public QObject {
 public:
   VcardModel (std::shared_ptr<linphone::Vcard> vcard) : m_vcard(vcard) {}
 
-  ~VcardModel () = default;
+  ~VcardModel ();
 
   QString getUsername () const;
 

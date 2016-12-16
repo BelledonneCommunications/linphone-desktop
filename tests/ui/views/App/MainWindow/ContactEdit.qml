@@ -118,8 +118,6 @@ ColumnLayout  {
     if (_edition && _contact) {
       _contact.abortEdit()
     }
-
-    // TODO: Remove photo if contact not created.
   }
 
   // ---------------------------------------------------------------------------
@@ -152,6 +150,7 @@ ColumnLayout  {
       spacing: ContactEditStyle.infoBar.spacing
 
       ActionButton {
+        enabled: _edition
         icon: 'contact_card_photo'
         iconSize: ContactEditStyle.infoBar.avatarSize
 
@@ -163,7 +162,7 @@ ColumnLayout  {
           anchors.fill: parent
           image: _vcard.avatar
           username: _vcard.username
-          visible: isLoaded() && !parent.hovered
+          visible: isLoaded() && (!parent.hovered || !_edition)
         }
       }
 

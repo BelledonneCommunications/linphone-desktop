@@ -4,7 +4,7 @@
 #include <QtDebug>
 #include <QUuid>
 
-#include "../../app/AvatarProvider.hpp"
+#include "../../app/App.hpp"
 #include "../../app/Database.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
@@ -27,7 +27,44 @@ inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const Q
       }
     );
 
-  return *it;
+  if (it != list.cend())
+    return *it;
+
+  return nullptr;
+}
+
+inline shared_ptr<belcard::BelCardPhoto> findBelCardPhoto (const list<shared_ptr<belcard::BelCardPhoto> > &photos) {
+  auto it = find_if(
+      photos.cbegin(), photos.cend(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
+        return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
+      }
+    );
+
+  if (it != photos.cend())
+    return *it;
+
+  return nullptr;
+}
+
+// -----------------------------------------------------------------------------
+
+VcardModel::~VcardModel () {
+  // If it's a detached Vcard, the linked photo must be destroyed from fs.
+  if (App::getInstance()->getEngine()->objectOwnership(this) != QQmlEngine::CppOwnership) {
+    shared_ptr<belcard::BelCardPhoto> photo(findBelCardPhoto(m_vcard->getBelcard()->getPhotos()));
+    if (!photo)
+      return;
+
+    QString image_path(
+      ::Utils::linphoneStringToQString(
+        Database::getAvatarsPath() +
+        photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+      )
+    );
+
+    if (!QFile::remove(image_path))
+      qWarning() << QStringLiteral("Unable to remove `%1`.").arg(image_path);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -49,19 +86,15 @@ void VcardModel::setUsername (const QString &username) {
 QString VcardModel::getAvatar () const {
   // Find desktop avatar.
   list<shared_ptr<belcard::BelCardPhoto> > photos = m_vcard->getBelcard()->getPhotos();
-  auto it = find_if(
-      photos.cbegin(), photos.cend(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
-        return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
-      }
-    );
+  shared_ptr<belcard::BelCardPhoto> photo = findBelCardPhoto(photos);
 
   // No path found.
-  if (it == photos.cend())
+  if (!photo)
     return "";
 
   // Returns right path.
   return QStringLiteral("image://%1/%2").arg(AvatarProvider::PROVIDER_ID).arg(
-    ::Utils::linphoneStringToQString((*it)->getValue().substr(sizeof(VCARD_SCHEME) - 1))
+    ::Utils::linphoneStringToQString(photo->getValue().substr(sizeof(VCARD_SCHEME) - 1))
   );
 }
 
@@ -90,22 +123,17 @@ bool VcardModel::setAvatar (const QString &path) {
   list<shared_ptr<belcard::BelCardPhoto> > photos = belcard->getPhotos();
 
   // 3. Remove oldest photo.
-  auto it = find_if(
-      photos.begin(), photos.end(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
-        return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
-      }
-    );
-
-  if (it != photos.end()) {
+  shared_ptr<belcard::BelCardPhoto> old_photo = findBelCardPhoto(photos);
+  if (old_photo) {
     QString image_path(
       ::Utils::linphoneStringToQString(
-        Database::getAvatarsPath() + (*it)->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+        Database::getAvatarsPath() + old_photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
 
     if (!QFile::remove(image_path))
       qWarning() << QStringLiteral("Unable to remove `%1`.").arg(image_path);
-    belcard->removePhoto(*it);
+    belcard->removePhoto(old_photo);
   }
 
   // 4. Update.

@@ -3,7 +3,6 @@ import QtQuick 2.7
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
 
 // =============================================================================
 
@@ -26,10 +25,9 @@ Item {
   function _computeInitials () {
     var result = username.match(_initialsRegex)
 
-    Utils.assert(
-      result != null,
-      'Unable to get initials of: `' + username + '`.'
-    )
+    if (!result) {
+      return ''
+    }
 
     return result[1].charAt(0).toUpperCase() + (
       result[2] != null
