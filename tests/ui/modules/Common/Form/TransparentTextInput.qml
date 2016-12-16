@@ -11,6 +11,7 @@ Item {
   property alias color: textInput.color
   property alias font: textInput.font
   property alias inputMethodHints: textInput.inputMethodHints
+  property alias placeholder: placeholder.text
   property alias readOnly: textInput.readOnly
   property alias text: textInput.text
   property bool forceFocus: false
@@ -59,17 +60,37 @@ Item {
     visible: parent.isInvalid
   }
 
+  Text {
+    id: placeholder
+
+    anchors.centerIn: parent
+    color: TransparentTextInputStyle.placeholder.color
+    elide: Text.ElideRight
+
+    font {
+      italic: true
+      pointSize: TransparentTextInputStyle.placeholder.fontSize
+    }
+
+    height: textInput.height
+    width: textInput.width
+
+    verticalAlignment: Text.AlignVCenter
+    visible: textInput.text.length === 0 && !textInput.activeFocus && !textInput.readOnly
+  }
+
   TextInput {
     id: textInput
 
     anchors.centerIn: parent
-    height: parent.height - parent.padding * 2
+    height: parent.height
     width: parent.width - parent.padding * 2
 
     clip: true
     color: activeFocus && !readOnly
-      ? TransparentTextInputStyle.textColor.focused
-      : TransparentTextInputStyle.textColor.normal
+      ? TransparentTextInputStyle.text.color.focused
+      : TransparentTextInputStyle.text.color.normal
+    font.pointSize: TransparentTextInputStyle.text.fontSize
     selectByMouse: true
     verticalAlignment: TextInput.AlignVCenter
 

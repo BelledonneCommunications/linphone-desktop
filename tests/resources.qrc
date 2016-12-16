@@ -143,6 +143,7 @@
     <file>ui/modules/Common/Form/ExclusiveButtons.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/SmallButton.qml</file>
+    <file>ui/modules/Common/Form/StaticListForm.qml</file>
     <file>ui/modules/Common/Form/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/TextButtonB.qml</file>
     <file>ui/modules/Common/Form/TextField.qml</file>

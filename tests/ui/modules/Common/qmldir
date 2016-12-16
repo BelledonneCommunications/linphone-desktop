@@ -38,6 +38,7 @@ CheckBoxText         1.0 Form/CheckBoxText.qml
 ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
 LightButton          1.0 Form/LightButton.qml
 ListForm             1.0 Form/ListForm.qml
+StaticListForm       1.0 Form/StaticListForm.qml
 TextButtonA          1.0 Form/TextButtonA.qml
 TextButtonB          1.0 Form/TextButtonB.qml
 TextField            1.0 Form/TextField.qml

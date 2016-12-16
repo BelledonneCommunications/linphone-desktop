@@ -104,11 +104,11 @@
     </message>
     <message>
         <source>sipAccountsInput</source>
-        <translation type="unfinished">Adresse SIP</translation>
+        <translation type="obsolete">Adresse SIP</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="obsolete">ADRESSE(S)</translation>
+        <translation type="unfinished">ADRESSE(S)</translation>
     </message>
     <message>
         <source>addressInput</source>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>emailsInput</source>
-        <translation type="unfinished">Adresse e-mail</translation>
+        <translation type="obsolete">Adresse e-mail</translation>
     </message>
     <message>
         <source>webSites</source>
@@ -128,14 +128,10 @@
     </message>
     <message>
         <source>webSitesInput</source>
-        <translation type="unfinished">URL</translation>
+        <translation type="obsolete">URL</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>companiesInput</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -149,6 +145,38 @@
     <message>
         <source>cancel</source>
         <translation type="unfinished">ANNULER</translation>
+    </message>
+    <message>
+        <source>sipAccountsPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>companiesPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emailsPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>webSitesPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>postalCode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>locality</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

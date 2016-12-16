@@ -1,6 +1,6 @@
 import QtQuick 2.7
 
-// ===================================================================
+// =============================================================================
 
 Item {
   property alias useStates: actionButton.useStates
@@ -10,7 +10,7 @@ Item {
 
   signal clicked
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   height: iconSize || parent.iconSize || parent.height
   width: iconSize || parent.iconSize || parent.height
