@@ -132,7 +132,6 @@ class DesktopPreparator(prepare.Preparator):
             self.additional_args += ["-DENABLE_MPEG4=YES"]
             self.additional_args += ["-DENABLE_OPENH264=YES"]
             self.additional_args += ["-DENABLE_VPX=YES"]
-            self.additional_args += ["-DENABLE_X264=NO"]
 
     def check_environment(self):
         ret = prepare.Preparator.check_environment(self)
