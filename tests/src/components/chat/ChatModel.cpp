@@ -20,7 +20,7 @@ QHash<int, QByteArray> ChatModel::roleNames () const {
   return roles;
 }
 
-int ChatModel::rowCount (const QModelIndex&) const {
+int ChatModel::rowCount (const QModelIndex &) const {
   return m_entries.count();
 }
 
@@ -40,7 +40,7 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-bool ChatModel::removeRow (int row, const QModelIndex&) {
+bool ChatModel::removeRow (int row, const QModelIndex &) {
   return removeRows(row, 1);
 }
 

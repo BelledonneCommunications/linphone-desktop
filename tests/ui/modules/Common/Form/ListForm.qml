@@ -132,12 +132,12 @@ RowLayout {
     }
 
     padding: ListFormStyle.value.text.padding
-    visible: values.model.count === 0 // TODO: placeholder click machin
+    visible: values.model.count === 0
     verticalAlignment: Text.AlignVCenter
 
     MouseArea {
       anchors.fill: parent
-      onClicked: _addValue('')
+      onClicked: !listForm.readOnly && _addValue('')
     }
   }
 

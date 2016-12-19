@@ -61,6 +61,8 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 // -------------------------------------------------------------------
 
 void App::initContentApp () {
+  qInfo() << "Initializing core manager...";
+
   // Init core.
   CoreManager::init();
 
@@ -69,6 +71,7 @@ void App::initContentApp () {
   addContextProperties();
 
   // Load main view.
+  qInfo() << "Loading main view...";
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
@@ -81,6 +84,8 @@ void App::initContentApp () {
 }
 
 void App::registerTypes () {
+  qInfo() << "Registering types...";
+
   // Register meta types.
   qmlRegisterUncreatableType<Presence>(
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
@@ -143,14 +148,16 @@ void App::registerTypes () {
 }
 
 void App::addContextProperties () {
+  qInfo() << "Adding context properties...";
   QQmlContext *context = m_engine.rootContext();
-  QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
 
-  // Windows.
-  if (component.isError())
+  QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
+  if (component.isError()) {
     qWarning() << component.errors();
-  else
-    context->setContextProperty("CallsWindow", component.create());
+    abort();
+  }
+
+  context->setContextProperty("CallsWindow", component.create());
 
   m_notifier = new Notifier();
   context->setContextProperty("Notifier", m_notifier);

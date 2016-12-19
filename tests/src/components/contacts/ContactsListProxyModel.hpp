@@ -49,7 +49,7 @@ private:
   // and reused by `lessThan`.
   mutable QHash<const ContactModel *, unsigned int> m_weights;
 
-  bool m_use_connected_filter;
+  bool m_use_connected_filter = false;
 
   static const QRegExp m_search_separators;
 
