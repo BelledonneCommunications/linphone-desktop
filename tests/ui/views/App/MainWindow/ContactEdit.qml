@@ -268,6 +268,15 @@ ColumnLayout  {
       contentWidth: width - ScrollBar.vertical.width
       flickableDirection: Flickable.VerticalFlick
 
+      SmartConnect {
+        Component.onCompleted: this.connect(_vcard, 'onVcardUpdated', function () {
+          addresses.setData(_vcard.sipAddresses)
+          companies.setData(_vcard.companies)
+          emails.setData(_vcard.emails)
+          urls.setData(_vcard.urls)
+        })
+      }
+
       ColumnLayout {
         id: infoList
 
