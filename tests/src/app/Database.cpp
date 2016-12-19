@@ -7,12 +7,12 @@
 #include "Database.hpp"
 
 #ifdef _WIN32
-  #define DATABASES_PATH \
-    QStandardPaths::writableLocation(QStandardPaths::DataLocation)
+#define DATABASES_PATH \
+  QStandardPaths::writableLocation(QStandardPaths::DataLocation)
 #else
-  #define DATABASES_PATH \
-    QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
-#endif
+#define DATABASES_PATH \
+  QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
+#endif // ifdef _WIN32
 
 #define DATABASE_PATH_AVATARS ".linphone/avatars/"
 #define DATABASE_PATH_CALL_HISTORY_LIST ".linphone-call-history.db"
@@ -21,7 +21,7 @@
 
 using namespace std;
 
-// ===================================================================
+// =============================================================================
 
 inline bool ensureDatabaseFilePathExists (const QString &path) {
   QDir dir(DATABASES_PATH);
@@ -47,9 +47,9 @@ string Database::getAvatarsPath () {
 inline string getDatabaseFilePath (const QString &filename) {
   QString path(DATABASES_PATH + "/");
   path += filename;
-  return ensureDatabaseFilePathExists(path)
-    ? Utils::qStringToLinphoneString(QDir::toNativeSeparators(path))
-    : "";
+  return ensureDatabaseFilePathExists(path) ? Utils::qStringToLinphoneString(
+    QDir::toNativeSeparators(path)
+  ) : "";
 }
 
 string Database::getCallHistoryPath () {

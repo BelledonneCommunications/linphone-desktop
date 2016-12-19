@@ -4,7 +4,7 @@
 #include <QSet>
 #include <QTranslator>
 
-// ===================================================================
+// =============================================================================
 
 class DefaultTranslator : public QTranslator {
 public:
@@ -22,4 +22,4 @@ private:
   QSet<QString> m_contexts;
 };
 
-#endif
+#endif // DEFAULT_TRANSLATOR_H_

@@ -1,11 +1,9 @@
-#include <QtDebug>
-
 #include "Database.hpp"
 #include "../utils.hpp"
 
 #include "AvatarProvider.hpp"
 
-// ===================================================================
+// =============================================================================
 
 const QString AvatarProvider::PROVIDER_ID = "avatar";
 

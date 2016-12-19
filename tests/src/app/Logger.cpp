@@ -14,9 +14,9 @@
   #define PURPLE ""
   #define RED ""
   #define RESET ""
-#endif
+#endif // ifdef __linux__
 
-// ===================================================================
+// =============================================================================
 
 void logger (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
   QByteArray local_msg = msg.toLocal8Bit();
@@ -31,26 +31,31 @@ void logger (QtMsgType type, const QMessageLogContext &context, const QString &m
     context_line = context.line;
   }
 
-  switch (type) {
-    case QtDebugMsg:
-      fprintf(stderr, GREEN "[%s][Debug]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context_line, local_msg.constData());
-      break;
-    case QtInfoMsg:
-      fprintf(stderr, BLUE "[%s][Info]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context_line, local_msg.constData());
-      break;
-    case QtWarningMsg:
-      fprintf(stderr, RED "[%s][Warning]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context_line, local_msg.constData());
-      break;
-    case QtCriticalMsg:
-      fprintf(stderr, RED "[%s][Critical]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context_line, local_msg.constData());
-      break;
-    case QtFatalMsg:
-      fprintf(stderr, RED "[%s][Fatal]" PURPLE "%s:%u: " RESET "%s\n",
-        date_time.constData(), context_file, context_line, local_msg.constData());
-      abort();
+  if (type == QtDebugMsg)
+    fprintf(
+      stderr, GREEN "[%s][Debug]" PURPLE "%s:%u: " RESET "%s\n",
+      date_time.constData(), context_file, context_line, local_msg.constData()
+    );
+  else if (type == QtInfoMsg)
+    fprintf(
+      stderr, BLUE "[%s][Info]" PURPLE "%s:%u: " RESET "%s\n",
+      date_time.constData(), context_file, context_line, local_msg.constData()
+    );
+  else if (type == QtWarningMsg)
+    fprintf(
+      stderr, RED "[%s][Warning]" PURPLE "%s:%u: " RESET "%s\n",
+      date_time.constData(), context_file, context_line, local_msg.constData()
+    );
+  else if (type == QtCriticalMsg)
+    fprintf(
+      stderr, RED "[%s][Critical]" PURPLE "%s:%u: " RESET "%s\n",
+      date_time.constData(), context_file, context_line, local_msg.constData()
+    );
+  else if (type == QtFatalMsg) {
+    fprintf(
+      stderr, RED "[%s][Fatal]" PURPLE "%s:%u: " RESET "%s\n",
+      date_time.constData(), context_file, context_line, local_msg.constData()
+    );
+    abort();
   }
 }

@@ -3,7 +3,7 @@
 
 #include "DefaultTranslator.hpp"
 
-// ===================================================================
+// =============================================================================
 
 DefaultTranslator::DefaultTranslator () {
   QDirIterator it(":", QDirIterator::Subdirectories);

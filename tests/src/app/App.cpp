@@ -58,7 +58,7 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
   m_engine.addImportPath(":/ui/views");
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 void App::initContentApp () {
   qInfo() << "Initializing core manager...";

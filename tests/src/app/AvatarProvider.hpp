@@ -3,7 +3,7 @@
 
 #include <QQuickImageProvider>
 
-// ===================================================================
+// =============================================================================
 
 class AvatarProvider : public QQuickImageProvider {
 public:
@@ -17,6 +17,7 @@ public:
   ) override;
 
   static const QString PROVIDER_ID;
+
 private:
   QString m_avatars_path;
 };

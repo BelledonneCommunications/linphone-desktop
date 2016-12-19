@@ -3,7 +3,7 @@
 
 #include <string>
 
-// ===================================================================
+// =============================================================================
 
 namespace Database {
   // Returns the databases paths.
@@ -14,6 +14,6 @@ namespace Database {
   std::string getCallHistoryPath ();
   std::string getFriendsListPath ();
   std::string getMessageHistoryPath ();
-};
+}
 
 #endif // DATABASE_H_
