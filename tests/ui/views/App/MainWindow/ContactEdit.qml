@@ -395,7 +395,9 @@ ColumnLayout  {
 
         Row {
           Layout.alignment: Qt.AlignHCenter
+          Layout.bottomMargin: ContactEditStyle.values.bottomMargin
           Layout.topMargin: ContactEditStyle.buttons.topMargin
+
           spacing: ContactEditStyle.buttons.spacing
           visible: _edition
 
@@ -409,10 +411,6 @@ ColumnLayout  {
             text: qsTr('save')
             onClicked: _save()
           }
-        }
-
-        Item {
-          Layout.bottomMargin: ContactEditStyle.values.bottomMargin
         }
       }
     }
