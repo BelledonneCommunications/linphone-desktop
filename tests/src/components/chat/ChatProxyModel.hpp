@@ -5,9 +5,9 @@
 
 #include "ChatModel.hpp"
 
-// ===================================================================
+// =============================================================================
 // Fetch the L last filtered chat entries.
-// ===================================================================
+// =============================================================================
 
 // Cannot be used as a nested class by Qt and `Q_OBJECT` macro
 // must be used in header c++ file.
@@ -28,7 +28,7 @@ private:
   ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
 };
 
-// ===================================================================
+// =============================================================================
 
 class ChatProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
@@ -39,11 +39,6 @@ class ChatProxyModel : public QSortFilterProxyModel {
     WRITE setSipAddress
     NOTIFY sipAddressChanged
   );
-
-signals:
-  void sipAddressChanged (const QString &sipAddress);
-  void moreEntriesLoaded (int n);
-  void entryTypeFilterChanged (ChatModel::EntryType type);
 
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
@@ -58,6 +53,11 @@ public slots:
   void removeAllEntries () {
     static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->removeAllEntries();
   }
+
+signals:
+  void sipAddressChanged (const QString &sipAddress);
+  void moreEntriesLoaded (int n);
+  void entryTypeFilterChanged (ChatModel::EntryType type);
 
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
@@ -74,7 +74,6 @@ private:
   }
 
   ChatModelFilter m_chat_model_filter;
-
   int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
 
   static const unsigned int ENTRIES_CHUNK_SIZE;

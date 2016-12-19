@@ -11,7 +11,7 @@
 
 using namespace std;
 
-// ===================================================================
+// =============================================================================
 
 QHash<int, QByteArray> ChatModel::roleNames () const {
   QHash<int, QByteArray> roles;
@@ -62,7 +62,7 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
   return true;
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 void ChatModel::removeEntry (int id) {
   qInfo() << QStringLiteral("Removing chat entry: %1 of %2.")
@@ -85,7 +85,7 @@ void ChatModel::removeAllEntries () {
   endResetModel();
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 void ChatModel::fillMessageEntry (
   QVariantMap &dest,
@@ -125,7 +125,7 @@ void ChatModel::fillCallEndEntry (
   dest["isStart"] = false;
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 void ChatModel::removeEntry (ChatEntryData &pair) {
   int type = pair.first["type"].toInt();

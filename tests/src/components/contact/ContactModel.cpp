@@ -1,5 +1,3 @@
-#include <QtDebug>
-
 #include "../../app/App.hpp"
 
 #include "ContactModel.hpp"

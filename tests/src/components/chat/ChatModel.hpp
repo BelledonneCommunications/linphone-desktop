@@ -1,12 +1,12 @@
 #ifndef CHAT_MODEL_H_
 #define CHAT_MODEL_H_
 
-#include <QAbstractListModel>
 #include <linphone++/linphone.hh>
+#include <QAbstractListModel>
 
-// ===================================================================
+// =============================================================================
 // Fetch all N messages of a ChatRoom.
-// ===================================================================
+// =============================================================================
 
 class ChatModel : public QAbstractListModel {
   friend class ChatProxyModel;
@@ -19,9 +19,6 @@ class ChatModel : public QAbstractListModel {
     WRITE setSipAddress
     NOTIFY sipAddressChanged
   );
-
-signals:
-  void sipAddressChanged (const QString &sipAddress);
 
 public:
   typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
@@ -36,6 +33,7 @@ public:
     MessageEntry,
     CallEntry
   };
+
   Q_ENUM(EntryType);
 
   enum CallStatus {
@@ -43,6 +41,7 @@ public:
     CallStatusMissed = linphone::CallStatusMissed,
     CallStatusSuccess = linphone::CallStatusSuccess
   };
+
   Q_ENUM(CallStatus);
 
   ChatModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
@@ -58,6 +57,9 @@ public:
 public slots:
   void removeEntry (int id);
   void removeAllEntries ();
+
+signals:
+  void sipAddressChanged (const QString &sipAddress);
 
 private:
   void fillMessageEntry (

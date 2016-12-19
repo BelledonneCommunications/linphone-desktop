@@ -37,7 +37,7 @@ public slots:
   }
 
   void abortEdit () {
-    // TODO.
+    // TODO: call linphone friend abort function.
     // m_linphone_friend->abort();
   }
 
