@@ -34,7 +34,7 @@ function connectOnce (signal, cb) {
 function encodeTextToQmlRichFormat (text, options) {
   var images = ''
 
-  if (options == null) {
+  if (!options) {
     options = {}
   }
 
@@ -218,7 +218,7 @@ function setTimeout (parent, delay, cb) {
 // ===================================================================
 
 function _computeOptimizedCb (func, context) {
-  return (context != null)
+  return context
     ? (function () {
       return func.apply(context, arguments)
     }) : func
