@@ -1,14 +1,14 @@
-// ===================================================================
+// =============================================================================
 // Contains many common helpers.
-// ===================================================================
+// =============================================================================
 
 .pragma library
 
 .import 'uri-tools.js' as UriTools
 
-// ===================================================================
+// =============================================================================
 // QML helpers.
-// ===================================================================
+// =============================================================================
 
 // Destroy timeout.
 function clearTimeout (timer) {
@@ -16,7 +16,7 @@ function clearTimeout (timer) {
   timer.destroy()
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Connect a signal to a function only for one call.
 function connectOnce (signal, cb) {
@@ -29,7 +29,7 @@ function connectOnce (signal, cb) {
   return func
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function encodeTextToQmlRichFormat (text, options) {
   var images = ''
@@ -81,7 +81,7 @@ function extractFirstUri (str) {
     : res[0]
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Returns the top (root) parent of one object.
 function getTopParent (object, useFakeParent) {
@@ -98,7 +98,7 @@ function getTopParent (object, useFakeParent) {
   return parent
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Display a simple ConfirmDialog component.
 // Wrap the openWindow function.
@@ -117,7 +117,7 @@ function openConfirmDialog (parent, options) {
   )
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Load by default a window in the ui/views folder.
 // If options.isString is equals to true, a marshalling component can
@@ -161,7 +161,7 @@ function openWindow (window, parent, options) {
   return object
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Test if a point is in a item.
 //
@@ -179,7 +179,7 @@ function pointIsInItem (source, target, point) {
   )
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Test the type of a qml object.
 // Warning: this function is probably not portable
@@ -196,7 +196,7 @@ function qmlTypeof (object, className) {
   )
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // A copy of `Window.setTimeout` from js.
 // delay is in milliseconds.
@@ -213,9 +213,9 @@ function setTimeout (parent, delay, cb) {
   return timer
 }
 
-// ===================================================================
+// =============================================================================
 // GENERIC.
-// ===================================================================
+// =============================================================================
 
 function _computeOptimizedCb (func, context) {
   return context
@@ -248,7 +248,7 @@ function _keyFinder (obj, cb, context) {
   }
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Basic assert function.
 function assert (condition, message) {
@@ -257,7 +257,7 @@ function assert (condition, message) {
   }
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Returns an array from a `object` or `array` argument.
 function ensureArray (obj) {
@@ -276,7 +276,7 @@ function ensureArray (obj) {
   return values
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function escapeQuotes (str) {
   return str != null
@@ -284,7 +284,7 @@ function escapeQuotes (str) {
     : ''
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Get the first matching value in a array or object.
 // The matching value is obtained if `cb` returns true.
@@ -297,7 +297,7 @@ function find (obj, cb, context) {
   return key != null && key !== -1 ? obj[key] : null
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Generate a random number in the [min, max[ interval.
 // Uniform distrib.
@@ -305,7 +305,7 @@ function genRandomNumber (min, max) {
   return Math.random() * (max - min) + min
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Generate a random number between a set of intervals.
 // The `intervals` param must be orderer like this:
@@ -337,7 +337,7 @@ function genRandomNumberBetweenIntervals (intervals) {
   return n
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Returns the extension of a filename.
 function getExtension (str) {
@@ -350,7 +350,7 @@ function getExtension (str) {
   return str.slice(index + 1)
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Test if a value is included in an array or object.
 function includes (obj, value, startIndex) {
@@ -375,37 +375,37 @@ function includes (obj, value, startIndex) {
   return false
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function isArray (array) {
   return (array instanceof Array)
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function isFunction (func) {
   return typeof func === 'function'
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function isInteger (integer) {
   return integer === parseInt(integer, 10)
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function isObject (object) {
   return object !== null && typeof object === 'object'
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 function isString (string) {
   return typeof string === 'string' || string instanceof String
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Convert a snake_case string to a lowerCamelCase string.
 function snakeToCamel (s) {
@@ -414,7 +414,7 @@ function snakeToCamel (s) {
   })
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Test if a string starts by a given string.
 function startsWith (str, searchStr) {
@@ -425,7 +425,7 @@ function startsWith (str, searchStr) {
   return str.slice(0, searchStr.length) === searchStr
 }
 
-// -------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 // Invoke a `cb` function with each value of the interval: `[0, n[`.
 // Return a mapped array created with the returned values of `cb`.
