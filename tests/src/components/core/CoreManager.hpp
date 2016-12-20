@@ -1,9 +1,6 @@
 #ifndef CORE_MANAGER_H_
 #define CORE_MANAGER_H_
 
-#include <QObject>
-#include <linphone++/linphone.hh>
-
 #include "../contact/VcardModel.hpp"
 
 // =============================================================================
@@ -30,7 +27,7 @@ public:
 
 public slots:
   // Must be used in a qml scene.
-  // The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
+  // Warning: The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
   VcardModel *createDetachedVcardModel ();
 
 private:

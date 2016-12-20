@@ -75,7 +75,7 @@ ColumnLayout  {
   spacing: 0
 
   Component.onCompleted: {
-    _contact = ContactsListModel.mapSipAddressToContact(sipAddress)
+    _contact = SipAddressesModel.mapSipAddressToContact(sipAddress)
 
     if (!_contact) {
       _vcard = CoreManager.createDetachedVcardModel()

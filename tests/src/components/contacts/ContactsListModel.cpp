@@ -77,17 +77,6 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 
 // -----------------------------------------------------------------------------
 
-ContactModel *ContactsListModel::mapSipAddressToContact (const QString &sipAddress) const {
-  shared_ptr<linphone::Friend> friend_ = m_linphone_friends->findFriendByUri(
-      ::Utils::qStringToLinphoneString(sipAddress)
-    );
-
-  if (!friend_)
-    return nullptr;
-
-  return &friend_->getData<ContactModel>(ContactModel::NAME);
-}
-
 ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   ContactModel *contact = new ContactModel(vcard);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);

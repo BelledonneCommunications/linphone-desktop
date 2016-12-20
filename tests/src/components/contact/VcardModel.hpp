@@ -25,6 +25,7 @@ public:
   ~VcardModel ();
 
   QString getUsername () const;
+  QVariantList getSipAddresses () const;
 
 public slots:
   bool addSipAddress (const QString &sip_address);
@@ -58,7 +59,6 @@ private:
   bool setAvatar (const QString &path);
 
   QVariantMap getAddress () const;
-  QVariantList getSipAddresses () const;
   QVariantList getCompanies () const;
   QVariantList getEmails () const;
   QVariantList getUrls () const;

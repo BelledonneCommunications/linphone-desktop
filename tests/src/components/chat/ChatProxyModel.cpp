@@ -11,7 +11,7 @@ bool ChatModelFilter::filterAcceptsRow (int source_row, const QModelIndex &) con
     return true;
 
   QModelIndex index = sourceModel()->index(source_row, 0, QModelIndex());
-  const QVariantMap &data = qvariant_cast<QVariantMap>(index.data());
+  const QVariantMap &data = index.data().toMap();
 
   return data["type"].toInt() == m_entry_type_filter;
 }

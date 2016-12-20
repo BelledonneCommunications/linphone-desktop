@@ -49,7 +49,7 @@ bool ContactsListProxyModel::filterAcceptsRow (
   const QModelIndex &source_parent
 ) const {
   QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-  const ContactModel *contact = qvariant_cast<ContactModel *>(index.data());
+  const ContactModel *contact = index.data().value<ContactModel *>();
 
   m_weights[contact] = static_cast<unsigned int>(computeContactWeight(*contact));
 
@@ -60,8 +60,8 @@ bool ContactsListProxyModel::filterAcceptsRow (
 }
 
 bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const ContactModel *contact_a = qvariant_cast<ContactModel *>(sourceModel()->data(left));
-  const ContactModel *contact_b = qvariant_cast<ContactModel *>(sourceModel()->data(right));
+  const ContactModel *contact_a = sourceModel()->data(left).value<ContactModel *>();
+  const ContactModel *contact_b = sourceModel()->data(right).value<ContactModel *>();
 
   unsigned int weight_a = m_weights[contact_a];
   unsigned int weight_b = m_weights[contact_b];

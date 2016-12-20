@@ -15,7 +15,7 @@ ColumnLayout  {
 
   property string sipAddress
 
-  property var _contact: ContactsListModel.mapSipAddressToContact(
+  property var _contact: SipAddressesModel.mapSipAddressToContact(
     sipAddress
   ) || sipAddress
 

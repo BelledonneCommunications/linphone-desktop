@@ -1,3 +1,4 @@
+#include <QQmlComponent>
 #include <QQuickWindow>
 #include <QtDebug>
 #include <QTimer>
@@ -22,7 +23,7 @@
 // =============================================================================
 
 inline int getNotificationSize (const QObject &object, const char *property) {
-  QVariant variant(object.property(property));
+  QVariant variant = object.property(property);
   bool so_far_so_good;
 
   int size = variant.toInt(&so_far_so_good);
@@ -56,7 +57,7 @@ Notifier::Notifier (QObject *parent) :
   m_components[Notifier::Call] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH));
 
   // Check errors.
-  for (int i = 0; i < Notifier::MaxNbTypes; i++) {
+  for (int i = 0; i < Notifier::MaxNbTypes; ++i) {
     QQmlComponent *component = m_components[i];
     if (component->isError()) {
       qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(i) <<

@@ -12,6 +12,7 @@ class ContactsListModel : public QAbstractListModel {
   Q_OBJECT;
 
   friend class ContactsListProxyModel;
+  friend class SipAddressesModel;
 
 public:
   ~ContactsListModel () = default;
@@ -25,7 +26,7 @@ public:
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   static void init () {
-    if (!ContactsListModel::m_instance) {
+    if (!m_instance) {
       m_instance = new ContactsListModel();
     }
   }
@@ -35,8 +36,6 @@ public:
   }
 
 public slots:
-  ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
-
   ContactModel *addContact (VcardModel *vcard);
   void removeContact (ContactModel *contact);
 

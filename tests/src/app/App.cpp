@@ -11,6 +11,7 @@
 #include "../components/core/CoreManager.hpp"
 #include "../components/notifier/Notifier.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
+#include "../components/sip-addresses/SipAddressesModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 
 #include "App.hpp"
@@ -66,6 +67,7 @@ void App::initContentApp () {
   // Init core & contacts.
   CoreManager::init();
   ContactsListModel::init();
+  SipAddressesModel::init();
 
   // Register types and load context properties.
   registerTypes();
@@ -120,6 +122,13 @@ void App::registerTypes () {
     }
   );
 
+  qmlRegisterSingletonType<SipAddressesModel>(
+    "Linphone", 1, 0, "SipAddressesModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return SipAddressesModel::getInstance();
+    }
+  );
+
   qmlRegisterSingletonType<AccountSettingsModel>(
     "Linphone", 1, 0, "AccountSettingsModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
@@ -144,6 +153,7 @@ void App::addContextProperties () {
   qInfo() << "Adding context properties...";
   QQmlContext *context = m_engine.rootContext();
 
+  // TODO: Avoid context properties. Use qmlRegister...
   QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
   if (component.isError()) {
     qWarning() << component.errors();

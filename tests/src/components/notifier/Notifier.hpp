@@ -3,9 +3,10 @@
 
 #include <QMutex>
 #include <QObject>
-#include <QQmlComponent>
 
 // =============================================================================
+
+class QQmlComponent;
 
 class Notifier : public QObject {
   Q_OBJECT;

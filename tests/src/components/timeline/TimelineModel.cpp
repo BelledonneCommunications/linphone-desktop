@@ -1,36 +1,12 @@
-#include <algorithm>
-
-#include <linphone++/linphone.hh>
-#include <QDateTime>
-#include <QSet>
-
-#include "../../utils.hpp"
-#include "../contacts/ContactsListModel.hpp"
-#include "../core/CoreManager.hpp"
+#include "../sip-addresses/SipAddressesModel.hpp"
 
 #include "TimelineModel.hpp"
 
-using namespace std;
+// =============================================================================
 
-// ===================================================================
-
-TimelineModel::TimelineModel (QObject *parent) : QAbstractListModel(parent) {
-  init_entries();
-
-  // Invalidate model if a contact is removed.
-  // Better than compare each sip address.
-  connect(
-    ContactsListModel::getInstance(), &ContactsListModel::rowsRemoved, this,
-    [this](const QModelIndex &, int, int) {
-      beginResetModel();
-      // Nothing.
-      endResetModel();
-    }
-  );
-}
-
-int TimelineModel::rowCount (const QModelIndex &) const {
-  return m_entries.count();
+TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
+  setSourceModel(SipAddressesModel::getInstance());
+  sort(0);
 }
 
 QHash<int, QByteArray> TimelineModel::roleNames () const {
@@ -39,96 +15,16 @@ QHash<int, QByteArray> TimelineModel::roleNames () const {
   return roles;
 }
 
-QVariant TimelineModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
+// -----------------------------------------------------------------------------
 
-  if (row < 0 || row >= m_entries.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return m_entries[row];
-
-  return QVariant();
+bool TimelineModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
+  QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+  return index.data().toMap().contains("timestamp");
 }
 
-// -------------------------------------------------------------------
+bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+  const QVariantMap &sip_address_a = sourceModel()->data(left).toMap();
+  const QVariantMap &sip_address_b = sourceModel()->data(right).toMap();
 
-void TimelineModel::init_entries () {
-  // Returns an iterator entry position to insert a new entry.
-  auto search_entry = [this](
-      const QVariantMap &map,
-      const QList<QMap<QString, QVariant> >::iterator *start = NULL
-    ) {
-      return lower_bound(
-        start ? *start : m_entries.begin(), m_entries.end(), map,
-        [](const QVariantMap &a, const QVariantMap &b) {
-          return a["timestamp"] > b["timestamp"];
-        }
-      );
-    };
-
-  shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
-
-  // Insert chat rooms events.
-  for (const auto &chat_room : core->getChatRooms()) {
-    list<shared_ptr<linphone::ChatMessage> > history = chat_room->getHistory(0);
-
-    if (history.size() == 0)
-      continue;
-
-    // Last message must be at the end of history.
-    shared_ptr<linphone::ChatMessage> message = history.back();
-
-    // Insert event message in timeline entries.
-    QVariantMap map;
-    map["timestamp"] = QDateTime::fromMSecsSinceEpoch(
-        static_cast<qint64>(message->getTime()) * 1000
-      );
-    map["sipAddresses"] = ::Utils::linphoneStringToQString(
-        chat_room->getPeerAddress()->asString()
-      );
-
-    m_entries.insert(search_entry(map), map);
-  }
-
-  // Insert calls events.
-  QSet<QString> address_done;
-  for (const auto &call_log : core->getCallLogs()) {
-    // Get a sip uri to check.
-    QString address = ::Utils::linphoneStringToQString(
-        call_log->getRemoteAddress()->asString()
-      );
-
-    if (address_done.contains(address))
-      continue; // Already used.
-
-    address_done << address;
-
-    // Make a new map.
-    QVariantMap map;
-    map["timestamp"] = QDateTime::fromMSecsSinceEpoch(
-        static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
-      );
-    map["sipAddresses"] = address;
-
-    // Search existing entry.
-    auto it = find_if(
-        m_entries.begin(), m_entries.end(), [&address](const QVariantMap &map) {
-          return address == map["sipAddresses"].toString();
-        }
-      );
-
-    // Is it a new entry?
-    if (it == m_entries.cend())
-      m_entries.insert(search_entry(map), map);
-    else if (map["timestamp"] > (*it)["timestamp"]) {
-      // Remove old entry and insert.
-      it = m_entries.erase(it);
-
-      if (it != m_entries.cbegin())
-        it--;
-
-      m_entries.insert(search_entry(map, &it), map);
-    }
-  }
+  return sip_address_a["timestamp"] > sip_address_b["timestamp"];
 }

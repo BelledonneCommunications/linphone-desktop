@@ -66,17 +66,17 @@ ColumnLayout {
     delegate: Item {
       property var contact: {
         Utils.assert(
-          !Utils.isArray($timelineEntry.sipAddresses),
+          !Utils.isArray($timelineEntry.sipAddress),
           'Conferences are not supported at this moment.'
         )
 
-        return ContactsListModel.mapSipAddressToContact(
-          $timelineEntry.sipAddresses
-        ) || $timelineEntry.sipAddresses
+        return SipAddressesModel.mapSipAddressToContact(
+          $timelineEntry.sipAddress
+        ) || $timelineEntry.sipAddress
       }
 
       height: TimelineStyle.contact.height
-      width: parent.width
+      width: parent ? parent.width : 0
 
       Contact {
         anchors.fill: parent
@@ -87,7 +87,7 @@ ColumnLayout {
               ? TimelineStyle.contact.backgroundColor.a
               : TimelineStyle.contact.backgroundColor.b
           )
-        sipAddress: $timelineEntry.sipAddresses
+        sipAddress: $timelineEntry.sipAddress
         sipAddressColor: view.currentIndex === index
           ? TimelineStyle.contact.sipAddress.color.selected
           : TimelineStyle.contact.sipAddress.color.normal
@@ -110,7 +110,7 @@ ColumnLayout {
         anchors.fill: parent
         onClicked: {
           view.currentIndex = index
-          timeline.entrySelected($timelineEntry.sipAddresses)
+          timeline.entrySelected($timelineEntry.sipAddress)
         }
       }
     }

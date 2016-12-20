@@ -15,7 +15,7 @@ Rectangle {
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
   property string sipAddress
-  property var _contact: ContactsListModel.mapSipAddressToContact(sipAddress)
+  property var _contact: SipAddressesModel.mapSipAddressToContact(sipAddress)
 
   color: 'transparent' // No color by default.
   height: ContactStyle.height

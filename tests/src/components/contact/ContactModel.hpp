@@ -1,11 +1,7 @@
 #ifndef CONTACT_MODEL_H_
 #define CONTACT_MODEL_H_
 
-#include <linphone++/linphone.hh>
-#include <QObject>
-
 #include "../presence/Presence.hpp"
-
 #include "VcardModel.hpp"
 
 // =============================================================================
@@ -25,7 +21,9 @@ public:
   ContactModel (VcardModel *vcard);
   ~ContactModel () = default;
 
-  static const char *NAME;
+  std::shared_ptr<VcardModel> getVcardModel () const {
+    return m_vcard;
+  }
 
 public slots:
   void startEdit () {
@@ -47,10 +45,6 @@ signals:
 private:
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
-
-  std::shared_ptr<VcardModel> getVcardModel () const {
-    return m_vcard;
-  }
 
   VcardModel *getVcardModelPtr () const {
     return m_vcard.get();
