@@ -5,7 +5,7 @@
 
 class ContactsListModel;
 
-// ===================================================================
+// =============================================================================
 
 class TimelineModel : public QAbstractListModel {
   Q_OBJECT;
@@ -23,7 +23,7 @@ private:
   // A timeline enty is a object that contains:
   // - A QDateTime `timestamp`.
   // - A `sipAddresses` value, if it exists only one address, it's
-  //   a string, otherwise it's a string array.
+  // a string, otherwise it's a string array.
   QList<QVariantMap> m_entries;
 };
 

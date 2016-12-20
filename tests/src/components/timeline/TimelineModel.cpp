@@ -1,8 +1,8 @@
 #include <algorithm>
 
+#include <linphone++/linphone.hh>
 #include <QDateTime>
 #include <QSet>
-#include <linphone++/linphone.hh>
 
 #include "../../utils.hpp"
 #include "../contacts/ContactsListModel.hpp"
@@ -56,16 +56,16 @@ QVariant TimelineModel::data (const QModelIndex &index, int role) const {
 void TimelineModel::init_entries () {
   // Returns an iterator entry position to insert a new entry.
   auto search_entry = [this](
-    const QVariantMap &map,
-    const QList<QMap<QString, QVariant> >::iterator *start = NULL
-  ) {
-    return lower_bound(
-      start ? *start : m_entries.begin(), m_entries.end(), map,
-      [](const QVariantMap &a, const QVariantMap &b) {
-        return a["timestamp"] > b["timestamp"];
-      }
-    );
-  };
+      const QVariantMap &map,
+      const QList<QMap<QString, QVariant> >::iterator *start = NULL
+    ) {
+      return lower_bound(
+        start ? *start : m_entries.begin(), m_entries.end(), map,
+        [](const QVariantMap &a, const QVariantMap &b) {
+          return a["timestamp"] > b["timestamp"];
+        }
+      );
+    };
 
   shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
 
@@ -82,11 +82,11 @@ void TimelineModel::init_entries () {
     // Insert event message in timeline entries.
     QVariantMap map;
     map["timestamp"] = QDateTime::fromMSecsSinceEpoch(
-       static_cast<qint64>(message->getTime()) * 1000
-    );
-    map["sipAddresses"] = Utils::linphoneStringToQString(
-      chat_room->getPeerAddress()->asString()
-    );
+        static_cast<qint64>(message->getTime()) * 1000
+      );
+    map["sipAddresses"] = ::Utils::linphoneStringToQString(
+        chat_room->getPeerAddress()->asString()
+      );
 
     m_entries.insert(search_entry(map), map);
   }
@@ -95,9 +95,9 @@ void TimelineModel::init_entries () {
   QSet<QString> address_done;
   for (const auto &call_log : core->getCallLogs()) {
     // Get a sip uri to check.
-    QString address = Utils::linphoneStringToQString(
-      call_log->getRemoteAddress()->asString()
-    );
+    QString address = ::Utils::linphoneStringToQString(
+        call_log->getRemoteAddress()->asString()
+      );
 
     if (address_done.contains(address))
       continue; // Already used.
@@ -107,16 +107,16 @@ void TimelineModel::init_entries () {
     // Make a new map.
     QVariantMap map;
     map["timestamp"] = QDateTime::fromMSecsSinceEpoch(
-      static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
-    );
+        static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
+      );
     map["sipAddresses"] = address;
 
     // Search existing entry.
     auto it = find_if(
-      m_entries.begin(), m_entries.end(), [&address](const QVariantMap &map) {
-        return address == map["sipAddresses"].toString();
-      }
-    );
+        m_entries.begin(), m_entries.end(), [&address](const QVariantMap &map) {
+          return address == map["sipAddresses"].toString();
+        }
+      );
 
     // Is it a new entry?
     if (it == m_entries.cend())
