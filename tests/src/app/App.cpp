@@ -63,8 +63,9 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 void App::initContentApp () {
   qInfo() << "Initializing core manager...";
 
-  // Init core.
+  // Init core & contacts.
   CoreManager::init();
+  ContactsListModel::init();
 
   // Register types and load context properties.
   registerTypes();
@@ -86,13 +87,18 @@ void App::initContentApp () {
 void App::registerTypes () {
   qInfo() << "Registering types...";
 
-  // Register meta types.
+  qmlRegisterUncreatableType<ContactModel>(
+    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
+  );
+  qmlRegisterUncreatableType<VcardModel>(
+    "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable"
+  );
   qmlRegisterUncreatableType<Presence>(
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
+
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
-  // Register Application/Core.
   qmlRegisterSingletonType<App>(
     "Linphone", 1, 0, "App",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
@@ -107,28 +113,10 @@ void App::registerTypes () {
     }
   );
 
-  // Register models.
-  qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
-
-  qmlRegisterUncreatableType<ContactModel>(
-    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
-  );
-
-  qmlRegisterUncreatableType<VcardModel>(
-    "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable"
-  );
-
-  ContactsListProxyModel::initContactsListModel(new ContactsListModel());
-  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
-
-  qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
-  qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
-
-  // Register singletons.
   qmlRegisterSingletonType<ContactsListModel>(
     "Linphone", 1, 0, "ContactsListModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return ContactsListProxyModel::getContactsListModel();
+      return ContactsListModel::getInstance();
     }
   );
 
@@ -142,9 +130,14 @@ void App::registerTypes () {
   qmlRegisterSingletonType<TimelineModel>(
     "Linphone", 1, 0, "TimelineModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new TimelineModel(ContactsListProxyModel::getContactsListModel());
+      return new TimelineModel();
     }
   );
+
+  qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
+  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
+  qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
+  qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
 }
 
 void App::addContextProperties () {

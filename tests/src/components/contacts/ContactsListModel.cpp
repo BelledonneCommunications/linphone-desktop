@@ -10,6 +10,8 @@ using namespace std;
 
 // =============================================================================
 
+ContactsListModel *ContactsListModel::m_instance = nullptr;
+
 ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(parent) {
   m_linphone_friends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 

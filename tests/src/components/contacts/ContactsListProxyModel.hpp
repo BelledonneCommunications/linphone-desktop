@@ -3,9 +3,11 @@
 
 #include <QSortFilterProxyModel>
 
-#include "ContactsListModel.hpp"
+#include "../contact/ContactModel.hpp"
 
 // =============================================================================
+
+class ContactsListModel;
 
 class ContactsListProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
@@ -19,11 +21,6 @@ class ContactsListProxyModel : public QSortFilterProxyModel {
 public:
   ContactsListProxyModel (QObject *parent = Q_NULLPTR);
   ~ContactsListProxyModel () = default;
-
-  static void initContactsListModel (ContactsListModel *list);
-  static ContactsListModel *getContactsListModel () {
-    return m_list;
-  }
 
 public slots:
   void setFilter (const QString &pattern) {
@@ -45,17 +42,14 @@ private:
 
   void setConnectedFilter (bool use_connected_filter);
 
+  ContactsListModel *m_list;
+  bool m_use_connected_filter = false;
+
   // It's just a cache to save values computed by `filterAcceptsRow`
   // and reused by `lessThan`.
   mutable QHash<const ContactModel *, unsigned int> m_weights;
 
-  bool m_use_connected_filter = false;
-
   static const QRegExp m_search_separators;
-
-  // The contacts list is shared between `ContactsListProxyModel`
-  // it's necessary to initialize it with `initContactsListModel`.
-  static ContactsListModel *m_list;
 };
 
 #endif // CONTACTS_LIST_PROXY_MODEL_H_

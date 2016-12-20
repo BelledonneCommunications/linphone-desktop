@@ -11,7 +11,7 @@ class TimelineModel : public QAbstractListModel {
   Q_OBJECT;
 
 public:
-  TimelineModel (const ContactsListModel *contacts_list);
+  TimelineModel (QObject *parent = Q_NULLPTR);
 
   int rowCount (const QModelIndex &) const override;
   QHash<int, QByteArray> roleNames () const override;

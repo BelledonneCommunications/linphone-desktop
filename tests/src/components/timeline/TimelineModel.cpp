@@ -14,13 +14,13 @@ using namespace std;
 
 // ===================================================================
 
-TimelineModel::TimelineModel (const ContactsListModel *contacts_list) {
+TimelineModel::TimelineModel (QObject *parent) : QAbstractListModel(parent) {
   init_entries();
 
   // Invalidate model if a contact is removed.
   // Better than compare each sip address.
   connect(
-    contacts_list, &ContactsListModel::rowsRemoved, this,
+    ContactsListModel::getInstance(), &ContactsListModel::rowsRemoved, this,
     [this](const QModelIndex &, int, int) {
       beginResetModel();
       // Nothing.

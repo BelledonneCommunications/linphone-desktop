@@ -1,6 +1,7 @@
 #include <QDebug>
 
 #include "../../utils.hpp"
+#include "ContactsListModel.hpp"
 
 #include "ContactsListProxyModel.hpp"
 
@@ -17,8 +18,6 @@ using namespace std;
 
 // =============================================================================
 
-ContactsListModel *ContactsListProxyModel::m_list = nullptr;
-
 // Notes:
 //
 // - First `^` is necessary to search two words with one separator
@@ -33,8 +32,7 @@ const QRegExp ContactsListProxyModel::m_search_separators("^[^_.-;@ ][_.-;@ ]");
 // -----------------------------------------------------------------------------
 
 ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  if (m_list == nullptr)
-    qFatal("Contacts list model is undefined.");
+  m_list = ContactsListModel::getInstance();
 
   setSourceModel(m_list);
   setFilterCaseSensitivity(Qt::CaseInsensitive);
@@ -44,13 +42,6 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
 
   setDynamicSortFilter(false);
   sort(0);
-}
-
-void ContactsListProxyModel::initContactsListModel (ContactsListModel *list) {
-  if (!m_list)
-    m_list = list;
-  else
-    qWarning() << "Contacts list model is already defined.";
 }
 
 bool ContactsListProxyModel::filterAcceptsRow (
