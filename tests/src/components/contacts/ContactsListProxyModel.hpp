@@ -25,7 +25,7 @@ public:
 public slots:
   void setFilter (const QString &pattern) {
     setFilterFixedString(pattern);
-    invalidateFilter();
+    invalidate();
   }
 
 protected:

@@ -89,8 +89,7 @@ ApplicationWindow {
         maxMenuHeight: MainWindowStyle.searchBox.maxHeight
         placeholderText: qsTr('mainSearchBarPlaceholder')
 
-        contactsModel: ContactsListProxyModel {}
-        othersSipAddresses: UnregisteredSipAddressesProxyModel {}
+        model: SmartSearchBarModel
       }
     }
   }

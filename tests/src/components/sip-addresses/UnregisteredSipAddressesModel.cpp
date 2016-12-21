@@ -10,5 +10,5 @@ UnregisteredSipAddressesModel::UnregisteredSipAddressesModel (QObject *parent) :
 
 bool UnregisteredSipAddressesModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
   QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-  return index.data().toMap().contains("contact");
+  return !index.data().toMap().contains("contact");
 }

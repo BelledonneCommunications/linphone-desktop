@@ -4,10 +4,10 @@ import Common 1.0
 import Common.Styles 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 // A reusable search input which display a entries model in a menu.
 // Each entry can be filtered with the search input.
-// ===================================================================
+// =============================================================================
 
 Item {
   id: searchBox
@@ -16,8 +16,7 @@ Item {
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
 
-  // This property must implement `setFilterFixedString` and/or
-  // `invalidate` functions.
+  // This property must implement `setFilter` function.
   property alias model: list.model
 
   property alias placeholderText: searchField.placeholderText
@@ -27,7 +26,7 @@ Item {
   signal menuClosed
   signal menuOpened
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   function hideMenu () {
     if (!_isOpen) {
@@ -47,17 +46,14 @@ Item {
 
   function _filter (text) {
     Utils.assert(
-      model.setFilterFixedString != null,
-      '`model.setFilterFixedString` must be defined.'
+      model.setFilter != null,
+      '`model.setFilter` must be defined.'
     )
 
-    model.setFilterFixedString(text)
-    if (model.invalidate) {
-      model.invalidate()
-    }
+    model.setFilter(text)
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   implicitHeight: searchField.height
 
@@ -112,7 +108,7 @@ Item {
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   states: State {
     name: 'opened'

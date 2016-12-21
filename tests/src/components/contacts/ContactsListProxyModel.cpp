@@ -35,7 +35,6 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
   m_list = CoreManager::getInstance()->getContactsListModel();
 
   setSourceModel(m_list);
-  setFilterCaseSensitivity(Qt::CaseInsensitive);
   setDynamicSortFilter(false);
 
   for (const ContactModel *contact : m_list->m_list)
@@ -88,12 +87,8 @@ float ContactsListProxyModel::computeStringWeight (const QString &string, float 
       if ((offset = tmp_offset) == 0) break;
   }
 
-  // No weight.
-  if (offset == -1)
-    return 0;
-
-  // Weight & offset.
   switch (offset) {
+    case -1: return 0;
     case 0: return percentage * FACTOR_POS_0;
     case 1: return percentage * FACTOR_POS_1;
     case 2: return percentage * FACTOR_POS_2;

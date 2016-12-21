@@ -3,7 +3,7 @@
 
 #include <QString>
 
-// ===================================================================
+// =============================================================================
 
 namespace Utils {
   inline QString linphoneStringToQString (const std::string &string) {
