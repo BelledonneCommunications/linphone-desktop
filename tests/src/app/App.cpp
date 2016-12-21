@@ -12,6 +12,7 @@
 #include "../components/notifier/Notifier.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/sip-addresses/SipAddressesModel.hpp"
+#include "../components/sip-addresses/UnregisteredSipAddressesProxyModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 
 #include "App.hpp"
@@ -64,10 +65,8 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 void App::initContentApp () {
   qInfo() << "Initializing core manager...";
 
-  // Init core & contacts.
+  // Init core.
   CoreManager::init();
-  ContactsListModel::init();
-  SipAddressesModel::init();
 
   // Register types and load context properties.
   registerTypes();
@@ -99,8 +98,6 @@ void App::registerTypes () {
     "Linphone", 1, 0, "Presence", "Presence is uncreatable"
   );
 
-  qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
-
   qmlRegisterSingletonType<App>(
     "Linphone", 1, 0, "App",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
@@ -118,14 +115,14 @@ void App::registerTypes () {
   qmlRegisterSingletonType<ContactsListModel>(
     "Linphone", 1, 0, "ContactsListModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return ContactsListModel::getInstance();
+      return CoreManager::getInstance()->getContactsListModel();
     }
   );
 
   qmlRegisterSingletonType<SipAddressesModel>(
     "Linphone", 1, 0, "SipAddressesModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return SipAddressesModel::getInstance();
+      return CoreManager::getInstance()->getSipAddressesModel();
     }
   );
 
@@ -147,6 +144,9 @@ void App::registerTypes () {
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
   qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
+  qmlRegisterType<UnregisteredSipAddressesProxyModel>("Linphone", 1, 0, "UnregisteredSipAddressesProxyModel");
+
+  qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 }
 
 void App::addContextProperties () {

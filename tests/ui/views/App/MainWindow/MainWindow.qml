@@ -27,8 +27,7 @@ ApplicationWindow {
   title: MainWindowStyle.title
   visible: true
 
-  onActiveFocusItemChanged: activeFocusItem == null &&
-    smartSearchBar.hideMenu()
+  onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()
 
   // ---------------------------------------------------------------------------
   // Toolbar properties.
@@ -88,8 +87,10 @@ ApplicationWindow {
         Layout.fillWidth: true
         entryHeight: MainWindowStyle.searchBox.entryHeight
         maxMenuHeight: MainWindowStyle.searchBox.maxHeight
-        model: ContactsListProxyModel {}
         placeholderText: qsTr('mainSearchBarPlaceholder')
+
+        contactsModel: ContactsListProxyModel {}
+        othersSipAddresses: UnregisteredSipAddressesProxyModel {}
       }
     }
   }

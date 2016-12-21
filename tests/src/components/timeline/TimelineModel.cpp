@@ -1,11 +1,11 @@
-#include "../sip-addresses/SipAddressesModel.hpp"
+#include "../core/CoreManager.hpp"
 
 #include "TimelineModel.hpp"
 
 // =============================================================================
 
 TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  setSourceModel(SipAddressesModel::getInstance());
+  setSourceModel(CoreManager::getInstance()->getSipAddressesModel());
   sort(0);
 }
 

@@ -1,11 +1,11 @@
-#include "../sip-addresses/SipAddressesModel.hpp"
+#include "../core/CoreManager.hpp"
 
 #include "UnregisteredSipAddressesModel.hpp"
 
 // =============================================================================
 
 UnregisteredSipAddressesModel::UnregisteredSipAddressesModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  setSourceModel(SipAddressesModel::getInstance());
+  setSourceModel(CoreManager::getInstance()->getSipAddressesModel());
 }
 
 bool UnregisteredSipAddressesModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {

@@ -9,8 +9,6 @@
 
 // =============================================================================
 
-SipAddressesModel *SipAddressesModel::m_instance = nullptr;
-
 SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
@@ -51,7 +49,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   }
 
   // Get sip addresses from contacts.
-  for (auto &contact : ContactsListModel::getInstance()->m_list) {
+  for (auto &contact : CoreManager::getInstance()->getContactsListModel()->m_list) {
     for (const auto &sip_address : contact->getVcardModel()->getSipAddresses()) {
       auto it = m_sip_addresses.find(sip_address.toString());
 

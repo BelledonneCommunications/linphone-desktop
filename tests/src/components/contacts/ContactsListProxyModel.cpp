@@ -1,7 +1,7 @@
 #include <QDebug>
 
 #include "../../utils.hpp"
-#include "ContactsListModel.hpp"
+#include "../core/CoreManager.hpp"
 
 #include "ContactsListProxyModel.hpp"
 
@@ -32,15 +32,15 @@ const QRegExp ContactsListProxyModel::m_search_separators("^[^_.-;@ ][_.-;@ ]");
 // -----------------------------------------------------------------------------
 
 ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  m_list = ContactsListModel::getInstance();
+  m_list = CoreManager::getInstance()->getContactsListModel();
 
   setSourceModel(m_list);
   setFilterCaseSensitivity(Qt::CaseInsensitive);
+  setDynamicSortFilter(false);
 
   for (const ContactModel *contact : m_list->m_list)
     m_weights[contact] = 0;
 
-  setDynamicSortFilter(false);
   sort(0);
 }
 
@@ -125,6 +125,6 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
 void ContactsListProxyModel::setConnectedFilter (bool use_connected_filter) {
   if (use_connected_filter != m_use_connected_filter) {
     m_use_connected_filter = use_connected_filter;
-    invalidate();
+    invalidateFilter();
   }
 }

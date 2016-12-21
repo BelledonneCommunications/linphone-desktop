@@ -13,6 +13,16 @@ CoreManager::CoreManager (QObject *parent) : QObject(parent),
   setDatabasesPaths();
 }
 
+void CoreManager::init () {
+  if (!m_instance) {
+    m_instance = new CoreManager();
+
+    m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
+    m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
+    m_instance->m_unregistered_sip_addresses_model = new UnregisteredSipAddressesModel(m_instance);
+  }
+}
+
 VcardModel *CoreManager::createDetachedVcardModel () {
   return new VcardModel(linphone::Factory::get()->createVcard());
 }
