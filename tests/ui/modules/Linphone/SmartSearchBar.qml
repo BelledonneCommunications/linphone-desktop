@@ -13,9 +13,8 @@ SearchBox {
   delegate: Rectangle {
     id: searchBoxEntry
 
-    width: parent.width
     height: searchBox.entryHeight
-    color: '#FFFFFF'
+    width: parent.width
 
     Rectangle {
       id: indicator
@@ -85,9 +84,13 @@ SearchBox {
 
           ActionButton {
             icon: 'chat'
-            onClicked: window.setView('Conversation', {
-              sipAddress: $entry.sipAddress || $entry.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
-            })
+            onClicked: {
+              searchBox.hideMenu()
+              window.ensureCollapsed()
+              window.setView('Conversation', {
+                sipAddress: $entry.sipAddress || $entry.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
+              })
+            }
           }
         }
       }

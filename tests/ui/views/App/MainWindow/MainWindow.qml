@@ -14,7 +14,19 @@ ApplicationWindow {
   id: window
 
   function setView (view, props) {
+    if (view === 'Home' || view === 'Contacts') {
+      menu.setSelectedEntry(view === 'Home' ? 0 : 1)
+      timeline.resetSelectedEntry()
+    } else if (view === 'Conversation') {
+      menu.resetSelectedEntry()
+      timeline.setSelectedEntry(props.sipAddress)
+    }
+
     contentLoader.setSource(view + '.qml', props || {})
+  }
+
+  function ensureCollapsed () {
+    collapse.setCollapsed(true)
   }
 
   // ---------------------------------------------------------------------------
@@ -46,6 +58,8 @@ ApplicationWindow {
       spacing: MainWindowStyle.toolBar.spacing
 
       Collapse {
+        id: collapse
+
         Layout.fillHeight: parent.height
         target: window
         targetHeight: MainWindowStyle.minimumHeight
@@ -123,15 +137,7 @@ ApplicationWindow {
           icon: 'contact'
         }]
 
-        onEntrySelected: {
-          timeline.resetSelectedItem()
-
-          if (entry === 0) {
-            setView('Home')
-          } else if (entry === 1) {
-            setView('Contacts')
-          }
-        }
+        onEntrySelected: !entry ? setView('Home') : setView('Contacts')
       }
 
       // History.
@@ -142,10 +148,7 @@ ApplicationWindow {
         Layout.fillWidth: true
         model: TimelineModel
 
-        onEntrySelected: {
-          menu.resetSelectedEntry()
-          setView('Conversation', { sipAddress: entry })
-        }
+        onEntrySelected: setView('Conversation', { sipAddress: entry })
       }
     }
 

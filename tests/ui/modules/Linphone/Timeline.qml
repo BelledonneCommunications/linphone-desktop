@@ -17,7 +17,18 @@ ColumnLayout {
 
   // ---------------------------------------------------------------------------
 
-  function resetSelectedItem () {
+  function setSelectedEntry (sipAddress) {
+    var n = model.rowCount()
+
+    for (var i = 0; i < n; i++) {
+      if (sipAddress === model.data(model.index(i, 0)).sipAddress) {
+        view.currentIndex = i
+        return
+      }
+    }
+  }
+
+  function resetSelectedEntry () {
     view.currentIndex = -1
   }
 
@@ -25,12 +36,15 @@ ColumnLayout {
 
   spacing: 0
 
+  // ---------------------------------------------------------------------------
+  // Legend.
+  // ---------------------------------------------------------------------------
+
   Rectangle {
     Layout.fillWidth: true
     Layout.preferredHeight: TimelineStyle.legend.height
     color: TimelineStyle.legend.backgroundColor
 
-    // Legend.
     Row {
       anchors {
         fill: parent
@@ -55,7 +69,10 @@ ColumnLayout {
     }
   }
 
+  // ---------------------------------------------------------------------------
   // History.
+  // ---------------------------------------------------------------------------
+
   ScrollableListView {
     id: view
 
