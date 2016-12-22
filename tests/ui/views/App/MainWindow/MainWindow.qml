@@ -145,7 +145,7 @@ ApplicationWindow {
         maxMenuHeight: MainWindowStyle.searchBox.maxHeight
         placeholderText: qsTr('mainSearchBarPlaceholder')
 
-        model: SmartSearchBarModel
+        model: SmartSearchBarProxyModel {}
       }
     }
   }

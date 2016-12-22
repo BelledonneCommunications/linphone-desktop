@@ -12,7 +12,7 @@
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/sip-addresses/UnregisteredSipAddressesProxyModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
-#include "../components/smart-search-bar/SmartSearchBarModel.hpp"
+#include "../components/smart-search-bar/SmartSearchBarProxyModel.hpp"
 
 #include "App.hpp"
 
@@ -139,17 +139,12 @@ void App::registerTypes () {
     }
   );
 
-  qmlRegisterSingletonType<SmartSearchBarModel>(
-    "Linphone", 1, 0, "SmartSearchBarModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new SmartSearchBarModel();
-    }
-  );
   qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
   qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
   qmlRegisterType<UnregisteredSipAddressesProxyModel>("Linphone", 1, 0, "UnregisteredSipAddressesProxyModel");
+  qmlRegisterType<SmartSearchBarProxyModel>("Linphone", 1, 0, "SmartSearchBarProxyModel");
 
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 }

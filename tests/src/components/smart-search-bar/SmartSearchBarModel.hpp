@@ -14,14 +14,14 @@ class SmartSearchBarModel : public QAbstractListModel {
 public:
   SmartSearchBarModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
 
-  ~SmartSearchBarModel () = default;
+  virtual ~SmartSearchBarModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role) const override;
 
-private:
+protected:
   ContactsListProxyModel m_contacts;
   UnregisteredSipAddressesProxyModel m_sip_addresses;
 };

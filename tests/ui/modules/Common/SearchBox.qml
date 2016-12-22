@@ -70,7 +70,7 @@ Item {
       Keys.onEscapePressed: searchBox.hideMenu()
 
       onActiveFocusChanged: activeFocus && searchBox.showMenu()
-      onTextChanged: _filter()
+      onTextChanged: _filter(text)
     }
 
     // Wrap the search box menu in a window.

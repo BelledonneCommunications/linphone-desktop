@@ -27,10 +27,14 @@ bool UnregisteredSipAddressesProxyModel::filterAcceptsRow (int source_row, const
 }
 
 bool UnregisteredSipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  return computeStringWeight(
-    sourceModel()->data(left).toMap()["sipAddress"].toString()
-  ) > computeStringWeight(
-    sourceModel()->data(right).toMap()["sipAddress"].toString()
+  QString sip_address_a = sourceModel()->data(left).toMap()["sipAddress"].toString();
+  QString sip_address_b = sourceModel()->data(right).toMap()["sipAddress"].toString();
+
+  int weight_a = computeStringWeight(sip_address_a);
+  int weight_b = computeStringWeight(sip_address_b);
+
+  return weight_a > weight_b || (
+    weight_a == weight_b && sip_address_a >= sip_address_b
   );
 }
 

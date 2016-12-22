@@ -9,10 +9,10 @@
 // =============================================================================
 
 class ContactsListModel : public QAbstractListModel {
-  Q_OBJECT;
-
   friend class ContactsListProxyModel;
   friend class SipAddressesModel;
+
+  Q_OBJECT;
 
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
