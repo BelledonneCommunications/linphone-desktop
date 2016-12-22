@@ -178,6 +178,14 @@
         <source>locality</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>abortEditionTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>abortEditionDescriptionText</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>

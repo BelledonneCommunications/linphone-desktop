@@ -13,20 +13,62 @@ import App.Styles 1.0
 ApplicationWindow {
   id: window
 
+  property string _currentView: ''
+  property var _lockedInfo
+
+  // ---------------------------------------------------------------------------
+
+  function lockView (info) {
+    _lockedInfo = info
+  }
+
+  function unlockView () {
+    _lockedInfo = undefined
+  }
+
   function setView (view, props) {
+    if (!_lockedInfo) {
+      _setView(view, props)
+      return
+    }
+
+    Utils.openConfirmDialog(window, {
+      descriptionText: _lockedInfo.descriptionText,
+      exitHandler: function (status) {
+        if (status) {
+          unlockView()
+          _setView(view, props)
+        } else {
+          _updateSelectedEntry(_currentView, props)
+        }
+      },
+      title: _lockedInfo.title
+    })
+  }
+
+  function ensureCollapsed () {
+    collapse.setCollapsed(true)
+  }
+
+  // ---------------------------------------------------------------------------
+
+  function _updateSelectedEntry (view, props) {
     if (view === 'Home' || view === 'Contacts') {
       menu.setSelectedEntry(view === 'Home' ? 0 : 1)
       timeline.resetSelectedEntry()
     } else if (view === 'Conversation') {
       menu.resetSelectedEntry()
       timeline.setSelectedEntry(props.sipAddress)
+    } else if (view === 'ContactEdit') {
+      menu.resetSelectedEntry()
+      timeline.resetSelectedEntry()
     }
-
-    contentLoader.setSource(view + '.qml', props || {})
   }
 
-  function ensureCollapsed () {
-    collapse.setCollapsed(true)
+  function _setView (view, props) {
+    _updateSelectedEntry(view, props)
+    _currentView = view
+    contentLoader.setSource(view + '.qml', props || {})
   }
 
   // ---------------------------------------------------------------------------

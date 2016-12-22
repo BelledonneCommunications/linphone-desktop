@@ -25,11 +25,17 @@ ColumnLayout  {
   function _editContact () {
     _contact.startEdit()
     _edition = true
+
+    window.lockView({
+      title: qsTr('abortEditionTitle'),
+      descriptionText: qsTr('abortEditionDescriptionText')
+    })
   }
 
   function _save () {
     if (_contact) {
       _contact.endEdit()
+      window.unlockView()
     } else {
       _contact = ContactsListModel.addContact(_vcard)
     }
@@ -41,6 +47,7 @@ ColumnLayout  {
     if (_contact) {
       _contact.abortEdit()
       _edition = false
+      window.unlockView()
     } else {
       window.setView('Contacts')
     }

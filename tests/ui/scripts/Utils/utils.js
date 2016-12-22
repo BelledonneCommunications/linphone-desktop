@@ -105,11 +105,11 @@ function getTopParent (object, useFakeParent) {
 function openConfirmDialog (parent, options) {
   return openWindow(
     'import QtQuick 2.7;' +
-      'import Common 1.0;' +
-      'ConfirmDialog {' +
+    'import Common 1.0;' +
+    'ConfirmDialog {' +
       'descriptionText: \'' + escapeQuotes(options.descriptionText) + '\';' +
       'title: \'' + escapeQuotes(options.title) + '\'' +
-      '}',
+    '}',
     parent, {
       isString: true,
       exitHandler: options.exitHandler
