@@ -39,7 +39,6 @@ private:
 
   void setConnectedFilter (bool use_connected_filter);
 
-  ContactsListModel *m_list;
   QString m_filter;
   bool m_use_connected_filter = false;
 

@@ -40,7 +40,7 @@ QHash<int, QByteArray> ContactsListModel::roleNames () const {
 QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
-  if (row < 0 || row >= m_list.count())
+  if (!index.isValid() || row < 0 || row >= m_list.count())
     return QVariant();
 
   if (role == Qt::DisplayRole)

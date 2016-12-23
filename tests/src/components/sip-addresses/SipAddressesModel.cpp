@@ -82,7 +82,7 @@ QHash<int, QByteArray> SipAddressesModel::roleNames () const {
 QVariant SipAddressesModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
-  if (row < 0 || row >= m_refs.count())
+  if (!index.isValid() || row < 0 || row >= m_refs.count())
     return QVariant();
 
   if (role == Qt::DisplayRole)

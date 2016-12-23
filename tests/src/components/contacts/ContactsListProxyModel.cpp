@@ -32,13 +32,7 @@ const QRegExp ContactsListProxyModel::m_search_separators("^[^_.-;@ ][_.-;@ ]");
 // -----------------------------------------------------------------------------
 
 ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  m_list = CoreManager::getInstance()->getContactsListModel();
-
-  setSourceModel(m_list);
-
-  for (const ContactModel *contact : m_list->m_list)
-    m_weights[contact] = 0;
-
+  setSourceModel(CoreManager::getInstance()->getContactsListModel());
   sort(0);
 }
 

@@ -9,7 +9,6 @@
 // =============================================================================
 
 class ContactsListModel : public QAbstractListModel {
-  friend class ContactsListProxyModel;
   friend class SipAddressesModel;
 
   Q_OBJECT;
