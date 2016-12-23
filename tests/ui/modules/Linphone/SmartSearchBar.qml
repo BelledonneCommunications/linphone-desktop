@@ -14,7 +14,7 @@ SearchBox {
     id: searchBoxEntry
 
     height: searchBox.entryHeight
-    width: parent.width
+    width: parent ? parent.width : 0
 
     Rectangle {
       id: indicator
@@ -47,9 +47,9 @@ SearchBox {
           id: avatar
           Layout.preferredHeight: 30
           Layout.preferredWidth: 30
-          image: $entry.vcard && $entry.vcard.avatar
-          presenceLevel: $entry.presenceLevel != null ? $entry.presenceLevel : -1
-          username: LinphoneUtils.getContactUsername($entry.sipAddress || $entry)
+          image: $entry.contact && $entry.contact.vcard.avatar
+          presenceLevel: $entry.contact ? $entry.contact.presenceLevel : -1
+          username: LinphoneUtils.getContactUsername($entry.contact || $entry.sipAddress)
         }
 
         Text {
@@ -62,7 +62,7 @@ SearchBox {
             pointSize: 9
           }
 
-          text: $entry.vcard ? $entry.vcard.username : $entry.sipAddress
+          text: $entry.contact ? $entry.contact.vcard.username : $entry.sipAddress
         }
 
         // ---------------------------------------------------------------------

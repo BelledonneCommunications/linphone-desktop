@@ -1,29 +1,33 @@
 #ifndef SMART_SEARCH_BAR_MODEL_H_
 #define SMART_SEARCH_BAR_MODEL_H_
 
-#include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 
-#include "../contacts/ContactsListProxyModel.hpp"
-#include "../sip-addresses/UnregisteredSipAddressesProxyModel.hpp"
+#include "../sip-addresses/SipAddressesModel.hpp"
 
 // =============================================================================
 
-class SmartSearchBarModel : public QAbstractListModel {
+class SmartSearchBarModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
 public:
-  SmartSearchBarModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
-
-  virtual ~SmartSearchBarModel () = default;
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
+  SmartSearchBarModel (QObject *parent = Q_NULLPTR);
+  ~SmartSearchBarModel () = default;
 
   QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role) const override;
+
+public slots:
+  void setFilter (const QString &pattern);
 
 protected:
-  ContactsListProxyModel m_contacts;
-  UnregisteredSipAddressesProxyModel m_sip_addresses;
+  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
+  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+
+private:
+  int computeStringWeight (const QString &string) const;
+
+  QString m_filter;
+  static const QRegExp m_search_separators;
 };
 
 #endif // SMART_SEARCH_BAR_MODEL_H_

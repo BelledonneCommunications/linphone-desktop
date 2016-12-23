@@ -67,10 +67,7 @@ set(SOURCES
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/components/sip-addresses/SipAddressesModel.cpp
-  src/components/sip-addresses/UnregisteredSipAddressesModel.cpp
-  src/components/sip-addresses/UnregisteredSipAddressesProxyModel.cpp
   src/components/smart-search-bar/SmartSearchBarModel.cpp
-  src/components/smart-search-bar/SmartSearchBarProxyModel.cpp
   src/components/timeline/TimelineModel.cpp
   src/main.cpp
 )
@@ -94,10 +91,7 @@ set(HEADERS
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/components/sip-addresses/SipAddressesModel.hpp
-  src/components/sip-addresses/UnregisteredSipAddressesModel.hpp
-  src/components/sip-addresses/UnregisteredSipAddressesProxyModel.hpp
   src/components/smart-search-bar/SmartSearchBarModel.hpp
-  src/components/smart-search-bar/SmartSearchBarProxyModel.hpp
   src/components/timeline/TimelineModel.hpp
   src/utils.hpp
 )

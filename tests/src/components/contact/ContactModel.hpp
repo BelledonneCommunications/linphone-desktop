@@ -15,6 +15,7 @@ class ContactModel : public QObject {
 
   friend class ContactsListModel;
   friend class ContactsListProxyModel;
+  friend class SmartSearchBarModel;
 
 public:
   ContactModel (std::shared_ptr<linphone::Friend> linphone_friend);

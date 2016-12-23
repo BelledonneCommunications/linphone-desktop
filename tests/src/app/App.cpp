@@ -10,9 +10,8 @@
 #include "../components/core/CoreManager.hpp"
 #include "../components/notifier/Notifier.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
-#include "../components/sip-addresses/UnregisteredSipAddressesProxyModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
-#include "../components/smart-search-bar/SmartSearchBarProxyModel.hpp"
+#include "../components/smart-search-bar/SmartSearchBarModel.hpp"
 
 #include "App.hpp"
 
@@ -143,8 +142,7 @@ void App::registerTypes () {
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
   qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
-  qmlRegisterType<UnregisteredSipAddressesProxyModel>("Linphone", 1, 0, "UnregisteredSipAddressesProxyModel");
-  qmlRegisterType<SmartSearchBarProxyModel>("Linphone", 1, 0, "SmartSearchBarProxyModel");
+  qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
 
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 }

@@ -18,8 +18,10 @@ QHash<int, QByteArray> TimelineModel::roleNames () const {
 // -----------------------------------------------------------------------------
 
 bool TimelineModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
-  QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-  return index.data().toMap().contains("timestamp");
+  const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
+  const QVariantMap &map = index.data().toMap();
+
+  return map.contains("timestamp");
 }
 
 bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {

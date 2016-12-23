@@ -35,7 +35,6 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
   m_list = CoreManager::getInstance()->getContactsListModel();
 
   setSourceModel(m_list);
-  setDynamicSortFilter(false);
 
   for (const ContactModel *contact : m_list->m_list)
     m_weights[contact] = 0;
@@ -43,11 +42,20 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
   sort(0);
 }
 
+// -----------------------------------------------------------------------------
+
+void ContactsListProxyModel::setFilter (const QString &pattern) {
+  m_filter = pattern;
+  invalidate();
+}
+
+// -----------------------------------------------------------------------------
+
 bool ContactsListProxyModel::filterAcceptsRow (
   int source_row,
   const QModelIndex &source_parent
 ) const {
-  QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+  const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
   const ContactModel *contact = index.data().value<ContactModel *>();
 
   m_weights[contact] = static_cast<unsigned int>(computeContactWeight(*contact));
@@ -79,7 +87,7 @@ float ContactsListProxyModel::computeStringWeight (const QString &string, float 
   int offset = -1;
 
   // Search pattern.
-  while ((index = filterRegExp().indexIn(string, index + 1)) != -1) {
+  while ((index = string.indexOf(m_filter, index + 1, Qt::CaseInsensitive)) != -1) {
     // Search n chars between one separator and index.
     int tmp_offset = index - string.lastIndexOf(m_search_separators, index) - 1;
 

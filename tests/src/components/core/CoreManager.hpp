@@ -4,7 +4,6 @@
 #include "../contact/VcardModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
-#include "../sip-addresses/UnregisteredSipAddressesModel.hpp"
 
 // =============================================================================
 
@@ -30,10 +29,6 @@ public:
     return m_sip_addresses_model;
   }
 
-  UnregisteredSipAddressesModel *getUnregisteredSipAddressesModel () {
-    return m_unregistered_sip_addresses_model;
-  }
-
   static void init ();
 
   static CoreManager *getInstance () {
@@ -53,7 +48,6 @@ private:
   std::shared_ptr<linphone::Core> m_core;
   ContactsListModel *m_contacts_list_model;
   SipAddressesModel *m_sip_addresses_model;
-  UnregisteredSipAddressesModel *m_unregistered_sip_addresses_model;
 
   static CoreManager *m_instance;
 };

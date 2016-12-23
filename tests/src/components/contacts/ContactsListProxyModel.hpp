@@ -23,10 +23,7 @@ public:
   ~ContactsListProxyModel () = default;
 
 public slots:
-  void setFilter (const QString &pattern) {
-    setFilterFixedString(pattern);
-    invalidate();
-  }
+  void setFilter (const QString &pattern);
 
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
@@ -43,6 +40,7 @@ private:
   void setConnectedFilter (bool use_connected_filter);
 
   ContactsListModel *m_list;
+  QString m_filter;
   bool m_use_connected_filter = false;
 
   // It's just a cache to save values computed by `filterAcceptsRow`

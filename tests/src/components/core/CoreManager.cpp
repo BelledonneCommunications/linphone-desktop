@@ -19,7 +19,6 @@ void CoreManager::init () {
 
     m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
     m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
-    m_instance->m_unregistered_sip_addresses_model = new UnregisteredSipAddressesModel(m_instance);
   }
 }
 
