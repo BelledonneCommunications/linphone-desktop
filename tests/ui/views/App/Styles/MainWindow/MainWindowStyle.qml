@@ -3,7 +3,7 @@ import QtQuick 2.7
 
 import Common 1.0
 
-// ===================================================================
+// =============================================================================
 
 QtObject {
   property int minimumHeight: 480
@@ -30,7 +30,7 @@ QtObject {
   }
 
   property QtObject searchBox: QtObject {
-    property int entryHeight: 50
+    property int entryHeight: 51
     property int maxHeight: 300 // See Hick's law for good choice.
   }
 

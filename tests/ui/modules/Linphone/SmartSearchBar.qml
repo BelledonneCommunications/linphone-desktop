@@ -10,6 +10,12 @@ import LinphoneUtils 1.0
 SearchBox {
   id: searchBox
 
+  header: Rectangle {
+    color: '#4B5964'
+    height: 40
+    width: 10
+  }
+
   delegate: Rectangle {
     id: searchBoxEntry
 
@@ -45,24 +51,23 @@ SearchBox {
 
         Avatar {
           id: avatar
+
           Layout.preferredHeight: 30
           Layout.preferredWidth: 30
+
           image: $entry.contact && $entry.contact.vcard.avatar
           presenceLevel: $entry.contact ? $entry.contact.presenceLevel : -1
           username: LinphoneUtils.getContactUsername($entry.contact || $entry.sipAddress)
         }
 
-        Text {
+        ContactDescription {
+          Layout.fillHeight: true
           Layout.fillWidth: true
-          color: '#4B5964'
-          elide: Text.ElideRight
 
-          font {
-            bold: true
-            pointSize: 9
-          }
-
-          text: $entry.contact ? $entry.contact.vcard.username : $entry.sipAddress
+          sipAddress: $entry.sipAddress
+          sipAddressColor: '#A1A1A1'
+          username: avatar.username
+          usernameColor: '#4B5964'
         }
 
         // ---------------------------------------------------------------------
@@ -88,12 +93,18 @@ SearchBox {
               searchBox.hideMenu()
               window.ensureCollapsed()
               window.setView('Conversation', {
-                sipAddress: $entry.sipAddress || $entry.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
+                sipAddress: $entry.sipAddress
               })
             }
           }
         }
       }
+    }
+
+    Rectangle {
+      color: '#CBCBCB'
+      height: 1
+      width: parent.width
     }
 
     // -------------------------------------------------------------------------
