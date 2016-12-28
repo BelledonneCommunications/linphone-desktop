@@ -57,7 +57,7 @@ ColumnLayout  {
 
         Layout.preferredHeight: ConversationStyle.bar.avatarSize
         Layout.preferredWidth: ConversationStyle.bar.avatarSize
-        image: _contact.vcard.avatar
+        image: _contact.vcard ? _contact.vcard.avatar : ''
         presenceLevel: _contact.presenceLevel || -1
         username: LinphoneUtils.getContactUsername(_contact)
       }
