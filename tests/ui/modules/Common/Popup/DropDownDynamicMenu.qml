@@ -1,3 +1,5 @@
+import QtQuick 2.7
+
 import Utils 1.0
 
 // =============================================================================
@@ -11,12 +13,17 @@ AbstractDropDownMenu {
   property int maxMenuHeight
 
   function _computeHeight () {
-    var list = _content[0]
+    Utils.assert(_content != null && _content.length > 0, '`_content` cannot be null and must exists.')
 
+    var list = _content[0]
     Utils.assert(list != null, 'No list found.')
     Utils.assert(Utils.qmlTypeof(list, 'QQuickListView'), 'No list view parameter.')
 
     var height = list.count * entryHeight
+
+    if (list.headerPositioning === ListView.OverlayHeader) {
+      height += list.headerItem.height
+    }
 
     return (maxMenuHeight !== undefined && height > maxMenuHeight)
       ? maxMenuHeight

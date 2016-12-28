@@ -2,7 +2,7 @@ import QtGraphicalEffects 1.0
 
 import Common.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 DropShadow {
   color: PopupStyle.shadow.color

@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 // =============================================================================
 
@@ -13,7 +12,12 @@ SearchBox {
   header: Rectangle {
     color: '#4B5964'
     height: 40
-    width: 10
+    width: parent.width
+
+    MouseArea {
+      anchors.fill: parent
+      hoverEnabled: true
+    }
   }
 
   delegate: Rectangle {
@@ -40,34 +44,18 @@ SearchBox {
       RowLayout {
         anchors {
           fill: parent
-          leftMargin: 22
           rightMargin: 10
         }
-        spacing: 15
+        spacing: 0
 
         // ---------------------------------------------------------------------
         // Contact or address info
         // ---------------------------------------------------------------------
 
-        Avatar {
-          id: avatar
-
-          Layout.preferredHeight: 30
-          Layout.preferredWidth: 30
-
-          image: $entry.contact && $entry.contact.vcard.avatar
-          presenceLevel: $entry.contact ? $entry.contact.presenceLevel : -1
-          username: LinphoneUtils.getContactUsername($entry.contact || $entry.sipAddress)
-        }
-
-        ContactDescription {
+        Contact {
           Layout.fillHeight: true
           Layout.fillWidth: true
-
           sipAddress: $entry.sipAddress
-          sipAddressColor: '#A1A1A1'
-          username: avatar.username
-          usernameColor: '#4B5964'
         }
 
         // ---------------------------------------------------------------------

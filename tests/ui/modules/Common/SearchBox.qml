@@ -12,7 +12,7 @@ import Utils 1.0
 Item {
   id: searchBox
 
-  property alias header: menu.header
+  property alias header: list.header
 
   property alias delegate: list.delegate
   property alias entryHeight: menu.entryHeight
@@ -105,6 +105,7 @@ Item {
           id: list
 
           anchors.fill: parent
+          headerPositioning: header ? ListView.OverlayHeader : ListView.InlineFooter
         }
       }
     }

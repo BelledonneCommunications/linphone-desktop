@@ -4,9 +4,9 @@ import Common 1.0
 import Common.Styles 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 // Low component to display a list/menu in a popup.
-// ===================================================================
+// =============================================================================
 
 Item {
   id: menu
@@ -27,7 +27,7 @@ Item {
   signal menuClosed
   signal menuOpened
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   function isOpen () {
     return _isOpen
@@ -58,7 +58,7 @@ Item {
     throw new Error('Virtual method must be implemented.')
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   implicitHeight: 0
   opacity: 0
@@ -74,7 +74,7 @@ Item {
     }
   }
 
-  // Block clicks, wheel... below menu.
+  // Handle clicks, wheel... below menu.
   MouseArea {
     anchors.fill: parent
     hoverEnabled: true
@@ -100,14 +100,13 @@ Item {
     enabled: parent.visible
 
     onPressed: {
-      if (launcher != null && pointIsInItem(launcher)) {
-        return
+      if (launcher == null || !pointIsInItem(launcher)) {
+        hideMenu()
       }
-      hideMenu()
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   states: State {
     name: 'opened'
