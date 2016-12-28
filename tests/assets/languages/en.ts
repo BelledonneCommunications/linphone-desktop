@@ -418,11 +418,11 @@
     <name>NewCall</name>
     <message>
         <source>newCallTitle</source>
-        <translation>New call</translation>
+        <translation type="vanished">New call</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>CANCEL</translation>
+        <translation type="vanished">CANCEL</translation>
     </message>
 </context>
 <context>
@@ -483,7 +483,7 @@
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>
-        <translation>Search contact or enter SIP address</translation>
+        <translation type="vanished">Search contact or enter SIP address</translation>
     </message>
 </context>
 <context>

@@ -406,11 +406,11 @@
     <name>NewCall</name>
     <message>
         <source>newCallTitle</source>
-        <translation>Nouvel appel</translation>
+        <translation type="vanished">Nouvel appel</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>ANNULER</translation>
+        <translation type="vanished">ANNULER</translation>
     </message>
 </context>
 <context>
@@ -471,7 +471,7 @@
     <name>SelectContact</name>
     <message>
         <source>contactSearch</source>
-        <translation>Rechercher un contact ou entrer une adresse SIP</translation>
+        <translation type="vanished">Rechercher un contact ou entrer une adresse SIP</translation>
     </message>
 </context>
 <context>

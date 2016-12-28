@@ -1,10 +1,10 @@
-# ====================================================================
+# ==============================================================================
 # Linphone's components to export.
-# ====================================================================
+# ==============================================================================
 
 module Linphone
 
-# Components ---------------------------------------------------------
+# Components -------------------------------------------------------------------
 
 # Account
 AccountStatus       1.0 Account/AccountStatus.qml
@@ -23,9 +23,6 @@ ContactDescription  1.0 Contact/ContactDescription.qml
 # Presence
 PresenceLevel       1.0 Presence/PresenceLevel.qml
 PresenceString      1.0 Presence/PresenceString.qml
-
-# Select
-SelectContact       1.0 Select/SelectContact.qml
 
 # SmartSearchBar
 SmartSearchBar      1.0 SmartSearchBar.qml

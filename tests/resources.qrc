@@ -213,7 +213,6 @@
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
-    <file>ui/modules/Linphone/Select/SelectContact.qml</file>
     <file>ui/modules/Linphone/SmartSearchBar.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
@@ -242,7 +241,6 @@
     <file>ui/views/App/MainWindow/Home.qml</file>
     <file>ui/views/App/MainWindow/MainWindow.qml</file>
     <file>ui/views/App/ManageAccounts.qml</file>
-    <file>ui/views/App/NewCall.qml</file>
     <file>ui/views/App/qmldir</file>
     <file>ui/views/App/Styles/Calls/StartingCallStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/ContactEditStyle.qml</file>
