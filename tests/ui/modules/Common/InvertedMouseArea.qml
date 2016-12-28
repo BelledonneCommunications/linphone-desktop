@@ -3,21 +3,25 @@ import QtQuick 2.7
 import Common 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 // Helper to handle button click outside an item.
-// ===================================================================
+// =============================================================================
 
 Item {
   id: item
 
+  // ---------------------------------------------------------------------------
+
   property bool _mouseAlwaysOutside
   property var _mouseArea: null
+
+  // ---------------------------------------------------------------------------
 
   // When emitted, returns a function to test if the click
   // is on a specific item. It takes only a item parameter.
   signal pressed (var pointIsInItem)
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   function _createMouseArea () {
     var parent = Utils.getTopParent(item, true)
@@ -41,7 +45,7 @@ Item {
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   // It's necessary to use a `enabled` variable.
   // See: http://doc.qt.io/qt-5/qml-qtqml-component.html#completed-signal

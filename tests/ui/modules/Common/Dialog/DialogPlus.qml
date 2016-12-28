@@ -4,9 +4,9 @@ import QtQuick.Window 2.2
 
 import Common.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 // Helper to build quickly dialogs.
-// ===================================================================
+// =============================================================================
 
 Window {
   property alias buttons: buttons.data // Optionnal.
@@ -16,7 +16,11 @@ Window {
   default property alias _content: content.data // Required.
   property bool _disableExitStatus
 
+  // ---------------------------------------------------------------------------
+
   signal exitStatus (int status)
+
+  // ---------------------------------------------------------------------------
 
   // Derived class must use this function instead of close.
   // Destroy the component and send signal to caller.
@@ -37,14 +41,12 @@ Window {
     anchors.fill: parent
     spacing: 0
 
-    // Description.
     DialogDescription {
       id: description
 
       Layout.fillWidth: true
     }
 
-    // Content.
     Item {
       id: content
 
@@ -52,7 +54,6 @@ Window {
       Layout.fillWidth: true
     }
 
-    // Buttons.
     Row {
       id: buttons
 

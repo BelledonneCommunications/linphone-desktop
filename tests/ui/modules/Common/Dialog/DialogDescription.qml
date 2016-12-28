@@ -2,9 +2,9 @@ import QtQuick 2.7
 
 import Common.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 // Description content used by dialogs.
-// ===================================================================
+// =============================================================================
 
 Item {
   property alias text: description.text
@@ -17,9 +17,12 @@ Item {
   Text {
     id: description
 
-    anchors.fill: parent
-    anchors.leftMargin: DialogStyle.leftMargin
-    anchors.rightMargin: DialogStyle.rightMargin
+    anchors {
+      fill: parent
+      leftMargin: DialogStyle.leftMargin
+      rightMargin: DialogStyle.rightMargin
+    }
+
     color: DialogStyle.description.color
     font.pointSize: DialogStyle.description.fontSize
     verticalAlignment: Text.AlignVCenter

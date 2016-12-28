@@ -7,13 +7,18 @@ import Common.Styles 1.0
 Row {
   id: item
 
-  property var texts
+  // ---------------------------------------------------------------------------
 
   property int selectedButton: 0
+  property var texts
+
+  // ---------------------------------------------------------------------------
 
   // Emitted when the selected button is changed.
   // Gives the selected button id.
   signal clicked (int button)
+
+  // ---------------------------------------------------------------------------
 
   spacing: ExclusiveButtonsStyle.buttonsSpacing
 

@@ -10,10 +10,14 @@ import Common.Styles 1.0
 Item {
   id: collapse
 
+  // ---------------------------------------------------------------------------
+
   property alias target: targetChanges.target
   property int targetHeight
 
   property bool _collapsed: false
+
+  // ---------------------------------------------------------------------------
 
   signal collapsed (bool collapsed)
 

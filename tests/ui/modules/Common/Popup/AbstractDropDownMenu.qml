@@ -11,6 +11,8 @@ import Utils 1.0
 Item {
   id: menu
 
+  // ---------------------------------------------------------------------------
+
   // Optionnal parameter, if defined and if a click is detected
   // on it, menu is not closed.
   property var launcher
@@ -23,6 +25,8 @@ Item {
 
   default property alias _content: content.data
   property bool _isOpen: false
+
+  // ---------------------------------------------------------------------------
 
   signal menuClosed
   signal menuOpened

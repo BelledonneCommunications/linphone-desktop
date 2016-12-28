@@ -2,7 +2,7 @@
 
 module Common.Styles
 
-# Components styles --------------------------------------------------
+# Components styles ------------------------------------------------------------
 
 singleton CaterpillarAnimationStyle 1.0 Animations/CaterpillarAnimationStyle.qml
 

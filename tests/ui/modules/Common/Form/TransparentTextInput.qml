@@ -18,6 +18,8 @@ Item {
   property bool isInvalid: false
   property int padding: TransparentTextInputStyle.padding
 
+  // ---------------------------------------------------------------------------
+
   signal editingFinished
 
   // ---------------------------------------------------------------------------

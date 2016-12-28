@@ -12,6 +12,8 @@ import Utils 1.0
 Item {
   id: searchBox
 
+  // ---------------------------------------------------------------------------
+
   readonly property alias filter: searchField.text
 
   property alias delegate: list.delegate
@@ -25,6 +27,8 @@ Item {
   property alias placeholderText: searchField.placeholderText
 
   property bool _isOpen: false
+
+  // ---------------------------------------------------------------------------
 
   signal menuClosed
   signal menuOpened

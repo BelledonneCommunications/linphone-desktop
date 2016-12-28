@@ -4,12 +4,16 @@ import QtQuick.Dialogs 1.2
 
 import Common.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Item {
+  property alias placeholderText: textArea.placeholderText
+
+  // ---------------------------------------------------------------------------
+
   signal dropped (var files)
 
-  property alias placeholderText: textArea.placeholderText
+  // ---------------------------------------------------------------------------
 
   function _emitFiles (files) {
     // Filtering files, other urls are forbidden.
@@ -27,6 +31,8 @@ Item {
       dropped(files)
     }
   }
+
+  // ---------------------------------------------------------------------------
 
   // Text area.
   Flickable {
@@ -80,7 +86,7 @@ Item {
     }
   }
 
-  // Hover style.
+  // Hovered style.
   Rectangle {
     id: hoverContent
 

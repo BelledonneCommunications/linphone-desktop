@@ -4,9 +4,9 @@ import QtQuick.Controls 2.0 as Controls
 import Common 1.0
 import Common.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 // A classic TextInput which supports an icon attribute.
-// ===================================================================
+// =============================================================================
 
 Controls.TextField {
   property alias icon: icon.icon

@@ -10,6 +10,8 @@ import Utils 1.0
 RowLayout {
   id: listForm
 
+  // ---------------------------------------------------------------------------
+
   property alias placeholder: placeholder.text
   property alias title: text.text
   property bool readOnly: false
@@ -17,6 +19,8 @@ RowLayout {
   property var defaultData: []
   property var minValues
   readonly property int count: values.count
+
+  // ---------------------------------------------------------------------------
 
   signal changed (int index, string defaultValue, string newValue)
   signal removed (int index, string value)

@@ -4,17 +4,10 @@ import QtQuick 2.7
 // =============================================================================
 
 QtObject {
-  property color a: 'transparent'
-
-  property color q: '#E6E6E6'
-  property color d:   '#5A585B'
-
-  // -----------------------------------------------------------------
-  // OK.
-  // -----------------------------------------------------------------
-
+  property color a:   'transparent'
   property color b:   '#5E5E5F'
   property color c:   '#CBCBCB'
+  property color d:   '#5A585B'
   property color e:   '#F3F3F3'
   property color f:   '#E8E8E8'
   property color g:   '#6B7A86'
@@ -32,6 +25,7 @@ QtObject {
   property color n:   '#C0C0C0'
   property color o:   '#232323'
   property color p:   '#E2E9EF'
+  property color q:   '#E6E6E6'
   property color r:   '#595759'
   property color s:   '#D64D00'
   property color t:   '#FF8600'

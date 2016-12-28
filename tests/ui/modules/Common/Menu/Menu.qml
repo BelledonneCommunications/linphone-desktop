@@ -11,11 +11,15 @@ import Common.Styles 1.0
 Rectangle {
   id: menu
 
+  // ---------------------------------------------------------------------------
+
   property int entryHeight
   property int entryWidth
   property var entries
 
   property int _selectedEntry: 0
+
+  // ---------------------------------------------------------------------------
 
   signal entrySelected (int entry)
 

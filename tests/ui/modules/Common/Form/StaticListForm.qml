@@ -24,30 +24,30 @@ RowLayout {
 
   // ---------------------------------------------------------------------------
 
-	spacing: 0
+  spacing: 0
 
-	Text {
-		id: text
+  Text {
+    id: text
 
-		Layout.leftMargin: ListFormStyle.titleArea.iconSize + ListFormStyle.titleArea.spacing
-		Layout.preferredHeight: ListFormStyle.lineHeight
-		Layout.preferredWidth: ListFormStyle.titleArea.text.width
     Layout.alignment: Qt.AlignTop
+    Layout.leftMargin: ListFormStyle.titleArea.iconSize + ListFormStyle.titleArea.spacing
+    Layout.preferredHeight: ListFormStyle.lineHeight
+    Layout.preferredWidth: ListFormStyle.titleArea.text.width
 
-		color: ListFormStyle.titleArea.text.color
-		elide: Text.ElideRight
+    color: ListFormStyle.titleArea.text.color
+    elide: Text.ElideRight
 
-		font {
-			bold: true
-			pointSize: ListFormStyle.titleArea.text.fontSize
-		}
+    font {
+      bold: true
+      pointSize: ListFormStyle.titleArea.text.fontSize
+    }
 
-		verticalAlignment: Text.AlignVCenter
-	}
+    verticalAlignment: Text.AlignVCenter
+  }
 
-	ColumnLayout {
-		Layout.fillWidth: true
-		spacing: 0
+  ColumnLayout {
+    Layout.fillWidth: true
+    spacing: 0
 
     Repeater {
       model: form.fields

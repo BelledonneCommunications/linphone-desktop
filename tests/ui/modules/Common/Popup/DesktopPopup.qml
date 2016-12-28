@@ -8,6 +8,8 @@ import Common.Styles 1.0
 Item {
   id: wrapper
 
+  // ---------------------------------------------------------------------------
+
   property alias popupX: popup.x
   property alias popupY: popup.y
 
@@ -18,6 +20,8 @@ Item {
 
   default property alias _content: content.data
   property bool _isOpen: false
+
+  // ---------------------------------------------------------------------------
 
   function show () {
     _isOpen = true
