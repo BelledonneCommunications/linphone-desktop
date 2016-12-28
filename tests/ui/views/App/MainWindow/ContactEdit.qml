@@ -86,6 +86,15 @@ ColumnLayout  {
 
     if (!_contact) {
       _vcard = CoreManager.createDetachedVcardModel()
+
+      if (sipAddress && sipAddress.length > 0) {
+        _vcard.addSipAddress(
+          Utils.startsWith(sipAddress, 'sip:')
+            ? sipAddress
+            : 'sip:' + sipAddress
+        )
+      }
+
       _edition = true
     } else {
       _vcard = _contact.vcard
