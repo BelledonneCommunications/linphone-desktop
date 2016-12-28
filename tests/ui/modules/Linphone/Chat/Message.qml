@@ -4,10 +4,12 @@ import Common 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 
 Item {
   id: container
+
+  // ---------------------------------------------------------------------------
 
   property alias backgroundColor: rectangle.color
   property alias color: text.color
@@ -15,7 +17,7 @@ Item {
 
   default property alias _content: content.data
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   function _handleHoveredLink (hoveredLink) {
     // Can be the `invertedMouseArea` of other message.
@@ -34,7 +36,7 @@ Item {
     }
   }
 
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   implicitHeight: text.contentHeight + text.padding * 2
 

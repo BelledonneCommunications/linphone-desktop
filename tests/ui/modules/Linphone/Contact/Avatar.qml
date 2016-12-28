@@ -9,6 +9,8 @@ import Linphone.Styles 1.0
 Item {
   id: avatar
 
+  // ---------------------------------------------------------------------------
+
   property alias presenceLevel: presenceLevel.level
   property color backgroundColor: AvatarStyle.backgroundColor
   property string username

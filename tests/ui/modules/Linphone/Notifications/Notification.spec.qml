@@ -3,7 +3,7 @@ import QtTest 1.1
 import Linphone 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 
 // Check defined properties/methods used in `Notifier.cpp`.
 TestCase {

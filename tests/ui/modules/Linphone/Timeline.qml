@@ -11,7 +11,11 @@ import Utils 1.0
 ColumnLayout {
   id: timeline
 
+  // ---------------------------------------------------------------------------
+
   property alias model: view.model
+
+  // ---------------------------------------------------------------------------
 
   signal entrySelected (var entry)
 

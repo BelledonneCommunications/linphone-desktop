@@ -3,10 +3,12 @@ import QtQuick 2.7
 import Linphone 1.0
 import Linphone.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Text {
   property int status: -1
+
+  // ---------------------------------------------------------------------------
 
   function _getStatusString () {
     switch (status) {
@@ -32,6 +34,8 @@ Text {
         return qsTr('presenceUnknown')
     }
   }
+
+  // ---------------------------------------------------------------------------
 
   color: PresenceStringStyle.color
   elide: Text.ElideRight

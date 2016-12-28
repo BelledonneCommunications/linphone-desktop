@@ -11,6 +11,8 @@ Column {
   property color usernameColor: ContactDescriptionStyle.username.color
   property int horizontalTextAlignment
 
+  // ---------------------------------------------------------------------------
+
   Text {
     id: username
 

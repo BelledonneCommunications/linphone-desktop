@@ -5,7 +5,7 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Item {
   implicitHeight: message.height

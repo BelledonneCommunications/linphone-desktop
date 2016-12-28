@@ -13,7 +13,8 @@ class AccountSettingsModel : public QObject {
   Q_PROPERTY(
     QString username
     READ getUsername
-    WRITE setUsername
+    // WRITE setUsername
+    CONSTANT // TODO: TMP
   );
 
   Q_PROPERTY(

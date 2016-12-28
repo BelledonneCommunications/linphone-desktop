@@ -11,11 +11,15 @@ import Linphone.Styles 1.0
 Rectangle {
   id: item
 
+  // ---------------------------------------------------------------------------
+
   property alias actions: actionBar.data
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
   property string sipAddress
   property var _contact: SipAddressesModel.mapSipAddressToContact(sipAddress)
+
+  // ---------------------------------------------------------------------------
 
   color: 'transparent' // No color by default.
   height: ContactStyle.height

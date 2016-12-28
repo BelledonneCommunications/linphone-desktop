@@ -6,7 +6,7 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import LinphoneUtils 1.0
 
-// ===================================================================
+// =============================================================================
 
 RowLayout {
   implicitHeight: message.height

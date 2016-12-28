@@ -8,13 +8,17 @@ import Common 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
-// ===================================================================
+// =============================================================================
 
 DesktopPopup {
   id: notification
 
+  // ---------------------------------------------------------------------------
+
   property int notificationOffset: 0
   property alias notificationHeight: notification.popupHeight
+
+  // ---------------------------------------------------------------------------
 
   flags: Qt.Popup
 
