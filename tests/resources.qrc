@@ -43,6 +43,7 @@
     <file>assets/images/contact_add_hovered.svg</file>
     <file>assets/images/contact_add_normal.svg</file>
     <file>assets/images/contact_add_pressed.svg</file>
+    <file>assets/images/contact_add.svg</file>
     <file>assets/images/contact_card_photo_disabled.svg</file>
     <file>assets/images/contact_card_photo_hovered.svg</file>
     <file>assets/images/contact_card_photo_normal.svg</file>
@@ -222,6 +223,7 @@
     <file>ui/modules/Linphone/Styles/NotificationStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Presence/PresenceStringStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
+    <file>ui/modules/Linphone/Styles/SmartSearchBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>

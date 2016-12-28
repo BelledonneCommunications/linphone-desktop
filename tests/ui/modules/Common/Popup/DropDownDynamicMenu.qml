@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import Common 1.0
 import Utils 1.0
 
 // =============================================================================
@@ -7,8 +8,7 @@ import Utils 1.0
 // =============================================================================
 
 AbstractDropDownMenu {
-  // Can be computed, but for performance usage, it must be given
-  // in attribute.
+  // Can be computed, but for performance usage, it must be given in attribute.
   property int entryHeight
   property int maxMenuHeight
 
@@ -22,6 +22,9 @@ AbstractDropDownMenu {
     var height = list.count * entryHeight
 
     if (list.headerPositioning === ListView.OverlayHeader) {
+      // Workaround to force header layout.
+      list.headerItem.z = Constants.zMax
+
       height += list.headerItem.height
     }
 

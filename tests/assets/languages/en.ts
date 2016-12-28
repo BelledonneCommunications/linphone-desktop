@@ -487,6 +487,13 @@
     </message>
 </context>
 <context>
+    <name>SmartSearchBar</name>
+    <message>
+        <source>addContact</source>
+        <translation>ADD CONTACT</translation>
+    </message>
+</context>
+<context>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>

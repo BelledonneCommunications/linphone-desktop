@@ -146,6 +146,21 @@ ApplicationWindow {
         placeholderText: qsTr('mainSearchBarPlaceholder')
 
         model: SmartSearchBarModel {}
+
+        onAddContact: {
+          window.ensureCollapsed()
+          window.setView('ContactEdit', {
+            sipAddress: sipAddress
+          })
+        }
+        onLaunchCall: CallsWindow.show()
+        onLaunchChat: {
+          window.ensureCollapsed()
+          window.setView('Conversation', {
+            sipAddress: sipAddress
+          })
+        }
+        onLaunchVideoCall: CallsWindow.show()
       }
     }
   }

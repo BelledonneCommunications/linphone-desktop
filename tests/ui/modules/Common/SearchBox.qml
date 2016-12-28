@@ -12,9 +12,10 @@ import Utils 1.0
 Item {
   id: searchBox
 
-  property alias header: list.header
+  readonly property alias filter: searchField.text
 
   property alias delegate: list.delegate
+  property alias header: list.header
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
 

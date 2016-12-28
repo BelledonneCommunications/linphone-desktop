@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick 2.7
 
 import Common 1.0
+import Linphone.Styles 1.0
 
 // =============================================================================
 
@@ -30,7 +31,7 @@ QtObject {
   }
 
   property QtObject searchBox: QtObject {
-    property int entryHeight: 51
+    property int entryHeight: 50 + SmartSearchBarStyle.entry.separator.height
     property int maxHeight: 300 // See Hick's law for good choice.
   }
 
