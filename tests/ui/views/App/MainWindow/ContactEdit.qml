@@ -58,6 +58,7 @@ ColumnLayout  {
       descriptionText: qsTr('removeContactDescription'),
       exitHandler: function (status) {
         if (status) {
+          window.unlockView()
           window.setView('Contacts')
           ContactsListModel.removeContact(_contact)
         }
@@ -89,9 +90,7 @@ ColumnLayout  {
 
       if (sipAddress && sipAddress.length > 0) {
         _vcard.addSipAddress(
-          Utils.startsWith(sipAddress, 'sip:')
-            ? sipAddress
-            : 'sip:' + sipAddress
+          Utils.startsWith(sipAddress, 'sip:') ? sipAddress : 'sip:' + sipAddress
         )
       }
 
