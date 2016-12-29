@@ -9,8 +9,6 @@
 // =============================================================================
 
 class ChatModel : public QAbstractListModel {
-  friend class ChatProxyModel;
-
   Q_OBJECT;
 
   Q_PROPERTY(
@@ -44,7 +42,8 @@ public:
 
   Q_ENUM(CallStatus);
 
-  ChatModel (QObject *parent = Q_NULLPTR) : QAbstractListModel(parent) {}
+  ChatModel (QObject *parent = Q_NULLPTR);
+  ~ChatModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -54,12 +53,16 @@ public:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+  QString getSipAddress () const;
+  void setSipAddress (const QString &sip_address);
+
 public slots:
   void removeEntry (int id);
   void removeAllEntries ();
 
 signals:
   void sipAddressChanged (const QString &sipAddress);
+  void allEntriesRemoved ();
 
 private:
   void fillMessageEntry (
@@ -78,9 +81,6 @@ private:
   );
 
   void removeEntry (ChatEntryData &pair);
-
-  QString getSipAddress () const;
-  void setSipAddress (const QString &sip_address);
 
   QList<ChatEntryData> m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;

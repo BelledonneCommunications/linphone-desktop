@@ -3,6 +3,7 @@
 #include <QtDebug>
 
 #include "../../utils.hpp"
+#include "../chat/ChatModel.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "SipAddressesModel.hpp"
@@ -23,21 +24,27 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
       for (const auto &sip_address : contact->getVcardModel()->getSipAddresses()) {
         auto it = m_sip_addresses.find(sip_address.toString());
         if (it == m_sip_addresses.end()) {
-          qWarning() << QStringLiteral("Unable to remove contact from sip address: `%1`.").arg(
-            sip_address.toString()
-          );
+          qWarning() << QStringLiteral("Unable to remove contact from sip address: `%1`.").arg(sip_address.toString());
           continue;
         }
 
-        if (it->remove("contact") != 0) {
-          int row = static_cast<int>(distance(m_sip_addresses.begin(), it));
+        if (it->remove("contact") == 0)
+          qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sip_address.toString());
+
+        int row = m_refs.indexOf(&(*it));
+        Q_ASSERT(row != -1);
+
+        // History exists, signal changes.
+        if (it->contains("timestamp")) {
           emit dataChanged(index(row, 0), index(row, 0));
+          continue;
         }
+
+        // Remove sip address if no history.
+        removeRow(row);
       }
     }
   );
-
-  // TODO: handle data changed from contact
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +81,61 @@ ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sip_addr
   return it->value("contact").value<ContactModel *>();
 }
 
+void SipAddressesModel::handleAllHistoryEntriesRemoved () {
+  QObject *sender = QObject::sender();
+  if (!sender)
+    return;
+
+  ChatModel *chat_model = qobject_cast<ChatModel *>(sender);
+  if (!chat_model)
+    return;
+
+  const QString sip_address = chat_model->getSipAddress();
+  auto it = m_sip_addresses.find(sip_address);
+  if (it == m_sip_addresses.end()) {
+    qWarning() << QStringLiteral("Unable to found sip address: `%1`.").arg(sip_address);
+    return;
+  }
+
+  int row = m_refs.indexOf(&(*it));
+  Q_ASSERT(row != -1);
+
+  // No history, no contact => Remove sip address from list.
+  if (!it->contains("contact")) {
+    removeRow(row);
+    return;
+  }
+
+  // Signal changes.
+  it->remove("timestamp");
+  emit dataChanged(index(row, 0), index(row, 0));
+}
+
 // -----------------------------------------------------------------------------
+
+bool SipAddressesModel::removeRow (int row, const QModelIndex &parent) {
+  return removeRows(row, 1, parent);
+}
+
+bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &parent) {
+  int limit = row + count - 1;
+
+  if (row < 0 || count < 0 || limit >= m_sip_addresses.count())
+    return false;
+
+  beginRemoveRows(parent, row, limit);
+
+  for (int i = 0; i < count; ++i) {
+    const QVariantMap *map = m_refs.takeAt(row);
+    QString sip_address = (*map)["sipAddress"].toString();
+    qInfo() << QStringLiteral("Remove sip address: `%1`.").arg(sip_address);
+    m_sip_addresses.remove(sip_address);
+  }
+
+  endRemoveRows();
+
+  return true;
+}
 
 void SipAddressesModel::updateFromContact (ContactModel *contact) {
   for (const auto &sip_address : contact->getVcardModel()->getSipAddresses()) {

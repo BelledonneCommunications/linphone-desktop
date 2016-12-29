@@ -13,6 +13,13 @@ using namespace std;
 
 // =============================================================================
 
+ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
+  QObject::connect(
+    this, &ChatModel::allEntriesRemoved,
+    CoreManager::getInstance()->getSipAddressesModel(), &SipAddressesModel::handleAllHistoryEntriesRemoved
+  );
+}
+
 QHash<int, QByteArray> ChatModel::roleNames () const {
   QHash<int, QByteArray> roles;
   roles[Roles::ChatEntry] = "$chatEntry";
@@ -59,7 +66,81 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 
   endRemoveRows();
 
+  if (m_entries.count() == 0)
+    emit allEntriesRemoved();
+
   return true;
+}
+
+QString ChatModel::getSipAddress () const {
+  if (!m_chat_room)
+    return "";
+
+  return ::Utils::linphoneStringToQString(
+    m_chat_room->getPeerAddress()->asString()
+  );
+}
+
+void ChatModel::setSipAddress (const QString &sip_address) {
+  if (sip_address == getSipAddress())
+    return;
+
+  beginResetModel();
+
+  // Invalid old sip address entries.
+  m_entries.clear();
+
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  string std_sip_address = ::Utils::qStringToLinphoneString(sip_address);
+
+  m_chat_room = core->getChatRoomFromUri(std_sip_address);
+
+  // Get messages.
+  for (auto &message : m_chat_room->getHistory(0)) {
+    QVariantMap map;
+
+    fillMessageEntry(map, message);
+    m_entries << qMakePair(map, static_pointer_cast<void>(message));
+  }
+
+  // Get calls.
+  auto insert_entry = [this](
+      const ChatEntryData &pair,
+      const QList<ChatEntryData>::iterator *start = NULL
+    ) {
+      auto it = lower_bound(
+          start ? *start : m_entries.begin(), m_entries.end(), pair,
+          [](const ChatEntryData &a, const ChatEntryData &b) {
+            return a.first["timestamp"] < b.first["timestamp"];
+          }
+        );
+
+      return m_entries.insert(it, pair);
+    };
+
+  for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
+    linphone::CallStatus status = call_log->getStatus();
+
+    // Ignore aborted calls.
+    if (status == linphone::CallStatusAborted)
+      continue;
+
+    // Add start call.
+    QVariantMap start;
+    fillCallStartEntry(start, call_log);
+    auto it = insert_entry(qMakePair(start, static_pointer_cast<void>(call_log)));
+
+    // Add end call. (if necessary)
+    if (status == linphone::CallStatusSuccess) {
+      QVariantMap end;
+      fillCallEndEntry(end, call_log);
+      insert_entry(qMakePair(end, static_pointer_cast<void>(call_log)), &it);
+    }
+  }
+
+  endResetModel();
+
+  emit sipAddressChanged(sip_address);
 }
 
 // -----------------------------------------------------------------------------
@@ -83,6 +164,8 @@ void ChatModel::removeAllEntries () {
   m_entries.clear();
 
   endResetModel();
+
+  emit allEntriesRemoved();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,75 +242,4 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
     default:
       qWarning() << QStringLiteral("Unknown chat entry type: %1.").arg(type);
   }
-}
-
-QString ChatModel::getSipAddress () const {
-  if (!m_chat_room)
-    return "";
-
-  return ::Utils::linphoneStringToQString(
-    m_chat_room->getPeerAddress()->asString()
-  );
-}
-
-void ChatModel::setSipAddress (const QString &sip_address) {
-  if (sip_address == getSipAddress())
-    return;
-
-  beginResetModel();
-
-  // Invalid old sip address entries.
-  m_entries.clear();
-
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  string std_sip_address = ::Utils::qStringToLinphoneString(sip_address);
-
-  m_chat_room = core->getChatRoomFromUri(std_sip_address);
-
-  // Get messages.
-  for (auto &message : m_chat_room->getHistory(0)) {
-    QVariantMap map;
-
-    fillMessageEntry(map, message);
-    m_entries << qMakePair(map, static_pointer_cast<void>(message));
-  }
-
-  // Get calls.
-  auto insert_entry = [this](
-      const ChatEntryData &pair,
-      const QList<ChatEntryData>::iterator *start = NULL
-    ) {
-      auto it = lower_bound(
-          start ? *start : m_entries.begin(), m_entries.end(), pair,
-          [](const ChatEntryData &a, const ChatEntryData &b) {
-            return a.first["timestamp"] < b.first["timestamp"];
-          }
-        );
-
-      return m_entries.insert(it, pair);
-    };
-
-  for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
-    linphone::CallStatus status = call_log->getStatus();
-
-    // Ignore aborted calls.
-    if (status == linphone::CallStatusAborted)
-      continue;
-
-    // Add start call.
-    QVariantMap start;
-    fillCallStartEntry(start, call_log);
-    auto it = insert_entry(qMakePair(start, static_pointer_cast<void>(call_log)));
-
-    // Add end call. (if necessary)
-    if (status == linphone::CallStatusSuccess) {
-      QVariantMap end;
-      fillCallEndEntry(end, call_log);
-      insert_entry(qMakePair(end, static_pointer_cast<void>(call_log)), &it);
-    }
-  }
-
-  endResetModel();
-
-  emit sipAddressChanged(sip_address);
 }

@@ -21,8 +21,12 @@ public:
 
 public slots:
   ContactModel *mapSipAddressToContact (const QString &sip_address) const;
+  void handleAllHistoryEntriesRemoved ();
 
 private:
+  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
+  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
+
   void updateFromContact (ContactModel *contact);
   void fetchSipAddresses ();
 
