@@ -85,17 +85,6 @@ ColumnLayout {
     currentIndex: -1
 
     delegate: Item {
-      property var contact: {
-        Utils.assert(
-          !Utils.isArray($timelineEntry.sipAddress),
-          'Conferences are not supported at this moment.'
-        )
-
-        return SipAddressesModel.mapSipAddressToContact(
-          $timelineEntry.sipAddress
-        ) || $timelineEntry.sipAddress
-      }
-
       height: TimelineStyle.contact.height
       width: parent ? parent.width : 0
 
@@ -108,7 +97,7 @@ ColumnLayout {
               ? TimelineStyle.contact.backgroundColor.a
               : TimelineStyle.contact.backgroundColor.b
           )
-        sipAddress: $timelineEntry.sipAddress
+        sipAddress: $timelineEntry
         sipAddressColor: view.currentIndex === index
           ? TimelineStyle.contact.sipAddress.color.selected
           : TimelineStyle.contact.sipAddress.color.normal

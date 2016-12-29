@@ -65,6 +65,8 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
     ContactModel *contact = m_list.takeAt(row);
 
     m_linphone_friends->removeFriend(contact->m_linphone_friend);
+
+    emit contactRemoved(contact);
     contact->deleteLater();
   }
 
@@ -95,6 +97,8 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   beginInsertRows(QModelIndex(), row, row);
   m_list << contact;
   endInsertRows();
+
+  emit contactAdded(contact);
 
   return contact;
 }

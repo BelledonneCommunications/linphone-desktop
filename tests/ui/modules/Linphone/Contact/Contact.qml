@@ -5,6 +5,7 @@ import Common 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // =============================================================================
 
@@ -16,10 +17,19 @@ Rectangle {
   property alias actions: actionBar.data
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
-  property string sipAddress
-  property var _contact: SipAddressesModel.mapSipAddressToContact(sipAddress)
+
+  // Can be a SipAddress object of SipAddressesModel or just a string.
+  property var sipAddress
+
+  property var _contact: Utils.isObject(sipAddress)
+    ? sipAddress.contact
+    : SipAddressesModel.mapSipAddressToContact(sipAddress)
 
   // ---------------------------------------------------------------------------
+
+  function _getSipAddress () {
+    return item.sipAddress.sipAddress || item.sipAddress
+  }
 
   color: 'transparent' // No color by default.
   height: ContactStyle.height
@@ -39,7 +49,7 @@ Rectangle {
       Layout.preferredWidth: ContactStyle.contentHeight
       image: _contact && _contact.vcard.avatar
       presenceLevel: _contact ? _contact.presenceLevel : Presence.White
-      username: LinphoneUtils.getContactUsername(_contact || sipAddress)
+      username: LinphoneUtils.getContactUsername(_contact || _getSipAddress())
     }
 
     ContactDescription {
@@ -47,7 +57,7 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      sipAddress: item.sipAddress
+      sipAddress: _getSipAddress()
       username: avatar.username
     }
 

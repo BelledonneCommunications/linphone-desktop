@@ -23,6 +23,9 @@ public slots:
   ContactModel *mapSipAddressToContact (const QString &sip_address) const;
 
 private:
+  void updateFromContact (ContactModel *contact);
+  void fetchSipAddresses ();
+
   QHash<QString, QVariantMap> m_sip_addresses;
   QList<const QVariantMap *> m_refs;
 };

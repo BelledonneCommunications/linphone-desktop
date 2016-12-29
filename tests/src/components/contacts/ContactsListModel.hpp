@@ -29,6 +29,10 @@ public slots:
   ContactModel *addContact (VcardModel *vcard);
   void removeContact (ContactModel *contact);
 
+signals:
+  void contactAdded (ContactModel *contact);
+  void contactRemoved (const ContactModel *contact);
+
 private:
   QList<ContactModel *> m_list;
   std::shared_ptr<linphone::FriendList> m_linphone_friends;
