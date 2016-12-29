@@ -1,7 +1,6 @@
 #ifndef CORE_MANAGER_H_
 #define CORE_MANAGER_H_
 
-#include "../contact/VcardModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
 

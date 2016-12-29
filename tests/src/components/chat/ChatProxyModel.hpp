@@ -45,9 +45,7 @@ public:
 
 public slots:
   void loadMoreEntries ();
-
   void setEntryTypeFilter (ChatModel::EntryType type);
-
   void removeEntry (int id);
 
   void removeAllEntries () {

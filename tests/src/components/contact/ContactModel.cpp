@@ -17,7 +17,7 @@ ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
 ContactModel::ContactModel (VcardModel *vcard) {
   QQmlEngine *engine = App::getInstance()->getEngine();
   if (engine->objectOwnership(vcard) == QQmlEngine::CppOwnership)
-    throw std::invalid_argument("A contact is already linked to this vcard.");
+    throw invalid_argument("A contact is already linked to this vcard.");
 
   m_linphone_friend = linphone::Friend::newFromVcard(vcard->m_vcard);
   m_vcard.reset(vcard);

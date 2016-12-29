@@ -35,18 +35,16 @@ void SmartSearchBarModel::setFilter (const QString &pattern) {
 // -----------------------------------------------------------------------------
 
 bool SmartSearchBarModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
-  const QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
-  const QVariantMap map = index.data().toMap();
-
-  return computeStringWeight(map["sipAddress"].toString()) > 0;
+  const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
+  return computeStringWeight(index.data().toMap()["sipAddress"].toString()) > 0;
 }
 
 bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const QVariantMap map_a = sourceModel()->data(left).toMap();
-  const QVariantMap map_b = sourceModel()->data(right).toMap();
+  const QVariantMap &map_a = sourceModel()->data(left).toMap();
+  const QVariantMap &map_b = sourceModel()->data(right).toMap();
 
-  const QString sip_address_a = map_a["sipAddress"].toString();
-  const QString sip_address_b = map_b["sipAddress"].toString();
+  const QString &sip_address_a = map_a["sipAddress"].toString();
+  const QString &sip_address_b = map_b["sipAddress"].toString();
 
   int weight_a = computeStringWeight(sip_address_a);
   int weight_b = computeStringWeight(sip_address_b);
