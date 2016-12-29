@@ -191,6 +191,10 @@ void SipAddressesModel::fetchSipAddresses () {
 
     if (address_done.contains(sip_address))
       continue; // Already used.
+
+    if (call_log->getStatus() == linphone::CallStatusAborted)
+      continue; // Ignore aborted calls.
+
     address_done << sip_address;
 
     QVariantMap map;
