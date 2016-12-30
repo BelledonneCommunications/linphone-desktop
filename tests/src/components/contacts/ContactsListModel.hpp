@@ -32,8 +32,14 @@ public slots:
 signals:
   void contactAdded (ContactModel *contact);
   void contactRemoved (const ContactModel *contact);
+  void contactUpdated (ContactModel *contact);
+
+  void sipAddressAdded (ContactModel *contact, const QString &sip_address);
+  void sipAddressRemoved (ContactModel *contact, const QString &sip_address);
 
 private:
+  void addContact (ContactModel *contact);
+
   QList<ContactModel *> m_list;
   std::shared_ptr<linphone::FriendList> m_linphone_friends;
 };

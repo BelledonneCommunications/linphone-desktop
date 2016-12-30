@@ -23,7 +23,7 @@ ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(pare
       contact, QQmlEngine::CppOwnership
     );
 
-    m_list << contact;
+    addContact(contact);
   }
 }
 
@@ -95,7 +95,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   int row = rowCount();
 
   beginInsertRows(QModelIndex(), row, row);
-  m_list << contact;
+  addContact(contact);
   endInsertRows();
 
   emit contactAdded(contact);
@@ -109,4 +109,25 @@ void ContactsListModel::removeContact (ContactModel *contact) {
   int index = m_list.indexOf(contact);
   if (index == -1 || !removeRow(index))
     qWarning() << "Unable to remove contact:" << contact;
+}
+
+void ContactsListModel::addContact (ContactModel *contact) {
+  QObject::connect(
+    contact, &ContactModel::contactUpdated,
+    this, [this, contact]() {
+      emit contactUpdated(contact);
+    }
+  );
+  QObject::connect(
+    contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sip_address) {
+      emit sipAddressAdded(contact, sip_address);
+    }
+  );
+  QObject::connect(
+    contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sip_address) {
+      emit sipAddressRemoved(contact, sip_address);
+    }
+  );
+
+  m_list << contact;
 }

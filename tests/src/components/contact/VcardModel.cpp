@@ -156,7 +156,7 @@ inline shared_ptr<belcard::BelCardAddress> getOrCreateBelCardAddress (shared_ptr
   if (addresses.empty()) {
     address = belcard::BelCardGeneric::create<belcard::BelCardAddress>();
     if (!belcard->addAddress(address))
-      qWarning() << "Unable to create a new address.";
+      qWarning() << "Unable to create a new address on vcard.";
   } else
     address = addresses.front();
 
@@ -227,7 +227,7 @@ bool VcardModel::addSipAddress (const QString &sip_address) {
     );
 
   if (!l_address) {
-    qWarning() << QStringLiteral("Unable to add invalid sip address: `%1`.").arg(sip_address);
+    qWarning() << QStringLiteral("Unable to add invalid sip address on vcard: `%1`.").arg(sip_address);
     return false;
   }
 
@@ -236,10 +236,10 @@ bool VcardModel::addSipAddress (const QString &sip_address) {
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
   value->setValue(l_address->asStringUriOnly());
 
-  qInfo() << QStringLiteral("Add new sip address: `%1`.").arg(sip_address);
+  qInfo() << QStringLiteral("Add new sip address on vcard: `%1`.").arg(sip_address);
 
   if (!belcard->addImpp(value)) {
-    qWarning() << QStringLiteral("Unable to add sip address: `%1`.").arg(sip_address);
+    qWarning() << QStringLiteral("Unable to add sip address on vcard: `%1`.").arg(sip_address);
     return false;
   }
 
@@ -253,17 +253,17 @@ void VcardModel::removeSipAddress (const QString &sip_address) {
   shared_ptr<belcard::BelCardImpp> value = findBelCardValue(addresses, sip_address);
 
   if (!value) {
-    qWarning() << QStringLiteral("Unable to remove sip address: `%1`.").arg(sip_address);
+    qWarning() << QStringLiteral("Unable to remove sip address on vcard: `%1`.").arg(sip_address);
     return;
   }
 
   if (addresses.size() == 1) {
-    qWarning() << QStringLiteral("Unable to remove the only existing sip address: `%1`.")
+    qWarning() << QStringLiteral("Unable to remove the only existing sip address on vcard: `%1`.")
       .arg(sip_address);
     return;
   }
 
-  qInfo() << QStringLiteral("Remove sip address: `%1`.").arg(sip_address);
+  qInfo() << QStringLiteral("Remove sip address on vcard: `%1`.").arg(sip_address);
   belcard->removeImpp(value);
 
   emit vcardUpdated();
@@ -294,10 +294,10 @@ bool VcardModel::addCompany (const QString &company) {
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
   value->setValue(::Utils::qStringToLinphoneString(company));
 
-  qInfo() << QStringLiteral("Add new company: `%1`.").arg(company);
+  qInfo() << QStringLiteral("Add new company on vcard: `%1`.").arg(company);
 
   if (!belcard->addRole(value)) {
-    qWarning() << QStringLiteral("Unable to add company: `%1`.").arg(company);
+    qWarning() << QStringLiteral("Unable to add company on vcard: `%1`.").arg(company);
     return false;
   }
 
@@ -310,11 +310,11 @@ void VcardModel::removeCompany (const QString &company) {
   shared_ptr<belcard::BelCardRole> value = findBelCardValue(belcard->getRoles(), company);
 
   if (!value) {
-    qWarning() << QStringLiteral("Unable to remove company: `%1`.").arg(company);
+    qWarning() << QStringLiteral("Unable to remove company on vcard: `%1`.").arg(company);
     return;
   }
 
-  qInfo() << QStringLiteral("Remove company: `%1`.").arg(company);
+  qInfo() << QStringLiteral("Remove company on vcard: `%1`.").arg(company);
   belcard->removeRole(value);
 
   emit vcardUpdated();
@@ -345,10 +345,10 @@ bool VcardModel::addEmail (const QString &email) {
   shared_ptr<belcard::BelCardEmail> value = belcard::BelCardGeneric::create<belcard::BelCardEmail>();
   value->setValue(::Utils::qStringToLinphoneString(email));
 
-  qInfo() << QStringLiteral("Add new email: `%1`.").arg(email);
+  qInfo() << QStringLiteral("Add new email on vcard: `%1`.").arg(email);
 
   if (!belcard->addEmail(value)) {
-    qWarning() << QStringLiteral("Unable to add email: `%1`.").arg(email);
+    qWarning() << QStringLiteral("Unable to add email on vcard: `%1`.").arg(email);
     return false;
   }
 
@@ -361,11 +361,11 @@ void VcardModel::removeEmail (const QString &email) {
   shared_ptr<belcard::BelCardEmail> value = findBelCardValue(belcard->getEmails(), email);
 
   if (!value) {
-    qWarning() << QStringLiteral("Unable to remove email: `%1`.").arg(email);
+    qWarning() << QStringLiteral("Unable to remove email on vcard: `%1`.").arg(email);
     return;
   }
 
-  qInfo() << QStringLiteral("Remove email: `%1`.").arg(email);
+  qInfo() << QStringLiteral("Remove email on vcard: `%1`.").arg(email);
   belcard->removeEmail(value);
 
   emit vcardUpdated();
@@ -396,10 +396,10 @@ bool VcardModel::addUrl (const QString &url) {
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
   value->setValue(::Utils::qStringToLinphoneString(url));
 
-  qInfo() << QStringLiteral("Add new url: `%1`.").arg(url);
+  qInfo() << QStringLiteral("Add new url on vcard: `%1`.").arg(url);
 
   if (!belcard->addURL(value)) {
-    qWarning() << QStringLiteral("Unable to add url: `%1`.").arg(url);
+    qWarning() << QStringLiteral("Unable to add url on vcard: `%1`.").arg(url);
     return false;
   }
 
@@ -412,11 +412,11 @@ void VcardModel::removeUrl (const QString &url) {
   shared_ptr<belcard::BelCardURL> value = findBelCardValue(belcard->getURLs(), url);
 
   if (!value) {
-    qWarning() << QStringLiteral("Unable to remove url: `%1`.").arg(url);
+    qWarning() << QStringLiteral("Unable to remove url on vcard: `%1`.").arg(url);
     return;
   }
 
-  qInfo() << QStringLiteral("Remove url: `%1`.").arg(url);
+  qInfo() << QStringLiteral("Remove url on vcard: `%1`.").arg(url);
   belcard->removeURL(value);
 
   emit vcardUpdated();

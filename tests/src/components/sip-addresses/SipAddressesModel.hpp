@@ -27,7 +27,10 @@ private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-  void updateFromContact (ContactModel *contact);
+  void updateFromNewContact (ContactModel *contact);
+  void updateFromNewContactSipAddress (ContactModel *contact, const QString &sip_address);
+  void tryToRemoveSipAddress (const QString &sip_address);
+
   void fetchSipAddresses ();
 
   QHash<QString, QVariantMap> m_sip_addresses;

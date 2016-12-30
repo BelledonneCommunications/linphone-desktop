@@ -27,21 +27,14 @@ public:
   }
 
 public slots:
-  void startEdit () {
-    m_linphone_friend->edit();
-  }
-
-  void endEdit () {
-    m_linphone_friend->done();
-  }
-
-  void abortEdit () {
-    // TODO: call linphone friend abort function.
-    // m_linphone_friend->abort();
-  }
+  void startEdit ();
+  void endEdit ();
+  void abortEdit ();
 
 signals:
   void contactUpdated ();
+  void sipAddressAdded (const QString &sip_address);
+  void sipAddressRemoved (const QString &sip_address);
 
 private:
   Presence::PresenceStatus getPresenceStatus () const;
@@ -50,6 +43,8 @@ private:
   VcardModel *getVcardModelPtr () const {
     return m_vcard.get();
   }
+
+  QVariantList m_old_sip_addresses;
 
   std::shared_ptr<VcardModel> m_vcard;
   std::shared_ptr<linphone::Friend> m_linphone_friend;

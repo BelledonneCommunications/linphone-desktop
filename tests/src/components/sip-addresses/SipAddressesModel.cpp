@@ -12,37 +12,39 @@
 
 SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
   fetchSipAddresses();
+  ContactsListModel *contacts = CoreManager::getInstance()->getContactsListModel();
+
+  QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::updateFromNewContact);
 
   QObject::connect(
-    CoreManager::getInstance()->getContactsListModel(), &ContactsListModel::contactAdded,
-    this, &SipAddressesModel::updateFromContact
+    contacts, &ContactsListModel::contactRemoved, this, [this](const ContactModel *contact) {
+      for (const auto &sip_address : contact->getVcardModel()->getSipAddresses())
+        tryToRemoveSipAddress(sip_address.toString());
+    }
   );
 
   QObject::connect(
-    CoreManager::getInstance()->getContactsListModel(), &ContactsListModel::contactRemoved,
-    this, [this](const ContactModel *contact) {
-      for (const auto &sip_address : contact->getVcardModel()->getSipAddresses()) {
-        auto it = m_sip_addresses.find(sip_address.toString());
-        if (it == m_sip_addresses.end()) {
-          qWarning() << QStringLiteral("Unable to remove contact from sip address: `%1`.").arg(sip_address.toString());
-          continue;
-        }
-
-        if (it->remove("contact") == 0)
-          qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sip_address.toString());
-
-        int row = m_refs.indexOf(&(*it));
-        Q_ASSERT(row != -1);
-
-        // History exists, signal changes.
-        if (it->contains("timestamp")) {
-          emit dataChanged(index(row, 0), index(row, 0));
-          continue;
-        }
-
-        // Remove sip address if no history.
-        removeRow(row);
+    contacts, &ContactsListModel::sipAddressAdded, this, [this](ContactModel *contact, const QString &sip_address) {
+      // TODO: Avoid the limitation of one contact by sip address.
+      ContactModel *mapped_contact = mapSipAddressToContact(sip_address);
+      if (mapped_contact) {
+        qWarning() << "Unable to map sip address" << sip_address << "to" << contact << "- already used by" << mapped_contact;
+        return;
       }
+
+      updateFromNewContactSipAddress(contact, sip_address);
+    }
+  );
+
+  QObject::connect(
+    contacts, &ContactsListModel::sipAddressRemoved, this, [this](ContactModel *contact, const QString &sip_address) {
+      ContactModel *mapped_contact = mapSipAddressToContact(sip_address);
+      if (contact != mapped_contact) {
+        qWarning() << "Unable to remove sip address" << sip_address << "of" << contact << "- already used by" << mapped_contact;
+        return;
+      }
+
+      tryToRemoveSipAddress(sip_address);
     }
   );
 }
@@ -137,32 +139,65 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
   return true;
 }
 
-void SipAddressesModel::updateFromContact (ContactModel *contact) {
-  for (const auto &sip_address : contact->getVcardModel()->getSipAddresses()) {
-    const QString &sip_address_str = sip_address.toString();
-    auto it = m_sip_addresses.find(sip_address_str);
+void SipAddressesModel::updateFromNewContact (ContactModel *contact) {
+  for (const auto &sip_address : contact->getVcardModel()->getSipAddresses())
+    updateFromNewContactSipAddress(contact, sip_address.toString());
+}
 
-    // New sip address from contact = new entry.
-    if (it == m_sip_addresses.end()) {
-      QVariantMap map;
-      map["sipAddress"] = sip_address;
-      map["contact"] = QVariant::fromValue(contact);
+void SipAddressesModel::updateFromNewContactSipAddress (ContactModel *contact, const QString &sip_address) {
+  auto it = m_sip_addresses.find(sip_address);
 
-      m_sip_addresses[sip_address_str] = map;
-      m_refs << &m_sip_addresses[sip_address_str];
+  // New sip address.
+  if (it == m_sip_addresses.end()) {
+    QVariantMap map;
+    map["sipAddress"] = sip_address;
+    map["contact"] = QVariant::fromValue(contact);
 
-      int row = m_refs.count() - 1;
-      emit dataChanged(index(row, 0), index(row, 0));
-      continue;
-    }
+    int row = m_refs.count();
 
-    // Sip address exists, update contact.
-    (*it)["contact"] = QVariant::fromValue(contact);
+    beginInsertRows(QModelIndex(), row, row);
 
-    int row = m_refs.indexOf(&(*it));
-    Q_ASSERT(row != -1);
+    qInfo() << QStringLiteral("Add sip address: `%1`.").arg(sip_address);
+
+    m_sip_addresses[sip_address] = map;
+    m_refs << &m_sip_addresses[sip_address];
+
+    endInsertRows();
+
     emit dataChanged(index(row, 0), index(row, 0));
+
+    return;
   }
+
+  // Sip address exists, update contact.
+  (*it)["contact"] = QVariant::fromValue(contact);
+
+  int row = m_refs.indexOf(&(*it));
+  Q_ASSERT(row != -1);
+  emit dataChanged(index(row, 0), index(row, 0));
+}
+
+void SipAddressesModel::tryToRemoveSipAddress (const QString &sip_address) {
+  auto it = m_sip_addresses.find(sip_address);
+  if (it == m_sip_addresses.end()) {
+    qWarning() << QStringLiteral("Unable to remove unavailable sip address: `%1`.").arg(sip_address);
+    return;
+  }
+
+  if (it->remove("contact") == 0)
+    qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sip_address);
+
+  int row = m_refs.indexOf(&(*it));
+  Q_ASSERT(row != -1);
+
+  // History exists, signal changes.
+  if (it->contains("timestamp")) {
+    emit dataChanged(index(row, 0), index(row, 0));
+    return;
+  }
+
+  // Remove sip address if no history.
+  removeRow(row);
 }
 
 void SipAddressesModel::fetchSipAddresses () {
@@ -213,5 +248,5 @@ void SipAddressesModel::fetchSipAddresses () {
 
   // Get sip addresses from contacts.
   for (auto &contact : CoreManager::getInstance()->getContactsListModel()->m_list)
-    updateFromContact(contact);
+    updateFromNewContact(contact);
 }
