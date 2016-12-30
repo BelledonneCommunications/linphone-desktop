@@ -22,8 +22,7 @@ public:
   ContactsListProxyModel (QObject *parent = Q_NULLPTR);
   ~ContactsListProxyModel () = default;
 
-public slots:
-  void setFilter (const QString &pattern);
+  Q_INVOKABLE void setFilter (const QString &pattern);
 
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;

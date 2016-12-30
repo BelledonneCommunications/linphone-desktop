@@ -16,8 +16,7 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
 
-public slots:
-  void setFilter (const QString &pattern);
+  Q_INVOKABLE void setFilter (const QString &pattern);
 
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;

@@ -83,6 +83,26 @@ ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sip_addr
   return it->value("contact").value<ContactModel *>();
 }
 
+// -----------------------------------------------------------------------------
+
+ContactObserver *SipAddressesModel::getContactObserver (const QString &sip_address) {
+  ContactObserver *model = new ContactObserver(sip_address);
+  model->setContact(mapSipAddressToContact(sip_address));
+
+  m_observers.insert(sip_address, model);
+  QObject::connect(
+    model, &ContactObserver::destroyed, this, [this, model]() {
+      const QString &sip_address = model->getSipAddress();
+      if (m_observers.remove(sip_address, model) == 0)
+        qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sip_address);
+    }
+  );
+
+  return model;
+}
+
+// -----------------------------------------------------------------------------
+
 void SipAddressesModel::handleAllHistoryEntriesRemoved () {
   QObject *sender = QObject::sender();
   if (!sender)
@@ -111,24 +131,6 @@ void SipAddressesModel::handleAllHistoryEntriesRemoved () {
   // Signal changes.
   it->remove("timestamp");
   emit dataChanged(index(row, 0), index(row, 0));
-}
-
-// -----------------------------------------------------------------------------
-
-ContactObserver *SipAddressesModel::getContactObserver (const QString &sip_address) {
-  ContactObserver *model = new ContactObserver(sip_address);
-  model->setContact(mapSipAddressToContact(sip_address));
-
-  m_observers.insert(sip_address, model);
-  QObject::connect(
-    model, &ContactObserver::destroyed, this, [this, model]() {
-      const QString &sip_address = model->getSipAddress();
-      if (m_observers.remove(sip_address, model) == 0)
-        qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sip_address);
-    }
-  );
-
-  return model;
 }
 
 // -----------------------------------------------------------------------------

@@ -20,8 +20,7 @@ public:
     MaxNbTypes
   };
 
-public slots:
-  void showCallMessage (int timeout, const QString &sip_address);
+  Q_INVOKABLE void showCallMessage (int timeout, const QString &sip_address);
 
 private:
   QObject *createNotification (NotificationType type);

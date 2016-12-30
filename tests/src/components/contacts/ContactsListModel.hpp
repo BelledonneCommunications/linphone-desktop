@@ -25,9 +25,8 @@ public:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-public slots:
-  ContactModel *addContact (VcardModel *vcard);
-  void removeContact (ContactModel *contact);
+  Q_INVOKABLE ContactModel *addContact (VcardModel *vcard);
+  Q_INVOKABLE void removeContact (ContactModel *contact);
 
 signals:
   void contactAdded (ContactModel *contact);

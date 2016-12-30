@@ -33,8 +33,7 @@ public:
     return &m_engine;
   }
 
-public slots:
-  QString locale () const {
+  Q_INVOKABLE QString locale () const {
     return m_locale;
   }
 

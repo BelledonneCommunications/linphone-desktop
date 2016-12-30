@@ -20,11 +20,10 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role) const override;
 
-public slots:
-  ContactModel *mapSipAddressToContact (const QString &sip_address) const;
-  void handleAllHistoryEntriesRemoved ();
+  Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sip_address) const;
+  Q_INVOKABLE ContactObserver *getContactObserver (const QString &sip_address);
 
-  ContactObserver *getContactObserver (const QString &sip_address);
+  Q_INVOKABLE void handleAllHistoryEntriesRemoved ();
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());

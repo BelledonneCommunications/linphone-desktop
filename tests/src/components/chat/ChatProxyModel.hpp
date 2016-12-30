@@ -43,12 +43,11 @@ class ChatProxyModel : public QSortFilterProxyModel {
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
 
-public slots:
-  void loadMoreEntries ();
-  void setEntryTypeFilter (ChatModel::EntryType type);
-  void removeEntry (int id);
+  Q_INVOKABLE void loadMoreEntries ();
+  Q_INVOKABLE void setEntryTypeFilter (ChatModel::EntryType type);
+  Q_INVOKABLE void removeEntry (int id);
 
-  void removeAllEntries () {
+  Q_INVOKABLE void removeAllEntries () {
     static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->removeAllEntries();
   }
 

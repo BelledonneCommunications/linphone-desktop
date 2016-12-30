@@ -56,9 +56,8 @@ public:
   QString getSipAddress () const;
   void setSipAddress (const QString &sip_address);
 
-public slots:
-  void removeEntry (int id);
-  void removeAllEntries ();
+  Q_INVOKABLE void removeEntry (int id);
+  Q_INVOKABLE void removeAllEntries ();
 
 signals:
   void sipAddressChanged (const QString &sip_address);

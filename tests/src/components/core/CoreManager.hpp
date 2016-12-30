@@ -34,10 +34,9 @@ public:
     return m_instance;
   }
 
-public slots:
   // Must be used in a qml scene.
   // Warning: The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
-  VcardModel *createDetachedVcardModel ();
+  Q_INVOKABLE VcardModel *createDetachedVcardModel ();
 
 private:
   CoreManager (QObject *parent = Q_NULLPTR);

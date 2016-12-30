@@ -27,27 +27,26 @@ public:
   QString getUsername () const;
   QVariantList getSipAddresses () const;
 
-public slots:
-  bool addSipAddress (const QString &sip_address);
-  void removeSipAddress (const QString &sip_address);
-  bool updateSipAddress (const QString &old_sip_address, const QString &sip_address);
+  Q_INVOKABLE bool addSipAddress (const QString &sip_address);
+  Q_INVOKABLE void removeSipAddress (const QString &sip_address);
+  Q_INVOKABLE bool updateSipAddress (const QString &old_sip_address, const QString &sip_address);
 
-  bool addCompany (const QString &company);
-  void removeCompany (const QString &company);
-  bool updateCompany (const QString &old_company, const QString &company);
+  Q_INVOKABLE bool addCompany (const QString &company);
+  Q_INVOKABLE void removeCompany (const QString &company);
+  Q_INVOKABLE bool updateCompany (const QString &old_company, const QString &company);
 
-  bool addEmail (const QString &email);
-  void removeEmail (const QString &email);
-  bool updateEmail (const QString &old_email, const QString &email);
+  Q_INVOKABLE bool addEmail (const QString &email);
+  Q_INVOKABLE void removeEmail (const QString &email);
+  Q_INVOKABLE bool updateEmail (const QString &old_email, const QString &email);
 
-  bool addUrl (const QString &url);
-  void removeUrl (const QString &url);
-  bool updateUrl (const QString &old_url, const QString &url);
+  Q_INVOKABLE bool addUrl (const QString &url);
+  Q_INVOKABLE void removeUrl (const QString &url);
+  Q_INVOKABLE bool updateUrl (const QString &old_url, const QString &url);
 
-  void setStreet (const QString &street);
-  void setLocality (const QString &locality);
-  void setPostalCode (const QString &postal_code);
-  void setCountry (const QString &country);
+  Q_INVOKABLE void setStreet (const QString &street);
+  Q_INVOKABLE void setLocality (const QString &locality);
+  Q_INVOKABLE void setPostalCode (const QString &postal_code);
+  Q_INVOKABLE void setCountry (const QString &country);
 
 signals:
   void vcardUpdated ();

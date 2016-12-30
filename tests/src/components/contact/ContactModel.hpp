@@ -26,10 +26,9 @@ public:
     return m_vcard;
   }
 
-public slots:
-  void startEdit ();
-  void endEdit ();
-  void abortEdit ();
+  Q_INVOKABLE void startEdit ();
+  Q_INVOKABLE void endEdit ();
+  Q_INVOKABLE void abortEdit ();
 
 signals:
   void contactUpdated ();
