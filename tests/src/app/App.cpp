@@ -89,6 +89,9 @@ void App::registerTypes () {
   qmlRegisterUncreatableType<ContactModel>(
     "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
   );
+  qmlRegisterUncreatableType<SipAddressModel>(
+    "Linphone", 1, 0, "SipAddressModel", "SipAddressModel is uncreatable"
+  );
   qmlRegisterUncreatableType<VcardModel>(
     "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable"
   );

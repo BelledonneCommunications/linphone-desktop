@@ -61,7 +61,7 @@ public slots:
   void removeAllEntries ();
 
 signals:
-  void sipAddressChanged (const QString &sipAddress);
+  void sipAddressChanged (const QString &sip_address);
   void allEntriesRemoved ();
 
 private:
