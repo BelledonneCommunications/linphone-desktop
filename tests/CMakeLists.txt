@@ -58,6 +58,7 @@ set(SOURCES
   src/components/camera/Camera.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
+  src/components/contact/ContactObserver.cpp
   src/components/contact/ContactModel.cpp
   src/components/contact/VcardModel.cpp
   src/components/contacts/ContactsListModel.cpp
@@ -66,7 +67,6 @@ set(SOURCES
   src/components/notifier/Notifier.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
-  src/components/sip-address/SipAddressModel.cpp
   src/components/sip-addresses/SipAddressesModel.cpp
   src/components/smart-search-bar/SmartSearchBarModel.cpp
   src/components/timeline/TimelineModel.cpp
@@ -82,6 +82,7 @@ set(HEADERS
   src/components/camera/Camera.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
+  src/components/contact/ContactObserver.hpp
   src/components/contact/ContactModel.hpp
   src/components/contact/VcardModel.hpp
   src/components/contacts/ContactsListModel.hpp
@@ -91,7 +92,6 @@ set(HEADERS
   src/components/presence/Presence.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
-  src/components/sip-address/SipAddressModel.hpp
   src/components/sip-addresses/SipAddressesModel.hpp
   src/components/smart-search-bar/SmartSearchBarModel.hpp
   src/components/timeline/TimelineModel.hpp

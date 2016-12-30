@@ -20,8 +20,8 @@ RowLayout {
     Avatar {
       anchors.centerIn: parent
       height: ChatStyle.entry.message.incoming.avatarSize
-      image: _contact.avatar
-      username: LinphoneUtils.getContactUsername(_contact)
+      image: _contactObserver.contact ? _contactObserver.contact.avatar : ''
+      username: LinphoneUtils.getContactUsername(_contactObserver.contact || _contactObserver.sipAddress)
       width: ChatStyle.entry.message.incoming.avatarSize
     }
   }

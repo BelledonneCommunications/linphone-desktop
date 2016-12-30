@@ -16,9 +16,7 @@ Rectangle {
   property bool isVideoCall: false
   property string sipAddress
 
-  property var _contact: SipAddressesModel.mapSipAddressToContact(
-    sipAddress
-  ) || sipAddress
+  property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -58,7 +56,7 @@ Rectangle {
         anchors.centerIn: parent
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
-        username: LinphoneUtils.getContactUsername(_contact)
+        username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
 
         height: parent.height
         width: parent.width - cameraActions.width - callQuality.width - 150
@@ -110,7 +108,7 @@ Rectangle {
           }
 
           backgroundColor: StartingCallStyle.avatar.backgroundColor
-          image: _contact.vcard.avatar
+          image: _contactObserver.contact ? _contactObserver.contact.vcard.avatar : ''
           username: contactDescription.username
 
           height: _computeAvatarSize()

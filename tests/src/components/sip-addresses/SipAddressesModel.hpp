@@ -4,6 +4,7 @@
 #include <QAbstractListModel>
 
 #include "../contact/ContactModel.hpp"
+#include "../contact/ContactObserver.hpp"
 
 // =============================================================================
 
@@ -23,6 +24,8 @@ public slots:
   ContactModel *mapSipAddressToContact (const QString &sip_address) const;
   void handleAllHistoryEntriesRemoved ();
 
+  ContactObserver *getContactObserver (const QString &sip_address);
+
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
@@ -33,8 +36,12 @@ private:
 
   void fetchSipAddresses ();
 
+  void updateObservers (const QString &sip_address, ContactModel *contact);
+
   QHash<QString, QVariantMap> m_sip_addresses;
   QList<const QVariantMap *> m_refs;
+
+  QMultiHash<QString, ContactObserver *> m_observers;
 };
 
 #endif // SIP_ADDRESSES_MODEL_H_

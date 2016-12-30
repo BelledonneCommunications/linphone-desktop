@@ -11,9 +11,7 @@ import Linphone.Styles 1.0
 ColumnLayout {
   property alias proxyModel: chat.model
 
-  property var _contact: SipAddressesModel.mapSipAddressToContact(
-    proxyModel.sipAddress
-  ) || proxyModel.sipAddress
+  property var _contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
 
   // ---------------------------------------------------------------------------
 

@@ -115,6 +115,24 @@ void SipAddressesModel::handleAllHistoryEntriesRemoved () {
 
 // -----------------------------------------------------------------------------
 
+ContactObserver *SipAddressesModel::getContactObserver (const QString &sip_address) {
+  ContactObserver *model = new ContactObserver(sip_address);
+  model->setContact(mapSipAddressToContact(sip_address));
+
+  m_observers.insert(sip_address, model);
+  QObject::connect(
+    model, &ContactObserver::destroyed, this, [this, model]() {
+      const QString &sip_address = model->getSipAddress();
+      if (m_observers.remove(sip_address, model) == 0)
+        qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sip_address);
+    }
+  );
+
+  return model;
+}
+
+// -----------------------------------------------------------------------------
+
 bool SipAddressesModel::removeRow (int row, const QModelIndex &parent) {
   return removeRows(row, 1, parent);
 }
@@ -130,6 +148,7 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
   for (int i = 0; i < count; ++i) {
     const QVariantMap *map = m_refs.takeAt(row);
     QString sip_address = (*map)["sipAddress"].toString();
+
     qInfo() << QStringLiteral("Remove sip address: `%1`.").arg(sip_address);
     m_sip_addresses.remove(sip_address);
   }
@@ -153,6 +172,8 @@ void SipAddressesModel::updateFromNewContactSipAddress (ContactModel *contact, c
     map["sipAddress"] = sip_address;
     map["contact"] = QVariant::fromValue(contact);
 
+    updateObservers(sip_address, contact);
+
     int row = m_refs.count();
 
     beginInsertRows(QModelIndex(), row, row);
@@ -172,6 +193,8 @@ void SipAddressesModel::updateFromNewContactSipAddress (ContactModel *contact, c
   // Sip address exists, update contact.
   (*it)["contact"] = QVariant::fromValue(contact);
 
+  updateObservers(sip_address, contact);
+
   int row = m_refs.indexOf(&(*it));
   Q_ASSERT(row != -1);
   emit dataChanged(index(row, 0), index(row, 0));
@@ -183,6 +206,8 @@ void SipAddressesModel::tryToRemoveSipAddress (const QString &sip_address) {
     qWarning() << QStringLiteral("Unable to remove unavailable sip address: `%1`.").arg(sip_address);
     return;
   }
+
+  updateObservers(sip_address, nullptr);
 
   if (it->remove("contact") == 0)
     qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sip_address);
@@ -249,4 +274,11 @@ void SipAddressesModel::fetchSipAddresses () {
   // Get sip addresses from contacts.
   for (auto &contact : CoreManager::getInstance()->getContactsListModel()->m_list)
     updateFromNewContact(contact);
+}
+
+void SipAddressesModel::updateObservers (const QString &sip_address, ContactModel *contact) {
+  for (auto &observer : m_observers.values(sip_address)) {
+    if (contact != observer->getContact())
+      observer->setContact(contact);
+  }
 }
