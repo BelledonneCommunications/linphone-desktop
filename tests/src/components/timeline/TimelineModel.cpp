@@ -25,6 +25,5 @@ bool TimelineModel::filterAcceptsRow (int source_row, const QModelIndex &source_
 }
 
 bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  return sourceModel()->data(left).toMap()["timestamp"].toDateTime().toMSecsSinceEpoch() >
-         sourceModel()->data(right).toMap()["timestamp"].toDateTime().toMSecsSinceEpoch();
+  return sourceModel()->data(left).toMap()["timestamp"] > sourceModel()->data(right).toMap()["timestamp"];
 }

@@ -13,7 +13,8 @@
 #define NOTIFICATION_HEIGHT_PROPERTY "notificationHeight"
 #define NOTIFICATION_OFFSET_PROPERTY_NAME "notificationOffset"
 
-#define QML_NOTIFICATION_PATH "qrc:/ui/modules/Linphone/Notifications/CallNotification.qml"
+#define QML_CALL_NOTIFICATION_PATH "qrc:/ui/modules/Linphone/Notifications/CallNotification.qml"
+#define QML_MESSAGE_RECEIVED_NOTIFICATION_PATH "qrc:/ui/modules/Linphone/Notifications/ReceivedMessageNotification.qml"
 
 // Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
@@ -54,7 +55,8 @@ Notifier::Notifier (QObject *parent) :
   QQmlEngine *engine = App::getInstance()->getEngine();
 
   // Build components.
-  m_components[Notifier::Call] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH));
+  m_components[Notifier::Call] = new QQmlComponent(engine, QUrl(QML_CALL_NOTIFICATION_PATH));
+  m_components[Notifier::MessageReceived] = new QQmlComponent(engine, QUrl(QML_MESSAGE_RECEIVED_NOTIFICATION_PATH));
 
   // Check errors.
   for (int i = 0; i < Notifier::MaxNbTypes; ++i) {
@@ -147,6 +149,17 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 }
 
 // -----------------------------------------------------------------------------
+
+void Notifier::notifyReceivedMessage (
+  int timeout,
+  const std::shared_ptr<linphone::ChatRoom> &room,
+  const std::shared_ptr<linphone::ChatMessage> &message
+) {
+  QObject *object = createNotification(Notifier::MessageReceived);
+
+  if (object)
+    showNotification(object, timeout);
+}
 
 void Notifier::showCallMessage (int timeout, const QString &) {
   QObject *object = createNotification(Notifier::Call);

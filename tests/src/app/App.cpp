@@ -8,7 +8,6 @@
 #include "../components/chat/ChatProxyModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
-#include "../components/notifier/Notifier.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
@@ -56,6 +55,14 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
   m_engine.addImportPath(":/ui/modules");
   m_engine.addImportPath(":/ui/scripts");
   m_engine.addImportPath(":/ui/views");
+}
+
+// -----------------------------------------------------------------------------
+
+bool App::hasFocus () const {
+  QQmlApplicationEngine &engine = const_cast<QQmlApplicationEngine &>(m_engine);
+  const QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
+  return !!root->activeFocusItem();
 }
 
 // -----------------------------------------------------------------------------

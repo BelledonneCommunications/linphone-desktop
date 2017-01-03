@@ -1,6 +1,8 @@
 #ifndef NOTIFIER_H_
 #define NOTIFIER_H_
 
+#include <linphone++/linphone.hh>
+
 #include <QMutex>
 #include <QObject>
 
@@ -17,10 +19,18 @@ public:
 
   enum NotificationType {
     Call,
+    MessageReceived,
     MaxNbTypes
   };
 
-  Q_INVOKABLE void showCallMessage (int timeout, const QString &sip_address);
+  void notifyReceivedMessage (
+    int timeout,
+    const std::shared_ptr<linphone::ChatRoom> &room,
+    const std::shared_ptr<linphone::ChatMessage> &message
+  );
+
+  // TODO
+  void showCallMessage (int timeout, const QString &);
 
 private:
   QObject *createNotification (NotificationType type);

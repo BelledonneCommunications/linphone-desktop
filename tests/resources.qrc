@@ -210,6 +210,7 @@
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
     <file>ui/modules/Linphone/Notifications/CallNotification.qml</file>
     <file>ui/modules/Linphone/Notifications/Notification.qml</file>
+    <file>ui/modules/Linphone/Notifications/ReceivedMessageNotification.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>

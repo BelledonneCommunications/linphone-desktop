@@ -6,10 +6,9 @@
 #include <QQmlFileSelector>
 #include <QSystemTrayIcon>
 
+#include "../components/notifier/Notifier.hpp"
 #include "AvatarProvider.hpp"
 #include "DefaultTranslator.hpp"
-
-class Notifier;
 
 // =============================================================================
 
@@ -17,6 +16,21 @@ class App : public QApplication {
   Q_OBJECT;
 
 public:
+
+  QQmlEngine *getEngine () {
+    return &m_engine;
+  }
+
+  Notifier *getNotifier () const {
+    return m_notifier;
+  }
+
+  bool hasFocus () const;
+
+  Q_INVOKABLE QString locale () const {
+    return m_locale;
+  }
+
   static void init (int &argc, char **argv) {
     if (!m_instance) {
       // Instance must be exists before content.
@@ -27,14 +41,6 @@ public:
 
   static App *getInstance () {
     return m_instance;
-  }
-
-  QQmlEngine *getEngine () {
-    return &m_engine;
-  }
-
-  Q_INVOKABLE QString locale () const {
-    return m_locale;
   }
 
 private:

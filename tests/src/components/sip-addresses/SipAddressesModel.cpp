@@ -213,8 +213,6 @@ void SipAddressesModel::addOrUpdateSipAddress (const QString &sip_address, Conta
   m_refs << &m_sip_addresses[sip_address];
 
   endInsertRows();
-
-  emit dataChanged(index(row, 0), index(row, 0));
 }
 
 void SipAddressesModel::removeContactOfSipAddress (const QString &sip_address) {
