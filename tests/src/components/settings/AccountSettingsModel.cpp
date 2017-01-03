@@ -3,8 +3,7 @@
 // ===================================================================
 
 AccountSettingsModel::AccountSettingsModel (QObject *parent) :
-  QObject(parent) {
-}
+  QObject(parent) {}
 
 QString AccountSettingsModel::getUsername () const {
   return "Edward Miller ";
@@ -12,7 +11,7 @@ QString AccountSettingsModel::getUsername () const {
 
 void AccountSettingsModel::setUsername (const QString &username) {
   // NOTHING TODO.
-  (void)username;
+  (void) username;
 }
 
 Presence::PresenceLevel AccountSettingsModel::getPresenceLevel () const {
@@ -30,3 +29,16 @@ QString AccountSettingsModel::getSipAddress () const {
 bool AccountSettingsModel::getAutoAnswerStatus () const {
   return true;
 }
+
+// TODO: TMP
+/*
+   shared_ptr<linphone::ProxyConfig> cfg = m_core->getDefaultProxyConfig();
+   shared_ptr<linphone::Address> address = cfg->getIdentityAddress();
+   shared_ptr<linphone::AuthInfo> auth_info = m_core->findAuthInfo("", address->getUsername(), cfg->getDomain());
+
+   if (auth_info)
+   qDebug() << "OK";
+   else
+   qDebug() << "FAIL";
+
+ */

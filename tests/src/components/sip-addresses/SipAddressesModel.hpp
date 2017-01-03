@@ -25,15 +25,22 @@ public:
 
   Q_INVOKABLE void handleAllHistoryEntriesRemoved ();
 
+  void handleReceivedMessage (
+    const std::shared_ptr<linphone::ChatRoom> &room,
+    const std::shared_ptr<linphone::ChatMessage> &message
+  );
+
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-  void updateFromNewContact (ContactModel *contact);
-  void updateFromNewContactSipAddress (ContactModel *contact, const QString &sip_address);
-  void tryToRemoveSipAddress (const QString &sip_address);
+  void handleContactAdded (ContactModel *contact);
+  void handleContactRemoved (const ContactModel *contact);
 
-  void fetchSipAddresses ();
+  void addOrUpdateSipAddress (const QString &sip_address, ContactModel *contact = nullptr, qint64 timestamp = 0);
+  void removeContactOfSipAddress (const QString &sip_address);
+
+  void initSipAddresses ();
 
   void updateObservers (const QString &sip_address, ContactModel *contact);
 

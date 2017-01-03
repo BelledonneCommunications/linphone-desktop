@@ -6,12 +6,20 @@
 
 #include "Database.hpp"
 
+// =============================================================================
+
 #ifdef _WIN32
+
 #define DATABASES_PATH \
   QStandardPaths::writableLocation(QStandardPaths::DataLocation)
+#define DATABASE_PATH_CONFIG "linphonerc"
+
 #else
+
 #define DATABASES_PATH \
   QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
+#define DATABASE_PATH_CONFIG ".linphonerc"
+
 #endif // ifdef _WIN32
 
 #define DATABASE_PATH_AVATARS ".linphone/avatars/"
@@ -54,6 +62,10 @@ inline string getDatabaseFilePath (const QString &filename) {
 
 string Database::getCallHistoryPath () {
   return getDatabaseFilePath(DATABASE_PATH_CALL_HISTORY_LIST);
+}
+
+string Database::getConfigPath () {
+  return getDatabaseFilePath(DATABASE_PATH_CONFIG);
 }
 
 string Database::getFriendsListPath () {

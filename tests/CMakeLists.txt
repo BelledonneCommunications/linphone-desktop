@@ -48,6 +48,7 @@ endforeach ()
 
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbelcard.so")
+list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbellesip.so")
 
 set(SOURCES
   src/app/App.cpp
@@ -63,6 +64,7 @@ set(SOURCES
   src/components/contact/VcardModel.cpp
   src/components/contacts/ContactsListModel.cpp
   src/components/contacts/ContactsListProxyModel.cpp
+  src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/notifier/Notifier.cpp
   src/components/settings/AccountSettingsModel.cpp
@@ -87,6 +89,7 @@ set(HEADERS
   src/components/contact/VcardModel.hpp
   src/components/contacts/ContactsListModel.hpp
   src/components/contacts/ContactsListProxyModel.hpp
+  src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/notifier/Notifier.hpp
   src/components/presence/Presence.hpp

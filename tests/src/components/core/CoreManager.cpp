@@ -1,4 +1,7 @@
+#include <QTimer>
+
 #include "../../app/Database.hpp"
+#include "CoreHandlers.hpp"
 
 #include "CoreManager.hpp"
 
@@ -8,9 +11,20 @@ using namespace std;
 
 CoreManager *CoreManager::m_instance = nullptr;
 
-CoreManager::CoreManager (QObject *parent) : QObject(parent),
-  m_core(linphone::Factory::get()->createCore(nullptr, "", "", nullptr)) {
+CoreManager::CoreManager (QObject *parent) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
+  string config_path = Database::getConfigPath();
+  if (config_path.length() == 0)
+    qFatal("Unable to get config path.");
+  m_core = linphone::Factory::get()->createCore(m_handlers, config_path, "");
   setDatabasesPaths();
+}
+
+CoreManager::~CoreManager () {
+  delete m_cbs_timer;
+}
+
+void CoreManager::enableHandlers () {
+  m_cbs_timer->start();
 }
 
 void CoreManager::init () {
@@ -19,6 +33,15 @@ void CoreManager::init () {
 
     m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
     m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
+
+    QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
+    timer->setInterval(20);
+
+    QObject::connect(
+      timer, &QTimer::timeout, m_instance, []() {
+        m_instance->m_core->iterate();
+      }
+    );
   }
 }
 

@@ -70,6 +70,8 @@ void App::initContentApp () {
   registerTypes();
   addContextProperties();
 
+  CoreManager::getInstance()->enableHandlers();
+
   // Load main view.
   qInfo() << "Loading main view...";
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));

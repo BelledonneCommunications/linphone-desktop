@@ -12,6 +12,7 @@ namespace Database {
   std::string getAvatarsPath ();
 
   std::string getCallHistoryPath ();
+  std::string getConfigPath ();
   std::string getFriendsListPath ();
   std::string getMessageHistoryPath ();
 }
