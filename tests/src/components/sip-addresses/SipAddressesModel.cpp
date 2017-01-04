@@ -19,6 +19,9 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::handleContactAdded);
   QObject::connect(contacts, &ContactsListModel::contactRemoved, this, &SipAddressesModel::handleContactRemoved);
 
+  m_handlers = CoreManager::getInstance()->getHandlers();
+  QObject::connect(&(*m_handlers), &CoreHandlers::receivedMessage, this, &SipAddressesModel::handleReceivedMessage);
+
   QObject::connect(
     contacts, &ContactsListModel::sipAddressAdded, this, [this](ContactModel *contact, const QString &sip_address) {
       // TODO: Avoid the limitation of one contact by sip address.
@@ -129,14 +132,6 @@ void SipAddressesModel::handleAllHistoryEntriesRemoved () {
   emit dataChanged(index(row, 0), index(row, 0));
 }
 
-void SipAddressesModel::handleReceivedMessage (
-  const shared_ptr<linphone::ChatRoom> &room,
-  const shared_ptr<linphone::ChatMessage> &message
-) {
-  const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asString());
-  addOrUpdateSipAddress(sip_address, nullptr, static_cast<qint64>(message->getTime()));
-}
-
 // -----------------------------------------------------------------------------
 
 bool SipAddressesModel::removeRow (int row, const QModelIndex &parent) {
@@ -172,6 +167,14 @@ void SipAddressesModel::handleContactAdded (ContactModel *contact) {
 void SipAddressesModel::handleContactRemoved (const ContactModel *contact) {
   for (const auto &sip_address : contact->getVcardModel()->getSipAddresses())
     removeContactOfSipAddress(sip_address.toString());
+}
+
+void SipAddressesModel::handleReceivedMessage (
+  const shared_ptr<linphone::ChatRoom> &,
+  const shared_ptr<linphone::ChatMessage> &message
+) {
+  const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asString());
+  addOrUpdateSipAddress(sip_address, nullptr, static_cast<qint64>(message->getTime()));
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (const QString &sip_address, ContactModel *contact, qint64 timestamp) {

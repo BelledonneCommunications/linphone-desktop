@@ -31,8 +31,7 @@ void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::ChatRoom> &room,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
-  CoreManager *core = CoreManager::getInstance();
-  core->getSipAddressesModel()->handleReceivedMessage(room, message);
+  emit receivedMessage(room, message);
 
   const App *app = App::getInstance();
   if (!app->hasFocus())

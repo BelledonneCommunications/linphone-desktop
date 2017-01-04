@@ -18,6 +18,27 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
     this, &ChatModel::allEntriesRemoved,
     CoreManager::getInstance()->getSipAddressesModel(), &SipAddressesModel::handleAllHistoryEntriesRemoved
   );
+
+  m_handlers = CoreManager::getInstance()->getHandlers();
+  QObject::connect(
+    &(*m_handlers), &CoreHandlers::receivedMessage,
+    this, [this](
+      const std::shared_ptr<linphone::ChatRoom> &room,
+      const std::shared_ptr<linphone::ChatMessage> &message
+    ) {
+      if (m_chat_room == room) {
+        int row = rowCount();
+
+        beginInsertRows(QModelIndex(), row, row);
+
+        QVariantMap map;
+        fillMessageEntry(map, message);
+        m_entries << qMakePair(map, static_pointer_cast<void>(message));
+
+        endInsertRows();
+      }
+    }
+  );
 }
 
 QHash<int, QByteArray> ChatModel::roleNames () const {

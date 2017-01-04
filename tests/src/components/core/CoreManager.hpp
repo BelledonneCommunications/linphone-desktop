@@ -3,6 +3,7 @@
 
 #include "../contacts/ContactsListModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
+#include "CoreHandlers.hpp"
 
 // =============================================================================
 
@@ -12,10 +13,16 @@ class CoreManager : public QObject {
   Q_OBJECT;
 
 public:
-  ~CoreManager ();
+  ~CoreManager () = default;
+
+  void enableHandlers ();
 
   std::shared_ptr<linphone::Core> getCore () {
     return m_core;
+  }
+
+  std::shared_ptr<CoreHandlers> getHandlers () {
+    return m_handlers;
   }
 
   // ---------------------------------------------------------------------------
@@ -30,13 +37,17 @@ public:
     return m_sip_addresses_model;
   }
 
-  void enableHandlers ();
+  // ---------------------------------------------------------------------------
+  // Initialization.
+  // ---------------------------------------------------------------------------
 
   static void init ();
 
   static CoreManager *getInstance () {
     return m_instance;
   }
+
+  // ---------------------------------------------------------------------------
 
   // Must be used in a qml scene.
   // Warning: The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
@@ -48,7 +59,7 @@ private:
   void setDatabasesPaths ();
 
   std::shared_ptr<linphone::Core> m_core;
-  std::shared_ptr<linphone::CoreListener> m_handlers;
+  std::shared_ptr<CoreHandlers> m_handlers;
 
   ContactsListModel *m_contacts_list_model;
   SipAddressesModel *m_sip_addresses_model;

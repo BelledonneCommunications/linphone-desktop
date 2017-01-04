@@ -8,6 +8,8 @@
 
 // =============================================================================
 
+class CoreHandlers;
+
 class SipAddressesModel : public QAbstractListModel {
   Q_OBJECT;
 
@@ -25,17 +27,17 @@ public:
 
   Q_INVOKABLE void handleAllHistoryEntriesRemoved ();
 
-  void handleReceivedMessage (
-    const std::shared_ptr<linphone::ChatRoom> &room,
-    const std::shared_ptr<linphone::ChatMessage> &message
-  );
-
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);
+
+  void handleReceivedMessage (
+    const std::shared_ptr<linphone::ChatRoom> &room,
+    const std::shared_ptr<linphone::ChatMessage> &message
+  );
 
   void addOrUpdateSipAddress (const QString &sip_address, ContactModel *contact = nullptr, qint64 timestamp = 0);
   void removeContactOfSipAddress (const QString &sip_address);
@@ -48,6 +50,8 @@ private:
   QList<const QVariantMap *> m_refs;
 
   QMultiHash<QString, ContactObserver *> m_observers;
+
+  std::shared_ptr<CoreHandlers> m_handlers;
 };
 
 #endif // SIP_ADDRESSES_MODEL_H_

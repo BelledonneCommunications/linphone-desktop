@@ -8,15 +8,12 @@
 // Fetch all N messages of a ChatRoom.
 // =============================================================================
 
+class CoreHandlers;
+
 class ChatModel : public QAbstractListModel {
   Q_OBJECT;
 
-  Q_PROPERTY(
-    QString sipAddress
-    READ getSipAddress
-    WRITE setSipAddress
-    NOTIFY sipAddressChanged
-  );
+  Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
 
 public:
   typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
@@ -83,6 +80,8 @@ private:
 
   QList<ChatEntryData> m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;
+
+  std::shared_ptr<CoreHandlers> m_handlers;
 };
 
 #endif // CHAT_MODEL_H_

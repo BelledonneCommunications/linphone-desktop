@@ -1,7 +1,6 @@
 #include <QTimer>
 
 #include "../../app/Database.hpp"
-#include "CoreHandlers.hpp"
 
 #include "CoreManager.hpp"
 
@@ -17,10 +16,6 @@ CoreManager::CoreManager (QObject *parent) : QObject(parent), m_handlers(make_sh
     qFatal("Unable to get config path.");
   m_core = linphone::Factory::get()->createCore(m_handlers, config_path, "");
   setDatabasesPaths();
-}
-
-CoreManager::~CoreManager () {
-  delete m_cbs_timer;
 }
 
 void CoreManager::enableHandlers () {
