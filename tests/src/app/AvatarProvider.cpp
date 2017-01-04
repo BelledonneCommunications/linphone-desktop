@@ -1,4 +1,4 @@
-#include "Database.hpp"
+#include "Paths.hpp"
 #include "../utils.hpp"
 
 #include "AvatarProvider.hpp"
@@ -12,7 +12,7 @@ AvatarProvider::AvatarProvider () :
     QQmlImageProviderBase::Image,
     QQmlImageProviderBase::ForceAsynchronousImageLoading
   ) {
-  m_avatars_path = Utils::linphoneStringToQString(Database::getAvatarsPath());
+  m_avatars_path = Utils::linphoneStringToQString(Paths::getAvatarsDirpath());
 }
 
 QImage AvatarProvider::requestImage (

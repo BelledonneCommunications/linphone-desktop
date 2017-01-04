@@ -46,16 +46,18 @@ foreach (package ${QT5_PACKAGES})
   endif ()
 endforeach ()
 
+list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone.so")
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbelcard.so")
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbellesip.so")
+list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbctoolbox.so")
 
 set(SOURCES
   src/app/App.cpp
   src/app/AvatarProvider.cpp
-  src/app/Database.cpp
   src/app/DefaultTranslator.cpp
   src/app/Logger.cpp
+  src/app/Paths.cpp
   src/components/camera/Camera.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
@@ -78,9 +80,9 @@ set(SOURCES
 set(HEADERS
   src/app/App.hpp
   src/app/AvatarProvider.hpp
-  src/app/Database.hpp
   src/app/DefaultTranslator.hpp
   src/app/Logger.hpp
+  src/app/Paths.hpp
   src/components/camera/Camera.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp

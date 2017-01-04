@@ -5,6 +5,16 @@
 
 // =============================================================================
 
-void logger (QtMsgType type, const QMessageLogContext &context, const QString &msg);
+class Logger {
+public:
+  static void init ();
+
+private:
+  Logger () = default;
+
+  bool m_display_core_logs = false;
+
+  static Logger *m_instance;
+};
 
 #endif // LOGGER_H_

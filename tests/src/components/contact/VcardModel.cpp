@@ -5,7 +5,7 @@
 #include <QUuid>
 
 #include "../../app/App.hpp"
-#include "../../app/Database.hpp"
+#include "../../app/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -57,7 +57,7 @@ VcardModel::~VcardModel () {
 
     QString image_path(
       ::Utils::linphoneStringToQString(
-        Database::getAvatarsPath() +
+        Paths::getAvatarsDirpath() +
         photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
@@ -111,7 +111,7 @@ bool VcardModel::setAvatar (const QString &path) {
     .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
     .arg(info.suffix());
 
-  QString dest = ::Utils::linphoneStringToQString(Database::getAvatarsPath()) + file_id;
+  QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirpath()) + file_id;
 
   if (!file.copy(dest))
     return false;
@@ -127,7 +127,7 @@ bool VcardModel::setAvatar (const QString &path) {
   if (old_photo) {
     QString image_path(
       ::Utils::linphoneStringToQString(
-        Database::getAvatarsPath() + old_photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+        Paths::getAvatarsDirpath() + old_photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
 

@@ -1,10 +1,10 @@
 #include "app/App.hpp"
 #include "app/Logger.hpp"
 
-// ===================================================================
+// =============================================================================
 
 int main (int argc, char *argv[]) {
-  qInstallMessageHandler(logger);
+  Logger::init();
 
   QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   App::init(argc, argv);

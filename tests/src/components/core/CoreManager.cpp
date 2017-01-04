@@ -1,6 +1,6 @@
 #include <QTimer>
 
-#include "../../app/Database.hpp"
+#include "../../app/Paths.hpp"
 
 #include "CoreManager.hpp"
 
@@ -11,10 +11,7 @@ using namespace std;
 CoreManager *CoreManager::m_instance = nullptr;
 
 CoreManager::CoreManager (QObject *parent) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
-  string config_path = Database::getConfigPath();
-  if (config_path.length() == 0)
-    qFatal("Unable to get config path.");
-  m_core = linphone::Factory::get()->createCore(m_handlers, config_path, "");
+  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(), "");
   setDatabasesPaths();
 }
 
@@ -45,20 +42,7 @@ VcardModel *CoreManager::createDetachedVcardModel () {
 }
 
 void CoreManager::setDatabasesPaths () {
-  string database_path;
-
-  database_path = Database::getFriendsListPath();
-  if (database_path.length() == 0)
-    qFatal("Unable to get friends list database path.");
-  m_core->setFriendsDatabasePath(database_path);
-
-  database_path = Database::getCallHistoryPath();
-  if (database_path.length() == 0)
-    qFatal("Unable to get call history database path.");
-  m_core->setCallLogsDatabasePath(database_path);
-
-  database_path = Database::getMessageHistoryPath();
-  if (database_path.length() == 0)
-    qFatal("Unable to get message history database path.");
-  m_core->setChatDatabasePath(database_path);
+  m_core->setFriendsDatabasePath(Paths::getFriendsListFilepath());
+  m_core->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
+  m_core->setChatDatabasePath(Paths::getMessageHistoryFilepath());
 }
