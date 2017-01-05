@@ -36,7 +36,7 @@ void SmartSearchBarModel::setFilter (const QString &pattern) {
 
 bool SmartSearchBarModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
   const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
-  return computeStringWeight(index.data().toMap()["sipAddress"].toString()) > 0;
+  return computeEntryWeight(index.data().toMap()) > 0;
 }
 
 bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -46,8 +46,9 @@ bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &
   const QString &sip_address_a = map_a["sipAddress"].toString();
   const QString &sip_address_b = map_b["sipAddress"].toString();
 
-  int weight_a = computeStringWeight(sip_address_a);
-  int weight_b = computeStringWeight(sip_address_b);
+  // TODO: Use a cache, do not compute the same value as `filterAcceptsRow`.
+  int weight_a = computeEntryWeight(map_a);
+  int weight_b = computeEntryWeight(map_b);
 
   // 1. Not the same weight.
   if (weight_a != weight_b)
@@ -75,6 +76,16 @@ bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &
 
   // 6. Same contact name, so compare sip addresses.
   return sip_address_a <= sip_address_b;
+}
+
+int SmartSearchBarModel::computeEntryWeight (const QVariantMap &entry) const {
+  int weight = computeStringWeight(entry["sipAddress"].toString().mid(4));
+
+  const ContactModel *contact = entry.value("contact").value<ContactModel *>();
+  if (contact)
+    weight += computeStringWeight(contact->getVcardModel()->getUsername());
+
+  return weight;
 }
 
 int SmartSearchBarModel::computeStringWeight (const QString &string) const {

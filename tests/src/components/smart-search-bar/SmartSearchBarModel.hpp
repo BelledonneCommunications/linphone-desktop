@@ -23,6 +23,7 @@ protected:
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
+  int computeEntryWeight (const QVariantMap &entry) const;
   int computeStringWeight (const QString &string) const;
 
   QString m_filter;
