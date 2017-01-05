@@ -58,6 +58,7 @@ Item {
       selectByMouse: true
       wrapMode: TextArea.Wrap
 
+      Component.onCompleted: forceActiveFocus()
       Keys.onReturnPressed: text.length !== 0 && validText(text)
     }
   }
