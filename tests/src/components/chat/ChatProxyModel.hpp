@@ -51,6 +51,10 @@ public:
     static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->removeAllEntries();
   }
 
+  Q_INVOKABLE void sendMessage (const QString &message) {
+    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->sendMessage(message);
+  }
+
 signals:
   void sipAddressChanged (const QString &sipAddress);
   void moreEntriesLoaded (int n);

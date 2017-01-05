@@ -1,5 +1,4 @@
 #include <bctoolbox/logging.h>
-#include <bctoolbox/port.h>
 #include <linphone/linphonecore.h>
 #include <QDateTime>
 

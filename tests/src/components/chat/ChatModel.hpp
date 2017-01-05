@@ -11,6 +11,8 @@
 class CoreHandlers;
 
 class ChatModel : public QAbstractListModel {
+  class MessageHandlers;
+
   Q_OBJECT;
 
   Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
@@ -39,6 +41,14 @@ public:
 
   Q_ENUM(CallStatus);
 
+  enum MessageState {
+    MessageStateDelivered = linphone::ChatMessageStateDelivered,
+    MessageStateInProgress = linphone::ChatMessageStateInProgress,
+    MessageStateNotDelivered = linphone::ChatMessageStateNotDelivered
+  };
+
+  Q_ENUM(MessageState);
+
   ChatModel (QObject *parent = Q_NULLPTR);
   ~ChatModel () = default;
 
@@ -53,8 +63,10 @@ public:
   QString getSipAddress () const;
   void setSipAddress (const QString &sip_address);
 
-  Q_INVOKABLE void removeEntry (int id);
-  Q_INVOKABLE void removeAllEntries ();
+  void removeEntry (int id);
+  void removeAllEntries ();
+
+  void sendMessage (const QString &message);
 
 signals:
   void sipAddressChanged (const QString &sip_address);
@@ -78,10 +90,13 @@ private:
 
   void removeEntry (ChatEntryData &pair);
 
+  void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
+
   QList<ChatEntryData> m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;
 
-  std::shared_ptr<CoreHandlers> m_handlers;
+  std::shared_ptr<CoreHandlers> m_core_handlers;
+  std::shared_ptr<MessageHandlers> m_message_handlers;
 };
 
 #endif // CHAT_MODEL_H_

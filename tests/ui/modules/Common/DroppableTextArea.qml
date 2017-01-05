@@ -8,10 +8,12 @@ import Common.Styles 1.0
 
 Item {
   property alias placeholderText: textArea.placeholderText
+  property alias text: textArea.text
 
   // ---------------------------------------------------------------------------
 
   signal dropped (var files)
+  signal validText (string text)
 
   // ---------------------------------------------------------------------------
 
@@ -36,9 +38,13 @@ Item {
 
   // Text area.
   Flickable {
+    anchors.fill: parent
+    boundsBehavior: Flickable.StopAtBounds
+
     ScrollBar.vertical: ForceScrollBar {
       id: scrollBar
     }
+
     TextArea.flickable: TextArea {
       id: textArea
 
@@ -49,12 +55,11 @@ Item {
       rightPadding: fileChooserButton.width +
         fileChooserButton.anchors.rightMargin +
         DroppableTextAreaStyle.fileChooserButton.margins
+      selectByMouse: true
       wrapMode: TextArea.Wrap
-    }
-    anchors.fill: parent
 
-    // Necessary, else `placeHolderText` can get out of the component.
-    clip: true
+      Keys.onReturnPressed: text.length !== 0 && validText(text)
+    }
   }
 
   // Handle click to select files.

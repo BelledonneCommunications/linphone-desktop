@@ -13,30 +13,66 @@ using namespace std;
 
 // =============================================================================
 
+class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
+  void onFileTransferRecv (
+    const shared_ptr<linphone::ChatMessage> &message,
+    const shared_ptr<linphone::Content> &content,
+    const shared_ptr<linphone::Buffer> &buffer
+  ) override {
+    qDebug() << "Not yet implemented";
+  }
+
+  shared_ptr<linphone::Buffer> onFileTransferSend (
+    const shared_ptr<linphone::ChatMessage> &message,
+    const shared_ptr<linphone::Content> &content,
+    size_t offset,
+    size_t size
+  ) override {
+    qDebug() << "Not yet implemented";
+  }
+
+  void onFileTransferProgressIndication (
+    const shared_ptr<linphone::ChatMessage> &message,
+    const shared_ptr<linphone::Content> &content,
+    size_t offset,
+    size_t total
+  ) override {
+    qDebug() << "Not yet implemented";
+  }
+
+  void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessageState state) override {
+    ChatModel *chat = static_cast<ChatModel *>(message->getUserData());
+
+    auto it = find_if(chat->m_entries.begin(), chat->m_entries.end(), [&message](const ChatEntryData &pair) {
+          return pair.second == message;
+        });
+    if (it == chat->m_entries.end())
+      return;
+
+    (*it).first["state"] = state;
+    int row = distance(chat->m_entries.begin(), it);
+
+    emit chat->dataChanged(chat->index(row, 0), chat->index(row, 0));
+  }
+};
+
+// -----------------------------------------------------------------------------
+
 ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
   QObject::connect(
     this, &ChatModel::allEntriesRemoved,
     CoreManager::getInstance()->getSipAddressesModel(), &SipAddressesModel::handleAllHistoryEntriesRemoved
   );
 
-  m_handlers = CoreManager::getInstance()->getHandlers();
+  m_core_handlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
-    &(*m_handlers), &CoreHandlers::receivedMessage,
+    &(*m_core_handlers), &CoreHandlers::receivedMessage,
     this, [this](
-      const std::shared_ptr<linphone::ChatRoom> &room,
-      const std::shared_ptr<linphone::ChatMessage> &message
+      const shared_ptr<linphone::ChatRoom> &room,
+      const shared_ptr<linphone::ChatMessage> &message
     ) {
-      if (m_chat_room == room) {
-        int row = rowCount();
-
-        beginInsertRows(QModelIndex(), row, row);
-
-        QVariantMap map;
-        fillMessageEntry(map, message);
-        m_entries << qMakePair(map, static_pointer_cast<void>(message));
-
-        endInsertRows();
-      }
+      if (m_chat_room == room)
+        insertMessageAtEnd(message);
     }
   );
 }
@@ -189,6 +225,14 @@ void ChatModel::removeAllEntries () {
   emit allEntriesRemoved();
 }
 
+void ChatModel::sendMessage (const QString &message) {
+  shared_ptr<linphone::ChatMessage> _message = m_chat_room->createMessage(::Utils::qStringToLinphoneString(message));
+  _message->setUserData(this);
+  _message->setListener(m_message_handlers);
+  m_chat_room->sendChatMessage(_message);
+  insertMessageAtEnd(_message);
+}
+
 // -----------------------------------------------------------------------------
 
 void ChatModel::fillMessageEntry (
@@ -246,11 +290,9 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
         shared_ptr<void> linphone_ptr = pair.second;
         QTimer::singleShot(
           0, this, [this, linphone_ptr]() {
-            auto it = find_if(
-                m_entries.begin(), m_entries.end(), [linphone_ptr](const ChatEntryData &pair) {
+            auto it = find_if(m_entries.begin(), m_entries.end(), [linphone_ptr](const ChatEntryData &pair) {
                   return pair.second == linphone_ptr;
-                }
-              );
+                });
 
             if (it != m_entries.end())
               removeEntry(static_cast<int>(distance(m_entries.begin(), it)));
@@ -263,4 +305,16 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
     default:
       qWarning() << QStringLiteral("Unknown chat entry type: %1.").arg(type);
   }
+}
+
+void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &message) {
+  int row = rowCount();
+
+  beginInsertRows(QModelIndex(), row, row);
+
+  QVariantMap map;
+  fillMessageEntry(map, message);
+  m_entries << qMakePair(map, static_pointer_cast<void>(message));
+
+  endInsertRows();
 }

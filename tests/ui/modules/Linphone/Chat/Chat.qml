@@ -15,6 +15,10 @@ ColumnLayout {
 
   // ---------------------------------------------------------------------------
 
+  signal messageToSend (string text)
+
+  // ---------------------------------------------------------------------------
+
   spacing: 0
 
   ScrollableListView {
@@ -212,6 +216,11 @@ ColumnLayout {
     DroppableTextArea {
       anchors.fill: parent
       placeholderText: qsTr('newMessagePlaceholder')
+
+      onValidText: {
+        this.text = ''
+        proxyModel.sendMessage(text)
+      }
     }
   }
 }
