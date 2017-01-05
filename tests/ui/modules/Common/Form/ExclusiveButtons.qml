@@ -22,7 +22,23 @@ Row {
 
   spacing: ExclusiveButtonsStyle.buttonsSpacing
 
+  Keys.onLeftPressed: {
+    if (selectedButton > 0) {
+      clicked(--selectedButton)
+    }
+  }
+
+  Keys.onRightPressed: {
+    if (selectedButton < repeater.count - 1) {
+      clicked(++selectedButton)
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+
   Repeater {
+    id: repeater
+
     model: texts
 
     SmallButton {
