@@ -20,7 +20,7 @@ public:
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
   QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role) const override;
+  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
