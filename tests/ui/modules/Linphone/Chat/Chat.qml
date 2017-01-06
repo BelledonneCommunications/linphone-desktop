@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // =============================================================================
 
@@ -182,6 +183,10 @@ ColumnLayout {
       var initView = function () {
         positionViewAtEnd()
         _tryToLoadMoreEntries = false
+
+        // TODO: Remove these lines when this issue will not be longer valid :
+        // https://bugreports.qt.io/browse/QTBUG-49989
+        Utils.setTimeout(chat, 10, positionViewAtEnd)
       }
 
       // Received only if more entries were loaded.
