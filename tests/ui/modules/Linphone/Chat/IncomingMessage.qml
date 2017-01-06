@@ -26,7 +26,7 @@ RowLayout {
 
       // The avatar is only visible for the first message of a incoming messages sequence.
       visible: {
-        if (index === 0) {
+        if (index <= 0) {
           return true
         }
 
