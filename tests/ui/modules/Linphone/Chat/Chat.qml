@@ -184,7 +184,7 @@ ColumnLayout {
         _tryToLoadMoreEntries = false
       }
 
-      // Received only if more entries was loaded.
+      // Received only if more entries were loaded.
       proxyModel.moreEntriesLoaded.connect(function (n) {
         positionViewAtIndex(n - 1, ListView.Beginning)
         _tryToLoadMoreEntries = false

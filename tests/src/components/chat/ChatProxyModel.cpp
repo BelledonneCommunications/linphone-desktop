@@ -18,7 +18,7 @@ bool ChatModelFilter::filterAcceptsRow (int source_row, const QModelIndex &) con
 
 void ChatModelFilter::setEntryTypeFilter (ChatModel::EntryType type) {
   m_entry_type_filter = type;
-  invalidateFilter();
+  invalidate();
 }
 
 // =============================================================================
@@ -49,7 +49,7 @@ void ChatProxyModel::loadMoreEntries () {
 }
 
 void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
-  if (m_chat_model_filter.m_entry_type_filter != type) {
+  if (m_chat_model_filter.getEntryTypeFilter() != type) {
     m_chat_model_filter.setEntryTypeFilter(type);
     emit entryTypeFilterChanged(type);
   }

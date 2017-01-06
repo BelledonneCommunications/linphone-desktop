@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphone)
 
-set(LINPHONE_EXEC linphone)
+set(LINPHONE_EXEC linphone-qt)
 set(CMAKE_CXX_STANDARD 11)
 
 # Use automatically moc from Qt5.
@@ -46,11 +46,9 @@ foreach (package ${QT5_PACKAGES})
   endif ()
 endforeach ()
 
-list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone.so")
+find_package(Linphone REQUIRED)
+
 list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
-list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbelcard.so")
-list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbellesip.so")
-list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/libbctoolbox.so")
 
 set(SOURCES
   src/app/App.cpp
@@ -180,6 +178,6 @@ add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
 add_dependencies(${LINPHONE_EXEC} update_translations)
 add_dependencies(update_translations check_qml)
 
-target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/include/")
+target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}")
 
-target_link_libraries(${LINPHONE_EXEC} ${LIBS})
+target_link_libraries(${LINPHONE_EXEC} ${LIBS} ${LINPHONE_LIBRARIES})

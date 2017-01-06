@@ -12,18 +12,21 @@
 // Cannot be used as a nested class by Qt and `Q_OBJECT` macro
 // must be used in header c++ file.
 class ChatModelFilter : public QSortFilterProxyModel {
-  friend class ChatProxyModel;
   Q_OBJECT;
 
 public:
   ChatModelFilter (QObject *parent = Q_NULLPTR);
 
+  ChatModel::EntryType getEntryTypeFilter () {
+    return m_entry_type_filter;
+  }
+
+  void setEntryTypeFilter (ChatModel::EntryType type);
+
 protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &parent) const override;
 
 private:
-  void setEntryTypeFilter (ChatModel::EntryType type);
-
   ChatModel m_chat_model;
   ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
 };
@@ -58,6 +61,7 @@ public:
 signals:
   void sipAddressChanged (const QString &sipAddress);
   void moreEntriesLoaded (int n);
+
   void entryTypeFilterChanged (ChatModel::EntryType type);
 
 protected:
