@@ -9,6 +9,7 @@
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
+#include "../components/settings/SettingsModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
 
@@ -140,6 +141,13 @@ void App::registerTypes () {
     "Linphone", 1, 0, "AccountSettingsModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
       return new AccountSettingsModel();
+    }
+  );
+
+  qmlRegisterSingletonType<SettingsModel>(
+    "Linphone", 1, 0, "SettingsModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new SettingsModel();
     }
   );
 

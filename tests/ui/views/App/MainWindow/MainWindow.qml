@@ -113,6 +113,8 @@ ApplicationWindow {
         Layout.fillHeight: parent.height
         Layout.preferredWidth: MainWindowStyle.accountStatus.width
 
+        account: AccountSettingsModel
+
         onClicked: Utils.openWindow('ManageAccounts', window)
       }
 
@@ -120,7 +122,7 @@ ApplicationWindow {
         width: MainWindowStyle.autoAnswerStatus.width
 
         Icon {
-          icon: AccountSettingsModel.autoAnswerStatus
+          icon: SettingsModel.autoAnswerStatus
             ? 'auto_answer'
             : ''
           iconSize: MainWindowStyle.autoAnswerStatus.iconSize

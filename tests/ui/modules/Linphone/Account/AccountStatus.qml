@@ -11,6 +11,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
+  property var account
+
   signal clicked
 
   // ---------------------------------------------------------------------------
@@ -29,7 +31,7 @@ Item {
         Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
         Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
         icon: 'chevron'
-        level: AccountSettingsModel.presenceLevel
+        level: account.presenceLevel
       }
 
       Text {
@@ -39,7 +41,7 @@ Item {
         elide: Text.ElideRight
         font.bold: true
         font.pointSize: AccountStatusStyle.username.fontSize
-        text: AccountSettingsModel.username
+        text: account.username
         verticalAlignment: Text.AlignBottom
       }
     }
@@ -49,7 +51,7 @@ Item {
       elide: Text.ElideRight
       font.pointSize: AccountStatusStyle.sipAddress.fontSize
       height: parent.height / 2
-      text: AccountSettingsModel.sipAddress
+      text: account.sipAddress
       verticalAlignment: Text.AlignTop
       width: parent.width
     }

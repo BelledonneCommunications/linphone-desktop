@@ -10,18 +10,8 @@
 class AccountSettingsModel : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(
-    QString username
-    READ getUsername
-    // WRITE setUsername
-    CONSTANT // TODO: TMP
-  );
-
-  Q_PROPERTY(
-    QString sipAddress
-    READ getSipAddress
-    CONSTANT
-  );
+  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountUpdated);
+  Q_PROPERTY(QString sipAddress READ getSipAddress NOTIFY accountUpdated);
 
   Q_PROPERTY(
     Presence::PresenceLevel presenceLevel
@@ -35,14 +25,11 @@ class AccountSettingsModel : public QObject {
     CONSTANT
   );
 
-  Q_PROPERTY(
-    bool autoAnswerStatus
-    READ getAutoAnswerStatus
-    CONSTANT
-  );
-
 public:
   AccountSettingsModel (QObject *parent = Q_NULLPTR);
+
+signals:
+  void accountUpdated ();
 
 private:
   QString getUsername () const;
@@ -53,7 +40,9 @@ private:
 
   QString getSipAddress () const;
 
-  bool getAutoAnswerStatus () const;
+  std::shared_ptr<linphone::Address> getDefaultSipAddress () const;
+
+  std::shared_ptr<linphone::ProxyConfig> m_default_proxy;
 };
 
 #endif // ACCOUNT_SETTINGS_MODEL_H_

@@ -1,6 +1,7 @@
 #ifndef PRESENCE_H_
 #define PRESENCE_H_
 
+#include <linphone++/linphone.hh>
 #include <QObject>
 
 // =============================================================================
