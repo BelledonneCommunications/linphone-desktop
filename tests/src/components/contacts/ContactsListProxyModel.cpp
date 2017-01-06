@@ -110,7 +110,7 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel &contact)
   float size = static_cast<float>(addresses.size());
   for (auto it = addresses.cbegin(); it != addresses.cend(); ++it)
     weight += computeStringWeight(
-        ::Utils::linphoneStringToQString((*it)->asString()),
+        ::Utils::linphoneStringToQString((*it)->asStringUriOnly()),
         SIP_ADDRESSES_WEIGHT / size
       );
 

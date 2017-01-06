@@ -134,7 +134,7 @@ QString ChatModel::getSipAddress () const {
     return "";
 
   return ::Utils::linphoneStringToQString(
-    m_chat_room->getPeerAddress()->asString()
+    m_chat_room->getPeerAddress()->asStringUriOnly()
   );
 }
 

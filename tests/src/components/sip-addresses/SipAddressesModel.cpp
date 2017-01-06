@@ -173,7 +173,7 @@ void SipAddressesModel::handleReceivedMessage (
   const shared_ptr<linphone::ChatRoom> &,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
-  const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asString());
+  const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
   addOrUpdateSipAddress(sip_address, nullptr, static_cast<qint64>(message->getTime()));
 }
 
@@ -253,7 +253,7 @@ void SipAddressesModel::initSipAddresses () {
     if (history.size() == 0)
       continue;
 
-    QString sip_address = ::Utils::linphoneStringToQString(chat_room->getPeerAddress()->asString());
+    QString sip_address = ::Utils::linphoneStringToQString(chat_room->getPeerAddress()->asStringUriOnly());
 
     QVariantMap map;
     map["sipAddress"] = sip_address;
@@ -265,7 +265,7 @@ void SipAddressesModel::initSipAddresses () {
   // Get sip addresses from calls.
   QSet<QString> address_done;
   for (const auto &call_log : core->getCallLogs()) {
-    QString sip_address = ::Utils::linphoneStringToQString(call_log->getRemoteAddress()->asStringUriOnly());
+    const QString &sip_address = ::Utils::linphoneStringToQString(call_log->getRemoteAddress()->asStringUriOnly());
 
     if (address_done.contains(sip_address))
       continue; // Already used.
