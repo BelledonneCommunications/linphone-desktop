@@ -265,7 +265,7 @@ void SipAddressesModel::initSipAddresses () {
   // Get sip addresses from calls.
   QSet<QString> address_done;
   for (const auto &call_log : core->getCallLogs()) {
-    QString sip_address = ::Utils::linphoneStringToQString(call_log->getRemoteAddress()->asString());
+    QString sip_address = ::Utils::linphoneStringToQString(call_log->getRemoteAddress()->asStringUriOnly());
 
     if (address_done.contains(sip_address))
       continue; // Already used.

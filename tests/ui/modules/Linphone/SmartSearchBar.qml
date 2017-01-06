@@ -104,7 +104,7 @@ SearchBox {
         Contact {
           Layout.fillHeight: true
           Layout.fillWidth: true
-          sipAddress: $entry.sipAddress
+          entry: $entry
         }
 
         // ---------------------------------------------------------------------

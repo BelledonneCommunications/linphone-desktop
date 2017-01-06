@@ -18,18 +18,10 @@ Rectangle {
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
 
-  // Can be a SipAddress object of SipAddressesModel or just a string.
-  property var sipAddress
-
-  property var _contact: Utils.isObject(sipAddress)
-    ? sipAddress.contact
-    : SipAddressesModel.mapSipAddressToContact(sipAddress)
+  property var entry
+  property var _contact: entry.contact
 
   // ---------------------------------------------------------------------------
-
-  function _getSipAddress () {
-    return item.sipAddress.sipAddress || item.sipAddress
-  }
 
   color: 'transparent' // No color by default.
   height: ContactStyle.height
@@ -49,7 +41,7 @@ Rectangle {
       Layout.preferredWidth: ContactStyle.contentHeight
       image: _contact && _contact.vcard.avatar
       presenceLevel: _contact ? _contact.presenceLevel : -1
-      username: LinphoneUtils.getContactUsername(_contact || _getSipAddress())
+      username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress)
     }
 
     ContactDescription {
@@ -57,7 +49,7 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      sipAddress: _getSipAddress()
+      sipAddress: entry.sipAddress
       username: avatar.username
     }
 

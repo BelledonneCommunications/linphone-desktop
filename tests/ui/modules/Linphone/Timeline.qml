@@ -97,7 +97,7 @@ ColumnLayout {
               ? TimelineStyle.contact.backgroundColor.a
               : TimelineStyle.contact.backgroundColor.b
           )
-        sipAddress: $timelineEntry
+        entry: $timelineEntry
         sipAddressColor: view.currentIndex === index
           ? TimelineStyle.contact.sipAddress.color.selected
           : TimelineStyle.contact.sipAddress.color.normal
