@@ -105,6 +105,10 @@ Item {
         launcher: searchField
         width: searchField.width
 
+        // If the menu is focused, the main window loses the active status.
+        // So It's necessary to map the keys events.
+        Keys.forwardTo: searchField
+
         onMenuClosed: searchBox.hideMenu()
 
         ScrollableListView {
