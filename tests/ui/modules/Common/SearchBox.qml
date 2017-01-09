@@ -72,6 +72,7 @@ Item {
       id: searchField
 
       icon: 'search'
+      selectByMouse: true
       width: parent.width
 
       Keys.onEscapePressed: searchBox.hideMenu()
