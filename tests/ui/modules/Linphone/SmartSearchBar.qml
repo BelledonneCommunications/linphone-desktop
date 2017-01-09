@@ -18,8 +18,10 @@ SearchBox {
   signal launchVideoCall (string sipAddress)
 
   // ---------------------------------------------------------------------------
+  // Header.
+  // ---------------------------------------------------------------------------
 
-  header: Column {
+  header: MouseArea {
     readonly property string interpretableSipAddress: SipAddressesModel.interpretUrl(searchBox.filter)
 
     height: {
@@ -28,122 +30,129 @@ SearchBox {
     }
     width: parent.width
 
-    spacing: 0
+    // Workaround to handle mouse.
+    // Without it, the mouse can be given to items list when it is hover header.
+    hoverEnabled: true
 
-    // -------------------------------------------------------------------------
-    // Default contact.
-    // -------------------------------------------------------------------------
+    Column {
+      anchors.fill: parent
 
-    Loader {
-      id: defaultContact
+      spacing: 0
 
-      height: searchBox.entryHeight
-      width: parent.width
+      // -----------------------------------------------------------------------
+      // Default contact.
+      // -----------------------------------------------------------------------
 
-      visible: interpretableSipAddress.length > 0
+      Loader {
+        id: defaultContact
 
-      sourceComponent: Rectangle {
-        anchors.fill: parent
-        color: SmartSearchBarStyle.entry.color.normal
+        height: searchBox.entryHeight
+        width: parent.width
 
-        RowLayout {
-          anchors {
-            fill: parent
-            rightMargin: SmartSearchBarStyle.entry.rightMargin
-          }
-          spacing: 0
+        visible: interpretableSipAddress.length > 0
 
-          Contact {
-            id: contact
+        sourceComponent: Rectangle {
+          anchors.fill: parent
+          color: SmartSearchBarStyle.entry.color.normal
 
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            entry: Object ({
-              sipAddress: interpretableSipAddress
-            })
-          }
+          RowLayout {
+            anchors {
+              fill: parent
+              rightMargin: SmartSearchBarStyle.entry.rightMargin
+            }
+            spacing: 0
 
-          ActionBar {
-            iconSize: SmartSearchBarStyle.entry.iconSize
+            Contact {
+              id: contact
 
-            ActionButton {
-              icon: 'video_call'
-              onClicked: {
-                searchBox.hideMenu()
-                searchBox.launchVideoCall(interpretableSipAddress)
-              }
+              Layout.fillHeight: true
+              Layout.fillWidth: true
+              entry: Object ({
+                sipAddress: interpretableSipAddress
+              })
             }
 
-            ActionButton {
-              icon: 'call'
-              onClicked: {
-                searchBox.hideMenu()
-                searchBox.launchCall(interpretableSipAddress)
-              }
-            }
+            ActionBar {
+              iconSize: SmartSearchBarStyle.entry.iconSize
 
-            ActionButton {
-              icon: 'chat'
-              onClicked: {
-                searchBox.hideMenu()
-                searchBox.launchChat(interpretableSipAddress)
+              ActionButton {
+                icon: 'video_call'
+                onClicked: {
+                  searchBox.hideMenu()
+                  searchBox.launchVideoCall(interpretableSipAddress)
+                }
+              }
+
+              ActionButton {
+                icon: 'call'
+                onClicked: {
+                  searchBox.hideMenu()
+                  searchBox.launchCall(interpretableSipAddress)
+                }
+              }
+
+              ActionButton {
+                icon: 'chat'
+                onClicked: {
+                  searchBox.hideMenu()
+                  searchBox.launchChat(interpretableSipAddress)
+                }
               }
             }
           }
         }
       }
-    }
 
-    // -------------------------------------------------------------------------
-    // Add contact button.
-    // -------------------------------------------------------------------------
+      // -----------------------------------------------------------------------
+      // Add contact button.
+      // -----------------------------------------------------------------------
 
-    MouseArea {
-      id: addContactButton
+      MouseArea {
+        id: addContactButton
 
-      height: SmartSearchBarStyle.header.addButtonHeight
-      width: parent.width
+        height: SmartSearchBarStyle.header.addButtonHeight
+        width: parent.width
 
-      onClicked: {
-        searchBox.hideMenu()
-        searchBox.addContact(interpretableSipAddress)
-      }
-
-      Rectangle {
-        anchors.fill: parent
-        color: parent.pressed
-        ? SmartSearchBarStyle.header.color.pressed
-        : SmartSearchBarStyle.header.color.normal
-
-        Text {
-          anchors {
-            left: parent.left
-            leftMargin: SmartSearchBarStyle.header.leftMargin
-            verticalCenter: parent.verticalCenter
-          }
-          font {
-            bold: true
-            pointSize: SmartSearchBarStyle.header.text.fontSize
-          }
-          color: addContactButton.pressed
-          ? SmartSearchBarStyle.header.text.color.pressed
-          : SmartSearchBarStyle.header.text.color.normal
-          text: qsTr('addContact')
+        onClicked: {
+          searchBox.hideMenu()
+          searchBox.addContact(interpretableSipAddress)
         }
 
-        Icon {
-          anchors {
-            right: parent.right
-            rightMargin: SmartSearchBarStyle.header.rightMargin
-            verticalCenter: parent.verticalCenter
+        Rectangle {
+          anchors.fill: parent
+          color: parent.pressed
+            ? SmartSearchBarStyle.header.color.pressed
+            : SmartSearchBarStyle.header.color.normal
+
+          Text {
+            anchors {
+              left: parent.left
+              leftMargin: SmartSearchBarStyle.header.leftMargin
+              verticalCenter: parent.verticalCenter
+            }
+            font {
+              bold: true
+              pointSize: SmartSearchBarStyle.header.text.fontSize
+            }
+            color: addContactButton.pressed
+              ? SmartSearchBarStyle.header.text.color.pressed
+              : SmartSearchBarStyle.header.text.color.normal
+            text: qsTr('addContact')
           }
-          icon: 'contact_add'
-          iconSize: SmartSearchBarStyle.header.iconSize
+
+          Icon {
+            anchors {
+              right: parent.right
+              rightMargin: SmartSearchBarStyle.header.rightMargin
+              verticalCenter: parent.verticalCenter
+            }
+            icon: 'contact_add'
+            iconSize: SmartSearchBarStyle.header.iconSize
+          }
         }
       }
     }
   }
-
 
   // ---------------------------------------------------------------------------
   // Entries.
