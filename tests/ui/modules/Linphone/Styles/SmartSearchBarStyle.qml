@@ -27,7 +27,7 @@ QtObject {
   }
 
   property QtObject header: QtObject {
-    property int height: 40
+    property int addButtonHeight: 40
     property int iconSize: 22
     property int leftMargin: 20
     property int rightMargin: 10

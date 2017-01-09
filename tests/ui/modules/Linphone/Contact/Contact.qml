@@ -19,6 +19,7 @@ Rectangle {
   property alias usernameColor: description.usernameColor
 
   property var entry
+
   property var _contact: entry.contact
 
   // ---------------------------------------------------------------------------

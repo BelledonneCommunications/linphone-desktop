@@ -89,9 +89,7 @@ ColumnLayout  {
       _vcard = CoreManager.createDetachedVcardModel()
 
       if (sipAddress && sipAddress.length > 0) {
-        _vcard.addSipAddress(
-          Utils.startsWith(sipAddress, 'sip:') ? sipAddress : 'sip:' + sipAddress
-        )
+        _vcard.addSipAddress(sipAddress)
       }
 
       _edition = true
@@ -215,12 +213,8 @@ ColumnLayout  {
       // -----------------------------------------------------------------------
 
       function _handleSipAddressChanged (index, defaultValue, newValue) {
-        if (!Utils.startsWith(newValue, 'sip:')) {
-          newValue = 'sip:' + newValue
-
-          if (newValue === defaultValue) {
-            return
-          }
+        if (newValue === defaultValue) {
+          return
         }
 
         var so_far_so_good = (defaultValue.length === 0)

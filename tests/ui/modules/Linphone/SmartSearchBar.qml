@@ -19,57 +19,138 @@ SearchBox {
 
   // ---------------------------------------------------------------------------
 
-  header: MouseArea {
-    id: headerContent
+  header: Column {
+    readonly property string interpretableSipAddress: SipAddressesModel.interpretUrl(searchBox.filter)
 
-    height: SmartSearchBarStyle.header.height
+    height: {
+      var height = SmartSearchBarStyle.header.addButtonHeight
+      return defaultContact.visible ? height + searchBox.entryHeight : height
+    }
     width: parent.width
 
-    onClicked: {
-      searchBox.hideMenu()
-      searchBox.addContact(searchBox.filter)
+    spacing: 0
+
+    // -------------------------------------------------------------------------
+    // Default contact.
+    // -------------------------------------------------------------------------
+
+    Loader {
+      id: defaultContact
+
+      height: searchBox.entryHeight
+      width: parent.width
+
+      visible: interpretableSipAddress.length > 0
+
+      sourceComponent: Rectangle {
+        anchors.fill: parent
+        color: SmartSearchBarStyle.entry.color.normal
+
+        RowLayout {
+          anchors {
+            fill: parent
+            rightMargin: SmartSearchBarStyle.entry.rightMargin
+          }
+          spacing: 0
+
+          Contact {
+            id: contact
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            entry: Object ({
+              sipAddress: interpretableSipAddress
+            })
+          }
+
+          ActionBar {
+            iconSize: SmartSearchBarStyle.entry.iconSize
+
+            ActionButton {
+              icon: 'video_call'
+              onClicked: {
+                searchBox.hideMenu()
+                searchBox.launchVideoCall(interpretableSipAddress)
+              }
+            }
+
+            ActionButton {
+              icon: 'call'
+              onClicked: {
+                searchBox.hideMenu()
+                searchBox.launchCall(interpretableSipAddress)
+              }
+            }
+
+            ActionButton {
+              icon: 'chat'
+              onClicked: {
+                searchBox.hideMenu()
+                searchBox.launchChat(interpretableSipAddress)
+              }
+            }
+          }
+        }
+      }
     }
 
-    Rectangle {
-      anchors.fill: parent
-      color: parent.pressed
+    // -------------------------------------------------------------------------
+    // Add contact button.
+    // -------------------------------------------------------------------------
+
+    MouseArea {
+      id: addContactButton
+
+      height: SmartSearchBarStyle.header.addButtonHeight
+      width: parent.width
+
+      onClicked: {
+        searchBox.hideMenu()
+        searchBox.addContact(interpretableSipAddress)
+      }
+
+      Rectangle {
+        anchors.fill: parent
+        color: parent.pressed
         ? SmartSearchBarStyle.header.color.pressed
         : SmartSearchBarStyle.header.color.normal
 
-      Text {
-        anchors {
-          left: parent.left
-          leftMargin: SmartSearchBarStyle.header.leftMargin
-          verticalCenter: parent.verticalCenter
-        }
-        font {
-          bold: true
-          pointSize: SmartSearchBarStyle.header.text.fontSize
-        }
-        color: headerContent.pressed
+        Text {
+          anchors {
+            left: parent.left
+            leftMargin: SmartSearchBarStyle.header.leftMargin
+            verticalCenter: parent.verticalCenter
+          }
+          font {
+            bold: true
+            pointSize: SmartSearchBarStyle.header.text.fontSize
+          }
+          color: addContactButton.pressed
           ? SmartSearchBarStyle.header.text.color.pressed
           : SmartSearchBarStyle.header.text.color.normal
-        text: qsTr('addContact')
-      }
-
-      Icon {
-        anchors {
-          right: parent.right
-          rightMargin: SmartSearchBarStyle.header.rightMargin
-          verticalCenter: parent.verticalCenter
+          text: qsTr('addContact')
         }
-        icon: 'contact_add'
-        iconSize: SmartSearchBarStyle.header.iconSize
+
+        Icon {
+          anchors {
+            right: parent.right
+            rightMargin: SmartSearchBarStyle.header.rightMargin
+            verticalCenter: parent.verticalCenter
+          }
+          icon: 'contact_add'
+          iconSize: SmartSearchBarStyle.header.iconSize
+        }
       }
     }
   }
+
 
   // ---------------------------------------------------------------------------
   // Entries.
   // ---------------------------------------------------------------------------
 
   delegate: Rectangle {
-    id: searchBoxEntry
+    id: sipAddressEntry
 
     color: SmartSearchBarStyle.entry.color.normal
     height: searchBox.entryHeight
@@ -97,9 +178,9 @@ SearchBox {
         }
         spacing: 0
 
-        // ---------------------------------------------------------------------
+        // -------------------------------------------------------------------
         // Contact or address info.
-        // ---------------------------------------------------------------------
+        // -------------------------------------------------------------------
 
         Contact {
           Layout.fillHeight: true
@@ -107,9 +188,9 @@ SearchBox {
           entry: $entry
         }
 
-        // ---------------------------------------------------------------------
+        // -------------------------------------------------------------------
         // Actions
-        // ---------------------------------------------------------------------
+        // -------------------------------------------------------------------
 
         ActionBar {
           iconSize: SmartSearchBarStyle.entry.iconSize
@@ -155,7 +236,7 @@ SearchBox {
 
       PropertyChanges {
         color: SmartSearchBarStyle.entry.color.hovered
-        target: searchBoxEntry
+        target: sipAddressEntry
       }
 
       PropertyChanges {

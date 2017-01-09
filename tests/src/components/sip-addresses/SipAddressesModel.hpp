@@ -27,6 +27,8 @@ public:
 
   Q_INVOKABLE void handleAllHistoryEntriesRemoved ();
 
+  Q_INVOKABLE QString interpretUrl (const QString &sip_address);
+
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;

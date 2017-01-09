@@ -134,6 +134,16 @@ void SipAddressesModel::handleAllHistoryEntriesRemoved () {
 
 // -----------------------------------------------------------------------------
 
+QString SipAddressesModel::interpretUrl (const QString &sip_address) {
+  shared_ptr<linphone::Address> l_address = CoreManager::getInstance()->getCore()->interpretUrl(
+      ::Utils::qStringToLinphoneString(sip_address)
+    );
+
+  return l_address ? ::Utils::linphoneStringToQString(l_address->asStringUriOnly()) : "";
+}
+
+// -----------------------------------------------------------------------------
+
 bool SipAddressesModel::removeRow (int row, const QModelIndex &parent) {
   return removeRows(row, 1, parent);
 }
