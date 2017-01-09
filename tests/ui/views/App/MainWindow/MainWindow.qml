@@ -115,6 +115,10 @@ ApplicationWindow {
 
         account: AccountSettingsModel
 
+        TooltipArea {
+          text: AccountSettingsModel.sipAddress
+        }
+
         onClicked: Utils.openWindow('ManageAccounts', window)
       }
 

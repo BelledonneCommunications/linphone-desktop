@@ -10,7 +10,7 @@ import Utils 1.0
 ToolTip {
   id: tooltip
 
-  property string _edge: 'left'
+  property var _edge: 'left'
 
   // ---------------------------------------------------------------------------
 
@@ -51,6 +51,7 @@ ToolTip {
     } else if (a.y > b.y + b.height) {
       _edge = 'bottom'
     } else {
+      _edge = null
       console.warn('Unable to get the tooltip arrow position.')
     }
   }
@@ -101,9 +102,9 @@ ToolTip {
 
       fillMode: Image.PreserveAspectFit
       height: TooltipStyle.arrowSize
-      source: Constants.imagesPath +
-        'tooltip_arrow_' + _edge +
-        Constants.imagesFormat
+      source: _edge
+        ? (Constants.imagesPath + 'tooltip_arrow_' + _edge + Constants.imagesFormat)
+        : ''
       visible: tooltip.visible && _edge
       width: TooltipStyle.arrowSize
       z: Constants.zMax
