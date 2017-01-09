@@ -167,6 +167,13 @@ ApplicationWindow {
           })
         }
         onLaunchVideoCall: CallsWindow.show()
+
+        onEntryClicked: {
+          window.ensureCollapsed()
+          window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
+            sipAddress: entry.sipAddress
+          })
+        }
       }
     }
   }

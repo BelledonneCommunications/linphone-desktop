@@ -52,11 +52,7 @@ Item {
   }
 
   function _filter (text) {
-    Utils.assert(
-      model.setFilter != null,
-      '`model.setFilter` must be defined.'
-    )
-
+    Utils.assert(model.setFilter != null, '`model.setFilter` must be defined.')
     model.setFilter(text)
   }
 

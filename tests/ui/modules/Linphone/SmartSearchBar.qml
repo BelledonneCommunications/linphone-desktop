@@ -17,12 +17,16 @@ SearchBox {
   signal launchCall (string sipAddress)
   signal launchVideoCall (string sipAddress)
 
+  signal entryClicked (var entry)
+
   // ---------------------------------------------------------------------------
   // Header.
   // ---------------------------------------------------------------------------
 
   header: MouseArea {
-    readonly property string interpretableSipAddress: SipAddressesModel.interpretUrl(searchBox.filter)
+    readonly property string interpretableSipAddress: SipAddressesModel.interpretUrl(
+      searchBox.filter
+    )
 
     height: {
       var height = SmartSearchBarStyle.header.addButtonHeight
@@ -31,7 +35,7 @@ SearchBox {
     width: parent.width
 
     // Workaround to handle mouse.
-    // Without it, the mouse can be given to items list when it is hover header.
+    // Without it, the mouse can be given to items list when mouse is hover header.
     hoverEnabled: true
 
     Column {
@@ -195,6 +199,20 @@ SearchBox {
           Layout.fillHeight: true
           Layout.fillWidth: true
           entry: $entry
+
+          MouseArea {
+            anchors.fill: parent
+
+            cursorShape: containsMouse
+              ? Qt.PointingHandCursor
+              : Qt.ArrowCursor
+            hoverEnabled: true
+
+            onClicked: {
+              searchBox.hideMenu()
+              searchBox.entryClicked($entry)
+            }
+          }
         }
 
         // -------------------------------------------------------------------
