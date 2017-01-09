@@ -12,6 +12,12 @@ SearchBox {
 
   // ---------------------------------------------------------------------------
 
+  readonly property string interpretableSipAddress: SipAddressesModel.interpretUrl(
+    searchBox.filter
+  )
+
+  // ---------------------------------------------------------------------------
+
   signal addContact (string sipAddress)
   signal launchChat (string sipAddress)
   signal launchCall (string sipAddress)
@@ -20,13 +26,14 @@ SearchBox {
   signal entryClicked (var entry)
 
   // ---------------------------------------------------------------------------
+
+  onEnterPressed: interpretableSipAddress.length > 0 && searchBox.launchCall(interpretableSipAddress)
+
+  // ---------------------------------------------------------------------------
   // Header.
   // ---------------------------------------------------------------------------
 
   header: MouseArea {
-    readonly property string interpretableSipAddress: SipAddressesModel.interpretUrl(
-      searchBox.filter
-    )
 
     height: {
       var height = SmartSearchBarStyle.header.addButtonHeight

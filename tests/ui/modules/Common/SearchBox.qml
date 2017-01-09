@@ -32,6 +32,7 @@ Item {
 
   signal menuClosed
   signal menuOpened
+  signal enterPressed
 
   // ---------------------------------------------------------------------------
 
@@ -72,6 +73,10 @@ Item {
       width: parent.width
 
       Keys.onEscapePressed: searchBox.hideMenu()
+      Keys.onReturnPressed: {
+        searchBox.hideMenu()
+        searchBox.enterPressed()
+      }
 
       onActiveFocusChanged: activeFocus && searchBox.showMenu()
       onTextChanged: _filter(text)
