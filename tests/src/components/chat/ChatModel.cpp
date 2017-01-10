@@ -17,9 +17,7 @@ class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
 public:
   MessageHandlers (ChatModel *chat_model) : m_chat_model(chat_model) {}
 
-  ~MessageHandlers () {
-    qDebug() << "handlers";
-  }
+  ~MessageHandlers () = default;
 
 private:
 

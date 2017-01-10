@@ -25,15 +25,22 @@ ColumnLayout {
   ScrollableListView {
     id: chat
 
+    // -------------------------------------------------------------------------
+
+    property bool _bindToEnd: false
     property bool _tryToLoadMoreEntries: true
+
+    // -------------------------------------------------------------------------
 
     function _loadMoreEntries () {
       if (atYBeginning && !_tryToLoadMoreEntries) {
         _tryToLoadMoreEntries = true
-        positionViewAtIndex(0, ListView.Beginning)
+        positionViewAtBeginning()
         proxyModel.loadMoreEntries()
       }
     }
+
+    // -------------------------------------------------------------------------
 
     Layout.fillHeight: true
     Layout.fillWidth: true
@@ -43,6 +50,49 @@ ColumnLayout {
       delegate: sectionHeading
       property: '$sectionDate'
     }
+
+    // -------------------------------------------------------------------------
+
+    Component.onCompleted: {
+      function goToEnd () {
+        return Utils.setTimeout(chat, 100, function () {
+          if (_bindToEnd) {
+            positionViewAtEnd()
+          }
+
+          return goToEnd()
+        })
+      }
+      goToEnd()
+
+      var initView = function () {
+        _tryToLoadMoreEntries = false
+        _bindToEnd = true
+      }
+
+      // Received only if more entries were loaded.
+      proxyModel.moreEntriesLoaded.connect(function (n) {
+        positionViewAtIndex(n - 1, ListView.Beginning)
+        _tryToLoadMoreEntries = false
+      })
+
+      // When the view is changed (for example `Calls` -> `Messages`),
+      // the position is set at end and it can be possible to load
+      // more entries.
+      proxyModel.entryTypeFilterChanged.connect(initView)
+
+      // First render.
+      initView()
+    }
+
+    onMovementStarted: _bindToEnd = false
+    onMovementEnded: {
+      if (atYEnd) {
+        _bindToEnd = true
+      }
+    }
+
+    onContentYChanged: _loadMoreEntries()
 
     // -------------------------------------------------------------------------
     // Heading.
@@ -178,33 +228,6 @@ ColumnLayout {
         }
       }
     }
-
-    Component.onCompleted: {
-      var initView = function () {
-        positionViewAtEnd()
-        _tryToLoadMoreEntries = false
-
-        // TODO: Remove these lines when this issue will not be longer valid :
-        // https://bugreports.qt.io/browse/QTBUG-49989
-        Utils.setTimeout(chat, 10, positionViewAtEnd)
-      }
-
-      // Received only if more entries were loaded.
-      proxyModel.moreEntriesLoaded.connect(function (n) {
-        positionViewAtIndex(n - 1, ListView.Beginning)
-        _tryToLoadMoreEntries = false
-      })
-
-      // When the view is changed (for example `Calls` -> `Messages`),
-      // the position is set at end and it can be possible to load
-      // more entries.
-      proxyModel.entryTypeFilterChanged.connect(initView)
-
-      // First render.
-      initView()
-    }
-
-    onContentYChanged: _loadMoreEntries()
   }
 
   // ---------------------------------------------------------------------------
