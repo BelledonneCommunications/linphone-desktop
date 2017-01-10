@@ -69,10 +69,9 @@ bool App::hasFocus () const {
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
-  qInfo() << "Initializing core manager...";
-
   // Init core.
   CoreManager::init();
+  qInfo() << "Core manager initialized.";
 
   // Register types and load context properties.
   registerTypes();

@@ -177,6 +177,18 @@ ColumnLayout {
             anchors.fill: parent
             hoverEnabled: true
 
+            MouseArea {
+              anchors.fill: parent
+              cursorShape: containsMouse
+                ? Qt.PointingHandCursor
+                : Qt.ArrowCursor
+              hoverEnabled: true
+
+              onClicked: window.setView('ContactEdit', {
+                sipAddress: $contact.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
+              })
+            }
+
             RowLayout {
               anchors {
                 fill: parent
@@ -193,7 +205,9 @@ ColumnLayout {
               }
 
               Text {
+                Layout.fillHeight: true
                 Layout.preferredWidth: ContactsStyle.contact.username.width
+
                 color: ContactsStyle.contact.username.color
                 elide: Text.ElideRight
 
@@ -203,18 +217,7 @@ ColumnLayout {
                 }
 
                 text: $contact.vcard.username
-
-                MouseArea {
-                  anchors.fill: parent
-                  cursorShape: containsMouse
-                    ? Qt.PointingHandCursor
-                    : Qt.ArrowCursor
-                  hoverEnabled: true
-
-                  onClicked: window.setView('ContactEdit', {
-                    sipAddress: $contact.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
-                  })
-                }
+                verticalAlignment: Text.AlignVCenter
               }
 
               // Container.
