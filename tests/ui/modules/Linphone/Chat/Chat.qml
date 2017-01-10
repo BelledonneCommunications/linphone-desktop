@@ -68,6 +68,8 @@ ColumnLayout {
       var initView = function () {
         _tryToLoadMoreEntries = false
         _bindToEnd = true
+
+        positionViewAtEnd()
       }
 
       // Received only if more entries were loaded.
