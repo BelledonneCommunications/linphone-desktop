@@ -34,7 +34,6 @@ SearchBox {
   // ---------------------------------------------------------------------------
 
   header: MouseArea {
-
     height: {
       var height = SmartSearchBarStyle.header.addButtonHeight
       return defaultContact.visible ? height + searchBox.entryHeight : height
