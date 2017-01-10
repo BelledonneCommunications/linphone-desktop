@@ -14,6 +14,15 @@ using namespace std;
 // =============================================================================
 
 class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
+public:
+  MessageHandlers (ChatModel *chat_model) : m_chat_model(chat_model) {}
+
+  ~MessageHandlers () {
+    qDebug() << "handlers";
+  }
+
+private:
+
   void onFileTransferRecv (
     const shared_ptr<linphone::ChatMessage> &message,
     const shared_ptr<linphone::Content> &content,
@@ -41,19 +50,21 @@ class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
   }
 
   void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessageState state) override {
-    ChatModel *chat = static_cast<ChatModel *>(message->getUserData());
+    ChatModel &chat = *m_chat_model;
 
-    auto it = find_if(chat->m_entries.begin(), chat->m_entries.end(), [&message](const ChatEntryData &pair) {
+    auto it = find_if(chat.m_entries.begin(), chat.m_entries.end(), [&message](const ChatEntryData &pair) {
           return pair.second == message;
         });
-    if (it == chat->m_entries.end())
+    if (it == chat.m_entries.end())
       return;
 
     (*it).first["state"] = state;
-    int row = distance(chat->m_entries.begin(), it);
+    int row = distance(chat.m_entries.begin(), it);
 
-    emit chat->dataChanged(chat->index(row, 0), chat->index(row, 0));
+    emit chat.dataChanged(chat.index(row, 0), chat.index(row, 0));
   }
+
+  ChatModel *m_chat_model;
 };
 
 // -----------------------------------------------------------------------------
@@ -227,8 +238,7 @@ void ChatModel::removeAllEntries () {
 
 void ChatModel::sendMessage (const QString &message) {
   shared_ptr<linphone::ChatMessage> _message = m_chat_room->createMessage(::Utils::qStringToLinphoneString(message));
-  _message->setUserData(this);
-  _message->setListener(m_message_handlers);
+  _message->setListener(make_shared<MessageHandlers>(this));
   m_chat_room->sendChatMessage(_message);
   insertMessageAtEnd(_message);
 }
