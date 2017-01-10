@@ -12,6 +12,7 @@ import Utils 1.0
 ColumnLayout {
   property alias proxyModel: chat.model
 
+  property bool _bindToEnd: false
   property var _contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
 
   // ---------------------------------------------------------------------------
@@ -27,7 +28,6 @@ ColumnLayout {
 
     // -------------------------------------------------------------------------
 
-    property bool _bindToEnd: false
     property bool _tryToLoadMoreEntries: true
 
     // -------------------------------------------------------------------------
@@ -247,6 +247,7 @@ ColumnLayout {
 
       onValidText: {
         this.text = ''
+        _bindToEnd = true
         proxyModel.sendMessage(text)
       }
     }
