@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 1.4
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -27,10 +28,32 @@ Item {
     Row {
       spacing: ChatStyle.entry.message.extraContent.spacing
 
-      Icon {
+      Component {
+        id: icon
+
+        Icon {
+          icon: $chatEntry.status === ChatModel.MessageStatusNotDelivered ? 'chat_error' : 'chat_send'
+          iconSize: ChatStyle.entry.message.outgoing.sendIconSize
+
+          MouseArea {
+            anchors.fill: parent
+            onClicked: console.log('resend')
+          }
+        }
+      }
+
+      Component {
+        id: indicator
+        BusyIndicator {
+          width: ChatStyle.entry.message.outgoing.sendIconSize
+        }
+      }
+
+      Loader {
         height: ChatStyle.entry.lineHeight
-        icon: 'chat_send'
-        iconSize: ChatStyle.entry.message.outgoing.sendIconSize
+        sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress
+          ? indicator
+          : icon
       }
 
       ActionButton {

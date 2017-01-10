@@ -56,7 +56,7 @@ private:
     if (it == chat.m_entries.end())
       return;
 
-    (*it).first["state"] = state;
+    (*it).first["status"] = state;
     int row = distance(chat.m_entries.begin(), it);
 
     emit chat.dataChanged(chat.index(row, 0), chat.index(row, 0));
@@ -251,6 +251,7 @@ void ChatModel::fillMessageEntry (
   dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(message->getTime()) * 1000);
   dest["content"] = ::Utils::linphoneStringToQString(message->getText());
   dest["isOutgoing"] = message->isOutgoing();
+  dest["status"] = message->getState();
 }
 
 void ChatModel::fillCallStartEntry (

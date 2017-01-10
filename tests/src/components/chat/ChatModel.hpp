@@ -41,13 +41,13 @@ public:
 
   Q_ENUM(CallStatus);
 
-  enum MessageState {
-    MessageStateDelivered = linphone::ChatMessageStateDelivered,
-    MessageStateInProgress = linphone::ChatMessageStateInProgress,
-    MessageStateNotDelivered = linphone::ChatMessageStateNotDelivered
+  enum MessageStatus {
+    MessageStatusDelivered = linphone::ChatMessageStateDelivered,
+    MessageStatusInProgress = linphone::ChatMessageStateInProgress,
+    MessageStatusNotDelivered = linphone::ChatMessageStateNotDelivered
   };
 
-  Q_ENUM(MessageState);
+  Q_ENUM(MessageStatus);
 
   ChatModel (QObject *parent = Q_NULLPTR);
   ~ChatModel () = default;
