@@ -33,7 +33,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  // DO NOT TOUCH THIS PROPERTIES.
+  // DO NOT TOUCH THESE PROPERTIES.
 
   // No visible.
   visible: false

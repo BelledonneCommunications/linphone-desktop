@@ -259,6 +259,21 @@ function assert (condition, message) {
 
 // -----------------------------------------------------------------------------
 
+function extractProperties (obj, pattern) {
+  if (!pattern) {
+    return {}
+  }
+
+  var obj2 = {}
+  pattern.forEach(function (property) {
+    obj2[property] = obj[property]
+  })
+
+  return obj2
+}
+
+// -----------------------------------------------------------------------------
+
 // Returns an array from a `object` or `array` argument.
 function ensureArray (obj) {
   if (isArray(obj)) {
