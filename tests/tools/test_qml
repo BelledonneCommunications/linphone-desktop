@@ -22,6 +22,11 @@ cd $SCRIPT_DIR/..
 
 # ==============================================================================
 
+if ! [ -x "$( command -v "$TEST_RUNNER" )" ]; then
+  printf "${RED}Unable to found `$TEST_RUNNER`. No tests can be executed.${NC}\n"
+  exit 0
+fi
+
 so_far_so_good=0
 
 # Check all `*.spec.qml` files.
