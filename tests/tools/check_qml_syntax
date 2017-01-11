@@ -15,6 +15,13 @@ NC='\e[0m'
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $SCRIPT_DIR/..
 
+# ==============================================================================
+
+if ! [ -x "$( command -v "$LINTER" )" ]; then
+  printf "${RED}Unable to found `$LINTER`. No tests can be executed.${NC}\n"
+  exit 0
+fi
+
 printf "${BLUE}Checking qml files...${NC}\n"
 
 so_far_so_good=0
