@@ -74,6 +74,8 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
   );
 
   m_core_handlers = CoreManager::getInstance()->getHandlers();
+  m_message_handlers = make_shared<MessageHandlers>(this);
+
   QObject::connect(
     &(*m_core_handlers), &CoreHandlers::receivedMessage,
     this, [this](
@@ -236,8 +238,8 @@ void ChatModel::removeAllEntries () {
 
 void ChatModel::sendMessage (const QString &message) {
   shared_ptr<linphone::ChatMessage> _message = m_chat_room->createMessage(::Utils::qStringToLinphoneString(message));
-  _message->setListener(make_shared<MessageHandlers>(this));
-  m_chat_room->sendChatMessage(_message);
+  _message->setListener(m_message_handlers);
+  m_chat_room->sendMessage(_message);
   insertMessageAtEnd(_message);
 }
 

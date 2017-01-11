@@ -96,6 +96,7 @@ private:
   std::shared_ptr<linphone::ChatRoom> m_chat_room;
 
   std::shared_ptr<CoreHandlers> m_core_handlers;
+  std::shared_ptr<MessageHandlers> m_message_handlers;
 };
 
 #endif // CHAT_MODEL_H_
