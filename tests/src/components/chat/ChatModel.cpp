@@ -72,21 +72,15 @@ private:
 // -----------------------------------------------------------------------------
 
 ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
-  QObject::connect(
-    this, &ChatModel::allEntriesRemoved,
-    CoreManager::getInstance()->getSipAddressesModel(), &SipAddressesModel::handleAllHistoryEntriesRemoved
-  );
-
   m_core_handlers = CoreManager::getInstance()->getHandlers();
   m_message_handlers = make_shared<MessageHandlers>(this);
 
+  CoreManager::getInstance()->getSipAddressesModel()->connectToChatModel(this);
+
   QObject::connect(
     &(*m_core_handlers), &CoreHandlers::receivedMessage,
-    this, [this](
-      const shared_ptr<linphone::ChatRoom> &room,
-      const shared_ptr<linphone::ChatMessage> &message
-    ) {
-      if (m_chat_room == room) {
+    this, [this](const shared_ptr<linphone::ChatMessage> &message) {
+      if (m_chat_room == message->getChatRoom()) {
         insertMessageAtEnd(message);
         m_chat_room->markAsRead();
       }
@@ -112,7 +106,7 @@ int ChatModel::rowCount (const QModelIndex &) const {
 QVariant ChatModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
-  if (row < 0 || row >= m_entries.count())
+  if (!index.isValid() || row < 0 || row >= m_entries.count())
     return QVariant();
 
   switch (role) {
@@ -132,7 +126,7 @@ bool ChatModel::removeRow (int row, const QModelIndex &) {
 bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
   int limit = row + count - 1;
 
-  if (row < 0 || count < 0 || limit >= m_entries.count())
+  if (!parent.isValid() || row < 0 || count < 0 || limit >= m_entries.count())
     return false;
 
   beginRemoveRows(parent, row, limit);
@@ -252,6 +246,8 @@ void ChatModel::sendMessage (const QString &message) {
   _message->setListener(m_message_handlers);
   m_chat_room->sendMessage(_message);
   insertMessageAtEnd(_message);
+
+  emit messageSent(_message);
 }
 
 // -----------------------------------------------------------------------------
@@ -261,7 +257,7 @@ void ChatModel::fillMessageEntry (
   const shared_ptr<linphone::ChatMessage> &message
 ) {
   dest["type"] = EntryType::MessageEntry;
-  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(message->getTime()) * 1000);
+  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
   dest["content"] = ::Utils::linphoneStringToQString(message->getText());
   dest["isOutgoing"] = message->isOutgoing();
   dest["status"] = message->getState();
@@ -271,7 +267,7 @@ void ChatModel::fillCallStartEntry (
   QVariantMap &dest,
   const shared_ptr<linphone::CallLog> &call_log
 ) {
-  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(static_cast<qint64>(call_log->getStartDate()) * 1000);
+  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(call_log->getStartDate() * 1000);
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;
@@ -284,9 +280,7 @@ void ChatModel::fillCallEndEntry (
   QVariantMap &dest,
   const shared_ptr<linphone::CallLog> &call_log
 ) {
-  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(
-      static_cast<qint64>(call_log->getStartDate() + call_log->getDuration()) * 1000
-    );
+  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch((call_log->getStartDate() + call_log->getDuration()) * 1000);
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;

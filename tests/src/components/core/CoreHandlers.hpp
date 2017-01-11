@@ -32,10 +32,7 @@ public:
   ) override;
 
 signals:
-  void receivedMessage (
-    const std::shared_ptr<linphone::ChatRoom> &room,
-    const std::shared_ptr<linphone::ChatMessage> &message
-  );
+  void receivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
 };
 
 #endif // CORE_HANDLERS_H_

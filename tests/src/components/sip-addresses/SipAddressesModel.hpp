@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 
+#include "../chat/ChatModel.hpp"
 #include "../contact/ContactModel.hpp"
 #include "../contact/ContactObserver.hpp"
 
@@ -22,10 +23,10 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  void connectToChatModel (ChatModel *chat_model);
+
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sip_address) const;
   Q_INVOKABLE ContactObserver *getContactObserver (const QString &sip_address);
-
-  Q_INVOKABLE void handleAllHistoryEntriesRemoved ();
 
   Q_INVOKABLE QString interpretUrl (const QString &sip_address);
 
@@ -36,12 +37,11 @@ private:
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);
 
-  void handleReceivedMessage (
-    const std::shared_ptr<linphone::ChatRoom> &room,
-    const std::shared_ptr<linphone::ChatMessage> &message
+  void addOrUpdateSipAddress (
+    const QString &sip_address,
+    ContactModel *contact = nullptr,
+    const std::shared_ptr<linphone::ChatMessage> &message = std::shared_ptr<linphone::ChatMessage>()
   );
-
-  void addOrUpdateSipAddress (const QString &sip_address, ContactModel *contact = nullptr, qint64 timestamp = 0);
   void removeContactOfSipAddress (const QString &sip_address);
 
   void initSipAddresses ();

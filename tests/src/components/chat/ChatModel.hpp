@@ -72,6 +72,8 @@ signals:
   void sipAddressChanged (const QString &sip_address);
   void allEntriesRemoved ();
 
+  void messageSent (std::shared_ptr<linphone::ChatMessage> &message);
+
 private:
   void fillMessageEntry (
     QVariantMap &dest,

@@ -31,7 +31,7 @@ void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::ChatRoom> &room,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
-  emit receivedMessage(room, message);
+  emit receivedMessage(message);
 
   const App *app = App::getInstance();
   if (!app->hasFocus())
