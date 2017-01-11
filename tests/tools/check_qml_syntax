@@ -22,7 +22,7 @@ if ! [ -x "$( command -v "$LINTER" )" ]; then
   exit 0
 fi
 
-$("$LINTER" -v)
+"${LINTER}" -v
 if [[ $? != 0 ]] ; then
     printf "${RED}Unable to check qml syntax.${NC}\n"
     exit 0
