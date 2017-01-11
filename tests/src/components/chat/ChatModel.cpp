@@ -21,6 +21,7 @@ public:
 
   ~MessageHandlers () = default;
 
+private:
   void onFileTransferRecv (
     const shared_ptr<linphone::ChatMessage> &message,
     const shared_ptr<linphone::Content> &content,
@@ -65,7 +66,6 @@ public:
     emit chat.dataChanged(chat.index(row, 0), chat.index(row, 0));
   }
 
-private:
   ChatModel *m_chat_model;
 };
 

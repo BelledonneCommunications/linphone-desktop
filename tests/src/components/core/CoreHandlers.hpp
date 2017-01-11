@@ -11,7 +11,10 @@ class CoreHandlers :
   public linphone::CoreListener {
   Q_OBJECT;
 
-public:
+signals:
+  void receivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+
+private:
   void onAuthenticationRequested (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::AuthInfo> &auth_info,
@@ -30,9 +33,6 @@ public:
     const std::shared_ptr<linphone::ChatRoom> &room,
     const std::shared_ptr<linphone::ChatMessage> &message
   ) override;
-
-signals:
-  void receivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
 };
 
 #endif // CORE_HANDLERS_H_
