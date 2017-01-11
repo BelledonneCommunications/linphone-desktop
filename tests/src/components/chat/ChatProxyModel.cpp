@@ -27,6 +27,20 @@ const unsigned int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(&m_chat_model_filter);
+
+  ChatModel *chat = static_cast<ChatModel *>(m_chat_model_filter.sourceModel());
+
+  QObject::connect(
+    chat, &ChatModel::messageReceived, this, [this](const shared_ptr<linphone::ChatMessage> &) {
+      m_n_max_displayed_entries++;
+    }
+  );
+
+  QObject::connect(
+    chat, &ChatModel::messageSent, this, [this](const shared_ptr<linphone::ChatMessage> &) {
+      m_n_max_displayed_entries++;
+    }
+  );
 }
 
 void ChatProxyModel::loadMoreEntries () {
@@ -42,7 +56,6 @@ void ChatProxyModel::loadMoreEntries () {
     invalidateFilter();
 
     count = rowCount() - count;
-
     if (count > 0)
       emit moreEntriesLoaded(count);
   }

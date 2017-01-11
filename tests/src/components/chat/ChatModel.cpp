@@ -83,6 +83,8 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
       if (m_chat_room == message->getChatRoom()) {
         insertMessageAtEnd(message);
         m_chat_room->markAsRead();
+
+        emit messageReceived(message);
       }
     }
   );
