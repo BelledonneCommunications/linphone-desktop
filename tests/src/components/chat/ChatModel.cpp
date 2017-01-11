@@ -14,12 +14,12 @@ using namespace std;
 // =============================================================================
 
 class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
+  friend class ChatModel;
+
 public:
   MessageHandlers (ChatModel *chat_model) : m_chat_model(chat_model) {}
 
   ~MessageHandlers () = default;
-
-private:
 
   void onFileTransferRecv (
     const shared_ptr<linphone::ChatMessage> &message,
@@ -48,6 +48,9 @@ private:
   }
 
   void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessageState state) override {
+    if (!m_chat_model)
+      return;
+
     ChatModel &chat = *m_chat_model;
 
     auto it = find_if(chat.m_entries.begin(), chat.m_entries.end(), [&message](const ChatEntryData &pair) {
@@ -62,6 +65,7 @@ private:
     emit chat.dataChanged(chat.index(row, 0), chat.index(row, 0));
   }
 
+private:
   ChatModel *m_chat_model;
 };
 
@@ -82,10 +86,16 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
       const shared_ptr<linphone::ChatRoom> &room,
       const shared_ptr<linphone::ChatMessage> &message
     ) {
-      if (m_chat_room == room)
+      if (m_chat_room == room) {
         insertMessageAtEnd(message);
+        m_chat_room->markAsRead();
+      }
     }
   );
+}
+
+ChatModel::~ChatModel () {
+  m_message_handlers->m_chat_model = nullptr;
 }
 
 QHash<int, QByteArray> ChatModel::roleNames () const {
@@ -162,6 +172,7 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   string std_sip_address = ::Utils::qStringToLinphoneString(sip_address);
 
   m_chat_room = core->getChatRoomFromUri(std_sip_address);
+  m_chat_room->markAsRead();
 
   // Get messages.
   for (auto &message : m_chat_room->getHistory(0)) {

@@ -50,7 +50,7 @@ public:
   Q_ENUM(MessageStatus);
 
   ChatModel (QObject *parent = Q_NULLPTR);
-  ~ChatModel () = default;
+  ~ChatModel ();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
