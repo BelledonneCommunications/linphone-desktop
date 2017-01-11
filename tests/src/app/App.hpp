@@ -16,7 +16,6 @@ class App : public QApplication {
   Q_OBJECT;
 
 public:
-
   QQmlEngine *getEngine () {
     return &m_engine;
   }

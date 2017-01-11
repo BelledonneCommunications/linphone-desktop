@@ -189,19 +189,29 @@ void SipAddressesModel::handleContactRemoved (const ContactModel *contact) {
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (
+  QVariantMap &map,
+  ContactModel *contact,
+  const shared_ptr<linphone::ChatMessage> &message
+) {
+  if (contact) {
+    map["contact"] = QVariant::fromValue(contact);
+    updateObservers(map["sipAddress"].toString(), contact);
+  }
+
+  if (message) {
+    map["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
+    map["unreadMessagesCount"] = message->getChatRoom()->getUnreadMessagesCount();
+  }
+}
+
+void SipAddressesModel::addOrUpdateSipAddress (
   const QString &sip_address,
   ContactModel *contact,
-  const std::shared_ptr<linphone::ChatMessage> &message
+  const shared_ptr<linphone::ChatMessage> &message
 ) {
   auto it = m_sip_addresses.find(sip_address);
   if (it != m_sip_addresses.end()) {
-    if (contact) {
-      (*it)["contact"] = QVariant::fromValue(contact);
-      updateObservers(sip_address, contact);
-    }
-
-    if (message)
-      (*it)["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
+    addOrUpdateSipAddress(*it, contact, message);
 
     int row = m_refs.indexOf(&(*it));
     Q_ASSERT(row != -1);
@@ -212,14 +222,7 @@ void SipAddressesModel::addOrUpdateSipAddress (
 
   QVariantMap map;
   map["sipAddress"] = sip_address;
-
-  if (contact) {
-    map["contact"] = QVariant::fromValue(contact);
-    updateObservers(sip_address, contact);
-  }
-
-  if (message)
-    map["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
+  addOrUpdateSipAddress(map, contact, message);
 
   int row = m_refs.count();
 
@@ -273,6 +276,7 @@ void SipAddressesModel::initSipAddresses () {
     QVariantMap map;
     map["sipAddress"] = sip_address;
     map["timestamp"] = QDateTime::fromMSecsSinceEpoch(history.back()->getTime() * 1000);
+    map["unreadMessagesCount"] = chat_room->getUnreadMessagesCount();
 
     m_sip_addresses[sip_address] = map;
   }

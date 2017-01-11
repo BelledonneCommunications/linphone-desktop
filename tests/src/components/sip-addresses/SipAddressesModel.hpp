@@ -38,10 +38,17 @@ private:
   void handleContactRemoved (const ContactModel *contact);
 
   void addOrUpdateSipAddress (
+    QVariantMap &map,
+    ContactModel *contact,
+    const std::shared_ptr<linphone::ChatMessage> &message
+  );
+
+  void addOrUpdateSipAddress (
     const QString &sip_address,
     ContactModel *contact = nullptr,
     const std::shared_ptr<linphone::ChatMessage> &message = std::shared_ptr<linphone::ChatMessage>()
   );
+
   void removeContactOfSipAddress (const QString &sip_address);
 
   void initSipAddresses ();
