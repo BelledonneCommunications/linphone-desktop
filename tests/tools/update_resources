@@ -1,6 +1,6 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
-# ====================================================================
+# ==============================================================================
 # Tool to build automatically `resources.qrc`.
 #
 # It should be used sparingly, it adds all `.qml`, `.svg`, `.png`,
@@ -8,7 +8,7 @@
 # in the resources file.
 #
 # If you don't want to add a particular file, do not use this script!
-# ====================================================================
+# ==============================================================================
 
 RESOURCES_FILE='resources.qrc'
 

@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/usr/bin/env bash
 
 # Check QML files, quit on failure.
 sh './tests/tools/check_qml_syntax'
