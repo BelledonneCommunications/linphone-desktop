@@ -15,6 +15,8 @@ ColumnLayout {
 
   property alias model: view.model
 
+  property string _selectedSipAddress
+
   // ---------------------------------------------------------------------------
 
   signal entrySelected (var entry)
@@ -27,6 +29,7 @@ ColumnLayout {
     for (var i = 0; i < n; i++) {
       if (sipAddress === model.data(model.index(i, 0)).sipAddress) {
         view.currentIndex = i
+        _selectedSipAddress = sipAddress
         return
       }
     }
@@ -34,11 +37,24 @@ ColumnLayout {
 
   function resetSelectedEntry () {
     view.currentIndex = -1
+    _selectedSipAddress = ''
   }
 
   // ---------------------------------------------------------------------------
 
   spacing: 0
+
+  SmartConnect {
+    Component.onCompleted: this.connect(model, 'dataChanged', function () {
+      var index = view.currentIndex
+      if (
+        index !== -1 &&
+        _selectedSipAddress !== model.data(model.index(index, 0)).sipAddress
+      ) {
+        setSelectedEntry(_selectedSipAddress)
+      }
+    })
+  }
 
   // ---------------------------------------------------------------------------
   // Legend.
