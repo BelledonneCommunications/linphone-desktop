@@ -78,11 +78,11 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
   CoreManager::getInstance()->getSipAddressesModel()->connectToChatModel(this);
 
   QObject::connect(
-    &(*m_core_handlers), &CoreHandlers::receivedMessage,
+    &(*m_core_handlers), &CoreHandlers::messageReceived,
     this, [this](const shared_ptr<linphone::ChatMessage> &message) {
       if (m_chat_room == message->getChatRoom()) {
         insertMessageAtEnd(message);
-        m_chat_room->markAsRead();
+        resetMessagesCount();
 
         emit messageReceived(message);
       }
@@ -165,10 +165,11 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   m_entries.clear();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  string std_sip_address = ::Utils::qStringToLinphoneString(sip_address);
 
-  m_chat_room = core->getChatRoomFromUri(std_sip_address);
-  m_chat_room->markAsRead();
+  m_chat_room = core->getChatRoomFromUri(::Utils::qStringToLinphoneString(sip_address));
+
+  if (m_chat_room->getUnreadMessagesCount() > 0)
+    resetMessagesCount();
 
   // Get messages.
   for (auto &message : m_chat_room->getHistory(0)) {
@@ -335,4 +336,9 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
   m_entries << qMakePair(map, static_pointer_cast<void>(message));
 
   endInsertRows();
+}
+
+void ChatModel::resetMessagesCount () {
+  m_chat_room->markAsRead();
+  emit messagesCountReset();
 }

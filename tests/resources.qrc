@@ -24,6 +24,8 @@
     <file>assets/images/camera_on_hovered.svg</file>
     <file>assets/images/camera_on_normal.svg</file>
     <file>assets/images/camera_on_pressed.svg</file>
+    <file>assets/images/chat_amount.svg</file>
+    <file>assets/images/chat_count.svg</file>
     <file>assets/images/chat_error.svg</file>
     <file>assets/images/chat_hovered.svg</file>
     <file>assets/images/chat_normal.svg</file>
@@ -208,6 +210,7 @@
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
+    <file>ui/modules/Linphone/Contact/MessagesCounter.qml</file>
     <file>ui/modules/Linphone/Notifications/CallNotification.qml</file>
     <file>ui/modules/Linphone/Notifications/Notification.qml</file>
     <file>ui/modules/Linphone/Notifications/ReceivedMessageNotification.qml</file>
@@ -220,6 +223,7 @@
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Contact/MessagesCounterStyle.qml</file>
     <file>ui/modules/Linphone/Styles/NotificationStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Presence/PresenceStringStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>

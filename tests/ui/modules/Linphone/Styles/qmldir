@@ -11,6 +11,7 @@ singleton ChatStyle               1.0 ChatStyle.qml
 singleton AvatarStyle             1.0 Contact/AvatarStyle.qml
 singleton ContactDescriptionStyle 1.0 Contact/ContactDescriptionStyle.qml
 singleton ContactStyle            1.0 Contact/ContactStyle.qml
+singleton MessagesCounterStyle    1.0 Contact/MessagesCounterStyle.qml
 
 singleton NotificationStyle       1.0 NotificationStyle.qml
 

@@ -21,7 +21,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
 
   m_handlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
-    &(*m_handlers), &CoreHandlers::receivedMessage,
+    &(*m_handlers), &CoreHandlers::messageReceived,
     this, [this](const std::shared_ptr<linphone::ChatMessage> &message) {
       const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
       addOrUpdateSipAddress(sip_address, nullptr, message);
@@ -104,13 +104,33 @@ void SipAddressesModel::connectToChatModel (ChatModel *chat_model) {
     }
   );
 
+  for (auto &signal : { &ChatModel::messageSent, &ChatModel::messageReceived }) {
+    QObject::connect(
+      chat_model, signal,
+      this, [this](const std::shared_ptr<linphone::ChatMessage> &message) {
+        addOrUpdateSipAddress(
+          ::Utils::linphoneStringToQString(message->getToAddress()->asStringUriOnly()), nullptr, message
+        );
+      }
+    );
+  }
+
   QObject::connect(
-    chat_model, &ChatModel::messageSent,
-    this, [this](const std::shared_ptr<linphone::ChatMessage> &message) {
-      addOrUpdateSipAddress(
-        ::Utils::linphoneStringToQString(message->getToAddress()->asStringUriOnly()), nullptr, message
-      );
-    });
+    chat_model, &ChatModel::messagesCountReset, this, [this, chat_model]() {
+      const QString &sip_address = chat_model->getSipAddress();
+
+      auto it = m_sip_addresses.find(sip_address);
+      if (it != m_sip_addresses.end()) {
+        (*it)["unreadMessagesCount"] = 0;
+
+        int row = m_refs.indexOf(&(*it));
+        Q_ASSERT(row != -1);
+        emit dataChanged(index(row, 0), index(row, 0));
+
+        return;
+      }
+    }
+  );
 }
 
 // -----------------------------------------------------------------------------

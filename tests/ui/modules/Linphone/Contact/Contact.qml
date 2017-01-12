@@ -1,11 +1,9 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
-import Common 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
 
 // =============================================================================
 
@@ -14,9 +12,10 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  property alias actions: actionBar.data
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
+
+  property bool displayUnreadMessagesCount: false
 
   property var entry
 
@@ -33,7 +32,7 @@ Rectangle {
       leftMargin: ContactStyle.leftMargin
       rightMargin: ContactStyle.rightMargin
     }
-    spacing: ContactStyle.spacing
+    spacing: 0
 
     Avatar {
       id: avatar
@@ -50,14 +49,17 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
+      Layout.leftMargin: ContactStyle.spacing
+
       sipAddress: entry.sipAddress
       username: avatar.username
     }
 
-    ActionBar {
-      id: actionBar
+    MessagesCounter {
+      Layout.alignment: Qt.AlignTop
 
-      Layout.preferredHeight: ContactStyle.contentHeight
+      count: entry.unreadMessagesCount || 0
+      visible: displayUnreadMessagesCount && entry.unreadMessagesCount > 0
     }
   }
 }

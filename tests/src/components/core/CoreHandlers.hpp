@@ -12,7 +12,7 @@ class CoreHandlers :
   Q_OBJECT;
 
 signals:
-  void receivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+  void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 
 private:
   void onAuthenticationRequested (

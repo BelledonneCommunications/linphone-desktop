@@ -113,6 +113,7 @@ ColumnLayout {
               ? TimelineStyle.contact.backgroundColor.a
               : TimelineStyle.contact.backgroundColor.b
           )
+        displayUnreadMessagesCount: view.currentIndex !== index
         entry: $timelineEntry
         sipAddressColor: view.currentIndex === index
           ? TimelineStyle.contact.sipAddress.color.selected

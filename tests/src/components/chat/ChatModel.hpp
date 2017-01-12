@@ -75,6 +75,8 @@ signals:
   void messageSent (const std::shared_ptr<linphone::ChatMessage> &message);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 
+  void messagesCountReset ();
+
 private:
   void fillMessageEntry (
     QVariantMap &dest,
@@ -94,6 +96,8 @@ private:
   void removeEntry (ChatEntryData &pair);
 
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
+
+  void resetMessagesCount ();
 
   QList<ChatEntryData> m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;

@@ -6,34 +6,10 @@
 #include "ChatModel.hpp"
 
 // =============================================================================
-// Fetch the L last filtered chat entries.
-// =============================================================================
-
-// Cannot be used as a nested class by Qt and `Q_OBJECT` macro
-// must be used in header c++ file.
-class ChatModelFilter : public QSortFilterProxyModel {
-  Q_OBJECT;
-
-public:
-  ChatModelFilter (QObject *parent = Q_NULLPTR);
-
-  ChatModel::EntryType getEntryTypeFilter () {
-    return m_entry_type_filter;
-  }
-
-  void setEntryTypeFilter (ChatModel::EntryType type);
-
-protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &parent) const override;
-
-private:
-  ChatModel m_chat_model;
-  ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
-};
-
-// =============================================================================
 
 class ChatProxyModel : public QSortFilterProxyModel {
+  class ChatModelFilter;
+
   Q_OBJECT;
 
   Q_PROPERTY(
@@ -50,16 +26,12 @@ public:
   Q_INVOKABLE void setEntryTypeFilter (ChatModel::EntryType type);
   Q_INVOKABLE void removeEntry (int id);
 
-  Q_INVOKABLE void removeAllEntries () {
-    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->removeAllEntries();
-  }
+  Q_INVOKABLE void removeAllEntries ();
 
-  Q_INVOKABLE void sendMessage (const QString &message) {
-    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->sendMessage(message);
-  }
+  Q_INVOKABLE void sendMessage (const QString &message);
 
 signals:
-  void sipAddressChanged (const QString &sipAddress);
+  void sipAddressChanged (const QString &sip_address);
   void moreEntriesLoaded (int n);
 
   void entryTypeFilterChanged (ChatModel::EntryType type);
@@ -68,17 +40,10 @@ protected:
   bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
 
 private:
-  QString getSipAddress () const {
-    return static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->getSipAddress();
-  }
+  QString getSipAddress () const;
+  void setSipAddress (const QString &sip_address);
 
-  void setSipAddress (const QString &sip_address) {
-    static_cast<ChatModel *>(m_chat_model_filter.sourceModel())->setSipAddress(
-      sip_address
-    );
-  }
-
-  ChatModelFilter m_chat_model_filter;
+  ChatModelFilter *m_chat_model_filter;
   int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
 
   static const unsigned int ENTRIES_CHUNK_SIZE;
