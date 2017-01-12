@@ -128,7 +128,7 @@ bool ChatModel::removeRow (int row, const QModelIndex &) {
 bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
   int limit = row + count - 1;
 
-  if (!parent.isValid() || row < 0 || count < 0 || limit >= m_entries.count())
+  if (row < 0 || count < 0 || limit >= m_entries.count())
     return false;
 
   beginRemoveRows(parent, row, limit);

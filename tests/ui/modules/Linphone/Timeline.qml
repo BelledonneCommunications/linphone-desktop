@@ -27,9 +27,10 @@ ColumnLayout {
     var n = model.rowCount()
 
     for (var i = 0; i < n; i++) {
+      _selectedSipAddress = sipAddress
+
       if (sipAddress === model.data(model.index(i, 0)).sipAddress) {
         view.currentIndex = i
-        _selectedSipAddress = sipAddress
         return
       }
     }
@@ -45,15 +46,39 @@ ColumnLayout {
   spacing: 0
 
   SmartConnect {
-    Component.onCompleted: this.connect(model, 'dataChanged', function () {
-      var index = view.currentIndex
-      if (
-        index !== -1 &&
-        _selectedSipAddress !== model.data(model.index(index, 0)).sipAddress
-      ) {
-        setSelectedEntry(_selectedSipAddress)
-      }
-    })
+    Component.onCompleted: {
+      // Handle if current entry was moved in timeline.
+      this.connect(model, 'dataChanged', function () {
+        var index = view.currentIndex
+        if (
+          index !== -1 &&
+          _selectedSipAddress !== model.data(model.index(index, 0)).sipAddress
+        ) {
+          setSelectedEntry(_selectedSipAddress)
+        }
+      })
+
+      // A timeline entry is removed from timeline if there is no history entry.
+      this.connect(model, 'rowsAboutToBeRemoved', function (_, first, last) {
+        var index = view.currentIndex
+        if (index >= first && index <= last) {
+          view.currentIndex = -1
+        }
+      })
+
+      // A entry is added when history is created.
+      this.connect(model, 'rowsInserted', function (_, first, last) {
+        if (_selectedSipAddress.length === 0) {
+          return
+        }
+
+        for (var i = first; i <= last; i++) {
+          if (_selectedSipAddress === model.data(model.index(i, 0)).sipAddress) {
+            view.currentIndex = i
+          }
+        }
+      })
+    }
   }
 
   // ---------------------------------------------------------------------------

@@ -5,16 +5,23 @@ import Utils 1.0
 // =============================================================================
 
 Item {
-  property bool _connected: false
+  property var handlers: ({})
 
   function connect (emitter, signalName, handler) {
-    Utils.assert(!_connected, 'SmartConnect is already connected!')
-
     emitter[signalName].connect(handler)
-    _connected = true
 
-    Component.onDestruction.connect(function () {
-      emitter[signalName].disconnect(handler)
-    })
+    if (!handlers[signalName]) {
+      handlers[signalName] = []
+    }
+
+    handlers[signalName].push([emitter, handler])
+  }
+
+  Component.onDestruction: {
+    for (var signalName in handlers) {
+      handlers[signalName].forEach(function (value) {
+        value[0][signalName].disconnect(value[1])
+      })
+    }
   }
 }
