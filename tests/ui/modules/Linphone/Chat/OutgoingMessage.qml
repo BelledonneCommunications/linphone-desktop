@@ -32,12 +32,14 @@ Item {
         id: icon
 
         Icon {
-          icon: $chatEntry.status === ChatModel.MessageStatusNotDelivered ? 'chat_error' : 'chat_send'
+          property bool isNotDelivered: $chatEntry.status === ChatModel.MessageStatusNotDelivered
+
+          icon: isNotDelivered ? 'chat_error' : 'chat_send'
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
             anchors.fill: parent
-            onClicked: console.log('resend')
+            onClicked: isNotDelivered && proxyModel.resendMessage(index)
           }
         }
       }

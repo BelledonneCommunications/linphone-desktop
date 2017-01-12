@@ -29,6 +29,7 @@ public:
   Q_INVOKABLE void removeAllEntries ();
 
   Q_INVOKABLE void sendMessage (const QString &message);
+  Q_INVOKABLE void resendMessage (int id);
 
 signals:
   void sipAddressChanged (const QString &sip_address);

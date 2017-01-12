@@ -68,6 +68,8 @@ public:
 
   void sendMessage (const QString &message);
 
+  void resendMessage (int id);
+
 signals:
   void sipAddressChanged (const QString &sip_address);
   void allEntriesRemoved ();

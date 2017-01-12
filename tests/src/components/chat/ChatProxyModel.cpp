@@ -98,6 +98,13 @@ void ChatProxyModel::sendMessage (const QString &message) {
   static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->sendMessage(message);
 }
 
+void ChatProxyModel::resendMessage (int id) {
+  QModelIndex source_index = mapToSource(index(id, 0));
+  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->resendMessage(
+    m_chat_model_filter->mapToSource(source_index).row()
+  );
+}
+
 bool ChatProxyModel::filterAcceptsRow (int source_row, const QModelIndex &) const {
   return m_chat_model_filter->rowCount() - source_row <= m_n_max_displayed_entries;
 }

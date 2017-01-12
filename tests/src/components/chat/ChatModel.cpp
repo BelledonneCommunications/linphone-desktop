@@ -253,6 +253,28 @@ void ChatModel::sendMessage (const QString &message) {
   emit messageSent(_message);
 }
 
+void ChatModel::resendMessage (int id) {
+  if (id < 0 || id > m_entries.count()) {
+    qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
+    return;
+  }
+
+  const ChatEntryData &entry = m_entries[id];
+  if (entry.first["type"] != EntryType::MessageEntry) {
+    qWarning() << QStringLiteral("Unable to resend entry %1. It's not a message.").arg(id);
+    return;
+  }
+
+  shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
+  if (message->getState() != linphone::ChatMessageStateNotDelivered) {
+    qWarning() << QStringLiteral("Unable to resend message: %1. Bad state.").arg(id);
+    return;
+  }
+
+  message->setListener(m_message_handlers);
+  m_chat_room->sendMessage(message);
+}
+
 // -----------------------------------------------------------------------------
 
 void ChatModel::fillMessageEntry (
