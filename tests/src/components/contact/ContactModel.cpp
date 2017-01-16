@@ -71,6 +71,8 @@ void ContactModel::abortEdit () {
   // TODO: call linphone friend abort function when available.
   // m_linphone_friend->abort();
   m_old_sip_addresses.clear();
+
+  emit contactUpdated();
 }
 
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {
