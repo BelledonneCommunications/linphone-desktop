@@ -51,7 +51,7 @@ inline shared_ptr<belcard::BelCardPhoto> findBelCardPhoto (const list<shared_ptr
 VcardModel::~VcardModel () {
   // If it's a detached Vcard, the linked photo must be destroyed from fs.
   if (App::getInstance()->getEngine()->objectOwnership(this) != QQmlEngine::CppOwnership) {
-    shared_ptr<belcard::BelCardPhoto> photo(findBelCardPhoto(m_vcard->getBelcard()->getPhotos()));
+    shared_ptr<belcard::BelCardPhoto> photo(findBelCardPhoto(m_vcard->getVcard()->getPhotos()));
     if (!photo)
       return;
 
@@ -85,7 +85,7 @@ void VcardModel::setUsername (const QString &username) {
 
 QString VcardModel::getAvatar () const {
   // Find desktop avatar.
-  list<shared_ptr<belcard::BelCardPhoto> > photos = m_vcard->getBelcard()->getPhotos();
+  list<shared_ptr<belcard::BelCardPhoto> > photos = m_vcard->getVcard()->getPhotos();
   shared_ptr<belcard::BelCardPhoto> photo = findBelCardPhoto(photos);
 
   // No path found.
@@ -119,7 +119,7 @@ bool VcardModel::setAvatar (const QString &path) {
   qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
 
   // 2. Edit vcard.
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   list<shared_ptr<belcard::BelCardPhoto> > photos = belcard->getPhotos();
 
   // 3. Remove oldest photo.
@@ -164,7 +164,7 @@ inline shared_ptr<belcard::BelCardAddress> getOrCreateBelCardAddress (shared_ptr
 }
 
 QVariantMap VcardModel::getAddress () const {
-  list<shared_ptr<belcard::BelCardAddress> > addresses = m_vcard->getBelcard()->getAddresses();
+  list<shared_ptr<belcard::BelCardAddress> > addresses = m_vcard->getVcard()->getAddresses();
   QVariantMap map;
 
   if (addresses.empty())
@@ -180,25 +180,25 @@ QVariantMap VcardModel::getAddress () const {
 }
 
 void VcardModel::setStreet (const QString &street) {
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getVcard());
   address->setStreet(::Utils::qStringToLinphoneString(street));
   emit vcardUpdated();
 }
 
 void VcardModel::setLocality (const QString &locality) {
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getVcard());
   address->setLocality(::Utils::qStringToLinphoneString(locality));
   emit vcardUpdated();
 }
 
 void VcardModel::setPostalCode (const QString &postal_code) {
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getVcard());
   address->setPostalCode(::Utils::qStringToLinphoneString(postal_code));
   emit vcardUpdated();
 }
 
 void VcardModel::setCountry (const QString &country) {
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getBelcard());
+  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(m_vcard->getVcard());
   address->setCountry(::Utils::qStringToLinphoneString(country));
   emit vcardUpdated();
 }
@@ -209,7 +209,7 @@ QVariantList VcardModel::getSipAddresses () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QVariantList list;
 
-  for (const auto &address : m_vcard->getBelcard()->getImpp()) {
+  for (const auto &address : m_vcard->getVcard()->getImpp()) {
     string value = address->getValue();
     shared_ptr<linphone::Address> l_address = core->createAddress(value);
 
@@ -232,7 +232,7 @@ bool VcardModel::addSipAddress (const QString &sip_address) {
   }
 
   // Add sip address in belcard.
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
   value->setValue(l_address->asStringUriOnly());
 
@@ -248,7 +248,7 @@ bool VcardModel::addSipAddress (const QString &sip_address) {
 }
 
 void VcardModel::removeSipAddress (const QString &sip_address) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   list<shared_ptr<belcard::BelCardImpp> > addresses = belcard->getImpp();
   shared_ptr<belcard::BelCardImpp> value = findBelCardValue(addresses, sip_address);
 
@@ -283,14 +283,14 @@ bool VcardModel::updateSipAddress (const QString &old_sip_address, const QString
 QVariantList VcardModel::getCompanies () const {
   QVariantList list;
 
-  for (const auto &company : m_vcard->getBelcard()->getRoles())
+  for (const auto &company : m_vcard->getVcard()->getRoles())
     list.append(::Utils::linphoneStringToQString(company->getValue()));
 
   return list;
 }
 
 bool VcardModel::addCompany (const QString &company) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
   value->setValue(::Utils::qStringToLinphoneString(company));
 
@@ -306,7 +306,7 @@ bool VcardModel::addCompany (const QString &company) {
 }
 
 void VcardModel::removeCompany (const QString &company) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardRole> value = findBelCardValue(belcard->getRoles(), company);
 
   if (!value) {
@@ -334,14 +334,14 @@ bool VcardModel::updateCompany (const QString &old_company, const QString &compa
 QVariantList VcardModel::getEmails () const {
   QVariantList list;
 
-  for (const auto &email : m_vcard->getBelcard()->getEmails())
+  for (const auto &email : m_vcard->getVcard()->getEmails())
     list.append(::Utils::linphoneStringToQString(email->getValue()));
 
   return list;
 }
 
 bool VcardModel::addEmail (const QString &email) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardEmail> value = belcard::BelCardGeneric::create<belcard::BelCardEmail>();
   value->setValue(::Utils::qStringToLinphoneString(email));
 
@@ -357,7 +357,7 @@ bool VcardModel::addEmail (const QString &email) {
 }
 
 void VcardModel::removeEmail (const QString &email) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardEmail> value = findBelCardValue(belcard->getEmails(), email);
 
   if (!value) {
@@ -385,14 +385,14 @@ bool VcardModel::updateEmail (const QString &old_email, const QString &email) {
 QVariantList VcardModel::getUrls () const {
   QVariantList list;
 
-  for (const auto &url : m_vcard->getBelcard()->getURLs())
+  for (const auto &url : m_vcard->getVcard()->getURLs())
     list.append(::Utils::linphoneStringToQString(url->getValue()));
 
   return list;
 }
 
 bool VcardModel::addUrl (const QString &url) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
   value->setValue(::Utils::qStringToLinphoneString(url));
 
@@ -408,7 +408,7 @@ bool VcardModel::addUrl (const QString &url) {
 }
 
 void VcardModel::removeUrl (const QString &url) {
-  shared_ptr<belcard::BelCard> belcard = m_vcard->getBelcard();
+  shared_ptr<belcard::BelCard> belcard = m_vcard->getVcard();
   shared_ptr<belcard::BelCardURL> value = findBelCardValue(belcard->getURLs(), url);
 
   if (!value) {

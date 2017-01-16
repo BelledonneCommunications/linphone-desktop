@@ -338,7 +338,7 @@ void ChatModel::sendMessage (const QString &message) {
   _message->setListener(m_message_handlers);
 
   insertMessageAtEnd(_message);
-  m_chat_room->sendMessage(_message);
+  m_chat_room->sendChatMessage(_message);
 
   emit messageSent(_message);
 }
@@ -366,7 +366,7 @@ void ChatModel::resendMessage (int id) {
   }
 
   message->setListener(m_message_handlers);
-  m_chat_room->sendMessage(message);
+  m_chat_room->sendChatMessage(message);
 }
 
 void ChatModel::sendFileMessage (const QString &path) {
@@ -388,7 +388,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   message->setListener(m_message_handlers);
 
   insertMessageAtEnd(message);
-  m_chat_room->sendMessage(message);
+  m_chat_room->sendChatMessage(message);
 
   emit messageSent(message);
 }
