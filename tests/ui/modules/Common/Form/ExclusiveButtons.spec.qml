@@ -25,13 +25,7 @@ Item {
       ExclusiveButtons {
         id: exclusiveButtons
 
-        texts: [
-          qsTr('A'),
-          qsTr('B'),
-          qsTr('C'),
-          qsTr('D'),
-          qsTr('E')
-        ]
+        texts: ['A', 'B', 'C', 'D', 'E']
       }
 
       SignalSpy {

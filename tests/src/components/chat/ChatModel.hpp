@@ -18,8 +18,6 @@ class ChatModel : public QAbstractListModel {
   Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
 
 public:
-  typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
-
   enum Roles {
     ChatEntry = Qt::DisplayRole,
     SectionDate
@@ -70,6 +68,8 @@ public:
 
   void resendMessage (int id);
 
+  void sendFileMessage (const QString &path);
+
 signals:
   void sipAddressChanged (const QString &sip_address);
   void allEntriesRemoved ();
@@ -80,20 +80,11 @@ signals:
   void messagesCountReset ();
 
 private:
-  void fillMessageEntry (
-    QVariantMap &dest,
-    const std::shared_ptr<linphone::ChatMessage> &message
-  );
+  typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
 
-  void fillCallStartEntry (
-    QVariantMap &dest,
-    const std::shared_ptr<linphone::CallLog> &call_log
-  );
-
-  void fillCallEndEntry (
-    QVariantMap &dest,
-    const std::shared_ptr<linphone::CallLog> &call_log
-  );
+  void fillMessageEntry (QVariantMap &dest, const std::shared_ptr<linphone::ChatMessage> &message);
+  void fillCallStartEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &call_log);
+  void fillCallEndEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &call_log);
 
   void removeEntry (ChatEntryData &pair);
 

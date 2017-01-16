@@ -1,17 +1,47 @@
 #include <algorithm>
 
 #include <QDateTime>
-#include <QTimer>
+#include <QFileInfo>
+#include <QImage>
 #include <QtDebug>
+#include <QTimer>
+#include <QUuid>
 
+#include "../../app/Paths.hpp"
+#include "../../app/ThumbnailProvider.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ChatModel.hpp"
 
+#define THUMBNAIL_IMAGE_FILE_HEIGHT 100
+#define THUMBNAIL_IMAGE_FILE_WIDTH 100
+
 using namespace std;
 
 // =============================================================================
+
+inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
+  string data = message->getAppdata();
+  if (!data.empty())
+    dest["thumbnail"] = QStringLiteral("image://%1/%2")
+      .arg(ThumbnailProvider::PROVIDER_ID).arg(::Utils::linphoneStringToQString(data));
+}
+
+inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
+  if (message && message->getFileTransferInformation()) {
+    message->cancelFileTransfer();
+
+    string file_id = message->getAppdata();
+    if (!file_id.empty()) {
+      QString thumbnail_path = ::Utils::linphoneStringToQString(Paths::getThumbnailsDirPath() + file_id);
+      if (!QFile::remove(thumbnail_path))
+        qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnail_path);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
 
 class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
   friend class ChatModel;
@@ -22,48 +52,93 @@ public:
   ~MessageHandlers () = default;
 
 private:
+  QList<ChatEntryData>::iterator findMessageEntry (const shared_ptr<linphone::ChatMessage> &message) {
+    return find_if(
+      m_chat_model->m_entries.begin(), m_chat_model->m_entries.end(), [&message](const ChatEntryData &pair) {
+        return pair.second == message;
+      }
+    );
+  }
+
+  void signalDataChanged (const QList<ChatEntryData>::iterator &it) {
+    int row = static_cast<int>(distance(m_chat_model->m_entries.begin(), it));
+    emit m_chat_model->dataChanged(m_chat_model->index(row, 0), m_chat_model->index(row, 0));
+  }
+
   void onFileTransferRecv (
-    const shared_ptr<linphone::ChatMessage> &message,
-    const shared_ptr<linphone::Content> &content,
-    const shared_ptr<linphone::Buffer> &buffer
+    const shared_ptr<linphone::ChatMessage> &,
+    const shared_ptr<linphone::Content> &,
+    const shared_ptr<linphone::Buffer> &
   ) override {
-    qDebug() << "Not yet implemented";
+    qWarning() << "`onFileTransferRecv` called.";
   }
 
   shared_ptr<linphone::Buffer> onFileTransferSend (
-    const shared_ptr<linphone::ChatMessage> &message,
-    const shared_ptr<linphone::Content> &content,
-    size_t offset,
-    size_t size
+    const shared_ptr<linphone::ChatMessage> &,
+    const shared_ptr<linphone::Content> &,
+    size_t,
+    size_t
   ) override {
-    qDebug() << "Not yet implemented";
+    qWarning() << "`onFileTransferSend` called.";
+    return nullptr;
   }
 
   void onFileTransferProgressIndication (
     const shared_ptr<linphone::ChatMessage> &message,
-    const shared_ptr<linphone::Content> &content,
+    const shared_ptr<linphone::Content> &,
     size_t offset,
-    size_t total
+    size_t
   ) override {
-    qDebug() << "Not yet implemented";
+    if (!m_chat_model)
+      return;
+
+    auto it = findMessageEntry(message);
+    if (it == m_chat_model->m_entries.end())
+      return;
+
+    (*it).first["fileOffset"] = static_cast<quint64>(offset);
+
+    signalDataChanged(it);
   }
 
   void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessageState state) override {
     if (!m_chat_model)
       return;
 
-    ChatModel &chat = *m_chat_model;
-
-    auto it = find_if(chat.m_entries.begin(), chat.m_entries.end(), [&message](const ChatEntryData &pair) {
-          return pair.second == message;
-        });
-    if (it == chat.m_entries.end())
+    auto it = findMessageEntry(message);
+    if (it == m_chat_model->m_entries.end())
       return;
 
-    (*it).first["status"] = state;
-    int row = distance(chat.m_entries.begin(), it);
+    if (state == linphone::ChatMessageStateFileTransferError)
+      state = linphone::ChatMessageStateNotDelivered;
+    else if (state == linphone::ChatMessageStateFileTransferDone) {
+      QString thumbnail_path = ::Utils::linphoneStringToQString(message->getFileTransferFilepath());
 
-    emit chat.dataChanged(chat.index(row, 0), chat.index(row, 0));
+      QImage image(thumbnail_path);
+      if (!image.isNull()) {
+        QImage thumbnail = image.scaled(
+            THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
+            Qt::KeepAspectRatio, Qt::SmoothTransformation
+          );
+
+        QString uuid = QUuid::createUuid().toString();
+        QString file_id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
+
+        if (!thumbnail.save(::Utils::linphoneStringToQString(Paths::getThumbnailsDirPath()) + file_id, "jpg", 100)) {
+          qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnail_path);
+          return;
+        }
+
+        message->setAppdata(::Utils::qStringToLinphoneString(file_id));
+        fillThumbnailProperty((*it).first, message);
+      }
+
+      state = linphone::ChatMessageStateDelivered;
+    }
+
+    (*it).first["status"] = state;
+
+    signalDataChanged(it);
   }
 
   ChatModel *m_chat_model;
@@ -245,15 +320,22 @@ void ChatModel::removeAllEntries () {
 }
 
 void ChatModel::sendMessage (const QString &message) {
+  if (!m_chat_room)
+    return;
+
   shared_ptr<linphone::ChatMessage> _message = m_chat_room->createMessage(::Utils::qStringToLinphoneString(message));
   _message->setListener(m_message_handlers);
-  m_chat_room->sendMessage(_message);
+
   insertMessageAtEnd(_message);
+  m_chat_room->sendMessage(_message);
 
   emit messageSent(_message);
 }
 
 void ChatModel::resendMessage (int id) {
+  if (!m_chat_room)
+    return;
+
   if (id < 0 || id > m_entries.count()) {
     qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
     return;
@@ -275,23 +357,48 @@ void ChatModel::resendMessage (int id) {
   m_chat_room->sendMessage(message);
 }
 
+void ChatModel::sendFileMessage (const QString &path) {
+  if (!m_chat_room)
+    return;
+
+  QFile file(path);
+  if (!file.exists())
+    return;
+
+  shared_ptr<linphone::Content> content = CoreManager::getInstance()->getCore()->createContent();
+  content->setType("application");
+  content->setSubtype("octet-stream");
+  content->setSize(file.size());
+  content->setName(::Utils::qStringToLinphoneString(QFileInfo(file).fileName()));
+
+  shared_ptr<linphone::ChatMessage> message = m_chat_room->createFileTransferMessage(content);
+  message->setFileTransferFilepath(::Utils::qStringToLinphoneString(path));
+  message->setListener(m_message_handlers);
+
+  insertMessageAtEnd(message);
+  m_chat_room->sendMessage(message);
+
+  emit messageSent(message);
+}
+
 // -----------------------------------------------------------------------------
 
-void ChatModel::fillMessageEntry (
-  QVariantMap &dest,
-  const shared_ptr<linphone::ChatMessage> &message
-) {
+void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
   dest["type"] = EntryType::MessageEntry;
   dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
   dest["content"] = ::Utils::linphoneStringToQString(message->getText());
-  dest["isOutgoing"] = message->isOutgoing();
+  dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessageStateIdle;
   dest["status"] = message->getState();
+
+  shared_ptr<linphone::Content> content = message->getFileTransferInformation();
+  if (content) {
+    dest["fileSize"] = static_cast<quint64>(content->getSize());
+    dest["fileName"] = ::Utils::linphoneStringToQString(content->getName());
+    fillThumbnailProperty(dest, message);
+  }
 }
 
-void ChatModel::fillCallStartEntry (
-  QVariantMap &dest,
-  const shared_ptr<linphone::CallLog> &call_log
-) {
+void ChatModel::fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &call_log) {
   QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(call_log->getStartDate() * 1000);
 
   dest["type"] = EntryType::CallEntry;
@@ -301,10 +408,7 @@ void ChatModel::fillCallStartEntry (
   dest["isStart"] = true;
 }
 
-void ChatModel::fillCallEndEntry (
-  QVariantMap &dest,
-  const shared_ptr<linphone::CallLog> &call_log
-) {
+void ChatModel::fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &call_log) {
   QDateTime timestamp = QDateTime::fromMSecsSinceEpoch((call_log->getStartDate() + call_log->getDuration()) * 1000);
 
   dest["type"] = EntryType::CallEntry;
@@ -320,10 +424,14 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
   int type = pair.first["type"].toInt();
 
   switch (type) {
-    case ChatModel::MessageEntry:
-      m_chat_room->deleteMessage(static_pointer_cast<linphone::ChatMessage>(pair.second));
+    case ChatModel::MessageEntry: {
+      shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(pair.second);
+      removeFileMessageThumbnail(message);
+      m_chat_room->deleteMessage(message);
       break;
-    case ChatModel::CallEntry:
+    }
+
+    case ChatModel::CallEntry: {
       if (pair.first["status"].toInt() == linphone::CallStatusSuccess) {
         // WARNING: Unable to remove symmetric call here. (start/end)
         // We are between `beginRemoveRows` and `endRemoveRows`.
@@ -343,6 +451,8 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
 
       CoreManager::getInstance()->getCore()->removeCallLog(static_pointer_cast<linphone::CallLog>(pair.second));
       break;
+    }
+
     default:
       qWarning() << QStringLiteral("Unknown chat entry type: %1.").arg(type);
   }

@@ -12,6 +12,7 @@ namespace Paths {
   std::string getFriendsListFilepath ();
   std::string getLogsDirpath ();
   std::string getMessageHistoryFilepath ();
+  std::string getThumbnailsDirPath ();
 }
 
 #endif // PATHS_H_

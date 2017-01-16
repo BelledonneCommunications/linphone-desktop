@@ -1,21 +1,21 @@
-#ifndef AVATAR_PROVIDER_H_
-#define AVATAR_PROVIDER_H_
+#ifndef THUMBNAIL_PROVIDER_H_
+#define THUMBNAIL_PROVIDER_H_
 
 #include <QQuickImageProvider>
 
 // =============================================================================
 
-class AvatarProvider : public QQuickImageProvider {
+class ThumbnailProvider : public QQuickImageProvider {
 public:
-  AvatarProvider ();
-  ~AvatarProvider () = default;
+  ThumbnailProvider ();
+  ~ThumbnailProvider () = default;
 
   QImage requestImage (const QString &id, QSize *size, const QSize &requested_size) override;
 
   static const QString PROVIDER_ID;
 
 private:
-  QString m_avatars_path;
+  QString m_thumbnails_path;
 };
 
-#endif // AVATAR_PROVIDER_H_
+#endif // THUMBNAIL_PROVIDER_H_

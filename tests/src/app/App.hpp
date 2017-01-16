@@ -9,6 +9,7 @@
 #include "../components/notifier/Notifier.hpp"
 #include "AvatarProvider.hpp"
 #include "DefaultTranslator.hpp"
+#include "ThumbnailProvider.hpp"
 
 // =============================================================================
 
@@ -57,6 +58,7 @@ private:
   QSystemTrayIcon *m_system_tray_icon = nullptr;
 
   AvatarProvider m_avatar_provider;
+  ThumbnailProvider m_thumbnail_provider;
   DefaultTranslator m_default_translator;
   QTranslator m_english_translator;
 

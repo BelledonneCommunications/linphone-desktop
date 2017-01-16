@@ -1,3 +1,4 @@
+#include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "SettingsModel.hpp"
@@ -18,7 +19,19 @@ bool SettingsModel::getAutoAnswerStatus () const {
   return !!m_config->getInt(UI_SECTION, "auto_answer", 0);
 }
 
-bool SettingsModel::setAutoAnswerStatus (bool status) {
+void SettingsModel::setAutoAnswerStatus (bool status) {
   m_config->setInt(UI_SECTION, "auto_answer", status);
   emit autoAnswerStatusChanged(status);
+}
+
+QString SettingsModel::getFileTransferUrl () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getFileTransferServer()
+  );
+}
+
+void SettingsModel::setFileTransferUrl (const QString &url) {
+  CoreManager::getInstance()->getCore()->setFileTransferServer(
+    ::Utils::qStringToLinphoneString(url)
+  );
 }

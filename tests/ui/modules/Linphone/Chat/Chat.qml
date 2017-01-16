@@ -191,6 +191,11 @@ ColumnLayout {
         OutgoingMessage {}
       }
 
+      Component {
+        id: fileMessage
+        FileMessage {}
+      }
+
       // -----------------------------------------------------------------------
 
       MouseArea {
@@ -223,9 +228,17 @@ ColumnLayout {
           // Display content.
           Loader {
             Layout.fillWidth: true
-            sourceComponent: $chatEntry.type === ChatModel.MessageEntry
-              ? ($chatEntry.isOutgoing ? outgoingMessage : incomingMessage)
-            : event
+            sourceComponent: {
+              if ($chatEntry.fileName) {
+                return fileMessage
+              }
+
+              if ($chatEntry.type === ChatModel.CallEntry) {
+                return event
+              }
+
+              return $chatEntry.isOutgoing ? outgoingMessage : incomingMessage
+            }
           }
         }
       }
@@ -245,7 +258,14 @@ ColumnLayout {
 
     DroppableTextArea {
       anchors.fill: parent
+      dropEnabled: SettingsModel.fileTransferUrl.length > 0
+      dropDisabledReason: qsTr('noFileTransferUrl')
       placeholderText: qsTr('newMessagePlaceholder')
+
+      onDropped: {
+        _bindToEnd = true
+        files.forEach(proxyModel.sendFileMessage)
+      }
 
       onValidText: {
         this.text = ''

@@ -56,6 +56,27 @@ QtObject {
         property int rightMargin: 5
       }
 
+      property QtObject file: QtObject {
+        property int height: 64
+        property int margins: 8
+        property int spacing: 8
+        property int width: 250
+
+        property QtObject status: QtObject {
+          property int spacing: 4
+
+          property QtObject bar: QtObject {
+            property int height: 6
+            property int radius: 3
+          }
+        }
+
+        property QtObject thumbnail: QtObject {
+          property int height: 50
+          property int width: 50
+        }
+      }
+
       property QtObject images: QtObject {
         property int height: 48
         // `width` can be used.

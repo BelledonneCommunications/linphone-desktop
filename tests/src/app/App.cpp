@@ -43,8 +43,9 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
       .arg(current_locale.name());
   }
 
-  // Provide avatars loader.
+  // Provide avatars/thumbnails providers.
   m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, &m_avatar_provider);
+  m_engine.addImageProvider(ThumbnailProvider::PROVIDER_ID, &m_thumbnail_provider);
 
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 

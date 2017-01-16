@@ -12,12 +12,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
 
   Q_OBJECT;
 
-  Q_PROPERTY(
-    QString sipAddress
-    READ getSipAddress
-    WRITE setSipAddress
-    NOTIFY sipAddressChanged
-  );
+  Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
 
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
@@ -30,6 +25,8 @@ public:
 
   Q_INVOKABLE void sendMessage (const QString &message);
   Q_INVOKABLE void resendMessage (int id);
+
+  Q_INVOKABLE void sendFileMessage (const QString &path);
 
 signals:
   void sipAddressChanged (const QString &sip_address);

@@ -314,6 +314,25 @@ function find (obj, cb, context) {
 
 // -----------------------------------------------------------------------------
 
+function formatSize (size) {
+  var units = ['KB', 'MB', 'GB', 'TB']
+  var unit = 'B'
+
+  if (size == null) {
+    size = 0
+  }
+
+  var length = units.length
+  for (var i = 0; size >= 1024 && i < length; i++) {
+    unit = units[i]
+    size /= 1024
+  }
+
+  return parseFloat(size.toFixed(2)) + unit
+}
+
+// -----------------------------------------------------------------------------
+
 // Generate a random number in the [min, max[ interval.
 // Uniform distrib.
 function genRandomNumber (min, max) {

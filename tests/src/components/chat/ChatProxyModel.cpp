@@ -105,9 +105,17 @@ void ChatProxyModel::resendMessage (int id) {
   );
 }
 
+void ChatProxyModel::sendFileMessage (const QString &path) {
+  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->sendFileMessage(path);
+}
+
+// -----------------------------------------------------------------------------
+
 bool ChatProxyModel::filterAcceptsRow (int source_row, const QModelIndex &) const {
   return m_chat_model_filter->rowCount() - source_row <= m_n_max_displayed_entries;
 }
+
+// -----------------------------------------------------------------------------
 
 QString ChatProxyModel::getSipAddress () const {
   return static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->getSipAddress();

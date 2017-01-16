@@ -21,6 +21,7 @@ QtObject {
   property color k:   '#FFFFFF'
   property color k50: '#32FFFFFF'
   property color l:   '#000000'
+  property color l50: '#32000000'
   property color m:   '#D1D1D1'
   property color n:   '#C0C0C0'
   property color o:   '#232323'
@@ -34,4 +35,5 @@ QtObject {
   property color w:   '#A1A1A1'
   property color x:   '#96A5B1'
   property color y:   '#D0D8DE'
+  property color z:   '#17A81A'
 }

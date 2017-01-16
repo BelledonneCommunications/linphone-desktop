@@ -4,6 +4,7 @@
     <file>assets/images/add_hovered.svg</file>
     <file>assets/images/add_normal.svg</file>
     <file>assets/images/add_pressed.svg</file>
+    <file>assets/images/attachment_disabled.svg</file>
     <file>assets/images/attachment_hovered.svg</file>
     <file>assets/images/attachment_normal.svg</file>
     <file>assets/images/attachment_pressed.svg</file>
@@ -204,6 +205,7 @@
     <file>ui/modules/Linphone/Call/PausedCallControls.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
+    <file>ui/modules/Linphone/Chat/FileMessage.qml</file>
     <file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
     <file>ui/modules/Linphone/Chat/Message.qml</file>
     <file>ui/modules/Linphone/Chat/OutgoingMessage.qml</file>

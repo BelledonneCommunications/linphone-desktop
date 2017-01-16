@@ -41,6 +41,11 @@
         <source>newMessagePlaceholder</source>
         <translation>Enter your message</translation>
     </message>
+    <message>
+        <source>noFileTransferUrl</source>
+        <translation>Unable to send file.
+Server url not configured.</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmDialog</name>

@@ -33,6 +33,11 @@
         <source>newMessagePlaceholder</source>
         <translation>Entrer votre message.</translation>
     </message>
+    <message>
+        <source>noFileTransferUrl</source>
+        <translation>Impossible d&apos;envoyer un fichier.
+Url du serveur non configurée.</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmDialog</name>

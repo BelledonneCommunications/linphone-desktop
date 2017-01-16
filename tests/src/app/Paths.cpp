@@ -11,7 +11,7 @@
 #ifdef _WIN32
 
 #define MAIN_PATH \
-  QStandardPaths::writableLocation(QStandardPaths::DataLocation)
+  (QStandardPaths::writableLocation(QStandardPaths::DataLocation) + "/")
 #define PATH_CONFIG "linphonerc"
 
 #define LINPHONE_FOLDER "linphone/"
@@ -19,15 +19,16 @@
 #else
 
 #define MAIN_PATH \
-  QStandardPaths::writableLocation(QStandardPaths::HomeLocation)
+  (QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/")
 #define PATH_CONFIG ".linphonerc"
 
 #define LINPHONE_FOLDER ".linphone/"
 
 #endif // ifdef _WIN32
 
-#define PATH_AVATARS LINPHONE_FOLDER "avatars/"
-#define PATH_LOGS LINPHONE_FOLDER "logs/"
+#define PATH_AVATARS (LINPHONE_FOLDER "avatars/")
+#define PATH_LOGS (LINPHONE_FOLDER "logs/")
+#define PATH_THUMBNAILS (LINPHONE_FOLDER "thumbnails/")
 
 #define PATH_CALL_HISTORY_LIST ".linphone-call-history.db"
 #define PATH_FRIENDS_LIST ".linphone-friends.db"
@@ -65,25 +66,29 @@ inline string getFilePath (const QString &filename) {
 // -----------------------------------------------------------------------------
 
 string Paths::getAvatarsDirpath () {
-  return getDirectoryPath(MAIN_PATH + "/" PATH_AVATARS);
+  return getDirectoryPath(MAIN_PATH + PATH_AVATARS);
 }
 
 string Paths::getCallHistoryFilepath () {
-  return getFilePath(MAIN_PATH + "/" + PATH_CALL_HISTORY_LIST);
+  return getFilePath(MAIN_PATH + PATH_CALL_HISTORY_LIST);
 }
 
 string Paths::getConfigFilepath () {
-  return getFilePath(MAIN_PATH + "/" + PATH_CONFIG);
+  return getFilePath(MAIN_PATH + PATH_CONFIG);
 }
 
 string Paths::getFriendsListFilepath () {
-  return getFilePath(MAIN_PATH + "/" + PATH_FRIENDS_LIST);
+  return getFilePath(MAIN_PATH + PATH_FRIENDS_LIST);
 }
 
 string Paths::getLogsDirpath () {
-  return getDirectoryPath(MAIN_PATH + "/" PATH_LOGS);
+  return getDirectoryPath(MAIN_PATH + PATH_LOGS);
 }
 
 string Paths::getMessageHistoryFilepath () {
-  return getFilePath(MAIN_PATH + "/" + PATH_MESSAGE_HISTORY_LIST);
+  return getFilePath(MAIN_PATH + PATH_MESSAGE_HISTORY_LIST);
+}
+
+string Paths::getThumbnailsDirPath () {
+  return getDirectoryPath(MAIN_PATH + PATH_THUMBNAILS);
 }

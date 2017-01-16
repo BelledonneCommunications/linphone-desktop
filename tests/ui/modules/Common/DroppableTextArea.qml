@@ -7,8 +7,13 @@ import Common.Styles 1.0
 // =============================================================================
 
 Item {
+  id: droppableTextArea
+
   property alias placeholderText: textArea.placeholderText
   property alias text: textArea.text
+
+  property bool dropEnabled: true
+  property string dropDisabledReason
 
   // ---------------------------------------------------------------------------
 
@@ -73,6 +78,7 @@ Item {
         DroppableTextAreaStyle.fileChooserButton.margins
       verticalCenter: parent.verticalCenter
     }
+    enabled: droppableTextArea.dropEnabled
     icon: 'attachment'
     iconSize: DroppableTextAreaStyle.fileChooserButton.size
 
@@ -88,7 +94,9 @@ Item {
     }
 
     TooltipArea {
-      text: qsTr('attachmentTooltip')
+      text: droppableTextArea.dropEnabled
+        ? qsTr('attachmentTooltip')
+        : droppableTextArea.dropDisabledReason
     }
   }
 
@@ -111,6 +119,7 @@ Item {
   DropArea {
     anchors.fill: parent
     keys: [ 'text/uri-list' ]
+    visible: droppableTextArea.dropEnabled
 
     onDropped: {
       state = ''
