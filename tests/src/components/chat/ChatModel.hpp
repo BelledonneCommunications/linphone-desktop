@@ -70,6 +70,8 @@ public:
 
   void sendFileMessage (const QString &path);
 
+  void downloadFile (int id, const QString &download_path);
+
 signals:
   void sipAddressChanged (const QString &sip_address);
   void allEntriesRemoved ();

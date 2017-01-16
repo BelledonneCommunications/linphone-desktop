@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -46,6 +47,8 @@ Row {
 
     Rectangle {
       id: rectangle
+
+      readonly property bool isNotDelivered: $chatEntry.status === ChatModel.MessageStatusNotDelivered
 
       color: $chatEntry.isOutgoing
         ? ChatStyle.entry.message.outgoing.backgroundColor
@@ -169,6 +172,27 @@ Row {
           }
         }
       }
+
+      MouseArea {
+        FileDialog {
+          id: fileDialog
+
+          folder: shortcuts.home
+          title: qsTr('downloadFileTitle')
+          selectExisting: false
+
+          onAccepted: proxyModel.downloadFile(index, fileUrl)
+        }
+
+        anchors.fill: parent
+        cursorShape: containsMouse
+          ? Qt.PointingHandCursor
+          : Qt.ArrowCursor
+        hoverEnabled: true
+
+        onClicked: fileDialog.open()
+        visible: !rectangle.isNotDelivered && !$chatEntry.isOutgoing
+      }
     }
 
     // -------------------------------------------------------------------------
@@ -182,10 +206,7 @@ Row {
         id: icon
 
         Icon {
-          readonly property bool isNotDelivered:
-            $chatEntry.status === ChatModel.MessageStatusNotDelivered
-
-          icon: isNotDelivered ? 'chat_error' : 'chat_send'
+          icon: rectangle.isNotDelivered ? 'chat_error' : 'chat_send'
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {

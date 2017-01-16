@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include <QDateTime>
+#include <QFileDialog>
 #include <QFileInfo>
 #include <QImage>
 #include <QtDebug>
@@ -22,10 +23,36 @@ using namespace std;
 // =============================================================================
 
 inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  string data = message->getAppdata();
-  if (!data.empty())
+  string file_id = message->getAppdata();
+  if (!file_id.empty() && !dest.contains("thumbnail"))
     dest["thumbnail"] = QStringLiteral("image://%1/%2")
-      .arg(ThumbnailProvider::PROVIDER_ID).arg(::Utils::linphoneStringToQString(data));
+      .arg(ThumbnailProvider::PROVIDER_ID).arg(::Utils::linphoneStringToQString(file_id));
+}
+
+inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
+  if (!message->getAppdata().empty())
+    return;
+
+  QString thumbnail_path = ::Utils::linphoneStringToQString(message->getFileTransferFilepath());
+
+  QImage image(thumbnail_path);
+  if (image.isNull())
+    return;
+
+  QImage thumbnail = image.scaled(
+      THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
+      Qt::KeepAspectRatio, Qt::SmoothTransformation
+    );
+
+  QString uuid = QUuid::createUuid().toString();
+  QString file_id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
+
+  if (!thumbnail.save(::Utils::linphoneStringToQString(Paths::getThumbnailsDirPath()) + file_id, "jpg", 100)) {
+    qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnail_path);
+    return;
+  }
+
+  message->setAppdata(::Utils::qStringToLinphoneString(file_id));
 }
 
 inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
@@ -112,24 +139,8 @@ private:
     if (state == linphone::ChatMessageStateFileTransferError)
       state = linphone::ChatMessageStateNotDelivered;
     else if (state == linphone::ChatMessageStateFileTransferDone) {
-      QString thumbnail_path = ::Utils::linphoneStringToQString(message->getFileTransferFilepath());
-
-      QImage image(thumbnail_path);
-      if (!image.isNull()) {
-        QImage thumbnail = image.scaled(
-            THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
-            Qt::KeepAspectRatio, Qt::SmoothTransformation
-          );
-
-        QString uuid = QUuid::createUuid().toString();
-        QString file_id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
-
-        if (!thumbnail.save(::Utils::linphoneStringToQString(Paths::getThumbnailsDirPath()) + file_id, "jpg", 100)) {
-          qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnail_path);
-          return;
-        }
-
-        message->setAppdata(::Utils::qStringToLinphoneString(file_id));
+      if (!message->isOutgoing()) {
+        createThumbnail(message);
         fillThumbnailProperty((*it).first, message);
       }
 
@@ -348,7 +359,8 @@ void ChatModel::resendMessage (int id) {
   }
 
   shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
-  if (message->getState() != linphone::ChatMessageStateNotDelivered) {
+  int state = message->getState();
+  if (state != linphone::ChatMessageStateNotDelivered && state != linphone::ChatMessageStateFileTransferError) {
     qWarning() << QStringLiteral("Unable to resend message: %1. Bad state.").arg(id);
     return;
   }
@@ -379,6 +391,45 @@ void ChatModel::sendFileMessage (const QString &path) {
   m_chat_room->sendMessage(message);
 
   emit messageSent(message);
+}
+
+void ChatModel::downloadFile (int id, const QString &download_path) {
+  if (!m_chat_room)
+    return;
+
+  if (id < 0 || id > m_entries.count()) {
+    qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
+    return;
+  }
+
+  const ChatEntryData &entry = m_entries[id];
+  if (entry.first["type"] != EntryType::MessageEntry) {
+    qWarning() << QStringLiteral("Unable to download entry %1. It's not a message.").arg(id);
+    return;
+  }
+
+  shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
+  if (!message->getFileTransferInformation()) {
+    qWarning() << QStringLiteral("Entry %1 is not a file message.").arg(id);
+    return;
+  }
+
+  int state = message->getState();
+  if (state != linphone::ChatMessageStateDelivered && state != linphone::ChatMessageStateFileTransferDone) {
+    qWarning() << QStringLiteral("Unable to download file of entry %1. It was not uploaded.").arg(id);
+    return;
+  }
+
+  message->setFileTransferFilepath(
+    ::Utils::qStringToLinphoneString(download_path.startsWith("file://")
+      ? download_path.mid(sizeof("file://") - 1)
+      : download_path
+    )
+  );
+  message->setListener(m_message_handlers);
+
+  if (message->downloadFile() < 0)
+    qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(id);
 }
 
 // -----------------------------------------------------------------------------

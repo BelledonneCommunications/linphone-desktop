@@ -109,6 +109,13 @@ void ChatProxyModel::sendFileMessage (const QString &path) {
   static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->sendFileMessage(path);
 }
 
+void ChatProxyModel::downloadFile (int id, const QString &download_path) {
+  QModelIndex source_index = mapToSource(index(id, 0));
+  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->downloadFile(
+    m_chat_model_filter->mapToSource(source_index).row(), download_path
+  );
+}
+
 // -----------------------------------------------------------------------------
 
 bool ChatProxyModel::filterAcceptsRow (int source_row, const QModelIndex &) const {

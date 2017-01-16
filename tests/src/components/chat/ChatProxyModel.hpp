@@ -28,6 +28,8 @@ public:
 
   Q_INVOKABLE void sendFileMessage (const QString &path);
 
+  Q_INVOKABLE void downloadFile (int id, const QString &download_path);
+
 signals:
   void sipAddressChanged (const QString &sip_address);
   void moreEntriesLoaded (int n);

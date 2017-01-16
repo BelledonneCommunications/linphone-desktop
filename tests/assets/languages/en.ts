@@ -312,6 +312,13 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>FileMessage</name>
+    <message>
+        <source>downloadFileTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>invitContactQuestion</source>
