@@ -89,3 +89,9 @@
 [submodule "submodules/bcunit"]
 	path = submodules/bcunit
 	url = git://git.linphone.org/bcunit.git
+[submodule "submodules/belle-msrp"]
+	path = submodules/belle-msrp
+	url = git://git.linphone.org/belle-msrp.git
+[submodule "submodules/externals/libjpeg-turbo"]
+	path = submodules/externals/libjpeg-turbo
+	url = git://git.linphone.org/libjpeg-turbo.git
