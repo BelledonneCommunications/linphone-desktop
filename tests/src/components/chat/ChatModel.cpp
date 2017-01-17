@@ -251,7 +251,7 @@ void ChatModel::setSipAddress (const QString &sip_address) {
 
     // TODO: Remove me in a future linphone core version.
     if (message->getState() == linphone::ChatMessageStateInProgress)
-      map["status"] = linphone::ChatMessageStateDelivered;
+      map["status"] = linphone::ChatMessageStateNotDelivered;
 
     m_entries << qMakePair(map, static_pointer_cast<void>(message));
   }
@@ -344,19 +344,29 @@ void ChatModel::resendMessage (int id) {
   }
 
   const ChatEntryData &entry = m_entries[id];
-  if (entry.first["type"] != EntryType::MessageEntry) {
+  const QVariantMap &map = entry.first;
+
+  if (map["type"] != EntryType::MessageEntry) {
     qWarning() << QStringLiteral("Unable to resend entry %1. It's not a message.").arg(id);
     return;
   }
 
-  shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
-
-  switch (message->getState()) {
+  switch (map["status"].toInt()) {
     case MessageStatusFileTransferError:
-    case MessageStatusNotDelivered:
-      message->setListener(m_message_handlers);
-      m_chat_room->sendChatMessage(message);
+    case MessageStatusNotDelivered: {
+      shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
+
+      // TODO: Remove workaround in a future linphone core version.
+      // `sendChatMessage` duplicates the message on resend.
+      shared_ptr<linphone::ChatMessage> message2 = message->clone();
+      message2->setListener(m_message_handlers);
+      m_chat_room->sendChatMessage(message2);
+
+      removeEntry(id);
+      insertMessageAtEnd(message2);
+
       break;
+    }
 
     default:
       qWarning() << QStringLiteral("Unable to resend message: %1. Bad state.").arg(id);
