@@ -248,6 +248,11 @@ void ChatModel::setSipAddress (const QString &sip_address) {
     QVariantMap map;
 
     fillMessageEntry(map, message);
+
+    // TODO: Remove me in a future linphone core version.
+    if (message->getState() == linphone::ChatMessageStateInProgress)
+      map["status"] = linphone::ChatMessageStateDelivered;
+
     m_entries << qMakePair(map, static_pointer_cast<void>(message));
   }
 
