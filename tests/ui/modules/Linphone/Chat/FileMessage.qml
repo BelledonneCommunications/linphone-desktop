@@ -223,13 +223,13 @@ Row {
 
       Component {
         id: indicator
-        BusyIndicator {
-          width: ChatStyle.entry.message.outgoing.sendIconSize
-        }
+        BusyIndicator {}
       }
 
       Loader {
         height: ChatStyle.entry.lineHeight
+        width: ChatStyle.entry.message.outgoing.sendIconSize
+
         sourceComponent: $chatEntry.isOutgoing
           ? (
             $chatEntry.status === ChatModel.MessageStatusInProgress
