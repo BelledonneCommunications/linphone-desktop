@@ -94,7 +94,7 @@ private:
 
   shared_ptr<linphone::Buffer> onFileTransferSend (
     const shared_ptr<linphone::ChatMessage> &,
-    const shared_ptr<linphone::Content> &content,
+    const shared_ptr<linphone::Content> &,
     size_t,
     size_t
   ) override {
