@@ -41,6 +41,11 @@ public:
 
   enum MessageStatus {
     MessageStatusDelivered = linphone::ChatMessageStateDelivered,
+    MessageStatusDeliveredToUser = linphone::ChatMessageStateDeliveredToUser,
+    MessageStatusDisplayed = linphone::ChatMessageStateDisplayed,
+    MessageStatusFileTransferDone = linphone::ChatMessageStateFileTransferDone,
+    MessageStatusFileTransferError = linphone::ChatMessageStateFileTransferError,
+    MessageStatusIdle = linphone::ChatMessageStateIdle,
     MessageStatusInProgress = linphone::ChatMessageStateInProgress,
     MessageStatusNotDelivered = linphone::ChatMessageStateNotDelivered
   };

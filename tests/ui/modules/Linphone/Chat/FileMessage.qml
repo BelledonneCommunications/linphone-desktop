@@ -48,7 +48,12 @@ Row {
     Rectangle {
       id: rectangle
 
-      readonly property bool isNotDelivered: $chatEntry.status === ChatModel.MessageStatusNotDelivered
+      readonly property bool isNotDelivered: Utils.includes([
+        ChatModel.MessageStatusFileTransferError,
+        ChatModel.MessageStatusIdle,
+        ChatModel.MessageStatusInProgress,
+        ChatModel.MessageStatusNotDelivered
+      ], $chatEntry.status)
 
       color: $chatEntry.isOutgoing
         ? ChatStyle.entry.message.outgoing.backgroundColor

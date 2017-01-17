@@ -92,17 +92,9 @@ private:
     emit m_chat_model->dataChanged(m_chat_model->index(row, 0), m_chat_model->index(row, 0));
   }
 
-  void onFileTransferRecv (
-    const shared_ptr<linphone::ChatMessage> &,
-    const shared_ptr<linphone::Content> &,
-    const shared_ptr<linphone::Buffer> &
-  ) override {
-    qWarning() << "`onFileTransferRecv` called.";
-  }
-
   shared_ptr<linphone::Buffer> onFileTransferSend (
     const shared_ptr<linphone::ChatMessage> &,
-    const shared_ptr<linphone::Content> &,
+    const shared_ptr<linphone::Content> &content,
     size_t,
     size_t
   ) override {
@@ -136,15 +128,9 @@ private:
     if (it == m_chat_model->m_entries.end())
       return;
 
-    if (state == linphone::ChatMessageStateFileTransferError)
-      state = linphone::ChatMessageStateNotDelivered;
-    else if (state == linphone::ChatMessageStateFileTransferDone) {
-      if (!message->isOutgoing()) {
-        createThumbnail(message);
-        fillThumbnailProperty((*it).first, message);
-      }
-
-      state = linphone::ChatMessageStateDelivered;
+    if (state == linphone::ChatMessageStateFileTransferDone && !message->isOutgoing()) {
+      createThumbnail(message);
+      fillThumbnailProperty((*it).first, message);
     }
 
     (*it).first["status"] = state;
@@ -359,14 +345,17 @@ void ChatModel::resendMessage (int id) {
   }
 
   shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
-  int state = message->getState();
-  if (state != linphone::ChatMessageStateNotDelivered && state != linphone::ChatMessageStateFileTransferError) {
-    qWarning() << QStringLiteral("Unable to resend message: %1. Bad state.").arg(id);
-    return;
-  }
 
-  message->setListener(m_message_handlers);
-  m_chat_room->sendChatMessage(message);
+  switch (message->getState()) {
+    case MessageStatusFileTransferError:
+    case MessageStatusNotDelivered:
+      message->setListener(m_message_handlers);
+      m_chat_room->sendChatMessage(message);
+      break;
+
+    default:
+      qWarning() << QStringLiteral("Unable to resend message: %1. Bad state.").arg(id);
+  }
 }
 
 void ChatModel::sendFileMessage (const QString &path) {
@@ -414,10 +403,16 @@ void ChatModel::downloadFile (int id, const QString &download_path) {
     return;
   }
 
-  int state = message->getState();
-  if (state != linphone::ChatMessageStateDelivered && state != linphone::ChatMessageStateFileTransferDone) {
-    qWarning() << QStringLiteral("Unable to download file of entry %1. It was not uploaded.").arg(id);
-    return;
+  switch (message->getState()) {
+    case MessageStatusDelivered:
+    case MessageStatusDeliveredToUser:
+    case MessageStatusDisplayed:
+    case MessageStatusFileTransferDone:
+      break;
+
+    default:
+      qWarning() << QStringLiteral("Unable to download file of entry %1. It was not uploaded.").arg(id);
+      return;
   }
 
   message->setFileTransferFilepath(

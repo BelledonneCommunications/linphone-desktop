@@ -32,7 +32,12 @@ Item {
         id: icon
 
         Icon {
-          property bool isNotDelivered: $chatEntry.status === ChatModel.MessageStatusNotDelivered
+          property bool isNotDelivered: Utils.includes([
+            ChatModel.MessageStatusFileTransferError,
+            ChatModel.MessageStatusIdle,
+            ChatModel.MessageStatusInProgress,
+            ChatModel.MessageStatusNotDelivered
+          ], $chatEntry.status)
 
           icon: isNotDelivered ? 'chat_error' : 'chat_send'
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
