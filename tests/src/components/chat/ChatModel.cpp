@@ -356,8 +356,6 @@ void ChatModel::resendMessage (int id) {
     case MessageStatusNotDelivered: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
 
-      // TODO: Remove workaround in a future linphone core version.
-      // `sendChatMessage` duplicates the message on resend.
       shared_ptr<linphone::ChatMessage> message2 = message->clone();
       message2->setListener(m_message_handlers);
       m_chat_room->sendChatMessage(message2);
@@ -390,6 +388,8 @@ void ChatModel::sendFileMessage (const QString &path) {
   shared_ptr<linphone::ChatMessage> message = m_chat_room->createFileTransferMessage(content);
   message->setFileTransferFilepath(::Utils::qStringToLinphoneString(path));
   message->setListener(m_message_handlers);
+
+  createThumbnail(message);
 
   insertMessageAtEnd(message);
   m_chat_room->sendChatMessage(message);
