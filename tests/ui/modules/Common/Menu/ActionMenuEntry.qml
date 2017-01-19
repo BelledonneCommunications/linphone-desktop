@@ -33,6 +33,7 @@ Rectangle {
     color: ActionMenuStyle.entry.text.color
     elide: Text.ElideRight
     font.pointSize: ActionMenuStyle.entry.text.fontSize
+
     height: parent.height
     verticalAlignment: Text.AlignVCenter
   }
@@ -43,6 +44,6 @@ Rectangle {
     anchors.fill: parent
     hoverEnabled: true
 
-    onClicked: entry.clicked
+    onClicked: entry.clicked()
   }
 }

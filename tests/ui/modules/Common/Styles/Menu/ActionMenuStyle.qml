@@ -9,18 +9,18 @@ QtObject {
   property int spacing: 1
 
   property QtObject entry: QtObject {
-    property int leftMargin: 4
-    property int rightMargin: 4
+    property int leftMargin: 18
+    property int rightMargin: 8
 
     property QtObject color: QtObject {
-      property color hovered: Colors.s
-      property color normal: Colors.i
-      property color pressed: Colors.t
+      property color hovered: Colors.j
+      property color normal: Colors.g
+      property color pressed: Colors.i
     }
 
     property QtObject text: QtObject {
       property color color: Colors.k
-      property int fontSize: 8
+      property int fontSize: 9
     }
   }
 }

@@ -8,6 +8,9 @@ singleton AccountStatusStyle      1.0 Account/AccountStatusStyle.qml
 
 singleton ChatStyle               1.0 ChatStyle.qml
 
+singleton CallsStyle              1.0 Calls/CallsStyle.qml
+singleton CallControlsStyle       1.0 Calls/CallControlsStyle.qml
+
 singleton AvatarStyle             1.0 Contact/AvatarStyle.qml
 singleton ContactDescriptionStyle 1.0 Contact/ContactDescriptionStyle.qml
 singleton ContactStyle            1.0 Contact/ContactStyle.qml

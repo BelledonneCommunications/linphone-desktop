@@ -15,9 +15,7 @@ ColumnLayout  {
 
   property string sipAddress
 
-  property var _contact: SipAddressesModel.mapSipAddressToContact(
-    sipAddress
-  ) || sipAddress
+  property var _contact: SipAddressesModel.mapSipAddressToContact(sipAddress)
 
   function _removeAllEntries () {
     Utils.openConfirmDialog(window, {
@@ -57,9 +55,9 @@ ColumnLayout  {
 
         Layout.preferredHeight: ConversationStyle.bar.avatarSize
         Layout.preferredWidth: ConversationStyle.bar.avatarSize
-        image: _contact.vcard ? _contact.vcard.avatar : ''
-        presenceLevel: _contact.presenceLevel || -1
-        username: LinphoneUtils.getContactUsername(_contact)
+        image: _contact ? _contact.vcard.avatar : ''
+        presenceLevel: _contact ? _contact.presenceLevel : -1
+        username: LinphoneUtils.getContactUsername(_contact || conversation.sipAddress)
       }
 
       ContactDescription {
@@ -81,12 +79,12 @@ ColumnLayout  {
 
           ActionButton {
             icon: 'video_call'
-            onClicked: CallsWindow.show()
+            onClicked: CallsWindow.launchVideoCall(conversation.sipAddress)
           }
 
           ActionButton {
             icon: 'call'
-            onClicked: CallsWindow.show()
+            onClicked: CallsWindow.launchAudioCall(conversation.sipAddress)
           }
         }
 
@@ -94,7 +92,7 @@ ColumnLayout  {
           anchors.verticalCenter: parent.verticalCenter
 
           ActionButton {
-            icon: Utils.isString(_contact) ? 'contact_add' : 'contact_edit'
+            icon: _contact ? 'contact_add' : 'contact_edit'
             iconSize: ConversationStyle.bar.actions.edit.iconSize
 
             onClicked: window.setView('ContactEdit', {

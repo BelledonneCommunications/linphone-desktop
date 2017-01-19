@@ -77,7 +77,7 @@ SearchBox {
 
               Layout.fillHeight: true
               Layout.fillWidth: true
-              entry: Object ({
+              entry: ({
                 sipAddress: interpretableSipAddress
               })
             }

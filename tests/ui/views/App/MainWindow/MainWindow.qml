@@ -159,14 +159,15 @@ ApplicationWindow {
             sipAddress: sipAddress
           })
         }
-        onLaunchCall: CallsWindow.show()
+
+        onLaunchCall: CallsWindow.launchAudioCall(sipAddress)
         onLaunchChat: {
           window.ensureCollapsed()
           window.setView('Conversation', {
             sipAddress: sipAddress
           })
         }
-        onLaunchVideoCall: CallsWindow.show()
+        onLaunchVideoCall: CallsWindow.launchVideoCall(sipAddress)
 
         onEntryClicked: {
           window.ensureCollapsed()

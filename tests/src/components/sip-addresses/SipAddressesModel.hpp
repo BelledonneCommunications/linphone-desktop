@@ -60,7 +60,7 @@ private:
 
   QMultiHash<QString, ContactObserver *> m_observers;
 
-  std::shared_ptr<CoreHandlers> m_handlers;
+  std::shared_ptr<CoreHandlers> m_core_handlers;
 };
 
 #endif // SIP_ADDRESSES_MODEL_H_

@@ -12,16 +12,8 @@
         <translation type="obsolete">Contacts</translation>
     </message>
     <message>
-        <source>acceptAudioCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>acceptVideoCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>hangup</source>
-        <translation type="unfinished">End call</translation>
+        <translation type="obsolete">End call</translation>
     </message>
 </context>
 <context>
@@ -33,6 +25,30 @@
     <message>
         <source>newConference</source>
         <translation type="vanished">NEW CONFERENCE</translation>
+    </message>
+    <message>
+        <source>acceptAudioCall</source>
+        <translation>ACCEPT AUDIO CALL</translation>
+    </message>
+    <message>
+        <source>acceptVideoCall</source>
+        <translation>ACCEPT VIDEO CALL</translation>
+    </message>
+    <message>
+        <source>terminateCall</source>
+        <translation>HANGUP</translation>
+    </message>
+    <message>
+        <source>resumeCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transferCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pauseCall</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

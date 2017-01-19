@@ -9,10 +9,24 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Window {
   id: window
+
+  // ---------------------------------------------------------------------------
+
+  function launchAudioCall (sipAddress) {
+    window.show()
+
+  }
+
+  function launchVideoCall (sipAddress) {
+    window.show()
+
+  }
+
+  // ---------------------------------------------------------------------------
 
   minimumHeight: 480
   minimumWidth: 960
@@ -33,6 +47,7 @@ Window {
 
       ColumnLayout {
         anchors.fill: parent
+        spacing: 0
 
         Item {
           Layout.fillWidth: true
@@ -69,51 +84,14 @@ Window {
           }
         }
 
-        ListView {
-          Layout.fillWidth: true
+        Calls {
           Layout.fillHeight: true
-          spacing: 0
+          Layout.fillWidth: true
+
+          model: CallsListModel
         }
       }
     }
-
-    /* childA: ColumnLayout { */
-    /*   anchors.fill: parent */
-    /*   spacing: 0 */
-
-    /*   Rectangle { */
-    /*     Layout.fillWidth: true */
-    /*     Layout.preferredHeight: 50 */
-    /*     color: '#FFFFFF' */
-
-    /*     ActionBar { */
-    /*       anchors.verticalCenter: parent.verticalCenter */
-    /*       anchors.leftMargin: 10 */
-    /*       anchors.left: parent.left */
-    /*       iconSize: 30 */
-    /*       spacing: 16 */
-
-    /*       ActionButton { */
-    /*         icon: 'call' */
-    /*       } */
-
-    /*       ActionButton { */
-    /*         icon: 'conference' */
-    /*       } */
-    /*     } */
-    /*   } */
-
-    /*   ScrollableListView { */
-    /*     Layout.fillWidth: true */
-    /*     Layout.fillHeight: true */
-    /*     spacing: 1 */
-    /*     delegate: CallControls { */
-    /*       width: parent.width */
-    /*     } */
-
-    /*     model: callsList */
-    /*   } */
-    /* } */
 
     // ---------------------------------------------------------------
     // Content.

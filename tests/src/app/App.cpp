@@ -4,14 +4,15 @@
 #include <QQuickView>
 #include <QtDebug>
 
+#include "../components/calls/CallsListModel.hpp"
 #include "../components/camera/Camera.hpp"
 #include "../components/chat/ChatProxyModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/settings/SettingsModel.hpp"
-#include "../components/timeline/TimelineModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
+#include "../components/timeline/TimelineModel.hpp"
 
 #include "App.hpp"
 
@@ -96,17 +97,20 @@ void App::initContentApp () {
 void App::registerTypes () {
   qInfo() << "Registering types...";
 
+  qmlRegisterUncreatableType<CallModel>(
+    "Linphone", 1, 0, "CallModel", "CallModel is uncreatable."
+  );
   qmlRegisterUncreatableType<ContactModel>(
-    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable"
+    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable."
   );
   qmlRegisterUncreatableType<ContactObserver>(
-    "Linphone", 1, 0, "ContactObserver", "ContactObserver is uncreatable"
-  );
-  qmlRegisterUncreatableType<VcardModel>(
-    "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable"
+    "Linphone", 1, 0, "ContactObserver", "ContactObserver is uncreatable."
   );
   qmlRegisterUncreatableType<Presence>(
-    "Linphone", 1, 0, "Presence", "Presence is uncreatable"
+    "Linphone", 1, 0, "Presence", "Presence is uncreatable."
+  );
+  qmlRegisterUncreatableType<VcardModel>(
+    "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable."
   );
 
   qmlRegisterSingletonType<App>(
@@ -123,20 +127,6 @@ void App::registerTypes () {
     }
   );
 
-  qmlRegisterSingletonType<ContactsListModel>(
-    "Linphone", 1, 0, "ContactsListModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance()->getContactsListModel();
-    }
-  );
-
-  qmlRegisterSingletonType<SipAddressesModel>(
-    "Linphone", 1, 0, "SipAddressesModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance()->getSipAddressesModel();
-    }
-  );
-
   qmlRegisterSingletonType<AccountSettingsModel>(
     "Linphone", 1, 0, "AccountSettingsModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
@@ -144,10 +134,31 @@ void App::registerTypes () {
     }
   );
 
+  qmlRegisterSingletonType<CallsListModel>(
+    "Linphone", 1, 0, "CallsListModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new CallsListModel();
+    }
+  );
+
+  qmlRegisterSingletonType<ContactsListModel>(
+    "Linphone", 1, 0, "ContactsListModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return CoreManager::getInstance()->getContactsListModel();
+    }
+  );
+
   qmlRegisterSingletonType<SettingsModel>(
     "Linphone", 1, 0, "SettingsModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
       return new SettingsModel();
+    }
+  );
+
+  qmlRegisterSingletonType<SipAddressesModel>(
+    "Linphone", 1, 0, "SipAddressesModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return CoreManager::getInstance()->getSipAddressesModel();
     }
   );
 

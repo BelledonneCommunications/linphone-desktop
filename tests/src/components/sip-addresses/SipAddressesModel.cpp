@@ -19,10 +19,10 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::handleContactAdded);
   QObject::connect(contacts, &ContactsListModel::contactRemoved, this, &SipAddressesModel::handleContactRemoved);
 
-  m_handlers = CoreManager::getInstance()->getHandlers();
+  m_core_handlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
-    &(*m_handlers), &CoreHandlers::messageReceived,
-    this, [this](const std::shared_ptr<linphone::ChatMessage> &message) {
+    &(*m_core_handlers), &CoreHandlers::messageReceived,
+    this, [this](const shared_ptr<linphone::ChatMessage> &message) {
       const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
       addOrUpdateSipAddress(sip_address, nullptr, message);
     }
@@ -107,7 +107,7 @@ void SipAddressesModel::connectToChatModel (ChatModel *chat_model) {
   for (auto &signal : { &ChatModel::messageSent, &ChatModel::messageReceived }) {
     QObject::connect(
       chat_model, signal,
-      this, [this](const std::shared_ptr<linphone::ChatMessage> &message) {
+      this, [this](const shared_ptr<linphone::ChatMessage> &message) {
         addOrUpdateSipAddress(
           ::Utils::linphoneStringToQString(message->getToAddress()->asStringUriOnly()), nullptr, message
         );

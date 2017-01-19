@@ -131,12 +131,12 @@ ColumnLayout {
 
                 ActionButton {
                   icon: 'video_call'
-                  onClicked: CallsWindow.show()
+                  onClicked: CallsWindow.launchVideoCall($contact.vcard.sipAddresses[0]) // FIXME: Display menu if many addresses.
                 }
 
                 ActionButton {
                   icon: 'call'
-                  onClicked: CallsWindow.show()
+                  onClicked: CallsWindow.launchAudioCall($contact.vcard.sipAddresses[0]) // FIXME: Display menu if many addresses.
                 }
 
                 ActionButton {

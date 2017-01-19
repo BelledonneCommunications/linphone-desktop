@@ -152,8 +152,8 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 
 void Notifier::notifyReceivedMessage (
   int timeout,
-  const std::shared_ptr<linphone::ChatRoom> &room,
-  const std::shared_ptr<linphone::ChatMessage> &message
+  const shared_ptr<linphone::ChatRoom> &room,
+  const shared_ptr<linphone::ChatMessage> &message
 ) {
   QObject *object = createNotification(Notifier::MessageReceived);
 

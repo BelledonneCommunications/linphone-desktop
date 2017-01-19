@@ -13,6 +13,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CUSTOM_FLAGS "\
+-Wall \
 -Wcast-align \
 -Wconversion \
 -Werror=suggest-override \
@@ -58,6 +59,8 @@ set(SOURCES
   src/app/Paths.cpp
   src/app/ThumbnailProvider.cpp
   src/components/camera/Camera.cpp
+  src/components/call/CallModel.cpp
+  src/components/calls/CallsListModel.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
   src/components/contact/ContactObserver.cpp
@@ -84,6 +87,8 @@ set(HEADERS
   src/app/Paths.hpp
   src/app/ThumbnailProvider.hpp
   src/components/camera/Camera.hpp
+  src/components/call/CallModel.hpp
+  src/components/calls/CallsListModel.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
   src/components/contact/ContactObserver.hpp
@@ -103,9 +108,7 @@ set(HEADERS
   src/utils.hpp
 )
 
-set(QRC_RESOURCES
-  resources.qrc
-)
+set(QRC_RESOURCES resources.qrc)
 
 set(LANGUAGES_DIRECTORY assets/languages)
 set(I18N_FILENAME i18n.qrc)

@@ -9,6 +9,12 @@
     <file>assets/images/attachment_normal.svg</file>
     <file>assets/images/attachment_pressed.svg</file>
     <file>assets/images/auto_answer.svg</file>
+    <file>assets/images/burger_menu_hovered.svg</file>
+    <file>assets/images/burger_menu_light_hovered.svg</file>
+    <file>assets/images/burger_menu_light_normal.svg</file>
+    <file>assets/images/burger_menu_light_pressed.svg</file>
+    <file>assets/images/burger_menu_normal.svg</file>
+    <file>assets/images/burger_menu_pressed.svg</file>
     <file>assets/images/call_accept_hovered.svg</file>
     <file>assets/images/call_accept_normal.svg</file>
     <file>assets/images/call_accept_pressed.svg</file>
@@ -19,6 +25,10 @@
     <file>assets/images/call_quality_1.svg</file>
     <file>assets/images/call_quality_2.svg</file>
     <file>assets/images/call_quality_3.svg</file>
+    <file>assets/images/call_sign_connected.svg</file>
+    <file>assets/images/call_sign_incoming.svg</file>
+    <file>assets/images/call_sign_outgoing.svg</file>
+    <file>assets/images/call_sign_paused.svg</file>
     <file>assets/images/camera_off_hovered.svg</file>
     <file>assets/images/camera_off_normal.svg</file>
     <file>assets/images/camera_off_pressed.svg</file>
@@ -200,11 +210,8 @@
     <file>ui/modules/Common/Tooltip/Tooltip.qml</file>
     <file>ui/modules/Common/View/ScrollableListView.qml</file>
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
-    <file>ui/modules/Linphone/Call/CallControls.qml</file>
-    <file>ui/modules/Linphone/Call/ConnectedCallsControl.qml</file>
-    <file>ui/modules/Linphone/Call/IncomingCallControls.qml</file>
-    <file>ui/modules/Linphone/Call/OutgoingCallControls.qml</file>
-    <file>ui/modules/Linphone/Call/PausedCallControls.qml</file>
+    <file>ui/modules/Linphone/Calls/CallControls.qml</file>
+    <file>ui/modules/Linphone/Calls/Calls.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
     <file>ui/modules/Linphone/Chat/FileMessage.qml</file>
@@ -223,6 +230,8 @@
     <file>ui/modules/Linphone/qmldir</file>
     <file>ui/modules/Linphone/SmartSearchBar.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Calls/CallControlsStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>

@@ -12,6 +12,7 @@ class CoreHandlers :
   Q_OBJECT;
 
 signals:
+  void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 
 private:
@@ -24,7 +25,7 @@ private:
   void onCallStateChanged (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Call> &call,
-    linphone::CallState cstate,
+    linphone::CallState state,
     const std::string &message
   ) override;
 

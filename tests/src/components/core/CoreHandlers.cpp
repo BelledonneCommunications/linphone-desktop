@@ -10,8 +10,8 @@ using namespace std;
 // =============================================================================
 
 void CoreHandlers::onAuthenticationRequested (
-  const std::shared_ptr<linphone::Core> &,
-  const std::shared_ptr<linphone::AuthInfo> &,
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::AuthInfo> &,
   linphone::AuthMethod
 ) {
   qDebug() << "Auth request";
@@ -19,11 +19,11 @@ void CoreHandlers::onAuthenticationRequested (
 
 void CoreHandlers::onCallStateChanged (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::Call> &,
-  linphone::CallState,
+  const shared_ptr<linphone::Call> &call,
+  linphone::CallState state,
   const string &
 ) {
-  qDebug() << "call";
+  emit callStateChanged(call, state);
 }
 
 void CoreHandlers::onMessageReceived (

@@ -111,6 +111,8 @@ void ContactsListModel::removeContact (ContactModel *contact) {
     qWarning() << "Unable to remove contact:" << contact;
 }
 
+// -----------------------------------------------------------------------------
+
 void ContactsListModel::addContact (ContactModel *contact) {
   QObject::connect(
     contact, &ContactModel::contactUpdated,

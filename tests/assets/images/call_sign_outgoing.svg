@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>call_outgoing_sign</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="call_outgoing_sign">
+            <polygon fill="#18A7AF" points="0 0 40 0 0 40"></polygon>
+            <path d="M7.11999998,7 L7.11999998,14.3291087 L7.1206698,14.8400002 L7.11999998,7 Z M14.9600001,14.8733085 L7.63089146,14.8733085 L7.11999998,14.8739783 L14.9600001,14.8733085 Z M7.5460029,14.4373645 L14.9600001,7 L7.5460029,14.4373645 Z" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" transform="translate(11.040000, 10.936989) rotate(-540.000000) translate(-11.040000, -10.936989) "></path>
+        </g>
+    </g>
+</svg>

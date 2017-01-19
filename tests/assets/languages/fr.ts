@@ -4,16 +4,8 @@
 <context>
     <name>CallControls</name>
     <message>
-        <source>acceptAudioCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>acceptVideoCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>hangup</source>
-        <translation type="unfinished">Fin d&apos;appel</translation>
+        <translation type="obsolete">Fin d&apos;appel</translation>
     </message>
 </context>
 <context>
@@ -25,6 +17,30 @@
     <message>
         <source>newConference</source>
         <translation type="vanished">NOUVELLE CONFERENCE</translation>
+    </message>
+    <message>
+        <source>acceptAudioCall</source>
+        <translation>ACCEPTER APPEL AUDIO</translation>
+    </message>
+    <message>
+        <source>acceptVideoCall</source>
+        <translation>ACCEPTER APPEL VIDEO</translation>
+    </message>
+    <message>
+        <source>terminateCall</source>
+        <translation>RACCROCHER</translation>
+    </message>
+    <message>
+        <source>resumeCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>transferCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pauseCall</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
