@@ -92,7 +92,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
     return nullptr;
   }
 
-  int row = rowCount();
+  int row = m_list.count();
 
   beginInsertRows(QModelIndex(), row, row);
   addContact(contact);

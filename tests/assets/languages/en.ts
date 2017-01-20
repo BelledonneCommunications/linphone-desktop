@@ -40,15 +40,15 @@
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"></translation>
+        <translation>RESUME CALL</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"></translation>
+        <translation>TRANSFER CALL</translation>
     </message>
     <message>
         <source>pauseCall</source>
-        <translation type="unfinished"></translation>
+        <translation>PAUSE CALL</translation>
     </message>
 </context>
 <context>

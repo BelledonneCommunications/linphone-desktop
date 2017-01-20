@@ -32,15 +32,15 @@
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"></translation>
+        <translation>REPRENDRE APPEL</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"></translation>
+        <translation>TRANSFERER APPEL</translation>
     </message>
     <message>
         <source>pauseCall</source>
-        <translation type="unfinished"></translation>
+        <translation>PAUSE</translation>
     </message>
 </context>
 <context>

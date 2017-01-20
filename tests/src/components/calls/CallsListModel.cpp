@@ -1,9 +1,13 @@
 #include <QDebug>
+#include <QTimer>
 
 #include "../../app/App.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "CallsListModel.hpp"
+
+/* Delay before removing call in ms. */
+#define DELAY_BEFORE_REMOVE_CALL 3000
 
 using namespace std;
 
@@ -16,17 +20,16 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
     this, [this](const shared_ptr<linphone::Call> &linphone_call, linphone::CallState state) {
       switch (state) {
         case linphone::CallStateIncomingReceived:
-          addCall(linphone_call);
-          break;
         case linphone::CallStateOutgoingInit:
           addCall(linphone_call);
           break;
+
         case linphone::CallStateEnd:
         case linphone::CallStateError:
           removeCall(linphone_call);
           break;
-        default:
 
+        default:
           break;
       }
     }
@@ -80,11 +83,13 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphone_call) {
+  App::getInstance()->getCallsWindow()->show();
+
   CallModel *call = new CallModel(linphone_call);
   App::getInstance()->getEngine()->setObjectOwnership(call, QQmlEngine::CppOwnership);
   linphone_call->setData("call-model", *call);
 
-  int row = rowCount();
+  int row = m_list.count();
 
   beginInsertRows(QModelIndex(), row, row);
   m_list << call;
@@ -92,12 +97,20 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphone_call) {
 }
 
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphone_call) {
-  CallModel &call = linphone_call->getData<CallModel>("call-model");
+  CallModel *call = &linphone_call->getData<CallModel>("call-model");
   linphone_call->unsetData("call-model");
 
-  qInfo() << "Removing call:" << &call;
+  // TODO: It will be (maybe) necessary to use a single scheduled function in the future.
+  QTimer::singleShot(
+    DELAY_BEFORE_REMOVE_CALL, this, [this, call]() {
+      qInfo() << "Removing call:" << call;
 
-  int index = m_list.indexOf(&call);
-  if (index == -1 || !removeRow(index))
-    qWarning() << "Unable to remove call:" << &call;
+      int index = m_list.indexOf(call);
+      if (index == -1 || !removeRow(index))
+        qWarning() << "Unable to remove call:" << call;
+
+      if (m_list.empty())
+        App::getInstance()->getCallsWindow()->close();
+    }
+  );
 }

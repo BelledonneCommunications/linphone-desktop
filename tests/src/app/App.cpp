@@ -62,6 +62,14 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 
 // -----------------------------------------------------------------------------
 
+QQuickWindow *App::getCallsWindow () const {
+  QQuickWindow *window = m_engine.rootContext()->contextProperty("CallsWindow").value<QQuickWindow *>();
+  if (!window)
+    qFatal("Unable to get calls window.");
+
+  return window;
+}
+
 bool App::hasFocus () const {
   QQmlApplicationEngine &engine = const_cast<QQmlApplicationEngine &>(m_engine);
   const QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
@@ -182,7 +190,6 @@ void App::addContextProperties () {
   qInfo() << "Adding context properties...";
   QQmlContext *context = m_engine.rootContext();
 
-  // TODO: Avoid context properties. Use qmlRegister...
   QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
   if (component.isError()) {
     qWarning() << component.errors();

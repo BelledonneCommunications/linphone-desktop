@@ -520,7 +520,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
 }
 
 void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &message) {
-  int row = rowCount();
+  int row = m_entries.count();
 
   beginInsertRows(QModelIndex(), row, row);
 

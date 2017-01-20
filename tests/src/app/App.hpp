@@ -4,6 +4,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
+#include <QQuickWindow>
 #include <QSystemTrayIcon>
 
 #include "../components/notifier/Notifier.hpp"
@@ -24,6 +25,8 @@ public:
   Notifier *getNotifier () const {
     return m_notifier;
   }
+
+  QQuickWindow *getCallsWindow () const;
 
   bool hasFocus () const;
 
