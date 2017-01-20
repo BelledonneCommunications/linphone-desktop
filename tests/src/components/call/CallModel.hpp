@@ -10,16 +10,16 @@ class CallModel : public QObject {
   Q_OBJECT;
 
   Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
-
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
-
+  Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY pausedByUserChanged);
 
 public:
   enum CallStatus {
     CallStatusConnected,
     CallStatusEnded,
+    CallStatusIdle,
     CallStatusIncoming,
     CallStatusOutgoing,
     CallStatusPaused
@@ -32,22 +32,30 @@ public:
 
   Q_INVOKABLE void acceptAudioCall ();
   Q_INVOKABLE void terminateCall ();
+  Q_INVOKABLE void transferCall ();
 
 signals:
   void statusChanged (CallStatus status);
   void pausedByUserChanged (bool status);
+  void microMutedChanged (bool status);
 
 private:
   QString getSipAddress () const;
 
   CallStatus getStatus () const;
-
   bool isOutgoing () const {
     return m_linphone_call->getDir() == linphone::CallDirOutgoing;
   }
 
+  bool getMicroMuted () const;
+  void setMicroMuted (bool status);
+
   bool getPausedByUser () const;
   void setPausedByUser (bool status);
+
+  bool m_micro_muted = false;
+
+  linphone::CallState m_linphone_call_status = linphone::CallStateIdle;
 
   std::shared_ptr<linphone::Call> m_linphone_call;
 };

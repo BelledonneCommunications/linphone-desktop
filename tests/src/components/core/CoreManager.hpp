@@ -29,11 +29,11 @@ public:
   // Singleton models.
   // ---------------------------------------------------------------------------
 
-  ContactsListModel *getContactsListModel () {
+  ContactsListModel *getContactsListModel () const {
     return m_contacts_list_model;
   }
 
-  SipAddressesModel *getSipAddressesModel () {
+  SipAddressesModel *getSipAddressesModel () const {
     return m_sip_addresses_model;
   }
 
