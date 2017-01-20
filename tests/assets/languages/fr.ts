@@ -349,11 +349,11 @@ Url du serveur non configurée.</translation>
     <name>IncomingCall</name>
     <message>
         <source>incomingVideoCall</source>
-        <translation>APPEL VIDEO ENTRANT</translation>
+        <translation type="vanished">APPEL VIDEO ENTRANT</translation>
     </message>
     <message>
         <source>incomingAudioCall</source>
-        <translation>APPEL AUDIO ENTRANT</translation>
+        <translation type="vanished">APPEL AUDIO ENTRANT</translation>
     </message>
 </context>
 <context>
@@ -445,11 +445,11 @@ Url du serveur non configurée.</translation>
     <name>OutgoingCall</name>
     <message>
         <source>outgoingVideoCall</source>
-        <translation>APPEL VIDEO SORTANT</translation>
+        <translation type="vanished">APPEL VIDEO SORTANT</translation>
     </message>
     <message>
         <source>outgoingAudioCall</source>
-        <translation>APPEL AUDIO SORTANT</translation>
+        <translation type="vanished">APPEL AUDIO SORTANT</translation>
     </message>
 </context>
 <context>

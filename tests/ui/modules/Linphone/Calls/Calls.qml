@@ -11,11 +11,9 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
+  readonly property var selectedCall: currentIndex >= 0 ? model.data(model.index(currentIndex, 0)) : null
+
   property var _mapStatusToParams
-
-  // ---------------------------------------------------------------------------
-
-  signal entrySelected (var entry)
 
   // ---------------------------------------------------------------------------
 
@@ -50,10 +48,10 @@ ListView {
         handler: (function (call) { call.pausedByUser = false })
       }, {
         name: qsTr('transferCall'),
-        handler: (function (call) { call.transferCall() })
+        handler: (function (call) { call.transfer() })
       }, {
         name: qsTr('terminateCall'),
-        handler: (function (call) { call.terminateCall() })
+        handler: (function (call) { call.terminate() })
       }],
       component: callActions,
       string: 'connected'
@@ -66,13 +64,13 @@ ListView {
     _mapStatusToParams[CallModel.CallStatusIncoming] = {
       actions: [{
         name: qsTr('acceptAudioCall'),
-        handler: (function (call) { call.acceptAudioCall() })
+        handler: (function (call) { call.accept() })
       }, {
         name: qsTr('acceptVideoCall'),
-        handler: (function (call) { call.acceptVideoCall() })
+        handler: (function (call) { call.acceptWithVideo() })
       }, {
         name: qsTr('terminateCall'),
-        handler: (function (call) { call.terminateCall() })
+        handler: (function (call) { call.terminate() })
       }],
       component: callActions,
       string: 'incoming'
@@ -80,7 +78,7 @@ ListView {
 
     _mapStatusToParams[CallModel.CallStatusOutgoing] = {
       component: callAction,
-      handler: (function (call) { call.terminateCall() }),
+      handler: (function (call) { call.terminate() }),
       icon: 'hangup',
       string: 'outgoing'
     }
@@ -91,10 +89,10 @@ ListView {
         handler: (function (call) { call.pausedByUser = true })
       }, {
         name: qsTr('transferCall'),
-        handler: (function (call) { call.transferCall() })
+        handler: (function (call) { call.transfer() })
       }, {
         name: qsTr('terminateCall'),
-        handler: (function (call) { call.terminateCall() })
+        handler: (function (call) { call.terminate() })
       }],
       component: callActions,
       string: 'paused'

@@ -30,9 +30,10 @@ public:
   CallModel (std::shared_ptr<linphone::Call> linphone_call);
   ~CallModel () = default;
 
-  Q_INVOKABLE void acceptAudioCall ();
-  Q_INVOKABLE void terminateCall ();
-  Q_INVOKABLE void transferCall ();
+  Q_INVOKABLE void accept ();
+  Q_INVOKABLE void acceptWithVideo ();
+  Q_INVOKABLE void terminate ();
+  Q_INVOKABLE void transfer ();
 
 signals:
   void statusChanged (CallStatus status);

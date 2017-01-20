@@ -19,11 +19,6 @@ QtObject {
     property int maxSize: 300
   }
 
-  property QtObject callType: QtObject {
-    property color color: Colors.x
-    property int fontSize: 17
-  }
-
   property QtObject header: QtObject {
     property int spacing: 10
     property int topMargin: 26

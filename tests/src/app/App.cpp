@@ -21,7 +21,7 @@
 
 // The two main windows of Linphone desktop.
 #define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/MainWindow/MainWindow.qml"
-#define QML_VIEW_CALL_WINDOW "qrc:/ui/views/App/Calls/Calls.qml"
+#define QML_VIEW_CALL_WINDOW "qrc:/ui/views/App/Calls/CallsWindow.qml"
 
 // =============================================================================
 

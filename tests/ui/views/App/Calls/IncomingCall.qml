@@ -5,10 +5,6 @@ import App.Styles 1.0
 // ===================================================================
 
 AbstractStartingCall {
-  callTypeLabel: isVideoCall
-    ? qsTr('incomingVideoCall')
-    : qsTr('incomingAudioCall')
-
   ActionBar {
     anchors.centerIn: parent
     iconSize: StartingCallStyle.iconSize
@@ -32,6 +28,8 @@ AbstractStartingCall {
 
     ActionButton {
       icon: 'hangup'
+
+      onClicked: call.terminate()
     }
   }
 }

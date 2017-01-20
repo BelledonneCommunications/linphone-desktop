@@ -41,15 +41,19 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
 
 // -----------------------------------------------------------------------------
 
-void CallModel::acceptAudioCall () {
+void CallModel::accept () {
   CoreManager::getInstance()->getCore()->acceptCall(m_linphone_call);
 }
 
-void CallModel::terminateCall () {
+void CallModel::acceptWithVideo () {
+  // TODO
+}
+
+void CallModel::terminate () {
   CoreManager::getInstance()->getCore()->terminateCall(m_linphone_call);
 }
 
-void CallModel::transferCall () {
+void CallModel::transfer () {
   // TODO
 }
 

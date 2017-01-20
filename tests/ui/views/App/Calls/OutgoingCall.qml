@@ -6,17 +6,12 @@ import Common.Styles 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 AbstractStartingCall {
-  isOutgoing: true
-  callTypeLabel: isVideoCall
-    ? qsTr('outgoingVideoCall')
-    : qsTr('outgoingAudioCall')
-
   GridLayout {
     rowSpacing: ActionBarStyle.spacing
-    columns: parent.width < 415 && isVideoCall ? 1 : 2
+    columns: parent.width < 415 && call.isVideoCall ? 1 : 2
 
     anchors {
       left: parent.left
@@ -25,10 +20,11 @@ AbstractStartingCall {
     }
 
     ActionSwitch {
+      enabled: !call.microMuted
       icon: 'micro'
       iconSize: StartingCallStyle.iconSize
 
-      onClicked: enabled = !enabled
+      onClicked: call.microMuted = !enabled
     }
 
     ActionSwitch {
@@ -39,24 +35,26 @@ AbstractStartingCall {
     }
   }
 
-  Rectangle {
+  Item {
     anchors.centerIn: parent
-    color: 'red'
     height: StartingCallStyle.userVideo.height
-    visible: isVideoCall
     width: StartingCallStyle.userVideo.width
+
+    visible: isVideoCall
   }
 
   ActionBar {
     anchors {
-      verticalCenter: parent.verticalCenter
       right: parent.right
       rightMargin: StartingCallStyle.rightButtonsGroupMargin
+      verticalCenter: parent.verticalCenter
     }
     iconSize: StartingCallStyle.iconSize
 
     ActionButton {
       icon: 'hangup'
+
+      onClicked: call.terminate()
     }
   }
 }

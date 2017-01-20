@@ -7,22 +7,19 @@ import LinphoneUtils 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 Rectangle {
   id: abstractCall
 
+  // ---------------------------------------------------------------------------
+
+  property var call
+
   default property alias _actionArea: actionArea.data
-  property alias callTypeLabel: callType.text
-  property bool isOutgoing: false
-  property bool isVideoCall: false
-  property string sipAddress
+  property var _contact: SipAddressesModel.mapSipAddressToContact(call.sipAddress)
 
-  property var _contact: SipAddressesModel.mapSipAddressToContact(
-    sipAddress
-  ) || sipAddress
-
-  // -----------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   color: StartingCallStyle.backgroundColor
 
@@ -34,47 +31,33 @@ Rectangle {
 
     spacing: 0
 
-    // ---------------------------------------------------------------
-    // Call type.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Contact & Call type (animation).
+    // -------------------------------------------------------------------------
 
     Column {
       Layout.fillWidth: true
       spacing: StartingCallStyle.header.spacing
-
-      Text {
-        id: callType
-
-        color: StartingCallStyle.callType.color
-
-        font {
-          bold: true
-          pointSize: StartingCallStyle.callType.fontSize
-        }
-
-        horizontalAlignment: Text.AlignHCenter
-        width: parent.width
-      }
-
-      CaterpillarAnimation {
-        anchors.horizontalCenter: parent.horizontalCenter
-        visible: abstractCall.isOutgoing
-      }
 
       ContactDescription {
         id: contactDescription
 
         height: StartingCallStyle.contactDescriptionHeight
         horizontalTextAlignment: Text.AlignHCenter
-        sipAddress: abstractCall.sipAddress
-        username: LinphoneUtils.getContactUsername(_contact)
+        sipAddress: call.sipAddress
+        username: LinphoneUtils.getContactUsername(_contact || call.sipAddress)
         width: parent.width
+      }
+
+      CaterpillarAnimation {
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: call.isOutgoing
       }
     }
 
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Contact visual.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     Item {
       id: container
@@ -98,7 +81,7 @@ Rectangle {
 
         anchors.centerIn: parent
         backgroundColor: StartingCallStyle.avatar.backgroundColor
-        image: _contact.avatar
+        image: _contact && _contact.avatar
         username: contactDescription.username
 
         height: _computeAvatarSize()
@@ -106,9 +89,9 @@ Rectangle {
       }
     }
 
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Buttons.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     Item {
       id: actionArea

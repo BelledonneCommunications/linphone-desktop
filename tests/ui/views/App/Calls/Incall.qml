@@ -13,8 +13,9 @@ import App.Styles 1.0
 Rectangle {
   id: call
 
-  property bool isVideoCall: false
-  property string sipAddress
+  // ---------------------------------------------------------------------------
+
+  property var call
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
 

@@ -250,7 +250,7 @@
     <file>ui/scripts/Utils/uri-tools.js</file>
     <file>ui/scripts/Utils/utils.js</file>
     <file>ui/views/App/Calls/AbstractStartingCall.qml</file>
-    <file>ui/views/App/Calls/Calls.qml</file>
+    <file>ui/views/App/Calls/CallsWindow.qml</file>
     <file>ui/views/App/Calls/Incall.qml</file>
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
@@ -261,6 +261,7 @@
     <file>ui/views/App/MainWindow/MainWindow.qml</file>
     <file>ui/views/App/ManageAccounts.qml</file>
     <file>ui/views/App/qmldir</file>
+    <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
     <file>ui/views/App/Styles/Calls/StartingCallStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/ContactsStyle.qml</file>

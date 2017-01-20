@@ -358,17 +358,6 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>IncomingCall</name>
-    <message>
-        <source>incomingVideoCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>incomingAudioCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
@@ -451,17 +440,6 @@ Server url not configured.</translation>
     <message>
         <source>cancel</source>
         <translation type="vanished">CANCEL</translation>
-    </message>
-</context>
-<context>
-    <name>OutgoingCall</name>
-    <message>
-        <source>outgoingVideoCall</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>outgoingAudioCall</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
