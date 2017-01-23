@@ -12,13 +12,10 @@ singleton Constants  1.0 Constants.qml
 # Components -------------------------------------------------------------------
 
 # Animations
-CaterpillarAnimation 1.0 Animations/CaterpillarAnimation.qml
+BusyIndicator        1.0 Animations/BusyIndicator.qml
 
 # Chat
 Borders              1.0 Borders.qml
-
-# BusyIndicator
-BusyIndicator        1.0 BusyIndicator.qml
 
 # Collapse
 Collapse             1.0 Collapse.qml

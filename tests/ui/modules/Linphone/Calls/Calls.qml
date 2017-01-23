@@ -44,14 +44,14 @@ ListView {
 
     _mapStatusToParams[CallModel.CallStatusConnected] = {
       actions: [{
-        name: qsTr('resumeCall'),
-        handler: (function (call) { call.pausedByUser = false })
+        handler: (function (call) { call.pausedByUser = false }),
+        name: qsTr('resumeCall')
       }, {
-        name: qsTr('transferCall'),
-        handler: (function (call) { call.transfer() })
+        handler: (function (call) { call.transfer() }),
+        name: qsTr('transferCall')
       }, {
-        name: qsTr('terminateCall'),
-        handler: (function (call) { call.terminate() })
+        handler: (function (call) { call.terminate() }),
+        name: qsTr('terminateCall')
       }],
       component: callActions,
       string: 'connected'
@@ -85,14 +85,14 @@ ListView {
 
     _mapStatusToParams[CallModel.CallStatusPaused] = {
       actions: [{
-        name: qsTr('pauseCall'),
-        handler: (function (call) { call.pausedByUser = true })
+        handler: (function (call) { call.pausedByUser = true }),
+        name: qsTr('pauseCall')
       }, {
-        name: qsTr('transferCall'),
-        handler: (function (call) { call.transfer() })
+        handler: (function (call) { call.transfer() }),
+        name: qsTr('transferCall')
       }, {
-        name: qsTr('terminateCall'),
-        handler: (function (call) { call.terminate() })
+        handler: (function (call) { call.terminate() }),
+        name: qsTr('terminateCall')
       }],
       component: callActions,
       string: 'paused'
@@ -155,6 +155,29 @@ ListView {
           }
         }
       }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+
+  SmartConnect {
+    Component.onCompleted: {
+      this.connect(model, 'rowsAboutToBeRemoved', function (_, first, last) {
+        var index = calls.currentIndex
+        if (index >= first && index <= last) { // Remove current call.
+          if (model.rowCount() - (last - first + 1) <= 0) {
+            calls.currentIndex = -1
+          } else {
+            calls.currentIndex = 0
+          }
+        } else if (last < index) { // Remove before current call.
+          calls.currentIndex = index - (last - first + 1)
+        }
+      })
+
+      this.connect(model, 'rowsInserted', function (_, first, last) {
+        calls.currentIndex = first
+      })
     }
   }
 

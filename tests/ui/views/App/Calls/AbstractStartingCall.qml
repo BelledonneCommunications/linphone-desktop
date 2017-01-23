@@ -17,7 +17,8 @@ Rectangle {
   property var call
 
   default property alias _actionArea: actionArea.data
-  property var _contact: SipAddressesModel.mapSipAddressToContact(call.sipAddress)
+
+  property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -45,12 +46,16 @@ Rectangle {
         height: StartingCallStyle.contactDescriptionHeight
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
-        username: LinphoneUtils.getContactUsername(_contact || call.sipAddress)
+        username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
         width: parent.width
       }
 
-      CaterpillarAnimation {
+      BusyIndicator {
         anchors.horizontalCenter: parent.horizontalCenter
+        color: StartingCallStyle.busyIndicator.color
+        height: StartingCallStyle.busyIndicator.height
+        width: StartingCallStyle.busyIndicator.width
+
         visible: call.isOutgoing
       }
     }
@@ -81,7 +86,7 @@ Rectangle {
 
         anchors.centerIn: parent
         backgroundColor: StartingCallStyle.avatar.backgroundColor
-        image: _contact && _contact.avatar
+        image: _contactObserver.contact && _contactObserver.contact.avatar
         username: contactDescription.username
 
         height: _computeAvatarSize()

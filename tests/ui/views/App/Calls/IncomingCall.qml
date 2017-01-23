@@ -2,7 +2,7 @@ import Common 1.0
 
 import App.Styles 1.0
 
-// ===================================================================
+// =============================================================================
 
 AbstractStartingCall {
   ActionBar {
@@ -11,18 +11,22 @@ AbstractStartingCall {
 
     ActionButton {
       icon: 'video_call_accept'
+
+      onClicked: call.acceptWithVideo()
     }
 
     ActionButton {
       icon: 'call_accept'
+
+      onClicked: call.accept()
     }
   }
 
   ActionBar {
     anchors {
-      verticalCenter: parent.verticalCenter
       right: parent.right
       rightMargin: StartingCallStyle.rightButtonsGroupMargin
+      verticalCenter: parent.verticalCenter
     }
     iconSize: StartingCallStyle.iconSize
 

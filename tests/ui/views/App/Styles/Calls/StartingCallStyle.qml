@@ -19,6 +19,12 @@ QtObject {
     property int maxSize: 300
   }
 
+  property QtObject busyIndicator: QtObject {
+    property color color: Colors.g
+    property int height: 30
+    property int width: 30
+  }
+
   property QtObject header: QtObject {
     property int spacing: 10
     property int topMargin: 26

@@ -14,6 +14,7 @@ class CallModel : public QObject {
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY pausedByUserChanged);
+  Q_PROPERTY(bool videoOutputEnabled READ getVideoOutputEnabled WRITE setVideoOutputEnabled NOTIFY videoOutputEnabled);
 
 public:
   enum CallStatus {
@@ -39,6 +40,7 @@ signals:
   void statusChanged (CallStatus status);
   void pausedByUserChanged (bool status);
   void microMutedChanged (bool status);
+  void videoOutputEnabled (bool status);
 
 private:
   QString getSipAddress () const;
@@ -53,6 +55,9 @@ private:
 
   bool getPausedByUser () const;
   void setPausedByUser (bool status);
+
+  bool getVideoOutputEnabled () const;
+  void setVideoOutputEnabled (bool status);
 
   bool m_micro_muted = false;
 

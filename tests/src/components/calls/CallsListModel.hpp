@@ -21,6 +21,9 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  Q_INVOKABLE void launchAudioCall (const QString &sip_uri) const;
+  Q_INVOKABLE void launchVideoCall (const QString &sip_uri) const;
+
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;

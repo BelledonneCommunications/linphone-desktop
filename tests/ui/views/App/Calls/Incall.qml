@@ -11,10 +11,6 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
-  id: call
-
-  // ---------------------------------------------------------------------------
-
   property var call
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)

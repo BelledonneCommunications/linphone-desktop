@@ -15,26 +15,11 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  readonly property var call: {
-    console.log('hihi')
-    return calls.selectedCall
-  }
+  readonly property var call: calls.selectedCall
   readonly property var sipAddress: {
     if (call) {
       return call.sipAddress
     }
-  }
-
-  // ---------------------------------------------------------------------------
-
-  function launchAudioCall (sipAddress) {
-    window.show()
-
-  }
-
-  function launchVideoCall (sipAddress) {
-    window.show()
-
   }
 
   // ---------------------------------------------------------------------------
@@ -125,7 +110,6 @@ Window {
         id: incomingCall
 
         IncomingCall {
-          anchors.fill: parent
           call: window.call
         }
       }
@@ -134,7 +118,6 @@ Window {
         id: outgoingCall
 
         OutgoingCall {
-          anchors.fill: parent
           call: window.call
         }
       }
@@ -143,8 +126,17 @@ Window {
         id: incall
 
         Incall {
-          anchors.fill: parent
           call: window.call
+        }
+      }
+
+      Component {
+        id: chat
+
+        Chat {
+          proxyModel: ChatProxyModel {
+            sipAddress: window.sipAddress
+          }
         }
       }
 
@@ -158,11 +150,12 @@ Window {
           if (!call) {
             return null
           }
-          return incomingCall
+
           var status = call.status
           if (status === CallModel.CallStatusIncoming) {
             return incomingCall
           }
+
           if (status === CallModel.CallStatusOutgoing) {
             return outgoingCall
           }
@@ -174,13 +167,7 @@ Window {
       childB: Loader {
         active: Boolean(window.call)
         anchors.fill: parent
-
-        sourceComponent: Chat {
-          anchors.fill: parent
-          proxyModel: ChatProxyModel {
-            sipAddress: window.sipAddress || ''
-          }
-        }
+        sourceComponent: window.call ? chat : null
       }
     }
   }

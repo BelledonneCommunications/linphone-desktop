@@ -79,12 +79,12 @@ ColumnLayout  {
 
           ActionButton {
             icon: 'video_call'
-            onClicked: CallsWindow.launchVideoCall(conversation.sipAddress)
+            onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
           }
 
           ActionButton {
             icon: 'call'
-            onClicked: CallsWindow.launchAudioCall(conversation.sipAddress)
+            onClicked: CallsListModel.launchAudioCall(conversation.sipAddress)
           }
         }
 
@@ -92,7 +92,7 @@ ColumnLayout  {
           anchors.verticalCenter: parent.verticalCenter
 
           ActionButton {
-            icon: _contact ? 'contact_add' : 'contact_edit'
+            icon: !_contact ? 'contact_add' : 'contact_edit'
             iconSize: ConversationStyle.bar.actions.edit.iconSize
 
             onClicked: window.setView('ContactEdit', {

@@ -10,6 +10,8 @@ BusyIndicator {
 
   // ---------------------------------------------------------------------------
 
+  property color color: BusyIndicatorStyle.color
+
   readonly property int _rotation: 360
   readonly property int _size: width < height ? width : height
 
@@ -58,7 +60,7 @@ BusyIndicator {
           height: item.height / 3
           width: item.width / 3
 
-          color: BusyIndicatorStyle.color
+          color: busyIndicator.color
           radius: (width > height ? width : height) / 2
 
           transform: [

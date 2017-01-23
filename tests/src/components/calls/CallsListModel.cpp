@@ -2,6 +2,7 @@
 #include <QTimer>
 
 #include "../../app/App.hpp"
+#include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "CallsListModel.hpp"
@@ -60,6 +61,19 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
 
 // -----------------------------------------------------------------------------
 
+void CallsListModel::launchAudioCall (const QString &sip_uri) const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  core->inviteAddress(
+    core->interpretUrl(::Utils::qStringToLinphoneString(sip_uri))
+  );
+}
+
+void CallsListModel::launchVideoCall (const QString &sip_uri) const {
+  // TODO
+}
+
+// -----------------------------------------------------------------------------
+
 bool CallsListModel::removeRow (int row, const QModelIndex &parent) {
   return removeRows(row, 1, parent);
 }
@@ -86,6 +100,9 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphone_call) {
   App::getInstance()->getCallsWindow()->show();
 
   CallModel *call = new CallModel(linphone_call);
+
+  qInfo() << "Add call:" << call;
+
   App::getInstance()->getEngine()->setObjectOwnership(call, QQmlEngine::CppOwnership);
   linphone_call->setData("call-model", *call);
 
@@ -97,12 +114,12 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphone_call) {
 }
 
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphone_call) {
-  CallModel *call = &linphone_call->getData<CallModel>("call-model");
-  linphone_call->unsetData("call-model");
-
   // TODO: It will be (maybe) necessary to use a single scheduled function in the future.
   QTimer::singleShot(
-    DELAY_BEFORE_REMOVE_CALL, this, [this, call]() {
+    DELAY_BEFORE_REMOVE_CALL, this, [this, linphone_call]() {
+      CallModel *call = &linphone_call->getData<CallModel>("call-model");
+      linphone_call->unsetData("call-model");
+
       qInfo() << "Removing call:" << call;
 
       int index = m_list.indexOf(call);
