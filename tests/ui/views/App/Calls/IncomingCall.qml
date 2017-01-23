@@ -7,7 +7,7 @@ import App.Styles 1.0
 AbstractStartingCall {
   ActionBar {
     anchors.centerIn: parent
-    iconSize: CallStyle.iconSize
+    iconSize: CallStyle.actionArea.iconSize
 
     ActionButton {
       icon: 'video_call_accept'
@@ -25,10 +25,10 @@ AbstractStartingCall {
   ActionBar {
     anchors {
       right: parent.right
-      rightMargin: CallStyle.rightButtonsGroupMargin
+      rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
       verticalCenter: parent.verticalCenter
     }
-    iconSize: CallStyle.iconSize
+    iconSize: CallStyle.actionArea.iconSize
 
     ActionButton {
       icon: 'hangup'

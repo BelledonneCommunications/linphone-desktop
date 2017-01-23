@@ -39,16 +39,16 @@ Rectangle {
       id: info
 
       Layout.fillWidth: true
-      Layout.leftMargin: CallStyle.info.leftMargin
-      Layout.rightMargin: 20
-      Layout.preferredHeight: CallStyle.contactDescriptionHeight
+      Layout.leftMargin: CallStyle.header.leftMargin
+      Layout.rightMargin: CallStyle.header.rightMargin
+      Layout.preferredHeight: CallStyle.header.contactDescriptionHeight
 
       Icon {
         id: callQuality
 
         anchors.left: parent.left
         icon: 'call_quality_' + 2
-        iconSize: 40
+        iconSize: CallStyle.header.iconSize
       }
 
       ContactDescription {
@@ -67,7 +67,7 @@ Rectangle {
         id: cameraActions
 
         anchors.right: parent.right
-        iconSize: 40
+        iconSize: CallStyle.header.iconSize
 
         ActionButton {
           icon: 'screenshot'
@@ -92,7 +92,7 @@ Rectangle {
 
       Layout.fillWidth: true
       Layout.fillHeight: true
-      Layout.margins: CallStyle.containerMargins
+      Layout.margins: CallStyle.container.margins
 
       Component {
         id: avatar
@@ -102,13 +102,14 @@ Rectangle {
             var height = container.height
             var width = container.width
 
-            var size = height < CallStyle.avatar.maxSize && height > 0
-            ? height
-            : CallStyle.avatar.maxSize
+            var size = height < CallStyle.container.avatar.maxSize && height > 0
+              ? height
+              : CallStyle.container.avatar.maxSize
+
             return size < width ? size : width
           }
 
-          backgroundColor: CallStyle.avatar.backgroundColor
+          backgroundColor: CallStyle.container.avatar.backgroundColor
           image: _contactObserver.contact ? _contactObserver.contact.vcard.avatar : ''
           username: contactDescription.username
 
@@ -132,65 +133,66 @@ Rectangle {
       }
     }
 
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // Buttons.
-    // ---------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     Item {
       Layout.fillWidth: true
-      Layout.preferredHeight: CallStyle.actionAreaHeight
+      Layout.preferredHeight: CallStyle.actionArea.height
 
       GridLayout {
         anchors {
           left: parent.left
-          leftMargin: CallStyle.leftButtonsGroupMargin
+          leftMargin: CallStyle.actionArea.leftButtonsGroupMargin
           verticalCenter: parent.verticalCenter
         }
 
         rowSpacing: ActionBarStyle.spacing
-        columns: call.width < 645 && isVideoCall ? 2 : 4
+        columns: incall.width < CallStyle.actionArea.lowWidth ? 2 : 4
 
         ActionSwitch {
+          enabled: !call.microMuted
           icon: 'micro'
-          iconSize: CallStyle.iconSize
-          onClicked: enabled = !enabled
+          iconSize: CallStyle.actionArea.iconSize
+
+          onClicked: call.microMuted = enabled
         }
 
         ActionSwitch {
           icon: 'speaker'
-          iconSize: CallStyle.iconSize
+          iconSize: CallStyle.actionArea.iconSize
           onClicked: enabled = !enabled
         }
 
         ActionSwitch {
           icon: 'camera'
-          iconSize: CallStyle.iconSize
+          iconSize: CallStyle.actionArea.iconSize
           onClicked: enabled = !enabled
         }
 
         ActionButton {
-          Layout.preferredHeight: CallStyle.iconSize
-          Layout.preferredWidth: CallStyle.iconSize
-          icon: 'options'
-          iconSize: CallStyle.iconSize
+          Layout.preferredHeight: CallStyle.actionArea.iconSize
+          Layout.preferredWidth: CallStyle.actionArea.iconSize
+          icon: 'options' // TODO: display options.
+          iconSize: CallStyle.actionArea.iconSize
         }
       }
 
-      Rectangle {
+      Item {
         anchors.centerIn: parent
-        color: 'red'
-        height: CallStyle.userVideo.height
-        visible: incall.width >= 650
-        width: CallStyle.userVideo.width
+        height: CallStyle.actionArea.userVideo.height
+        visible: incall.width >= CallStyle.actionArea.lowWidth && call.videoOutputEnabled
+        width: CallStyle.actionArea.userVideo.width
       }
 
       ActionBar {
         anchors {
           right: parent.right
-          rightMargin: CallStyle.rightButtonsGroupMargin
+          rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
           verticalCenter: parent.verticalCenter
         }
-        iconSize: CallStyle.iconSize
+        iconSize: CallStyle.actionArea.iconSize
 
         ActionSwitch {
           enabled: !call.pausedByUser

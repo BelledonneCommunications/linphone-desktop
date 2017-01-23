@@ -38,7 +38,7 @@ Rectangle {
       ContactDescription {
         id: contactDescription
 
-        height: CallStyle.contactDescriptionHeight
+        height: CallStyle.header.contactDescriptionHeight
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
         username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
@@ -47,9 +47,9 @@ Rectangle {
 
       BusyIndicator {
         anchors.horizontalCenter: parent.horizontalCenter
-        color: CallStyle.busyIndicator.color
-        height: CallStyle.busyIndicator.height
-        width: CallStyle.busyIndicator.width
+        color: CallStyle.header.busyIndicator.color
+        height: CallStyle.header.busyIndicator.height
+        width: CallStyle.header.busyIndicator.width
 
         visible: call.isOutgoing
       }
@@ -64,7 +64,7 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      Layout.margins: CallStyle.containerMargins
+      Layout.margins: CallStyle.container.margins
 
       Avatar {
         id: avatar
@@ -73,14 +73,14 @@ Rectangle {
           var height = container.height
           var width = container.width
 
-          var size = height < CallStyle.avatar.maxSize && height > 0
+          var size = height < CallStyle.container.avatar.maxSize && height > 0
               ? height
-              : CallStyle.avatar.maxSize
+              : CallStyle.container.avatar.maxSize
           return size < width ? size : width
         }
 
         anchors.centerIn: parent
-        backgroundColor: CallStyle.avatar.backgroundColor
+        backgroundColor: CallStyle.container.avatar.backgroundColor
         image: _contactObserver.contact && _contactObserver.contact.avatar
         username: contactDescription.username
 
@@ -97,7 +97,7 @@ Rectangle {
       id: actionArea
 
       Layout.fillWidth: true
-      Layout.preferredHeight: CallStyle.actionAreaHeight
+      Layout.preferredHeight: CallStyle.actionArea.height
     }
   }
 }
