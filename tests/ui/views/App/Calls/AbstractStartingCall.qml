@@ -38,7 +38,7 @@ Rectangle {
       ContactDescription {
         id: contactDescription
 
-        height: CallStyle.header.contactDescriptionHeight
+        height: CallStyle.header.contactDescription.height
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
         username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
@@ -81,7 +81,7 @@ Rectangle {
 
         anchors.centerIn: parent
         backgroundColor: CallStyle.container.avatar.backgroundColor
-        image: _contactObserver.contact && _contactObserver.contact.avatar
+        image: _contactObserver.contact && _contactObserver.contact.vcard.avatar
         username: contactDescription.username
 
         height: _computeAvatarSize()

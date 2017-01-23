@@ -31,7 +31,6 @@ QtObject {
   }
 
   property QtObject header: QtObject {
-    property int contactDescriptionHeight: 60
     property int iconSize: 40
     property int leftMargin: 20
     property int rightMargin: 20
@@ -42,6 +41,11 @@ QtObject {
       property color color: Colors.g
       property int height: 30
       property int width: 30
+    }
+
+    property QtObject contactDescription: QtObject {
+      property int height: 60
+      property int width: 150
     }
   }
 }

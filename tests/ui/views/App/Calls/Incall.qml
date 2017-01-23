@@ -41,7 +41,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.leftMargin: CallStyle.header.leftMargin
       Layout.rightMargin: CallStyle.header.rightMargin
-      Layout.preferredHeight: CallStyle.header.contactDescriptionHeight
+      Layout.preferredHeight: CallStyle.header.contactDescription.height
 
       Icon {
         id: callQuality
@@ -49,7 +49,7 @@ Rectangle {
         anchors.left: parent.left
         icon: 'call_quality_0'
         iconSize: CallStyle.header.iconSize
-        onIconChanged: console.log(icon)
+
         // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
         Timer {
           interval: 5000
@@ -77,25 +77,29 @@ Rectangle {
         username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
 
         height: parent.height
-        width: parent.width - cameraActions.width - callQuality.width - 150
+        width: parent.width - cameraActions.width - callQuality.width - CallStyle.header.contactDescription.width
       }
 
-      ActionBar {
+      Loader {
         id: cameraActions
 
         anchors.right: parent.right
-        iconSize: CallStyle.header.iconSize
+        active: call.videoInputEnabled
 
-        ActionButton {
-          icon: 'screenshot'
-        }
+        sourceComponent: ActionBar {
+          iconSize: CallStyle.header.iconSize
 
-        ActionButton {
-          icon: 'record'
-        }
+          ActionButton {
+            icon: 'screenshot'
+          }
 
-        ActionButton {
-          icon: 'fullscreen'
+          ActionButton {
+            icon: 'record'
+          }
+
+          ActionButton {
+            icon: 'fullscreen'
+          }
         }
       }
     }
@@ -127,7 +131,7 @@ Rectangle {
           }
 
           backgroundColor: CallStyle.container.avatar.backgroundColor
-          image: _contactObserver.contact ? _contactObserver.contact.vcard.avatar : ''
+          image: _contactObserver.contact && _contactObserver.contact.vcard.avatar
           username: contactDescription.username
 
           height: _computeAvatarSize()
