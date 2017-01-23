@@ -37,6 +37,8 @@ public:
   Q_INVOKABLE void terminate ();
   Q_INVOKABLE void transfer ();
 
+  Q_INVOKABLE float getQuality () const;
+
 signals:
   void statusChanged (CallStatus status);
   void microMutedChanged (bool status);

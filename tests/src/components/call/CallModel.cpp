@@ -57,6 +57,10 @@ void CallModel::transfer () {
   // TODO
 }
 
+float CallModel::getQuality () const {
+  return m_linphone_call->getCurrentQuality();
+}
+
 // -----------------------------------------------------------------------------
 
 QString CallModel::getSipAddress () const {
