@@ -10,7 +10,7 @@ import App.Styles 1.0
 
 AbstractStartingCall {
   GridLayout {
-    columns: parent.width < 415 && call.videoOutputEnabled ? 1 : 2
+    columns: parent.width < StartingCallStyle.low && call.videoOutputEnabled ? 1 : 2
     rowSpacing: ActionBarStyle.spacing
 
     anchors {

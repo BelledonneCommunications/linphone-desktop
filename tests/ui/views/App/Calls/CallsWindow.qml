@@ -15,11 +15,22 @@ Window {
 
   // ---------------------------------------------------------------------------
 
+  readonly property bool chatIsOpened: !rightPaned.isClosed()
   readonly property var call: calls.selectedCall
   readonly property var sipAddress: {
     if (call) {
       return call.sipAddress
     }
+  }
+
+  // ---------------------------------------------------------------------------
+
+  function openChat () {
+    rightPaned.open()
+  }
+
+  function closeChat () {
+    rightPaned.close()
   }
 
   // ---------------------------------------------------------------------------
@@ -97,6 +108,8 @@ Window {
     // -------------------------------------------------------------------------
 
     childB: Paned {
+      id: rightPaned
+
       anchors.fill: parent
       closingEdge: Qt.RightEdge
       defaultClosed: true

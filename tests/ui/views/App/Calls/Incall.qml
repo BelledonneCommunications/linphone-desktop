@@ -11,6 +11,10 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
+  id: incall
+
+  // ---------------------------------------------------------------------------
+
   property var call
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
@@ -195,18 +199,19 @@ Rectangle {
 
         ActionButton {
           icon: 'hangup'
+
+          onClicked: Call.terminate()
         }
 
         ActionSwitch {
-          enabled: !call.parent.parent.isClosed()
+          enabled: CallsWindow.chatIsOpened
           icon: 'chat'
-          onClicked: {
-            var parent = call.parent.parent
 
+          onClicked: {
             if (enabled) {
-              parent.close()
+              CallsWindow.closeChat()
             } else {
-              parent.open()
+              CallsWindow.openChat()
             }
           }
         }

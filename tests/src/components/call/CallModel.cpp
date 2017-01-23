@@ -126,6 +126,7 @@ void CallModel::setPausedByUser (bool status) {
 
 bool CallModel::getVideoOutputEnabled () const {
   // TODO
+  return false;
 }
 
 void CallModel::setVideoOutputEnabled (bool status) {

@@ -12,6 +12,7 @@ QtObject {
   property int containerMargins: 20
   property int iconSize: 40
   property int leftButtonsGroupMargin: 50
+  property int lowWidth: 415
   property int rightButtonsGroupMargin: 50
 
   property QtObject avatar: QtObject {
@@ -31,7 +32,7 @@ QtObject {
   }
 
   property QtObject userVideo: QtObject {
-    property int width: 130
     property int height: 90
+    property int width: 130
   }
 }
