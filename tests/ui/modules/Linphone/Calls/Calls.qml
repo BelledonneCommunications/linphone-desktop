@@ -112,8 +112,6 @@ ListView {
     }
   }
 
-  // ---------------------------------------------------------------------------
-
   Component {
     id: callActions
 
@@ -187,7 +185,7 @@ ListView {
     id: _callControls
 
     function useColorStatus () {
-      return calls.currentIndex === index && $call.status !== CallModel.CallStatusEnded
+      return calls.currentIndex === index && $call && $call.status !== CallModel.CallStatusEnded
     }
 
     color: useColorStatus()

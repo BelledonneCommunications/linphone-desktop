@@ -43,7 +43,6 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      anchors.fill: parent
 
       displayUnreadMessagesCount: true
 
@@ -55,7 +54,10 @@ Rectangle {
 
     Item {
       id: content
+
       Layout.fillHeight: true
+
+      Component.onCompleted: Layout.preferredWidth = data[0].width
     }
   }
 

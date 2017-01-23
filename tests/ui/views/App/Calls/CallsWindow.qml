@@ -41,9 +41,9 @@ Window {
 
   Paned {
     anchors.fill: parent
-    defaultChildAWidth: 250
-    maximumLeftLimit: 250
-    minimumLeftLimit: 110
+    defaultChildAWidth: CallsWindowStyle.callsList.defaultWidth
+    maximumLeftLimit: CallsWindowStyle.callsList.maximumWidth
+    minimumLeftLimit: CallsWindowStyle.callsList.minimumWidth
 
     // -------------------------------------------------------------------------
     // Calls list.
@@ -76,18 +76,20 @@ Window {
           ActionBar {
             anchors {
               left: parent.left
-              leftMargin: 10
+              leftMargin: CallsWindowStyle.callsList.header.leftMargin
               verticalCenter: parent.verticalCenter
             }
 
-            iconSize: 40
+            iconSize: CallsWindowStyle.callsList.header.iconSize
 
             ActionButton {
               icon: 'new_call'
+              // TODO: launch new call
             }
 
             ActionButton {
               icon: 'new_conference'
+              // TODO: launch new conference
             }
           }
         }
@@ -113,8 +115,8 @@ Window {
       anchors.fill: parent
       closingEdge: Qt.RightEdge
       defaultClosed: true
-      minimumLeftLimit: 395
-      minimumRightLimit: 300
+      minimumLeftLimit: CallsWindowStyle.call.minimumWidth
+      minimumRightLimit: CallsWindowStyle.chat.minimumWidth
       resizeAInPriority: true
 
       // -----------------------------------------------------------------------
@@ -178,9 +180,9 @@ Window {
       }
 
       childB: Loader {
-        active: Boolean(window.call)
+        active: Boolean(window.sipAddress)
         anchors.fill: parent
-        sourceComponent: window.call ? chat : null
+        sourceComponent: window.sipAddress ? chat : null
       }
     }
   }

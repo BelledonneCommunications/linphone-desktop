@@ -13,7 +13,8 @@ class CallModel : public QObject {
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
-  Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY pausedByUserChanged);
+  Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
+  Q_PROPERTY(bool videoInputEnabled READ getVideoInputEnabled WRITE setVideoInputEnabled NOTIFY videoInputEnabled);
   Q_PROPERTY(bool videoOutputEnabled READ getVideoOutputEnabled WRITE setVideoOutputEnabled NOTIFY videoOutputEnabled);
 
 public:
@@ -38,8 +39,8 @@ public:
 
 signals:
   void statusChanged (CallStatus status);
-  void pausedByUserChanged (bool status);
   void microMutedChanged (bool status);
+  void videoInputEnabled (bool status);
   void videoOutputEnabled (bool status);
 
 private:
@@ -55,6 +56,9 @@ private:
 
   bool getPausedByUser () const;
   void setPausedByUser (bool status);
+
+  bool getVideoInputEnabled () const;
+  void setVideoInputEnabled (bool status);
 
   bool getVideoOutputEnabled () const;
   void setVideoOutputEnabled (bool status);

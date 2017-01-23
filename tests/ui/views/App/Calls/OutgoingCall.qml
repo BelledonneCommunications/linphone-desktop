@@ -10,26 +10,26 @@ import App.Styles 1.0
 
 AbstractStartingCall {
   GridLayout {
-    columns: parent.width < StartingCallStyle.low && call.videoOutputEnabled ? 1 : 2
+    columns: parent.width < CallStyle.lowWidth && call.videoOutputEnabled ? 1 : 2
     rowSpacing: ActionBarStyle.spacing
 
     anchors {
       left: parent.left
-      leftMargin: StartingCallStyle.leftButtonsGroupMargin
+      leftMargin: CallStyle.leftButtonsGroupMargin
       verticalCenter: parent.verticalCenter
     }
 
     ActionSwitch {
       enabled: !call.microMuted
       icon: 'micro'
-      iconSize: StartingCallStyle.iconSize
+      iconSize: CallStyle.iconSize
 
       onClicked: call.microMuted = enabled
     }
 
     ActionSwitch {
       icon: 'speaker'
-      iconSize: StartingCallStyle.iconSize
+      iconSize: CallStyle.iconSize
 
       onClicked: enabled = !enabled
     }
@@ -37,8 +37,8 @@ AbstractStartingCall {
 
   Item {
     anchors.centerIn: parent
-    height: StartingCallStyle.userVideo.height
-    width: StartingCallStyle.userVideo.width
+    height: CallStyle.userVideo.height
+    width: CallStyle.userVideo.width
 
     visible: call.videoOutputEnabled
   }
@@ -46,10 +46,10 @@ AbstractStartingCall {
   ActionBar {
     anchors {
       right: parent.right
-      rightMargin: StartingCallStyle.rightButtonsGroupMargin
+      rightMargin: CallStyle.rightButtonsGroupMargin
       verticalCenter: parent.verticalCenter
     }
-    iconSize: StartingCallStyle.iconSize
+    iconSize: CallStyle.iconSize
 
     ActionButton {
       icon: 'hangup'

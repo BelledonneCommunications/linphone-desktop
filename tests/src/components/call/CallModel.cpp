@@ -110,18 +110,23 @@ void CallModel::setPausedByUser (bool status) {
   bool paused = getPausedByUser();
 
   if (status) {
-    if (!paused) {
+    if (!paused)
       CoreManager::getInstance()->getCore()->pauseCall(m_linphone_call);
-      emit pausedByUserChanged(true);
-    }
 
     return;
   }
 
-  if (paused) {
+  if (paused)
     CoreManager::getInstance()->getCore()->resumeCall(m_linphone_call);
-    emit pausedByUserChanged(false);
-  }
+}
+
+bool CallModel::getVideoInputEnabled () const {
+  // TODO
+  return false;
+}
+
+void CallModel::setVideoInputEnabled (bool status) {
+  // TODO
 }
 
 bool CallModel::getVideoOutputEnabled () const {

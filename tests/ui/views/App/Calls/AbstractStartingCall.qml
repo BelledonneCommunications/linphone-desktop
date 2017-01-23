@@ -10,24 +10,19 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
-  id: abstractCall
-
-  // ---------------------------------------------------------------------------
-
   property var call
 
   default property alias _actionArea: actionArea.data
-
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
 
-  color: StartingCallStyle.backgroundColor
+  color: CallStyle.backgroundColor
 
   ColumnLayout {
     anchors {
       fill: parent
-      topMargin: StartingCallStyle.header.topMargin
+      topMargin: CallStyle.header.topMargin
     }
 
     spacing: 0
@@ -38,12 +33,12 @@ Rectangle {
 
     Column {
       Layout.fillWidth: true
-      spacing: StartingCallStyle.header.spacing
+      spacing: CallStyle.header.spacing
 
       ContactDescription {
         id: contactDescription
 
-        height: StartingCallStyle.contactDescriptionHeight
+        height: CallStyle.contactDescriptionHeight
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
         username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
@@ -52,9 +47,9 @@ Rectangle {
 
       BusyIndicator {
         anchors.horizontalCenter: parent.horizontalCenter
-        color: StartingCallStyle.busyIndicator.color
-        height: StartingCallStyle.busyIndicator.height
-        width: StartingCallStyle.busyIndicator.width
+        color: CallStyle.busyIndicator.color
+        height: CallStyle.busyIndicator.height
+        width: CallStyle.busyIndicator.width
 
         visible: call.isOutgoing
       }
@@ -69,7 +64,7 @@ Rectangle {
 
       Layout.fillHeight: true
       Layout.fillWidth: true
-      Layout.margins: StartingCallStyle.containerMargins
+      Layout.margins: CallStyle.containerMargins
 
       Avatar {
         id: avatar
@@ -78,14 +73,14 @@ Rectangle {
           var height = container.height
           var width = container.width
 
-          var size = height < StartingCallStyle.avatar.maxSize && height > 0
+          var size = height < CallStyle.avatar.maxSize && height > 0
               ? height
-              : StartingCallStyle.avatar.maxSize
+              : CallStyle.avatar.maxSize
           return size < width ? size : width
         }
 
         anchors.centerIn: parent
-        backgroundColor: StartingCallStyle.avatar.backgroundColor
+        backgroundColor: CallStyle.avatar.backgroundColor
         image: _contactObserver.contact && _contactObserver.contact.avatar
         username: contactDescription.username
 
@@ -102,7 +97,7 @@ Rectangle {
       id: actionArea
 
       Layout.fillWidth: true
-      Layout.preferredHeight: StartingCallStyle.actionAreaHeight
+      Layout.preferredHeight: CallStyle.actionAreaHeight
     }
   }
 }

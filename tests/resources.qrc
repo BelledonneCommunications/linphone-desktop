@@ -260,8 +260,8 @@
     <file>ui/views/App/MainWindow/MainWindow.qml</file>
     <file>ui/views/App/ManageAccounts.qml</file>
     <file>ui/views/App/qmldir</file>
+    <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
-    <file>ui/views/App/Styles/Calls/StartingCallStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/MainWindow/ConversationStyle.qml</file>

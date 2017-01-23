@@ -21,12 +21,12 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: StartingCallStyle.backgroundColor
+  color: CallStyle.backgroundColor
 
   ColumnLayout {
     anchors {
       fill: parent
-      topMargin: StartingCallStyle.header.topMargin
+      topMargin: CallStyle.header.topMargin
     }
 
     spacing: 0
@@ -39,9 +39,9 @@ Rectangle {
       id: info
 
       Layout.fillWidth: true
-      Layout.leftMargin: 20
+      Layout.leftMargin: CallStyle.info.leftMargin
       Layout.rightMargin: 20
-      Layout.preferredHeight: StartingCallStyle.contactDescriptionHeight
+      Layout.preferredHeight: CallStyle.contactDescriptionHeight
 
       Icon {
         id: callQuality
@@ -92,7 +92,7 @@ Rectangle {
 
       Layout.fillWidth: true
       Layout.fillHeight: true
-      Layout.margins: StartingCallStyle.containerMargins
+      Layout.margins: CallStyle.containerMargins
 
       Component {
         id: avatar
@@ -102,13 +102,13 @@ Rectangle {
             var height = container.height
             var width = container.width
 
-            var size = height < StartingCallStyle.avatar.maxSize && height > 0
+            var size = height < CallStyle.avatar.maxSize && height > 0
             ? height
-            : StartingCallStyle.avatar.maxSize
+            : CallStyle.avatar.maxSize
             return size < width ? size : width
           }
 
-          backgroundColor: StartingCallStyle.avatar.backgroundColor
+          backgroundColor: CallStyle.avatar.backgroundColor
           image: _contactObserver.contact ? _contactObserver.contact.vcard.avatar : ''
           username: contactDescription.username
 
@@ -128,7 +128,7 @@ Rectangle {
 
       Loader {
         anchors.centerIn: parent
-        sourceComponent: isVideoCall ? camera : avatar
+        sourceComponent: call.videoInputEnabled ? camera : avatar
       }
     }
 
@@ -138,12 +138,12 @@ Rectangle {
 
     Item {
       Layout.fillWidth: true
-      Layout.preferredHeight: StartingCallStyle.actionAreaHeight
+      Layout.preferredHeight: CallStyle.actionAreaHeight
 
       GridLayout {
         anchors {
           left: parent.left
-          leftMargin: StartingCallStyle.leftButtonsGroupMargin
+          leftMargin: CallStyle.leftButtonsGroupMargin
           verticalCenter: parent.verticalCenter
         }
 
@@ -152,55 +152,57 @@ Rectangle {
 
         ActionSwitch {
           icon: 'micro'
-          iconSize: StartingCallStyle.iconSize
+          iconSize: CallStyle.iconSize
           onClicked: enabled = !enabled
         }
 
         ActionSwitch {
           icon: 'speaker'
-          iconSize: StartingCallStyle.iconSize
+          iconSize: CallStyle.iconSize
           onClicked: enabled = !enabled
         }
 
         ActionSwitch {
           icon: 'camera'
-          iconSize: StartingCallStyle.iconSize
+          iconSize: CallStyle.iconSize
           onClicked: enabled = !enabled
         }
 
         ActionButton {
-          Layout.preferredHeight: StartingCallStyle.iconSize
-          Layout.preferredWidth: StartingCallStyle.iconSize
+          Layout.preferredHeight: CallStyle.iconSize
+          Layout.preferredWidth: CallStyle.iconSize
           icon: 'options'
-          iconSize: StartingCallStyle.iconSize
+          iconSize: CallStyle.iconSize
         }
       }
 
       Rectangle {
         anchors.centerIn: parent
         color: 'red'
-        height: StartingCallStyle.userVideo.height
-        visible: call.width >= 550
-        width: StartingCallStyle.userVideo.width
+        height: CallStyle.userVideo.height
+        visible: incall.width >= 650
+        width: CallStyle.userVideo.width
       }
 
       ActionBar {
         anchors {
           right: parent.right
-          rightMargin: StartingCallStyle.rightButtonsGroupMargin
+          rightMargin: CallStyle.rightButtonsGroupMargin
           verticalCenter: parent.verticalCenter
         }
-        iconSize: StartingCallStyle.iconSize
+        iconSize: CallStyle.iconSize
 
         ActionSwitch {
+          enabled: !call.pausedByUser
           icon: 'pause'
-          onClicked: enabled = !enabled
+
+          onClicked: call.pausedByUser = enabled
         }
 
         ActionButton {
           icon: 'hangup'
 
-          onClicked: Call.terminate()
+          onClicked: call.terminate()
         }
 
         ActionSwitch {
