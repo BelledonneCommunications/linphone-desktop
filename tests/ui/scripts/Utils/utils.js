@@ -39,7 +39,7 @@ function encodeTextToQmlRichFormat (text, options) {
   }
 
   text = text
-    .replace(/&/g, '&#38;')
+    .replace(/&/g, '&#38;') // TODO: deal correctly with urls and `&m`
     .replace(/</g, '\u2063&lt;')
     .replace(/>/g, '\u2063&gt;')
     .replace(/\r\n|\n/g, '<br/>')

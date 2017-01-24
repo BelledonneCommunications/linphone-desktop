@@ -11,7 +11,7 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
-  readonly property var selectedCall: currentIndex >= 0 ? model.data(model.index(currentIndex, 0)) : null
+  readonly property var selectedCall: smartConnect.selectedCall
 
   property var _mapStatusToParams
 
@@ -157,24 +157,53 @@ ListView {
   }
 
   // ---------------------------------------------------------------------------
+  // Update the current selected call and the current index.
+  // ---------------------------------------------------------------------------
 
   SmartConnect {
+    id: smartConnect
+
+    property var selectedCall
+
     Component.onCompleted: {
       this.connect(model, 'rowsAboutToBeRemoved', function (_, first, last) {
         var index = calls.currentIndex
+
         if (index >= first && index <= last) { // Remove current call.
           if (model.rowCount() - (last - first + 1) <= 0) {
-            calls.currentIndex = -1
+            selectedCall = null
           } else {
-            calls.currentIndex = 0
+            if (first === 0) {
+              selectedCall = model.data(model.index(last + 1, 0))
+            } else {
+              selectedCall = model.data(model.index(0, 0))
+            }
           }
-        } else if (last < index) { // Remove before current call.
+        }
+      })
+
+      this.connect(model, 'rowsRemoved', function (_, first, last) {
+        var index = calls.currentIndex
+
+        // The current call has been removed.
+        if (index >= first && index <= last) {
+          if (model.rowCount() === 0) {
+            calls.currentIndex = -1 // No calls.
+          } else {
+            calls.currentIndex = 0 // The first call becomes the selected call.
+          }
+        }
+
+        // Update the current index of the selected call if it was after the removed calls.
+        else if (last < index) {
           calls.currentIndex = index - (last - first + 1)
         }
       })
 
+      // The last inserted element become the selected call.
       this.connect(model, 'rowsInserted', function (_, first, last) {
         calls.currentIndex = first
+        selectedCall = model.data(model.index(first, 0))
       })
     }
   }
