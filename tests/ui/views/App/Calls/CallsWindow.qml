@@ -153,7 +153,7 @@ Window {
         anchors.fill: parent
         sourceComponent: {
           var status = window.call.status
-          if (!status) {
+          if (status == null) {
             return null
           }
 

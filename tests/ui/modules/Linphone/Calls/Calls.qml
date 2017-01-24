@@ -54,6 +54,7 @@ ListView {
         name: qsTr('terminateCall')
       }],
       component: callActions,
+      icon: 'hangup',
       string: 'connected'
     }
 
@@ -214,9 +215,13 @@ ListView {
   delegate: CallControls {
     id: _callControls
 
+    // -------------------------------------------------------------------------
+
     function useColorStatus () {
       return calls.currentIndex === index && $call && $call.status !== CallModel.CallStatusEnded
     }
+
+    // -------------------------------------------------------------------------
 
     color: useColorStatus()
       ? CallsStyle.entry.color.selected
@@ -231,6 +236,13 @@ ListView {
     signIcon: _getSignIcon($call)
     sipAddress: $call.sipAddress
     width: parent.width
+
+    onClicked: {
+      smartConnect.selectedCall = $call
+      calls.currentIndex = index
+    }
+
+    // -------------------------------------------------------------------------
 
     Loader {
       property int callId: index

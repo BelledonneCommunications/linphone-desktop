@@ -25,9 +25,19 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
+  signal clicked
+
+  // ---------------------------------------------------------------------------
+
   color: CallControlsStyle.color
   height: CallControlsStyle.height
   width: CallControlsStyle.width
+
+  MouseArea {
+    anchors.fill: parent
+
+    onClicked: callControls.clicked()
+  }
 
   RowLayout {
     anchors {
