@@ -5,6 +5,7 @@ import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 
@@ -56,11 +57,7 @@ Rectangle {
           triggeredOnStart: true
 
           onTriggered: {
-            if (!call.getQuality) {
-              return
-            }
-
-            var quality = call.getQuality()
+            var quality = call.quality
             callQuality.icon = 'call_quality_' + (
               // Note: `quality` is in the [0, 5] interval.
               // It's necessary to map in the `call_quality_` interval. ([0, 3])
@@ -103,6 +100,24 @@ Rectangle {
             icon: 'fullscreen'
           }
         }
+      }
+    }
+
+    Text {
+      id: elapsedTime
+
+      Layout.fillWidth: true
+      color: CallStyle.header.elapsedTime.color
+      font.pointSize: CallStyle.header.elapsedTime.fontSize
+      horizontalAlignment: Text.AlignHCenter
+
+      Component.onCompleted: {
+        var updateDuration = function () {
+          text = Utils .formatElapsedTime(call.duration)
+          Utils.setTimeout(elapsedTime, 1000, updateDuration)
+        }
+
+        updateDuration()
       }
     }
 

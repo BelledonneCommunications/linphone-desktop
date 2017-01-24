@@ -314,6 +314,30 @@ function find (obj, cb, context) {
 
 // -----------------------------------------------------------------------------
 
+function formatElapsedTime (seconds) {
+  seconds = parseInt(seconds, 10)
+
+  var h = Math.floor(seconds / 3600)
+  var m = Math.floor((seconds - h * 3600) / 60)
+  var s = seconds - h * 3600 - m * 60
+
+  if (h < 10 && h > 0) {
+    h = '0' + h
+  }
+
+  if (m < 10) {
+    m = '0' + m
+  }
+
+  if (s < 10) {
+    s = '0' + s
+  }
+
+  return (h === 0 ? '' : h + ':') + m + ':' + s
+}
+
+// -----------------------------------------------------------------------------
+
 function formatSize (size) {
   var units = ['KB', 'MB', 'GB', 'TB']
   var unit = 'B'

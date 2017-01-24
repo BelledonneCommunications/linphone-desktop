@@ -63,13 +63,21 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
 
 void CallsListModel::launchAudioCall (const QString &sip_uri) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  core->inviteAddress(
-    core->interpretUrl(::Utils::qStringToLinphoneString(sip_uri))
-  );
+  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::qStringToLinphoneString(sip_uri));
+
+  if (!address)
+    return;
+
+  shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
+  params->enableVideo(false);
+
+  core->inviteAddressWithParams(address, params);
 }
 
 void CallsListModel::launchVideoCall (const QString &sip_uri) const {
-  // TODO
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  // TODO: Deal with videos.
+  core->inviteAddress(core->interpretUrl(::Utils::qStringToLinphoneString(sip_uri)));
 }
 
 // -----------------------------------------------------------------------------

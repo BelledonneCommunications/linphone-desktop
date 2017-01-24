@@ -57,10 +57,6 @@ void CallModel::transfer () {
   // TODO
 }
 
-float CallModel::getQuality () const {
-  return m_linphone_call->getCurrentQuality();
-}
-
 // -----------------------------------------------------------------------------
 
 QString CallModel::getSipAddress () const {
@@ -88,6 +84,14 @@ CallModel::CallStatus CallModel::getStatus () const {
   }
 
   return m_linphone_call->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
+}
+
+int CallModel::getDuration () const {
+  return m_linphone_call->getDuration();
+}
+
+float CallModel::getQuality () const {
+  return m_linphone_call->getCurrentQuality();
 }
 
 bool CallModel::getMicroMuted () const {
