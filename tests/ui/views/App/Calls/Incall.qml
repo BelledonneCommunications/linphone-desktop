@@ -15,8 +15,6 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  property var call
-
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
@@ -58,6 +56,10 @@ Rectangle {
           triggeredOnStart: true
 
           onTriggered: {
+            if (!call.getQuality) {
+              return
+            }
+
             var quality = call.getQuality()
             callQuality.icon = 'call_quality_' + (
               // Note: `quality` is in the [0, 5] interval.
@@ -73,8 +75,8 @@ Rectangle {
 
         anchors.centerIn: parent
         horizontalTextAlignment: Text.AlignHCenter
-        sipAddress: call.sipAddress
-        username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
+        sipAddress: _contactObserver.sipAddress
+        username: LinphoneUtils.getContactUsername(_contactObserver.contact || sipAddress)
 
         height: parent.height
         width: parent.width - cameraActions.width - callQuality.width - CallStyle.header.contactDescription.width
@@ -84,7 +86,7 @@ Rectangle {
         id: cameraActions
 
         anchors.right: parent.right
-        active: call.videoInputEnabled
+        active: Boolean(call.videoInputEnabled)
 
         sourceComponent: ActionBar {
           iconSize: CallStyle.header.iconSize
@@ -203,7 +205,7 @@ Rectangle {
       Item {
         anchors.centerIn: parent
         height: CallStyle.actionArea.userVideo.height
-        visible: incall.width >= CallStyle.actionArea.lowWidth && call.videoOutputEnabled
+        visible: Boolean(incall.width >= CallStyle.actionArea.lowWidth && call.videoOutputEnabled)
         width: CallStyle.actionArea.userVideo.width
       }
 

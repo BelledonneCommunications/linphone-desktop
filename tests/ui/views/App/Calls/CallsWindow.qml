@@ -16,12 +16,10 @@ Window {
   // ---------------------------------------------------------------------------
 
   readonly property bool chatIsOpened: !rightPaned.isClosed()
-  readonly property var call: calls.selectedCall
-  readonly property var sipAddress: {
-    if (call) {
-      return call.sipAddress
-    }
-  }
+
+  // `{}` is a workaround to avoid `TypeError: Cannot read property...` in `Incall` component.
+  property var call: calls.selectedCall || {}
+  property string sipAddress: call.sipAddress || ''
 
   // ---------------------------------------------------------------------------
 
@@ -124,25 +122,19 @@ Window {
       Component {
         id: incomingCall
 
-        IncomingCall {
-          call: window.call
-        }
+        IncomingCall {}
       }
 
       Component {
         id: outgoingCall
 
-        OutgoingCall {
-          call: window.call
-        }
+        OutgoingCall {}
       }
 
       Component {
         id: incall
 
-        Incall {
-          call: window.call
-        }
+        Incall {}
       }
 
       Component {
@@ -158,15 +150,13 @@ Window {
       // -----------------------------------------------------------------------
 
       childA: Loader {
-        active: Boolean(window.call)
         anchors.fill: parent
         sourceComponent: {
-          var call = window.call
-          if (!call) {
+          var status = window.call.status
+          if (!status) {
             return null
           }
 
-          var status = call.status
           if (status === CallModel.CallStatusIncoming) {
             return incomingCall
           }
@@ -180,7 +170,6 @@ Window {
       }
 
       childB: Loader {
-        active: Boolean(window.sipAddress)
         anchors.fill: parent
         sourceComponent: window.sipAddress ? chat : null
       }

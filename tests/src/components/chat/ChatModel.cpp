@@ -228,7 +228,7 @@ QString ChatModel::getSipAddress () const {
 }
 
 void ChatModel::setSipAddress (const QString &sip_address) {
-  if (sip_address == getSipAddress())
+  if (sip_address == getSipAddress() || sip_address.isEmpty())
     return;
 
   beginResetModel();

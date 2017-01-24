@@ -58,6 +58,7 @@ ListView {
     }
 
     _mapStatusToParams[CallModel.CallStatusEnded] = {
+      icon: 'hangup',
       string: 'ended'
     }
 
@@ -157,7 +158,7 @@ ListView {
   }
 
   // ---------------------------------------------------------------------------
-  // Update the current selected call and the current index.
+  // SmartConnect that updates the current selected call and the current index.
   // ---------------------------------------------------------------------------
 
   SmartConnect {
