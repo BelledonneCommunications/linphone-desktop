@@ -13,6 +13,7 @@ QtObject {
   property color g:   '#6B7A86'
   property color g10: '#1A6B7A86'
   property color g20: '#336B7A86'
+  property color g90: '#E66B7A86'
   property color h:   '#687680'
   property color i:   '#FE5E00'
   property color i30: '#4DFE5E00'

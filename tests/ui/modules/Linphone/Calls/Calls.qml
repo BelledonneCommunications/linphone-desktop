@@ -17,17 +17,9 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
-  function _getSignIcon (call) {
-    if (call) {
-      return 'call_sign_' + _mapStatusToParams[call.status].string
-    }
-
-    return ''
-  }
-
   function _getParams (call) {
     if (call) {
-      return _mapStatusToParams[call.status]
+      return _mapStatusToParams[call.status](call)
     }
   }
 
@@ -42,63 +34,74 @@ ListView {
   Component.onCompleted: {
     _mapStatusToParams = {}
 
-    _mapStatusToParams[CallModel.CallStatusConnected] = {
-      actions: [{
-        handler: (function (call) { call.pausedByUser = false }),
-        name: qsTr('resumeCall')
-      }, {
-        handler: (function (call) { call.transfer() }),
-        name: qsTr('transferCall')
-      }, {
-        handler: (function (call) { call.terminate() }),
-        name: qsTr('terminateCall')
-      }],
-      component: callActions,
-      icon: 'hangup',
-      string: 'connected'
-    }
+    _mapStatusToParams[CallModel.CallStatusConnected] = (function (call) {
+      return {
+        actions: [{
+          handler: (function () { call.pausedByUser = true }),
+          name: qsTr('pauseCall')
+        }, {
+          handler: (function () { call.transfer() }),
+          name: qsTr('transferCall')
+        }, {
+          handler: (function () { call.terminate() }),
+          name: qsTr('terminateCall')
+        }],
+        component: callActions,
+        string: 'connected'
+      }
+    })
 
-    _mapStatusToParams[CallModel.CallStatusEnded] = {
-      icon: 'hangup',
-      string: 'ended'
-    }
+    _mapStatusToParams[CallModel.CallStatusEnded] = (function (call) {
+      return {
+        string: 'ended'
+      }
+    })
 
-    _mapStatusToParams[CallModel.CallStatusIncoming] = {
-      actions: [{
-        name: qsTr('acceptAudioCall'),
-        handler: (function (call) { call.accept() })
-      }, {
-        name: qsTr('acceptVideoCall'),
-        handler: (function (call) { call.acceptWithVideo() })
-      }, {
-        name: qsTr('terminateCall'),
-        handler: (function (call) { call.terminate() })
-      }],
-      component: callActions,
-      string: 'incoming'
-    }
+    _mapStatusToParams[CallModel.CallStatusIncoming] = (function (call) {
+      return {
+        actions: [{
+          name: qsTr('acceptAudioCall'),
+          handler: (function () { call.accept() })
+        }, {
+          name: qsTr('acceptVideoCall'),
+          handler: (function () { call.acceptWithVideo() })
+        }, {
+          name: qsTr('terminateCall'),
+          handler: (function () { call.terminate() })
+        }],
+        component: callActions,
+        string: 'incoming'
+      }
+    })
 
-    _mapStatusToParams[CallModel.CallStatusOutgoing] = {
-      component: callAction,
-      handler: (function (call) { call.terminate() }),
-      icon: 'hangup',
-      string: 'outgoing'
-    }
+    _mapStatusToParams[CallModel.CallStatusOutgoing] = (function (call) {
+      return {
+        component: callAction,
+        handler: (function () { call.terminate() }),
+        icon: 'hangup',
+        string: 'outgoing'
+      }
+    })
 
-    _mapStatusToParams[CallModel.CallStatusPaused] = {
-      actions: [{
-        handler: (function (call) { call.pausedByUser = true }),
-        name: qsTr('pauseCall')
-      }, {
-        handler: (function (call) { call.transfer() }),
-        name: qsTr('transferCall')
-      }, {
-        handler: (function (call) { call.terminate() }),
-        name: qsTr('terminateCall')
-      }],
-      component: callActions,
-      string: 'paused'
-    }
+    _mapStatusToParams[CallModel.CallStatusPaused] = (function (call) {
+      return {
+        actions: [(call.pausedByUser ? {
+          handler: (function () { call.pausedByUser = false }),
+          name: qsTr('resumeCall')
+        } : {
+          handler: (function () { call.pausedByUser = true }),
+          name: qsTr('pauseCall')
+        }), {
+          handler: (function () { call.transfer() }),
+          name: qsTr('transferCall')
+        }, {
+          handler: (function () { call.terminate() }),
+          name: qsTr('terminateCall')
+        }],
+        component: callActions,
+        string: 'paused'
+      }
+    })
   }
 
   // ---------------------------------------------------------------------------
@@ -107,10 +110,10 @@ ListView {
     id: callAction
 
     ActionButton {
-      icon: params.icon
+      icon: params.icon || 'generic_error'
       iconSize: CallsStyle.entry.iconActionSize
 
-      onClicked: params.handler(call)
+      onClicked: params.handler()
     }
   }
 
@@ -149,7 +152,7 @@ ListView {
 
               onClicked: {
                 menu.hideMenu()
-                params.actions[index].handler(call)
+                params.actions[index].handler()
               }
             }
           }
@@ -233,7 +236,11 @@ ListView {
       ? CallsStyle.entry.usernameColor.selected
       : CallsStyle.entry.usernameColor.normal
 
-    signIcon: _getSignIcon($call)
+    signIcon: {
+      var params = loader.params
+      return params ? 'call_sign_' + params.string : ''
+    }
+
     sipAddress: $call.sipAddress
     width: parent.width
 
@@ -245,6 +252,8 @@ ListView {
     // -------------------------------------------------------------------------
 
     Loader {
+      id: loader
+
       property int callId: index
       property var call: $call
       property var callControls: _callControls

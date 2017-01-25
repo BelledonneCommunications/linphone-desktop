@@ -69,8 +69,8 @@ private:
   void setVideoOutputEnabled (bool status);
 
   bool m_micro_muted = false;
-
-  linphone::CallState m_linphone_call_status = linphone::CallStateIdle;
+  bool m_paused_by_remote = false;
+  bool m_paused_by_user = false;
 
   std::shared_ptr<linphone::Call> m_linphone_call;
 };

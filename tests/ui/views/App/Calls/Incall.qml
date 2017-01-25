@@ -148,11 +148,29 @@ Rectangle {
           }
 
           backgroundColor: CallStyle.container.avatar.backgroundColor
+          foregroundColor: call.status === CallModel.CallStatusPaused
+            ? CallStyle.container.pause.color
+            : 'transparent'
           image: _contactObserver.contact && _contactObserver.contact.vcard.avatar
           username: contactDescription.username
 
           height: _computeAvatarSize()
           width: height
+
+          Text {
+            anchors.fill: parent
+            color: CallStyle.container.pause.text.color
+
+            // `|| 1` => `pointSize` must be greater than 0.
+            font.pointSize: (width / CallStyle.container.pause.text.fontSizeFactor) || 1
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+
+            text: '&#9616;&nbsp;&#9612;'
+            textFormat: Text.RichText
+            visible: call.status === CallModel.CallStatusPaused
+          }
         }
       }
 

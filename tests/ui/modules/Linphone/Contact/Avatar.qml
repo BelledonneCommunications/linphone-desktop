@@ -13,6 +13,7 @@ Item {
 
   property alias presenceLevel: presenceLevel.level
   property color backgroundColor: AvatarStyle.backgroundColor
+  property color foregroundColor: 'transparent'
   property string username
   property var image
 
@@ -45,6 +46,7 @@ Item {
 
     anchors.fill: parent
     backgroundColor: avatar.backgroundColor
+    foregroundColor: avatar.foregroundColor
     source: avatar.image || ''
   }
 

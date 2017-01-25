@@ -28,6 +28,15 @@ QtObject {
       property color backgroundColor: Colors.w
       property int maxSize: 300
     }
+
+    property QtObject pause: QtObject {
+      property color color: Colors.g90
+
+      property QtObject text: QtObject {
+        property color color: Colors.k
+        property int fontSizeFactor: 10
+      }
+    }
   }
 
   property QtObject header: QtObject {

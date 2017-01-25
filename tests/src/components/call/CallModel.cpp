@@ -18,16 +18,22 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
         case linphone::CallStateConnected:
         case linphone::CallStateEnd:
         case linphone::CallStateError:
-        case linphone::CallStatePaused:
         case linphone::CallStateRefered:
         case linphone::CallStateReleased:
         case linphone::CallStateStreamsRunning:
-          m_linphone_call_status = state;
+          m_paused_by_remote = false;
           break;
 
         case linphone::CallStatePausedByRemote:
-          if (m_linphone_call_status != linphone::CallStatePaused)
-            m_linphone_call_status = state;
+          m_paused_by_remote = true;
+          break;
+
+        case linphone::CallStatePausing:
+          m_paused_by_user = true;
+          break;
+
+        case linphone::CallStateResuming:
+          m_paused_by_user = false;
           break;
 
         default:
@@ -64,7 +70,7 @@ QString CallModel::getSipAddress () const {
 }
 
 CallModel::CallStatus CallModel::getStatus () const {
-  switch (m_linphone_call_status) {
+  switch (m_linphone_call->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
       return CallStatusConnected;
@@ -77,9 +83,23 @@ CallModel::CallStatus CallModel::getStatus () const {
 
     case linphone::CallStatePaused:
     case linphone::CallStatePausedByRemote:
+    case linphone::CallStatePausing:
+    case linphone::CallStateResuming:
       return CallStatusPaused;
 
-    default:
+    case linphone::CallStateUpdating:
+    case linphone::CallStateUpdatedByRemote:
+      return m_paused_by_remote ? CallStatusPaused : CallStatusConnected;
+
+    case linphone::CallStateEarlyUpdatedByRemote:
+    case linphone::CallStateEarlyUpdating:
+    case linphone::CallStateIdle:
+    case linphone::CallStateIncomingEarlyMedia:
+    case linphone::CallStateIncomingReceived:
+    case linphone::CallStateOutgoingEarlyMedia:
+    case linphone::CallStateOutgoingInit:
+    case linphone::CallStateOutgoingProgress:
+    case linphone::CallStateOutgoingRinging:
       break;
   }
 
@@ -111,20 +131,18 @@ void CallModel::setMicroMuted (bool status) {
 }
 
 bool CallModel::getPausedByUser () const {
-  return m_linphone_call_status == linphone::CallStatePaused;
+  return m_paused_by_user;
 }
 
 void CallModel::setPausedByUser (bool status) {
-  bool paused = getPausedByUser();
-
   if (status) {
-    if (!paused)
+    if (!m_paused_by_user)
       CoreManager::getInstance()->getCore()->pauseCall(m_linphone_call);
 
     return;
   }
 
-  if (paused)
+  if (m_paused_by_user)
     CoreManager::getInstance()->getCore()->resumeCall(m_linphone_call);
 }
 
