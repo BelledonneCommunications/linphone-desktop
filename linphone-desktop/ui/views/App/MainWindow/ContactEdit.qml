@@ -146,7 +146,7 @@ ColumnLayout  {
           anchors.fill: parent
           image: _vcard.avatar
           username: _vcard.username
-          visible: isLoaded() && (!parent.hovered || !_edition)
+          visible: (isLoaded() && !parent.hovered) || !_edition
         }
       }
 
