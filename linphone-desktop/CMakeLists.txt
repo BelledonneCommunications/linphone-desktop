@@ -1,12 +1,32 @@
-# ==============================================================================
+################################################################################
 # CMakeLists.txt
-# ==============================================================================
+# Copyright (C) 2017  Belledonne Communications, Grenoble France
+#
+################################################################################
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+################################################################################
 
 cmake_minimum_required(VERSION 3.1)
-project(linphone)
+project(linphoneqt)
 
 set(LINPHONE_EXEC linphone-qt)
 set(CMAKE_CXX_STANDARD 11)
+
+include(GNUInstallDirs)
 
 # Use automatically moc from Qt5.
 set(CMAKE_AUTOMOC ON)
@@ -38,18 +58,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARAT
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 LinguistTools)
 
-set(LIBS)
-foreach (package ${QT5_PACKAGES})
-  # `qt5_create_translation` is provided from `LinguistTools` package.
-  # But the `Qt5::LinguistTools` lib does not exist. Remove it.
-  if (NOT (${package} STREQUAL LinguistTools))
-    list(APPEND LIBS "Qt5::${package}")
-  endif ()
-endforeach ()
-
 find_package(Linphone REQUIRED)
 
-list(APPEND LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
+set(LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
 
 set(SOURCES
   src/app/App.cpp
@@ -168,7 +179,7 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy
 # Build.
 # ------------------------------------------------------------------------------
 
-find_package(Qt5 COMPONENTS ${QT5_PACKAGES})
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
@@ -184,5 +195,21 @@ add_dependencies(${LINPHONE_EXEC} update_translations)
 add_dependencies(update_translations check_qml)
 
 target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}")
+foreach (package ${QT5_PACKAGES})
+  target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
+  # `qt5_create_translation` is provided from `LinguistTools` package.
+  # But the `Qt5::LinguistTools` lib does not exist. Remove it.
+  if (NOT (${package} STREQUAL LinguistTools))
+    target_link_libraries(${LINPHONE_EXEC} ${Qt5${package}_LIBRARIES})
+  endif()
+endforeach ()
 
 target_link_libraries(${LINPHONE_EXEC} ${LIBS} ${LINPHONE_LIBRARIES})
+
+install(TARGETS ${LINPHONE_EXEC}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
+

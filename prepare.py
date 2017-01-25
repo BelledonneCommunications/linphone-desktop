@@ -51,6 +51,11 @@ class DesktopTarget(prepare.Target):
             "-DCMAKE_SKIP_INSTALL_RPATH=YES",
             "-DENABLE_RELATIVE_PREFIX=YES"
         ]
+        external_builders_path = os.path.join(current_path, 'cmake_builder')
+        self.additional_args = [
+            "-DLINPHONE_BUILDER_EXTERNAL_BUILDERS_PATH=" + external_builders_path,
+            "-DLINPHONE_BUILDER_TARGET=linphoneqt"
+        ]
 
 
 class DesktopRaspberryTarget(prepare.Target):
