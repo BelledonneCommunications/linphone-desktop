@@ -34,6 +34,10 @@ public:
   CallModel (std::shared_ptr<linphone::Call> linphone_call);
   ~CallModel () = default;
 
+  std::shared_ptr<linphone::Call> getLinphoneCall () const {
+    return m_linphone_call;
+  }
+
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
   Q_INVOKABLE void terminate ();

@@ -128,6 +128,8 @@ Rectangle {
     Item {
       id: container
 
+      property var _call: call
+
       Layout.fillWidth: true
       Layout.fillHeight: true
       Layout.margins: CallStyle.container.margins
@@ -180,11 +182,13 @@ Rectangle {
         Camera {
           height: container.height
           width: container.width
+          call: container._call
         }
       }
 
       Loader {
         anchors.centerIn: parent
+
         sourceComponent: call.videoInputEnabled ? camera : avatar
       }
     }
