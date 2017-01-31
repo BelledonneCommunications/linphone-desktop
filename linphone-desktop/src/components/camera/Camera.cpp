@@ -42,6 +42,7 @@ CameraRenderer::CameraRenderer (const Camera *camera) : m_camera(camera) {}
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
   QOpenGLFramebufferObjectFormat format;
   format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
+  format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 
   ContextInfo *context_info = m_camera->m_context_info;

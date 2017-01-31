@@ -12,12 +12,12 @@ class CallModel : public QObject {
   Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
-  Q_PROPERTY(int duration READ getDuration CONSTANT);
-  Q_PROPERTY(float quality READ getQuality CONSTANT);
+  Q_PROPERTY(int duration READ getDuration CONSTANT); // Constant but called with a timer in qml.
+  Q_PROPERTY(float quality READ getQuality CONSTANT); // Same idea.
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
-  Q_PROPERTY(bool videoInputEnabled READ getVideoInputEnabled WRITE setVideoInputEnabled NOTIFY videoInputEnabled);
-  Q_PROPERTY(bool videoOutputEnabled READ getVideoOutputEnabled WRITE setVideoOutputEnabled NOTIFY videoOutputEnabled);
+  Q_PROPERTY(bool videoInputEnabled READ getVideoInputEnabled WRITE setVideoInputEnabled NOTIFY statusChanged);
+  Q_PROPERTY(bool videoOutputEnabled READ getVideoOutputEnabled WRITE setVideoOutputEnabled NOTIFY statusChanged);
 
 public:
   enum CallStatus {
@@ -46,8 +46,6 @@ public:
 signals:
   void statusChanged (CallStatus status);
   void microMutedChanged (bool status);
-  void videoInputEnabled (bool status);
-  void videoOutputEnabled (bool status);
 
 private:
   QString getSipAddress () const;

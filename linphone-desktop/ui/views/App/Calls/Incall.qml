@@ -113,7 +113,7 @@ Rectangle {
 
       Component.onCompleted: {
         var updateDuration = function () {
-          text = Utils .formatElapsedTime(call.duration)
+          text = Utils.formatElapsedTime(call.duration)
           Utils.setTimeout(elapsedTime, 1000, updateDuration)
         }
 

@@ -147,8 +147,8 @@ void CallModel::setPausedByUser (bool status) {
 }
 
 bool CallModel::getVideoInputEnabled () const {
-  // TODO
-  return false;
+  shared_ptr<linphone::CallParams> params = m_linphone_call->getRemoteParams();
+  return params && params->videoEnabled() && getStatus() == CallStatusConnected;
 }
 
 void CallModel::setVideoInputEnabled (bool status) {
@@ -156,8 +156,8 @@ void CallModel::setVideoInputEnabled (bool status) {
 }
 
 bool CallModel::getVideoOutputEnabled () const {
-  // TODO
-  return false;
+  shared_ptr<linphone::CallParams> params = m_linphone_call->getCurrentParams();
+  return params && params->videoEnabled() && getStatus() == CallStatusConnected;
 }
 
 void CallModel::setVideoOutputEnabled (bool status) {
