@@ -77,6 +77,9 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setAcceptHoverEvents(true);
   setAcceptedMouseButtons(Qt::LeftButton | Qt::RightButton);
 
+  // The fbo content must be y-mirrored because the ms rendering is y-inverted.
+  setMirrorVertically(true);
+
   m_context_info = new ContextInfo();
 }
 
