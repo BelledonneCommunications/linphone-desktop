@@ -23,7 +23,8 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt)
 
-set(LINPHONE_EXEC linphone-qt)
+set(EXECUTABLE_NAME linphone)
+set(TARGET_NAME linphone-qt)
 set(CMAKE_CXX_STANDARD 11)
 
 include(GNUInstallDirs)
@@ -194,28 +195,29 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 # Build.
 # Note: `update_translations` is provided by `languages/CMakeLists.txt`.
 if(WIN32)
-  add_executable(${LINPHONE_EXEC} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES})
+  add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES})
 else()
-  add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
+  add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
 endif()
-  add_dependencies(${LINPHONE_EXEC} update_translations)
+  add_dependencies(${TARGET_NAME} update_translations)
 if(NOT WIN32)
   add_dependencies(update_translations check_qml)
 endif()
+set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 
-target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}")
+target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}")
 foreach (package ${QT5_PACKAGES})
-  target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
+  target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
   # `qt5_create_translation` is provided from `LinguistTools` package.
   # But the `Qt5::LinguistTools` lib does not exist. Remove it.
   if (NOT (${package} STREQUAL LinguistTools))
-    target_link_libraries(${LINPHONE_EXEC} ${Qt5${package}_LIBRARIES})
+    target_link_libraries(${TARGET_NAME} ${Qt5${package}_LIBRARIES})
   endif()
 endforeach ()
 
-target_link_libraries(${LINPHONE_EXEC} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
+target_link_libraries(${TARGET_NAME} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
 
-install(TARGETS ${LINPHONE_EXEC}
+install(TARGETS ${TARGET_NAME}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
