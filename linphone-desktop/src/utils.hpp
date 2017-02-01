@@ -11,7 +11,7 @@ namespace Utils {
   }
 
   inline std::string qStringToLinphoneString (const QString &string) {
-    return string.toStdString();
+    return string.toLocal8Bit().constData();
   }
 }
 
