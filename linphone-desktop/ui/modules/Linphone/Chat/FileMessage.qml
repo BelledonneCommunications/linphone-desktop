@@ -183,8 +183,8 @@ Row {
           id: fileDialog
 
           folder: shortcuts.home
-          title: qsTr('downloadFileTitle')
           selectExisting: false
+          title: qsTr('downloadFileTitle')
 
           onAccepted: proxyModel.downloadFile(index, fileUrl)
         }

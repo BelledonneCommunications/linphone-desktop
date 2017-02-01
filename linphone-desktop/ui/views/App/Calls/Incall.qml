@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -84,13 +85,31 @@ Rectangle {
         id: cameraActions
 
         anchors.right: parent.right
-        active: Boolean(call.videoInputEnabled)
+        active: Boolean(call.videoInputEnabled) && call.status !== CallModel.CallStatusEnded
 
         sourceComponent: ActionBar {
           iconSize: CallStyle.header.iconSize
 
           ActionButton {
             icon: 'screenshot'
+
+            FileDialog {
+              id: fileDialog
+
+              folder: shortcuts.home
+              selectExisting: false
+              title: qsTr('saveScreenshotTitle')
+
+              onAccepted: cameraLoader.item.saveScreenshot(fileUrl)
+            }
+
+            onClicked: {
+              // TODO: At this moment, FileDialog does not support default filename, use this name in the future:
+              //'linphone ' + ((new Date()).toLocaleString(Qt.locale(), 'yyyy-MM-dd hh:mm:ss')) + '.jpg'
+
+              cameraLoader.item.takeScreenshot()
+              fileDialog.open()
+            }
           }
 
           ActionButton {
@@ -186,8 +205,9 @@ Rectangle {
       }
 
       Loader {
-        anchors.centerIn: parent
+        id: cameraLoader
 
+        anchors.centerIn: parent
         sourceComponent: call.videoInputEnabled ? camera : avatar
       }
     }
@@ -199,6 +219,8 @@ Rectangle {
     Item {
       Layout.fillWidth: true
       Layout.preferredHeight: CallStyle.actionArea.height
+
+      visible: call.status !== CallModel.CallStatusEnded
 
       GridLayout {
         anchors {

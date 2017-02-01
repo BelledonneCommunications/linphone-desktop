@@ -358,6 +358,13 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>Incall</name>
+    <message>
+        <source>saveScreenshotTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>

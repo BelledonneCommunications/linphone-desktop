@@ -1,8 +1,8 @@
-#include "Camera.hpp"
-
+#include <QFileInfo>
 #include <QOpenGLFunctions>
 #include <QOpenGLTexture>
 
+#include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "Camera.hpp"
@@ -52,15 +52,10 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   context_info->width = size.width();
   context_info->height = size.height();
 
-  shared_ptr<linphone::Call> linphone_call = m_camera->m_call->getLinphoneCall();
-  linphone::CallState state = linphone_call->getState();
-
-  if (state == linphone::CallStateConnected || state == linphone::CallStateStreamsRunning) {
-    if (m_camera->m_is_preview)
-      CoreManager::getInstance()->getCore()->setNativePreviewWindowId(context_info);
-    else
-      linphone_call->setNativeVideoWindowId(context_info);
-  }
+  if (m_camera->m_is_preview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(context_info);
+  else
+    m_camera->m_call->getLinphoneCall()->setNativeVideoWindowId(context_info);
 
   return new QOpenGLFramebufferObject(size, format);
 }
@@ -95,8 +90,29 @@ Camera::~Camera () {
 }
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
-  return new CameraRenderer(this);
+  m_renderer = new CameraRenderer(this);
+  return m_renderer;
 }
+
+// -----------------------------------------------------------------------------
+
+void Camera::takeScreenshot () {
+  m_screenshot = m_renderer->framebufferObject()->toImage();
+}
+
+void Camera::saveScreenshot (const QString &path) {
+  QString formatted_path = path.startsWith("file://") ? path.mid(sizeof("file://") - 1) : path;
+  QFileInfo info(formatted_path);
+  QString extension = info.suffix();
+
+  m_screenshot.save(
+    formatted_path,
+    extension.size() > 0 ? ::Utils::qStringToLinphoneString(extension).c_str() : "jpg",
+    100
+  );
+}
+
+// -----------------------------------------------------------------------------
 
 void Camera::mousePressEvent (QMouseEvent *) {
   setFocus(true);

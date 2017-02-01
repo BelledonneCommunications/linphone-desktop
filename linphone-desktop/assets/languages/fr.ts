@@ -346,6 +346,13 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>Incall</name>
+    <message>
+        <source>saveScreenshotTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IncomingCall</name>
     <message>
         <source>incomingVideoCall</source>
