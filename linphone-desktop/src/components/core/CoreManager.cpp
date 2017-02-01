@@ -14,6 +14,7 @@ CoreManager::CoreManager (QObject *parent) : QObject(parent), m_handlers(make_sh
   m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(), "");
 
   m_core->setVideoDisplayFilter("MSOGL");
+  m_core->usePreviewWindow(true);
 
   setDatabasesPaths();
 }

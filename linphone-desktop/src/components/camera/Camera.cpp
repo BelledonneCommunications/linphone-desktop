@@ -2,7 +2,10 @@
 
 #include <QOpenGLFunctions>
 #include <QOpenGLTexture>
-#include <QtMath>
+
+#include "../core/CoreManager.hpp"
+
+#include "Camera.hpp"
 
 // =============================================================================
 
@@ -52,8 +55,12 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   shared_ptr<linphone::Call> linphone_call = m_camera->m_call->getLinphoneCall();
   linphone::CallState state = linphone_call->getState();
 
-  if (state == linphone::CallStateConnected || state == linphone::CallStateStreamsRunning)
-    linphone_call->setNativeVideoWindowId(context_info);
+  if (state == linphone::CallStateConnected || state == linphone::CallStateStreamsRunning) {
+    if (m_camera->m_is_preview)
+      CoreManager::getInstance()->getCore()->setNativePreviewWindowId(context_info);
+    else
+      linphone_call->setNativeVideoWindowId(context_info);
+  }
 
   return new QOpenGLFramebufferObject(size, format);
 }
@@ -63,10 +70,10 @@ void CameraRenderer::render () {
 
   QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
-  f->glClearColor(0.f, 0.f, 0.f, 1.f);
+  f->glClearColor(0.f, 0.f, 0.f, 0.f);
   f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  m_camera->getCall()->getLinphoneCall()->oglRender();
+  m_camera->getCall()->getLinphoneCall()->oglRender(m_camera->m_is_preview);
 
   update();
 }
@@ -91,13 +98,9 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
   return new CameraRenderer(this);
 }
 
-void Camera::hoverMoveEvent (QHoverEvent *) {}
-
 void Camera::mousePressEvent (QMouseEvent *) {
   setFocus(true);
 }
-
-void Camera::keyPressEvent (QKeyEvent *) {}
 
 // -----------------------------------------------------------------------------
 
@@ -111,8 +114,12 @@ void Camera::setCall (CallModel *call) {
       shared_ptr<linphone::Call> linphone_call = call->getLinphoneCall();
       linphone::CallState state = linphone_call->getState();
 
-      if (state == linphone::CallStateConnected || state == linphone::CallStateStreamsRunning)
-        linphone_call->setNativeVideoWindowId(m_context_info);
+      if (state == linphone::CallStateConnected || state == linphone::CallStateStreamsRunning) {
+        if (m_is_preview)
+          CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
+        else
+          linphone_call->setNativeVideoWindowId(m_context_info);
+      }
     }
 
     m_call = call;

@@ -32,6 +32,7 @@ class Camera : public QQuickFramebufferObject {
   Q_OBJECT;
 
   Q_PROPERTY(CallModel * call READ getCall WRITE setCall NOTIFY callChanged);
+  Q_PROPERTY(bool isPreview MEMBER m_is_preview NOTIFY isPreviewChanged);
 
 public:
   Camera (QQuickItem *parent = Q_NULLPTR);
@@ -41,19 +42,17 @@ public:
 
 signals:
   void callChanged (CallModel *call);
+  void isPreviewChanged (bool is_preview);
 
 protected:
-  void hoverMoveEvent (QHoverEvent *event) override;
   void mousePressEvent (QMouseEvent *event) override;
-
-  void keyPressEvent (QKeyEvent *event) override;
 
 private:
   CallModel *getCall () const;
   void setCall (CallModel *call);
 
+  bool m_is_preview = false;
   CallModel *m_call = nullptr;
-
   ContextInfo *m_context_info;
 };
 

@@ -17,6 +17,7 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
+  property var _call: call
 
   // ---------------------------------------------------------------------------
 
@@ -128,8 +129,6 @@ Rectangle {
     Item {
       id: container
 
-      property var _call: call
-
       Layout.fillWidth: true
       Layout.fillHeight: true
       Layout.margins: CallStyle.container.margins
@@ -182,7 +181,7 @@ Rectangle {
         Camera {
           height: container.height
           width: container.width
-          call: container._call
+          call: incall._call
         }
       }
 
@@ -239,11 +238,15 @@ Rectangle {
         }
       }
 
-      Item {
+      Camera {
         anchors.centerIn: parent
         height: CallStyle.actionArea.userVideo.height
-        visible: Boolean(incall.width >= CallStyle.actionArea.lowWidth && call.videoOutputEnabled)
         width: CallStyle.actionArea.userVideo.width
+
+        isPreview: true
+
+        call: incall._call
+        visible: Boolean(incall.width >= CallStyle.actionArea.lowWidth && call.videoOutputEnabled)
       }
 
       ActionBar {
