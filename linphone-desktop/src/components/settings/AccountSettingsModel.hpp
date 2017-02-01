@@ -1,9 +1,9 @@
 #ifndef ACCOUNT_SETTINGS_MODEL_H_
 #define ACCOUNT_SETTINGS_MODEL_H_
 
-#include <QObject>
-
 #include "../presence/Presence.hpp"
+
+#include <QObject>
 
 // ===================================================================
 

@@ -1,10 +1,10 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+#include "../call/CallModel.hpp"
+
 #include <QOpenGLFramebufferObject>
 #include <QQuickFramebufferObject>
-
-#include "../call/CallModel.hpp"
 
 // =============================================================================
 

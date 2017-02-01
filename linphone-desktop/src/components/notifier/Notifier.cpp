@@ -1,11 +1,11 @@
+#include "../../app/App.hpp"
+
+#include "Notifier.hpp"
+
 #include <QQmlComponent>
 #include <QQuickWindow>
 #include <QtDebug>
 #include <QTimer>
-
-#include "../../app/App.hpp"
-
-#include "Notifier.hpp"
 
 // Notifications QML properties/methods.
 #define NOTIFICATION_SHOW_METHOD_NAME "show"

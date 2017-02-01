@@ -1,8 +1,8 @@
+#include "Camera.hpp"
+
 #include <QOpenGLFunctions>
 #include <QOpenGLTexture>
 #include <QtMath>
-
-#include "Camera.hpp"
 
 // =============================================================================
 

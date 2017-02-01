@@ -1,9 +1,9 @@
 #ifndef CONTACTS_LIST_PROXY_MODEL_H_
 #define CONTACTS_LIST_PROXY_MODEL_H_
 
-#include <QSortFilterProxyModel>
-
 #include "../contact/ContactModel.hpp"
+
+#include <QSortFilterProxyModel>
 
 // =============================================================================
 

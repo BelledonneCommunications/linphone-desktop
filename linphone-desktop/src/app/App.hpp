@@ -1,16 +1,16 @@
 #ifndef APP_H_
 #define APP_H_
 
+#include "../components/notifier/Notifier.hpp"
+#include "AvatarProvider.hpp"
+#include "DefaultTranslator.hpp"
+#include "ThumbnailProvider.hpp"
+
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
 #include <QQuickWindow>
 #include <QSystemTrayIcon>
-
-#include "../components/notifier/Notifier.hpp"
-#include "AvatarProvider.hpp"
-#include "DefaultTranslator.hpp"
-#include "ThumbnailProvider.hpp"
 
 // =============================================================================
 

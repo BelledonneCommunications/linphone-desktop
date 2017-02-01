@@ -1,9 +1,3 @@
-#include <QMenu>
-#include <QQmlComponent>
-#include <QQmlContext>
-#include <QQuickView>
-#include <QtDebug>
-
 #include "../components/calls/CallsListModel.hpp"
 #include "../components/camera/Camera.hpp"
 #include "../components/chat/ChatProxyModel.hpp"
@@ -15,6 +9,12 @@
 #include "../components/timeline/TimelineModel.hpp"
 
 #include "App.hpp"
+
+#include <QMenu>
+#include <QQmlComponent>
+#include <QQmlContext>
+#include <QQuickView>
+#include <QtDebug>
 
 #define LANGUAGES_PATH ":/languages/"
 #define WINDOW_ICON_PATH ":/assets/images/linphone.png"

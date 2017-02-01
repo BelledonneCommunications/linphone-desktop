@@ -32,6 +32,7 @@ include(GNUInstallDirs)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+if(NOT WIN32)
 set(CUSTOM_FLAGS "\
 -Wall \
 -Wcast-align \
@@ -49,6 +50,7 @@ set(CUSTOM_FLAGS "\
 -Wuninitialized \
 -Wunused \
 ")
+endif()
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
 
@@ -59,8 +61,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARAT
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 LinguistTools)
 
 find_package(Linphone REQUIRED)
-
-set(LIBS "${CMAKE_SOURCE_DIR}/../OUTPUT/desktop/lib64/liblinphone++.so")
+find_package(LinphoneCxx REQUIRED)
 
 set(SOURCES
   src/app/App.cpp
@@ -161,10 +162,12 @@ foreach (line ${QRC_RESOURCES_CONTENT})
   endif ()
 endforeach ()
 
-add_custom_target(
-  check_qml DEPENDS ${QML_SOURCES}
-  COMMAND "${CMAKE_SOURCE_DIR}/tools/check_qml_syntax"
-)
+if(NOT WIN32)
+  add_custom_target(
+    check_qml DEPENDS ${QML_SOURCES}
+    COMMAND "${CMAKE_SOURCE_DIR}/tools/check_qml_syntax"
+  )
+endif()
 
 # ------------------------------------------------------------------------------
 # Init git hooks.
@@ -190,9 +193,15 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 
 # Build.
 # Note: `update_translations` is provided by `languages/CMakeLists.txt`.
-add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
-add_dependencies(${LINPHONE_EXEC} update_translations)
-add_dependencies(update_translations check_qml)
+if(WIN32)
+  add_executable(${LINPHONE_EXEC} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES})
+else()
+  add_executable(${LINPHONE_EXEC} ${SOURCES} ${HEADERS} ${RESOURCES})
+endif()
+  add_dependencies(${LINPHONE_EXEC} update_translations)
+if(NOT WIN32)
+  add_dependencies(update_translations check_qml)
+endif()
 
 target_include_directories(${LINPHONE_EXEC} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}")
 foreach (package ${QT5_PACKAGES})
@@ -204,7 +213,7 @@ foreach (package ${QT5_PACKAGES})
   endif()
 endforeach ()
 
-target_link_libraries(${LINPHONE_EXEC} ${LIBS} ${LINPHONE_LIBRARIES})
+target_link_libraries(${LINPHONE_EXEC} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
 
 install(TARGETS ${LINPHONE_EXEC}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
