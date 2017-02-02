@@ -1,5 +1,5 @@
 ############################################################################
-# linphoneqt.cmake
+# additional_steps.cmake
 # Copyright (C) 2017  Belledonne Communications, Grenoble France
 #
 ############################################################################
@@ -20,9 +20,12 @@
 #
 ############################################################################
 
-lcb_external_source_paths("../linphone-desktop")
-
-lcb_dependencies("linphone")
-
-# Add config step for packaging
-set(LINPHONE_BUILDER_ADDITIONAL_CONFIG_STEPS "${CMAKE_CURRENT_LIST_DIR}/additional_steps.cmake")
+# Create a shortcut to linphone.exe in install prefix
+if(LINPHONE_BUILDER_TARGET STREQUAL linphoneqt AND WIN32)
+	set(SHORTCUT_PATH "${CMAKE_INSTALL_PREFIX}/linphone.lnk")
+	set(SHORTCUT_TARGET_PATH "${CMAKE_INSTALL_PREFIX}/bin/linphone.exe")
+	set(SHORTCUT_WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}")
+	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/linphone_package/winshortcut.vbs.in" "${CMAKE_CURRENT_BINARY_DIR}/winshortcut.vbs" @ONLY)
+	add_custom_command(OUTPUT "${SHORTCUT_PATH}" COMMAND "cscript" "${CMAKE_CURRENT_BINARY_DIR}/winshortcut.vbs")
+	add_custom_target(linphoneqt_winshortcut ALL DEPENDS "${SHORTCUT_PATH}" TARGET_linphone_builder)
+endif()
