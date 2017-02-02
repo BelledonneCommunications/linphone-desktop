@@ -15,11 +15,10 @@ Window {
 
   // ---------------------------------------------------------------------------
 
+  property var call: calls.selectedCall
   readonly property bool chatIsOpened: !rightPaned.isClosed()
 
-  // `{}` is a workaround to avoid `TypeError: Cannot read property...` in `Incall` component.
-  property var call: calls.selectedCall || {}
-  property string sipAddress: call.sipAddress || ''
+  property string sipAddress: call ? call.sipAddress : ''
 
   // ---------------------------------------------------------------------------
 
@@ -122,19 +121,28 @@ Window {
       Component {
         id: incomingCall
 
-        IncomingCall {}
+        IncomingCall {
+          call: window.call
+        }
       }
 
       Component {
         id: outgoingCall
 
-        OutgoingCall {}
+        OutgoingCall {
+          call: window.call
+        }
       }
 
       Component {
         id: incall
 
-        Incall {}
+        Incall {
+          // `{}` is a workaround to avoid `TypeError: Cannot read property...` in `Incall` component.
+          call: window.call || ({
+            videoEnabled: false
+          })
+        }
       }
 
       Component {
@@ -151,7 +159,12 @@ Window {
 
       childA: Loader {
         anchors.fill: parent
+
         sourceComponent: {
+          if (!window.call) {
+            return null
+          }
+
           var status = window.call.status
           if (status == null) {
             return null

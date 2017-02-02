@@ -351,6 +351,14 @@ Url du serveur non configurée.</translation>
         <source>saveScreenshotTitle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>acceptVideoDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acceptVideoTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IncomingCall</name>

@@ -10,6 +10,8 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
+  property var call
+
   default property alias _actionArea: actionArea.data
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
 

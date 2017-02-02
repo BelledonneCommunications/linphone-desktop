@@ -10,7 +10,7 @@ import App.Styles 1.0
 
 AbstractStartingCall {
   GridLayout {
-    columns: parent.width < CallStyle.actionArea.lowWidth && call.videoOutputEnabled ? 1 : 2
+    columns: parent.width < CallStyle.actionArea.lowWidth && call.videoEnabled ? 1 : 2
     rowSpacing: ActionBarStyle.spacing
 
     anchors {
@@ -26,13 +26,6 @@ AbstractStartingCall {
 
       onClicked: call.microMuted = enabled
     }
-
-    ActionSwitch {
-      icon: 'speaker'
-      iconSize: CallStyle.actionArea.iconSize
-
-      onClicked: enabled = !enabled
-    }
   }
 
   Item {
@@ -40,7 +33,7 @@ AbstractStartingCall {
     height: CallStyle.actionArea.userVideo.height
     width: CallStyle.actionArea.userVideo.width
 
-    visible: call.videoOutputEnabled
+    visible: call.videoEnabled
   }
 
   ActionBar {

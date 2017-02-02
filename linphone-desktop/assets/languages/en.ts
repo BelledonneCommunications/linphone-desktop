@@ -363,6 +363,14 @@ Server url not configured.</translation>
         <source>saveScreenshotTitle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>acceptVideoDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>acceptVideoTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

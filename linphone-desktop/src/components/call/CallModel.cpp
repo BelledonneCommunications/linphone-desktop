@@ -36,6 +36,20 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
           m_paused_by_user = false;
           break;
 
+        case linphone::CallStateUpdatedByRemote: {
+          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+          if (
+            !m_linphone_call->getCurrentParams()->videoEnabled() &&
+            m_linphone_call->getRemoteParams()->videoEnabled()
+          ) {
+            CoreManager::getInstance()->getCore()->deferCallUpdate(m_linphone_call);
+            emit videoRequested();
+          }
+        }
+
+        break;
+
         default:
           break;
       }
@@ -61,6 +75,16 @@ void CallModel::terminate () {
 
 void CallModel::transfer () {
   // TODO
+}
+
+void CallModel::acceptVideoRequest () {
+  shared_ptr<linphone::CallParams> params = m_linphone_call->getCurrentParams()->copy();
+  params->enableVideo(true);
+  CoreManager::getInstance()->getCore()->acceptCallUpdate(m_linphone_call, params);
+}
+
+void CallModel::rejectVideoRequest () {
+  CoreManager::getInstance()->getCore()->acceptCallUpdate(m_linphone_call, m_linphone_call->getCurrentParams());
 }
 
 // -----------------------------------------------------------------------------
@@ -135,6 +159,15 @@ bool CallModel::getPausedByUser () const {
 }
 
 void CallModel::setPausedByUser (bool status) {
+  switch (m_linphone_call->getState()) {
+    case linphone::CallStateConnected:
+    case linphone::CallStateStreamsRunning:
+    case linphone::CallStatePaused:
+    case linphone::CallStatePausedByRemote:
+      break;
+    default: return;
+  }
+
   if (status) {
     if (!m_paused_by_user)
       CoreManager::getInstance()->getCore()->pauseCall(m_linphone_call);
@@ -146,20 +179,24 @@ void CallModel::setPausedByUser (bool status) {
     CoreManager::getInstance()->getCore()->resumeCall(m_linphone_call);
 }
 
-bool CallModel::getVideoInputEnabled () const {
-  shared_ptr<linphone::CallParams> params = m_linphone_call->getRemoteParams();
-  return params && params->videoEnabled() && getStatus() == CallStatusConnected;
-}
-
-void CallModel::setVideoInputEnabled (bool status) {
-  // TODO
-}
-
-bool CallModel::getVideoOutputEnabled () const {
+bool CallModel::getVideoEnabled () const {
   shared_ptr<linphone::CallParams> params = m_linphone_call->getCurrentParams();
   return params && params->videoEnabled() && getStatus() == CallStatusConnected;
 }
 
-void CallModel::setVideoOutputEnabled (bool status) {
-  // TODO
+void CallModel::setVideoEnabled (bool status) {
+  switch (m_linphone_call->getState()) {
+    case linphone::CallStateConnected:
+    case linphone::CallStateStreamsRunning:
+      break;
+    default: return;
+  }
+
+  if (status == getVideoEnabled())
+    return;
+
+  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(m_linphone_call);
+  params->enableVideo(status);
+
+  CoreManager::getInstance()->getCore()->updateCall(m_linphone_call, params);
 }

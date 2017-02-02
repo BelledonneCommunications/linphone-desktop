@@ -17,12 +17,35 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
+  property var call
+
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
-  property var _call: call
 
   // ---------------------------------------------------------------------------
 
   color: CallStyle.backgroundColor
+
+  // ---------------------------------------------------------------------------
+  // Handle video requests.
+  // ---------------------------------------------------------------------------
+
+  SmartConnect {
+    Component.onCompleted: this.connect(call, 'videoRequested', function () {
+      Utils.openConfirmDialog(window, {
+        descriptionText: qsTr('acceptVideoDescription'),
+        exitHandler: function (status) {
+          if (status) {
+            call.acceptVideoRequest()
+          } else {
+            call.rejectVideoRequest()
+          }
+        },
+        title: qsTr('acceptVideoTitle')
+      })
+    })
+  }
+
+  // ---------------------------------------------------------------------------
 
   ColumnLayout {
     anchors {
@@ -85,7 +108,7 @@ Rectangle {
         id: cameraActions
 
         anchors.right: parent.right
-        active: Boolean(call.videoInputEnabled) && call.status !== CallModel.CallStatusEnded
+        active: call.videoEnabled && call.status !== CallModel.CallStatusEnded
 
         sourceComponent: ActionBar {
           iconSize: CallStyle.header.iconSize
@@ -200,7 +223,7 @@ Rectangle {
         Camera {
           height: container.height
           width: container.width
-          call: incall._call
+          call: incall.call
         }
       }
 
@@ -208,7 +231,7 @@ Rectangle {
         id: cameraLoader
 
         anchors.centerIn: parent
-        sourceComponent: call.videoInputEnabled ? camera : avatar
+        sourceComponent: call.videoEnabled ? camera : avatar
       }
     }
 
@@ -241,15 +264,11 @@ Rectangle {
         }
 
         ActionSwitch {
-          icon: 'speaker'
-          iconSize: CallStyle.actionArea.iconSize
-          onClicked: enabled = !enabled
-        }
-
-        ActionSwitch {
+          enabled: call.videoEnabled
           icon: 'camera'
           iconSize: CallStyle.actionArea.iconSize
-          onClicked: enabled = !enabled
+
+          onClicked: call.videoEnabled = !enabled
         }
 
         ActionButton {
@@ -266,9 +285,9 @@ Rectangle {
         width: CallStyle.actionArea.userVideo.width
 
         isPreview: true
+        visible: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled
 
-        call: incall._call
-        visible: Boolean(incall.width >= CallStyle.actionArea.lowWidth && call.videoOutputEnabled)
+        Component.onCompleted: call = incall.call
       }
 
       ActionBar {

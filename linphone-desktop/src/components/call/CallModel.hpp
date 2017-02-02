@@ -16,8 +16,7 @@ class CallModel : public QObject {
   Q_PROPERTY(float quality READ getQuality CONSTANT); // Same idea.
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
-  Q_PROPERTY(bool videoInputEnabled READ getVideoInputEnabled WRITE setVideoInputEnabled NOTIFY statusChanged);
-  Q_PROPERTY(bool videoOutputEnabled READ getVideoOutputEnabled WRITE setVideoOutputEnabled NOTIFY statusChanged);
+  Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged);
 
 public:
   enum CallStatus {
@@ -43,9 +42,13 @@ public:
   Q_INVOKABLE void terminate ();
   Q_INVOKABLE void transfer ();
 
+  Q_INVOKABLE void acceptVideoRequest ();
+  Q_INVOKABLE void rejectVideoRequest ();
+
 signals:
   void statusChanged (CallStatus status);
   void microMutedChanged (bool status);
+  void videoRequested ();
 
 private:
   QString getSipAddress () const;
@@ -64,11 +67,8 @@ private:
   bool getPausedByUser () const;
   void setPausedByUser (bool status);
 
-  bool getVideoInputEnabled () const;
-  void setVideoInputEnabled (bool status);
-
-  bool getVideoOutputEnabled () const;
-  void setVideoOutputEnabled (bool status);
+  bool getVideoEnabled () const;
+  void setVideoEnabled (bool status);
 
   bool m_micro_muted = false;
   bool m_paused_by_remote = false;
