@@ -185,6 +185,13 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 
+if(CMAKE_INSTALL_RPATH)
+       get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
+       get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
+       get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
+       list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
+endif()
+
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
 list(APPEND QRC_RESOURCES "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
