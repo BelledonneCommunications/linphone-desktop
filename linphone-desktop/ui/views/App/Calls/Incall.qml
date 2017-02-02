@@ -31,9 +31,23 @@ Rectangle {
 
   SmartConnect {
     Component.onCompleted: this.connect(call, 'videoRequested', function () {
-      Utils.openConfirmDialog(window, {
+      var dialog
+
+      // Close window if call is ended.
+      var endedHandler = function (status) {
+        if (status === CallModel.CallStatusEnded) {
+          dialog.close()
+          call.statusChanged.disconnect(endedHandler)
+        }
+      }
+
+      call.statusChanged.connect(endedHandler)
+
+      dialog = Utils.openConfirmDialog(window, {
         descriptionText: qsTr('acceptVideoDescription'),
         exitHandler: function (status) {
+          call.statusChanged.disconnect(endedHandler)
+
           if (status) {
             call.acceptVideoRequest()
           } else {
@@ -267,6 +281,7 @@ Rectangle {
           enabled: call.videoEnabled
           icon: 'camera'
           iconSize: CallStyle.actionArea.iconSize
+          updating: call.updating
 
           onClicked: call.videoEnabled = !enabled
         }
@@ -301,6 +316,7 @@ Rectangle {
         ActionSwitch {
           enabled: !call.pausedByUser
           icon: 'pause'
+          updating: call.updating
 
           onClicked: call.pausedByUser = enabled
         }

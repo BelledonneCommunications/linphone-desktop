@@ -13,6 +13,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   property bool enabled: true
+  property bool updating: false
   property bool useStates: true
   property int iconSize // Optionnal.
   readonly property alias hovered: button.hovered
@@ -28,6 +29,10 @@ Item {
   // ---------------------------------------------------------------------------
 
   function _getIcon () {
+    if (wrappedButton.updating) {
+      return wrappedButton.icon + '_updating'
+    }
+
     if (!useStates) {
       return wrappedButton.icon
     }
@@ -55,9 +60,9 @@ Item {
     background: Rectangle {
       color: 'transparent'
     }
-    hoverEnabled: true
+    hoverEnabled: !wrappedButton.updating
 
-    onClicked: wrappedButton.enabled && wrappedButton.clicked()
+    onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked()
 
     Icon {
       id: icon

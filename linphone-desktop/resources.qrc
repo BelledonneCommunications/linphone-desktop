@@ -33,9 +33,11 @@
     <file>assets/images/camera_off_hovered.svg</file>
     <file>assets/images/camera_off_normal.svg</file>
     <file>assets/images/camera_off_pressed.svg</file>
+    <file>assets/images/camera_off_updating.svg</file>
     <file>assets/images/camera_on_hovered.svg</file>
     <file>assets/images/camera_on_normal.svg</file>
     <file>assets/images/camera_on_pressed.svg</file>
+    <file>assets/images/camera_on_updating.svg</file>
     <file>assets/images/chat_amount.svg</file>
     <file>assets/images/chat_count.svg</file>
     <file>assets/images/chat_error.svg</file>
@@ -120,9 +122,11 @@
     <file>assets/images/pause_off_hovered.svg</file>
     <file>assets/images/pause_off_normal.svg</file>
     <file>assets/images/pause_off_pressed.svg</file>
+    <file>assets/images/pause_off_updating.svg</file>
     <file>assets/images/pause_on_hovered.svg</file>
     <file>assets/images/pause_on_normal.svg</file>
     <file>assets/images/pause_on_pressed.svg</file>
+    <file>assets/images/pause_on_updating.svg</file>
     <file>assets/images/record_hovered.svg</file>
     <file>assets/images/record_normal.svg</file>
     <file>assets/images/record_pressed.svg</file>

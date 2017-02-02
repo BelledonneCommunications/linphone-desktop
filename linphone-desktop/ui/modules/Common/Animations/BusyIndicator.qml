@@ -17,6 +17,8 @@ BusyIndicator {
 
   // ---------------------------------------------------------------------------
 
+  visible: running
+
   contentItem: Item {
     x: parent.width / 2 - width / 2
     y: parent.height / 2 - height / 2

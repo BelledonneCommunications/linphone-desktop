@@ -200,3 +200,18 @@ void CallModel::setVideoEnabled (bool status) {
 
   CoreManager::getInstance()->getCore()->updateCall(m_linphone_call, params);
 }
+
+bool CallModel::getUpdating () const {
+  switch (m_linphone_call->getState()) {
+    case linphone::CallStateConnected:
+    case linphone::CallStateStreamsRunning:
+    case linphone::CallStatePaused:
+    case linphone::CallStatePausedByRemote:
+      return false;
+
+    default:
+      break;
+  }
+
+  return true;
+}
