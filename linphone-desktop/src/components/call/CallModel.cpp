@@ -62,9 +62,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
           m_paused_by_user = false;
           break;
 
-        case linphone::CallStateUpdatedByRemote: {
-          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-
+        case linphone::CallStateUpdatedByRemote:
           if (
             !m_linphone_call->getCurrentParams()->videoEnabled() &&
             m_linphone_call->getRemoteParams()->videoEnabled()
@@ -72,9 +70,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
             CoreManager::getInstance()->getCore()->deferCallUpdate(m_linphone_call);
             emit videoRequested();
           }
-        }
 
-        break;
+          break;
 
         default:
           break;
@@ -99,11 +96,21 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &call_params) {
 // -----------------------------------------------------------------------------
 
 void CallModel::accept () {
-  CoreManager::getInstance()->getCore()->acceptCall(m_linphone_call);
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
+  params->enableVideo(false);
+  setRecordFile(params);
+
+  core->acceptCallWithParams(m_linphone_call, params);
 }
 
 void CallModel::acceptWithVideo () {
-  // TODO
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
+  params->enableVideo(true);
+  setRecordFile(params);
+
+  core->acceptCallWithParams(m_linphone_call, params);
 }
 
 void CallModel::terminate () {
@@ -115,10 +122,11 @@ void CallModel::transfer () {
 }
 
 void CallModel::acceptVideoRequest () {
-  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(m_linphone_call);
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
   params->enableVideo(true);
 
-  CoreManager::getInstance()->getCore()->acceptCallUpdate(m_linphone_call, params);
+  core->acceptCallUpdate(m_linphone_call, params);
 }
 
 void CallModel::rejectVideoRequest () {
@@ -274,10 +282,11 @@ void CallModel::setVideoEnabled (bool status) {
   if (status == getVideoEnabled())
     return;
 
-  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(m_linphone_call);
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
   params->enableVideo(status);
 
-  CoreManager::getInstance()->getCore()->updateCall(m_linphone_call, params);
+  core->updateCall(m_linphone_call, params);
 }
 
 bool CallModel::getUpdating () const {
