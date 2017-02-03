@@ -127,9 +127,8 @@
     <file>assets/images/pause_on_normal.svg</file>
     <file>assets/images/pause_on_pressed.svg</file>
     <file>assets/images/pause_on_updating.svg</file>
-    <file>assets/images/record_hovered.svg</file>
-    <file>assets/images/record_normal.svg</file>
-    <file>assets/images/record_pressed.svg</file>
+    <file>assets/images/record_off.svg</file>
+    <file>assets/images/record_on.svg</file>
     <file>assets/images/screenshot_hovered.svg</file>
     <file>assets/images/screenshot_normal.svg</file>
     <file>assets/images/screenshot_pressed.svg</file>

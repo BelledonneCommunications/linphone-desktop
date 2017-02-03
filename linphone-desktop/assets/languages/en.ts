@@ -360,10 +360,6 @@ Server url not configured.</translation>
 <context>
     <name>Incall</name>
     <message>
-        <source>saveScreenshotTitle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>acceptVideoDescription</source>
         <translation type="unfinished"></translation>
     </message>

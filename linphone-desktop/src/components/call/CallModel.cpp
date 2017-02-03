@@ -1,3 +1,7 @@
+#include <QDateTime>
+#include <QtDebug>
+
+#include "../../app/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -61,6 +65,17 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
 
 // -----------------------------------------------------------------------------
 
+void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &call_params) {
+  call_params->setRecordFile(
+    Paths::getCapturesDirPath() +
+    ::Utils::qStringToLinphoneString(
+      QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss")
+    ) + ".mkv"
+  );
+}
+
+// -----------------------------------------------------------------------------
+
 void CallModel::accept () {
   CoreManager::getInstance()->getCore()->acceptCall(m_linphone_call);
 }
@@ -78,13 +93,55 @@ void CallModel::transfer () {
 }
 
 void CallModel::acceptVideoRequest () {
-  shared_ptr<linphone::CallParams> params = m_linphone_call->getCurrentParams()->copy();
+  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(m_linphone_call);
   params->enableVideo(true);
+
   CoreManager::getInstance()->getCore()->acceptCallUpdate(m_linphone_call, params);
 }
 
 void CallModel::rejectVideoRequest () {
   CoreManager::getInstance()->getCore()->acceptCallUpdate(m_linphone_call, m_linphone_call->getCurrentParams());
+}
+
+void CallModel::takeSnapshot () {
+  static QString old_name;
+  QString new_name = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss") + ".jpg";
+
+  if (new_name == old_name) {
+    qWarning() << "Unable to take snapshot. Wait one second.";
+    return;
+  }
+
+  old_name = new_name;
+
+  qInfo() << "Take snapshot of call:" << &m_linphone_call;
+
+  m_linphone_call->takeVideoSnapshot(
+    Paths::getCapturesDirPath() + ::Utils::qStringToLinphoneString(new_name)
+  );
+}
+
+void CallModel::startRecording () {
+  if (m_recording)
+    return;
+
+  qInfo() << "Start recording call:" << &m_linphone_call;
+
+  m_linphone_call->startRecording();
+  m_recording = true;
+
+  emit recordingChanged(true);
+}
+
+void CallModel::stopRecording () {
+  if (m_recording) {
+    qInfo() << "Stop recording call:" << &m_linphone_call;
+
+    m_recording = false;
+    m_linphone_call->stopRecording();
+
+    emit recordingChanged(false);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -214,4 +271,8 @@ bool CallModel::getUpdating () const {
   }
 
   return true;
+}
+
+bool CallModel::getRecording () const {
+  return m_recording;
 }

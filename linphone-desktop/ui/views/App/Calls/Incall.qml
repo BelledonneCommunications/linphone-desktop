@@ -33,11 +33,19 @@ Rectangle {
     Component.onCompleted: this.connect(call, 'videoRequested', function () {
       var dialog
 
-      // Close window if call is ended.
+      // Close dialog after 10s.
+      var timeout = Utils.setTimeout(incall, 10000, function () {
+        call.statusChanged.disconnect(endedHandler)
+        dialog.close()
+        call.rejectVideoRequest()
+      })
+
+      // Close dialog if call is ended.
       var endedHandler = function (status) {
         if (status === CallModel.CallStatusEnded) {
-          dialog.close()
+          Utils.clearTimeout(timeout)
           call.statusChanged.disconnect(endedHandler)
+          dialog.close()
         }
       }
 
@@ -46,6 +54,7 @@ Rectangle {
       dialog = Utils.openConfirmDialog(window, {
         descriptionText: qsTr('acceptVideoDescription'),
         exitHandler: function (status) {
+          Utils.clearTimeout(timeout)
           call.statusChanged.disconnect(endedHandler)
 
           if (status) {
@@ -118,43 +127,37 @@ Rectangle {
         width: parent.width - cameraActions.width - callQuality.width - CallStyle.header.contactDescription.width
       }
 
+      // -----------------------------------------------------------------------
+      // Video actions.
+      // -----------------------------------------------------------------------
+
       Loader {
         id: cameraActions
 
         anchors.right: parent.right
-        active: call.videoEnabled && call.status !== CallModel.CallStatusEnded
+        active: call.status !== CallModel.CallStatusEnded
 
         sourceComponent: ActionBar {
           iconSize: CallStyle.header.iconSize
 
           ActionButton {
             icon: 'screenshot'
+            visible: call.videoEnabled
 
-            FileDialog {
-              id: fileDialog
-
-              folder: shortcuts.home
-              selectExisting: false
-              title: qsTr('saveScreenshotTitle')
-
-              onAccepted: cameraLoader.item.saveScreenshot(fileUrl)
-            }
-
-            onClicked: {
-              // TODO: At this moment, FileDialog does not support default filename, use this name in the future:
-              //'linphone ' + ((new Date()).toLocaleString(Qt.locale(), 'yyyy-MM-dd hh:mm:ss')) + '.jpg'
-
-              cameraLoader.item.takeScreenshot()
-              fileDialog.open()
-            }
+            onClicked: call.takeSnapshot()
           }
 
-          ActionButton {
+          ActionSwitch {
+            enabled: call.recording
             icon: 'record'
+            useStates: false
+
+            onClicked: !enabled ? call.startRecording() : call.stopRecording()
           }
 
           ActionButton {
             icon: 'fullscreen'
+            visible: call.videoEnabled
           }
         }
       }
@@ -242,15 +245,13 @@ Rectangle {
       }
 
       Loader {
-        id: cameraLoader
-
         anchors.centerIn: parent
         sourceComponent: call.videoEnabled ? camera : avatar
       }
     }
 
     // -------------------------------------------------------------------------
-    // Buttons.
+    // Action Buttons.
     // -------------------------------------------------------------------------
 
     Item {

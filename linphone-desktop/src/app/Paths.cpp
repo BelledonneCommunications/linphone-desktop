@@ -27,6 +27,7 @@
 #endif // ifdef _WIN32
 
 #define PATH_AVATARS (LINPHONE_FOLDER "avatars/")
+#define PATH_CAPTURES (LINPHONE_FOLDER "captures/")
 #define PATH_LOGS (LINPHONE_FOLDER "logs/")
 #define PATH_THUMBNAILS (LINPHONE_FOLDER "thumbnails/")
 
@@ -91,4 +92,8 @@ string Paths::getMessageHistoryFilepath () {
 
 string Paths::getThumbnailsDirPath () {
   return getDirectoryPath(MAIN_PATH + PATH_THUMBNAILS);
+}
+
+string Paths::getCapturesDirPath () {
+  return getDirectoryPath(MAIN_PATH + PATH_CAPTURES);
 }

@@ -70,6 +70,7 @@ void CallsListModel::launchAudioCall (const QString &sip_uri) const {
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableVideo(false);
+  CallModel::setRecordFile(params);
 
   core->inviteAddressWithParams(address, params);
 }
@@ -84,6 +85,7 @@ void CallsListModel::launchVideoCall (const QString &sip_uri) const {
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableEarlyMediaSending(true);
   params->enableVideo(true);
+  CallModel::setRecordFile(params);
 
   core->inviteAddressWithParams(address, params);
 }

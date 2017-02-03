@@ -10,6 +10,7 @@ namespace Paths {
   std::string getCallHistoryFilepath ();
   std::string getConfigFilepath ();
   std::string getFriendsListFilepath ();
+  std::string getCapturesDirPath ();
   std::string getLogsDirpath ();
   std::string getMessageHistoryFilepath ();
   std::string getThumbnailsDirPath ();
