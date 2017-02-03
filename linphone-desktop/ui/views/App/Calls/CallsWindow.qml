@@ -140,6 +140,8 @@ Window {
         Incall {
           // `{}` is a workaround to avoid `TypeError: Cannot read property...` in `Incall` component.
           call: window.call || ({
+            recording: false,
+            updating: true,
             videoEnabled: false
           })
         }
