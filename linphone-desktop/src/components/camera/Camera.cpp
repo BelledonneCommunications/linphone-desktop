@@ -62,6 +62,20 @@ struct ContextInfo {
 
 // -----------------------------------------------------------------------------
 
+inline void setWindowId (const Camera &camera) {
+  ContextInfo *context_info = camera.m_context_info;
+
+  qInfo() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
+    .arg(context_info->width).arg(context_info->height).arg(camera.m_is_preview);
+
+  if (camera.m_is_preview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(context_info);
+  else
+    camera.m_call->getLinphoneCall()->setNativeVideoWindowId(context_info);
+}
+
+// -----------------------------------------------------------------------------
+
 CameraRenderer::CameraRenderer (const Camera *camera) : m_camera(camera) {}
 
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
@@ -74,10 +88,7 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   context_info->width = size.width();
   context_info->height = size.height();
 
-  if (m_camera->m_is_preview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(context_info);
-  else
-    m_camera->m_call->getLinphoneCall()->setNativeVideoWindowId(context_info);
+  setWindowId(*m_camera);
 
   return new QOpenGLFramebufferObject(size, format);
 }
@@ -148,20 +159,9 @@ CallModel *Camera::getCall () const {
 
 void Camera::setCall (CallModel *call) {
   if (m_call != call) {
-    if (call) {
-      shared_ptr<linphone::Call> linphone_call = call->getLinphoneCall();
-      linphone::CallState state = linphone_call->getState();
+    if ((m_call = call))
+      setWindowId(*this);
 
-      if (state == linphone::CallStateConnected || state == linphone::CallStateStreamsRunning) {
-        if (m_is_preview)
-          CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
-        else
-          linphone_call->setNativeVideoWindowId(m_context_info);
-      }
-    }
-
-    m_call = call;
-
-    emit callChanged(call);
+    emit callChanged(m_call);
   }
 }

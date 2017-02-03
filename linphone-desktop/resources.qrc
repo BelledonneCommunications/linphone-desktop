@@ -259,6 +259,7 @@
     <file>ui/views/App/Calls/Incall.qml</file>
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
+    <file>ui/views/App/IncallFullscreen.qml</file>
     <file>ui/views/App/MainWindow/ContactEdit.qml</file>
     <file>ui/views/App/MainWindow/Contacts.qml</file>
     <file>ui/views/App/MainWindow/Conversation.qml</file>

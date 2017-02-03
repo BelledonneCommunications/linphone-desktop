@@ -53,6 +53,7 @@ private:
 
 class Camera : public QQuickFramebufferObject {
   friend class CameraRenderer;
+  friend void setWindowId (const Camera &camera);
 
   Q_OBJECT;
 

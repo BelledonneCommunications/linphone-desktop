@@ -12,7 +12,7 @@ QtObject {
     property int height: 100
     property int iconSize: 40
     property int leftButtonsGroupMargin: 50
-    property int lowWidth: 415
+    property int lowWidth: 515
     property int rightButtonsGroupMargin: 50
 
     property QtObject userVideo: QtObject {

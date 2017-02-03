@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -20,6 +19,21 @@ Rectangle {
   property var call
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
+  property var _fullscreen: null
+
+  // ---------------------------------------------------------------------------
+
+  function _showFullscreen () {
+    if (_fullscreen) {
+      return
+    }
+
+    _fullscreen = Utils.openWindow('IncallFullscreen', incall, {
+      properties: {
+        call: incall.call
+      }
+    })
+  }
 
   // ---------------------------------------------------------------------------
 
@@ -96,6 +110,7 @@ Rectangle {
         anchors.left: parent.left
         icon: 'call_quality_0'
         iconSize: CallStyle.header.iconSize
+        visible: call.status !== CallModel.CallStatusEnded
 
         // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
         Timer {
@@ -158,6 +173,8 @@ Rectangle {
           ActionButton {
             icon: 'fullscreen'
             visible: call.videoEnabled
+
+            onClicked: _showFullscreen()
           }
         }
       }
@@ -246,7 +263,7 @@ Rectangle {
 
       Loader {
         anchors.centerIn: parent
-        sourceComponent: call.videoEnabled ? camera : avatar
+        sourceComponent: call.videoEnabled && !_fullscreen ? camera : avatar
       }
     }
 
@@ -295,15 +312,19 @@ Rectangle {
         }
       }
 
-      Camera {
+      Loader {
         anchors.centerIn: parent
         height: CallStyle.actionArea.userVideo.height
         width: CallStyle.actionArea.userVideo.width
 
-        isPreview: true
-        visible: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled
+        visible: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled && !_fullscreen
 
-        Component.onCompleted: call = incall.call
+        Camera {
+          anchors.fill: parent
+          isPreview: true
+
+          Component.onCompleted: call = incall.call
+        }
       }
 
       ActionBar {

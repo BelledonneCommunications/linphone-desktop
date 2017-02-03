@@ -6,4 +6,5 @@ module App
 
 # Views ------------------------------------------------------------------------
 
+IncallFullscreen 1.0 IncallFullscreen.qml
 ManageAccounts 1.0 ManageAccounts.qml

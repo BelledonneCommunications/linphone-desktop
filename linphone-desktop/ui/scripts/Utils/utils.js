@@ -4,6 +4,8 @@
 
 .pragma library
 
+.import QtQuick 2.0 as QtQuick
+
 .import 'uri-tools.js' as UriTools
 
 // =============================================================================
@@ -136,15 +138,15 @@ function openWindow (window, parent, options) {
       'qrc:/ui/views/App/' + window + '.qml'
     )
 
-    if (component.status !== Component.Ready) {
+    if (component.status !== QtQuick.Component.Ready) {
       console.debug('Window not ready.')
-      if (component.status === Component.Error) {
+      if (component.status === QtQuick.Component.Error) {
         console.debug('Error:' + component.errorString())
       }
       return // Error.
     }
 
-    object = component.createObject(parent)
+    object = component.createObject(parent, options ? options.properties : {})
   }
 
   object.closing.connect(object.destroy.bind(object))
