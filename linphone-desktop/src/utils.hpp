@@ -23,6 +23,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#include <QObject>
 #include <QString>
 
 // =============================================================================
@@ -34,6 +35,19 @@ namespace Utils {
 
   inline std::string qStringToLinphoneString (const QString &string) {
     return string.toLocal8Bit().constData();
+  }
+
+  template<class T>
+  T *findParentType (const QObject *object) {
+    QObject *parent = object->parent();
+    if (!parent)
+      return nullptr;
+
+    T *found = qobject_cast<T *>(parent);
+    if (found)
+      return found;
+
+    return findParentType<T>(parent);
   }
 }
 

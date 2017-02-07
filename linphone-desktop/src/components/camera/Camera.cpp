@@ -21,11 +21,11 @@
  */
 
 #include <QFileInfo>
-#include <QOpenGLFunctions>
-#include <QOpenGLTexture>
+#include <QQuickWindow>
 
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
+#include "MSFunctions.hpp"
 
 #include "Camera.hpp"
 
@@ -58,6 +58,8 @@ struct CameraStateBinder {
 struct ContextInfo {
   GLuint width;
   GLuint height;
+
+  OpenGlFunctions *functions;
 };
 
 // -----------------------------------------------------------------------------
@@ -101,9 +103,23 @@ void CameraRenderer::render () {
   f->glClearColor(0.f, 0.f, 0.f, 0.f);
   f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-  m_camera->getCall()->getLinphoneCall()->oglRender(m_camera->m_is_preview);
+  // Draw with ms filter.
+  MSFunctions *ms_functions = MSFunctions::getInstance();
 
+  ms_functions->bind(f);
+  m_camera->getCall()->getLinphoneCall()->oglRender(m_camera->m_is_preview);
+  ms_functions->bind(nullptr);
+
+  // Synchronize opengl calls with QML.
+  if (m_window)
+    m_window->resetOpenGLState();
+
+  // Process at next tick.
   update();
+}
+
+void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
+  m_window = item->window();
 }
 
 // -----------------------------------------------------------------------------
@@ -116,9 +132,16 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setMirrorVertically(true);
 
   m_context_info = new ContextInfo();
+  m_context_info->functions = MSFunctions::getInstance()->getFunctions();
 }
 
 Camera::~Camera () {
+  // Reset context in ms filter.
+  if (m_is_preview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
+  else
+    m_call->getLinphoneCall()->setNativeVideoWindowId(nullptr);
+
   delete m_context_info;
 }
 

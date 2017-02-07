@@ -72,6 +72,7 @@ set(SOURCES
   src/app/Paths.cpp
   src/app/ThumbnailProvider.cpp
   src/components/camera/Camera.cpp
+  src/components/camera/MSFunctions.cpp
   src/components/call/CallModel.cpp
   src/components/calls/CallsListModel.cpp
   src/components/chat/ChatModel.cpp
@@ -100,6 +101,7 @@ set(HEADERS
   src/app/Paths.hpp
   src/app/ThumbnailProvider.hpp
   src/components/camera/Camera.hpp
+  src/components/camera/MSFunctions.hpp
   src/components/call/CallModel.hpp
   src/components/calls/CallsListModel.hpp
   src/components/chat/ChatModel.hpp
@@ -186,10 +188,10 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 
 if(CMAKE_INSTALL_RPATH)
-       get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
-       get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
-       get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
-       list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
+  get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
+  get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
+  get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
+  list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
 endif()
 
 # Add languages support.
@@ -230,4 +232,3 @@ install(TARGETS ${TARGET_NAME}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
-

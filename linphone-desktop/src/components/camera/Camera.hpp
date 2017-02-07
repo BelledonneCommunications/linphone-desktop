@@ -41,12 +41,14 @@ public:
   CameraRenderer (const Camera *camera);
   ~CameraRenderer () = default;
 
+protected:
   QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override;
-
   void render () override;
+  void synchronize (QQuickFramebufferObject *item) override;
 
 private:
   const Camera *m_camera;
+  QQuickWindow *m_window;
 };
 
 // -----------------------------------------------------------------------------
@@ -83,9 +85,9 @@ private:
   bool m_is_preview = false;
   CallModel *m_call = nullptr;
   ContextInfo *m_context_info;
+  QImage m_screenshot;
 
   mutable CameraRenderer *m_renderer;
-  QImage m_screenshot;
 };
 
 #endif // CAMERA_H_
