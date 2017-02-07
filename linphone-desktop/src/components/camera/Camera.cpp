@@ -136,6 +136,11 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 }
 
 Camera::~Camera () {
+  if (m_is_preview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
+  else
+    m_call->getLinphoneCall()->setNativeVideoWindowId(nullptr);
+
   delete m_context_info;
 }
 

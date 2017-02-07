@@ -312,19 +312,28 @@ Rectangle {
         }
       }
 
+      // -----------------------------------------------------------------------
+      // Preview.
+      // -----------------------------------------------------------------------
+
       Loader {
         anchors.centerIn: parent
         height: CallStyle.actionArea.userVideo.height
         width: CallStyle.actionArea.userVideo.width
 
-        visible: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled && !_fullscreen
+        Component {
+          id: preview
 
-        Camera {
-          anchors.fill: parent
-          isPreview: true
-
-          Component.onCompleted: call = incall.call
+          Camera {
+            anchors.fill: parent
+            call: incall.call
+            isPreview: true
+          }
         }
+
+        sourceComponent: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled && !_fullscreen
+          ? preview
+          : null
       }
 
       ActionBar {
