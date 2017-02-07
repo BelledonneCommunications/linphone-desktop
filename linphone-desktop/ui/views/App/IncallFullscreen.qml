@@ -30,6 +30,9 @@ Window {
 
   // ---------------------------------------------------------------------------
 
+  height: Screen.height
+  width: Screen.width
+
   visible: true
   visibility: Window.FullScreen
 
@@ -40,193 +43,196 @@ Window {
   Rectangle {
     anchors.fill: parent
     color: '#000000' // Not a style.
-  }
+    focus: true
 
-  Camera {
-    id: camera
+    Keys.onEscapePressed: incall.close()
 
-    anchors.fill: parent
-    call: incall.call
-  }
+    Camera {
+      id: camera
 
-  ColumnLayout {
-    anchors {
-      fill: parent
-      topMargin: CallStyle.header.topMargin
+      anchors.fill: parent
+      call: incall.call
     }
 
-    spacing: 0
+    ColumnLayout {
+      anchors {
+        fill: parent
+        topMargin: CallStyle.header.topMargin
+      }
 
-    // -------------------------------------------------------------------------
-    // Call info.
-    // -------------------------------------------------------------------------
+      spacing: 0
 
-    Item {
-      id: info
+      // -----------------------------------------------------------------------
+      // Call info.
+      // -----------------------------------------------------------------------
 
-      Layout.alignment: Qt.AlignTop
-      Layout.fillWidth: true
-      Layout.leftMargin: CallStyle.header.leftMargin
-      Layout.rightMargin: CallStyle.header.rightMargin
-      Layout.preferredHeight: CallStyle.header.contactDescription.height
+      Item {
+        id: info
 
-      Icon {
-        id: callQuality
+        Layout.alignment: Qt.AlignTop
+        Layout.fillWidth: true
+        Layout.leftMargin: CallStyle.header.leftMargin
+        Layout.rightMargin: CallStyle.header.rightMargin
+        Layout.preferredHeight: CallStyle.header.contactDescription.height
 
-        anchors.left: parent.left
-        icon: 'call_quality_0'
-        iconSize: CallStyle.header.iconSize
+        Icon {
+          id: callQuality
 
-        // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
-        Timer {
-          interval: 5000
-          repeat: true
-          running: true
-          triggeredOnStart: true
+          anchors.left: parent.left
+          icon: 'call_quality_0'
+          iconSize: CallStyle.header.iconSize
 
-          onTriggered: {
-            var quality = call.quality
-            callQuality.icon = 'call_quality_' + (
-              // Note: `quality` is in the [0, 5] interval.
-              // It's necessary to map in the `call_quality_` interval. ([0, 3])
-              quality >= 0 ? Math.round(quality / (5 / 3)) : 0
-            )
+          // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
+          Timer {
+            interval: 5000
+            repeat: true
+            running: true
+            triggeredOnStart: true
+
+            onTriggered: {
+              var quality = call.quality
+              callQuality.icon = 'call_quality_' + (
+                // Note: `quality` is in the [0, 5] interval.
+                // It's necessary to map in the `call_quality_` interval. ([0, 3])
+                quality >= 0 ? Math.round(quality / (5 / 3)) : 0
+              )
+            }
+          }
+        }
+
+        // ---------------------------------------------------------------------
+        // Timer.
+        // ---------------------------------------------------------------------
+
+        Text {
+          id: elapsedTime
+
+          anchors.fill: parent
+
+          font.pointSize: CallStyle.header.elapsedTime.fullscreenFontSize
+
+          horizontalAlignment: Text.AlignHCenter
+          verticalAlignment: Text.AlignVCenter
+
+          // Not a customizable style.
+          color: 'white'
+          style: Text.Raised
+          styleColor: 'black'
+
+          Component.onCompleted: {
+            var updateDuration = function () {
+              text = Utils.formatElapsedTime(call.duration)
+              Utils.setTimeout(elapsedTime, 1000, updateDuration)
+            }
+
+            updateDuration()
+          }
+        }
+
+        // ---------------------------------------------------------------------
+        // Video actions.
+        // ---------------------------------------------------------------------
+
+        ActionBar {
+          anchors.right: parent.right
+          iconSize: CallStyle.header.iconSize
+
+          ActionButton {
+            icon: 'screenshot'
+
+            onClicked: call.takeSnapshot()
+          }
+
+          ActionSwitch {
+            enabled: call.recording
+            icon: 'record'
+            useStates: false
+
+            onClicked: !enabled ? call.startRecording() : call.stopRecording()
+          }
+
+          ActionButton {
+            icon: 'fullscreen'
+
+            onClicked: _exit()
           }
         }
       }
 
       // -----------------------------------------------------------------------
-      // Timer.
+      // Action Buttons.
       // -----------------------------------------------------------------------
 
-      Text {
-        id: elapsedTime
+      Item {
+        Layout.alignment: Qt.AlignBottom
+        Layout.fillWidth: true
+        Layout.preferredHeight: CallStyle.actionArea.height
 
-        anchors.fill: parent
-
-        font.pointSize: CallStyle.header.elapsedTime.fullscreenFontSize
-
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-
-        // Not a customizable style.
-        color: 'white'
-        style: Text.Raised
-        styleColor: 'black'
-
-        Component.onCompleted: {
-          var updateDuration = function () {
-            text = Utils.formatElapsedTime(call.duration)
-            Utils.setTimeout(elapsedTime, 1000, updateDuration)
+        GridLayout {
+          anchors {
+            left: parent.left
+            leftMargin: CallStyle.actionArea.leftButtonsGroupMargin
+            verticalCenter: parent.verticalCenter
           }
 
-          updateDuration()
-        }
-      }
+          rowSpacing: ActionBarStyle.spacing
 
-      // -----------------------------------------------------------------------
-      // Video actions.
-      // -----------------------------------------------------------------------
+          ActionSwitch {
+            enabled: !call.microMuted
+            icon: 'micro'
+            iconSize: CallStyle.actionArea.iconSize
 
-			ActionBar {
-				anchors.right: parent.right
-				iconSize: CallStyle.header.iconSize
+            onClicked: call.microMuted = enabled
+          }
 
-				ActionButton {
-					icon: 'screenshot'
+          ActionSwitch {
+            enabled: true
+            icon: 'camera'
+            iconSize: CallStyle.actionArea.iconSize
+            updating: call.updating
 
-					onClicked: call.takeSnapshot()
-				}
+            onClicked: _exit(function () { call.videoEnabled = false })
+          }
 
-				ActionSwitch {
-					enabled: call.recording
-					icon: 'record'
-					useStates: false
-
-					onClicked: !enabled ? call.startRecording() : call.stopRecording()
-				}
-
-				ActionButton {
-					icon: 'fullscreen'
-
-					onClicked: _exit()
-				}
-			}
-		}
-
-    // -------------------------------------------------------------------------
-    // Action Buttons.
-    // -------------------------------------------------------------------------
-
-    Item {
-      Layout.alignment: Qt.AlignBottom
-      Layout.fillWidth: true
-      Layout.preferredHeight: CallStyle.actionArea.height
-
-      GridLayout {
-        anchors {
-          left: parent.left
-          leftMargin: CallStyle.actionArea.leftButtonsGroupMargin
-          verticalCenter: parent.verticalCenter
+          ActionButton {
+            Layout.preferredHeight: CallStyle.actionArea.iconSize
+            Layout.preferredWidth: CallStyle.actionArea.iconSize
+            icon: 'options' // TODO: display options.
+            iconSize: CallStyle.actionArea.iconSize
+          }
         }
 
-        rowSpacing: ActionBarStyle.spacing
+        Camera {
+          anchors.centerIn: parent
+          height: CallStyle.actionArea.userVideo.height
+          width: CallStyle.actionArea.userVideo.width
 
-        ActionSwitch {
-          enabled: !call.microMuted
-          icon: 'micro'
+          isPreview: true
+
+          call: incall.call
+        }
+
+        ActionBar {
+          anchors {
+            right: parent.right
+            rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
+            verticalCenter: parent.verticalCenter
+          }
           iconSize: CallStyle.actionArea.iconSize
 
-          onClicked: call.microMuted = enabled
-        }
+          ActionSwitch {
+            enabled: !call.pausedByUser
+            icon: 'pause'
+            updating: call.updating
 
-        ActionSwitch {
-          enabled: true
-          icon: 'camera'
-          iconSize: CallStyle.actionArea.iconSize
-          updating: call.updating
+            onClicked: _exit(function () { call.pausedByUser = enabled })
+          }
 
-          onClicked: _exit(function () { call.videoEnabled = false })
-        }
+          ActionButton {
+            icon: 'hangup'
 
-        ActionButton {
-          Layout.preferredHeight: CallStyle.actionArea.iconSize
-          Layout.preferredWidth: CallStyle.actionArea.iconSize
-          icon: 'options' // TODO: display options.
-          iconSize: CallStyle.actionArea.iconSize
-        }
-      }
-
-      Camera {
-        anchors.centerIn: parent
-        height: CallStyle.actionArea.userVideo.height
-        width: CallStyle.actionArea.userVideo.width
-
-        isPreview: true
-
-        call: incall.call
-      }
-
-      ActionBar {
-        anchors {
-          right: parent.right
-          rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
-          verticalCenter: parent.verticalCenter
-        }
-        iconSize: CallStyle.actionArea.iconSize
-
-        ActionSwitch {
-          enabled: !call.pausedByUser
-          icon: 'pause'
-          updating: call.updating
-
-          onClicked: _exit(function () { call.pausedByUser = enabled })
-        }
-
-        ActionButton {
-          icon: 'hangup'
-
-          onClicked: _exit(call.terminate)
+            onClicked: _exit(call.terminate)
+          }
         }
       }
     }
