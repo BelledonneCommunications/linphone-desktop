@@ -60,6 +60,7 @@ QtObject {
     property QtObject elapsedTime: QtObject {
       property color color: Colors.j
       property int fontSize: 10
+      property int fullscreenFontSize: 12
     }
   }
 }

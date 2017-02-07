@@ -96,6 +96,35 @@ Window {
       }
 
       // -----------------------------------------------------------------------
+      // Timer.
+      // -----------------------------------------------------------------------
+
+      Text {
+        id: elapsedTime
+
+        anchors.fill: parent
+
+        font.pointSize: CallStyle.header.elapsedTime.fullscreenFontSize
+
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+
+        // Not a customizable style.
+        color: 'white'
+        style: Text.Raised
+        styleColor: 'black'
+
+        Component.onCompleted: {
+          var updateDuration = function () {
+            text = Utils.formatElapsedTime(call.duration)
+            Utils.setTimeout(elapsedTime, 1000, updateDuration)
+          }
+
+          updateDuration()
+        }
+      }
+
+      // -----------------------------------------------------------------------
       // Video actions.
       // -----------------------------------------------------------------------
 
@@ -124,24 +153,6 @@ Window {
 				}
 			}
 		}
-
-		Text {
-      id: elapsedTime
-
-      Layout.fillWidth: true
-      color: CallStyle.header.elapsedTime.color
-      font.pointSize: CallStyle.header.elapsedTime.fontSize
-      horizontalAlignment: Text.AlignHCenter
-
-      Component.onCompleted: {
-        var updateDuration = function () {
-          text = Utils.formatElapsedTime(call.duration)
-          Utils.setTimeout(elapsedTime, 1000, updateDuration)
-        }
-
-        updateDuration()
-      }
-    }
 
     // -------------------------------------------------------------------------
     // Action Buttons.
