@@ -17,6 +17,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   property var call
+  property bool hideButtons: false
 
   // ---------------------------------------------------------------------------
 
@@ -54,6 +55,35 @@ Window {
       call: incall.call
     }
 
+    // -------------------------------------------------------------------------
+    // Handle mouse move / Hide buttons.
+    // -------------------------------------------------------------------------
+
+    MouseArea {
+      Timer {
+        id: hideButtonsTimer
+
+        interval: 5000
+        running: true
+
+        onTriggered: hideButtons = true
+      }
+
+      anchors.fill: parent
+      acceptedButtons: Qt.NoButton
+      hoverEnabled: true
+      propagateComposedEvents: true
+
+      onEntered: hideButtonsTimer.start()
+      onExited: hideButtonsTimer.stop()
+
+      onPositionChanged: {
+        hideButtonsTimer.stop()
+        hideButtons = false
+        hideButtonsTimer.start()
+      }
+    }
+
     ColumnLayout {
       anchors {
         fill: parent
@@ -81,6 +111,7 @@ Window {
           anchors.left: parent.left
           icon: 'call_quality_0'
           iconSize: CallStyle.header.iconSize
+          visible: !hideButtons
 
           // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
           Timer {
@@ -136,6 +167,7 @@ Window {
         ActionBar {
           anchors.right: parent.right
           iconSize: CallStyle.header.iconSize
+          visible: !hideButtons
 
           ActionButton {
             icon: 'screenshot'
@@ -167,6 +199,7 @@ Window {
         Layout.alignment: Qt.AlignBottom
         Layout.fillWidth: true
         Layout.preferredHeight: CallStyle.actionArea.height
+        visible: !hideButtons
 
         GridLayout {
           anchors {
@@ -200,16 +233,6 @@ Window {
             icon: 'options' // TODO: display options.
             iconSize: CallStyle.actionArea.iconSize
           }
-        }
-
-        Camera {
-          anchors.centerIn: parent
-          height: CallStyle.actionArea.userVideo.height
-          width: CallStyle.actionArea.userVideo.width
-
-          isPreview: true
-
-          call: incall.call
         }
 
         ActionBar {
