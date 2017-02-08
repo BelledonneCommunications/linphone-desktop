@@ -36,13 +36,14 @@ Item {
 
         // See: https://www.opengl.org/sdk/docs/man/html/mix.xhtml
         fragmentShader: '
-          uniform lowp sampler2D image;
-          uniform lowp sampler2D mask;
-          uniform lowp vec4 backgroundColor;
-          uniform lowp vec4 foregroundColor;
+          precision lowp float;
+          uniform sampler2D image;
+          uniform sampler2D mask;
+          uniform vec4 backgroundColor;
+          uniform vec4 foregroundColor;
 
-          uniform lowp float qt_Opacity;
-          varying highp vec2 qt_TexCoord0;
+          uniform float qt_Opacity;
+          varying vec2 qt_TexCoord0;
 
           void main () {
             vec4 tex = texture2D(image, qt_TexCoord0);
