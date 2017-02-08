@@ -20,16 +20,16 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QFileInfo>
-#include <QQuickWindow>
-
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 #include "MSFunctions.hpp"
 
 #include "Camera.hpp"
 
-// =============================================================================
+#include <QFileInfo>
+#include <QQuickWindow>
+
+ // =============================================================================
 
 struct CameraStateBinder {
   CameraStateBinder (CameraRenderer *renderer) : m_renderer(renderer) {
