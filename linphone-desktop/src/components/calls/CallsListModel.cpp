@@ -147,7 +147,8 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphone_call) {
-  App::getInstance()->getCallsWindow()->show();
+  if (linphone_call->getDir() == linphone::CallDirOutgoing)
+    App::getInstance()->getCallsWindow()->show();
 
   CallModel *call = new CallModel(linphone_call);
 

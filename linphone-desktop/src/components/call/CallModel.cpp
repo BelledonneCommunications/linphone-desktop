@@ -23,6 +23,7 @@
 #include <QDateTime>
 #include <QtDebug>
 
+#include "../../app/App.hpp"
 #include "../../app/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
@@ -101,6 +102,7 @@ void CallModel::accept () {
   params->enableVideo(false);
   setRecordFile(params);
 
+  App::getInstance()->getCallsWindow()->show();
   core->acceptCallWithParams(m_linphone_call, params);
 }
 
@@ -110,6 +112,7 @@ void CallModel::acceptWithVideo () {
   params->enableVideo(true);
   setRecordFile(params);
 
+  App::getInstance()->getCallsWindow()->show();
   core->acceptCallWithParams(m_linphone_call, params);
 }
 
