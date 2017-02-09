@@ -36,6 +36,19 @@ using namespace std;
 
 // =============================================================================
 
+inline QList<CallModel *>::iterator findCall (
+  QList<CallModel *> &list,
+  const shared_ptr<linphone::Call> &linphone_call
+) {
+  return find_if(
+    list.begin(), list.end(), [linphone_call](CallModel *call) {
+      return linphone_call == call->getLinphoneCall();
+    }
+  );
+}
+
+// -----------------------------------------------------------------------------
+
 CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
   m_core_handlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
@@ -51,6 +64,12 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
         case linphone::CallStateError:
           removeCall(linphone_call);
           break;
+
+        case linphone::CallStateStreamsRunning: {
+          int index = static_cast<int>(distance(m_list.begin(), findCall(m_list, linphone_call)));
+          emit callRunning(index, &linphone_call->getData<CallModel>("call-model"));
+        }
+        break;
 
         default:
           break;
@@ -82,12 +101,7 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
 }
 
 CallModel *CallsListModel::getCall (const shared_ptr<linphone::Call> &linphone_call) const {
-  auto it = find_if(
-      m_list.begin(), m_list.end(), [linphone_call](CallModel *call) {
-        return linphone_call == call->getLinphoneCall();
-      }
-    );
-
+  auto it = findCall(*(const_cast<QList<CallModel *> *>(&m_list)), linphone_call);
   return it != m_list.end() ? *it : nullptr;
 }
 

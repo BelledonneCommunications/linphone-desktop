@@ -11,9 +11,10 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
-  readonly property var selectedCall: smartConnect.selectedCall
+  readonly property var selectedCall: _selectedCall
 
   property var _mapStatusToParams
+  property var _selectedCall
 
   // ---------------------------------------------------------------------------
 
@@ -102,6 +103,57 @@ ListView {
         string: 'paused'
       }
     })
+
+    model.rowsAboutToBeRemoved.connect(function (_, first, last) {
+      var index = calls.currentIndex
+
+      if (index >= first && index <= last) { // Remove current call.
+        if (model.rowCount() - (last - first + 1) <= 0) {
+          _selectedCall = null
+        } else {
+          if (first === 0) {
+            _selectedCall = model.data(model.index(last + 1, 0))
+          } else {
+            _selectedCall = model.data(model.index(0, 0))
+          }
+        }
+      }
+    })
+
+    model.rowsRemoved.connect(function (_, first, last) {
+      var index = calls.currentIndex
+
+      // The current call has been removed.
+      if (index >= first && index <= last) {
+        if (model.rowCount() === 0) {
+          calls.currentIndex = -1 // No calls.
+        } else {
+          calls.currentIndex = 0 // The first call becomes the selected call.
+        }
+      }
+
+      // Update the current index of the selected call if it was after the removed calls.
+      else if (last < index) {
+        calls.currentIndex = index - (last - first + 1)
+      }
+    })
+
+    // The last inserted outgoing element become the selected call.
+    model.rowsInserted.connect(function (_, first, last) {
+      for (var index = last; index >= first; index--) {
+        var call = model.data(model.index(index, 0))
+
+        if (call.isOutgoing) {
+          calls.currentIndex = first
+          _selectedCall = model.data(model.index(first, 0))
+        }
+      }
+    })
+
+    model.callRunning.connect(function (index, call) {
+      calls.currentIndex = index
+      _selectedCall = call
+    })
   }
 
   // ---------------------------------------------------------------------------
@@ -162,58 +214,6 @@ ListView {
   }
 
   // ---------------------------------------------------------------------------
-  // SmartConnect that updates the current selected call and the current index.
-  // ---------------------------------------------------------------------------
-
-  SmartConnect {
-    id: smartConnect
-
-    property var selectedCall
-
-    Component.onCompleted: {
-      this.connect(model, 'rowsAboutToBeRemoved', function (_, first, last) {
-        var index = calls.currentIndex
-
-        if (index >= first && index <= last) { // Remove current call.
-          if (model.rowCount() - (last - first + 1) <= 0) {
-            selectedCall = null
-          } else {
-            if (first === 0) {
-              selectedCall = model.data(model.index(last + 1, 0))
-            } else {
-              selectedCall = model.data(model.index(0, 0))
-            }
-          }
-        }
-      })
-
-      this.connect(model, 'rowsRemoved', function (_, first, last) {
-        var index = calls.currentIndex
-
-        // The current call has been removed.
-        if (index >= first && index <= last) {
-          if (model.rowCount() === 0) {
-            calls.currentIndex = -1 // No calls.
-          } else {
-            calls.currentIndex = 0 // The first call becomes the selected call.
-          }
-        }
-
-        // Update the current index of the selected call if it was after the removed calls.
-        else if (last < index) {
-          calls.currentIndex = index - (last - first + 1)
-        }
-      })
-
-      // The last inserted element become the selected call.
-      this.connect(model, 'rowsInserted', function (_, first, last) {
-        calls.currentIndex = first
-        selectedCall = model.data(model.index(first, 0))
-      })
-    }
-  }
-
-  // ---------------------------------------------------------------------------
 
   delegate: CallControls {
     id: _callControls
@@ -245,7 +245,7 @@ ListView {
     width: parent.width
 
     onClicked: {
-      smartConnect.selectedCall = $call
+      _selectedCall = $call
       calls.currentIndex = index
     }
 

@@ -48,6 +48,9 @@ public:
   Q_INVOKABLE void launchAudioCall (const QString &sip_uri) const;
   Q_INVOKABLE void launchVideoCall (const QString &sip_uri) const;
 
+signals:
+  void callRunning (int index, CallModel *call);
+
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;

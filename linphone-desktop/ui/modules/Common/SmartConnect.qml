@@ -20,7 +20,11 @@ Item {
   Component.onDestruction: {
     for (var signalName in handlers) {
       handlers[signalName].forEach(function (value) {
-        value[0][signalName].disconnect(value[1])
+        var component = value[0][signalName]
+
+        if (component) {
+          component.disconnect(value[1])
+        }
       })
     }
   }
