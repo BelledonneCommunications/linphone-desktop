@@ -87,7 +87,7 @@ ColumnLayout {
         bottomColor: ContactsStyle.contact.border.color
         bottomWidth: ContactsStyle.contact.border.width
         height: ContactsStyle.contact.height
-        width: parent.width
+        width: parent ? parent.width : 0
 
         // ---------------------------------------------------------------------
 
