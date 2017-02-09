@@ -46,16 +46,19 @@ void CoreHandlers::onCallStateChanged (
   const string &
 ) {
   emit callStateChanged(call, state);
+
+  if (call->getState() == linphone::CallStateIncomingReceived)
+    App::getInstance()->getNotifier()->notifyReceivedCall(call);
 }
 
 void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::ChatRoom> &room,
+  const shared_ptr<linphone::ChatRoom> &,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
   emit messageReceived(message);
 
   const App *app = App::getInstance();
   if (!app->hasFocus())
-    app->getNotifier()->notifyReceivedMessage(10000, room, message);
+    app->getNotifier()->notifyReceivedMessage(message);
 }

@@ -226,18 +226,15 @@ float CallModel::getQuality () const {
 }
 
 bool CallModel::getMicroMuted () const {
-  return m_micro_muted;
+  return !CoreManager::getInstance()->getCore()->micEnabled();
 }
 
 void CallModel::setMicroMuted (bool status) {
-  if (m_micro_muted != status) {
-    m_micro_muted = status;
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-    shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-    if (m_micro_muted == core->micEnabled())
-      core->enableMic(!m_micro_muted);
-
-    emit microMutedChanged(m_micro_muted);
+  if (status != core->micEnabled()) {
+    core->enableMic(!status);
+    emit microMutedChanged(status);
   }
 }
 

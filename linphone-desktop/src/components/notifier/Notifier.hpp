@@ -40,19 +40,15 @@ public:
   ~Notifier ();
 
   enum NotificationType {
-    Call,
     MessageReceived,
+    FileMessageReceived,
+    CallReceived,
     MaxNbTypes
   };
 
-  void notifyReceivedMessage (
-    int timeout,
-    const std::shared_ptr<linphone::ChatRoom> &room,
-    const std::shared_ptr<linphone::ChatMessage> &message
-  );
-
-  // TODO
-  void showCallMessage (int timeout, const QString &);
+  void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+  void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+  void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
 
 private:
   QObject *createNotification (NotificationType type);

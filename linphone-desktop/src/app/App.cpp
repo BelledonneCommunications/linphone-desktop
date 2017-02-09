@@ -92,10 +92,13 @@ QQuickWindow *App::getCallsWindow () const {
   return window;
 }
 
-bool App::hasFocus () const {
+QQuickWindow *App::getMainWindow () const {
   QQmlApplicationEngine &engine = const_cast<QQmlApplicationEngine &>(m_engine);
-  const QQuickWindow *root = qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
-  return !!root->activeFocusItem();
+  return qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
+}
+
+bool App::hasFocus () const {
+  return getMainWindow()->isActive() || getCallsWindow()->isActive();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,6 +111,9 @@ void App::initContentApp () {
   // Register types and load context properties.
   registerTypes();
   addContextProperties();
+
+  // Enable notifications.
+  m_notifier = new Notifier();
 
   CoreManager::getInstance()->enableHandlers();
 
@@ -167,7 +173,7 @@ void App::registerTypes () {
   qmlRegisterSingletonType<CallsListModel>(
     "Linphone", 1, 0, "CallsListModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new CallsListModel();
+      return CoreManager::getInstance()->getCallsListModel();
     }
   );
 
@@ -219,13 +225,10 @@ void App::addContextProperties () {
   }
 
   context->setContextProperty("CallsWindow", component.create());
-
-  m_notifier = new Notifier();
-  context->setContextProperty("Notifier", m_notifier);
 }
 
 void App::setTrayIcon () {
-  QQuickWindow *root = qobject_cast<QQuickWindow *>(m_engine.rootObjects().at(0));
+  QQuickWindow *root = getMainWindow();
   QMenu *menu = new QMenu();
 
   m_system_tray_icon = new QSystemTrayIcon(root);

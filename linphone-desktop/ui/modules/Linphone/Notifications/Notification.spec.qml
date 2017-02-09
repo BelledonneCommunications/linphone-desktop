@@ -11,6 +11,10 @@ TestCase {
     id: notification
   }
 
+  function test_notificationDataProperty () {
+    compare(Utils.isObject(notification.notificationData), true)
+  }
+
   function test_notificationHeightProperty () {
     compare(Utils.isInteger(notification.notificationHeight), true)
   }

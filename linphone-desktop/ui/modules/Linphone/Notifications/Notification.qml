@@ -15,15 +15,19 @@ DesktopPopup {
 
   // ---------------------------------------------------------------------------
 
-  property int notificationOffset: 0
   property alias notificationHeight: notification.popupHeight
+  property int notificationOffset: 0
+  property var notificationData: null
+
+  readonly property var window: _window
+  property var _window
 
   // ---------------------------------------------------------------------------
 
   flags: Qt.Popup
 
   Component.onCompleted: {
-    var window = data[0]
+    var window = _window = data[0]
 
     Utils.assert(
       Utils.qmlTypeof(window, 'QQuickWindowQmlImpl'), true,
@@ -45,7 +49,7 @@ DesktopPopup {
       }
 
       var height = screen.desktopAvailableHeight - window.height
-      return height - notificationOffset % height
+      return height - (notificationOffset % height)
     })
   }
 }

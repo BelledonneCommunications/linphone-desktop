@@ -81,6 +81,16 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
+CallModel *CallsListModel::getCall (const shared_ptr<linphone::Call> &linphone_call) const {
+  auto it = find_if(
+      m_list.begin(), m_list.end(), [linphone_call](CallModel *call) {
+        return linphone_call == call->getLinphoneCall();
+      }
+    );
+
+  return it != m_list.end() ? *it : nullptr;
+}
+
 // -----------------------------------------------------------------------------
 
 void CallsListModel::launchAudioCall (const QString &sip_uri) const {

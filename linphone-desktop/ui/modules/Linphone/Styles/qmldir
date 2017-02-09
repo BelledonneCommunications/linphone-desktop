@@ -4,22 +4,25 @@ module Linphone.Style
 
 # Components styles ------------------------------------------------------------
 
-singleton AccountStatusStyle      1.0 Account/AccountStatusStyle.qml
+singleton AccountStatusStyle                   1.0 Account/AccountStatusStyle.qml
 
-singleton ChatStyle               1.0 ChatStyle.qml
+singleton ChatStyle                            1.0 ChatStyle.qml
 
-singleton CallsStyle              1.0 Calls/CallsStyle.qml
-singleton CallControlsStyle       1.0 Calls/CallControlsStyle.qml
+singleton CallsStyle                           1.0 Calls/CallsStyle.qml
+singleton CallControlsStyle                    1.0 Calls/CallControlsStyle.qml
 
-singleton AvatarStyle             1.0 Contact/AvatarStyle.qml
-singleton ContactDescriptionStyle 1.0 Contact/ContactDescriptionStyle.qml
-singleton ContactStyle            1.0 Contact/ContactStyle.qml
-singleton MessagesCounterStyle    1.0 Contact/MessagesCounterStyle.qml
+singleton AvatarStyle                          1.0 Contact/AvatarStyle.qml
+singleton ContactDescriptionStyle              1.0 Contact/ContactDescriptionStyle.qml
+singleton ContactStyle                         1.0 Contact/ContactStyle.qml
+singleton MessagesCounterStyle                 1.0 Contact/MessagesCounterStyle.qml
 
-singleton NotificationStyle       1.0 NotificationStyle.qml
+singleton NotificationStyle                    1.0 Notifications/NotificationStyle.qml
+singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationReceivedCallStyle.qml
+singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
+singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationReceivedFileMessageStyle.qml
 
-singleton PresenceStringStyle     1.0 Presence/PresenceStringStyle.qml
+singleton PresenceStringStyle                  1.0 Presence/PresenceStringStyle.qml
 
-singleton SmartSearchBarStyle     1.0 SmartSearchBarStyle.qml
+singleton SmartSearchBarStyle                  1.0 SmartSearchBarStyle.qml
 
-singleton TimelineStyle           1.0 TimelineStyle.qml
+singleton TimelineStyle                        1.0 TimelineStyle.qml

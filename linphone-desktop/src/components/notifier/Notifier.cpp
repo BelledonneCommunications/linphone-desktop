@@ -20,23 +20,31 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/App.hpp"
-
-#include "Notifier.hpp"
-
 #include <QQmlComponent>
 #include <QQuickWindow>
 #include <QtDebug>
 #include <QTimer>
 
+#include "../../app/App.hpp"
+#include "../../utils.hpp"
+#include "../core/CoreManager.hpp"
+
+#include "Notifier.hpp"
+
 // Notifications QML properties/methods.
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
 
-#define NOTIFICATION_HEIGHT_PROPERTY "notificationHeight"
-#define NOTIFICATION_OFFSET_PROPERTY_NAME "notificationOffset"
+#define NOTIFICATION_PROPERTY_DATA "notificationData"
+#define NOTIFICATION_PROPERTY_HEIGHT "notificationHeight"
+#define NOTIFICATION_PROPERTY_OFFSET "notificationOffset"
 
-#define QML_CALL_NOTIFICATION_PATH "qrc:/ui/modules/Linphone/Notifications/CallNotification.qml"
-#define QML_MESSAGE_RECEIVED_NOTIFICATION_PATH "qrc:/ui/modules/Linphone/Notifications/ReceivedMessageNotification.qml"
+#define QML_NOTIFICATION_PATH_RECEIVED_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml"
+#define QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml"
+#define QML_NOTIFICATION_PATH_RECEIVED_CALL "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedCall.qml"
+
+#define NOTIFICATION_TIMEOUT_RECEIVED_MESSAGE 10000
+#define NOTIFICATION_TIMEOUT_RECEIVED_FILE_MESSAGE 10000
+#define NOTIFICATION_TIMEOUT_RECEIVED_CALL 10000
 
 // Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
@@ -77,22 +85,22 @@ Notifier::Notifier (QObject *parent) :
   QQmlEngine *engine = App::getInstance()->getEngine();
 
   // Build components.
-  m_components[Notifier::Call] = new QQmlComponent(engine, QUrl(QML_CALL_NOTIFICATION_PATH));
-  m_components[Notifier::MessageReceived] = new QQmlComponent(engine, QUrl(QML_MESSAGE_RECEIVED_NOTIFICATION_PATH));
+  m_components[Notifier::MessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_MESSAGE));
+  m_components[Notifier::FileMessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE));
+  m_components[Notifier::CallReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_CALL));
 
   // Check errors.
   for (int i = 0; i < Notifier::MaxNbTypes; ++i) {
     QQmlComponent *component = m_components[i];
     if (component->isError()) {
-      qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(i) <<
-        component->errors();
+      qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(i) << component->errors();
       abort();
     }
   }
 }
 
 Notifier::~Notifier () {
-  for (int i = 0; i < Notifier::MaxNbTypes; i++)
+  for (int i = 0; i < Notifier::MaxNbTypes; ++i)
     delete m_components[i];
 }
 
@@ -110,9 +118,9 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
 
   // Create instance and set attributes.
   QObject *object = m_components[type]->create();
-  int offset = getNotificationSize(*object, NOTIFICATION_HEIGHT_PROPERTY);
+  int offset = getNotificationSize(*object, NOTIFICATION_PROPERTY_HEIGHT);
 
-  if (offset == -1 || !::setProperty(*object, NOTIFICATION_OFFSET_PROPERTY_NAME, m_offset)) {
+  if (offset == -1 || !::setProperty(*object, NOTIFICATION_PROPERTY_OFFSET, m_offset)) {
     delete object;
     m_mutex.unlock();
     return nullptr;
@@ -149,7 +157,7 @@ void Notifier::showNotification (QObject *notification, int timeout) {
       qInfo() << "Update notifications counter, hidden notification detected.";
 
       if (visible)
-        qFatal("A notification cannot be visible twice!");
+        qWarning("A notification cannot be visible twice!");
 
       m_mutex.lock();
 
@@ -172,20 +180,41 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 
 // -----------------------------------------------------------------------------
 
-void Notifier::notifyReceivedMessage (
-  int timeout,
-  const shared_ptr<linphone::ChatRoom> &room,
-  const shared_ptr<linphone::ChatMessage> &message
-) {
-  QObject *object = createNotification(Notifier::MessageReceived);
+void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &message) {
+  QObject *notification = createNotification(Notifier::MessageReceived);
+  if (!notification)
+    return;
 
-  if (object)
-    showNotification(object, timeout);
+  QVariantMap map;
+  map["message"] = ::Utils::linphoneStringToQString(message->getText());
+  map["sipAddress"] = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
+  map["window"].setValue(App::getInstance()->getMainWindow());
+
+  ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
+  showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_MESSAGE);
 }
 
-void Notifier::showCallMessage (int timeout, const QString &) {
-  QObject *object = createNotification(Notifier::Call);
+void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
+  QObject *notification = createNotification(Notifier::FileMessageReceived);
+  if (!notification)
+    return;
 
-  if (object)
-    showNotification(object, timeout);
+  QVariantMap map;
+  map["fileUri"] = ::Utils::linphoneStringToQString(message->getFileTransferFilepath());
+  map["fileSize"] = static_cast<quint64>(message->getFileTransferInformation()->getSize());
+
+  ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
+  showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_FILE_MESSAGE);
+}
+
+void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
+  QObject *notification = createNotification(Notifier::CallReceived);
+  if (!notification)
+    return;
+
+  QVariantMap map;
+  map["call"].setValue(CoreManager::getInstance()->getCallsListModel()->getCall(call));
+
+  ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
+  showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_CALL);
 }

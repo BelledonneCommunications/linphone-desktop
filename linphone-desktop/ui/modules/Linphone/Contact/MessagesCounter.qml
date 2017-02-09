@@ -23,8 +23,10 @@ Item {
     iconSize: MessagesCounterStyle.iconSize.message
 
     Icon {
-      anchors.horizontalCenter: parent.right
-      anchors.verticalCenter: parent.bottom
+      anchors {
+        horizontalCenter: parent.right
+        verticalCenter: parent.bottom
+      }
 
       icon: 'chat_amount'
       iconSize: MessagesCounterStyle.iconSize.amount

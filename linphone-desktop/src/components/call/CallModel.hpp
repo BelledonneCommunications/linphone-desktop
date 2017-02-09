@@ -109,7 +109,6 @@ private:
 
   bool getRecording () const;
 
-  bool m_micro_muted = false;
   bool m_paused_by_remote = false;
   bool m_paused_by_user = false;
   bool m_recording = false;

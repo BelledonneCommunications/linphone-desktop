@@ -78,6 +78,7 @@
     <file>assets/images/edit_normal.svg</file>
     <file>assets/images/edit_pressed.svg</file>
     <file>assets/images/ended_call.svg</file>
+    <file>assets/images/file_sign.svg</file>
     <file>assets/images/filter.svg</file>
     <file>assets/images/fullscreen_hovered.svg</file>
     <file>assets/images/fullscreen_normal.svg</file>
@@ -101,6 +102,7 @@
     <file>assets/images/led_red.svg</file>
     <file>assets/images/led_white.svg</file>
     <file>assets/images/linphone.png</file>
+    <file>assets/images/message_sign.svg</file>
     <file>assets/images/micro_off_hovered.svg</file>
     <file>assets/images/micro_off_normal.svg</file>
     <file>assets/images/micro_off_pressed.svg</file>
@@ -228,9 +230,10 @@
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
     <file>ui/modules/Linphone/Contact/MessagesCounter.qml</file>
-    <file>ui/modules/Linphone/Notifications/CallNotification.qml</file>
     <file>ui/modules/Linphone/Notifications/Notification.qml</file>
-    <file>ui/modules/Linphone/Notifications/ReceivedMessageNotification.qml</file>
+    <file>ui/modules/Linphone/Notifications/NotificationReceivedCall.qml</file>
+    <file>ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml</file>
+    <file>ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
@@ -243,7 +246,10 @@
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/MessagesCounterStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/NotificationStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedCallStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedFileMessageStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Notifications/NotificationStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Presence/PresenceStringStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/SmartSearchBarStyle.qml</file>

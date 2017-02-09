@@ -77,7 +77,10 @@ Item {
       to: 'opened'
 
       ScriptAction {
-        script: popup.showNormal()
+        script: {
+          popup.showNormal()
+          popup.requestActivate()
+        }
       }
 
       NumberAnimation {

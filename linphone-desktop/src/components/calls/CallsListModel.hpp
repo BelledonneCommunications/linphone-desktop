@@ -43,6 +43,8 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  CallModel *getCall (const std::shared_ptr<linphone::Call> &linphone_call) const;
+
   Q_INVOKABLE void launchAudioCall (const QString &sip_uri) const;
   Q_INVOKABLE void launchVideoCall (const QString &sip_uri) const;
 

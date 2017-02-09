@@ -261,6 +261,18 @@ function assert (condition, message) {
 
 // -----------------------------------------------------------------------------
 
+function basename (str) {
+  return str.slice(str.lastIndexOf('/') + 1)
+}
+
+// -----------------------------------------------------------------------------
+
+function dirname (str) {
+  return str.slice(0, str.lastIndexOf('/') + 1)
+}
+
+// -----------------------------------------------------------------------------
+
 function extractProperties (obj, pattern) {
   if (!pattern) {
     return {}

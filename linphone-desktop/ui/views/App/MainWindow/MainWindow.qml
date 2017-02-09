@@ -46,10 +46,6 @@ ApplicationWindow {
     })
   }
 
-  function ensureCollapsed () {
-    collapse.setCollapsed(true)
-  }
-
   // ---------------------------------------------------------------------------
 
   function _updateSelectedEntry (view, props) {
@@ -66,6 +62,10 @@ ApplicationWindow {
   }
 
   function _setView (view, props) {
+    window.showNormal()
+    window.requestActivate()
+    collapse.setCollapsed(true)
+
     _updateSelectedEntry(view, props)
     _currentView = view
     contentLoader.setSource(view + '.qml', props || {})
@@ -153,28 +153,20 @@ ApplicationWindow {
 
         model: SmartSearchBarModel {}
 
-        onAddContact: {
-          window.ensureCollapsed()
-          window.setView('ContactEdit', {
-            sipAddress: sipAddress
-          })
-        }
+        onAddContact: window.setView('ContactEdit', {
+          sipAddress: sipAddress
+        })
 
         onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
-        onLaunchChat: {
-          window.ensureCollapsed()
-          window.setView('Conversation', {
-            sipAddress: sipAddress
-          })
-        }
+        onLaunchChat: window.setView('Conversation', {
+          sipAddress: sipAddress
+        })
+
         onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
 
-        onEntryClicked: {
-          window.ensureCollapsed()
-          window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
-            sipAddress: entry.sipAddress
-          })
-        }
+        onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
+          sipAddress: entry.sipAddress
+        })
       }
     }
   }

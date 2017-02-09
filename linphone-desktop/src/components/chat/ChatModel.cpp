@@ -30,6 +30,7 @@
 #include <QTimer>
 #include <QUuid>
 
+#include "../../app/App.hpp"
 #include "../../app/Paths.hpp"
 #include "../../app/ThumbnailProvider.hpp"
 #include "../../utils.hpp"
@@ -150,9 +151,11 @@ private:
     if (it == m_chat_model->m_entries.end())
       return;
 
+    // File message downloaded.
     if (state == linphone::ChatMessageStateFileTransferDone && !message->isOutgoing()) {
       createThumbnail(message);
       fillThumbnailProperty((*it).first, message);
+      App::getInstance()->getNotifier()->notifyReceivedFileMessage(message);
     }
 
     (*it).first["status"] = state;

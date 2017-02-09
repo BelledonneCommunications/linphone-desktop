@@ -49,6 +49,7 @@ void CoreManager::init () {
   if (!m_instance) {
     m_instance = new CoreManager();
 
+    m_instance->m_calls_list_model = new CallsListModel(m_instance);
     m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
     m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
 

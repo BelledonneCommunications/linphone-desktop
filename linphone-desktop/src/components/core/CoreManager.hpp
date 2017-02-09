@@ -23,6 +23,7 @@
 #ifndef CORE_MANAGER_H_
 #define CORE_MANAGER_H_
 
+#include "../calls/CallsListModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
 #include "CoreHandlers.hpp"
@@ -50,6 +51,10 @@ public:
   // ---------------------------------------------------------------------------
   // Singleton models.
   // ---------------------------------------------------------------------------
+
+  CallsListModel *getCallsListModel () const {
+    return m_calls_list_model;
+  }
 
   ContactsListModel *getContactsListModel () const {
     return m_contacts_list_model;
@@ -83,6 +88,7 @@ private:
   std::shared_ptr<linphone::Core> m_core;
   std::shared_ptr<CoreHandlers> m_handlers;
 
+  CallsListModel *m_calls_list_model;
   ContactsListModel *m_contacts_list_model;
   SipAddressesModel *m_sip_addresses_model;
 

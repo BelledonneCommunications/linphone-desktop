@@ -28,6 +28,8 @@
 int main (int argc, char *argv[]) {
   Logger::init();
 
+  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
+
   // Force shader version 2.0.
   QSurfaceFormat fmt;
   fmt.setVersion(2, 0);

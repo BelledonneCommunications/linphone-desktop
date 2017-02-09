@@ -49,6 +49,7 @@ public:
   }
 
   QQuickWindow *getCallsWindow () const;
+  QQuickWindow *getMainWindow () const;
 
   bool hasFocus () const;
 
