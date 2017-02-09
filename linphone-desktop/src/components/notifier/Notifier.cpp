@@ -212,8 +212,17 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
   if (!notification)
     return;
 
+  CallModel *model = CoreManager::getInstance()->getCallsListModel()->getCall(call);
+
+  QObject::connect(
+    model, &CallModel::statusChanged, notification, [notification](CallModel::CallStatus status) {
+      if (status == CallModel::CallStatusEnded)
+        notification->findChild<QQuickWindow *>()->setVisible(false);
+    }
+  );
+
   QVariantMap map;
-  map["call"].setValue(CoreManager::getInstance()->getCallsListModel()->getCall(call));
+  map["call"].setValue(model);
 
   ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
   showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_CALL);
