@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
-    <title>call_in_sign</title>
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>call_sms_sign</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="call_in_sign">
-            <polygon fill="#FF5E00" points="0 0 40 0 0 40"></polygon>
-            <path d="M11.243716,8.71501414 L11.1871835,8.71501414 C8.47215269,8.71501414 5.21235367,10.3895588 4.11804501,12.8152126 L4.51732144,15.956733 L8.01512006,15.956733 L8.2626641,12.830113 L14.1683578,12.830113 L14.41529,15.956733 L17.9130886,15.956733 L18.3123651,12.8149535 C17.2174446,10.3886518 13.9583798,8.71501414 11.243716,8.71501414 Z" fill="#FFFFFF" transform="translate(11.215205, 12.335874) rotate(-135.000000) translate(-11.215205, -12.335874) "></path>
+        <g id="call_sms_sign">
+            <polygon id="call_pausing_sign" fill="#4B5964" points="0 0 40 0 0 40"></polygon>
+            <g id="Group-2" transform="translate(6.000000, 6.000000)">
+                <path d="M4.27105133,9.9721567 C4.2709188,9.9721567 2.68640495,11.6499828 0.666666667,11.1986991 C0.666666667,11.1986991 2.64439334,10.6207694 2.19565096,8.87239286 L2.18120532,8.79149862 C1.24435953,7.92911296 0.666666667,6.7487201 0.666666667,5.44632281 C0.666666667,2.80665089 3.0405218,0.666666667 5.96794956,0.666666667 C8.89550984,0.666666667 11.2690999,2.80665089 11.2690999,5.44632281 C11.2690999,8.08599474 8.89550984,10.2258463 5.96794956,10.2258463 C5.37422072,10.2258463 4.80368441,10.1381888 4.27078627,9.97586988 L4.27105133,9.9721567 L4.27105133,9.9721567 Z" id="chat_in_writing_2" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                <ellipse id="chat_in_writing_2" fill="#FFFFFF" cx="4" cy="5.33333333" rx="0.666666667" ry="0.666666667"></ellipse>
+                <circle id="chat_in_writing_2" fill="#FFFFFF" cx="6" cy="5.33333333" r="0.666666667"></circle>
+                <circle id="chat_in_writing_2" fill="#FFFFFF" cx="8" cy="5.33333333" r="0.666666667"></circle>
+            </g>
         </g>
     </g>
 </svg>
