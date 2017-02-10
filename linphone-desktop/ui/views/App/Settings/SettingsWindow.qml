@@ -3,12 +3,15 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Common.Styles 1.0
 
 import App.Styles 1.0
 
 // =============================================================================
 
 ApplicationWindow {
+  id: window
+
   height: SettingsWindowStyle.height
   width: SettingsWindowStyle.width
 
@@ -29,39 +32,49 @@ ApplicationWindow {
     // Navigation bar.
     // -------------------------------------------------------------------------
 
-    TabBar {
-      id: navigationBar
-
+    RowLayout {
       Layout.fillWidth: true
+      spacing: 0
 
-      TabButton {
-        text: qsTr('sipAccountsTab')
-        width: implicitWidth
+      TabBar {
+        id: tabBar
+
+        TabButton {
+          text: qsTr('sipAccountsTab')
+          width: implicitWidth
+        }
+
+        TabButton {
+          text: qsTr('audioTab')
+          width: implicitWidth
+        }
+
+        TabButton {
+          text: qsTr('videoTab')
+          width: implicitWidth
+        }
+
+        TabButton {
+          text: qsTr('callsAndChatTab')
+          width: implicitWidth
+        }
+
+        TabButton {
+          text: qsTr('networkTab')
+          width: implicitWidth
+        }
+
+        TabButton {
+          text: qsTr('uiTab')
+          width: implicitWidth
+        }
       }
 
-      TabButton {
-        text: qsTr('audioTab')
-        width: implicitWidth
-      }
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: TabButtonStyle.text.height
 
-      TabButton {
-        text: qsTr('videoTab')
-        width: implicitWidth
-      }
-
-      TabButton {
-        text: qsTr('callsAndChatTab')
-        width: implicitWidth
-      }
-
-      TabButton {
-        text: qsTr('networkTab')
-        width: implicitWidth
-      }
-
-      TabButton {
-        text: qsTr('uiTab')
-        width: implicitWidth
+        color: TabButtonStyle.backgroundColor.normal
       }
     }
 
@@ -72,7 +85,8 @@ ApplicationWindow {
     StackLayout {
       Layout.fillHeight: true
       Layout.fillWidth: true
-      currentIndex: navigationBar.currentIndex
+
+      currentIndex: tabBar.currentIndex
 
       SettingsSipAccounts {}
       SettingsAudio {}
@@ -92,6 +106,8 @@ ApplicationWindow {
       Layout.rightMargin: SettingsWindowStyle.validButton.rightMargin
 
       text: qsTr('validButton')
+
+      onClicked: window.hide()
     }
   }
 }
