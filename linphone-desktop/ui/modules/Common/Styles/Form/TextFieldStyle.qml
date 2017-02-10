@@ -9,6 +9,8 @@ QtObject {
   property QtObject background: QtObject {
     property color color: Colors.k
     property int height: 36
+    property int width: 300
+
     property int radius: 4
 
     property QtObject border: QtObject {

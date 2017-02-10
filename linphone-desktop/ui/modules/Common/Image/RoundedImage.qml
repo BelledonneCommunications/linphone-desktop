@@ -37,8 +37,8 @@ Item {
         // See: https://www.opengl.org/sdk/docs/man/html/mix.xhtml
         fragmentShader: '
           #ifdef GL_ES
-          precision lowp float;
-	  #endif
+            precision lowp float;
+          #endif
           uniform sampler2D image;
           uniform sampler2D mask;
           uniform vec4 backgroundColor;

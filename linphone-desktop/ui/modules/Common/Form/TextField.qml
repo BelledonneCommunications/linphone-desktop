@@ -18,6 +18,7 @@ Controls.TextField {
     }
     color: TextFieldStyle.background.color
     implicitHeight: TextFieldStyle.background.height
+    implicitWidth: TextFieldStyle.background.width
 
     radius: TextFieldStyle.background.radius
   }

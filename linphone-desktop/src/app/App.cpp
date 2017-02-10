@@ -41,9 +41,10 @@
 #define LANGUAGES_PATH ":/languages/"
 #define WINDOW_ICON_PATH ":/assets/images/linphone.png"
 
-// The two main windows of Linphone desktop.
-#define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/MainWindow/MainWindow.qml"
-#define QML_VIEW_CALL_WINDOW "qrc:/ui/views/App/Calls/CallsWindow.qml"
+// The main windows of Linphone desktop.
+#define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/Main/MainWindow.qml"
+#define QML_VIEW_CALLS_WINDOW "qrc:/ui/views/App/Calls/CallsWindow.qml"
+#define QML_VIEW_SETTINGS_WINDOW "qrc:/ui/views/App/Settings/SettingsWindow.qml"
 
 // =============================================================================
 
@@ -85,11 +86,7 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 // -----------------------------------------------------------------------------
 
 QQuickWindow *App::getCallsWindow () const {
-  QQuickWindow *window = m_engine.rootContext()->contextProperty("CallsWindow").value<QQuickWindow *>();
-  if (!window)
-    qFatal("Unable to get calls window.");
-
-  return window;
+  return m_calls_window;
 }
 
 QQuickWindow *App::getMainWindow () const {
@@ -97,8 +94,14 @@ QQuickWindow *App::getMainWindow () const {
   return qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
 }
 
+QQuickWindow *App::getSettingsWindow () const {
+  return m_settings_window;
+}
+
+// -----------------------------------------------------------------------------
+
 bool App::hasFocus () const {
-  return getMainWindow()->isActive() || getCallsWindow()->isActive();
+  return getMainWindow()->isActive() || m_calls_window->isActive();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,9 +111,9 @@ void App::initContentApp () {
   CoreManager::init();
   qInfo() << "Core manager initialized.";
 
-  // Register types and load context properties.
+  // Register types ans make sub windows.
   registerTypes();
-  addContextProperties();
+  createSubWindows();
 
   // Enable notifications.
   m_notifier = new Notifier();
@@ -129,6 +132,8 @@ void App::initContentApp () {
   else
     setTrayIcon();
 }
+
+// -----------------------------------------------------------------------------
 
 void App::registerTypes () {
   qInfo() << "Registering types...";
@@ -214,18 +219,27 @@ void App::registerTypes () {
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 }
 
-void App::addContextProperties () {
-  qInfo() << "Adding context properties...";
-  QQmlContext *context = m_engine.rootContext();
+// -----------------------------------------------------------------------------
 
-  QQmlComponent component(&m_engine, QUrl(QML_VIEW_CALL_WINDOW));
+inline QQuickWindow *createSubWindow (QQmlApplicationEngine &engine, const char *path) {
+  QQmlComponent component(&engine, QUrl(path));
   if (component.isError()) {
     qWarning() << component.errors();
     abort();
   }
 
-  context->setContextProperty("CallsWindow", component.create());
+  // Default Ownership is Cpp: http://doc.qt.io/qt-5/qqmlengine.html#ObjectOwnership-enum
+  return qobject_cast<QQuickWindow *>(component.create());
 }
+
+void App::createSubWindows () {
+  qInfo() << "Create sub windows...";
+
+  m_calls_window = createSubWindow(m_engine, QML_VIEW_CALLS_WINDOW);
+  m_settings_window = createSubWindow(m_engine, QML_VIEW_SETTINGS_WINDOW);
+}
+
+// -----------------------------------------------------------------------------
 
 void App::setTrayIcon () {
   QQuickWindow *root = getMainWindow();

@@ -31,11 +31,17 @@ DroppableTextArea    1.0 DroppableTextArea.qml
 ForceScrollBar       1.0 ForceScrollBar.qml
 
 # Form
+TabBar               1.0 Form/Tab/TabBar.qml
+TabButton            1.0 Form/Tab/TabButton.qml
+TabContainer         1.0 Form/Tab/TabContainer.qml
+
 ActionBar            1.0 Form/ActionBar.qml
 ActionButton         1.0 Form/ActionButton.qml
 ActionSwitch         1.0 Form/ActionSwitch.qml
 CheckBoxText         1.0 Form/CheckBoxText.qml
 ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
+Form                 1.0 Form/Form.qml
+FormGroup            1.0 Form/FormGroup.qml
 LightButton          1.0 Form/LightButton.qml
 ListForm             1.0 Form/ListForm.qml
 StaticListForm       1.0 Form/StaticListForm.qml

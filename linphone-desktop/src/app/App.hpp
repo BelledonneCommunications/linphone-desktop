@@ -50,6 +50,7 @@ public:
 
   QQuickWindow *getCallsWindow () const;
   QQuickWindow *getMainWindow () const;
+  QQuickWindow *getSettingsWindow () const;
 
   bool hasFocus () const;
 
@@ -76,7 +77,7 @@ private:
   void initContentApp ();
 
   void registerTypes ();
-  void addContextProperties ();
+  void createSubWindows ();
   void setTrayIcon ();
 
   QQmlApplicationEngine m_engine;
@@ -90,6 +91,9 @@ private:
 
   Notifier *m_notifier = nullptr;
   QString m_locale = "en";
+
+  QQuickWindow *m_calls_window = nullptr;
+  QQuickWindow *m_settings_window = nullptr;
 
   static App *m_instance;
 };

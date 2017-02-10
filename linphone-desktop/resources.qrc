@@ -167,9 +167,14 @@
     <file>ui/modules/Common/Form/ActionSwitch.qml</file>
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
     <file>ui/modules/Common/Form/ExclusiveButtons.qml</file>
+    <file>ui/modules/Common/Form/FormGroup.qml</file>
+    <file>ui/modules/Common/Form/Form.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/SmallButton.qml</file>
     <file>ui/modules/Common/Form/StaticListForm.qml</file>
+    <file>ui/modules/Common/Form/Tab/TabBar.qml</file>
+    <file>ui/modules/Common/Form/Tab/TabButton.qml</file>
+    <file>ui/modules/Common/Form/Tab/TabContainer.qml</file>
     <file>ui/modules/Common/Form/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/TextButtonB.qml</file>
     <file>ui/modules/Common/Form/TextField.qml</file>
@@ -200,8 +205,12 @@
     <file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ExclusiveButtonsStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/FormGroupStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/FormStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ListFormStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SmallButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonBStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextFieldStyle.qml</file>
@@ -266,19 +275,27 @@
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/IncallFullscreen.qml</file>
-    <file>ui/views/App/MainWindow/ContactEdit.qml</file>
-    <file>ui/views/App/MainWindow/Contacts.qml</file>
-    <file>ui/views/App/MainWindow/Conversation.qml</file>
-    <file>ui/views/App/MainWindow/Home.qml</file>
-    <file>ui/views/App/MainWindow/MainWindow.qml</file>
+    <file>ui/views/App/Main/ContactEdit.qml</file>
+    <file>ui/views/App/Main/Contacts.qml</file>
+    <file>ui/views/App/Main/Conversation.qml</file>
+    <file>ui/views/App/Main/Home.qml</file>
+    <file>ui/views/App/Main/MainWindow.qml</file>
     <file>ui/views/App/ManageAccounts.qml</file>
     <file>ui/views/App/qmldir</file>
+    <file>ui/views/App/Settings/SettingsAudio.qml</file>
+    <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
+    <file>ui/views/App/Settings/SettingsNetwork.qml</file>
+    <file>ui/views/App/Settings/SettingsSipAccounts.qml</file>
+    <file>ui/views/App/Settings/SettingsUi.qml</file>
+    <file>ui/views/App/Settings/SettingsVideo.qml</file>
+    <file>ui/views/App/Settings/SettingsWindow.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
-    <file>ui/views/App/Styles/MainWindow/ContactEditStyle.qml</file>
-    <file>ui/views/App/Styles/MainWindow/ContactsStyle.qml</file>
-    <file>ui/views/App/Styles/MainWindow/ConversationStyle.qml</file>
-    <file>ui/views/App/Styles/MainWindow/MainWindowStyle.qml</file>
+    <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
+    <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
+    <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
+    <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
+    <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
   </qresource>
 </RCC>

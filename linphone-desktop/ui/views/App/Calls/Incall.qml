@@ -359,14 +359,14 @@ Rectangle {
         }
 
         ActionSwitch {
-          enabled: CallsWindow.chatIsOpened
+          enabled: window.chatIsOpened
           icon: 'chat'
 
           onClicked: {
             if (enabled) {
-              CallsWindow.closeChat()
+              window.closeChat()
             } else {
-              CallsWindow.openChat()
+              window.openChat()
             }
           }
         }

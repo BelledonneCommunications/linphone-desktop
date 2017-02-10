@@ -8,7 +8,6 @@ import Common 1.0
 QtObject {
   property int minimumHeight: 480
   property int minimumWidth: 960
-  property string title: 'Linphone'
 
   property QtObject call: QtObject {
     property int minimumWidth: 395

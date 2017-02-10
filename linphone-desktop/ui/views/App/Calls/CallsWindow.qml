@@ -34,7 +34,7 @@ Window {
 
   minimumHeight: CallsWindowStyle.minimumHeight
   minimumWidth: CallsWindowStyle.minimumWidth
-  title: CallsWindowStyle.title
+  title: qsTr('callsTitle')
 
   Paned {
     anchors.fill: parent

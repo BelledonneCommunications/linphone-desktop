@@ -52,6 +52,13 @@
     </message>
 </context>
 <context>
+    <name>CallsWindow</name>
+    <message>
+        <source>callsTitle</source>
+        <translation type="unfinished">Calls</translation>
+    </message>
+</context>
+<context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
@@ -501,6 +508,80 @@ Server url not configured.</translation>
     <message>
         <source>contactSearch</source>
         <translation type="vanished">Search contact or enter SIP address</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCallsChat</name>
+    <message>
+        <source>fileServerLabel</source>
+        <translation>File server</translation>
+    </message>
+    <message>
+        <source>encryptWithLimeLabel</source>
+        <translation>Encrypt with LIME</translation>
+    </message>
+    <message>
+        <source>limeDisabled</source>
+        <translation>Disabled</translation>
+    </message>
+    <message>
+        <source>limeRequired</source>
+        <translation>Requis</translation>
+    </message>
+    <message>
+        <source>limePreferred</source>
+        <translation>Preferred</translation>
+    </message>
+    <message>
+        <source>chatTitle</source>
+        <translation>Chat</translation>
+    </message>
+    <message>
+        <source>callsTitle</source>
+        <translation>Calls</translation>
+    </message>
+    <message>
+        <source>encryptionLabel</source>
+        <translation>Encryption</translation>
+    </message>
+    <message>
+        <source>noEncryption</source>
+        <translation>None</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsWindow</name>
+    <message>
+        <source>settingsTitle</source>
+        <translation>Linphone - Settings</translation>
+    </message>
+    <message>
+        <source>sipAccountsTab</source>
+        <translation>SIP accounts</translation>
+    </message>
+    <message>
+        <source>audioTab</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>videoTab</source>
+        <translation>Video</translation>
+    </message>
+    <message>
+        <source>callsAndChatTab</source>
+        <translation>Calls and Chat</translation>
+    </message>
+    <message>
+        <source>networkTab</source>
+        <translation>Network</translation>
+    </message>
+    <message>
+        <source>uiTab</source>
+        <translation>User Interface</translation>
+    </message>
+    <message>
+        <source>validButton</source>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
