@@ -97,6 +97,7 @@ Item {
 
       popupX: coords.x
       popupY: coords.y
+      requestActivate: true
 
       onVisibleChanged: !visible && searchBox.hideMenu()
 

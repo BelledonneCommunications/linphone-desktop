@@ -12,7 +12,7 @@ Item {
 
   property alias popupX: popup.x
   property alias popupY: popup.y
-
+  property bool requestActivate: false
   property int flags: Qt.SplashScreen
 
   readonly property alias popupWidth: popup.width
@@ -79,7 +79,10 @@ Item {
       ScriptAction {
         script: {
           popup.showNormal()
-          popup.requestActivate()
+
+          if (wrapper.requestActivate) {
+            popup.requestActivate()
+          }
         }
       }
 
