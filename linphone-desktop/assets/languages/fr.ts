@@ -568,6 +568,29 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsNetwork</name>
+    <message>
+        <source>forceMtuLabel</source>
+        <translation>Forcer MTU</translation>
+    </message>
+    <message>
+        <source>mtuLabel</source>
+        <translation>MTU</translation>
+    </message>
+    <message>
+        <source>sendDtmfsLabel</source>
+        <translation>Envoyer DTMFs en SIP info</translation>
+    </message>
+    <message>
+        <source>allowIpV6Label</source>
+        <translation>Autoriser IPv6</translation>
+    </message>
+    <message>
+        <source>transportTitle</source>
+        <translation>Transport</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

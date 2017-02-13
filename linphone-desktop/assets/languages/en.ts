@@ -558,6 +558,29 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsNetwork</name>
+    <message>
+        <source>forceMtuLabel</source>
+        <translation>Forcer MTU</translation>
+    </message>
+    <message>
+        <source>mtuLabel</source>
+        <translation>MTU</translation>
+    </message>
+    <message>
+        <source>sendDtmfsLabel</source>
+        <translation>Send DTMFs as SIP info</translation>
+    </message>
+    <message>
+        <source>allowIpV6Label</source>
+        <translation>Allow IPv6</translation>
+    </message>
+    <message>
+        <source>transportTitle</source>
+        <translation>Transport</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
