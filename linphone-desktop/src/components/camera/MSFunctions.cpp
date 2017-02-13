@@ -23,7 +23,7 @@
 #include "MSFunctions.hpp"
 
 // Do not include this header before `QOpenGLFunctions`!!!
-#include <mediastreamer2/msogl.h>
+#include <mediastreamer2/msogl_functions.h>
 
 // =============================================================================
 
