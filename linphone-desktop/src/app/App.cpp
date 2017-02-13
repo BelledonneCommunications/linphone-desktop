@@ -39,7 +39,7 @@
 #include <QtDebug>
 
 #define LANGUAGES_PATH ":/languages/"
-#define WINDOW_ICON_PATH ":/assets/images/linphone.png"
+#define WINDOW_ICON_PATH ":/assets/images/linphone_logo.svg"
 
 // The main windows of Linphone desktop.
 #define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/Main/MainWindow.qml"
