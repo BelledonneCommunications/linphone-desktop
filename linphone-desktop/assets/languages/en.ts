@@ -552,6 +552,10 @@ Server url not configured.</translation>
         <source>autoAnswerLabel</source>
         <translation>Auto answer</translation>
     </message>
+    <message>
+        <source>autoAnswerDelayLabel</source>
+        <translation>Delay (in ms)</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

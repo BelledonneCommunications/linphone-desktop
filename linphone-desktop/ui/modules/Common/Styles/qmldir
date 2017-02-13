@@ -16,6 +16,9 @@ singleton DroppableTextAreaStyle    1.0 DroppableTextAreaStyle.qml
 
 singleton ForceScrollBarStyle       1.0 ForceScrollBarStyle.qml
 
+singleton NumericFieldStyle         1.0 Form/Fields/NumericFieldStyle.qml
+singleton TextFieldStyle            1.0 Form/Fields/TextFieldStyle.qml
+
 singleton TabButtonStyle            1.0 Form/Tab/TabButtonStyle.qml
 singleton TabContainerStyle         1.0 Form/Tab/TabContainerStyle.qml
 
@@ -23,14 +26,14 @@ singleton AbstractTextButtonStyle   1.0 Form/AbstractTextButtonStyle.qml
 singleton ActionBarStyle            1.0 Form/ActionBarStyle.qml
 singleton CheckBoxTextStyle         1.0 Form/CheckBoxTextStyle.qml
 singleton ExclusiveButtonsStyle     1.0 Form/ExclusiveButtonsStyle.qml
-singleton FormStyle                 1.0 Form/FormStyle.qml
 singleton FormGroupStyle            1.0 Form/FormGroupStyle.qml
+singleton FormLineStyle             1.0 Form/FormLineStyle.qml
+singleton FormStyle                 1.0 Form/FormStyle.qml
 singleton ListFormStyle             1.0 Form/ListFormStyle.qml
 singleton SmallButtonStyle          1.0 Form/SmallButtonStyle.qml
 singleton SwitchStyle               1.0 Form/SwitchStyle.qml
 singleton TextButtonAStyle          1.0 Form/TextButtonAStyle.qml
 singleton TextButtonBStyle          1.0 Form/TextButtonBStyle.qml
-singleton TextFieldStyle            1.0 Form/TextFieldStyle.qml
 singleton TransparentComboBoxStyle  1.0 Form/TransparentComboBoxStyle.qml
 singleton TransparentTextInputStyle 1.0 Form/TransparentTextInputStyle.qml
 

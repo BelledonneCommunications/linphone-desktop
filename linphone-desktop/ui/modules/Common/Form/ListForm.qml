@@ -167,6 +167,7 @@ RowLayout {
         inputMethodHints: listForm.inputMethodHints
         isInvalid: $isInvalid
         readOnly: listForm.readOnly
+        selectByMouse: true
         text: $value
 
         height: ListFormStyle.lineHeight

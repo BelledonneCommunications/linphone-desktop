@@ -562,6 +562,10 @@ Url du serveur non configurée.</translation>
         <source>autoAnswerLabel</source>
         <translation>Répondre automatiquement</translation>
     </message>
+    <message>
+        <source>autoAnswerDelayLabel</source>
+        <translation>Délai (en ms)</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

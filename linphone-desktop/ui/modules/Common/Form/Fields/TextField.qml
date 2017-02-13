@@ -9,22 +9,46 @@ import Common.Styles 1.0
 // =============================================================================
 
 Controls.TextField {
+  id: textField
+
   property alias icon: icon.icon
+  property var tools
 
   background: Rectangle {
     border {
       color: TextFieldStyle.background.border.color
       width: TextFieldStyle.background.border.width
     }
-    color: TextFieldStyle.background.color
+
+    color: textField.readOnly
+      ? TextFieldStyle.background.color.readOnly
+      : TextFieldStyle.background.color.normal
+
     implicitHeight: TextFieldStyle.background.height
     implicitWidth: TextFieldStyle.background.width
 
     radius: TextFieldStyle.background.radius
+
+    MouseArea {
+      anchors.right: parent.right
+      height: parent.height
+      hoverEnabled: true
+      implicitWidth: tools ? tools.width : 0
+
+      Rectangle {
+        id: toolsContainer
+
+        anchors.fill: parent
+        color: background.color
+        data: tools || []
+      }
+    }
   }
 
   color: TextFieldStyle.text.color
   font.pointSize: TextFieldStyle.text.fontSize
+  rightPadding: TextFieldStyle.text.rightPadding + toolsContainer.width
+  selectByMouse: true
 
   Icon {
     id: icon

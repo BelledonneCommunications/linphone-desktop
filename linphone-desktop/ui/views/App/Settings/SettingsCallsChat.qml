@@ -26,10 +26,22 @@ TabContainer {
         }
       }
 
-      FormGroup {
-        label: qsTr('autoAnswerLabel')
+      FormLine {
+        FormGroup {
+          label: qsTr('autoAnswerLabel')
 
-        Switch {}
+          Switch {
+            id: autoAnswer
+          }
+        }
+
+        FormGroup {
+          label: qsTr('autoAnswerDelayLabel')
+
+          NumericField {
+            readOnly: !autoAnswer.checked
+          }
+        }
       }
     }
 
