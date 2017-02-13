@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="20px" viewBox="0 0 21 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>settings_audio_default</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="settings_audio_default" stroke="#FFFFFF" stroke-width="1.5">
+            <path d="M0.955995459,13.7737278 L6.68408709,13.7737278 L13.1361811,19 L13.1361811,1 L6.68408709,6.22597142 L0.800000012,6.22597142 L0.800000012,13.7737278 L0.955995459,13.7737278 L0.955995459,13.7737278 Z M16.3099238,11.7675107 C17.3483641,10.7459012 17.3483641,9.08984708 16.3099238,8.06883931 M18.7740401,13.254199 C20.647209,11.4119328 20.6475148,8.42411632 18.7740401,6.58185009" id="speaker_on"></path>
+        </g>
+    </g>
+</svg>

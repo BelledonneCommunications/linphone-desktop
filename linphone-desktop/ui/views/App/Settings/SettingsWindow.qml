@@ -15,8 +15,8 @@ ApplicationWindow {
   height: SettingsWindowStyle.height
   width: SettingsWindowStyle.width
 
-  maximumHeight: height
-  maximumWidth: width
+  //maximumHeight: height
+  //maximumWidth: width
 
   minimumHeight: height
   minimumWidth: width
@@ -40,31 +40,37 @@ ApplicationWindow {
         id: tabBar
 
         TabButton {
+          icon: 'settings_sip_accounts'
           text: qsTr('sipAccountsTab')
           width: implicitWidth
         }
 
         TabButton {
+          icon: 'settings_audio'
           text: qsTr('audioTab')
           width: implicitWidth
         }
 
         TabButton {
+          icon: 'settings_video'
           text: qsTr('videoTab')
           width: implicitWidth
         }
 
         TabButton {
+          icon: 'settings_call'
           text: qsTr('callsAndChatTab')
           width: implicitWidth
         }
 
         TabButton {
+          icon: 'settings_network'
           text: qsTr('networkTab')
           width: implicitWidth
         }
 
         TabButton {
+          icon: 'settings_advanced'
           text: qsTr('uiTab')
           width: implicitWidth
         }

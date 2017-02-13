@@ -135,6 +135,18 @@
     <file>assets/images/screenshot_normal.svg</file>
     <file>assets/images/screenshot_pressed.svg</file>
     <file>assets/images/search.svg</file>
+    <file>assets/images/settings_advanced_normal.svg</file>
+    <file>assets/images/settings_advanced_selected.svg</file>
+    <file>assets/images/settings_audio_normal.svg</file>
+    <file>assets/images/settings_audio_selected.svg</file>
+    <file>assets/images/settings_call_normal.svg</file>
+    <file>assets/images/settings_call_selected.svg</file>
+    <file>assets/images/settings_network_normal.svg</file>
+    <file>assets/images/settings_network_selected.svg</file>
+    <file>assets/images/settings_sip_accounts_normal.svg</file>
+    <file>assets/images/settings_sip_accounts_selected.svg</file>
+    <file>assets/images/settings_video_normal.svg</file>
+    <file>assets/images/settings_video_selected.svg</file>
     <file>assets/images/speaker_off_hovered.svg</file>
     <file>assets/images/speaker_off_normal.svg</file>
     <file>assets/images/speaker_off_pressed.svg</file>

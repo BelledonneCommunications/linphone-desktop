@@ -1,17 +1,26 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.1
+import QtQuick.Controls 2.1 as Controls
+import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
 
-TabButton {
+Controls.TabButton {
   id: button
 
   // ---------------------------------------------------------------------------
 
+  property string icon
+  property int iconSize: TabButtonStyle.icon.size
+
+  readonly property bool _isSelected: parent.parent.currentItem === button
+
+  // ---------------------------------------------------------------------------
+
   function _getBackgroundColor () {
-    if (button.parent.parent.currentItem === button) {
+    if (_isSelected) {
       return TabButtonStyle.backgroundColor.selected
     }
 
@@ -25,7 +34,7 @@ TabButton {
   }
 
   function _getTextColor () {
-    if (button.parent.parent.currentItem === button) {
+    if (_isSelected) {
       return TabButtonStyle.text.color.selected
     }
 
@@ -45,22 +54,44 @@ TabButton {
     implicitHeight: TabButtonStyle.text.height
   }
 
-  contentItem: Text {
-    color: _getTextColor()
+  contentItem: RowLayout {
+    spacing: 8
 
-    font {
-      bold: true
-      pointSize: TabButtonStyle.text.fontSize
+    Icon {
+      id: icon
+
+      Layout.fillHeight: true
+      Layout.leftMargin: TabButtonStyle.text.leftPadding
+
+      icon: {
+        var icon = button.icon
+        return icon.length
+          ? (icon + '_' + (button._isSelected ? 'selected' : 'normal'))
+          : ''
+      }
+      iconSize: button.iconSize
     }
 
-    elide: Text.ElideRight
+    Text {
+      Layout.fillWidth: true
+      Layout.fillHeight: true
 
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
+      color: _getTextColor()
 
-    leftPadding: TabButtonStyle.text.leftPadding
-    rightPadding: TabButtonStyle.text.rightPadding
-    text: button.text
+      font {
+        bold: true
+        pointSize: TabButtonStyle.text.fontSize
+      }
+
+      elide: Text.ElideRight
+
+      height: parent.height
+      horizontalAlignment: Text.AlignHCenter
+      verticalAlignment: Text.AlignVCenter
+
+      rightPadding: TabButtonStyle.text.rightPadding
+      text: button.text
+    }
   }
 
   hoverEnabled: true

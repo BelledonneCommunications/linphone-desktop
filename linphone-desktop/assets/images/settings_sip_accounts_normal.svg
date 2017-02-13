@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="18px" viewBox="0 0 19 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>settings_account_default</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="settings_account_default" stroke="#FFFFFF" stroke-width="1.5">
+            <path d="M9.40087269,0.75 C11.815196,0.75 13.7728222,2.69537597 13.7728222,5.0925101 C13.7728222,6.23965754 13.3247653,7.28396572 12.5928155,8.06015727 C12.4891329,8.16911791 12.5298653,8.15075376 12.4163082,8.24869591 L12.5989871,8.37112359 C19.2223301,11.2359315 17.5251447,16.0522368 17.5251447,16.0522368 C13.2581122,17.3964928 9.40827859,17.1883657 9.40827859,17.1883657 L9.31076757,17.1883657 C9.31076757,17.1883657 5.460934,17.3964928 1.19513573,16.0522368 C1.19513573,16.0522368 -0.503283956,11.2359315 6.1212934,8.37112359 L6.30273794,8.24869591 C6.18918081,8.15075376 6.22991326,8.16911791 6.12746498,8.06015727 C5.39551522,7.28396572 4.94745828,6.23965754 4.94745828,5.0925101 C4.94745828,2.69537597 6.90385014,0.75 9.31817347,0.75 L9.40087269,0.75 L9.40087269,0.75 Z" id="new_conference_default"></path>
+        </g>
+    </g>
+</svg>

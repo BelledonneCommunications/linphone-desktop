@@ -13,6 +13,10 @@ QtObject {
     property color selected: Colors.k
   }
 
+  property QtObject icon: QtObject {
+    property int size: 20
+  }
+
   property QtObject text: QtObject {
     property int fontSize: 9
     property int height: 40
