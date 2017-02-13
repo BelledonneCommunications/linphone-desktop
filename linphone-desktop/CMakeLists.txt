@@ -40,7 +40,6 @@ if(NOT WIN32)
 -Wall \
 -Wcast-align \
 -Wconversion \
--Werror=suggest-override \
 -Wextra \
 -Wfloat-equal \
 -Winit-self \
@@ -53,7 +52,7 @@ if(NOT WIN32)
 -Wunused \
 ")
   if(SUGGEST_OVERRIDE)
-    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override")
+    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override -Werror=suggest-override")
   endif()
 endif()
 set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
