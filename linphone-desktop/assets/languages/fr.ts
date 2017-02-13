@@ -558,6 +558,10 @@ Url du serveur non configurée.</translation>
         <source>noEncryption</source>
         <translation>Aucune</translation>
     </message>
+    <message>
+        <source>autoAnswerLabel</source>
+        <translation>Répondre automatiquement</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

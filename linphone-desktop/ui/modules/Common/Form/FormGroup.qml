@@ -21,6 +21,7 @@ RowLayout {
     Layout.preferredWidth: FormGroupStyle.legend.width
 
     color: FormGroupStyle.legend.color
+    elide: Text.ElideRight
     font.pointSize: FormGroupStyle.legend.fontSize
 
     horizontalAlignment: Text.AlignRight

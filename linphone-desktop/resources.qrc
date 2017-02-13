@@ -184,6 +184,7 @@
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/SmallButton.qml</file>
     <file>ui/modules/Common/Form/StaticListForm.qml</file>
+    <file>ui/modules/Common/Form/Switch.qml</file>
     <file>ui/modules/Common/Form/Tab/TabBar.qml</file>
     <file>ui/modules/Common/Form/Tab/TabButton.qml</file>
     <file>ui/modules/Common/Form/Tab/TabContainer.qml</file>
@@ -221,6 +222,7 @@
     <file>ui/modules/Common/Styles/Form/FormStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ListFormStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SmallButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/SwitchStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>

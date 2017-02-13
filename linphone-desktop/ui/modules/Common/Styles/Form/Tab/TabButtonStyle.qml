@@ -6,6 +6,8 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
+  property int spacing: 8
+
   property QtObject backgroundColor: QtObject {
     property color hovered: Colors.s
     property color normal: Colors.i

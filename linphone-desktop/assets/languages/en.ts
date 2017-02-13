@@ -548,6 +548,10 @@ Server url not configured.</translation>
         <source>noEncryption</source>
         <translation>None</translation>
     </message>
+    <message>
+        <source>autoAnswerLabel</source>
+        <translation>Auto answer</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

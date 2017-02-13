@@ -25,6 +25,12 @@ TabContainer {
           ]
         }
       }
+
+      FormGroup {
+        label: qsTr('autoAnswerLabel')
+
+        Switch {}
+      }
     }
 
     Form {
@@ -42,9 +48,9 @@ TabContainer {
 
         ExclusiveButtons {
           texts: [
-          qsTr('limeDisabled'),
-          qsTr('limeRequired'),
-          qsTr('limePreferred')
+            qsTr('limeDisabled'),
+            qsTr('limeRequired'),
+            qsTr('limePreferred')
           ]
         }
       }

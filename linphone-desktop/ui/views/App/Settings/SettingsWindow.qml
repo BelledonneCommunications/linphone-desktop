@@ -15,8 +15,8 @@ ApplicationWindow {
   height: SettingsWindowStyle.height
   width: SettingsWindowStyle.width
 
-  //maximumHeight: height
-  //maximumWidth: width
+  maximumHeight: height
+  maximumWidth: width
 
   minimumHeight: height
   minimumWidth: width
