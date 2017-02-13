@@ -20,16 +20,16 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QQmlComponent>
-#include <QQuickWindow>
-#include <QtDebug>
-#include <QTimer>
-
 #include "../../app/App.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "Notifier.hpp"
+
+#include <QQmlComponent>
+#include <QQuickWindow>
+#include <QtDebug>
+#include <QTimer>
 
 // Notifications QML properties/methods.
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
