@@ -2,12 +2,14 @@ import QtQuick 2.7
 
 import Common 1.0
 
+import App.Styles 1.0
+
 // =============================================================================
 
 TabContainer {
   Column {
     anchors.fill: parent
-    spacing: 10
+    spacing: SettingsWindowStyle.forms.spacing
 
     Form {
       title: qsTr('callsTitle')

@@ -93,6 +93,7 @@ Item {
       ? TransparentTextInputStyle.text.color.focused
       : TransparentTextInputStyle.text.color.normal
     font.pointSize: TransparentTextInputStyle.text.fontSize
+    selectByMouse: true
     verticalAlignment: TextInput.AlignVCenter
 
     Keys.onEscapePressed: focus = false
