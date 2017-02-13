@@ -4,9 +4,7 @@ module Common.Styles
 
 # Components styles ------------------------------------------------------------
 
-singleton BusyIndicatorStyle        1.0 BusyIndicatorStyle.qml
-
-singleton CaterpillarAnimationStyle 1.0 Animations/CaterpillarAnimationStyle.qml
+singleton BusyIndicatorStyle        1.0 Animations/BusyIndicatorStyle.qml
 
 singleton CollapseStyle             1.0 CollapseStyle.qml
 
