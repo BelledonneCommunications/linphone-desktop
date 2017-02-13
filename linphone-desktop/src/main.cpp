@@ -35,7 +35,13 @@ int main (int argc, char *argv[]) {
   fmt.setVersion(2, 0);
   QSurfaceFormat::setDefaultFormat(fmt);
 
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  /*
+   * TODO: Uncomment me in the future!
+   * Disabled for a moment.
+   * `QXcbConnection: XCB error` errors on Cinnamon.
+   * QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+   */
+
   App::init(argc, argv);
 
   // Run!
