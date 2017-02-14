@@ -235,7 +235,7 @@ bool CallModel::getMicroMuted () const {
 void CallModel::setMicroMuted (bool status) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  if (status != core->micEnabled()) {
+  if (status == core->micEnabled()) {
     core->enableMic(!status);
     emit microMutedChanged(status);
   }
