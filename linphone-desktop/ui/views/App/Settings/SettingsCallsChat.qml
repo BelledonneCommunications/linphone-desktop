@@ -15,16 +15,18 @@ TabContainer {
       title: qsTr('callsTitle')
       width: parent.width
 
-      FormGroup {
-        label: qsTr('encryptionLabel')
+      FormLine {
+        FormGroup {
+          label: qsTr('encryptionLabel')
 
-        ExclusiveButtons {
-          texts: [
-            qsTr('noEncryption'),
-            'SRTP',
-            'ZRTP',
-            'DTLS'
-          ]
+          ExclusiveButtons {
+            texts: [
+              qsTr('noEncryption'),
+              'SRTP',
+              'ZRTP',
+              'DTLS'
+            ]
+          }
         }
       }
 
@@ -51,21 +53,25 @@ TabContainer {
       title: qsTr('chatTitle')
       width: parent.width
 
-      FormGroup {
-        label: qsTr('fileServerLabel')
+      FormLine {
+        FormGroup {
+          label: qsTr('fileServerLabel')
 
-        TextField {}
+          TextField {}
+        }
       }
 
-      FormGroup {
-        label: qsTr('encryptWithLimeLabel')
+      FormLine {
+        FormGroup {
+          label: qsTr('encryptWithLimeLabel')
 
-        ExclusiveButtons {
-          texts: [
-            qsTr('limeDisabled'),
-            qsTr('limeRequired'),
-            qsTr('limePreferred')
-          ]
+          ExclusiveButtons {
+            texts: [
+              qsTr('limeDisabled'),
+              qsTr('limeRequired'),
+              qsTr('limePreferred')
+            ]
+          }
         }
       }
     }

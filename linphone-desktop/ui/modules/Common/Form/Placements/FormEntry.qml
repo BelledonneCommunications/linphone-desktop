@@ -5,26 +5,38 @@ import Common.Styles 1.0
 
 // =============================================================================
 // Like a `FormGroup` but without label.
+// Must be used in a `FormLine`.
 // =============================================================================
 
-RowLayout {
+Item {
   default property alias _content: content.data
 
   // ---------------------------------------------------------------------------
 
-	spacing: 0
-	width: FormGroupStyle.content.width
+  implicitHeight: content.height
+  width: FormGroupStyle.content.width
 
   Item {
     id: content
 
     readonly property int currentHeight: _content[0] ? _content[0].height : 0
+    readonly property int currentWidth: _content[0] ? _content[0].width : 0
 
-    Layout.alignment: (
-			currentHeight < FormGroupStyle.legend.height ? Qt.AlignVCenter : Qt.AlignTop
-		) | Qt.AlignHCenter
+    anchors {
+      horizontalCenter: parent.horizontalCenter
 
-    Layout.preferredHeight: currentHeight
-		Layout.maximumWidth: FormGroupStyle.content.width
+      top: width > FormGroupStyle.legend.width
+        ? parent.top
+        : undefined
+
+      verticalCenter: width > FormGroupStyle.legend.width
+        ? undefined
+        : parent.verticalCenter
+    }
+
+    height: currentHeight
+    width: currentWidth > FormGroupStyle.content.width
+      ? FormGroupStyle.content.width
+      : currentWidth
   }
 }

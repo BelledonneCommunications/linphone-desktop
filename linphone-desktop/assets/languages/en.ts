@@ -639,6 +639,22 @@ Server url not configured.</translation>
         <source>videoRtpUdpPortLabel</source>
         <translation>Video RTP UDP port</translation>
     </message>
+    <message>
+        <source>portsHeader</source>
+        <translation type="vanished">Port</translation>
+    </message>
+    <message>
+        <source>portHeader</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <source>randomPortHeader</source>
+        <translation>Use a random port</translation>
+    </message>
+    <message>
+        <source>enabledPortHeader</source>
+        <translation>Enabled port</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

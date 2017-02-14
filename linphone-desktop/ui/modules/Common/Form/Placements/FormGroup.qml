@@ -4,6 +4,9 @@ import QtQuick.Layouts 1.3
 import Common.Styles 1.0
 
 // =============================================================================
+// Display a form component with a legend.
+// Must be used in a `FormLine`.
+// =============================================================================
 
 RowLayout {
   property alias label: label.text

@@ -1,12 +1,10 @@
-import QtQuick 2.7
-
 import Common.Styles 1.0
 
 // =============================================================================
-// A line of `FormGroup`/`FormEntry`.
+// Like a `FormLine` but used as form header.
 // =============================================================================
 
-Row {
-  spacing: FormLineStyle.spacing
+FormLine {
+  height: FormHeaderStyle.height
   width: parent.width
 }

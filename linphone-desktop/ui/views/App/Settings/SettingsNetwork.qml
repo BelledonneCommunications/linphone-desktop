@@ -58,6 +58,20 @@ TabContainer {
       title: qsTr('networkProtocolAndPortsTitle')
       width: parent.width
 
+      FormHeader {
+        FormHeaderGroup {
+          text: qsTr('portHeader')
+        }
+
+        FormHeaderEntry {
+          text: qsTr('randomPortHeader')
+        }
+
+        FormHeaderEntry {
+          text: qsTr('enabledPortHeader')
+        }
+      }
+
       FormLine {
         FormGroup {
           label: qsTr('sipUdpPortLabel')

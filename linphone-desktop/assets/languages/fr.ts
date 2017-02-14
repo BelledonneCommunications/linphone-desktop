@@ -649,6 +649,22 @@ Url du serveur non configurée.</translation>
         <source>videoRtpUdpPortLabel</source>
         <translation>Port Vidéo RTP UDP</translation>
     </message>
+    <message>
+        <source>portsHeader</source>
+        <translation type="vanished">Port</translation>
+    </message>
+    <message>
+        <source>portHeader</source>
+        <translation>Port</translation>
+    </message>
+    <message>
+        <source>randomPortHeader</source>
+        <translation>Utiliser un port aléatoire</translation>
+    </message>
+    <message>
+        <source>enabledPortHeader</source>
+        <translation>Port activé</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
