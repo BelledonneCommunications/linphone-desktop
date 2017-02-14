@@ -1,0 +1,1 @@
+Delete $INSTDIR\lib\mediastreamer\plugins\openh264.dll

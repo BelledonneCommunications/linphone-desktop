@@ -1,0 +1,9 @@
+@LIBDIR@/@LIBPREFIX@linphone*.@LIBEXT@
+@LIBDIR@/@LIBPREFIX@iconv*.@LIBEXT@
+@LIBDIR@/@LIBPREFIX@intl*.@LIBEXT@
+include/linphone/*
+lib/linphone*.lib
+share/doc/linphone-*
+share/Linphone/cmake/*
+share/sounds/linphone/*
+share/locale/*/LC_MESSAGES/linphone.mo

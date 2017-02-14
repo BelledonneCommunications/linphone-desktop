@@ -1,0 +1,6 @@
+@LIBDIR@/@LIBPREFIX@ortp*.@LIBEXT@
+include/ortp/*
+lib/ortp*.lib
+lib/pkgconfig/ortp.pc
+share/doc/oRTP-*
+share/oRTP/cmake/*

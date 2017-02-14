@@ -207,7 +207,7 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 # Build.
 # Note: `update_translations` is provided by `languages/CMakeLists.txt`.
 if(WIN32)
-  add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES})
+  add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} linphone.rc)
 else()
   add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
 endif()

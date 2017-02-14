@@ -1,0 +1,8 @@
+@LIBDIR@/@LIBPREFIX@mediastreamer_base*.@LIBEXT@
+@LIBDIR@/@LIBPREFIX@mediastreamer_voip*.@LIBEXT@
+include/mediastreamer2/*
+lib/mediastreamer_base*.lib
+lib/mediastreamer_voip*.lib
+share/doc/mediastreamer2-*
+share/images/nowebcamCIF.jpg
+share/Mediastreamer2/cmake/*

@@ -1,0 +1,34 @@
+############################################################################
+# WindowsPackaging.cmake
+# Copyright (C) 2014  Belledonne Communications, Grenoble France
+#
+############################################################################
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+############################################################################
+
+if(NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
+	execute_process(
+		COMMAND ${CMAKE_CPACK_COMMAND} -G NSIS
+		RESULT_VARIABLE CPACK_COMMAND_SUCCESS
+	)
+
+	if(@PERFORM_SIGNING@)
+		execute_process(
+			COMMAND @SIGNTOOL_COMMAND@ @CMAKE_CURRENT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.exe
+		)
+	endif()
+endif()

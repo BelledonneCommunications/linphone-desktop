@@ -1,0 +1,5 @@
+@LIBDIR@/@LIBPREFIX@bellesip*.@LIBEXT@
+include/belle-sip/*
+lib/bellesip*.lib
+lib/pkgconfig/belle-sip.pc
+share/BelleSIP/cmake/*

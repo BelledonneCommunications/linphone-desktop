@@ -1,0 +1,6 @@
+@LIBDIR@/@LIBPREFIX@belr*.@LIBEXT@
+@LIBDIR@/@LIBPREFIX@belcard*.@LIBEXT@
+lib/belr*.lib
+lib/belcard*.lib
+share/Belr/cmake
+share/Belcard/cmake
