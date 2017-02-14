@@ -3,9 +3,9 @@ import QtQuick 2.7
 // =============================================================================
 
 Item {
+  property alias updating: actionButton.updating
   property alias useStates: actionButton.useStates
   property bool enabled: true
-  property alias updating: actionButton.updating
   property int iconSize // Optionnal.
   property string icon
 

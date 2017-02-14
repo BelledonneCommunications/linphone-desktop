@@ -17,12 +17,14 @@ QtObject {
     property QtObject border: QtObject {
       property QtObject color: QtObject {
         property color checked: Colors.i
+        property color disabled: Colors.c
         property color normal: Colors.c
       }
     }
 
     property QtObject color: QtObject {
       property color checked: Colors.i
+      property color disabled: Colors.e
       property color normal: Colors.k
     }
   }
@@ -33,12 +35,14 @@ QtObject {
     property QtObject border: QtObject {
       property QtObject color: QtObject {
         property color checked: Colors.i
+        property color disabled: Colors.c
         property color normal: Colors.w
         property color pressed: Colors.w
       }
     }
 
     property QtObject color: QtObject {
+      property color disabled: Colors.e
       property color pressed: Colors.c
       property color normal: Colors.k
     }

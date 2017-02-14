@@ -63,7 +63,7 @@ TabContainer {
           label: qsTr('sipUdpPortLabel')
 
           NumericField {
-            readOnly: randomSipUdpPort.checked
+            readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
           }
         }
 
@@ -72,7 +72,13 @@ TabContainer {
 
           Switch {
             id: randomSipUdpPort
+
+            enabled: enableSipUdpPort.checked
           }
+        }
+
+        Switch {
+          id: enableSipUdpPort
         }
       }
 
@@ -81,7 +87,7 @@ TabContainer {
           label: qsTr('sipTcpPortLabel')
 
           NumericField {
-            readOnly: randomSipTcpPort.checked
+            readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
           }
         }
 
@@ -90,7 +96,13 @@ TabContainer {
 
           Switch {
             id: randomSipTcpPort
+
+            enabled: enableSipTcpPort.checked
           }
+        }
+
+        Switch {
+          id: enableSipTcpPort
         }
       }
 
@@ -99,7 +111,7 @@ TabContainer {
           label: qsTr('audioRtpUdpPortLabel')
 
           NumericField {
-            readOnly: randomAudioRtpUdpPort.checked
+            readOnly: randomAudioRtpUdpPort.checked || !enableAudioRtpUdpPort.checked
           }
         }
 
@@ -108,7 +120,13 @@ TabContainer {
 
           Switch {
             id: randomAudioRtpUdpPort
+
+            enabled: enableAudioRtpUdpPort.checked
           }
+        }
+
+        Switch {
+          id: enableAudioRtpUdpPort
         }
       }
 
@@ -126,6 +144,8 @@ TabContainer {
 
           Switch {
             id: randomVideoRtpUdpPort
+
+            enabled: enableVideoRtpUdpPort.checked
           }
         }
 
