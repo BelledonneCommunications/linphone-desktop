@@ -281,5 +281,42 @@ TabContainer {
         }
       }
     }
+
+    // -------------------------------------------------------------------------
+    // Bandwidth control.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('bandwidthControlTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('downloadSpeedLimitLabel')
+
+          NumericField {
+            minValue: 0
+            maxValue: 100000
+          }
+        }
+
+        FormGroup {
+          label: qsTr('uploadSpeedLimitLabel')
+
+          NumericField {
+            minValue: 0
+            maxValue: 100000
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('enableAdaptiveRateControlLabel')
+
+          Switch {}
+        }
+      }
+    }
   }
 }

@@ -675,6 +675,22 @@ Server url not configured.</translation>
         <source>videoRtpStreamFieldLabel</source>
         <translation>Video RTP Stream</translation>
     </message>
+    <message>
+        <source>bandwidthControlTitle</source>
+        <translation>Bandwidth Control</translation>
+    </message>
+    <message>
+        <source>downloadSpeedLimitLabel</source>
+        <translation>Dowload speed limit in Kbit/sec</translation>
+    </message>
+    <message>
+        <source>uploadSpeedLimitLabel</source>
+        <translation>Upload speed limit in Kbit/sec</translation>
+    </message>
+    <message>
+        <source>enableAdaptiveRateControlLabel</source>
+        <translation>Enable adaptive rate control</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

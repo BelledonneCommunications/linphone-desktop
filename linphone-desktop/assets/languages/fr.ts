@@ -615,7 +615,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation>Protocol réseau et ports</translation>
+        <translation>Protocole réseau et ports</translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
@@ -684,6 +684,22 @@ Url du serveur non configurée.</translation>
     <message>
         <source>videoRtpStreamFieldLabel</source>
         <translation>Flux RTP vidéo</translation>
+    </message>
+    <message>
+        <source>bandwidthControlTitle</source>
+        <translation>Gestion de la bande passante</translation>
+    </message>
+    <message>
+        <source>downloadSpeedLimitLabel</source>
+        <translation>Limite de débit descendant en Kbit/sec</translation>
+    </message>
+    <message>
+        <source>uploadSpeedLimitLabel</source>
+        <translation>Limite de débit montant en Kbit/sec</translation>
+    </message>
+    <message>
+        <source>enableAdaptiveRateControlLabel</source>
+        <translation>Activer le contrôle de débit adaptif</translation>
     </message>
 </context>
 <context>
