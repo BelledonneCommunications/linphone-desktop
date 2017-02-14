@@ -26,4 +26,6 @@ ScrollBar {
     radius: ForceScrollBarStyle.contentItem.radius
   }
   hoverEnabled: true
+
+  visible: size < 1.0
 }

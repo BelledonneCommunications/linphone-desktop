@@ -8,7 +8,7 @@ import Common 1.0
 QtObject {
   property QtObject background: QtObject {
     property int height: 36
-    property int width: 300
+    property int width: 200
 
     property int radius: 4
 

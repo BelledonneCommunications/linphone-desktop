@@ -14,5 +14,6 @@ QtObject {
   property QtObject validButton: QtObject {
     property int bottomMargin: 30
     property int rightMargin: 30
+    property int topMargin: 30
   }
 }

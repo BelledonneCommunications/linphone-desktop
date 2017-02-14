@@ -15,11 +15,8 @@ ApplicationWindow {
   height: SettingsWindowStyle.height
   width: SettingsWindowStyle.width
 
-  maximumHeight: height
-  maximumWidth: width
-
-  minimumHeight: height
-  minimumWidth: width
+  minimumHeight: SettingsWindowStyle.height
+  minimumWidth: SettingsWindowStyle.width
 
   title: qsTr('settingsTitle')
   visible: true
@@ -108,6 +105,7 @@ ApplicationWindow {
 
     TextButtonB {
       Layout.alignment: Qt.AlignRight
+      Layout.topMargin: SettingsWindowStyle.validButton.topMargin
       Layout.bottomMargin: SettingsWindowStyle.validButton.bottomMargin
       Layout.rightMargin: SettingsWindowStyle.validButton.rightMargin
 

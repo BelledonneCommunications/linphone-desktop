@@ -556,7 +556,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>noEncryption</source>
-        <translation>Aucune</translation>
+        <translation>Aucun</translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
@@ -616,6 +616,38 @@ Url du serveur non configurée.</translation>
     <message>
         <source>networkProtocolAndPortsTitle</source>
         <translation>Protocol réseau et ports</translation>
+    </message>
+    <message>
+        <source>sipUdpPortLabel</source>
+        <translation>Port SIP UDP</translation>
+    </message>
+    <message>
+        <source>randomSipUdpPortLabel</source>
+        <translation>Aléatoire</translation>
+    </message>
+    <message>
+        <source>sipTcpPortLabel</source>
+        <translation>Port SIP TCP</translation>
+    </message>
+    <message>
+        <source>randomSipTcpPortLabel</source>
+        <translation>Aléatoire</translation>
+    </message>
+    <message>
+        <source>audioRtpUdpPortLabel</source>
+        <translation>Port Audio RTP UDP</translation>
+    </message>
+    <message>
+        <source>randomAudioRtpUdpPortLabel</source>
+        <translation>Aléatoire</translation>
+    </message>
+    <message>
+        <source>randomVideoRtpUdpPortLabel</source>
+        <translation>Aléatoire</translation>
+    </message>
+    <message>
+        <source>videoRtpUdpPortLabel</source>
+        <translation>Port Vidéo RTP UDP</translation>
     </message>
 </context>
 <context>

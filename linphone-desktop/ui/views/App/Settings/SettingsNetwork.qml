@@ -8,8 +8,8 @@ import App.Styles 1.0
 
 TabContainer {
   Column {
-    anchors.fill: parent
     spacing: SettingsWindowStyle.forms.spacing
+    width: parent.width
 
     // -------------------------------------------------------------------------
     // Transport.
@@ -59,7 +59,79 @@ TabContainer {
       width: parent.width
 
       FormLine {
+        FormGroup {
+          label: qsTr('sipUdpPortLabel')
 
+          NumericField {
+            readOnly: randomSipUdpPort.checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('randomSipUdpPortLabel')
+
+          Switch {
+            id: randomSipUdpPort
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('sipTcpPortLabel')
+
+          NumericField {
+            readOnly: randomSipTcpPort.checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('randomSipTcpPortLabel')
+
+          Switch {
+            id: randomSipTcpPort
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('audioRtpUdpPortLabel')
+
+          NumericField {
+            readOnly: randomAudioRtpUdpPort.checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('randomAudioRtpUdpPortLabel')
+
+          Switch {
+            id: randomAudioRtpUdpPort
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('videoRtpUdpPortLabel')
+
+          NumericField {
+            readOnly: randomVideoRtpUdpPort.checked || !enableVideoRtpUdpPort.checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('randomVideoRtpUdpPortLabel')
+
+          Switch {
+            id: randomVideoRtpUdpPort
+          }
+        }
+
+        Switch {
+          id: enableVideoRtpUdpPort
+        }
       }
     }
 

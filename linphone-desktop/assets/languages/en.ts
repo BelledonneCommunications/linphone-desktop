@@ -607,6 +607,38 @@ Server url not configured.</translation>
         <source>networkProtocolAndPortsTitle</source>
         <translation>Network protocol and Ports</translation>
     </message>
+    <message>
+        <source>sipUdpPortLabel</source>
+        <translation>SIP UDP port</translation>
+    </message>
+    <message>
+        <source>randomSipUdpPortLabel</source>
+        <translation>Random</translation>
+    </message>
+    <message>
+        <source>sipTcpPortLabel</source>
+        <translation>SIP TCP port</translation>
+    </message>
+    <message>
+        <source>randomSipTcpPortLabel</source>
+        <translation>Random</translation>
+    </message>
+    <message>
+        <source>audioRtpUdpPortLabel</source>
+        <translation>Audio RTP UDP port</translation>
+    </message>
+    <message>
+        <source>randomAudioRtpUdpPortLabel</source>
+        <translation>Random</translation>
+    </message>
+    <message>
+        <source>randomVideoRtpUdpPortLabel</source>
+        <translation>Random</translation>
+    </message>
+    <message>
+        <source>videoRtpUdpPortLabel</source>
+        <translation>Video RTP UDP port</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
