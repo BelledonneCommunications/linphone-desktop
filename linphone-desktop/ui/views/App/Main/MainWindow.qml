@@ -62,7 +62,7 @@ ApplicationWindow {
   }
 
   function _setView (view, props) {
-    //window.show()
+    window.show()
     window.requestActivate()
     collapse.setCollapsed(true)
 
