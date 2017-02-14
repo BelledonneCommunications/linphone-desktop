@@ -32,12 +32,12 @@ RowLayout {
     id: content
 
     Layout.alignment: {
-      var height = _content[0].height
+      var height = _content[0] ? _content[0].height : 0
       return height < label.height ? Qt.AlignVCenter : Qt.AlignTop
     }
 
     Layout.maximumWidth: FormGroupStyle.content.width
-    Layout.preferredHeight: _content[0].height
+    Layout.preferredHeight: _content[0] ? _content[0].height : 0
     Layout.preferredWidth: FormGroupStyle.content.width
   }
 }

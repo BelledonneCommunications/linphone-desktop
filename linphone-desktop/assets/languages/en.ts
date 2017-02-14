@@ -579,6 +579,34 @@ Server url not configured.</translation>
         <source>transportTitle</source>
         <translation>Transport</translation>
     </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT and Firewall</translation>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>Enable ICE</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>STUN/TURN server</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Enable TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>TURN user</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>TURN password</translation>
+    </message>
+    <message>
+        <source>networkProtocolAndPortsTitle</source>
+        <translation>Network protocol and Ports</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

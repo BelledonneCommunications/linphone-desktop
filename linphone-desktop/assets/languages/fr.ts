@@ -589,6 +589,34 @@ Url du serveur non configurée.</translation>
         <source>transportTitle</source>
         <translation>Transport</translation>
     </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT et Pare-feu</translation>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>Activer ICE</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>Serveur STUN/TURN</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Activer TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>Utilisateur TURN</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>Mot de passe TURN</translation>
+    </message>
+    <message>
+        <source>networkProtocolAndPortsTitle</source>
+        <translation>Protocol réseau et ports</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
