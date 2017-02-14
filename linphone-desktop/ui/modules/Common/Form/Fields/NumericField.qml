@@ -33,6 +33,8 @@ TextField {
 
   // ---------------------------------------------------------------------------
 
+  text: minValue
+
   tools: Rectangle {
     border {
       color: TextFieldStyle.background.border.color

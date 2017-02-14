@@ -182,6 +182,7 @@
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
+    <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEntry.qml</file>
     <file>ui/modules/Common/Form/Placements/FormGroup.qml</file>
     <file>ui/modules/Common/Form/Placements/FormHeaderEntry.qml</file>

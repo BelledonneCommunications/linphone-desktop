@@ -665,6 +665,26 @@ Url du serveur non configurée.</translation>
         <source>enabledPortHeader</source>
         <translation>Port activé</translation>
     </message>
+    <message>
+        <source>enableTlsLabel</source>
+        <translation>Activer TLS</translation>
+    </message>
+    <message>
+        <source>dscpFieldsTitle</source>
+        <translation>Champs DSCP</translation>
+    </message>
+    <message>
+        <source>sipFieldLabel</source>
+        <translation>SIP</translation>
+    </message>
+    <message>
+        <source>audioRtpStreamFieldLabel</source>
+        <translation>Flux RTP audio</translation>
+    </message>
+    <message>
+        <source>videoRtpStreamFieldLabel</source>
+        <translation>Flux RTP vidéo</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

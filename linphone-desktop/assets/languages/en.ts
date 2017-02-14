@@ -655,6 +655,26 @@ Server url not configured.</translation>
         <source>enabledPortHeader</source>
         <translation>Enabled port</translation>
     </message>
+    <message>
+        <source>enableTlsLabel</source>
+        <translation>Enable TLS</translation>
+    </message>
+    <message>
+        <source>dscpFieldsTitle</source>
+        <translation>DSCP Fields</translation>
+    </message>
+    <message>
+        <source>sipFieldLabel</source>
+        <translation>SIP</translation>
+    </message>
+    <message>
+        <source>audioRtpStreamFieldLabel</source>
+        <translation>Audio RTP Stream</translation>
+    </message>
+    <message>
+        <source>videoRtpStreamFieldLabel</source>
+        <translation>Video RTP Stream</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

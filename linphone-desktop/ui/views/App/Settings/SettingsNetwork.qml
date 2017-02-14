@@ -32,6 +32,8 @@ TabContainer {
           label: qsTr('mtuLabel')
 
           NumericField {
+            minValue: 500
+            maxValue: 3001
             readOnly: !forceMtu.checked
           }
         }
@@ -77,6 +79,8 @@ TabContainer {
           label: qsTr('sipUdpPortLabel')
 
           NumericField {
+            minValue: 0
+            maxValue: 65535
             readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
           }
         }
@@ -101,6 +105,8 @@ TabContainer {
           label: qsTr('sipTcpPortLabel')
 
           NumericField {
+            minValue: 0
+            maxValue: 65535
             readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
           }
         }
@@ -125,6 +131,8 @@ TabContainer {
           label: qsTr('audioRtpUdpPortLabel')
 
           NumericField {
+            minValue: 0
+            maxValue: 65535
             readOnly: randomAudioRtpUdpPort.checked || !enableAudioRtpUdpPort.checked
           }
         }
@@ -149,6 +157,8 @@ TabContainer {
           label: qsTr('videoRtpUdpPortLabel')
 
           NumericField {
+            minValue: 0
+            maxValue: 65535
             readOnly: randomVideoRtpUdpPort.checked || !enableVideoRtpUdpPort.checked
           }
         }
@@ -165,6 +175,47 @@ TabContainer {
           Switch {
             id: enableVideoRtpUdpPort
           }
+        }
+      }
+
+      FormEmptyLine {}
+
+      FormLine {
+        FormGroup {
+          label: qsTr('enableTlsLabel')
+
+          Switch {}
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // DSCP fields.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('dscpFieldsTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('sipFieldLabel')
+
+          TextField {}
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('audioRtpStreamFieldLabel')
+
+          TextField {}
+        }
+
+        FormGroup {
+          label: qsTr('videoRtpStreamFieldLabel')
+
+          TextField {}
         }
       }
     }

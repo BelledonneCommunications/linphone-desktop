@@ -35,6 +35,7 @@ NumericField         1.0 Form/Fields/NumericField.qml
 TextField            1.0 Form/Fields/TextField.qml
 
 Form                 1.0 Form/Placements/Form.qml
+FormEmptyLine        1.0 Form/Placements/FormEmptyLine.qml
 FormEntry            1.0 Form/Placements/FormEntry.qml
 FormGroup            1.0 Form/Placements/FormGroup.qml
 FormHeader           1.0 Form/Placements/FormHeader.qml
