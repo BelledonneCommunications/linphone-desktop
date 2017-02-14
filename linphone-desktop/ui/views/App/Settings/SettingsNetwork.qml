@@ -67,9 +67,7 @@ TabContainer {
           }
         }
 
-        FormGroup {
-          label: qsTr('randomSipUdpPortLabel')
-
+        FormEntry {
           Switch {
             id: randomSipUdpPort
 
@@ -77,8 +75,10 @@ TabContainer {
           }
         }
 
-        Switch {
-          id: enableSipUdpPort
+        FormEntry {
+          Switch {
+            id: enableSipUdpPort
+          }
         }
       }
 
@@ -91,9 +91,7 @@ TabContainer {
           }
         }
 
-        FormGroup {
-          label: qsTr('randomSipTcpPortLabel')
-
+        FormEntry {
           Switch {
             id: randomSipTcpPort
 
@@ -101,8 +99,10 @@ TabContainer {
           }
         }
 
-        Switch {
-          id: enableSipTcpPort
+        FormEntry {
+          Switch {
+            id: enableSipTcpPort
+          }
         }
       }
 
@@ -115,9 +115,7 @@ TabContainer {
           }
         }
 
-        FormGroup {
-          label: qsTr('randomAudioRtpUdpPortLabel')
-
+        FormEntry {
           Switch {
             id: randomAudioRtpUdpPort
 
@@ -125,8 +123,10 @@ TabContainer {
           }
         }
 
-        Switch {
-          id: enableAudioRtpUdpPort
+        FormEntry {
+          Switch {
+            id: enableAudioRtpUdpPort
+          }
         }
       }
 
@@ -139,9 +139,7 @@ TabContainer {
           }
         }
 
-        FormGroup {
-          label: qsTr('randomVideoRtpUdpPortLabel')
-
+        FormEntry {
           Switch {
             id: randomVideoRtpUdpPort
 
@@ -149,8 +147,10 @@ TabContainer {
           }
         }
 
-        Switch {
-          id: enableVideoRtpUdpPort
+        FormEntry {
+          Switch {
+            id: enableVideoRtpUdpPort
+          }
         }
       }
     }
@@ -187,6 +187,8 @@ TabContainer {
 
           Switch {
             id: enableTurn
+
+            enabled: enableIce.checked
           }
         }
 
@@ -194,7 +196,7 @@ TabContainer {
           label: qsTr('turnUserLabel')
 
           TextField {
-            readOnly: !enableTurn.checked
+            readOnly: !enableTurn.checked || !enableTurn.enabled
           }
         }
       }
@@ -209,7 +211,7 @@ TabContainer {
 
           TextField {
             echoMode: TextInput.Password
-            readOnly: !enableTurn.checked
+            readOnly: !enableTurn.checked || !enableTurn.enabled
           }
         }
       }

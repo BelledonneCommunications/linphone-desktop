@@ -34,6 +34,11 @@ ForceScrollBar       1.0 ForceScrollBar.qml
 NumericField         1.0 Form/Fields/NumericField.qml
 TextField            1.0 Form/Fields/TextField.qml
 
+Form                 1.0 Form/Placements/Form.qml
+FormEntry            1.0 Form/Placements/FormEntry.qml
+FormGroup            1.0 Form/Placements/FormGroup.qml
+FormLine             1.0 Form/Placements/FormLine.qml
+
 TabBar               1.0 Form/Tab/TabBar.qml
 TabButton            1.0 Form/Tab/TabButton.qml
 TabContainer         1.0 Form/Tab/TabContainer.qml
@@ -43,9 +48,6 @@ ActionButton         1.0 Form/ActionButton.qml
 ActionSwitch         1.0 Form/ActionSwitch.qml
 CheckBoxText         1.0 Form/CheckBoxText.qml
 ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
-Form                 1.0 Form/Form.qml
-FormGroup            1.0 Form/FormGroup.qml
-FormLine             1.0 Form/FormLine.qml
 LightButton          1.0 Form/LightButton.qml
 ListForm             1.0 Form/ListForm.qml
 StaticListForm       1.0 Form/StaticListForm.qml

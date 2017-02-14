@@ -613,7 +613,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>randomSipUdpPortLabel</source>
-        <translation>Random</translation>
+        <translation type="vanished">Random</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
@@ -621,7 +621,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>randomSipTcpPortLabel</source>
-        <translation>Random</translation>
+        <translation type="vanished">Random</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -629,11 +629,11 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>randomAudioRtpUdpPortLabel</source>
-        <translation>Random</translation>
+        <translation type="vanished">Random</translation>
     </message>
     <message>
         <source>randomVideoRtpUdpPortLabel</source>
-        <translation>Random</translation>
+        <translation type="vanished">Random</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>

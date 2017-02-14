@@ -31,13 +31,14 @@ RowLayout {
   Item {
     id: content
 
-    Layout.alignment: {
-      var height = _content[0] ? _content[0].height : 0
-      return height < label.height ? Qt.AlignVCenter : Qt.AlignTop
-    }
+    readonly property int currentHeight: _content[0] ? _content[0].height : 0
+
+    Layout.alignment: currentHeight < FormGroupStyle.legend.height
+      ? Qt.AlignVCenter
+      : Qt.AlignTop
 
     Layout.maximumWidth: FormGroupStyle.content.width
-    Layout.preferredHeight: _content[0] ? _content[0].height : 0
+    Layout.preferredHeight: currentHeight
     Layout.preferredWidth: FormGroupStyle.content.width
   }
 }

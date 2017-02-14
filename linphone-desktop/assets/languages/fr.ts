@@ -623,7 +623,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>randomSipUdpPortLabel</source>
-        <translation>Aléatoire</translation>
+        <translation type="vanished">Aléatoire</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
@@ -631,7 +631,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>randomSipTcpPortLabel</source>
-        <translation>Aléatoire</translation>
+        <translation type="vanished">Aléatoire</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -639,11 +639,11 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>randomAudioRtpUdpPortLabel</source>
-        <translation>Aléatoire</translation>
+        <translation type="vanished">Aléatoire</translation>
     </message>
     <message>
         <source>randomVideoRtpUdpPortLabel</source>
-        <translation>Aléatoire</translation>
+        <translation type="vanished">Aléatoire</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
