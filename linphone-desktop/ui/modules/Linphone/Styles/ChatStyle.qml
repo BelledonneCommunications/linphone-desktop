@@ -6,8 +6,6 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
-  property color color: Colors.k
-
   property QtObject sectionHeading: QtObject {
     property int padding: 5
     property int bottomMargin: 20

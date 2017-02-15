@@ -12,6 +12,12 @@ import Utils 1.0
 ColumnLayout {
   property alias proxyModel: chat.model
 
+  // Unable to use it in style file at this moment.
+  // A `TypeError: Cannot read property 'XXX' of undefined` is launched for many properties
+  // in the style file otherwise.
+  // Seems related to: https://bugreports.qt.io/browse/QTBUG-58648
+  property color _backgroundColor: 'white'
+
   property bool _bindToEnd: false
   property var _contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
 
@@ -25,7 +31,7 @@ ColumnLayout {
 
   Rectangle {
     anchors.fill: parent
-    color: ChatStyle.color
+    color: _backgroundColor
   }
 
   ScrollableListView {
@@ -176,7 +182,7 @@ ColumnLayout {
           ChatStyle.entry.message.extraContent.leftMargin +
           ChatStyle.entry.message.outgoing.sendIconSize
       }
-      color: ChatStyle.color
+      color: _backgroundColor
       implicitHeight: layout.height + ChatStyle.entry.bottomMargin
 
       // -----------------------------------------------------------------------
