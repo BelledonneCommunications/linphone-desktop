@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
+import QtQuick.Controls 1.4 as Controls1
+
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
@@ -10,7 +12,7 @@ import App.Styles 1.0
 
 // =============================================================================
 
-ApplicationWindow {
+Controls1.ApplicationWindow {
   id: window
 
   property string _currentView: ''
@@ -62,7 +64,7 @@ ApplicationWindow {
   }
 
   function _setView (view, props) {
-    window.show()
+    window.setVisible(true)
     window.requestActivate()
     collapse.setCollapsed(true)
 
@@ -84,145 +86,160 @@ ApplicationWindow {
   onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()
 
   // ---------------------------------------------------------------------------
-  // Toolbar properties.
+  // Menu bar.
   // ---------------------------------------------------------------------------
 
-  header: ToolBar {
-    background: MainWindowStyle.toolBar.background
-    height: MainWindowStyle.toolBar.height
+   menuBar: MainWindowMenuBar {}
 
-    RowLayout {
-      anchors {
-        fill: parent
-        leftMargin: MainWindowStyle.toolBar.leftMargin
-        rightMargin: MainWindowStyle.toolBar.rightMargin
-      }
-      spacing: MainWindowStyle.toolBar.spacing
 
-      Collapse {
-        id: collapse
-
-        Layout.fillHeight: parent.height
-        target: window
-        targetHeight: MainWindowStyle.minimumHeight
-      }
-
-      AccountStatus {
-        id: accountStatus
-
-        Layout.fillHeight: parent.height
-        Layout.preferredWidth: MainWindowStyle.accountStatus.width
-
-        account: AccountSettingsModel
-
-        TooltipArea {
-          text: AccountSettingsModel.sipAddress
-        }
-
-        onClicked: Utils.openWindow('ManageAccounts', window)
-      }
-
-      Column {
-        width: MainWindowStyle.autoAnswerStatus.width
-
-        Icon {
-          icon: SettingsModel.autoAnswerStatus
-            ? 'auto_answer'
-            : ''
-          iconSize: MainWindowStyle.autoAnswerStatus.iconSize
-        }
-
-        Text {
-          clip: true
-          font {
-            pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
-          }
-          text: qsTr('autoAnswerStatus')
-          width: parent.width
-          color: MainWindowStyle.autoAnswerStatus.text.color
-        }
-      }
-
-      SmartSearchBar {
-        id: smartSearchBar
-
-        Layout.fillWidth: true
-        entryHeight: MainWindowStyle.searchBox.entryHeight
-        maxMenuHeight: MainWindowStyle.searchBox.maxHeight
-        placeholderText: qsTr('mainSearchBarPlaceholder')
-
-        model: SmartSearchBarModel {}
-
-        onAddContact: window.setView('ContactEdit', {
-          sipAddress: sipAddress
-        })
-
-        onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
-        onLaunchChat: window.setView('Conversation', {
-          sipAddress: sipAddress
-        })
-
-        onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
-
-        onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
-          sipAddress: entry.sipAddress
-        })
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // Content.
-  // ---------------------------------------------------------------------------
-
-  RowLayout {
+  ColumnLayout {
     anchors.fill: parent
     spacing: 0
 
-    // Main menu.
-    ColumnLayout {
-      Layout.fillHeight: true
-      Layout.maximumWidth: MainWindowStyle.menu.width
-      Layout.preferredWidth: MainWindowStyle.menu.width
-      spacing: 0
+    // -------------------------------------------------------------------------
+    // Toolbar properties.
+    // -------------------------------------------------------------------------
 
-      Menu {
-        id: menu
+    ToolBar {
+      background: MainWindowStyle.toolBar.background
+      Layout.preferredHeight: MainWindowStyle.toolBar.height
+      Layout.fillWidth: true
 
-        entryHeight: MainWindowStyle.menu.entryHeight
-        entryWidth: MainWindowStyle.menu.width
+      RowLayout {
+        anchors {
+          fill: parent
+          leftMargin: MainWindowStyle.toolBar.leftMargin
+          rightMargin: MainWindowStyle.toolBar.rightMargin
+        }
+        spacing: MainWindowStyle.toolBar.spacing
 
-        entries: [{
-          entryName: qsTr('homeEntry'),
-          icon: 'home'
-        }, {
-          entryName: qsTr('contactsEntry'),
-          icon: 'contact'
-        }]
+        Collapse {
+          id: collapse
 
-        onEntrySelected: !entry ? setView('Home') : setView('Contacts')
-      }
+          Layout.fillHeight: parent.height
+          target: window
+          targetHeight: MainWindowStyle.minimumHeight
+        }
 
-      // History.
-      Timeline {
-        id: timeline
+        AccountStatus {
+          id: accountStatus
 
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-        model: TimelineModel
+          Layout.fillHeight: parent.height
+          Layout.preferredWidth: MainWindowStyle.accountStatus.width
 
-        onEntrySelected: setView('Conversation', { sipAddress: entry })
+          account: AccountSettingsModel
+
+          TooltipArea {
+            text: AccountSettingsModel.sipAddress
+          }
+
+          onClicked: Utils.openWindow('ManageAccounts', window)
+        }
+
+        Column {
+          width: MainWindowStyle.autoAnswerStatus.width
+
+          Icon {
+            icon: SettingsModel.autoAnswerStatus
+              ? 'auto_answer'
+              : ''
+            iconSize: MainWindowStyle.autoAnswerStatus.iconSize
+          }
+
+          Text {
+            clip: true
+            font {
+              pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
+            }
+            text: qsTr('autoAnswerStatus')
+            width: parent.width
+            color: MainWindowStyle.autoAnswerStatus.text.color
+          }
+        }
+
+        SmartSearchBar {
+          id: smartSearchBar
+
+          Layout.fillWidth: true
+          entryHeight: MainWindowStyle.searchBox.entryHeight
+          maxMenuHeight: MainWindowStyle.searchBox.maxHeight
+          placeholderText: qsTr('mainSearchBarPlaceholder')
+
+          model: SmartSearchBarModel {}
+
+          onAddContact: window.setView('ContactEdit', {
+            sipAddress: sipAddress
+          })
+
+          onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
+          onLaunchChat: window.setView('Conversation', {
+            sipAddress: sipAddress
+          })
+
+          onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
+
+          onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
+            sipAddress: entry.sipAddress
+          })
+        }
       }
     }
 
-    // Main content.
-    Loader {
-      id: contentLoader
+    // -------------------------------------------------------------------------
+    // Content.
+    // -------------------------------------------------------------------------
 
+    RowLayout {
       Layout.fillHeight: true
       Layout.fillWidth: true
 
-      Component.onCompleted: setView('Home')
+      spacing: 0
+
+      // Main menu.
+      ColumnLayout {
+        Layout.fillHeight: true
+        Layout.maximumWidth: MainWindowStyle.menu.width
+        Layout.preferredWidth: MainWindowStyle.menu.width
+        spacing: 0
+
+        Menu {
+          id: menu
+
+          entryHeight: MainWindowStyle.menu.entryHeight
+          entryWidth: MainWindowStyle.menu.width
+
+          entries: [{
+            entryName: qsTr('homeEntry'),
+            icon: 'home'
+          }, {
+            entryName: qsTr('contactsEntry'),
+            icon: 'contact'
+          }]
+
+          onEntrySelected: !entry ? setView('Home') : setView('Contacts')
+        }
+
+        // History.
+        Timeline {
+          id: timeline
+
+          Layout.fillHeight: true
+          Layout.fillWidth: true
+          model: TimelineModel
+
+          onEntrySelected: setView('Conversation', { sipAddress: entry })
+        }
+      }
+
+      // Main content.
+      Loader {
+        id: contentLoader
+
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+
+        Component.onCompleted: setView('Home')
+      }
     }
   }
 }

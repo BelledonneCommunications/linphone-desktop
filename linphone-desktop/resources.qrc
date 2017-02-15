@@ -303,6 +303,7 @@
     <file>ui/views/App/Main/Contacts.qml</file>
     <file>ui/views/App/Main/Conversation.qml</file>
     <file>ui/views/App/Main/Home.qml</file>
+    <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
     <file>ui/views/App/ManageAccounts.qml</file>
     <file>ui/views/App/qmldir</file>
