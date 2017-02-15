@@ -395,6 +395,41 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>MainWindowMenuBar</name>
+    <message>
+        <source>tools</source>
+        <translation>Tools</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation>Help</translation>
+    </message>
+    <message>
+        <source>options</source>
+        <translation>Options</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Settings</translation>
+    </message>
+    <message>
+        <source>accountAssistant</source>
+        <translation>Account assistant</translation>
+    </message>
+    <message>
+        <source>audioAssistant</source>
+        <translation>Audio Assistant</translation>
+    </message>
+    <message>
+        <source>debugWindow</source>
+        <translation>Debug window</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>About</translation>
+    </message>
+</context>
+<context>
     <name>ManageAccounts</name>
     <message>
         <source>manageAccountsDescription</source>

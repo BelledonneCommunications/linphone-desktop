@@ -6,6 +6,8 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
+  property color color: Colors.k
+
   property QtObject contact: QtObject {
     property int height: 60
 

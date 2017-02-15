@@ -45,6 +45,11 @@ ColumnLayout {
 
   spacing: 0
 
+  Rectangle {
+    anchors.fill: parent
+    color: TimelineStyle.color
+  }
+
   SmartConnect {
     Component.onCompleted: {
       // Handle if current entry was moved in timeline.

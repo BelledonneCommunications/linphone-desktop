@@ -394,6 +394,41 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>MainWindowMenuBar</name>
+    <message>
+        <source>tools</source>
+        <translation>Outils</translation>
+    </message>
+    <message>
+        <source>help</source>
+        <translation>Aide</translation>
+    </message>
+    <message>
+        <source>options</source>
+        <translation>Options</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Paramètres</translation>
+    </message>
+    <message>
+        <source>accountAssistant</source>
+        <translation>Assistant de compte</translation>
+    </message>
+    <message>
+        <source>audioAssistant</source>
+        <translation>Assistant audio</translation>
+    </message>
+    <message>
+        <source>debugWindow</source>
+        <translation>Fenêtre de debug</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>À propos</translation>
+    </message>
+</context>
+<context>
     <name>ManageAccounts</name>
     <message>
         <source>manageAccountsDescription</source>
