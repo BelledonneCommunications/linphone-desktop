@@ -319,6 +319,7 @@
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
+    <file>ui/views/App/Styles/Main/MainWindowMenuBarStyle.qml</file>
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
     <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>

@@ -428,6 +428,22 @@ Server url not configured.</translation>
         <source>about</source>
         <translation>About</translation>
     </message>
+    <message>
+        <source>checkForUpdates</source>
+        <translation>Check for updates</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Quit</translation>
+    </message>
+    <message>
+        <source>importContacts</source>
+        <translation>Import contacts from vCards</translation>
+    </message>
+    <message>
+        <source>exportContacts</source>
+        <translation>Export contacts as vCards</translation>
+    </message>
 </context>
 <context>
     <name>ManageAccounts</name>
