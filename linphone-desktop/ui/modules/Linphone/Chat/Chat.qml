@@ -23,6 +23,11 @@ ColumnLayout {
 
   spacing: 0
 
+  Rectangle {
+    anchors.fill: parent
+    color: ChatStyle.color
+  }
+
   ScrollableListView {
     id: chat
 
@@ -171,6 +176,7 @@ ColumnLayout {
           ChatStyle.entry.message.extraContent.leftMargin +
           ChatStyle.entry.message.outgoing.sendIconSize
       }
+      color: ChatStyle.color
       implicitHeight: layout.height + ChatStyle.entry.bottomMargin
 
       // -----------------------------------------------------------------------

@@ -277,6 +277,11 @@ ColumnLayout  {
       contentWidth: width - ScrollBar.vertical.width
       flickableDirection: Flickable.VerticalFlick
 
+      Rectangle {
+        anchors.fill: parent
+        color: ContactEditStyle.content.color
+      }
+
       SmartConnect {
         Component.onCompleted: this.connect(_vcard, 'onVcardUpdated', function () {
           addresses.setData(_vcard.sipAddresses)

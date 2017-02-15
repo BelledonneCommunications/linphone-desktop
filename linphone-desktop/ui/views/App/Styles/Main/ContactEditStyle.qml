@@ -6,6 +6,11 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
+  property QtObject buttons: QtObject {
+    property int spacing: 20
+    property int topMargin: 20
+  }
+
   property QtObject infoBar: QtObject {
     property color color: Colors.e
     property int avatarSize: 60
@@ -25,9 +30,8 @@ QtObject {
     }
   }
 
-  property QtObject buttons: QtObject {
-    property int spacing: 20
-    property int topMargin: 20
+  property QtObject content: QtObject {
+    property color color: Colors.k
   }
 
   property QtObject values: QtObject {
