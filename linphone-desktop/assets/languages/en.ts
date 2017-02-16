@@ -345,23 +345,59 @@ Server url not configured.</translation>
     <name>Home</name>
     <message>
         <source>invitContactQuestion</source>
-        <translation>Are your friends already know Linphone?</translation>
+        <translation type="vanished">Are your friends already know Linphone?</translation>
     </message>
     <message>
         <source>invitContact</source>
-        <translation>INVIT YOUR FRIENDS</translation>
+        <translation type="vanished">INVIT YOUR FRIENDS</translation>
     </message>
     <message>
         <source>addContactQuestion</source>
-        <translation>Quickly add your contacts in your notebook.</translation>
+        <translation type="vanished">Quickly add your contacts in your notebook.</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation>ADD CONTACTS</translation>
+        <translation type="vanished">ADD CONTACTS</translation>
     </message>
     <message>
         <source>displayTooltip</source>
-        <translation>Display tooltips to discover Linphone Desktop</translation>
+        <translation type="vanished">Display tooltips to discover Linphone Desktop</translation>
+    </message>
+    <message>
+        <source>howToDescription</source>
+        <translation>Need help on how to use Linphone?</translation>
+    </message>
+    <message>
+        <source>howToTitle</source>
+        <translation>HOW TO USE LINPHONE</translation>
+    </message>
+    <message>
+        <source>inviteDescription</source>
+        <translation>Invite your friends on Linphone.</translation>
+    </message>
+    <message>
+        <source>inviteTitle</source>
+        <translation>INVITE YOUR FRIENDS</translation>
+    </message>
+    <message>
+        <source>accountAssistantDescription</source>
+        <translation>Create or manage your Linphone account.</translation>
+    </message>
+    <message>
+        <source>accountAssistantTitle</source>
+        <translation>ACCOUNT ASSISTANT</translation>
+    </message>
+    <message>
+        <source>assistantButton</source>
+        <translation>ASSISTANT</translation>
+    </message>
+    <message>
+        <source>showTooltips</source>
+        <translation>Show tooltips</translation>
+    </message>
+    <message>
+        <source>inviteButton</source>
+        <translation>INVITE</translation>
     </message>
 </context>
 <context>

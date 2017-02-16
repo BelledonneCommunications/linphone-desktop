@@ -1,62 +1,80 @@
 import QtQuick 2.7
-import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import Linphone.Styles 1.0
+
+import App.Styles 1.0
 
 // =============================================================================
 
-ColumnLayout {
-  spacing: 0
+Rectangle {
+  color: HomeStyle.color
 
-  ColumnLayout {
-    Layout.alignment: Qt.AlignTop
-    Layout.fillHeight: true
-    Layout.fillWidth: true
-    Layout.leftMargin: 50
-    Layout.topMargin: 50
-    spacing: 30
+  ScrollableListView {
+    anchors.horizontalCenter: parent.horizontalCenter
+    orientation: ListView.Horizontal
+    spacing: HomeStyle.spacing
 
-    // Invit friends.
-    Column {
-      spacing: 8
+    height: parent.height
+    width: {
+      var width = CardBlockStyle.width * count + (count - 1) * spacing
+      return parent.width < width ? parent.width : width
+    }
 
-      Text {
-        color: '#5A585B'
-        font.bold: true
-        font.pointSize: 11
-        text: qsTr('invitContactQuestion')
+    model: ListModel {
+      ListElement {
+        $component: 'checkBox'
+        $componentText: qsTr('showTooltips')
+        $description: qsTr('howToDescription')
+        $icon: 'home_use_linphone'
+        $title: qsTr('howToTitle')
       }
 
-      TextButtonB {
-        text: qsTr('invitContact')
+      ListElement {
+        $component: 'button'
+        $componentText: qsTr('inviteButton')
+        $description: qsTr('inviteDescription')
+        $icon: 'home_invite_friends'
+        $title: qsTr('inviteTitle')
+      }
+
+      ListElement {
+        $component: 'button'
+        $componentText: qsTr('assistantButton')
+        $description: qsTr('accountAssistantDescription')
+        $icon: 'home_account_assistant'
+        $title: qsTr('accountAssistantTitle')
       }
     }
 
-    // Add contacts.
-    Column {
-      spacing: 8
+    delegate: CardBlock {
+      anchors.verticalCenter: parent.verticalCenter
 
-      Text {
-        color: '#5A585B'
-        font.bold: true
-        font.pointSize: 11
-        text: qsTr('addContactQuestion')
-      }
+      description: $description
+      icon: $icon
+      title: $title
 
-      TextButtonB {
-        text: qsTr('addContact')
+      Loader {
+        Component {
+          id: button
+
+          TextButtonB {
+            text: $componentText
+          }
+        }
+
+        Component {
+          id: checkBox
+
+          CheckBoxText {
+            text: $componentText
+          }
+        }
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        sourceComponent: $component === 'button' ? button : checkBox
       }
     }
-  }
-
-  // Tooltip checkbox area.
-  CheckBoxText {
-    Layout.alignment: Qt.AlignBottom
-    Layout.fillWidth: true
-    Layout.leftMargin: 50
-    Layout.preferredHeight: 70
-
-    text: qsTr('displayTooltip')
   }
 }

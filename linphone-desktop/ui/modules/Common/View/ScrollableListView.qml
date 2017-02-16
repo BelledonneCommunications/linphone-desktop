@@ -8,14 +8,22 @@ import Common 1.0
 ListView {
   id: listView
 
+  ScrollBar.horizontal: ForceScrollBar {
+    id: hScrollBar
+
+    onPressedChanged: pressed ? listView.movementStarted() : listView.movementEnded()
+  }
+
   ScrollBar.vertical: ForceScrollBar {
-    id: scrollBar
+    id: vScrollBar
 
     onPressedChanged: pressed ? listView.movementStarted() : listView.movementEnded()
   }
 
   boundsBehavior: Flickable.StopAtBounds
   clip: true
-  contentWidth: width - scrollBar.width
+  contentWidth: vScrollBar.visible ? width - vScrollBar.width : width
+  contentHeight: hScrollBar.visible ? height - hScrollBar.height : height
+
   spacing: 0
 }

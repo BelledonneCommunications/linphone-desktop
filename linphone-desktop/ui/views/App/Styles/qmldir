@@ -10,6 +10,7 @@ singleton CallsWindowStyle    1.0 Calls/CallsWindowStyle.qml
 singleton ContactEditStyle       1.0 Main/ContactEditStyle.qml
 singleton ContactsStyle          1.0 Main/ContactsStyle.qml
 singleton ConversationStyle      1.0 Main/ConversationStyle.qml
+singleton HomeStyle              1.0 Main/HomeStyle.qml
 singleton MainWindowMenuBarStyle 1.0 Main/MainWindowMenuBarStyle.qml
 singleton MainWindowStyle        1.0 Main/MainWindowStyle.qml
 

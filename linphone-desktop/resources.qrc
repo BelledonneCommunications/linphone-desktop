@@ -94,8 +94,11 @@
     <file>assets/images/history_normal.svg</file>
     <file>assets/images/history_pressed.svg</file>
     <file>assets/images/history.svg</file>
+    <file>assets/images/home_account_assistant.svg</file>
+    <file>assets/images/home_invite_friends.svg</file>
     <file>assets/images/home_normal.svg</file>
     <file>assets/images/home_selected.svg</file>
+    <file>assets/images/home_use_linphone.svg</file>
     <file>assets/images/incoming_call.svg</file>
     <file>assets/images/led_green.svg</file>
     <file>assets/images/led_orange.svg</file>
@@ -253,6 +256,7 @@
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Calls/CallControls.qml</file>
     <file>ui/modules/Linphone/Calls/Calls.qml</file>
+    <file>ui/modules/Linphone/CardBlock.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
     <file>ui/modules/Linphone/Chat/FileMessage.qml</file>
@@ -274,6 +278,7 @@
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallControlsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/CardBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
@@ -319,6 +324,7 @@
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
+    <file>ui/views/App/Styles/Main/HomeStyle.qml</file>
     <file>ui/views/App/Styles/Main/MainWindowMenuBarStyle.qml</file>
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>

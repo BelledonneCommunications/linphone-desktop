@@ -333,23 +333,59 @@ Url du serveur non configurée.</translation>
     <name>Home</name>
     <message>
         <source>invitContactQuestion</source>
-        <translation>Vos amis connaissent-ils déjà Linphone ?</translation>
+        <translation type="vanished">Vos amis connaissent-ils déjà Linphone ?</translation>
     </message>
     <message>
         <source>invitContact</source>
-        <translation>INVITER VOS AMIS</translation>
+        <translation type="vanished">INVITER VOS AMIS</translation>
     </message>
     <message>
         <source>addContactQuestion</source>
-        <translation>Ajouter vos contacts dans votre carnet d&apos;adresses.</translation>
+        <translation type="vanished">Ajouter vos contacts dans votre carnet d&apos;adresses.</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation>AJOUTER CONTACTS</translation>
+        <translation type="vanished">AJOUTER CONTACTS</translation>
     </message>
     <message>
         <source>displayTooltip</source>
-        <translation>Afficher les tooltips pour découvrir Linphone Desktop</translation>
+        <translation type="vanished">Afficher les tooltips pour découvrir Linphone Desktop</translation>
+    </message>
+    <message>
+        <source>howToDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>howToTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inviteDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inviteTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>accountAssistantDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>accountAssistantTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>assistantButton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>showTooltips</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inviteButton</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -6,6 +6,8 @@ module Linphone.Style
 
 singleton AccountStatusStyle                   1.0 Account/AccountStatusStyle.qml
 
+singleton CardBlockStyle                       1.0 CardBlockStyle.qml
+
 singleton ChatStyle                            1.0 ChatStyle.qml
 
 singleton CallsStyle                           1.0 Calls/CallsStyle.qml
