@@ -176,13 +176,19 @@ if(WIN32)
 		COMMAND ${WINDEPLOYQT_PROGRAM} "${LINPHONE_OUTPUT_DIR}/bin/linphone.exe" "--qmldir" "${LINPHONE_QML_DIR}"
 	)
 
+	file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
+	list(REMOVE_ITEM SHARE_CONTENT "share/images" "share/linphone" "share/Linphone" "share/sounds")
+	foreach(item IN LISTS SHARE_CONTENT)
+		list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${item}" EXCLUDE)
+	endforeach()
+
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
 		DESTINATION "."
 		COMPONENT "linphone_base"
-		PATTERN "doc" EXCLUDE
-		PATTERN "etc" EXCLUDE
+		PATTERN "bin/belcard*.exe" EXCLUDE
+		PATTERN "bin/*_tester.exe" EXCLUDE
+		PATTERN "bin/openh264.dll" EXCLUDE
 		PATTERN "include" EXCLUDE
-		PATTERN "lib/cmake" EXCLUDE
 		PATTERN "lib/mediastreamer" EXCLUDE
 		PATTERN "lib/pkgconfig" EXCLUDE
 		PATTERN "lib/*.a" EXCLUDE
@@ -190,16 +196,12 @@ if(WIN32)
 		PATTERN "lib/*.exp" EXCLUDE
 		PATTERN "lib/*.la" EXCLUDE
 		PATTERN "lib/*.lib" EXCLUDE
-		PATTERN "man" EXCLUDE
-		PATTERN "manifest" EXCLUDE
-		PATTERN "share/aclocal" EXCLUDE
-		PATTERN "share/BCUnit" EXCLUDE
-		PATTERN "share/java" EXCLUDE
-		PATTERN "src" EXCLUDE
+		PATTERN "lib/Win32" EXCLUDE
 		PATTERN "linphone.lnk" EXCLUDE
-		PATTERN "bin/openh264.dll" EXCLUDE
-		PATTERN "share/*/cmake" EXCLUDE
+		PATTERN "share/Linphone/cmake" EXCLUDE
+		${SHARE_CONTENT_EXCLUDE}
 	)
+
 
 	if(ENABLE_OPENH264)
 		# Include bunzip2.exe and bzip2.dll to be able to extract the openh264 file downloaded from Cisco
@@ -215,10 +217,6 @@ if(WIN32)
 		)
 	endif()
 
-	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/"
-		DESTINATION "lib/mediastreamer/plugins"
-		FILES_MATCHING PATTERN "libmssilk.*"
-	)
 elseif(APPLE)
 	find_program(MAC_BUNDLER gtk-mac-bundler)
 	if(NOT MAC_BUNDLER)
