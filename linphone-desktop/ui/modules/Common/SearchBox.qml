@@ -100,6 +100,10 @@ Item {
         this.connect(window, 'xChanged', handleCoords)
         this.connect(window, 'yChanged', handleCoords)
 
+        this.connect(window, 'visibilityChanged', function () {
+          searchBox.hideMenu()
+        })
+
         handleCoords()
       }
     }
