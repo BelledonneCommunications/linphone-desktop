@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Window 2.2
 
 import Common 1.0
 import Common.Styles 1.0
@@ -81,21 +82,36 @@ Item {
       onTextChanged: _filter(text)
     }
 
+    // -------------------------------------------------------------------------
+
+    SmartConnect {
+      Component.onCompleted: {
+        var window = searchBox.Window.window
+
+        var handleCoords = function () {
+          var point = searchBox.mapToItem(null, 0, searchBox.height)
+
+          desktopPopup.popupX = window.x + point.x
+          desktopPopup.popupY = window.y + point.y
+        }
+
+        this.connect(window, 'heightChanged', handleCoords)
+        this.connect(window, 'widthChanged', handleCoords)
+        this.connect(window, 'xChanged', handleCoords)
+        this.connect(window, 'yChanged', handleCoords)
+
+        handleCoords()
+      }
+    }
+
     // Wrap the search box menu in a window.
     DesktopPopup {
       id: desktopPopup
 
       // The menu is always below the search field.
-      property point coords: {
-        var point = searchBox.mapToItem(null, 0, searchBox.height)
-        point.x += window.x
-        point.y += window.y
+      popupX: 0
+      popupY: 0
 
-        return point
-      }
-
-      popupX: coords.x
-      popupY: coords.y
       requestActivate: true
 
       onVisibleChanged: !visible && searchBox.hideMenu()
