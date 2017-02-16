@@ -95,6 +95,7 @@ Item {
           desktopPopup.popupY = window.y + point.y
         }
 
+        // The menu is always below the search field.
         this.connect(window, 'heightChanged', handleCoords)
         this.connect(window, 'widthChanged', handleCoords)
         this.connect(window, 'xChanged', handleCoords)
@@ -111,10 +112,6 @@ Item {
     // Wrap the search box menu in a window.
     DesktopPopup {
       id: desktopPopup
-
-      // The menu is always below the search field.
-      popupX: 0
-      popupY: 0
 
       requestActivate: true
 
