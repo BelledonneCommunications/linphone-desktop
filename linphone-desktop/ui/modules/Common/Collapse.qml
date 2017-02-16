@@ -15,6 +15,7 @@ Item {
 
   property var target
   property int targetHeight
+  readonly property alias isCollapsed: collapse._collapsed
 
   property bool _collapsed: false
   property var _savedHeight

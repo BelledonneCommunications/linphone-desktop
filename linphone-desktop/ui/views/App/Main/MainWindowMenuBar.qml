@@ -9,6 +9,27 @@ import App.Styles 1.0
  // ============================================================================
 
  MenuBar {
+   id: container
+
+   // --------------------------------------------------------------------------
+
+   property bool hide: false
+
+   // --------------------------------------------------------------------------
+
+   // Workaround to hide toolbar.
+   // Use private properties of MenuBar.
+
+   __contentItem.height: hide
+     ? 0
+     : MainWindowMenuBarStyle.height
+
+   __contentItem.transform: Scale {
+     yScale: Number(!hide)
+   }
+
+   // --------------------------------------------------------------------------
+
    style: MenuBarStyle {
      background: Rectangle {
        color: MainWindowMenuBarStyle.color

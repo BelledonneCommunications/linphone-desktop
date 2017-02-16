@@ -16,7 +16,7 @@ import App.Styles 1.0
 Controls1.ApplicationWindow {
   id: window
 
-  property string _currentView: ''
+  property string _currentView
   property var _lockedInfo
 
   // ---------------------------------------------------------------------------
@@ -84,15 +84,25 @@ Controls1.ApplicationWindow {
   title: MainWindowStyle.title
   visible: true
 
+  // ---------------------------------------------------------------------------
+  // Menu bar.
+  // ---------------------------------------------------------------------------
+
+  menuBar: MainWindowMenuBar {
+    hide: !collapse.isCollapsed
+  }
+
+  // ---------------------------------------------------------------------------
+
+  Component.onCompleted: _setView('Home')
+
   onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()
 
   // ---------------------------------------------------------------------------
-  // Mernu bar.
-  // ---------------------------------------------------------------------------
-
-  menuBar: MainWindowMenuBar {}
 
   ColumnLayout {
+    id: container
+
     anchors.fill: parent
     spacing: 0
 
@@ -149,12 +159,10 @@ Controls1.ApplicationWindow {
 
           Text {
             clip: true
-            font {
-              pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
-            }
+            color: MainWindowStyle.autoAnswerStatus.text.color
+            font.pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
             text: qsTr('autoAnswerStatus')
             width: parent.width
-            color: MainWindowStyle.autoAnswerStatus.text.color
           }
         }
 
@@ -238,8 +246,6 @@ Controls1.ApplicationWindow {
 
         Layout.fillHeight: true
         Layout.fillWidth: true
-
-        Component.onCompleted: setView('Home')
       }
     }
   }

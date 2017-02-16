@@ -7,6 +7,7 @@ import Common 1.0
 
 QtObject {
   property color color: Colors.v
+  property int height: 27
 
   property QtObject menu: QtObject {
     property QtObject text: QtObject {
