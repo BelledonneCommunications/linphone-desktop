@@ -28,10 +28,6 @@ find_package(Git)
 
 set(LINPHONE_QML_DIR "${LINPHONE_DESKTOP_DIR}/ui")
 
-if(WIN32)
-	set(WINDEPLOYQT_PROGRAM windeployqt)
-endif()
-
 if(GIT_EXECUTABLE)
 	execute_process(
 		COMMAND ${GIT_EXECUTABLE} describe --always
@@ -173,7 +169,7 @@ endif()
 
 if(WIN32)
 	execute_process(
-		COMMAND ${WINDEPLOYQT_PROGRAM} "${LINPHONE_OUTPUT_DIR}/bin/linphone.exe" "--qmldir" "${LINPHONE_QML_DIR}"
+		COMMAND windeployqt "${LINPHONE_OUTPUT_DIR}/bin/linphone.exe" "--qmldir" "${LINPHONE_QML_DIR}"
 	)
 
 	file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
@@ -218,22 +214,22 @@ if(WIN32)
 	endif()
 
 elseif(APPLE)
-	find_program(MAC_BUNDLER gtk-mac-bundler)
-	if(NOT MAC_BUNDLER)
-		message(FATAL_ERROR "Could not find gtk-mac-bundler executable!")
-	endif()
-	find_program(PATCH_PROGRAM patch)
-	if(NOT PATCH_PROGRAM)
-		message(FATAL_ERROR "Could not find patch executable!")
-	endif()
-	configure_file("${LINPHONE_SOURCE_DIR}/build/macos/Info-linphone.plist.in" "mac-bundler/Info-linphone.plist" @ONLY)
-	configure_file("${LINPHONE_SOURCE_DIR}/build/macos/environment.sh" "mac-bundler/environment.sh" COPYONLY)
-	configure_file("${LINPHONE_SOURCE_DIR}/gtk/gtkrc.mac" "mac-bundler/gtkrc" COPYONLY)
-	configure_file("${LINPHONE_SOURCE_DIR}/pixmaps/linphone.icns" "mac-bundler/linphone.icns" COPYONLY)
-	configure_file("mac-bundler/linphone.bundle" "mac-bundler/linphone.bundle" COPYONLY)	# This file has to be different than the one in the linphone source code because of different file access paths
-	configure_file("mac-bundler/pkg-scripts/postinstall.in" "mac-bundler/pkg-scripts/postinstall" @ONLY)
-	configure_file("mac-bundler/call-bundler.cmake.in" "mac-bundler/call-bundler.cmake")
-	install(SCRIPT "${CMAKE_BINARY_DIR}/mac-bundler/call-bundler.cmake")
+	configure_file("Info.plist.in" "Linphone.app/Contents/Info.plist" @ONLY)
+	configure_file("linphone.icns" "Linphone.app/Contents/Resources/linphone.icns" COPYONLY)
+	file(COPY "${LINPHONE_OUTPUT_DIR}/bin/linphone" DESTINATION "Linphone.app/Contents/MacOS")
+
+	execute_process(
+		COMMAND macdeployqt "${CMAKE_CURRENT_BINARY_DIR}/Linphone.app" "-qmldir=${LINPHONE_QML_DIR}" "-verbose=2"
+	)
+
+	install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Linphone.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
+	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer" DESTINATION "Linphone.app/Contents/Resources/lib" USE_SOURCE_PERMISSIONS)
+	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/share/images" DESTINATION "Linphone.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
+	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/share/Linphone/rootca.pem" DESTINATION "Linphone.app/Contents/Resources/share/linphone" USE_SOURCE_PERMISSIONS)
+	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/share/sounds" DESTINATION "Linphone.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
+
+	configure_file("MacPackaging.cmake.in" "MacPackaging.cmake" @ONLY)
+	install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/MacPackaging.cmake")
 endif()
 
 if(MSVC)
