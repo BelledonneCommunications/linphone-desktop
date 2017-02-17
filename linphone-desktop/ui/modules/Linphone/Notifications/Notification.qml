@@ -17,7 +17,7 @@ DesktopPopup {
 
   property alias notificationHeight: notification.popupHeight
   property int notificationOffset: 0
-  property var notificationData: null
+  property var notificationData: ({})
 
   readonly property var window: _window
   property var _window
