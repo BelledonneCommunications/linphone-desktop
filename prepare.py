@@ -48,7 +48,6 @@ class DesktopTarget(prepare.Target):
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'submodules')
         self.packaging_args = [
-            "-DCMAKE_SKIP_INSTALL_RPATH=YES",
             "-DENABLE_RELATIVE_PREFIX=YES"
         ]
         external_builders_path = os.path.join(current_path, 'cmake_builder')
