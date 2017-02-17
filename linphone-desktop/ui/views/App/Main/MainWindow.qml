@@ -81,6 +81,9 @@ Controls1.ApplicationWindow {
   maximumHeight: MainWindowStyle.toolBar.height
   minimumHeight: MainWindowStyle.toolBar.height
   minimumWidth: MainWindowStyle.minimumWidth
+
+  width: MainWindowStyle.width
+
   title: MainWindowStyle.title
   visible: true
 
