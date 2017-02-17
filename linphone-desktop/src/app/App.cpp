@@ -81,6 +81,9 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
   m_engine.addImportPath(":/ui/modules");
   m_engine.addImportPath(":/ui/scripts");
   m_engine.addImportPath(":/ui/views");
+
+  // Don't quit if last window is closed!!!
+  setQuitOnLastWindowClosed(false);
 }
 
 // -----------------------------------------------------------------------------
