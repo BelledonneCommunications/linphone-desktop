@@ -6,13 +6,13 @@ module Common.Styles
 
 singleton BusyIndicatorStyle        1.0 Animations/BusyIndicatorStyle.qml
 
-singleton CollapseStyle             1.0 CollapseStyle.qml
+singleton DialogStyle               1.0 Dialog/DialogStyle.qml
 
-singleton DialogStyle               1.0 DialogStyle.qml
-
-singleton DroppableTextAreaStyle    1.0 DroppableTextAreaStyle.qml
-
-singleton ForceScrollBarStyle       1.0 ForceScrollBarStyle.qml
+singleton AbstractTextButtonStyle   1.0 Form/Buttons/AbstractTextButtonStyle.qml
+singleton ExclusiveButtonsStyle     1.0 Form/Buttons/ExclusiveButtonsStyle.qml
+singleton SmallButtonStyle          1.0 Form/Buttons/SmallButtonStyle.qml
+singleton TextButtonAStyle          1.0 Form/Buttons/TextButtonAStyle.qml
+singleton TextButtonBStyle          1.0 Form/Buttons/TextButtonBStyle.qml
 
 singleton NumericFieldStyle         1.0 Form/Fields/NumericFieldStyle.qml
 singleton TextAreaFieldStyle        1.0 Form/Fields/TextAreaFieldStyle.qml
@@ -27,25 +27,22 @@ singleton FormStyle                 1.0 Form/Placements/FormStyle.qml
 singleton TabButtonStyle            1.0 Form/Tab/TabButtonStyle.qml
 singleton TabContainerStyle         1.0 Form/Tab/TabContainerStyle.qml
 
-singleton AbstractTextButtonStyle   1.0 Form/AbstractTextButtonStyle.qml
 singleton ActionBarStyle            1.0 Form/ActionBarStyle.qml
 singleton CheckBoxTextStyle         1.0 Form/CheckBoxTextStyle.qml
-singleton ExclusiveButtonsStyle     1.0 Form/ExclusiveButtonsStyle.qml
+singleton DroppableTextAreaStyle    1.0 Form/DroppableTextAreaStyle.qml
 singleton ListFormStyle             1.0 Form/ListFormStyle.qml
-singleton SmallButtonStyle          1.0 Form/SmallButtonStyle.qml
+singleton SearchBoxStyle            1.0 Form/SearchBoxStyle.qml
 singleton SwitchStyle               1.0 Form/SwitchStyle.qml
-singleton TextButtonAStyle          1.0 Form/TextButtonAStyle.qml
-singleton TextButtonBStyle          1.0 Form/TextButtonBStyle.qml
 singleton TransparentComboBoxStyle  1.0 Form/TransparentComboBoxStyle.qml
 singleton TransparentTextInputStyle 1.0 Form/TransparentTextInputStyle.qml
 
 singleton ActionMenuStyle           1.0 Menu/ActionMenuStyle.qml
 singleton MenuStyle                 1.0 Menu/MenuStyle.qml
 
-singleton PanedStyle                1.0 PanedStyle.qml
+singleton CollapseStyle             1.0 Misc/CollapseStyle.qml
+singleton ForceScrollBarStyle       1.0 Misc/ForceScrollBarStyle.qml
+singleton PanedStyle                1.0 Misc/PanedStyle.qml
 
-singleton PopupStyle                1.0 PopupStyle.qml
+singleton PopupStyle                1.0 Popup/PopupStyle.qml
 
-singleton SearchBoxStyle            1.0 SearchBoxStyle.qml
-
-singleton TooltipStyle              1.0 TooltipStyle.qml
+singleton TooltipStyle              1.0 Tooltip/TooltipStyle.qml

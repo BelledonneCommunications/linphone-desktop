@@ -6,31 +6,32 @@ module Common
 
 # Constants --------------------------------------------------------------------
 
-singleton Colors     1.0 Colors.qml
-singleton Constants  1.0 Constants.qml
+singleton Colors     1.0 Constants/Colors.qml
+singleton Constants  1.0 Constants/Constants.qml
 
 # Components -------------------------------------------------------------------
 
-# Animations
 BusyIndicator        1.0 Animations/BusyIndicator.qml
 
-# Chat
-Borders              1.0 Borders.qml
-
-# Collapse
-Collapse             1.0 Collapse.qml
-
-# Dialog
 ConfirmDialog        1.0 Dialog/ConfirmDialog.qml
 DialogPlus           1.0 Dialog/DialogPlus.qml
 
-# DroppableTextArea
-DroppableTextArea    1.0 DroppableTextArea.qml
+ActionBar            1.0 Form/ActionBar.qml
+ActionButton         1.0 Form/ActionButton.qml
+ActionSwitch         1.0 Form/ActionSwitch.qml
+CheckBoxText         1.0 Form/CheckBoxText.qml
+DroppableTextArea    1.0 Form/DroppableTextArea.qml
+ListForm             1.0 Form/ListForm.qml
+SearchBox            1.0 Form/SearchBox.qml
+StaticListForm       1.0 Form/StaticListForm.qml
+Switch               1.0 Form/Switch.qml
+TransparentComboBox  1.0 Form/TransparentComboBox.qml
+TransparentTextInput 1.0 Form/TransparentTextInput.qml
 
-# ForceScrollBar
-ForceScrollBar       1.0 ForceScrollBar.qml
+ExclusiveButtons     1.0 Form/Buttons/ExclusiveButtons.qml
+TextButtonA          1.0 Form/Buttons/TextButtonA.qml
+TextButtonB          1.0 Form/Buttons/TextButtonB.qml
 
-# Form
 NumericField         1.0 Form/Fields/NumericField.qml
 TextAreaField        1.0 Form/Fields/TextAreaField.qml
 TextField            1.0 Form/Fields/TextField.qml
@@ -48,49 +49,26 @@ TabBar               1.0 Form/Tab/TabBar.qml
 TabButton            1.0 Form/Tab/TabButton.qml
 TabContainer         1.0 Form/Tab/TabContainer.qml
 
-ActionBar            1.0 Form/ActionBar.qml
-ActionButton         1.0 Form/ActionButton.qml
-ActionSwitch         1.0 Form/ActionSwitch.qml
-CheckBoxText         1.0 Form/CheckBoxText.qml
-ExclusiveButtons     1.0 Form/ExclusiveButtons.qml
-LightButton          1.0 Form/LightButton.qml
-ListForm             1.0 Form/ListForm.qml
-StaticListForm       1.0 Form/StaticListForm.qml
-Switch               1.0 Form/Switch.qml
-TextButtonA          1.0 Form/TextButtonA.qml
-TextButtonB          1.0 Form/TextButtonB.qml
-TransparentComboBox  1.0 Form/TransparentComboBox.qml
-TransparentTextInput 1.0 Form/TransparentTextInput.qml
+InvertedMouseArea    1.0 Helpers/InvertedMouseArea.qml
+SmartConnect         1.0 Helpers/SmartConnect.qml
 
-# Image
 Icon                 1.0 Image/Icon.qml
 RoundedImage         1.0 Image/RoundedImage.qml
 
-# InvertedMouseArea
-InvertedMouseArea    1.0 InvertedMouseArea.qml
-
-# Menu
 ActionMenu           1.0 Menu/ActionMenu.qml
 ActionMenuEntry      1.0 Menu/ActionMenuEntry.qml
 Menu                 1.0 Menu/Menu.qml
 
-# Paned
-Paned                1.0 Paned.qml
+Borders              1.0 Misc/Borders.qml
+Collapse             1.0 Misc/Collapse.qml
+ForceScrollBar       1.0 Misc/ForceScrollBar.qml
+Paned                1.0 Misc/Paned.qml
 
-# Popup
 DesktopPopup         1.0 Popup/DesktopPopup.qml
 DropDownDynamicMenu  1.0 Popup/DropDownDynamicMenu.qml
 DropDownMenu         1.0 Popup/DropDownMenu.qml
 PopupShadow          1.0 Popup/PopupShadow.qml
 
-# SearchBox
-SearchBox            1.0 SearchBox.qml
-
-# SmartConnect
-SmartConnect         1.0 SmartConnect.qml
-
-# Tooltip
 TooltipArea          1.0 Tooltip/TooltipArea.qml
 
-# View
 ScrollableListView   1.0 View/ScrollableListView.qml

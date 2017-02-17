@@ -167,21 +167,21 @@
     <file>assets/images/video_call_normal.svg</file>
     <file>assets/images/video_call_pressed.svg</file>
     <file>ui/modules/Common/Animations/BusyIndicator.qml</file>
-    <file>ui/modules/Common/Borders.qml</file>
-    <file>ui/modules/Common/Collapse.qml</file>
-    <file>ui/modules/Common/Colors.qml</file>
-    <file>ui/modules/Common/Constants.qml</file>
+    <file>ui/modules/Common/Constants/Colors.qml</file>
+    <file>ui/modules/Common/Constants/Constants.qml</file>
     <file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>
     <file>ui/modules/Common/Dialog/DialogDescription.qml</file>
     <file>ui/modules/Common/Dialog/DialogPlus.qml</file>
-    <file>ui/modules/Common/DroppableTextArea.qml</file>
-    <file>ui/modules/Common/ForceScrollBar.qml</file>
-    <file>ui/modules/Common/Form/AbstractTextButton.qml</file>
     <file>ui/modules/Common/Form/ActionBar.qml</file>
     <file>ui/modules/Common/Form/ActionButton.qml</file>
     <file>ui/modules/Common/Form/ActionSwitch.qml</file>
+    <file>ui/modules/Common/Form/Buttons/AbstractTextButton.qml</file>
+    <file>ui/modules/Common/Form/Buttons/ExclusiveButtons.qml</file>
+    <file>ui/modules/Common/Form/Buttons/SmallButton.qml</file>
+    <file>ui/modules/Common/Form/Buttons/TextButtonA.qml</file>
+    <file>ui/modules/Common/Form/Buttons/TextButtonB.qml</file>
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
-    <file>ui/modules/Common/Form/ExclusiveButtons.qml</file>
+    <file>ui/modules/Common/Form/DroppableTextArea.qml</file>
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
@@ -194,40 +194,41 @@
     <file>ui/modules/Common/Form/Placements/FormHeader.qml</file>
     <file>ui/modules/Common/Form/Placements/FormLine.qml</file>
     <file>ui/modules/Common/Form/Placements/Form.qml</file>
-    <file>ui/modules/Common/Form/SmallButton.qml</file>
+    <file>ui/modules/Common/Form/SearchBox.qml</file>
     <file>ui/modules/Common/Form/StaticListForm.qml</file>
     <file>ui/modules/Common/Form/Switch.qml</file>
     <file>ui/modules/Common/Form/Tab/TabBar.qml</file>
     <file>ui/modules/Common/Form/Tab/TabButton.qml</file>
     <file>ui/modules/Common/Form/Tab/TabContainer.qml</file>
-    <file>ui/modules/Common/Form/TextButtonA.qml</file>
-    <file>ui/modules/Common/Form/TextButtonB.qml</file>
     <file>ui/modules/Common/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Common/Form/TransparentTextInput.qml</file>
+    <file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
+    <file>ui/modules/Common/Helpers/SmartConnect.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
-    <file>ui/modules/Common/InvertedMouseArea.qml</file>
     <file>ui/modules/Common/Menu/ActionMenuEntry.qml</file>
     <file>ui/modules/Common/Menu/ActionMenu.qml</file>
     <file>ui/modules/Common/Menu/Menu.qml</file>
-    <file>ui/modules/Common/Paned.qml</file>
+    <file>ui/modules/Common/Misc/Borders.qml</file>
+    <file>ui/modules/Common/Misc/Collapse.qml</file>
+    <file>ui/modules/Common/Misc/ForceScrollBar.qml</file>
+    <file>ui/modules/Common/Misc/Paned.qml</file>
     <file>ui/modules/Common/Popup/AbstractDropDownMenu.qml</file>
     <file>ui/modules/Common/Popup/DesktopPopup.qml</file>
     <file>ui/modules/Common/Popup/DropDownDynamicMenu.qml</file>
     <file>ui/modules/Common/Popup/DropDownMenu.qml</file>
     <file>ui/modules/Common/Popup/PopupShadow.qml</file>
     <file>ui/modules/Common/qmldir</file>
-    <file>ui/modules/Common/SearchBox.qml</file>
-    <file>ui/modules/Common/SmartConnect.qml</file>
     <file>ui/modules/Common/Styles/Animations/BusyIndicatorStyle.qml</file>
-    <file>ui/modules/Common/Styles/CollapseStyle.qml</file>
-    <file>ui/modules/Common/Styles/DialogStyle.qml</file>
-    <file>ui/modules/Common/Styles/DroppableTextAreaStyle.qml</file>
-    <file>ui/modules/Common/Styles/ForceScrollBarStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/AbstractTextButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Dialog/DialogStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Buttons/AbstractTextButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Buttons/ExclusiveButtonsStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Buttons/SmallButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Buttons/TextButtonAStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Buttons/TextButtonBStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/ExclusiveButtonsStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/DroppableTextAreaStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/NumericFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/TextAreaFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/TextFieldStyle.qml</file>
@@ -237,21 +238,20 @@
     <file>ui/modules/Common/Styles/Form/Placements/FormHeaderStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormLineStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/SmallButtonStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/SearchBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SwitchStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/TextButtonAStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/TextButtonBStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentComboBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentTextInputStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/ActionMenuStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/MenuStyle.qml</file>
-    <file>ui/modules/Common/Styles/PanedStyle.qml</file>
-    <file>ui/modules/Common/Styles/PopupStyle.qml</file>
+    <file>ui/modules/Common/Styles/Misc/CollapseStyle.qml</file>
+    <file>ui/modules/Common/Styles/Misc/ForceScrollBarStyle.qml</file>
+    <file>ui/modules/Common/Styles/Misc/PanedStyle.qml</file>
+    <file>ui/modules/Common/Styles/Popup/PopupStyle.qml</file>
     <file>ui/modules/Common/Styles/qmldir</file>
-    <file>ui/modules/Common/Styles/SearchBoxStyle.qml</file>
-    <file>ui/modules/Common/Styles/TooltipStyle.qml</file>
+    <file>ui/modules/Common/Styles/Tooltip/TooltipStyle.qml</file>
     <file>ui/modules/Common/Tooltip/TooltipArea.qml</file>
     <file>ui/modules/Common/Tooltip/Tooltip.qml</file>
     <file>ui/modules/Common/View/ScrollableListView.qml</file>
