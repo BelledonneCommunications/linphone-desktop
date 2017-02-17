@@ -3,6 +3,7 @@ import QtQuick 2.7
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 
@@ -35,6 +36,7 @@ Rectangle {
         $component: 'button'
         $componentText: qsTr('inviteButton')
         $description: qsTr('inviteDescription')
+        $window: 'InviteFriends'
         $icon: 'home_invite_friends'
         $title: qsTr('inviteTitle')
       }
@@ -45,6 +47,7 @@ Rectangle {
         $description: qsTr('accountAssistantDescription')
         $icon: 'home_account_assistant'
         $title: qsTr('accountAssistantTitle')
+        $window: 'Assistant'
       }
     }
 
@@ -61,6 +64,7 @@ Rectangle {
 
           TextButtonB {
             text: $componentText
+            onClicked: Utils.openWindow($window, window)
           }
         }
 

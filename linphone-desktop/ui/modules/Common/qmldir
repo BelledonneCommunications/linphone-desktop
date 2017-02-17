@@ -32,6 +32,7 @@ ForceScrollBar       1.0 ForceScrollBar.qml
 
 # Form
 NumericField         1.0 Form/Fields/NumericField.qml
+TextAreaField        1.0 Form/Fields/TextAreaField.qml
 TextField            1.0 Form/Fields/TextField.qml
 
 Form                 1.0 Form/Placements/Form.qml

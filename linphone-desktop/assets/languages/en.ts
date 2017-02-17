@@ -412,6 +412,25 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>InviteFriends</name>
+    <message>
+        <source>enterEmailLabel</source>
+        <translation>Enter your friend&apos;s email address</translation>
+    </message>
+    <message>
+        <source>messageLabel</source>
+        <translation>You can modify the invitation that will be sent</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>CONFIRM</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>

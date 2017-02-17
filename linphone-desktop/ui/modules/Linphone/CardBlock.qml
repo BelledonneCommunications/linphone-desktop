@@ -25,8 +25,8 @@ Column {
   }
 
   Column {
-    width: parent.width
     spacing: CardBlockStyle.title.bottomMargin
+    width: parent.width
 
     Text {
       id: title

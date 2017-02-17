@@ -15,6 +15,7 @@ singleton DroppableTextAreaStyle    1.0 DroppableTextAreaStyle.qml
 singleton ForceScrollBarStyle       1.0 ForceScrollBarStyle.qml
 
 singleton NumericFieldStyle         1.0 Form/Fields/NumericFieldStyle.qml
+singleton TextAreaFieldStyle        1.0 Form/Fields/TextAreaFieldStyle.qml
 singleton TextFieldStyle            1.0 Form/Fields/TextFieldStyle.qml
 
 singleton FormGroupStyle            1.0 Form/Placements/FormGroupStyle.qml

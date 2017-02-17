@@ -183,6 +183,7 @@
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
     <file>ui/modules/Common/Form/ExclusiveButtons.qml</file>
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
+    <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
@@ -228,6 +229,7 @@
     <file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ExclusiveButtonsStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/NumericFieldStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Fields/TextAreaFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/TextFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ListFormStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormGroupStyle.qml</file>
@@ -304,6 +306,7 @@
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/IncallFullscreen.qml</file>
+    <file>ui/views/App/InviteFriends.qml</file>
     <file>ui/views/App/Main/ContactEdit.qml</file>
     <file>ui/views/App/Main/Contacts.qml</file>
     <file>ui/views/App/Main/Conversation.qml</file>
@@ -321,6 +324,7 @@
     <file>ui/views/App/Settings/SettingsWindow.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
+    <file>ui/views/App/Styles/InviteFriendsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
