@@ -432,6 +432,14 @@ Url du serveur non configurée.</translation>
         <source>inviteFriendsTitle</source>
         <translation>Linphone - Inviter des amis</translation>
     </message>
+    <message>
+        <source>defaultMessage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>defaultSubject</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

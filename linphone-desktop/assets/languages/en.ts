@@ -433,6 +433,14 @@ Server url not configured.</translation>
         <source>inviteFriendsTitle</source>
         <translation>Linphone - Invite Friends</translation>
     </message>
+    <message>
+        <source>defaultMessage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>defaultSubject</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

@@ -18,7 +18,15 @@ DialogPlus {
       enabled: email.length && message.length
       text: qsTr('confirm')
 
-      onClicked: exit(0)
+      onClicked: {
+        Qt.openUrlExternally(
+          'mailto:' + encodeURIComponent(email.text) +
+          '?subject=' + encodeURIComponent(qsTr('defaultSubject')) +
+          '&body=' + encodeURIComponent(message.text)
+        )
+
+        exit(0)
+      }
     }
   ]
 
@@ -61,6 +69,7 @@ DialogPlus {
       TextField {
         id: email
 
+        inputMethodHints: Qt.ImhEmailCharactersOnly
         width: parent.width
       }
     }
@@ -87,6 +96,8 @@ DialogPlus {
 
         Layout.fillHeight: true
         Layout.fillWidth: true
+
+        text: qsTr('defaultMessage')
       }
     }
   }
