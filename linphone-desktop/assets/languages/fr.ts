@@ -428,6 +428,10 @@ Url du serveur non configurée.</translation>
         <source>confirm</source>
         <translation>CONFIRMER</translation>
     </message>
+    <message>
+        <source>inviteFriendsTitle</source>
+        <translation>Linphone - Inviter des amis</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

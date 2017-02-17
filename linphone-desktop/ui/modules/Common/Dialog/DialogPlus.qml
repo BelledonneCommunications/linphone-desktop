@@ -37,6 +37,15 @@ Window {
   // Handle normal windows close.
   onClosing: !_disableExitStatus && exitStatus(0)
 
+  // ---------------------------------------------------------------------------
+
+  Shortcut {
+    sequence: StandardKey.Close
+    onActivated: exit(0)
+  }
+
+  // ---------------------------------------------------------------------------
+
   ColumnLayout {
     anchors.fill: parent
     spacing: 0

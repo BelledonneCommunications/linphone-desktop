@@ -12,17 +12,18 @@ DialogPlus {
     TextButtonA {
       text: qsTr('cancel')
 
-      onClicked: exit(0)
+      onClicked: exit(-1)
     },
     TextButtonB {
       enabled: email.length && message.length
       text: qsTr('confirm')
 
-      onClicked: exit(-1)
+      onClicked: exit(0)
     }
   ]
 
   centeredButtons: true
+  title: qsTr('inviteFriendsTitle')
 
   height: InviteFriendsStyle.height
   width: InviteFriendsStyle.width

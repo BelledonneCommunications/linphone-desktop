@@ -103,6 +103,13 @@ Controls1.ApplicationWindow {
 
   // ---------------------------------------------------------------------------
 
+  Shortcut {
+    sequence: StandardKey.Close
+    onActivated: window.hide()
+  }
+
+  // ---------------------------------------------------------------------------
+
   ColumnLayout {
     id: container
 

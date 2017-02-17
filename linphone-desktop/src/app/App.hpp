@@ -50,9 +50,10 @@ public:
 
   QQuickWindow *getCallsWindow () const;
   QQuickWindow *getMainWindow () const;
-  QQuickWindow *getSettingsWindow () const;
 
   bool hasFocus () const;
+
+  Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
 
   Q_INVOKABLE QString locale () const {
     return m_locale;

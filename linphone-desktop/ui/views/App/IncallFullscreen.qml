@@ -41,6 +41,13 @@ Window {
 
   // ---------------------------------------------------------------------------
 
+  Shortcut {
+    sequence: StandardKey.Close
+    onActivated: window.hide()
+  }
+
+  // ---------------------------------------------------------------------------
+
   Rectangle {
     anchors.fill: parent
     color: '#000000' // Not a style.

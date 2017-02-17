@@ -429,6 +429,10 @@ Server url not configured.</translation>
         <source>confirm</source>
         <translation>CONFIRM</translation>
     </message>
+    <message>
+        <source>inviteFriendsTitle</source>
+        <translation>Linphone - Invite Friends</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>

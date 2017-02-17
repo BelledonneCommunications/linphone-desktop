@@ -19,7 +19,15 @@ ApplicationWindow {
   minimumWidth: SettingsWindowStyle.width
 
   title: qsTr('settingsTitle')
-  visible: true
+
+  // ---------------------------------------------------------------------------
+
+  Shortcut {
+    sequence: StandardKey.Close
+    onActivated: window.hide()
+  }
+
+  // ---------------------------------------------------------------------------
 
   ColumnLayout {
     anchors.fill: parent

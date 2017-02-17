@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
-import Common 1.0 as Common
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -109,6 +109,8 @@ import App.Styles 1.0
      MenuItem {
        shortcut: 'Ctrl+P'
        text: qsTr('settings')
+
+       onTriggered: App.getSettingsWindow().show()
      }
 
      MenuSeparator {}
@@ -116,6 +118,8 @@ import App.Styles 1.0
      MenuItem {
        shortcut: StandardKey.Quit
        text: qsTr('quit')
+
+       onTriggered: Qt.quit()
      }
    }
 
