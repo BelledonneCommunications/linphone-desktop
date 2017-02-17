@@ -15,7 +15,7 @@ QtObject {
 
   property QtObject description: QtObject {
     property color color: Colors.w
-    property int fontSize: 9
+    property int fontSize: 10
     property int height: 40
   }
 
@@ -27,7 +27,7 @@ QtObject {
   property QtObject title: QtObject {
     property color color: Colors.j
     property int bottomMargin: 10
-    property int fontSize: 9
+    property int fontSize: 10
     property int height: 20
   }
 }

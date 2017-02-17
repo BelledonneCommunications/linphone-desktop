@@ -353,39 +353,39 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Besoin d&apos;aide sur l&apos;utilisation de Linphone ?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>COMMENT UTILISER LINPHONE</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Inviter vos amis à utiliser Linphone.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>INVITER VOS AMIS</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Créer ou gérer votre compte Linphone.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>ASSISTANT DE COMPTE</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"></translation>
+        <translation>ASSISTANT</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"></translation>
+        <translation>Voir les aides.</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"></translation>
+        <translation>INVITER</translation>
     </message>
 </context>
 <context>
