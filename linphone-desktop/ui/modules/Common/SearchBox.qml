@@ -89,6 +89,8 @@ Item {
         var window = searchBox.Window.window
 
         var handleCoords = function () {
+          searchBox.hideMenu()
+
           var point = searchBox.mapToItem(null, 0, searchBox.height)
 
           desktopPopup.popupX = window.x + point.x
@@ -98,12 +100,11 @@ Item {
         // The menu is always below the search field.
         this.connect(window, 'heightChanged', handleCoords)
         this.connect(window, 'widthChanged', handleCoords)
+
         this.connect(window, 'xChanged', handleCoords)
         this.connect(window, 'yChanged', handleCoords)
 
-        this.connect(window, 'visibilityChanged', function () {
-          searchBox.hideMenu()
-        })
+        this.connect(window, 'visibilityChanged', handleCoords)
 
         handleCoords()
       }
