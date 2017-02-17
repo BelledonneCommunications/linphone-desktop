@@ -62,7 +62,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARAT
 # Define packages, libs, sources, headers, resources and languages.
 # ------------------------------------------------------------------------------
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 LinguistTools)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools)
 
 find_package(Linphone REQUIRED)
 find_package(LinphoneCxx REQUIRED)
