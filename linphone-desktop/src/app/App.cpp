@@ -126,11 +126,15 @@ void App::initContentApp () {
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
-  // Enable TrayIconSystem.
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    qWarning("System tray not found on this system.");
-  else
-    setTrayIcon();
+  #ifndef __APPLE__
+
+    // Enable TrayIconSystem.
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
+      qWarning("System tray not found on this system.");
+    else
+      setTrayIcon();
+
+  #endif // ifndef __APPLE__
 }
 
 // -----------------------------------------------------------------------------
