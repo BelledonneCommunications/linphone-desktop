@@ -97,7 +97,9 @@ Controls1.ApplicationWindow {
 
   // ---------------------------------------------------------------------------
 
-  Component.onCompleted: _setView('Home')
+  Component.onCompleted: Utils.setTimeout(window, 0, function () {
+    _setView('Home')
+  })
 
   onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()
 
