@@ -9,7 +9,7 @@ import Utils 1.0
 
 // =============================================================================
 
-ColumnLayout {
+Rectangle {
   property alias proxyModel: chat.model
 
   // Unable to use it in style file at this moment.
@@ -27,262 +27,264 @@ ColumnLayout {
 
   // ---------------------------------------------------------------------------
 
-  spacing: 0
+  color: _backgroundColor
 
-  Rectangle {
+  ColumnLayout {
+
     anchors.fill: parent
-    color: _backgroundColor
-  }
+    spacing: 0
 
-  ScrollableListView {
-    id: chat
 
-    // -------------------------------------------------------------------------
+    ScrollableListView {
+      id: chat
 
-    property bool _tryToLoadMoreEntries: true
+      // -----------------------------------------------------------------------
 
-    // -------------------------------------------------------------------------
+      property bool _tryToLoadMoreEntries: true
 
-    function _loadMoreEntries () {
-      if (atYBeginning && !_tryToLoadMoreEntries) {
-        _tryToLoadMoreEntries = true
-        positionViewAtBeginning()
-        proxyModel.loadMoreEntries()
+      // -----------------------------------------------------------------------
+
+      function _loadMoreEntries () {
+        if (atYBeginning && !_tryToLoadMoreEntries) {
+          _tryToLoadMoreEntries = true
+          positionViewAtBeginning()
+          proxyModel.loadMoreEntries()
+        }
       }
-    }
 
-    // -------------------------------------------------------------------------
+      // -----------------------------------------------------------------------
 
-    Layout.fillHeight: true
-    Layout.fillWidth: true
+      Layout.fillHeight: true
+      Layout.fillWidth: true
 
-    section {
-      criteria: ViewSection.FullString
-      delegate: sectionHeading
-      property: '$sectionDate'
-    }
+      section {
+        criteria: ViewSection.FullString
+        delegate: sectionHeading
+        property: '$sectionDate'
+      }
 
-    // -------------------------------------------------------------------------
+      // -----------------------------------------------------------------------
 
-    Component.onCompleted: {
-      function goToEnd () {
-        return Utils.setTimeout(chat, 100, function () {
-          if (_bindToEnd) {
-            positionViewAtEnd()
-          }
+      Component.onCompleted: {
+        function goToEnd () {
+          return Utils.setTimeout(chat, 100, function () {
+            if (_bindToEnd) {
+              positionViewAtEnd()
+            }
 
-          return goToEnd()
+            return goToEnd()
+          })
+        }
+        goToEnd()
+
+        var initView = function () {
+          _tryToLoadMoreEntries = false
+          _bindToEnd = true
+
+          positionViewAtEnd()
+        }
+
+        // Received only if more entries were loaded.
+        proxyModel.moreEntriesLoaded.connect(function (n) {
+          positionViewAtIndex(n - 1, ListView.Beginning)
+          _tryToLoadMoreEntries = false
         })
+
+        // When the view is changed (for example `Calls` -> `Messages`),
+        // the position is set at end and it can be possible to load
+        // more entries.
+        proxyModel.entryTypeFilterChanged.connect(initView)
+
+        // First render.
+        initView()
       }
-      goToEnd()
 
-      var initView = function () {
-        _tryToLoadMoreEntries = false
-        _bindToEnd = true
-
-        positionViewAtEnd()
+      onMovementStarted: _bindToEnd = false
+      onMovementEnded: {
+        if (atYEnd) {
+          _bindToEnd = true
+        }
       }
 
-      // Received only if more entries were loaded.
-      proxyModel.moreEntriesLoaded.connect(function (n) {
-        positionViewAtIndex(n - 1, ListView.Beginning)
-        _tryToLoadMoreEntries = false
-      })
+      onContentYChanged: _loadMoreEntries()
 
-      // When the view is changed (for example `Calls` -> `Messages`),
-      // the position is set at end and it can be possible to load
-      // more entries.
-      proxyModel.entryTypeFilterChanged.connect(initView)
+      // -----------------------------------------------------------------------
+      // Heading.
+      // -----------------------------------------------------------------------
 
-      // First render.
-      initView()
-    }
+      Component {
+        id: sectionHeading
 
-    onMovementStarted: _bindToEnd = false
-    onMovementEnded: {
-      if (atYEnd) {
-        _bindToEnd = true
-      }
-    }
-
-    onContentYChanged: _loadMoreEntries()
-
-    // -------------------------------------------------------------------------
-    // Heading.
-    // -------------------------------------------------------------------------
-
-    Component {
-      id: sectionHeading
-
-      Item {
-        implicitHeight: container.height + ChatStyle.sectionHeading.bottomMargin
-        width: parent.width
-
-        Borders {
-          id: container
-
-          borderColor: ChatStyle.sectionHeading.border.color
-          bottomWidth: ChatStyle.sectionHeading.border.width
-          implicitHeight: text.contentHeight +
-            ChatStyle.sectionHeading.padding * 2 +
-            ChatStyle.sectionHeading.border.width * 2
-          topWidth: ChatStyle.sectionHeading.border.width
+        Item {
+          implicitHeight: container.height + ChatStyle.sectionHeading.bottomMargin
           width: parent.width
 
-          Text {
-            id: text
+          Borders {
+            id: container
 
-            anchors.fill: parent
-            color: ChatStyle.sectionHeading.text.color
-            font {
-              bold: true
-              pointSize: ChatStyle.sectionHeading.text.fontSize
+            borderColor: ChatStyle.sectionHeading.border.color
+            bottomWidth: ChatStyle.sectionHeading.border.width
+            implicitHeight: text.contentHeight +
+              ChatStyle.sectionHeading.padding * 2 +
+              ChatStyle.sectionHeading.border.width * 2
+            topWidth: ChatStyle.sectionHeading.border.width
+            width: parent.width
+
+            Text {
+              id: text
+
+              anchors.fill: parent
+              color: ChatStyle.sectionHeading.text.color
+              font {
+                bold: true
+                pointSize: ChatStyle.sectionHeading.text.fontSize
+              }
+              horizontalAlignment: Text.AlignHCenter
+              verticalAlignment: Text.AlignVCenter
+
+              // Cast section to integer because Qt converts the
+              // sectionDate in string!!!
+              text: new Date(section).toLocaleDateString(
+                Qt.locale(App.locale())
+              )
             }
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            // Cast section to integer because Qt converts the
-            // sectionDate in string!!!
-            text: new Date(section).toLocaleDateString(
-              Qt.locale(App.locale())
-            )
           }
         }
       }
-    }
 
-    // -------------------------------------------------------------------------
-    // Message/Event renderer.
-    // -------------------------------------------------------------------------
+      // -----------------------------------------------------------------------
+      // Message/Event renderer.
+      // -----------------------------------------------------------------------
 
-    delegate: Rectangle {
-      id: entry
+      delegate: Rectangle {
+        id: entry
 
-      function isHoverEntry () {
-        return mouseArea.containsMouse
-      }
+        function isHoverEntry () {
+          return mouseArea.containsMouse
+        }
 
-      function removeEntry () {
-        proxyModel.removeEntry(index)
-      }
+        function removeEntry () {
+          proxyModel.removeEntry(index)
+        }
 
-      anchors {
-        left: parent ? parent.left : undefined
-        leftMargin: ChatStyle.entry.leftMargin
-        right: parent ? parent.right : undefined
+        anchors {
+          left: parent ? parent.left : undefined
+          leftMargin: ChatStyle.entry.leftMargin
+          right: parent ? parent.right : undefined
 
-        // Ugly. I admit it, but it exists a problem, without these
-        // lines the extra content message is truncated.
-        // I have no other solution at this moment with `anchors`
-        // properties... The messages use the `implicitWidth/Height`
-        // and `width/Height` attrs and is not easy to found a fix.
-        rightMargin: ChatStyle.entry.deleteIconSize +
+          // Ugly. I admit it, but it exists a problem, without these
+          // lines the extra content message is truncated.
+          // I have no other solution at this moment with `anchors`
+          // properties... The messages use the `implicitWidth/Height`
+          // and `width/Height` attrs and is not easy to found a fix.
+          rightMargin: ChatStyle.entry.deleteIconSize +
           ChatStyle.entry.message.extraContent.spacing +
           ChatStyle.entry.message.extraContent.rightMargin +
           ChatStyle.entry.message.extraContent.leftMargin +
           ChatStyle.entry.message.outgoing.sendIconSize
-      }
-      color: _backgroundColor
-      implicitHeight: layout.height + ChatStyle.entry.bottomMargin
+        }
+        color: _backgroundColor
+        implicitHeight: layout.height + ChatStyle.entry.bottomMargin
 
-      // -----------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-      // Avoid the use of explicit qrc paths.
-      Component {
-        id: event
-        Event {}
-      }
+        // Avoid the use of explicit qrc paths.
+        Component {
+          id: event
+          Event {}
+        }
 
-      Component {
-        id: incomingMessage
-        IncomingMessage {}
-      }
+        Component {
+          id: incomingMessage
+          IncomingMessage {}
+        }
 
-      Component {
-        id: outgoingMessage
-        OutgoingMessage {}
-      }
+        Component {
+          id: outgoingMessage
+          OutgoingMessage {}
+        }
 
-      Component {
-        id: fileMessage
-        FileMessage {}
-      }
+        Component {
+          id: fileMessage
+          FileMessage {}
+        }
 
-      // -----------------------------------------------------------------------
+        // ---------------------------------------------------------------------
 
-      MouseArea {
-        id: mouseArea
+        MouseArea {
+          id: mouseArea
 
-        hoverEnabled: true
-        implicitHeight: layout.height
-        width: parent.width + parent.anchors.rightMargin
+          hoverEnabled: true
+          implicitHeight: layout.height
+          width: parent.width + parent.anchors.rightMargin
 
-        RowLayout {
-          id: layout
+          RowLayout {
+            id: layout
 
-          spacing: 0
-          width: entry.width
+            spacing: 0
+            width: entry.width
 
-          // Display time.
-          Text {
-            Layout.alignment: Qt.AlignTop
-            Layout.preferredHeight: ChatStyle.entry.lineHeight
-            Layout.preferredWidth: ChatStyle.entry.time.width
-            color: ChatStyle.entry.time.color
-            font.pointSize: ChatStyle.entry.time.fontSize
-            text: $chatEntry.timestamp.toLocaleString(
-              Qt.locale(App.locale()),
-              'hh:mm'
-            )
-            verticalAlignment: Text.AlignVCenter
-          }
+            // Display time.
+            Text {
+              Layout.alignment: Qt.AlignTop
+              Layout.preferredHeight: ChatStyle.entry.lineHeight
+              Layout.preferredWidth: ChatStyle.entry.time.width
+              color: ChatStyle.entry.time.color
+              font.pointSize: ChatStyle.entry.time.fontSize
+              text: $chatEntry.timestamp.toLocaleString(
+                Qt.locale(App.locale()),
+                'hh:mm'
+              )
+              verticalAlignment: Text.AlignVCenter
+            }
 
-          // Display content.
-          Loader {
-            Layout.fillWidth: true
-            sourceComponent: {
-              if ($chatEntry.fileName) {
-                return fileMessage
+            // Display content.
+            Loader {
+              Layout.fillWidth: true
+              sourceComponent: {
+                if ($chatEntry.fileName) {
+                  return fileMessage
+                }
+
+                if ($chatEntry.type === ChatModel.CallEntry) {
+                  return event
+                }
+
+                return $chatEntry.isOutgoing ? outgoingMessage : incomingMessage
               }
-
-              if ($chatEntry.type === ChatModel.CallEntry) {
-                return event
-              }
-
-              return $chatEntry.isOutgoing ? outgoingMessage : incomingMessage
             }
           }
         }
       }
     }
-  }
 
-  // ---------------------------------------------------------------------------
-  // Send area.
-  // ---------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // Send area.
+    // -------------------------------------------------------------------------
 
-  Borders {
-    Layout.fillWidth: true
-    Layout.preferredHeight: ChatStyle.sendArea.height +
+    Borders {
+      Layout.fillWidth: true
+      Layout.preferredHeight: ChatStyle.sendArea.height +
       ChatStyle.sendArea.border.width
-    borderColor: ChatStyle.sendArea.border.color
-    topWidth: ChatStyle.sendArea.border.width
+      borderColor: ChatStyle.sendArea.border.color
+      topWidth: ChatStyle.sendArea.border.width
 
-    DroppableTextArea {
-      anchors.fill: parent
-      dropEnabled: SettingsModel.fileTransferUrl.length > 0
-      dropDisabledReason: qsTr('noFileTransferUrl')
-      placeholderText: qsTr('newMessagePlaceholder')
+      DroppableTextArea {
+        anchors.fill: parent
+        dropEnabled: SettingsModel.fileTransferUrl.length > 0
+        dropDisabledReason: qsTr('noFileTransferUrl')
+        placeholderText: qsTr('newMessagePlaceholder')
 
-      onDropped: {
-        _bindToEnd = true
-        files.forEach(proxyModel.sendFileMessage)
-      }
+        onDropped: {
+          _bindToEnd = true
+          files.forEach(proxyModel.sendFileMessage)
+        }
 
-      onValidText: {
-        this.text = ''
-        _bindToEnd = true
-        proxyModel.sendMessage(text)
+        onValidText: {
+          this.text = ''
+          _bindToEnd = true
+          proxyModel.sendMessage(text)
+        }
       }
     }
   }
