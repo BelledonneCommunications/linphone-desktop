@@ -277,18 +277,24 @@ ColumnLayout  {
       contentWidth: width - ScrollBar.vertical.width
       flickableDirection: Flickable.VerticalFlick
 
-      Rectangle {
-        anchors.fill: parent
-        color: ContactEditStyle.content.color
-      }
+      // -----------------------------------------------------------------------
 
-      SmartConnect {
-        Component.onCompleted: this.connect(_vcard, 'onVcardUpdated', function () {
+      Connections {
+        target: _vcard
+
+        onVcardUpdated: {
           addresses.setData(_vcard.sipAddresses)
           companies.setData(_vcard.companies)
           emails.setData(_vcard.emails)
           urls.setData(_vcard.urls)
-        })
+        }
+      }
+
+      // -----------------------------------------------------------------------
+
+      Rectangle {
+        anchors.fill: parent
+        color: ContactEditStyle.content.color
       }
 
       ColumnLayout {
