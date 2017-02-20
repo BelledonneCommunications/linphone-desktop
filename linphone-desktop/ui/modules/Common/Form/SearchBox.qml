@@ -58,6 +58,15 @@ Item {
     model.setFilter(text)
   }
 
+  function _handleCoords () {
+    searchBox.hideMenu()
+
+    var point = searchBox.mapToItem(null, 0, searchBox.height)
+
+    desktopPopup.popupX = window.x + point.x
+    desktopPopup.popupY = window.y + point.y
+  }
+
   // ---------------------------------------------------------------------------
 
   implicitHeight: searchField.height
@@ -84,30 +93,16 @@ Item {
 
     // -------------------------------------------------------------------------
 
-    SmartConnect {
-      Component.onCompleted: {
-        var window = searchBox.Window.window
+    Connections {
+      target: searchBox.Window.window
 
-        var handleCoords = function () {
-          searchBox.hideMenu()
+      onHeightChanged: _handleCoords()
+      onWidthChanged: _handleCoords()
 
-          var point = searchBox.mapToItem(null, 0, searchBox.height)
+      onXChanged: _handleCoords()
+      onYChanged: _handleCoords()
 
-          desktopPopup.popupX = window.x + point.x
-          desktopPopup.popupY = window.y + point.y
-        }
-
-        // The menu is always below the search field.
-        this.connect(window, 'heightChanged', handleCoords)
-        this.connect(window, 'widthChanged', handleCoords)
-
-        this.connect(window, 'xChanged', handleCoords)
-        this.connect(window, 'yChanged', handleCoords)
-
-        this.connect(window, 'visibilityChanged', handleCoords)
-
-        handleCoords()
-      }
+      onVisibilityChanged: _handleCoords()
     }
 
     // Wrap the search box menu in a window.
