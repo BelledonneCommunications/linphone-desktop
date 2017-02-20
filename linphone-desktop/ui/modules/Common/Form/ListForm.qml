@@ -173,19 +173,11 @@ RowLayout {
         width: parent.width
 
         onEditingFinished: _handleEditionFinished(index, text)
-      }
 
-      Component.onCompleted: {
-        if ($value.length === 0) {
-          // Magic code. If it's the first inserted value,
-          // an event or a callback steal the item focus.
-          // I suppose it's an internal Qt qml event...
-          //
-          // So, I choose to run a callback executed after this
-          // internal event.
-          Utils.setTimeout(listForm, 0, function () {
+        Component.onCompleted: {
+          if ($value.length === 0) {
             textInput.forceActiveFocus()
-          })
+          }
         }
       }
     }
