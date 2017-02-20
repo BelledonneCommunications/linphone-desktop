@@ -50,7 +50,6 @@ TabButton            1.0 Form/Tab/TabButton.qml
 TabContainer         1.0 Form/Tab/TabContainer.qml
 
 InvertedMouseArea    1.0 Helpers/InvertedMouseArea.qml
-SmartConnect         1.0 Helpers/SmartConnect.qml
 
 Icon                 1.0 Image/Icon.qml
 RoundedImage         1.0 Image/RoundedImage.qml

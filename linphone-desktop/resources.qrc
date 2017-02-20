@@ -203,7 +203,6 @@
     <file>ui/modules/Common/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Common/Form/TransparentTextInput.qml</file>
     <file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
-    <file>ui/modules/Common/Helpers/SmartConnect.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
     <file>ui/modules/Common/Menu/ActionMenuEntry.qml</file>
