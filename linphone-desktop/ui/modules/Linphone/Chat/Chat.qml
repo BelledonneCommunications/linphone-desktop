@@ -52,6 +52,13 @@ Rectangle {
         }
       }
 
+      function _initView () {
+        _tryToLoadMoreEntries = false
+        _bindToEnd = true
+
+        positionViewAtEnd()
+      }
+
       // -----------------------------------------------------------------------
 
       Layout.fillHeight: true
@@ -77,27 +84,11 @@ Rectangle {
         }
         goToEnd()
 
-        var initView = function () {
-          _tryToLoadMoreEntries = false
-          _bindToEnd = true
-
-          positionViewAtEnd()
-        }
-
-        // Received only if more entries were loaded.
-        proxyModel.moreEntriesLoaded.connect(function (n) {
-          positionViewAtIndex(n - 1, ListView.Beginning)
-          _tryToLoadMoreEntries = false
-        })
-
-        // When the view is changed (for example `Calls` -> `Messages`),
-        // the position is set at end and it can be possible to load
-        // more entries.
-        proxyModel.entryTypeFilterChanged.connect(initView)
-
         // First render.
-        initView()
+        _initView()
       }
+
+      // -----------------------------------------------------------------------
 
       onMovementStarted: _bindToEnd = false
       onMovementEnded: {
@@ -107,6 +98,22 @@ Rectangle {
       }
 
       onContentYChanged: _loadMoreEntries()
+
+      // -----------------------------------------------------------------------
+
+      Connections {
+        target: proxyModel
+
+        // When the view is changed (for example `Calls` -> `Messages`),
+        // the position is set at end and it can be possible to load
+        // more entries.
+        onEntryTypeFilterChanged: _initView()
+
+        onMoreEntriesLoaded: {
+          chat.positionViewAtIndex(n - 1, ListView.Beginning)
+          chat._tryToLoadMoreEntries = false
+        }
+      }
 
       // -----------------------------------------------------------------------
       // Heading.
