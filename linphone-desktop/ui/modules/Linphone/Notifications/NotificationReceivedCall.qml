@@ -41,7 +41,7 @@ Notification {
     }
 
     Loader {
-      active: notification._call
+      active: Boolean(notification._call)
       anchors {
         fill: parent
 
