@@ -21,6 +21,10 @@ QtObject {
         property int iconSize: 40
       }
 
+      property QtObject del: QtObject {
+        property int iconSize: 22
+      }
+
       property QtObject edit: QtObject {
         property int iconSize: 22
       }

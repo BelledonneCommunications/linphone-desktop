@@ -121,22 +121,22 @@ ColumnLayout  {
 
   Rectangle {
     Layout.fillWidth: true
-    Layout.preferredHeight: ContactEditStyle.infoBar.height
-    color: ContactEditStyle.infoBar.color
+    Layout.preferredHeight: ContactEditStyle.bar.height
+    color: ContactEditStyle.bar.color
 
     RowLayout {
       anchors {
         fill: parent
-        leftMargin: ContactEditStyle.infoBar.leftMargin
-        rightMargin: ContactEditStyle.infoBar.rightMargin
+        leftMargin: ContactEditStyle.bar.leftMargin
+        rightMargin: ContactEditStyle.bar.rightMargin
       }
 
-      spacing: ContactEditStyle.infoBar.spacing
+      spacing: ContactEditStyle.bar.spacing
 
       ActionButton {
         enabled: _edition
         icon: 'contact_card_photo'
-        iconSize: ContactEditStyle.infoBar.avatarSize
+        iconSize: ContactEditStyle.bar.avatarSize
 
         onClicked: avatarChooser.open()
 
@@ -154,13 +154,13 @@ ColumnLayout  {
         id: usernameInput
 
         Layout.fillWidth: true
-        Layout.preferredHeight: ContactEditStyle.infoBar.buttons.size
+        Layout.preferredHeight: ContactEditStyle.bar.buttons.size
 
-        color: ContactEditStyle.infoBar.username.color
+        color: ContactEditStyle.bar.username.color
 
         font {
           bold: true
-          pointSize: ContactEditStyle.infoBar.username.fontSize
+          pointSize: ContactEditStyle.bar.username.fontSize
         }
         forceFocus: true
         readOnly: !_edition
@@ -169,30 +169,43 @@ ColumnLayout  {
         onEditingFinished: _setUsername(text)
       }
 
-      ActionBar {
+      Row {
         Layout.alignment: Qt.AlignRight
-        iconSize: ContactEditStyle.infoBar.buttons.size
-        spacing: ContactEditStyle.infoBar.buttons.spacing
+        Layout.fillHeight: true
+
+        spacing: ContactEditStyle.bar.actions.spacing
         visible: _contact != null
 
-        ActionButton {
-          icon: 'history'
+        ActionBar {
+          anchors.verticalCenter: parent.verticalCenter
+          iconSize: ContactEditStyle.bar.actions.history.iconSize
 
-          onClicked: window.setView('Conversation', {
-            sipAddress: contactEdit.sipAddress
-          })
+          ActionButton {
+            icon: 'history'
+
+            onClicked: window.setView('Conversation', {
+              sipAddress: contactEdit.sipAddress
+            })
+          }
         }
 
-        ActionButton {
-          icon: 'edit'
-          visible: !_edition
-          onClicked: _editContact()
-        }
+        ActionBar {
+          anchors.verticalCenter: parent.verticalCenter
 
-        ActionButton {
-          icon: 'delete'
+          ActionButton {
+            icon: 'edit'
+            iconSize: ContactEditStyle.bar.actions.edit.iconSize
 
-          onClicked: _removeContact()
+            visible: !_edition
+            onClicked: _editContact()
+          }
+
+          ActionButton {
+            icon: 'delete'
+            iconSize: ContactEditStyle.bar.actions.del.iconSize
+
+            onClicked: _removeContact()
+          }
         }
       }
     }
