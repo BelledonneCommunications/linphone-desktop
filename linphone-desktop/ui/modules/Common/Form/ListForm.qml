@@ -184,7 +184,7 @@ RowLayout {
             //
             // So, I choose to run a callback executed after this
             // internal event.
-            Utils.setTimeout(listForm, 0, function () {
+            Utils.setTimeout(values, 0, function () {
               textInput.forceActiveFocus()
             })
           }
