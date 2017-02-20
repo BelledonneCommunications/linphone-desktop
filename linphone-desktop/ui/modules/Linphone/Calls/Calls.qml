@@ -103,8 +103,14 @@ ListView {
         string: 'paused'
       }
     })
+  }
 
-    model.rowsAboutToBeRemoved.connect(function (_, first, last) {
+  // ---------------------------------------------------------------------------
+
+  Connections {
+    target: model
+
+    onRowsAboutToBeRemoved: {
       var index = calls.currentIndex
 
       if (index >= first && index <= last) { // Remove current call.
@@ -118,9 +124,9 @@ ListView {
           }
         }
       }
-    })
+    }
 
-    model.rowsRemoved.connect(function (_, first, last) {
+    onRowsRemoved: {
       var index = calls.currentIndex
 
       // The current call has been removed.
@@ -136,10 +142,10 @@ ListView {
       else if (last < index) {
         calls.currentIndex = index - (last - first + 1)
       }
-    })
+    }
 
     // The last inserted outgoing element become the selected call.
-    model.rowsInserted.connect(function (_, first, last) {
+    onRowsInserted: {
       for (var index = last; index >= first; index--) {
         var call = model.data(model.index(index, 0))
 
@@ -148,12 +154,12 @@ ListView {
           _selectedCall = model.data(model.index(first, 0))
         }
       }
-    })
+    }
 
-    model.callRunning.connect(function (index, call) {
+    onCallRunning: {
       calls.currentIndex = index
       _selectedCall = call
-    })
+    }
   }
 
   // ---------------------------------------------------------------------------

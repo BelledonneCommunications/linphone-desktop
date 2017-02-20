@@ -237,7 +237,7 @@ Item {
   onWidthChanged: _applyLimits()
 
   Component.onCompleted: {
-    // Unable to modify this properties after creation.
+    // Unable to modify these properties after creation.
     // It's a desired choice.
     _maximumLeftLimit = _parseLimit(maximumLeftLimit)
     _maximumRightLimit = _parseLimit(maximumRightLimit)
