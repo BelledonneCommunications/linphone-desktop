@@ -176,7 +176,17 @@ RowLayout {
 
         Component.onCompleted: {
           if ($value.length === 0) {
-            textInput.forceActiveFocus()
+            // FIXME: Find the source of this problem.
+            //
+            // Magic code. If it's the first inserted value,
+            // an event or a callback steal the item focus.
+            // I suppose it's an internal Qt qml event...
+            //
+            // So, I choose to run a callback executed after this
+            // internal event.
+            Utils.setTimeout(listForm, 0, function () {
+              textInput.forceActiveFocus()
+            })
           }
         }
       }
