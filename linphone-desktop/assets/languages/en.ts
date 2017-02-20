@@ -168,7 +168,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Choose your avatar</translation>
     </message>
     <message>
         <source>companiesInput</source>
@@ -188,43 +188,43 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sip account</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Company</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Email</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Web site</translation>
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"></translation>
+        <translation>Street</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"></translation>
+        <translation>Postal code</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"></translation>
+        <translation>Country</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"></translation>
+        <translation>Locality</translation>
     </message>
     <message>
         <source>abortEditionTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancel contact edition</translation>
     </message>
     <message>
         <source>abortEditionDescriptionText</source>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to cancel the contact edition?</translation>
     </message>
 </context>
 <context>

@@ -160,59 +160,59 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Choisissez votre avatar</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"></translation>
+        <translation>ENTREPRISES</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>SAUVEGARDER</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ANNULER</translation>
+        <translation>ANNULER</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Compte SIP</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Entreprise</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Email</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Site internet</translation>
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"></translation>
+        <translation>Rue</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"></translation>
+        <translation>Code postal</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"></translation>
+        <translation>Pays</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"></translation>
+        <translation>Localité</translation>
     </message>
     <message>
         <source>abortEditionTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler l&apos;édition du contact</translation>
     </message>
     <message>
         <source>abortEditionDescriptionText</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir annuler l&apos;édition du contact ?</translation>
     </message>
 </context>
 <context>
