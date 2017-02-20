@@ -43,8 +43,10 @@ Rectangle {
   // Handle video requests.
   // ---------------------------------------------------------------------------
 
-  SmartConnect {
-    Component.onCompleted: this.connect(call, 'videoRequested', function () {
+  Connections {
+    target: call
+
+    onVideoRequested: {
       var dialog
 
       // Close dialog after 10s.
@@ -79,7 +81,7 @@ Rectangle {
         },
         title: qsTr('acceptVideoTitle')
       })
-    })
+    }
   }
 
   // ---------------------------------------------------------------------------
