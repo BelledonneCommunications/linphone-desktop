@@ -85,30 +85,14 @@ Item {
           }
         }
       }
-
-      NumberAnimation {
-        duration: PopupStyle.animation.openingDuration
-        easing.type: Easing.InOutQuad
-        property: 'opacity'
-        target: popup
-      }
     },
 
     Transition {
       from: 'opened'
       to: ''
 
-      SequentialAnimation {
-        NumberAnimation {
-          duration: PopupStyle.animation.closingDuration
-          easing.type: Easing.InOutQuad
-          property: 'opacity'
-          target: popup
-        }
-
-        ScriptAction {
-          script: popup.showMinimized()
-        }
+      ScriptAction {
+        script: popup.showMinimized()
       }
     }
   ]

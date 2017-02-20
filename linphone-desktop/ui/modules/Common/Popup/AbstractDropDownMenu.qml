@@ -135,47 +135,18 @@ Item {
           menuOpened()
         }
       }
-
-      NumberAnimation {
-        duration: PopupStyle.animation.openingDuration
-        easing.type: Easing.InOutQuad
-        property: 'opacity'
-        target: menu
-      }
-
-      NumberAnimation {
-        duration: PopupStyle.animation.openingDuration
-        easing.type: Easing.InOutQuad
-        property: 'implicitHeight'
-        target: menu
-      }
     },
 
     Transition {
       from: 'opened'
       to: ''
 
-      NumberAnimation {
-        duration: PopupStyle.animation.closingDuration
-        easing.type: Easing.InOutQuad
-        property: 'implicitHeight'
-        target: menu
-      }
-
       SequentialAnimation {
         ScriptAction {
-          script: menuClosed()
-        }
-
-        NumberAnimation {
-          duration: PopupStyle.animation.closingDuration
-          easing.type: Easing.InOutQuad
-          property: 'opacity'
-          target: menu
-        }
-
-        ScriptAction {
-          script: visible = false
+          script: {
+            menuClosed()
+            visible = false
+          }
         }
       }
     }
