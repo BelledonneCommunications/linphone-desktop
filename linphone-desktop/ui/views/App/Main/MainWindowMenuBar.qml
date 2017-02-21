@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Window 2.2
 
 import Linphone 1.0
 
@@ -110,7 +111,14 @@ import App.Styles 1.0
        shortcut: 'Ctrl+P'
        text: qsTr('settings')
 
-       onTriggered: App.getSettingsWindow().show()
+       onTriggered: {
+         var window = App.getSettingsWindow()
+         if (window.visibility === Window.Minimized) {
+           window.visibility = Window.AutomaticVisibility
+         } else {
+           window.setVisible(true)
+         }
+       }
      }
 
      MenuSeparator {}
