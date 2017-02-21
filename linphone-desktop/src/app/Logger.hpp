@@ -30,11 +30,15 @@
 class Logger {
 public:
   static void init ();
+  static Logger * instance () { return m_instance; };
+
+  bool isVerbose () const { return m_verbose; };
+  void setVerbose (bool verbose) { m_verbose = verbose; };
 
 private:
   Logger () = default;
 
-  bool m_display_core_logs = false;
+  bool m_verbose = false;
 
   static Logger *m_instance;
 };

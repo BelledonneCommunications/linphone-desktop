@@ -35,20 +35,10 @@ using namespace std;
 
 CoreManager *CoreManager::m_instance = nullptr;
 
-CoreManager::CoreManager (QObject *parent) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
-  QDir dir(QCoreApplication::applicationDirPath());
-  if (dir.dirName() == "MacOS") {
-    dir.cdUp();
-    dir.cd("Resources");
-    QDir mspluginsdir(dir);
-    mspluginsdir.cd("lib/mediastreamer/plugins");
-    QDir datadir(dir);
-    datadir.cd("share");
-    linphone::Factory::get()->setMspluginsDir(::Utils::qStringToLinphoneString(mspluginsdir.absolutePath()));
-    linphone::Factory::get()->setTopResourcesDir(::Utils::qStringToLinphoneString(datadir.absolutePath()));
-  }
+CoreManager::CoreManager (const QString &configPath, QObject *parent) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
+  setResourcesPaths();
 
-  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(), "");
+  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(configPath), "");
 
   m_core->setVideoDisplayFilter("MSOGL");
   m_core->usePreviewWindow(true);
@@ -60,9 +50,9 @@ void CoreManager::enableHandlers () {
   m_cbs_timer->start();
 }
 
-void CoreManager::init () {
+void CoreManager::init (const QString &configPath) {
   if (!m_instance) {
-    m_instance = new CoreManager();
+    m_instance = new CoreManager(configPath);
 
     m_instance->m_calls_list_model = new CallsListModel(m_instance);
     m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
@@ -87,4 +77,18 @@ void CoreManager::setDatabasesPaths () {
   m_core->setFriendsDatabasePath(Paths::getFriendsListFilepath());
   m_core->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
   m_core->setChatDatabasePath(Paths::getMessageHistoryFilepath());
+}
+
+void CoreManager::setResourcesPaths () {
+  QDir dir(QCoreApplication::applicationDirPath());
+  if (dir.dirName() == "MacOS") {
+    dir.cdUp();
+    dir.cd("Resources");
+    QDir mspluginsdir(dir);
+    mspluginsdir.cd("lib/mediastreamer/plugins");
+    QDir datadir(dir);
+    datadir.cd("share");
+    linphone::Factory::get()->setMspluginsDir(::Utils::qStringToLinphoneString(mspluginsdir.absolutePath()));
+    linphone::Factory::get()->setTopResourcesDir(::Utils::qStringToLinphoneString(datadir.absolutePath()));
+  }
 }

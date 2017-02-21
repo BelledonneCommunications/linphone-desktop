@@ -136,7 +136,7 @@ void Logger::init () {
   linphone_core_set_log_level(ORTP_MESSAGE);
   linphone_core_set_log_handler(
     [](const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
-      if (m_instance->m_display_core_logs)
+      if (m_instance->isVerbose())
         linphoneLogger(domain, type, fmt, args);
     }
   );

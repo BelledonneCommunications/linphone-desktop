@@ -42,7 +42,9 @@ int main (int argc, char *argv[]) {
    * QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    */
 
-  App::init(argc, argv);
+  App::create(argc, argv);
+  App::getInstance()->parseArgs();
+  App::getInstance()->initContentApp();
 
   // Run!
   return App::getInstance()->exec();

@@ -2,6 +2,29 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>App</name>
+    <message>
+        <source>Linphone seems to be running correctly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Log to stdout some debug information while running.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Specify the linphone configuration file to use.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Run self test and exit 0 if it succeeded.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A free SIP video-phone</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CallControls</name>
     <message>
         <source>homeEntry</source>

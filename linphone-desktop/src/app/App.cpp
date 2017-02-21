@@ -31,12 +31,14 @@
 #include "../components/timeline/TimelineModel.hpp"
 
 #include "App.hpp"
+#include "Logger.hpp"
 
 #include <QFileSelector>
 #include <QMenu>
 #include <QQmlComponent>
 #include <QQmlContext>
 #include <QQuickView>
+#include <QTimer>
 #include <QtDebug>
 
 #define LANGUAGES_PATH ":/languages/"
@@ -52,6 +54,8 @@
 App *App::m_instance = nullptr;
 
 App::App (int &argc, char **argv) : QApplication(argc, argv) {
+  this->setApplicationVersion("4.0");
+
   if (m_english_translator.load(QLocale(QLocale::English), LANGUAGES_PATH))
     installTranslator(&m_english_translator);
   else
@@ -67,24 +71,6 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
     qWarning() << QStringLiteral("Unable to found translations for locale: %1.")
       .arg(current_locale.name());
   }
-
-  // Provide avatars/thumbnails providers.
-  m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, &m_avatar_provider);
-  m_engine.addImageProvider(ThumbnailProvider::PROVIDER_ID, &m_thumbnail_provider);
-
-  setWindowIcon(QIcon(WINDOW_ICON_PATH));
-
-  // Provide `+custom` folders for custom components.
-  m_file_selector = new QQmlFileSelector(&m_engine);
-  m_file_selector->setExtraSelectors(QStringList("custom"));
-
-  // Set modules paths.
-  m_engine.addImportPath(":/ui/modules");
-  m_engine.addImportPath(":/ui/scripts");
-  m_engine.addImportPath(":/ui/views");
-
-  // Don't quit if last window is closed!!!
-  setQuitOnLastWindowClosed(false);
 }
 
 // -----------------------------------------------------------------------------
@@ -111,8 +97,26 @@ bool App::hasFocus () const {
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
+  // Provide avatars/thumbnails providers.
+  m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, &m_avatar_provider);
+  m_engine.addImageProvider(ThumbnailProvider::PROVIDER_ID, &m_thumbnail_provider);
+
+  setWindowIcon(QIcon(WINDOW_ICON_PATH));
+
+  // Provide `+custom` folders for custom components.
+  m_file_selector = new QQmlFileSelector(&m_engine);
+  m_file_selector->setExtraSelectors(QStringList("custom"));
+
+  // Set modules paths.
+  m_engine.addImportPath(":/ui/modules");
+  m_engine.addImportPath(":/ui/scripts");
+  m_engine.addImportPath(":/ui/views");
+
+  // Don't quit if last window is closed!!!
+  setQuitOnLastWindowClosed(false);
+
   // Init core.
-  CoreManager::init();
+  CoreManager::init(m_parser.value("config"));
   qInfo() << "Core manager initialized.";
 
   qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
@@ -141,6 +145,29 @@ void App::initContentApp () {
       setTrayIcon();
 
   #endif // ifndef __APPLE__
+
+  if (m_parser.isSet("selftest")) {
+    QTimer::singleShot(300, this, &App::quit);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+void App::parseArgs () {
+  m_parser.setApplicationDescription(tr("A free SIP video-phone"));
+  m_parser.addHelpOption();
+  m_parser.addVersionOption();
+  m_parser.addOptions({
+    { "config", tr("Specify the linphone configuration file to use."), "file" },
+    { "selftest", tr("Run self test and exit 0 if it succeeded.") },
+    { { "V", "verbose" }, tr("Log to stdout some debug information while running.") }
+  });
+
+  m_parser.process(*this);
+
+  if (m_parser.isSet("verbose")) {
+    Logger::instance()->setVerbose(true);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +286,7 @@ void App::setTrayIcon () {
 
   // trayIcon: Right click actions.
   QAction *quit_action = new QAction("Quit", root);
-  root->connect(quit_action, &QAction::triggered, qApp, &QCoreApplication::quit);
+  root->connect(quit_action, &QAction::triggered, this, &App::quit);
 
   QAction *restore_action = new QAction("Restore", root);
   root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
@@ -287,4 +314,13 @@ void App::setTrayIcon () {
   m_system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
   m_system_tray_icon->setToolTip("Linphone");
   m_system_tray_icon->show();
+}
+
+// -----------------------------------------------------------------------------
+
+void App::quit () {
+  if (m_parser.isSet("selftest")) {
+    cout << tr("Linphone seems to be running correctly").toStdString() << endl;
+  }
+  QCoreApplication::quit();
 }

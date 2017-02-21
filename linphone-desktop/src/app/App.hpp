@@ -29,6 +29,7 @@
 #include "ThumbnailProvider.hpp"
 
 #include <QApplication>
+#include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
 #include <QQuickWindow>
@@ -55,15 +56,18 @@ public:
 
   Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
 
+  void initContentApp ();
+
   Q_INVOKABLE QString locale () const {
     return m_locale;
   }
 
-  static void init (int &argc, char **argv) {
+  void parseArgs ();
+
+  static void create (int &argc, char **argv) {
     if (!m_instance) {
       // Instance must be exists before content.
       m_instance = new App(argc, argv);
-      m_instance->initContentApp();
     }
   }
 
@@ -71,16 +75,18 @@ public:
     return m_instance;
   }
 
+public slots:
+  void quit ();
+
 private:
   App (int &argc, char **argv);
   ~App () = default;
-
-  void initContentApp ();
 
   void registerTypes ();
   void createSubWindows ();
   void setTrayIcon ();
 
+  QCommandLineParser m_parser;
   QQmlApplicationEngine m_engine;
   QQmlFileSelector *m_file_selector = nullptr;
   QSystemTrayIcon *m_system_tray_icon = nullptr;

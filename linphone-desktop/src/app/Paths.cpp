@@ -96,7 +96,10 @@ string Paths::getCallHistoryFilepath () {
   return getFilePath(MAIN_PATH + PATH_CALL_HISTORY_LIST);
 }
 
-string Paths::getConfigFilepath () {
+string Paths::getConfigFilepath (const QString &configPath) {
+  if (!configPath.isEmpty()) {
+    return getFilePath(QFileInfo(configPath).absoluteFilePath());
+  }
   return getFilePath(MAIN_PATH + PATH_CONFIG);
 }
 
