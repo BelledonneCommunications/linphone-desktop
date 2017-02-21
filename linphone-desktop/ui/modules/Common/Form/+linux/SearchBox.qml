@@ -75,7 +75,7 @@ Item {
       }
 
       onActiveFocusChanged: {
-        if (activeFocus) {
+        if (activeFocus && !_isOpen) {
           searchBox.menuRequested()
           searchBox.showMenu()
         }
