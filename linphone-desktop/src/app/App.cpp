@@ -151,6 +151,10 @@ void App::initContentApp () {
   }
 }
 
+bool App::isInitiallyIconified () const {
+  return m_parser.isSet("iconified");
+}
+
 // -----------------------------------------------------------------------------
 
 void App::parseArgs () {
@@ -159,6 +163,9 @@ void App::parseArgs () {
   m_parser.addVersionOption();
   m_parser.addOptions({
     { "config", tr("commandLineOptionConfig"), "file" },
+  #ifndef __APPLE__
+    { "iconified", tr("commandLineOptionIconified") },
+  #endif // __APPLE__
     { "selftest", tr("commandLineOptionSelftest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
   });

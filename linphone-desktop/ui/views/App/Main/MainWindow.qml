@@ -105,6 +105,9 @@ Controls1.ApplicationWindow {
 
   Component.onCompleted: Utils.setTimeout(window, 0, function () {
     _setView('Home')
+    if (App.isInitiallyIconified()) {
+      window.hide()
+    }
   })
 
   onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()

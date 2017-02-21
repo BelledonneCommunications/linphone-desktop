@@ -58,6 +58,8 @@ public:
 
   void initContentApp ();
 
+  Q_INVOKABLE bool isInitiallyIconified () const;
+
   Q_INVOKABLE QString locale () const {
     return m_locale;
   }

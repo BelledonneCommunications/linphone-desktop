@@ -23,6 +23,10 @@
         <source>applicationDescription</source>
         <translation>A free SIP video-phone</translation>
     </message>
+    <message>
+        <source>commandLineOptionIconified</source>
+        <translation>Start in the system tray, do not show the main interface.</translation>
+    </message>
 </context>
 <context>
     <name>CallControls</name>
