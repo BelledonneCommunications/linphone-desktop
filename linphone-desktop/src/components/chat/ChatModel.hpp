@@ -117,6 +117,7 @@ private:
 
   void removeEntry (ChatEntryData &pair);
 
+  void insertCall (const std::shared_ptr<linphone::CallLog> &call_log);
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 
   void resetMessagesCount ();

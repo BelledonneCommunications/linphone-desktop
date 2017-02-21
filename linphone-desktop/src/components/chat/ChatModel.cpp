@@ -169,10 +169,12 @@ private:
 // -----------------------------------------------------------------------------
 
 ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
-  m_core_handlers = CoreManager::getInstance()->getHandlers();
+  CoreManager *core = CoreManager::getInstance();
+
+  m_core_handlers = core->getHandlers();
   m_message_handlers = make_shared<MessageHandlers>(this);
 
-  CoreManager::getInstance()->getSipAddressesModel()->connectToChatModel(this);
+  core->getSipAddressesModel()->connectToChatModel(this);
 
   QObject::connect(
     &(*m_core_handlers), &CoreHandlers::messageReceived,
@@ -183,6 +185,14 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
 
         emit messageReceived(message);
       }
+    }
+  );
+
+  QObject::connect(
+    &(*m_core_handlers), &CoreHandlers::callStateChanged,
+    this, [this](const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
+      if (state == linphone::CallStateEnd || state == linphone::CallStateError)
+        insertCall(call->getCallLog());
     }
   );
 }
@@ -282,39 +292,8 @@ void ChatModel::setSipAddress (const QString &sip_address) {
   }
 
   // Get calls.
-  auto insert_entry = [this](
-      const ChatEntryData &pair,
-      const QList<ChatEntryData>::iterator *start = NULL
-    ) {
-      auto it = lower_bound(
-          start ? *start : m_entries.begin(), m_entries.end(), pair,
-          [](const ChatEntryData &a, const ChatEntryData &b) {
-            return a.first["timestamp"] < b.first["timestamp"];
-          }
-        );
-
-      return m_entries.insert(it, pair);
-    };
-
-  for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress())) {
-    linphone::CallStatus status = call_log->getStatus();
-
-    // Ignore aborted calls.
-    if (status == linphone::CallStatusAborted)
-      continue;
-
-    // Add start call.
-    QVariantMap start;
-    fillCallStartEntry(start, call_log);
-    auto it = insert_entry(qMakePair(start, static_pointer_cast<void>(call_log)));
-
-    // Add end call. (if necessary)
-    if (status == linphone::CallStatusSuccess) {
-      QVariantMap end;
-      fillCallEndEntry(end, call_log);
-      insert_entry(qMakePair(end, static_pointer_cast<void>(call_log)), &it);
-    }
-  }
+  for (auto &call_log : core->getCallHistoryForAddress(m_chat_room->getPeerAddress()))
+    insertCall(call_log);
 
   endResetModel();
 
@@ -379,6 +358,7 @@ void ChatModel::resendMessage (int id) {
   switch (map["status"].toInt()) {
     case MessageStatusFileTransferError:
     case MessageStatusNotDelivered: {
+      // TODO: Do not duplicate me! Use a linphone core function in the future.
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
 
       shared_ptr<linphone::ChatMessage> message2 = message->clone();
@@ -541,6 +521,46 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
 
     default:
       qWarning() << QStringLiteral("Unknown chat entry type: %1.").arg(type);
+  }
+}
+
+void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &call_log) {
+  auto insert_entry = [this](
+      const ChatEntryData &pair,
+      const QList<ChatEntryData>::iterator *start = NULL
+    ) {
+      auto it = lower_bound(
+          start ? *start : m_entries.begin(), m_entries.end(), pair,
+          [](const ChatEntryData &a, const ChatEntryData &b) {
+            return a.first["timestamp"] < b.first["timestamp"];
+          }
+        );
+
+      int row = static_cast<int>(distance(m_entries.begin(), it));
+
+      beginInsertRows(QModelIndex(), row, row);
+      it = m_entries.insert(it, pair);
+      endInsertRows();
+
+      return it;
+    };
+
+  linphone::CallStatus status = call_log->getStatus();
+
+  // Ignore aborted calls.
+  if (status == linphone::CallStatusAborted)
+    return;
+
+  // Add start call.
+  QVariantMap start;
+  fillCallStartEntry(start, call_log);
+  auto it = insert_entry(qMakePair(start, static_pointer_cast<void>(call_log)));
+
+  // Add end call. (if necessary)
+  if (status == linphone::CallStatusSuccess) {
+    QVariantMap end;
+    fillCallEndEntry(end, call_log);
+    insert_entry(qMakePair(end, static_pointer_cast<void>(call_log)), &it);
   }
 }
 
