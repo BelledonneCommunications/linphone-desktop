@@ -154,13 +154,13 @@ void App::initContentApp () {
 // -----------------------------------------------------------------------------
 
 void App::parseArgs () {
-  m_parser.setApplicationDescription(tr("A free SIP video-phone"));
+  m_parser.setApplicationDescription(tr("applicationDescription"));
   m_parser.addHelpOption();
   m_parser.addVersionOption();
   m_parser.addOptions({
-    { "config", tr("Specify the linphone configuration file to use."), "file" },
-    { "selftest", tr("Run self test and exit 0 if it succeeded.") },
-    { { "V", "verbose" }, tr("Log to stdout some debug information while running.") }
+    { "config", tr("commandLineOptionConfig"), "file" },
+    { "selftest", tr("commandLineOptionSelftest") },
+    { { "V", "verbose" }, tr("commandLineOptionVerbose") }
   });
 
   m_parser.process(*this);
@@ -320,7 +320,7 @@ void App::setTrayIcon () {
 
 void App::quit () {
   if (m_parser.isSet("selftest")) {
-    cout << tr("Linphone seems to be running correctly").toStdString() << endl;
+    cout << tr("selftestResult").toStdString() << endl;
   }
   QCoreApplication::quit();
 }

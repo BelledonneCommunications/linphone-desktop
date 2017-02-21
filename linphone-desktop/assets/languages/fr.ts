@@ -4,23 +4,23 @@
 <context>
     <name>App</name>
     <message>
-        <source>Linphone seems to be running correctly</source>
+        <source>selftestResult</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Log to stdout some debug information while running.</source>
+        <source>commandLineOptionVerbose</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Specify the linphone configuration file to use.</source>
+        <source>commandLineOptionConfig</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Run self test and exit 0 if it succeeded.</source>
+        <source>commandLineOptionSelftest</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>A free SIP video-phone</source>
+        <source>applicationDescription</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
