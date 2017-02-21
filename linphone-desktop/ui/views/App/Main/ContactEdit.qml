@@ -215,243 +215,244 @@ ColumnLayout  {
   // Info list.
   // ---------------------------------------------------------------------------
 
-  Loader {
+  Rectangle {
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    active: _vcard != null
-    sourceComponent: Flickable {
-      id: flick
+    color: ContactEditStyle.content.color
 
-      // -----------------------------------------------------------------------
+    Loader {
+      anchors.fill: parent
 
-      function _handleSipAddressChanged (index, defaultValue, newValue) {
-        if (newValue === defaultValue) {
-          return
+      active: _vcard != null
+      sourceComponent: Flickable {
+        id: flick
+
+        // ---------------------------------------------------------------------
+
+        function _handleSipAddressChanged (index, defaultValue, newValue) {
+          if (newValue === defaultValue) {
+            return
+          }
+
+          var so_far_so_good = (defaultValue.length === 0)
+            ? _vcard.addSipAddress(newValue)
+            : _vcard.updateSipAddress(defaultValue, newValue)
+
+          addresses.setInvalid(index, !so_far_so_good)
         }
 
-        var so_far_so_good = (defaultValue.length === 0)
-          ? _vcard.addSipAddress(newValue)
-          : _vcard.updateSipAddress(defaultValue, newValue)
-
-        addresses.setInvalid(index, !so_far_so_good)
-      }
-
-      function _handleCompanyChanged (index, defaultValue, newValue) {
-        var so_far_so_good = (defaultValue.length === 0)
-          ? _vcard.addCompany(newValue)
-          : _vcard.updateCompany(defaultValue, newValue)
+        function _handleCompanyChanged (index, defaultValue, newValue) {
+          var so_far_so_good = (defaultValue.length === 0)
+            ? _vcard.addCompany(newValue)
+            : _vcard.updateCompany(defaultValue, newValue)
 
           companies.setInvalid(index, !so_far_so_good)
-      }
-
-      function _handleEmailChanged (index, defaultValue, newValue) {
-        var so_far_so_good = (defaultValue.length === 0)
-          ? _vcard.addEmail(newValue)
-          : _vcard.updateEmail(defaultValue, newValue)
-
-          emails.setInvalid(index, !so_far_so_good)
-      }
-
-      function _handleUrlChanged (index, defaultValue, newValue) {
-        var url = Utils.extractFirstUri(newValue)
-        if (url === defaultValue) {
-          return
         }
 
-        var so_far_so_good = url && (
+        function _handleEmailChanged (index, defaultValue, newValue) {
+          var so_far_so_good = (defaultValue.length === 0)
+            ? _vcard.addEmail(newValue)
+            : _vcard.updateEmail(defaultValue, newValue)
+
+          emails.setInvalid(index, !so_far_so_good)
+        }
+
+        function _handleUrlChanged (index, defaultValue, newValue) {
+          var url = Utils.extractFirstUri(newValue)
+          if (url === defaultValue) {
+            return
+          }
+
+          var so_far_so_good = url && (
           defaultValue.length === 0
             ? _vcard.addUrl(newValue)
             : _vcard.updateUrl(defaultValue, newValue)
-        )
+          )
 
-        urls.setInvalid(index, !so_far_so_good)
-      }
-
-      function _handleAddressChanged (index, value) {
-        if (index === 0) { // Street.
-          _vcard.setStreet(value)
-        } else if (index === 1) { // Locality.
-          _vcard.setLocality(value)
-        } else if (index === 2) { // Postal code.
-          _vcard.setPostalCode(value)
-        } else if (index === 3) { // Country.
-          _vcard.setCountry(value)
-        }
-      }
-
-      // -----------------------------------------------------------------------
-
-      ScrollBar.vertical: ForceScrollBar {}
-
-      boundsBehavior: Flickable.StopAtBounds
-      clip: true
-      contentHeight: infoList.height
-      contentWidth: width - ScrollBar.vertical.width
-      flickableDirection: Flickable.VerticalFlick
-
-      // -----------------------------------------------------------------------
-
-      Connections {
-        target: _vcard
-
-        onVcardUpdated: {
-          addresses.setData(_vcard.sipAddresses)
-          companies.setData(_vcard.companies)
-          emails.setData(_vcard.emails)
-          urls.setData(_vcard.urls)
-        }
-      }
-
-      // -----------------------------------------------------------------------
-
-      Rectangle {
-        anchors.fill: parent
-        color: ContactEditStyle.content.color
-      }
-
-      ColumnLayout {
-        id: infoList
-
-        width: flick.contentWidth
-
-        ListForm {
-          id: addresses
-
-          Layout.leftMargin: ContactEditStyle.values.leftMargin
-          Layout.rightMargin: ContactEditStyle.values.rightMargin
-          Layout.topMargin: ContactEditStyle.values.topMargin
-
-          defaultData: _vcard.sipAddresses
-          minValues: _contact ? 1 : 0
-          placeholder: qsTr('sipAccountsPlaceholder')
-          readOnly: !_edition
-          title: qsTr('sipAccounts')
-
-          onChanged: _handleSipAddressChanged(index, defaultValue, newValue)
-          onRemoved: _vcard.removeSipAddress(value)
+          urls.setInvalid(index, !so_far_so_good)
         }
 
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.preferredHeight: ContactEditStyle.values.separator.height
-          color: ContactEditStyle.values.separator.color
-        }
-
-        ListForm {
-          id: companies
-
-          Layout.leftMargin: ContactEditStyle.values.leftMargin
-          Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-          defaultData: _vcard.companies
-          placeholder: qsTr('companiesPlaceholder')
-          readOnly: !_edition
-          title: qsTr('companies')
-
-          onChanged: _handleCompanyChanged(index, defaultValue, newValue)
-          onRemoved: _vcard.removeCompany(value)
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.preferredHeight: ContactEditStyle.values.separator.height
-          color: ContactEditStyle.values.separator.color
-        }
-
-        ListForm {
-          id: emails
-
-          Layout.leftMargin: ContactEditStyle.values.leftMargin
-          Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-          defaultData: _vcard.emails
-          inputMethodHints: Qt.ImhEmailCharactersOnly
-          placeholder: qsTr('emailsPlaceholder')
-          readOnly: !_edition
-          title: qsTr('emails')
-
-          onChanged: _handleEmailChanged(index, defaultValue, newValue)
-          onRemoved: _vcard.removeEmail(value)
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.preferredHeight: ContactEditStyle.values.separator.height
-          color: ContactEditStyle.values.separator.color
-        }
-
-        ListForm {
-          id: urls
-
-          Layout.leftMargin: ContactEditStyle.values.leftMargin
-          Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-          defaultData: _vcard.urls
-          inputMethodHints: Qt.ImhUrlCharactersOnly
-          placeholder: qsTr('webSitesPlaceholder')
-          readOnly: !_edition
-          title: qsTr('webSites')
-
-          onChanged: _handleUrlChanged(index, defaultValue, newValue)
-          onRemoved: _vcard.removeUrl(value)
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.preferredHeight: ContactEditStyle.values.separator.height
-          color: ContactEditStyle.values.separator.color
-        }
-
-        StaticListForm {
-          Layout.leftMargin: ContactEditStyle.values.leftMargin
-          Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-          fields: {
-            var address = _vcard.address
-
-            return [{
-              placeholder: qsTr('street'),
-              text: address.street
-            }, {
-              placeholder: qsTr('locality'),
-              text: address.locality
-            }, {
-              placeholder: qsTr('postalCode'),
-              text: address.postalCode
-            }, {
-              placeholder: qsTr('country'),
-              text: address.country
-            }]
+        function _handleAddressChanged (index, value) {
+          if (index === 0) { // Street.
+            _vcard.setStreet(value)
+          } else if (index === 1) { // Locality.
+            _vcard.setLocality(value)
+          } else if (index === 2) { // Postal code.
+            _vcard.setPostalCode(value)
+          } else if (index === 3) { // Country.
+            _vcard.setCountry(value)
           }
-
-          readOnly: !_edition
-          title: qsTr('address')
-
-          onChanged: _handleAddressChanged(index, value)
         }
 
         // ---------------------------------------------------------------------
-        // Edition buttons.
+
+        ScrollBar.vertical: ForceScrollBar {}
+
+        boundsBehavior: Flickable.StopAtBounds
+        clip: true
+        contentHeight: infoList.height
+        contentWidth: width - ScrollBar.vertical.width
+        flickableDirection: Flickable.VerticalFlick
+
         // ---------------------------------------------------------------------
 
-        Row {
-          Layout.alignment: Qt.AlignHCenter
-          Layout.bottomMargin: ContactEditStyle.values.bottomMargin
-          Layout.topMargin: ContactEditStyle.buttons.topMargin
+        Connections {
+          target: _vcard
 
-          spacing: ContactEditStyle.buttons.spacing
-          visible: _edition
+          onVcardUpdated: {
+            addresses.setData(_vcard.sipAddresses)
+            companies.setData(_vcard.companies)
+            emails.setData(_vcard.emails)
+            urls.setData(_vcard.urls)
+          }
+        }
 
-          TextButtonA {
-            text: qsTr('cancel')
-            onClicked: _cancel()
+        // ---------------------------------------------------------------------
+
+        ColumnLayout {
+          id: infoList
+
+          width: flick.contentWidth
+
+          ListForm {
+            id: addresses
+
+            Layout.leftMargin: ContactEditStyle.values.leftMargin
+            Layout.rightMargin: ContactEditStyle.values.rightMargin
+            Layout.topMargin: ContactEditStyle.values.topMargin
+
+            defaultData: _vcard.sipAddresses
+            minValues: _contact ? 1 : 0
+            placeholder: qsTr('sipAccountsPlaceholder')
+            readOnly: !_edition
+            title: qsTr('sipAccounts')
+
+            onChanged: _handleSipAddressChanged(index, defaultValue, newValue)
+            onRemoved: _vcard.removeSipAddress(value)
           }
 
-          TextButtonB {
-            enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
-            text: qsTr('save')
-            onClicked: _save()
+          Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: ContactEditStyle.values.separator.height
+            color: ContactEditStyle.values.separator.color
+          }
+
+          ListForm {
+            id: companies
+
+            Layout.leftMargin: ContactEditStyle.values.leftMargin
+            Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+            defaultData: _vcard.companies
+            placeholder: qsTr('companiesPlaceholder')
+            readOnly: !_edition
+            title: qsTr('companies')
+
+            onChanged: _handleCompanyChanged(index, defaultValue, newValue)
+            onRemoved: _vcard.removeCompany(value)
+          }
+
+          Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: ContactEditStyle.values.separator.height
+            color: ContactEditStyle.values.separator.color
+          }
+
+          ListForm {
+            id: emails
+
+            Layout.leftMargin: ContactEditStyle.values.leftMargin
+            Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+            defaultData: _vcard.emails
+            inputMethodHints: Qt.ImhEmailCharactersOnly
+            placeholder: qsTr('emailsPlaceholder')
+            readOnly: !_edition
+            title: qsTr('emails')
+
+            onChanged: _handleEmailChanged(index, defaultValue, newValue)
+            onRemoved: _vcard.removeEmail(value)
+          }
+
+          Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: ContactEditStyle.values.separator.height
+            color: ContactEditStyle.values.separator.color
+          }
+
+          ListForm {
+            id: urls
+
+            Layout.leftMargin: ContactEditStyle.values.leftMargin
+            Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+            defaultData: _vcard.urls
+            inputMethodHints: Qt.ImhUrlCharactersOnly
+            placeholder: qsTr('webSitesPlaceholder')
+            readOnly: !_edition
+            title: qsTr('webSites')
+
+            onChanged: _handleUrlChanged(index, defaultValue, newValue)
+            onRemoved: _vcard.removeUrl(value)
+          }
+
+          Rectangle {
+            Layout.fillWidth: true
+            Layout.preferredHeight: ContactEditStyle.values.separator.height
+            color: ContactEditStyle.values.separator.color
+          }
+
+          StaticListForm {
+            Layout.leftMargin: ContactEditStyle.values.leftMargin
+            Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+            fields: {
+              var address = _vcard.address
+
+              return [{
+                placeholder: qsTr('street'),
+                text: address.street
+              }, {
+                placeholder: qsTr('locality'),
+                text: address.locality
+              }, {
+                placeholder: qsTr('postalCode'),
+                text: address.postalCode
+              }, {
+                placeholder: qsTr('country'),
+                text: address.country
+              }]
+            }
+
+            readOnly: !_edition
+            title: qsTr('address')
+
+            onChanged: _handleAddressChanged(index, value)
+          }
+
+          // -------------------------------------------------------------------
+          // Edition buttons.
+          // -------------------------------------------------------------------
+
+          Row {
+            Layout.alignment: Qt.AlignHCenter
+            Layout.bottomMargin: ContactEditStyle.values.bottomMargin
+            Layout.topMargin: ContactEditStyle.buttons.topMargin
+
+            spacing: ContactEditStyle.buttons.spacing
+            visible: _edition
+
+            TextButtonA {
+              text: qsTr('cancel')
+              onClicked: _cancel()
+            }
+
+            TextButtonB {
+              enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
+              text: qsTr('save')
+              onClicked: _save()
+            }
           }
         }
       }
