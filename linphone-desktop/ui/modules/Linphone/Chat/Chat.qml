@@ -30,10 +30,8 @@ Rectangle {
   color: _backgroundColor
 
   ColumnLayout {
-
     anchors.fill: parent
     spacing: 0
-
 
     ScrollableListView {
       id: chat

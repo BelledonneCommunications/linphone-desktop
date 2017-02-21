@@ -22,7 +22,6 @@ ListView {
 
   boundsBehavior: Flickable.StopAtBounds
   clip: true
-  contentHeight: hScrollBar.visible ? height - hScrollBar.height : height
   contentWidth: vScrollBar.visible ? width - vScrollBar.width : width
   spacing: 0
 }
