@@ -105,7 +105,7 @@ Rectangle {
         // When the view is changed (for example `Calls` -> `Messages`),
         // the position is set at end and it can be possible to load
         // more entries.
-        onEntryTypeFilterChanged: _initView()
+        onEntryTypeFilterChanged: chat._initView()
 
         onMoreEntriesLoaded: {
           chat.positionViewAtIndex(n - 1, ListView.Beginning)
