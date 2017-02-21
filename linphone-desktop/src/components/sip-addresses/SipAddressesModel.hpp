@@ -59,17 +59,18 @@ private:
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);
 
-  void addOrUpdateSipAddress (
-    QVariantMap &map,
-    ContactModel *contact,
-    const std::shared_ptr<linphone::ChatMessage> &message
-  );
+  // ---------------------------------------------------------------------------
 
-  void addOrUpdateSipAddress (
-    const QString &sip_address,
-    ContactModel *contact = nullptr,
-    const std::shared_ptr<linphone::ChatMessage> &message = std::shared_ptr<linphone::ChatMessage>()
-  );
+  // A sip address exists in this list if a contact is linked to it, or a call, or a message.
+
+  void addOrUpdateSipAddress (QVariantMap &map, ContactModel *contact);
+  void addOrUpdateSipAddress (QVariantMap &map, const std::shared_ptr<linphone::Call> &call);
+  void addOrUpdateSipAddress (QVariantMap &map, const std::shared_ptr<linphone::ChatMessage> &message);
+
+  template<class T>
+  void addOrUpdateSipAddress (const QString &sip_address, T data);
+
+  // ---------------------------------------------------------------------------
 
   void removeContactOfSipAddress (const QString &sip_address);
 
