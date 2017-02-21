@@ -338,7 +338,11 @@ void SipAddressesModel::initSipAddresses () {
 
     QVariantMap map;
     map["sipAddress"] = sip_address;
-    map["timestamp"] = QDateTime::fromMSecsSinceEpoch((call_log->getStartDate() + call_log->getDuration()) * 1000);
+
+    // The duration can be wrong if status is not success.
+    map["timestamp"] = call_log->getStatus() == linphone::CallStatus::CallStatusSuccess
+      ? QDateTime::fromMSecsSinceEpoch((call_log->getStartDate() + call_log->getDuration()) * 1000)
+      : QDateTime::fromMSecsSinceEpoch(call_log->getStartDate() * 1000);
 
     auto it = m_sip_addresses.find(sip_address);
     if (it == m_sip_addresses.end() || map["timestamp"] > (*it)["timestamp"])
