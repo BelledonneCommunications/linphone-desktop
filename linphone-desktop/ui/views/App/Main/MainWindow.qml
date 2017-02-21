@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import QtQuick.Window 2.2
 
 // Explicit import to support Toolbar.
 import QtQuick.Controls 1.4 as Controls1
@@ -65,7 +66,12 @@ Controls1.ApplicationWindow {
   }
 
   function _setView (view, props) {
-    window.show()
+    if (window.visibility === Window.Minimized) {
+      window.visibility = Window.AutomaticVisibility
+    } else {
+      window.setVisible(true)
+    }
+
     window.requestActivate()
     collapse.setCollapsed(true)
 

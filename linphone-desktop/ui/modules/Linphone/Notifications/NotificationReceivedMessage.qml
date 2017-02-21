@@ -12,7 +12,7 @@ Notification {
 
   // ---------------------------------------------------------------------------
 
-  property string _sipAddress: notificationData ? notificationData.sipAddress : ''
+  property string _sipAddress: notificationData && notificationData.sipAddress || ''
   property var _contact: _contactObserver.contact
   property var _contactObserver: SipAddressesModel.getContactObserver(_sipAddress)
 

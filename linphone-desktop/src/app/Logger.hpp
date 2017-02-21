@@ -30,7 +30,7 @@
 class Logger {
 public:
   static void init ();
-  static Logger * instance () { return m_instance; };
+  static Logger *instance () { return m_instance; };
 
   bool isVerbose () const { return m_verbose; };
   void setVerbose (bool verbose) { m_verbose = verbose; };

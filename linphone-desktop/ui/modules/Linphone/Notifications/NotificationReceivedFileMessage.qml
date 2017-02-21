@@ -13,7 +13,7 @@ Notification {
 
   // ---------------------------------------------------------------------------
 
-  property string _fileUri: notificationData ? notificationData.fileUri : ''
+  property string _fileUri: notificationData && notificationData.fileUri || ''
 
   // ---------------------------------------------------------------------------
 
