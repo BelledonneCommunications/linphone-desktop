@@ -142,6 +142,7 @@ Controls1.ApplicationWindow {
           Layout.fillHeight: parent.height
           target: window
           targetHeight: MainWindowStyle.minimumHeight
+          visible: Qt.platform.os !== 'linux'
         }
 
         AccountStatus {
@@ -202,9 +203,6 @@ Controls1.ApplicationWindow {
           })
 
           onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
-
-          // Specific linux action..
-          onMenuRequested: Qt.platform.os === 'linux' && collapse.setCollapsed(true)
         }
       }
     }
