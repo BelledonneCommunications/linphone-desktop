@@ -1,12 +1,10 @@
 import QtQuick 2.7
-import QtQuick.Window 2.2
 
 import Common 1.0
 import Utils 1.0
 
 // =============================================================================
-// A reusable search input which display a entries model in a menu.
-// Each entry can be filtered with the search input.
+// Specific GNU/Linux version of `SearchBox` component.
 // =============================================================================
 
 Item {
@@ -21,9 +19,7 @@ Item {
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
 
-  // This property must implement `setFilter` function.
   property alias model: list.model
-
   property alias placeholderText: searchField.placeholderText
 
   property bool _isOpen: false
@@ -57,15 +53,6 @@ Item {
     model.setFilter(text)
   }
 
-  function _handleCoords () {
-    searchBox.hideMenu()
-
-    var point = searchBox.mapToItem(null, 0, searchBox.height)
-
-    desktopPopup.popupX = window.x + point.x
-    desktopPopup.popupY = window.y + point.y
-  }
-
   // ---------------------------------------------------------------------------
 
   implicitHeight: searchField.height
@@ -92,44 +79,25 @@ Item {
 
     // -------------------------------------------------------------------------
 
-    Connections {
-      target: searchBox.Window.window
+    DropDownDynamicMenu {
+      id: menu
 
-      onHeightChanged: _handleCoords()
-      onWidthChanged: _handleCoords()
+      launcher: searchField
+      relativeTo: searchField
+      relativeY: searchField.height
+      width: searchField.width
 
-      onXChanged: _handleCoords()
-      onYChanged: _handleCoords()
+      // If the menu is focused, the main window loses the active status.
+      // So It's necessary to map the keys events.
+      Keys.forwardTo: searchField
 
-      onVisibilityChanged: _handleCoords()
-    }
+      onMenuClosed: searchBox.hideMenu()
 
-    // Wrap the search box menu in a window.
-    DesktopPopup {
-      id: desktopPopup
+      ScrollableListView {
+        id: list
 
-      requestActivate: true
-
-      onVisibleChanged: !visible && searchBox.hideMenu()
-
-      DropDownDynamicMenu {
-        id: menu
-
-        launcher: searchField
-        width: searchField.width
-
-        // If the menu is focused, the main window loses the active status.
-        // So It's necessary to map the keys events.
-        Keys.forwardTo: searchField
-
-        onMenuClosed: searchBox.hideMenu()
-
-        ScrollableListView {
-          id: list
-
-          anchors.fill: parent
-          headerPositioning: header ? ListView.OverlayHeader : ListView.InlineFooter
-        }
+        anchors.fill: parent
+        headerPositioning: header ? ListView.OverlayHeader : ListView.InlineFooter
       }
     }
   }
@@ -149,7 +117,6 @@ Item {
       ScriptAction {
         script: {
           menu.showMenu()
-          desktopPopup.show()
 
           menuOpened()
         }
@@ -164,7 +131,6 @@ Item {
         script: {
           menu.hideMenu()
           searchField.focus = false
-          desktopPopup.hide()
 
           menuClosed()
         }

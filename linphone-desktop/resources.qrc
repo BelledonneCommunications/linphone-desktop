@@ -185,6 +185,7 @@
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
+    <file>ui/modules/Common/Form/+linux/SearchBox.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEntry.qml</file>
