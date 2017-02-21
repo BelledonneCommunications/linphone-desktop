@@ -32,6 +32,7 @@ Item {
 
   signal menuClosed
   signal menuOpened
+  signal menuRequested
   signal enterPressed
 
   // ---------------------------------------------------------------------------
@@ -71,7 +72,7 @@ Item {
   implicitHeight: searchField.height
 
   Item {
-    implicitHeight: searchField.height + menu.height
+    implicitHeight: searchField.height
     width: parent.width
 
     TextField {
@@ -86,7 +87,13 @@ Item {
         searchBox.enterPressed()
       }
 
-      onActiveFocusChanged: activeFocus && searchBox.showMenu()
+      onActiveFocusChanged: {
+        if (activeFocus) {
+          searchBox.menuRequested()
+          searchBox.showMenu()
+        }
+      }
+
       onTextChanged: _filter(text)
     }
 
@@ -151,7 +158,7 @@ Item {
           menu.showMenu()
           desktopPopup.show()
 
-          menuOpened()
+          searchBox.menuOpened()
         }
       }
     },
@@ -166,7 +173,7 @@ Item {
           searchField.focus = false
           desktopPopup.hide()
 
-          menuClosed()
+          searchBox.menuClosed()
         }
       }
     }

@@ -192,6 +192,10 @@ Controls1.ApplicationWindow {
             sipAddress: sipAddress
           })
 
+          onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
+            sipAddress: entry.sipAddress
+          })
+
           onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
           onLaunchChat: window.setView('Conversation', {
             sipAddress: sipAddress
@@ -199,9 +203,8 @@ Controls1.ApplicationWindow {
 
           onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
 
-          onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
-            sipAddress: entry.sipAddress
-          })
+          // Specific linux action..
+          onMenuRequested: Qt.platform.os === 'linux' && collapse.setCollapsed(true)
         }
       }
     }

@@ -28,6 +28,7 @@ Item {
 
   signal menuClosed
   signal menuOpened
+  signal menuRequested
   signal enterPressed
 
   // ---------------------------------------------------------------------------
@@ -73,7 +74,13 @@ Item {
         searchBox.enterPressed()
       }
 
-      onActiveFocusChanged: activeFocus && searchBox.showMenu()
+      onActiveFocusChanged: {
+        if (activeFocus) {
+          searchBox.menuRequested()
+          searchBox.showMenu()
+        }
+      }
+
       onTextChanged: _filter(text)
     }
 
@@ -118,7 +125,7 @@ Item {
         script: {
           menu.showMenu()
 
-          menuOpened()
+          searchBox.menuOpened()
         }
       }
     },
@@ -132,7 +139,7 @@ Item {
           menu.hideMenu()
           searchField.focus = false
 
-          menuClosed()
+          searchBox.menuClosed()
         }
       }
     }
