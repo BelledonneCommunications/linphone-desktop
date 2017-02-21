@@ -183,10 +183,10 @@ Rectangle {
           // properties... The messages use the `implicitWidth/Height`
           // and `width/Height` attrs and is not easy to found a fix.
           rightMargin: ChatStyle.entry.deleteIconSize +
-          ChatStyle.entry.message.extraContent.spacing +
-          ChatStyle.entry.message.extraContent.rightMargin +
-          ChatStyle.entry.message.extraContent.leftMargin +
-          ChatStyle.entry.message.outgoing.sendIconSize
+            ChatStyle.entry.message.extraContent.spacing +
+            ChatStyle.entry.message.extraContent.rightMargin +
+            ChatStyle.entry.message.extraContent.leftMargin +
+            ChatStyle.entry.message.outgoing.sendIconSize
         }
         color: _backgroundColor
         implicitHeight: layout.height + ChatStyle.entry.bottomMargin
