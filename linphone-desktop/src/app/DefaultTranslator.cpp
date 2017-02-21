@@ -33,8 +33,12 @@ DefaultTranslator::DefaultTranslator () {
     QFileInfo info(it.next());
 
     if (info.suffix() == "qml") {
-      QString basename = info.baseName();
+      // Ignore extra selectors.
+      QString dir = info.absoluteDir().dirName();
+      if (dir == "+linux" || dir == "+mac" || dir == "+windows")
+        continue;
 
+      QString basename = info.baseName();
       if (m_contexts.contains(basename))
         qWarning() << QStringLiteral("QML context `%1` already exists in contexts list.").arg(basename);
       else

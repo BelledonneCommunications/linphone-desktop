@@ -32,6 +32,7 @@
 
 #include "App.hpp"
 
+#include <QFileSelector>
 #include <QMenu>
 #include <QQmlComponent>
 #include <QQmlContext>
@@ -113,6 +114,8 @@ void App::initContentApp () {
   // Init core.
   CoreManager::init();
   qInfo() << "Core manager initialized.";
+
+  qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
 
   // Register types ans make sub windows.
   registerTypes();
