@@ -77,7 +77,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   );
 
   QObject::connect(
-    &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::callStateChanged,
+    &(*m_core_handlers), &CoreHandlers::callStateChanged,
     this, [this](const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
       // Ignore aborted calls.
       if (call->getCallLog()->getStatus() == linphone::CallStatus::CallStatusAborted)
