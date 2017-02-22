@@ -65,6 +65,14 @@ Controls1.ApplicationWindow {
     }
   }
 
+  function _forceView (view, props) {
+    collapse.setCollapsed(true)
+
+    _updateSelectedEntry(view, props)
+    _currentView = view
+    contentLoader.setSource(view + '.qml', props || {})
+  }
+
   function _setView (view, props) {
     if (window.visibility === Window.Minimized) {
       window.visibility = Window.AutomaticVisibility
@@ -72,12 +80,7 @@ Controls1.ApplicationWindow {
       window.setVisible(true)
     }
 
-    window.requestActivate()
-    collapse.setCollapsed(true)
-
-    _updateSelectedEntry(view, props)
-    _currentView = view
-    contentLoader.setSource(view + '.qml', props || {})
+    _forceView()
   }
 
   // ---------------------------------------------------------------------------
@@ -91,7 +94,7 @@ Controls1.ApplicationWindow {
   width: MainWindowStyle.width
 
   title: MainWindowStyle.title
-  visible: true
+  visible: false
 
   // ---------------------------------------------------------------------------
   // Menu bar.
@@ -104,10 +107,7 @@ Controls1.ApplicationWindow {
   // ---------------------------------------------------------------------------
 
   Component.onCompleted: Utils.setTimeout(window, 0, function () {
-    _setView('Home')
-    if (App.isInitiallyIconified()) {
-      window.hide()
-    }
+    _forceView('Home')
   })
 
   onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()

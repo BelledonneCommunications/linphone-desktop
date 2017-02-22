@@ -146,13 +146,11 @@ void App::initContentApp () {
 
   #endif // ifndef __APPLE__
 
-  if (m_parser.isSet("selftest")) {
-    QTimer::singleShot(300, this, &App::quit);
-  }
-}
+  if (!m_parser.isSet("iconified"))
+    getMainWindow()->setVisible(true);
 
-bool App::isInitiallyIconified () const {
-  return m_parser.isSet("iconified");
+  if (m_parser.isSet("selftest"))
+    QTimer::singleShot(300, this, &App::quit);
 }
 
 // -----------------------------------------------------------------------------
@@ -163,9 +161,9 @@ void App::parseArgs () {
   m_parser.addVersionOption();
   m_parser.addOptions({
     { "config", tr("commandLineOptionConfig"), "file" },
-  #ifndef __APPLE__
-    { "iconified", tr("commandLineOptionIconified") },
-  #endif // __APPLE__
+    #ifndef __APPLE__
+      { "iconified", tr("commandLineOptionIconified") },
+    #endif // __APPLE__
     { "selftest", tr("commandLineOptionSelftest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
   });
