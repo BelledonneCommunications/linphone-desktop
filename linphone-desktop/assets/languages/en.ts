@@ -838,6 +838,21 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsUi</name>
+    <message>
+        <source>pathsTitle</source>
+        <translation>Paths</translation>
+    </message>
+    <message>
+        <source>savedScreenshotsLabel</source>
+        <translation>Saved screenshots folder</translation>
+    </message>
+    <message>
+        <source>savedVideosLabel</source>
+        <translation>Saved videos folder</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

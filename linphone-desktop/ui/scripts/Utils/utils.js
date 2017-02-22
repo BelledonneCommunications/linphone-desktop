@@ -262,13 +262,27 @@ function assert (condition, message) {
 // -----------------------------------------------------------------------------
 
 function basename (str) {
-  return str.slice(str.lastIndexOf('/') + 1)
+  var str2 = str
+  var length = str2.length - 1
+
+  if (str2[length] === '/') {
+    str2 = str2.substring(0, length)
+  }
+
+  return str2.slice(str2.lastIndexOf('/') + 1)
 }
 
 // -----------------------------------------------------------------------------
 
 function dirname (str) {
-  return str.slice(0, str.lastIndexOf('/') + 1)
+  var str2 = str
+  var length = str2.length - 1
+
+  if (str2[length] === '/') {
+    str2 = str2.substring(0, length)
+  }
+
+  return str2.slice(0, str2.lastIndexOf('/') + 1)
 }
 
 // -----------------------------------------------------------------------------

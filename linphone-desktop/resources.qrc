@@ -78,6 +78,7 @@
     <file>assets/images/edit_normal.svg</file>
     <file>assets/images/edit_pressed.svg</file>
     <file>assets/images/ended_call.svg</file>
+    <file>assets/images/file.png</file>
     <file>assets/images/file_sign.svg</file>
     <file>assets/images/filter.svg</file>
     <file>assets/images/fullscreen_hovered.svg</file>
@@ -177,6 +178,7 @@
     <file>ui/modules/Common/Form/ActionSwitch.qml</file>
     <file>ui/modules/Common/Form/Buttons/AbstractTextButton.qml</file>
     <file>ui/modules/Common/Form/Buttons/ExclusiveButtons.qml</file>
+    <file>ui/modules/Common/Form/Buttons/FileChooserButton.qml</file>
     <file>ui/modules/Common/Form/Buttons/SmallButton.qml</file>
     <file>ui/modules/Common/Form/Buttons/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/Buttons/TextButtonB.qml</file>
@@ -224,6 +226,7 @@
     <file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Buttons/AbstractTextButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Buttons/ExclusiveButtonsStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Buttons/FileChooserButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Buttons/SmallButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Buttons/TextButtonAStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Buttons/TextButtonBStyle.qml</file>

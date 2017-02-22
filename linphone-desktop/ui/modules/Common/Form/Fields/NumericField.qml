@@ -35,13 +35,7 @@ TextField {
 
   text: minValue
 
-  tools: Rectangle {
-    border {
-      color: TextFieldStyle.background.border.color
-      width: TextFieldStyle.background.border.width
-    }
-    color: 'transparent' // Not a style.
-
+  tools: Item {
     height: parent.height
     width: NumericFieldStyle.tools.width
 

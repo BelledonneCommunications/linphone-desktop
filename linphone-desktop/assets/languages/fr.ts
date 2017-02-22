@@ -848,6 +848,21 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsUi</name>
+    <message>
+        <source>pathsTitle</source>
+        <translation>Chemins</translation>
+    </message>
+    <message>
+        <source>savedScreenshotsLabel</source>
+        <translation>Dossier des captures d&apos;écrans</translation>
+    </message>
+    <message>
+        <source>savedVideosLabel</source>
+        <translation>Dossier des captures vidéos</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

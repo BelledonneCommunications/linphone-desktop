@@ -38,6 +38,11 @@ Controls.TextField {
       Rectangle {
         id: toolsContainer
 
+        border {
+          color: TextFieldStyle.background.border.color
+          width: TextFieldStyle.background.border.width
+        }
+
         anchors.fill: parent
         color: background.color
         data: tools || []
