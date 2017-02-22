@@ -80,7 +80,7 @@ Controls1.ApplicationWindow {
       window.setVisible(true)
     }
 
-    _forceView()
+    _forceView(view, props)
   }
 
   // ---------------------------------------------------------------------------
