@@ -851,6 +851,14 @@ Server url not configured.</translation>
         <source>savedVideosLabel</source>
         <translation>Saved videos folder</translation>
     </message>
+    <message>
+        <source>languagesTitle</source>
+        <translation>Languages</translation>
+    </message>
+    <message>
+        <source>languagesLabel</source>
+        <translation>Language</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

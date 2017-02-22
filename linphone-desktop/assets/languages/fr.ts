@@ -861,6 +861,14 @@ Url du serveur non configurée.</translation>
         <source>savedVideosLabel</source>
         <translation>Dossier des captures vidéos</translation>
     </message>
+    <message>
+        <source>languagesTitle</source>
+        <translation>Langues</translation>
+    </message>
+    <message>
+        <source>languagesLabel</source>
+        <translation>Langue</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

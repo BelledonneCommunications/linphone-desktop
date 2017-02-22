@@ -15,7 +15,23 @@ TabContainer {
     // Languages.
     // -------------------------------------------------------------------------
 
-    // TODO
+    Form {
+      title: qsTr('languagesTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('languagesLabel')
+
+          ComboBox {
+            model: ListModel {
+              ListElement { key: 'English'; value: 0 }
+              ListElement { key: 'Français'; value: 1 }
+            }
+          }
+        }
+      }
+    }
 
     // -------------------------------------------------------------------------
     // Paths.

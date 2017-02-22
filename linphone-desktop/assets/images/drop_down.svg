@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>drop_down_list</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="drop_down_list" stroke="#6B7A86" stroke-width="2">
+            <path d="M3.5,8.5 L8.5,3.5 M3.50419639,-1.5 L8.5,3.5" id="status_username_disconnected" transform="translate(6.000000, 3.500000) rotate(-270.000000) translate(-6.000000, -3.500000) "></path>
+        </g>
+    </g>
+</svg>

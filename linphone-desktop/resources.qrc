@@ -74,6 +74,7 @@
     <file>assets/images/delete_hovered.svg</file>
     <file>assets/images/delete_normal.svg</file>
     <file>assets/images/delete_pressed.svg</file>
+    <file>assets/images/drop_down.svg</file>
     <file>assets/images/edit_hovered.svg</file>
     <file>assets/images/edit_normal.svg</file>
     <file>assets/images/edit_pressed.svg</file>
@@ -183,6 +184,7 @@
     <file>ui/modules/Common/Form/Buttons/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/Buttons/TextButtonB.qml</file>
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
+    <file>ui/modules/Common/Form/ComboBox.qml</file>
     <file>ui/modules/Common/Form/DroppableTextArea.qml</file>
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
@@ -203,7 +205,6 @@
     <file>ui/modules/Common/Form/Tab/TabBar.qml</file>
     <file>ui/modules/Common/Form/Tab/TabButton.qml</file>
     <file>ui/modules/Common/Form/Tab/TabContainer.qml</file>
-    <file>ui/modules/Common/Form/TransparentComboBox.qml</file>
     <file>ui/modules/Common/Form/TransparentTextInput.qml</file>
     <file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
@@ -231,6 +232,7 @@
     <file>ui/modules/Common/Styles/Form/Buttons/TextButtonAStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Buttons/TextButtonBStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/ComboBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/DroppableTextAreaStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/NumericFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/TextAreaFieldStyle.qml</file>
@@ -245,7 +247,6 @@
     <file>ui/modules/Common/Styles/Form/SwitchStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/TransparentComboBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentTextInputStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/ActionMenuStyle.qml</file>
     <file>ui/modules/Common/Styles/Menu/MenuStyle.qml</file>
