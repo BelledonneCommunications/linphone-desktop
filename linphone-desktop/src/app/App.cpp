@@ -147,7 +147,7 @@ void App::initContentApp () {
   #endif // ifndef __APPLE__
 
   if (!m_parser.isSet("iconified"))
-    getMainWindow()->setVisible(true);
+    getMainWindow()->showNormal();
 
   if (m_parser.isSet("selftest"))
     QTimer::singleShot(300, this, &App::quit);

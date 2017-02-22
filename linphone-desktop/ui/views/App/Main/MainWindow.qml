@@ -94,7 +94,6 @@ Controls1.ApplicationWindow {
   width: MainWindowStyle.width
 
   title: MainWindowStyle.title
-  visible: false
 
   // ---------------------------------------------------------------------------
   // Menu bar.
