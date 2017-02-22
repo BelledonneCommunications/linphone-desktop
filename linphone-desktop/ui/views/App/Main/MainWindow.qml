@@ -183,6 +183,7 @@ Controls1.ApplicationWindow {
             color: MainWindowStyle.autoAnswerStatus.text.color
             font.pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
             text: qsTr('autoAnswerStatus')
+            visible: SettingsModel.autoAnswerStatus
             width: parent.width
           }
         }
