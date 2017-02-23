@@ -26,7 +26,6 @@
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
-#include "../components/settings/SettingsModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
 #include "../utils.hpp"
@@ -265,7 +264,7 @@ void App::registerTypes () {
   qmlRegisterSingletonType<SettingsModel>(
     "Linphone", 1, 0, "SettingsModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new SettingsModel();
+      return CoreManager::getInstance()->getSettingsModel();
     }
   );
 

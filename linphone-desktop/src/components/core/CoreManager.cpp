@@ -57,6 +57,7 @@ void CoreManager::init (const QString &configPath) {
     m_instance->m_calls_list_model = new CallsListModel(m_instance);
     m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
     m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
+    m_instance->m_settings_model = new SettingsModel(m_instance);
 
     QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
     timer->setInterval(20);
@@ -88,7 +89,9 @@ void CoreManager::setResourcesPaths () {
     mspluginsdir.cd("lib/mediastreamer/plugins");
     QDir datadir(dir);
     datadir.cd("share");
-    linphone::Factory::get()->setMspluginsDir(::Utils::qStringToLinphoneString(mspluginsdir.absolutePath()));
-    linphone::Factory::get()->setTopResourcesDir(::Utils::qStringToLinphoneString(datadir.absolutePath()));
+
+    shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+    factory->setMspluginsDir(::Utils::qStringToLinphoneString(mspluginsdir.absolutePath()));
+    factory->setTopResourcesDir(::Utils::qStringToLinphoneString(datadir.absolutePath()));
   }
 }

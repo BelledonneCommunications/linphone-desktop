@@ -24,7 +24,6 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
-#include "../../app/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -87,8 +86,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
 
 void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &call_params) {
   call_params->setRecordFile(
-    Paths::getCapturesDirPath() +
     ::Utils::qStringToLinphoneString(
+      CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder() +
       QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss")
     ) + ".mkv"
   );
@@ -150,7 +149,9 @@ void CallModel::takeSnapshot () {
   qInfo() << "Take snapshot of call:" << &m_linphone_call;
 
   m_linphone_call->takeVideoSnapshot(
-    Paths::getCapturesDirPath() + ::Utils::qStringToLinphoneString(new_name)
+    ::Utils::qStringToLinphoneString(
+      CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + new_name
+    )
   );
 }
 

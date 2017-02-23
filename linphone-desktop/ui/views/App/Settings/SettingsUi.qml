@@ -89,7 +89,10 @@ TabContainer {
           FileChooserButton {
             id: savedScreenshotsFolder
 
+            selectedFile: SettingsModel.savedScreenshotsFolder
             selectFolder: true
+
+            onAccepted: SettingsModel.savedScreenshotsFolder = selectedFile
           }
         }
 
@@ -99,7 +102,10 @@ TabContainer {
           FileChooserButton {
             id: savedVideosFolder
 
+            selectedFile: SettingsModel.savedVideosFolder
             selectFolder: true
+
+            onAccepted: SettingsModel.savedVideosFolder = selectedFile
           }
         }
       }

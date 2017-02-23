@@ -34,8 +34,23 @@ class SettingsModel : public QObject {
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
+  Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
+  Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
+
 public:
   SettingsModel (QObject *parent = Q_NULLPTR);
+
+  bool getAutoAnswerStatus () const;
+  void setAutoAnswerStatus (bool status);
+
+  QString getFileTransferUrl () const;
+  void setFileTransferUrl (const QString &url);
+
+  QString getSavedScreenshotsFolder () const;
+  void setSavedScreenshotsFolder (const QString &folder);
+
+  QString getSavedVideosFolder () const;
+  void setSavedVideosFolder (const QString &folder);
 
   static const std::string UI_SECTION;
 
@@ -43,13 +58,10 @@ signals:
   void autoAnswerStatusChanged (bool status);
   void fileTransferUrlChanged (const QString &url);
 
+  void savedScreenshotsFolderChanged (const QString &folder);
+  void savedVideosFolderChanged (const QString &folder);
+
 private:
-  bool getAutoAnswerStatus () const;
-  void setAutoAnswerStatus (bool status);
-
-  QString getFileTransferUrl () const;
-  void setFileTransferUrl (const QString &url);
-
   std::shared_ptr<linphone::Config> m_config;
 };
 

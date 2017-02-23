@@ -20,8 +20,11 @@
  *      Author: Ronan Abhamon
  */
 
+#include "../../app/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
+
+#include <QDir>
 
 #include "SettingsModel.hpp"
 
@@ -58,4 +61,38 @@ void SettingsModel::setFileTransferUrl (const QString &url) {
   CoreManager::getInstance()->getCore()->setFileTransferServer(
     ::Utils::qStringToLinphoneString(url)
   );
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getSavedScreenshotsFolder () const {
+  return QDir::cleanPath(
+    ::Utils::linphoneStringToQString(
+      m_config->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirPath())
+    )
+  ) + QDir::separator();
+}
+
+void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
+  QString _folder = QDir::cleanPath(folder) + QDir::separator();
+
+  m_config->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::qStringToLinphoneString(_folder));
+  emit savedScreenshotsFolderChanged(_folder);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getSavedVideosFolder () const {
+  return QDir::cleanPath(
+    ::Utils::linphoneStringToQString(
+      m_config->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirPath())
+    )
+  ) + QDir::separator();
+}
+
+void SettingsModel::setSavedVideosFolder (const QString &folder) {
+  QString _folder = QDir::cleanPath(folder) + QDir::separator();
+
+  m_config->setString(UI_SECTION, "saved_videos_folder", ::Utils::qStringToLinphoneString(_folder));
+  emit savedVideosFolderChanged(_folder);
 }
