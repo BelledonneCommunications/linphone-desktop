@@ -25,7 +25,6 @@
 
 #include "../components/notifier/Notifier.hpp"
 #include "AvatarProvider.hpp"
-#include "DefaultTranslator.hpp"
 #include "ThumbnailProvider.hpp"
 
 #include <QApplication>
@@ -37,10 +36,19 @@
 
 // =============================================================================
 
+class DefaultTranslator;
+
 class App : public QApplication {
   Q_OBJECT;
 
+  Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged);
+  Q_PROPERTY(QString locale READ getLocale CONSTANT);
+  Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
+
 public:
+  void initContentApp ();
+  void parseArgs ();
+
   QQmlEngine *getEngine () {
     return &m_engine;
   }
@@ -54,15 +62,7 @@ public:
 
   bool hasFocus () const;
 
-  void initContentApp ();
-
   Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
-
-  Q_INVOKABLE QString locale () const {
-    return m_locale;
-  }
-
-  void parseArgs ();
 
   static void create (int &argc, char **argv) {
     if (!m_instance) {
@@ -78,6 +78,9 @@ public:
 public slots:
   void quit ();
 
+signals:
+  void configLocaleChanged (const QString &locale);
+
 private:
   App (int &argc, char **argv);
   ~App () = default;
@@ -86,6 +89,15 @@ private:
   void createSubWindows ();
   void setTrayIcon ();
 
+  QString getConfigLocale () const;
+  void setConfigLocale (const QString &locale);
+
+  QString getLocale () const;
+
+  QVariantList getAvailableLocales () const {
+    return m_available_locales;
+  }
+
   QCommandLineParser m_parser;
   QQmlApplicationEngine m_engine;
   QQmlFileSelector *m_file_selector = nullptr;
@@ -93,11 +105,13 @@ private:
 
   AvatarProvider m_avatar_provider;
   ThumbnailProvider m_thumbnail_provider;
-  DefaultTranslator m_default_translator;
-  QTranslator m_english_translator;
+
+  DefaultTranslator *m_translator = nullptr;
 
   Notifier *m_notifier = nullptr;
-  QString m_locale = "en";
+
+  QVariantList m_available_locales;
+  QString m_locale;
 
   QQuickWindow *m_calls_window = nullptr;
   QQuickWindow *m_settings_window = nullptr;

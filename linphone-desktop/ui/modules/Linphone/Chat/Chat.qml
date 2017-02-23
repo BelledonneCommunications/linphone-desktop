@@ -150,7 +150,7 @@ Rectangle {
               // Cast section to integer because Qt converts the
               // sectionDate in string!!!
               text: new Date(section).toLocaleDateString(
-                Qt.locale(App.locale())
+                Qt.locale(App.locale)
               )
             }
           }
@@ -237,7 +237,7 @@ Rectangle {
               color: ChatStyle.entry.time.color
               font.pointSize: ChatStyle.entry.time.fontSize
               text: $chatEntry.timestamp.toLocaleString(
-                Qt.locale(App.locale()),
+                Qt.locale(App.locale),
                 'hh:mm'
               )
               verticalAlignment: Text.AlignVCenter

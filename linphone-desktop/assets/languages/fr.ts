@@ -869,6 +869,10 @@ Url du serveur non configurée.</translation>
         <source>languagesLabel</source>
         <translation>Langue</translation>
     </message>
+    <message>
+        <source>systemLocale</source>
+        <translation>Locale du système</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

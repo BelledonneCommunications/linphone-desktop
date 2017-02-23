@@ -37,6 +37,8 @@ class SettingsModel : public QObject {
 public:
   SettingsModel (QObject *parent = Q_NULLPTR);
 
+  static const std::string UI_SECTION;
+
 signals:
   void autoAnswerStatusChanged (bool status);
   void fileTransferUrlChanged (const QString &url);
@@ -49,8 +51,6 @@ private:
   void setFileTransferUrl (const QString &url);
 
   std::shared_ptr<linphone::Config> m_config;
-
-  static const std::string UI_SECTION;
 };
 
 #endif // SETTINGS_MODEL_H_

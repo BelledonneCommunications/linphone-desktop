@@ -230,7 +230,7 @@ function _indexFinder (array, cb, context) {
   var length = array.length
 
   for (var i = 0; i < length; i++) {
-    if (cb(array[index], index, array)) {
+    if (cb(array[i], i, array)) {
       return i
     }
   }
@@ -270,6 +270,12 @@ function basename (str) {
   }
 
   return str2.slice(str2.lastIndexOf('/') + 1)
+}
+
+// -----------------------------------------------------------------------------
+
+function capitalizeFirstLetter (str) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
 // -----------------------------------------------------------------------------
@@ -338,6 +344,15 @@ function find (obj, cb, context) {
   var key = finder(obj, cb, context)
 
   return key != null && key !== -1 ? obj[key] : null
+}
+
+// -----------------------------------------------------------------------------
+
+function findIndex (array, cb, context) {
+  cb = _computeOptimizedCb(cb, context)
+
+  var key = _indexFinder(array, cb, context)
+  return key != null && key !== -1 ? key : null
 }
 
 // -----------------------------------------------------------------------------

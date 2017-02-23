@@ -29,17 +29,19 @@
 #include "../components/settings/SettingsModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
+#include "../utils.hpp"
 
 #include "App.hpp"
+#include "DefaultTranslator.hpp"
 #include "Logger.hpp"
 
+#include <QDir>
 #include <QFileSelector>
 #include <QMenu>
-#include <QQmlComponent>
-#include <QQmlContext>
-#include <QQuickView>
 #include <QTimer>
 #include <QtDebug>
+
+#define DEFAULT_LOCALE "en"
 
 #define LANGUAGES_PATH ":/languages/"
 #define WINDOW_ICON_PATH ":/assets/images/linphone_logo.svg"
@@ -53,45 +55,32 @@
 
 App *App::m_instance = nullptr;
 
+inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
+  return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
+}
+
 App::App (int &argc, char **argv) : QApplication(argc, argv) {
-  this->setApplicationVersion("4.0");
+  setApplicationVersion("4.0");
 
-  if (m_english_translator.load(QLocale(QLocale::English), LANGUAGES_PATH))
-    installTranslator(&m_english_translator);
-  else
-    qWarning("Unable to install english translator.");
+  // List available locales.
+  for (const auto &locale : QDir(LANGUAGES_PATH).entryList())
+    m_available_locales << QLocale(locale);
 
-  // Try to use default locale.
-  QLocale current_locale = QLocale::system();
+  m_translator = new DefaultTranslator(this);
 
-  if (m_default_translator.load(current_locale, LANGUAGES_PATH)) {
-    installTranslator(&m_default_translator);
-    m_locale = current_locale.name();
-  } else {
-    qWarning() << QStringLiteral("Unable to found translations for locale: %1.")
-      .arg(current_locale.name());
+  // Try to use system locale.
+  QLocale sys_locale = QLocale::system();
+  if (installLocale(*this, *m_translator, sys_locale)) {
+    m_locale = sys_locale.name();
+    qInfo() << QStringLiteral("Use system locale: %1").arg(m_locale);
+    return;
   }
-}
 
-// -----------------------------------------------------------------------------
-
-QQuickWindow *App::getCallsWindow () const {
-  return m_calls_window;
-}
-
-QQuickWindow *App::getMainWindow () const {
-  QQmlApplicationEngine &engine = const_cast<QQmlApplicationEngine &>(m_engine);
-  return qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
-}
-
-QQuickWindow *App::getSettingsWindow () const {
-  return m_settings_window;
-}
-
-// -----------------------------------------------------------------------------
-
-bool App::hasFocus () const {
-  return getMainWindow()->isActive() || m_calls_window->isActive();
+  // Use english.
+  m_locale = DEFAULT_LOCALE;
+  if (!installLocale(*this, *m_translator, QLocale(m_locale)))
+    qFatal("Unable to install default translator.");
+  qInfo() << QStringLiteral("Use default locale: %1").arg(m_locale);
 }
 
 // -----------------------------------------------------------------------------
@@ -118,8 +107,29 @@ void App::initContentApp () {
   // Init core.
   CoreManager::init(m_parser.value("config"));
   qInfo() << "Core manager initialized.";
-
   qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
+
+  // Try to use preferred locale.
+  {
+    QString locale = getConfigLocale();
+
+    if (!locale.isEmpty()) {
+      DefaultTranslator *translator = new DefaultTranslator(this);
+
+      if (installLocale(*this, *translator, QLocale(locale))) {
+        // Use config.
+        m_translator->deleteLater();
+        m_translator = translator;
+        m_locale = locale;
+
+        qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
+      } else {
+        // Reset config.
+        setConfigLocale("");
+        translator->deleteLater();
+      }
+    }
+  }
 
   // Register types ans make sub windows.
   registerTypes();
@@ -173,6 +183,27 @@ void App::parseArgs () {
   if (m_parser.isSet("verbose")) {
     Logger::instance()->setVerbose(true);
   }
+}
+
+// -----------------------------------------------------------------------------
+
+QQuickWindow *App::getCallsWindow () const {
+  return m_calls_window;
+}
+
+QQuickWindow *App::getMainWindow () const {
+  QQmlApplicationEngine &engine = const_cast<QQmlApplicationEngine &>(m_engine);
+  return qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
+}
+
+QQuickWindow *App::getSettingsWindow () const {
+  return m_settings_window;
+}
+
+// -----------------------------------------------------------------------------
+
+bool App::hasFocus () const {
+  return getMainWindow()->isActive() || m_calls_window->isActive();
 }
 
 // -----------------------------------------------------------------------------
@@ -319,6 +350,28 @@ void App::setTrayIcon () {
   m_system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
   m_system_tray_icon->setToolTip("Linphone");
   m_system_tray_icon->show();
+}
+
+// -----------------------------------------------------------------------------
+
+QString App::getConfigLocale () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getConfig()->getString(
+      SettingsModel::UI_SECTION, "locale", ""
+    )
+  );
+}
+
+void App::setConfigLocale (const QString &locale) {
+  CoreManager::getInstance()->getCore()->getConfig()->setString(
+    SettingsModel::UI_SECTION, "locale", ::Utils::qStringToLinphoneString(locale)
+  );
+
+  emit configLocaleChanged(locale);
+}
+
+QString App::getLocale () const {
+  return m_locale;
 }
 
 // -----------------------------------------------------------------------------

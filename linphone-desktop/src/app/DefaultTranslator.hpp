@@ -30,7 +30,7 @@
 
 class DefaultTranslator : public QTranslator {
 public:
-  DefaultTranslator ();
+  DefaultTranslator (QObject *parent = Q_NULLPTR);
   ~DefaultTranslator () = default;
 
   QString translate (

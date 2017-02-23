@@ -859,6 +859,10 @@ Server url not configured.</translation>
         <source>languagesLabel</source>
         <translation>Language</translation>
     </message>
+    <message>
+        <source>systemLocale</source>
+        <translation>System locale</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>

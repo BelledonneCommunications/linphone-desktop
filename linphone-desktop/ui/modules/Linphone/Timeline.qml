@@ -160,7 +160,7 @@ ColumnLayout {
           anchors.fill: parent
           sourceComponent: TooltipArea {
             text: $timelineEntry.timestamp.toLocaleString(
-              Qt.locale(App.locale()),
+              Qt.locale(App.locale),
               Locale.ShortFormat
             )
           }

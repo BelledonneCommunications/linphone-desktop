@@ -43,9 +43,11 @@ int main (int argc, char *argv[]) {
    */
 
   App::create(argc, argv);
-  App::getInstance()->parseArgs();
-  App::getInstance()->initContentApp();
+
+  App *app = App::getInstance();
+  app->parseArgs();
+  app->initContentApp();
 
   // Run!
-  return App::getInstance()->exec();
+  return app->exec();
 }

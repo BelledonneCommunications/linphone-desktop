@@ -27,7 +27,7 @@
 
 // =============================================================================
 
-DefaultTranslator::DefaultTranslator () {
+DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
   QDirIterator it(":", QDirIterator::Subdirectories);
   while (it.hasNext()) {
     QFileInfo info(it.next());
