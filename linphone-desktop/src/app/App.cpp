@@ -153,10 +153,10 @@ void App::initContentApp () {
     else
       setTrayIcon();
 
-  #endif // ifndef __APPLE__
+    if (!m_parser.isSet("iconified"))
+      getMainWindow()->showNormal();
 
-  if (!m_parser.isSet("iconified"))
-    getMainWindow()->showNormal();
+  #endif // ifndef __APPLE__
 
   if (m_parser.isSet("selftest"))
     QTimer::singleShot(300, this, &App::quit);
@@ -172,7 +172,7 @@ void App::parseArgs () {
     { "config", tr("commandLineOptionConfig"), "file" },
     #ifndef __APPLE__
       { "iconified", tr("commandLineOptionIconified") },
-    #endif // __APPLE__
+    #endif // ifndef __APPLE__
     { "selftest", tr("commandLineOptionSelftest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
   });
