@@ -92,10 +92,7 @@ Item {
       to: ''
 
       ScriptAction {
-        script: {
-          popup.hide()
-          popup.showMinimized()
-        }
+        script: popup.hide()
       }
     }
   ]
