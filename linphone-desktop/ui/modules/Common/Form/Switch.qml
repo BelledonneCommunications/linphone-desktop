@@ -14,6 +14,10 @@ Switch {
 
   // ---------------------------------------------------------------------------
 
+  signal clicked
+
+  // ---------------------------------------------------------------------------
+
   checked: false
 
   indicator: Rectangle {
@@ -94,6 +98,6 @@ Switch {
   MouseArea {
     anchors.fill: parent
 
-    onClicked: control.enabled && control.toggle()
+    onClicked: control.enabled && control.clicked()
   }
 }

@@ -716,15 +716,15 @@ Url du serveur non configurée.</translation>
     <name>SettingsNetwork</name>
     <message>
         <source>forceMtuLabel</source>
-        <translation>Forcer MTU</translation>
+        <translation type="vanished">Forcer MTU</translation>
     </message>
     <message>
         <source>mtuLabel</source>
-        <translation>MTU</translation>
+        <translation type="vanished">MTU</translation>
     </message>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>Envoyer DTMFs en SIP info</translation>
+        <translation>Méthode d&apos;envoi des DTMFs</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>

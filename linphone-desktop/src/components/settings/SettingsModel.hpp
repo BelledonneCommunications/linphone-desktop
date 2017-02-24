@@ -31,6 +31,11 @@
 class SettingsModel : public QObject {
   Q_OBJECT;
 
+  Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
+  Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
+
+  Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged);
+
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
@@ -39,6 +44,19 @@ class SettingsModel : public QObject {
 
 public:
   SettingsModel (QObject *parent = Q_NULLPTR);
+
+  // Network. ------------------------------------------------------------------
+
+  bool getUseSipInfoForDtmfs () const;
+  void setUseSipInfoForDtmfs (bool status);
+
+  bool getUseRfc2833ForDtmfs () const;
+  void setUseRfc2833ForDtmfs (bool status);
+
+  bool getIpv6Enabled () const;
+  void setIpv6Enabled (bool status);
+
+  // Misc. ---------------------------------------------------------------------
 
   bool getAutoAnswerStatus () const;
   void setAutoAnswerStatus (bool status);
@@ -52,9 +70,15 @@ public:
   QString getSavedVideosFolder () const;
   void setSavedVideosFolder (const QString &folder);
 
+  // ---------------------------------------------------------------------------
+
   static const std::string UI_SECTION;
 
 signals:
+  void dtmfsProtocolChanged ();
+
+  void ipv6EnabledChanged (bool status);
+
   void autoAnswerStatusChanged (bool status);
   void fileTransferUrlChanged (const QString &url);
 

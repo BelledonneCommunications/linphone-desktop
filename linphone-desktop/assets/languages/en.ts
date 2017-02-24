@@ -706,15 +706,15 @@ Server url not configured.</translation>
     <name>SettingsNetwork</name>
     <message>
         <source>forceMtuLabel</source>
-        <translation>Forcer MTU</translation>
+        <translation type="vanished">Forcer MTU</translation>
     </message>
     <message>
         <source>mtuLabel</source>
-        <translation>MTU</translation>
+        <translation type="vanished">MTU</translation>
     </message>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>Send DTMFs as SIP info</translation>
+        <translation>DTMFs send method</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>

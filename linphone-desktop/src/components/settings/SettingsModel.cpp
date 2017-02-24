@@ -20,11 +20,11 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDir>
+
 #include "../../app/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
-
-#include <QDir>
 
 #include "SettingsModel.hpp"
 
@@ -38,7 +38,62 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
   m_config = CoreManager::getInstance()->getCore()->getConfig();
 }
 
+// =============================================================================
+// Network.
+// =============================================================================
+
+bool SettingsModel::getUseRfc2833ForDtmfs () const {
+  return CoreManager::getInstance()->getCore()->getUseRfc2833ForDtmf();
+}
+
+void SettingsModel::setUseRfc2833ForDtmfs (bool status) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  if (status) {
+    core->setUseInfoForDtmf(false);
+    core->setUseRfc2833ForDtmf(true);
+  } else {
+    core->setUseRfc2833ForDtmf(false);
+    core->setUseInfoForDtmf(true);
+  }
+
+  emit dtmfsProtocolChanged();
+}
+
 // -----------------------------------------------------------------------------
+
+bool SettingsModel::getUseSipInfoForDtmfs () const {
+  return CoreManager::getInstance()->getCore()->getUseInfoForDtmf();
+}
+
+void SettingsModel::setUseSipInfoForDtmfs (bool status) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  if (status) {
+    core->setUseRfc2833ForDtmf(false);
+    core->setUseInfoForDtmf(true);
+  } else {
+    core->setUseInfoForDtmf(false);
+    core->setUseRfc2833ForDtmf(true);
+  }
+
+  emit dtmfsProtocolChanged();
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getIpv6Enabled () const {
+  return CoreManager::getInstance()->getCore()->ipv6Enabled();
+}
+
+void SettingsModel::setIpv6Enabled (bool status) {
+  CoreManager::getInstance()->getCore()->enableIpv6(status);
+  emit ipv6EnabledChanged(status);
+}
+
+// =============================================================================
+// Misc.
+// =============================================================================
 
 bool SettingsModel::getAutoAnswerStatus () const {
   return !!m_config->getInt(UI_SECTION, "auto_answer", 0);
@@ -61,6 +116,7 @@ void SettingsModel::setFileTransferUrl (const QString &url) {
   CoreManager::getInstance()->getCore()->setFileTransferServer(
     ::Utils::qStringToLinphoneString(url)
   );
+  emit fileTransferUrlChanged(url);
 }
 
 // -----------------------------------------------------------------------------

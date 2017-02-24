@@ -1,6 +1,7 @@
 import QtQuick 2.7
 
 import Common 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -21,34 +22,28 @@ TabContainer {
 
       FormLine {
         FormGroup {
-          label: qsTr('forceMtuLabel')
+          label: qsTr('sendDtmfsLabel')
 
-          Switch {
-            id: forceMtu
+          ExclusiveButtons {
+            selectedButton: Number(!SettingsModel.useSipInfoForDtmfs)
+            texts: [
+              'SIP INFO',
+              'RFC 2833'
+            ]
+
+            onClicked: SettingsModel.useSipInfoForDtmfs = !button
           }
         }
 
         FormGroup {
-          label: qsTr('mtuLabel')
+          label: qsTr('allowIpV6Label')
 
-          NumericField {
-            minValue: 500
-            maxValue: 3001
-            readOnly: !forceMtu.checked
+          Switch {
+            checked: SettingsModel.ipv6Enabled
+
+            onClicked: SettingsModel.ipv6Enabled = !checked
           }
         }
-      }
-
-      FormGroup {
-        label: qsTr('sendDtmfsLabel')
-
-        Switch {}
-      }
-
-      FormGroup {
-        label: qsTr('allowIpV6Label')
-
-        Switch {}
       }
     }
 
