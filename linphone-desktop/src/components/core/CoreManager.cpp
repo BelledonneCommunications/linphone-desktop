@@ -35,10 +35,10 @@ using namespace std;
 
 CoreManager *CoreManager::m_instance = nullptr;
 
-CoreManager::CoreManager (const QString &configPath, QObject *parent) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
+CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
   setResourcesPaths();
 
-  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(configPath), "");
+  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(config_path), "");
 
   m_core->setVideoDisplayFilter("MSOGL");
   m_core->usePreviewWindow(true);
@@ -50,9 +50,9 @@ void CoreManager::enableHandlers () {
   m_cbs_timer->start();
 }
 
-void CoreManager::init (const QString &configPath) {
+void CoreManager::init (QObject *parent, const QString &config_path) {
   if (!m_instance) {
-    m_instance = new CoreManager(configPath);
+    m_instance = new CoreManager(parent, config_path);
 
     m_instance->m_calls_list_model = new CallsListModel(m_instance);
     m_instance->m_contacts_list_model = new ContactsListModel(m_instance);

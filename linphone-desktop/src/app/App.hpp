@@ -24,15 +24,11 @@
 #define APP_H_
 
 #include "../components/notifier/Notifier.hpp"
-#include "AvatarProvider.hpp"
-#include "ThumbnailProvider.hpp"
 
 #include <QApplication>
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
-#include <QQmlFileSelector>
 #include <QQuickWindow>
-#include <QSystemTrayIcon>
 
 // =============================================================================
 
@@ -46,6 +42,9 @@ class App : public QApplication {
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
 
 public:
+  App (int &argc, char **argv);
+  ~App ();
+
   void initContentApp ();
   void parseArgs ();
 
@@ -64,15 +63,8 @@ public:
 
   Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
 
-  static void create (int &argc, char **argv) {
-    if (!m_instance) {
-      // Instance must be exists before content.
-      m_instance = new App(argc, argv);
-    }
-  }
-
   static App *getInstance () {
-    return m_instance;
+    return static_cast<App *>(QApplication::instance());
   }
 
 public slots:
@@ -82,9 +74,6 @@ signals:
   void configLocaleChanged (const QString &locale);
 
 private:
-  App (int &argc, char **argv);
-  ~App () = default;
-
   void registerTypes ();
   void createSubWindows ();
   void setTrayIcon ();
@@ -100,11 +89,6 @@ private:
 
   QCommandLineParser m_parser;
   QQmlApplicationEngine m_engine;
-  QQmlFileSelector *m_file_selector = nullptr;
-  QSystemTrayIcon *m_system_tray_icon = nullptr;
-
-  AvatarProvider m_avatar_provider;
-  ThumbnailProvider m_thumbnail_provider;
 
   DefaultTranslator *m_translator = nullptr;
 
@@ -115,8 +99,6 @@ private:
 
   QQuickWindow *m_calls_window = nullptr;
   QQuickWindow *m_settings_window = nullptr;
-
-  static App *m_instance;
 };
 
 #endif // APP_H_

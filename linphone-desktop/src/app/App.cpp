@@ -31,14 +31,18 @@
 #include "../utils.hpp"
 
 #include "App.hpp"
+#include "AvatarProvider.hpp"
 #include "DefaultTranslator.hpp"
 #include "Logger.hpp"
+#include "ThumbnailProvider.hpp"
 
 #include <QDir>
 #include <QFileSelector>
 #include <QMenu>
-#include <QTimer>
+#include <QQmlFileSelector>
+#include <QSystemTrayIcon>
 #include <QtDebug>
+#include <QTimer>
 
 #define DEFAULT_LOCALE "en"
 
@@ -52,14 +56,13 @@
 
 // =============================================================================
 
-App *App::m_instance = nullptr;
-
 inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
   return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
 }
 
 App::App (int &argc, char **argv) : QApplication(argc, argv) {
   setApplicationVersion("4.0");
+  setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
   // List available locales.
   for (const auto &locale : QDir(LANGUAGES_PATH).entryList())
@@ -82,29 +85,37 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
   qInfo() << QStringLiteral("Use default locale: %1").arg(m_locale);
 }
 
+App::~App () {
+  qInfo() << "Destroying app...";
+}
+
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
-  // Provide avatars/thumbnails providers.
-  m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, &m_avatar_provider);
-  m_engine.addImageProvider(ThumbnailProvider::PROVIDER_ID, &m_thumbnail_provider);
-
-  setWindowIcon(QIcon(WINDOW_ICON_PATH));
+  // Avoid double free.
+  m_engine.setObjectOwnership(this, QQmlEngine::CppOwnership);
 
   // Provide `+custom` folders for custom components.
-  m_file_selector = new QQmlFileSelector(&m_engine);
-  m_file_selector->setExtraSelectors(QStringList("custom"));
+  {
+    QQmlFileSelector *file_selector = new QQmlFileSelector(&m_engine);
+    file_selector = new QQmlFileSelector(&m_engine);
+    file_selector->setExtraSelectors(QStringList("custom"));
+  }
 
   // Set modules paths.
   m_engine.addImportPath(":/ui/modules");
   m_engine.addImportPath(":/ui/scripts");
   m_engine.addImportPath(":/ui/views");
 
+  // Provide avatars/thumbnails providers.
+  m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
+  m_engine.addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
+
   // Don't quit if last window is closed!!!
   setQuitOnLastWindowClosed(false);
 
   // Init core.
-  CoreManager::init(m_parser.value("config"));
+  CoreManager::init(nullptr, m_parser.value("config"));
   qInfo() << "Core manager initialized.";
   qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
 
@@ -130,20 +141,25 @@ void App::initContentApp () {
     }
   }
 
-  // Register types ans make sub windows.
+  // Register types and create sub-windows.
   registerTypes();
-  createSubWindows();
 
   // Enable notifications.
-  m_notifier = new Notifier();
+  m_notifier = new Notifier(this);
 
-  CoreManager::getInstance()->enableHandlers();
+  {
+    CoreManager *core = CoreManager::getInstance();
+    core->enableHandlers();
+    core->setParent(this);
+  }
 
   // Load main view.
   qInfo() << "Loading main view...";
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
+
+  createSubWindows();
 
   #ifndef __APPLE__
     // Enable TrayIconSystem.
@@ -293,22 +309,28 @@ void App::registerTypes () {
 
 // -----------------------------------------------------------------------------
 
-inline QQuickWindow *createSubWindow (QQmlApplicationEngine &engine, const char *path) {
-  QQmlComponent component(&engine, QUrl(path));
+inline QQuickWindow *createSubWindow (App *app, const char *path) {
+  QQmlEngine *engine = app->getEngine();
+
+  QQmlComponent component(engine, QUrl(path));
   if (component.isError()) {
     qWarning() << component.errors();
     abort();
   }
 
-  // Default Ownership is Cpp: http://doc.qt.io/qt-5/qqmlengine.html#ObjectOwnership-enum
-  return qobject_cast<QQuickWindow *>(component.create());
+  QQuickWindow *window = qobject_cast<QQuickWindow *>(component.create());
+
+  QQmlEngine::setObjectOwnership(window, QQmlEngine::CppOwnership);
+  window->setParent(app->getMainWindow());
+
+  return window;
 }
 
 void App::createSubWindows () {
   qInfo() << "Create sub windows...";
 
-  m_calls_window = createSubWindow(m_engine, QML_VIEW_CALLS_WINDOW);
-  m_settings_window = createSubWindow(m_engine, QML_VIEW_SETTINGS_WINDOW);
+  m_calls_window = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
+  m_settings_window = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
 }
 
 // -----------------------------------------------------------------------------
@@ -317,7 +339,7 @@ void App::setTrayIcon () {
   QQuickWindow *root = getMainWindow();
   QMenu *menu = new QMenu();
 
-  m_system_tray_icon = new QSystemTrayIcon(root);
+  QSystemTrayIcon *system_tray_icon = new QSystemTrayIcon(root);
 
   // trayIcon: Right click actions.
   QAction *quit_action = new QAction("Quit", root);
@@ -328,7 +350,7 @@ void App::setTrayIcon () {
 
   // trayIcon: Left click actions.
   root->connect(
-    m_system_tray_icon, &QSystemTrayIcon::activated, [root](
+    system_tray_icon, &QSystemTrayIcon::activated, [root](
       QSystemTrayIcon::ActivationReason reason
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
@@ -345,10 +367,10 @@ void App::setTrayIcon () {
   menu->addSeparator();
   menu->addAction(quit_action);
 
-  m_system_tray_icon->setContextMenu(menu);
-  m_system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
-  m_system_tray_icon->setToolTip("Linphone");
-  m_system_tray_icon->show();
+  system_tray_icon->setContextMenu(menu);
+  system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
+  system_tray_icon->setToolTip("Linphone");
+  system_tray_icon->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -376,8 +398,8 @@ QString App::getLocale () const {
 // -----------------------------------------------------------------------------
 
 void App::quit () {
-  if (m_parser.isSet("selftest")) {
+  if (m_parser.isSet("selftest"))
     cout << tr("selftestResult").toStdString() << endl;
-  }
-  QCoreApplication::quit();
+
+  QApplication::quit();
 }

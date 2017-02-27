@@ -56,6 +56,13 @@ private:
     const std::shared_ptr<linphone::ChatRoom> &room,
     const std::shared_ptr<linphone::ChatMessage> &message
   ) override;
+
+  void onRegistrationStateChanged (
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::ProxyConfig> &config,
+    linphone::RegistrationState state,
+    const std::string &message
+  ) override;
 };
 
 #endif // CORE_HANDLERS_H_

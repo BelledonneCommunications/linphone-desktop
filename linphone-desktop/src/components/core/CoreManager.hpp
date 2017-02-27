@@ -73,7 +73,7 @@ public:
   // Initialization.
   // ---------------------------------------------------------------------------
 
-  static void init (const QString &configPath);
+  static void init (QObject *parent, const QString &config_path);
 
   static CoreManager *getInstance () {
     return m_instance;
@@ -86,7 +86,7 @@ public:
   Q_INVOKABLE VcardModel *createDetachedVcardModel ();
 
 private:
-  CoreManager (const QString &configPath, QObject *parent = Q_NULLPTR);
+  CoreManager (QObject *parent, const QString &config_path);
 
   void setDatabasesPaths ();
   void setResourcesPaths ();

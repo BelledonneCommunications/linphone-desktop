@@ -62,3 +62,12 @@ void CoreHandlers::onMessageReceived (
   if (!app->hasFocus())
     app->getNotifier()->notifyReceivedMessage(message);
 }
+
+void CoreHandlers::onRegistrationStateChanged (
+  const shared_ptr<linphone::Core> &core,
+  const shared_ptr<linphone::ProxyConfig> &config,
+  linphone::RegistrationState state,
+  const string &message
+) {
+  // TODO.
+}

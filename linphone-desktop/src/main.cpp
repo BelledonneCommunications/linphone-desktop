@@ -20,8 +20,11 @@
  *      Author: Ronan Abhamon
  */
 
+#include <iostream>
 #include "app/App.hpp"
 #include "app/Logger.hpp"
+
+using namespace std;
 
 // =============================================================================
 
@@ -42,12 +45,11 @@ int main (int argc, char *argv[]) {
    * QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
    */
 
-  App::create(argc, argv);
+  App app(argc, argv);
 
-  App *app = App::getInstance();
-  app->parseArgs();
-  app->initContentApp();
+  app.parseArgs();
+  app.initContentApp();
 
   // Run!
-  return app->exec();
+  return app.exec();
 }
