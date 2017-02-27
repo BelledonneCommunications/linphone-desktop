@@ -42,22 +42,23 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Network.
 // =============================================================================
 
-bool SettingsModel::getUseRfc2833ForDtmfs () const {
-  return CoreManager::getInstance()->getCore()->getUseRfc2833ForDtmf();
+QList<int> SettingsModel::getVideoPortRange () const {
+  int a, b;
+  CoreManager::getInstance()->getCore()->getVideoPortRange(a, b);
+  return QList<int>() << a << b;
 }
 
-void SettingsModel::setUseRfc2833ForDtmfs (bool status) {
+void SettingsModel::setVideoPortRange (const QList<int> &range) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  int a = range[0];
+  int b = range[1];
 
-  if (status) {
-    core->setUseInfoForDtmf(false);
-    core->setUseRfc2833ForDtmf(true);
-  } else {
-    core->setUseRfc2833ForDtmf(false);
-    core->setUseInfoForDtmf(true);
-  }
+  if (b == -1)
+    core->setVideoPort(a);
+  else
+    core->setVideoPortRange(a, b);
 
-  emit dtmfsProtocolChanged();
+  emit videoPortRangeChanged(a, b);
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +76,26 @@ void SettingsModel::setUseSipInfoForDtmfs (bool status) {
   } else {
     core->setUseInfoForDtmf(false);
     core->setUseRfc2833ForDtmf(true);
+  }
+
+  emit dtmfsProtocolChanged();
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getUseRfc2833ForDtmfs () const {
+  return CoreManager::getInstance()->getCore()->getUseRfc2833ForDtmf();
+}
+
+void SettingsModel::setUseRfc2833ForDtmfs (bool status) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  if (status) {
+    core->setUseInfoForDtmf(false);
+    core->setUseRfc2833ForDtmf(true);
+  } else {
+    core->setUseRfc2833ForDtmf(false);
+    core->setUseInfoForDtmf(true);
   }
 
   emit dtmfsProtocolChanged();

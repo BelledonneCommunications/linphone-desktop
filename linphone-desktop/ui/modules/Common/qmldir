@@ -34,6 +34,7 @@ TextButtonA          1.0 Form/Buttons/TextButtonA.qml
 TextButtonB          1.0 Form/Buttons/TextButtonB.qml
 
 NumericField         1.0 Form/Fields/NumericField.qml
+PortField            1.0 Form/Fields/PortField.qml
 TextAreaField        1.0 Form/Fields/TextAreaField.qml
 TextField            1.0 Form/Fields/TextField.qml
 

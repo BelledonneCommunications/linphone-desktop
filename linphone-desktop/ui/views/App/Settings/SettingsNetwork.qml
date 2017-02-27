@@ -13,41 +13,6 @@ TabContainer {
     width: parent.width
 
     // -------------------------------------------------------------------------
-    // Transport.
-    // -------------------------------------------------------------------------
-
-    Form {
-      title: qsTr('transportTitle')
-      width: parent.width
-
-      FormLine {
-        FormGroup {
-          label: qsTr('sendDtmfsLabel')
-
-          ExclusiveButtons {
-            selectedButton: Number(!SettingsModel.useSipInfoForDtmfs)
-            texts: [
-              'SIP INFO',
-              'RFC 2833'
-            ]
-
-            onClicked: SettingsModel.useSipInfoForDtmfs = !button
-          }
-        }
-
-        FormGroup {
-          label: qsTr('allowIpV6Label')
-
-          Switch {
-            checked: SettingsModel.ipv6Enabled
-
-            onClicked: SettingsModel.ipv6Enabled = !checked
-          }
-        }
-      }
-    }
-
-    // -------------------------------------------------------------------------
     // Network protocol and ports.
     // -------------------------------------------------------------------------
 
@@ -73,10 +38,12 @@ TabContainer {
         FormGroup {
           label: qsTr('sipUdpPortLabel')
 
-          NumericField {
-            minValue: 0
-            maxValue: 65535
-            readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+          PortField {
+            //readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+            supportsRange: true
+            text: SettingsModel.videoPortRange.join(':')
+
+            onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
           }
         }
 
@@ -180,6 +147,41 @@ TabContainer {
           label: qsTr('enableTlsLabel')
 
           Switch {}
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Transport.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('transportTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('sendDtmfsLabel')
+
+          ExclusiveButtons {
+            selectedButton: Number(!SettingsModel.useSipInfoForDtmfs)
+            texts: [
+              'SIP INFO',
+              'RFC 2833'
+            ]
+
+            onClicked: SettingsModel.useSipInfoForDtmfs = !button
+          }
+        }
+
+        FormGroup {
+          label: qsTr('allowIpV6Label')
+
+          Switch {
+            checked: SettingsModel.ipv6Enabled
+
+            onClicked: SettingsModel.ipv6Enabled = !checked
+          }
         }
       }
     }

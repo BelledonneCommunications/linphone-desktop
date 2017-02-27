@@ -6,7 +6,15 @@
 
 .import QtQuick 2.0 as QtQuick
 
+.import 'port-tools.js' as PortTools
 .import 'uri-tools.js' as UriTools
+
+// =============================================================================
+// Constants.
+// =============================================================================
+
+var PORT_REGEX = PortTools.PORT_REGEX
+var PORT_RANGE_REGEX = PortTools.PORT_RANGE_REGEX
 
 // =============================================================================
 // QML helpers.

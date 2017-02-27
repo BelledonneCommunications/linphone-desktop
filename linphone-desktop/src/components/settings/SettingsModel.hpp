@@ -31,6 +31,8 @@
 class SettingsModel : public QObject {
   Q_OBJECT;
 
+  Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
+
   Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
   Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
 
@@ -46,6 +48,9 @@ public:
   SettingsModel (QObject *parent = Q_NULLPTR);
 
   // Network. ------------------------------------------------------------------
+
+  QList<int> getVideoPortRange () const;
+  void setVideoPortRange (const QList<int> &range);
 
   bool getUseSipInfoForDtmfs () const;
   void setUseSipInfoForDtmfs (bool status);
@@ -75,6 +80,8 @@ public:
   static const std::string UI_SECTION;
 
 signals:
+  void videoPortRangeChanged (int a, int b);
+
   void dtmfsProtocolChanged ();
 
   void ipv6EnabledChanged (bool status);

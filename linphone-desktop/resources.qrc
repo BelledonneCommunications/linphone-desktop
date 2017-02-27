@@ -187,6 +187,7 @@
     <file>ui/modules/Common/Form/ComboBox.qml</file>
     <file>ui/modules/Common/Form/DroppableTextArea.qml</file>
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
+    <file>ui/modules/Common/Form/Fields/PortField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
     <file>ui/modules/Common/Form/+linux/SearchBox.qml</file>
@@ -301,6 +302,7 @@
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
     <file>ui/scripts/LinphoneUtils/qmldir</file>
+    <file>ui/scripts/Utils/port-tools.js</file>
     <file>ui/scripts/Utils/qmldir</file>
     <file>ui/scripts/Utils/uri-tools.js</file>
     <file>ui/scripts/Utils/utils.js</file>
