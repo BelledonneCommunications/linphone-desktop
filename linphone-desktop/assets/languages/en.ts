@@ -543,7 +543,7 @@ Server url not configured.</translation>
     <name>ManageAccounts</name>
     <message>
         <source>manageAccountsDescription</source>
-        <translation>Select your active account and choose all necessary presence status.</translation>
+        <translation type="vanished">Select your active account and choose all necessary presence status.</translation>
     </message>
     <message>
         <source>manageAccountsTitle</source>
@@ -551,47 +551,55 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>validate</source>
-        <translation>VALIDATE</translation>
+        <translation type="vanished">VALIDATE</translation>
     </message>
     <message>
         <source>onlinePresence</source>
-        <translation>Connected</translation>
+        <translation type="vanished">Connected</translation>
     </message>
     <message>
         <source>busyPresence</source>
-        <translation>Busy</translation>
+        <translation type="vanished">Busy</translation>
     </message>
     <message>
         <source>beRightBackPresence</source>
-        <translation>Be right back</translation>
+        <translation type="vanished">Be right back</translation>
     </message>
     <message>
         <source>awayPresence</source>
-        <translation>Away</translation>
+        <translation type="vanished">Away</translation>
     </message>
     <message>
         <source>onThePhonePresence</source>
-        <translation>On the phone</translation>
+        <translation type="vanished">On the phone</translation>
     </message>
     <message>
         <source>outToLunchPresence</source>
-        <translation>Out to lunch</translation>
+        <translation type="vanished">Out to lunch</translation>
     </message>
     <message>
         <source>doNotDisturbPresence</source>
-        <translation>Away</translation>
+        <translation type="vanished">Away</translation>
     </message>
     <message>
         <source>movedPresence</source>
-        <translation>Moved</translation>
+        <translation type="vanished">Moved</translation>
     </message>
     <message>
         <source>usingAnotherMessagingServicePresence</source>
-        <translation>Using another messaging service</translation>
+        <translation type="vanished">Using another messaging service</translation>
     </message>
     <message>
         <source>offlinePresence</source>
-        <translation>Disconnected</translation>
+        <translation type="vanished">Disconnected</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>selectAccountLabel</source>
+        <translation>Select you active account</translation>
     </message>
 </context>
 <context>

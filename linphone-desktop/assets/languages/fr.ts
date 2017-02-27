@@ -542,7 +542,7 @@ Url du serveur non configurée.</translation>
     <name>ManageAccounts</name>
     <message>
         <source>manageAccountsDescription</source>
-        <translation>Sélectionner votre compte actif ainsi que vos status de présence.</translation>
+        <translation type="vanished">Sélectionner votre compte actif ainsi que vos status de présence.</translation>
     </message>
     <message>
         <source>manageAccountsTitle</source>
@@ -550,47 +550,55 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>validate</source>
-        <translation>VALIDER</translation>
+        <translation type="vanished">VALIDER</translation>
     </message>
     <message>
         <source>onlinePresence</source>
-        <translation>Disponible</translation>
+        <translation type="vanished">Disponible</translation>
     </message>
     <message>
         <source>busyPresence</source>
-        <translation>Occupé</translation>
+        <translation type="vanished">Occupé</translation>
     </message>
     <message>
         <source>beRightBackPresence</source>
-        <translation>De retour</translation>
+        <translation type="vanished">De retour</translation>
     </message>
     <message>
         <source>awayPresence</source>
-        <translation>Absent</translation>
+        <translation type="vanished">Absent</translation>
     </message>
     <message>
         <source>onThePhonePresence</source>
-        <translation>Au téléphone</translation>
+        <translation type="vanished">Au téléphone</translation>
     </message>
     <message>
         <source>outToLunchPresence</source>
-        <translation>A table</translation>
+        <translation type="vanished">A table</translation>
     </message>
     <message>
         <source>doNotDisturbPresence</source>
-        <translation>Ne pas déranger</translation>
+        <translation type="vanished">Ne pas déranger</translation>
     </message>
     <message>
         <source>movedPresence</source>
-        <translation>Parti</translation>
+        <translation type="vanished">Parti</translation>
     </message>
     <message>
         <source>usingAnotherMessagingServicePresence</source>
-        <translation>Utilisation d&apos;un autre service de messagerie</translation>
+        <translation type="vanished">Utilisation d&apos;un autre service de messagerie</translation>
     </message>
     <message>
         <source>offlinePresence</source>
-        <translation>Déconnecté</translation>
+        <translation type="vanished">Déconnecté</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>selectAccountLabel</source>
+        <translation>Sélectionner votre compte principal</translation>
     </message>
 </context>
 <context>

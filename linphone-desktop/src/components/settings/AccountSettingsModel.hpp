@@ -27,28 +27,22 @@
 
 #include <QObject>
 
-// ===================================================================
+// =============================================================================
 
 class AccountSettingsModel : public QObject {
   Q_OBJECT;
 
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountUpdated);
   Q_PROPERTY(QString sipAddress READ getSipAddress NOTIFY accountUpdated);
+  Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountUpdated);
 
-  Q_PROPERTY(
-    Presence::PresenceLevel presenceLevel
-    READ getPresenceLevel
-    CONSTANT
-  );
-
-  Q_PROPERTY(
-    Presence::PresenceStatus presenceStatus
-    READ getPresenceStatus
-    CONSTANT
-  );
+  Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel CONSTANT);
+  Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus CONSTANT);
 
 public:
-  AccountSettingsModel (QObject *parent = Q_NULLPTR);
+  AccountSettingsModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+
+  Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
 
 signals:
   void accountUpdated ();
@@ -61,10 +55,11 @@ private:
   Presence::PresenceStatus getPresenceStatus () const;
 
   QString getSipAddress () const;
+  QVariantList getAccounts () const;
 
   std::shared_ptr<linphone::Address> getDefaultSipAddress () const;
-
-  std::shared_ptr<linphone::ProxyConfig> m_default_proxy;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig> );
 
 #endif // ACCOUNT_SETTINGS_MODEL_H_

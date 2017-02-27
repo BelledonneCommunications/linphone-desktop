@@ -29,9 +29,12 @@
 
 // =============================================================================
 
-AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
-  m_default_proxy = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
+void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
+  CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxy_config);
+  emit accountUpdated();
 }
+
+// -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getUsername () const {
   shared_ptr<linphone::Address> address = getDefaultSipAddress();
@@ -52,6 +55,8 @@ void AccountSettingsModel::setUsername (const QString &username) {
   emit accountUpdated();
 }
 
+// -----------------------------------------------------------------------------
+
 Presence::PresenceLevel AccountSettingsModel::getPresenceLevel () const {
   return Presence::Green;
 }
@@ -60,15 +65,38 @@ Presence::PresenceStatus AccountSettingsModel::getPresenceStatus () const {
   return Presence::Online;
 }
 
+// -----------------------------------------------------------------------------
+
 QString AccountSettingsModel::getSipAddress () const {
   return ::Utils::linphoneStringToQString(getDefaultSipAddress()->asStringUriOnly());
+}
+
+QVariantList AccountSettingsModel::getAccounts () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  QVariantList accounts;
+
+  {
+    QVariantMap account;
+    account["sipAddress"] = ::Utils::linphoneStringToQString(core->getPrimaryContactParsed()->asStringUriOnly());
+    account["proxyConfig"].setValue(shared_ptr<linphone::ProxyConfig>());
+    accounts << account;
+  }
+
+  for (const auto &proxy_config : core->getProxyConfigList()) {
+    QVariantMap account;
+    account["sipAddress"] = ::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asStringUriOnly());
+    account["proxyConfig"].setValue(proxy_config);
+    accounts << account;
+  }
+
+  return accounts;
 }
 
 // -----------------------------------------------------------------------------
 
 shared_ptr<linphone::Address> AccountSettingsModel::getDefaultSipAddress () const {
-  if (m_default_proxy)
-    return m_default_proxy->getIdentityAddress();
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
 
-  return CoreManager::getInstance()->getCore()->getPrimaryContactParsed();
+  return proxy_config ? proxy_config->getIdentityAddress() : core->getPrimaryContactParsed();
 }

@@ -9,8 +9,6 @@ import Common.Styles 1.0
 ComboBox {
   id: comboBox
 
-  textRole: 'key'
-
   // ---------------------------------------------------------------------------
 
   background: Rectangle {
@@ -67,7 +65,9 @@ ComboBox {
 
     font.bold: comboBox.currentIndex === index
     hoverEnabled: true
-    text: key
+    text: textRole.length
+      ? (typeof modelData !== 'undefined' ? modelData[textRole] : model[textRole])
+      : modelData
     width: comboBox.width
   }
 }

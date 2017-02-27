@@ -41,6 +41,7 @@ TabContainer {
               })
             }
 
+            textRole: 'key'
             model: ListModel {}
 
             Component.onCompleted: {
