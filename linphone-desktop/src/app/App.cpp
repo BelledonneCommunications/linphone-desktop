@@ -87,6 +87,8 @@ App::App (int &argc, char **argv) : QApplication(argc, argv) {
 
 App::~App () {
   qInfo() << "Destroying app...";
+  delete m_calls_window;
+  delete m_settings_window;
 }
 
 // -----------------------------------------------------------------------------
@@ -153,13 +155,12 @@ void App::initContentApp () {
     core->setParent(this);
   }
 
+  createSubWindows();
   // Load main view.
   qInfo() << "Loading main view...";
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
-
-  createSubWindows();
 
   #ifndef __APPLE__
     // Enable TrayIconSystem.
@@ -319,9 +320,7 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
   }
 
   QQuickWindow *window = qobject_cast<QQuickWindow *>(component.create());
-
   QQmlEngine::setObjectOwnership(window, QQmlEngine::CppOwnership);
-  window->setParent(app->getMainWindow());
 
   return window;
 }
