@@ -38,6 +38,8 @@
 #define NOTIFICATION_PROPERTY_HEIGHT "notificationHeight"
 #define NOTIFICATION_PROPERTY_OFFSET "notificationOffset"
 
+#define NOTIFICATION_PROPERTY_TIMER "__timer"
+
 #define QML_NOTIFICATION_PATH_RECEIVED_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml"
 #define QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml"
 #define QML_NOTIFICATION_PATH_RECEIVED_CALL "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedCall.qml"
@@ -145,12 +147,12 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   QTimer *timer = new QTimer(window);
   timer->setInterval(timeout > MAX_TIMEOUT ? MAX_TIMEOUT : timeout);
   timer->setSingleShot(true);
-  notification->setProperty("__timer", QVariant::fromValue(timer));
+  notification->setProperty(NOTIFICATION_PROPERTY_TIMER, QVariant::fromValue(timer));
 
   // Destroy it after timeout.
   QObject::connect(
     timer, &QTimer::timeout, this, [this, notification]() {
-      notification->property("__timer").value<QTimer *>()->stop();
+      notification->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
       deleteNotification(notification);
     }
   );
@@ -163,7 +165,7 @@ void Notifier::showNotification (QObject *notification, int timeout) {
         return;
 
       qInfo() << "Update notifications counter, hidden notification detected.";
-      notification->property("__timer").value<QTimer *>()->stop();
+      notification->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
       deleteNotification(notification);
     }
   );
