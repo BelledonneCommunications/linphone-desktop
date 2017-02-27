@@ -52,8 +52,8 @@ public:
 
 private:
   QObject *createNotification (NotificationType type);
-  void handleNotificationHidden ();
   void showNotification (QObject *notification, int timeout);
+  void deleteNotification (QObject *notification);
 
   QQmlComponent *m_components[MaxNbTypes];
 

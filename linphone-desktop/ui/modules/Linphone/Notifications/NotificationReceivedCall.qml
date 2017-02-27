@@ -18,13 +18,6 @@ Notification {
 
   // ---------------------------------------------------------------------------
 
-  function _close (cb) {
-    notification.window.setVisible(false)
-    cb()
-  }
-
-  // ---------------------------------------------------------------------------
-
   Rectangle {
     color: NotificationReceivedCallStyle.color
     height: NotificationReceivedCallStyle.height

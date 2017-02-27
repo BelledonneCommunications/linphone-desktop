@@ -44,7 +44,7 @@
 
 #define NOTIFICATION_TIMEOUT_RECEIVED_MESSAGE 10000
 #define NOTIFICATION_TIMEOUT_RECEIVED_FILE_MESSAGE 10000
-#define NOTIFICATION_TIMEOUT_RECEIVED_CALL 10000
+#define NOTIFICATION_TIMEOUT_RECEIVED_CALL 30000
 
 // Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
@@ -135,47 +135,55 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
 }
 
 void Notifier::showNotification (QObject *notification, int timeout) {
-  if (timeout > MAX_TIMEOUT) {
-    timeout = MAX_TIMEOUT;
-  }
-
   // Display notification.
-  QMetaObject::invokeMethod(
-    notification, NOTIFICATION_SHOW_METHOD_NAME,
-    Qt::DirectConnection
-  );
+  QMetaObject::invokeMethod(notification, NOTIFICATION_SHOW_METHOD_NAME, Qt::DirectConnection);
 
   QQuickWindow *window = notification->findChild<QQuickWindow *>();
-
   if (!window)
     qFatal("Cannot found a `QQuickWindow` instance in `notification`.");
+
+  QTimer *timer = new QTimer(window);
+  timer->setInterval(timeout > MAX_TIMEOUT ? MAX_TIMEOUT : timeout);
+  timer->setSingleShot(true);
+  notification->setProperty("__timer", QVariant::fromValue(timer));
+
+  // Destroy it after timeout.
+  QObject::connect(
+    timer, &QTimer::timeout, this, [this, notification]() {
+      notification->property("__timer").value<QTimer *>()->stop();
+      deleteNotification(notification);
+    }
+  );
 
   // Called explicitly (by a click on notification for example)
   // or when single shot happen and if notification is visible.
   QObject::connect(
-    window, &QQuickWindow::visibleChanged, [this](const bool &visible) {
+    window, &QQuickWindow::visibilityChanged, [this, notification](QWindow::Visibility visibility) {
+      if (visibility != QWindow::Visibility::Hidden)
+        return;
+
       qInfo() << "Update notifications counter, hidden notification detected.";
-
-      if (visible)
-        qWarning("A notification cannot be visible twice!");
-
-      m_mutex.lock();
-
-      m_n_instances--;
-
-      if (m_n_instances == 0)
-        m_offset = 0;
-
-      m_mutex.unlock();
+      notification->property("__timer").value<QTimer *>()->stop();
+      deleteNotification(notification);
     }
   );
 
-  // Destroy it after timeout.
-  QTimer::singleShot(
-    timeout, this, [notification]() {
-      delete notification;
-    }
-  );
+  timer->start();
+}
+
+// -----------------------------------------------------------------------------
+
+void Notifier::deleteNotification (QObject *notification) {
+  m_mutex.lock();
+
+  m_n_instances--;
+
+  if (m_n_instances == 0)
+    m_offset = 0;
+
+  m_mutex.unlock();
+
+  notification->deleteLater();
 }
 
 // -----------------------------------------------------------------------------

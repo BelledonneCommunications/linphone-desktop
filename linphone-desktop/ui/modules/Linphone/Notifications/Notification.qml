@@ -24,6 +24,16 @@ DesktopPopup {
 
   // ---------------------------------------------------------------------------
 
+  function _close (cb) {
+    window.visibility = Window.Hidden
+
+    if (cb) {
+      cb()
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+
   flags: Qt.Popup
 
   Component.onCompleted: {

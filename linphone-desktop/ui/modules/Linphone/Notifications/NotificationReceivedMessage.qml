@@ -89,12 +89,11 @@ Notification {
       cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
       hoverEnabled: true
 
-      onClicked: {
-        notification.window.setVisible(false)
+      onClicked: notification._close(function () {
         notification.notificationData.window.setView('Conversation', {
           sipAddress: notification._sipAddress
         })
-      }
+      })
     }
   }
 }

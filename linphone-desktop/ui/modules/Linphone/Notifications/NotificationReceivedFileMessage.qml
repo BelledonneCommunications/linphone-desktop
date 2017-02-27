@@ -70,10 +70,9 @@ Notification {
         cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
         hoverEnabled: true
 
-        onClicked: {
-          notification.window.setVisible(false)
+        onClicked: notification._close(function () {
           Qt.openUrlExternally('file://' + Utils.dirname(notification._fileUri))
-        }
+        })
       }
     }
   }
