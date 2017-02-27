@@ -12,12 +12,6 @@ import Utils 1.0
 Rectangle {
   property alias proxyModel: chat.model
 
-  // Unable to use it in style file at this moment.
-  // A `TypeError: Cannot read property 'XXX' of undefined` is launched for many properties
-  // in the style file otherwise.
-  // Seems related to: https://bugreports.qt.io/browse/QTBUG-58648
-  property color _backgroundColor: 'white'
-
   property bool _bindToEnd: false
   property var _contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
 
@@ -27,7 +21,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: _backgroundColor
+  color: ChatStyle.color
 
   ColumnLayout {
     anchors.fill: parent
@@ -188,7 +182,7 @@ Rectangle {
             ChatStyle.entry.message.extraContent.leftMargin +
             ChatStyle.entry.message.outgoing.sendIconSize
         }
-        color: _backgroundColor
+        color: ChatStyle.color
         implicitHeight: layout.height + ChatStyle.entry.bottomMargin
 
         // ---------------------------------------------------------------------
