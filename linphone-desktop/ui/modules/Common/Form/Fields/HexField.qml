@@ -37,15 +37,12 @@ Item {
     id: textField
 
     validator: RegExpValidator {
-      regExp: /[0-9A-F]*/
+      regExp: /[0-9A-Fa-f]*/
     }
 
     onEditingFinished: {
-      if (!text.length) {
-        text = '0'
-      }
-
-      wrapper.editingFinished(parseInt(textField.text, 16))
+      text = _computeText('0x' + text)
+      wrapper.editingFinished(parseInt(text, 16))
     }
   }
 }
