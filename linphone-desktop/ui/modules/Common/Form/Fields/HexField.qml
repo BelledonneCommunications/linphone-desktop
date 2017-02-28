@@ -41,10 +41,11 @@ Item {
     }
 
     onEditingFinished: {
-      text = text.length
-        ? parseInt(textField.text, 16)
-        : 0
-      wrapper.editingFinished(text)
+      if (!text.length) {
+        text = '0'
+      }
+
+      wrapper.editingFinished(parseInt(textField.text, 16))
     }
   }
 }
