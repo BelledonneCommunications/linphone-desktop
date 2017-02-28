@@ -41,6 +41,14 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged);
 
+  Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE setIceEnabled NOTIFY iceEnabledChanged);
+  Q_PROPERTY(bool turnEnabled READ getTurnEnabled WRITE setTurnEnabled NOTIFY turnEnabledChanged);
+
+  Q_PROPERTY(QString stunServer READ getStunServer WRITE setStunServer NOTIFY stunServerChanged);
+
+  Q_PROPERTY(QString turnUser READ getTurnUser WRITE setTurnUser NOTIFY turnUserChanged);
+  Q_PROPERTY(QString turnPassword READ getTurnPassword WRITE setTurnPassword NOTIFY turnPasswordChanged);
+
   Q_PROPERTY(int dscpSip READ getDscpSip WRITE setDscpSip NOTIFY dscpSipChanged);
   Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
   Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
@@ -73,6 +81,21 @@ public:
 
   bool getIpv6Enabled () const;
   void setIpv6Enabled (bool status);
+
+  bool getIceEnabled () const;
+  void setIceEnabled (bool status);
+
+  bool getTurnEnabled () const;
+  void setTurnEnabled (bool status);
+
+  QString getStunServer () const;
+  void setStunServer (const QString &stun_server);
+
+  QString getTurnUser () const;
+  void setTurnUser (const QString &user);
+
+  QString getTurnPassword () const;
+  void setTurnPassword (const QString &password);
 
   int getDscpSip () const;
   void setDscpSip (int dscp);
@@ -110,6 +133,14 @@ signals:
   void dtmfsProtocolChanged ();
 
   void ipv6EnabledChanged (bool status);
+
+  void iceEnabledChanged (bool status);
+  void turnEnabledChanged (bool status);
+
+  void stunServerChanged (const QString &server);
+
+  void turnUserChanged (const QString &user);
+  void turnPasswordChanged (const QString &password);
 
   void dscpSipChanged (int dscp);
   void dscpAudioChanged (int dscp);

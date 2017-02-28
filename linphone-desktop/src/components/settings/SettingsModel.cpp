@@ -143,6 +143,92 @@ void SettingsModel::setIpv6Enabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getIceEnabled () const {
+  return CoreManager::getInstance()->getCore()->getNatPolicy()->iceEnabled();
+}
+
+void SettingsModel::setIceEnabled (bool status) {
+  shared_ptr<linphone::NatPolicy> nat_policy = CoreManager::getInstance()->getCore()->getNatPolicy();
+
+  nat_policy->enableIce(status);
+  nat_policy->enableStun(status);
+
+  emit iceEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getTurnEnabled () const {
+  return CoreManager::getInstance()->getCore()->getNatPolicy()->turnEnabled();
+}
+
+void SettingsModel::setTurnEnabled (bool status) {
+  CoreManager::getInstance()->getCore()->getNatPolicy()->enableTurn(status);
+  emit turnEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getStunServer () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getNatPolicy()->getStunServer()
+  );
+}
+
+void SettingsModel::setStunServer (const QString &stun_server) {
+  CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServer(
+    ::Utils::qStringToLinphoneString(stun_server)
+  );
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getTurnUser () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getNatPolicy()->getStunServerUsername()
+  );
+}
+
+void SettingsModel::setTurnUser (const QString &user) {
+  CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServerUsername(
+    ::Utils::qStringToLinphoneString(user)
+  );
+
+  emit turnUserChanged(user);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getTurnPassword () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::NatPolicy> nat_policy = core->getNatPolicy();
+  shared_ptr<linphone::AuthInfo> auth_info = core->findAuthInfo(nat_policy->getStunServerUsername(), "", "");
+
+  return auth_info ? ::Utils::linphoneStringToQString(auth_info->getPasswd()) : "";
+}
+
+void SettingsModel::setTurnPassword (const QString &password) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::NatPolicy> nat_policy = core->getNatPolicy();
+
+  const string &username = nat_policy->getStunServerUsername();
+  shared_ptr<linphone::AuthInfo> auth_info = core->findAuthInfo(username, "", "");
+
+  if (auth_info) {
+    shared_ptr<linphone::AuthInfo> _auth_info = auth_info->clone();
+    core->removeAuthInfo(auth_info);
+    _auth_info->setPasswd(::Utils::qStringToLinphoneString(password));
+    core->addAuthInfo(_auth_info);
+  } else {
+    auth_info = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::qStringToLinphoneString(password), "", "", "");
+    core->addAuthInfo(auth_info);
+  }
+
+  emit turnPasswordChanged(password);
+}
+
+// -----------------------------------------------------------------------------
+
 int SettingsModel::getDscpSip () const {
   return CoreManager::getInstance()->getCore()->getSipDscp();
 }

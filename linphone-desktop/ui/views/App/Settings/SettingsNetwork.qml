@@ -230,6 +230,86 @@ TabContainer {
     }
 
     // -------------------------------------------------------------------------
+    // NAT and Firewall.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('natAndFirewallTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('enableIceLabel')
+
+          Switch {
+            id: enableIce
+
+            checked: SettingsModel.iceEnabled
+
+            onClicked: SettingsModel.iceEnabled = !checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('stunServerLabel')
+
+          TextField {
+            readOnly: !enableIce.checked
+
+            text: SettingsModel.stunServer
+
+            onEditingFinished: SettingsModel.stunServer = text
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('enableTurnLabel')
+
+          Switch {
+            id: enableTurn
+
+            enabled: enableIce.checked
+            checked: SettingsModel.turnEnabled
+
+            onClicked: SettingsModel.turnEnabled = !checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('turnUserLabel')
+
+          TextField {
+            id: turnUser
+
+            readOnly: !enableTurn.checked || !enableTurn.enabled
+            text: SettingsModel.turnUser
+
+            onEditingFinished: SettingsModel.turnUser = text
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: ''
+        }
+
+        FormGroup {
+          label: qsTr('turnPasswordLabel')
+
+          TextField {
+            readOnly: !enableTurn.checked || !enableTurn.enabled || !turnUser.text.length
+            text: SettingsModel.turnPassword
+
+            onEditingFinished: SettingsModel.turnPassword = text
+          }
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // DSCP fields.
     // -------------------------------------------------------------------------
 
@@ -264,68 +344,6 @@ TabContainer {
           HexField {
             text: SettingsModel.dscpVideo
             onEditingFinished: SettingsModel.dscpVideo = value
-          }
-        }
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // NAT and Firewall.
-    // -------------------------------------------------------------------------
-
-    Form {
-      title: qsTr('natAndFirewallTitle')
-      width: parent.width
-
-      FormLine {
-        FormGroup {
-          label: qsTr('enableIceLabel')
-
-          Switch {
-            id: enableIce
-          }
-        }
-
-        FormGroup {
-          label: qsTr('stunServerLabel')
-
-          TextField {
-            readOnly: !enableIce.checked
-          }
-        }
-      }
-
-      FormLine {
-        FormGroup {
-          label: qsTr('enableTurnLabel')
-
-          Switch {
-            id: enableTurn
-
-            enabled: enableIce.checked
-          }
-        }
-
-        FormGroup {
-          label: qsTr('turnUserLabel')
-
-          TextField {
-            readOnly: !enableTurn.checked || !enableTurn.enabled
-          }
-        }
-      }
-
-      FormLine {
-        FormGroup {
-          label: ''
-        }
-
-        FormGroup {
-          label: qsTr('turnPasswordLabel')
-
-          TextField {
-            echoMode: TextInput.Password
-            readOnly: !enableTurn.checked || !enableTurn.enabled
           }
         }
       }
