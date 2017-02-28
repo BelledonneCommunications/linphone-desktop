@@ -140,11 +140,7 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   // Display notification.
   QMetaObject::invokeMethod(notification, NOTIFICATION_SHOW_METHOD_NAME, Qt::DirectConnection);
 
-  QQuickWindow *window = notification->findChild<QQuickWindow *>();
-  if (!window)
-    qFatal("Cannot found a `QQuickWindow` instance in `notification`.");
-
-  QTimer *timer = new QTimer(window);
+  QTimer *timer = new QTimer(notification);
   timer->setInterval(timeout > MAX_TIMEOUT ? MAX_TIMEOUT : timeout);
   timer->setSingleShot(true);
   notification->setProperty(NOTIFICATION_PROPERTY_TIMER, QVariant::fromValue(timer));
@@ -152,30 +148,24 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   // Destroy it after timeout.
   QObject::connect(
     timer, &QTimer::timeout, this, [this, notification]() {
-      notification->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
-      deleteNotification(notification);
+      deleteNotification(QVariant::fromValue(notification));
     }
   );
 
   // Called explicitly (by a click on notification for example)
   // or when single shot happen and if notification is visible.
-  QObject::connect(
-    window, &QQuickWindow::visibilityChanged, [this, notification](QWindow::Visibility visibility) {
-      if (visibility != QWindow::Visibility::Hidden)
-        return;
-
-      qInfo() << "Update notifications counter, hidden notification detected.";
-      notification->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
-      deleteNotification(notification);
-    }
-  );
+  QObject::connect(notification, SIGNAL(deleteNotification(QVariant)), this, SLOT(deleteNotification(QVariant)));
 
   timer->start();
 }
 
 // -----------------------------------------------------------------------------
 
-void Notifier::deleteNotification (QObject *notification) {
+void Notifier::deleteNotification (QVariant notification) {
+  QObject *instance = notification.value<QObject *>();
+
+  instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
+
   m_mutex.lock();
 
   m_n_instances--;
@@ -185,7 +175,7 @@ void Notifier::deleteNotification (QObject *notification) {
 
   m_mutex.unlock();
 
-  notification->deleteLater();
+  instance->deleteLater();
 }
 
 // -----------------------------------------------------------------------------

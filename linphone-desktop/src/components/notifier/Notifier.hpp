@@ -50,10 +50,12 @@ public:
   void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message);
   void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
 
+public slots:
+  void deleteNotification (QVariant notification);
+
 private:
   QObject *createNotification (NotificationType type);
   void showNotification (QObject *notification, int timeout);
-  void deleteNotification (QObject *notification);
 
   QQmlComponent *m_components[MaxNbTypes];
 

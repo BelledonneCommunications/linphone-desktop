@@ -24,12 +24,14 @@ DesktopPopup {
 
   // ---------------------------------------------------------------------------
 
-  function _close (cb) {
-    window.visibility = Window.Hidden
+  signal deleteNotification (var notification)
 
+  function _close (cb) {
     if (cb) {
       cb()
     }
+
+    deleteNotification(notification)
   }
 
   // ---------------------------------------------------------------------------
