@@ -163,8 +163,9 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 
 void Notifier::deleteNotification (QVariant notification) {
   QObject *instance = notification.value<QObject *>();
-
   instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
+
+  qDebug() << "Delete notification.";
 
   m_mutex.lock();
 
@@ -215,9 +216,9 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
   CallModel *model = CoreManager::getInstance()->getCallsListModel()->getCall(call);
 
   QObject::connect(
-    model, &CallModel::statusChanged, notification, [notification](CallModel::CallStatus status) {
+    model, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
       if (status == CallModel::CallStatusEnded)
-        notification->findChild<QQuickWindow *>()->setVisible(false);
+        deleteNotification(QVariant::fromValue(notification));
     }
   );
 
