@@ -17,18 +17,26 @@ TextField {
 
   function _decrease () {
     var value = +numericField.text
-
-    if (value - step >= minValue) {
-      numericField.text = value - step
+    if (value === minValue) {
+      return
     }
+
+    numericField.text = value - step >= minValue
+      ? value - step
+      : minValue
+    numericField.editingFinished()
   }
 
   function _increase () {
     var value = +numericField.text
-
-    if (value + step <= maxValue) {
-      numericField.text = value + step
+    if (value === maxValue) {
+      return
     }
+
+    numericField.text = value + step <= maxValue
+      ? value + step
+      : maxValue
+    numericField.editingFinished()
   }
 
   // ---------------------------------------------------------------------------

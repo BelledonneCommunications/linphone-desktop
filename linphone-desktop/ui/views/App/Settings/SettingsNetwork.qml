@@ -13,6 +13,90 @@ TabContainer {
     width: parent.width
 
     // -------------------------------------------------------------------------
+    // Transport.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('transportTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('sendDtmfsLabel')
+
+          ExclusiveButtons {
+            selectedButton: Number(!SettingsModel.useSipInfoForDtmfs)
+            texts: [
+              'SIP INFO',
+              'RFC 2833'
+            ]
+
+            onClicked: SettingsModel.useSipInfoForDtmfs = !button
+          }
+        }
+
+        FormGroup {
+          label: qsTr('allowIpV6Label')
+
+          Switch {
+            checked: SettingsModel.ipv6Enabled
+
+            onClicked: SettingsModel.ipv6Enabled = !checked
+          }
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Bandwidth control.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('bandwidthControlTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('downloadSpeedLimitLabel')
+
+          NumericField {
+            minValue: 0
+            maxValue: 100000
+            step: 100
+
+            text: SettingsModel.downloadBandwidth
+
+            onEditingFinished: SettingsModel.downloadBandwidth = text
+          }
+        }
+
+        FormGroup {
+          label: qsTr('uploadSpeedLimitLabel')
+
+          NumericField {
+            minValue: 0
+            maxValue: 100000
+            step: 100
+            text: SettingsModel.uploadBandwidth
+
+            onEditingFinished: SettingsModel.uploadBandwidth = text
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('enableAdaptiveRateControlLabel')
+
+          Switch {
+            checked: SettingsModel.adaptiveRateControlEnabled
+            onClicked: SettingsModel.adaptiveRateControlEnabled = !checked
+          }
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // Network protocol and ports.
     // -------------------------------------------------------------------------
 
@@ -151,78 +235,6 @@ TabContainer {
       FormLine {
         FormGroup {
           label: qsTr('enableTlsLabel')
-
-          Switch {}
-        }
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // Transport.
-    // -------------------------------------------------------------------------
-
-    Form {
-      title: qsTr('transportTitle')
-      width: parent.width
-
-      FormLine {
-        FormGroup {
-          label: qsTr('sendDtmfsLabel')
-
-          ExclusiveButtons {
-            selectedButton: Number(!SettingsModel.useSipInfoForDtmfs)
-            texts: [
-              'SIP INFO',
-              'RFC 2833'
-            ]
-
-            onClicked: SettingsModel.useSipInfoForDtmfs = !button
-          }
-        }
-
-        FormGroup {
-          label: qsTr('allowIpV6Label')
-
-          Switch {
-            checked: SettingsModel.ipv6Enabled
-
-            onClicked: SettingsModel.ipv6Enabled = !checked
-          }
-        }
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // Bandwidth control.
-    // -------------------------------------------------------------------------
-
-    Form {
-      title: qsTr('bandwidthControlTitle')
-      width: parent.width
-
-      FormLine {
-        FormGroup {
-          label: qsTr('downloadSpeedLimitLabel')
-
-          NumericField {
-            minValue: 0
-            maxValue: 100000
-          }
-        }
-
-        FormGroup {
-          label: qsTr('uploadSpeedLimitLabel')
-
-          NumericField {
-            minValue: 0
-            maxValue: 100000
-          }
-        }
-      }
-
-      FormLine {
-        FormGroup {
-          label: qsTr('enableAdaptiveRateControlLabel')
 
           Switch {}
         }

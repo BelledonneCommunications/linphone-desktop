@@ -42,56 +42,6 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Network.
 // =============================================================================
 
-// bool SettingsModel::getTcpPortEnabled () const {}
-
-// void SettingsModel::setTcpPortEnabled (bool status) {
-// emit tcpPortEnabledChanged(status);
-// }
-
-// -----------------------------------------------------------------------------
-
-QList<int> SettingsModel::getAudioPortRange () const {
-  int a, b;
-  CoreManager::getInstance()->getCore()->getAudioPortRange(a, b);
-  return QList<int>() << a << b;
-}
-
-void SettingsModel::setAudioPortRange (const QList<int> &range) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  int a = range[0];
-  int b = range[1];
-
-  if (b == -1)
-    core->setAudioPort(a);
-  else
-    core->setAudioPortRange(a, b);
-
-  emit audioPortRangeChanged(a, b);
-}
-
-// -----------------------------------------------------------------------------
-
-QList<int> SettingsModel::getVideoPortRange () const {
-  int a, b;
-  CoreManager::getInstance()->getCore()->getVideoPortRange(a, b);
-  return QList<int>() << a << b;
-}
-
-void SettingsModel::setVideoPortRange (const QList<int> &range) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  int a = range[0];
-  int b = range[1];
-
-  if (b == -1)
-    core->setVideoPort(a);
-  else
-    core->setVideoPortRange(a, b);
-
-  emit videoPortRangeChanged(a, b);
-}
-
-// -----------------------------------------------------------------------------
-
 bool SettingsModel::getUseSipInfoForDtmfs () const {
   return CoreManager::getInstance()->getCore()->getUseInfoForDtmf();
 }
@@ -139,6 +89,89 @@ bool SettingsModel::getIpv6Enabled () const {
 void SettingsModel::setIpv6Enabled (bool status) {
   CoreManager::getInstance()->getCore()->enableIpv6(status);
   emit ipv6EnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getDownloadBandwidth () const {
+  return CoreManager::getInstance()->getCore()->getDownloadBandwidth();
+}
+
+void SettingsModel::setDownloadBandwidth (int bandwidth) {
+  CoreManager::getInstance()->getCore()->setDownloadBandwidth(bandwidth);
+  emit downloadBandWidthChanged(getDownloadBandwidth());
+}
+
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getUploadBandwidth () const {
+  return CoreManager::getInstance()->getCore()->getUploadBandwidth();
+}
+
+void SettingsModel::setUploadBandwidth (int bandwidth) {
+  CoreManager::getInstance()->getCore()->setUploadBandwidth(bandwidth);
+  emit uploadBandWidthChanged(getUploadBandwidth());
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getAdaptiveRateControlEnabled () const {
+  return CoreManager::getInstance()->getCore()->adaptiveRateControlEnabled();
+}
+
+void SettingsModel::setAdaptiveRateControlEnabled (bool status) {
+  CoreManager::getInstance()->getCore()->enableAdaptiveRateControl(status);
+  emit adaptiveRateControlEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+// bool SettingsModel::getTcpPortEnabled () const {}
+
+// void SettingsModel::setTcpPortEnabled (bool status) {
+// emit tcpPortEnabledChanged(status);
+// }
+
+// -----------------------------------------------------------------------------
+
+QList<int> SettingsModel::getAudioPortRange () const {
+  int a, b;
+  CoreManager::getInstance()->getCore()->getAudioPortRange(a, b);
+  return QList<int>() << a << b;
+}
+
+void SettingsModel::setAudioPortRange (const QList<int> &range) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  int a = range[0];
+  int b = range[1];
+
+  if (b == -1)
+    core->setAudioPort(a);
+  else
+    core->setAudioPortRange(a, b);
+
+  emit audioPortRangeChanged(a, b);
+}
+
+// -----------------------------------------------------------------------------
+
+QList<int> SettingsModel::getVideoPortRange () const {
+  int a, b;
+  CoreManager::getInstance()->getCore()->getVideoPortRange(a, b);
+  return QList<int>() << a << b;
+}
+
+void SettingsModel::setVideoPortRange (const QList<int> &range) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  int a = range[0];
+  int b = range[1];
+
+  if (b == -1)
+    core->setVideoPort(a);
+  else
+    core->setVideoPortRange(a, b);
+
+  emit videoPortRangeChanged(a, b);
 }
 
 // -----------------------------------------------------------------------------

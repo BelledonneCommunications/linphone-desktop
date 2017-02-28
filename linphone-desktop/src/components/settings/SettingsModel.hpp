@@ -31,15 +31,31 @@
 class SettingsModel : public QObject {
   Q_OBJECT;
 
-  // Q_PROPERTY(bool tcpPortEnabled READ getTcpPortEnabled WRITE setTcpPortEnabled NOTIFY tcpPortEnabledChanged);
+  // ===========================================================================
+  // PROPERTIES.
+  // ===========================================================================
 
-  Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
-  Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
+  // Network. ------------------------------------------------------------------
 
   Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
   Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
 
   Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged);
+
+  Q_PROPERTY(int downloadBandwidth READ getDownloadBandwidth WRITE setDownloadBandwidth NOTIFY downloadBandWidthChanged);
+  Q_PROPERTY(int uploadBandwidth READ getUploadBandwidth WRITE setUploadBandwidth NOTIFY uploadBandWidthChanged);
+
+  Q_PROPERTY(
+    bool adaptiveRateControlEnabled
+    READ getAdaptiveRateControlEnabled
+    WRITE setAdaptiveRateControlEnabled
+    NOTIFY adaptiveRateControlEnabledChanged
+  );
+
+  // Q_PROPERTY(bool tcpPortEnabled READ getTcpPortEnabled WRITE setTcpPortEnabled NOTIFY tcpPortEnabledChanged);
+
+  Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
+  Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
 
   Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE setIceEnabled NOTIFY iceEnabledChanged);
   Q_PROPERTY(bool turnEnabled READ getTurnEnabled WRITE setTurnEnabled NOTIFY turnEnabledChanged);
@@ -53,6 +69,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
   Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
 
+  // Misc. ---------------------------------------------------------------------
+
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
@@ -62,16 +80,11 @@ class SettingsModel : public QObject {
 public:
   SettingsModel (QObject *parent = Q_NULLPTR);
 
+  // ===========================================================================
+  // METHODS.
+  // ===========================================================================
+
   // Network. ------------------------------------------------------------------
-
-  // bool getTcpPortEnabled () const;
-  // void setTcpPortEnabled (bool status);
-
-  QList<int> getAudioPortRange () const;
-  void setAudioPortRange (const QList<int> &range);
-
-  QList<int> getVideoPortRange () const;
-  void setVideoPortRange (const QList<int> &range);
 
   bool getUseSipInfoForDtmfs () const;
   void setUseSipInfoForDtmfs (bool status);
@@ -81,6 +94,24 @@ public:
 
   bool getIpv6Enabled () const;
   void setIpv6Enabled (bool status);
+
+  int getDownloadBandwidth () const;
+  void setDownloadBandwidth (int bandwidth);
+
+  int getUploadBandwidth () const;
+  void setUploadBandwidth (int bandwidth);
+
+  bool getAdaptiveRateControlEnabled () const;
+  void setAdaptiveRateControlEnabled (bool status);
+
+  // bool getTcpPortEnabled () const;
+  // void setTcpPortEnabled (bool status);
+
+  QList<int> getAudioPortRange () const;
+  void setAudioPortRange (const QList<int> &range);
+
+  QList<int> getVideoPortRange () const;
+  void setVideoPortRange (const QList<int> &range);
 
   bool getIceEnabled () const;
   void setIceEnabled (bool status);
@@ -124,15 +155,26 @@ public:
 
   static const std::string UI_SECTION;
 
-signals:
-  // void tcpPortEnabledChanged (bool status);
+  // ===========================================================================
+  // SIGNALS.
+  // ===========================================================================
 
-  void audioPortRangeChanged (int a, int b);
-  void videoPortRangeChanged (int a, int b);
+signals:
+  // Network. ------------------------------------------------------------------
 
   void dtmfsProtocolChanged ();
 
   void ipv6EnabledChanged (bool status);
+
+  void downloadBandWidthChanged (int bandwidth);
+  void uploadBandWidthChanged (int bandwidth);
+
+  bool adaptiveRateControlEnabledChanged (bool status);
+
+  // void tcpPortEnabledChanged (bool status);
+
+  void audioPortRangeChanged (int a, int b);
+  void videoPortRangeChanged (int a, int b);
 
   void iceEnabledChanged (bool status);
   void turnEnabledChanged (bool status);
@@ -145,6 +187,8 @@ signals:
   void dscpSipChanged (int dscp);
   void dscpAudioChanged (int dscp);
   void dscpVideoChanged (int dscp);
+
+  // Misc. ---------------------------------------------------------------------
 
   void autoAnswerStatusChanged (bool status);
   void fileTransferUrlChanged (const QString &url);
