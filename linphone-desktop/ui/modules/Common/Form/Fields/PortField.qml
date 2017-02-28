@@ -46,8 +46,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  implicitWidth: textField.width
   implicitHeight: textField.height
+  implicitWidth: textField.width
 
   // ---------------------------------------------------------------------------
 
@@ -67,7 +67,7 @@ Item {
     }
 
     // Workaround to supports empty string.
-    Keys.onReturnPressed: textField.focus = false
+    Keys.onReturnPressed: editingFinished()
     onActiveFocusChanged: !activeFocus && editingFinished()
 
     onEditingFinished: {

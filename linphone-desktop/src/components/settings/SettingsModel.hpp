@@ -31,6 +31,8 @@
 class SettingsModel : public QObject {
   Q_OBJECT;
 
+  // Q_PROPERTY(bool tcpPortEnabled READ getTcpPortEnabled WRITE setTcpPortEnabled NOTIFY tcpPortEnabledChanged);
+
   Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
   Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
 
@@ -38,6 +40,10 @@ class SettingsModel : public QObject {
   Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
 
   Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged);
+
+  Q_PROPERTY(int dscpSip READ getDscpSip WRITE setDscpSip NOTIFY dscpSipChanged);
+  Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
+  Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
@@ -49,6 +55,9 @@ public:
   SettingsModel (QObject *parent = Q_NULLPTR);
 
   // Network. ------------------------------------------------------------------
+
+  // bool getTcpPortEnabled () const;
+  // void setTcpPortEnabled (bool status);
 
   QList<int> getAudioPortRange () const;
   void setAudioPortRange (const QList<int> &range);
@@ -64,6 +73,15 @@ public:
 
   bool getIpv6Enabled () const;
   void setIpv6Enabled (bool status);
+
+  int getDscpSip () const;
+  void setDscpSip (int dscp);
+
+  int getDscpAudio () const;
+  void setDscpAudio (int dscp);
+
+  int getDscpVideo () const;
+  void setDscpVideo (int dscp);
 
   // Misc. ---------------------------------------------------------------------
 
@@ -84,12 +102,18 @@ public:
   static const std::string UI_SECTION;
 
 signals:
+  // void tcpPortEnabledChanged (bool status);
+
   void audioPortRangeChanged (int a, int b);
   void videoPortRangeChanged (int a, int b);
 
   void dtmfsProtocolChanged ();
 
   void ipv6EnabledChanged (bool status);
+
+  void dscpSipChanged (int dscp);
+  void dscpAudioChanged (int dscp);
+  void dscpVideoChanged (int dscp);
 
   void autoAnswerStatusChanged (bool status);
   void fileTransferUrlChanged (const QString &url);

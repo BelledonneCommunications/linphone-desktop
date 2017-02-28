@@ -42,6 +42,14 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Network.
 // =============================================================================
 
+// bool SettingsModel::getTcpPortEnabled () const {}
+
+// void SettingsModel::setTcpPortEnabled (bool status) {
+// emit tcpPortEnabledChanged(status);
+// }
+
+// -----------------------------------------------------------------------------
+
 QList<int> SettingsModel::getAudioPortRange () const {
   int a, b;
   CoreManager::getInstance()->getCore()->getAudioPortRange(a, b);
@@ -131,6 +139,35 @@ bool SettingsModel::getIpv6Enabled () const {
 void SettingsModel::setIpv6Enabled (bool status) {
   CoreManager::getInstance()->getCore()->enableIpv6(status);
   emit ipv6EnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getDscpSip () const {
+  return CoreManager::getInstance()->getCore()->getSipDscp();
+}
+
+void SettingsModel::setDscpSip (int dscp) {
+  CoreManager::getInstance()->getCore()->setSipDscp(dscp);
+  emit dscpSipChanged(dscp);
+}
+
+int SettingsModel::getDscpAudio () const {
+  return CoreManager::getInstance()->getCore()->getAudioDscp();
+}
+
+void SettingsModel::setDscpAudio (int dscp) {
+  CoreManager::getInstance()->getCore()->setAudioDscp(dscp);
+  emit dscpAudioChanged(dscp);
+}
+
+int SettingsModel::getDscpVideo () const {
+  return CoreManager::getInstance()->getCore()->getVideoDscp();
+}
+
+void SettingsModel::setDscpVideo (int dscp) {
+  CoreManager::getInstance()->getCore()->setVideoDscp(dscp);
+  emit dscpVideoChanged(dscp);
 }
 
 // =============================================================================

@@ -38,12 +38,10 @@ TabContainer {
         FormGroup {
           label: qsTr('sipUdpPortLabel')
 
-          PortField {
-            //readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
-            //supportsRange: true
-            //text: SettingsModel.videoPortRange.join(':')
-
-            //onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
+          NumericField {
+            minValue: 0
+            maxValue: 65535
+            readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
           }
         }
 
@@ -195,6 +193,43 @@ TabContainer {
     }
 
     // -------------------------------------------------------------------------
+    // Bandwidth control.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('bandwidthControlTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('downloadSpeedLimitLabel')
+
+          NumericField {
+            minValue: 0
+            maxValue: 100000
+          }
+        }
+
+        FormGroup {
+          label: qsTr('uploadSpeedLimitLabel')
+
+          NumericField {
+            minValue: 0
+            maxValue: 100000
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('enableAdaptiveRateControlLabel')
+
+          Switch {}
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // DSCP fields.
     // -------------------------------------------------------------------------
 
@@ -206,7 +241,10 @@ TabContainer {
         FormGroup {
           label: qsTr('sipFieldLabel')
 
-          TextField {}
+          HexField {
+            text: SettingsModel.dscpSip
+            onEditingFinished: SettingsModel.dscpSip = value
+          }
         }
       }
 
@@ -214,13 +252,19 @@ TabContainer {
         FormGroup {
           label: qsTr('audioRtpStreamFieldLabel')
 
-          TextField {}
+          HexField {
+            text: SettingsModel.dscpAudio
+            onEditingFinished: SettingsModel.dscpAudio = value
+          }
         }
 
         FormGroup {
           label: qsTr('videoRtpStreamFieldLabel')
 
-          TextField {}
+          HexField {
+            text: SettingsModel.dscpVideo
+            onEditingFinished: SettingsModel.dscpVideo = value
+          }
         }
       }
     }
@@ -283,43 +327,6 @@ TabContainer {
             echoMode: TextInput.Password
             readOnly: !enableTurn.checked || !enableTurn.enabled
           }
-        }
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // Bandwidth control.
-    // -------------------------------------------------------------------------
-
-    Form {
-      title: qsTr('bandwidthControlTitle')
-      width: parent.width
-
-      FormLine {
-        FormGroup {
-          label: qsTr('downloadSpeedLimitLabel')
-
-          NumericField {
-            minValue: 0
-            maxValue: 100000
-          }
-        }
-
-        FormGroup {
-          label: qsTr('uploadSpeedLimitLabel')
-
-          NumericField {
-            minValue: 0
-            maxValue: 100000
-          }
-        }
-      }
-
-      FormLine {
-        FormGroup {
-          label: qsTr('enableAdaptiveRateControlLabel')
-
-          Switch {}
         }
       }
     }
