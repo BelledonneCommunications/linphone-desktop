@@ -31,6 +31,7 @@
 class SettingsModel : public QObject {
   Q_OBJECT;
 
+  Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
   Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
 
   Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
@@ -48,6 +49,9 @@ public:
   SettingsModel (QObject *parent = Q_NULLPTR);
 
   // Network. ------------------------------------------------------------------
+
+  QList<int> getAudioPortRange () const;
+  void setAudioPortRange (const QList<int> &range);
 
   QList<int> getVideoPortRange () const;
   void setVideoPortRange (const QList<int> &range);
@@ -80,6 +84,7 @@ public:
   static const std::string UI_SECTION;
 
 signals:
+  void audioPortRangeChanged (int a, int b);
   void videoPortRangeChanged (int a, int b);
 
   void dtmfsProtocolChanged ();

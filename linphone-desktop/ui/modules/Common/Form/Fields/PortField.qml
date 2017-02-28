@@ -9,8 +9,10 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property string text
+  property alias readOnly: textField.readOnly
   property bool supportsRange: false
+
+  property string text
 
   // ---------------------------------------------------------------------------
 
@@ -47,14 +49,16 @@ Item {
   implicitWidth: textField.width
   implicitHeight: textField.height
 
-  onTextChanged: textField.text = _computeText(_extractPorts(text))
-
   // ---------------------------------------------------------------------------
+
+  Binding {
+    property: 'text'
+    target: textField
+    value: _computeText(_extractPorts(wrapper.text))
+  }
 
   TextField {
     id: textField
-
-    property bool locked: false
 
     validator: RegExpValidator {
       regExp: wrapper.supportsRange
@@ -63,13 +67,12 @@ Item {
     }
 
     // Workaround to supports empty string.
-    Keys.onReturnPressed: editingFinished()
-    onActiveFocusChanged: !activeFocus && !text.length && editingFinished()
+    Keys.onReturnPressed: textField.focus = false
+    onActiveFocusChanged: !activeFocus && editingFinished()
 
     onEditingFinished: {
-      var range = _extractPorts(textField.text)
-
-      wrapper.text = textField.text = _computeText(range)
+      var range = _extractPorts(text)
+      textField.text = _computeText(range)
       wrapper.editingFinished(range[0], range[1])
     }
   }

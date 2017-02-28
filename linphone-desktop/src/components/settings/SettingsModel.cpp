@@ -42,6 +42,27 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Network.
 // =============================================================================
 
+QList<int> SettingsModel::getAudioPortRange () const {
+  int a, b;
+  CoreManager::getInstance()->getCore()->getAudioPortRange(a, b);
+  return QList<int>() << a << b;
+}
+
+void SettingsModel::setAudioPortRange (const QList<int> &range) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  int a = range[0];
+  int b = range[1];
+
+  if (b == -1)
+    core->setAudioPort(a);
+  else
+    core->setAudioPortRange(a, b);
+
+  emit audioPortRangeChanged(a, b);
+}
+
+// -----------------------------------------------------------------------------
+
 QList<int> SettingsModel::getVideoPortRange () const {
   int a, b;
   CoreManager::getInstance()->getCore()->getVideoPortRange(a, b);

@@ -40,10 +40,10 @@ TabContainer {
 
           PortField {
             //readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
-            supportsRange: true
-            text: SettingsModel.videoPortRange.join(':')
+            //supportsRange: true
+            //text: SettingsModel.videoPortRange.join(':')
 
-            onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
+            //onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
           }
         }
 
@@ -89,13 +89,19 @@ TabContainer {
       }
 
       FormLine {
+        id: audioRtpUdpPort
+
+        readonly property int defaultPort: 7078
+
         FormGroup {
           label: qsTr('audioRtpUdpPortLabel')
 
-          NumericField {
-            minValue: 0
-            maxValue: 65535
-            readOnly: randomAudioRtpUdpPort.checked || !enableAudioRtpUdpPort.checked
+          PortField {
+            readOnly: randomAudioRtpUdpPort.checked
+            supportsRange: true
+            text: SettingsModel.audioPortRange.join(':')
+
+            onEditingFinished: SettingsModel.audioPortRange = [ portA, portB ]
           }
         }
 
@@ -103,25 +109,29 @@ TabContainer {
           Switch {
             id: randomAudioRtpUdpPort
 
-            enabled: enableAudioRtpUdpPort.checked
-          }
-        }
+            checked: SettingsModel.audioPortRange[0] === -1
 
-        FormEntry {
-          Switch {
-            id: enableAudioRtpUdpPort
+            onClicked: SettingsModel.audioPortRange = checked
+              ? [ audioRtpUdpPort.defaultPort, -1 ]
+              : [ -1, -1 ]
           }
         }
       }
 
       FormLine {
+        id: videoRtpUdpPort
+
+        readonly property int defaultPort: 9078
+
         FormGroup {
           label: qsTr('videoRtpUdpPortLabel')
 
-          NumericField {
-            minValue: 0
-            maxValue: 65535
-            readOnly: randomVideoRtpUdpPort.checked || !enableVideoRtpUdpPort.checked
+          PortField {
+            readOnly: randomVideoRtpUdpPort.checked
+            supportsRange: true
+            text: SettingsModel.videoPortRange.join(':')
+
+            onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
           }
         }
 
@@ -129,13 +139,11 @@ TabContainer {
           Switch {
             id: randomVideoRtpUdpPort
 
-            enabled: enableVideoRtpUdpPort.checked
-          }
-        }
+            checked: SettingsModel.videoPortRange[0] === -1
 
-        FormEntry {
-          Switch {
-            id: enableVideoRtpUdpPort
+            onClicked: SettingsModel.videoPortRange = checked
+              ? [ videoRtpUdpPort.defaultPort, -1 ]
+              : [ -1, -1 ]
           }
         }
       }
