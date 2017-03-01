@@ -56,6 +56,10 @@ TabContainer {
 
           Switch {
             id: autoAnswer
+
+            checked: SettingsModel.autoAnswerStatus
+
+            onClicked: SettingsModel.autoAnswerStatus = !checked
           }
         }
 
