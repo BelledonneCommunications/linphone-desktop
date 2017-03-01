@@ -330,6 +330,16 @@ void App::createSubWindows () {
 
   m_calls_window = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
   m_settings_window = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
+
+  QObject::connect(
+    m_settings_window, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+      if (visibility == QWindow::Hidden) {
+        qInfo() << "Update nat policy.";
+        shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+        core->setNatPolicy(core->getNatPolicy());
+      }
+    }
+  );
 }
 
 // -----------------------------------------------------------------------------
