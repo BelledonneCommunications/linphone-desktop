@@ -35,6 +35,10 @@ class SettingsModel : public QObject {
   // PROPERTIES.
   // ===========================================================================
 
+  // Chat & calls. -------------------------------------------------------------
+
+  Q_PROPERTY(MediaEncryption mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged);
+
   // Network. ------------------------------------------------------------------
 
   Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
@@ -78,11 +82,25 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
 
 public:
+  enum MediaEncryption {
+    MediaEncryptionDtls = linphone::MediaEncryptionDTLS,
+    MediaEncryptionNone = linphone::MediaEncryptionNone,
+    MediaEncryptionSrtp = linphone::MediaEncryptionSRTP,
+    MediaEncryptionZrtp = linphone::MediaEncryptionZRTP
+  };
+
+  Q_ENUM(MediaEncryption);
+
   SettingsModel (QObject *parent = Q_NULLPTR);
 
   // ===========================================================================
   // METHODS.
   // ===========================================================================
+
+  // Chat & calls. -------------------------------------------------------------
+
+  MediaEncryption getMediaEncryption () const;
+  void setMediaEncryption (MediaEncryption encryption);
 
   // Network. ------------------------------------------------------------------
 
@@ -160,6 +178,10 @@ public:
   // ===========================================================================
 
 signals:
+  // Chat & calls. -------------------------------------------------------------
+
+  void mediaEncryptionChanged (MediaEncryption encryption);
+
   // Network. ------------------------------------------------------------------
 
   void dtmfsProtocolChanged ();

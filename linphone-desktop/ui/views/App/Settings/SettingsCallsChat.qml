@@ -1,6 +1,8 @@
 import QtQuick 2.7
 
 import Common 1.0
+import Linphone 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 
@@ -20,12 +22,25 @@ TabContainer {
           label: qsTr('encryptionLabel')
 
           ExclusiveButtons {
+            property var _resolveButton
             texts: [
-              qsTr('noEncryption'),
-              'SRTP',
-              'ZRTP',
-              'DTLS'
+              qsTr('noEncryption'), // 0.
+              'SRTP',               // 1.
+              'ZRTP',               // 2.
+              'DTLS'                // 3.
             ]
+
+            Component.onCompleted: {
+              var map = _resolveButton = {}
+              map[SettingsModel.MediaEncryptionNone] = 0
+              map[SettingsModel.MediaEncryptionSrtp] = 1
+              map[SettingsModel.MediaEncryptionZrtp] = 2
+              map[SettingsModel.MediaEncryptionDtls] = 3
+
+              selectedButton = Utils.invert(map)[SettingsModel.mediaEncryption]
+            }
+
+            onClicked: SettingsModel.mediaEncryption = _resolveButton[button]
           }
         }
       }

@@ -39,6 +39,23 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 }
 
 // =============================================================================
+// Chat & calls.
+// =============================================================================
+
+SettingsModel::MediaEncryption SettingsModel::getMediaEncryption () const {
+  return static_cast<SettingsModel::MediaEncryption>(
+    CoreManager::getInstance()->getCore()->getMediaEncryption()
+  );
+}
+
+void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
+  CoreManager::getInstance()->getCore()->setMediaEncryption(
+    static_cast<linphone::MediaEncryption>(encryption)
+  );
+  emit mediaEncryptionChanged(encryption);
+}
+
+// =============================================================================
 // Network.
 // =============================================================================
 

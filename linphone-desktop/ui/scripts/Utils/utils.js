@@ -486,6 +486,18 @@ function includes (obj, value, startIndex) {
 
 // -----------------------------------------------------------------------------
 
+function invert (obj) {
+  var out = {}
+
+  for (var key in obj) {
+    out[key] = obj[key]
+  }
+
+  return out
+}
+
+// -----------------------------------------------------------------------------
+
 function isArray (array) {
   return (array instanceof Array)
 }
