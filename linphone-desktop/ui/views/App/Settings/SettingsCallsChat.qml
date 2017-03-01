@@ -68,6 +68,14 @@ TabContainer {
 
           NumericField {
             readOnly: !autoAnswer.checked
+
+            minValue: 0
+            maxValue: 30000
+            step: 1000
+
+            text: SettingsModel.autoAnswerDelay
+
+            onEditingFinished: SettingsModel.autoAnswerDelay = text
           }
         }
       }

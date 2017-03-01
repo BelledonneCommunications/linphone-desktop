@@ -42,6 +42,19 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Chat & calls.
 // =============================================================================
 
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getAutoAnswerDelay () const {
+  return m_config->getInt(UI_SECTION, "auto_answer_delay", 0);
+}
+
+void SettingsModel::setAutoAnswerDelay (int delay) {
+  m_config->setInt(UI_SECTION, "auto_answer_delay", delay);
+  emit autoAnswerDelayChanged(delay);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getAutoAnswerStatus () const {
   return !!m_config->getInt(UI_SECTION, "auto_answer", 0);
 }
