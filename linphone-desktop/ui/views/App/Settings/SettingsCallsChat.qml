@@ -77,7 +77,11 @@ TabContainer {
         FormGroup {
           label: qsTr('fileServerLabel')
 
-          TextField {}
+          TextField {
+            text: SettingsModel.fileTransferUrl
+
+            onEditingFinished: SettingsModel.fileTransferUrl = text
+          }
         }
       }
 

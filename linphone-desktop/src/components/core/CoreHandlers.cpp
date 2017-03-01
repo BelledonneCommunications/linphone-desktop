@@ -56,11 +56,15 @@ void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::ChatRoom> &,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
-  emit messageReceived(message);
+  const string content_type = message->getContentType();
 
-  const App *app = App::getInstance();
-  if (!app->hasFocus())
-    app->getNotifier()->notifyReceivedMessage(message);
+  if (content_type == "text/plain" || content_type == "application/vnd.gsma.rcs-ft-http+xml") {
+    emit messageReceived(message);
+
+    const App *app = App::getInstance();
+    if (!app->hasFocus())
+      app->getNotifier()->notifyReceivedMessage(message);
+  }
 }
 
 void CoreHandlers::onRegistrationStateChanged (

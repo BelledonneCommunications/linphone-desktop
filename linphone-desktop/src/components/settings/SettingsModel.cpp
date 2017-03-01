@@ -42,6 +42,32 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Chat & calls.
 // =============================================================================
 
+bool SettingsModel::getAutoAnswerStatus () const {
+  return !!m_config->getInt(UI_SECTION, "auto_answer", 0);
+}
+
+void SettingsModel::setAutoAnswerStatus (bool status) {
+  m_config->setInt(UI_SECTION, "auto_answer", status);
+  emit autoAnswerStatusChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getFileTransferUrl () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getFileTransferServer()
+  );
+}
+
+void SettingsModel::setFileTransferUrl (const QString &url) {
+  CoreManager::getInstance()->getCore()->setFileTransferServer(
+    ::Utils::qStringToLinphoneString(url)
+  );
+  emit fileTransferUrlChanged(url);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getLimeIsSupported () const {
   return CoreManager::getInstance()->getCore()->limeAvailable();
 }
@@ -366,32 +392,6 @@ void SettingsModel::setDscpVideo (int dscp) {
 // =============================================================================
 // Misc.
 // =============================================================================
-
-bool SettingsModel::getAutoAnswerStatus () const {
-  return !!m_config->getInt(UI_SECTION, "auto_answer", 0);
-}
-
-void SettingsModel::setAutoAnswerStatus (bool status) {
-  m_config->setInt(UI_SECTION, "auto_answer", status);
-  emit autoAnswerStatusChanged(status);
-}
-
-// -----------------------------------------------------------------------------
-
-QString SettingsModel::getFileTransferUrl () const {
-  return ::Utils::linphoneStringToQString(
-    CoreManager::getInstance()->getCore()->getFileTransferServer()
-  );
-}
-
-void SettingsModel::setFileTransferUrl (const QString &url) {
-  CoreManager::getInstance()->getCore()->setFileTransferServer(
-    ::Utils::qStringToLinphoneString(url)
-  );
-  emit fileTransferUrlChanged(url);
-}
-
-// -----------------------------------------------------------------------------
 
 QString SettingsModel::getSavedScreenshotsFolder () const {
   return QDir::cleanPath(

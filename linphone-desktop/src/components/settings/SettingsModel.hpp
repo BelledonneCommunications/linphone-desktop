@@ -37,6 +37,9 @@ class SettingsModel : public QObject {
 
   // Chat & calls. -------------------------------------------------------------
 
+  Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
+  Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
+
   Q_PROPERTY(bool limeIsSupported READ getLimeIsSupported CONSTANT);
   Q_PROPERTY(QVariantList supportedMediaEncryptions READ getSupportedMediaEncryptions CONSTANT);
 
@@ -79,9 +82,6 @@ class SettingsModel : public QObject {
 
   // Misc. ---------------------------------------------------------------------
 
-  Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
-  Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
-
   Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
   Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
 
@@ -110,6 +110,12 @@ public:
   // ===========================================================================
 
   // Chat & calls. -------------------------------------------------------------
+
+  bool getAutoAnswerStatus () const;
+  void setAutoAnswerStatus (bool status);
+
+  QString getFileTransferUrl () const;
+  void setFileTransferUrl (const QString &url);
 
   bool getLimeIsSupported () const;
   QVariantList getSupportedMediaEncryptions () const;
@@ -175,12 +181,6 @@ public:
 
   // Misc. ---------------------------------------------------------------------
 
-  bool getAutoAnswerStatus () const;
-  void setAutoAnswerStatus (bool status);
-
-  QString getFileTransferUrl () const;
-  void setFileTransferUrl (const QString &url);
-
   QString getSavedScreenshotsFolder () const;
   void setSavedScreenshotsFolder (const QString &folder);
 
@@ -197,6 +197,9 @@ public:
 
 signals:
   // Chat & calls. -------------------------------------------------------------
+
+  void autoAnswerStatusChanged (bool status);
+  void fileTransferUrlChanged (const QString &url);
 
   void mediaEncryptionChanged (MediaEncryption encryption);
   void limeStateChanged (LimeState state);
@@ -230,9 +233,6 @@ signals:
   void dscpVideoChanged (int dscp);
 
   // Misc. ---------------------------------------------------------------------
-
-  void autoAnswerStatusChanged (bool status);
-  void fileTransferUrlChanged (const QString &url);
 
   void savedScreenshotsFolderChanged (const QString &folder);
   void savedVideosFolderChanged (const QString &folder);
