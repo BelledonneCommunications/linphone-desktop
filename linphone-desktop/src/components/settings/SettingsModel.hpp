@@ -37,7 +37,11 @@ class SettingsModel : public QObject {
 
   // Chat & calls. -------------------------------------------------------------
 
+  Q_PROPERTY(bool limeIsSupported READ getLimeIsSupported CONSTANT);
+  Q_PROPERTY(QVariantList supportedMediaEncryptions READ getSupportedMediaEncryptions CONSTANT);
+
   Q_PROPERTY(MediaEncryption mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged);
+  Q_PROPERTY(LimeState limeState READ getLimeState WRITE setLimeState NOTIFY limeStateChanged);
 
   // Network. ------------------------------------------------------------------
 
@@ -83,13 +87,21 @@ class SettingsModel : public QObject {
 
 public:
   enum MediaEncryption {
-    MediaEncryptionDtls = linphone::MediaEncryptionDTLS,
     MediaEncryptionNone = linphone::MediaEncryptionNone,
+    MediaEncryptionDtls = linphone::MediaEncryptionDTLS,
     MediaEncryptionSrtp = linphone::MediaEncryptionSRTP,
     MediaEncryptionZrtp = linphone::MediaEncryptionZRTP
   };
 
   Q_ENUM(MediaEncryption);
+
+  enum LimeState {
+    LimeStateDisabled = linphone::LimeStateDisabled,
+    LimeStateMandatory = linphone::LimeStateMandatory,
+    LimeStatePreferred = linphone::LimeStatePreferred
+  };
+
+  Q_ENUM(LimeState);
 
   SettingsModel (QObject *parent = Q_NULLPTR);
 
@@ -99,8 +111,14 @@ public:
 
   // Chat & calls. -------------------------------------------------------------
 
+  bool getLimeIsSupported () const;
+  QVariantList getSupportedMediaEncryptions () const;
+
   MediaEncryption getMediaEncryption () const;
   void setMediaEncryption (MediaEncryption encryption);
+
+  LimeState getLimeState () const;
+  void setLimeState (LimeState state);
 
   // Network. ------------------------------------------------------------------
 
@@ -181,6 +199,7 @@ signals:
   // Chat & calls. -------------------------------------------------------------
 
   void mediaEncryptionChanged (MediaEncryption encryption);
+  void limeStateChanged (LimeState state);
 
   // Network. ------------------------------------------------------------------
 

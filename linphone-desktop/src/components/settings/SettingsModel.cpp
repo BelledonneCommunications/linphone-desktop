@@ -42,6 +42,34 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Chat & calls.
 // =============================================================================
 
+bool SettingsModel::getLimeIsSupported () const {
+  return CoreManager::getInstance()->getCore()->limeAvailable();
+}
+
+// -----------------------------------------------------------------------------
+
+inline QVariant buildEncryptionDescription (SettingsModel::MediaEncryption encryption, const char *description) {
+  return QVariantList() << encryption << description;
+}
+
+QVariantList SettingsModel::getSupportedMediaEncryptions () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  QVariantList list;
+
+  if (core->mediaEncryptionSupported(linphone::MediaEncryptionDTLS))
+    list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
+
+  if (core->mediaEncryptionSupported(linphone::MediaEncryptionSRTP))
+    list << buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
+
+  if (core->mediaEncryptionSupported(linphone::MediaEncryptionZRTP))
+    list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
+
+  return list;
+}
+
+// -----------------------------------------------------------------------------
+
 SettingsModel::MediaEncryption SettingsModel::getMediaEncryption () const {
   return static_cast<SettingsModel::MediaEncryption>(
     CoreManager::getInstance()->getCore()->getMediaEncryption()
@@ -49,10 +77,39 @@ SettingsModel::MediaEncryption SettingsModel::getMediaEncryption () const {
 }
 
 void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
+  if (encryption == getMediaEncryption())
+    return;
+
+  if (encryption != SettingsModel::MediaEncryptionZrtp)
+    setLimeState(SettingsModel::LimeStateDisabled);
+
   CoreManager::getInstance()->getCore()->setMediaEncryption(
     static_cast<linphone::MediaEncryption>(encryption)
   );
+
   emit mediaEncryptionChanged(encryption);
+}
+
+// -----------------------------------------------------------------------------
+
+SettingsModel::LimeState SettingsModel::getLimeState () const {
+  return static_cast<SettingsModel::LimeState>(
+    CoreManager::getInstance()->getCore()->limeEnabled()
+  );
+}
+
+void SettingsModel::setLimeState (LimeState state) {
+  if (state == getLimeState())
+    return;
+
+  if (state != SettingsModel::LimeStateDisabled)
+    setMediaEncryption(SettingsModel::MediaEncryptionZrtp);
+
+  CoreManager::getInstance()->getCore()->enableLime(
+    static_cast<linphone::LimeState>(state)
+  );
+
+  emit limeStateChanged(state);
 }
 
 // =============================================================================

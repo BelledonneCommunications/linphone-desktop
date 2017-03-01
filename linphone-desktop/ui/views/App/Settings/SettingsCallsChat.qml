@@ -18,29 +18,34 @@ TabContainer {
       width: parent.width
 
       FormLine {
+        visible: !!encryption.encryptions.length
+
         FormGroup {
           label: qsTr('encryptionLabel')
 
           ExclusiveButtons {
-            property var _resolveButton
-            texts: [
-              qsTr('noEncryption'), // 0.
-              'SRTP',               // 1.
-              'ZRTP',               // 2.
-              'DTLS'                // 3.
-            ]
+            id: encryption
 
-            Component.onCompleted: {
-              var map = _resolveButton = {}
-              map[SettingsModel.MediaEncryptionNone] = 0
-              map[SettingsModel.MediaEncryptionSrtp] = 1
-              map[SettingsModel.MediaEncryptionZrtp] = 2
-              map[SettingsModel.MediaEncryptionDtls] = 3
+            property var encryptions: (function () {
+              var encryptions = SettingsModel.supportedMediaEncryptions
+              if (encryptions.length) {
+                encryptions.unshift([ SettingsModel.MediaEncryptionNone, qsTr('noEncryption') ])
+              }
 
-              selectedButton = Utils.invert(map)[SettingsModel.mediaEncryption]
+              return encryptions
+            })()
+
+            texts: encryptions.map(function (value) {
+              return value[1]
+            })
+
+            onClicked: SettingsModel.mediaEncryption = encryptions[button][0]
+
+            Binding {
+              property: 'selectedButton'
+              target: encryption
+              value: SettingsModel.mediaEncryption
             }
-
-            onClicked: SettingsModel.mediaEncryption = _resolveButton[button]
           }
         }
       }
@@ -77,15 +82,31 @@ TabContainer {
       }
 
       FormLine {
+        visible: SettingsModel.limeIsSupported
+
         FormGroup {
           label: qsTr('encryptWithLimeLabel')
 
           ExclusiveButtons {
-            texts: [
-              qsTr('limeDisabled'),
-              qsTr('limeRequired'),
-              qsTr('limePreferred')
-            ]
+            id: lime
+
+            property var limeStates: ([
+              [ SettingsModel.LimeStateDisabled, qsTr('limeDisabled') ],
+              [ SettingsModel.LimeStateMandatory, qsTr('limeRequired') ],
+              [ SettingsModel.LimeStatePreferred, qsTr('limePreferred') ]
+            ])
+
+            texts: limeStates.map(function (value) {
+              return value[1]
+            })
+
+            onClicked: SettingsModel.limeState = limeStates[button][0]
+
+            Binding {
+              property: 'selectedButton'
+              target: lime
+              value: SettingsModel.limeState
+            }
           }
         }
       }
