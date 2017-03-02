@@ -35,6 +35,16 @@ class SettingsModel : public QObject {
   // PROPERTIES.
   // ===========================================================================
 
+  // Audio. --------------------------------------------------------------------
+
+  Q_PROPERTY(QVariantList audioCodecs READ getAudioCodecs WRITE setAudioCodecs NOTIFY audioCodecsChanged);
+
+  Q_PROPERTY(QStringList audioDevices READ getAudioDevices CONSTANT);
+
+  Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged);
+  Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged);
+  Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged);
+
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
@@ -110,6 +120,22 @@ public:
   // ===========================================================================
   // METHODS.
   // ===========================================================================
+
+  // Audio. --------------------------------------------------------------------
+
+  QVariantList getAudioCodecs () const;
+  void setAudioCodecs (const QVariantList &codecs);
+
+  QStringList getAudioDevices () const;
+
+  QString getCaptureDevice () const;
+  void setCaptureDevice (const QString &device);
+
+  QString getPlaybackDevice () const;
+  void setPlaybackDevice (const QString &device);
+
+  QString getRingerDevice () const;
+  void setRingerDevice (const QString &device);
 
   // Chat & calls. -------------------------------------------------------------
 
@@ -201,6 +227,14 @@ public:
   // ===========================================================================
 
 signals:
+  // Audio. --------------------------------------------------------------------
+
+  void audioCodecsChanged (const QVariantList &codecs);
+
+  void captureDeviceChanged (const QString &device);
+  void playbackDeviceChanged (const QString &device);
+  void ringerDeviceChanged (const QString &device);
+
   // Chat & calls. -------------------------------------------------------------
 
   void autoAnswerStatusChanged (bool status);

@@ -39,6 +39,89 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 }
 
 // =============================================================================
+// Audio.
+// =============================================================================
+
+QVariantList SettingsModel::getAudioCodecs () const {
+  QVariantList list;
+
+  for (const auto &codec : CoreManager::getInstance()->getCore()->getAudioCodecs()) {
+    QVariantMap map;
+
+    map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
+    map["channels"] = codec->getChannels();
+    map["bitrate"] = codec->getNormalBitrate();
+    map["type"] = codec->getType();
+    map["isVbr"] = codec->isVbr();
+
+    list << map;
+  }
+
+  return list;
+}
+
+void SettingsModel::setAudioCodecs (const QVariantList &codecs) {
+  // TODO
+  emit audioCodecsChanged(codecs);
+}
+
+// -----------------------------------------------------------------------------
+
+QStringList SettingsModel::getAudioDevices () const {
+  QStringList list;
+
+  for (const auto &device : CoreManager::getInstance()->getCore()->getSoundDevices())
+    list << ::Utils::linphoneStringToQString(device);
+
+  return list;
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getCaptureDevice () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getCaptureDevice()
+  );
+}
+
+void SettingsModel::setCaptureDevice (const QString &device) {
+  CoreManager::getInstance()->getCore()->setCaptureDevice(
+    ::Utils::qStringToLinphoneString(device)
+  );
+  emit captureDeviceChanged(device);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getPlaybackDevice () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getPlaybackDevice()
+  );
+}
+
+void SettingsModel::setPlaybackDevice (const QString &device) {
+  CoreManager::getInstance()->getCore()->setPlaybackDevice(
+    ::Utils::qStringToLinphoneString(device)
+  );
+  emit playbackDeviceChanged(device);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getRingerDevice () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getRingerDevice()
+  );
+}
+
+void SettingsModel::setRingerDevice (const QString &device) {
+  CoreManager::getInstance()->getCore()->setRingerDevice(
+    ::Utils::qStringToLinphoneString(device)
+  );
+  emit ringerDeviceChanged(device);
+}
+
+// =============================================================================
 // Chat & calls.
 // =============================================================================
 

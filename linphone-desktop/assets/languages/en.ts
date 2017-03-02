@@ -664,6 +664,25 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsAudio</name>
+    <message>
+        <source>audioTitle</source>
+        <translation>Audio parameters</translation>
+    </message>
+    <message>
+        <source>playbackDeviceLabel</source>
+        <translation>Playback device</translation>
+    </message>
+    <message>
+        <source>captureDeviceLabel</source>
+        <translation>Capture device</translation>
+    </message>
+    <message>
+        <source>ringerDeviceLabel</source>
+        <translation>Ringer device</translation>
+    </message>
+</context>
+<context>
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>

@@ -674,6 +674,25 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsAudio</name>
+    <message>
+        <source>audioTitle</source>
+        <translation>Paramètres audio</translation>
+    </message>
+    <message>
+        <source>playbackDeviceLabel</source>
+        <translation>Périphérique d&apos;écoute</translation>
+    </message>
+    <message>
+        <source>captureDeviceLabel</source>
+        <translation>Périphérique de capture</translation>
+    </message>
+    <message>
+        <source>ringerDeviceLabel</source>
+        <translation>Périphérique de sonnerie</translation>
+    </message>
+</context>
+<context>
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>
