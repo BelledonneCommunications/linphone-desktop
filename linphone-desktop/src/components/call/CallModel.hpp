@@ -86,6 +86,8 @@ signals:
   void recordingChanged (bool status);
 
 private:
+  void stopAutoAnswerTimer () const;
+
   QString getSipAddress () const;
 
   CallStatus getStatus () const;

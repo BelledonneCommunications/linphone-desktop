@@ -22,6 +22,7 @@
 
 #include <QDateTime>
 #include <QtDebug>
+#include <QTimer>
 
 #include "../../app/App.hpp"
 #include "../../utils.hpp"
@@ -29,10 +30,27 @@
 
 #include "CallModel.hpp"
 
+#define AUTO_ANSWER_OBJECT_NAME "auto-answer-timer"
+
 // =============================================================================
 
 CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
   m_linphone_call = linphone_call;
+
+  // Deal with auto-answer.
+  {
+    SettingsModel *settings = CoreManager::getInstance()->getSettingsModel();
+
+    if (settings->getAutoAnswerStatus()) {
+      QTimer *timer = new QTimer(this);
+      timer->setInterval(settings->getAutoAnswerDelay());
+      timer->setSingleShot(true);
+      timer->setObjectName(AUTO_ANSWER_OBJECT_NAME);
+
+      QObject::connect(timer, &QTimer::timeout, this, &CallModel::accept);
+      timer->start();
+    }
+  }
 
   QObject::connect(
     &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::callStateChanged,
@@ -41,9 +59,13 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
         return;
 
       switch (state) {
-        case linphone::CallStateConnected:
         case linphone::CallStateEnd:
         case linphone::CallStateError:
+          stopAutoAnswerTimer();
+          m_paused_by_remote = false;
+          break;
+
+        case linphone::CallStateConnected:
         case linphone::CallStateRefered:
         case linphone::CallStateReleased:
         case linphone::CallStateStreamsRunning:
@@ -96,6 +118,8 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &call_params) {
 // -----------------------------------------------------------------------------
 
 void CallModel::accept () {
+  stopAutoAnswerTimer();
+
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
   params->enableVideo(false);
@@ -106,6 +130,8 @@ void CallModel::accept () {
 }
 
 void CallModel::acceptWithVideo () {
+  stopAutoAnswerTimer();
+
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
   params->enableVideo(true);
@@ -179,6 +205,14 @@ void CallModel::stopRecording () {
 }
 
 // -----------------------------------------------------------------------------
+
+void CallModel::stopAutoAnswerTimer () const {
+  QTimer *timer = findChild<QTimer *>(AUTO_ANSWER_OBJECT_NAME, Qt::FindDirectChildrenOnly);
+  if (timer) {
+    timer->stop();
+    timer->deleteLater();
+  }
+}
 
 QString CallModel::getSipAddress () const {
   return ::Utils::linphoneStringToQString(m_linphone_call->getRemoteAddress()->asStringUriOnly());

@@ -111,8 +111,10 @@ Notifier::~Notifier () {
 QObject *Notifier::createNotification (Notifier::NotificationType type) {
   m_mutex.lock();
 
+  Q_ASSERT(m_n_instances <= N_MAX_NOTIFICATIONS);
+
   // Check existing instances.
-  if (m_n_instances >= N_MAX_NOTIFICATIONS) {
+  if (m_n_instances == N_MAX_NOTIFICATIONS) {
     qWarning() << "Unable to create another notification";
     m_mutex.unlock();
     return nullptr;
@@ -148,12 +150,12 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   // Destroy it after timeout.
   QObject::connect(
     timer, &QTimer::timeout, this, [this, notification]() {
+      qDebug() << "toto";
       deleteNotification(QVariant::fromValue(notification));
     }
   );
 
   // Called explicitly (by a click on notification for example)
-  // or when single shot happen and if notification is visible.
   QObject::connect(notification, SIGNAL(deleteNotification(QVariant)), this, SLOT(deleteNotification(QVariant)));
 
   timer->start();
@@ -162,17 +164,26 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 // -----------------------------------------------------------------------------
 
 void Notifier::deleteNotification (QVariant notification) {
+  m_mutex.lock();
+
   QObject *instance = notification.value<QObject *>();
-  instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
+
+  // Notification marked destroyed.
+  if (instance->property("__valid").isValid()) {
+    m_mutex.unlock();
+    return;
+  }
 
   qDebug() << "Delete notification.";
 
-  m_mutex.lock();
+  instance->setProperty("__valid", true);
+  instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
 
   m_n_instances--;
-
   if (m_n_instances == 0)
     m_offset = 0;
+
+  Q_ASSERT(m_n_instances >= 0);
 
   m_mutex.unlock();
 
@@ -217,7 +228,7 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
 
   QObject::connect(
     model, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
-      if (status == CallModel::CallStatusEnded)
+      if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
         deleteNotification(QVariant::fromValue(notification));
     }
   );

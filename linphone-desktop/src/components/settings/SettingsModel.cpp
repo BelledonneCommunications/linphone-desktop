@@ -42,8 +42,6 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Chat & calls.
 // =============================================================================
 
-// -----------------------------------------------------------------------------
-
 int SettingsModel::getAutoAnswerDelay () const {
   return m_config->getInt(UI_SECTION, "auto_answer_delay", 0);
 }
