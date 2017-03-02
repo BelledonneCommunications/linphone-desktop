@@ -681,6 +681,10 @@ Server url not configured.</translation>
         <source>ringerDeviceLabel</source>
         <translation>Ringer device</translation>
     </message>
+    <message>
+        <source>ringLabel</source>
+        <translation>Ring</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>

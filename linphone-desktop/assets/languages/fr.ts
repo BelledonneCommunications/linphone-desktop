@@ -691,6 +691,10 @@ Url du serveur non configurée.</translation>
         <source>ringerDeviceLabel</source>
         <translation>Périphérique de sonnerie</translation>
     </message>
+    <message>
+        <source>ringLabel</source>
+        <translation>Sonnerie</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>

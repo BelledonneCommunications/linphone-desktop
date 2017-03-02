@@ -45,6 +45,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged);
   Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged);
 
+  Q_PROPERTY(QString ringPath READ getRingPath WRITE setRingPath NOTIFY ringPathChanged);
+
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
@@ -136,6 +138,9 @@ public:
 
   QString getRingerDevice () const;
   void setRingerDevice (const QString &device);
+
+  QString getRingPath () const;
+  void setRingPath (const QString &path);
 
   // Chat & calls. -------------------------------------------------------------
 
@@ -234,6 +239,8 @@ signals:
   void captureDeviceChanged (const QString &device);
   void playbackDeviceChanged (const QString &device);
   void ringerDeviceChanged (const QString &device);
+
+  void ringPathChanged (const QString &path);
 
   // Chat & calls. -------------------------------------------------------------
 

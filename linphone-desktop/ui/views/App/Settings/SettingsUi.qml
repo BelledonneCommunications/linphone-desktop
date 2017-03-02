@@ -88,8 +88,6 @@ TabContainer {
           label: qsTr('savedScreenshotsLabel')
 
           FileChooserButton {
-            id: savedScreenshotsFolder
-
             selectedFile: SettingsModel.savedScreenshotsFolder
             selectFolder: true
 
@@ -101,8 +99,6 @@ TabContainer {
           label: qsTr('savedVideosLabel')
 
           FileChooserButton {
-            id: savedVideosFolder
-
             selectedFile: SettingsModel.savedVideosFolder
             selectFolder: true
 

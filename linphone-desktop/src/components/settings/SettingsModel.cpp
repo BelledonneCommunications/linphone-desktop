@@ -45,17 +45,17 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 QVariantList SettingsModel::getAudioCodecs () const {
   QVariantList list;
 
-  for (const auto &codec : CoreManager::getInstance()->getCore()->getAudioCodecs()) {
-    QVariantMap map;
-
-    map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
-    map["channels"] = codec->getChannels();
-    map["bitrate"] = codec->getNormalBitrate();
-    map["type"] = codec->getType();
-    map["isVbr"] = codec->isVbr();
-
-    list << map;
-  }
+  // for (const auto &codec : CoreManager::getInstance()->getCore()->getAudioCodecs()) {
+  // QVariantMap map;
+  //
+  // map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
+  // map["channels"] = codec->getChannels();
+  // map["bitrate"] = codec->getNormalBitrate();
+  // map["type"] = codec->getType();
+  // map["isVbr"] = codec->isVbr();
+  //
+  // list << map;
+  // }
 
   return list;
 }
@@ -119,6 +119,22 @@ void SettingsModel::setRingerDevice (const QString &device) {
     ::Utils::qStringToLinphoneString(device)
   );
   emit ringerDeviceChanged(device);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getRingPath () const {
+  return ::Utils::linphoneStringToQString(CoreManager::getInstance()->getCore()->getRing());
+}
+
+void SettingsModel::setRingPath (const QString &path) {
+  QString cleaned_path = QDir::cleanPath(path);
+
+  CoreManager::getInstance()->getCore()->setRing(
+    ::Utils::qStringToLinphoneString(cleaned_path)
+  );
+
+  emit ringPathChanged(cleaned_path);
 }
 
 // =============================================================================
@@ -442,10 +458,11 @@ void SettingsModel::setTurnPassword (const QString &password) {
   shared_ptr<linphone::AuthInfo> auth_info = core->findAuthInfo(username, "", "");
 
   if (auth_info) {
-    shared_ptr<linphone::AuthInfo> _auth_info = auth_info->clone();
+    shared_ptr<linphone::AuthInfo> auth_info_clone = auth_info->clone();
+    auth_info_clone->setPasswd(::Utils::qStringToLinphoneString(password));
+
     core->removeAuthInfo(auth_info);
-    _auth_info->setPasswd(::Utils::qStringToLinphoneString(password));
-    core->addAuthInfo(_auth_info);
+    core->addAuthInfo(auth_info_clone);
   } else {
     auth_info = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::qStringToLinphoneString(password), "", "", "");
     core->addAuthInfo(auth_info);
@@ -496,10 +513,10 @@ QString SettingsModel::getSavedScreenshotsFolder () const {
 }
 
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
-  QString _folder = QDir::cleanPath(folder) + QDir::separator();
+  QString cleaned_folder = QDir::cleanPath(folder) + QDir::separator();
 
-  m_config->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::qStringToLinphoneString(_folder));
-  emit savedScreenshotsFolderChanged(_folder);
+  m_config->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::qStringToLinphoneString(cleaned_folder));
+  emit savedScreenshotsFolderChanged(cleaned_folder);
 }
 
 // -----------------------------------------------------------------------------

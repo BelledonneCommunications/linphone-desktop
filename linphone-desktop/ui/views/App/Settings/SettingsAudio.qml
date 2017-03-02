@@ -58,5 +58,17 @@ TabContainer {
         }
       }
     }
+
+    FormLine {
+      FormGroup {
+        label: qsTr('ringLabel')
+
+        FileChooserButton {
+          selectedFile: SettingsModel.ringPath
+
+          onAccepted: SettingsModel.ringPath = selectedFile
+        }
+      }
+    }
   }
 }
