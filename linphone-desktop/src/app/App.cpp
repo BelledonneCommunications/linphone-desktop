@@ -60,7 +60,7 @@ inline bool installLocale (App &app, QTranslator &translator, const QLocale &loc
   return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
 }
 
-App::App (int &argc, char **argv) : QApplication(argc, argv) {
+App::App (int &argc, char *argv[]) : SingleApplication(argc, argv) {
   setApplicationVersion("4.0");
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 

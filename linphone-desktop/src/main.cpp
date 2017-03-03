@@ -21,6 +21,7 @@
  */
 
 #include <iostream>
+
 #include "app/App.hpp"
 #include "app/Logger.hpp"
 

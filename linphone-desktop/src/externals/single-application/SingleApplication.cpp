@@ -65,7 +65,7 @@ SingleApplicationPrivate::~SingleApplicationPrivate () {
     delete socket;
   }
   memory->lock();
-  InstancesInfo *inst = (InstancesInfo *)memory->data();
+  InstancesInfo *inst = static_cast<InstancesInfo *>(memory->data());
   if (server != nullptr) {
     server->close();
     delete server;
@@ -78,19 +78,19 @@ SingleApplicationPrivate::~SingleApplicationPrivate () {
 void SingleApplicationPrivate::genBlockServerName (int timeout) {
   QCryptographicHash appData(QCryptographicHash::Sha256);
   appData.addData("SingleApplication", 17);
-  appData.addData(SingleApplication::app_t::applicationName().toUtf8());
-  appData.addData(SingleApplication::app_t::organizationName().toUtf8());
-  appData.addData(SingleApplication::app_t::organizationDomain().toUtf8());
+  appData.addData(QApplication::applicationName().toUtf8());
+  appData.addData(QApplication::organizationName().toUtf8());
+  appData.addData(QApplication::organizationDomain().toUtf8());
 
   if (!(options & SingleApplication::Mode::ExcludeAppVersion)) {
-    appData.addData(SingleApplication::app_t::applicationVersion().toUtf8());
+    appData.addData(QApplication::applicationVersion().toUtf8());
   }
 
   if (!(options & SingleApplication::Mode::ExcludeAppPath)) {
     #ifdef Q_OS_WIN
-      appData.addData(SingleApplication::app_t::applicationFilePath().toLower().toUtf8());
+      appData.addData(QApplication::applicationFilePath().toLower().toUtf8());
     #else
-      appData.addData(SingleApplication::app_t::applicationFilePath().toUtf8());
+      appData.addData(QApplication::applicationFilePath().toUtf8());
     #endif // ifdef Q_OS_WIN
   }
 
@@ -157,7 +157,7 @@ void SingleApplicationPrivate::startPrimary (bool resetMemory) {
 
   // Reset the number of connections
   memory->lock();
-  InstancesInfo *inst = (InstancesInfo *)memory->data();
+  InstancesInfo *inst = static_cast<InstancesInfo *>(memory->data());
 
   if (resetMemory) {
     inst->primary = true;
@@ -207,7 +207,7 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
     QByteArray initMsg = blockServerName.toLatin1();
 
     initMsg.append(connectionType);
-    initMsg.append((const char *)&instanceNumber, sizeof(quint32));
+    initMsg.append(reinterpret_cast<const char *>(&instanceNumber), sizeof(quint32));
     initMsg.append(QByteArray::number(qChecksum(initMsg.constData(), initMsg.length()), 256));
 
     socket->write(initMsg);
@@ -283,7 +283,7 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
           initMsg += connectionType;
           tmp = nextConnSocket->read(sizeof(quint32));
           const char *data = tmp.constData();
-          instanceId = (quint32) * data;
+          instanceId = static_cast<quint32>(*data);
           initMsg += tmp;
           // Verify the checksum of the initMsg
           QByteArray checksum = QByteArray::number(
@@ -356,7 +356,7 @@ void SingleApplicationPrivate::slotClientConnectionClosed (QLocalSocket *closedS
  * @param {bool} allowSecondaryInstances
  */
 SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSecondary, Options options, int timeout)
-  : app_t(argc, argv), d_ptr(new SingleApplicationPrivate(this)) {
+  : QApplication(argc, argv), d_ptr(new SingleApplicationPrivate(this)) {
   Q_D(SingleApplication);
 
   // Store the current mode of the program
@@ -384,7 +384,7 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
     // Attempt to attach to the memory segment
     if (d->memory->attach()) {
       d->memory->lock();
-      InstancesInfo *inst = (InstancesInfo *)d->memory->data();
+      InstancesInfo *inst = static_cast<InstancesInfo *>(d->memory->data());
 
       if (!inst->primary) {
         d->startPrimary(false);

@@ -25,16 +25,17 @@
 
 #include "../components/notifier/Notifier.hpp"
 
-#include <QApplication>
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
+
+#include "../externals/single-application/SingleApplication.hpp"
 
 // =============================================================================
 
 class DefaultTranslator;
 
-class App : public QApplication {
+class App : public SingleApplication {
   Q_OBJECT;
 
   Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged);
@@ -42,7 +43,7 @@ class App : public QApplication {
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
 
 public:
-  App (int &argc, char **argv);
+  App (int &argc, char *argv[]);
   ~App ();
 
   void initContentApp ();
