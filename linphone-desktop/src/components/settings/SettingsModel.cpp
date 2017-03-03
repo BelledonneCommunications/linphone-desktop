@@ -149,6 +149,60 @@ void SettingsModel::setEchoCancellationEnabled (bool status) {
 }
 
 // =============================================================================
+// Video.
+// =============================================================================
+
+QStringList SettingsModel::getVideoDevices () const {
+  QStringList list;
+
+  for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevices())
+    list << ::Utils::linphoneStringToQString(device);
+
+  return list;
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getVideoDevice () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getVideoDevice()
+  );
+}
+
+void SettingsModel::setVideoDevice (const QString &device) {
+  CoreManager::getInstance()->getCore()->setVideoDevice(
+    ::Utils::qStringToLinphoneString(device)
+  );
+  emit videoDeviceChanged(device);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getVideoPreset () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getVideoPreset()
+  );
+}
+
+void SettingsModel::setVideoPreset (const QString &preset) {
+  CoreManager::getInstance()->getCore()->setVideoPreset(
+    ::Utils::qStringToLinphoneString(preset)
+  );
+  emit videoPresetChanged(preset);
+}
+
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getVideoFramerate () const {
+  return static_cast<int>(CoreManager::getInstance()->getCore()->getPreferredFramerate());
+}
+
+void SettingsModel::setVideoFramerate (int framerate) {
+  CoreManager::getInstance()->getCore()->setPreferredFramerate(static_cast<float>(framerate));
+  emit videoFramerateChanged(framerate);
+}
+
+// =============================================================================
 // Chat & calls.
 // =============================================================================
 

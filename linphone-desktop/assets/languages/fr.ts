@@ -910,6 +910,45 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsVideo</name>
+    <message>
+        <source>videoInputDeviceLabel</source>
+        <translation>Périphérique de capture vidéo</translation>
+    </message>
+    <message>
+        <source>useCustomVideoFramerateLabel</source>
+        <translation type="vanished">Forcer n.b. images/s</translation>
+    </message>
+    <message>
+        <source>videoFramerateLabel</source>
+        <translation>Images/s</translation>
+    </message>
+    <message>
+        <source>videoCaptureTitle</source>
+        <translation>Paramètres de capture vidéo</translation>
+    </message>
+    <message>
+        <source>videoPresetLabel</source>
+        <translation>Profil vidéo</translation>
+    </message>
+    <message>
+        <source>presetDefault</source>
+        <translation>Défaut</translation>
+    </message>
+    <message>
+        <source>presetHighFps</source>
+        <translation>Fluide</translation>
+    </message>
+    <message>
+        <source>presetCustom</source>
+        <translation>Personnalisé</translation>
+    </message>
+    <message>
+        <source>videoSizeLabel</source>
+        <translation>Définition</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

@@ -900,6 +900,45 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsVideo</name>
+    <message>
+        <source>videoInputDeviceLabel</source>
+        <translation>Video input device</translation>
+    </message>
+    <message>
+        <source>useCustomVideoFramerateLabel</source>
+        <translation type="vanished">Use custom framerate</translation>
+    </message>
+    <message>
+        <source>videoFramerateLabel</source>
+        <translation>Framerate</translation>
+    </message>
+    <message>
+        <source>videoCaptureTitle</source>
+        <translation>Video capture parameters</translation>
+    </message>
+    <message>
+        <source>videoPresetLabel</source>
+        <translation>Video preset</translation>
+    </message>
+    <message>
+        <source>presetDefault</source>
+        <translation>Default</translation>
+    </message>
+    <message>
+        <source>presetHighFps</source>
+        <translation>High FPS</translation>
+    </message>
+    <message>
+        <source>presetCustom</source>
+        <translation>Custom</translation>
+    </message>
+    <message>
+        <source>videoSizeLabel</source>
+        <translation>Video resolution</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

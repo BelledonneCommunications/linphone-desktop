@@ -49,6 +49,15 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY echoCancellationEnabledChanged);
 
+  // Video. --------------------------------------------------------------------
+
+  Q_PROPERTY(QStringList videoDevices READ getVideoDevices CONSTANT);
+
+  Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged);
+
+  Q_PROPERTY(QString videoPreset READ getVideoPreset WRITE setVideoPreset NOTIFY videoPresetChanged);
+  Q_PROPERTY(int videoFramerate READ getVideoFramerate WRITE setVideoFramerate NOTIFY videoFramerateChanged);
+
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
@@ -146,6 +155,19 @@ public:
 
   bool getEchoCancellationEnabled () const;
   void setEchoCancellationEnabled (bool status);
+
+  // Video. --------------------------------------------------------------------
+
+  QStringList getVideoDevices () const;
+
+  QString getVideoDevice () const;
+  void setVideoDevice (const QString &device);
+
+  QString getVideoPreset () const;
+  void setVideoPreset (const QString &preset);
+
+  int getVideoFramerate () const;
+  void setVideoFramerate (int framerate);
 
   // Chat & calls. -------------------------------------------------------------
 
@@ -248,6 +270,13 @@ signals:
   void ringPathChanged (const QString &path);
 
   void echoCancellationEnabledChanged (bool status);
+
+  // Video. --------------------------------------------------------------------
+
+  void videoDeviceChanged (const QString &device);
+
+  void videoPresetChanged (const QString &preset);
+  void videoFramerateChanged (int framerate);
 
   // Chat & calls. -------------------------------------------------------------
 
