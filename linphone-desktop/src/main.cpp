@@ -32,23 +32,21 @@ using namespace std;
 int main (int argc, char *argv[]) {
   Logger::init();
 
+  // Force OpenGLES & shader version 2.0.
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
 
-  // Force shader version 2.0.
   QSurfaceFormat fmt;
   fmt.setVersion(2, 0);
   QSurfaceFormat::setDefaultFormat(fmt);
 
-  /*
-   * TODO: Uncomment me in the future!
-   * Disabled for a moment.
-   * `QXcbConnection: XCB error` errors on Cinnamon.
-   * QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-   */
-
   App app(argc, argv);
-
   app.parseArgs();
+
+  if (app.isSecondary()) {
+    app.sendMessage("show", 0);
+    return 0;
+  }
+
   app.initContentApp();
 
   // Run!

@@ -60,7 +60,7 @@ inline bool installLocale (App &app, QTranslator &translator, const QLocale &loc
   return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
 }
 
-App::App (int &argc, char *argv[]) : SingleApplication(argc, argv) {
+App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
   setApplicationVersion("4.0");
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
@@ -143,7 +143,7 @@ void App::initContentApp () {
     }
   }
 
-  // Register types and create sub-windows.
+  // Register types.
   registerTypes();
 
   // Enable notifications.
@@ -155,7 +155,9 @@ void App::initContentApp () {
     core->setParent(this);
   }
 
+  // Create sub windows.
   createSubWindows();
+
   // Load main view.
   qInfo() << "Loading main view...";
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
@@ -177,6 +179,13 @@ void App::initContentApp () {
 
   if (m_parser.isSet("selftest"))
     QTimer::singleShot(300, this, &App::quit);
+
+  QObject::connect(
+    this, &App::receivedMessage, this, [this](int, QByteArray message) {
+      if (message == "show")
+        getMainWindow()->showNormal();
+    }
+  );
 }
 
 // -----------------------------------------------------------------------------
