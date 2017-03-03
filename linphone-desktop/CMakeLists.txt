@@ -93,6 +93,7 @@ set(SOURCES
   src/components/sip-addresses/SipAddressesModel.cpp
   src/components/smart-search-bar/SmartSearchBarModel.cpp
   src/components/timeline/TimelineModel.cpp
+  src/externals/single-application/SingleApplication.cpp
   src/main.cpp
 )
 
@@ -123,6 +124,8 @@ set(HEADERS
   src/components/sip-addresses/SipAddressesModel.hpp
   src/components/smart-search-bar/SmartSearchBarModel.hpp
   src/components/timeline/TimelineModel.hpp
+  src/externals/single-application/SingleApplication.hpp
+  src/externals/single-application/SingleApplicationPrivate.hpp
   src/utils.hpp
 )
 
