@@ -47,6 +47,8 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(QString ringPath READ getRingPath WRITE setRingPath NOTIFY ringPathChanged);
 
+  Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY echoCancellationEnabledChanged);
+
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
@@ -141,6 +143,9 @@ public:
 
   QString getRingPath () const;
   void setRingPath (const QString &path);
+
+  bool getEchoCancellationEnabled () const;
+  void setEchoCancellationEnabled (bool status);
 
   // Chat & calls. -------------------------------------------------------------
 
@@ -241,6 +246,8 @@ signals:
   void ringerDeviceChanged (const QString &device);
 
   void ringPathChanged (const QString &path);
+
+  void echoCancellationEnabledChanged (bool status);
 
   // Chat & calls. -------------------------------------------------------------
 

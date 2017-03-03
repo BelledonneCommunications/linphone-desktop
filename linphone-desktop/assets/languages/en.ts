@@ -685,6 +685,10 @@ Server url not configured.</translation>
         <source>ringLabel</source>
         <translation>Ring</translation>
     </message>
+    <message>
+        <source>echoCancellationLabel</source>
+        <translation>Enable echo cancellation</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>

@@ -695,6 +695,10 @@ Url du serveur non configurée.</translation>
         <source>ringLabel</source>
         <translation>Sonnerie</translation>
     </message>
+    <message>
+        <source>echoCancellationLabel</source>
+        <translation>Activer annulation d&apos;écho</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>

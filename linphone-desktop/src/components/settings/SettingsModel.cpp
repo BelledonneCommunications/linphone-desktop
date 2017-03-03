@@ -137,6 +137,17 @@ void SettingsModel::setRingPath (const QString &path) {
   emit ringPathChanged(cleaned_path);
 }
 
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getEchoCancellationEnabled () const {
+  return CoreManager::getInstance()->getCore()->echoCancellationEnabled();
+}
+
+void SettingsModel::setEchoCancellationEnabled (bool status) {
+  CoreManager::getInstance()->getCore()->enableEchoCancellation(status);
+  emit echoCancellationEnabledChanged(status);
+}
+
 // =============================================================================
 // Chat & calls.
 // =============================================================================

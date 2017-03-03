@@ -70,5 +70,17 @@ TabContainer {
         }
       }
     }
+
+    FormLine {
+      FormGroup {
+        label: qsTr('echoCancellationLabel')
+
+        Switch {
+          checked: SettingsModel.echoCancellationEnabled
+
+          onClicked: SettingsModel.echoCancellationEnabled = !checked
+        }
+      }
+    }
   }
 }
