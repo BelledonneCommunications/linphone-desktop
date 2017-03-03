@@ -194,13 +194,12 @@
     <file>ui/modules/Common/Form/+linux/SearchBox.qml</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
-    <file>ui/modules/Common/Form/Placements/FormEntry.qml</file>
     <file>ui/modules/Common/Form/Placements/FormGroup.qml</file>
-    <file>ui/modules/Common/Form/Placements/FormHeaderEntry.qml</file>
-    <file>ui/modules/Common/Form/Placements/FormHeaderGroup.qml</file>
-    <file>ui/modules/Common/Form/Placements/FormHeader.qml</file>
     <file>ui/modules/Common/Form/Placements/FormLine.qml</file>
     <file>ui/modules/Common/Form/Placements/Form.qml</file>
+    <file>ui/modules/Common/Form/Placements/FormTableEntry.qml</file>
+    <file>ui/modules/Common/Form/Placements/FormTableLine.qml</file>
+    <file>ui/modules/Common/Form/Placements/FormTable.qml</file>
     <file>ui/modules/Common/Form/SearchBox.qml</file>
     <file>ui/modules/Common/Form/StaticListForm.qml</file>
     <file>ui/modules/Common/Form/Switch.qml</file>
@@ -241,10 +240,10 @@
     <file>ui/modules/Common/Styles/Form/Fields/TextFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ListFormStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormGroupStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/Placements/FormHeaderGroupStyle.qml</file>
-    <file>ui/modules/Common/Styles/Form/Placements/FormHeaderStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormLineStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Placements/FormTableLineStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/Placements/FormTableStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SearchBoxStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SwitchStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>

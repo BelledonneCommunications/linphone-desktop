@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import Common.Styles 1.0
 import Utils 1.0
 
 // =============================================================================
@@ -47,7 +48,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   implicitHeight: textField.height
-  implicitWidth: textField.width
+  width: TextFieldStyle.background.width
 
   // ---------------------------------------------------------------------------
 
@@ -65,6 +66,8 @@ Item {
         ? Utils.PORT_RANGE_REGEX
         : Utils.PORT_REGEX
     }
+
+    width: parent.width
 
     // Workaround to supports empty string.
     Keys.onReturnPressed: editingFinished()

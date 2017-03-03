@@ -104,128 +104,123 @@ TabContainer {
       title: qsTr('networkProtocolAndPortsTitle')
       width: parent.width
 
-      FormHeader {
-        FormHeaderGroup {
-          text: qsTr('portHeader')
-        }
+      FormTable {
+        titles: [
+          qsTr('portHeader'),
+          qsTr('randomPortHeader'),
+          qsTr('enabledPortHeader')
+        ]
 
-        FormHeaderEntry {
-          text: qsTr('randomPortHeader')
-        }
+        FormTableLine {
+          title: qsTr('sipUdpPortLabel')
 
-        FormHeaderEntry {
-          text: qsTr('enabledPortHeader')
-        }
-      }
+          FormTableEntry {
+            NumericField {
+              minValue: 0
+              maxValue: 65535
+              readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+            }
+          }
 
-      FormLine {
-        FormGroup {
-          label: qsTr('sipUdpPortLabel')
+          FormTableEntry {
+            Switch {
+              id: randomSipUdpPort
 
-          NumericField {
-            minValue: 0
-            maxValue: 65535
-            readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+              enabled: enableSipUdpPort.checked
+            }
+          }
+
+          FormTableEntry {
+            Switch {
+              id: enableSipUdpPort
+            }
           }
         }
 
-        FormEntry {
-          Switch {
-            id: randomSipUdpPort
+        FormTableLine {
+          title: qsTr('sipTcpPortLabel')
 
-            enabled: enableSipUdpPort.checked
+          FormTableEntry {
+            NumericField {
+
+              minValue: 0
+              maxValue: 65535
+              readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
+            }
+          }
+
+          FormTableEntry {
+            Switch {
+              id: randomSipTcpPort
+
+              enabled: enableSipTcpPort.checked
+            }
+          }
+
+          FormTableEntry {
+            Switch {
+              id: enableSipTcpPort
+            }
           }
         }
 
-        FormEntry {
-          Switch {
-            id: enableSipUdpPort
+        FormTableLine {
+          id: audioRtpUdpPort
+
+          readonly property int defaultPort: 7078
+
+          title: qsTr('audioRtpUdpPortLabel')
+
+          FormTableEntry {
+            PortField {
+              readOnly: randomAudioRtpUdpPort.checked
+              supportsRange: true
+              text: SettingsModel.audioPortRange.join(':')
+
+              onEditingFinished: SettingsModel.audioPortRange = [ portA, portB ]
+            }
           }
-        }
-      }
 
-      FormLine {
-        FormGroup {
-          label: qsTr('sipTcpPortLabel')
+          FormTableEntry {
+            Switch {
+              id: randomAudioRtpUdpPort
 
-          NumericField {
-            minValue: 0
-            maxValue: 65535
-            readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
-          }
-        }
+              checked: SettingsModel.audioPortRange[0] === -1
 
-        FormEntry {
-          Switch {
-            id: randomSipTcpPort
-
-            enabled: enableSipTcpPort.checked
-          }
-        }
-
-        FormEntry {
-          Switch {
-            id: enableSipTcpPort
-          }
-        }
-      }
-
-      FormLine {
-        id: audioRtpUdpPort
-
-        readonly property int defaultPort: 7078
-
-        FormGroup {
-          label: qsTr('audioRtpUdpPortLabel')
-
-          PortField {
-            readOnly: randomAudioRtpUdpPort.checked
-            supportsRange: true
-            text: SettingsModel.audioPortRange.join(':')
-
-            onEditingFinished: SettingsModel.audioPortRange = [ portA, portB ]
+              onClicked: SettingsModel.audioPortRange = checked
+                ? [ audioRtpUdpPort.defaultPort, -1 ]
+                : [ -1, -1 ]
+            }
           }
         }
 
-        FormEntry {
-          Switch {
-            id: randomAudioRtpUdpPort
+        FormTableLine {
+          id: videoRtpUdpPort
 
-            checked: SettingsModel.audioPortRange[0] === -1
+          readonly property int defaultPort: 9078
 
-            onClicked: SettingsModel.audioPortRange = checked
-              ? [ audioRtpUdpPort.defaultPort, -1 ]
-              : [ -1, -1 ]
+          title: qsTr('videoRtpUdpPortLabel')
+
+          FormTableEntry {
+            PortField {
+              readOnly: randomVideoRtpUdpPort.checked
+              supportsRange: true
+              text: SettingsModel.videoPortRange.join(':')
+
+              onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
+            }
           }
-        }
-      }
 
-      FormLine {
-        id: videoRtpUdpPort
+          FormTableEntry {
+            Switch {
+              id: randomVideoRtpUdpPort
 
-        readonly property int defaultPort: 9078
+              checked: SettingsModel.videoPortRange[0] === -1
 
-        FormGroup {
-          label: qsTr('videoRtpUdpPortLabel')
-
-          PortField {
-            readOnly: randomVideoRtpUdpPort.checked
-            supportsRange: true
-            text: SettingsModel.videoPortRange.join(':')
-
-            onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
-          }
-        }
-
-        FormEntry {
-          Switch {
-            id: randomVideoRtpUdpPort
-
-            checked: SettingsModel.videoPortRange[0] === -1
-
-            onClicked: SettingsModel.videoPortRange = checked
-              ? [ videoRtpUdpPort.defaultPort, -1 ]
-              : [ -1, -1 ]
+              onClicked: SettingsModel.videoPortRange = checked
+                ? [ videoRtpUdpPort.defaultPort, -1 ]
+                : [ -1, -1 ]
+            }
           }
         }
       }
@@ -304,9 +299,7 @@ TabContainer {
       }
 
       FormLine {
-        FormGroup {
-          label: ''
-        }
+        FormGroup {}
 
         FormGroup {
           label: qsTr('turnPasswordLabel')
@@ -338,6 +331,8 @@ TabContainer {
             onEditingFinished: SettingsModel.dscpSip = value
           }
         }
+
+        FormGroup {}
       }
 
       FormLine {

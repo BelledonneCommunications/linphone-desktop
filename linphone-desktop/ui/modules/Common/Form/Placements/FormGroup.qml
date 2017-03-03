@@ -4,18 +4,18 @@ import QtQuick.Layouts 1.3
 import Common.Styles 1.0
 
 // =============================================================================
-// Display a form component with a legend.
-// Must be used in a `FormLine`.
-// =============================================================================
 
 RowLayout {
   property alias label: label.text
 
-  default property alias _content: content.data
+  default property var _content: null
 
   // ---------------------------------------------------------------------------
 
   spacing: FormGroupStyle.spacing
+  width: parent.maxItemWidth
+
+  // ---------------------------------------------------------------------------
 
   Text {
     id: label
@@ -31,17 +31,36 @@ RowLayout {
     verticalAlignment: Text.AlignVCenter
   }
 
+  // ---------------------------------------------------------------------------
+
   Item {
-    id: content
+    readonly property int currentHeight: _content ? _content.height : 0
 
-    readonly property int currentHeight: _content[0] ? _content[0].height : 0
+    Layout.alignment: (
+      currentHeight < FormGroupStyle.legend.height
+        ? Qt.AlignVCenter
+        : Qt.AlignTop
+    ) | Qt.AlignLeft
 
-    Layout.alignment: currentHeight < FormGroupStyle.legend.height
-      ? Qt.AlignVCenter
-      : Qt.AlignTop
-
-    Layout.maximumWidth: FormGroupStyle.content.width
+    Layout.fillWidth: true
     Layout.preferredHeight: currentHeight
-    Layout.preferredWidth: FormGroupStyle.content.width
+
+    Loader {
+      active: !!_content
+      anchors.fill: parent
+
+      sourceComponent: Item {
+        id: content
+
+        data: [ _content ]
+        width: parent.width
+
+        Component.onCompleted: _content.width = Qt.binding(function () {
+          var contentWidth = content.width
+          var wishedWidth = FormGroupStyle.content.maxWidth
+          return contentWidth > wishedWidth ? wishedWidth : contentWidth
+        })
+      }
+    }
   }
 }

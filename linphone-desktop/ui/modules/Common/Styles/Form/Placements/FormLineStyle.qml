@@ -4,5 +4,5 @@ import QtQuick 2.7
 // =============================================================================
 
 QtObject {
-  property int spacing: 10
+  property int spacing: 20
 }

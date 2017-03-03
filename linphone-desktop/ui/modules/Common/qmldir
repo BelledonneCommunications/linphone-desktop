@@ -41,12 +41,11 @@ TextField            1.0 Form/Fields/TextField.qml
 
 Form                 1.0 Form/Placements/Form.qml
 FormEmptyLine        1.0 Form/Placements/FormEmptyLine.qml
-FormEntry            1.0 Form/Placements/FormEntry.qml
 FormGroup            1.0 Form/Placements/FormGroup.qml
-FormHeader           1.0 Form/Placements/FormHeader.qml
-FormHeaderEntry      1.0 Form/Placements/FormHeaderEntry.qml
-FormHeaderGroup      1.0 Form/Placements/FormHeaderGroup.qml
 FormLine             1.0 Form/Placements/FormLine.qml
+FormTable            1.0 Form/Placements/FormTable.qml
+FormTableEntry       1.0 Form/Placements/FormTableEntry.qml
+FormTableLine        1.0 Form/Placements/FormTableLine.qml
 
 TabBar               1.0 Form/Tab/TabBar.qml
 TabButton            1.0 Form/Tab/TabButton.qml

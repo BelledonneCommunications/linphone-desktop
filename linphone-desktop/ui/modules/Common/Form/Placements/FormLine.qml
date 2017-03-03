@@ -1,12 +1,21 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
 import Common.Styles 1.0
 
 // =============================================================================
-// A line of `FormGroup`/`FormEntry`.
-// =============================================================================
 
 Row {
+  readonly property double maxItemWidth: {
+    var n = children.length
+    var curWidth = width / n - (n - 1) * spacing
+    var maxWidth = FormGroupStyle.legend.width + FormGroupStyle.content.maxWidth + FormGroupStyle.spacing
+
+    return curWidth < maxWidth ? curWidth : maxWidth
+  }
+
+  // ---------------------------------------------------------------------------
+
   spacing: FormLineStyle.spacing
   width: parent.width
 }

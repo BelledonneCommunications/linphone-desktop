@@ -11,7 +11,7 @@ QtObject {
     property int height: 36
     property int iconSize: 10
     property int radius: 4
-    property int width: 400
+    property int width: 200
 
     property QtObject border: QtObject {
       property color color: Colors.c

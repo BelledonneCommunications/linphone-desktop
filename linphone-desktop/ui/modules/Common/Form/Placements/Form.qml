@@ -12,10 +12,11 @@ Column {
 
   spacing: FormStyle.spacing
 
-  ColumnLayout {
-    width: parent.width
+  // ---------------------------------------------------------------------------
 
+  ColumnLayout {
     spacing: FormStyle.header.spacing
+    width: parent.width
 
     Text {
       id: title

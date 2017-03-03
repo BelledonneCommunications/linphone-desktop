@@ -1,5 +1,7 @@
 import QtQuick 2.7
 
+import Common.Styles 1.0
+
 // =============================================================================
 
 Item {
@@ -23,7 +25,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   implicitHeight: textField.height
-  implicitWidth: textField.width
+  width: TextFieldStyle.background.width
 
   // ---------------------------------------------------------------------------
 
@@ -39,6 +41,8 @@ Item {
     validator: RegExpValidator {
       regExp: /[0-9A-Fa-f]*/
     }
+
+    width: parent.width
 
     onEditingFinished: {
       text = _computeText('0x' + text)

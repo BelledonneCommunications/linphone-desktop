@@ -44,8 +44,6 @@ Rectangle {
           top: parent.top
           topMargin: TabContainerStyle.topMargin
         }
-
-        width: parent.width
       }
     }
 
