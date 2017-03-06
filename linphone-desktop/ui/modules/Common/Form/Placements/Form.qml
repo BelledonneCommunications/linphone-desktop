@@ -17,6 +17,7 @@ Column {
 
   ColumnLayout {
     spacing: FormStyle.header.spacing
+    visible: parent.title.length > 0
     width: parent.width
 
     Text {

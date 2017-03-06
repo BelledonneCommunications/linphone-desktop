@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
@@ -31,39 +30,31 @@ DialogPlus {
 
   // ---------------------------------------------------------------------------
 
-  Column {
+  Form {
+    orientation: Qt.Vertical
+
     anchors {
-      fill: parent
+      left: parent.left
       leftMargin: ManageAccountsStyle.leftMargin
+      right: parent.right
       rightMargin: ManageAccountsStyle.rightMargin
     }
 
-    spacing: ManageAccountsStyle.input.spacing
+    FormLine {
+      FormGroup {
+        label: qsTr('selectAccountLabel')
 
-    Text {
-      color: ManageAccountsStyle.input.legend.color
-      elide: Text.ElideRight
+        ComboBox {
+          currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
+            return account.sipAddress === AccountSettingsModel.sipAddress
+          })
 
-      font {
-        bold: true
-        pointSize: ManageAccountsStyle.input.legend.fontSize
+          model: AccountSettingsModel.accounts
+          textRole: 'sipAddress'
+
+          onActivated: AccountSettingsModel.setDefaultProxyConfig(model[index].proxyConfig)
+        }
       }
-
-      text: qsTr('selectAccountLabel')
-    }
-
-    ComboBox {
-      id: email
-
-      currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
-        return account.sipAddress === AccountSettingsModel.sipAddress
-      })
-
-      model: AccountSettingsModel.accounts
-      textRole: 'sipAddress'
-      width: parent.width
-
-      onActivated: AccountSettingsModel.setDefaultProxyConfig(model[index].proxyConfig)
     }
   }
 }
