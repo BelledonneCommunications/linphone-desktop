@@ -61,6 +61,7 @@ DialogPlus {
 
       model: AccountSettingsModel.accounts
       textRole: 'sipAddress'
+      width: parent.width
 
       onActivated: AccountSettingsModel.setDefaultProxyConfig(model[index].proxyConfig)
     }
