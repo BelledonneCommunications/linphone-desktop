@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtQuick.Layouts 1.3
 
 import Common 1.0
 
@@ -36,68 +35,46 @@ DialogPlus {
   height: InviteFriendsStyle.height
   width: InviteFriendsStyle.width
 
+  maximumHeight: InviteFriendsStyle.height
+  maximumWidth: InviteFriendsStyle.width
+
   minimumHeight: InviteFriendsStyle.height
   minimumWidth: InviteFriendsStyle.width
 
   // ---------------------------------------------------------------------------
 
-  ColumnLayout {
+  Form {
     anchors {
       fill: parent
       leftMargin: InviteFriendsStyle.leftMargin
       rightMargin: InviteFriendsStyle.rightMargin
     }
 
-    spacing: InviteFriendsStyle.spacing
+    orientation: Qt.Vertical
 
-    Column {
-      Layout.fillWidth: true
-      spacing: InviteFriendsStyle.input.spacing
+    FormLine {
+      FormGroup {
+        label: qsTr('enterEmailLabel')
 
-      Text {
-        color: InviteFriendsStyle.input.legend.color
-        elide: Text.ElideRight
+        TextField {
+          id: email
 
-        font {
-          bold: true
-          pointSize: InviteFriendsStyle.input.legend.fontSize
+          inputMethodHints: Qt.ImhEmailCharactersOnly
+          width: parent.width
         }
-
-        text: qsTr('enterEmailLabel')
-      }
-
-      TextField {
-        id: email
-
-        inputMethodHints: Qt.ImhEmailCharactersOnly
-        width: parent.width
       }
     }
 
-    ColumnLayout {
-      Layout.fillHeight: true
-      Layout.fillWidth: true
-      spacing: InviteFriendsStyle.input.spacing
+    FormLine {
+      FormGroup {
+        label: qsTr('messageLabel')
 
-      Text {
-        color: InviteFriendsStyle.input.legend.color
-        elide: Text.ElideRight
+        TextAreaField {
+          id: message
 
-        font {
-          bold: true
-          pointSize: InviteFriendsStyle.input.legend.fontSize
+          height: InviteFriendsStyle.message.height
+          text: qsTr('defaultMessage')
         }
-
-        text: qsTr('messageLabel')
-      }
-
-      TextAreaField {
-        id: message
-
-        Layout.fillHeight: true
-        Layout.fillWidth: true
-
-        text: qsTr('defaultMessage')
       }
     }
   }
