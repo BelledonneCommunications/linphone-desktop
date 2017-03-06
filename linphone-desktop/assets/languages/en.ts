@@ -29,6 +29,40 @@
     </message>
 </context>
 <context>
+    <name>AssistantHome</name>
+    <message>
+        <source>createSipAccount</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>useLinphoneSipAccount</source>
+        <translation>USE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>useOtherSipAccount</source>
+        <translation>USE A SIP ACCOUNT</translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfiguration</source>
+        <translation>FETCH REMOTE CONFIGURATION</translation>
+    </message>
+    <message>
+        <source>homeTitle</source>
+        <translation>WELCOME</translation>
+    </message>
+    <message>
+        <source>homeDescription</source>
+        <translation>This assistant will help you to configure and use your linphone account.</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantWindow</name>
+    <message>
+        <source>assistantTitle</source>
+        <translation>Linphone - Assistant</translation>
+    </message>
+</context>
+<context>
     <name>CallControls</name>
     <message>
         <source>homeEntry</source>
@@ -442,30 +476,53 @@ Server url not configured.</translation>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation>Enter your friend&apos;s email address</translation>
+        <translation type="vanished">Enter your friend&apos;s email address</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation>You can modify the invitation that will be sent</translation>
+        <translation type="vanished">You can modify the invitation that will be sent</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>CANCEL</translation>
+        <translation type="vanished">CANCEL</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>CONFIRM</translation>
+        <translation type="vanished">CONFIRM</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation>Linphone - Invite Friends</translation>
+        <translation type="vanished">Linphone - Invite Friends</translation>
+    </message>
+</context>
+<context>
+    <name>InviteFriendsWindow</name>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">CANCEL</translation>
     </message>
     <message>
-        <source>defaultMessage</source>
-        <translation type="unfinished"></translation>
+        <source>confirm</source>
+        <translation type="unfinished">CONFIRM</translation>
     </message>
     <message>
         <source>defaultSubject</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>inviteFriendsTitle</source>
+        <translation type="unfinished">Linphone - Invite Friends</translation>
+    </message>
+    <message>
+        <source>enterEmailLabel</source>
+        <translation type="unfinished">Enter your friend&apos;s email address</translation>
+    </message>
+    <message>
+        <source>messageLabel</source>
+        <translation type="unfinished">You can modify the invitation that will be sent</translation>
+    </message>
+    <message>
+        <source>defaultMessage</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -547,7 +604,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>manageAccountsTitle</source>
-        <translation>Presence and accounts</translation>
+        <translation type="vanished">Presence and accounts</translation>
     </message>
     <message>
         <source>validate</source>
@@ -595,11 +652,26 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>ok</source>
-        <translation>OK</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation>Select you active account</translation>
+        <translation type="vanished">Select you active account</translation>
+    </message>
+</context>
+<context>
+    <name>ManageAccountsWindow</name>
+    <message>
+        <source>ok</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>manageAccountsTitle</source>
+        <translation type="unfinished">Presence and accounts</translation>
+    </message>
+    <message>
+        <source>selectAccountLabel</source>
+        <translation type="unfinished">Select you active account</translation>
     </message>
 </context>
 <context>

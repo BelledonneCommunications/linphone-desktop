@@ -20,13 +20,13 @@ DialogPlus {
   centeredButtons: true
   title: qsTr('manageAccountsTitle')
 
-  height: ManageAccountsStyle.height
-  width: ManageAccountsStyle.width
+  height: ManageAccountsWindowStyle.height
+  width: ManageAccountsWindowStyle.width
 
-  minimumHeight: ManageAccountsStyle.height
-  minimumWidth: ManageAccountsStyle.width
-  maximumHeight: ManageAccountsStyle.height
-  maximumWidth: ManageAccountsStyle.width
+  minimumHeight: ManageAccountsWindowStyle.height
+  minimumWidth: ManageAccountsWindowStyle.width
+  maximumHeight: ManageAccountsWindowStyle.height
+  maximumWidth: ManageAccountsWindowStyle.width
 
   // ---------------------------------------------------------------------------
 
@@ -35,9 +35,9 @@ DialogPlus {
 
     anchors {
       left: parent.left
-      leftMargin: ManageAccountsStyle.leftMargin
+      leftMargin: ManageAccountsWindowStyle.leftMargin
       right: parent.right
-      rightMargin: ManageAccountsStyle.rightMargin
+      rightMargin: ManageAccountsWindowStyle.rightMargin
     }
 
     FormLine {

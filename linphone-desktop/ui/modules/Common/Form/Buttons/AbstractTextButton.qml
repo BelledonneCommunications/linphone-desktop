@@ -48,8 +48,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  implicitHeight: button.height
-  implicitWidth: button.width
+  height: AbstractTextButtonStyle.background.height
+  width: AbstractTextButtonStyle.background.width
 
   // ---------------------------------------------------------------------------
 
@@ -58,10 +58,9 @@ Item {
 
     background: Rectangle {
       color: _getBackgroundColor()
-      implicitHeight: AbstractTextButtonStyle.background.height
-      implicitWidth: AbstractTextButtonStyle.background.width
       radius: AbstractTextButtonStyle.background.radius
     }
+
     contentItem: Text {
       color: _getTextColor()
       font {
@@ -74,7 +73,11 @@ Item {
       text: button.text
       verticalAlignment: Text.AlignVCenter
     }
+
     hoverEnabled: true
+
+    height: parent.height
+    width: parent.width
 
     onClicked: wrappedButton.enabled && parent.clicked()
   }

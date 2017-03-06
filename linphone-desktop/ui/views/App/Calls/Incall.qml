@@ -28,7 +28,7 @@ Rectangle {
       return
     }
 
-    _fullscreen = Utils.openWindow('IncallFullscreen', incall, {
+    _fullscreen = Utils.openWindow('IncallFullscreenWindow', incall, {
       properties: {
         call: incall.call
       }

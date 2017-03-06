@@ -32,22 +32,22 @@ DialogPlus {
   centeredButtons: true
   title: qsTr('inviteFriendsTitle')
 
-  height: InviteFriendsStyle.height
-  width: InviteFriendsStyle.width
+  height: InviteFriendsWindowStyle.height
+  width: InviteFriendsWindowStyle.width
 
-  maximumHeight: InviteFriendsStyle.height
-  maximumWidth: InviteFriendsStyle.width
+  maximumHeight: InviteFriendsWindowStyle.height
+  maximumWidth: InviteFriendsWindowStyle.width
 
-  minimumHeight: InviteFriendsStyle.height
-  minimumWidth: InviteFriendsStyle.width
+  minimumHeight: InviteFriendsWindowStyle.height
+  minimumWidth: InviteFriendsWindowStyle.width
 
   // ---------------------------------------------------------------------------
 
   Form {
     anchors {
       fill: parent
-      leftMargin: InviteFriendsStyle.leftMargin
-      rightMargin: InviteFriendsStyle.rightMargin
+      leftMargin: InviteFriendsWindowStyle.leftMargin
+      rightMargin: InviteFriendsWindowStyle.rightMargin
     }
 
     orientation: Qt.Vertical
@@ -72,7 +72,7 @@ DialogPlus {
         TextAreaField {
           id: message
 
-          height: InviteFriendsStyle.message.height
+          height: InviteFriendsWindowStyle.message.height
           text: qsTr('defaultMessage')
         }
       }

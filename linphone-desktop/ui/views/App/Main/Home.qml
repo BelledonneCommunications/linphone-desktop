@@ -36,7 +36,7 @@ Rectangle {
         $component: 'button'
         $componentText: qsTr('inviteButton')
         $description: qsTr('inviteDescription')
-        $window: 'InviteFriends'
+        $window: 'InviteFriendsWindow'
         $icon: 'home_invite_friends'
         $title: qsTr('inviteTitle')
       }
@@ -47,7 +47,7 @@ Rectangle {
         $description: qsTr('accountAssistantDescription')
         $icon: 'home_account_assistant'
         $title: qsTr('accountAssistantTitle')
-        $window: 'Assistant'
+        $window: 'AssistantWindow'
       }
     }
 

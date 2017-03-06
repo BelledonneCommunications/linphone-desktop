@@ -6,6 +6,7 @@ module App
 
 # Views ------------------------------------------------------------------------
 
-IncallFullscreen 1.0 IncallFullscreen.qml
-InviteFriends    1.0 InviteFriends.qml
-ManageAccounts   1.0 ManageAccounts.qml
+Assistant              1.0 AssistantWindow.qml
+IncallFullscreenWindow 1.0 IncallFullscreenWindow.qml
+InviteFriendsWindow    1.0 InviteFriendsWindow.qml
+ManageAccountsWindow   1.0 ManageAccountsWindow.qml

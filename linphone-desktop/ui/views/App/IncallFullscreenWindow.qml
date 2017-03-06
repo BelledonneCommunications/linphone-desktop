@@ -31,13 +31,7 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  height: Screen.height
-  width: Screen.width
-
-  visible: true
-  visibility: Window.FullScreen
-
-  onActiveChanged: incall.showFullScreen()
+  onVisibilityChanged: visibility === Window.Windowed && showFullScreen()
 
   // ---------------------------------------------------------------------------
 
@@ -109,8 +103,8 @@ Window {
         Layout.alignment: Qt.AlignTop
         Layout.fillWidth: true
         Layout.leftMargin: CallStyle.header.leftMargin
-        Layout.rightMargin: CallStyle.header.rightMargin
         Layout.preferredHeight: CallStyle.header.contactDescription.height
+        Layout.rightMargin: CallStyle.header.rightMargin
 
         Icon {
           id: callQuality

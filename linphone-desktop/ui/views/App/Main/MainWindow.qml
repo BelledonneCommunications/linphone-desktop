@@ -165,7 +165,7 @@ Controls1.ApplicationWindow {
             text: AccountSettingsModel.sipAddress
           }
 
-          onClicked: Utils.openWindow('ManageAccounts', window)
+          onClicked: Utils.openWindow('ManageAccountsWindow', window)
         }
 
         Column {
