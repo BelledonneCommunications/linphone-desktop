@@ -28,11 +28,12 @@ singleton NumericFieldStyle         1.0 Form/Fields/NumericFieldStyle.qml
 singleton TextAreaFieldStyle        1.0 Form/Fields/TextAreaFieldStyle.qml
 singleton TextFieldStyle            1.0 Form/Fields/TextFieldStyle.qml
 
-singleton FormGroupStyle            1.0 Form/Placements/FormGroupStyle.qml
+singleton FormHGroupStyle           1.0 Form/Placements/FormHGroupStyle.qml
 singleton FormLineStyle             1.0 Form/Placements/FormLineStyle.qml
 singleton FormStyle                 1.0 Form/Placements/FormStyle.qml
 singleton FormTableLineStyle        1.0 Form/Placements/FormTableLineStyle.qml
 singleton FormTableStyle            1.0 Form/Placements/FormTableStyle.qml
+singleton FormVGroupStyle           1.0 Form/Placements/FormVGroupStyle.qml
 
 singleton TabButtonStyle            1.0 Form/Tab/TabButtonStyle.qml
 singleton TabContainerStyle         1.0 Form/Tab/TabContainerStyle.qml

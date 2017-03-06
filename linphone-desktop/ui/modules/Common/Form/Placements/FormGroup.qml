@@ -1,66 +1,39 @@
 import QtQuick 2.7
-import QtQuick.Layouts 1.3
-
-import Common.Styles 1.0
 
 // =============================================================================
 
-RowLayout {
-  property alias label: label.text
+Loader {
+  id: loader
+
+  // ---------------------------------------------------------------------------
+
+  property string label
+  readonly property int orientation: parent.orientation
 
   default property var _content: null
 
   // ---------------------------------------------------------------------------
 
-  spacing: FormGroupStyle.spacing
+  sourceComponent: orientation === Qt.Horizontal ? hGroup : vGroup
   width: parent.maxItemWidth
 
   // ---------------------------------------------------------------------------
 
-  Text {
-    id: label
+  Component {
+    id: hGroup
 
-    Layout.preferredHeight: FormGroupStyle.legend.height
-    Layout.preferredWidth: FormGroupStyle.legend.width
-
-    color: FormGroupStyle.legend.color
-    elide: Text.ElideRight
-    font.pointSize: FormGroupStyle.legend.fontSize
-
-    horizontalAlignment: Text.AlignRight
-    verticalAlignment: Text.AlignVCenter
+    FormHGroup {
+      _content: loader._content
+      label: loader.label
+    }
   }
 
-  // ---------------------------------------------------------------------------
+  Component {
+    id: vGroup
 
-  Item {
-    readonly property int currentHeight: _content ? _content.height : 0
-
-    Layout.alignment: (
-      currentHeight < FormGroupStyle.legend.height
-        ? Qt.AlignVCenter
-        : Qt.AlignTop
-    ) | Qt.AlignLeft
-
-    Layout.fillWidth: true
-    Layout.preferredHeight: currentHeight
-
-    Loader {
-      active: !!_content
-      anchors.fill: parent
-
-      sourceComponent: Item {
-        id: content
-
-        data: [ _content ]
-        width: parent.width
-
-        Component.onCompleted: _content.width = Qt.binding(function () {
-          var contentWidth = content.width
-          var wishedWidth = FormGroupStyle.content.maxWidth
-          return contentWidth > wishedWidth ? wishedWidth : contentWidth
-        })
-      }
+    FormVGroup {
+      _content: loader._content
+      label: loader.label
     }
   }
 }

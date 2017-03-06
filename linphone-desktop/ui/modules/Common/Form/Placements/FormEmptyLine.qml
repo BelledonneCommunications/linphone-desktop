@@ -5,6 +5,6 @@ import Common.Styles 1.0
 // =============================================================================
 
 Item {
-  height: FormGroupStyle.legend.height
+  height: FormHGroupStyle.legend.height
   width: parent.width
 }
