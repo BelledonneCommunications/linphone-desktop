@@ -16,11 +16,10 @@ TabContainer {
         label: qsTr('videoInputDeviceLabel')
 
         ComboBox {
-          model: SettingsModel.videoDevices
-
-          Component.onCompleted: currentIndex = Utils.findIndex(model, function (device) {
+          currentIndex: Utils.findIndex(model, function (device) {
             return device === SettingsModel.videoDevice
           })
+          model: SettingsModel.videoDevices
 
           onActivated: SettingsModel.videoDevice = model[index]
         }
@@ -32,6 +31,14 @@ TabContainer {
         label: qsTr('videoPresetLabel')
 
         ComboBox {
+          currentIndex: {
+            var preset = SettingsModel.videoPreset
+
+            return Number(Utils.findIndex([ 'default', 'high-fps', 'custom' ], function (value) {
+              return preset === value
+            }))
+          }
+
           model: ListModel {
             id: presets
 
@@ -52,13 +59,6 @@ TabContainer {
           }
 
           textRole: 'key'
-
-          Component.onCompleted: {
-            var preset = SettingsModel.videoPreset
-            currentIndex = Number(Utils.findIndex([ 'default', 'high-fps', 'custom' ], function (value) {
-              return preset === value
-            }))
-          }
 
           onActivated: SettingsModel.videoPreset = presets.get(index).value
         }

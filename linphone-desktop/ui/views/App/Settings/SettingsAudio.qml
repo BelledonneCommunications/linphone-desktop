@@ -16,11 +16,10 @@ TabContainer {
         label: qsTr('playbackDeviceLabel')
 
         ComboBox {
-          model: SettingsModel.audioDevices
-
-          Component.onCompleted: currentIndex = Utils.findIndex(model, function (device) {
+          currentIndex: Utils.findIndex(model, function (device) {
             return device === SettingsModel.playbackDevice
           })
+          model: SettingsModel.audioDevices
 
           onActivated: SettingsModel.playbackDevice = model[index]
         }
@@ -32,11 +31,10 @@ TabContainer {
         label: qsTr('captureDeviceLabel')
 
         ComboBox {
-          model: SettingsModel.audioDevices
-
-          Component.onCompleted: currentIndex = Utils.findIndex(model, function (device) {
+          currentIndex: Utils.findIndex(model, function (device) {
             return device === SettingsModel.captureDevice
           })
+          model: SettingsModel.audioDevices
 
           onActivated: SettingsModel.captureDevice = model[index]
         }
@@ -48,11 +46,10 @@ TabContainer {
         label: qsTr('ringerDeviceLabel')
 
         ComboBox {
-          model: SettingsModel.audioDevices
-
-          Component.onCompleted: currentIndex = Utils.findIndex(model, function (device) {
+          currentIndex: Utils.findIndex(model, function (device) {
             return device === SettingsModel.ringerDevice
           })
+          model: SettingsModel.audioDevices
 
           onActivated: SettingsModel.ringerDevice = model[index]
         }
