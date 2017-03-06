@@ -13,4 +13,8 @@ QtObject {
   property int topMargin: 35
   property int height: 480
   property int width: 700
+
+  property QtObject stackAnimation: QtObject {
+    property int duration: 400
+  }
 }

@@ -67,5 +67,43 @@ Window {
     }
 
     initialItem: window.viewsPath + 'AssistantHome.qml'
+
+    // -------------------------------------------------------------------------
+
+    popEnter: Transition {
+      XAnimator {
+        duration: AssistantWindowStyle.stackAnimation.duration
+        easing.type: Easing.OutBack
+        from: -stack.width - AssistantWindowStyle.leftMargin
+        to: 0
+      }
+    }
+
+    popExit: Transition {
+      XAnimator {
+        duration: AssistantWindowStyle.stackAnimation.duration
+        easing.type: Easing.OutBack
+        from: 0
+        to: stack.width + AssistantWindowStyle.rightMargin
+      }
+    }
+
+    pushEnter: Transition {
+      XAnimator {
+        duration: AssistantWindowStyle.stackAnimation.duration
+        easing.type: Easing.OutBack
+        from: stack.width + AssistantWindowStyle.rightMargin
+        to: 0
+      }
+    }
+
+    pushExit: Transition {
+      XAnimator {
+        duration: AssistantWindowStyle.stackAnimation.duration
+        easing.type: Easing.OutBack
+        from: 0
+        to: -stack.width - AssistantWindowStyle.leftMargin
+      }
+    }
   }
 }

@@ -29,6 +29,28 @@
     </message>
 </context>
 <context>
+    <name>AssistantAbstractView</name>
+    <message>
+        <source>back</source>
+        <translation>BACK</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantFetchRemoteConfiguration</name>
+    <message>
+        <source>fetchRemoteConfigurationTitle</source>
+        <translation>Fetch remote configuration</translation>
+    </message>
+    <message>
+        <source>urlLabel</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>DOWNLOAD</translation>
+    </message>
+</context>
+<context>
     <name>AssistantHome</name>
     <message>
         <source>createSipAccount</source>
