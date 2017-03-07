@@ -27,7 +27,7 @@ AssistantAbstractView {
       mainActionEnabled: country.currentIndex !== -1 &&
         phoneNumber.text.length
 
-      mainActionLabel: qsTr('createAction')
+      mainActionLabel: qsTr('confirmAction')
 
       title: view.title
 
@@ -83,7 +83,7 @@ AssistantAbstractView {
         && password.text.length
         && passwordConfirmation.text === password.text
 
-      mainActionLabel: qsTr('createAction')
+      mainActionLabel: qsTr('confirmAction')
 
       title: view.title
 

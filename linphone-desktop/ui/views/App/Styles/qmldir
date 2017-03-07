@@ -8,9 +8,10 @@ singleton AssistantWindowStyle                   1.0 AssistantWindowStyle.qml
 singleton InviteFriendsWindowStyle               1.0 InviteFriendsWindowStyle.qml
 singleton ManageAccountsWindowStyle              1.0 ManageAccountsWindowStyle.qml
 
-singleton AssistantHomeStyle                     1.0 Assistant/AssistantHomeStyle.qml
 singleton AssistantAbstractViewStyle             1.0 Assistant/AssistantAbstractViewStyle.qml
 singleton AssistantCreateLinphoneSipAccountStyle 1.0 Assistant/AssistantCreateLinphoneSipAccountStyle.qml
+singleton AssistantHomeStyle                     1.0 Assistant/AssistantHomeStyle.qml
+singleton AssistantUseLinphoneSipAccountStyle    1.0 Assistant/AssistantUseLinphoneSipAccountStyle.qml
 
 singleton CallStyle                              1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                       1.0 Calls/CallsWindowStyle.qml

@@ -313,6 +313,7 @@
     <file>ui/views/App/Assistant/AssistantCreateLinphoneSipAccount.qml</file>
     <file>ui/views/App/Assistant/AssistantFetchRemoteConfiguration.qml</file>
     <file>ui/views/App/Assistant/AssistantHome.qml</file>
+    <file>ui/views/App/Assistant/AssistantUseLinphoneSipAccount.qml</file>
     <file>ui/views/App/Assistant/AssistantUseOtherSipAccount.qml</file>
     <file>ui/views/App/AssistantWindow.qml</file>
     <file>ui/views/App/Calls/AbstractStartingCall.qml</file>
@@ -340,6 +341,7 @@
     <file>ui/views/App/Styles/Assistant/AssistantAbstractViewStyle.qml</file>
     <file>ui/views/App/Styles/Assistant/AssistantCreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Assistant/AssistantHomeStyle.qml</file>
+    <file>ui/views/App/Styles/Assistant/AssistantUseLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/AssistantWindowStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>

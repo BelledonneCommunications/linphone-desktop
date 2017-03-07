@@ -78,8 +78,8 @@
         <translation>Confirmation du mot de passe</translation>
     </message>
     <message>
-        <source>createAction</source>
-        <translation type="unfinished"></translation>
+        <source>confirmAction</source>
+        <translation>CREATE</translation>
     </message>
 </context>
 <context>
@@ -122,6 +122,37 @@
     <message>
         <source>createLinphoneSipAccount</source>
         <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantUseLinphoneSipAccount</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>CONNEXION</translation>
+    </message>
+    <message>
+        <source>useLinphoneSipAccountTitle</source>
+        <translation>UTILISER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>countryLabel</source>
+        <translation>Votre pays</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Numéro de téléphone</translation>
+    </message>
+    <message>
+        <source>useUsernameToLogin</source>
+        <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation type="unfinished">Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation type="unfinished">Mot de passe</translation>
     </message>
 </context>
 <context>
