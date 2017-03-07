@@ -10,10 +10,13 @@ AssistantAbstractView {
   mainActionEnabled: url.text.length > 0
   mainActionLabel: qsTr('confirmAction')
 
+  title: qsTr('fetchRemoteConfigurationTitle')
+
+  // ---------------------------------------------------------------------------
+
   Form {
     anchors.fill: parent
     orientation: Qt.Vertical
-    title: qsTr('fetchRemoteConfigurationTitle')
 
     FormLine {
       FormGroup {

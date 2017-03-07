@@ -310,6 +310,7 @@
     <file>ui/scripts/Utils/uri-tools.js</file>
     <file>ui/scripts/Utils/utils.js</file>
     <file>ui/views/App/Assistant/AssistantAbstractView.qml</file>
+    <file>ui/views/App/Assistant/AssistantCreateLinphoneSipAccount.qml</file>
     <file>ui/views/App/Assistant/AssistantFetchRemoteConfiguration.qml</file>
     <file>ui/views/App/Assistant/AssistantHome.qml</file>
     <file>ui/views/App/Assistant/AssistantUseOtherSipAccount.qml</file>
@@ -337,6 +338,7 @@
     <file>ui/views/App/Settings/SettingsVideo.qml</file>
     <file>ui/views/App/Settings/SettingsWindow.qml</file>
     <file>ui/views/App/Styles/Assistant/AssistantAbstractViewStyle.qml</file>
+    <file>ui/views/App/Styles/Assistant/AssistantCreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Assistant/AssistantHomeStyle.qml</file>
     <file>ui/views/App/Styles/AssistantWindowStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>

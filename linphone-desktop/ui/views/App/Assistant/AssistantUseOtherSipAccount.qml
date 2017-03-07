@@ -8,62 +8,65 @@ AssistantAbstractView {
   })
 
   mainActionEnabled: username.text.length &&
-		sipDomain.text.length &&
-		password.text.length
+    sipDomain.text.length &&
+    password.text.length
 
   mainActionLabel: qsTr('confirmAction')
+
+  title: qsTr('useOtherSipAccountTitle')
+
+  // ---------------------------------------------------------------------------
 
   Form {
     anchors.fill: parent
     orientation: Qt.Vertical
-    title: qsTr('useOtherSipAccountTitle')
 
     FormLine {
       FormGroup {
         label: qsTr('usernameLabel')
 
-				TextField {
+        TextField {
           id: username
         }
       }
-		}
+    }
 
-		FormLine {
-			FormGroup {
-				label: qsTr('displayNameLabel')
+    FormLine {
+      FormGroup {
+        label: qsTr('displayNameLabel')
 
-				TextField {}
-			}
-		}
+        TextField {}
+      }
+    }
 
-		FormLine {
-			FormGroup {
-				label: qsTr('sipDomainLabel')
+    FormLine {
+      FormGroup {
+        label: qsTr('sipDomainLabel')
 
-				TextField {
-					id: sipDomain
-				}
-			}
-		}
+        TextField {
+          id: sipDomain
+        }
+      }
+    }
 
-		FormLine {
-			FormGroup {
-				label: qsTr('passwordLabel')
+    FormLine {
+      FormGroup {
+        label: qsTr('passwordLabel')
 
-				TextField {
-					id: password
-				}
-			}
-		}
+        TextField {
+          id: password
+        }
+      }
+    }
 
-		FormLine {
-			FormGroup {
-				label: qsTr('transportLabel')
+    FormLine {
+      FormGroup {
+        label: qsTr('transportLabel')
 
-				ExclusiveButtons {
-					texts: [ 'UDP', 'TCP', 'TLS' ]
-				}
-			}
-		}
-	}
+        ExclusiveButtons {
+          texts: [ 'UDP', 'TCP', 'TLS' ]
+        }
+      }
+    }
+  }
 }

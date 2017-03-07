@@ -36,6 +36,25 @@
     </message>
 </context>
 <context>
+    <name>AssistantCreateLinphoneSipAccount</name>
+    <message>
+        <source>createLinphoneSipAccountDescription</source>
+        <translation>Comment souhaitez-vous créer votre compte ?</translation>
+    </message>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>AVEC UN NUMÉRO DE TÉLÉPHONE</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>AVER UNE ADRESSE E-MAIL</translation>
+    </message>
+</context>
+<context>
     <name>AssistantFetchRemoteConfiguration</name>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
@@ -52,10 +71,6 @@
 </context>
 <context>
     <name>AssistantHome</name>
-    <message>
-        <source>createSipAccount</source>
-        <translation>CRÉER UN COMPTE LINPHONE</translation>
-    </message>
     <message>
         <source>useLinphoneSipAccount</source>
         <translation>UTILISER UN COMPTE LINPHONE</translation>
@@ -75,6 +90,10 @@
     <message>
         <source>homeDescription</source>
         <translation>Cet assistant va vous aider à configurer et utiliser votre compte SIP.</translation>
+    </message>
+    <message>
+        <source>createLinphoneSipAccount</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
     </message>
 </context>
 <context>
