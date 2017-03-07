@@ -44,7 +44,14 @@ TabContainer {
             Binding {
               property: 'selectedButton'
               target: encryption
-              value: SettingsModel.mediaEncryption
+              value: {
+                var toFound = SettingsModel.mediaEncryption
+                return Number(
+                  Utils.findIndex(encryption.encryptions, function (value) {
+                    return toFound === value[0]
+                  })
+                )
+              }
             }
           }
         }
@@ -121,7 +128,14 @@ TabContainer {
             Binding {
               property: 'selectedButton'
               target: lime
-              value: SettingsModel.limeState
+              value: {
+                var toFound = SettingsModel.limeState
+                return Number(
+                  Utils.findIndex(lime.limeStates, function (value) {
+                    return toFound === value[0]
+                  })
+                )
+              }
             }
           }
         }
