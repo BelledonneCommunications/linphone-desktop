@@ -21,6 +21,7 @@
 // THE SOFTWARE.
 
 #include <cstdlib>
+#include <iostream>
 
 #include <QtCore/QDir>
 #include <QtCore/QProcess>
@@ -51,6 +52,8 @@ static const char NewInstance = 'N';
 static const char SecondaryInstance = 'S';
 static const char Reconnect = 'R';
 static const char InvalidConnection = '\0';
+
+using namespace std;
 
 // -----------------------------------------------------------------------------
 
@@ -250,6 +253,8 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
       delete sharedMem.back();
       sharedMem.pop_back();
     }
+
+    cout << "[PROCESS ABNORMALLY TERMINATED]: " << signum << endl;
     ::exit(128 + signum);
   }
 
