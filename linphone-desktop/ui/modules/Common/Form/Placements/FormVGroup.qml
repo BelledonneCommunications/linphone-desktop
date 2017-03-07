@@ -24,12 +24,7 @@ ColumnLayout {
 
     color: FormVGroupStyle.legend.color
     elide: Text.ElideRight
-
-    font {
-      bold: true
-      pointSize: FormVGroupStyle.legend.fontSize
-    }
-
+    font.pointSize: FormVGroupStyle.legend.fontSize
     verticalAlignment: Text.AlignVCenter
   }
 

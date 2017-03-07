@@ -78,6 +78,37 @@
     </message>
 </context>
 <context>
+    <name>AssistantUseOtherSipAccount</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>CONNEXION</translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountTitle</source>
+        <translation>UTILISER UN COMPTE SIP</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Nom d&apos;affichage (optionnel)</translation>
+    </message>
+    <message>
+        <source>sipDomainLabel</source>
+        <translation>Domaine SIP</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Mot de passe</translation>
+    </message>
+    <message>
+        <source>transportLabel</source>
+        <translation>Transport</translation>
+    </message>
+</context>
+<context>
     <name>AssistantWindow</name>
     <message>
         <source>assistantTitle</source>

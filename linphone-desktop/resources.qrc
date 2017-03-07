@@ -312,6 +312,7 @@
     <file>ui/views/App/Assistant/AssistantAbstractView.qml</file>
     <file>ui/views/App/Assistant/AssistantFetchRemoteConfiguration.qml</file>
     <file>ui/views/App/Assistant/AssistantHome.qml</file>
+    <file>ui/views/App/Assistant/AssistantUseOtherSipAccount.qml</file>
     <file>ui/views/App/AssistantWindow.qml</file>
     <file>ui/views/App/Calls/AbstractStartingCall.qml</file>
     <file>ui/views/App/Calls/CallsWindow.qml</file>
