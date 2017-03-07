@@ -2,6 +2,8 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 
+import Utils 1.0
+
 import App.Styles 1.0
 
 // =============================================================================
@@ -16,7 +18,11 @@ Window {
   // ---------------------------------------------------------------------------
 
   function pushView (view) {
-    stack.push(viewsPath + view + '.qml')
+    stack.push(
+      Utils.isString(view)
+        ? viewsPath + view + '.qml'
+        : view
+    )
   }
 
   function popView () {

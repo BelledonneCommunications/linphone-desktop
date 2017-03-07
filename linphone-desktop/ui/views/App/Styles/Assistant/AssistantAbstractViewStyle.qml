@@ -6,7 +6,7 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
-  property int spacing: 20
+  property int spacing: 30
 
   property QtObject buttons: QtObject {
     property int spacing: 10

@@ -53,6 +53,34 @@
         <source>withEmailAddress</source>
         <translation>WITH AN EMAIL ADDRESS</translation>
     </message>
+    <message>
+        <source>countryLabel</source>
+        <translation>Your country</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Phone number</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Username (optional)</translation>
+    </message>
+    <message>
+        <source>emailLabel</source>
+        <translation>Email</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>passwordConfirmationLabel</source>
+        <translation>Password confirmation</translation>
+    </message>
+    <message>
+        <source>createAction</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantFetchRemoteConfiguration</name>
