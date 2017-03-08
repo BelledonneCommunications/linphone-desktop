@@ -48,40 +48,35 @@ function encodeTextToQmlRichFormat (text, options) {
     options = {}
   }
 
-  text = text
-    .replace(/&/g, '&#38;') // TODO: deal correctly with urls and `&m`
-    .replace(/</g, '\u2063&lt;')
-    .replace(/>/g, '\u2063&gt;')
-    .replace(/\r\n|\n/g, '<br/>')
-    .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
-    .replace(/ /g, '&nbsp;')
-    .replace(UriTools.URI_REGEX, function (match) {
-      // If it's a simple URL, transforms it in URI.
-      if (startsWith(match, 'www.')) {
-        match = 'http://' + match
-      }
+  var formattedText = execAll(UriTools.URI_REGEX, text, function (str, valid) {
+    if (!valid) {
+      return unscapeHtml(str).replace(/\r\n|\n/g, '<br/>')
+        .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
+        .replace(/ /g, '&nbsp;')
+    }
 
-      var ext = getExtension(match)
-      if (includes([ 'jpg', 'jpeg', 'gif', 'png', 'svg' ], ext)) {
-        images += '<a href="' + match + '"><img' + (
-          options.imagesWidth != null
-            ? ' width="' + options.imagesWidth + '"'
-            : ''
-        ) + (
-          options.imagesHeight != null
-            ? ' height="' + options.imagesHeight + '"'
-            : ''
-        ) + ' src="' + match + '" /></a>'
-      }
+    var uri = startsWith(str, 'www.') ? 'http://' + str : str
 
-      return '<a href="' + match + '">' + match + '</a>'
-    })
+    var ext = getExtension(str)
+    if (includes([ 'jpg', 'jpeg', 'gif', 'png', 'svg' ], ext)) {
+      images += '<a href="' + uri + '"><img' + (
+        options.imagesWidth != null
+          ? ' width="' + options.imagesWidth + '"'
+          : ''
+      ) + (
+        options.imagesHeight != null
+        ? ' height="' + options.imagesHeight + '"'
+        : ''
+      ) + ' src="' + str + '" /></a>'
+    }
 
+    return '<a href="' + uri + '">' + str + '</a>'
+  }).join('')
   if (images.length > 0) {
     images = '<div>' + images + '</div>'
   }
 
-  return images.concat('<p>' + text + '</p>')
+  return images.concat('<p>' + formattedText + '</p>')
 }
 
 function extractFirstUri (str) {
@@ -297,6 +292,40 @@ function dirname (str) {
   }
 
   return str2.slice(0, str2.lastIndexOf('/') + 1)
+}
+
+// -----------------------------------------------------------------------------
+
+function execAll (regex, text, cb) {
+  var index = 0
+  var arr = []
+  var match
+
+  if (!cb) {
+    cb = function (text) {
+      return text
+    }
+  }
+
+  while ((match = regex.exec(text))) {
+    var curIndex = match.index
+    var matchStr = match[0]
+
+    if (curIndex > index) {
+      arr.push(cb(text.substring(index, curIndex), false))
+    }
+
+    arr.push(cb(matchStr, true))
+
+    index = curIndex + matchStr.length
+  }
+
+  var length = text.length
+  if (index < length) {
+    arr.push(cb(text.substring(index, length)))
+  }
+
+  return arr
 }
 
 // -----------------------------------------------------------------------------
@@ -559,4 +588,14 @@ function times (n, cb, context) {
   }
 
   return arr
+}
+
+// -----------------------------------------------------------------------------
+
+function unscapeHtml (str) {
+  return str.replace(/&/g, '&amp;')
+  .replace(/</g, '\u2063&lt;')
+  .replace(/>/g, '\u2063&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#039;')
 }

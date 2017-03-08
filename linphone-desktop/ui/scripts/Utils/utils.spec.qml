@@ -145,8 +145,72 @@ TestCase {
 
   function test_ensureArray (data) {
     // Use `sort` because transform a object in array hasn't a
-    // guarantee order.
+    // guarantee ordering.
     compare(Utils.ensureArray(data.input).sort(), data.output.sort())
+  }
+
+  // ---------------------------------------------------------------------------
+
+  function test_execAll_data () {
+    return [
+      {
+        cb: function () {
+          return 'failed'
+        },
+        regex: /x/g,
+        text: '',
+
+        output: []
+      }, {
+        cb: function (c, valid) {
+          return !valid && c
+        },
+        regex: /x/g,
+        text: 'n',
+
+        output: [ 'n' ]
+      }, {
+        cb: function (c, valid) {
+          return valid && String.fromCharCode(c.charCodeAt(0) + 1)
+        },
+        regex: /[a-z]/g,
+        text: 'abcdefgh',
+
+        output: [ 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i' ]
+      }, {
+        cb: function (n, valid) {
+          return !valid ? '*' : Math.abs(n)
+        },
+        regex: /\d+/g,
+        text: 'abc 5 def -4 ghi 452-12',
+
+        output: [ '*', 5, '*', 4, '*', 452, '*', 12 ]
+      }, {
+        regex: /candy-shop/g,
+        text: 'candy-hop candy-shop cndy-shop candyshop',
+
+        output: [ 'candy-hop ', 'candy-shop', ' cndy-shop candyshop' ]
+      }, {
+        cb: function (text, valid) {
+          return valid ? text + ' Batman!' : text
+        },
+        regex: /(?:na)+\.\.\./g,
+        text: 'Nananana. Nanananananananana... Nanananananananana... Nananananananananananana...',
+
+        output: [
+          'Nananana. Na',
+          'nananananananana... Batman!',
+          ' Na',
+          'nananananananana... Batman!',
+          ' Na',
+          'nanananananananananana... Batman!'
+        ]
+      }
+    ]
+  }
+
+  function test_execAll (data) {
+    compare(Utils.execAll(data.regex, data.text, data.cb), data.output)
   }
 
   // ---------------------------------------------------------------------------

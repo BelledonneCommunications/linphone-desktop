@@ -20,8 +20,8 @@ var URI_UNRESERVED = '[\\w\-\._~]'
 
 // Level 1. --------------------------------------------------------------------
 
-var URI_HOST = '(' +
-  '(' +
+var URI_HOST = '(?:' +
+  '(?:' +
     URI_UNRESERVED +
     '|' + URI_PCT_ENCODED +
     '|' + URI_SUB_DELIMS +
@@ -90,7 +90,7 @@ var URI = (SUPPORTS_URL
 ) + URI_HIER_PART + '(?:' + '\\?' + URI_QUERY + ')?' +
 '(?:' + '#' + URI_FRAGMENT + ')?'
 
-var URI_REGEX = new RegExp(URI, 'g')
+var URI_REGEX = new RegExp('(' + URI + ')', 'g')
 
 // =============================================================================
 
