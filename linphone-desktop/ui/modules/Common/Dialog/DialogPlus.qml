@@ -32,6 +32,7 @@ Window {
     }
   }
 
+  flags: Qt.Tool | Qt.FramelessWindowHint
   modality: Qt.WindowModal
 
   // Handle normal windows close.
