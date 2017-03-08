@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import Linphone.Styles 1.0
 import Utils 1.0
 
 import App.Styles 1.0
@@ -120,6 +121,8 @@ ColumnLayout  {
   // ---------------------------------------------------------------------------
 
   Rectangle {
+    id: infoBar
+
     Layout.fillWidth: true
     Layout.preferredHeight: ContactEditStyle.bar.height
     color: ContactEditStyle.bar.color
@@ -183,9 +186,7 @@ ColumnLayout  {
           ActionButton {
             icon: 'history'
 
-            onClicked: window.setView('Conversation', {
-              sipAddress: contactEdit.sipAddress
-            })
+            onClicked: sipAddressesMenu.showMenu()
           }
         }
 
@@ -209,6 +210,22 @@ ColumnLayout  {
         }
       }
     }
+  }
+
+  // ---------------------------------------------------------------------------
+
+  SipAddressesMenu {
+    id: sipAddressesMenu
+
+    relativeTo: infoBar
+    relativeX: infoBar.width - SipAddressesMenuStyle.entry.width
+    relativeY: infoBar.height
+
+    sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
+
+    onSipAddressClicked: window.setView('Conversation', {
+      sipAddress: sipAddress
+    })
   }
 
   // ---------------------------------------------------------------------------
