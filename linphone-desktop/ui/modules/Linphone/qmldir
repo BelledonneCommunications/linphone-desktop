@@ -6,29 +6,23 @@ module Linphone
 
 # Components -------------------------------------------------------------------
 
-# Account
 AccountStatus       1.0 Account/AccountStatus.qml
 
-# CardBlock
 CardBlock           1.0 CardBlock.qml
 
-# Calls
 Calls               1.0 Calls/Calls.qml
 
-# Chat
 Chat                1.0 Chat/Chat.qml
 
-# Contact
 Avatar              1.0 Contact/Avatar.qml
 Contact             1.0 Contact/Contact.qml
 ContactDescription  1.0 Contact/ContactDescription.qml
 
-# Presence
+SipAddressesMenu    1.0 Menus/SipAddressesMenu.qml
+
 PresenceLevel       1.0 Presence/PresenceLevel.qml
 PresenceString      1.0 Presence/PresenceString.qml
 
-# SmartSearchBar
 SmartSearchBar      1.0 SmartSearchBar.qml
 
-# Timeline
 Timeline            1.0 Timeline.qml

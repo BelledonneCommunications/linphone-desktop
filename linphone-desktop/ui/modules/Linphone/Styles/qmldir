@@ -18,6 +18,8 @@ singleton ContactDescriptionStyle              1.0 Contact/ContactDescriptionSty
 singleton ContactStyle                         1.0 Contact/ContactStyle.qml
 singleton MessagesCounterStyle                 1.0 Contact/MessagesCounterStyle.qml
 
+singleton SipAddressesMenuStyle                1.0 Menus/SipAddressesMenuStyle.qml
+
 singleton NotificationStyle                    1.0 Notifications/NotificationStyle.qml
 singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationReceivedCallStyle.qml
 singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml

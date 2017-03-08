@@ -1,0 +1,116 @@
+import QtQuick 2.7
+
+import Common 1.0
+import Linphone.Styles 1.0
+
+// =============================================================================
+
+Item {
+  id: sipAddressesMenu
+
+  // ---------------------------------------------------------------------------
+
+  property alias launcher: menu.launcher
+  property alias relativeTo: menu.relativeTo
+  property alias relativeX: menu.relativeX
+  property alias relativeY: menu.relativeY
+
+  property var sipAddresses: []
+
+  // ---------------------------------------------------------------------------
+
+  function showMenu () {
+    var length = sipAddresses.length
+    if (!length) {
+      return
+    }
+
+    if (length === 1) {
+      return sipAddressesMenu.sipAddressClicked(sipAddresses[0])
+    }
+
+    menu.showMenu()
+  }
+
+  function _fillModel () {
+    model.clear()
+
+    sipAddresses.forEach(function (sipAddress) {
+      model.append({ $sipAddress: sipAddress })
+    })
+  }
+
+  // ---------------------------------------------------------------------------
+
+  signal sipAddressClicked (string sipAddress)
+
+  // ---------------------------------------------------------------------------
+
+  onSipAddressesChanged: _fillModel()
+
+  // ---------------------------------------------------------------------------
+
+  DropDownDynamicMenu {
+    id: menu
+
+    parent: sipAddressesMenu.parent
+
+    entryHeight: SipAddressesMenuStyle.entry.height
+    maxMenuHeight: SipAddressesMenuStyle.maxHeight
+    width: SipAddressesMenuStyle.entry.width
+
+    ScrollableListView {
+      id: list
+
+      anchors.fill: parent
+      spacing: SipAddressesMenuStyle.spacing
+
+      model: ListModel {
+        id: model
+
+        Component.onCompleted: _fillModel()
+      }
+
+      delegate: Rectangle {
+        height: menu.entryHeight
+        width: parent.width
+
+        color: mouseArea.pressed
+          ? SipAddressesMenuStyle.entry.color.pressed
+          : (
+            mouseArea.containsMouse
+              ? SipAddressesMenuStyle.entry.color.hovered
+              : SipAddressesMenuStyle.entry.color.normal
+          )
+
+        Text {
+          anchors {
+            left: parent.left
+            leftMargin: SipAddressesMenuStyle.entry.leftMargin
+            right: parent.right
+            rightMargin: SipAddressesMenuStyle.entry.rightMargin
+          }
+
+          color: SipAddressesMenuStyle.entry.text.color
+          elide: Text.ElideRight
+          font.pointSize: SipAddressesMenuStyle.entry.text.fontSize
+          height: parent.height
+          text: $sipAddress
+          verticalAlignment: Text.AlignVCenter
+        }
+
+        MouseArea {
+          id: mouseArea
+
+          anchors.fill: parent
+          hoverEnabled: true
+
+          onClicked: {
+            menu.hideMenu()
+            sipAddressesMenu.sipAddressClicked($sipAddress)
+          }
+        }
+      }
+    }
+  }
+}

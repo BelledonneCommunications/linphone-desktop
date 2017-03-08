@@ -1,0 +1,29 @@
+pragma Singleton
+import QtQuick 2.7
+
+import Common 1.0
+
+// =============================================================================
+
+QtObject {
+  property int spacing: 1
+  property int maxHeight: 164
+
+  property QtObject entry: QtObject {
+    property int leftMargin: 18
+    property int rightMargin: 8
+    property int height: 40
+    property int width: 300
+
+    property QtObject color: QtObject {
+      property color hovered: Colors.j
+      property color normal: Colors.g
+      property color pressed: Colors.i
+    }
+
+    property QtObject text: QtObject {
+      property color color: Colors.k
+      property int fontSize: 10
+    }
+  }
+}

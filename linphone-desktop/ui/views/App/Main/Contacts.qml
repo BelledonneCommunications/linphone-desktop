@@ -131,19 +131,17 @@ ColumnLayout {
 
                 ActionButton {
                   icon: 'video_call'
-                  onClicked: CallsListModel.launchVideoCall($contact.vcard.sipAddresses[0]) // FIXME: Display menu if many addresses.
+                  onClicked: actions.itemAt(0).showMenu()
                 }
 
                 ActionButton {
                   icon: 'call'
-                  onClicked: CallsListModel.launchAudioCall($contact.vcard.sipAddresses[0]) // FIXME: Display menu if many addresses.
+                  onClicked: actions.itemAt(1).showMenu()
                 }
 
                 ActionButton {
                   icon: 'chat'
-                  onClicked: window.setView('Conversation', {
-                    sipAddress: $contact.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
-                  })
+                  onClicked: actions.itemAt(2).showMenu()
                 }
               }
 
@@ -157,6 +155,33 @@ ColumnLayout {
 
                 onClicked: _removeContact($contact)
               }
+            }
+          }
+
+          // -------------------------------------------------------------------
+
+          Repeater {
+            id: actions
+
+            readonly property var handlers: [
+              CallsListModel.launchVideoCall,
+              CallsListModel.launchAudioCall,
+              function (sipAddress) {
+                window.setView('Conversation', {
+                  sipAddress: sipAddress
+                })
+              }
+            ]
+
+            model: handlers
+
+            SipAddressesMenu {
+              relativeTo: loader
+              relativeY: loader.height
+
+              sipAddresses: $contact.vcard.sipAddresses
+
+              onSipAddressClicked: actions.handlers[index](sipAddress)
             }
           }
 
@@ -185,7 +210,7 @@ ColumnLayout {
               hoverEnabled: true
 
               onClicked: window.setView('ContactEdit', {
-                sipAddress: $contact.vcard.sipAddresses[0] // FIXME: Display menu if many addresses.
+                sipAddress: $contact.vcard.sipAddresses[0]
               })
             }
 
