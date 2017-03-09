@@ -51,8 +51,8 @@ function encodeTextToQmlRichFormat (text, options) {
   var formattedText = execAll(UriTools.URI_REGEX, text, function (str, valid) {
     if (!valid) {
       return unscapeHtml(str).replace(/\r\n|\n/g, '<br/>')
-        .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp;')
-        .replace(/ /g, '&nbsp;')
+        .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp; ')
+        .replace(/ /g, '&nbsp; ')
     }
 
     var uri = startsWith(str, 'www.') ? 'http://' + str : str

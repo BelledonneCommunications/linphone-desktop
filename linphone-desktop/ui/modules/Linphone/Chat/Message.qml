@@ -46,6 +46,7 @@ Item {
       left: container.left
       right: container.right
     }
+
     clip: true
     padding: ChatStyle.entry.message.padding
     readOnly: true
@@ -58,7 +59,7 @@ Item {
     // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
     textFormat: Text.RichText // To supports links and imgs.
-    wrapMode: TextEdit.WordWrap
+    wrapMode: TextEdit.Wrap
 
     onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
     onLinkActivated: Qt.openUrlExternally(link)
@@ -76,6 +77,10 @@ Item {
         : Qt.IBeamCursor
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // Extra content.
+  // ---------------------------------------------------------------------------
 
   Item {
     id: content
