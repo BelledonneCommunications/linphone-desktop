@@ -12,33 +12,14 @@ Item {
   // ---------------------------------------------------------------------------
 
   property alias backgroundColor: rectangle.color
-  property alias color: text.color
-  property alias fontSize: text.font.pointSize
+  property alias color: message.color
+  property alias fontSize: message.font.pointSize
 
   default property alias _content: content.data
 
   // ---------------------------------------------------------------------------
 
-  function _handleHoveredLink (hoveredLink) {
-    // Can be the `invertedMouseArea` of other message.
-    // Or another mouse area. Dangerous?
-    var mouseArea = Utils.find(
-      Utils.getTopParent(container).children,
-      function (element) {
-        return Utils.qmlTypeof(element, 'QQuickMouseArea')
-      }
-    )
-
-    if (mouseArea != null) {
-      mouseArea.cursorShape = hoveredLink
-        ? Qt.PointingHandCursor
-        : Qt.ArrowCursor
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-
-  implicitHeight: text.contentHeight + text.padding * 2
+  implicitHeight: message.contentHeight + message.padding * 2
 
   Rectangle {
     id: rectangle
@@ -46,14 +27,40 @@ Item {
     height: parent.height
     radius: ChatStyle.entry.message.radius
     width: (
-      text.contentWidth < parent.width
-        ? text.contentWidth
+      message.contentWidth < parent.width
+        ? message.contentWidth
         : parent.width
-    ) + text.padding * 2
+    ) + message.padding * 2
   }
 
   TextEdit {
-    id: text
+    id: message
+
+    // See: `ensureVisible` on http://doc.qt.io/qt-5/qml-qtquick-textedit.html
+    function ensureVisible (cursor) {
+      // Case 1: No focused.
+      if (!message.activeFocus) {
+        return
+      }
+
+      // Case 2: Scroll up.
+      var contentItem = chat.contentItem
+      var contentY = chat.contentY
+      var messageY = message.mapToItem(contentItem, 0, 0).y + cursor.y
+
+      if (contentY >= messageY) {
+        chat.contentY = messageY
+        return
+      }
+
+      // Case 3: Scroll down.
+      var chatHeight = chat.height
+      var cursorHeight = cursor.height
+
+      if (contentY + chatHeight <= messageY + cursorHeight) {
+        chat.contentY = messageY + cursorHeight - chatHeight
+      }
+    }
 
     anchors {
       left: container.left
@@ -73,20 +80,12 @@ Item {
     textFormat: Text.RichText // To supports links and imgs.
     wrapMode: TextEdit.Wrap
 
-    onHoveredLinkChanged: _handleHoveredLink(hoveredLink)
+    onCursorRectangleChanged: ensureVisible(cursorRectangle)
     onLinkActivated: Qt.openUrlExternally(link)
 
-    InvertedMouseArea {
-      anchors.fill: parent
-      enabled: parent.activeFocus
+    onActiveFocusChanged: deselect()
 
-      onPressed: {
-        parent.deselect()
-        parent.focus = false
-      }
-    }
-
-    // Used if no InvertedMouseArea exists.
+    // Handle hovered link.
     MouseArea {
       id: mouseArea
 
@@ -94,7 +93,7 @@ Item {
       acceptedButtons: Qt.NoButton
       cursorShape: parent.hoveredLink
         ? Qt.PointingHandCursor
-        : Qt.ArrowCursor
+        : Qt.IBeamCursor
     }
   }
 
