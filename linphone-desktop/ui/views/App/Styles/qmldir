@@ -4,22 +4,22 @@ module App.Styles
 
 # Views styles -----------------------------------------------------------------
 
-singleton AssistantWindowStyle                   1.0 AssistantWindowStyle.qml
-singleton InviteFriendsWindowStyle               1.0 InviteFriendsWindowStyle.qml
 singleton ManageAccountsWindowStyle              1.0 ManageAccountsWindowStyle.qml
-
-singleton AssistantAbstractViewStyle             1.0 Assistant/AssistantAbstractViewStyle.qml
-singleton AssistantCreateLinphoneSipAccountStyle 1.0 Assistant/AssistantCreateLinphoneSipAccountStyle.qml
-singleton AssistantHomeStyle                     1.0 Assistant/AssistantHomeStyle.qml
-singleton AssistantUseLinphoneSipAccountStyle    1.0 Assistant/AssistantUseLinphoneSipAccountStyle.qml
 
 singleton CallStyle                              1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                       1.0 Calls/CallsWindowStyle.qml
 
+singleton AssistantAbstractViewStyle             1.0 Main/Assistant/AssistantAbstractViewStyle.qml
+singleton AssistantCreateLinphoneSipAccountStyle 1.0 Main/Assistant/AssistantCreateLinphoneSipAccountStyle.qml
+singleton AssistantHomeStyle                     1.0 Main/Assistant/AssistantHomeStyle.qml
+singleton AssistantUseLinphoneSipAccountStyle    1.0 Main/Assistant/AssistantUseLinphoneSipAccountStyle.qml
+
+singleton AssistantStyle                         1.0 Main/AssistantStyle.qml
 singleton ContactEditStyle                       1.0 Main/ContactEditStyle.qml
 singleton ContactsStyle                          1.0 Main/ContactsStyle.qml
 singleton ConversationStyle                      1.0 Main/ConversationStyle.qml
 singleton HomeStyle                              1.0 Main/HomeStyle.qml
+singleton InviteFriendsStyle                     1.0 Main/InviteFriendsStyle.qml
 singleton MainWindowMenuBarStyle                 1.0 Main/MainWindowMenuBarStyle.qml
 singleton MainWindowStyle                        1.0 Main/MainWindowStyle.qml
 

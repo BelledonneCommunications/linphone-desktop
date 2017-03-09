@@ -29,6 +29,13 @@
     </message>
 </context>
 <context>
+    <name>Assistant</name>
+    <message>
+        <source>assistantTitle</source>
+        <translation type="obsolete">Linphone - Assistant</translation>
+    </message>
+</context>
+<context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
@@ -86,7 +93,7 @@
     <name>AssistantFetchRemoteConfiguration</name>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation>Télécharger une configuration</translation>
+        <translation>TÉLÉCHARGER UNE CONFIGURATION</translation>
     </message>
     <message>
         <source>urlLabel</source>
@@ -190,7 +197,7 @@
     <name>AssistantWindow</name>
     <message>
         <source>assistantTitle</source>
-        <translation>Linphone - Assistant</translation>
+        <translation type="vanished">Linphone - Assistant</translation>
     </message>
 </context>
 <context>
@@ -606,54 +613,54 @@ Url du serveur non configurée.</translation>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="vanished">Entrer l&apos;adresse email de votre ami</translation>
+        <translation>Entrer l&apos;adresse email de votre ami</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="vanished">Modifier l&apos;invitation qui sera envoyée</translation>
+        <translation>Modifier l&apos;invitation qui sera envoyée</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="vanished">ANNULER</translation>
+        <translation>ANNULER</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="vanished">CONFIRMER</translation>
+        <translation>CONFIRMER</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="vanished">Linphone - Inviter des amis</translation>
+        <translation>Inviter des amis</translation>
+    </message>
+    <message>
+        <source>defaultMessage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>defaultSubject</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InviteFriendsWindow</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ANNULER</translation>
+        <translation type="obsolete">ANNULER</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished">CONFIRMER</translation>
-    </message>
-    <message>
-        <source>defaultSubject</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">CONFIRMER</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished">Linphone - Inviter des amis</translation>
+        <translation type="obsolete">Linphone - Inviter des amis</translation>
     </message>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished">Entrer l&apos;adresse email de votre ami</translation>
+        <translation type="obsolete">Entrer l&apos;adresse email de votre ami</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished">Modifier l&apos;invitation qui sera envoyée</translation>
-    </message>
-    <message>
-        <source>defaultMessage</source>
-        <translation type="unfinished"></translation>
+        <translation type="obsolete">Modifier l&apos;invitation qui sera envoyée</translation>
     </message>
 </context>
 <context>

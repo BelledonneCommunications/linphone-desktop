@@ -7,7 +7,7 @@ import App.Styles 1.0
 
 // =============================================================================
 
-ColumnLayout {
+Item {
   id: view
 
   // ---------------------------------------------------------------------------
@@ -26,15 +26,15 @@ ColumnLayout {
   height: stack.height
   width: stack.width
 
-  spacing: AssistantAbstractViewStyle.spacing
-
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Info.
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Column {
-    Layout.fillWidth: true
+    anchors.centerIn: parent
+
     spacing: AssistantAbstractViewStyle.info.spacing
+    width: parent.width
 
     Text {
       id: title
@@ -60,34 +60,39 @@ ColumnLayout {
       font.pointSize: AssistantAbstractViewStyle.info.description.fontSize
 
       horizontalAlignment: Text.AlignHCenter
-      visible: text.length > 0
       width: parent.width
+    }
+
+    // -------------------------------------------------------------------------
+    // Content.
+    // -------------------------------------------------------------------------
+
+    Item {
+      id: content
+
+      anchors.horizontalCenter: parent.horizontalCenter
+      height: AssistantAbstractViewStyle.content.height
+      width: AssistantAbstractViewStyle.content.width
     }
   }
 
-  // --------------------------------------------------------------------------
-  // Content.
-  // --------------------------------------------------------------------------
-
-  Item {
-    id: content
-
-    Layout.alignment: Qt.AlignHCenter
-    Layout.fillHeight: true
-    Layout.preferredWidth: AssistantAbstractViewStyle.content.width
-  }
-
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   // Nav buttons.
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   Row {
-    Layout.alignment: Qt.AlignHCenter
+    id: buttons
+
+    anchors {
+      bottom: parent.bottom
+      horizontalCenter: parent.horizontalCenter
+    }
+
     spacing: AssistantAbstractViewStyle.buttons.spacing
 
     TextButtonA {
       text: qsTr('back')
-      onClicked: window.popView()
+      onClicked: assistant.popView()
     }
 
     TextButtonB {

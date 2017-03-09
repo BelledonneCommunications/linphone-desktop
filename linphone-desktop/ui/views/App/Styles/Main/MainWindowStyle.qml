@@ -7,8 +7,8 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 QtObject {
-  property int minimumHeight: 480
-  property int minimumWidth: 680
+  property int minimumHeight: 610
+  property int minimumWidth: 950
   property int width: 950
   property string title: 'Linphone'
 

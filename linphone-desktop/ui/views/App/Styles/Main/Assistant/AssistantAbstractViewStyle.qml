@@ -6,24 +6,26 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
+  property QtObject buttons: QtObject {
+    property int spacing: 10
+  }
+
+  property QtObject content: QtObject {
+    property int height: 375
+    property int width: 400
+  }
+
   property QtObject info: QtObject {
-    property int iconSize: 150
+    property int spacing: 20
 
     property QtObject description: QtObject {
       property color color: Colors.g
-      property int height: 40
       property int fontSize: 10
     }
 
     property QtObject title: QtObject {
       property color color: Colors.g
-      property int height: 40
       property int fontSize: 11
     }
-  }
-
-  property QtObject buttons: QtObject {
-    property int height: 90
-    property int spacing: 5
   }
 }

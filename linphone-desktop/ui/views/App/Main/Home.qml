@@ -36,7 +36,7 @@ Rectangle {
         $component: 'button'
         $componentText: qsTr('inviteButton')
         $description: qsTr('inviteDescription')
-        $window: 'InviteFriendsWindow'
+        $view: 'InviteFriends'
         $icon: 'home_invite_friends'
         $title: qsTr('inviteTitle')
       }
@@ -47,7 +47,7 @@ Rectangle {
         $description: qsTr('accountAssistantDescription')
         $icon: 'home_account_assistant'
         $title: qsTr('accountAssistantTitle')
-        $window: 'AssistantWindow'
+        $view: 'Assistant'
       }
     }
 
@@ -64,7 +64,7 @@ Rectangle {
 
           TextButtonB {
             text: $componentText
-            onClicked: Utils.openWindow($window, window)
+            onClicked: window.setView($view)
           }
         }
 

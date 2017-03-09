@@ -14,41 +14,54 @@ ColumnLayout {
   // Info.
   // ---------------------------------------------------------------------------
 
-  Icon {
-    Layout.alignment: Qt.AlignHCenter
-
-    icon: 'home_account_assistant'
-    iconSize: AssistantHomeStyle.info.iconSize
-  }
-
-  Text {
+  Item {
+    Layout.fillHeight: true
     Layout.fillWidth: true
-    Layout.preferredHeight: AssistantHomeStyle.info.title.height
 
-    color: AssistantHomeStyle.info.title.color
-    elide: Text.ElideRight
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
+    Column {
+      anchors.verticalCenter: parent.verticalCenter
+      spacing: 0
 
-    font {
-      bold: true
-      pointSize: AssistantHomeStyle.info.title.fontSize
+      height: AssistantHomeStyle.info.height
+      width: parent.width
+
+      Icon {
+        anchors.horizontalCenter: parent.horizontalCenter
+
+        icon: 'home_account_assistant'
+        iconSize: AssistantHomeStyle.info.iconSize
+      }
+
+      Text {
+        height: AssistantHomeStyle.info.title.height
+        width: parent.width
+
+        color: AssistantHomeStyle.info.title.color
+        elide: Text.ElideRight
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+
+        font {
+          bold: true
+          pointSize: AssistantHomeStyle.info.title.fontSize
+        }
+
+        text: qsTr('homeTitle')
+      }
+
+      Text {
+        height: AssistantHomeStyle.info.description.height
+        width: parent.width
+
+        color: AssistantHomeStyle.info.description.color
+        elide: Text.ElideRight
+        font.pointSize: AssistantHomeStyle.info.description.fontSize
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+
+        text: qsTr('homeDescription')
+      }
     }
-
-    text: qsTr('homeTitle')
-  }
-
-  Text {
-    Layout.fillWidth: true
-    Layout.preferredHeight: AssistantHomeStyle.info.description.height
-
-    color: AssistantHomeStyle.info.description.color
-    elide: Text.ElideRight
-    font.pointSize: AssistantHomeStyle.info.description.fontSize
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
-
-    text: qsTr('homeDescription')
   }
 
   // ---------------------------------------------------------------------------
@@ -58,7 +71,9 @@ ColumnLayout {
   GridView {
     id: buttons
 
+    Layout.alignment: Qt.AlignHCenter
     Layout.fillWidth: true
+    Layout.maximumWidth: AssistantHomeStyle.buttons.maxWidth
     Layout.preferredHeight: AssistantHomeStyle.buttons.height
 
     cellHeight: height / 2
@@ -76,7 +91,7 @@ ColumnLayout {
 
         text: $text
 
-        onClicked: window.pushView($view)
+        onClicked: assistant.pushView($view)
       }
     }
 

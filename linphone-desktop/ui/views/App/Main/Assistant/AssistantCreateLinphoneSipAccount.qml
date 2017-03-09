@@ -147,7 +147,7 @@ AssistantAbstractView {
       height: AssistantCreateLinphoneSipAccountStyle.buttons.button.height
       width: parent.width
 
-      onClicked: window.pushView(phoneNumberView)
+      onClicked: assistant.pushView(phoneNumberView)
     }
 
     TextButtonA {
@@ -156,7 +156,7 @@ AssistantAbstractView {
       height: AssistantCreateLinphoneSipAccountStyle.buttons.button.height
       width: parent.width
 
-      onClicked: window.pushView(emailAddressView)
+      onClicked: assistant.pushView(emailAddressView)
     }
   }
 }
