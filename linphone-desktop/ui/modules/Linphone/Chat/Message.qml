@@ -4,6 +4,8 @@ import Common 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
+import 'Message.js' as Logic
+
 // =============================================================================
 
 Item {
@@ -33,34 +35,12 @@ Item {
     ) + message.padding * 2
   }
 
+  // ---------------------------------------------------------------------------
+  // Message.
+  // ---------------------------------------------------------------------------
+
   TextEdit {
     id: message
-
-    // See: `ensureVisible` on http://doc.qt.io/qt-5/qml-qtquick-textedit.html
-    function ensureVisible (cursor) {
-      // Case 1: No focused.
-      if (!message.activeFocus) {
-        return
-      }
-
-      // Case 2: Scroll up.
-      var contentItem = chat.contentItem
-      var contentY = chat.contentY
-      var messageY = message.mapToItem(contentItem, 0, 0).y + cursor.y
-
-      if (contentY >= messageY) {
-        chat.contentY = messageY
-        return
-      }
-
-      // Case 3: Scroll down.
-      var chatHeight = chat.height
-      var cursorHeight = cursor.height
-
-      if (contentY + chatHeight <= messageY + cursorHeight) {
-        chat.contentY = messageY + cursorHeight - chatHeight
-      }
-    }
 
     anchors {
       left: container.left
@@ -78,9 +58,9 @@ Item {
     // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
     textFormat: Text.RichText // To supports links and imgs.
-    wrapMode: TextEdit.Wrap
+    wrapMode: TextEdit.WordWrap
 
-    onCursorRectangleChanged: ensureVisible(cursorRectangle)
+    onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
     onLinkActivated: Qt.openUrlExternally(link)
 
     onActiveFocusChanged: deselect()
