@@ -9,7 +9,7 @@ import App.Styles 1.0
 // =============================================================================
 
 Item {
-	id: assistant
+  id: assistant
 
   readonly property string viewsPath: 'qrc:/ui/views/App/Main/Assistant/'
 
@@ -54,8 +54,8 @@ Item {
       YAnimator {
         duration: AssistantStyle.stackAnimation.duration
         easing.type: Easing.OutBack
-				from: stack.height + AssistantStyle.bottomMargin
-				to: 0
+        from: stack.height + AssistantStyle.bottomMargin
+        to: 0
       }
     }
 
@@ -66,7 +66,7 @@ Item {
         from: 0
         to: stack.width + AssistantStyle.rightMargin
       }
-		}
+    }
 
     pushEnter: Transition {
       XAnimator {
@@ -81,9 +81,9 @@ Item {
       YAnimator {
         duration: AssistantStyle.stackAnimation.duration
         easing.type: Easing.OutBack
-				from: 0
-				to: stack.height + AssistantStyle.bottomMargin
+        from: 0
+        to: stack.height + AssistantStyle.bottomMargin
       }
-		}
+    }
   }
 }

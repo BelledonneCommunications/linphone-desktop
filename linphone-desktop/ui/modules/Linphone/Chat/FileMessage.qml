@@ -27,8 +27,8 @@ Row {
         height: ChatStyle.entry.message.incoming.avatarSize
         width: ChatStyle.entry.message.incoming.avatarSize
 
-        image: _contactObserver.contact ? _contactObserver.contact.avatar : ''
-        username: LinphoneUtils.getContactUsername(_contactObserver.contact || proxyModel.sipAddress)
+        image: chat.contactObserver.contact ? chat.contactObserver.contact.avatar : ''
+        username: LinphoneUtils.getContactUsername(chat.contactObserver.contact || proxyModel.sipAddress)
       }
     }
 

@@ -5,15 +5,13 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
+
+import 'Chat.js' as Logic
 
 // =============================================================================
 
 Rectangle {
   property alias proxyModel: chat.model
-
-  property bool _bindToEnd: false
-  property var _contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -32,29 +30,16 @@ Rectangle {
 
       // -----------------------------------------------------------------------
 
-      property bool _tryToLoadMoreEntries: true
-
-      // -----------------------------------------------------------------------
-
-      function _loadMoreEntries () {
-        if (atYBeginning && !_tryToLoadMoreEntries) {
-          _tryToLoadMoreEntries = true
-          positionViewAtBeginning()
-          proxyModel.loadMoreEntries()
-        }
-      }
-
-      function _initView () {
-        _tryToLoadMoreEntries = false
-        _bindToEnd = true
-
-        positionViewAtEnd()
-      }
+      property bool bindToEnd: false
+      property bool tryToLoadMoreEntries: true
+      property var contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
 
       // -----------------------------------------------------------------------
 
       Layout.fillHeight: true
       Layout.fillWidth: true
+
+      highlightFollowsCurrentItem: false
 
       section {
         criteria: ViewSection.FullString
@@ -64,32 +49,12 @@ Rectangle {
 
       // -----------------------------------------------------------------------
 
-      Component.onCompleted: {
-        function goToEnd () {
-          return Utils.setTimeout(chat, 100, function () {
-            if (_bindToEnd) {
-              positionViewAtEnd()
-            }
+      Component.onCompleted: Logic.initView()
 
-            return goToEnd()
-          })
-        }
-        goToEnd()
-
-        // First render.
-        _initView()
-      }
-
-      // -----------------------------------------------------------------------
-
-      onMovementStarted: _bindToEnd = false
-      onMovementEnded: {
-        if (atYEnd) {
-          _bindToEnd = true
-        }
-      }
-
-      onContentYChanged: _loadMoreEntries()
+      onContentYChanged: Logic.loadMoreEntries()
+      onCurrentItemChanged: Logic.handleCurrentItemChanged(currentItem)
+      onMovementEnded: Logic.handleMovementEnded()
+      onMovementStarted: Logic.handleMovementStarted()
 
       // -----------------------------------------------------------------------
 
@@ -99,12 +64,9 @@ Rectangle {
         // When the view is changed (for example `Calls` -> `Messages`),
         // the position is set at end and it can be possible to load
         // more entries.
-        onEntryTypeFilterChanged: chat._initView()
-
-        onMoreEntriesLoaded: {
-          chat.positionViewAtIndex(n - 1, ListView.Beginning)
-          chat._tryToLoadMoreEntries = false
-        }
+        onEntryTypeFilterChanged: Logic.initView()
+        onMoreEntriesLoaded: Logic.handleMoreEntriesLoaded(n)
+        onDataChanged: Logic.handleDataChanged(topLeft, bottomRight)
       }
 
       // -----------------------------------------------------------------------
@@ -171,42 +133,15 @@ Rectangle {
           leftMargin: ChatStyle.entry.leftMargin
           right: parent ? parent.right : undefined
 
-          // Ugly. I admit it, but it exists a problem, without these
-          // lines the extra content message is truncated.
-          // I have no other solution at this moment with `anchors`
-          // properties... The messages use the `implicitWidth/Height`
-          // and `width/Height` attrs and is not easy to found a fix.
           rightMargin: ChatStyle.entry.deleteIconSize +
             ChatStyle.entry.message.extraContent.spacing +
             ChatStyle.entry.message.extraContent.rightMargin +
             ChatStyle.entry.message.extraContent.leftMargin +
             ChatStyle.entry.message.outgoing.sendIconSize
         }
+
         color: ChatStyle.color
         implicitHeight: layout.height + ChatStyle.entry.bottomMargin
-
-        // ---------------------------------------------------------------------
-
-        // Avoid the use of explicit qrc paths.
-        Component {
-          id: event
-          Event {}
-        }
-
-        Component {
-          id: incomingMessage
-          IncomingMessage {}
-        }
-
-        Component {
-          id: outgoingMessage
-          OutgoingMessage {}
-        }
-
-        Component {
-          id: fileMessage
-          FileMessage {}
-        }
 
         // ---------------------------------------------------------------------
 
@@ -228,29 +163,22 @@ Rectangle {
               Layout.alignment: Qt.AlignTop
               Layout.preferredHeight: ChatStyle.entry.lineHeight
               Layout.preferredWidth: ChatStyle.entry.time.width
+
               color: ChatStyle.entry.time.color
               font.pointSize: ChatStyle.entry.time.fontSize
+
               text: $chatEntry.timestamp.toLocaleString(
                 Qt.locale(App.locale),
                 'hh:mm'
               )
+
               verticalAlignment: Text.AlignVCenter
             }
 
             // Display content.
             Loader {
               Layout.fillWidth: true
-              sourceComponent: {
-                if ($chatEntry.fileName) {
-                  return fileMessage
-                }
-
-                if ($chatEntry.type === ChatModel.CallEntry) {
-                  return event
-                }
-
-                return $chatEntry.isOutgoing ? outgoingMessage : incomingMessage
-              }
+              source: Logic.getComponentFromEntry($chatEntry)
             }
           }
         }
@@ -263,27 +191,22 @@ Rectangle {
 
     Borders {
       Layout.fillWidth: true
-      Layout.preferredHeight: ChatStyle.sendArea.height +
-      ChatStyle.sendArea.border.width
+      Layout.preferredHeight: ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+
       borderColor: ChatStyle.sendArea.border.color
       topWidth: ChatStyle.sendArea.border.width
 
       DroppableTextArea {
+        id: textArea
+
         anchors.fill: parent
+
         dropEnabled: SettingsModel.fileTransferUrl.length > 0
         dropDisabledReason: qsTr('noFileTransferUrl')
         placeholderText: qsTr('newMessagePlaceholder')
 
-        onDropped: {
-          _bindToEnd = true
-          files.forEach(proxyModel.sendFileMessage)
-        }
-
-        onValidText: {
-          this.text = ''
-          _bindToEnd = true
-          proxyModel.sendMessage(text)
-        }
+        onDropped: Logic.handleFilesDropped(files)
+        onValidText: Logic.sendMessage(text)
       }
     }
   }
