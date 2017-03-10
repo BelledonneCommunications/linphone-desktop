@@ -50,9 +50,7 @@ function encodeTextToQmlRichFormat (text, options) {
 
   var formattedText = execAll(UriTools.URI_REGEX, text, function (str, valid) {
     if (!valid) {
-      return unscapeHtml(str).replace(/\r\n|\n/g, '<br/>')
-        .replace(/\t/g, '&nbsp;&nbsp;&nbsp;&nbsp; ')
-        .replace(/ /g, '&nbsp; ')
+      return unscapeHtml(str)
     }
 
     var uri = startsWith(str, 'www.') ? 'http://' + str : str
@@ -76,7 +74,7 @@ function encodeTextToQmlRichFormat (text, options) {
     images = '<div>' + images + '</div>'
   }
 
-  return images.concat('<p>' + formattedText + '</p>')
+  return images.concat('<p style="white-space:pre-wrap;">' + formattedText + '</p>')
 }
 
 function extractFirstUri (str) {

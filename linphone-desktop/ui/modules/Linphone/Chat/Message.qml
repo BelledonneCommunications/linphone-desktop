@@ -59,7 +59,7 @@ Item {
     // See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
     // and http://doc.qt.io/qt-5/richtext-html-subset.html
     textFormat: Text.RichText // To supports links and imgs.
-    wrapMode: TextEdit.Wrap
+    wrapMode: TextEdit.WordWrap
 
     onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
     onLinkActivated: Qt.openUrlExternally(link)
