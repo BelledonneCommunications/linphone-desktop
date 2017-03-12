@@ -12,8 +12,10 @@ import App.Styles 1.0
 Rectangle {
   color: HomeStyle.color
 
-  ScrollableListView {
+  ListView {
     anchors.horizontalCenter: parent.horizontalCenter
+    boundsBehavior: Flickable.StopAtBounds
+    clip: true
     orientation: ListView.Horizontal
     spacing: HomeStyle.spacing
 

@@ -52,7 +52,6 @@ Rectangle {
       Component.onCompleted: Logic.initView()
 
       onContentYChanged: Logic.loadMoreEntries()
-      onCurrentItemChanged: Logic.handleCurrentItemChanged(currentItem)
       onMovementEnded: Logic.handleMovementEnded()
       onMovementStarted: Logic.handleMovementStarted()
 

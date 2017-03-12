@@ -28,22 +28,6 @@ function getComponentFromEntry (chatEntry) {
   return chatEntry.isOutgoing ? 'OutgoingMessage.qml' : 'IncomingMessage.qml'
 }
 
-function handleCurrentItemChanged (currentItem) {
-  // Go to last item only!
-  if (!chat.bindToEnd || !currentItem || chat.currentIndex + 1 !== chat.count) {
-    return
-  }
-
-  var chatHeight = chat.height
-  var messageY = currentItem.mapToItem(chat.contentItem, 0, 0).y
-  var messageHeight = currentItem.height
-  console.log(chat.contentY, chatHeight, messageY)
-  if (chat.contentY <= messageY) {
-    chat.contentY = messageY
-  }
-  chat.currentIndex = -1
-}
-
 function handleFilesDropped (files) {
   chat.bindToEnd = true
   files.forEach(proxyModel.sendFileMessage)
@@ -69,7 +53,7 @@ function handleDataChanged (_, bottomRight) {
   var index = bottomRight.row
 
   if (chat.bindToEnd && index + 1 === n) {
-    chat.currentIndex = index
+    chat.positionViewAtEnd()
   }
 }
 
