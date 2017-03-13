@@ -255,6 +255,8 @@ CallModel::CallStatus CallModel::getStatus () const {
   return m_linphone_call->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
 }
 
+// -----------------------------------------------------------------------------
+
 int CallModel::getDuration () const {
   return m_linphone_call->getDuration();
 }
@@ -262,6 +264,30 @@ int CallModel::getDuration () const {
 float CallModel::getQuality () const {
   return m_linphone_call->getCurrentQuality();
 }
+
+// -----------------------------------------------------------------------------
+
+#define VU_MIN (-20.f)
+#define VU_MAX (4.f)
+
+inline float computeVu (float volume) {
+  if (volume < VU_MIN)
+    return 0.f;
+  if (volume > VU_MAX)
+    return 1.f;
+
+  return (volume - VU_MIN) / (VU_MAX - VU_MIN);
+}
+
+float CallModel::getMicroVu () const {
+  return computeVu(m_linphone_call->getRecordVolume());
+}
+
+float CallModel::getSpeakerVu () const {
+  return computeVu(m_linphone_call->getPlayVolume());
+}
+
+// -----------------------------------------------------------------------------
 
 bool CallModel::getMicroMuted () const {
   return !CoreManager::getInstance()->getCore()->micEnabled();
@@ -275,6 +301,8 @@ void CallModel::setMicroMuted (bool status) {
     emit microMutedChanged(status);
   }
 }
+
+// -----------------------------------------------------------------------------
 
 bool CallModel::getPausedByUser () const {
   return m_paused_by_user;
@@ -301,6 +329,8 @@ void CallModel::setPausedByUser (bool status) {
     m_linphone_call->resume();
 }
 
+// -----------------------------------------------------------------------------
+
 bool CallModel::getVideoEnabled () const {
   shared_ptr<linphone::CallParams> params = m_linphone_call->getCurrentParams();
   return params && params->videoEnabled() && getStatus() == CallStatusConnected;
@@ -323,6 +353,8 @@ void CallModel::setVideoEnabled (bool status) {
 
   m_linphone_call->update(params);
 }
+
+// -----------------------------------------------------------------------------
 
 bool CallModel::getUpdating () const {
   switch (m_linphone_call->getState()) {

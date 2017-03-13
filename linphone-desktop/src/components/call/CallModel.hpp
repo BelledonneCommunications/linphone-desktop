@@ -35,8 +35,12 @@ class CallModel : public QObject {
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
 
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
-  Q_PROPERTY(int duration READ getDuration CONSTANT); // Constant but called with a timer in qml.
-  Q_PROPERTY(float quality READ getQuality CONSTANT); // Same idea.
+
+  Q_PROPERTY(int duration READ getDuration CONSTANT); // Constants but called with a timer in qml.
+  Q_PROPERTY(float quality READ getQuality CONSTANT);
+  Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
+  Q_PROPERTY(float speakerVu READ getSpeakerVu CONSTANT);
+
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
 
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
@@ -97,6 +101,8 @@ private:
 
   int getDuration () const;
   float getQuality () const;
+  float getMicroVu () const;
+  float getSpeakerVu () const;
 
   bool getMicroMuted () const;
   void setMicroMuted (bool status);

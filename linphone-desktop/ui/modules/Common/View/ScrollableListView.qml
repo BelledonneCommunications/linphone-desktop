@@ -33,6 +33,7 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
+  // TODO: Find a solution at this bug => https://bugreports.qt.io/browse/QTBUG-31573
   SequentialAnimation {
     id: scrollAnimation
 

@@ -43,12 +43,6 @@
     <file>assets/images/chat_error.svg</file>
     <file>assets/images/chat_hovered.svg</file>
     <file>assets/images/chat_normal.svg</file>
-    <file>assets/images/chat_off_hovered.svg</file>
-    <file>assets/images/chat_off_normal.svg</file>
-    <file>assets/images/chat_off_pressed.svg</file>
-    <file>assets/images/chat_on_hovered.svg</file>
-    <file>assets/images/chat_on_normal.svg</file>
-    <file>assets/images/chat_on_pressed.svg</file>
     <file>assets/images/chat_pressed.svg</file>
     <file>assets/images/chat_send.svg</file>
     <file>assets/images/chevron_green.svg</file>
@@ -212,6 +206,7 @@
     <file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
+    <file>ui/modules/Common/Indicators/VuMeter.qml</file>
     <file>ui/modules/Common/Menus/ActionMenuEntry.qml</file>
     <file>ui/modules/Common/Menus/ActionMenu.qml</file>
     <file>ui/modules/Common/Menus/Menu.qml</file>
@@ -252,6 +247,7 @@
     <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/TransparentTextInputStyle.qml</file>
+    <file>ui/modules/Common/Styles/Indicators/VuMeterStyle.qml</file>
     <file>ui/modules/Common/Styles/Menus/ActionMenuStyle.qml</file>
     <file>ui/modules/Common/Styles/Menus/MenuStyle.qml</file>
     <file>ui/modules/Common/Styles/Misc/CollapseStyle.qml</file>

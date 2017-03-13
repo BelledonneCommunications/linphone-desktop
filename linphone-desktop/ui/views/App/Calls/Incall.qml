@@ -286,24 +286,68 @@ Rectangle {
           verticalCenter: parent.verticalCenter
         }
 
-        rowSpacing: ActionBarStyle.spacing
         columns: incall.width < CallStyle.actionArea.lowWidth ? 2 : 4
+        rowSpacing: ActionBarStyle.spacing
 
-        ActionSwitch {
-          enabled: !call.microMuted
-          icon: 'micro'
-          iconSize: CallStyle.actionArea.iconSize
+        Row {
+          spacing: CallStyle.actionArea.vu.spacing
 
-          onClicked: call.microMuted = enabled
+          VuMeter {
+            Timer {
+              interval: 50
+              repeat: true
+              running: micro.enabled
+
+              onTriggered: parent.value = call.microVu
+            }
+
+            enabled: micro.enabled
+          }
+
+          ActionSwitch {
+            id: micro
+
+            enabled: !call.microMuted
+            icon: 'micro'
+            iconSize: CallStyle.actionArea.iconSize
+
+            onClicked: call.microMuted = enabled
+          }
+        }
+
+        Row {
+          spacing: CallStyle.actionArea.vu.spacing
+
+          VuMeter {
+            Timer {
+              interval: 50
+              repeat: true
+              running: speaker.enabled
+
+              onTriggered: parent.value = call.speakerVu
+            }
+
+            enabled: speaker.enabled
+          }
+
+          ActionSwitch {
+            id: speaker
+
+            enabled: true
+            icon: 'speaker'
+            iconSize: CallStyle.actionArea.iconSize
+
+            onClicked: console.log('TODO')
+          }
         }
 
         ActionSwitch {
-          enabled: !call.videoEnabled
+          enabled: call.videoEnabled
           icon: 'camera'
           iconSize: CallStyle.actionArea.iconSize
           updating: call.updating
 
-          onClicked: call.videoEnabled = enabled
+          onClicked: call.videoEnabled = !enabled
         }
 
         ActionButton {
@@ -360,12 +404,11 @@ Rectangle {
           onClicked: call.terminate()
         }
 
-        ActionSwitch {
-          enabled: window.chatIsOpened
+        ActionButton {
           icon: 'chat'
 
           onClicked: {
-            if (enabled) {
+            if (window.chatIsOpened) {
               window.closeChat()
             } else {
               window.openChat()

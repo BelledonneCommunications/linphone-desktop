@@ -28,19 +28,6 @@ function clearTimeout (timer) {
 
 // -----------------------------------------------------------------------------
 
-// Connect a signal to a function only for one call.
-function connectOnce (signal, cb) {
-  var func = function () {
-    signal.disconnect(func)
-    cb.apply(this, arguments)
-  }
-
-  signal.connect(func)
-  return func
-}
-
-// -----------------------------------------------------------------------------
-
 function encodeTextToQmlRichFormat (text, options) {
   var images = ''
 

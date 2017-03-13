@@ -56,6 +56,8 @@ InvertedMouseArea    1.0 Helpers/InvertedMouseArea.qml
 Icon                 1.0 Image/Icon.qml
 RoundedImage         1.0 Image/RoundedImage.qml
 
+VuMeter              1.0 Indicators/VuMeter.qml
+
 ActionMenu           1.0 Menus/ActionMenu.qml
 ActionMenuEntry      1.0 Menus/ActionMenuEntry.qml
 Menu                 1.0 Menus/Menu.qml
