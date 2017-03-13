@@ -30,8 +30,6 @@ using namespace std;
 // =============================================================================
 
 int main (int argc, char *argv[]) {
-  Logger::init();
-
   // Force OpenGLES & shader version 2.0.
   QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
 

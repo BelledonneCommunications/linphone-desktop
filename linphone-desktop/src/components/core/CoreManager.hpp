@@ -89,6 +89,7 @@ private:
   CoreManager (QObject *parent, const QString &config_path);
 
   void setDatabasesPaths ();
+  void setOtherPaths ();
   void setResourcesPaths ();
 
   std::shared_ptr<linphone::Core> m_core;

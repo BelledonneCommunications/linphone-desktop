@@ -572,7 +572,7 @@ void SettingsModel::setDscpVideo (int dscp) {
 QString SettingsModel::getSavedScreenshotsFolder () const {
   return QDir::cleanPath(
     ::Utils::linphoneStringToQString(
-      m_config->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirPath())
+      m_config->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirpath())
     )
   ) + QDir::separator();
 }
@@ -589,7 +589,7 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 QString SettingsModel::getSavedVideosFolder () const {
   return QDir::cleanPath(
     ::Utils::linphoneStringToQString(
-      m_config->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirPath())
+      m_config->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirpath())
     )
   ) + QDir::separator();
 }

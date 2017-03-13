@@ -205,6 +205,9 @@ void App::parseArgs () {
 
   m_parser.process(*this);
 
+  // Initialise logger (do not do this before this point because the application has to be created
+  // for the logs to be put in the correct directory
+  Logger::init();
   if (m_parser.isSet("verbose")) {
     Logger::instance()->setVerbose(true);
   }

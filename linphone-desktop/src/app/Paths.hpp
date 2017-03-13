@@ -31,12 +31,16 @@
 namespace Paths {
   std::string getAvatarsDirpath ();
   std::string getCallHistoryFilepath ();
-  std::string getConfigFilepath (const QString &configPath);
+  std::string getConfigFilepath (const QString &configPath = QString());
   std::string getFriendsListFilepath ();
-  std::string getCapturesDirPath ();
+  std::string getCapturesDirpath ();
   std::string getLogsDirpath ();
   std::string getMessageHistoryFilepath ();
-  std::string getThumbnailsDirPath ();
+  std::string getThumbnailsDirpath ();
+  std::string getZrtpSecretsFilepath ();
+  std::string getUserCertificatesDirpath ();
+
+  void migrate ();
 }
 
 #endif // PATHS_H_

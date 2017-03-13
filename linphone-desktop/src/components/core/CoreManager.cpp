@@ -36,6 +36,9 @@ using namespace std;
 CoreManager *CoreManager::m_instance = nullptr;
 
 CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
+  // TODO: activate migration when ready to switch to this new version
+  //Paths::migrate();
+
   setResourcesPaths();
 
   m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(config_path), "");
@@ -44,6 +47,7 @@ CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject
   m_core->usePreviewWindow(true);
 
   setDatabasesPaths();
+  setOtherPaths();
 }
 
 void CoreManager::enableHandlers () {
@@ -78,6 +82,11 @@ void CoreManager::setDatabasesPaths () {
   m_core->setFriendsDatabasePath(Paths::getFriendsListFilepath());
   m_core->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
   m_core->setChatDatabasePath(Paths::getMessageHistoryFilepath());
+}
+
+void CoreManager::setOtherPaths () {
+  m_core->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
+  m_core->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
 }
 
 void CoreManager::setResourcesPaths () {
