@@ -20,14 +20,21 @@
 #
 ############################################################################
 
-# Create a shortcut to linphone.exe in install prefix
 if(LINPHONE_BUILDER_TARGET STREQUAL linphoneqt AND WIN32)
+	# Create a shortcut to linphone.exe in install prefix
 	set(SHORTCUT_PATH "${CMAKE_INSTALL_PREFIX}/linphone.lnk")
 	set(SHORTCUT_TARGET_PATH "${CMAKE_INSTALL_PREFIX}/bin/linphone.exe")
 	set(SHORTCUT_WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}")
 	configure_file("${CMAKE_CURRENT_LIST_DIR}/linphone_package/winshortcut.vbs.in" "${CMAKE_CURRENT_BINARY_DIR}/winshortcut.vbs" @ONLY)
 	add_custom_command(OUTPUT "${SHORTCUT_PATH}" COMMAND "cscript" "${CMAKE_CURRENT_BINARY_DIR}/winshortcut.vbs")
 	add_custom_target(linphoneqt_winshortcut ALL DEPENDS "${SHORTCUT_PATH}" TARGET_linphone_builder)
+
+	# Create a shortcut to the solution file in the top directory
+	set(SHORTCUT_PATH "${CMAKE_SOURCE_DIR}/../../Project.lnk")
+	set(SHORTCUT_TARGET_PATH "${LINPHONE_BUILDER_WORK_DIR}/cmake/Project.sln")
+	set(SHORTCUT_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../..")
+	configure_file("${CMAKE_CURRENT_LIST_DIR}/linphone_package/winshortcut.vbs.in" "${CMAKE_CURRENT_BINARY_DIR}/solutionshortcut.vbs" @ONLY)
+	execute_process(COMMAND "cscript" "${CMAKE_CURRENT_BINARY_DIR}/solutionshortcut.vbs")
 endif()
 
 # Packaging
