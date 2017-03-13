@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg width="40px" height="41px" viewBox="0 0 40 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
-    <title>camera_on_clic</title>
+    <title>camera_off_clic</title>
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="camera_on_clic">
-            <path d="M20,40 C31.045695,40 40,31.045695 40,20 C40,8.954305 31.045695,0 20,0 C8.954305,0 0,8.954305 0,20 C0,31.045695 8.954305,40 20,40 Z" fill="#FF5E00"></path>
-            <polygon stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="24.8941594 26 24.8941594 21.3142449 30.7045152 25.6765037 30.7045152 14.3231669 24.8941594 18.6860845 24.8941594 14 9 14 9 25.8534054 9.17456154 26"></polygon>
+        <g id="camera_off_clic">
+            <path d="M20,40.3145406 C31.045695,40.3145406 40,31.3602356 40,20.3145406 C40,9.26884559 31.045695,0.314540582 20,0.314540582 C8.954305,0.314540582 0,9.26884559 0,20.3145406 C0,31.3602356 8.954305,40.3145406 20,40.3145406 Z" fill="#FF5E00"></path>
+            <path d="M9,30.2917175 L28.1397841,11.3145406 L9,30.2917175 Z" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polygon stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" points="24.8941594 26.3145406 24.8941594 21.6287855 30.7045152 25.9910443 30.7045152 14.6377075 24.8941594 19.0006251 24.8941594 14.3145406 9 14.3145406 9 26.167946 9.17456154 26.3145406"></polygon>
         </g>
     </g>
 </svg>

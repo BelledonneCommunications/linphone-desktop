@@ -298,12 +298,12 @@ Rectangle {
         }
 
         ActionSwitch {
-          enabled: call.videoEnabled
+          enabled: !call.videoEnabled
           icon: 'camera'
           iconSize: CallStyle.actionArea.iconSize
           updating: call.updating
 
-          onClicked: call.videoEnabled = !enabled
+          onClicked: call.videoEnabled = enabled
         }
 
         ActionButton {
