@@ -64,6 +64,8 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARAT
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Network)
 
+find_package(BcToolbox REQUIRED)
+find_package(Belcard REQUIRED)
 find_package(Linphone REQUIRED)
 find_package(LinphoneCxx REQUIRED)
 
@@ -220,7 +222,7 @@ if(NOT WIN32)
 endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 
-target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}")
+target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
 foreach (package ${QT5_PACKAGES})
   target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
   # `qt5_create_translation` is provided from `LinguistTools` package.
@@ -230,7 +232,7 @@ foreach (package ${QT5_PACKAGES})
   endif()
 endforeach ()
 
-target_link_libraries(${TARGET_NAME} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
+target_link_libraries(${TARGET_NAME} ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
 
 install(TARGETS ${TARGET_NAME}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
