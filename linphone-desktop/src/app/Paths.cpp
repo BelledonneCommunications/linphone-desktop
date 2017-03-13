@@ -29,22 +29,19 @@
 
 #include "Paths.hpp"
 
-// =============================================================================
-
-using namespace std;
-
 #define PATH_AVATARS "/avatars/"
 #define PATH_CAPTURES "/captures/"
 #define PATH_LOGS "/logs/"
 #define PATH_THUMBNAILS "/thumbnails/"
+#define PATH_USER_CERTIFICATES "/usr-crt/"
 
-#define PATH_CONFIG "/linphonerc"
 #define PATH_CALL_HISTORY_LIST "/call-history.db"
+#define PATH_CONFIG "/linphonerc"
 #define PATH_FRIENDS_LIST "/friends.db"
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
-
 #define PATH_ZRTP_SECRETS "/zidcache"
-#define PATH_USER_CERTIFICATES "/usr-crt/"
+
+using namespace std;
 
 // =============================================================================
 
@@ -55,14 +52,15 @@ inline bool directoryPathExists (const QString &path) {
 
 inline bool filePathExists (const QString &path) {
   QFileInfo info(path);
-  if (!directoryPathExists(info.path())) return false;
+  if (!directoryPathExists(info.path()))
+    return false;
 
   QFile file(path);
   return file.exists();
 }
 
 inline bool filePathExists (const string &path) {
-	return filePathExists(Utils::linphoneStringToQString(path));
+  return filePathExists(Utils::linphoneStringToQString(path));
 }
 
 inline void ensureDirectoryPathExists (const QString &path) {
@@ -91,11 +89,10 @@ inline string getFilePath (const QString &filename) {
 }
 
 static QString getAppConfigFilepath () {
-  if (QSysInfo::productType() == "macos") {
+  if (QSysInfo::productType() == "macos")
     return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CONFIG;
-  } else {
-    return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PATH_CONFIG;
-  }
+
+  return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PATH_CONFIG;
 }
 
 static QString getAppCallHistoryFilepath () {
@@ -120,10 +117,10 @@ string Paths::getCallHistoryFilepath () {
   return getFilePath(getAppCallHistoryFilepath());
 }
 
-string Paths::getConfigFilepath (const QString &configPath) {
-  if (!configPath.isEmpty()) {
-    return getFilePath(QFileInfo(configPath).absoluteFilePath());
-  }
+string Paths::getConfigFilepath (const QString &config_path) {
+  if (!config_path.isEmpty())
+    return getFilePath(QFileInfo(config_path).absoluteFilePath());
+
   return getFilePath(getAppConfigFilepath());
 }
 
@@ -157,53 +154,61 @@ string Paths::getUserCertificatesDirpath () {
 
 // -----------------------------------------------------------------------------
 
-static void migrateFile (const QString &oldPath, const QString &newPath) {
-  QFileInfo info(newPath);
+static void migrateFile (const QString &old_path, const QString &new_path) {
+  QFileInfo info(new_path);
   ensureDirectoryPathExists(info.path());
-  if (QFile::copy(oldPath, newPath)) {
-    QFile::remove(oldPath);
-    qInfo() << "Migrated" << oldPath << "to" << newPath;
+
+  if (QFile::copy(old_path, new_path)) {
+    QFile::remove(old_path);
+    qInfo() << "Migrated" << old_path << "to" << new_path;
   } else {
-    qWarning() << "Failed migration of" << oldPath << "to" << newPath;
+    qWarning() << "Failed migration of" << old_path << "to" << new_path;
   }
 }
 
-static void migrateConfigurationFile (const QString &oldPath, const QString &newPath) {
-  QFileInfo info(newPath);
+static void migrateConfigurationFile (const QString &old_path, const QString &new_path) {
+  QFileInfo info(new_path);
   ensureDirectoryPathExists(info.path());
-  if (QFile::copy(oldPath, newPath)) {
-    QFile oldFile(oldPath);
-    if (oldFile.open(QIODevice::WriteOnly)) {
-      QTextStream stream(&oldFile);
-      stream << "This file has been migrated to " << newPath;
+
+  if (QFile::copy(old_path, new_path)) {
+    QFile old_file(old_path);
+    if (old_file.open(QIODevice::WriteOnly)) {
+      QTextStream stream(&old_file);
+      stream << "This file has been migrated to " << new_path;
     }
-    QFile::setPermissions(oldPath, QFileDevice::ReadOwner);
-    qInfo() << "Migrated" << oldPath << "to" << newPath;
+
+    QFile::setPermissions(old_path, QFileDevice::ReadOwner);
+    qInfo() << "Migrated" << old_path << "to" << new_path;
   } else {
-    qWarning() << "Failed migration of" << oldPath << "to" << newPath;
+    qWarning() << "Failed migration of" << old_path << "to" << new_path;
   }
 }
 
 void Paths::migrate () {
-  QString newPath;
-  QString oldPath;
-  QString oldBaseDir;
+  QString new_path = getAppConfigFilepath();
+  QString old_base_dir = QSysInfo::productType() == "windows"
+    ? QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
+    : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
+  QString old_path = old_base_dir + "/.linphonerc";
 
-  if (QSysInfo::productType() == "windows") {
-    oldBaseDir = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-  } else {
-    oldBaseDir = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  }
-  newPath = getAppConfigFilepath();
-  oldPath = oldBaseDir + "/.linphonerc";
-  if (!filePathExists(newPath) && filePathExists(oldPath)) migrateConfigurationFile(oldPath, newPath);
-  newPath = getAppCallHistoryFilepath();
-  oldPath = oldBaseDir + "/.linphone-call-history.db";
-  if (!filePathExists(newPath) && filePathExists(oldPath)) migrateFile(oldPath, newPath);
-  newPath = getAppFriendsFilepath();
-  oldPath = oldBaseDir + "/.linphone-friends.db";
-  if (!filePathExists(newPath) && filePathExists(oldPath)) migrateFile(oldPath, newPath);
-  newPath = getAppMessageHistoryFilepath();
-  oldPath = oldBaseDir + "/.linphone-history.db";
-  if (!filePathExists(newPath) && filePathExists(oldPath)) migrateFile(oldPath, newPath);
+  if (!filePathExists(new_path) && filePathExists(old_path))
+    migrateConfigurationFile(old_path, new_path);
+
+  new_path = getAppCallHistoryFilepath();
+  old_path = old_base_dir + "/.linphone-call-history.db";
+
+  if (!filePathExists(new_path) && filePathExists(old_path))
+    migrateFile(old_path, new_path);
+
+  new_path = getAppFriendsFilepath();
+  old_path = old_base_dir + "/.linphone-friends.db";
+
+  if (!filePathExists(new_path) && filePathExists(old_path))
+    migrateFile(old_path, new_path);
+
+  new_path = getAppMessageHistoryFilepath();
+  old_path = old_base_dir + "/.linphone-history.db";
+
+  if (!filePathExists(new_path) && filePathExists(old_path))
+    migrateFile(old_path, new_path);
 }

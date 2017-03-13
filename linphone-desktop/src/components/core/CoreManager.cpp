@@ -37,7 +37,7 @@ CoreManager *CoreManager::m_instance = nullptr;
 
 CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
   // TODO: activate migration when ready to switch to this new version
-  //Paths::migrate();
+  // Paths::migrate();
 
   setResourcesPaths();
 

@@ -24,21 +24,23 @@
 #define PATHS_H_
 
 #include <string>
+
 #include <QString>
 
 // =============================================================================
 
 namespace Paths {
   std::string getAvatarsDirpath ();
-  std::string getCallHistoryFilepath ();
-  std::string getConfigFilepath (const QString &configPath = QString());
-  std::string getFriendsListFilepath ();
   std::string getCapturesDirpath ();
   std::string getLogsDirpath ();
-  std::string getMessageHistoryFilepath ();
   std::string getThumbnailsDirpath ();
-  std::string getZrtpSecretsFilepath ();
   std::string getUserCertificatesDirpath ();
+
+  std::string getCallHistoryFilepath ();
+  std::string getConfigFilepath (const QString &config_path = QString());
+  std::string getFriendsListFilepath ();
+  std::string getMessageHistoryFilepath ();
+  std::string getZrtpSecretsFilepath ();
 
   void migrate ();
 }
