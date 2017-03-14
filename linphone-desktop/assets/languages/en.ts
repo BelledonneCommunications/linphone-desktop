@@ -703,7 +703,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>accountAssistant</source>
-        <translation>Account assistant</translation>
+        <translation type="vanished">Account assistant</translation>
     </message>
     <message>
         <source>audioAssistant</source>
@@ -711,7 +711,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>debugWindow</source>
-        <translation>Debug window</translation>
+        <translation type="vanished">Debug window</translation>
     </message>
     <message>
         <source>about</source>

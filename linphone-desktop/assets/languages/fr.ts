@@ -702,7 +702,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>accountAssistant</source>
-        <translation>Assistant de compte</translation>
+        <translation type="vanished">Assistant de compte</translation>
     </message>
     <message>
         <source>audioAssistant</source>
@@ -710,7 +710,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>debugWindow</source>
-        <translation>Fenêtre de debug</translation>
+        <translation type="vanished">Fenêtre de debug</translation>
     </message>
     <message>
         <source>about</source>

@@ -135,10 +135,6 @@ import App.Styles 1.0
      title: qsTr('tools')
 
      MenuItem {
-       text: qsTr('accountAssistant')
-     }
-
-     MenuItem {
        text: qsTr('audioAssistant')
      }
 
@@ -150,13 +146,6 @@ import App.Styles 1.0
 
      MenuItem {
        text: qsTr('exportContacts')
-     }
-
-     MenuSeparator {}
-
-     MenuItem {
-       shortcut: 'Ctrl+D'
-       text: qsTr('debugWindow')
      }
    }
 
