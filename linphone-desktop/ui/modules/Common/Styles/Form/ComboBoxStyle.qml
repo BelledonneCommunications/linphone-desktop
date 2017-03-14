@@ -19,10 +19,27 @@ QtObject {
     }
   }
 
+  property QtObject contentItem: QtObject {
+    property QtObject text: QtObject {
+      property color color: Colors.d
+      property int fontSize: 10
+    }
+  }
+
   property QtObject delegate: QtObject {
     property QtObject color: QtObject {
       property color hovered: Colors.y
       property color normal: Colors.k
+    }
+
+    property QtObject contentItem: QtObject {
+      property int iconSize: 20
+      property int spacing: 5
+
+      property QtObject text: QtObject {
+        property color color: Colors.d
+        property int fontSize: 10
+      }
     }
 
     property QtObject indicator: QtObject {

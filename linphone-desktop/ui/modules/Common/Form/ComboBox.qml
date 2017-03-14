@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
@@ -8,6 +9,10 @@ import Common.Styles 1.0
 
 ComboBox {
   id: comboBox
+
+  // ---------------------------------------------------------------------------
+
+  property string iconRole: ''
 
   // ---------------------------------------------------------------------------
 
@@ -24,6 +29,22 @@ ComboBox {
     implicitWidth: ComboBoxStyle.background.width
   }
 
+  // ---------------------------------------------------------------------------
+
+  contentItem: Text {
+    color: ComboBoxStyle.contentItem.text.color
+    elide: Text.ElideRight
+
+    font.pointSize: ComboBoxStyle.contentItem.text.fontSize
+
+    rightPadding: comboBox.indicator.width + comboBox.spacing
+    verticalAlignment: Text.AlignVCenter
+
+    text: comboBox.displayText
+  }
+
+  // ---------------------------------------------------------------------------
+
   indicator: Icon {
     icon: 'drop_down'
     iconSize: ComboBoxStyle.background.iconSize
@@ -36,6 +57,12 @@ ComboBox {
 
   delegate: ItemDelegate {
     id: item
+
+    readonly property var flattenedModel: textRole.length
+      && (typeof modelData !== 'undefined' ? modelData : model)
+
+    hoverEnabled: true
+    width: comboBox.width
 
     background: Rectangle {
       color: item.hovered
@@ -63,11 +90,35 @@ ComboBox {
       }
     }
 
-    font.bold: comboBox.currentIndex === index
-    hoverEnabled: true
-    text: textRole.length
-      ? (typeof modelData !== 'undefined' ? modelData[textRole] : model[textRole])
-      : modelData
-    width: comboBox.width
+    contentItem: RowLayout {
+      spacing: ComboBoxStyle.delegate.contentItem.spacing
+      width: item.width
+
+      Icon {
+        Layout.alignment: Qt.AlignVCenter
+
+        icon: {
+          var iconRole = comboBox.iconRole
+          return (iconRole.length && item.flattenedModel[iconRole]) || ''
+        }
+        iconSize: ComboBoxStyle.delegate.contentItem.iconSize
+
+        visible: icon.length > 0
+      }
+
+      Text {
+        Layout.fillWidth: true
+
+        color: ComboBoxStyle.delegate.contentItem.text.color
+        elide: Text.ElideRight
+
+        font {
+          bold: comboBox.currentIndex === index
+          pointSize: ComboBoxStyle.delegate.contentItem.text.fontSize
+        }
+
+        text: item.flattenedModel[textRole] || modelData
+      }
+    }
   }
 }
