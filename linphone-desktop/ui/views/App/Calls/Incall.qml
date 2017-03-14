@@ -16,6 +16,10 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
+  readonly property bool cameraActivated:
+    cameraLoader.status !== Loader.Null ||
+    cameraPreviewLoader.status !== Loader.Null
+
   property var call
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
@@ -30,7 +34,8 @@ Rectangle {
 
     _fullscreen = Utils.openWindow('IncallFullscreenWindow', incall, {
       properties: {
-        call: incall.call
+        call: incall.call,
+        callsWindow: incall
       }
     })
   }
@@ -253,19 +258,30 @@ Rectangle {
         }
       }
 
-      Component {
-        id: camera
+      Loader {
+        id: cameraLoader
 
-        Camera {
-          height: container.height
-          width: container.width
-          call: incall.call
+        anchors.centerIn: parent
+
+        active: call.videoEnabled && !_fullscreen
+        sourceComponent: camera
+
+        Component {
+          id: camera
+
+          Camera {
+            call: incall.call
+            height: container.height
+            width: container.width
+          }
         }
       }
 
       Loader {
         anchors.centerIn: parent
-        sourceComponent: call.videoEnabled && !_fullscreen ? camera : avatar
+
+        active: !call.videoEnabled || _fullscreen
+        sourceComponent: avatar
       }
     }
 
@@ -363,12 +379,17 @@ Rectangle {
       // -----------------------------------------------------------------------
 
       Loader {
+        id: cameraPreviewLoader
+
         anchors.centerIn: parent
         height: CallStyle.actionArea.userVideo.height
         width: CallStyle.actionArea.userVideo.width
 
+        active: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled && !_fullscreen
+        sourceComponent: cameraPreview
+
         Component {
-          id: preview
+          id: cameraPreview
 
           Camera {
             anchors.fill: parent
@@ -376,10 +397,6 @@ Rectangle {
             isPreview: true
           }
         }
-
-        sourceComponent: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled && !_fullscreen
-          ? preview
-          : null
       }
 
       ActionBar {

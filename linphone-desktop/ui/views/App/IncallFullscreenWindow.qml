@@ -17,6 +17,8 @@ Window {
   // ---------------------------------------------------------------------------
 
   property var call
+  property var callsWindow
+
   property bool hideButtons: false
 
   // ---------------------------------------------------------------------------
@@ -49,11 +51,18 @@ Window {
 
     Keys.onEscapePressed: incall.close()
 
-    Camera {
+    Component {
       id: camera
 
+      Camera {
+        call: incall.call
+      }
+    }
+
+    Loader {
       anchors.fill: parent
-      call: incall.call
+      active: !incall.callsWindow.cameraActivated
+      sourceComponent: camera
     }
 
     // -------------------------------------------------------------------------
