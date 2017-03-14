@@ -20,6 +20,9 @@ QtObject {
   }
 
   property QtObject contentItem: QtObject {
+    property int iconSize: 20
+    property int spacing: 5
+
     property QtObject text: QtObject {
       property color color: Colors.d
       property int fontSize: 10

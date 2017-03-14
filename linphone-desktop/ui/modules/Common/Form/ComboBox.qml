@@ -5,6 +5,10 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Common.Styles 1.0
 
+import Utils 1.0
+
+import 'ComboBox.js' as Logic
+
 // =============================================================================
 
 ComboBox {
@@ -31,16 +35,28 @@ ComboBox {
 
   // ---------------------------------------------------------------------------
 
-  contentItem: Text {
-    color: ComboBoxStyle.contentItem.text.color
-    elide: Text.ElideRight
+  contentItem: RowLayout {
+    spacing: ComboBoxStyle.contentItem.spacing
+    width: comboBox.width
 
-    font.pointSize: ComboBoxStyle.contentItem.text.fontSize
+    Icon {
+      icon: Logic.getSelectedEntryIcon()
+      iconSize: ComboBoxStyle.contentItem.iconSize
 
-    rightPadding: comboBox.indicator.width + comboBox.spacing
-    verticalAlignment: Text.AlignVCenter
+      visible: icon.length > 0
+    }
 
-    text: comboBox.displayText
+    Text {
+      Layout.fillWidth: true
+
+      color: ComboBoxStyle.contentItem.text.color
+      elide: Text.ElideRight
+
+      font.pointSize: ComboBoxStyle.contentItem.text.fontSize
+      rightPadding: comboBox.indicator.width + comboBox.spacing
+
+      text: comboBox.displayText
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -58,8 +74,7 @@ ComboBox {
   delegate: ItemDelegate {
     id: item
 
-    readonly property var flattenedModel: textRole.length
-      && (typeof modelData !== 'undefined' ? modelData : model)
+    readonly property var flattenedModel: Logic.getFlattenedModel()
 
     hoverEnabled: true
     width: comboBox.width
@@ -95,12 +110,7 @@ ComboBox {
       width: item.width
 
       Icon {
-        Layout.alignment: Qt.AlignVCenter
-
-        icon: {
-          var iconRole = comboBox.iconRole
-          return (iconRole.length && item.flattenedModel[iconRole]) || ''
-        }
+        icon: Logic.getEntryIcon()
         iconSize: ComboBoxStyle.delegate.contentItem.iconSize
 
         visible: icon.length > 0
