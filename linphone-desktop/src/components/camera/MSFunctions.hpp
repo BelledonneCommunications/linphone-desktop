@@ -25,12 +25,16 @@
 
 #include <QOpenGLFunctions>
 
+#define GL_ASSERT() \
+  Q_ASSERT(m_instance->m_q_functions != NULL); \
+  Q_ASSERT(QOpenGLContext::currentContext()->functions() == m_instance->m_q_functions);
+
 #define GL_CALL(CALL) \
-  Q_ASSERT(QOpenGLContext::currentContext()->functions() == m_instance->m_q_functions && m_instance->m_q_functions != NULL); \
+  GL_ASSERT() \
   m_instance->m_q_functions->CALL;
 
 #define GL_CALL_RET(CALL) \
-  Q_ASSERT(QOpenGLContext::currentContext()->functions() == m_instance->m_q_functions && m_instance->m_q_functions != NULL); \
+  GL_ASSERT() \
   return m_instance->m_q_functions->CALL;
 
 // =============================================================================
@@ -42,11 +46,11 @@ public:
   ~MSFunctions ();
 
   void bind (QOpenGLFunctions *f) {
-    m_q_functions = f;
+    m_q_functions = f; // Qt functions.
   }
 
   OpenGlFunctions *getFunctions () {
-    return m_functions;
+    return m_functions; // Own implementation.
   }
 
   // ---------------------------------------------------------------------------
@@ -217,5 +221,6 @@ private:
 
 #undef GL_CALL
 #undef GL_CALL_RET
+#undef GL_ASSERT
 
 #endif // MS_FUNCTIONS_H_

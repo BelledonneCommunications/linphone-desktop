@@ -29,7 +29,7 @@
 #include <QFileInfo>
 #include <QQuickWindow>
 
- // =============================================================================
+// =============================================================================
 
 struct CameraStateBinder {
   CameraStateBinder (CameraRenderer *renderer) : m_renderer(renderer) {
