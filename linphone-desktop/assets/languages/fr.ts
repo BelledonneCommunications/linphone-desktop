@@ -525,7 +525,7 @@ Url du serveur non configurée.</translation>
     <name>FileMessage</name>
     <message>
         <source>downloadFileTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Télécharger le fichier</translation>
     </message>
 </context>
 <context>

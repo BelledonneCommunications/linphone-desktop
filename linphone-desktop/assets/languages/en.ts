@@ -537,7 +537,7 @@ Server url not configured.</translation>
     <name>FileMessage</name>
     <message>
         <source>downloadFileTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Download file</translation>
     </message>
 </context>
 <context>
