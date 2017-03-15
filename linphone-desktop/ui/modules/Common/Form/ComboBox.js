@@ -25,8 +25,3 @@ function getEntryIcon () {
   var iconRole = comboBox.iconRole
   return (iconRole.length && item.flattenedModel[iconRole]) || ''
 }
-
-function getFlattenedModel () {
-  return comboBox.textRole.length &&
-    (typeof modelData !== 'undefined' ? modelData : model)
-}

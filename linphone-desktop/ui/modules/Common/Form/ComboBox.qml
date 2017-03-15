@@ -74,7 +74,8 @@ ComboBox {
   delegate: ItemDelegate {
     id: item
 
-    readonly property var flattenedModel: Logic.getFlattenedModel()
+    readonly property var flattenedModel: comboBox.textRole.length &&
+      (typeof modelData !== 'undefined' ? modelData : model)
 
     hoverEnabled: true
     width: comboBox.width
