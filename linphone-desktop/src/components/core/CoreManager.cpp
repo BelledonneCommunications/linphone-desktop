@@ -68,7 +68,9 @@ void CoreManager::init (QObject *parent, const QString &config_path) {
 
     QObject::connect(
       timer, &QTimer::timeout, m_instance, []() {
+        m_instance->m_mutex_video_render.lock();
         m_instance->m_core->iterate();
+        m_instance->m_mutex_video_render.unlock();
       }
     );
   }

@@ -104,11 +104,23 @@ void CameraRenderer::render () {
   f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Draw with ms filter.
-  MSFunctions *ms_functions = MSFunctions::getInstance();
+  {
+    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
-  ms_functions->bind(f);
-  m_camera->getCall()->getLinphoneCall()->oglRender(m_camera->m_is_preview);
-  ms_functions->bind(nullptr);
+    f->glClearColor(0.f, 0.f, 0.f, 0.f);
+    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    CoreManager *core = CoreManager::getInstance();
+    MSFunctions *ms_functions = MSFunctions::getInstance();
+
+    core->lockVideoRender();
+
+    ms_functions->bind(f);
+    m_camera->getCall()->getLinphoneCall()->oglRender(m_camera->m_is_preview);
+    ms_functions->bind(nullptr);
+
+    core->unlockVideoRender();
+  }
 
   // Synchronize opengl calls with QML.
   if (m_window)

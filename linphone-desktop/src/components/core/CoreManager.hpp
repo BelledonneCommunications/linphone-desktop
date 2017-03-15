@@ -27,7 +27,10 @@
 #include "../contacts/ContactsListModel.hpp"
 #include "../settings/SettingsModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
+
 #include "CoreHandlers.hpp"
+
+#include <QMutex>
 
 // =============================================================================
 
@@ -47,6 +50,18 @@ public:
 
   std::shared_ptr<CoreHandlers> getHandlers () {
     return m_handlers;
+  }
+
+  // ---------------------------------------------------------------------------
+  // Video render lock.
+  // ---------------------------------------------------------------------------
+
+  void lockVideoRender () {
+    m_mutex_video_render.lock();
+  }
+
+  void unlockVideoRender () {
+    m_mutex_video_render.unlock();
   }
 
   // ---------------------------------------------------------------------------
@@ -101,6 +116,8 @@ private:
   SettingsModel *m_settings_model;
 
   QTimer *m_cbs_timer;
+
+  QMutex m_mutex_video_render;
 
   static CoreManager *m_instance;
 };

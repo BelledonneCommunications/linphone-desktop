@@ -143,7 +143,11 @@ void CallModel::acceptWithVideo () {
 }
 
 void CallModel::terminate () {
+  CoreManager *core = CoreManager::getInstance();
+
+  core->lockVideoRender();
   m_linphone_call->terminate();
+  core->unlockVideoRender();
 }
 
 void CallModel::transfer () {
