@@ -29,13 +29,6 @@
     </message>
 </context>
 <context>
-    <name>Assistant</name>
-    <message>
-        <source>assistantTitle</source>
-        <translation type="obsolete">Linphone - Assistant</translation>
-    </message>
-</context>
-<context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
@@ -194,37 +187,7 @@
     </message>
 </context>
 <context>
-    <name>AssistantWindow</name>
-    <message>
-        <source>assistantTitle</source>
-        <translation type="vanished">Linphone - Assistant</translation>
-    </message>
-</context>
-<context>
-    <name>CallControls</name>
-    <message>
-        <source>homeEntry</source>
-        <translation type="obsolete">Home</translation>
-    </message>
-    <message>
-        <source>contactsEntry</source>
-        <translation type="obsolete">Contacts</translation>
-    </message>
-    <message>
-        <source>hangup</source>
-        <translation type="obsolete">End call</translation>
-    </message>
-</context>
-<context>
     <name>Calls</name>
-    <message>
-        <source>newCall</source>
-        <translation type="vanished">NEW CALL</translation>
-    </message>
-    <message>
-        <source>newConference</source>
-        <translation type="vanished">NEW CONFERENCE</translation>
-    </message>
     <message>
         <source>acceptAudioCall</source>
         <translation>ACCEPT AUDIO CALL</translation>
@@ -281,49 +244,6 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>Contact</name>
-    <message>
-        <source>sipAccounts</source>
-        <translation type="vanished">SIP ACCOUNT(S)</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="vanished">ADDRESS</translation>
-    </message>
-    <message>
-        <source>emails</source>
-        <translation type="vanished">E-MAIL(S)</translation>
-    </message>
-    <message>
-        <source>webSites</source>
-        <translation type="vanished">WEB SITE(S)</translation>
-    </message>
-    <message>
-        <source>sipAccountsInput</source>
-        <translation type="vanished">SIP Address</translation>
-    </message>
-    <message>
-        <source>emailsInput</source>
-        <translation type="vanished">E-mail address</translation>
-    </message>
-    <message>
-        <source>addressInput</source>
-        <translation type="vanished">Address</translation>
-    </message>
-    <message>
-        <source>webSitesInput</source>
-        <translation type="vanished">URL</translation>
-    </message>
-    <message>
-        <source>removeContactDescription</source>
-        <translation type="vanished">Do you really want remove this contact from your book?</translation>
-    </message>
-    <message>
-        <source>removeContactTitle</source>
-        <translation type="vanished">Delete confirmation</translation>
-    </message>
-</context>
-<context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
@@ -338,40 +258,20 @@ Server url not configured.</translation>
         <translation type="unfinished">SIP ACCOUNT(S)</translation>
     </message>
     <message>
-        <source>sipAccountsInput</source>
-        <translation type="obsolete">SIP Address</translation>
-    </message>
-    <message>
         <source>address</source>
         <translation type="unfinished">ADDRESS</translation>
-    </message>
-    <message>
-        <source>addressInput</source>
-        <translation type="obsolete">Address</translation>
     </message>
     <message>
         <source>emails</source>
         <translation type="unfinished">E-MAIL(S)</translation>
     </message>
     <message>
-        <source>emailsInput</source>
-        <translation type="obsolete">E-mail address</translation>
-    </message>
-    <message>
         <source>webSites</source>
         <translation type="unfinished">WEB SITE(S)</translation>
     </message>
     <message>
-        <source>webSitesInput</source>
-        <translation type="obsolete">URL</translation>
-    </message>
-    <message>
         <source>avatarChooserTitle</source>
         <translation>Choose your avatar</translation>
-    </message>
-    <message>
-        <source>companiesInput</source>
-        <translation type="vanished">Company</translation>
     </message>
     <message>
         <source>companies</source>
@@ -468,23 +368,12 @@ Server url not configured.</translation>
         <translation>MESSAGES</translation>
     </message>
     <message>
-        <source>newMessagePlaceholder</source>
-        <translation type="vanished">Enter your message</translation>
-    </message>
-    <message>
         <source>removeAllEntriesDescription</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>removeAllEntriesTitle</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>DropZone</name>
-    <message>
-        <source>fileChooserTitle</source>
-        <translation type="vanished">Please choose one or many files</translation>
     </message>
 </context>
 <context>
@@ -542,26 +431,6 @@ Server url not configured.</translation>
 </context>
 <context>
     <name>Home</name>
-    <message>
-        <source>invitContactQuestion</source>
-        <translation type="vanished">Are your friends already know Linphone?</translation>
-    </message>
-    <message>
-        <source>invitContact</source>
-        <translation type="vanished">INVIT YOUR FRIENDS</translation>
-    </message>
-    <message>
-        <source>addContactQuestion</source>
-        <translation type="vanished">Quickly add your contacts in your notebook.</translation>
-    </message>
-    <message>
-        <source>addContact</source>
-        <translation type="vanished">ADD CONTACTS</translation>
-    </message>
-    <message>
-        <source>displayTooltip</source>
-        <translation type="vanished">Display tooltips to discover Linphone Desktop</translation>
-    </message>
     <message>
         <source>howToDescription</source>
         <translation>Need help on how to use Linphone?</translation>
@@ -642,29 +511,6 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>InviteFriendsWindow</name>
-    <message>
-        <source>cancel</source>
-        <translation type="obsolete">CANCEL</translation>
-    </message>
-    <message>
-        <source>confirm</source>
-        <translation type="obsolete">CONFIRM</translation>
-    </message>
-    <message>
-        <source>inviteFriendsTitle</source>
-        <translation type="obsolete">Linphone - Invite Friends</translation>
-    </message>
-    <message>
-        <source>enterEmailLabel</source>
-        <translation type="obsolete">Enter your friend&apos;s email address</translation>
-    </message>
-    <message>
-        <source>messageLabel</source>
-        <translation type="obsolete">You can modify the invitation that will be sent</translation>
-    </message>
-</context>
-<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
@@ -702,16 +548,8 @@ Server url not configured.</translation>
         <translation>Settings</translation>
     </message>
     <message>
-        <source>accountAssistant</source>
-        <translation type="vanished">Account assistant</translation>
-    </message>
-    <message>
         <source>audioAssistant</source>
         <translation>Audio Assistant</translation>
-    </message>
-    <message>
-        <source>debugWindow</source>
-        <translation type="vanished">Debug window</translation>
     </message>
     <message>
         <source>about</source>
@@ -735,69 +573,6 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>ManageAccounts</name>
-    <message>
-        <source>manageAccountsDescription</source>
-        <translation type="vanished">Select your active account and choose all necessary presence status.</translation>
-    </message>
-    <message>
-        <source>manageAccountsTitle</source>
-        <translation type="vanished">Presence and accounts</translation>
-    </message>
-    <message>
-        <source>validate</source>
-        <translation type="vanished">VALIDATE</translation>
-    </message>
-    <message>
-        <source>onlinePresence</source>
-        <translation type="vanished">Connected</translation>
-    </message>
-    <message>
-        <source>busyPresence</source>
-        <translation type="vanished">Busy</translation>
-    </message>
-    <message>
-        <source>beRightBackPresence</source>
-        <translation type="vanished">Be right back</translation>
-    </message>
-    <message>
-        <source>awayPresence</source>
-        <translation type="vanished">Away</translation>
-    </message>
-    <message>
-        <source>onThePhonePresence</source>
-        <translation type="vanished">On the phone</translation>
-    </message>
-    <message>
-        <source>outToLunchPresence</source>
-        <translation type="vanished">Out to lunch</translation>
-    </message>
-    <message>
-        <source>doNotDisturbPresence</source>
-        <translation type="vanished">Away</translation>
-    </message>
-    <message>
-        <source>movedPresence</source>
-        <translation type="vanished">Moved</translation>
-    </message>
-    <message>
-        <source>usingAnotherMessagingServicePresence</source>
-        <translation type="vanished">Using another messaging service</translation>
-    </message>
-    <message>
-        <source>offlinePresence</source>
-        <translation type="vanished">Disconnected</translation>
-    </message>
-    <message>
-        <source>ok</source>
-        <translation type="vanished">OK</translation>
-    </message>
-    <message>
-        <source>selectAccountLabel</source>
-        <translation type="vanished">Select you active account</translation>
-    </message>
-</context>
-<context>
     <name>ManageAccountsWindow</name>
     <message>
         <source>ok</source>
@@ -810,17 +585,6 @@ Server url not configured.</translation>
     <message>
         <source>selectAccountLabel</source>
         <translation type="unfinished">Select you active account</translation>
-    </message>
-</context>
-<context>
-    <name>NewCall</name>
-    <message>
-        <source>newCallTitle</source>
-        <translation type="vanished">New call</translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translation type="vanished">CANCEL</translation>
     </message>
 </context>
 <context>
@@ -864,13 +628,6 @@ Server url not configured.</translation>
     <message>
         <source>presenceOnThePhone</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SelectContact</name>
-    <message>
-        <source>contactSearch</source>
-        <translation type="vanished">Search contact or enter SIP address</translation>
     </message>
 </context>
 <context>
@@ -950,14 +707,6 @@ Server url not configured.</translation>
 <context>
     <name>SettingsNetwork</name>
     <message>
-        <source>forceMtuLabel</source>
-        <translation type="vanished">Forcer MTU</translation>
-    </message>
-    <message>
-        <source>mtuLabel</source>
-        <translation type="vanished">MTU</translation>
-    </message>
-    <message>
         <source>sendDtmfsLabel</source>
         <translation>DTMFs send method</translation>
     </message>
@@ -1002,36 +751,16 @@ Server url not configured.</translation>
         <translation>SIP UDP port</translation>
     </message>
     <message>
-        <source>randomSipUdpPortLabel</source>
-        <translation type="vanished">Random</translation>
-    </message>
-    <message>
         <source>sipTcpPortLabel</source>
         <translation>SIP TCP port</translation>
-    </message>
-    <message>
-        <source>randomSipTcpPortLabel</source>
-        <translation type="vanished">Random</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
         <translation>Audio RTP UDP port</translation>
     </message>
     <message>
-        <source>randomAudioRtpUdpPortLabel</source>
-        <translation type="vanished">Random</translation>
-    </message>
-    <message>
-        <source>randomVideoRtpUdpPortLabel</source>
-        <translation type="vanished">Random</translation>
-    </message>
-    <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Video RTP UDP port</translation>
-    </message>
-    <message>
-        <source>portsHeader</source>
-        <translation type="vanished">Port</translation>
     </message>
     <message>
         <source>portHeader</source>
@@ -1114,10 +843,6 @@ Server url not configured.</translation>
     <message>
         <source>videoInputDeviceLabel</source>
         <translation>Video input device</translation>
-    </message>
-    <message>
-        <source>useCustomVideoFramerateLabel</source>
-        <translation type="vanished">Use custom framerate</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>

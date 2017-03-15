@@ -1,6 +1,6 @@
-# ====================================================================
+# ==============================================================================
 # assets/languages/CMakeLists.txt
-# ====================================================================
+# ==============================================================================
 
 # This line prevent `.ts` files deletion.
 # See: https://bugreports.qt.io/browse/QTBUG-31860
@@ -25,7 +25,7 @@ set(I18N_CONTENT "${I18N_CONTENT}  </qresource>\n</RCC>\n")
 file(WRITE "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}" "${I18N_CONTENT}")
 
 # Create `qm` files from `ts` files.
-qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES})
+qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES} OPTIONS -no-obsolete)
 
 # Translations target must be called by `make`|`make all`.
 add_custom_target(update_translations DEPENDS ${QM_FILES})

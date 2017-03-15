@@ -29,13 +29,6 @@
     </message>
 </context>
 <context>
-    <name>Assistant</name>
-    <message>
-        <source>assistantTitle</source>
-        <translation type="obsolete">Linphone - Assistant</translation>
-    </message>
-</context>
-<context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
@@ -194,29 +187,7 @@
     </message>
 </context>
 <context>
-    <name>AssistantWindow</name>
-    <message>
-        <source>assistantTitle</source>
-        <translation type="vanished">Linphone - Assistant</translation>
-    </message>
-</context>
-<context>
-    <name>CallControls</name>
-    <message>
-        <source>hangup</source>
-        <translation type="obsolete">Fin d&apos;appel</translation>
-    </message>
-</context>
-<context>
     <name>Calls</name>
-    <message>
-        <source>newCall</source>
-        <translation type="vanished">NOUVEL APPEL</translation>
-    </message>
-    <message>
-        <source>newConference</source>
-        <translation type="vanished">NOUVELLE CONFERENCE</translation>
-    </message>
     <message>
         <source>acceptAudioCall</source>
         <translation>ACCEPTER APPEL AUDIO</translation>
@@ -273,49 +244,6 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>Contact</name>
-    <message>
-        <source>sipAccounts</source>
-        <translation type="vanished">COMPTE(S) SIP</translation>
-    </message>
-    <message>
-        <source>address</source>
-        <translation type="vanished">ADRESSE(S)</translation>
-    </message>
-    <message>
-        <source>emails</source>
-        <translation type="vanished">EMAIL(S)</translation>
-    </message>
-    <message>
-        <source>webSites</source>
-        <translation type="vanished">SITE(S) WEB</translation>
-    </message>
-    <message>
-        <source>sipAccountsInput</source>
-        <translation type="vanished">Adresse SIP</translation>
-    </message>
-    <message>
-        <source>emailsInput</source>
-        <translation type="vanished">Adresse e-mail</translation>
-    </message>
-    <message>
-        <source>addressInput</source>
-        <translation type="vanished">Adresse</translation>
-    </message>
-    <message>
-        <source>webSitesInput</source>
-        <translation type="vanished">URL</translation>
-    </message>
-    <message>
-        <source>removeContactDescription</source>
-        <translation type="vanished">Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
-    </message>
-    <message>
-        <source>removeContactTitle</source>
-        <translation type="vanished">Confirmation de la suppression</translation>
-    </message>
-</context>
-<context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
@@ -330,32 +258,16 @@ Url du serveur non configurée.</translation>
         <translation type="unfinished">COMPTE(S) SIP</translation>
     </message>
     <message>
-        <source>sipAccountsInput</source>
-        <translation type="obsolete">Adresse SIP</translation>
-    </message>
-    <message>
         <source>address</source>
         <translation type="unfinished">ADRESSE(S)</translation>
-    </message>
-    <message>
-        <source>addressInput</source>
-        <translation type="obsolete">Adresse</translation>
     </message>
     <message>
         <source>emails</source>
         <translation type="unfinished">EMAIL(S)</translation>
     </message>
     <message>
-        <source>emailsInput</source>
-        <translation type="obsolete">Adresse e-mail</translation>
-    </message>
-    <message>
         <source>webSites</source>
         <translation type="unfinished">SITE(S) WEB</translation>
-    </message>
-    <message>
-        <source>webSitesInput</source>
-        <translation type="obsolete">URL</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -456,23 +368,12 @@ Url du serveur non configurée.</translation>
         <translation>MESSAGES</translation>
     </message>
     <message>
-        <source>newMessagePlaceholder</source>
-        <translation type="vanished">Entrer votre message.</translation>
-    </message>
-    <message>
         <source>removeAllEntriesDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer cet historique ?</translation>
     </message>
     <message>
         <source>removeAllEntriesTitle</source>
         <translation>Suppression de l&apos;historique</translation>
-    </message>
-</context>
-<context>
-    <name>DropZone</name>
-    <message>
-        <source>fileChooserTitle</source>
-        <translation type="vanished">Merci de choisir un ou plusieurs fichiers</translation>
     </message>
 </context>
 <context>
@@ -531,26 +432,6 @@ Url du serveur non configurée.</translation>
 <context>
     <name>Home</name>
     <message>
-        <source>invitContactQuestion</source>
-        <translation type="vanished">Vos amis connaissent-ils déjà Linphone ?</translation>
-    </message>
-    <message>
-        <source>invitContact</source>
-        <translation type="vanished">INVITER VOS AMIS</translation>
-    </message>
-    <message>
-        <source>addContactQuestion</source>
-        <translation type="vanished">Ajouter vos contacts dans votre carnet d&apos;adresses.</translation>
-    </message>
-    <message>
-        <source>addContact</source>
-        <translation type="vanished">AJOUTER CONTACTS</translation>
-    </message>
-    <message>
-        <source>displayTooltip</source>
-        <translation type="vanished">Afficher les tooltips pour découvrir Linphone Desktop</translation>
-    </message>
-    <message>
         <source>howToDescription</source>
         <translation>Besoin d&apos;aide sur l&apos;utilisation de Linphone ?</translation>
     </message>
@@ -599,17 +480,6 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>IncomingCall</name>
-    <message>
-        <source>incomingVideoCall</source>
-        <translation type="vanished">APPEL VIDEO ENTRANT</translation>
-    </message>
-    <message>
-        <source>incomingAudioCall</source>
-        <translation type="vanished">APPEL AUDIO ENTRANT</translation>
-    </message>
-</context>
-<context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
@@ -638,29 +508,6 @@ Url du serveur non configurée.</translation>
     <message>
         <source>defaultSubject</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>InviteFriendsWindow</name>
-    <message>
-        <source>cancel</source>
-        <translation type="obsolete">ANNULER</translation>
-    </message>
-    <message>
-        <source>confirm</source>
-        <translation type="obsolete">CONFIRMER</translation>
-    </message>
-    <message>
-        <source>inviteFriendsTitle</source>
-        <translation type="obsolete">Linphone - Inviter des amis</translation>
-    </message>
-    <message>
-        <source>enterEmailLabel</source>
-        <translation type="obsolete">Entrer l&apos;adresse email de votre ami</translation>
-    </message>
-    <message>
-        <source>messageLabel</source>
-        <translation type="obsolete">Modifier l&apos;invitation qui sera envoyée</translation>
     </message>
 </context>
 <context>
@@ -701,16 +548,8 @@ Url du serveur non configurée.</translation>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>accountAssistant</source>
-        <translation type="vanished">Assistant de compte</translation>
-    </message>
-    <message>
         <source>audioAssistant</source>
         <translation>Assistant audio</translation>
-    </message>
-    <message>
-        <source>debugWindow</source>
-        <translation type="vanished">Fenêtre de debug</translation>
     </message>
     <message>
         <source>about</source>
@@ -734,69 +573,6 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>ManageAccounts</name>
-    <message>
-        <source>manageAccountsDescription</source>
-        <translation type="vanished">Sélectionner votre compte actif ainsi que vos status de présence.</translation>
-    </message>
-    <message>
-        <source>manageAccountsTitle</source>
-        <translation type="vanished">Présence et comptes</translation>
-    </message>
-    <message>
-        <source>validate</source>
-        <translation type="vanished">VALIDER</translation>
-    </message>
-    <message>
-        <source>onlinePresence</source>
-        <translation type="vanished">Disponible</translation>
-    </message>
-    <message>
-        <source>busyPresence</source>
-        <translation type="vanished">Occupé</translation>
-    </message>
-    <message>
-        <source>beRightBackPresence</source>
-        <translation type="vanished">De retour</translation>
-    </message>
-    <message>
-        <source>awayPresence</source>
-        <translation type="vanished">Absent</translation>
-    </message>
-    <message>
-        <source>onThePhonePresence</source>
-        <translation type="vanished">Au téléphone</translation>
-    </message>
-    <message>
-        <source>outToLunchPresence</source>
-        <translation type="vanished">A table</translation>
-    </message>
-    <message>
-        <source>doNotDisturbPresence</source>
-        <translation type="vanished">Ne pas déranger</translation>
-    </message>
-    <message>
-        <source>movedPresence</source>
-        <translation type="vanished">Parti</translation>
-    </message>
-    <message>
-        <source>usingAnotherMessagingServicePresence</source>
-        <translation type="vanished">Utilisation d&apos;un autre service de messagerie</translation>
-    </message>
-    <message>
-        <source>offlinePresence</source>
-        <translation type="vanished">Déconnecté</translation>
-    </message>
-    <message>
-        <source>ok</source>
-        <translation type="vanished">OK</translation>
-    </message>
-    <message>
-        <source>selectAccountLabel</source>
-        <translation type="vanished">Sélectionner votre compte principal</translation>
-    </message>
-</context>
-<context>
     <name>ManageAccountsWindow</name>
     <message>
         <source>ok</source>
@@ -809,28 +585,6 @@ Url du serveur non configurée.</translation>
     <message>
         <source>selectAccountLabel</source>
         <translation type="unfinished">Sélectionner votre compte principal</translation>
-    </message>
-</context>
-<context>
-    <name>NewCall</name>
-    <message>
-        <source>newCallTitle</source>
-        <translation type="vanished">Nouvel appel</translation>
-    </message>
-    <message>
-        <source>cancel</source>
-        <translation type="vanished">ANNULER</translation>
-    </message>
-</context>
-<context>
-    <name>OutgoingCall</name>
-    <message>
-        <source>outgoingVideoCall</source>
-        <translation type="vanished">APPEL VIDEO SORTANT</translation>
-    </message>
-    <message>
-        <source>outgoingAudioCall</source>
-        <translation type="vanished">APPEL AUDIO SORTANT</translation>
     </message>
 </context>
 <context>
@@ -874,13 +628,6 @@ Url du serveur non configurée.</translation>
     <message>
         <source>presenceOnThePhone</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>SelectContact</name>
-    <message>
-        <source>contactSearch</source>
-        <translation type="vanished">Rechercher un contact ou entrer une adresse SIP</translation>
     </message>
 </context>
 <context>
@@ -960,14 +707,6 @@ Url du serveur non configurée.</translation>
 <context>
     <name>SettingsNetwork</name>
     <message>
-        <source>forceMtuLabel</source>
-        <translation type="vanished">Forcer MTU</translation>
-    </message>
-    <message>
-        <source>mtuLabel</source>
-        <translation type="vanished">MTU</translation>
-    </message>
-    <message>
         <source>sendDtmfsLabel</source>
         <translation>Méthode d&apos;envoi des DTMFs</translation>
     </message>
@@ -1012,36 +751,16 @@ Url du serveur non configurée.</translation>
         <translation>Port SIP UDP</translation>
     </message>
     <message>
-        <source>randomSipUdpPortLabel</source>
-        <translation type="vanished">Aléatoire</translation>
-    </message>
-    <message>
         <source>sipTcpPortLabel</source>
         <translation>Port SIP TCP</translation>
-    </message>
-    <message>
-        <source>randomSipTcpPortLabel</source>
-        <translation type="vanished">Aléatoire</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
         <translation>Port Audio RTP UDP</translation>
     </message>
     <message>
-        <source>randomAudioRtpUdpPortLabel</source>
-        <translation type="vanished">Aléatoire</translation>
-    </message>
-    <message>
-        <source>randomVideoRtpUdpPortLabel</source>
-        <translation type="vanished">Aléatoire</translation>
-    </message>
-    <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Port Vidéo RTP UDP</translation>
-    </message>
-    <message>
-        <source>portsHeader</source>
-        <translation type="vanished">Port</translation>
     </message>
     <message>
         <source>portHeader</source>
@@ -1124,10 +843,6 @@ Url du serveur non configurée.</translation>
     <message>
         <source>videoInputDeviceLabel</source>
         <translation>Périphérique de capture vidéo</translation>
-    </message>
-    <message>
-        <source>useCustomVideoFramerateLabel</source>
-        <translation type="vanished">Forcer n.b. images/s</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
