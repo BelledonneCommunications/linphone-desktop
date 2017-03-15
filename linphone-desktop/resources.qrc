@@ -178,6 +178,7 @@
     <file>ui/modules/Common/Form/Buttons/TextButtonA.qml</file>
     <file>ui/modules/Common/Form/Buttons/TextButtonB.qml</file>
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
+    <file>ui/modules/Common/Form/ComboBox.js</file>
     <file>ui/modules/Common/Form/ComboBox.qml</file>
     <file>ui/modules/Common/Form/DroppableTextArea.qml</file>
     <file>ui/modules/Common/Form/Fields/HexField.qml</file>
