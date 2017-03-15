@@ -35,6 +35,7 @@
 // =============================================================================
 
 CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
+  Q_ASSERT(linphone_call != nullptr);
   m_linphone_call = linphone_call;
 
   // Deal with auto-answer.
