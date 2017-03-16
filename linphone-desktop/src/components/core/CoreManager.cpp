@@ -55,25 +55,26 @@ void CoreManager::enableHandlers () {
 }
 
 void CoreManager::init (QObject *parent, const QString &config_path) {
-  if (!m_instance) {
-    m_instance = new CoreManager(parent, config_path);
+  if (m_instance)
+    return;
 
-    m_instance->m_calls_list_model = new CallsListModel(m_instance);
-    m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
-    m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
-    m_instance->m_settings_model = new SettingsModel(m_instance);
+  m_instance = new CoreManager(parent, config_path);
 
-    QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
-    timer->setInterval(20);
+  m_instance->m_calls_list_model = new CallsListModel(m_instance);
+  m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
+  m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
+  m_instance->m_settings_model = new SettingsModel(m_instance);
 
-    QObject::connect(
-      timer, &QTimer::timeout, m_instance, []() {
-        m_instance->m_mutex_video_render.lock();
-        m_instance->m_core->iterate();
-        m_instance->m_mutex_video_render.unlock();
-      }
-    );
-  }
+  QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
+  timer->setInterval(20);
+
+  QObject::connect(
+    timer, &QTimer::timeout, m_instance, []() {
+      m_instance->lockVideoRender();
+      m_instance->m_core->iterate();
+      m_instance->unlockVideoRender();
+    }
+  );
 }
 
 VcardModel *CoreManager::createDetachedVcardModel () {

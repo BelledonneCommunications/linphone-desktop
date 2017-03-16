@@ -23,7 +23,6 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
-#include <QImage>
 #include <QOpenGLFramebufferObject>
 #include <QQuickFramebufferObject>
 
@@ -38,8 +37,8 @@ class CameraRenderer : public QQuickFramebufferObject::Renderer {
   friend class Camera;
 
 public:
-  CameraRenderer (const Camera *camera);
-  ~CameraRenderer () = default;
+  CameraRenderer ();
+  ~CameraRenderer ();
 
 protected:
   QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override;
@@ -47,7 +46,12 @@ protected:
   void synchronize (QQuickFramebufferObject *item) override;
 
 private:
-  const Camera *m_camera;
+  ContextInfo *m_context_info;
+  bool m_need_sync = false;
+
+  bool m_is_preview = false;
+  shared_ptr<linphone::Call> m_linphone_call;
+
   QQuickWindow *m_window;
 };
 
@@ -55,7 +59,6 @@ private:
 
 class Camera : public QQuickFramebufferObject {
   friend class CameraRenderer;
-  friend void setWindowId (const Camera &camera);
 
   Q_OBJECT;
 
@@ -67,9 +70,6 @@ public:
   ~Camera ();
 
   QQuickFramebufferObject::Renderer *createRenderer () const override;
-
-  Q_INVOKABLE void takeScreenshot ();
-  Q_INVOKABLE void saveScreenshot (const QString &path);
 
 signals:
   void callChanged (CallModel *call);
@@ -84,10 +84,6 @@ private:
 
   bool m_is_preview = false;
   CallModel *m_call = nullptr;
-  ContextInfo *m_context_info;
-  QImage m_screenshot;
-
-  mutable CameraRenderer *m_renderer;
 };
 
 #endif // CAMERA_H_

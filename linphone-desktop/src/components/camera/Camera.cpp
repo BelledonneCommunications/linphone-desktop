@@ -64,21 +64,13 @@ struct ContextInfo {
 
 // -----------------------------------------------------------------------------
 
-inline void setWindowId (const Camera &camera) {
-  ContextInfo *context_info = camera.m_context_info;
-
-  qInfo() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
-    .arg(context_info->width).arg(context_info->height).arg(camera.m_is_preview);
-
-  if (camera.m_is_preview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(context_info);
-  else
-    camera.m_call->getLinphoneCall()->setNativeVideoWindowId(context_info);
+CameraRenderer::CameraRenderer () {
+  m_context_info = new ContextInfo();
 }
 
-// -----------------------------------------------------------------------------
-
-CameraRenderer::CameraRenderer (const Camera *camera) : m_camera(camera) {}
+CameraRenderer::~CameraRenderer () {
+  delete m_context_info;
+}
 
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
   QOpenGLFramebufferObjectFormat format;
@@ -86,22 +78,20 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 
-  ContextInfo *context_info = m_camera->m_context_info;
-  context_info->width = size.width();
-  context_info->height = size.height();
+  m_context_info->width = size.width();
+  m_context_info->height = size.height();
+  m_context_info->functions = MSFunctions::getInstance()->getFunctions();
 
-  setWindowId(*m_camera);
+  m_need_sync = true;
 
   return new QOpenGLFramebufferObject(size, format);
 }
 
 void CameraRenderer::render () {
+  if (!m_linphone_call)
+    return;
+
   CameraStateBinder state(this);
-
-  QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-
-  f->glClearColor(0.f, 0.f, 0.f, 0.f);
-  f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // Draw with ms filter.
   {
@@ -116,7 +106,7 @@ void CameraRenderer::render () {
     core->lockVideoRender();
 
     ms_functions->bind(f);
-    m_camera->getCall()->getLinphoneCall()->oglRender(m_camera->m_is_preview);
+    m_linphone_call->oglRender(m_is_preview);
     ms_functions->bind(nullptr);
 
     core->unlockVideoRender();
@@ -132,6 +122,31 @@ void CameraRenderer::render () {
 
 void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
   m_window = item->window();
+
+  if (!m_need_sync) {
+    Camera *camera = qobject_cast<Camera *>(item);
+
+    shared_ptr<linphone::Call> linphone_call = camera->getCall()->getLinphoneCall();
+    bool is_preview = camera->m_is_preview;
+
+    if (m_linphone_call == linphone_call && m_is_preview == is_preview)
+      return;
+
+    m_linphone_call = linphone_call;
+    m_is_preview = is_preview;
+  }
+
+  m_need_sync = false;
+
+  qInfo() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
+    .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview);
+
+  void *window_id = const_cast<ContextInfo *>(m_context_info);
+
+  if (m_is_preview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(window_id);
+  else
+    m_linphone_call->setNativeVideoWindowId(window_id);
 }
 
 // -----------------------------------------------------------------------------
@@ -142,41 +157,23 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 
   // The fbo content must be y-mirrored because the ms rendering is y-inverted.
   setMirrorVertically(true);
-
-  m_context_info = new ContextInfo();
-  m_context_info->functions = MSFunctions::getInstance()->getFunctions();
 }
 
 Camera::~Camera () {
+  CoreManager *core = CoreManager::getInstance();
+
+  core->lockVideoRender();
+
   if (m_is_preview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
   else
     m_call->getLinphoneCall()->setNativeVideoWindowId(nullptr);
 
-  delete m_context_info;
+  core->unlockVideoRender();
 }
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
-  m_renderer = new CameraRenderer(this);
-  return m_renderer;
-}
-
-// -----------------------------------------------------------------------------
-
-void Camera::takeScreenshot () {
-  m_screenshot = m_renderer->framebufferObject()->toImage();
-}
-
-void Camera::saveScreenshot (const QString &path) {
-  QString formatted_path = path.startsWith("file://") ? path.mid(sizeof("file://") - 1) : path;
-  QFileInfo info(formatted_path);
-  QString extension = info.suffix();
-
-  m_screenshot.save(
-    formatted_path,
-    extension.size() > 0 ? ::Utils::qStringToLinphoneString(extension).c_str() : "jpg",
-    100
-  );
+  return new CameraRenderer();
 }
 
 // -----------------------------------------------------------------------------
@@ -193,8 +190,7 @@ CallModel *Camera::getCall () const {
 
 void Camera::setCall (CallModel *call) {
   if (m_call != call) {
-    if ((m_call = call))
-      setWindowId(*this);
+    m_call = call;
 
     emit callChanged(m_call);
   }
