@@ -35,6 +35,7 @@ struct ContextInfo;
 
 class CameraRenderer : public QQuickFramebufferObject::Renderer {
   friend class Camera;
+  friend struct CameraStateBinder;
 
 public:
   CameraRenderer ();
@@ -46,8 +47,9 @@ protected:
   void synchronize (QQuickFramebufferObject *item) override;
 
 private:
+  void updateWindowId ();
+
   ContextInfo *m_context_info;
-  bool m_need_sync = false;
 
   bool m_is_preview = false;
   shared_ptr<linphone::Call> m_linphone_call;
@@ -63,11 +65,11 @@ class Camera : public QQuickFramebufferObject {
   Q_OBJECT;
 
   Q_PROPERTY(CallModel * call READ getCall WRITE setCall NOTIFY callChanged);
-  Q_PROPERTY(bool isPreview MEMBER m_is_preview NOTIFY isPreviewChanged);
+  Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
 
 public:
   Camera (QQuickItem *parent = Q_NULLPTR);
-  ~Camera ();
+  ~Camera () = default;
 
   QQuickFramebufferObject::Renderer *createRenderer () const override;
 
@@ -81,6 +83,9 @@ protected:
 private:
   CallModel *getCall () const;
   void setCall (CallModel *call);
+
+  bool getIsPreview () const;
+  void setIsPreview (bool status);
 
   bool m_is_preview = false;
   CallModel *m_call = nullptr;

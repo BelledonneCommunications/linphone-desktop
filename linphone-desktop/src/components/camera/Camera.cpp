@@ -27,6 +27,7 @@
 #include "Camera.hpp"
 
 #include <QFileInfo>
+#include <QThread>
 #include <QQuickWindow>
 
 // =============================================================================
@@ -48,6 +49,9 @@ struct CameraStateBinder {
 
     f->glDisable(GL_CULL_FACE);
     f->glDisable(GL_DEPTH_TEST);
+
+    // Process at next tick.
+    m_renderer->update();
   }
 
   CameraRenderer *m_renderer;
@@ -78,20 +82,26 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 
+  CoreManager *core = CoreManager::getInstance();
+
+  core->lockVideoRender();
+
   m_context_info->width = size.width();
   m_context_info->height = size.height();
   m_context_info->functions = MSFunctions::getInstance()->getFunctions();
 
-  m_need_sync = true;
+  updateWindowId();
+
+  core->unlockVideoRender();
 
   return new QOpenGLFramebufferObject(size, format);
 }
 
 void CameraRenderer::render () {
+  CameraStateBinder state(this);
+
   if (!m_linphone_call)
     return;
-
-  CameraStateBinder state(this);
 
   // Draw with ms filter.
   {
@@ -115,38 +125,27 @@ void CameraRenderer::render () {
   // Synchronize opengl calls with QML.
   if (m_window)
     m_window->resetOpenGLState();
-
-  // Process at next tick.
-  update();
 }
 
 void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
   m_window = item->window();
 
-  if (!m_need_sync) {
-    Camera *camera = qobject_cast<Camera *>(item);
+  Camera *camera = qobject_cast<Camera *>(item);
 
-    shared_ptr<linphone::Call> linphone_call = camera->getCall()->getLinphoneCall();
-    bool is_preview = camera->m_is_preview;
+  m_linphone_call = camera->getCall()->getLinphoneCall();
+  m_is_preview = camera->m_is_preview;
 
-    if (m_linphone_call == linphone_call && m_is_preview == is_preview)
-      return;
+  updateWindowId();
+}
 
-    m_linphone_call = linphone_call;
-    m_is_preview = is_preview;
-  }
-
-  m_need_sync = false;
-
-  qInfo() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
+void CameraRenderer::updateWindowId () {
+  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
     .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview);
 
-  void *window_id = const_cast<ContextInfo *>(m_context_info);
-
   if (m_is_preview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(window_id);
-  else
-    m_linphone_call->setNativeVideoWindowId(window_id);
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
+  else if (m_linphone_call)
+    m_linphone_call->setNativeVideoWindowId(m_context_info);
 }
 
 // -----------------------------------------------------------------------------
@@ -159,24 +158,9 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setMirrorVertically(true);
 }
 
-Camera::~Camera () {
-  CoreManager *core = CoreManager::getInstance();
-
-  core->lockVideoRender();
-
-  if (m_is_preview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
-  else
-    m_call->getLinphoneCall()->setNativeVideoWindowId(nullptr);
-
-  core->unlockVideoRender();
-}
-
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
   return new CameraRenderer();
 }
-
-// -----------------------------------------------------------------------------
 
 void Camera::mousePressEvent (QMouseEvent *) {
   setFocus(true);
@@ -191,7 +175,21 @@ CallModel *Camera::getCall () const {
 void Camera::setCall (CallModel *call) {
   if (m_call != call) {
     m_call = call;
+    update();
 
     emit callChanged(m_call);
+  }
+}
+
+bool Camera::getIsPreview () const {
+  return m_is_preview;
+}
+
+void Camera::setIsPreview (bool status) {
+  if (m_is_preview != status) {
+    m_is_preview = status;
+    update();
+
+    emit isPreviewChanged(status);
   }
 }
