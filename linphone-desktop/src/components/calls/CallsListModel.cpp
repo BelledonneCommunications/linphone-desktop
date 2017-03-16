@@ -74,7 +74,9 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
         default:
           break;
       }
-    }
+    },
+    // Necessary to avoid a segfault if a video stream exists.
+    Qt::DirectConnection
   );
 }
 
