@@ -30,12 +30,8 @@ using namespace std;
 // =============================================================================
 
 int main (int argc, char *argv[]) {
-  // Force OpenGLES & shader version 2.0.
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
-
-  QSurfaceFormat fmt;
-  fmt.setVersion(2, 0);
-  QSurfaceFormat::setDefaultFormat(fmt);
+  QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
+  QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
   App app(argc, argv);
   app.parseArgs();
