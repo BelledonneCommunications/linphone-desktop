@@ -84,14 +84,13 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 
   CoreManager *core = CoreManager::getInstance();
 
-  core->lockVideoRender();
-
   m_context_info->width = size.width();
   m_context_info->height = size.height();
   m_context_info->functions = MSFunctions::getInstance()->getFunctions();
 
+  // It's not the same thread as render.
+  core->lockVideoRender();
   updateWindowId();
-
   core->unlockVideoRender();
 
   return new QOpenGLFramebufferObject(size, format);
@@ -128,6 +127,8 @@ void CameraRenderer::render () {
 }
 
 void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
+  // No mutex needed here. It's a synchronized area.
+
   m_window = item->window();
 
   Camera *camera = qobject_cast<Camera *>(item);
