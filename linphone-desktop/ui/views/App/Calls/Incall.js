@@ -8,6 +8,14 @@
 
 // =============================================================================
 
+function computeAvatarSize (maxSize) {
+  var height = container.height
+  var width = container.width
+
+  var size = height < maxSize && height > 0 ? height : maxSize
+  return size < width ? size : width
+}
+
 function handleVideoRequested () {
   var call = incall.call
   var dialog
@@ -30,6 +38,7 @@ function handleVideoRequested () {
 
   call.statusChanged.connect(endedHandler)
 
+  // Ask video to user.
   dialog = Utils.openConfirmDialog(window, {
     descriptionText: qsTr('acceptVideoDescription'),
     exitHandler: function (status) {
@@ -47,4 +56,26 @@ function handleVideoRequested () {
     },
     title: qsTr('acceptVideoTitle')
   })
+}
+
+function showFullScreen () {
+  if (incall._fullscreen) {
+    return
+  }
+
+  incall._fullscreen = Utils.openWindow('IncallFullscreenWindow', incall, {
+    properties: {
+      call: incall.call,
+      callsWindow: incall
+    }
+  })
+}
+
+function updateCallQualityIcon () {
+  var quality = call.quality
+  callQuality.icon = 'call_quality_' + (
+    // Note: `quality` is in the [0, 5] interval.
+    // It's necessary to map in the `call_quality_` interval. ([0, 3])
+    quality >= 0 ? Math.round(quality / (5 / 3)) : 0
+  )
 }

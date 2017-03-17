@@ -1,6 +1,6 @@
 # See: https://wiki.qt.io/Qml_Styling
 
-module Linphone.Style
+module Linphone.Styles
 
 # Components styles ------------------------------------------------------------
 

@@ -18,6 +18,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
+  // Used by `IncallFullscreenWindow.qml`.
   readonly property bool cameraActivated:
     cameraLoader.status !== Loader.Null ||
     cameraPreviewLoader.status !== Loader.Null
@@ -26,21 +27,6 @@ Rectangle {
 
   property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
   property var _fullscreen: null
-
-  // ---------------------------------------------------------------------------
-
-  function _showFullscreen () {
-    if (_fullscreen) {
-      return
-    }
-
-    _fullscreen = Utils.openWindow('IncallFullscreenWindow', incall, {
-      properties: {
-        call: incall.call,
-        callsWindow: incall
-      }
-    })
-  }
 
   // ---------------------------------------------------------------------------
 
@@ -89,14 +75,7 @@ Rectangle {
           running: true
           triggeredOnStart: true
 
-          onTriggered: {
-            var quality = call.quality
-            callQuality.icon = 'call_quality_' + (
-              // Note: `quality` is in the [0, 5] interval.
-              // It's necessary to map in the `call_quality_` interval. ([0, 3])
-              quality >= 0 ? Math.round(quality / (5 / 3)) : 0
-            )
-          }
+          onTriggered: Logic.updateCallQualityIcon()
         }
       }
 
@@ -144,7 +123,7 @@ Rectangle {
             icon: 'fullscreen'
             visible: call.videoEnabled
 
-            onClicked: _showFullscreen()
+            onClicked: Logic.showFullscreen()
           }
         }
       }
@@ -158,13 +137,13 @@ Rectangle {
       font.pointSize: CallStyle.header.elapsedTime.fontSize
       horizontalAlignment: Text.AlignHCenter
 
-      Component.onCompleted: {
-        var updateDuration = function () {
-          text = Utils.formatElapsedTime(call.duration)
-          Utils.setTimeout(elapsedTime, 1000, updateDuration)
-        }
+      Timer {
+        interval: 1000
+        repeat: true
+        running: true
+        triggeredOnStart: true
 
-        updateDuration()
+        onTriggered: elapsedTime.text = Utils.formatElapsedTime(call.duration)
       }
     }
 
@@ -183,17 +162,6 @@ Rectangle {
         id: avatar
 
         Avatar {
-          function _computeAvatarSize () {
-            var height = container.height
-            var width = container.width
-
-            var size = height < CallStyle.container.avatar.maxSize && height > 0
-              ? height
-              : CallStyle.container.avatar.maxSize
-
-            return size < width ? size : width
-          }
-
           backgroundColor: CallStyle.container.avatar.backgroundColor
           foregroundColor: call.status === CallModel.CallStatusPaused
             ? CallStyle.container.pause.color
@@ -201,7 +169,7 @@ Rectangle {
           image: _contactObserver.contact && _contactObserver.contact.vcard.avatar
           username: contactDescription.username
 
-          height: _computeAvatarSize()
+          height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
           width: height
 
           Text {
