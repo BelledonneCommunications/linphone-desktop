@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>A free SIP video-phone</translation>
+        <translation>A free (libre) SIP video-phone.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -148,11 +148,11 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">Password</translation>
+        <translation>Password</translation>
     </message>
 </context>
 <context>
@@ -217,7 +217,7 @@
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished">Calls</translation>
+        <translation>Calls</translation>
     </message>
 </context>
 <context>
@@ -247,27 +247,27 @@ Server url not configured.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished">Do you really want remove this contact from your book?</translation>
+        <translation>Do you really want remove this contact from your book?</translation>
     </message>
     <message>
         <source>removeContactTitle</source>
-        <translation type="unfinished">Delete confirmation</translation>
+        <translation>Delete confirmation</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation type="unfinished">SIP ACCOUNT(S)</translation>
+        <translation>SIP ACCOUNT(S)</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished">ADDRESS</translation>
+        <translation>ADDRESS</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished">E-MAIL(S)</translation>
+        <translation>E-MAIL(S)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished">WEB SITE(S)</translation>
+        <translation>WEB SITE(S)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -369,11 +369,11 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to clean history?</translation>
     </message>
     <message>
         <source>removeAllEntriesTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Clean history</translation>
     </message>
 </context>
 <context>
@@ -388,7 +388,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Send a file</translation>
     </message>
 </context>
 <context>
@@ -576,15 +576,15 @@ Server url not configured.</translation>
     <name>ManageAccountsWindow</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>manageAccountsTitle</source>
-        <translation type="unfinished">Presence and accounts</translation>
+        <translation>Presence and accounts</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished">Select you active account</translation>
+        <translation>Select you active account</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>

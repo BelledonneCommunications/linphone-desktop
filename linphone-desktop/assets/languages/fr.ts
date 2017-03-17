@@ -5,27 +5,27 @@
     <name>App</name>
     <message>
         <source>selftestResult</source>
-        <translation type="unfinished"></translation>
+        <translation>Linphone semble fonctionner normalement.</translation>
     </message>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher sur stdout les informations de debug.</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>Spécifier un fichier de configuration à utiliser.</translation>
     </message>
     <message>
         <source>commandLineOptionSelftest</source>
-        <translation type="unfinished"></translation>
+        <translation>Éxécuter un test automatique et retourner 0 en cas de succès.</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Un logiciel libre de voix sur IP SIP.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancer l&apos;application dans la zone de notification.</translation>
     </message>
 </context>
 <context>
@@ -148,11 +148,11 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished">Nom d&apos;utilisateur</translation>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">Mot de passe</translation>
+        <translation>Mot de passe</translation>
     </message>
 </context>
 <context>
@@ -217,7 +217,7 @@
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished">Appels</translation>
+        <translation>Appels</translation>
     </message>
 </context>
 <context>
@@ -247,27 +247,27 @@ Url du serveur non configurée.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished">Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
+        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
     </message>
     <message>
         <source>removeContactTitle</source>
-        <translation type="unfinished">Confirmation de la suppression</translation>
+        <translation>Confirmation de la suppression</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation type="unfinished">COMPTE(S) SIP</translation>
+        <translation>COMPTE(S) SIP</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished">ADRESSE(S)</translation>
+        <translation>ADRESSE(S)</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished">EMAIL(S)</translation>
+        <translation>EMAIL(S)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished">SITE(S) WEB</translation>
+        <translation>SITE(S) WEB</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -576,19 +576,19 @@ Url du serveur non configurée.</translation>
     <name>ManageAccountsWindow</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>manageAccountsTitle</source>
-        <translation type="unfinished">Présence et comptes</translation>
+        <translation>Présence et comptes</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished">Sélectionner votre compte principal</translation>
+        <translation>Sélectionner votre compte principal</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner votre présence</translation>
     </message>
 </context>
 <context>
