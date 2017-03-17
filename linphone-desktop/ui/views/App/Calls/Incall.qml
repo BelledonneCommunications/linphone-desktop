@@ -9,6 +9,8 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'Incall.js' as Logic
+
 // =============================================================================
 
 Rectangle {
@@ -45,51 +47,12 @@ Rectangle {
   color: CallStyle.backgroundColor
 
   // ---------------------------------------------------------------------------
-  // Handle video requests.
-  // ---------------------------------------------------------------------------
 
   Connections {
     target: call
 
-    onVideoRequested: {
-      var dialog
-
-      // Close dialog after 10s.
-      var timeout = Utils.setTimeout(incall, 10000, function () {
-        call.statusChanged.disconnect(endedHandler)
-        dialog.close()
-        call.rejectVideoRequest()
-      })
-
-      // Close dialog if call is ended.
-      var endedHandler = function (status) {
-        if (status === CallModel.CallStatusEnded) {
-          Utils.clearTimeout(timeout)
-          call.statusChanged.disconnect(endedHandler)
-          dialog.close()
-        }
-      }
-
-      call.statusChanged.connect(endedHandler)
-
-      dialog = Utils.openConfirmDialog(window, {
-        descriptionText: qsTr('acceptVideoDescription'),
-        exitHandler: function (status) {
-          Utils.clearTimeout(timeout)
-          call.statusChanged.disconnect(endedHandler)
-
-          if (status) {
-            call.acceptVideoRequest()
-          } else {
-            call.rejectVideoRequest()
-          }
-        },
-        title: qsTr('acceptVideoTitle')
-      })
-    }
+    onVideoRequested: Logic.handleVideoRequested()
   }
-
-  // ---------------------------------------------------------------------------
 
   ColumnLayout {
     anchors {

@@ -102,7 +102,11 @@ function openConfirmDialog (parent, options) {
     '}',
     parent, {
       isString: true,
-      exitHandler: options.exitHandler
+      exitHandler: (options && options.exitHandler) ||
+      function () {
+        return 0
+      },
+      properties: options && options.properties
     }
   )
 }
@@ -113,7 +117,7 @@ function openConfirmDialog (parent, options) {
 // If options.isString is equals to true, a marshalling component can
 // be used.
 //
-// Supported options: isString, exitHandler.
+// Supported options: isString, exitHandler, properties.
 //
 // If exitHandler is used, window must implement exitStatus signal.
 function openWindow (window, parent, options) {
@@ -121,6 +125,13 @@ function openWindow (window, parent, options) {
 
   if (options && options.isString) {
     object = Qt.createQmlObject(window, parent)
+
+    var properties = options && options.properties
+    if (properties) {
+      for (var key in properties) {
+        object[key] = properties[key]
+      }
+    }
   } else {
     var component = Qt.createComponent(
       'qrc:/ui/views/App/' + window + '.qml'

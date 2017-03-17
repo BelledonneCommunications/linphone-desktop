@@ -163,12 +163,12 @@ file(STRINGS ${QRC_RESOURCES} QRC_RESOURCES_CONTENT)
 foreach (line ${QRC_RESOURCES_CONTENT})
   set(result)
   string(REGEX REPLACE
-    "^[ \t]*<[ \t]*file[ \t]*>[ \t]*(.+\\.qml)[ \t]*<[ \t]*/[ \t]*file[ \t]*>[ \t]*$"
+    "^[ \t]*<[ \t]*file[ \t]*>[ \t]*(.+\\.[a-z]+)[ \t]*<[ \t]*/[ \t]*file[ \t]*>[ \t]*$"
     "\\1"
     result
     ${line})
-  string(REGEX MATCH "qml$" isQml ${result})
-  if (NOT ${isQml} STREQUAL "")
+  string(REGEX MATCH "\\.[a-z]+$" isUi ${result})
+  if (NOT ${isUi} STREQUAL "")
     list(APPEND QML_SOURCES "${CMAKE_SOURCE_DIR}/${result}")
   endif ()
 endforeach ()

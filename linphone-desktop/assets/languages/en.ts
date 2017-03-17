@@ -472,11 +472,11 @@ Server url not configured.</translation>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Your contact would like to turn on video.</translation>
     </message>
     <message>
         <source>acceptVideoTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Video requested</translation>
     </message>
 </context>
 <context>
