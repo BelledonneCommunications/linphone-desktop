@@ -74,7 +74,7 @@ void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
   const shared_ptr<linphone::PresenceModel> &
 ) {
   ContactModel *contact_model = &lf->getData<ContactModel>("contact-model");
-  if (contact_model) contact_model->presenceReceived();
+  contact_model->presenceReceived();
 }
 
 void CoreHandlers::onRegistrationStateChanged (
