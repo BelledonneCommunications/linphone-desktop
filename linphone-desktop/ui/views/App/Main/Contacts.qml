@@ -113,9 +113,9 @@ ColumnLayout {
 
               Text {
                 Layout.fillWidth: true
-                color: ContactsStyle.contact.presenceStringColor
+                color: ContactsStyle.contact.presence.color
                 elide: Text.ElideRight
-                font.pointSize: ContactsStyle.contact.presenceStringFontSize
+                font.pointSize: ContactsStyle.contact.presence.fontSize
                 text: Presence.getPresenceStatusAsString($contact.presenceStatus)
               }
             }

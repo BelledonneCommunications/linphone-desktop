@@ -25,8 +25,6 @@ QtObject {
     property int presenceLevelSize: 12
     property int rightMargin: 25
     property int spacing: 15
-    property int presenceStringFontSize: 10
-    property color presenceStringColor: Colors.w
 
     property QtObject backgroundColor: QtObject {
       property color normal: Colors.k
@@ -41,6 +39,11 @@ QtObject {
     property QtObject indicator: QtObject {
       property color color: Colors.i
       property int width: 5
+    }
+
+    property QtObject presence: QtObject {
+      property int fontSize: 10
+      property color color: Colors.w
     }
 
     property QtObject username: QtObject {
