@@ -35,6 +35,7 @@ ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
   m_vcard = make_shared<VcardModel>(linphone_friend->getVcard());
 
   App::getInstance()->getEngine()->setObjectOwnership(m_vcard.get(), QQmlEngine::CppOwnership);
+  m_linphone_friend->setData("contact-model", *this);
 }
 
 ContactModel::ContactModel (VcardModel *vcard) {
@@ -46,6 +47,12 @@ ContactModel::ContactModel (VcardModel *vcard) {
   m_vcard.reset(vcard);
 
   engine->setObjectOwnership(vcard, QQmlEngine::CppOwnership);
+}
+
+void ContactModel::presenceReceived () {
+  Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(m_linphone_friend->getConsolidatedPresence());
+  emit presenceStatusChanged(status);
+  emit presenceLevelChanged(Presence::getPresenceLevel(status));
 }
 
 void ContactModel::startEdit () {
@@ -98,7 +105,7 @@ void ContactModel::abortEdit () {
 }
 
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {
-  return Presence::PresenceStatus::Offline;
+  return static_cast<Presence::PresenceStatus>(m_linphone_friend->getConsolidatedPresence());
 }
 
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {

@@ -12,6 +12,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   property var account
+  property var presence
 
   signal clicked
 
@@ -27,11 +28,10 @@ Item {
 
       PresenceLevel {
         Layout.alignment: Qt.AlignBottom
-        Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottoMargin
+        Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottomMargin
         Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
         Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
-        icon: 'chevron'
-        level: account.presenceLevel
+        level: presence.presenceLevel
       }
 
       Text {

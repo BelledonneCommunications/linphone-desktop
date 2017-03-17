@@ -25,8 +25,6 @@ singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationRec
 singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
 singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationReceivedFileMessageStyle.qml
 
-singleton PresenceStringStyle                  1.0 Presence/PresenceStringStyle.qml
-
 singleton SmartSearchBarStyle                  1.0 SmartSearchBarStyle.qml
 
 singleton TimelineStyle                        1.0 TimelineStyle.qml

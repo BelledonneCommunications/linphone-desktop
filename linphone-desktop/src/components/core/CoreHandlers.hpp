@@ -57,6 +57,13 @@ private:
     const std::shared_ptr<linphone::ChatMessage> &message
   ) override;
 
+  void onNotifyPresenceReceivedForUriOrTel (
+    const std::shared_ptr<linphone::Core> &lc,
+    const std::shared_ptr<linphone::Friend> &lf,
+    const std::string &uri_or_tel,
+    const std::shared_ptr<linphone::PresenceModel> &presence_model
+  ) override;
+
   void onRegistrationStateChanged (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::ProxyConfig> &config,

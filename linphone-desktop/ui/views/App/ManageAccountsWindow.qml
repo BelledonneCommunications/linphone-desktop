@@ -42,6 +42,24 @@ DialogPlus {
 
     FormLine {
       FormGroup {
+        label: qsTr('selectPresenceLabel')
+
+        ComboBox {
+          currentIndex: Utils.findIndex(PresenceStatusModel.statuses, function (status) {
+            return status.presenceStatus == PresenceStatusModel.presenceStatus
+          })
+
+          model: PresenceStatusModel.statuses
+          iconRole: 'presenceIcon'
+          textRole: 'presenceLabel'
+
+          onActivated: PresenceStatusModel.presenceStatus = model[index].presenceStatus
+        }
+      }
+    }
+
+    FormLine {
+      FormGroup {
         label: qsTr('selectAccountLabel')
 
         ComboBox {

@@ -90,6 +90,8 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/notifier/Notifier.cpp
+  src/components/presence/Presence.cpp
+  src/components/presence/PresenceStatusModel.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/components/sip-addresses/SipAddressesModel.cpp
@@ -121,6 +123,7 @@ set(HEADERS
   src/components/core/CoreManager.hpp
   src/components/notifier/Notifier.hpp
   src/components/presence/Presence.hpp
+  src/components/presence/PresenceStatusModel.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/components/sip-addresses/SipAddressesModel.hpp

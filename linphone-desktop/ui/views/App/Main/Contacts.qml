@@ -111,9 +111,12 @@ ColumnLayout {
                 level: $contact.presenceLevel
               }
 
-              PresenceString {
+              Text {
                 Layout.fillWidth: true
-                status: $contact.presenceStatus
+                color: ContactsStyle.contact.presenceStringColor
+                elide: Text.ElideRight
+                font.pointSize: ContactsStyle.contact.presenceStringFontSize
+                text: Presence.getPresenceStatusAsString($contact.presenceStatus)
               }
             }
           }

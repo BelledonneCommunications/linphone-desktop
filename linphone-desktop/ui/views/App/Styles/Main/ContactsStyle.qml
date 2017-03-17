@@ -25,6 +25,8 @@ QtObject {
     property int presenceLevelSize: 12
     property int rightMargin: 25
     property int spacing: 15
+    property int presenceStringFontSize: 10
+    property color presenceStringColor: Colors.w
 
     property QtObject backgroundColor: QtObject {
       property color normal: Colors.k

@@ -31,8 +31,8 @@
 class ContactModel : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY contactUpdated);
-  Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY contactUpdated);
+  Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
+  Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY presenceLevelChanged);
   Q_PROPERTY(VcardModel * vcard READ getVcardModelPtr NOTIFY contactUpdated);
 
   friend class ContactsListModel;
@@ -48,12 +48,16 @@ public:
     return m_vcard;
   }
 
+  void presenceReceived ();
+
   Q_INVOKABLE void startEdit ();
   Q_INVOKABLE void endEdit ();
   Q_INVOKABLE void abortEdit ();
 
 signals:
   void contactUpdated ();
+  void presenceStatusChanged (Presence::PresenceStatus status);
+  void presenceLevelChanged (Presence::PresenceLevel level);
   void sipAddressAdded (const QString &sip_address);
   void sipAddressRemoved (const QString &sip_address);
 

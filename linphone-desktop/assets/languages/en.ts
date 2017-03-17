@@ -586,48 +586,28 @@ Server url not configured.</translation>
         <source>selectAccountLabel</source>
         <translation type="unfinished">Select you active account</translation>
     </message>
+    <message>
+        <source>selectPresenceLabel</source>
+        <translation>Select a presence status</translation>
+    </message>
 </context>
 <context>
-    <name>PresenceString</name>
+    <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"></translation>
+        <translation>Available</translation>
     </message>
     <message>
-        <source>presenceOutToLunch</source>
-        <translation type="unfinished"></translation>
+        <source>presenceBusy</source>
+        <translation>Busy</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceMoved</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceUsingAnotherMessagingService</source>
-        <translation type="unfinished"></translation>
+        <translation>Do not disturb</translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceUnknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceBeRightBack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceAway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceOnThePhone</source>
-        <translation type="unfinished"></translation>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>

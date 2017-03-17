@@ -33,15 +33,10 @@ class Presence : public QObject {
 
 public:
   enum PresenceStatus {
-    Online,
-    BeRightBack,
-    Away,
-    OnThePhone,
-    OutToLunch,
-    DoNotDisturb,
-    Moved,
-    UsingAnotherMessagingService,
-    Offline
+    Online = linphone::ConsolidatedPresenceOnline,
+    Busy = linphone::ConsolidatedPresenceBusy,
+    DoNotDisturb = linphone::ConsolidatedPresenceDoNotDisturb,
+    Offline = linphone::ConsolidatedPresenceOffline
   };
 
   Q_ENUM(PresenceStatus);
@@ -59,16 +54,9 @@ public:
 
   ~Presence () = default;
 
-  static PresenceLevel getPresenceLevel (const PresenceStatus &presenceStatus) {
-    if (presenceStatus == Online)
-      return Green;
-    if (presenceStatus == DoNotDisturb)
-      return Red;
-    if (presenceStatus == Offline)
-      return White;
-
-    return Orange;
-  }
+  static PresenceLevel getPresenceLevel (const PresenceStatus &status);
+  Q_INVOKABLE static QString getPresenceStatusAsString (const PresenceStatus &status);
+  Q_INVOKABLE static QString getPresenceLevelIconName (const PresenceLevel &level);
 };
 
 #endif // PRESENCE_H_

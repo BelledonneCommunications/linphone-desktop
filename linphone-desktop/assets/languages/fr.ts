@@ -586,15 +586,19 @@ Url du serveur non configurée.</translation>
         <source>selectAccountLabel</source>
         <translation type="unfinished">Sélectionner votre compte principal</translation>
     </message>
+    <message>
+        <source>selectPresenceLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
-    <name>PresenceString</name>
+    <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation>En ligne</translation>
+        <translation type="unfinished">En ligne</translation>
     </message>
     <message>
-        <source>presenceOutToLunch</source>
+        <source>presenceBusy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -602,32 +606,19 @@ Url du serveur non configurée.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>presenceMoved</source>
-        <translation type="unfinished"></translation>
+        <source>presenceOffline</source>
+        <translation type="unfinished">Hors-ligne</translation>
     </message>
+</context>
+<context>
+    <name>PresenceString</name>
     <message>
-        <source>presenceUsingAnotherMessagingService</source>
-        <translation type="unfinished"></translation>
+        <source>presenceOnline</source>
+        <translation type="vanished">En ligne</translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation>Hors-ligne</translation>
-    </message>
-    <message>
-        <source>presenceUnknown</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceBeRightBack</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceAway</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>presenceOnThePhone</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Hors-ligne</translation>
     </message>
 </context>
 <context>

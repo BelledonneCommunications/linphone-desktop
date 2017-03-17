@@ -25,6 +25,7 @@
 #include "../components/chat/ChatProxyModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
+#include "../components/presence/PresenceStatusModel.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
@@ -248,9 +249,6 @@ void App::registerTypes () {
   qmlRegisterUncreatableType<ContactObserver>(
     "Linphone", 1, 0, "ContactObserver", "ContactObserver is uncreatable."
   );
-  qmlRegisterUncreatableType<Presence>(
-    "Linphone", 1, 0, "Presence", "Presence is uncreatable."
-  );
   qmlRegisterUncreatableType<VcardModel>(
     "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable."
   );
@@ -287,6 +285,20 @@ void App::registerTypes () {
     "Linphone", 1, 0, "ContactsListModel",
     [](QQmlEngine *, QJSEngine *) -> QObject *{
       return CoreManager::getInstance()->getContactsListModel();
+    }
+  );
+
+  qmlRegisterSingletonType<Presence>(
+    "Linphone", 1, 0, "Presence",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new Presence();
+    }
+  );
+
+  qmlRegisterSingletonType<PresenceStatusModel>(
+    "Linphone", 1, 0, "PresenceStatusModel",
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new PresenceStatusModel();
     }
   );
 

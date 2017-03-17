@@ -45,10 +45,6 @@
     <file>assets/images/chat_normal.svg</file>
     <file>assets/images/chat_pressed.svg</file>
     <file>assets/images/chat_send.svg</file>
-    <file>assets/images/chevron_green.svg</file>
-    <file>assets/images/chevron_orange.svg</file>
-    <file>assets/images/chevron_red.svg</file>
-    <file>assets/images/chevron_white.svg</file>
     <file>assets/images/collapse.svg</file>
     <file>assets/images/contact_add_hovered.svg</file>
     <file>assets/images/contact_add_normal.svg</file>
@@ -283,7 +279,6 @@
     <file>ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
-    <file>ui/modules/Linphone/Presence/PresenceString.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
     <file>ui/modules/Linphone/SmartSearchBar.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
@@ -300,7 +295,6 @@
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedFileMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Presence/PresenceStringStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/SmartSearchBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
