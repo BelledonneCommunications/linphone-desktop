@@ -21,7 +21,7 @@ function getSelectedEntryIcon () {
   ) || ''
 }
 
-function getEntryIcon () {
+function getEntryIcon (item) {
   var iconRole = comboBox.iconRole
   return (iconRole.length && item.flattenedModel[iconRole]) || ''
 }

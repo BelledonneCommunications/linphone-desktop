@@ -57,16 +57,6 @@ void AccountSettingsModel::setUsername (const QString &username) {
 
 // -----------------------------------------------------------------------------
 
-Presence::PresenceLevel AccountSettingsModel::getPresenceLevel () const {
-  return Presence::Green;
-}
-
-Presence::PresenceStatus AccountSettingsModel::getPresenceStatus () const {
-  return Presence::Online;
-}
-
-// -----------------------------------------------------------------------------
-
 QString AccountSettingsModel::getSipAddress () const {
   return ::Utils::linphoneStringToQString(getDefaultSipAddress()->asStringUriOnly());
 }

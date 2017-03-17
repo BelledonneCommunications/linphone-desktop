@@ -63,7 +63,8 @@ QString Presence::getPresenceLevelIconName (const PresenceLevel &level) {
     case Red:
       return "led_red";
     case White:
-    default:
       return "led_white";
+    default:
+      return "";
   }
 }

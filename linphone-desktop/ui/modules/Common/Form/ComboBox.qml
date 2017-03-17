@@ -111,7 +111,7 @@ ComboBox {
       width: item.width
 
       Icon {
-        icon: Logic.getEntryIcon()
+        icon: Logic.getEntryIcon(item)
         iconSize: ComboBoxStyle.delegate.contentItem.iconSize
 
         visible: icon.length > 0

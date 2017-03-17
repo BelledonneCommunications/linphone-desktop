@@ -595,30 +595,19 @@ Url du serveur non configurée.</translation>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished">En ligne</translation>
+        <translation>En ligne</translation>
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>Occupé</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation type="unfinished"></translation>
+        <translation>Ne pas déranger</translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished">Hors-ligne</translation>
-    </message>
-</context>
-<context>
-    <name>PresenceString</name>
-    <message>
-        <source>presenceOnline</source>
-        <translation type="vanished">En ligne</translation>
-    </message>
-    <message>
-        <source>presenceOffline</source>
-        <translation type="vanished">Hors-ligne</translation>
+        <translation>Hors-ligne</translation>
     </message>
 </context>
 <context>
