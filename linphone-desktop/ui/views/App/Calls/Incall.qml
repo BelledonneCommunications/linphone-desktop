@@ -37,6 +37,7 @@ Rectangle {
   Connections {
     target: call
 
+    onStatusChanged: Logic.handleStatusChanged (status)
     onVideoRequested: Logic.handleVideoRequested()
   }
 

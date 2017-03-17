@@ -16,6 +16,15 @@ function computeAvatarSize (maxSize) {
   return size < width ? size : width
 }
 
+function handleStatusChanged (status) {
+  if (status === Linphone.CallModel.CallStatusEnded) {
+    var fullscreen = incall._fullscreen
+    if (fullscreen) {
+      fullscreen.close()
+    }
+  }
+}
+
 function handleVideoRequested () {
   var call = incall.call
   var dialog
@@ -58,7 +67,7 @@ function handleVideoRequested () {
   })
 }
 
-function showFullScreen () {
+function showFullscreen () {
   if (incall._fullscreen) {
     return
   }
