@@ -324,6 +324,7 @@
     <file>ui/views/App/Main/Conversation.qml</file>
     <file>ui/views/App/Main/Home.qml</file>
     <file>ui/views/App/Main/InviteFriends.qml</file>
+    <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
     <file>ui/views/App/ManageAccountsWindow.qml</file>

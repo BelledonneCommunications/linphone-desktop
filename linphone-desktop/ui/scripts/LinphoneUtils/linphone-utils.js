@@ -6,6 +6,8 @@
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
+// =============================================================================
+
 // Returns the username of a contact object or URI string.
 function getContactUsername (contact) {
   return Utils.isString(contact)

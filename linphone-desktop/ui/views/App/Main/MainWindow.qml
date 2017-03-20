@@ -1,7 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 
 // Explicit import to support Toolbar.
 import QtQuick.Controls 1.4 as Controls1
@@ -11,6 +10,8 @@ import Linphone 1.0
 import Utils 1.0
 
 import App.Styles 1.0
+
+import 'MainWindow.js' as Logic
 
 // =============================================================================
 
@@ -23,64 +24,15 @@ Controls1.ApplicationWindow {
   // ---------------------------------------------------------------------------
 
   function lockView (info) {
-    _lockedInfo = info
+    Logic.lockView(info)
   }
 
   function unlockView () {
-    _lockedInfo = undefined
+    Logic.unlockView(info)
   }
 
   function setView (view, props) {
-    if (!_lockedInfo) {
-      _setView(view, props)
-      return
-    }
-
-    Utils.openConfirmDialog(window, {
-      descriptionText: _lockedInfo.descriptionText,
-      exitHandler: function (status) {
-        if (status) {
-          unlockView()
-          _setView(view, props)
-        } else {
-          _updateSelectedEntry(_currentView, props)
-        }
-      },
-      title: _lockedInfo.title
-    })
-  }
-
-  // ---------------------------------------------------------------------------
-
-  function _updateSelectedEntry (view, props) {
-    if (view === 'Home' || view === 'Contacts') {
-      menu.setSelectedEntry(view === 'Home' ? 0 : 1)
-      timeline.resetSelectedEntry()
-    } else if (view === 'Conversation') {
-      menu.resetSelectedEntry()
-      timeline.setSelectedEntry(props.sipAddress)
-    } else if (view === 'ContactEdit') {
-      menu.resetSelectedEntry()
-      timeline.resetSelectedEntry()
-    }
-  }
-
-  function _forceView (view, props) {
-    collapse.setCollapsed(true)
-
-    _updateSelectedEntry(view, props)
-    _currentView = view
-    contentLoader.setSource(view + '.qml', props || {})
-  }
-
-  function _setView (view, props) {
-    if (window.visibility === Window.Minimized) {
-      window.visibility = Window.AutomaticVisibility
-    } else {
-      window.setVisible(true)
-    }
-
-    _forceView(view, props)
+    Logic.setView(view, props)
   }
 
   // ---------------------------------------------------------------------------
@@ -104,10 +56,6 @@ Controls1.ApplicationWindow {
   }
 
   // ---------------------------------------------------------------------------
-
-  Component.onCompleted: Utils.setTimeout(window, 0, function () {
-    _forceView('Home')
-  })
 
   onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()
 
@@ -151,6 +99,8 @@ Controls1.ApplicationWindow {
           target: window
           targetHeight: MainWindowStyle.minimumHeight
           visible: Qt.platform.os !== 'linux'
+
+          Component.onCompleted: setCollapsed(true)
         }
 
         AccountStatus {
@@ -193,6 +143,7 @@ Controls1.ApplicationWindow {
           id: smartSearchBar
 
           Layout.fillWidth: true
+
           entryHeight: MainWindowStyle.searchBox.entryHeight
           maxMenuHeight: MainWindowStyle.searchBox.maxHeight
           placeholderText: qsTr('mainSearchBarPlaceholder')
@@ -269,6 +220,8 @@ Controls1.ApplicationWindow {
 
         Layout.fillHeight: true
         Layout.fillWidth: true
+
+        source: 'Home.qml'
       }
     }
   }
