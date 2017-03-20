@@ -31,13 +31,13 @@
 
 void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
   CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxy_config);
-  emit accountUpdated();
+  emit accountSettingsUpdated();
 }
 
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getUsername () const {
-  shared_ptr<linphone::Address> address = getDefaultSipAddress();
+  shared_ptr<linphone::Address> address = getUsedSipAddress();
   const string &display_name = address->getDisplayName();
 
   return ::Utils::linphoneStringToQString(
@@ -46,20 +46,62 @@ QString AccountSettingsModel::getUsername () const {
 }
 
 void AccountSettingsModel::setUsername (const QString &username) {
-  shared_ptr<linphone::Address> address = getDefaultSipAddress();
+  shared_ptr<linphone::Address> address = getUsedSipAddress();
 
   if (address->setDisplayName(::Utils::qStringToLinphoneString(username)))
     qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
       .arg(::Utils::linphoneStringToQString(address->asStringUriOnly()));
 
-  emit accountUpdated();
+  emit accountSettingsUpdated();
+}
+
+QString AccountSettingsModel::getSipAddress () const {
+  return ::Utils::linphoneStringToQString(getUsedSipAddress()->asStringUriOnly());
 }
 
 // -----------------------------------------------------------------------------
 
-QString AccountSettingsModel::getSipAddress () const {
-  return ::Utils::linphoneStringToQString(getDefaultSipAddress()->asStringUriOnly());
+QString AccountSettingsModel::getPrimaryUsername () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getUsername()
+  );
 }
+
+void AccountSettingsModel::setPrimaryUsername (const QString &username) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
+
+  primary->setUsername(
+    username.isEmpty() ? "linphone" : ::Utils::qStringToLinphoneString(username)
+  );
+  core->setPrimaryContact(primary->asString());
+
+  emit accountSettingsUpdated();
+}
+
+QString AccountSettingsModel::getPrimaryDisplayname () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getDisplayName()
+  );
+}
+
+void AccountSettingsModel::setPrimaryDisplayname (const QString &displayname) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
+
+  primary->setDisplayName(::Utils::qStringToLinphoneString(displayname));
+  core->setPrimaryContact(primary->asString());
+
+  emit accountSettingsUpdated();
+}
+
+QString AccountSettingsModel::getPrimarySipAddress () const {
+  return ::Utils::linphoneStringToQString(
+    CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->asString()
+  );
+}
+
+// -----------------------------------------------------------------------------
 
 QVariantList AccountSettingsModel::getAccounts () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
@@ -84,7 +126,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
 // -----------------------------------------------------------------------------
 
-shared_ptr<linphone::Address> AccountSettingsModel::getDefaultSipAddress () const {
+shared_ptr<linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
 

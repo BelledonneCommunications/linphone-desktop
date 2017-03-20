@@ -31,9 +31,14 @@
 class AccountSettingsModel : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountUpdated);
-  Q_PROPERTY(QString sipAddress READ getSipAddress NOTIFY accountUpdated);
-  Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountUpdated);
+  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountSettingsUpdated);
+  Q_PROPERTY(QString sipAddress READ getSipAddress NOTIFY accountSettingsUpdated);
+
+  Q_PROPERTY(QString primaryDisplayname READ getPrimaryDisplayname WRITE setPrimaryDisplayname NOTIFY accountSettingsUpdated);
+  Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY accountSettingsUpdated);
+  Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY accountSettingsUpdated);
+
+  Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountSettingsUpdated);
 
 public:
   AccountSettingsModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
@@ -41,16 +46,25 @@ public:
   Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
 
 signals:
-  void accountUpdated ();
+  void accountSettingsUpdated ();
 
 private:
   QString getUsername () const;
   void setUsername (const QString &username);
 
   QString getSipAddress () const;
+
+  QString getPrimaryUsername () const;
+  void setPrimaryUsername (const QString &username);
+
+  QString getPrimaryDisplayname () const;
+  void setPrimaryDisplayname (const QString &displayname);
+
+  QString getPrimarySipAddress () const;
+
   QVariantList getAccounts () const;
 
-  std::shared_ptr<linphone::Address> getDefaultSipAddress () const;
+  std::shared_ptr<linphone::Address> getUsedSipAddress () const;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig> );

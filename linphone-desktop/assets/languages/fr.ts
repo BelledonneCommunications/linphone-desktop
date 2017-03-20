@@ -792,6 +792,25 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsSipAccounts</name>
+    <message>
+        <source>defaultIdentityTitle</source>
+        <translation>Identité par défaut</translation>
+    </message>
+    <message>
+        <source>defaultDisplaynameLabel</source>
+        <translation>Nom d&apos;affichage</translation>
+    </message>
+    <message>
+        <source>defaultUsernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>defaultSipAddressLabel</source>
+        <translation>Adresse SIP</translation>
+    </message>
+</context>
+<context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
