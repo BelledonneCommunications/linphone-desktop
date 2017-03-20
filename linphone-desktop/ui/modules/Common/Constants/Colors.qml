@@ -23,6 +23,7 @@ QtObject {
   property color k50: '#32FFFFFF'
   property color l:   '#000000'
   property color l50: '#32000000'
+  property color l80: '#80000000'
   property color m:   '#D1D1D1'
   property color n:   '#C0C0C0'
   property color o:   '#232323'

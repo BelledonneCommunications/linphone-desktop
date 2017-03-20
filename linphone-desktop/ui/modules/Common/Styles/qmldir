@@ -50,3 +50,5 @@ singleton PanedStyle                1.0 Misc/PanedStyle.qml
 singleton PopupStyle                1.0 Popup/PopupStyle.qml
 
 singleton TooltipStyle              1.0 Tooltip/TooltipStyle.qml
+
+singleton WindowStyle               1.0 Window/WindowStyle.qml

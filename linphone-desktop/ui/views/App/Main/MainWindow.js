@@ -36,18 +36,22 @@ function setView (view, props) {
     return
   }
 
-  Utils.openConfirmDialog(window, {
+  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: lockedInfo.descriptionText,
-    exitHandler: function (status) {
-      if (status) {
-        unlockView()
-        apply(view, props)
-      } else {
-        updateSelectedEntry(window._currentView, props)
-      }
-    },
-    title: lockedInfo.title
+  }, function (status) {
+    if (status) {
+      unlockView()
+      apply(view, props)
+    } else {
+      updateSelectedEntry(window._currentView, props)
+    }
   })
+}
+
+// -----------------------------------------------------------------------------
+
+function manageAccounts () {
+  window.attachVirtualWindow(Qt.resolvedUrl('ManageAccounts.qml'))
 }
 
 // -----------------------------------------------------------------------------

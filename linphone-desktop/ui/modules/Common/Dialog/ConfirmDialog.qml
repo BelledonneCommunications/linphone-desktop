@@ -18,9 +18,9 @@ DialogPlus {
       onClicked: exit(1)
     }
   ]
+
   centeredButtons: true
-  maximumHeight: DialogStyle.confirmDialog.height
-  maximumWidth: DialogStyle.confirmDialog.width
-  minimumHeight: DialogStyle.confirmDialog.height
-  minimumWidth: DialogStyle.confirmDialog.width
+
+  height: DialogStyle.confirmDialog.height
+  width: DialogStyle.confirmDialog.width
 }

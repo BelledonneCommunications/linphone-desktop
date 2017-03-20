@@ -75,3 +75,5 @@ PopupShadow          1.0 Popup/PopupShadow.qml
 TooltipArea          1.0 Tooltip/TooltipArea.qml
 
 ScrollableListView   1.0 View/ScrollableListView.qml
+
+ApplicationWindow    1.0 Window/ApplicationWindow.qml

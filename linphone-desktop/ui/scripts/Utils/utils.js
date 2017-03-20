@@ -20,6 +20,12 @@ var PORT_RANGE_REGEX = PortTools.PORT_RANGE_REGEX
 // QML helpers.
 // =============================================================================
 
+function buildDialogUri (component) {
+  return 'qrc:/ui/modules/Common/Dialog/' + component + '.qml'
+}
+
+// -----------------------------------------------------------------------------
+
 // Destroy timeout.
 function clearTimeout (timer) {
   timer.stop() // NECESSARY.
@@ -90,25 +96,35 @@ function getTopParent (object, useFakeParent) {
 
 // -----------------------------------------------------------------------------
 
-// Display a simple ConfirmDialog component.
-// Wrap the openWindow function.
-function openConfirmDialog (parent, options) {
-  return openWindow(
-    'import QtQuick 2.7;' +
-    'import Common 1.0;' +
-    'ConfirmDialog {' +
-      'descriptionText: \'' + escapeQuotes(options.descriptionText) + '\';' +
-      'title: \'' + escapeQuotes(options.title) + '\'' +
-    '}',
-    parent, {
-      isString: true,
-      exitHandler: (options && options.exitHandler) ||
-      function () {
-        return 0
-      },
-      properties: options && options.properties
+function createObject (source, parent, options) {
+  if (options && options.isString) {
+    var object = Qt.createQmlObject(source, parent)
+
+    var properties = options && options.properties
+    if (properties) {
+      for (var key in properties) {
+        object[key] = properties[key]
+      }
     }
-  )
+
+    return object
+  }
+
+  var component = Qt.createComponent(source)
+  if (component.status !== QtQuick.Component.Ready) {
+    console.debug('Component not ready.')
+    if (component.status === QtQuick.Component.Error) {
+      console.debug('Error: ' + component.errorString())
+    }
+    return // Error.
+  }
+
+  var object = component.createObject(parent, (options && options.properties) || {})
+  if (!object) {
+    console.debug('Error: unable to create dynamic object.')
+  }
+
+  return object
 }
 
 // -----------------------------------------------------------------------------
@@ -121,32 +137,7 @@ function openConfirmDialog (parent, options) {
 //
 // If exitHandler is used, window must implement exitStatus signal.
 function openWindow (window, parent, options) {
-  var object
-
-  if (options && options.isString) {
-    object = Qt.createQmlObject(window, parent)
-
-    var properties = options && options.properties
-    if (properties) {
-      for (var key in properties) {
-        object[key] = properties[key]
-      }
-    }
-  } else {
-    var component = Qt.createComponent(
-      'qrc:/ui/views/App/' + window + '.qml'
-    )
-
-    if (component.status !== QtQuick.Component.Ready) {
-      console.debug('Window not ready.')
-      if (component.status === QtQuick.Component.Error) {
-        console.debug('Error:' + component.errorString())
-      }
-      return // Error.
-    }
-
-    object = component.createObject(parent, options ? options.properties : {})
-  }
+  var object = createObject(window, parent, options)
 
   object.closing.connect(object.destroy.bind(object))
 

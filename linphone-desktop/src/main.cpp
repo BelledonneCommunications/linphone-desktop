@@ -30,6 +30,8 @@ using namespace std;
 // =============================================================================
 
 int main (int argc, char *argv[]) {
+  qputenv("QML_DISABLE_DISK_CACHE", "true");
+
   QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 

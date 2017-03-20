@@ -41,29 +41,6 @@ TestCase {
 
   // ---------------------------------------------------------------------------
 
-  // Test only if a confirm dialog can be opened.
-  // The other tests are launched by `ConfirmDialog.spec.qml`.
-  function test_openConfirmDialog () {
-    var dialog
-
-    try {
-      dialog = Utils.openConfirmDialog(testCase, {
-        descriptionText: '',
-        title: ''
-      })
-    } catch (e) {
-      fail(e)
-    }
-
-    if (dialog == null) {
-      fail('`dialog` is not returned')
-    }
-
-    dialog.close()
-  }
-
-  // ---------------------------------------------------------------------------
-
   function test_qmlTypeof_data () {
     return [
       {

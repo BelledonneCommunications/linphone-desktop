@@ -11,14 +11,12 @@ import App.Styles 1.0
 
 ColumnLayout {
   function _removeContact (contact) {
-    Utils.openConfirmDialog(window, {
+    window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
       descriptionText: qsTr('removeContactDescription'),
-      exitHandler: function (status) {
-        if (status) {
-          ContactsListModel.removeContact(contact)
-        }
-      },
-      title: qsTr('removeContactTitle')
+    }, function (status) {
+      if (status) {
+        ContactsListModel.removeContact(contact)
+      }
     })
   }
 

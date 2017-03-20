@@ -2,9 +2,6 @@ import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
-// Explicit import to support Toolbar.
-import QtQuick.Controls 1.4 as Controls1
-
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
@@ -15,7 +12,7 @@ import 'MainWindow.js' as Logic
 
 // =============================================================================
 
-Controls1.ApplicationWindow {
+ApplicationWindow {
   id: window
 
   property string _currentView
@@ -28,7 +25,7 @@ Controls1.ApplicationWindow {
   }
 
   function unlockView () {
-    Logic.unlockView(info)
+    Logic.unlockView()
   }
 
   function setView (view, props) {
@@ -116,7 +113,7 @@ Controls1.ApplicationWindow {
             text: AccountSettingsModel.sipAddress
           }
 
-          onClicked: Utils.openWindow('ManageAccountsWindow', window)
+          onClicked: Logic.manageAccounts()
         }
 
         Column {

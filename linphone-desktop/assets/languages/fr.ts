@@ -250,10 +250,6 @@ Url du serveur non configurée.</translation>
         <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
     </message>
     <message>
-        <source>removeContactTitle</source>
-        <translation>Confirmation de la suppression</translation>
-    </message>
-    <message>
         <source>sipAccounts</source>
         <translation>COMPTE(S) SIP</translation>
     </message>
@@ -318,10 +314,6 @@ Url du serveur non configurée.</translation>
         <translation>Localité</translation>
     </message>
     <message>
-        <source>abortEditionTitle</source>
-        <translation>Annuler l&apos;édition du contact</translation>
-    </message>
-    <message>
         <source>abortEditionDescriptionText</source>
         <translation>Êtes-vous sûr de vouloir annuler l&apos;édition du contact ?</translation>
     </message>
@@ -348,10 +340,6 @@ Url du serveur non configurée.</translation>
         <source>removeContactDescription</source>
         <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
     </message>
-    <message>
-        <source>removeContactTitle</source>
-        <translation>Confirmation de la suppression</translation>
-    </message>
 </context>
 <context>
     <name>Conversation</name>
@@ -370,10 +358,6 @@ Url du serveur non configurée.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer cet historique ?</translation>
-    </message>
-    <message>
-        <source>removeAllEntriesTitle</source>
-        <translation>Suppression de l&apos;historique</translation>
     </message>
 </context>
 <context>
@@ -573,22 +557,18 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>ManageAccountsWindow</name>
+    <name>ManageAccounts</name>
     <message>
         <source>ok</source>
         <translation>OK</translation>
     </message>
     <message>
-        <source>manageAccountsTitle</source>
-        <translation>Présence et comptes</translation>
+        <source>selectPresenceLabel</source>
+        <translation>Sélectionner votre présence</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
         <translation>Sélectionner votre compte principal</translation>
-    </message>
-    <message>
-        <source>selectPresenceLabel</source>
-        <translation>Sélectionner votre présence</translation>
     </message>
 </context>
 <context>

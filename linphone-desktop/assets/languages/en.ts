@@ -250,10 +250,6 @@ Server url not configured.</translation>
         <translation>Do you really want remove this contact from your book?</translation>
     </message>
     <message>
-        <source>removeContactTitle</source>
-        <translation>Delete confirmation</translation>
-    </message>
-    <message>
         <source>sipAccounts</source>
         <translation>SIP ACCOUNT(S)</translation>
     </message>
@@ -318,10 +314,6 @@ Server url not configured.</translation>
         <translation>Locality</translation>
     </message>
     <message>
-        <source>abortEditionTitle</source>
-        <translation>Cancel contact edition</translation>
-    </message>
-    <message>
         <source>abortEditionDescriptionText</source>
         <translation>Are you sure you want to cancel the contact edition?</translation>
     </message>
@@ -348,10 +340,6 @@ Server url not configured.</translation>
         <source>removeContactDescription</source>
         <translation>Do you really want remove this contact from your book?</translation>
     </message>
-    <message>
-        <source>removeContactTitle</source>
-        <translation>Delete confirmation</translation>
-    </message>
 </context>
 <context>
     <name>Conversation</name>
@@ -370,10 +358,6 @@ Server url not configured.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Are you sure you want to clean history?</translation>
-    </message>
-    <message>
-        <source>removeAllEntriesTitle</source>
-        <translation>Clean history</translation>
     </message>
 </context>
 <context>
@@ -573,22 +557,18 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>ManageAccountsWindow</name>
+    <name>ManageAccounts</name>
     <message>
         <source>ok</source>
         <translation>OK</translation>
     </message>
     <message>
-        <source>manageAccountsTitle</source>
-        <translation>Presence and accounts</translation>
+        <source>selectPresenceLabel</source>
+        <translation>Select a presence status</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
         <translation>Select you active account</translation>
-    </message>
-    <message>
-        <source>selectPresenceLabel</source>
-        <translation>Select a presence status</translation>
     </message>
 </context>
 <context>

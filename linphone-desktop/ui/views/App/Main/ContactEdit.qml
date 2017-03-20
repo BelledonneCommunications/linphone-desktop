@@ -6,9 +6,10 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
 
 import App.Styles 1.0
+
+import 'ContactEdit.js' as Logic
 
 // =============================================================================
 
@@ -23,87 +24,10 @@ ColumnLayout  {
 
   // ---------------------------------------------------------------------------
 
-  function _editContact () {
-    _contact.startEdit()
-    _edition = true
-
-    window.lockView({
-      title: qsTr('abortEditionTitle'),
-      descriptionText: qsTr('abortEditionDescriptionText')
-    })
-  }
-
-  function _save () {
-    if (_contact) {
-      _contact.endEdit()
-      window.unlockView()
-    } else {
-      _contact = ContactsListModel.addContact(_vcard)
-    }
-
-    _edition = false
-  }
-
-  function _cancel () {
-    if (_contact) {
-      _contact.abortEdit()
-      _edition = false
-      window.unlockView()
-    } else {
-      window.setView('Contacts')
-    }
-  }
-
-  function _removeContact () {
-    Utils.openConfirmDialog(window, {
-      descriptionText: qsTr('removeContactDescription'),
-      exitHandler: function (status) {
-        if (status) {
-          window.unlockView()
-          window.setView('Contacts')
-          ContactsListModel.removeContact(_contact)
-        }
-      },
-      title: qsTr('removeContactTitle')
-    })
-  }
-
-  function _setAvatar (path) {
-    _vcard.avatar = path.match(/^(?:file:\/\/)?(.*)$/)[1]
-  }
-
-  function _setUsername (username) {
-    _vcard.username = username
-
-    // Update current text with new/old username.
-    usernameInput.text = _vcard.username
-  }
-
-  // ---------------------------------------------------------------------------
-
   spacing: 0
 
-  Component.onCompleted: {
-    _contact = SipAddressesModel.mapSipAddressToContact(sipAddress)
-
-    if (!_contact) {
-      _vcard = CoreManager.createDetachedVcardModel()
-
-      if (sipAddress && sipAddress.length > 0) {
-        _vcard.addSipAddress(sipAddress)
-      }
-
-      _edition = true
-    } else {
-      _vcard = _contact.vcard
-    }
-  }
-
-  Component.onDestruction: {
-    if (_edition && _contact) {
-      _contact.abortEdit()
-    }
-  }
+  Component.onCompleted: Logic.handleCreation()
+  Component.onDestruction: Logic.handleDestruction()
 
   // ---------------------------------------------------------------------------
 
@@ -113,7 +37,7 @@ ColumnLayout  {
     folder: shortcuts.home
     title: qsTr('avatarChooserTitle')
 
-    onAccepted: _setAvatar(fileUrls[0])
+    onAccepted: Logic.setAvatar(fileUrls[0])
   }
 
   // ---------------------------------------------------------------------------
@@ -169,7 +93,7 @@ ColumnLayout  {
         readOnly: !_edition
         text: avatar.username
 
-        onEditingFinished: _setUsername(text)
+        onEditingFinished: Logic.setUsername(text)
       }
 
       Row {
@@ -198,14 +122,14 @@ ColumnLayout  {
             iconSize: ContactEditStyle.bar.actions.edit.iconSize
 
             visible: !_edition
-            onClicked: _editContact()
+            onClicked: Logic.editContact()
           }
 
           ActionButton {
             icon: 'delete'
             iconSize: ContactEditStyle.bar.actions.del.iconSize
 
-            onClicked: _removeContact()
+            onClicked: Logic.removeContact()
           }
         }
       }
@@ -244,65 +168,6 @@ ColumnLayout  {
       active: _vcard != null
       sourceComponent: Flickable {
         id: flick
-
-        // ---------------------------------------------------------------------
-
-        function _handleSipAddressChanged (index, defaultValue, newValue) {
-          if (newValue === defaultValue) {
-            return
-          }
-
-          var so_far_so_good = (defaultValue.length === 0)
-            ? _vcard.addSipAddress(newValue)
-            : _vcard.updateSipAddress(defaultValue, newValue)
-
-          addresses.setInvalid(index, !so_far_so_good)
-        }
-
-        function _handleCompanyChanged (index, defaultValue, newValue) {
-          var so_far_so_good = (defaultValue.length === 0)
-            ? _vcard.addCompany(newValue)
-            : _vcard.updateCompany(defaultValue, newValue)
-
-          companies.setInvalid(index, !so_far_so_good)
-        }
-
-        function _handleEmailChanged (index, defaultValue, newValue) {
-          var so_far_so_good = (defaultValue.length === 0)
-            ? _vcard.addEmail(newValue)
-            : _vcard.updateEmail(defaultValue, newValue)
-
-          emails.setInvalid(index, !so_far_so_good)
-        }
-
-        function _handleUrlChanged (index, defaultValue, newValue) {
-          var url = Utils.extractFirstUri(newValue)
-          if (url === defaultValue) {
-            return
-          }
-
-          var so_far_so_good = url && (
-          defaultValue.length === 0
-            ? _vcard.addUrl(newValue)
-            : _vcard.updateUrl(defaultValue, newValue)
-          )
-
-          urls.setInvalid(index, !so_far_so_good)
-        }
-
-        function _handleAddressChanged (index, value) {
-          if (index === 0) { // Street.
-            _vcard.setStreet(value)
-          } else if (index === 1) { // Locality.
-            _vcard.setLocality(value)
-          } else if (index === 2) { // Postal code.
-            _vcard.setPostalCode(value)
-          } else if (index === 3) { // Country.
-            _vcard.setCountry(value)
-          }
-        }
-
-        // ---------------------------------------------------------------------
 
         ScrollBar.vertical: ForceScrollBar {}
 
@@ -345,7 +210,7 @@ ColumnLayout  {
             readOnly: !_edition
             title: qsTr('sipAccounts')
 
-            onChanged: _handleSipAddressChanged(index, defaultValue, newValue)
+            onChanged: Logic.handleSipAddressChanged(addresses, index, defaultValue, newValue)
             onRemoved: _vcard.removeSipAddress(value)
           }
 
@@ -366,7 +231,7 @@ ColumnLayout  {
             readOnly: !_edition
             title: qsTr('companies')
 
-            onChanged: _handleCompanyChanged(index, defaultValue, newValue)
+            onChanged: Logic.handleCompanyChanged(companies, index, defaultValue, newValue)
             onRemoved: _vcard.removeCompany(value)
           }
 
@@ -388,7 +253,7 @@ ColumnLayout  {
             readOnly: !_edition
             title: qsTr('emails')
 
-            onChanged: _handleEmailChanged(index, defaultValue, newValue)
+            onChanged: Logic.handleEmailChanged(emails, index, defaultValue, newValue)
             onRemoved: _vcard.removeEmail(value)
           }
 
@@ -410,7 +275,7 @@ ColumnLayout  {
             readOnly: !_edition
             title: qsTr('webSites')
 
-            onChanged: _handleUrlChanged(index, defaultValue, newValue)
+            onChanged: Logic.handleUrlChanged(urls, index, defaultValue, newValue)
             onRemoved: _vcard.removeUrl(value)
           }
 
@@ -424,28 +289,12 @@ ColumnLayout  {
             Layout.leftMargin: ContactEditStyle.values.leftMargin
             Layout.rightMargin: ContactEditStyle.values.rightMargin
 
-            fields: {
-              var address = _vcard.address
-
-              return [{
-                placeholder: qsTr('street'),
-                text: address.street
-              }, {
-                placeholder: qsTr('locality'),
-                text: address.locality
-              }, {
-                placeholder: qsTr('postalCode'),
-                text: address.postalCode
-              }, {
-                placeholder: qsTr('country'),
-                text: address.country
-              }]
-            }
+            fields: Logic.buildAddressFields()
 
             readOnly: !_edition
             title: qsTr('address')
 
-            onChanged: _handleAddressChanged(index, value)
+            onChanged: Logic.handleAddressChanged(index, value)
           }
 
           // -------------------------------------------------------------------
@@ -462,13 +311,13 @@ ColumnLayout  {
 
             TextButtonA {
               text: qsTr('cancel')
-              onClicked: _cancel()
+              onClicked: Logic.cancel()
             }
 
             TextButtonB {
               enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
               text: qsTr('save')
-              onClicked: _save()
+              onClicked: Logic.save()
             }
           }
         }

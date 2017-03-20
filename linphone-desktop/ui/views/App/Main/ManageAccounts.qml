@@ -18,15 +18,9 @@ DialogPlus {
   ]
 
   centeredButtons: true
-  title: qsTr('manageAccountsTitle')
 
   height: ManageAccountsWindowStyle.height
   width: ManageAccountsWindowStyle.width
-
-  minimumHeight: ManageAccountsWindowStyle.height
-  minimumWidth: ManageAccountsWindowStyle.width
-  maximumHeight: ManageAccountsWindowStyle.height
-  maximumWidth: ManageAccountsWindowStyle.width
 
   // ---------------------------------------------------------------------------
 

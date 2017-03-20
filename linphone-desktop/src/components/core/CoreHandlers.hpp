@@ -58,8 +58,8 @@ private:
   ) override;
 
   void onNotifyPresenceReceivedForUriOrTel (
-    const std::shared_ptr<linphone::Core> &lc,
-    const std::shared_ptr<linphone::Friend> &lf,
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::Friend> &linphone_friend,
     const std::string &uri_or_tel,
     const std::shared_ptr<linphone::PresenceModel> &presence_model
   ) override;

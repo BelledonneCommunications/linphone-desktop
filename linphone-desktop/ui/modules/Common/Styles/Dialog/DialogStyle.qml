@@ -6,6 +6,8 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
+  property color color: Colors.k
+
   property int leftMargin: 50
   property int rightMargin: 50
 

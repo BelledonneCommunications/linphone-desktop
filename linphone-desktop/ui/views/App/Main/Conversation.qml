@@ -4,9 +4,10 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
-import Utils 1.0
 
 import App.Styles 1.0
+
+import 'Conversation.js' as Logic
 
 // =============================================================================
 
@@ -16,18 +17,6 @@ ColumnLayout  {
   property string sipAddress
 
   property var _contact: SipAddressesModel.mapSipAddressToContact(sipAddress)
-
-  function _removeAllEntries () {
-    Utils.openConfirmDialog(window, {
-      descriptionText: qsTr('removeAllEntriesDescription'),
-      exitHandler: function (status) {
-        if (status) {
-          chatProxyModel.removeAllEntries()
-        }
-      },
-      title: qsTr('removeAllEntriesTitle')
-    })
-  }
 
   // ---------------------------------------------------------------------------
 
@@ -104,7 +93,7 @@ ColumnLayout  {
             icon: 'delete'
             iconSize: ConversationStyle.bar.actions.edit.iconSize
 
-            onClicked: _removeAllEntries()
+            onClicked: Logic.removeAllEntries()
           }
         }
       }

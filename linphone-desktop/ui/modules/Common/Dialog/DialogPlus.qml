@@ -1,14 +1,14 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 
+import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
 // Helper to build quickly dialogs.
 // =============================================================================
 
-Window {
+Rectangle {
   property alias buttons: buttons.data // Optionnal.
   property alias descriptionText: description.text // Optionnal.
   property bool centeredButtons: false
@@ -22,21 +22,21 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  // Derived class must use this function instead of close.
-  // Destroy the component and send signal to caller.
   function exit (status) {
     if (!_disableExitStatus) {
       _disableExitStatus = true
       exitStatus(status)
-      close()
     }
   }
 
-  flags: Qt.Tool | Qt.FramelessWindowHint
-  modality: Qt.WindowModal
+  // ---------------------------------------------------------------------------
 
-  // Handle normal windows close.
-  onClosing: !_disableExitStatus && exitStatus(0)
+  color: DialogStyle.color
+
+  layer {
+    enabled: true
+    effect: PopupShadow {}
+  }
 
   // ---------------------------------------------------------------------------
 

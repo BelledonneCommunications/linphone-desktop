@@ -253,10 +253,14 @@
     <file>ui/modules/Common/Styles/Popup/PopupStyle.qml</file>
     <file>ui/modules/Common/Styles/qmldir</file>
     <file>ui/modules/Common/Styles/Tooltip/TooltipStyle.qml</file>
+    <file>ui/modules/Common/Styles/Window/WindowStyle.qml</file>
     <file>ui/modules/Common/Tooltip/TooltipArea.qml</file>
     <file>ui/modules/Common/Tooltip/Tooltip.qml</file>
     <file>ui/modules/Common/View/ScrollableListView.js</file>
     <file>ui/modules/Common/View/ScrollableListView.qml</file>
+    <file>ui/modules/Common/Window/ApplicationWindow.qml</file>
+    <file>ui/modules/Common/Window/VirtualWindow.qml</file>
+    <file>ui/modules/Common/Window/Window.js</file>
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Calls/CallControls.qml</file>
     <file>ui/modules/Linphone/Calls/Calls.qml</file>
@@ -319,15 +323,17 @@
     <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccount.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantUseOtherSipAccount.qml</file>
     <file>ui/views/App/Main/Assistant.qml</file>
+    <file>ui/views/App/Main/ContactEdit.js</file>
     <file>ui/views/App/Main/ContactEdit.qml</file>
     <file>ui/views/App/Main/Contacts.qml</file>
+    <file>ui/views/App/Main/Conversation.js</file>
     <file>ui/views/App/Main/Conversation.qml</file>
     <file>ui/views/App/Main/Home.qml</file>
     <file>ui/views/App/Main/InviteFriends.qml</file>
     <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
-    <file>ui/views/App/ManageAccountsWindow.qml</file>
+    <file>ui/views/App/Main/ManageAccounts.qml</file>
     <file>ui/views/App/qmldir</file>
     <file>ui/views/App/Settings/SettingsAudio.qml</file>
     <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
