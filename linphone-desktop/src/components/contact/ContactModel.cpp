@@ -39,6 +39,8 @@ ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
 }
 
 ContactModel::ContactModel (VcardModel *vcard) {
+  Q_ASSERT(vcard != nullptr);
+
   QQmlEngine *engine = App::getInstance()->getEngine();
   if (engine->objectOwnership(vcard) == QQmlEngine::CppOwnership)
     throw invalid_argument("A contact is already linked to this vcard.");
@@ -49,8 +51,11 @@ ContactModel::ContactModel (VcardModel *vcard) {
   engine->setObjectOwnership(vcard, QQmlEngine::CppOwnership);
 }
 
-void ContactModel::presenceReceived () {
-  Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(m_linphone_friend->getConsolidatedPresence());
+void ContactModel::refreshPresence () {
+  Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(
+      m_linphone_friend->getConsolidatedPresence()
+    );
+
   emit presenceStatusChanged(status);
   emit presenceLevelChanged(Presence::getPresenceLevel(status));
 }

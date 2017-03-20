@@ -48,7 +48,7 @@ public:
     return m_vcard;
   }
 
-  void presenceReceived ();
+  void refreshPresence ();
 
   Q_INVOKABLE void startEdit ();
   Q_INVOKABLE void endEdit ();
