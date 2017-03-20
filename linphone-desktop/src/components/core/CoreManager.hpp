@@ -100,6 +100,8 @@ public:
   // Warning: The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
   Q_INVOKABLE VcardModel *createDetachedVcardModel ();
 
+  Q_INVOKABLE void forceRefreshRegisters ();
+
 private:
   CoreManager (QObject *parent, const QString &config_path);
 

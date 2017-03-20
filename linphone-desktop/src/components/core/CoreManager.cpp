@@ -26,6 +26,7 @@
 #include "CoreManager.hpp"
 
 #include <QCoreApplication>
+#include <QDebug>
 #include <QDir>
 #include <QTimer>
 
@@ -77,9 +78,18 @@ void CoreManager::init (QObject *parent, const QString &config_path) {
   );
 }
 
+// -----------------------------------------------------------------------------
+
 VcardModel *CoreManager::createDetachedVcardModel () {
   return new VcardModel(linphone::Factory::get()->createVcard());
 }
+
+void CoreManager::forceRefreshRegisters () {
+  qInfo() << QStringLiteral("Refresh registers.");
+  m_instance->m_core->refreshRegisters();
+}
+
+// -----------------------------------------------------------------------------
 
 void CoreManager::setDatabasesPaths () {
   m_core->setFriendsDatabasePath(Paths::getFriendsListFilepath());
