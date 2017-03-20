@@ -34,10 +34,11 @@ Presence::PresenceLevel Presence::getPresenceLevel (const PresenceStatus &status
       return Orange;
     case DoNotDisturb:
       return Red;
-    case Offline:
     default:
-      return White;
+      break;
   }
+
+  return White;
 }
 
 QString Presence::getPresenceStatusAsString (const PresenceStatus &status) {
@@ -48,23 +49,24 @@ QString Presence::getPresenceStatusAsString (const PresenceStatus &status) {
       return tr("presenceBusy");
     case DoNotDisturb:
       return tr("presenceDoNotDisturb");
-    case Offline:
     default:
-      return tr("presenceOffline");
+      break;
   }
+
+  return tr("presenceOffline");
 }
 
 QString Presence::getPresenceLevelIconName (const PresenceLevel &level) {
   switch (level) {
     case Green:
-      return "led_green";
+      return QStringLiteral("led_green");
     case Orange:
-      return "led_orange";
+      return QStringLiteral("led_orange");
     case Red:
-      return "led_red";
+      return QStringLiteral("led_red");
     case White:
-      return "led_white";
+      return QStringLiteral("led_white");
   }
 
-  return "";
+  return QStringLiteral("");
 }
