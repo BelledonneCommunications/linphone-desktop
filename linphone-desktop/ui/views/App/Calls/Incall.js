@@ -27,12 +27,11 @@ function handleStatusChanged (status) {
 
 function handleVideoRequested () {
   var call = incall.call
-  var dialog
 
   // Close dialog after 10s.
   var timeout = Utils.setTimeout(incall, 10000, function () {
     call.statusChanged.disconnect(endedHandler)
-    dialog.close()
+    window.detachVirtualWindow()
     call.rejectVideoRequest()
   })
 
@@ -41,29 +40,24 @@ function handleVideoRequested () {
     if (status === Linphone.CallModel.CallStatusEnded) {
       Utils.clearTimeout(timeout)
       call.statusChanged.disconnect(endedHandler)
-      dialog.close()
+      window.detachVirtualWindow()
     }
   }
 
   call.statusChanged.connect(endedHandler)
 
   // Ask video to user.
-  dialog = Utils.openConfirmDialog(window, {
+  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('acceptVideoDescription'),
-    exitHandler: function (status) {
-      Utils.clearTimeout(timeout)
-      call.statusChanged.disconnect(endedHandler)
+  }, function (status) {
+    Utils.clearTimeout(timeout)
+    call.statusChanged.disconnect(endedHandler)
 
-      if (status) {
-        call.acceptVideoRequest()
-      } else {
-        call.rejectVideoRequest()
-      }
-    },
-    properties: {
-      modality: Qt.NonModal
-    },
-    title: qsTr('acceptVideoTitle')
+    if (status) {
+      call.acceptVideoRequest()
+    } else {
+      call.rejectVideoRequest()
+    }
   })
 }
 

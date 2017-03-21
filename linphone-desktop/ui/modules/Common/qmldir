@@ -77,3 +77,4 @@ TooltipArea          1.0 Tooltip/TooltipArea.qml
 ScrollableListView   1.0 View/ScrollableListView.qml
 
 ApplicationWindow    1.0 Window/ApplicationWindow.qml
+Window               1.0 Window/Window.qml

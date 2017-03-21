@@ -261,6 +261,7 @@
     <file>ui/modules/Common/Window/ApplicationWindow.qml</file>
     <file>ui/modules/Common/Window/VirtualWindow.qml</file>
     <file>ui/modules/Common/Window/Window.js</file>
+    <file>ui/modules/Common/Window/Window.qml</file>
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Calls/CallControls.qml</file>
     <file>ui/modules/Linphone/Calls/Calls.qml</file>

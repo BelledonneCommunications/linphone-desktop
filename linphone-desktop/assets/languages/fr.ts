@@ -458,10 +458,6 @@ Url du serveur non configurée.</translation>
         <source>acceptVideoDescription</source>
         <translation>Votre correspondant souhaite ajouter la vidéo.</translation>
     </message>
-    <message>
-        <source>acceptVideoTitle</source>
-        <translation>Demande de vidéo</translation>
-    </message>
 </context>
 <context>
     <name>InviteFriends</name>

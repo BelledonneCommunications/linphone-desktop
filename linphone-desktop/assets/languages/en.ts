@@ -458,10 +458,6 @@ Server url not configured.</translation>
         <source>acceptVideoDescription</source>
         <translation>Your contact would like to turn on video.</translation>
     </message>
-    <message>
-        <source>acceptVideoTitle</source>
-        <translation>Video requested</translation>
-    </message>
 </context>
 <context>
     <name>InviteFriends</name>

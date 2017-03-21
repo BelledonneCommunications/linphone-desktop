@@ -29,3 +29,10 @@ function attachVirtualWindow (object, properties, exitStatusHandler) {
 
   virtualWindow.setContent(object)
 }
+
+function detachVirtualWindow () {
+  var object = virtualWindow.unsetContent()
+  if (object) {
+    object.destroy()
+  }
+}
