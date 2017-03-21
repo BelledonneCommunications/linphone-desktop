@@ -66,7 +66,7 @@ function showFullscreen () {
     return
   }
 
-  incall._fullscreen = Utils.openWindow('IncallFullscreenWindow', incall, {
+  incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), incall, {
     properties: {
       call: incall.call,
       callsWindow: incall

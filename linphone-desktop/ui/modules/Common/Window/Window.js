@@ -11,12 +11,12 @@
 // at item destruction.
 //
 // The exit status handler is optional.
-function attachVirtualWindow (object, properties, exitStatusHandler) {
+function attachVirtualWindow (component, properties, exitStatusHandler) {
   if (virtualWindow.visible) {
     return
   }
 
-  var object = Utils.createObject(object, null, {
+  var object = Utils.createObject(component, null, {
     properties: properties
   })
 
