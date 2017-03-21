@@ -50,6 +50,7 @@ private:
   void updateWindowId ();
 
   ContextInfo *m_context_info;
+  bool m_update_context_info = false;
 
   bool m_is_preview = false;
   shared_ptr<linphone::Call> m_linphone_call;

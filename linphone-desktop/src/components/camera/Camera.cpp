@@ -83,6 +83,7 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   m_context_info->width = size.width();
   m_context_info->height = size.height();
   m_context_info->functions = MSFunctions::getInstance()->getFunctions();
+  m_update_context_info = true;
 
   // It's not the same thread as render.
   core->lockVideoRender();
@@ -136,6 +137,14 @@ void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
 }
 
 void CameraRenderer::updateWindowId () {
+  if (!m_update_context_info)
+    return;
+
+  m_update_context_info = false;
+
+  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
+    .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview);
+
   if (m_is_preview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
   else if (m_linphone_call)
@@ -152,7 +161,7 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setMirrorVertically(true);
 
   m_refresh_timer = new QTimer(this);
-  m_refresh_timer->setInterval(1 / 60 * 1000);
+  m_refresh_timer->setInterval(1 / 30 * 1000);
 
   QObject::connect(m_refresh_timer, &QTimer::timeout, this, &QQuickFramebufferObject::update);
   m_refresh_timer->start();
