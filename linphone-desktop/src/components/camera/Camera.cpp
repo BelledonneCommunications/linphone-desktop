@@ -27,13 +27,14 @@
 #include "Camera.hpp"
 
 #include <QFileInfo>
-#include <QThread>
 #include <QQuickWindow>
+#include <QThread>
+#include <QTimer>
 
 // =============================================================================
 
 struct CameraStateBinder {
-  CameraStateBinder (CameraRenderer *renderer) : m_renderer(renderer) {
+  CameraStateBinder () {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
     f->glEnable(GL_DEPTH_TEST);
@@ -49,12 +50,7 @@ struct CameraStateBinder {
 
     f->glDisable(GL_CULL_FACE);
     f->glDisable(GL_DEPTH_TEST);
-
-    // Process at next tick.
-    m_renderer->update();
   }
-
-  CameraRenderer *m_renderer;
 };
 
 // -----------------------------------------------------------------------------
@@ -97,7 +93,7 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 }
 
 void CameraRenderer::render () {
-  CameraStateBinder state(this);
+  CameraStateBinder state;
 
   if (!m_linphone_call)
     return;
@@ -140,9 +136,6 @@ void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
 }
 
 void CameraRenderer::updateWindowId () {
-  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
-    .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview);
-
   if (m_is_preview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
   else if (m_linphone_call)
@@ -157,6 +150,12 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 
   // The fbo content must be y-mirrored because the ms rendering is y-inverted.
   setMirrorVertically(true);
+
+  m_refresh_timer = new QTimer(this);
+  m_refresh_timer->setInterval(1 / 60 * 1000);
+
+  QObject::connect(m_refresh_timer, &QTimer::timeout, this, &QQuickFramebufferObject::update);
+  m_refresh_timer->start();
 }
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {

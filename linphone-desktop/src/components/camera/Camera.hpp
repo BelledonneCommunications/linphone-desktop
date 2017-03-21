@@ -89,6 +89,8 @@ private:
 
   bool m_is_preview = false;
   CallModel *m_call = nullptr;
+
+  QTimer *m_refresh_timer;
 };
 
 #endif // CAMERA_H_
