@@ -57,12 +57,12 @@ public:
     return m_notifier;
   }
 
-  QQuickWindow *getCallsWindow () const;
+  QQuickWindow *getCallsWindow ();
   QQuickWindow *getMainWindow () const;
 
   bool hasFocus () const;
 
-  Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
+  Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   static App *getInstance () {
     return static_cast<App *>(QApplication::instance());
@@ -76,7 +76,6 @@ signals:
 
 private:
   void registerTypes ();
-  void createSubWindows ();
   void setTrayIcon ();
 
   QString getConfigLocale () const;

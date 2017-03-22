@@ -156,9 +156,6 @@ void App::initContentApp () {
     core->setParent(this);
   }
 
-  // Create sub windows.
-  createSubWindows();
-
   // Load main view.
   qInfo() << "Loading main view...";
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
@@ -216,7 +213,27 @@ void App::parseArgs () {
 
 // -----------------------------------------------------------------------------
 
-QQuickWindow *App::getCallsWindow () const {
+inline QQuickWindow *createSubWindow (App *app, const char *path) {
+  QQmlEngine *engine = app->getEngine();
+
+  QQmlComponent component(engine, QUrl(path));
+  if (component.isError()) {
+    qWarning() << component.errors();
+    abort();
+  }
+
+  QQuickWindow *window = qobject_cast<QQuickWindow *>(component.create());
+  QQmlEngine::setObjectOwnership(window, QQmlEngine::CppOwnership);
+
+  return window;
+}
+
+// -----------------------------------------------------------------------------
+
+QQuickWindow *App::getCallsWindow () {
+  if (!m_calls_window)
+    m_calls_window = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
+
   return m_calls_window;
 }
 
@@ -225,14 +242,28 @@ QQuickWindow *App::getMainWindow () const {
   return qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
 }
 
-QQuickWindow *App::getSettingsWindow () const {
+QQuickWindow *App::getSettingsWindow () {
+  if (!m_settings_window) {
+    m_settings_window = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
+
+    QObject::connect(
+      m_settings_window, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+        if (visibility == QWindow::Hidden) {
+          qInfo() << "Update nat policy.";
+          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+          core->setNatPolicy(core->getNatPolicy());
+        }
+      }
+    );
+  }
+
   return m_settings_window;
 }
 
 // -----------------------------------------------------------------------------
 
 bool App::hasFocus () const {
-  return getMainWindow()->isActive() || m_calls_window->isActive();
+  return getMainWindow()->isActive() || (m_calls_window && m_calls_window->isActive());
 }
 
 // -----------------------------------------------------------------------------
@@ -330,40 +361,6 @@ void App::registerTypes () {
   qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
 
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
-}
-
-// -----------------------------------------------------------------------------
-
-inline QQuickWindow *createSubWindow (App *app, const char *path) {
-  QQmlEngine *engine = app->getEngine();
-
-  QQmlComponent component(engine, QUrl(path));
-  if (component.isError()) {
-    qWarning() << component.errors();
-    abort();
-  }
-
-  QQuickWindow *window = qobject_cast<QQuickWindow *>(component.create());
-  QQmlEngine::setObjectOwnership(window, QQmlEngine::CppOwnership);
-
-  return window;
-}
-
-void App::createSubWindows () {
-  qInfo() << "Create sub windows...";
-
-  m_calls_window = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
-  m_settings_window = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
-
-  QObject::connect(
-    m_settings_window, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
-      if (visibility == QWindow::Hidden) {
-        qInfo() << "Update nat policy.";
-        shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-        core->setNatPolicy(core->getNatPolicy());
-      }
-    }
-  );
 }
 
 // -----------------------------------------------------------------------------
