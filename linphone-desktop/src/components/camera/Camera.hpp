@@ -35,7 +35,6 @@ struct ContextInfo;
 
 class CameraRenderer : public QQuickFramebufferObject::Renderer {
   friend class Camera;
-  friend struct CameraStateBinder;
 
 public:
   CameraRenderer ();

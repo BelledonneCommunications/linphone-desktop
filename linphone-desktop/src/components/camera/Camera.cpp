@@ -31,29 +31,9 @@
 #include <QThread>
 #include <QTimer>
 
+#define MAX_FPS 30
+
 // =============================================================================
-
-struct CameraStateBinder {
-  CameraStateBinder () {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-
-    f->glEnable(GL_DEPTH_TEST);
-    f->glEnable(GL_CULL_FACE);
-    f->glDepthMask(GL_TRUE);
-    f->glDepthFunc(GL_LESS);
-    f->glFrontFace(GL_CCW);
-    f->glCullFace(GL_BACK);
-  }
-
-  ~CameraStateBinder () {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
-
-    f->glDisable(GL_CULL_FACE);
-    f->glDisable(GL_DEPTH_TEST);
-  }
-};
-
-// -----------------------------------------------------------------------------
 
 struct ContextInfo {
   GLuint width;
@@ -74,7 +54,6 @@ CameraRenderer::~CameraRenderer () {
 
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
   QOpenGLFramebufferObjectFormat format;
-  format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
   format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 
@@ -94,8 +73,6 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 }
 
 void CameraRenderer::render () {
-  CameraStateBinder state;
-
   if (!m_linphone_call)
     return;
 
@@ -161,9 +138,14 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setMirrorVertically(true);
 
   m_refresh_timer = new QTimer(this);
-  m_refresh_timer->setInterval(1 / 30 * 1000);
+  m_refresh_timer->setInterval(1 / MAX_FPS * 1000);
 
-  QObject::connect(m_refresh_timer, &QTimer::timeout, this, &QQuickFramebufferObject::update);
+  QObject::connect(
+    m_refresh_timer, &QTimer::timeout,
+    this, &QQuickFramebufferObject::update,
+    Qt::DirectConnection
+  );
+
   m_refresh_timer->start();
 }
 
