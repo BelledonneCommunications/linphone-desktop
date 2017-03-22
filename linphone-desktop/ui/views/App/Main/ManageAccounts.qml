@@ -19,8 +19,8 @@ DialogPlus {
 
   centeredButtons: true
 
-  height: ManageAccountsWindowStyle.height
-  width: ManageAccountsWindowStyle.width
+  height: ManageAccountsStyle.height
+  width: ManageAccountsStyle.width
 
   // ---------------------------------------------------------------------------
 
@@ -29,9 +29,9 @@ DialogPlus {
 
     anchors {
       left: parent.left
-      leftMargin: ManageAccountsWindowStyle.leftMargin
+      leftMargin: ManageAccountsStyle.leftMargin
       right: parent.right
-      rightMargin: ManageAccountsWindowStyle.rightMargin
+      rightMargin: ManageAccountsStyle.rightMargin
     }
 
     FormLine {

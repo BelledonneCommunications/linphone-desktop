@@ -4,8 +4,6 @@ module App.Styles
 
 # Views styles -----------------------------------------------------------------
 
-singleton ManageAccountsWindowStyle              1.0 ManageAccountsWindowStyle.qml
-
 singleton CallStyle                              1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                       1.0 Calls/CallsWindowStyle.qml
 
@@ -22,5 +20,6 @@ singleton HomeStyle                              1.0 Main/HomeStyle.qml
 singleton InviteFriendsStyle                     1.0 Main/InviteFriendsStyle.qml
 singleton MainWindowMenuBarStyle                 1.0 Main/MainWindowMenuBarStyle.qml
 singleton MainWindowStyle                        1.0 Main/MainWindowStyle.qml
+singleton ManageAccountsStyle                    1.0 Main/ManageAccountsStyle.qml
 
 singleton SettingsWindowStyle                    1.0 Settings/SettingsWindowStyle.qml
