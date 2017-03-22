@@ -219,6 +219,10 @@
         <source>callsTitle</source>
         <translation>Calls</translation>
     </message>
+    <message>
+        <source>acceptClosingDescription</source>
+        <translation>Are you sure you want to terminate all calls?</translation>
+    </message>
 </context>
 <context>
     <name>Chat</name>

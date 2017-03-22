@@ -48,6 +48,10 @@ public:
   Q_INVOKABLE void launchAudioCall (const QString &sip_uri) const;
   Q_INVOKABLE void launchVideoCall (const QString &sip_uri) const;
 
+  Q_INVOKABLE int getRunningCallsNumber () const;
+
+  Q_INVOKABLE void terminateAllCalls () const;
+
 signals:
   void callRunning (int index, CallModel *call);
 

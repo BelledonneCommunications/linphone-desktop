@@ -219,6 +219,10 @@
         <source>callsTitle</source>
         <translation>Appels</translation>
     </message>
+    <message>
+        <source>acceptClosingDescription</source>
+        <translation>Voulez-vous vraiment quitter tous vos appels en cours ?</translation>
+    </message>
 </context>
 <context>
     <name>Chat</name>

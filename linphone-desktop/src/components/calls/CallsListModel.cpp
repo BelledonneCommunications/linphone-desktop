@@ -138,6 +138,16 @@ void CallsListModel::launchVideoCall (const QString &sip_uri) const {
 
 // -----------------------------------------------------------------------------
 
+int CallsListModel::getRunningCallsNumber () const {
+  return CoreManager::getInstance()->getCore()->getCallsNb();
+}
+
+void CallsListModel::terminateAllCalls () const {
+  CoreManager::getInstance()->getCore()->terminateAllCalls();
+}
+
+// -----------------------------------------------------------------------------
+
 bool CallsListModel::removeRow (int row, const QModelIndex &parent) {
   return removeRows(row, 1, parent);
 }

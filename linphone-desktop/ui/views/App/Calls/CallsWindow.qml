@@ -8,6 +8,8 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
+import 'CallsWindow.js' as Logic
+
 // =============================================================================
 
 Window {
@@ -35,6 +37,12 @@ Window {
   minimumHeight: CallsWindowStyle.minimumHeight
   minimumWidth: CallsWindowStyle.minimumWidth
   title: qsTr('callsTitle')
+
+  // ---------------------------------------------------------------------------
+
+  onClosing: Logic.handleClosing(close)
+
+  // ---------------------------------------------------------------------------
 
   Paned {
     anchors.fill: parent
