@@ -54,6 +54,7 @@ CameraRenderer::~CameraRenderer () {
 
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
   QOpenGLFramebufferObjectFormat format;
+  format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
   format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 

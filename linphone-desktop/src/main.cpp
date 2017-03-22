@@ -30,10 +30,29 @@ using namespace std;
 // =============================================================================
 
 int main (int argc, char *argv[]) {
+  // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
 
+  // Options to get a nice video render.
   QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
+
+  {
+    QSurfaceFormat format;
+
+    format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
+    format.setSwapInterval(1);
+
+    format.setRedBufferSize(8);
+    format.setGreenBufferSize(8);
+    format.setBlueBufferSize(8);
+    format.setAlphaBufferSize(8);
+
+    format.setDepthBufferSize(24);
+    format.setStencilBufferSize(8);
+
+    QSurfaceFormat::setDefaultFormat(format);
+  }
 
   App app(argc, argv);
   app.parseArgs();
