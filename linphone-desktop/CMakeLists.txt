@@ -62,7 +62,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
 # Define packages, libs, sources, headers, resources and languages.
 # ------------------------------------------------------------------------------
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Network)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Network Concurrent)
 
 find_package(BcToolbox REQUIRED)
 find_package(Belcard REQUIRED)

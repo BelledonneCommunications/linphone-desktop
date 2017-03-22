@@ -28,6 +28,7 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <QDir>
+#include <QtConcurrent>
 #include <QTimer>
 
 using namespace std;
@@ -37,34 +38,33 @@ using namespace std;
 CoreManager *CoreManager::m_instance = nullptr;
 
 CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
-  // TODO: activate migration when ready to switch to this new version
-  // Paths::migrate();
+  m_promise_build = QtConcurrent::run(this, &CoreManager::createLinphoneCore, config_path);
 
-  setResourcesPaths();
+  QObject::connect(
+    &m_promise_watcher, &QFutureWatcher<void>::finished, this, []() {
+      m_instance->m_calls_list_model = new CallsListModel(m_instance);
+      m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
+      m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
+      m_instance->m_settings_model = new SettingsModel(m_instance);
 
-  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(config_path), "");
+      emit m_instance->linphoneCoreCreated();
+    }
+  );
 
-  m_core->setVideoDisplayFilter("MSOGL");
-  m_core->usePreviewWindow(true);
-
-  setDatabasesPaths();
-  setOtherPaths();
+  m_promise_watcher.setFuture(m_promise_build);
 }
 
 void CoreManager::enableHandlers () {
   m_cbs_timer->start();
 }
 
+// -----------------------------------------------------------------------------
+
 void CoreManager::init (QObject *parent, const QString &config_path) {
   if (m_instance)
     return;
 
   m_instance = new CoreManager(parent, config_path);
-
-  m_instance->m_calls_list_model = new CallsListModel(m_instance);
-  m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
-  m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
-  m_instance->m_settings_model = new SettingsModel(m_instance);
 
   QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
   timer->setInterval(20);
@@ -116,4 +116,23 @@ void CoreManager::setResourcesPaths () {
     factory->setMspluginsDir(::Utils::qStringToLinphoneString(mspluginsdir.absolutePath()));
     factory->setTopResourcesDir(::Utils::qStringToLinphoneString(datadir.absolutePath()));
   }
+}
+
+// -----------------------------------------------------------------------------
+
+void CoreManager::createLinphoneCore (const QString &config_path) {
+  qInfo() << QStringLiteral("Launch async linphone core creation.");
+
+  // TODO: activate migration when ready to switch to this new version
+  // Paths::migrate();
+
+  setResourcesPaths();
+
+  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(config_path), "");
+
+  m_core->setVideoDisplayFilter("MSOGL");
+  m_core->usePreviewWindow(true);
+
+  setDatabasesPaths();
+  setOtherPaths();
 }

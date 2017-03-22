@@ -24,12 +24,11 @@
 #define APP_H_
 
 #include "../components/notifier/Notifier.hpp"
+#include "../externals/single-application/SingleApplication.hpp"
 
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
-
-#include "../externals/single-application/SingleApplication.hpp"
 
 // =============================================================================
 
@@ -48,6 +47,8 @@ public:
 
   void initContentApp ();
   void parseArgs ();
+
+  void tryToUsePreferredLocale ();
 
   QQmlEngine *getEngine () {
     return &m_engine;

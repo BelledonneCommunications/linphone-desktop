@@ -39,7 +39,6 @@ ApplicationWindow {
   maximumHeight: MainWindowStyle.toolBar.height
   minimumHeight: MainWindowStyle.toolBar.height
   minimumWidth: MainWindowStyle.minimumWidth
-
   width: MainWindowStyle.width
 
   title: MainWindowStyle.title
@@ -49,12 +48,12 @@ ApplicationWindow {
   // ---------------------------------------------------------------------------
 
   menuBar: MainWindowMenuBar {
-    hide: !collapse.isCollapsed
+    hide: mainLoader.item ? !mainLoader.item.collapse.isCollapsed : true
   }
 
   // ---------------------------------------------------------------------------
 
-  onActiveFocusItemChanged: activeFocusItem == null && smartSearchBar.hideMenu()
+  onActiveFocusItemChanged: Logic.handleActiveFocusItemChanged(activeFocusItem)
 
   // ---------------------------------------------------------------------------
 
@@ -65,160 +64,171 @@ ApplicationWindow {
 
   // ---------------------------------------------------------------------------
 
-  ColumnLayout {
-    id: container
+  Loader {
+    id: mainLoader
 
+    active: CoreManager.linphoneCoreCreated
     anchors.fill: parent
-    spacing: 0
 
-    // -------------------------------------------------------------------------
-    // Toolbar properties.
-    // -------------------------------------------------------------------------
-
-    ToolBar {
-      Layout.fillWidth: true
-      Layout.preferredHeight: MainWindowStyle.toolBar.height
-
-      background: MainWindowStyle.toolBar.background
-
-      RowLayout {
-        anchors {
-          fill: parent
-          leftMargin: MainWindowStyle.toolBar.leftMargin
-          rightMargin: MainWindowStyle.toolBar.rightMargin
-        }
-        spacing: MainWindowStyle.toolBar.spacing
-
-        Collapse {
-          id: collapse
-
-          Layout.fillHeight: parent.height
-          target: window
-          targetHeight: MainWindowStyle.minimumHeight
-          visible: Qt.platform.os !== 'linux'
-
-          Component.onCompleted: setCollapsed(true)
-        }
-
-        AccountStatus {
-          id: accountStatus
-
-          Layout.fillHeight: parent.height
-          Layout.preferredWidth: MainWindowStyle.accountStatus.width
-
-          account: AccountSettingsModel
-          presence: PresenceStatusModel
-
-          TooltipArea {
-            text: AccountSettingsModel.sipAddress
-          }
-
-          onClicked: Logic.manageAccounts()
-        }
-
-        Column {
-          width: MainWindowStyle.autoAnswerStatus.width
-
-          Icon {
-            icon: SettingsModel.autoAnswerStatus
-              ? 'auto_answer'
-              : ''
-            iconSize: MainWindowStyle.autoAnswerStatus.iconSize
-          }
-
-          Text {
-            clip: true
-            color: MainWindowStyle.autoAnswerStatus.text.color
-            font.pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
-            text: qsTr('autoAnswerStatus')
-            visible: SettingsModel.autoAnswerStatus
-            width: parent.width
-          }
-        }
-
-        SmartSearchBar {
-          id: smartSearchBar
-
-          Layout.fillWidth: true
-
-          entryHeight: MainWindowStyle.searchBox.entryHeight
-          maxMenuHeight: MainWindowStyle.searchBox.maxHeight
-          placeholderText: qsTr('mainSearchBarPlaceholder')
-
-          model: SmartSearchBarModel {}
-
-          onAddContact: window.setView('ContactEdit', {
-            sipAddress: sipAddress
-          })
-
-          onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
-            sipAddress: entry.sipAddress
-          })
-
-          onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
-          onLaunchChat: window.setView('Conversation', {
-            sipAddress: sipAddress
-          })
-
-          onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
-        }
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // Content.
-    // -------------------------------------------------------------------------
-
-    RowLayout {
-      Layout.fillHeight: true
-      Layout.fillWidth: true
+    sourceComponent: ColumnLayout {
+      // Workaround to get these properties in `MainWindow.js`.
+      // TODO: Find better Workaround.
+      readonly property alias collapse: collapse
+      readonly property alias contentLoader: contentLoader
+      readonly property alias menu: menu
+      readonly property alias timeline: timeline
 
       spacing: 0
 
-      // Main menu.
-      ColumnLayout {
-        Layout.maximumWidth: MainWindowStyle.menu.width
-        Layout.preferredWidth: MainWindowStyle.menu.width
+      // -----------------------------------------------------------------------
+      // Toolbar properties.
+      // -----------------------------------------------------------------------
 
-        spacing: 0
+      ToolBar {
+        Layout.fillWidth: true
+        Layout.preferredHeight: MainWindowStyle.toolBar.height
 
-        Menu {
-          id: menu
+        background: MainWindowStyle.toolBar.background
 
-          entryHeight: MainWindowStyle.menu.entryHeight
-          entryWidth: MainWindowStyle.menu.width
+        RowLayout {
+          anchors {
+            fill: parent
+            leftMargin: MainWindowStyle.toolBar.leftMargin
+            rightMargin: MainWindowStyle.toolBar.rightMargin
+          }
+          spacing: MainWindowStyle.toolBar.spacing
 
-          entries: [{
-            entryName: qsTr('homeEntry'),
-            icon: 'home'
-          }, {
-            entryName: qsTr('contactsEntry'),
-            icon: 'contact'
-          }]
+          Collapse {
+            id: collapse
 
-          onEntrySelected: !entry ? setView('Home') : setView('Contacts')
-        }
+            Layout.fillHeight: parent.height
+            target: window
+            targetHeight: MainWindowStyle.minimumHeight
+            visible: Qt.platform.os !== 'linux'
 
-        // History.
-        Timeline {
-          id: timeline
+            Component.onCompleted: setCollapsed(true)
+          }
 
-          Layout.fillHeight: true
-          Layout.fillWidth: true
-          model: TimelineModel
+          AccountStatus {
+            id: accountStatus
 
-          onEntrySelected: setView('Conversation', { sipAddress: entry })
+            Layout.fillHeight: parent.height
+            Layout.preferredWidth: MainWindowStyle.accountStatus.width
+
+            account: AccountSettingsModel
+            presence: PresenceStatusModel
+
+            TooltipArea {
+              text: AccountSettingsModel.sipAddress
+            }
+
+            onClicked: Logic.manageAccounts()
+          }
+
+          Column {
+            width: MainWindowStyle.autoAnswerStatus.width
+
+            Icon {
+              icon: SettingsModel.autoAnswerStatus
+                ? 'auto_answer'
+                : ''
+              iconSize: MainWindowStyle.autoAnswerStatus.iconSize
+            }
+
+            Text {
+              clip: true
+              color: MainWindowStyle.autoAnswerStatus.text.color
+              font.pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
+              text: qsTr('autoAnswerStatus')
+              visible: SettingsModel.autoAnswerStatus
+              width: parent.width
+            }
+          }
+
+          SmartSearchBar {
+            id: smartSearchBar
+
+            Layout.fillWidth: true
+
+            entryHeight: MainWindowStyle.searchBox.entryHeight
+            maxMenuHeight: MainWindowStyle.searchBox.maxHeight
+            placeholderText: qsTr('mainSearchBarPlaceholder')
+
+            model: SmartSearchBarModel {}
+
+            onAddContact: window.setView('ContactEdit', {
+              sipAddress: sipAddress
+            })
+
+            onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
+              sipAddress: entry.sipAddress
+            })
+
+            onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
+            onLaunchChat: window.setView('Conversation', {
+              sipAddress: sipAddress
+            })
+
+            onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
+          }
         }
       }
 
-      // Main content.
-      Loader {
-        id: contentLoader
+      // -----------------------------------------------------------------------
+      // Content.
+      // -----------------------------------------------------------------------
 
+      RowLayout {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        source: 'Home.qml'
+        spacing: 0
+
+        // Main menu.
+        ColumnLayout {
+          Layout.maximumWidth: MainWindowStyle.menu.width
+          Layout.preferredWidth: MainWindowStyle.menu.width
+
+          spacing: 0
+
+          Menu {
+            id: menu
+
+            entryHeight: MainWindowStyle.menu.entryHeight
+            entryWidth: MainWindowStyle.menu.width
+
+            entries: [{
+              entryName: qsTr('homeEntry'),
+              icon: 'home'
+            }, {
+              entryName: qsTr('contactsEntry'),
+              icon: 'contact'
+            }]
+
+            onEntrySelected: !entry ? setView('Home') : setView('Contacts')
+          }
+
+          // History.
+          Timeline {
+            id: timeline
+
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            model: TimelineModel
+
+            onEntrySelected: setView('Conversation', { sipAddress: entry })
+          }
+        }
+
+        // Main content.
+        Loader {
+          id: contentLoader
+
+          Layout.fillHeight: true
+          Layout.fillWidth: true
+
+          source: 'Home.qml'
+        }
       }
     }
   }
@@ -239,9 +249,9 @@ ApplicationWindow {
 
     flat: true
 
-    height: accountStatus.height
+    height: MainWindowStyle.toolBar.height
     width: MainWindowStyle.toolBar.leftMargin
 
-    onClicked: CoreManager.forceRefreshRegisters()
+    onClicked: CoreManager.linphoneCoreCreated && CoreManager.forceRefreshRegisters()
   }
 }

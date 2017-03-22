@@ -95,6 +95,10 @@ App::~App () {
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
+  // Init core.
+  CoreManager::init(this, m_parser.value("config"));
+  qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
+
   // Avoid double free.
   m_engine.setObjectOwnership(this, QQmlEngine::CppOwnership);
 
@@ -117,44 +121,11 @@ void App::initContentApp () {
   // Don't quit if last window is closed!!!
   setQuitOnLastWindowClosed(false);
 
-  // Init core.
-  CoreManager::init(nullptr, m_parser.value("config"));
-  qInfo() << "Core manager initialized.";
-  qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
-
-  // Try to use preferred locale.
-  {
-    QString locale = getConfigLocale();
-
-    if (!locale.isEmpty()) {
-      DefaultTranslator *translator = new DefaultTranslator(this);
-
-      if (installLocale(*this, *translator, QLocale(locale))) {
-        // Use config.
-        m_translator->deleteLater();
-        m_translator = translator;
-        m_locale = locale;
-
-        qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
-      } else {
-        // Reset config.
-        setConfigLocale("");
-        translator->deleteLater();
-      }
-    }
-  }
-
   // Register types.
   registerTypes();
 
   // Enable notifications.
   m_notifier = new Notifier(this);
-
-  {
-    CoreManager *core = CoreManager::getInstance();
-    core->enableHandlers();
-    core->setParent(this);
-  }
 
   // Load main view.
   qInfo() << "Loading main view...";
@@ -162,21 +133,32 @@ void App::initContentApp () {
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
-  #ifndef __APPLE__
-    // Enable TrayIconSystem.
-    if (!QSystemTrayIcon::isSystemTrayAvailable())
-      qWarning("System tray not found on this system.");
-    else
-      setTrayIcon();
-
-    if (!m_parser.isSet("iconified"))
-      getMainWindow()->showNormal();
-  #else
-    getMainWindow()->showNormal();
-  #endif // ifndef __APPLE__
+  CoreManager *core = CoreManager::getInstance();
 
   if (m_parser.isSet("selftest"))
-    QTimer::singleShot(300, this, &App::quit);
+    QObject::connect(core, &CoreManager::linphoneCoreCreated, this, &App::quit);
+  else
+    QObject::connect(
+      core, &CoreManager::linphoneCoreCreated, this, [core, this]() {
+        tryToUsePreferredLocale();
+
+        qInfo() << QStringLiteral("Linphone core created.");
+        core->enableHandlers();
+
+        #ifndef __APPLE__
+          // Enable TrayIconSystem.
+          if (!QSystemTrayIcon::isSystemTrayAvailable())
+            qWarning("System tray not found on this system.");
+          else
+            setTrayIcon();
+
+          if (!m_parser.isSet("iconified"))
+            getMainWindow()->showNormal();
+        #else
+          getMainWindow()->showNormal();
+        #endif // ifndef __APPLE__
+      }
+    );
 
   QObject::connect(
     this, &App::receivedMessage, this, [this](int, QByteArray message) {
@@ -208,6 +190,29 @@ void App::parseArgs () {
   Logger::init();
   if (m_parser.isSet("verbose")) {
     Logger::instance()->setVerbose(true);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+void App::tryToUsePreferredLocale () {
+  QString locale = getConfigLocale();
+
+  if (!locale.isEmpty()) {
+    DefaultTranslator *translator = new DefaultTranslator(this);
+
+    if (installLocale(*this, *translator, QLocale(locale))) {
+      // Use config.
+      m_translator->deleteLater();
+      m_translator = translator;
+      m_locale = locale;
+
+      qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
+    } else {
+      // Reset config.
+      setConfigLocale("");
+      translator->deleteLater();
+    }
   }
 }
 

@@ -8,6 +8,16 @@
 
 // =============================================================================
 
+function handleActiveFocusItemChanged (activeFocusItem) {
+  var smartSearchBar = window._smartSearchBar
+
+  if (activeFocusItem == null && smartSearchBar) {
+    smartSearchBar.hideMenu()
+  }
+}
+
+// -----------------------------------------------------------------------------
+
 function lockView (info) {
   window._lockedInfo = info
 }
@@ -24,10 +34,12 @@ function setView (view, props) {
       window.setVisible(true)
     }
 
-    collapse.setCollapsed(true)
+    var item = mainLoader.item
+
+    item.collapse.setCollapsed(true)
     updateSelectedEntry(view, props)
     window._currentView = view
-    contentLoader.setSource(view + '.qml', props || {})
+    item.contentLoader.setSource(view + '.qml', props || {})
   }
 
   var lockedInfo = window._lockedInfo
@@ -57,6 +69,11 @@ function manageAccounts () {
 // -----------------------------------------------------------------------------
 
 function updateSelectedEntry (view, props) {
+  var item = mainLoader.item
+
+  var menu = item.menu
+  var timeline = item.timeline
+
   if (view === 'Home' || view === 'Contacts') {
     menu.setSelectedEntry(view === 'Home' ? 0 : 1)
     timeline.resetSelectedEntry()

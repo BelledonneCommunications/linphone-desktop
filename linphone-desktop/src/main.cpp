@@ -20,10 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include <iostream>
-
 #include "app/App.hpp"
-#include "app/Logger.hpp"
 
 using namespace std;
 
@@ -32,6 +29,10 @@ using namespace std;
 int main (int argc, char *argv[]) {
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
+
+  // ---------------------------------------------------------------------------
+  // OpenGL properties.
+  // ---------------------------------------------------------------------------
 
   // Options to get a nice video render.
 #ifdef _WIN32
@@ -58,6 +59,10 @@ int main (int argc, char *argv[]) {
     QSurfaceFormat::setDefaultFormat(format);
   }
 
+  // ---------------------------------------------------------------------------
+  // App creation.
+  // ---------------------------------------------------------------------------
+
   App app(argc, argv);
   app.parseArgs();
 
@@ -69,5 +74,6 @@ int main (int argc, char *argv[]) {
   app.initContentApp();
 
   // Run!
+  qInfo() << "Running app...";
   return app.exec();
 }
