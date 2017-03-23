@@ -23,6 +23,7 @@
 lcb_external_source_paths("../linphone-desktop")
 
 lcb_dependencies("linphone" "ms2plugins")
+lcb_groupable(YES)
 
 # Add config step for packaging
 set(LINPHONE_BUILDER_ADDITIONAL_CONFIG_STEPS "${CMAKE_CURRENT_LIST_DIR}/additional_steps.cmake")

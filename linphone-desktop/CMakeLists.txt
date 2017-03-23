@@ -64,10 +64,18 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARAT
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Network Concurrent)
 
-find_package(BcToolbox REQUIRED)
-find_package(Belcard REQUIRED)
-find_package(Linphone REQUIRED)
-find_package(LinphoneCxx REQUIRED)
+if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+        include("${EP_linphone_CONFIG_DIR}/LinphoneConfig.cmake")
+        include("${EP_linphone_CONFIG_DIR}/wrappers/cpp/LinphoneCxxConfig.cmake")
+        include("${EP_bctoolbox_CONFIG_DIR}/BctoolboxConfig.cmake")
+        include("${EP_belcard_CONFIG_DIR}/BelcardConfig.cmake")
+else()
+	find_package(Linphone REQUIRED)
+	find_package(LinphoneCxx REQUIRED)
+	find_package(BcToolbox REQUIRED)
+	find_package(Belcard REQUIRED)
+endif()
+
 
 set(SOURCES
   src/app/App.cpp
