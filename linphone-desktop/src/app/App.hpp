@@ -33,6 +33,7 @@
 // =============================================================================
 
 class DefaultTranslator;
+class QSystemTrayIcon;
 
 class App : public SingleApplication {
   Q_OBJECT;
@@ -100,6 +101,8 @@ private:
 
   QQuickWindow *m_calls_window = nullptr;
   QQuickWindow *m_settings_window = nullptr;
+
+  QSystemTrayIcon *m_system_tray_icon = nullptr;
 };
 
 #endif // APP_H_
