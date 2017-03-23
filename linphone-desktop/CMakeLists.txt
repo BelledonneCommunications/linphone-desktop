@@ -161,9 +161,9 @@ function (PREPEND list prefix)
 endfunction ()
 
 # Force absolute paths.
-PREPEND(SOURCES "${CMAKE_SOURCE_DIR}/")
-PREPEND(HEADERS "${CMAKE_SOURCE_DIR}/")
-PREPEND(QRC_RESOURCES "${CMAKE_SOURCE_DIR}/")
+PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
+PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
+PREPEND(QRC_RESOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 # ------------------------------------------------------------------------------
 # Compute QML files list.
@@ -180,14 +180,14 @@ foreach (line ${QRC_RESOURCES_CONTENT})
     ${line})
   string(REGEX MATCH "\\.[a-z]+$" isUi ${result})
   if (NOT ${isUi} STREQUAL "")
-    list(APPEND QML_SOURCES "${CMAKE_SOURCE_DIR}/${result}")
+    list(APPEND QML_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/${result}")
   endif ()
 endforeach ()
 
 if(NOT WIN32)
   add_custom_target(
     check_qml DEPENDS ${QML_SOURCES}
-    COMMAND "${CMAKE_SOURCE_DIR}/tools/check_qml_syntax"
+    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/check_qml_syntax"
   )
 endif()
 
@@ -196,8 +196,8 @@ endif()
 # ------------------------------------------------------------------------------
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy
-  "${CMAKE_SOURCE_DIR}/tools/private/pre-commit"
-  "${CMAKE_SOURCE_DIR}/../.git/hooks/pre-commit"
+  "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
+  "${CMAKE_CURRENT_SOURCE_DIR}/../.git/hooks/pre-commit"
 )
 
 # ------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ endif()
 
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
-list(APPEND QRC_RESOURCES "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
+list(APPEND QRC_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
 # Add qrc. (images, qml, translations...)
 qt5_add_resources(RESOURCES ${QRC_RESOURCES})
@@ -232,8 +232,7 @@ if(NOT WIN32)
   add_dependencies(update_translations check_qml)
 endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-
-target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
+target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}" "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
 foreach (package ${QT5_PACKAGES})
   target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
   # `qt5_create_translation` is provided from `LinguistTools` package.

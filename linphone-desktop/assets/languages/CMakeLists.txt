@@ -13,7 +13,7 @@ set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
 set(TS_FILES)
 set(I18N_CONTENT "<!DOCTYPE RCC>\n<RCC version=\"1.0\">\n  <qresource prefix=\"/\">\n")
 foreach (lang ${LANGUAGES})
-  list(APPEND TS_FILES "${CMAKE_SOURCE_DIR}/${LANGUAGES_DIRECTORY}/${lang}.ts")
+  list(APPEND TS_FILES "${CMAKE_CURRENT_SOURCE_DIR}/${lang}.ts")
 
   # Note: the below `languages/` path is not the same as the `${LANGUAGES_DIRECTORY}` value.
   # It's the symbolic path used by the linphone binary in the qrc model.
@@ -22,11 +22,10 @@ foreach (lang ${LANGUAGES})
 endforeach ()
 set(I18N_CONTENT "${I18N_CONTENT}  </qresource>\n</RCC>\n")
 
-file(WRITE "${CMAKE_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}" "${I18N_CONTENT}")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${I18N_FILENAME}" "${I18N_CONTENT}")
 
 # Create `qm` files from `ts` files.
 qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES} OPTIONS -no-obsolete)
-
 # Translations target must be called by `make`|`make all`.
 add_custom_target(update_translations DEPENDS ${QM_FILES})
 
