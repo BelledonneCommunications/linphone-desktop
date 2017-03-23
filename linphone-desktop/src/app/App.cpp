@@ -99,9 +99,6 @@ void App::initContentApp () {
   CoreManager::init(this, m_parser.value("config"));
   qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
 
-  // Avoid double free.
-  m_engine.setObjectOwnership(this, QQmlEngine::CppOwnership);
-
   // Provide `+custom` folders for custom components.
   {
     QQmlFileSelector *file_selector = new QQmlFileSelector(&m_engine);
@@ -243,8 +240,9 @@ QQuickWindow *App::getCallsWindow () {
 }
 
 QQuickWindow *App::getMainWindow () const {
-  QQmlApplicationEngine &engine = const_cast<QQmlApplicationEngine &>(m_engine);
-  return qobject_cast<QQuickWindow *>(engine.rootObjects().at(0));
+  return qobject_cast<QQuickWindow *>(
+    const_cast<QQmlApplicationEngine *>(&m_engine)->rootObjects().at(0)
+  );
 }
 
 QQuickWindow *App::getSettingsWindow () {
@@ -273,8 +271,35 @@ bool App::hasFocus () const {
 
 // -----------------------------------------------------------------------------
 
+#define REGISTER_EXISTING_SINGLETON(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
+  "Linphone", 1, 0, NAME, \
+  [](QQmlEngine *, QJSEngine *) -> QObject *{ \
+    QObject *object = METHOD(); \
+    QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership); \
+    return object; \
+  } \
+)
+
+template<class T>
+void registerSingletonType (const char *name) {
+  qmlRegisterSingletonType<T>(
+    "Linphone", 1, 0, name,
+    [](QQmlEngine *, QJSEngine *) -> QObject *{
+      return new T();
+    }
+  );
+}
+
 void App::registerTypes () {
   qInfo() << "Registering types...";
+
+  qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
+  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
+  qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
+  qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
+  qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
+
+  qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
   qmlRegisterUncreatableType<CallModel>(
     "Linphone", 1, 0, "CallModel", "CallModel is uncreatable."
@@ -289,84 +314,20 @@ void App::registerTypes () {
     "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable."
   );
 
-  qmlRegisterSingletonType<App>(
-    "Linphone", 1, 0, "App",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return App::getInstance();
-    }
-  );
+  registerSingletonType<AccountSettingsModel>("AccountSettingsModel");
+  registerSingletonType<Presence>("Presence");
+  registerSingletonType<PresenceStatusModel>("PresenceStatusModel");
+  registerSingletonType<TimelineModel>("TimelineModel");
 
-  qmlRegisterSingletonType<CoreManager>(
-    "Linphone", 1, 0, "CoreManager",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance();
-    }
-  );
-
-  qmlRegisterSingletonType<AccountSettingsModel>(
-    "Linphone", 1, 0, "AccountSettingsModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new AccountSettingsModel();
-    }
-  );
-
-  qmlRegisterSingletonType<CallsListModel>(
-    "Linphone", 1, 0, "CallsListModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance()->getCallsListModel();
-    }
-  );
-
-  qmlRegisterSingletonType<ContactsListModel>(
-    "Linphone", 1, 0, "ContactsListModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance()->getContactsListModel();
-    }
-  );
-
-  qmlRegisterSingletonType<Presence>(
-    "Linphone", 1, 0, "Presence",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new Presence();
-    }
-  );
-
-  qmlRegisterSingletonType<PresenceStatusModel>(
-    "Linphone", 1, 0, "PresenceStatusModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new PresenceStatusModel();
-    }
-  );
-
-  qmlRegisterSingletonType<SettingsModel>(
-    "Linphone", 1, 0, "SettingsModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance()->getSettingsModel();
-    }
-  );
-
-  qmlRegisterSingletonType<SipAddressesModel>(
-    "Linphone", 1, 0, "SipAddressesModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return CoreManager::getInstance()->getSipAddressesModel();
-    }
-  );
-
-  qmlRegisterSingletonType<TimelineModel>(
-    "Linphone", 1, 0, "TimelineModel",
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new TimelineModel();
-    }
-  );
-
-  qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
-  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
-  qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
-  qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
-  qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
-
-  qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
+  REGISTER_EXISTING_SINGLETON(App, "App", App::getInstance);
+  REGISTER_EXISTING_SINGLETON(CoreManager, "CoreManager", CoreManager::getInstance);
+  REGISTER_EXISTING_SINGLETON(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
+  REGISTER_EXISTING_SINGLETON(SipAddressesModel, "SipAddressesModel", CoreManager::getInstance()->getSipAddressesModel);
+  REGISTER_EXISTING_SINGLETON(CallsListModel, "CallsListModel", CoreManager::getInstance()->getCallsListModel);
+  REGISTER_EXISTING_SINGLETON(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);
 }
+
+#undef REGISTER_EXISTING_SINGLETON
 
 // -----------------------------------------------------------------------------
 

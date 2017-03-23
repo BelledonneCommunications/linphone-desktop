@@ -35,11 +35,11 @@ int main (int argc, char *argv[]) {
   // ---------------------------------------------------------------------------
 
   // Options to get a nice video render.
-#ifdef _WIN32
-  QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
-#else
-  QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
-#endif
+  #ifdef _WIN32
+    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
+  #else
+    QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
+  #endif // ifdef _WIN32
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
   {

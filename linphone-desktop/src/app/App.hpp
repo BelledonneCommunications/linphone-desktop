@@ -89,14 +89,14 @@ private:
   }
 
   QCommandLineParser m_parser;
-  QQmlApplicationEngine m_engine;
-
-  DefaultTranslator *m_translator = nullptr;
-
-  Notifier *m_notifier = nullptr;
 
   QVariantList m_available_locales;
   QString m_locale;
+
+  QQmlApplicationEngine m_engine;
+
+  DefaultTranslator *m_translator = nullptr;
+  Notifier *m_notifier = nullptr;
 
   QQuickWindow *m_calls_window = nullptr;
   QQuickWindow *m_settings_window = nullptr;
