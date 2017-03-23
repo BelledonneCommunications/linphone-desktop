@@ -41,8 +41,6 @@ class QTimer;
 class CoreManager : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(bool linphoneCoreCreated READ getLinphoneCoreCreated NOTIFY linphoneCoreCreated);
-
 public:
   ~CoreManager () = default;
 
@@ -117,10 +115,6 @@ private:
   void setResourcesPaths ();
 
   void createLinphoneCore (const QString &config_path);
-
-  bool getLinphoneCoreCreated () {
-    return m_promise_build.isFinished();
-  }
 
   std::shared_ptr<linphone::Core> m_core;
   std::shared_ptr<CoreHandlers> m_handlers;

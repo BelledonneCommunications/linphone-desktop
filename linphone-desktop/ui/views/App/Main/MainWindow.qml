@@ -57,6 +57,11 @@ ApplicationWindow {
 
   // ---------------------------------------------------------------------------
 
+  Connections {
+    target: CoreManager
+    onLinphoneCoreCreated: mainLoader.active = true
+  }
+
   Shortcut {
     sequence: StandardKey.Close
     onActivated: window.hide()
@@ -67,12 +72,11 @@ ApplicationWindow {
   Loader {
     id: mainLoader
 
-    active: CoreManager.linphoneCoreCreated
+    active: false
     anchors.fill: parent
 
     sourceComponent: ColumnLayout {
       // Workaround to get these properties in `MainWindow.js`.
-      // TODO: Find better Workaround.
       readonly property alias collapse: collapse
       readonly property alias contentLoader: contentLoader
       readonly property alias menu: menu
@@ -252,6 +256,6 @@ ApplicationWindow {
     height: MainWindowStyle.toolBar.height
     width: MainWindowStyle.toolBar.leftMargin
 
-    onClicked: CoreManager.linphoneCoreCreated && CoreManager.forceRefreshRegisters()
+    onClicked: CoreManager.forceRefreshRegisters()
   }
 }
