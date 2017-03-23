@@ -271,7 +271,7 @@ bool App::hasFocus () const {
 
 // -----------------------------------------------------------------------------
 
-#define REGISTER_EXISTING_SINGLETON(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
+#define registerSharedSingletonType(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
   "Linphone", 1, 0, NAME, \
   [](QQmlEngine *, QJSEngine *) -> QObject *{ \
     QObject *object = METHOD(); \
@@ -319,15 +319,15 @@ void App::registerTypes () {
   registerSingletonType<PresenceStatusModel>("PresenceStatusModel");
   registerSingletonType<TimelineModel>("TimelineModel");
 
-  REGISTER_EXISTING_SINGLETON(App, "App", App::getInstance);
-  REGISTER_EXISTING_SINGLETON(CoreManager, "CoreManager", CoreManager::getInstance);
-  REGISTER_EXISTING_SINGLETON(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
-  REGISTER_EXISTING_SINGLETON(SipAddressesModel, "SipAddressesModel", CoreManager::getInstance()->getSipAddressesModel);
-  REGISTER_EXISTING_SINGLETON(CallsListModel, "CallsListModel", CoreManager::getInstance()->getCallsListModel);
-  REGISTER_EXISTING_SINGLETON(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);
+  registerSharedSingletonType(App, "App", App::getInstance);
+  registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
+  registerSharedSingletonType(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
+  registerSharedSingletonType(SipAddressesModel, "SipAddressesModel", CoreManager::getInstance()->getSipAddressesModel);
+  registerSharedSingletonType(CallsListModel, "CallsListModel", CoreManager::getInstance()->getCallsListModel);
+  registerSharedSingletonType(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);
 }
 
-#undef REGISTER_EXISTING_SINGLETON
+#undef registerSharedSingletonType
 
 // -----------------------------------------------------------------------------
 
