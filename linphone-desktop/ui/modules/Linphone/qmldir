@@ -12,6 +12,7 @@ CardBlock           1.0 Blocks/CardBlock.qml
 RequestBlock        1.0 Blocks/RequestBlock.qml
 
 Calls               1.0 Calls/Calls.qml
+CallStatistics      1.0 Calls/CallStatistics.qml
 
 Chat                1.0 Chat/Chat.qml
 

@@ -68,6 +68,7 @@ Collapse             1.0 Misc/Collapse.qml
 ForceScrollBar       1.0 Misc/ForceScrollBar.qml
 Paned                1.0 Misc/Paned.qml
 
+AbstractDropDownMenu 1.0 Popup/AbstractDropDownMenu.qml
 DesktopPopup         1.0 Popup/DesktopPopup.qml
 DropDownDynamicMenu  1.0 Popup/DropDownDynamicMenu.qml
 DropDownMenu         1.0 Popup/DropDownMenu.qml

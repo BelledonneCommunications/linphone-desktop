@@ -176,6 +176,88 @@
     </message>
 </context>
 <context>
+    <name>CallModel</name>
+    <message>
+        <source>callStatsCodec</source>
+        <translation>Codec</translation>
+    </message>
+    <message>
+        <source>callStatsUploadBandwidth</source>
+        <translation>Upload bandwidth</translation>
+    </message>
+    <message>
+        <source>callStatsDownloadBandwidth</source>
+        <translation>Download bandwidth</translation>
+    </message>
+    <message>
+        <source>callStatsIceState</source>
+        <translation>ICE state</translation>
+    </message>
+    <message>
+        <source>callStatsIpFamily</source>
+        <translation>IP family</translation>
+    </message>
+    <message>
+        <source>callStatsSenderLossRate</source>
+        <translation>Sender loss rate</translation>
+    </message>
+    <message>
+        <source>callStatsReceiverLossRate</source>
+        <translation>Receiver loss rate</translation>
+    </message>
+    <message>
+        <source>callStatsJitterBuffer</source>
+        <translation>Jitter buffer</translation>
+    </message>
+    <message>
+        <source>callStatsSentVideoDefinition</source>
+        <translation>Sent video definition</translation>
+    </message>
+    <message>
+        <source>callStatsReceivedVideoDefinition</source>
+        <translation>Received video definition</translation>
+    </message>
+    <message>
+        <source>iceStateNotActivated</source>
+        <translation>Not activated</translation>
+    </message>
+    <message>
+        <source>iceStateFailed</source>
+        <translation>Failed</translation>
+    </message>
+    <message>
+        <source>iceStateInProgress</source>
+        <translation>In progress</translation>
+    </message>
+    <message>
+        <source>iceStateReflexiveConnection</source>
+        <translation>Reflexive connection</translation>
+    </message>
+    <message>
+        <source>iceStateHostConnection</source>
+        <translation>Host connection</translation>
+    </message>
+    <message>
+        <source>iceStateRelayConnection</source>
+        <translation>Relay connection</translation>
+    </message>
+    <message>
+        <source>iceStateInvalid</source>
+        <translation>Invalid</translation>
+    </message>
+</context>
+<context>
+    <name>CallStatistics</name>
+    <message>
+        <source>audioStatsLabel</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>videoStatsLabel</source>
+        <translation>Video</translation>
+    </message>
+</context>
+<context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>

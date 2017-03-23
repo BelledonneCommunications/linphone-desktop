@@ -52,6 +52,14 @@ void CoreHandlers::onCallStateChanged (
     App::getInstance()->getNotifier()->notifyReceivedCall(call);
 }
 
+void CoreHandlers::onCallStatsUpdated (
+  const std::shared_ptr<linphone::Core> &,
+  const std::shared_ptr<linphone::Call> &call,
+  const linphone::CallStats &stats
+) {
+  call->getData<CallModel>("call-model").updateStats(stats);
+}
+
 void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::ChatRoom> &,

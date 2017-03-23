@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -61,13 +62,16 @@ Rectangle {
       Layout.rightMargin: CallStyle.header.rightMargin
       Layout.preferredHeight: CallStyle.header.contactDescription.height
 
-      Icon {
+      ActionButton {
         id: callQuality
 
         anchors.left: parent.left
         icon: 'call_quality_0'
         iconSize: CallStyle.header.iconSize
         visible: call.status !== CallModel.CallStatusEnded
+        useStates: false
+
+        onClicked: callStatistics.showMenu()
 
         // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
         Timer {
@@ -77,6 +81,16 @@ Rectangle {
           triggeredOnStart: true
 
           onTriggered: Logic.updateCallQualityIcon()
+        }
+
+        CallStatistics {
+          id: callStatistics
+          relativeTo: callQuality
+          relativeY: info.height + elapsedTime.height * 2
+          call: incall.call
+          width: container.width
+          height: container.height
+          launcher: callQuality
         }
       }
 

@@ -280,6 +280,7 @@
     <file>ui/modules/Linphone/Calls/CallControls.qml</file>
     <file>ui/modules/Linphone/Calls/Calls.js</file>
     <file>ui/modules/Linphone/Calls/Calls.qml</file>
+    <file>ui/modules/Linphone/Calls/CallStatistics.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.js</file>
     <file>ui/modules/Linphone/Chat/Chat.qml</file>
     <file>ui/modules/Linphone/Chat/Event.qml</file>
@@ -307,6 +308,7 @@
     <file>ui/modules/Linphone/Styles/Blocks/CardBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Blocks/RequestBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallControlsStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>

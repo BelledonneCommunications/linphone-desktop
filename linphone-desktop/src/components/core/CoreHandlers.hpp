@@ -54,6 +54,12 @@ private:
     const std::string &message
   ) override;
 
+  void onCallStatsUpdated (
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::Call> &call,
+    const linphone::CallStats &stats
+  ) override;
+
   void onMessageReceived (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::ChatRoom> &room,

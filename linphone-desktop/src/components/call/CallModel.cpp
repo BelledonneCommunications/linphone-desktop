@@ -39,6 +39,7 @@ using namespace std;
 CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
   Q_ASSERT(linphoneCall != nullptr);
   mLinphoneCall = linphoneCall;
+  mLinphoneCall->setData("call-model", *this);
 
   // Deal with auto-answer.
   {
@@ -116,6 +117,21 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
       QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss")
     ) + ".mkv"
   );
+}
+
+void CallModel::updateStats (const linphone::CallStats &stats) {
+  switch (stats.getType()) {
+    case linphone::StreamTypeAudio:
+      updateStats(stats, mAudioStats);
+      break;
+    case linphone::StreamTypeVideo:
+      updateStats(stats, mVideoStats);
+      break;
+    default:
+      break;
+  }
+
+  emit statsUpdated();
 }
 
 // -----------------------------------------------------------------------------
@@ -388,3 +404,97 @@ void CallModel::sendDtmf (const QString &dtmf) {
   qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(dtmf);
   mLinphoneCall->sendDtmf(dtmf.constData()[0].toLatin1());
 }
+
+// -----------------------------------------------------------------------------
+
+QVariantList CallModel::getAudioStats () const {
+  return mAudioStats;
+}
+
+QVariantList CallModel::getVideoStats () const {
+  return mVideoStats;
+}
+
+static QVariantMap createStat (const QString &key, const QString &value) {
+  QVariantMap m;
+  m["key"] = key;
+  m["value"] = value;
+  return m;
+}
+
+void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList &stats) {
+  QString family;
+  shared_ptr<const linphone::CallParams> params = mLinphoneCall->getCurrentParams();
+  shared_ptr<const linphone::PayloadType> payloadType;
+
+  switch (callStats.getType()) {
+    case linphone::StreamTypeAudio:
+      payloadType = params->getUsedAudioPayloadType();
+      break;
+    case linphone::StreamTypeVideo:
+      payloadType = params->getUsedVideoPayloadType();
+      break;
+    default:
+      return;
+  }
+
+  switch (callStats.getIpFamilyOfRemote()) {
+    case linphone::AddressFamilyInet:
+      family = "IPv4";
+      break;
+    case linphone::AddressFamilyInet6:
+      family = "IPv6";
+      break;
+    default:
+      family = "Unknown";
+      break;
+  }
+
+  stats.clear();
+  stats << createStat(tr("callStatsCodec"), QString("%1 / %2kHz").arg(Utils::linphoneStringToQString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000));
+  stats << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats.getUploadBandwidth())));
+  stats << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats.getDownloadBandwidth())));
+  stats << createStat(tr("callStatsIceState"), iceStateToString(callStats.getIceState()));
+  stats << createStat(tr("callStatsIpFamily"), family);
+  stats << createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats.getSenderLossRate()));
+  stats << createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats.getReceiverLossRate()));
+  switch (callStats.getType()) {
+    case linphone::StreamTypeAudio:
+      stats << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats.getJitterBufferSizeMs()));
+      break;
+    case linphone::StreamTypeVideo:
+      {
+        QString sentVideoDefinitionName = Utils::linphoneStringToQString(params->getSentVideoDefinition()->getName());
+        QString sentVideoDefinition = QString("%1x%2").arg(params->getSentVideoDefinition()->getWidth()).arg(params->getSentVideoDefinition()->getHeight());
+        stats << createStat(tr("callStatsSentVideoDefinition"),
+          (sentVideoDefinition == sentVideoDefinitionName) ? sentVideoDefinition : QString("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
+        QString receivedVideoDefinitionName = Utils::linphoneStringToQString(params->getReceivedVideoDefinition()->getName());
+        QString receivedVideoDefinition = QString("%1x%2").arg(params->getReceivedVideoDefinition()->getWidth()).arg(params->getReceivedVideoDefinition()->getHeight());
+        stats << createStat(tr("callStatsReceivedVideoDefinition"),
+          (receivedVideoDefinition == receivedVideoDefinitionName) ? receivedVideoDefinition : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
+      }
+      break;
+    default:
+      break;
+  }
+}
+
+QString CallModel::iceStateToString (linphone::IceState state) const {
+  switch (state) {
+    case linphone::IceStateNotActivated:
+      return tr("iceStateNotActivated");
+    case linphone::IceStateFailed:
+      return tr("iceStateFailed");
+    case linphone::IceStateInProgress:
+      return tr("iceStateInProgress");
+    case linphone::IceStateReflexiveConnection:
+      return tr("iceStateReflexiveConnection");
+    case linphone::IceStateHostConnection:
+      return tr("iceStateHostConnection");
+    case linphone::IceStateRelayConnection:
+      return tr("iceStateRelayConnection");
+    default:
+      return tr("iceStateInvalid");
+  }
+}
+

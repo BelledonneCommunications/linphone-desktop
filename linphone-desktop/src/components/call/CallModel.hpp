@@ -49,6 +49,9 @@ class CallModel : public QObject {
 
   Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
 
+  Q_PROPERTY(QVariantList audioStats READ getAudioStats NOTIFY statsUpdated);
+  Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated);
+
 public:
   enum CallStatus {
     CallStatusConnected,
@@ -69,6 +72,7 @@ public:
   }
 
   static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
+  void updateStats (const linphone::CallStats &stats);
 
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
@@ -90,6 +94,7 @@ signals:
   void microMutedChanged (bool status);
   void videoRequested ();
   void recordingChanged (bool status);
+  void statsUpdated ();
 
 private:
   void stopAutoAnswerTimer () const;
@@ -119,9 +124,16 @@ private:
 
   bool getRecording () const;
 
+  QVariantList getAudioStats () const;
+  QVariantList getVideoStats () const;
+  void updateStats (const linphone::CallStats &call_stats, QVariantList &stats);
+  QString iceStateToString (linphone::IceState state) const;
+
   bool mPausedByRemote = false;
   bool mPausedByUser = false;
   bool mRecording = false;
+  QVariantList mAudioStats;
+  QVariantList mVideoStats;
 
   std::shared_ptr<linphone::Call> mLinphoneCall;
 };

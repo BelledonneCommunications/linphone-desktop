@@ -176,6 +176,88 @@
     </message>
 </context>
 <context>
+    <name>CallModel</name>
+    <message>
+        <source>callStatsCodec</source>
+        <translation>Codec</translation>
+    </message>
+    <message>
+        <source>callStatsUploadBandwidth</source>
+        <translation>Bande passante d&apos;envoi</translation>
+    </message>
+    <message>
+        <source>callStatsDownloadBandwidth</source>
+        <translation>Bande passante de réception</translation>
+    </message>
+    <message>
+        <source>callStatsIceState</source>
+        <translation>État ICE</translation>
+    </message>
+    <message>
+        <source>callStatsIpFamily</source>
+        <translation>Famille IP</translation>
+    </message>
+    <message>
+        <source>callStatsSenderLossRate</source>
+        <translation>Taux de perte en envoi</translation>
+    </message>
+    <message>
+        <source>callStatsReceiverLossRate</source>
+        <translation>Taux de perte en réception</translation>
+    </message>
+    <message>
+        <source>callStatsJitterBuffer</source>
+        <translation>Tampon de gigue</translation>
+    </message>
+    <message>
+        <source>callStatsSentVideoDefinition</source>
+        <translation>Définition vidéo envoyée</translation>
+    </message>
+    <message>
+        <source>callStatsReceivedVideoDefinition</source>
+        <translation>Définition vidéo reçue</translation>
+    </message>
+    <message>
+        <source>iceStateNotActivated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iceStateFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iceStateInProgress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iceStateReflexiveConnection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iceStateHostConnection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iceStateRelayConnection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iceStateInvalid</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CallStatistics</name>
+    <message>
+        <source>audioStatsLabel</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>videoStatsLabel</source>
+        <translation>Vidéo</translation>
+    </message>
+</context>
+<context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
