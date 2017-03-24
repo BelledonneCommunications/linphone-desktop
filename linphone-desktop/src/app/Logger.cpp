@@ -29,7 +29,7 @@
 
 #include "Logger.hpp"
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__APPLE__)
   #define BLUE "\x1B[1;34m"
   #define YELLOW "\x1B[1;33m"
   #define GREEN "\x1B[1;32m"
