@@ -23,3 +23,5 @@ singleton MainWindowStyle                        1.0 Main/MainWindowStyle.qml
 singleton ManageAccountsStyle                    1.0 Main/ManageAccountsStyle.qml
 
 singleton SettingsWindowStyle                    1.0 Settings/SettingsWindowStyle.qml
+
+singleton SplashScreenStyle                      1.0 SplashScreen/SplashScreenStyle.qml

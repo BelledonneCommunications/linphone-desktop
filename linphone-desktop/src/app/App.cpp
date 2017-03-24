@@ -55,6 +55,8 @@
 #define QML_VIEW_CALLS_WINDOW "qrc:/ui/views/App/Calls/CallsWindow.qml"
 #define QML_VIEW_SETTINGS_WINDOW "qrc:/ui/views/App/Settings/SettingsWindow.qml"
 
+#define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
+
 // =============================================================================
 
 inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
@@ -92,6 +94,35 @@ App::~App () {
 
 // -----------------------------------------------------------------------------
 
+inline QQuickWindow *createSubWindow (App *app, const char *path) {
+  QQmlEngine *engine = app->getEngine();
+
+  QQmlComponent component(engine, QUrl(path));
+  if (component.isError()) {
+    qWarning() << component.errors();
+    abort();
+  }
+
+  QObject *object = component.create();
+  QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+  object->setParent(app->getMainWindow());
+
+  return qobject_cast<QQuickWindow *>(object);
+}
+
+// -----------------------------------------------------------------------------
+
+inline void activeSplashScreen (App *app) {
+  QQuickWindow *splash_screen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
+
+  QObject::connect(
+    CoreManager::getInstance(), &CoreManager::linphoneCoreCreated, splash_screen, [splash_screen]() {
+      splash_screen->hide();
+      splash_screen->deleteLater();
+    }
+  );
+}
+
 void App::initContentApp () {
   // Init core.
   CoreManager::init(this, m_parser.value("config"));
@@ -123,6 +154,9 @@ void App::initContentApp () {
   m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
   if (m_engine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
+
+  // Load splashscreen.
+  activeSplashScreen(this);
 
   CoreManager *core = CoreManager::getInstance();
 
@@ -206,24 +240,6 @@ void App::tryToUsePreferredLocale () {
       translator->deleteLater();
     }
   }
-}
-
-// -----------------------------------------------------------------------------
-
-inline QQuickWindow *createSubWindow (App *app, const char *path) {
-  QQmlEngine *engine = app->getEngine();
-
-  QQmlComponent component(engine, QUrl(path));
-  if (component.isError()) {
-    qWarning() << component.errors();
-    abort();
-  }
-
-  QObject *object = component.create();
-  QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
-  object->setParent(app->getMainWindow());
-
-  return qobject_cast<QQuickWindow *>(object);
 }
 
 // -----------------------------------------------------------------------------
