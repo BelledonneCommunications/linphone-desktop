@@ -6,3 +6,7 @@ record_for_lc_*.wav
 .bc_tester_utils.tmp
 prepare.conf.user
 Project.lnk
+
+build-*-Debug
+build-*-Default
+CMakeLists.txt.user
