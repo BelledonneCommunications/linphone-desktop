@@ -106,6 +106,7 @@ set(SOURCES
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
+  src/utils.cpp
 )
 
 set(HEADERS

@@ -1,5 +1,5 @@
 /*
- * utils.hpp
+ * utils.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,41 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: March 24, 2017
  *      Author: Ronan Abhamon
  */
 
-#ifndef UTILS_H_
-#define UTILS_H_
-
-#include <QObject>
-#include <QString>
+ #include "utils.hpp"
 
 // =============================================================================
 
-namespace Utils {
-  inline QString linphoneStringToQString (const std::string &string) {
-    return QString::fromLocal8Bit(string.c_str(), static_cast<int>(string.size()));
+char *Utils::rstrstr (const char *a, const char *b) {
+  size_t a_len = strlen(a);
+  size_t b_len = strlen(b);
+  const char *s;
+
+  if (b_len > a_len)
+    return NULL;
+
+  for (s = a + a_len - b_len; s >= a; --s) {
+    if (!strncmp(s, b, b_len))
+      return const_cast<char *>(s);
   }
 
-  inline std::string qStringToLinphoneString (const QString &string) {
-    return string.toLocal8Bit().constData();
-  }
-
-  template<class T>
-  T *findParentType (const QObject *object) {
-    QObject *parent = object->parent();
-    if (!parent)
-      return nullptr;
-
-    T *found = qobject_cast<T *>(parent);
-    if (found)
-      return found;
-
-    return findParentType<T>(parent);
-  }
-
-  char *rstrstr (const char *a, const char *b);
+  return NULL;
 }
-
-#endif // UTILS_H_

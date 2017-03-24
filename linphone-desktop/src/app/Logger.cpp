@@ -24,6 +24,7 @@
 #include <linphone/linphonecore.h>
 #include <QDateTime>
 
+#include "../utils.hpp"
 #include "Paths.hpp"
 
 #include "Logger.hpp"
@@ -48,54 +49,19 @@
 
 #define MAX_LOGS_COLLECTION_SIZE 104857600 /* 100MB. */
 
+#define SRC_PATTERN "/linphone-desktop/src/"
+
+using namespace std;
+
 // =============================================================================
+
+QMutex Logger::m_mutex;
 
 Logger *Logger::m_instance = nullptr;
 
 // -----------------------------------------------------------------------------
 
-static void qtLogger (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-  const char *format;
-  BctbxLogLevel level;
-
-  if (type == QtDebugMsg) {
-    format = GREEN "[%s][Debug]" PURPLE "%s" RESET "%s\n";
-    level = BCTBX_LOG_DEBUG;
-  } else if (type == QtInfoMsg) {
-    format = BLUE "[%s][Info]" PURPLE "%s" RESET "%s\n";
-    level = BCTBX_LOG_MESSAGE;
-  } else if (type == QtWarningMsg) {
-    format = RED "[%s][Warning]" PURPLE "%s" RESET "%s\n";
-    level = BCTBX_LOG_WARNING;
-  } else if (type == QtCriticalMsg) {
-    format = RED "[%s][Critical]" PURPLE "%s" RESET "%s\n";
-    level = BCTBX_LOG_ERROR;
-  } else if (type == QtFatalMsg) {
-    format = RED "[%s][Fatal]" PURPLE "%s" RESET "%s\n";
-    level = BCTBX_LOG_FATAL;
-  } else
-    return;
-
-  const char *context_str = "";
-
-  #ifdef QT_MESSAGELOGCONTEXT
-    QByteArray context_arr = QStringLiteral("%1:%2: ").arg(context.file).arg(context.line).toLocal8Bit();
-    context_str = context_arr.constData();
-  #endif // ifdef QT_MESSAGELOGCONTEXT
-
-  QByteArray local_msg = msg.toLocal8Bit();
-  QByteArray date_time = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
-
-  fprintf(stderr, format, date_time.constData(), context_str, local_msg.constData());
-  bctbx_log(QT_DOMAIN, level, "QT: %s%s", context_str, local_msg.constData());
-
-  if (type == QtFatalMsg)
-    abort();
-}
-
-// -----------------------------------------------------------------------------
-
-static void linphoneLogger (const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
+static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
   const char *format;
 
   if (type == ORTP_DEBUG)
@@ -126,18 +92,75 @@ static void linphoneLogger (const char *domain, OrtpLogLevel type, const char *f
 
 // -----------------------------------------------------------------------------
 
+void Logger::log (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+  const char *format;
+  BctbxLogLevel level;
+
+  if (type == QtDebugMsg) {
+    format = GREEN "[%s][Debug]" PURPLE "%s" RESET "%s\n";
+    level = BCTBX_LOG_DEBUG;
+  } else if (type == QtInfoMsg) {
+    format = BLUE "[%s][Info]" PURPLE "%s" RESET "%s\n";
+    level = BCTBX_LOG_MESSAGE;
+  } else if (type == QtWarningMsg) {
+    format = RED "[%s][Warning]" PURPLE "%s" RESET "%s\n";
+    level = BCTBX_LOG_WARNING;
+  } else if (type == QtCriticalMsg) {
+    format = RED "[%s][Critical]" PURPLE "%s" RESET "%s\n";
+    level = BCTBX_LOG_ERROR;
+  } else if (type == QtFatalMsg) {
+    format = RED "[%s][Fatal]" PURPLE "%s" RESET "%s\n";
+    level = BCTBX_LOG_FATAL;
+  } else
+    return;
+
+  const char *context_str = "";
+
+  #ifdef QT_MESSAGELOGCONTEXT
+
+    QByteArray context_arr;
+
+    {
+      const char *file = context.file;
+      const char *pos = file ? ::Utils::rstrstr(file, SRC_PATTERN) : file;
+
+      context_arr = QStringLiteral("%1:%2: ")
+        .arg(pos ? pos + sizeof(SRC_PATTERN) - 1 : file)
+        .arg(context.line)
+        .toLocal8Bit();
+      context_str = context_arr.constData();
+    }
+
+  #endif // ifdef QT_MESSAGELOGCONTEXT
+
+  QByteArray local_msg = msg.toLocal8Bit();
+  QByteArray date_time = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
+
+  m_mutex.lock();
+
+  fprintf(stderr, format, date_time.constData(), context_str, local_msg.constData());
+  bctbx_log(QT_DOMAIN, level, "QT: %s%s", context_str, local_msg.constData());
+
+  m_mutex.unlock();
+
+  if (type == QtFatalMsg)
+    abort();
+}
+
+// -----------------------------------------------------------------------------
+
 void Logger::init () {
   if (m_instance)
     return;
   m_instance = new Logger();
 
-  qInstallMessageHandler(qtLogger);
+  qInstallMessageHandler(Logger::log);
 
   linphone_core_set_log_level(ORTP_MESSAGE);
   linphone_core_set_log_handler(
     [](const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
       if (m_instance->isVerbose())
-        linphoneLogger(domain, type, fmt, args);
+        linphoneLog(domain, type, fmt, args);
     }
   );
 

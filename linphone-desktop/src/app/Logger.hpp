@@ -23,23 +23,36 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
-#include <QtGlobal>
+#include <QMutex>
 
 // =============================================================================
 
 class Logger {
 public:
-  static void init ();
-  static Logger *instance () { return m_instance; };
+  ~Logger () = default;
 
-  bool isVerbose () const { return m_verbose; };
-  void setVerbose (bool verbose) { m_verbose = verbose; };
+  bool isVerbose () const {
+    return m_verbose;
+  }
+
+  void setVerbose (bool verbose) {
+    m_verbose = verbose;
+  }
+
+  static void init ();
+
+  static Logger *getInstance () {
+    return m_instance;
+  }
 
 private:
   Logger () = default;
 
+  static void log (QtMsgType type, const QMessageLogContext &context, const QString &msg);
+
   bool m_verbose = false;
 
+  static QMutex m_mutex;
   static Logger *m_instance;
 };
 
