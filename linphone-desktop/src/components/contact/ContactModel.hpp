@@ -40,8 +40,8 @@ class ContactModel : public QObject {
   friend class SmartSearchBarModel;
 
 public:
-  ContactModel (std::shared_ptr<linphone::Friend> linphone_friend);
-  ContactModel (VcardModel *vcard);
+  ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphone_friend);
+  ContactModel (QObject *parent, VcardModel *vcard);
   ~ContactModel () = default;
 
   std::shared_ptr<VcardModel> getVcardModel () const {

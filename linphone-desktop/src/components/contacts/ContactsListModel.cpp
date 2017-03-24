@@ -37,13 +37,11 @@ ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(pare
 
   // Init contacts with linphone friends list.
   for (const auto &friend_ : m_linphone_friends->getFriends()) {
-    ContactModel *contact = new ContactModel(friend_);
+    ContactModel *contact = new ContactModel(this, friend_);
 
     // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
     // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
-    App::getInstance()->getEngine()->setObjectOwnership(
-      contact, QQmlEngine::CppOwnership
-    );
+    App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
     addContact(contact);
   }
@@ -100,7 +98,7 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 // -----------------------------------------------------------------------------
 
 ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
-  ContactModel *contact = new ContactModel(vcard);
+  ContactModel *contact = new ContactModel(this, vcard);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
   qInfo() << "Add contact:" << contact;

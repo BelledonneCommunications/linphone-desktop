@@ -30,7 +30,7 @@ using namespace std;
 
 // =============================================================================
 
-ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
+ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphone_friend) : QObject(parent) {
   m_linphone_friend = linphone_friend;
   m_vcard = make_shared<VcardModel>(linphone_friend->getVcard());
 
@@ -38,7 +38,7 @@ ContactModel::ContactModel (shared_ptr<linphone::Friend> linphone_friend) {
   m_linphone_friend->setData("contact-model", *this);
 }
 
-ContactModel::ContactModel (VcardModel *vcard) {
+ContactModel::ContactModel (QObject *parent, VcardModel *vcard) : QObject(parent) {
   Q_ASSERT(vcard != nullptr);
 
   QQmlEngine *engine = App::getInstance()->getEngine();
