@@ -88,9 +88,6 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
 
 App::~App () {
   qInfo() << "Destroying app...";
-  delete m_calls_window;
-  delete m_settings_window;
-  delete m_system_tray_icon;
 }
 
 // -----------------------------------------------------------------------------
@@ -221,10 +218,11 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
     abort();
   }
 
-  QQuickWindow *window = qobject_cast<QQuickWindow *>(component.create());
-  QQmlEngine::setObjectOwnership(window, QQmlEngine::CppOwnership);
+  QObject *object = component.create();
+  QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+  object->setParent(app->getMainWindow());
 
-  return window;
+  return qobject_cast<QQuickWindow *>(object);
 }
 
 // -----------------------------------------------------------------------------
@@ -329,8 +327,8 @@ void App::registerTypes () {
 // -----------------------------------------------------------------------------
 
 void App::setTrayIcon () {
-  QSystemTrayIcon *m_system_tray_icon = new QSystemTrayIcon();
   QQuickWindow *root = getMainWindow();
+  QSystemTrayIcon *system_tray_icon = new QSystemTrayIcon(root);
 
   // trayIcon: Right click actions.
   QAction *quit_action = new QAction("Quit", root);
@@ -342,7 +340,7 @@ void App::setTrayIcon () {
   // trayIcon: Left click actions.
   QMenu *menu = new QMenu();
   root->connect(
-    m_system_tray_icon, &QSystemTrayIcon::activated, [root](
+    system_tray_icon, &QSystemTrayIcon::activated, [root](
       QSystemTrayIcon::ActivationReason reason
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
@@ -359,10 +357,10 @@ void App::setTrayIcon () {
   menu->addSeparator();
   menu->addAction(quit_action);
 
-  m_system_tray_icon->setContextMenu(menu);
-  m_system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
-  m_system_tray_icon->setToolTip("Linphone");
-  m_system_tray_icon->show();
+  system_tray_icon->setContextMenu(menu);
+  system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
+  system_tray_icon->setToolTip("Linphone");
+  system_tray_icon->show();
 }
 
 // -----------------------------------------------------------------------------
