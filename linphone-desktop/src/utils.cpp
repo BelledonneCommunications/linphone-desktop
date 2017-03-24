@@ -30,12 +30,12 @@ char *Utils::rstrstr (const char *a, const char *b) {
   const char *s;
 
   if (b_len > a_len)
-    return NULL;
+    return nullptr;
 
   for (s = a + a_len - b_len; s >= a; --s) {
     if (!strncmp(s, b, b_len))
       return const_cast<char *>(s);
   }
 
-  return NULL;
+  return nullptr;
 }
