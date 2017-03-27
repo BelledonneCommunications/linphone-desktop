@@ -337,7 +337,7 @@ void CallModel::setPausedByUser (bool status) {
 // -----------------------------------------------------------------------------
 
 bool CallModel::getVideoEnabled () const {
-  shared_ptr<linphone::CallParams> params = m_linphone_call->getCurrentParams();
+  shared_ptr<const linphone::CallParams> params = m_linphone_call->getCurrentParams();
   return params && params->videoEnabled() && getStatus() == CallStatusConnected;
 }
 

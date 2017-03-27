@@ -510,7 +510,7 @@ void SettingsModel::setTurnUser (const QString &user) {
 QString SettingsModel::getTurnPassword () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::NatPolicy> nat_policy = core->getNatPolicy();
-  shared_ptr<linphone::AuthInfo> auth_info = core->findAuthInfo(nat_policy->getStunServerUsername(), "", "");
+  shared_ptr<const linphone::AuthInfo> auth_info = core->findAuthInfo(nat_policy->getStunServerUsername(), "", "");
 
   return auth_info ? ::Utils::linphoneStringToQString(auth_info->getPasswd()) : "";
 }
@@ -520,7 +520,7 @@ void SettingsModel::setTurnPassword (const QString &password) {
   shared_ptr<linphone::NatPolicy> nat_policy = core->getNatPolicy();
 
   const string &username = nat_policy->getStunServerUsername();
-  shared_ptr<linphone::AuthInfo> auth_info = core->findAuthInfo(username, "", "");
+  shared_ptr<const linphone::AuthInfo> auth_info = core->findAuthInfo(username, "", "");
 
   if (auth_info) {
     shared_ptr<linphone::AuthInfo> auth_info_clone = auth_info->clone();

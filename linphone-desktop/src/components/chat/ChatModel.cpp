@@ -117,7 +117,7 @@ private:
 
   shared_ptr<linphone::Buffer> onFileTransferSend (
     const shared_ptr<linphone::ChatMessage> &,
-    const shared_ptr<linphone::Content> &,
+    const shared_ptr<const linphone::Content> &,
     size_t,
     size_t
   ) override {
@@ -127,7 +127,7 @@ private:
 
   void onFileTransferProgressIndication (
     const shared_ptr<linphone::ChatMessage> &message,
-    const shared_ptr<linphone::Content> &,
+    const shared_ptr<const linphone::Content> &,
     size_t offset,
     size_t
   ) override {
@@ -456,7 +456,7 @@ void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::
   dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessageStateIdle;
   dest["status"] = message->getState();
 
-  shared_ptr<linphone::Content> content = message->getFileTransferInformation();
+  shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
     dest["fileSize"] = static_cast<quint64>(content->getSize());
     dest["fileName"] = ::Utils::linphoneStringToQString(content->getName());

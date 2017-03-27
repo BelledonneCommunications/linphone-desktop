@@ -71,7 +71,7 @@ void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Friend> &linphone_friend,
   const string &,
-  const shared_ptr<linphone::PresenceModel> &
+  const shared_ptr<const linphone::PresenceModel> &
 ) {
   linphone_friend->getData<ContactModel>("contact-model").refreshPresence();
 }

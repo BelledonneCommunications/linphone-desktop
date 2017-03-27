@@ -61,7 +61,7 @@ private:
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Friend> &linphone_friend,
     const std::string &uri_or_tel,
-    const std::shared_ptr<linphone::PresenceModel> &presence_model
+    const std::shared_ptr<const linphone::PresenceModel> &presence_model
   ) override;
 
   void onRegistrationStateChanged (

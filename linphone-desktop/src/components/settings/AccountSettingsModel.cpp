@@ -37,7 +37,7 @@ void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::Pro
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getUsername () const {
-  shared_ptr<linphone::Address> address = getUsedSipAddress();
+  shared_ptr<const linphone::Address> address = getUsedSipAddress();
   const string &display_name = address->getDisplayName();
 
   return ::Utils::linphoneStringToQString(
@@ -46,11 +46,15 @@ QString AccountSettingsModel::getUsername () const {
 }
 
 void AccountSettingsModel::setUsername (const QString &username) {
-  shared_ptr<linphone::Address> address = getUsedSipAddress();
+  shared_ptr<const linphone::Address> address = getUsedSipAddress();
+  shared_ptr<linphone::Address> new_address = address->clone();
 
-  if (address->setDisplayName(::Utils::qStringToLinphoneString(username)))
+  if (new_address->setDisplayName(::Utils::qStringToLinphoneString(username))) {
     qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
-      .arg(::Utils::linphoneStringToQString(address->asStringUriOnly()));
+      .arg(::Utils::linphoneStringToQString(new_address->asStringUriOnly()));
+  } else {
+    setUsedSipAddress(new_address);
+  }
 
   emit accountSettingsUpdated();
 }
@@ -126,7 +130,14 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
 // -----------------------------------------------------------------------------
 
-shared_ptr<linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
+void AccountSettingsModel::setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
+
+  proxy_config ? proxy_config->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
+}
+
+shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
 

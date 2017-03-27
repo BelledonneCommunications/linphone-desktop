@@ -64,7 +64,8 @@ private:
 
   QVariantList getAccounts () const;
 
-  std::shared_ptr<linphone::Address> getUsedSipAddress () const;
+  void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
+  std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig> );
