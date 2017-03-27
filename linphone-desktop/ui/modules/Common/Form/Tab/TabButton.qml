@@ -55,6 +55,8 @@ Controls.TabButton {
   }
 
   contentItem: RowLayout {
+    height: button.height
+    width: button.width
     spacing: TabButtonStyle.spacing
 
     Icon {
