@@ -78,6 +78,7 @@ endif()
 
 set(SOURCES
   src/app/App.cpp
+  src/app/AsyncObjectBuilder.cpp
   src/app/AvatarProvider.cpp
   src/app/DefaultTranslator.cpp
   src/app/Logger.cpp
@@ -111,6 +112,7 @@ set(SOURCES
 
 set(HEADERS
   src/app/App.hpp
+  src/app/AsyncObjectBuilder.hpp
   src/app/AvatarProvider.hpp
   src/app/DefaultTranslator.hpp
   src/app/Logger.hpp
