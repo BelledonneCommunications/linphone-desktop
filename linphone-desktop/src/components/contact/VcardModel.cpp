@@ -27,8 +27,8 @@
 #include <QUuid>
 
 #include "../../app/App.hpp"
-#include "../../app/AvatarProvider.hpp"
-#include "../../app/Paths.hpp"
+#include "../../app/paths/Paths.hpp"
+#include "../../app/providers/AvatarProvider.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 

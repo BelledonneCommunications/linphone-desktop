@@ -25,7 +25,7 @@
 
 #include "../components/notifier/Notifier.hpp"
 #include "../externals/single-application/SingleApplication.hpp"
-#include "AsyncObjectBuilder.hpp"
+#include "object-builders/AsyncObjectBuilder.hpp"
 
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>

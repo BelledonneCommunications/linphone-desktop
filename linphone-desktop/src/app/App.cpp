@@ -31,11 +31,12 @@
 #include "../components/timeline/TimelineModel.hpp"
 #include "../utils.hpp"
 
+#include "logger/Logger.hpp"
+#include "providers/AvatarProvider.hpp"
+#include "providers/ThumbnailProvider.hpp"
+#include "translator/DefaultTranslator.hpp"
+
 #include "App.hpp"
-#include "AvatarProvider.hpp"
-#include "DefaultTranslator.hpp"
-#include "Logger.hpp"
-#include "ThumbnailProvider.hpp"
 
 #include <QDir>
 #include <QFileSelector>

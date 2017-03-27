@@ -25,8 +25,8 @@
 
 #include <functional>
 
-#include <QQmlEngine>
 #include <QQmlComponent>
+#include <QQmlEngine>
 
 // =============================================================================
 

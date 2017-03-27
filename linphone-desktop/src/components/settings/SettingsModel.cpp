@@ -22,7 +22,7 @@
 
 #include <QDir>
 
-#include "../../app/Paths.hpp"
+#include "../../app/paths/Paths.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 

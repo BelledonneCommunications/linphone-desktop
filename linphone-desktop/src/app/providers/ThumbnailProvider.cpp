@@ -20,8 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
-#include "Paths.hpp"
-#include "../utils.hpp"
+#include "../../utils.hpp"
+#include "../paths/Paths.hpp"
 
 #include "ThumbnailProvider.hpp"
 

@@ -31,8 +31,8 @@
 #include <QUuid>
 
 #include "../../app/App.hpp"
-#include "../../app/Paths.hpp"
-#include "../../app/ThumbnailProvider.hpp"
+#include "../../app/paths/Paths.hpp"
+#include "../../app/providers/ThumbnailProvider.hpp"
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 

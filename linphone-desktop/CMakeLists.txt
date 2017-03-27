@@ -78,12 +78,12 @@ endif()
 
 set(SOURCES
   src/app/App.cpp
-  src/app/AsyncObjectBuilder.cpp
-  src/app/AvatarProvider.cpp
-  src/app/DefaultTranslator.cpp
-  src/app/Logger.cpp
-  src/app/Paths.cpp
-  src/app/ThumbnailProvider.cpp
+  src/app/logger/Logger.cpp
+  src/app/object-builders/AsyncObjectBuilder.cpp
+  src/app/paths/Paths.cpp
+  src/app/providers/AvatarProvider.cpp
+  src/app/providers/ThumbnailProvider.cpp
+  src/app/translator/DefaultTranslator.cpp
   src/components/camera/Camera.cpp
   src/components/camera/MSFunctions.cpp
   src/components/call/CallModel.cpp
@@ -112,12 +112,12 @@ set(SOURCES
 
 set(HEADERS
   src/app/App.hpp
-  src/app/AsyncObjectBuilder.hpp
-  src/app/AvatarProvider.hpp
-  src/app/DefaultTranslator.hpp
-  src/app/Logger.hpp
-  src/app/Paths.hpp
-  src/app/ThumbnailProvider.hpp
+  src/app/logger/Logger.hpp
+  src/app/object-builders/AsyncObjectBuilder.hpp
+  src/app/paths/Paths.hpp
+  src/app/providers/AvatarProvider.hpp
+  src/app/providers/ThumbnailProvider.hpp
+  src/app/translator/DefaultTranslator.hpp
   src/components/camera/Camera.hpp
   src/components/camera/MSFunctions.hpp
   src/components/call/CallModel.hpp

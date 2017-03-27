@@ -25,7 +25,7 @@
 #include <QStandardPaths>
 #include <QtDebug>
 
-#include "../utils.hpp"
+#include "../../utils.hpp"
 
 #include "Paths.hpp"
 

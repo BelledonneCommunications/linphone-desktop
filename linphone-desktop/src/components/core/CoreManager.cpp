@@ -20,8 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include "../../app/paths/Paths.hpp"
 #include "../../utils.hpp"
-#include "../../app/Paths.hpp"
 
 #include "CoreManager.hpp"
 

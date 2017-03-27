@@ -24,8 +24,8 @@
 #include <linphone/linphonecore.h>
 #include <QDateTime>
 
-#include "../utils.hpp"
-#include "Paths.hpp"
+#include "../../utils.hpp"
+#include "../paths/Paths.hpp"
 
 #include "Logger.hpp"
 
