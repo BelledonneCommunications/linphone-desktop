@@ -69,13 +69,7 @@ void CoreManager::init (QObject *parent, const QString &config_path) {
   QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
   timer->setInterval(20);
 
-  QObject::connect(
-    timer, &QTimer::timeout, m_instance, []() {
-      m_instance->lockVideoRender();
-      m_instance->m_core->iterate();
-      m_instance->unlockVideoRender();
-    }
-  );
+  QObject::connect(timer, &QTimer::timeout, m_instance, &CoreManager::iterate);
 }
 
 // -----------------------------------------------------------------------------
@@ -135,4 +129,12 @@ void CoreManager::createLinphoneCore (const QString &config_path) {
 
   setDatabasesPaths();
   setOtherPaths();
+}
+
+// -----------------------------------------------------------------------------
+
+void CoreManager::iterate () {
+  m_instance->lockVideoRender();
+  m_instance->m_core->iterate();
+  m_instance->unlockVideoRender();
 }

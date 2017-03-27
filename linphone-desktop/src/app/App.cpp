@@ -156,12 +156,11 @@ void App::initContentApp () {
   // Load splashscreen.
   activeSplashScreen(this);
 
-  CoreManager *core = CoreManager::getInstance();
-
-  if (m_parser.isSet("selftest"))
-    QObject::connect(core, &CoreManager::linphoneCoreCreated, this, &App::quit);
-  else
-    QObject::connect(core, &CoreManager::linphoneCoreCreated, this, &App::openAppAfterInit);
+  QObject::connect(
+    CoreManager::getInstance(),
+    &CoreManager::linphoneCoreCreated,
+    this, m_parser.isSet("selftest") ? &App::quit : &App::openAppAfterInit
+  );
 
   QObject::connect(
     this, &App::receivedMessage, this, [this](int, QByteArray message) {

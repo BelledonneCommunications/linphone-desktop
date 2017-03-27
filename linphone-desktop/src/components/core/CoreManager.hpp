@@ -116,6 +116,8 @@ private:
 
   void createLinphoneCore (const QString &config_path);
 
+  void iterate ();
+
   std::shared_ptr<linphone::Core> m_core;
   std::shared_ptr<CoreHandlers> m_handlers;
 
