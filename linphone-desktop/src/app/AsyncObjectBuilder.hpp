@@ -45,7 +45,7 @@ public:
   QObject *getObject () const;
 
   bool isCreated () const {
-    return m_is_created;
+    return !!m_object;
   }
 
 signals:
@@ -60,8 +60,6 @@ private:
   Decorator m_decorator;
 
   QObject *m_object = nullptr;
-
-  bool m_is_created = false;
 
   #ifdef QT_DEBUG
     bool m_block_creation = false;

@@ -54,8 +54,6 @@ protected:
       QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
       object->setParent(m_builder);
 
-      m_builder->m_is_created = true;
-
       // Call user decorator.
       if (m_builder->m_decorator)
         m_builder->m_decorator(object);
