@@ -115,7 +115,10 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 
 inline void activeSplashScreen (App *app) {
   QQuickWindow *splash_screen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
-  QObject::connect(CoreManager::getInstance(), &CoreManager::linphoneCoreCreated, splash_screen, &QQuickWindow::close);
+  QObject::connect(CoreManager::getInstance(), &CoreManager::linphoneCoreCreated, splash_screen, [splash_screen] {
+    splash_screen->close();
+    splash_screen->deleteLater();
+  });
 }
 
 void App::initContentApp () {
