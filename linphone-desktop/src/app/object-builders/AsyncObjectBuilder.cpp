@@ -89,8 +89,8 @@ AsyncObjectBuilder::~AsyncObjectBuilder () {
 }
 
 void AsyncObjectBuilder::createObject (QQmlEngine *engine, const char *path, Decorator decorator) {
-  Q_ASSERT(!m_block_creation);
   #ifdef QT_DEBUG
+    Q_ASSERT(!m_block_creation);
     m_block_creation = true;
   #endif // ifdef QT_DEBUG
 
