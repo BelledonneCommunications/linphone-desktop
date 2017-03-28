@@ -411,7 +411,7 @@ void SettingsModel::setAdaptiveRateControlEnabled (bool status) {
 
 QList<int> SettingsModel::getAudioPortRange () const {
   int a, b;
-  CoreManager::getInstance()->getCore()->getAudioPortRange(a, b);
+  CoreManager::getInstance()->getCore()->getAudioPortRange(&a, &b);
   return QList<int>() << a << b;
 }
 
@@ -432,7 +432,7 @@ void SettingsModel::setAudioPortRange (const QList<int> &range) {
 
 QList<int> SettingsModel::getVideoPortRange () const {
   int a, b;
-  CoreManager::getInstance()->getCore()->getVideoPortRange(a, b);
+  CoreManager::getInstance()->getCore()->getVideoPortRange(&a, &b);
   return QList<int>() << a << b;
 }
 
