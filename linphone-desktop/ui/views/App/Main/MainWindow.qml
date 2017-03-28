@@ -231,6 +231,8 @@ ApplicationWindow {
           Layout.fillHeight: true
           Layout.fillWidth: true
 
+          visible: collapse.collapsed ? 1.0 : 0
+
           source: 'Home.qml'
         }
       }
