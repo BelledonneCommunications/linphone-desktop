@@ -73,7 +73,7 @@ static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt,
   else if (type == ORTP_WARNING)
     format = RED "[%s][Warning]" YELLOW "Core:%s: " RESET "%s\n";
   else if (type == ORTP_ERROR)
-    format = RED "[%s][Critical]" YELLOW "Core:%s: " RESET "%s\n";
+    format = RED "[%s][Error]" YELLOW "Core:%s: " RESET "%s\n";
   else if (type == ORTP_FATAL)
     format = RED "[%s][Fatal]" YELLOW "Core:%s: " RESET "%s\n";
   else
