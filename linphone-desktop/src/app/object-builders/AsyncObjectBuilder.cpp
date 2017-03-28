@@ -33,11 +33,12 @@ using namespace std;
 class AsyncObjectBuilder::ObjectIncubator : public QQmlIncubator {
 public:
   // FIXME: At this moment, asynchronous loading is unstable.
-  // Use `IncubationMode::Synchronous` instead in Qt 5.9.
+  // In the future, use `IncubationMode::Asynchronous` instead in Qt 5.9.
   //
   // See: https://bugreports.qt.io/browse/QTBUG-49416 and
   // https://bugreports.qt.io/browse/QTBUG-50992
   ObjectIncubator (AsyncObjectBuilder *builder) : QQmlIncubator(IncubationMode::Synchronous) {
+    Q_ASSERT(builder != nullptr);
     m_builder = builder;
   }
 
@@ -62,6 +63,9 @@ protected:
 
       m_builder->m_object = object;
       emit m_builder->objectCreated(object);
+
+      Q_ASSERT(m_builder->m_component != nullptr);
+      Q_ASSERT(m_builder->m_incubator != nullptr);
 
       // Optimization: Delete unused component now.
       m_builder->m_component->deleteLater();
