@@ -223,11 +223,19 @@ ColumnLayout {
               }
               spacing: ContactsStyle.contact.spacing
 
-              Avatar {
-                Layout.preferredHeight: ContactsStyle.contact.avatarSize
-                Layout.preferredWidth: ContactsStyle.contact.avatarSize
-                image: $contact.vcard.avatar
-                username: $contact.vcard.username
+              Item {
+                Layout.preferredHeight: parent.height
+                Layout.preferredWidth: parent.height
+
+                Avatar {
+                  anchors.centerIn: parent
+
+                  image: $contact.vcard.avatar
+                  username: $contact.vcard.username
+
+                  height: ContactsStyle.contact.avatarSize
+                  width: ContactsStyle.contact.avatarSize
+                }
               }
 
               Text {
