@@ -234,7 +234,7 @@ if(NOT WIN32)
   add_dependencies(update_translations check_qml)
 endif()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONE_INCLUDE_DIRS}" "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
+target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
 foreach (package ${QT5_PACKAGES})
   target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
   # `qt5_create_translation` is provided from `LinguistTools` package.

@@ -68,7 +68,7 @@ private:
   ChatModelFilter *m_chat_model_filter;
   int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
 
-  static const unsigned int ENTRIES_CHUNK_SIZE;
+  static const int ENTRIES_CHUNK_SIZE;
 };
 
 #endif // CHAT_PROXY_MODEL_H_
