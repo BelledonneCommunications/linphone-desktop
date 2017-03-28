@@ -58,7 +58,7 @@ private:
 
 // =============================================================================
 
-const  int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
+const int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   m_chat_model_filter = new ChatModelFilter(this);
