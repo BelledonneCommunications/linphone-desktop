@@ -13,8 +13,6 @@ Notification {
   // ---------------------------------------------------------------------------
 
   property string _sipAddress: notificationData && notificationData.sipAddress || ''
-  property var _contact: _sipAddressObserver.contact
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(_sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -49,10 +47,7 @@ Notification {
         Contact {
           Layout.fillWidth: true
 
-          entry: ({
-            contact: notification._contact,
-            sipAddress: notification._sipAddress
-          })
+          entry: SipAddressesModel.getSipAddressObserver(notification._sipAddress)
         }
 
         Rectangle {

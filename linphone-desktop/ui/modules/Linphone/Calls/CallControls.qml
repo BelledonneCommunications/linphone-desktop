@@ -21,10 +21,6 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
-
-  // ---------------------------------------------------------------------------
-
   signal clicked
 
   // ---------------------------------------------------------------------------
@@ -56,10 +52,7 @@ Rectangle {
 
       displayUnreadMessagesCount: true
 
-      entry: ({
-        contact: _sipAddressObserver.contact,
-        sipAddress: callControls.sipAddress
-      })
+      entry: SipAddressesModel.getSipAddressObserver(sipAddress)
     }
 
     Item {

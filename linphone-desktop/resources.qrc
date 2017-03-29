@@ -265,6 +265,7 @@
     <file>ui/modules/Common/Window/Window.qml</file>
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Calls/CallControls.qml</file>
+    <file>ui/modules/Linphone/Calls/Calls.js</file>
     <file>ui/modules/Linphone/Calls/Calls.qml</file>
     <file>ui/modules/Linphone/CardBlock.qml</file>
     <file>ui/modules/Linphone/Chat/Chat.js</file>

@@ -92,6 +92,9 @@ void AsyncObjectBuilder::createObject (QQmlEngine *engine, const char *path, Dec
   #ifdef QT_DEBUG
     Q_ASSERT(!m_block_creation);
     m_block_creation = true;
+
+    Q_ASSERT(engine != nullptr);
+    Q_ASSERT(path != nullptr);
   #endif // ifdef QT_DEBUG
 
   m_component = new QQmlComponent(engine, QUrl(path), QQmlComponent::Asynchronous, this);

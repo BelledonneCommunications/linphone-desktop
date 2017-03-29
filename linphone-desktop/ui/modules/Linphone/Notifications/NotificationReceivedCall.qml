@@ -13,8 +13,6 @@ Notification {
   // ---------------------------------------------------------------------------
 
   property var _call: notificationData && notificationData.call
-  property var _contact: _sipAddressObserver.contact
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(_call ? _call.sipAddress : '')
 
   // ---------------------------------------------------------------------------
 
@@ -49,10 +47,10 @@ Notification {
         Contact {
           Layout.fillWidth: true
 
-          entry: ({
-            contact: notification._contact,
-            sipAddress: notification._sipAddressObserver.sipAddress
-          })
+          entry: {
+            var call = notification._call
+            return SipAddressesModel.getSipAddressObserver(call ? call.sipAddress : '')
+          }
         }
 
         // ---------------------------------------------------------------------
