@@ -32,7 +32,7 @@ Rectangle {
 
       property bool bindToEnd: false
       property bool tryToLoadMoreEntries: true
-      property var contactObserver: SipAddressesModel.getContactObserver(proxyModel.sipAddress)
+      property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.sipAddress)
 
       // -----------------------------------------------------------------------
 

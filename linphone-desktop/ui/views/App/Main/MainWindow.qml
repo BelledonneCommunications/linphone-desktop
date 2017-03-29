@@ -119,9 +119,6 @@ ApplicationWindow {
             Layout.fillHeight: parent.height
             Layout.preferredWidth: MainWindowStyle.accountStatus.width
 
-            account: AccountSettingsModel
-            presence: PresenceStatusModel
-
             TooltipArea {
               text: AccountSettingsModel.sipAddress
             }

@@ -25,7 +25,7 @@ Rectangle {
 
   property var call
 
-  property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
   property var _fullscreen: null
 
   // ---------------------------------------------------------------------------
@@ -85,8 +85,8 @@ Rectangle {
 
         anchors.centerIn: parent
         horizontalTextAlignment: Text.AlignHCenter
-        sipAddress: _contactObserver.sipAddress
-        username: LinphoneUtils.getContactUsername(_contactObserver.contact || sipAddress)
+        sipAddress: _sipAddressObserver.sipAddress
+        username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || sipAddress)
 
         height: parent.height
         width: parent.width - cameraActions.width - callQuality.width - CallStyle.header.contactDescription.width
@@ -167,7 +167,7 @@ Rectangle {
           foregroundColor: call.status === CallModel.CallStatusPaused
             ? CallStyle.container.pause.color
             : 'transparent'
-          image: _contactObserver.contact && _contactObserver.contact.vcard.avatar
+          image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
           username: contactDescription.username
 
           height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)

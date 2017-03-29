@@ -73,6 +73,7 @@ ColumnLayout  {
           anchors.fill: parent
           image: _vcard.avatar
           username: _vcard.username
+          presenceLevel: _contact ? _contact.presenceLevel : -1
           visible: (isLoaded() && !parent.hovered) || !_edition
         }
       }

@@ -25,7 +25,7 @@
 #include "../components/chat/ChatProxyModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
-#include "../components/presence/PresenceStatusModel.hpp"
+#include "../components/presence/OwnPresenceModel.hpp"
 #include "../components/settings/AccountSettingsModel.hpp"
 #include "../components/smart-search-bar/SmartSearchBarModel.hpp"
 #include "../components/timeline/TimelineModel.hpp"
@@ -279,16 +279,16 @@ void App::registerTypes () {
   qmlRegisterUncreatableType<ContactModel>(
     "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable."
   );
-  qmlRegisterUncreatableType<ContactObserver>(
-    "Linphone", 1, 0, "ContactObserver", "ContactObserver is uncreatable."
+  qmlRegisterUncreatableType<SipAddressObserver>(
+    "Linphone", 1, 0, "SipAddressObserver", "SipAddressObserver is uncreatable."
   );
   qmlRegisterUncreatableType<VcardModel>(
     "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable."
   );
 
   registerSingletonType<AccountSettingsModel>("AccountSettingsModel");
+  registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
-  registerSingletonType<PresenceStatusModel>("PresenceStatusModel");
   registerSingletonType<TimelineModel>("TimelineModel");
 
   registerSharedSingletonType(App, "App", App::getInstance);

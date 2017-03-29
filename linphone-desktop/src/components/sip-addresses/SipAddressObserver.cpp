@@ -1,5 +1,5 @@
 /*
- * ContactObserver.hpp
+ * SipAddressObserver.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,49 +16,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: March 28, 2017
  *      Author: Ronan Abhamon
  */
 
-#ifndef CONTACT_OBSERVER_H_
-#define CONTACT_OBSERVER_H_
-
-#include <QObject>
+#include "SipAddressObserver.hpp"
 
 // =============================================================================
 
-class ContactModel;
+SipAddressObserver::SipAddressObserver (const QString &sip_address) {
+  m_sip_address = sip_address;
+}
 
-class ContactObserver : public QObject {
-  friend class SipAddressesModel;
+void SipAddressObserver::setContact (ContactModel *contact) {
+  if (contact == m_contact)
+    return;
 
-  Q_OBJECT;
+  m_contact = contact;
+  emit contactChanged(contact);
+}
 
-  Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
-  Q_PROPERTY(ContactModel * contact READ getContact NOTIFY contactChanged);
+void SipAddressObserver::setPresenceStatus (const Presence::PresenceStatus &presence_status) {
+  if (presence_status == m_presence_status)
+    return;
 
-public:
-  ContactObserver (const QString &sip_address);
-  ~ContactObserver () = default;
-
-  ContactModel *getContact () const {
-    return m_contact;
-  }
-
-signals:
-  void contactChanged (ContactModel *contact);
-
-private:
-  QString getSipAddress () const {
-    return m_sip_address;
-  }
-
-  void setContact (ContactModel *contact);
-
-  QString m_sip_address;
-  ContactModel *m_contact = nullptr;
-};
-
-Q_DECLARE_METATYPE(ContactObserver *);
-
-#endif // CONTACT_OBSERVER_H_
+  m_presence_status = presence_status;
+  emit presenceStatusChanged(presence_status);
+}

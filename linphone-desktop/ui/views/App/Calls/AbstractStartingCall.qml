@@ -13,7 +13,7 @@ Rectangle {
   property var call
 
   default property alias _actionArea: actionArea.data
-  property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -41,7 +41,7 @@ Rectangle {
         height: CallStyle.header.contactDescription.height
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
-        username: LinphoneUtils.getContactUsername(_contactObserver.contact || call.sipAddress)
+        username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || call.sipAddress)
         width: parent.width
       }
 
@@ -81,7 +81,7 @@ Rectangle {
 
         anchors.centerIn: parent
         backgroundColor: CallStyle.container.avatar.backgroundColor
-        image: _contactObserver.contact && _contactObserver.contact.vcard.avatar
+        image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
         username: contactDescription.username
 
         height: _computeAvatarSize()

@@ -13,8 +13,8 @@ Notification {
   // ---------------------------------------------------------------------------
 
   property string _sipAddress: notificationData && notificationData.sipAddress || ''
-  property var _contact: _contactObserver.contact
-  property var _contactObserver: SipAddressesModel.getContactObserver(_sipAddress)
+  property var _contact: _sipAddressObserver.contact
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(_sipAddress)
 
   // ---------------------------------------------------------------------------
 

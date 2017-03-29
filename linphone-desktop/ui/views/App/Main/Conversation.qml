@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 import App.Styles 1.0
 
@@ -16,7 +15,7 @@ ColumnLayout  {
 
   property string sipAddress
 
-  property var _contact: SipAddressesModel.mapSipAddressToContact(sipAddress)
+  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -29,6 +28,7 @@ ColumnLayout  {
   Rectangle {
     Layout.fillWidth: true
     Layout.preferredHeight: ConversationStyle.bar.height
+
     color: ConversationStyle.bar.backgroundColor
 
     RowLayout {
@@ -44,14 +44,20 @@ ColumnLayout  {
 
         Layout.preferredHeight: ConversationStyle.bar.avatarSize
         Layout.preferredWidth: ConversationStyle.bar.avatarSize
-        image: _contact ? _contact.vcard.avatar : ''
-        presenceLevel: _contact ? _contact.presenceLevel : -1
-        username: LinphoneUtils.getContactUsername(_contact || conversation.sipAddress)
+
+        image: Logic.getAvatar()
+
+        presenceLevel: Presence.getPresenceLevel(
+          conversation._sipAddressObserver.presenceStatus
+        )
+
+        username: Logic.getUsername()
       }
 
       ContactDescription {
         Layout.fillHeight: true
         Layout.fillWidth: true
+
         sipAddress: conversation.sipAddress
         sipAddressColor: ConversationStyle.bar.description.sipAddressColor
         username: avatar.username
@@ -60,6 +66,7 @@ ColumnLayout  {
 
       Row {
         Layout.fillHeight: true
+
         spacing: ConversationStyle.bar.actions.spacing
 
         ActionBar {
@@ -81,8 +88,8 @@ ColumnLayout  {
           anchors.verticalCenter: parent.verticalCenter
 
           ActionButton {
-            icon: !_contact ? 'contact_add' : 'contact_edit'
-            iconSize: ConversationStyle.bar.actions.del.iconSize
+            icon: Logic.getEditIcon()
+            iconSize: ConversationStyle.bar.actions.edit.iconSize
 
             onClicked: window.setView('ContactEdit', {
               sipAddress: conversation.sipAddress
@@ -107,6 +114,7 @@ ColumnLayout  {
   Borders {
     Layout.fillWidth: true
     Layout.preferredHeight: ConversationStyle.filters.height
+
     borderColor: ConversationStyle.filters.border.color
     bottomWidth: ConversationStyle.filters.border.bottomWidth
     color: ConversationStyle.filters.backgroundColor
@@ -118,21 +126,14 @@ ColumnLayout  {
         leftMargin: ConversationStyle.filters.leftMargin
         verticalCenter: parent.verticalCenter
       }
+
       texts: [
         qsTr('displayCallsAndMessages'),
         qsTr('displayCalls'),
         qsTr('displayMessages')
       ]
 
-      onClicked: {
-        if (button === 0) {
-          chatProxyModel.setEntryTypeFilter(ChatModel.GenericEntry)
-        } else if (button === 1) {
-          chatProxyModel.setEntryTypeFilter(ChatModel.CallEntry)
-        } else {
-          chatProxyModel.setEntryTypeFilter(ChatModel.MessageEntry)
-        }
-      }
+      onClicked: Logic.updateChatFilter(button)
     }
   }
 
@@ -143,6 +144,7 @@ ColumnLayout  {
   Chat {
     Layout.fillHeight: true
     Layout.fillWidth: true
+
     proxyModel: ChatProxyModel {
       id: chatProxyModel
 

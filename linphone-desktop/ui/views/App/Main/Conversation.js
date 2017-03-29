@@ -2,6 +2,7 @@
 // `Conversation.qml` Logic.
 // =============================================================================
 
+.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
@@ -14,4 +15,30 @@ function removeAllEntries () {
       chatProxyModel.removeAllEntries()
     }
   })
+}
+
+function getAvatar () {
+  var contact = conversation._sipAddressObserver.contact
+  return contact ? contact.vcard.avatar : ''
+}
+
+function getEditIcon () {
+  return conversation._sipAddressObserver.contact ? 'contact_edit' : 'contact_add'
+}
+
+function getUsername () {
+  return LinphoneUtils.getContactUsername(
+    conversation._sipAddressObserver.contact ||
+    conversation.sipAddress
+  )
+}
+
+function updateChatFilter (button) {
+  if (button === 0) {
+    chatProxyModel.setEntryTypeFilter(ChatModel.GenericEntry)
+  } else if (button === 1) {
+    chatProxyModel.setEntryTypeFilter(ChatModel.CallEntry)
+  } else {
+    chatProxyModel.setEntryTypeFilter(ChatModel.MessageEntry)
+  }
 }

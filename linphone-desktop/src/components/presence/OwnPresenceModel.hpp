@@ -1,5 +1,5 @@
 /*
- * PresenceStatusModel.hpp
+ * OwnPresenceModel.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,16 +20,19 @@
  *      Author: Ghislain MARY
  */
 
-#ifndef PRESENCE_STATUS_MODEL_H_
-#define PRESENCE_STATUS_MODEL_H_
+#ifndef OWN_PRESENCE_MODEL_H_
+#define OWN_PRESENCE_MODEL_H_
 
 #include "../presence/Presence.hpp"
 
 #include <QObject>
 
 // =============================================================================
+// Gives the statuses list informations (icons, label, level, status).
+// Can set/get the presence status of the linphone user app.
+// =============================================================================
 
-class PresenceStatusModel : public QObject {
+class OwnPresenceModel : public QObject {
   Q_OBJECT;
 
   Q_PROPERTY(QVariantList statuses READ getStatuses CONSTANT);
@@ -38,11 +41,11 @@ class PresenceStatusModel : public QObject {
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus WRITE setPresenceStatus NOTIFY presenceStatusChanged);
 
 public:
-  PresenceStatusModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+  OwnPresenceModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
 
 signals:
-  void presenceLevelChanged(Presence::PresenceLevel level);
-  void presenceStatusChanged(Presence::PresenceStatus status);
+  void presenceLevelChanged (Presence::PresenceLevel level);
+  void presenceStatusChanged (Presence::PresenceStatus status);
 
 private:
   Presence::PresenceLevel getPresenceLevel () const;
@@ -52,4 +55,4 @@ private:
   QVariantList getStatuses () const;
 };
 
-#endif // PRESENCE_STATUS_MODEL_H_
+#endif // OWN_PRESENCE_MODEL_H_

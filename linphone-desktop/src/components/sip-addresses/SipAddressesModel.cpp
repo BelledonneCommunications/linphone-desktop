@@ -37,58 +37,19 @@ using namespace std;
 SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
   initSipAddresses();
 
+  m_core_handlers = CoreManager::getInstance()->getHandlers();
+
   ContactsListModel *contacts = CoreManager::getInstance()->getContactsListModel();
 
   QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::handleContactAdded);
   QObject::connect(contacts, &ContactsListModel::contactRemoved, this, &SipAddressesModel::handleContactRemoved);
 
-  m_core_handlers = CoreManager::getInstance()->getHandlers();
-  QObject::connect(
-    &(*m_core_handlers), &CoreHandlers::messageReceived,
-    this, [this](const shared_ptr<linphone::ChatMessage> &message) {
-      const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
-      addOrUpdateSipAddress(sip_address, message);
-    }
-  );
+  QObject::connect(contacts, &ContactsListModel::sipAddressAdded, this, &SipAddressesModel::handleSipAddressAdded);
+  QObject::connect(contacts, &ContactsListModel::sipAddressRemoved, this, &SipAddressesModel::handleSipAddressRemoved);
 
-  QObject::connect(
-    contacts, &ContactsListModel::sipAddressAdded, this, [this](ContactModel *contact, const QString &sip_address) {
-      // TODO: Avoid the limitation of one contact by sip address.
-      ContactModel *mapped_contact = mapSipAddressToContact(sip_address);
-      if (mapped_contact) {
-        qWarning() << "Unable to map sip address" << sip_address << "to" << contact << "- already used by" << mapped_contact;
-        return;
-      }
-
-      addOrUpdateSipAddress(sip_address, contact);
-    }
-  );
-
-  QObject::connect(
-    contacts, &ContactsListModel::sipAddressRemoved, this, [this](ContactModel *contact, const QString &sip_address) {
-      ContactModel *mapped_contact = mapSipAddressToContact(sip_address);
-      if (contact != mapped_contact) {
-        qWarning() << "Unable to remove sip address" << sip_address << "of" << contact << "- already used by" << mapped_contact;
-        return;
-      }
-
-      removeContactOfSipAddress(sip_address);
-    }
-  );
-
-  QObject::connect(
-    &(*m_core_handlers), &CoreHandlers::callStateChanged,
-    this, [this](const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
-      // Ignore aborted calls.
-      if (call->getCallLog()->getStatus() == linphone::CallStatus::CallStatusAborted)
-        return;
-
-      if (state == linphone::CallStateEnd || state == linphone::CallStateError)
-        addOrUpdateSipAddress(
-          ::Utils::linphoneStringToQString(call->getRemoteAddress()->asStringUriOnly()), call
-        );
-    }
-  );
+  QObject::connect(&(*m_core_handlers), &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
+  QObject::connect(&(*m_core_handlers), &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
+  QObject::connect(&(*m_core_handlers), &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
 }
 
 // -----------------------------------------------------------------------------
@@ -180,13 +141,22 @@ ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sip_addr
 
 // -----------------------------------------------------------------------------
 
-ContactObserver *SipAddressesModel::getContactObserver (const QString &sip_address) {
-  ContactObserver *model = new ContactObserver(sip_address);
-  model->setContact(mapSipAddressToContact(sip_address));
+SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip_address) {
+  SipAddressObserver *model = new SipAddressObserver(sip_address);
+
+  {
+    auto it = m_sip_addresses.find(sip_address);
+    if (it != m_sip_addresses.end()) {
+      model->setContact(it->value("contact").value<ContactModel *>());
+      model->setPresenceStatus(
+        it->value("presenceStatus", Presence::PresenceStatus::Offline).value<Presence::PresenceStatus>()
+      );
+    }
+  }
 
   m_observers.insert(sip_address, model);
   QObject::connect(
-    model, &ContactObserver::destroyed, this, [this, model]() {
+    model, &SipAddressObserver::destroyed, this, [this, model]() {
       const QString &sip_address = model->getSipAddress();
       if (m_observers.remove(sip_address, model) == 0)
         qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sip_address);
@@ -198,7 +168,7 @@ ContactObserver *SipAddressesModel::getContactObserver (const QString &sip_addre
 
 // -----------------------------------------------------------------------------
 
-QString SipAddressesModel::interpretUrl (const QString &sip_address) {
+QString SipAddressesModel::interpretUrl (const QString &sip_address) const {
   shared_ptr<linphone::Address> l_address = CoreManager::getInstance()->getCore()->interpretUrl(
       ::Utils::qStringToLinphoneString(sip_address)
     );
@@ -233,6 +203,8 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
   return true;
 }
 
+// -----------------------------------------------------------------------------
+
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
   for (const auto &sip_address : contact->getVcardModel()->getSipAddresses())
     addOrUpdateSipAddress(sip_address.toString(), contact);
@@ -241,6 +213,79 @@ void SipAddressesModel::handleContactAdded (ContactModel *contact) {
 void SipAddressesModel::handleContactRemoved (const ContactModel *contact) {
   for (const auto &sip_address : contact->getVcardModel()->getSipAddresses())
     removeContactOfSipAddress(sip_address.toString());
+}
+
+void SipAddressesModel::handleSipAddressAdded (ContactModel *contact, const QString &sip_address) {
+  ContactModel *mapped_contact = mapSipAddressToContact(sip_address);
+  if (mapped_contact) {
+    qWarning() << "Unable to map sip address" << sip_address << "to" << contact << "- already used by" << mapped_contact;
+    return;
+  }
+
+  addOrUpdateSipAddress(sip_address, contact);
+}
+
+void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QString &sip_address) {
+  ContactModel *mapped_contact = mapSipAddressToContact(sip_address);
+  if (contact != mapped_contact) {
+    qWarning() << "Unable to remove sip address" << sip_address << "of" << contact << "- already used by" << mapped_contact;
+    return;
+  }
+
+  removeContactOfSipAddress(sip_address);
+}
+
+void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
+  const QString &sip_address = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
+  addOrUpdateSipAddress(sip_address, message);
+}
+
+void SipAddressesModel::handleCallStateChanged (
+  const shared_ptr<linphone::Call> &call,
+  linphone::CallState state
+) {
+  // Ignore aborted calls.
+  if (call->getCallLog()->getStatus() == linphone::CallStatus::CallStatusAborted)
+    return;
+
+  if (state == linphone::CallStateEnd || state == linphone::CallStateError)
+    addOrUpdateSipAddress(
+      ::Utils::linphoneStringToQString(call->getRemoteAddress()->asStringUriOnly()), call
+    );
+}
+
+void SipAddressesModel::handlePresenceReceived (
+  const QString &sip_address,
+  const shared_ptr<const linphone::PresenceModel> &presence_model
+) {
+  Presence::PresenceStatus status;
+
+  switch (presence_model->getConsolidatedPresence()) {
+    case linphone::ConsolidatedPresenceOnline:
+      status = Presence::PresenceStatus::Online;
+      break;
+    case linphone::ConsolidatedPresenceBusy:
+      status = Presence::PresenceStatus::Busy;
+      break;
+    case linphone::ConsolidatedPresenceDoNotDisturb:
+      status = Presence::PresenceStatus::DoNotDisturb;
+      break;
+    case linphone::ConsolidatedPresenceOffline:
+      status = Presence::PresenceStatus::Offline;
+      break;
+  }
+
+  auto it = m_sip_addresses.find(sip_address);
+  if (it != m_sip_addresses.end()) {
+    qInfo() << QStringLiteral("Update presence of `%1`: %2.").arg(sip_address).arg(status);
+    (*it)["presenceStatus"] = status;
+
+    int row = m_refs.indexOf(&(*it));
+    Q_ASSERT(row != -1);
+    emit dataChanged(index(row, 0), index(row, 0));
+  }
+
+  updateObservers(sip_address, status);
 }
 
 // -----------------------------------------------------------------------------
@@ -374,8 +419,11 @@ void SipAddressesModel::initSipAddresses () {
 }
 
 void SipAddressesModel::updateObservers (const QString &sip_address, ContactModel *contact) {
-  for (auto &observer : m_observers.values(sip_address)) {
-    if (contact != observer->getContact())
-      observer->setContact(contact);
-  }
+  for (auto &observer : m_observers.values(sip_address))
+    observer->setContact(contact);
+}
+
+void SipAddressesModel::updateObservers (const QString &sip_address, const Presence::PresenceStatus &presence_status) {
+  for (auto &observer : m_observers.values(sip_address))
+    observer->setPresenceStatus(presence_status);
 }

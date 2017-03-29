@@ -25,7 +25,7 @@
 
 #include "../chat/ChatModel.hpp"
 #include "../contact/ContactModel.hpp"
-#include "../contact/ContactObserver.hpp"
+#include "SipAddressObserver.hpp"
 
 #include <QAbstractListModel>
 
@@ -48,16 +48,25 @@ public:
   void connectToChatModel (ChatModel *chat_model);
 
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sip_address) const;
-  Q_INVOKABLE ContactObserver *getContactObserver (const QString &sip_address);
+  Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sip_address);
 
-  Q_INVOKABLE QString interpretUrl (const QString &sip_address);
+  Q_INVOKABLE QString interpretUrl (const QString &sip_address) const;
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+  // ---------------------------------------------------------------------------
+
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);
+
+  void handleSipAddressAdded (ContactModel *contact, const QString &sip_address);
+  void handleSipAddressRemoved (ContactModel *contact, const QString &sip_address);
+
+  void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void handlePresenceReceived (const QString &sip_address, const shared_ptr<const linphone::PresenceModel> &presence_model);
 
   // ---------------------------------------------------------------------------
 
@@ -77,11 +86,12 @@ private:
   void initSipAddresses ();
 
   void updateObservers (const QString &sip_address, ContactModel *contact);
+  void updateObservers (const QString &sip_address, const Presence::PresenceStatus &presence_status);
 
   QHash<QString, QVariantMap> m_sip_addresses;
   QList<const QVariantMap *> m_refs;
 
-  QMultiHash<QString, ContactObserver *> m_observers;
+  QMultiHash<QString, SipAddressObserver *> m_observers;
 
   std::shared_ptr<CoreHandlers> m_core_handlers;
 };

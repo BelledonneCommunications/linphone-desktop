@@ -27,6 +27,9 @@
 #include <QObject>
 
 // =============================================================================
+// A helper to get the presence level of a presence status and to get a
+// presence status as string.
+// =============================================================================
 
 class Presence : public QObject {
   Q_OBJECT;
@@ -54,7 +57,8 @@ public:
 
   ~Presence () = default;
 
-  static PresenceLevel getPresenceLevel (const PresenceStatus &status);
+  Q_INVOKABLE static PresenceLevel getPresenceLevel (const PresenceStatus &status);
+
   Q_INVOKABLE static QString getPresenceStatusAsString (const PresenceStatus &status);
   Q_INVOKABLE static QString getPresenceLevelIconName (const PresenceLevel &level);
 };

@@ -23,6 +23,7 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
+#include "../../utils.hpp"
 #include "CoreManager.hpp"
 
 #include "CoreHandlers.hpp"
@@ -70,8 +71,15 @@ void CoreHandlers::onMessageReceived (
 void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Friend> &linphone_friend,
-  const string &,
-  const shared_ptr<const linphone::PresenceModel> &
+  const string &uri_or_tel,
+  const shared_ptr<const linphone::PresenceModel> &presence_model
+) {
+  emit presenceReceived(::Utils::linphoneStringToQString(uri_or_tel), presence_model);
+}
+
+void CoreHandlers::onNotifyPresenceReceived (
+  const std::shared_ptr<linphone::Core> &core,
+  const std::shared_ptr<linphone::Friend> &linphone_friend
 ) {
   linphone_friend->getData<ContactModel>("contact-model").refreshPresence();
 }

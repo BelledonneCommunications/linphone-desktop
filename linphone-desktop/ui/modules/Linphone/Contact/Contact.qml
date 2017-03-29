@@ -17,9 +17,10 @@ Rectangle {
 
   property bool displayUnreadMessagesCount: false
 
+  // A entry from `SipAddressesModel`.
   property var entry
 
-  property var _contact: entry.contact
+  readonly property var _contact: entry.contact
 
   // ---------------------------------------------------------------------------
 
@@ -39,8 +40,13 @@ Rectangle {
 
       Layout.preferredHeight: ContactStyle.contentHeight
       Layout.preferredWidth: ContactStyle.contentHeight
+
       image: _contact && _contact.vcard.avatar
-      presenceLevel: _contact ? _contact.presenceLevel : -1
+
+      presenceLevel: entry.presenceStatus != null
+        ? Presence.getPresenceLevel(entry.presenceStatus)
+        : -1
+
       username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress)
     }
 
@@ -58,7 +64,7 @@ Rectangle {
     MessagesCounter {
       Layout.alignment: Qt.AlignTop
 
-      count: entry.unreadMessagesCount || 0
+      count: Number(entry.unreadMessagesCount)
       visible: displayUnreadMessagesCount && entry.unreadMessagesCount > 0
     }
   }

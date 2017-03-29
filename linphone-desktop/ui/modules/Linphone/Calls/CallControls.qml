@@ -21,7 +21,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  property var _contactObserver: SipAddressesModel.getContactObserver(sipAddress)
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -57,7 +57,7 @@ Rectangle {
       displayUnreadMessagesCount: true
 
       entry: ({
-        contact: _contactObserver.contact,
+        contact: _sipAddressObserver.contact,
         sipAddress: callControls.sipAddress
       })
     }

@@ -13,8 +13,8 @@ Notification {
   // ---------------------------------------------------------------------------
 
   property var _call: notificationData && notificationData.call
-  property var _contact: _contactObserver.contact
-  property var _contactObserver: SipAddressesModel.getContactObserver(_call ? _call.sipAddress : '')
+  property var _contact: _sipAddressObserver.contact
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(_call ? _call.sipAddress : '')
 
   // ---------------------------------------------------------------------------
 
@@ -51,7 +51,7 @@ Notification {
 
           entry: ({
             contact: notification._contact,
-            sipAddress: notification._contactObserver.sipAddress
+            sipAddress: notification._sipAddressObserver.sipAddress
           })
         }
 

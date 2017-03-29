@@ -90,7 +90,6 @@ set(SOURCES
   src/components/calls/CallsListModel.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
-  src/components/contact/ContactObserver.cpp
   src/components/contact/ContactModel.cpp
   src/components/contact/VcardModel.cpp
   src/components/contacts/ContactsListModel.cpp
@@ -98,11 +97,12 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/notifier/Notifier.cpp
+  src/components/presence/OwnPresenceModel.cpp
   src/components/presence/Presence.cpp
-  src/components/presence/PresenceStatusModel.cpp
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/components/sip-addresses/SipAddressesModel.cpp
+  src/components/sip-addresses/SipAddressObserver.cpp
   src/components/smart-search-bar/SmartSearchBarModel.cpp
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
@@ -124,7 +124,6 @@ set(HEADERS
   src/components/calls/CallsListModel.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
-  src/components/contact/ContactObserver.hpp
   src/components/contact/ContactModel.hpp
   src/components/contact/VcardModel.hpp
   src/components/contacts/ContactsListModel.hpp
@@ -132,11 +131,12 @@ set(HEADERS
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/notifier/Notifier.hpp
+  src/components/presence/OwnPresenceModel.hpp
   src/components/presence/Presence.hpp
-  src/components/presence/PresenceStatusModel.hpp
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/components/sip-addresses/SipAddressesModel.hpp
+  src/components/sip-addresses/SipAddressObserver.hpp
   src/components/smart-search-bar/SmartSearchBarModel.hpp
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp

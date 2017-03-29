@@ -11,8 +11,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property var account
-  property var presence
+  readonly property var _account: AccountSettingsModel
 
   signal clicked
 
@@ -31,7 +30,7 @@ Item {
         Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottomMargin
         Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
         Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
-        level: presence.presenceLevel
+        level: OwnPresenceModel.presenceLevel
       }
 
       Text {
@@ -41,7 +40,7 @@ Item {
         elide: Text.ElideRight
         font.bold: true
         font.pointSize: AccountStatusStyle.username.fontSize
-        text: account.username
+        text: accountStatus._account.username
         verticalAlignment: Text.AlignBottom
       }
     }
@@ -51,7 +50,7 @@ Item {
       elide: Text.ElideRight
       font.pointSize: AccountStatusStyle.sipAddress.fontSize
       height: parent.height / 2
-      text: account.sipAddress
+      text: accountStatus._account.sipAddress
       verticalAlignment: Text.AlignTop
       width: parent.width
     }

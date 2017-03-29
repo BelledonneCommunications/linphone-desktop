@@ -39,15 +39,15 @@ DialogPlus {
         label: qsTr('selectPresenceLabel')
 
         ComboBox {
-          currentIndex: Utils.findIndex(PresenceStatusModel.statuses, function (status) {
-            return status.presenceStatus == PresenceStatusModel.presenceStatus
+          currentIndex: Utils.findIndex(OwnPresenceModel.statuses, function (status) {
+            return status.presenceStatus == OwnPresenceModel.presenceStatus
           })
 
-          model: PresenceStatusModel.statuses
+          model: OwnPresenceModel.statuses
           iconRole: 'presenceIcon'
           textRole: 'presenceLabel'
 
-          onActivated: PresenceStatusModel.presenceStatus = model[index].presenceStatus
+          onActivated: OwnPresenceModel.presenceStatus = model[index].presenceStatus
         }
       }
     }
