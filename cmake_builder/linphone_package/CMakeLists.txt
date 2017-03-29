@@ -185,7 +185,7 @@ if(WIN32)
 		PATTERN "bin/*_tester.exe" EXCLUDE
 		PATTERN "bin/openh264.dll" EXCLUDE
 		PATTERN "include" EXCLUDE
-		PATTERN "lib/mediastreamer" EXCLUDE
+		PATTERN "lib/mediastreamer/plugins/*openh264.*" EXCLUDE
 		PATTERN "lib/pkgconfig" EXCLUDE
 		PATTERN "lib/*.a" EXCLUDE
 		PATTERN "lib/*.def" EXCLUDE
@@ -206,10 +206,9 @@ if(WIN32)
 			COMPONENT "msopenh264"
 			FILES_MATCHING PATTERN "b*zip2.*"
 		)
-		install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/"
+		install(FILES "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/libmsopenh264.dll"
 			DESTINATION "lib/mediastreamer/plugins"
 			COMPONENT "msopenh264"
-			FILES_MATCHING PATTERN "libmsopenh264.*"
 		)
 	endif()
 
@@ -233,16 +232,13 @@ elseif(APPLE)
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/share/images" DESTINATION "Linphone.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/share/sounds" DESTINATION "Linphone.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
 	install(FILES "${LINPHONE_OUTPUT_DIR}/share/Linphone/rootca.pem" DESTINATION "Linphone.app/Contents/Resources/share/linphone")
+	install(FILES "${LINPHONE_OUTPUT_DIR}/share/Linphone/linphonerc-factory" DESTINATION "Linphone.app/Contents/Resources/share/linphone")
 
 	configure_file("MacPackaging.cmake.in" "MacPackaging.cmake" @ONLY)
 	install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/MacPackaging.cmake")
 endif()
 
 if(MSVC)
-	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/"
-		DESTINATION "lib/mediastreamer/plugins"
-		FILES_MATCHING PATTERN "libmswasapi.dll"
-	)
 	string(REGEX REPLACE "Visual Studio ([0-9]+).*" "\\1" MSVC_VERSION "${CMAKE_GENERATOR}")
 	find_file(MSVCP_LIB "msvcp${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
 	find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")

@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QCoreApplication>
 #include <QDir>
 #include <QFile>
 #include <QStandardPaths>
@@ -28,6 +29,7 @@
 #include "../../utils.hpp"
 
 #include "Paths.hpp"
+#include "config.h"
 
 #define PATH_AVATARS "/avatars/"
 #define PATH_CAPTURES "/captures/"
@@ -37,6 +39,7 @@
 
 #define PATH_CALL_HISTORY_LIST "/call-history.db"
 #define PATH_CONFIG "/linphonerc"
+#define PATH_FACTORY_CONFIG "/linphonerc-factory"
 #define PATH_FRIENDS_LIST "/friends.db"
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
 #define PATH_ZRTP_SECRETS "/zidcache"
@@ -78,14 +81,46 @@ inline void ensureFilePathExists (const QString &path) {
     qFatal("Unable to access at path: `%s`", path.toStdString().c_str());
 }
 
-inline string getDirectoryPath (const QString &dirname) {
-  ensureDirectoryPathExists(dirname);
+inline string getReadableDirectoryPath (const QString &dirname) {
   return Utils::qStringToLinphoneString(QDir::toNativeSeparators(dirname));
 }
 
-inline string getFilePath (const QString &filename) {
-  ensureFilePathExists(filename);
+inline string getWritableDirectoryPath (const QString &dirname) {
+  ensureDirectoryPathExists(dirname);
+  return getReadableDirectoryPath(dirname);
+}
+
+inline string getReadableFilePath (const QString &filename) {
   return Utils::qStringToLinphoneString(QDir::toNativeSeparators(filename));
+}
+
+inline string getWritableFilePath (const QString &filename) {
+  ensureFilePathExists(filename);
+  return getReadableFilePath(filename);
+}
+
+static QString getAppPackageDataDirpath () {
+  QDir dir(QCoreApplication::applicationDirPath());
+  if (dir.dirName() == "MacOS") {
+    dir.cdUp();
+    dir.cd("Resources");
+  } else {
+    dir.cdUp();
+  }
+  dir.cd("share/linphone");
+  return dir.absolutePath();
+}
+
+static QString getAppPackageMsPluginsDirpath () {
+  QDir dir(QCoreApplication::applicationDirPath());
+  if (dir.dirName() == "MacOS") {
+    dir.cdUp();
+    dir.cd("Resources");
+  } else {
+    dir.cdUp();
+  }
+  dir.cd(MSPLUGINS_DIR);
+  return dir.absolutePath();
 }
 
 static QString getAppConfigFilepath () {
@@ -99,6 +134,10 @@ static QString getAppCallHistoryFilepath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CALL_HISTORY_LIST;
 }
 
+static QString getAppFactoryConfigFilepath () {
+  return getAppPackageDataDirpath() + PATH_FACTORY_CONFIG;
+}
+
 static QString getAppFriendsFilepath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_FRIENDS_LIST;
 }
@@ -110,46 +149,58 @@ static QString getAppMessageHistoryFilepath () {
 // -----------------------------------------------------------------------------
 
 string Paths::getAvatarsDirpath () {
-  return getDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_AVATARS);
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_AVATARS);
 }
 
 string Paths::getCallHistoryFilepath () {
-  return getFilePath(getAppCallHistoryFilepath());
+  return getWritableFilePath(getAppCallHistoryFilepath());
 }
 
 string Paths::getConfigFilepath (const QString &config_path) {
   if (!config_path.isEmpty())
-    return getFilePath(QFileInfo(config_path).absoluteFilePath());
+    return getWritableFilePath(QFileInfo(config_path).absoluteFilePath());
 
-  return getFilePath(getAppConfigFilepath());
+  return getWritableFilePath(getAppConfigFilepath());
+}
+
+string Paths::getFactoryConfigFilepath () {
+  return getReadableFilePath(getAppFactoryConfigFilepath());
 }
 
 string Paths::getFriendsListFilepath () {
-  return getFilePath(getAppFriendsFilepath());
+  return getWritableFilePath(getAppFriendsFilepath());
 }
 
 string Paths::getLogsDirpath () {
-  return getDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_LOGS);
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_LOGS);
 }
 
 string Paths::getMessageHistoryFilepath () {
-  return getFilePath(getAppMessageHistoryFilepath());
+  return getWritableFilePath(getAppMessageHistoryFilepath());
+}
+
+string Paths::getPackageDataDirpath () {
+  return getReadableDirectoryPath(getAppPackageDataDirpath());
+}
+
+string Paths::getPackageMsPluginsDirpath () {
+  return getReadableDirectoryPath(getAppPackageMsPluginsDirpath());
 }
 
 string Paths::getThumbnailsDirpath () {
-  return getDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_THUMBNAILS);
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_THUMBNAILS);
 }
 
 string Paths::getCapturesDirpath () {
-  return getDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
 }
 
 string Paths::getZrtpSecretsFilepath () {
-  return getFilePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + PATH_ZRTP_SECRETS);
+  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + PATH_ZRTP_SECRETS);
 }
 
 string Paths::getUserCertificatesDirpath () {
-  return getDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_USER_CERTIFICATES);
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_USER_CERTIFICATES);
 }
 
 // -----------------------------------------------------------------------------

@@ -205,6 +205,13 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy
 )
 
 # ------------------------------------------------------------------------------
+# Create config.h file
+# ------------------------------------------------------------------------------
+
+set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
+
+# ------------------------------------------------------------------------------
 # Build.
 # ------------------------------------------------------------------------------
 
@@ -253,4 +260,8 @@ install(TARGETS ${TARGET_NAME}
   LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
   ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+)
+
+install(FILES "assets/linphonerc-factory"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/linphone"
 )

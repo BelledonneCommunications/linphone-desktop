@@ -36,8 +36,12 @@ namespace Paths {
   std::string getThumbnailsDirpath ();
   std::string getUserCertificatesDirpath ();
 
+  std::string getPackageDataDirpath ();
+  std::string getPackageMsPluginsDirpath ();
+
   std::string getCallHistoryFilepath ();
   std::string getConfigFilepath (const QString &config_path = QString());
+  std::string getFactoryConfigFilepath ();
   std::string getFriendsListFilepath ();
   std::string getMessageHistoryFilepath ();
   std::string getZrtpSecretsFilepath ();
