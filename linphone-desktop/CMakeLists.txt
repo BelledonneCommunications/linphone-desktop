@@ -44,13 +44,15 @@ if(NOT WIN32)
 -Wfloat-equal \
 -Winit-self \
 -Winline \
--Wlogical-op \
 -Wold-style-cast \
 -Woverloaded-virtual \
 -Wpointer-arith \
 -Wuninitialized \
 -Wunused \
 ")
+  if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
+  endif()
   if(SUGGEST_OVERRIDE)
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override -Werror=suggest-override")
   endif()
