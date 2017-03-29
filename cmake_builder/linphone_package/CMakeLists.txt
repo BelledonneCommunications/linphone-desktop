@@ -218,8 +218,12 @@ elseif(APPLE)
 	configure_file("linphone.icns" "Linphone.app/Contents/Resources/linphone.icns" COPYONLY)
 	file(COPY "${LINPHONE_OUTPUT_DIR}/bin/linphone" DESTINATION "Linphone.app/Contents/MacOS")
 
+	find_program(DEPLOYQT_PROGRAM macdeployqt)
+	if(NOT DEPLOYQT_PROGRAM)
+		message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
+	endif()
 	execute_process(
-		COMMAND macdeployqt "${CMAKE_CURRENT_BINARY_DIR}/Linphone.app" "-qmldir=${LINPHONE_QML_DIR}" "-verbose=2"
+		COMMAND "${DEPLOYQT_PROGRAM}" "${CMAKE_CURRENT_BINARY_DIR}/Linphone.app" "-qmldir=${LINPHONE_QML_DIR}" "-verbose=2"
 	)
 
 	install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/Linphone.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
