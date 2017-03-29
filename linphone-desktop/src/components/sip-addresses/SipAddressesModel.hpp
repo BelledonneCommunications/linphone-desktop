@@ -68,6 +68,10 @@ private:
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void handlePresenceReceived (const QString &sip_address, const shared_ptr<const linphone::PresenceModel> &presence_model);
 
+  void handleAllEntriesRemoved (const QString &sip_address);
+  void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
+  void handleMessagesCountReset (const QString &sip_address);
+
   // ---------------------------------------------------------------------------
 
   // A sip address exists in this list if a contact is linked to it, or a call, or a message.
@@ -87,6 +91,7 @@ private:
 
   void updateObservers (const QString &sip_address, ContactModel *contact);
   void updateObservers (const QString &sip_address, const Presence::PresenceStatus &presence_status);
+  void updateObservers (const QString &sip_address, int messages_count);
 
   QHash<QString, QVariantMap> m_sip_addresses;
   QList<const QVariantMap *> m_refs;

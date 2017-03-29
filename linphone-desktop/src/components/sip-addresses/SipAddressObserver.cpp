@@ -43,3 +43,11 @@ void SipAddressObserver::setPresenceStatus (const Presence::PresenceStatus &pres
   m_presence_status = presence_status;
   emit presenceStatusChanged(presence_status);
 }
+
+void SipAddressObserver::setUnreadMessagesCount (int unread_messages_count) {
+  if (unread_messages_count == m_unread_messages_count)
+    return;
+
+  m_unread_messages_count = unread_messages_count;
+  emit unreadMessagesCountChanged(unread_messages_count);
+}

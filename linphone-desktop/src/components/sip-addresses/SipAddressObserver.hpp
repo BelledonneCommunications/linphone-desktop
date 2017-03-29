@@ -36,6 +36,7 @@ class SipAddressObserver : public QObject {
 
   Q_PROPERTY(ContactModel * contact READ getContact NOTIFY contactChanged);
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
+  Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount NOTIFY unreadMessagesCountChanged);
 
 public:
   SipAddressObserver (const QString &sip_address);
@@ -44,11 +45,14 @@ public:
 signals:
   void contactChanged (ContactModel *contact);
   void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
+  void unreadMessagesCountChanged (int unreadMessagesCount);
 
 private:
   QString getSipAddress () const {
     return m_sip_address;
   }
+
+  // ---------------------------------------------------------------------------
 
   ContactModel *getContact () const {
     return m_contact;
@@ -56,16 +60,27 @@ private:
 
   void setContact (ContactModel *contact);
 
+  // ---------------------------------------------------------------------------
+
   Presence::PresenceStatus getPresenceStatus () const {
     return m_presence_status;
   }
 
   void setPresenceStatus (const Presence::PresenceStatus &presence_status);
 
+  // ---------------------------------------------------------------------------
+
+  int getUnreadMessagesCount () const {
+    return m_unread_messages_count;
+  }
+
+  void setUnreadMessagesCount (int unread_messages_count);
+
   QString m_sip_address;
 
   ContactModel *m_contact = nullptr;
   Presence::PresenceStatus m_presence_status = Presence::PresenceStatus::Offline;
+  int m_unread_messages_count = 0;
 };
 
 Q_DECLARE_METATYPE(SipAddressObserver *);

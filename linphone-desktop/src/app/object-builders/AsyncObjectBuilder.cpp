@@ -102,7 +102,11 @@ void AsyncObjectBuilder::createObject (QQmlEngine *engine, const char *path, Dec
 
   qInfo() << QStringLiteral("Start async creation of: `%1`. Component:").arg(path) << m_component;
 
-  QObject::connect(m_component, &QQmlComponent::statusChanged, this, &AsyncObjectBuilder::handleComponentCreation);
+  QObject::connect(
+    m_component, &QQmlComponent::statusChanged,
+    this, &AsyncObjectBuilder::handleComponentCreation,
+    Qt::DirectConnection
+  );
 }
 
 QObject *AsyncObjectBuilder::getObject () const {

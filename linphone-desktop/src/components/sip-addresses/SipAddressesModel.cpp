@@ -76,57 +76,18 @@ QVariant SipAddressesModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
+// -----------------------------------------------------------------------------
+
 void SipAddressesModel::connectToChatModel (ChatModel *chat_model) {
-  QObject::connect(
-    chat_model, &ChatModel::allEntriesRemoved,
-    this, [this, chat_model]() {
-      const QString sip_address = chat_model->getSipAddress();
-      auto it = m_sip_addresses.find(sip_address);
-      if (it == m_sip_addresses.end()) {
-        qWarning() << QStringLiteral("Unable to found sip address: `%1`.").arg(sip_address);
-        return;
-      }
+  QObject::connect(chat_model, &ChatModel::allEntriesRemoved, this, [this, chat_model] {
+    handleAllEntriesRemoved(chat_model->getSipAddress());
+  });
 
-      int row = m_refs.indexOf(&(*it));
-      Q_ASSERT(row != -1);
+  QObject::connect(chat_model, &ChatModel::messageSent, this, &SipAddressesModel::handleMessageSent);
 
-      // No history, no contact => Remove sip address from list.
-      if (!it->contains("contact")) {
-        removeRow(row);
-        return;
-      }
-
-      // Signal changes.
-      it->remove("timestamp");
-      emit dataChanged(index(row, 0), index(row, 0));
-    }
-  );
-
-  QObject::connect(
-    chat_model, &ChatModel::messageSent,
-    this, [this](const shared_ptr<linphone::ChatMessage> &message) {
-      addOrUpdateSipAddress(
-        ::Utils::linphoneStringToQString(message->getToAddress()->asStringUriOnly()), message
-      );
-    }
-  );
-
-  QObject::connect(
-    chat_model, &ChatModel::messagesCountReset, this, [this, chat_model]() {
-      const QString &sip_address = chat_model->getSipAddress();
-
-      auto it = m_sip_addresses.find(sip_address);
-      if (it != m_sip_addresses.end()) {
-        (*it)["unreadMessagesCount"] = 0;
-
-        int row = m_refs.indexOf(&(*it));
-        Q_ASSERT(row != -1);
-        emit dataChanged(index(row, 0), index(row, 0));
-
-        return;
-      }
-    }
-  );
+  QObject::connect(chat_model, &ChatModel::messagesCountReset, this, [this, chat_model] {
+    handleMessagesCountReset(chat_model->getSipAddress());
+  });
 }
 
 // -----------------------------------------------------------------------------
@@ -150,6 +111,9 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
       model->setContact(it->value("contact").value<ContactModel *>());
       model->setPresenceStatus(
         it->value("presenceStatus", Presence::PresenceStatus::Offline).value<Presence::PresenceStatus>()
+      );
+      model->setUnreadMessagesCount(
+        it->value("unreadMessagesCount", 0).toInt()
       );
     }
   }
@@ -288,6 +252,47 @@ void SipAddressesModel::handlePresenceReceived (
   updateObservers(sip_address, status);
 }
 
+void SipAddressesModel::handleAllEntriesRemoved (const QString &sip_address) {
+  auto it = m_sip_addresses.find(sip_address);
+  if (it == m_sip_addresses.end()) {
+    qWarning() << QStringLiteral("Unable to found sip address: `%1`.").arg(sip_address);
+    return;
+  }
+
+  int row = m_refs.indexOf(&(*it));
+  Q_ASSERT(row != -1);
+
+  // No history, no contact => Remove sip address from list.
+  if (!it->contains("contact")) {
+    removeRow(row);
+    return;
+  }
+
+  // Signal changes.
+  it->remove("timestamp");
+  emit dataChanged(index(row, 0), index(row, 0));
+}
+
+void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
+  addOrUpdateSipAddress(
+    ::Utils::linphoneStringToQString(message->getToAddress()->asStringUriOnly()),
+    message
+  );
+}
+
+void SipAddressesModel::handleMessagesCountReset (const QString &sip_address) {
+  auto it = m_sip_addresses.find(sip_address);
+  if (it != m_sip_addresses.end()) {
+    (*it)["unreadMessagesCount"] = 0;
+
+    int row = m_refs.indexOf(&(*it));
+    Q_ASSERT(row != -1);
+    emit dataChanged(index(row, 0), index(row, 0));
+  }
+
+  updateObservers(sip_address, 0);
+}
+
 // -----------------------------------------------------------------------------
 
 void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, ContactModel *contact) {
@@ -304,8 +309,14 @@ void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, const shared_pt
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, const shared_ptr<linphone::ChatMessage> &message) {
+  // FIXME: Bug in the core, count is incremented after this function call.
+  // So... +1!
+  int count = message->getChatRoom()->getUnreadMessagesCount() + 1;
+
   map["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
-  map["unreadMessagesCount"] = message->getChatRoom()->getUnreadMessagesCount();
+  map["unreadMessagesCount"] = count;
+
+  updateObservers(map["sipAddress"].toString(), count);
 }
 
 template<typename T>
@@ -418,6 +429,8 @@ void SipAddressesModel::initSipAddresses () {
     handleContactAdded(contact);
 }
 
+// -----------------------------------------------------------------------------
+
 void SipAddressesModel::updateObservers (const QString &sip_address, ContactModel *contact) {
   for (auto &observer : m_observers.values(sip_address))
     observer->setContact(contact);
@@ -426,4 +439,9 @@ void SipAddressesModel::updateObservers (const QString &sip_address, ContactMode
 void SipAddressesModel::updateObservers (const QString &sip_address, const Presence::PresenceStatus &presence_status) {
   for (auto &observer : m_observers.values(sip_address))
     observer->setPresenceStatus(presence_status);
+}
+
+void SipAddressesModel::updateObservers (const QString &sip_address, int messages_count) {
+  for (auto &observer : m_observers.values(sip_address))
+    observer->setUnreadMessagesCount(messages_count);
 }
