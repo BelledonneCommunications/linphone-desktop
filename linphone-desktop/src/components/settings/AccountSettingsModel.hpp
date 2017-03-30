@@ -44,6 +44,7 @@ public:
   AccountSettingsModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
 
   Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
+  Q_INVOKABLE void removeProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
 
 signals:
   void accountSettingsUpdated ();

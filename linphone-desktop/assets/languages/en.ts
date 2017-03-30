@@ -817,6 +817,49 @@ Server url not configured.</translation>
         <source>deleteHeader</source>
         <translation>Delete</translation>
     </message>
+    <message>
+        <source>deleteAccountDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsSipAccountsEdit</name>
+    <message>
+        <source>sipAddressLabel</source>
+        <translation>SIP address</translation>
+    </message>
+    <message>
+        <source>transportLabel</source>
+        <translation>Transport</translation>
+    </message>
+    <message>
+        <source>serverAddressLabel</source>
+        <translation>SIP Server address</translation>
+    </message>
+    <message>
+        <source>registrationDurationLabel</source>
+        <translation>Registration duration (sec)</translation>
+    </message>
+    <message>
+        <source>routeLabel</source>
+        <translation>Route</translation>
+    </message>
+    <message>
+        <source>contactParamsLabel</source>
+        <translation>Contact params</translation>
+    </message>
+    <message>
+        <source>registerLabel</source>
+        <translation>Register</translation>
+    </message>
+    <message>
+        <source>publishPresenceLabel</source>
+        <translation>Publish presence information</translation>
+    </message>
+    <message>
+        <source>enableAvpfLabel</source>
+        <translation>AVPF regular RTCP interval (sec)</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

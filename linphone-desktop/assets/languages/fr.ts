@@ -817,6 +817,49 @@ Url du serveur non configurée.</translation>
         <source>deleteHeader</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>deleteAccountDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsSipAccountsEdit</name>
+    <message>
+        <source>sipAddressLabel</source>
+        <translation>Adresse SIP</translation>
+    </message>
+    <message>
+        <source>transportLabel</source>
+        <translation>Transport</translation>
+    </message>
+    <message>
+        <source>serverAddressLabel</source>
+        <translation>Adresse serveur SIP</translation>
+    </message>
+    <message>
+        <source>registrationDurationLabel</source>
+        <translation>Durée d&apos;enregistrement</translation>
+    </message>
+    <message>
+        <source>routeLabel</source>
+        <translation>Route</translation>
+    </message>
+    <message>
+        <source>contactParamsLabel</source>
+        <translation>Paramètres de contact</translation>
+    </message>
+    <message>
+        <source>registerLabel</source>
+        <translation>S&apos;enregistrer</translation>
+    </message>
+    <message>
+        <source>publishPresenceLabel</source>
+        <translation>Publier la présence</translation>
+    </message>
+    <message>
+        <source>enableAvpfLabel</source>
+        <translation>Activer AVPF</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

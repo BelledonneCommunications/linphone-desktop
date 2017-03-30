@@ -6,6 +6,8 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
+import 'SettingsSipAccounts.js' as Logic
+
 // =============================================================================
 
 TabContainer {
@@ -66,7 +68,7 @@ TabContainer {
       width: parent.width
 
       FormTable {
-        legendLineWidth: 280
+        legendLineWidth: SettingsWindowStyle.sipAccounts.legendLineWidth
 
         titles: [
           qsTr('registerHeader'),
@@ -88,6 +90,8 @@ TabContainer {
               ActionButton {
                 icon: 'edit'
                 iconSize: SettingsWindowStyle.sipAccounts.iconSize
+
+                onClicked: Logic.editAccount(modelData)
               }
             }
 
@@ -95,6 +99,8 @@ TabContainer {
               ActionButton {
                 icon: 'delete'
                 iconSize: SettingsWindowStyle.sipAccounts.iconSize
+
+                onClicked: Logic.deleteAccount(modelData)
               }
             }
           }

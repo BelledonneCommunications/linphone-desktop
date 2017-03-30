@@ -34,6 +34,11 @@ void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::Pro
   emit accountSettingsUpdated();
 }
 
+void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
+  CoreManager::getInstance()->getCore()->removeProxyConfig(proxy_config);
+  emit accountSettingsUpdated();
+}
+
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getUsername () const {
