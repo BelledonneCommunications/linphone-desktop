@@ -6,6 +6,8 @@ import Common.Styles 1.0
 // =============================================================================
 
 Row {
+  id: formTableLine
+
   property alias title: title.text
   readonly property double maxItemWidth: parent.maxItemWidth
 
@@ -26,11 +28,13 @@ Row {
     verticalAlignment: Text.AlignVCenter
 
     height: FormTableStyle.entry.height
-    width: FormTableStyle.entry.width
+    width: formTableLine.parent.legendLineWidth
 
     font {
       bold: false
       pointSize: FormTableStyle.entry.text.fontSize
     }
+
+    visible: !formTableLine.parent.disableLineTitle
   }
 }

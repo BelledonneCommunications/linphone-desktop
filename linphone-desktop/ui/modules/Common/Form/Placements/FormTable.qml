@@ -8,6 +8,10 @@ Column {
   id: formTable
 
   property alias titles: header.model
+  property bool disableLineTitle: false
+
+  property int legendLineWidth: FormTableStyle.entry.width
+
   readonly property double maxItemWidth: {
     var n = titles.length
     var curWidth = (width - FormTableStyle.entry.width) / n - (n - 1) * FormTableLineStyle.spacing
@@ -30,7 +34,9 @@ Column {
     // No title for the titles column.
     Item {
       height: FormTableStyle.entry.height
-      width: FormTableStyle.entry.width
+      width: formTable.legendLineWidth
+
+      visible: !formTable.disableLineTitle
     }
 
     Repeater {

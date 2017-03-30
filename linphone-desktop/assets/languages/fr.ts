@@ -789,6 +789,34 @@ Url du serveur non configurée.</translation>
         <source>defaultSipAddressLabel</source>
         <translation>Adresse SIP</translation>
     </message>
+    <message>
+        <source>proxyAccountsTitle</source>
+        <translation>Comptes SIP</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>registerHeader</source>
+        <translation>S&apos;enregistrer</translation>
+    </message>
+    <message>
+        <source>eraseAllPasswords</source>
+        <translation>EFFACER MOTS DE PASSE</translation>
+    </message>
+    <message>
+        <source>addAccount</source>
+        <translation>AJOUTER COMPTE</translation>
+    </message>
+    <message>
+        <source>editionHeader</source>
+        <translation>Éditer</translation>
+    </message>
+    <message>
+        <source>deleteHeader</source>
+        <translation>Supprimer</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

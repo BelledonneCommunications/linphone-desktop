@@ -39,7 +39,7 @@ Window {
 
   Shortcut {
     sequence: StandardKey.Close
-    onActivated: window.hide()
+    onActivated: _exit()
   }
 
   // ---------------------------------------------------------------------------

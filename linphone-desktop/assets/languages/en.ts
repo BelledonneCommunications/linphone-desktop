@@ -789,6 +789,34 @@ Server url not configured.</translation>
         <source>defaultSipAddressLabel</source>
         <translation>SIP address</translation>
     </message>
+    <message>
+        <source>proxyAccountsTitle</source>
+        <translation>Proxy accounts</translation>
+    </message>
+    <message>
+        <source></source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>registerHeader</source>
+        <translation>Register</translation>
+    </message>
+    <message>
+        <source>eraseAllPasswords</source>
+        <translation>ERASE PASSWORDS</translation>
+    </message>
+    <message>
+        <source>addAccount</source>
+        <translation>ADD ACCOUNT</translation>
+    </message>
+    <message>
+        <source>editionHeader</source>
+        <translation>Edit</translation>
+    </message>
+    <message>
+        <source>deleteHeader</source>
+        <translation>Delete</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
@@ -53,6 +54,67 @@ TabContainer {
             text: AccountSettingsModel.primarySipAddress
           }
         }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Proxy accounts.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('proxyAccountsTitle')
+      width: parent.width
+
+      FormTable {
+        legendLineWidth: 280
+
+        titles: [
+          qsTr('registerHeader'),
+          qsTr('editionHeader'),
+          qsTr('deleteHeader')
+        ]
+
+        Repeater {
+          model: AccountSettingsModel.accounts
+
+          delegate: FormTableLine {
+            title: modelData.sipAddress
+
+            FormTableEntry {
+              Switch {}
+            }
+
+            FormTableEntry {
+              ActionButton {
+                icon: 'edit'
+                iconSize: SettingsWindowStyle.sipAccounts.iconSize
+              }
+            }
+
+            FormTableEntry {
+              ActionButton {
+                icon: 'delete'
+                iconSize: SettingsWindowStyle.sipAccounts.iconSize
+              }
+            }
+          }
+        }
+      }
+
+      FormEmptyLine {}
+    }
+
+    Row {
+      anchors.right: parent.right
+
+      spacing: SettingsWindowStyle.sipAccounts.buttonsSpacing
+
+      TextButtonB {
+        text: qsTr('eraseAllPasswords')
+      }
+
+      TextButtonB {
+        text: qsTr('addAccount')
       }
     }
   }

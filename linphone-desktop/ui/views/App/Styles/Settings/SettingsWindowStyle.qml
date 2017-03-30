@@ -16,4 +16,9 @@ QtObject {
     property int rightMargin: 30
     property int topMargin: 30
   }
+
+  property QtObject sipAccounts: QtObject {
+    property int buttonsSpacing: 8
+    property int iconSize: 20
+  }
 }
