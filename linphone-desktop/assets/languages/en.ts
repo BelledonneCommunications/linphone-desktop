@@ -487,7 +487,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultSubject</source>
