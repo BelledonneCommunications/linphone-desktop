@@ -54,6 +54,12 @@ Item {
     TextArea.flickable: TextArea {
       id: textArea
 
+      function handleValidation () {
+        if (text.length !== 0) {
+          validText(text)
+        }
+      }
+
       background: Rectangle {
         color: DroppableTextAreaStyle.backgroundColor
       }
@@ -65,7 +71,14 @@ Item {
       wrapMode: TextArea.Wrap
 
       Component.onCompleted: forceActiveFocus()
-      Keys.onReturnPressed: text.length !== 0 && validText(text)
+
+      Keys.onPressed: {
+        if (event.matches(StandardKey.InsertLineSeparator)) {
+          insert(cursorPosition, '')
+        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+          handleValidation()
+        }
+      }
     }
   }
 
