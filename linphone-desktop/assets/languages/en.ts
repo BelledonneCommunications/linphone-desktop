@@ -487,7 +487,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished></translation>
     </message>
     <message>
         <source>defaultSubject</source>
@@ -849,16 +849,20 @@ Server url not configured.</translation>
         <translation>Contact params</translation>
     </message>
     <message>
-        <source>registerLabel</source>
-        <translation>Register</translation>
-    </message>
-    <message>
         <source>publishPresenceLabel</source>
         <translation>Publish presence information</translation>
     </message>
     <message>
-        <source>enableAvpfLabel</source>
+        <source>avpfIntervalLabel</source>
         <translation>AVPF regular RTCP interval (sec)</translation>
+    </message>
+    <message>
+        <source>registerEnabledLabel</source>
+        <translation>Register</translation>
+    </message>
+    <message>
+        <source>avpfEnabledLabel</source>
+        <translation>Enable AVPF</translation>
     </message>
 </context>
 <context>

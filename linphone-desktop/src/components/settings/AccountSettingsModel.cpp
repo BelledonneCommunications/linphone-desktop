@@ -29,6 +29,25 @@
 
 // =============================================================================
 
+QVariantMap AccountSettingsModel::getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxy_config) {
+  Q_ASSERT(proxy_config != nullptr);
+
+  QVariantMap map;
+
+  map["sipAddress"] = ::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asStringUriOnly());
+  map["serverAddress"] = ::Utils::linphoneStringToQString(proxy_config->getServerAddr());
+  map["registrationDuration"] = proxy_config->getPublishExpires();
+  map["transport"] = ::Utils::linphoneStringToQString(proxy_config->getTransport());
+  map["route"] = ::Utils::linphoneStringToQString(proxy_config->getRoute());
+  map["contactParams"] = ::Utils::linphoneStringToQString(proxy_config->getContactParameters());
+  map["avpfInterval"] = proxy_config->getAvpfRrInterval();
+  map["registerEnabled"] = proxy_config->registerEnabled();
+  map["publishPresence"] = proxy_config->publishEnabled();
+  map["avpfEnabled"] = proxy_config->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
+
+  return map;
+}
+
 void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
   CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxy_config);
   emit accountSettingsUpdated();

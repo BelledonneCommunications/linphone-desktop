@@ -77,7 +77,7 @@ TabContainer {
         ]
 
         Repeater {
-          model: AccountSettingsModel.accounts
+          model: AccountSettingsModel.accounts.slice(1)
 
           delegate: FormTableLine {
             title: modelData.sipAddress

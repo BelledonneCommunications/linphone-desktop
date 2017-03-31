@@ -849,15 +849,19 @@ Url du serveur non configurée.</translation>
         <translation>Paramètres de contact</translation>
     </message>
     <message>
-        <source>registerLabel</source>
-        <translation>S&apos;enregistrer</translation>
-    </message>
-    <message>
         <source>publishPresenceLabel</source>
         <translation>Publier la présence</translation>
     </message>
     <message>
-        <source>enableAvpfLabel</source>
+        <source>avpfIntervalLabel</source>
+        <translation>Intervalle standard RTCP AVPF (sec)</translation>
+    </message>
+    <message>
+        <source>registerEnabledLabel</source>
+        <translation>S&apos;enregistrer</translation>
+    </message>
+    <message>
+        <source>avpfEnabledLabel</source>
         <translation>Activer AVPF</translation>
     </message>
 </context>

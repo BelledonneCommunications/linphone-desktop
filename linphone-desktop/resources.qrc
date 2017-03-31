@@ -340,6 +340,7 @@
     <file>ui/views/App/Settings/SettingsAudio.qml</file>
     <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
     <file>ui/views/App/Settings/SettingsNetwork.qml</file>
+    <file>ui/views/App/Settings/SettingsSipAccountsEdit.js</file>
     <file>ui/views/App/Settings/SettingsSipAccountsEdit.qml</file>
     <file>ui/views/App/Settings/SettingsSipAccounts.js</file>
     <file>ui/views/App/Settings/SettingsSipAccounts.qml</file>
@@ -363,6 +364,7 @@
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/Main/ManageAccountsStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
+    <file>ui/views/App/Styles/Settings/SettingsSipAccountsEditStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
     <file>ui/views/App/Styles/SplashScreen/SplashScreenStyle.qml</file>
   </qresource>

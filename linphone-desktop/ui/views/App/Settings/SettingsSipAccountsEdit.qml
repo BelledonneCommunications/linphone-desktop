@@ -6,13 +6,19 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'SettingsSipAccountsEdit.js' as Logic
+
 // =============================================================================
 
 ConfirmDialog {
   property var account
 
-  height: 500
-  width: 600
+  height: SettingsSipAccountsEditStyle.height
+  width: SettingsSipAccountsEditStyle.width
+
+  // ---------------------------------------------------------------------------
+
+  Component.onCompleted: Logic.initForm(account)
 
   // ---------------------------------------------------------------------------
 
@@ -29,7 +35,7 @@ ConfirmDialog {
         label: qsTr('sipAddressLabel') + '*'
 
         TextField {
-
+          id: sipAddress
         }
       }
     }
@@ -39,26 +45,28 @@ ConfirmDialog {
         label: qsTr('serverAddressLabel') + '*'
 
         TextField {
-
+          id: serverAddress
         }
       }
     }
 
     FormLine {
       FormGroup {
-        label: qsTr('registrationDurationLabel') + '*'
+        label: qsTr('registrationDurationLabel')
 
-        TextField {
-
+        NumericField {
+          id: registrationDuration
         }
       }
     }
 
     FormLine {
       FormGroup {
-        label: qsTr('transportLabel') + '*'
+        label: qsTr('transportLabel')
 
         ComboBox {
+          id: transport
+
           model: [ 'TCP', 'UDP', 'TLS' ]
         }
       }
@@ -69,7 +77,7 @@ ConfirmDialog {
         label: qsTr('routeLabel')
 
         TextField {
-
+          id: route
         }
       }
     }
@@ -79,17 +87,27 @@ ConfirmDialog {
         label: qsTr('contactParamsLabel')
 
         TextField {
-
+          id: contactParams
         }
       }
     }
 
     FormLine {
       FormGroup {
-        label: qsTr('registerLabel')
+        label: qsTr('avpfIntervalLabel')
+
+        NumericField {
+          id: avpfInterval
+        }
+      }
+    }
+
+    FormLine {
+      FormGroup {
+        label: qsTr('registerEnabledLabel')
 
         Switch {
-
+          id: registerEnabled
         }
       }
     }
@@ -99,17 +117,17 @@ ConfirmDialog {
         label: qsTr('publishPresenceLabel')
 
         Switch {
-
+          id: publishPresence
         }
       }
     }
 
     FormLine {
       FormGroup {
-        label: qsTr('enableAvpfLabel')
+        label: qsTr('avpfEnabledLabel')
 
         Switch {
-
+          id: avpfEnabled
         }
       }
     }
