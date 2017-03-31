@@ -34,7 +34,13 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const std::shared_p
 
   QVariantMap map;
 
-  map["sipAddress"] = ::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asStringUriOnly());
+  {
+    const shared_ptr<const linphone::Address> address = proxy_config->getIdentityAddress();
+    map["sipAddress"] = address
+      ? ::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asStringUriOnly())
+      : "";
+  }
+
   map["serverAddress"] = ::Utils::linphoneStringToQString(proxy_config->getServerAddr());
   map["registrationDuration"] = proxy_config->getPublishExpires();
   map["transport"] = ::Utils::linphoneStringToQString(proxy_config->getTransport());
@@ -56,6 +62,105 @@ void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::Pro
 void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
   CoreManager::getInstance()->getCore()->removeProxyConfig(proxy_config);
   emit accountSettingsUpdated();
+}
+
+void AccountSettingsModel::addOrUpdateProxyConfig (
+  const std::shared_ptr<linphone::ProxyConfig> &proxy_config,
+  const QVariantMap &data
+) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  QString literal = data["sipAddress"].toString();
+
+  // Sip address.
+  {
+    shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
+        ::Utils::qStringToLinphoneString(literal)
+      );
+    if (!address) {
+      qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
+      return;
+    }
+
+    proxy_config->setIdentityAddress(address);
+  }
+
+  // Server address.
+  {
+    QString q_server_address = data["serverAddress"].toString();
+    string s_server_address = ::Utils::qStringToLinphoneString(q_server_address);
+
+    if (!proxy_config->setServerAddr(s_server_address)) {
+      shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(s_server_address);
+      if (!address) {
+        qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(q_server_address);
+        return;
+      }
+
+      QString transport = data["transport"].toString();
+      if (transport == "TCP")
+        address->setTransport(linphone::TransportType::TransportTypeTcp);
+      else if (transport == "UDP")
+        address->setTransport(linphone::TransportType::TransportTypeTcp);
+      else
+        address->setTransport(linphone::TransportType::TransportTypeTls);
+
+      if (!proxy_config->setServerAddr(address->asString())) {
+        qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(q_server_address);
+        return;
+      }
+    }
+  }
+
+  proxy_config->setPublishExpires(data["registrationDuration"].toInt());
+  proxy_config->setRoute(::Utils::qStringToLinphoneString(data["route"].toString()));
+  proxy_config->setContactParameters(::Utils::qStringToLinphoneString(data["contactParams"].toString()));
+  proxy_config->setAvpfRrInterval(data["contactParams"].toInt());
+  proxy_config->enableRegister(data["registerEnabled"].toBool());
+  proxy_config->enablePublish(data["publishEnabled"].toBool());
+  proxy_config->setAvpfMode(data["avpfEnabled"].toBool()
+    ? linphone::AVPFMode::AVPFModeEnabled
+    : linphone::AVPFMode::AVPFModeDefault
+  );
+
+  list<shared_ptr<linphone::ProxyConfig> > proxy_configs = core->getProxyConfigList();
+  if (find(proxy_configs.cbegin(), proxy_configs.cend(), proxy_config) != proxy_configs.cend()) {
+    if (proxy_config->done() == -1) {
+      qWarning() << QStringLiteral("Unable to update proxy config: `%1`.").arg(literal);
+      return;
+    }
+  } else if (core->addProxyConfig(proxy_config) == -1) {
+    qWarning() << QStringLiteral("Unable to add proxy config: `%1`.").arg(literal);
+    return;
+  }
+
+  emit accountSettingsUpdated();
+}
+
+std::shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
+  return CoreManager::getInstance()->getCore()->createProxyConfig();
+}
+
+QString AccountSettingsModel::getTransportFromServerAddress (const QString &server_address) {
+  const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
+      ::Utils::qStringToLinphoneString(server_address)
+    );
+
+  if (!address)
+    return QStringLiteral("");
+
+  switch (address->getTransport()) {
+    case linphone::TransportTypeUdp:
+      return QStringLiteral("UDP");
+    case linphone::TransportTypeTcp:
+      return QStringLiteral("TCP");
+    case linphone::TransportTypeTls:
+      return QStringLiteral("TLS");
+
+    case linphone::TransportTypeDtls:
+      break;
+  }
+
+  return QStringLiteral("");
 }
 
 // -----------------------------------------------------------------------------

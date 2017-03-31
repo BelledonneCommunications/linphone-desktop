@@ -12,7 +12,7 @@ DialogPlus {
 
       onClicked: exit(0)
     },
-    TextButtonA {
+    TextButtonB {
       text: qsTr('confirm')
 
       onClicked: exit(1)

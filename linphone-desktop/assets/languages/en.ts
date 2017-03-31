@@ -864,6 +864,14 @@ Server url not configured.</translation>
         <source>avpfEnabledLabel</source>
         <translation>Enable AVPF</translation>
     </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">CANCEL</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished">CONFIRM</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

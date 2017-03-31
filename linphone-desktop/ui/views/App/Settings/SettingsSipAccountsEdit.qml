@@ -10,8 +10,29 @@ import 'SettingsSipAccountsEdit.js' as Logic
 
 // =============================================================================
 
-ConfirmDialog {
-  property var account
+DialogPlus {
+  id: dialog
+
+  property var account // Optional.
+
+  buttons: [
+    TextButtonA {
+      text: qsTr('cancel')
+
+      onClicked: exit(0)
+    },
+    TextButtonB {
+      enabled: sipAddress.length > 0 && serverAddress.length > 0
+      text: qsTr('confirm')
+
+      onClicked: {
+        Logic.validProxyConfig()
+        exit(1)
+      }
+    }
+  ]
+
+  centeredButtons: true
 
   height: SettingsSipAccountsEditStyle.height
   width: SettingsSipAccountsEditStyle.width
@@ -25,9 +46,9 @@ ConfirmDialog {
   Form {
     anchors {
       left: parent.left
-      leftMargin: ManageAccountsStyle.leftMargin
+      leftMargin: SettingsSipAccountsEditStyle.leftMargin
       right: parent.right
-      rightMargin: ManageAccountsStyle.rightMargin
+      rightMargin: SettingsSipAccountsEditStyle.rightMargin
     }
 
     FormLine {
@@ -46,6 +67,8 @@ ConfirmDialog {
 
         TextField {
           id: serverAddress
+
+          onTextChanged: Logic.handleServerAddressChanged(text)
         }
       }
     }
@@ -67,7 +90,7 @@ ConfirmDialog {
         ComboBox {
           id: transport
 
-          model: [ 'TCP', 'UDP', 'TLS' ]
+          model: [ 'UDP', 'TCP', 'TLS' ]
         }
       }
     }
@@ -98,6 +121,9 @@ ConfirmDialog {
 
         NumericField {
           id: avpfInterval
+
+          maxValue: 5
+          minValue: 1
         }
       }
     }
@@ -108,6 +134,8 @@ ConfirmDialog {
 
         Switch {
           id: registerEnabled
+
+          onClicked: checked = !checked
         }
       }
     }
@@ -118,6 +146,8 @@ ConfirmDialog {
 
         Switch {
           id: publishPresence
+
+          onClicked: checked = !checked
         }
       }
     }
@@ -128,6 +158,8 @@ ConfirmDialog {
 
         Switch {
           id: avpfEnabled
+
+          onClicked: checked = !checked
         }
       }
     }
