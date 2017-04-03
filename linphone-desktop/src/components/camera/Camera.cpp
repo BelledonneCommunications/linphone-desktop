@@ -49,6 +49,19 @@ CameraRenderer::CameraRenderer () {
 }
 
 CameraRenderer::~CameraRenderer () {
+  qInfo() << QStringLiteral("Delete context info:") << m_context_info;
+
+  CoreManager *core = CoreManager::getInstance();
+
+  core->lockVideoRender();
+
+  memset(m_context_info, 0, sizeof *m_context_info);
+  m_update_context_info = true;
+
+  updateWindowId();
+
+  core->unlockVideoRender();
+
   delete m_context_info;
 }
 
@@ -60,14 +73,16 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 
   CoreManager *core = CoreManager::getInstance();
 
+  // It's not the same thread as render.
+  core->lockVideoRender();
+
   m_context_info->width = size.width();
   m_context_info->height = size.height();
   m_context_info->functions = MSFunctions::getInstance()->getFunctions();
   m_update_context_info = true;
 
-  // It's not the same thread as render.
-  core->lockVideoRender();
   updateWindowId();
+
   core->unlockVideoRender();
 
   return new QOpenGLFramebufferObject(size, format);
@@ -120,8 +135,8 @@ void CameraRenderer::updateWindowId () {
 
   m_update_context_info = false;
 
-  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3).")
-    .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview);
+  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3):")
+    .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview) << m_context_info;
 
   if (m_is_preview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
