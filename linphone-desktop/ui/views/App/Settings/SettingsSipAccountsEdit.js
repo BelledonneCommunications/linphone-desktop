@@ -36,20 +36,23 @@ function initForm (account) {
   registerEnabled.checked = config.registerEnabled
   publishPresence.checked = config.publishPresence
   avpfEnabled.checked = config.avpfEnabled
+
+  if (account) {
+    dialog._sipAddressOk = true
+    dialog._serverAddressOk = true
+  }
+
+  dialog._routeOk = true
 }
 
-function handleServerAddressChanged (address) {
-  var newTransport = Linphone.AccountSettingsModel.getTransportFromServerAddress(address)
-  if (newTransport.length > 0) {
-    transport.currentIndex = Utils.findIndex(transport.model, function (value) {
-      return value === newTransport
-    })
-  }
+function formIsValid () {
+  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk
 }
+
+// -----------------------------------------------------------------------------
 
 function validProxyConfig () {
-  // TODO: Display errors on the form (if necessary).
-  Linphone.AccountSettingsModel.addOrUpdateProxyConfig(proxyConfig, {
+  if (Linphone.AccountSettingsModel.addOrUpdateProxyConfig(proxyConfig, {
     sipAddress: sipAddress.text,
     serverAddress: serverAddress.text,
     registrationDuration: registrationDuration.text,
@@ -60,5 +63,48 @@ function validProxyConfig () {
     registerEnabled: registerEnabled.checked,
     publishPresence: publishPresence.checked,
     avpfEnabled: avpfEnabled.checked
-  })
+  })) {
+    dialog.exit(1)
+  } else {
+    // TODO: Display errors on the form (if necessary).
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+function handleRouteChanged (route) {
+  dialog._routeOk = route.length === 0 || Linphone.SipAddressesModel.sipAddressIsValid(route)
+}
+
+function handleServerAddressChanged (address) {
+  if (address.length === 0) {
+    dialog._serverAddressOk = false
+    return
+  }
+
+  var newTransport = Linphone.SipAddressesModel.getTransportFromSipAddress(address)
+
+  if (newTransport.length > 0) {
+    transport.currentIndex = Utils.findIndex(transport.model, function (value) {
+      return value === newTransport
+    })
+    dialog._serverAddressOk = true
+  } else {
+    dialog._serverAddressOk = false
+  }
+}
+
+function handleSipAddressChanged (address) {
+  dialog._sipAddressOk = address.length > 0 &&
+    Linphone.SipAddressesModel.sipAddressIsValid(address)
+}
+
+function handleTransportChanged (transport) {
+  var newServerAddress = Linphone.SipAddressesModel.addTransportToSipAddress(serverAddress.text, transport)
+  if (newServerAddress.length > 0) {
+    serverAddress.text = newServerAddress
+    dialog._serverAddressOk = true
+  } else {
+    dialog._serverAddressOk = false
+  }
 }

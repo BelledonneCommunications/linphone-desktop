@@ -1,8 +1,6 @@
 import QtQuick 2.7
 
 import Common 1.0
-import Linphone 1.0
-import Utils 1.0
 
 import App.Styles 1.0
 
@@ -15,6 +13,10 @@ DialogPlus {
 
   property var account // Optional.
 
+  property bool _sipAddressOk: false
+  property bool _serverAddressOk: false
+  property bool _routeOk: false
+
   buttons: [
     TextButtonA {
       text: qsTr('cancel')
@@ -22,13 +24,10 @@ DialogPlus {
       onClicked: exit(0)
     },
     TextButtonB {
-      enabled: sipAddress.length > 0 && serverAddress.length > 0
+      enabled: Logic.formIsValid()
       text: qsTr('confirm')
 
-      onClicked: {
-        Logic.validProxyConfig()
-        exit(1)
-      }
+      onClicked: Logic.validProxyConfig()
     }
   ]
 
@@ -57,6 +56,8 @@ DialogPlus {
 
         TextField {
           id: sipAddress
+
+          onTextChanged: Logic.handleSipAddressChanged(text)
         }
       }
     }
@@ -90,7 +91,10 @@ DialogPlus {
         ComboBox {
           id: transport
 
-          model: [ 'UDP', 'TCP', 'TLS' ]
+          enabled: dialog._serverAddressOk
+          model: [ 'UDP', 'TCP', 'TLS', 'DTLS' ]
+
+          onActivated: Logic.handleTransportChanged(model[index])
         }
       }
     }
@@ -101,6 +105,8 @@ DialogPlus {
 
         TextField {
           id: route
+
+          onTextChanged: Logic.handleRouteChanged(text)
         }
       }
     }

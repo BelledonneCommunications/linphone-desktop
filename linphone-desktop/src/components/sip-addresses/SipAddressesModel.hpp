@@ -50,7 +50,17 @@ public:
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sip_address) const;
   Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sip_address);
 
+  // ---------------------------------------------------------------------------
+  // Sip addresses helpers.
+  // ---------------------------------------------------------------------------
+
   Q_INVOKABLE QString interpretUrl (const QString &sip_address) const;
+
+  Q_INVOKABLE QString getTransportFromSipAddress (const QString &sip_address) const;
+  Q_INVOKABLE QString addTransportToSipAddress (const QString &sip_address, const QString &transport) const;
+  Q_INVOKABLE bool sipAddressIsValid (const QString &sip_address) const;
+
+  // ---------------------------------------------------------------------------
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());

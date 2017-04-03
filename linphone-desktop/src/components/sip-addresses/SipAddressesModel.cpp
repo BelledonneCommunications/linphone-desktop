@@ -140,6 +140,57 @@ QString SipAddressesModel::interpretUrl (const QString &sip_address) const {
   return l_address ? ::Utils::linphoneStringToQString(l_address->asStringUriOnly()) : "";
 }
 
+QString SipAddressesModel::getTransportFromSipAddress (const QString &sip_address) const {
+  const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
+      ::Utils::qStringToLinphoneString(sip_address)
+    );
+
+  if (!address)
+    return QStringLiteral("");
+
+  switch (address->getTransport()) {
+    case linphone::TransportTypeUdp:
+      return QStringLiteral("UDP");
+    case linphone::TransportTypeTcp:
+      return QStringLiteral("TCP");
+    case linphone::TransportTypeTls:
+      return QStringLiteral("TLS");
+    case linphone::TransportTypeDtls:
+      return QStringLiteral("DTLS");
+  }
+
+  return QStringLiteral("");
+}
+
+QString SipAddressesModel::addTransportToSipAddress (const QString &sip_address, const QString &transport) const {
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
+      ::Utils::qStringToLinphoneString(sip_address)
+    );
+
+  if (!address)
+    return "";
+
+  QString _transport = transport.toUpper();
+  if (_transport == "TCP")
+    address->setTransport(linphone::TransportType::TransportTypeTcp);
+  else if (_transport == "UDP")
+    address->setTransport(linphone::TransportType::TransportTypeUdp);
+  else if (_transport == "TLS")
+    address->setTransport(linphone::TransportType::TransportTypeTls);
+  else
+    address->setTransport(linphone::TransportType::TransportTypeDtls);
+
+  return ::Utils::linphoneStringToQString(address->asString());
+}
+
+bool SipAddressesModel::sipAddressIsValid (const QString &sip_address) const {
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
+      ::Utils::qStringToLinphoneString(sip_address)
+    );
+
+  return !!address;
+}
+
 // -----------------------------------------------------------------------------
 
 bool SipAddressesModel::removeRow (int row, const QModelIndex &parent) {
@@ -309,9 +360,7 @@ void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, const shared_pt
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, const shared_ptr<linphone::ChatMessage> &message) {
-  // FIXME: Bug in the core, count is incremented after this function call.
-  // So... +1!
-  int count = message->getChatRoom()->getUnreadMessagesCount() + 1;
+  int count = message->getChatRoom()->getUnreadMessagesCount();
 
   map["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
   map["unreadMessagesCount"] = count;

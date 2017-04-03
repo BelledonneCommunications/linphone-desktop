@@ -64,7 +64,7 @@ void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyCo
   emit accountSettingsUpdated();
 }
 
-void AccountSettingsModel::addOrUpdateProxyConfig (
+bool AccountSettingsModel::addOrUpdateProxyConfig (
   const std::shared_ptr<linphone::ProxyConfig> &proxy_config,
   const QVariantMap &data
 ) {
@@ -78,7 +78,7 @@ void AccountSettingsModel::addOrUpdateProxyConfig (
       );
     if (!address) {
       qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
-      return;
+      return false;
     }
 
     proxy_config->setIdentityAddress(address);
@@ -86,28 +86,11 @@ void AccountSettingsModel::addOrUpdateProxyConfig (
 
   // Server address.
   {
-    QString q_server_address = data["serverAddress"].toString();
-    string s_server_address = ::Utils::qStringToLinphoneString(q_server_address);
+    QString server_address = data["serverAddress"].toString();
 
-    if (!proxy_config->setServerAddr(s_server_address)) {
-      shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(s_server_address);
-      if (!address) {
-        qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(q_server_address);
-        return;
-      }
-
-      QString transport = data["transport"].toString();
-      if (transport == "TCP")
-        address->setTransport(linphone::TransportType::TransportTypeTcp);
-      else if (transport == "UDP")
-        address->setTransport(linphone::TransportType::TransportTypeTcp);
-      else
-        address->setTransport(linphone::TransportType::TransportTypeTls);
-
-      if (!proxy_config->setServerAddr(address->asString())) {
-        qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(q_server_address);
-        return;
-      }
+    if (proxy_config->setServerAddr(::Utils::qStringToLinphoneString(server_address))) {
+      qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(server_address);
+      return false;
     }
   }
 
@@ -126,41 +109,20 @@ void AccountSettingsModel::addOrUpdateProxyConfig (
   if (find(proxy_configs.cbegin(), proxy_configs.cend(), proxy_config) != proxy_configs.cend()) {
     if (proxy_config->done() == -1) {
       qWarning() << QStringLiteral("Unable to update proxy config: `%1`.").arg(literal);
-      return;
+      return false;
     }
   } else if (core->addProxyConfig(proxy_config) == -1) {
     qWarning() << QStringLiteral("Unable to add proxy config: `%1`.").arg(literal);
-    return;
+    return false;
   }
 
   emit accountSettingsUpdated();
+
+  return true;
 }
 
 std::shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
   return CoreManager::getInstance()->getCore()->createProxyConfig();
-}
-
-QString AccountSettingsModel::getTransportFromServerAddress (const QString &server_address) {
-  const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::qStringToLinphoneString(server_address)
-    );
-
-  if (!address)
-    return QStringLiteral("");
-
-  switch (address->getTransport()) {
-    case linphone::TransportTypeUdp:
-      return QStringLiteral("UDP");
-    case linphone::TransportTypeTcp:
-      return QStringLiteral("TCP");
-    case linphone::TransportTypeTls:
-      return QStringLiteral("TLS");
-
-    case linphone::TransportTypeDtls:
-      break;
-  }
-
-  return QStringLiteral("");
 }
 
 // -----------------------------------------------------------------------------
