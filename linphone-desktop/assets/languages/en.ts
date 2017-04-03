@@ -616,6 +616,10 @@ Server url not configured.</translation>
         <source>echoCancellationLabel</source>
         <translation>Enable echo cancellation</translation>
     </message>
+    <message>
+        <source>audioCodecsTitle</source>
+        <translation>Audio codecs</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -819,7 +823,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to delete this account?</translation>
     </message>
 </context>
 <context>
@@ -866,11 +870,11 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">CANCEL</translation>
+        <translation>CANCEL</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished">CONFIRM</translation>
+        <translation>CONFIRM</translation>
     </message>
 </context>
 <context>
@@ -933,6 +937,10 @@ Server url not configured.</translation>
     <message>
         <source>videoSizeLabel</source>
         <translation>Video resolution</translation>
+    </message>
+    <message>
+        <source>videoCodecsTitle</source>
+        <translation>Video codecs</translation>
     </message>
 </context>
 <context>

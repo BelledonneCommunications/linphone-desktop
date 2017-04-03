@@ -616,6 +616,10 @@ Url du serveur non configurée.</translation>
         <source>echoCancellationLabel</source>
         <translation>Activer annulation d&apos;écho</translation>
     </message>
+    <message>
+        <source>audioCodecsTitle</source>
+        <translation>Codecs audio</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -819,7 +823,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Êtes-vous sûr de vouloir supprimer ce compte ?</translation>
     </message>
 </context>
 <context>
@@ -866,11 +870,11 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ANNULER</translation>
+        <translation>ANNULER</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished">CONFIRMER</translation>
+        <translation>CONFIRMER</translation>
     </message>
 </context>
 <context>
@@ -933,6 +937,10 @@ Url du serveur non configurée.</translation>
     <message>
         <source>videoSizeLabel</source>
         <translation>Définition</translation>
+    </message>
+    <message>
+        <source>videoCodecsTitle</source>
+        <translation>Codecs vidéo</translation>
     </message>
 </context>
 <context>

@@ -14,6 +14,8 @@ Calls               1.0 Calls/Calls.qml
 
 Chat                1.0 Chat/Chat.qml
 
+CodecsViewer        1.0 Codecs/CodecsViewer.qml
+
 Avatar              1.0 Contact/Avatar.qml
 Contact             1.0 Contact/Contact.qml
 ContactDescription  1.0 Contact/ContactDescription.qml
