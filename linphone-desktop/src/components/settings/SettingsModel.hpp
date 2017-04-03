@@ -37,8 +37,6 @@ class SettingsModel : public QObject {
 
   // Audio. --------------------------------------------------------------------
 
-  Q_PROPERTY(QVariantList audioCodecs READ getAudioCodecs WRITE setAudioCodecs NOTIFY audioCodecsChanged);
-
   Q_PROPERTY(QStringList audioDevices READ getAudioDevices CONSTANT);
 
   Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged);
@@ -135,9 +133,6 @@ public:
   // ===========================================================================
 
   // Audio. --------------------------------------------------------------------
-
-  QVariantList getAudioCodecs () const;
-  void setAudioCodecs (const QVariantList &codecs);
 
   QStringList getAudioDevices () const;
 
@@ -260,8 +255,6 @@ public:
 
 signals:
   // Audio. --------------------------------------------------------------------
-
-  void audioCodecsChanged (const QVariantList &codecs);
 
   void captureDeviceChanged (const QString &device);
   void playbackDeviceChanged (const QString &device);

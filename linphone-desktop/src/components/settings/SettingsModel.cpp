@@ -42,31 +42,6 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Audio.
 // =============================================================================
 
-QVariantList SettingsModel::getAudioCodecs () const {
-  QVariantList list;
-
-  // for (const auto &codec : CoreManager::getInstance()->getCore()->getAudioCodecs()) {
-  // QVariantMap map;
-  //
-  // map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
-  // map["channels"] = codec->getChannels();
-  // map["bitrate"] = codec->getNormalBitrate();
-  // map["type"] = codec->getType();
-  // map["isVbr"] = codec->isVbr();
-  //
-  // list << map;
-  // }
-
-  return list;
-}
-
-void SettingsModel::setAudioCodecs (const QVariantList &codecs) {
-  // TODO
-  emit audioCodecsChanged(codecs);
-}
-
-// -----------------------------------------------------------------------------
-
 QStringList SettingsModel::getAudioDevices () const {
   QStringList list;
 

@@ -23,6 +23,8 @@
 #include "../components/calls/CallsListModel.hpp"
 #include "../components/camera/Camera.hpp"
 #include "../components/chat/ChatProxyModel.hpp"
+#include "../components/codecs/AudioCodecsModel.hpp"
+#include "../components/codecs/VideoCodecsModel.hpp"
 #include "../components/contacts/ContactsListProxyModel.hpp"
 #include "../components/core/CoreManager.hpp"
 #include "../components/presence/OwnPresenceModel.hpp"
@@ -290,6 +292,8 @@ void App::registerTypes () {
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
   registerSingletonType<TimelineModel>("TimelineModel");
+  registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
+  registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerSharedSingletonType(App, "App", App::getInstance);
   registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
