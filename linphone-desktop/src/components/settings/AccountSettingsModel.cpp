@@ -97,7 +97,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   proxy_config->setPublishExpires(data["registrationDuration"].toInt());
   proxy_config->setRoute(::Utils::qStringToLinphoneString(data["route"].toString()));
   proxy_config->setContactParameters(::Utils::qStringToLinphoneString(data["contactParams"].toString()));
-  proxy_config->setAvpfRrInterval(data["contactParams"].toInt());
+  proxy_config->setAvpfRrInterval(static_cast<uint8_t>(data["avpfInterval"].toInt()));
   proxy_config->enableRegister(data["registerEnabled"].toBool());
   proxy_config->enablePublish(data["publishEnabled"].toBool());
   proxy_config->setAvpfMode(data["avpfEnabled"].toBool()
