@@ -56,7 +56,7 @@ public:
   void enableCodec (int id, bool status);
 
 private:
-  QVariantList m_codecs;
+  QList<QVariantMap> m_codecs;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType> );

@@ -28,7 +28,7 @@
 // ============================================================================
 
 template<typename T>
-inline void addCodecToList (QVariantList &list, const T &codec, CodecsModel::CodecType type) {
+inline void addCodecToList (QList<QVariantMap> &list, const T &codec, CodecsModel::CodecType type) {
   QVariantMap map;
 
   map["bitrate"] = codec->getNormalBitrate();
@@ -89,6 +89,12 @@ QVariant CodecsModel::data (const QModelIndex &index, int role) const {
 
 void CodecsModel::enableCodec (int id, bool status) {
   Q_ASSERT(id >= 0 && id < m_codecs.count());
-  shared_ptr<linphone::PayloadType> codec = m_codecs[id].toMap().value("__codec").value<shared_ptr<linphone::PayloadType> >();
+
+  QVariantMap &map = m_codecs[id];
+  shared_ptr<linphone::PayloadType> codec = map.value("__codec").value<shared_ptr<linphone::PayloadType> >();
+
   codec->enable(status);
+  map["enabled"] = status;
+
+  emit dataChanged(index(id, 0), index(id, 0));
 }
