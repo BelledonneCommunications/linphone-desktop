@@ -2,58 +2,90 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Linphone.Styles 1.0
 
 // =============================================================================
 
-ColumnLayout {
+Column {
   property alias model: view.model
-
-  // ---------------------------------------------------------------------------
-
-  height: 350
 
   // ---------------------------------------------------------------------------
   // Header.
   // ---------------------------------------------------------------------------
 
   Row {
-    Layout.fillWidth: true
-    height: 50
+    anchors {
+      left: parent.left
+      leftMargin: CodecsViewerStyle.leftMargin
+      right: parent.right
+    }
+
+    height: CodecsViewerStyle.legend.height
   }
 
   // ---------------------------------------------------------------------------
   // Codecs.
   // ---------------------------------------------------------------------------
 
-  ScrollableListView {
+  ListView {
     id: view
 
-    Layout.fillWidth: true
-    Layout.fillHeight: true
+    boundsBehavior: Flickable.StopAtBounds
+    clip: true
+    spacing: 0
+
+    anchors {
+      left: parent.left
+      leftMargin: CodecsViewerStyle.leftMargin
+      right: parent.right
+    }
+
+    height: count * CodecsViewerStyle.attribute.height
 
     delegate: Rectangle {
-      color: 'red'
-      height: 30
-      width: view.width
+      color: 'transparent'
 
-      Row {
+      height: CodecsViewerStyle.attribute.height
+      width: parent.width
+
+      RowLayout {
         anchors.fill: parent
+        spacing: CodecsViewerStyle.column.spacing
 
-        Text {
+        CodecAttribute {
+          Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
           text: $codec.mime
         }
 
-        Text {
-          text: $codec.description
+        CodecAttribute {
+          Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
+          text: $codec.encoderDescription
         }
 
-        Text {
-          text: $codec.channels
+        CodecAttribute {
+          Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
+          text: $codec.clockRate
         }
 
-        Text {
+        CodecAttribute {
+          Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
           text: $codec.bitrate
         }
+
+        TextField {
+          Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
+          text: $codec.recvFmtp
+        }
+
+        Switch {
+
+        }
+      }
+
+      MouseArea {
+        id: mouseArea
+
+        anchors.fill: parent
       }
     }
   }

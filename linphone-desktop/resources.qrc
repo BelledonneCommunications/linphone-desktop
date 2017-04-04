@@ -275,6 +275,8 @@
     <file>ui/modules/Linphone/Chat/Message.js</file>
     <file>ui/modules/Linphone/Chat/Message.qml</file>
     <file>ui/modules/Linphone/Chat/OutgoingMessage.qml</file>
+    <file>ui/modules/Linphone/Codecs/CodecAttribute.qml</file>
+    <file>ui/modules/Linphone/Codecs/CodecLegend.qml</file>
     <file>ui/modules/Linphone/Codecs/CodecsViewer.qml</file>
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
@@ -293,6 +295,7 @@
     <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/CardBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>

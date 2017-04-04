@@ -42,6 +42,7 @@ inline void addCodecToList (QVariantList &list, const T &codec, CodecsModel::Cod
   map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
   map["number"] = codec->getNumber();
   map["type"] = type;
+  map["recvFmtp"] = ::Utils::linphoneStringToQString(codec->getRecvFmtp());
 
   list << map;
 }
@@ -49,13 +50,15 @@ inline void addCodecToList (QVariantList &list, const T &codec, CodecsModel::Cod
 // -----------------------------------------------------------------------------
 
 CodecsModel::CodecsModel (QObject *parent) : QAbstractListModel(parent) {
-  for (const auto &codec : CoreManager::getInstance()->getCore()->getAudioPayloadTypes())
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  for (const auto &codec : core->getAudioPayloadTypes())
     addCodecToList(m_codecs, codec, AudioCodec);
 
-  for (const auto &codec : CoreManager::getInstance()->getCore()->getVideoPayloadTypes())
+  for (const auto &codec : core->getVideoPayloadTypes())
     addCodecToList(m_codecs, codec, VideoCodec);
 
-  for (const auto &codec : CoreManager::getInstance()->getCore()->getTextPayloadTypes())
+  for (const auto &codec : core->getTextPayloadTypes())
     addCodecToList(m_codecs, codec, TextCodec);
 }
 
