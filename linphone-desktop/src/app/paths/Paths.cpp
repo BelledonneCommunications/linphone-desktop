@@ -43,6 +43,7 @@
 #define PATH_FRIENDS_LIST "/friends.db"
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
 #define PATH_ZRTP_SECRETS "/zidcache"
+#define PATH_ZRTP_DATA "/zrtp-lime.db"
 
 using namespace std;
 
@@ -197,6 +198,10 @@ string Paths::getCapturesDirpath () {
 
 string Paths::getZrtpSecretsFilepath () {
   return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + PATH_ZRTP_SECRETS);
+}
+
+string Paths::getZrtpDataFilepath () {
+  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_ZRTP_DATA);
 }
 
 string Paths::getUserCertificatesDirpath () {

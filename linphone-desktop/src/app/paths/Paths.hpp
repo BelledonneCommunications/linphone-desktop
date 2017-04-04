@@ -45,6 +45,7 @@ namespace Paths {
   std::string getFriendsListFilepath ();
   std::string getMessageHistoryFilepath ();
   std::string getZrtpSecretsFilepath ();
+  std::string getZrtpDataFilepath ();
 
   void migrate ();
 }

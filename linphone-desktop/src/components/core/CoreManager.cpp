@@ -92,6 +92,8 @@ void CoreManager::setDatabasesPaths () {
 
 void CoreManager::setOtherPaths () {
   m_core->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
+  /* this one is actually a database but it MUST be set after the zrtp secrets as it allows automatic migration from old version(secrets, xml) to new version (data, sqlite)*/
+  m_core->setZrtpCacheDatabasePath(Paths::getZrtpDataFilepath());
   m_core->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
 }
 
