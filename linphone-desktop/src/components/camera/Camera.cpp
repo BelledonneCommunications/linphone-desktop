@@ -55,10 +55,10 @@ CameraRenderer::~CameraRenderer () {
 
   core->lockVideoRender();
 
-  memset(m_context_info, 0, sizeof *m_context_info);
-  m_update_context_info = true;
-
-  updateWindowId();
+  if (m_is_preview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
+  else if (m_linphone_call)
+    m_linphone_call->setNativeVideoWindowId(nullptr);
 
   core->unlockVideoRender();
 
