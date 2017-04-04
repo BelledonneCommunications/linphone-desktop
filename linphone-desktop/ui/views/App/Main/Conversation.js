@@ -2,6 +2,8 @@
 // `Conversation.qml` Logic.
 // =============================================================================
 
+.import Linphone 1.0 as Linphone
+
 .import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
@@ -35,10 +37,10 @@ function getUsername () {
 
 function updateChatFilter (button) {
   if (button === 0) {
-    chatProxyModel.setEntryTypeFilter(ChatModel.GenericEntry)
+    chatProxyModel.setEntryTypeFilter(Linphone.ChatModel.GenericEntry)
   } else if (button === 1) {
-    chatProxyModel.setEntryTypeFilter(ChatModel.CallEntry)
+    chatProxyModel.setEntryTypeFilter(Linphone.ChatModel.CallEntry)
   } else {
-    chatProxyModel.setEntryTypeFilter(ChatModel.MessageEntry)
+    chatProxyModel.setEntryTypeFilter(Linphone.ChatModel.MessageEntry)
   }
 }
