@@ -43,6 +43,7 @@ inline void addCodecToList (QVariantList &list, const T &codec, CodecsModel::Cod
   map["number"] = codec->getNumber();
   map["type"] = type;
   map["recvFmtp"] = ::Utils::linphoneStringToQString(codec->getRecvFmtp());
+  map["__codec"] = QVariant::fromValue(codec);
 
   list << map;
 }
@@ -87,5 +88,7 @@ QVariant CodecsModel::data (const QModelIndex &index, int role) const {
 // -----------------------------------------------------------------------------
 
 void CodecsModel::enableCodec (int id, bool status) {
-  // TODO.
+  Q_ASSERT(id >= 0 && id < m_codecs.count());
+  shared_ptr<linphone::PayloadType> codec = m_codecs[id].toMap().value("__codec").value<>();
+  codec->enable(status);
 }
