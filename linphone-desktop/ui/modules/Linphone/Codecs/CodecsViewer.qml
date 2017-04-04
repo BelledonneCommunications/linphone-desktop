@@ -21,6 +21,36 @@ Column {
     }
 
     height: CodecsViewerStyle.legend.height
+    spacing: CodecsViewerStyle.column.spacing
+
+    CodecLegend {
+      Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
+      text: qsTr('codecMime')
+    }
+
+    CodecLegend {
+      Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
+      text: qsTr('codecEncoderDescription')
+    }
+
+    CodecLegend {
+      Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
+      text: qsTr('codecEncoderClockRate')
+    }
+
+    CodecLegend {
+      Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
+      text: qsTr('codecBitrate')
+    }
+
+    CodecLegend {
+      Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
+      text: qsTr('codecRecvFmtp')
+    }
+
+    CodecLegend {
+      text: qsTr('codecStatus')
+    }
   }
 
   // ---------------------------------------------------------------------------
@@ -78,7 +108,9 @@ Column {
         }
 
         Switch {
+          checked: $codec.enabled
 
+          onClicked: view.model.enableCodec(index, !checked)
         }
       }
 

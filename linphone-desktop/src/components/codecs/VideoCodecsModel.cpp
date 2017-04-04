@@ -26,7 +26,7 @@
 
 // =============================================================================
 
-VideoCodecsModel::VideoCodecsModel (QObject *parent) : QSortFilterProxyModel(parent) {
+VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
   setSourceModel(CoreManager::getInstance()->getCodecsModel());
 }
 

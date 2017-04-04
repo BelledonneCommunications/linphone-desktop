@@ -23,11 +23,11 @@
 #ifndef AUDIO_CODECS_MODEL_H_
 #define AUDIO_CODECS_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include "AbstractCodecsModel.hpp"
 
 // =============================================================================
 
-class AudioCodecsModel : public QSortFilterProxyModel {
+class AudioCodecsModel : public AbstractCodecsModel {
   Q_OBJECT;
 
 public:

@@ -83,3 +83,9 @@ QVariant CodecsModel::data (const QModelIndex &index, int role) const {
 
   return QVariant();
 }
+
+// -----------------------------------------------------------------------------
+
+void CodecsModel::enableCodec (int id, bool status) {
+  // TODO.
+}

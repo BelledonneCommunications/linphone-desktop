@@ -23,11 +23,11 @@
 #ifndef VIDEO_CODECS_MODEL_H_
 #define VIDEO_CODECS_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include "AbstractCodecsModel.hpp"
 
 // =============================================================================
 
-class VideoCodecsModel : public QSortFilterProxyModel {
+class VideoCodecsModel : public AbstractCodecsModel {
   Q_OBJECT;
 
 public:

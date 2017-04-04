@@ -1,5 +1,5 @@
 /*
- * CodecsModel.hpp
+ * AbstractCodecsModel.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,41 +16,28 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: April 3, 2017
+ *  Created on: April 4, 2017
  *      Author: Ronan Abhamon
  */
 
-#ifndef CODECS_MODEL_H_
-#define CODECS_MODEL_H_
+#ifndef ABSTRACT_CODECS_MODEL_H_
+#define ABSTRACT_CODECS_MODEL_H_
 
-#include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 
 // =============================================================================
 
-class CodecsModel : public QAbstractListModel {
+class AbstractCodecsModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
 public:
-  enum CodecType {
-    AudioCodec,
-    VideoCodec,
-    TextCodec
-  };
+  AbstractCodecsModel (QObject *parent = Q_NULLPTR);
+  virtual ~AbstractCodecsModel () = default;
 
-  Q_ENUMS(CodecType);
+  Q_INVOKABLE void enableCodec (int id, bool status);
 
-  CodecsModel (QObject *parent = Q_NULLPTR);
-  ~CodecsModel () = default;
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-  void enableCodec (int id, bool status);
-
-private:
-  QVariantList m_codecs;
+protected:
+  virtual bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override = 0;
 };
 
-#endif // CODECS_MODEL_H_
+#endif // ABSTRACT_CODECS_MODEL_H_

@@ -237,6 +237,33 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>CodecsViewer</name>
+    <message>
+        <source>codecMime</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>codecEncoderDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>codecEncoderClockRate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>codecBitrate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>codecRecvFmtp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>codecStatus</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>

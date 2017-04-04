@@ -26,7 +26,7 @@
 
 // =============================================================================
 
-AudioCodecsModel::AudioCodecsModel (QObject *parent) : QSortFilterProxyModel(parent) {
+AudioCodecsModel::AudioCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
   setSourceModel(CoreManager::getInstance()->getCodecsModel());
 }
 
