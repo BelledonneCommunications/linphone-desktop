@@ -23,9 +23,15 @@
 #ifndef CODECS_MODEL_H_
 #define CODECS_MODEL_H_
 
+#include <memory>
+
 #include <QAbstractListModel>
 
 // =============================================================================
+
+namespace linphone {
+  class PayloadType;
+}
 
 class CodecsModel : public QAbstractListModel {
   Q_OBJECT;
@@ -52,5 +58,7 @@ public:
 private:
   QVariantList m_codecs;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType> );
 
 #endif // CODECS_MODEL_H_
