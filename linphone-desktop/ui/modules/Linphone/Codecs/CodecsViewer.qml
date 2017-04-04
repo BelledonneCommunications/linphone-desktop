@@ -1,3 +1,4 @@
+import QtQml.Models 2.2
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
@@ -7,7 +8,7 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 Column {
-  property alias model: view.model
+  property alias model: visualModel.model
 
   // ---------------------------------------------------------------------------
   // Header.
@@ -72,52 +73,84 @@ Column {
 
     height: count * CodecsViewerStyle.attribute.height
 
-    delegate: Rectangle {
-      color: 'transparent'
+    model: DelegateModel {
+      id: visualModel
 
-      height: CodecsViewerStyle.attribute.height
-      width: parent.width
+      delegate: MouseArea {
+        id: dragArea
 
-      RowLayout {
-        anchors.fill: parent
-        spacing: CodecsViewerStyle.column.spacing
+        property bool held: false
 
-        CodecAttribute {
-          Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
-          text: $codec.mime
+        anchors {
+          left: parent.left
+          right: parent.right
         }
 
-        CodecAttribute {
-          Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
-          text: $codec.encoderDescription
+        drag {
+          axis: Drag.YAxis
+          target: held ? content : undefined
         }
 
-        CodecAttribute {
-          Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
-          text: $codec.clockRate
+        height: CodecsViewerStyle.attribute.height
+
+        onPressAndHold: held = true
+        onReleased: held = false
+
+        RowLayout {
+          id: content
+
+          Drag.active: dragArea.held
+          Drag.source: dragArea
+          Drag.hotSpot.x: width / 2
+          Drag.hotSpot.y: height / 2
+
+          height: dragArea.height
+          width: dragArea.width
+
+          spacing: CodecsViewerStyle.column.spacing
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
+            text: $codec.mime
+          }
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
+            text: $codec.encoderDescription
+          }
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
+            text: $codec.clockRate
+          }
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
+            text: $codec.bitrate
+          }
+
+          TextField {
+            Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
+            text: $codec.recvFmtp
+          }
+
+          Switch {
+            checked: $codec.enabled
+
+            onClicked: view.model.enableCodec(index, !checked)
+          }
         }
 
-        CodecAttribute {
-          Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
-          text: $codec.bitrate
+        DropArea {
+          anchors.fill: parent
+
+          onEntered: {
+            visualModel.items.move(
+              drag.source.DelegateModel.itemsIndex,
+              dragArea.DelegateModel.itemsIndex
+            )
+          }
         }
-
-        TextField {
-          Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
-          text: $codec.recvFmtp
-        }
-
-        Switch {
-          checked: $codec.enabled
-
-          onClicked: view.model.enableCodec(index, !checked)
-        }
-      }
-
-      MouseArea {
-        id: mouseArea
-
-        anchors.fill: parent
       }
     }
   }
