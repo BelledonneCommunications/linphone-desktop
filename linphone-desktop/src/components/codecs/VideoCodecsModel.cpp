@@ -24,9 +24,15 @@
 
 #include "VideoCodecsModel.hpp"
 
+using namespace std;
+
 // =============================================================================
 
 VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
   for (auto &codec : CoreManager::getInstance()->getCore()->getVideoPayloadTypes())
     addCodec(codec);
+}
+
+void VideoCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType> > &codecs) {
+  CoreManager::getInstance()->getCore()->setVideoPayloadTypes(codecs);
 }

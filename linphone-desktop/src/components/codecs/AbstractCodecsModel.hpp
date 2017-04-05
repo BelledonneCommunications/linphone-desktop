@@ -59,6 +59,8 @@ protected:
 
   void addCodec (std::shared_ptr<linphone::PayloadType> &codec);
 
+  virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType> > &codecs) = 0;
+
 private:
   QList<QVariantMap> m_codecs;
 };

@@ -33,6 +33,9 @@ class VideoCodecsModel : public AbstractCodecsModel {
 public:
   VideoCodecsModel (QObject *parent = Q_NULLPTR);
   ~VideoCodecsModel () = default;
+
+protected:
+  void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType> > &codecs) override;
 };
 
 #endif // VIDEO_CODECS_MODEL_H_

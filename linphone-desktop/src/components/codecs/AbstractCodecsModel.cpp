@@ -23,6 +23,7 @@
 #include <linphone++/linphone.hh>
 
 #include "../../utils.hpp"
+#include "../core/CoreManager.hpp"
 
 #include "AbstractCodecsModel.hpp"
 
@@ -96,6 +97,7 @@ bool AbstractCodecsModel::moveRows (
 
   beginMoveRows(source_parent, source_row, limit, destination_parent, destination_child);
 
+  // Update UI.
   if (destination_child > source_row) {
     --destination_child;
     for (int i = source_row; i <= limit; ++i) {
@@ -105,6 +107,12 @@ bool AbstractCodecsModel::moveRows (
     for (int i = source_row; i <= limit; ++i)
       m_codecs.move(source_row + i - source_row, destination_child + i - source_row);
   }
+
+  // Update linphone codecs list.
+  list<shared_ptr<linphone::PayloadType> > codecs;
+  for (const auto &map : m_codecs)
+    codecs.push_back(map.value("__codec").value<shared_ptr<linphone::PayloadType> >());
+  updateCodecs(codecs);
 
   endMoveRows();
 
