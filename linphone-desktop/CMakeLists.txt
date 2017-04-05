@@ -94,7 +94,6 @@ set(SOURCES
   src/components/chat/ChatProxyModel.cpp
   src/components/codecs/AbstractCodecsModel.cpp
   src/components/codecs/AudioCodecsModel.cpp
-  src/components/codecs/CodecsModel.cpp
   src/components/codecs/VideoCodecsModel.cpp
   src/components/contact/ContactModel.cpp
   src/components/contact/VcardModel.cpp
@@ -130,7 +129,6 @@ set(HEADERS
   src/components/calls/CallsListModel.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
-  src/components/codecs/CodecsModel.hpp
   src/components/codecs/AbstractCodecsModel.hpp
   src/components/codecs/AudioCodecsModel.hpp
   src/components/codecs/VideoCodecsModel.hpp

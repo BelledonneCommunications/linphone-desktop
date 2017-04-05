@@ -33,9 +33,6 @@ class AudioCodecsModel : public AbstractCodecsModel {
 public:
   AudioCodecsModel (QObject *parent = Q_NULLPTR);
   ~AudioCodecsModel () = default;
-
-protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
 };
 
 #endif // AUDIO_CODECS_MODEL_H_

@@ -1,5 +1,5 @@
 /*
- * AbstractCodecsModel.cpp
+ * AbstractAbstractCodecsModel.cBase::pp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,15 +20,105 @@
  *      Author: Ronan Abhamon
  */
 
-#include "CodecsModel.hpp"
+#include <linphone++/linphone.hh>
+
+#include "../../utils.hpp"
 
 #include "AbstractCodecsModel.hpp"
 
 // =============================================================================
 
-AbstractCodecsModel::AbstractCodecsModel (QObject *parent) : QSortFilterProxyModel(parent) {}
+AbstractCodecsModel::AbstractCodecsModel (QObject *parent) : QAbstractListModel(parent) {}
+
+int AbstractCodecsModel::rowCount (const QModelIndex &) const {
+  return m_codecs.count();
+}
+
+QHash<int, QByteArray> AbstractCodecsModel::roleNames () const {
+  QHash<int, QByteArray> roles;
+  roles[Qt::DisplayRole] = "$codec";
+  return roles;
+}
+
+QVariant AbstractCodecsModel::data (const QModelIndex &index, int role) const {
+  int row = index.row();
+
+  if (!index.isValid() || row < 0 || row >= m_codecs.count())
+    return QVariant();
+
+  if (role == Qt::DisplayRole)
+    return m_codecs[row];
+
+  return QVariant();
+}
+
+bool AbstractCodecsModel::moveRow (
+  const QModelIndex &source_parent,
+  int source_row,
+  const QModelIndex &destination_parent,
+  int destination_child
+) {
+  return moveRows(source_parent, source_row, 1, destination_parent, destination_child);
+}
+
+bool AbstractCodecsModel::moveRows (
+  const QModelIndex &source_parent,
+  int source_row,
+  int count,
+  const QModelIndex &destination_parent,
+  int destination_child
+) {
+  int limit = source_row + count - 1;
+
+  if (source_row < 0 || count < 0 || limit >= m_codecs.count())
+    return false;
+
+  beginMoveRows(source_parent, source_row, limit, destination_parent, destination_child);
+
+  if (destination_child < source_row) {
+    for (int i = source_row; i <= limit; ++i)
+      m_codecs.move(source_row, destination_child + i - source_row);
+  } else {
+    for (int i = source_row; i <= limit; ++i)
+      m_codecs.move(source_row, destination_child + i);
+  }
+
+  endRemoveRows();
+
+  return true;
+}
+
+// -----------------------------------------------------------------------------
 
 void AbstractCodecsModel::enableCodec (int id, bool status) {
-  QModelIndex source_index = mapToSource(index(id, 0));
-  static_cast<CodecsModel *>(sourceModel())->enableCodec(source_index.row(), status);
+  Q_ASSERT(id >= 0 && id < m_codecs.count());
+
+  QVariantMap &map = m_codecs[id];
+  shared_ptr<linphone::PayloadType> codec = map.value("__codec").value<shared_ptr<linphone::PayloadType> >();
+
+  codec->enable(status);
+  map["enabled"] = status;
+
+  emit dataChanged(index(id, 0), index(id, 0));
+}
+
+// -----------------------------------------------------------------------------
+
+void AbstractCodecsModel::addCodec (std::shared_ptr<linphone::PayloadType> &codec) {
+  QVariantMap map;
+
+  map["bitrate"] = codec->getNormalBitrate();
+  map["channels"] = codec->getChannels();
+  map["clockRate"] = codec->getClockRate();
+  map["description"] = ::Utils::linphoneStringToQString(codec->getDescription());
+  map["enabled"] = codec->enabled();
+  map["encoderDescription"] = ::Utils::linphoneStringToQString(codec->getEncoderDescription());
+  map["isUsable"] = codec->isUsable();
+  map["isVbr"] = codec->isVbr();
+  map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
+  map["number"] = codec->getNumber();
+  map["recvFmtp"] = ::Utils::linphoneStringToQString(codec->getRecvFmtp());
+  map["__codec"] = QVariant::fromValue(codec);
+
+  m_codecs << map;
 }

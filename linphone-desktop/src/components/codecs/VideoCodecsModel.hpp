@@ -33,9 +33,6 @@ class VideoCodecsModel : public AbstractCodecsModel {
 public:
   VideoCodecsModel (QObject *parent = Q_NULLPTR);
   ~VideoCodecsModel () = default;
-
-protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
 };
 
 #endif // VIDEO_CODECS_MODEL_H_

@@ -27,10 +27,6 @@
 // =============================================================================
 
 VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
-  setSourceModel(CoreManager::getInstance()->getCodecsModel());
-}
-
-bool VideoCodecsModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
-  const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
-  return index.data().toMap()["type"] == CodecsModel::VideoCodec;
+  for (auto &codec : CoreManager::getInstance()->getCore()->getVideoPayloadTypes())
+    addCodec(codec);
 }

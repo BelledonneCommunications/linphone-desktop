@@ -24,7 +24,6 @@
 #define CORE_MANAGER_H_
 
 #include "../calls/CallsListModel.hpp"
-#include "../codecs/CodecsModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
 #include "../settings/SettingsModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
@@ -83,10 +82,6 @@ public:
     return m_sip_addresses_model;
   }
 
-  CodecsModel *getCodecsModel () const {
-    return m_codecs_model;
-  }
-
   SettingsModel *getSettingsModel () const {
     return m_settings_model;
   }
@@ -129,7 +124,6 @@ private:
   CallsListModel *m_calls_list_model;
   ContactsListModel *m_contacts_list_model;
   SipAddressesModel *m_sip_addresses_model;
-  CodecsModel *m_codecs_model;
   SettingsModel *m_settings_model;
 
   QTimer *m_cbs_timer;

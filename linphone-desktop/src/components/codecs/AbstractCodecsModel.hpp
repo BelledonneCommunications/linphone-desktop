@@ -23,21 +23,52 @@
 #ifndef ABSTRACT_CODECS_MODEL_H_
 #define ABSTRACT_CODECS_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include <memory>
+
+#include <QAbstractListModel>
 
 // =============================================================================
 
-class AbstractCodecsModel : public QSortFilterProxyModel {
+namespace linphone {
+  class PayloadType;
+}
+
+class AbstractCodecsModel : public QAbstractListModel {
   Q_OBJECT;
 
 public:
   AbstractCodecsModel (QObject *parent = Q_NULLPTR);
   virtual ~AbstractCodecsModel () = default;
 
-  Q_INVOKABLE void enableCodec (int id, bool status);
+  int rowCount (const QModelIndex &index = QModelIndex()) const override;
+
+  QHash<int, QByteArray> roleNames () const override;
+  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
+  bool moveRow (
+    const QModelIndex &source_parent,
+    int source_row,
+    const QModelIndex &destination_parent,
+    int destination_child
+  );
+
+  bool moveRows (
+    const QModelIndex &source_parent,
+    int source_row,
+    int count,
+    const QModelIndex &destination_parent,
+    int destination_child
+  ) override;
+
+  void enableCodec (int id, bool status);
 
 protected:
-  virtual bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override = 0;
+  void addCodec (std::shared_ptr<linphone::PayloadType> &codec);
+
+private:
+  QList<QVariantMap> m_codecs;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType> );
 
 #endif // ABSTRACT_CODECS_MODEL_H_
