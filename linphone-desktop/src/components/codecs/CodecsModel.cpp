@@ -85,6 +85,42 @@ QVariant CodecsModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
+bool CodecsModel::moveRow (
+  const QModelIndex &source_parent,
+  int source_row,
+  const QModelIndex &destination_parent,
+  int destination_child
+) {
+  return moveRows(source_parent, source_row, 1, destination_parent, destination_child);
+}
+
+bool CodecsModel::moveRows (
+  const QModelIndex &source_parent,
+  int source_row,
+  int count,
+  const QModelIndex &destination_parent,
+  int destination_child
+) {
+  int limit = source_row + count - 1;
+
+  if (source_row < 0 || count < 0 || limit >= m_codecs.count())
+    return false;
+
+  beginMoveRows(source_parent, source_row, limit, destination_parent, destination_child);
+
+  if (destination_child < source_row) {
+    for (int i = source_row; i <= limit; ++i)
+      m_codecs.move(source_row, destination_child + i - source_row);
+  } else {
+    for (int i = source_row; i <= limit; ++i)
+      m_codecs.move(source_row, destination_child + i);
+  }
+
+  endRemoveRows();
+
+  return true;
+}
+
 // -----------------------------------------------------------------------------
 
 void CodecsModel::enableCodec (int id, bool status) {

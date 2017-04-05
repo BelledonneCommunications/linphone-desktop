@@ -8,7 +8,7 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 Column {
-  property alias model: visualModel.model
+  property alias model: view.model
 
   // ---------------------------------------------------------------------------
   // Header.
@@ -76,129 +76,111 @@ Column {
 
     height: count * CodecsViewerStyle.attribute.height
 
-    model: DelegateModel {
-      id: visualModel
+    // -----------------------------------------------------------------------
+    // One codec.
+    // -----------------------------------------------------------------------
 
-      // -----------------------------------------------------------------------
-      // One codec.
-      // -----------------------------------------------------------------------
+    delegate: MouseArea {
+      id: dragArea
 
-      delegate: MouseArea {
-        id: dragArea
+      property bool held: false
 
-        property bool held: false
+      anchors {
+        left: parent.left
+        right: parent.right
+      }
 
-        anchors {
-          left: parent.left
-          right: parent.right
-        }
+      drag {
+        axis: Drag.YAxis
 
-        drag {
-          axis: Drag.YAxis
+        maximumY: (view.count - index) * height - height
+        minimumY: -index * height
 
-          maximumY: (view.count - DelegateModel.itemsIndex) * height - height
-          minimumY: -DelegateModel.itemsIndex * height
+        target: held ? content : undefined
+      }
 
-          target: held ? content : undefined
-        }
+      height: CodecsViewerStyle.attribute.height
 
-        height: CodecsViewerStyle.attribute.height
+      onPressed: held = true
+      onReleased: {
+        held = false
+        console.log('toto', content.y)
+        content.y = 0
+      }
 
-        onPressed: held = true
-        onReleased: {
-          held = false
+      Rectangle {
+        id: content
 
-          content.y = 0
-        }
+        Drag.active: dragArea.held
+        Drag.source: dragArea
+        Drag.hotSpot.x: width / 2
+        Drag.hotSpot.y: height / 2
 
-        Rectangle {
-          id: content
+        color: CodecsViewerStyle.attribute.background.color.normal
 
-          Drag.active: dragArea.held
-          Drag.source: dragArea
-          Drag.hotSpot.x: width / 2
-          Drag.hotSpot.y: height / 2
+        height: dragArea.height
+        width: dragArea.width
 
-          color: CodecsViewerStyle.attribute.background.color.normal
-
-          height: dragArea.height
-          width: dragArea.width
-
-          RowLayout {
-            anchors.fill: parent
-
-            spacing: CodecsViewerStyle.column.spacing
-
-            CodecAttribute {
-              Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
-              text: $codec.mime
-            }
-
-            CodecAttribute {
-              Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
-              text: $codec.encoderDescription
-            }
-
-            CodecAttribute {
-              Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
-              text: $codec.clockRate
-            }
-
-            CodecAttribute {
-              Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
-              text: $codec.bitrate
-            }
-
-            TextField {
-              Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
-              text: $codec.recvFmtp
-            }
-
-            Switch {
-              Layout.fillWidth: true
-              Layout.leftMargin: 10
-
-              checked: $codec.enabled
-
-              onClicked: visualModel.model.enableCodec(index, !checked)
-            }
-          }
-        }
-
-        DropArea {
-          anchors {
-            fill: parent
-            margins: CodecsViewerStyle.attribute.dropArea.margins
-          }
-
-          onEntered: {
-            visualModel.items.move(
-              drag.source.DelegateModel.itemsIndex,
-              dragArea.DelegateModel.itemsIndex
-            )
-          }
-        }
-
-        MouseArea {
-          id: mouseArea
-
+        RowLayout {
           anchors.fill: parent
-          hoverEnabled: true
 
-          onPressed: mouse.accepted = false
-        }
+          spacing: CodecsViewerStyle.column.spacing
 
-        // ---------------------------------------------------------------------
-        // Animations/States codec.
-        // ---------------------------------------------------------------------
-
-        states: State {
-          when: mouseArea.containsMouse
-
-          PropertyChanges {
-            target: content
-            color: CodecsViewerStyle.attribute.background.color.hovered
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
+            text: $codec.mime
           }
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
+            text: $codec.encoderDescription
+          }
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
+            text: $codec.clockRate
+          }
+
+          CodecAttribute {
+            Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
+            text: $codec.bitrate
+          }
+
+          TextField {
+            Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
+            text: $codec.recvFmtp
+          }
+
+          Switch {
+            Layout.fillWidth: true
+            Layout.leftMargin: 10
+
+            checked: $codec.enabled
+
+            onClicked: view.model.enableCodec(index, !checked)
+          }
+        }
+      }
+
+      MouseArea {
+        id: mouseArea
+
+        anchors.fill: parent
+        hoverEnabled: true
+
+        onPressed: mouse.accepted = false
+      }
+
+      // ---------------------------------------------------------------------
+      // Animations/States codec.
+      // ---------------------------------------------------------------------
+
+      states: State {
+        when: mouseArea.containsMouse
+
+        PropertyChanges {
+          target: content
+          color: CodecsViewerStyle.attribute.background.color.hovered
         }
       }
     }

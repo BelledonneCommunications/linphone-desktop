@@ -53,6 +53,21 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  bool moveRow (
+    const QModelIndex &source_parent,
+    int source_row,
+    const QModelIndex &destination_parent,
+    int destination_child
+  );
+
+  bool moveRows (
+    const QModelIndex &source_parent,
+    int source_row,
+    int count,
+    const QModelIndex &destination_parent,
+    int destination_child
+  ) override;
+
   void enableCodec (int id, bool status);
 
 private:
