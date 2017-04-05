@@ -12,6 +12,4 @@ Text {
     bold: true
     pointSize: CodecsViewerStyle.legend.fontSize
   }
-
-  horizontalAlignment: Text.AlignHCenter
 }

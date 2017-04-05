@@ -14,7 +14,7 @@ Column {
   // Header.
   // ---------------------------------------------------------------------------
 
-  Row {
+  RowLayout {
     anchors {
       left: parent.left
       leftMargin: CodecsViewerStyle.leftMargin
@@ -50,6 +50,9 @@ Column {
     }
 
     CodecLegend {
+      Layout.fillWidth: true
+      Layout.leftMargin: 10
+
       text: qsTr('codecStatus')
     }
   }
@@ -76,6 +79,10 @@ Column {
     model: DelegateModel {
       id: visualModel
 
+      // -----------------------------------------------------------------------
+      // One codec.
+      // -----------------------------------------------------------------------
+
       delegate: MouseArea {
         id: dragArea
 
@@ -88,15 +95,23 @@ Column {
 
         drag {
           axis: Drag.YAxis
+
+          maximumY: (view.count - DelegateModel.itemsIndex) * height - height
+          minimumY: -DelegateModel.itemsIndex * height
+
           target: held ? content : undefined
         }
 
         height: CodecsViewerStyle.attribute.height
 
-        onPressAndHold: held = true
-        onReleased: held = false
+        onPressed: held = true
+        onReleased: {
+          held = false
 
-        RowLayout {
+          content.y = 0
+        }
+
+        Rectangle {
           id: content
 
           Drag.active: dragArea.held
@@ -104,51 +119,85 @@ Column {
           Drag.hotSpot.x: width / 2
           Drag.hotSpot.y: height / 2
 
+          color: CodecsViewerStyle.attribute.background.color.normal
+
           height: dragArea.height
           width: dragArea.width
 
-          spacing: CodecsViewerStyle.column.spacing
+          RowLayout {
+            anchors.fill: parent
 
-          CodecAttribute {
-            Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
-            text: $codec.mime
-          }
+            spacing: CodecsViewerStyle.column.spacing
 
-          CodecAttribute {
-            Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
-            text: $codec.encoderDescription
-          }
+            CodecAttribute {
+              Layout.preferredWidth: CodecsViewerStyle.column.mimeWidth
+              text: $codec.mime
+            }
 
-          CodecAttribute {
-            Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
-            text: $codec.clockRate
-          }
+            CodecAttribute {
+              Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
+              text: $codec.encoderDescription
+            }
 
-          CodecAttribute {
-            Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
-            text: $codec.bitrate
-          }
+            CodecAttribute {
+              Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
+              text: $codec.clockRate
+            }
 
-          TextField {
-            Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
-            text: $codec.recvFmtp
-          }
+            CodecAttribute {
+              Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
+              text: $codec.bitrate
+            }
 
-          Switch {
-            checked: $codec.enabled
+            TextField {
+              Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
+              text: $codec.recvFmtp
+            }
 
-            onClicked: view.model.enableCodec(index, !checked)
+            Switch {
+              Layout.fillWidth: true
+              Layout.leftMargin: 10
+
+              checked: $codec.enabled
+
+              onClicked: visualModel.model.enableCodec(index, !checked)
+            }
           }
         }
 
         DropArea {
-          anchors.fill: parent
+          anchors {
+            fill: parent
+            margins: CodecsViewerStyle.attribute.dropArea.margins
+          }
 
           onEntered: {
             visualModel.items.move(
               drag.source.DelegateModel.itemsIndex,
               dragArea.DelegateModel.itemsIndex
             )
+          }
+        }
+
+        MouseArea {
+          id: mouseArea
+
+          anchors.fill: parent
+          hoverEnabled: true
+
+          onPressed: mouse.accepted = false
+        }
+
+        // ---------------------------------------------------------------------
+        // Animations/States codec.
+        // ---------------------------------------------------------------------
+
+        states: State {
+          when: mouseArea.containsMouse
+
+          PropertyChanges {
+            target: content
+            color: CodecsViewerStyle.attribute.background.color.hovered
           }
         }
       }

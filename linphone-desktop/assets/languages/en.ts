@@ -240,27 +240,27 @@ Server url not configured.</translation>
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"></translation>
+        <translation>Name</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Rate (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitrate (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"></translation>
+        <translation>Parameters</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
