@@ -69,7 +69,7 @@ set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Network
 if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
   include("${EP_linphone_CONFIG_DIR}/LinphoneConfig.cmake")
   include("${EP_linphone_CONFIG_DIR}/wrappers/cpp/LinphoneCxxConfig.cmake")
-  include("${EP_bctoolbox_CONFIG_DIR}/BctoolboxConfig.cmake")
+  include("${EP_bctoolbox_CONFIG_DIR}/BcToolboxConfig.cmake")
   include("${EP_belcard_CONFIG_DIR}/BelcardConfig.cmake")
 else()
   find_package(Linphone REQUIRED)
