@@ -34,7 +34,7 @@ QtObject {
     property int encoderDescriptionWidth: 280
     property int mimeWidth: 100
     property int recvFmtpWidth: 200
-    property int spacing: 5
+    property int spacing: 10
   }
 
   property QtObject legend: QtObject {

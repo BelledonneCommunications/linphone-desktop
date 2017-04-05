@@ -70,7 +70,6 @@ Column {
 
     anchors {
       left: parent.left
-      leftMargin: CodecsViewerStyle.leftMargin
       right: parent.right
     }
 
@@ -93,8 +92,8 @@ Column {
       drag {
         axis: Drag.YAxis
 
-        maximumY: (view.count - index) * height - height
-        minimumY: -index * height
+        maximumY: (view.count - index) * height - height / 2
+        minimumY: -index * height - height / 2
 
         target: held ? content : undefined
       }
@@ -104,7 +103,7 @@ Column {
       onPressed: held = true
       onReleased: {
         held = false
-        console.log('toto', content.y)
+        view.model.moveCodec(index, index + 1 + content.y / height)
         content.y = 0
       }
 
@@ -116,13 +115,20 @@ Column {
         Drag.hotSpot.x: width / 2
         Drag.hotSpot.y: height / 2
 
+        anchors {
+          left: parent.left
+          right: parent.right
+        }
+
         color: CodecsViewerStyle.attribute.background.color.normal
 
         height: dragArea.height
-        width: dragArea.width
 
         RowLayout {
-          anchors.fill: parent
+          anchors {
+            fill: parent
+            leftMargin: CodecsViewerStyle.leftMargin
+          }
 
           spacing: CodecsViewerStyle.column.spacing
 
@@ -141,7 +147,7 @@ Column {
             text: $codec.clockRate
           }
 
-          CodecAttribute {
+          TextField {
             Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
             text: $codec.bitrate
           }
@@ -153,7 +159,6 @@ Column {
 
           Switch {
             Layout.fillWidth: true
-            Layout.leftMargin: 10
 
             checked: $codec.enabled
 
@@ -175,14 +180,34 @@ Column {
       // Animations/States codec.
       // ---------------------------------------------------------------------
 
-      states: State {
-        when: mouseArea.containsMouse
+      states: [
+        State {
+          when: mouseArea.containsMouse && !dragArea.held
 
-        PropertyChanges {
-          target: content
-          color: CodecsViewerStyle.attribute.background.color.hovered
+          PropertyChanges {
+            target: content
+
+            color: CodecsViewerStyle.attribute.background.color.hovered
+          }
+        },
+
+        State {
+          when: dragArea.held
+
+          PropertyChanges {
+            target: content
+
+            color: CodecsViewerStyle.attribute.background.color.hovered
+          }
+
+          PropertyChanges {
+            target: dragArea
+
+            opacity: 0.5
+            z: Constants.zMax
+          }
         }
-      }
+      ]
     }
   }
 }

@@ -45,13 +45,10 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-  bool moveRow (
-    const QModelIndex &source_parent,
-    int source_row,
-    const QModelIndex &destination_parent,
-    int destination_child
-  );
+  Q_INVOKABLE void enableCodec (int id, bool status);
+  Q_INVOKABLE void moveCodec (int source, int destination);
 
+protected:
   bool moveRows (
     const QModelIndex &source_parent,
     int source_row,
@@ -60,9 +57,6 @@ public:
     int destination_child
   ) override;
 
-  void enableCodec (int id, bool status);
-
-protected:
   void addCodec (std::shared_ptr<linphone::PayloadType> &codec);
 
 private:

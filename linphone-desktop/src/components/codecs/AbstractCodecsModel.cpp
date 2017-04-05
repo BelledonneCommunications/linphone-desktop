@@ -52,42 +52,6 @@ QVariant AbstractCodecsModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-bool AbstractCodecsModel::moveRow (
-  const QModelIndex &source_parent,
-  int source_row,
-  const QModelIndex &destination_parent,
-  int destination_child
-) {
-  return moveRows(source_parent, source_row, 1, destination_parent, destination_child);
-}
-
-bool AbstractCodecsModel::moveRows (
-  const QModelIndex &source_parent,
-  int source_row,
-  int count,
-  const QModelIndex &destination_parent,
-  int destination_child
-) {
-  int limit = source_row + count - 1;
-
-  if (source_row < 0 || count < 0 || limit >= m_codecs.count())
-    return false;
-
-  beginMoveRows(source_parent, source_row, limit, destination_parent, destination_child);
-
-  if (destination_child < source_row) {
-    for (int i = source_row; i <= limit; ++i)
-      m_codecs.move(source_row, destination_child + i - source_row);
-  } else {
-    for (int i = source_row; i <= limit; ++i)
-      m_codecs.move(source_row, destination_child + i);
-  }
-
-  endRemoveRows();
-
-  return true;
-}
-
 // -----------------------------------------------------------------------------
 
 void AbstractCodecsModel::enableCodec (int id, bool status) {
@@ -100,6 +64,51 @@ void AbstractCodecsModel::enableCodec (int id, bool status) {
   map["enabled"] = status;
 
   emit dataChanged(index(id, 0), index(id, 0));
+}
+
+void AbstractCodecsModel::moveCodec (int source, int destination) {
+  moveRow(QModelIndex(), source, QModelIndex(), destination);
+}
+
+// -----------------------------------------------------------------------------
+
+bool AbstractCodecsModel::moveRows (
+  const QModelIndex &source_parent,
+  int source_row,
+  int count,
+  const QModelIndex &destination_parent,
+  int destination_child
+) {
+  int limit = source_row + count - 1;
+
+  {
+    int n_codecs = m_codecs.count();
+    if (
+      source_row < 0 ||
+      destination_child < 0 ||
+      count < 0 ||
+      destination_child > n_codecs ||
+      limit >= n_codecs ||
+      (source_row <= destination_child && source_row + count >= destination_child)
+    )
+      return false;
+  }
+
+  beginMoveRows(source_parent, source_row, limit, destination_parent, destination_child);
+
+  if (destination_child > source_row) {
+    --destination_child;
+    for (int i = source_row; i <= limit; ++i) {
+      m_codecs.move(source_row, destination_child + i - source_row);
+    }
+  } else {
+    for (int i = source_row; i <= limit; ++i)
+      m_codecs.move(source_row + i - source_row, destination_child + i - source_row);
+  }
+
+  endMoveRows();
+
+  return true;
 }
 
 // -----------------------------------------------------------------------------
