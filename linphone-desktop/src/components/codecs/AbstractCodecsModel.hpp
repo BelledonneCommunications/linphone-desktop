@@ -48,6 +48,9 @@ public:
   Q_INVOKABLE void enableCodec (int id, bool status);
   Q_INVOKABLE void moveCodec (int source, int destination);
 
+  Q_INVOKABLE void setBitrate (int id, int bitrate);
+  Q_INVOKABLE void setRecvFmtp (int id, const QString &recv_fmtp);
+
 protected:
   bool moveRows (
     const QModelIndex &source_parent,

@@ -27,7 +27,15 @@
 
 #include "AbstractCodecsModel.hpp"
 
+using namespace std;
+
 // =============================================================================
+
+inline shared_ptr<linphone::PayloadType> getCodecFromMap (const QVariantMap &map) {
+  return map.value("__codec").value<shared_ptr<linphone::PayloadType> >();
+}
+
+// -----------------------------------------------------------------------------
 
 AbstractCodecsModel::AbstractCodecsModel (QObject *parent) : QAbstractListModel(parent) {}
 
@@ -59,16 +67,40 @@ void AbstractCodecsModel::enableCodec (int id, bool status) {
   Q_ASSERT(id >= 0 && id < m_codecs.count());
 
   QVariantMap &map = m_codecs[id];
-  shared_ptr<linphone::PayloadType> codec = map.value("__codec").value<shared_ptr<linphone::PayloadType> >();
+  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
 
   codec->enable(status);
-  map["enabled"] = status;
+  map["enabled"] = codec->enabled();
 
   emit dataChanged(index(id, 0), index(id, 0));
 }
 
 void AbstractCodecsModel::moveCodec (int source, int destination) {
   moveRow(QModelIndex(), source, QModelIndex(), destination);
+}
+
+void AbstractCodecsModel::setBitrate (int id, int bitrate) {
+  Q_ASSERT(id >= 0 && id < m_codecs.count());
+
+  QVariantMap &map = m_codecs[id];
+  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+
+  codec->setNormalBitrate(bitrate);
+  map["bitrate"] = codec->getNormalBitrate();
+
+  emit dataChanged(index(id, 0), index(id, 0));
+}
+
+void AbstractCodecsModel::setRecvFmtp (int id, const QString &recv_fmtp) {
+  Q_ASSERT(id >= 0 && id < m_codecs.count());
+
+  QVariantMap &map = m_codecs[id];
+  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+
+  codec->setRecvFmtp(::Utils::qStringToLinphoneString(recv_fmtp));
+  map["recvFmtp"] = ::Utils::linphoneStringToQString(codec->getRecvFmtp());
+
+  emit dataChanged(index(id, 0), index(id, 0));
 }
 
 // -----------------------------------------------------------------------------

@@ -147,14 +147,18 @@ Column {
             text: $codec.clockRate
           }
 
-          TextField {
+          NumericField {
             Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
             text: $codec.bitrate
+
+            onEditingFinished: view.model.setBitrate(index, text)
           }
 
           TextField {
             Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
             text: $codec.recvFmtp
+
+            onEditingFinished: view.model.setRecvFmtp(index, text)
           }
 
           Switch {
