@@ -34,8 +34,12 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
 
     if (info.suffix() == "qml") {
       // Ignore extra selectors.
-      QString dir = info.absoluteDir().dirName();
-      if (dir == "+linux" || dir == "+mac" || dir == "+windows")
+      QString dir = info.absoluteDir().absolutePath();
+      if (dir.contains("+linux") || dir.contains("+mac") || dir.contains("+windows"))
+        continue;
+
+      // Ignore default imports.
+      if (dir.startsWith(":/QtQuick"))
         continue;
 
       QString basename = info.baseName();
@@ -53,6 +57,9 @@ QString DefaultTranslator::translate (
   const char *disambiguation,
   int n
 ) const {
+  if (!context)
+    return QStringLiteral("");
+
   QString translation = QTranslator::translate(context, source_text, disambiguation, n);
 
   if (translation.length() == 0 && m_contexts.contains(context))

@@ -92,7 +92,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
 }
 
 App::~App () {
-  qInfo() << "Destroying app...";
+  qInfo() << QStringLiteral("Destroying app...");
 }
 
 // -----------------------------------------------------------------------------
