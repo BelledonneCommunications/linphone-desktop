@@ -143,7 +143,7 @@ bool AbstractCodecsModel::moveRows (
   // Update linphone codecs list.
   list<shared_ptr<linphone::PayloadType> > codecs;
   for (const auto &map : m_codecs)
-    codecs.push_back(map.value("__codec").value<shared_ptr<linphone::PayloadType> >());
+    codecs.push_back(getCodecFromMap(map));
   updateCodecs(codecs);
 
   endMoveRows();

@@ -149,6 +149,7 @@ Column {
 
           NumericField {
             Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
+            readOnly: !$codec.isVbr
             text: $codec.bitrate
 
             onEditingFinished: view.model.setBitrate(index, text)
