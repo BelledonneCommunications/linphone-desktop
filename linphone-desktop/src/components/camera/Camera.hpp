@@ -52,7 +52,7 @@ private:
   bool m_update_context_info = false;
 
   bool m_is_preview = false;
-  shared_ptr<linphone::Call> m_linphone_call;
+  std::shared_ptr<linphone::Call> m_linphone_call;
 
   QQuickWindow *m_window;
 };

@@ -22,6 +22,8 @@
 
 #include "ChatProxyModel.hpp"
 
+using namespace std;
+
 // =============================================================================
 
 // Fetch the L last filtered chat entries.

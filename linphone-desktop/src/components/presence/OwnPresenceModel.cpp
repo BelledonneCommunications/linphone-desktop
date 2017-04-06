@@ -27,6 +27,8 @@
 
 #include "OwnPresenceModel.hpp"
 
+using namespace std;
+
 // =============================================================================
 
 Presence::PresenceLevel OwnPresenceModel::getPresenceLevel () const {

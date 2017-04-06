@@ -53,6 +53,8 @@
 #define N_MAX_NOTIFICATIONS 15
 #define MAX_TIMEOUT 60000
 
+using namespace std;
+
 // =============================================================================
 
 inline int getNotificationSize (const QObject &object, const char *property) {

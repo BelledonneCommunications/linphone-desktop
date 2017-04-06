@@ -76,7 +76,7 @@ private:
 
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
-  void handlePresenceReceived (const QString &sip_address, const shared_ptr<const linphone::PresenceModel> &presence_model);
+  void handlePresenceReceived (const QString &sip_address, const std::shared_ptr<const linphone::PresenceModel> &presence_model);
 
   void handleAllEntriesRemoved (const QString &sip_address);
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);

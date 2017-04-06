@@ -60,6 +60,8 @@
 
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
+using namespace std;
+
 // =============================================================================
 
 inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {

@@ -20,8 +20,6 @@
  *      Author: Ronan Abhamon
  */
 
-#include <linphone++/linphone.hh>
-
 #include "../../utils.hpp"
 #include "../core/CoreManager.hpp"
 

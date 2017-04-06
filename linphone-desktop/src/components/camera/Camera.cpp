@@ -33,6 +33,8 @@
 
 #define MAX_FPS 30
 
+using namespace std;
+
 // =============================================================================
 
 struct ContextInfo {

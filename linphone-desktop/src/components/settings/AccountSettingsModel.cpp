@@ -27,6 +27,8 @@
 
 #include "AccountSettingsModel.hpp"
 
+using namespace std;
+
 // =============================================================================
 
 QVariantMap AccountSettingsModel::getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxy_config) {

@@ -32,6 +32,8 @@
 
 #define AUTO_ANSWER_OBJECT_NAME "auto-answer-timer"
 
+using namespace std;
+
 // =============================================================================
 
 CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {

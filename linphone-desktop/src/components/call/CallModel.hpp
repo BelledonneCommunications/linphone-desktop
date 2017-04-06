@@ -68,7 +68,7 @@ public:
     return m_linphone_call;
   }
 
-  static void setRecordFile (shared_ptr<linphone::CallParams> &call_params);
+  static void setRecordFile (std::shared_ptr<linphone::CallParams> &call_params);
 
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
