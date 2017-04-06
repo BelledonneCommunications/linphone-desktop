@@ -24,7 +24,6 @@
 #define NOTIFIER_H_
 
 #include <linphone++/linphone.hh>
-
 #include <QMutex>
 #include <QObject>
 

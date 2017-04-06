@@ -23,12 +23,11 @@
 #ifndef CONTACTS_LIST_PROXY_MODEL_H_
 #define CONTACTS_LIST_PROXY_MODEL_H_
 
-#include "../contact/ContactModel.hpp"
-
 #include <QSortFilterProxyModel>
 
 // =============================================================================
 
+class ContactModel;
 class ContactsListModel;
 
 class ContactsListProxyModel : public QSortFilterProxyModel {
@@ -52,7 +51,7 @@ protected:
 
 private:
   float computeStringWeight (const QString &string, float percentage) const;
-  float computeContactWeight (const ContactModel &contact) const;
+  float computeContactWeight (const ContactModel *contact) const;
 
   bool isConnectedFilterUsed () const {
     return m_use_connected_filter;

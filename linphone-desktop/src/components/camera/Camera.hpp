@@ -23,15 +23,20 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 
+#include <memory>
+
 #include <QOpenGLFramebufferObject>
 #include <QQuickFramebufferObject>
 
-#include "../call/CallModel.hpp"
-
 // =============================================================================
 
+class CallModel;
 class Camera;
 struct ContextInfo;
+
+namespace linphone {
+  class Call;
+}
 
 class CameraRenderer : public QQuickFramebufferObject::Renderer {
   friend class Camera;
