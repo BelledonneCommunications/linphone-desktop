@@ -37,11 +37,11 @@ public:
     m_assistant = assistant;
   }
 
-  void onCreateAccount (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
+  // void onCreateAccount (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
 
   void onIsAccountExist (
     const shared_ptr<linphone::AccountCreator> &creator,
@@ -59,53 +59,53 @@ public:
     }
   }
 
-  void onActivateAccount (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onIsAccountActivated (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onLinkAccount (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onActivateAlias (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onIsAliasUsed (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onIsAccountLinked (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onRecoverAccount (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
-
-  void onUpdateAccount (
-    const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
-    const string &resp
-  ) override {}
+  // void onActivateAccount (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onIsAccountActivated (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onLinkAccount (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onActivateAlias (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onIsAliasUsed (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onIsAccountLinked (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onRecoverAccount (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
+  //
+  // void onUpdateAccount (
+  // const shared_ptr<linphone::AccountCreator> &creator,
+  // linphone::AccountCreatorStatus status,
+  // const string &resp
+  // ) override {}
 
 private:
   AssistantModel *m_assistant;
@@ -174,6 +174,15 @@ void AssistantModel::setPassword (const QString &password) {
   }
 
   emit passwordChanged(password, error);
+}
+
+void AssistantModel::setPhoneNumber (const QString &phone_number) {
+  // shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
+  QString error;
+
+  // TODO: use the future wrapped function: `set_phone_number`.
+
+  emit phoneNumberChanged(phone_number, error);
 }
 
 // -----------------------------------------------------------------------------

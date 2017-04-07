@@ -38,12 +38,14 @@ public:
 
   Q_INVOKABLE void setUsername (const QString &username);
   Q_INVOKABLE void setPassword (const QString &password);
+  Q_INVOKABLE void setPhoneNumber (const QString &phone_number);
 
   Q_INVOKABLE void login ();
 
 signals:
   void usernameChanged (const QString &username, const QString &error);
   void passwordChanged (const QString &password, const QString &error);
+  void phoneNumberChanged (const QString &phone_number, const QString &error);
 
   void loginStatusChanged (const QString &error);
 

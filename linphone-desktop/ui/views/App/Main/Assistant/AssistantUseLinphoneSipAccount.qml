@@ -115,6 +115,8 @@ AssistantAbstractView {
 
       text: qsTr('useUsernameToLogin')
       width: AssistantUseLinphoneSipAccountStyle.checkBox.width
+
+      onClicked: requestBlock.stop('')
     }
 
     RequestBlock {
