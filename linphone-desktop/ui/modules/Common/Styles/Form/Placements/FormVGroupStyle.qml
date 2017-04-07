@@ -12,6 +12,12 @@ QtObject {
     property int maxWidth: 400
   }
 
+  property QtObject error: QtObject {
+    property color color: Colors.error
+    property int fontSize: 10
+    property int height: 16
+  }
+
   property QtObject legend: QtObject {
     property color color: Colors.j
     property int fontSize: 10

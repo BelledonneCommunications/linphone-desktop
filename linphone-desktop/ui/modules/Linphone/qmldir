@@ -8,7 +8,8 @@ module Linphone
 
 AccountStatus       1.0 Account/AccountStatus.qml
 
-CardBlock           1.0 CardBlock.qml
+CardBlock           1.0 Blocks/CardBlock.qml
+RequestBlock        1.0 Blocks/RequestBlock.qml
 
 Calls               1.0 Calls/Calls.qml
 

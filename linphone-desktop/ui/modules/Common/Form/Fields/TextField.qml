@@ -12,11 +12,14 @@ Controls.TextField {
   id: textField
 
   property alias icon: icon.icon
+  property string error: ''
   property var tools
 
   background: Rectangle {
     border {
-      color: TextFieldStyle.background.border.color
+      color: textField.error.length > 0
+        ? TextFieldStyle.background.border.color.error
+        : TextFieldStyle.background.border.color.normal
       width: TextFieldStyle.background.border.width
     }
 
@@ -39,7 +42,9 @@ Controls.TextField {
         id: toolsContainer
 
         border {
-          color: TextFieldStyle.background.border.color
+          color: textField.error.length > 0
+            ? TextFieldStyle.background.border.color.error
+            : TextFieldStyle.background.border.color.normal
           width: TextFieldStyle.background.border.width
         }
 

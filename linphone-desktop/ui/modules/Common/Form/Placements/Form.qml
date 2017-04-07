@@ -7,6 +7,7 @@ import Common.Styles 1.0
 
 Column {
   property alias title: title.text
+  property bool dealWithErrors: false
   property int orientation: Qt.Horizontal
 
   // ---------------------------------------------------------------------------

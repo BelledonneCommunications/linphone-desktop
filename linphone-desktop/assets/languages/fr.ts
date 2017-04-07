@@ -125,6 +125,49 @@
     </message>
 </context>
 <context>
+    <name>AssistantModel</name>
+    <message>
+        <source>usernameStatusTooShort</source>
+        <translation>Trop court ! (%1 caractères min.)</translation>
+    </message>
+    <message>
+        <source>usernameStatusTooLong</source>
+        <translation>Trop long ! (%1 caractères max.)</translation>
+    </message>
+    <message>
+        <source>usernameStatusInvalidCharacters</source>
+        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
+    </message>
+    <message>
+        <source>usernameStatusInvalid</source>
+        <translation>Nom d&apos;utilisateur invalide.</translation>
+    </message>
+    <message>
+        <source>passwordStatusTooShort</source>
+        <translation>Trop court ! (%1 caractères min.)</translation>
+    </message>
+    <message>
+        <source>passwordStatusTooLong</source>
+        <translation>Trop long ! (%1 caractères max.)&gt;</translation>
+    </message>
+    <message>
+        <source>passwordStatusInvalidCharacters</source>
+        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
+    </message>
+    <message>
+        <source>passwordStatusMissingCharacters</source>
+        <translation>Caractères manquants : `%1`.</translation>
+    </message>
+    <message>
+        <source>requestFailed</source>
+        <translation>Impossible d&apos;envoyer la requête.</translation>
+    </message>
+    <message>
+        <source>loginWithUsernameFailed</source>
+        <translation>La connection a échouée. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
+    </message>
+</context>
+<context>
     <name>AssistantUseLinphoneSipAccount</name>
     <message>
         <source>confirmAction</source>

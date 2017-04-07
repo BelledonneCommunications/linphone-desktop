@@ -38,4 +38,6 @@ QtObject {
   property color x:   '#96A5B1'
   property color y:   '#D0D8DE'
   property color z:   '#17A81A'
+
+  property color error: '#FF0000'
 }

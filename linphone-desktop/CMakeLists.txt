@@ -86,6 +86,7 @@ set(SOURCES
   src/app/providers/AvatarProvider.cpp
   src/app/providers/ThumbnailProvider.cpp
   src/app/translator/DefaultTranslator.cpp
+  src/components/assistant/AssistantModel.cpp
   src/components/call/CallModel.cpp
   src/components/calls/CallsListModel.cpp
   src/components/camera/Camera.cpp
@@ -123,15 +124,17 @@ set(HEADERS
   src/app/providers/AvatarProvider.hpp
   src/app/providers/ThumbnailProvider.hpp
   src/app/translator/DefaultTranslator.hpp
+  src/components/assistant/AssistantModel.hpp
   src/components/camera/Camera.hpp
-  src/components/camera/MSFunctions.hpp
   src/components/call/CallModel.hpp
   src/components/calls/CallsListModel.hpp
+  src/components/camera/MSFunctions.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
   src/components/codecs/AbstractCodecsModel.hpp
   src/components/codecs/AudioCodecsModel.hpp
   src/components/codecs/VideoCodecsModel.hpp
+  src/components/Components.hpp
   src/components/contact/ContactModel.hpp
   src/components/contact/VcardModel.hpp
   src/components/contacts/ContactsListModel.hpp

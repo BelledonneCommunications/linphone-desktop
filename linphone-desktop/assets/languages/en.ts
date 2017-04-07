@@ -125,6 +125,49 @@
     </message>
 </context>
 <context>
+    <name>AssistantModel</name>
+    <message>
+        <source>loginWithUsernameFailed</source>
+        <translation>Login failed. Please check your username/password.</translation>
+    </message>
+    <message>
+        <source>usernameStatusTooShort</source>
+        <translation>Too short! (%1 characters min.)</translation>
+    </message>
+    <message>
+        <source>usernameStatusTooLong</source>
+        <translation>Too long! (%1 characters max.)</translation>
+    </message>
+    <message>
+        <source>usernameStatusInvalidCharacters</source>
+        <translation>Invalid characters detected. (regex: `%1`.)</translation>
+    </message>
+    <message>
+        <source>usernameStatusInvalid</source>
+        <translation>Invalid username.</translation>
+    </message>
+    <message>
+        <source>passwordStatusTooShort</source>
+        <translation>Too short! (%1 characters min.)</translation>
+    </message>
+    <message>
+        <source>passwordStatusTooLong</source>
+        <translation>Too long! (%1 characters max.)</translation>
+    </message>
+    <message>
+        <source>passwordStatusInvalidCharacters</source>
+        <translation>Invalid characters detected. (regex: `%1`.)</translation>
+    </message>
+    <message>
+        <source>passwordStatusMissingCharacters</source>
+        <translation>Missing characters: `%1`.</translation>
+    </message>
+    <message>
+        <source>requestFailed</source>
+        <translation>Unable to send the request.</translation>
+    </message>
+</context>
+<context>
     <name>AssistantUseLinphoneSipAccount</name>
     <message>
         <source>confirmAction</source>

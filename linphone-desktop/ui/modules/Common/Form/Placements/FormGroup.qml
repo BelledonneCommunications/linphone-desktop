@@ -9,6 +9,7 @@ Loader {
 
   property string label
   readonly property int orientation: parent.orientation
+  readonly property bool dealWithErrors: parent.dealWithErrors
 
   default property var _content: null
 

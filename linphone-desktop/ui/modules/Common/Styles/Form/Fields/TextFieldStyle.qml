@@ -13,7 +13,11 @@ QtObject {
     property int radius: 4
 
     property QtObject border: QtObject {
-      property color color: Colors.c
+      property QtObject color: QtObject {
+        property color error: Colors.error
+        property color normal: Colors.c
+      }
+
       property int width: 1
     }
 

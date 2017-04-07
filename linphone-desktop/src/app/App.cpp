@@ -20,17 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../components/calls/CallsListModel.hpp"
-#include "../components/camera/Camera.hpp"
-#include "../components/chat/ChatProxyModel.hpp"
-#include "../components/codecs/AudioCodecsModel.hpp"
-#include "../components/codecs/VideoCodecsModel.hpp"
-#include "../components/contacts/ContactsListProxyModel.hpp"
-#include "../components/core/CoreManager.hpp"
-#include "../components/presence/OwnPresenceModel.hpp"
-#include "../components/settings/AccountSettingsModel.hpp"
-#include "../components/smart-search-bar/SmartSearchBarModel.hpp"
-#include "../components/timeline/TimelineModel.hpp"
+#include "../components/Components.hpp"
 #include "../utils.hpp"
 
 #include "logger/Logger.hpp"
@@ -269,6 +259,7 @@ void registerSingletonType (const char *name) {
 void App::registerTypes () {
   qInfo() << "Registering types...";
 
+  qmlRegisterType<AssistantModel>("Linphone", 1, 0, "AssistantModel");
   qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
@@ -291,10 +282,10 @@ void App::registerTypes () {
   );
 
   registerSingletonType<AccountSettingsModel>("AccountSettingsModel");
+  registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
   registerSingletonType<TimelineModel>("TimelineModel");
-  registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerSharedSingletonType(App, "App", App::getInstance);

@@ -15,6 +15,7 @@ Row {
     return curWidth < maxWidth ? curWidth : maxWidth
   }
   readonly property int orientation: parent.orientation
+  readonly property bool dealWithErrors: parent.dealWithErrors
 
   // ---------------------------------------------------------------------------
 
