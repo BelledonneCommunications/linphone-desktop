@@ -44,8 +44,8 @@ namespace Paths {
   std::string getFactoryConfigFilepath ();
   std::string getFriendsListFilepath ();
   std::string getMessageHistoryFilepath ();
-  std::string getZrtpSecretsFilepath ();
   std::string getZrtpDataFilepath ();
+  std::string getZrtpSecretsFilepath ();
 
   void migrate ();
 }
