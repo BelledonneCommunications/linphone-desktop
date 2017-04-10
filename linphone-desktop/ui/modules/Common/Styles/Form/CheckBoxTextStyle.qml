@@ -6,6 +6,7 @@ import Common 1.0
 // =============================================================================
 
 QtObject {
+  property int fontSize: 10
   property int radius: 3
   property int size: 18
 

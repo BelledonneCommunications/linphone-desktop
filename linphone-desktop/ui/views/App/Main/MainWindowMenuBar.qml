@@ -7,160 +7,167 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
- // ============================================================================
+// ============================================================================
 
- MenuBar {
-   id: container
+MenuBar {
+  id: container
 
-   // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
-   property bool hide: false
+  property bool hide: false
 
-   // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
-   // Workaround to hide toolbar.
-   // Use private properties of MenuBar.
+  // Workaround to hide toolbar.
+  // Use private properties of MenuBar.
 
-   __contentItem.height: hide
-     ? 0
-     : MainWindowMenuBarStyle.height
+  __contentItem.height: hide
+    ? 0
+    : MainWindowMenuBarStyle.height
 
-   __contentItem.transform: Scale {
-     yScale: Number(!hide)
-   }
+  __contentItem.transform: Scale {
+    yScale: Number(!hide)
+  }
 
-   // --------------------------------------------------------------------------
+  // --------------------------------------------------------------------------
 
-   style: MenuBarStyle {
-     background: Rectangle {
-       color: MainWindowMenuBarStyle.color
+  style: MenuBarStyle {
+    background: Rectangle {
+      color: MainWindowMenuBarStyle.color
 
-       Rectangle {
-         anchors.bottom: parent.bottom
-         color: MainWindowMenuBarStyle.separator.color
-         height: MainWindowMenuBarStyle.separator.height
-         width: parent.width
-       }
-     }
+      Rectangle {
+        anchors.bottom: parent.bottom
+        color: MainWindowMenuBarStyle.separator.color
+        height: MainWindowMenuBarStyle.separator.height
+        width: parent.width
+      }
+    }
 
-     menuStyle: MenuStyle {
-       frame: Item {}
+    menuStyle: MenuStyle {
+      id: menuStyle
 
-       itemDelegate {
-         background: Rectangle {
-           color: (styleData.selected || styleData.open)
-             ? MainWindowMenuBarStyle.subMenu.color.selected
-             : MainWindowMenuBarStyle.subMenu.color.normal
-         }
+      font.pointSize: MainWindowMenuBarStyle.subMenu.text.fontSize
 
-         label: Label {
-           color: styleData.selected
-             ? MainWindowMenuBarStyle.subMenu.text.color.selected
-             : MainWindowMenuBarStyle.subMenu.text.color.normal
-           text: styleData.text
-         }
+      frame: Item {}
 
-         shortcut: Label {
-           color: styleData.selected
-             ? MainWindowMenuBarStyle.subMenu.text.color.selected
-             : MainWindowMenuBarStyle.subMenu.text.color.normal
-           text: styleData.shortcut
-         }
-       }
-     }
+      itemDelegate {
+        background: Rectangle {
+          color: (styleData.selected || styleData.open)
+            ? MainWindowMenuBarStyle.subMenu.color.selected
+            : MainWindowMenuBarStyle.subMenu.color.normal
+        }
 
-     itemDelegate: Item {
-       implicitHeight: menuItem.height + MainWindowMenuBarStyle.separator.spacing
-       implicitWidth: menuItem.width
+        label: Label {
+          color: styleData.selected
+            ? MainWindowMenuBarStyle.subMenu.text.color.selected
+            : MainWindowMenuBarStyle.subMenu.text.color.normal
+          font: menuStyle.font
+          text: styleData.text
+        }
 
-       Item {
-         id: menuItem
+        shortcut: Label {
+          color: styleData.selected
+            ? MainWindowMenuBarStyle.subMenu.text.color.selected
+            : MainWindowMenuBarStyle.subMenu.text.color.normal
+          font: menuStyle.font
+          text: styleData.shortcut
+        }
+      }
+    }
 
-         implicitHeight: text.height + MainWindowMenuBarStyle.menu.text.verticalMargins * 2
-         implicitWidth: text.width + MainWindowMenuBarStyle.menu.text.horizontalMargins * 2
+    itemDelegate: Item {
+      implicitHeight: menuItem.height + MainWindowMenuBarStyle.separator.spacing
+      implicitWidth: menuItem.width
 
-         Text {
-           id: text
+      Item {
+        id: menuItem
 
-           anchors.centerIn: parent
-           color: styleData.open
-             ? MainWindowMenuBarStyle.menu.text.color.selected
-             : MainWindowMenuBarStyle.menu.text.color.normal
+        implicitHeight: text.height + MainWindowMenuBarStyle.menu.text.verticalMargins * 2
+        implicitWidth: text.width + MainWindowMenuBarStyle.menu.text.horizontalMargins * 2
 
-           text: formatMnemonic(styleData.text, styleData.underlineMnemonic)
-         }
+        Text {
+          id: text
 
-         Rectangle {
-           anchors.bottom: parent.bottom
-           color: MainWindowMenuBarStyle.menu.indicator.color
-           visible: styleData.open
+          anchors.centerIn: parent
+          color: styleData.open
+            ? MainWindowMenuBarStyle.menu.text.color.selected
+            : MainWindowMenuBarStyle.menu.text.color.normal
 
-           height: MainWindowMenuBarStyle.menu.indicator.height
-           width: parent.width
-         }
-       }
-     }
-   }
+          font.pointSize: MainWindowMenuBarStyle.menu.text.fontSize
+          text: formatMnemonic(styleData.text, styleData.underlineMnemonic)
+        }
 
-   // --------------------------------------------------------------------------
+        Rectangle {
+          anchors.bottom: parent.bottom
+          color: MainWindowMenuBarStyle.menu.indicator.color
+          visible: styleData.open
 
-   Menu {
-     title: qsTr('options')
+          height: MainWindowMenuBarStyle.menu.indicator.height
+          width: parent.width
+        }
+      }
+    }
+  }
 
-     MenuItem {
-       shortcut: 'Ctrl+P'
-       text: qsTr('settings')
+  // --------------------------------------------------------------------------
 
-       onTriggered: {
-         var window = App.getSettingsWindow()
-         if (window.visibility === Window.Minimized) {
-           window.visibility = Window.AutomaticVisibility
-         } else {
-           window.setVisible(true)
-         }
-       }
-     }
+  Menu {
+    title: qsTr('options')
 
-     MenuSeparator {}
+    MenuItem {
+      shortcut: 'Ctrl+P'
+      text: qsTr('settings')
 
-     MenuItem {
-       shortcut: StandardKey.Quit
-       text: qsTr('quit')
+      onTriggered: {
+        var window = App.getSettingsWindow()
+        if (window.visibility === Window.Minimized) {
+          window.visibility = Window.AutomaticVisibility
+        } else {
+          window.setVisible(true)
+        }
+      }
+    }
 
-       onTriggered: Qt.quit()
-     }
-   }
+    MenuSeparator {}
 
-   Menu {
-     title: qsTr('tools')
+    MenuItem {
+      shortcut: StandardKey.Quit
+      text: qsTr('quit')
 
-     MenuItem {
-       text: qsTr('audioAssistant')
-     }
+      onTriggered: Qt.quit()
+    }
+  }
 
-     MenuSeparator {}
+  Menu {
+    title: qsTr('tools')
 
-     MenuItem {
-       text: qsTr('importContacts')
-     }
+    MenuItem {
+      text: qsTr('audioAssistant')
+    }
 
-     MenuItem {
-       text: qsTr('exportContacts')
-     }
-   }
+    MenuSeparator {}
 
-   Menu {
-     title: qsTr('help')
+    MenuItem {
+      text: qsTr('importContacts')
+    }
 
-     MenuItem {
-       shortcut: StandardKey.HelpContents
-       text: qsTr('about')
-     }
+    MenuItem {
+      text: qsTr('exportContacts')
+    }
+  }
 
-     MenuSeparator {}
+  Menu {
+    title: qsTr('help')
 
-     MenuItem {
-       text: qsTr('checkForUpdates')
-     }
-   }
- }
+    MenuItem {
+      shortcut: StandardKey.HelpContents
+      text: qsTr('about')
+    }
+
+    MenuSeparator {}
+
+    MenuItem {
+      text: qsTr('checkForUpdates')
+    }
+  }
+}

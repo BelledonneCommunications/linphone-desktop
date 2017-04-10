@@ -347,7 +347,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation>status</translation>
+        <translation>Status</translation>
     </message>
 </context>
 <context>

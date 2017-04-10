@@ -87,7 +87,7 @@ int main (int argc, char *argv[]) {
     if (info.suffix() == "ttf") {
       QString path = info.absoluteFilePath();
       if (path.startsWith(":/assets/fonts/"))
-        qDebug() << QFontDatabase::addApplicationFont(path);
+        QFontDatabase::addApplicationFont(path);
     }
   }
 

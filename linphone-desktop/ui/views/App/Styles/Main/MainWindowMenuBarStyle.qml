@@ -11,6 +11,7 @@ QtObject {
 
   property QtObject menu: QtObject {
     property QtObject text: QtObject {
+      property int fontSize: 10
       property int horizontalMargins: 9
       property int verticalMargins: 4
 
@@ -39,6 +40,8 @@ QtObject {
     }
 
     property QtObject text: QtObject {
+      property int fontSize: 10
+
       property QtObject color: QtObject {
         property color selected: Colors.k
         property color normal: Colors.b

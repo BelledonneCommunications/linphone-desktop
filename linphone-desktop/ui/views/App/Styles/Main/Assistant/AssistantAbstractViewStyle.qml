@@ -20,7 +20,7 @@ QtObject {
 
     property QtObject description: QtObject {
       property color color: Colors.g
-      property int fontSize: 10
+      property int fontSize: 11
     }
 
     property QtObject title: QtObject {

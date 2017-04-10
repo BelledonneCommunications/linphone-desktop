@@ -30,6 +30,7 @@ CheckBox {
     verticalAlignment: Text.AlignVCenter
   }
 
+  font.pointSize: CheckBoxTextStyle.fontSize
   hoverEnabled: true
 
   indicator: Rectangle {

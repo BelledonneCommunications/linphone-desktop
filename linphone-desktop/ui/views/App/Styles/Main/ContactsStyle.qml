@@ -48,7 +48,7 @@ QtObject {
 
     property QtObject username: QtObject {
       property color color: Colors.j
-      property int fontSize: 9
+      property int fontSize: 10
       property int width: 220
     }
   }
