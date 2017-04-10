@@ -27,6 +27,8 @@ set(EXECUTABLE_NAME linphone)
 set(TARGET_NAME linphone-qt)
 set(CMAKE_CXX_STANDARD 11)
 
+set(ASSETS_DIR assets)
+
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
@@ -64,7 +66,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DQT_QML_DEBUG -DQT_DECLARAT
 # Define packages, libs, sources, headers, resources and languages.
 # ------------------------------------------------------------------------------
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Network Concurrent)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent)
 
 if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
   include("${EP_linphone_CONFIG_DIR}/LinphoneConfig.cmake")
@@ -157,7 +159,7 @@ set(HEADERS
 
 set(QRC_RESOURCES resources.qrc)
 
-set(LANGUAGES_DIRECTORY assets/languages)
+set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES en fr)
 
@@ -271,6 +273,6 @@ install(TARGETS ${TARGET_NAME}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
-install(FILES "assets/linphonerc-factory"
+install(FILES "${ASSETS_DIR}/linphonerc-factory"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/linphone"
 )

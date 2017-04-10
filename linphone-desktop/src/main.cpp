@@ -20,7 +20,12 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDirIterator>
+#include <QFontDatabase>
+
 #include "app/App.hpp"
+
+#define DEFAULT_FONT "Noto Sans"
 
 using namespace std;
 
@@ -71,9 +76,28 @@ int main (int argc, char *argv[]) {
     return 0;
   }
 
-  app.initContentApp();
+  // ---------------------------------------------------------------------------
+  // Fonts.
+  // ---------------------------------------------------------------------------
 
-  // Run!
+  QDirIterator it(":", QDirIterator::Subdirectories);
+  while (it.hasNext()) {
+    QFileInfo info(it.next());
+
+    if (info.suffix() == "ttf") {
+      QString path = info.absoluteFilePath();
+      if (path.startsWith(":/assets/fonts/"))
+        qDebug() << QFontDatabase::addApplicationFont(path);
+    }
+  }
+
+  app.setFont(QFont(DEFAULT_FONT));
+
+  // ---------------------------------------------------------------------------
+  // Init and run!
+  // ---------------------------------------------------------------------------
+
+  app.initContentApp();
   qInfo() << "Running app...";
   return app.exec();
 }
