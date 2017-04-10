@@ -327,9 +327,13 @@
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantCreateLinphoneSipAccount.qml</file>
+    <file>ui/views/App/Main/Assistant/AssistantCreateLinphoneSipAccountWithEmail.qml</file>
+    <file>ui/views/App/Main/Assistant/AssistantCreateLinphoneSipAccountWithPhoneNumber.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantFetchRemoteConfiguration.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantHome.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccount.qml</file>
+    <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccountWithPhoneNumber.qml</file>
+    <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccountWithUsername.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantUseOtherSipAccount.qml</file>
     <file>ui/views/App/Main/Assistant.qml</file>
     <file>ui/views/App/Main/ContactEdit.js</file>

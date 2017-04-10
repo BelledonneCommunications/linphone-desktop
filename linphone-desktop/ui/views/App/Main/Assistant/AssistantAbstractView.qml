@@ -61,6 +61,8 @@ Item {
 
       horizontalAlignment: Text.AlignHCenter
       width: parent.width
+
+      visible: text.length > 0
     }
 
     // -------------------------------------------------------------------------

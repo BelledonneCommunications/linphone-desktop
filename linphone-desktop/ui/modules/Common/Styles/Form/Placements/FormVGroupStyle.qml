@@ -15,7 +15,7 @@ QtObject {
   property QtObject error: QtObject {
     property color color: Colors.error
     property int fontSize: 10
-    property int height: 16
+    property int height: 11
   }
 
   property QtObject legend: QtObject {

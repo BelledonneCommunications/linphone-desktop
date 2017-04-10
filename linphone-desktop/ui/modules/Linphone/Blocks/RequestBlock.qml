@@ -44,13 +44,17 @@ Item {
     width: parent.width
 
     horizontalAlignment: Text.AlignHCenter
+    padding: RequestBlockStyle.error.padding
     wrapMode: Text.WordWrap
 
     visible: !block.loading
   }
 
   BusyIndicator {
-    anchors.centerIn: parent
+    anchors {
+      horizontalCenter: parent.horizontalCenter
+      top: parent.top
+    }
 
     height: RequestBlockStyle.loadingIndicator.height
     width: RequestBlockStyle.loadingIndicator.width

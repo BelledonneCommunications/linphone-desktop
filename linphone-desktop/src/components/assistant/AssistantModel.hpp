@@ -36,17 +36,22 @@ class AssistantModel : public QObject {
 public:
   AssistantModel (QObject *parent = Q_NULLPTR);
 
-  Q_INVOKABLE void setUsername (const QString &username);
+  Q_INVOKABLE void setEmail (const QString &email);
   Q_INVOKABLE void setPassword (const QString &password);
   Q_INVOKABLE void setPhoneNumber (const QString &phone_number);
+  Q_INVOKABLE void setUsername (const QString &username);
 
+  Q_INVOKABLE void create ();
   Q_INVOKABLE void login ();
+  Q_INVOKABLE void reset ();
 
 signals:
-  void usernameChanged (const QString &username, const QString &error);
+  void emailChanged (const QString &email, const QString &error);
   void passwordChanged (const QString &password, const QString &error);
   void phoneNumberChanged (const QString &phone_number, const QString &error);
+  void usernameChanged (const QString &username, const QString &error);
 
+  void createStatusChanged (const QString &error);
   void loginStatusChanged (const QString &error);
 
 private:

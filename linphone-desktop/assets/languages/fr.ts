@@ -53,13 +53,16 @@
         <source>withEmailAddress</source>
         <translation>AVER UNE ADRESSE E-MAIL</translation>
     </message>
+</context>
+<context>
+    <name>AssistantCreateLinphoneSipAccountWithEmail</name>
     <message>
-        <source>countryLabel</source>
-        <translation>Votre pays</translation>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
     </message>
     <message>
-        <source>phoneNumberLabel</source>
-        <translation>Numéro de téléphone</translation>
+        <source>confirmAction</source>
+        <translation>CRÉER</translation>
     </message>
     <message>
         <source>usernameLabel</source>
@@ -78,8 +81,27 @@
         <translation>Confirmation du mot de passe</translation>
     </message>
     <message>
-        <source>confirmAction</source>
-        <translation>CREATE</translation>
+        <source>passwordConfirmationError</source>
+        <translation>Les mots de passe ne correspondent pas.</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantCreateLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>countryLabel</source>
+        <translation>Votre pays</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Numéro de téléphone</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
     </message>
 </context>
 <context>
@@ -166,6 +188,22 @@
         <source>loginWithUsernameFailed</source>
         <translation>La connection a échouée. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
     </message>
+    <message>
+        <source>emailStatusMalformed</source>
+        <translation>Adresse malformée.</translation>
+    </message>
+    <message>
+        <source>emailStatusMalformedInvalidCharacters</source>
+        <translation>Adresse malformée ou caractères invalides.</translation>
+    </message>
+    <message>
+        <source>cannotSendSms</source>
+        <translation>Erreur serveur : impossible d&apos;envoyer un sms.</translation>
+    </message>
+    <message>
+        <source>accountAlreadyExists</source>
+        <translation>Le compte existe déjà.</translation>
+    </message>
 </context>
 <context>
     <name>AssistantUseLinphoneSipAccount</name>
@@ -178,6 +216,13 @@
         <translation>UTILISER UN COMPTE LINPHONE</translation>
     </message>
     <message>
+        <source>useUsernameToLogin</source>
+        <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantUseLinphoneSipAccountWithPhoneNumber</name>
+    <message>
         <source>countryLabel</source>
         <translation>Votre pays</translation>
     </message>
@@ -185,10 +230,9 @@
         <source>phoneNumberLabel</source>
         <translation>Numéro de téléphone</translation>
     </message>
-    <message>
-        <source>useUsernameToLogin</source>
-        <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
-    </message>
+</context>
+<context>
+    <name>AssistantUseLinphoneSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Nom d&apos;utilisateur</translation>
@@ -283,27 +327,27 @@ Url du serveur non configurée.</translation>
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"></translation>
+        <translation>Nom</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Fréquence (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Débit (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>status</translation>
     </message>
 </context>
 <context>

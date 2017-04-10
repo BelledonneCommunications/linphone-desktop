@@ -11,6 +11,7 @@ QtObject {
   property QtObject error: QtObject {
     property color color: Colors.error
     property int fontSize: 11
+    property int padding: 4
   }
 
   property QtObject loadingIndicator: QtObject {

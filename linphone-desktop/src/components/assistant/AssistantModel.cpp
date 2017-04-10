@@ -37,11 +37,22 @@ public:
     m_assistant = assistant;
   }
 
-  // void onCreateAccount (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
+  void onCreateAccount (
+    const shared_ptr<linphone::AccountCreator> &,
+    linphone::AccountCreatorStatus status,
+    const string &
+  ) override {
+    if (status == linphone::AccountCreatorStatusAccountCreated)
+      emit m_assistant->createStatusChanged("");
+    else {
+      if (status == linphone::AccountCreatorStatusRequestFailed)
+        emit m_assistant->createStatusChanged(tr("requestFailed"));
+      else if (status == linphone::AccountCreatorStatusServerError)
+        emit m_assistant->createStatusChanged(tr("cannotSendSms"));
+      else
+        emit m_assistant->createStatusChanged(tr("accountAlreadyExists"));
+    }
+  }
 
   void onIsAccountExist (
     const shared_ptr<linphone::AccountCreator> &creator,
@@ -125,29 +136,22 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
-void AssistantModel::setUsername (const QString &username) {
+void AssistantModel::setEmail (const QString &email) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (m_account_creator->setUsername(::Utils::qStringToLinphoneString(username))) {
-    case linphone::AccountCreatorUsernameStatusOk:
+  switch (m_account_creator->setEmail(::Utils::qStringToLinphoneString(email))) {
+    case linphone::AccountCreatorEmailStatusOk:
       break;
-    case linphone::AccountCreatorUsernameStatusTooShort:
-      error = tr("usernameStatusTooShort").arg(config->getInt("assistant", "username_min_length", 1));
+    case linphone::AccountCreatorEmailStatusMalformed:
+      error = tr("emailStatusMalformed");
       break;
-    case linphone::AccountCreatorUsernameStatusTooLong:
-      error = tr("usernameStatusTooLong").arg(config->getInt("assistant", "username_max_length", -1));
-      break;
-    case linphone::AccountCreatorUsernameStatusInvalidCharacters:
-      error = tr("usernameStatusInvalidCharacters")
-        .arg(::Utils::linphoneStringToQString(config->getString("assistant", "username_regex", "")));
-      break;
-    case linphone::AccountCreatorUsernameStatusInvalid:
-      error = tr("usernameStatusInvalid");
+    case linphone::AccountCreatorEmailStatusInvalidCharacters:
+      error = tr("emailStatusMalformedInvalidCharacters");
       break;
   }
 
-  emit usernameChanged(username, error);
+  emit emailChanged(email, error);
 }
 
 void AssistantModel::setPassword (const QString &password) {
@@ -185,8 +189,46 @@ void AssistantModel::setPhoneNumber (const QString &phone_number) {
   emit phoneNumberChanged(phone_number, error);
 }
 
+void AssistantModel::setUsername (const QString &username) {
+  shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
+  QString error;
+
+  switch (m_account_creator->setUsername(::Utils::qStringToLinphoneString(username))) {
+    case linphone::AccountCreatorUsernameStatusOk:
+      break;
+    case linphone::AccountCreatorUsernameStatusTooShort:
+      error = tr("usernameStatusTooShort").arg(config->getInt("assistant", "username_min_length", 1));
+      break;
+    case linphone::AccountCreatorUsernameStatusTooLong:
+      error = tr("usernameStatusTooLong").arg(config->getInt("assistant", "username_max_length", -1));
+      break;
+    case linphone::AccountCreatorUsernameStatusInvalidCharacters:
+      error = tr("usernameStatusInvalidCharacters")
+        .arg(::Utils::linphoneStringToQString(config->getString("assistant", "username_regex", "")));
+      break;
+    case linphone::AccountCreatorUsernameStatusInvalid:
+      error = tr("usernameStatusInvalid");
+      break;
+  }
+
+  emit usernameChanged(username, error);
+}
+
 // -----------------------------------------------------------------------------
+
+void AssistantModel::create () {
+  m_account_creator->createAccount();
+}
 
 void AssistantModel::login () {
   m_account_creator->isAccountExist();
+}
+
+void AssistantModel::reset () {
+  m_account_creator->reset();
+
+  emit emailChanged("", "");
+  emit passwordChanged("", "");
+  emit phoneNumberChanged("", "");
+  emit usernameChanged("", "");
 }

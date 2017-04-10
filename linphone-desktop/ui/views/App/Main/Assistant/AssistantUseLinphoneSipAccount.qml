@@ -13,90 +13,9 @@ AssistantAbstractView {
     var item = loader.item
     return item && item.mainActionEnabled && !requestBlock.loading
   }
-
   mainActionLabel: qsTr('confirmAction')
 
   title: qsTr('useLinphoneSipAccountTitle')
-
-  // ---------------------------------------------------------------------------
-  // Login with phone number.
-  // ---------------------------------------------------------------------------
-
-  Component {
-    id: phoneNumberForm
-
-    Form {
-      property bool mainActionEnabled: country.currentIndex !== -1 && phoneNumber.text
-
-      dealWithErrors: true
-      orientation: Qt.Vertical
-
-      FormLine {
-        FormGroup {
-          label: qsTr('countryLabel')
-
-          ComboBox {
-            id: country
-          }
-        }
-      }
-
-      FormLine {
-        FormGroup {
-          label: qsTr('phoneNumberLabel')
-
-          TextField {
-            id: phoneNumber
-          }
-        }
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // Login with email address.
-  // ---------------------------------------------------------------------------
-
-  Component {
-    id: emailAddressForm
-
-    Form {
-      property bool mainActionEnabled: username.length &&
-        password.text &&
-        !usernameError.length &&
-        !passwordError.length
-
-      property alias usernameError: username.error
-      property alias passwordError: password.error
-
-      dealWithErrors: true
-      orientation: Qt.Vertical
-
-      FormLine {
-        FormGroup {
-          label: qsTr('usernameLabel')
-
-          TextField {
-            id: username
-
-            onTextChanged: assistantModel.setUsername(text)
-          }
-        }
-      }
-
-      FormLine {
-        FormGroup {
-          label: qsTr('passwordLabel')
-
-          TextField {
-            id: password
-
-            onTextChanged: assistantModel.setPassword(text)
-          }
-        }
-      }
-    }
-  }
 
   // ---------------------------------------------------------------------------
 
@@ -106,7 +25,9 @@ AssistantAbstractView {
     Loader {
       id: loader
 
-      sourceComponent: checkBox.checked ? emailAddressForm : phoneNumberForm
+      source: 'AssistantUseLinphoneSipAccountWith' + (
+        checkBox.checked ? 'Username' : 'PhoneNumber'
+      ) + '.qml'
       width: parent.width
     }
 
@@ -116,7 +37,10 @@ AssistantAbstractView {
       text: qsTr('useUsernameToLogin')
       width: AssistantUseLinphoneSipAccountStyle.checkBox.width
 
-      onClicked: requestBlock.stop('')
+      onClicked: {
+        assistantModel.reset()
+        requestBlock.stop('')
+      }
     }
 
     RequestBlock {
@@ -128,12 +52,23 @@ AssistantAbstractView {
   }
 
   // ---------------------------------------------------------------------------
+  // Assistant.
+  // ---------------------------------------------------------------------------
 
   AssistantModel {
     id: assistantModel
 
-    onUsernameChanged: loader.item.usernameError = error
-    onPasswordChanged: loader.item.passwordError = error
+    onPasswordChanged: {
+      if (checkBox.checked) {
+        loader.item.passwordError = error
+      }
+    }
+
+    onUsernameChanged: {
+      if (checkBox.checked) {
+        loader.item.usernameError = error
+      }
+    }
 
     onLoginStatusChanged: {
       requestBlock.stop(error)

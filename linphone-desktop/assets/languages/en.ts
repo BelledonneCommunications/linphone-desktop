@@ -53,17 +53,20 @@
         <source>withEmailAddress</source>
         <translation>WITH AN EMAIL ADDRESS</translation>
     </message>
+</context>
+<context>
+    <name>AssistantCreateLinphoneSipAccountWithEmail</name>
     <message>
-        <source>countryLabel</source>
-        <translation>Your country</translation>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
     </message>
     <message>
-        <source>phoneNumberLabel</source>
-        <translation>Phone number</translation>
+        <source>confirmAction</source>
+        <translation>CREATE</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Username (optional)</translation>
+        <translation>Username</translation>
     </message>
     <message>
         <source>emailLabel</source>
@@ -78,8 +81,27 @@
         <translation>Password confirmation</translation>
     </message>
     <message>
-        <source>confirmAction</source>
-        <translation>CREATE</translation>
+        <source>passwordConfirmationError</source>
+        <translation>The passwords you entered do not match.</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantCreateLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>countryLabel</source>
+        <translation>Your country</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Phone number</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Username</translation>
     </message>
 </context>
 <context>
@@ -166,6 +188,22 @@
         <source>requestFailed</source>
         <translation>Unable to send the request.</translation>
     </message>
+    <message>
+        <source>emailStatusMalformed</source>
+        <translation>Malformed email.</translation>
+    </message>
+    <message>
+        <source>emailStatusMalformedInvalidCharacters</source>
+        <translation>Malformed email or invalid characters.</translation>
+    </message>
+    <message>
+        <source>cannotSendSms</source>
+        <translation>Server error: Cannot send sms.</translation>
+    </message>
+    <message>
+        <source>accountAlreadyExists</source>
+        <translation>Account already exists.</translation>
+    </message>
 </context>
 <context>
     <name>AssistantUseLinphoneSipAccount</name>
@@ -178,6 +216,13 @@
         <translation>USE A LINPHONE ACCOUNT</translation>
     </message>
     <message>
+        <source>useUsernameToLogin</source>
+        <translation>Use username and password rather than your phone number.</translation>
+    </message>
+</context>
+<context>
+    <name>AssistantUseLinphoneSipAccountWithPhoneNumber</name>
+    <message>
         <source>countryLabel</source>
         <translation>Your country</translation>
     </message>
@@ -185,10 +230,9 @@
         <source>phoneNumberLabel</source>
         <translation>Phone number</translation>
     </message>
-    <message>
-        <source>useUsernameToLogin</source>
-        <translation>Use username and password rather than your phone number.</translation>
-    </message>
+</context>
+<context>
+    <name>AssistantUseLinphoneSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Username</translation>
