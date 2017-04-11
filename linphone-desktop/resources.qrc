@@ -334,16 +334,16 @@
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantCreateLinphoneSipAccount.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantCreateLinphoneSipAccountWithEmail.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantCreateLinphoneSipAccountWithPhoneNumber.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantFetchRemoteConfiguration.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantHome.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccount.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccountWithPhoneNumber.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantUseLinphoneSipAccountWithUsername.qml</file>
-    <file>ui/views/App/Main/Assistant/AssistantUseOtherSipAccount.qml</file>
+    <file>ui/views/App/Main/Assistant/CreateLinphoneSipAccount.qml</file>
+    <file>ui/views/App/Main/Assistant/CreateLinphoneSipAccountWithEmail.qml</file>
+    <file>ui/views/App/Main/Assistant/CreateLinphoneSipAccountWithPhoneNumber.qml</file>
+    <file>ui/views/App/Main/Assistant/FetchRemoteConfiguration.qml</file>
     <file>ui/views/App/Main/Assistant.qml</file>
+    <file>ui/views/App/Main/Assistant/UseLinphoneSipAccount.qml</file>
+    <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithPhoneNumber.qml</file>
+    <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithUsername.qml</file>
+    <file>ui/views/App/Main/Assistant/UseOtherSipAccount.qml</file>
     <file>ui/views/App/Main/ContactEdit.js</file>
     <file>ui/views/App/Main/ContactEdit.qml</file>
     <file>ui/views/App/Main/Contacts.qml</file>
@@ -369,10 +369,10 @@
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>
-    <file>ui/views/App/Styles/Main/Assistant/AssistantCreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantHomeStyle.qml</file>
-    <file>ui/views/App/Styles/Main/Assistant/AssistantUseLinphoneSipAccountStyle.qml</file>
+    <file>ui/views/App/Styles/Main/Assistant/CreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Main/AssistantStyle.qml</file>
+    <file>ui/views/App/Styles/Main/Assistant/UseLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>

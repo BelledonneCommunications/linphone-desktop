@@ -36,90 +36,6 @@
     </message>
 </context>
 <context>
-    <name>AssistantCreateLinphoneSipAccount</name>
-    <message>
-        <source>createLinphoneSipAccountDescription</source>
-        <translation>How would you like to create your account?</translation>
-    </message>
-    <message>
-        <source>createLinphoneSipAccountTitle</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>WITH A PHONE NUMBER</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>WITH AN EMAIL ADDRESS</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantCreateLinphoneSipAccountWithEmail</name>
-    <message>
-        <source>createLinphoneSipAccountTitle</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
-    </message>
-    <message>
-        <source>confirmAction</source>
-        <translation>CREATE</translation>
-    </message>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Username</translation>
-    </message>
-    <message>
-        <source>emailLabel</source>
-        <translation>Email</translation>
-    </message>
-    <message>
-        <source>passwordLabel</source>
-        <translation>Password</translation>
-    </message>
-    <message>
-        <source>passwordConfirmationLabel</source>
-        <translation>Password confirmation</translation>
-    </message>
-    <message>
-        <source>passwordConfirmationError</source>
-        <translation>The passwords you entered do not match.</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantCreateLinphoneSipAccountWithPhoneNumber</name>
-    <message>
-        <source>createLinphoneSipAccountTitle</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
-    </message>
-    <message>
-        <source>countryLabel</source>
-        <translation>Your country</translation>
-    </message>
-    <message>
-        <source>phoneNumberLabel</source>
-        <translation>Phone number</translation>
-    </message>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Username</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantFetchRemoteConfiguration</name>
-    <message>
-        <source>fetchRemoteConfigurationTitle</source>
-        <translation>FETCH REMOTE CONFIGURATION</translation>
-    </message>
-    <message>
-        <source>urlLabel</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>confirmAction</source>
-        <translation>DOWNLOAD</translation>
-    </message>
-</context>
-<context>
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
@@ -203,74 +119,6 @@
     <message>
         <source>accountAlreadyExists</source>
         <translation>Account already exists.</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseLinphoneSipAccount</name>
-    <message>
-        <source>confirmAction</source>
-        <translation>LOGIN</translation>
-    </message>
-    <message>
-        <source>useLinphoneSipAccountTitle</source>
-        <translation>USE A LINPHONE ACCOUNT</translation>
-    </message>
-    <message>
-        <source>useUsernameToLogin</source>
-        <translation>Use username and password rather than your phone number.</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseLinphoneSipAccountWithPhoneNumber</name>
-    <message>
-        <source>countryLabel</source>
-        <translation>Your country</translation>
-    </message>
-    <message>
-        <source>phoneNumberLabel</source>
-        <translation>Phone number</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseLinphoneSipAccountWithUsername</name>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Username</translation>
-    </message>
-    <message>
-        <source>passwordLabel</source>
-        <translation>Password</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseOtherSipAccount</name>
-    <message>
-        <source>confirmAction</source>
-        <translation>LOGIN</translation>
-    </message>
-    <message>
-        <source>useOtherSipAccountTitle</source>
-        <translation>USE A SIP ACCOUNT</translation>
-    </message>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Username</translation>
-    </message>
-    <message>
-        <source>displayNameLabel</source>
-        <translation>Display name (optional)</translation>
-    </message>
-    <message>
-        <source>sipDomainLabel</source>
-        <translation>SIP Domain</translation>
-    </message>
-    <message>
-        <source>passwordLabel</source>
-        <translation>Password</translation>
-    </message>
-    <message>
-        <source>transportLabel</source>
-        <translation>Transport</translation>
     </message>
 </context>
 <context>
@@ -479,6 +327,75 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>CreateLinphoneSipAccount</name>
+    <message>
+        <source>createLinphoneSipAccountDescription</source>
+        <translation>How would you like to create your account?</translation>
+    </message>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>WITH A PHONE NUMBER</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>WITH AN EMAIL ADDRESS</translation>
+    </message>
+</context>
+<context>
+    <name>CreateLinphoneSipAccountWithEmail</name>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>CREATE</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>emailLabel</source>
+        <translation>Email</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>passwordConfirmationLabel</source>
+        <translation>Password confirmation</translation>
+    </message>
+    <message>
+        <source>passwordConfirmationError</source>
+        <translation>The passwords you entered do not match.</translation>
+    </message>
+</context>
+<context>
+    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>countryLabel</source>
+        <translation>Your country</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Phone number</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Username</translation>
+    </message>
+</context>
+<context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
@@ -522,6 +439,21 @@ Server url not configured.</translation>
     <message>
         <source>missedOutgoingCall</source>
         <translation>Missed outgoing call</translation>
+    </message>
+</context>
+<context>
+    <name>FetchRemoteConfiguration</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>FETCH</translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationTitle</source>
+        <translation>FETCH REMOTE CONFIGURATION</translation>
+    </message>
+    <message>
+        <source>urlLabel</source>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -1104,6 +1036,74 @@ Server url not configured.</translation>
     <message>
         <source>timelineTitle</source>
         <translation>Previously</translation>
+    </message>
+</context>
+<context>
+    <name>UseLinphoneSipAccount</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>USE</translation>
+    </message>
+    <message>
+        <source>useLinphoneSipAccountTitle</source>
+        <translation>USE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>useUsernameToLogin</source>
+        <translation>Use username and password rather than your phone number.</translation>
+    </message>
+</context>
+<context>
+    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>countryLabel</source>
+        <translation>Your country</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Phone number</translation>
+    </message>
+</context>
+<context>
+    <name>UseLinphoneSipAccountWithUsername</name>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Password</translation>
+    </message>
+</context>
+<context>
+    <name>UseOtherSipAccount</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>USE</translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountTitle</source>
+        <translation>USE A SIP ACCOUNT</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Display name (optional)</translation>
+    </message>
+    <message>
+        <source>sipDomainLabel</source>
+        <translation>SIP Domain</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>transportLabel</source>
+        <translation>Transport</translation>
     </message>
 </context>
 </TS>

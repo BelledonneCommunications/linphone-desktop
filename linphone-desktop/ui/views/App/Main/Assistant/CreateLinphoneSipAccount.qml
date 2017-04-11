@@ -16,25 +16,25 @@ AssistantAbstractView {
 
   Column {
     anchors.centerIn: parent
-    spacing: AssistantCreateLinphoneSipAccountStyle.buttons.spacing
-    width: AssistantCreateLinphoneSipAccountStyle.buttons.button.width
+    spacing: CreateLinphoneSipAccountStyle.buttons.spacing
+    width: CreateLinphoneSipAccountStyle.buttons.button.width
 
     TextButtonA {
       text: qsTr('withPhoneNumber')
 
-      height: AssistantCreateLinphoneSipAccountStyle.buttons.button.height
+      height: CreateLinphoneSipAccountStyle.buttons.button.height
       width: parent.width
 
-      onClicked: assistant.pushView('AssistantCreateLinphoneSipAccountWithPhoneNumber')
+      onClicked: assistant.pushView('CreateLinphoneSipAccountWithPhoneNumber')
     }
 
     TextButtonA {
       text: qsTr('withEmailAddress')
 
-      height: AssistantCreateLinphoneSipAccountStyle.buttons.button.height
+      height: CreateLinphoneSipAccountStyle.buttons.button.height
       width: parent.width
 
-      onClicked: assistant.pushView('AssistantCreateLinphoneSipAccountWithEmail')
+      onClicked: assistant.pushView('CreateLinphoneSipAccountWithEmail')
     }
   }
 }

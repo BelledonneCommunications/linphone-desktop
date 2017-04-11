@@ -25,7 +25,7 @@ AssistantAbstractView {
     Loader {
       id: loader
 
-      source: 'AssistantUseLinphoneSipAccountWith' + (
+      source: 'UseLinphoneSipAccountWith' + (
         checkBox.checked ? 'Username' : 'PhoneNumber'
       ) + '.qml'
       width: parent.width
@@ -35,7 +35,7 @@ AssistantAbstractView {
       id: checkBox
 
       text: qsTr('useUsernameToLogin')
-      width: AssistantUseLinphoneSipAccountStyle.checkBox.width
+      width: UseLinphoneSipAccountStyle.checkBox.width
 
       onClicked: {
         assistantModel.reset()

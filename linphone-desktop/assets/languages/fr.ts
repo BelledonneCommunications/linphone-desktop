@@ -36,90 +36,6 @@
     </message>
 </context>
 <context>
-    <name>AssistantCreateLinphoneSipAccount</name>
-    <message>
-        <source>createLinphoneSipAccountDescription</source>
-        <translation>Comment souhaitez-vous créer votre compte ?</translation>
-    </message>
-    <message>
-        <source>createLinphoneSipAccountTitle</source>
-        <translation>CRÉER UN COMPTE LINPHONE</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>AVEC UN NUMÉRO DE TÉLÉPHONE</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>AVER UNE ADRESSE E-MAIL</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantCreateLinphoneSipAccountWithEmail</name>
-    <message>
-        <source>createLinphoneSipAccountTitle</source>
-        <translation>CRÉER UN COMPTE LINPHONE</translation>
-    </message>
-    <message>
-        <source>confirmAction</source>
-        <translation>CRÉER</translation>
-    </message>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Nom d&apos;utilisateur</translation>
-    </message>
-    <message>
-        <source>emailLabel</source>
-        <translation>E-mail</translation>
-    </message>
-    <message>
-        <source>passwordLabel</source>
-        <translation>Mot de passe</translation>
-    </message>
-    <message>
-        <source>passwordConfirmationLabel</source>
-        <translation>Confirmation du mot de passe</translation>
-    </message>
-    <message>
-        <source>passwordConfirmationError</source>
-        <translation>Les mots de passe ne correspondent pas.</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantCreateLinphoneSipAccountWithPhoneNumber</name>
-    <message>
-        <source>createLinphoneSipAccountTitle</source>
-        <translation>CRÉER UN COMPTE LINPHONE</translation>
-    </message>
-    <message>
-        <source>countryLabel</source>
-        <translation>Votre pays</translation>
-    </message>
-    <message>
-        <source>phoneNumberLabel</source>
-        <translation>Numéro de téléphone</translation>
-    </message>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Nom d&apos;utilisateur</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantFetchRemoteConfiguration</name>
-    <message>
-        <source>fetchRemoteConfigurationTitle</source>
-        <translation>TÉLÉCHARGER UNE CONFIGURATION</translation>
-    </message>
-    <message>
-        <source>urlLabel</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>confirmAction</source>
-        <translation>TÉLÉCHARGER</translation>
-    </message>
-</context>
-<context>
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
@@ -203,74 +119,6 @@
     <message>
         <source>accountAlreadyExists</source>
         <translation>Le compte existe déjà.</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseLinphoneSipAccount</name>
-    <message>
-        <source>confirmAction</source>
-        <translation>CONNEXION</translation>
-    </message>
-    <message>
-        <source>useLinphoneSipAccountTitle</source>
-        <translation>UTILISER UN COMPTE LINPHONE</translation>
-    </message>
-    <message>
-        <source>useUsernameToLogin</source>
-        <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseLinphoneSipAccountWithPhoneNumber</name>
-    <message>
-        <source>countryLabel</source>
-        <translation>Votre pays</translation>
-    </message>
-    <message>
-        <source>phoneNumberLabel</source>
-        <translation>Numéro de téléphone</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseLinphoneSipAccountWithUsername</name>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Nom d&apos;utilisateur</translation>
-    </message>
-    <message>
-        <source>passwordLabel</source>
-        <translation>Mot de passe</translation>
-    </message>
-</context>
-<context>
-    <name>AssistantUseOtherSipAccount</name>
-    <message>
-        <source>confirmAction</source>
-        <translation>CONNEXION</translation>
-    </message>
-    <message>
-        <source>useOtherSipAccountTitle</source>
-        <translation>UTILISER UN COMPTE SIP</translation>
-    </message>
-    <message>
-        <source>usernameLabel</source>
-        <translation>Nom d&apos;utilisateur</translation>
-    </message>
-    <message>
-        <source>displayNameLabel</source>
-        <translation>Nom d&apos;affichage (optionnel)</translation>
-    </message>
-    <message>
-        <source>sipDomainLabel</source>
-        <translation>Domaine SIP</translation>
-    </message>
-    <message>
-        <source>passwordLabel</source>
-        <translation>Mot de passe</translation>
-    </message>
-    <message>
-        <source>transportLabel</source>
-        <translation>Transport</translation>
     </message>
 </context>
 <context>
@@ -479,6 +327,75 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>CreateLinphoneSipAccount</name>
+    <message>
+        <source>createLinphoneSipAccountDescription</source>
+        <translation>Comment souhaitez-vous créer votre compte ?</translation>
+    </message>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>AVEC UN NUMÉRO DE TÉLÉPHONE</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>AVER UNE ADRESSE E-MAIL</translation>
+    </message>
+</context>
+<context>
+    <name>CreateLinphoneSipAccountWithEmail</name>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>CRÉER</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>emailLabel</source>
+        <translation>E-mail</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Mot de passe</translation>
+    </message>
+    <message>
+        <source>passwordConfirmationLabel</source>
+        <translation>Confirmation du mot de passe</translation>
+    </message>
+    <message>
+        <source>passwordConfirmationError</source>
+        <translation>Les mots de passe ne correspondent pas.</translation>
+    </message>
+</context>
+<context>
+    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>createLinphoneSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>countryLabel</source>
+        <translation>Votre pays</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Numéro de téléphone</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
+    </message>
+</context>
+<context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
@@ -522,6 +439,21 @@ Url du serveur non configurée.</translation>
     <message>
         <source>missedOutgoingCall</source>
         <translation>Appel sortant sans réponse</translation>
+    </message>
+</context>
+<context>
+    <name>FetchRemoteConfiguration</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>TÉLÉCHARGER</translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationTitle</source>
+        <translation>TÉLÉCHARGER UNE CONFIGURATION</translation>
+    </message>
+    <message>
+        <source>urlLabel</source>
+        <translation>URL</translation>
     </message>
 </context>
 <context>
@@ -1104,6 +1036,74 @@ Url du serveur non configurée.</translation>
     <message>
         <source>timelineTitle</source>
         <translation>Précédemment</translation>
+    </message>
+</context>
+<context>
+    <name>UseLinphoneSipAccount</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>UTILISER</translation>
+    </message>
+    <message>
+        <source>useLinphoneSipAccountTitle</source>
+        <translation>UTILISER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>useUsernameToLogin</source>
+        <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
+    </message>
+</context>
+<context>
+    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>countryLabel</source>
+        <translation>Votre pays</translation>
+    </message>
+    <message>
+        <source>phoneNumberLabel</source>
+        <translation>Numéro de téléphone</translation>
+    </message>
+</context>
+<context>
+    <name>UseLinphoneSipAccountWithUsername</name>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Mot de passe</translation>
+    </message>
+</context>
+<context>
+    <name>UseOtherSipAccount</name>
+    <message>
+        <source>confirmAction</source>
+        <translation>UTILISER</translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountTitle</source>
+        <translation>UTILISER UN COMPTE SIP</translation>
+    </message>
+    <message>
+        <source>usernameLabel</source>
+        <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Nom d&apos;affichage (optionnel)</translation>
+    </message>
+    <message>
+        <source>sipDomainLabel</source>
+        <translation>Domaine SIP</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Mot de passe</translation>
+    </message>
+    <message>
+        <source>transportLabel</source>
+        <translation>Transport</translation>
     </message>
 </context>
 </TS>

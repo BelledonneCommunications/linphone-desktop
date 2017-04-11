@@ -3,8 +3,6 @@ import QtQuick 2.7
 import Common 1.0
 import Linphone 1.0
 
-import App.Styles 1.0
-
 // =============================================================================
 
 AssistantAbstractView {

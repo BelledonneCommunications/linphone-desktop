@@ -98,22 +98,22 @@ ColumnLayout {
     model: ListModel {
       ListElement {
         $text: qsTr('createLinphoneSipAccount')
-        $view: 'AssistantCreateLinphoneSipAccount'
+        $view: 'CreateLinphoneSipAccount'
       }
 
       ListElement {
         $text: qsTr('useLinphoneSipAccount')
-        $view: 'AssistantUseLinphoneSipAccount'
+        $view: 'UseLinphoneSipAccount'
       }
 
       ListElement {
         $text: qsTr('useOtherSipAccount')
-        $view: 'AssistantUseOtherSipAccount'
+        $view: 'UseOtherSipAccount'
       }
 
       ListElement {
         $text: qsTr('fetchRemoteConfiguration')
-        $view: 'AssistantFetchRemoteConfiguration'
+        $view: 'FetchRemoteConfiguration'
       }
     }
 
