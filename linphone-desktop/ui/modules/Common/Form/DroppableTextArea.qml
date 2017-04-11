@@ -64,6 +64,8 @@ Item {
         color: DroppableTextAreaStyle.backgroundColor
       }
 
+      color: DroppableTextAreaStyle.text.color
+      font.pointSize: DroppableTextAreaStyle.text.fontSize
       rightPadding: fileChooserButton.width +
         fileChooserButton.anchors.rightMargin +
         DroppableTextAreaStyle.fileChooserButton.margins
