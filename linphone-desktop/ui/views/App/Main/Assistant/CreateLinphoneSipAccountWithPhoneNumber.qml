@@ -45,7 +45,7 @@ AssistantAbstractView {
         TextField {
           id: username
 
-          onTextChanged: assistantModel.setUsername(text)
+          onTextChanged: assistantModel.username = text
         }
       }
     }

@@ -33,16 +33,18 @@ class AssistantModel : public QObject {
 
   Q_OBJECT;
 
+  Q_PROPERTY(QString email READ getEmail WRITE setEmail NOTIFY emailChanged);
+  Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged);
+  Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
+  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
+
 public:
   AssistantModel (QObject *parent = Q_NULLPTR);
 
-  Q_INVOKABLE void setEmail (const QString &email);
-  Q_INVOKABLE void setPassword (const QString &password);
-  Q_INVOKABLE void setPhoneNumber (const QString &phone_number);
-  Q_INVOKABLE void setUsername (const QString &username);
-
+  Q_INVOKABLE void activate ();
   Q_INVOKABLE void create ();
   Q_INVOKABLE void login ();
+
   Q_INVOKABLE void reset ();
 
 signals:
@@ -51,10 +53,23 @@ signals:
   void phoneNumberChanged (const QString &phone_number, const QString &error);
   void usernameChanged (const QString &username, const QString &error);
 
+  void activateStatusChanged (const QString &error);
   void createStatusChanged (const QString &error);
   void loginStatusChanged (const QString &error);
 
 private:
+  QString getEmail () const;
+  void setEmail (const QString &email);
+
+  QString getPassword () const;
+  void setPassword (const QString &password);
+
+  QString getPhoneNumber () const;
+  void setPhoneNumber (const QString &phone_number);
+
+  QString getUsername () const;
+  void setUsername (const QString &username);
+
   std::shared_ptr<linphone::AccountCreator> m_account_creator;
   std::shared_ptr<Handlers> m_handlers;
 };

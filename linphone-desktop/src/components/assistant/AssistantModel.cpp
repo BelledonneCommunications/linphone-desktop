@@ -70,18 +70,39 @@ public:
     }
   }
 
-  // void onActivateAccount (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
-  // void onIsAccountActivated (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
+  void onActivateAccount (
+    const shared_ptr<linphone::AccountCreator> &,
+    linphone::AccountCreatorStatus status,
+    const string &
+  ) override {
+    if (
+      status == linphone::AccountCreatorStatusAccountActivated ||
+      status == linphone::AccountCreatorStatusAccountAlreadyActivated
+    )
+      emit m_assistant->activateStatusChanged("");
+    else {
+      if (status == linphone::AccountCreatorStatusRequestFailed)
+        emit m_assistant->activateStatusChanged(tr("requestFailed"));
+      else
+        emit m_assistant->activateStatusChanged(tr("smsActivationFailed"));
+    }
+  }
+
+  void onIsAccountActivated (
+    const shared_ptr<linphone::AccountCreator> &,
+    linphone::AccountCreatorStatus status,
+    const string &
+  ) override {
+    if (status == linphone::AccountCreatorStatusAccountActivated)
+      emit m_assistant->activateStatusChanged("");
+    else {
+      if (status == linphone::AccountCreatorStatusRequestFailed)
+        emit m_assistant->activateStatusChanged(tr("requestFailed"));
+      else
+        emit m_assistant->activateStatusChanged(tr("emailActivationFailed"));
+    }
+  }
+
   // void onLinkAccount (
   // const shared_ptr<linphone::AccountCreator> &creator,
   // linphone::AccountCreatorStatus status,
@@ -136,6 +157,36 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
+void AssistantModel::activate () {
+  if (m_account_creator->getEmail().empty())
+    m_account_creator->activateAccount();
+  else
+    m_account_creator->isAccountActivated();
+}
+
+void AssistantModel::create () {
+  m_account_creator->createAccount();
+}
+
+void AssistantModel::login () {
+  m_account_creator->isAccountExist();
+}
+
+void AssistantModel::reset () {
+  m_account_creator->reset();
+
+  emit emailChanged("", "");
+  emit passwordChanged("", "");
+  emit phoneNumberChanged("", "");
+  emit usernameChanged("", "");
+}
+
+// -----------------------------------------------------------------------------
+
+QString AssistantModel::getEmail () const {
+  return ::Utils::linphoneStringToQString(m_account_creator->getEmail());
+}
+
 void AssistantModel::setEmail (const QString &email) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
@@ -152,6 +203,10 @@ void AssistantModel::setEmail (const QString &email) {
   }
 
   emit emailChanged(email, error);
+}
+
+QString AssistantModel::getPassword () const {
+  return ::Utils::linphoneStringToQString(m_account_creator->getPassword());
 }
 
 void AssistantModel::setPassword (const QString &password) {
@@ -180,6 +235,10 @@ void AssistantModel::setPassword (const QString &password) {
   emit passwordChanged(password, error);
 }
 
+QString AssistantModel::getPhoneNumber () const {
+  return ::Utils::linphoneStringToQString(m_account_creator->getPhoneNumber());
+}
+
 void AssistantModel::setPhoneNumber (const QString &phone_number) {
   // shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
@@ -187,6 +246,10 @@ void AssistantModel::setPhoneNumber (const QString &phone_number) {
   // TODO: use the future wrapped function: `set_phone_number`.
 
   emit phoneNumberChanged(phone_number, error);
+}
+
+QString AssistantModel::getUsername () const {
+  return ::Utils::linphoneStringToQString(m_account_creator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {
@@ -212,23 +275,4 @@ void AssistantModel::setUsername (const QString &username) {
   }
 
   emit usernameChanged(username, error);
-}
-
-// -----------------------------------------------------------------------------
-
-void AssistantModel::create () {
-  m_account_creator->createAccount();
-}
-
-void AssistantModel::login () {
-  m_account_creator->isAccountExist();
-}
-
-void AssistantModel::reset () {
-  m_account_creator->reset();
-
-  emit emailChanged("", "");
-  emit passwordChanged("", "");
-  emit phoneNumberChanged("", "");
-  emit usernameChanged("", "");
 }

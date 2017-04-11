@@ -42,7 +42,7 @@ AssistantAbstractView {
           TextField {
             id: username
 
-            onTextChanged: assistantModel.setUsername(text)
+            onTextChanged: assistantModel.username = text
           }
         }
       }
@@ -54,7 +54,7 @@ AssistantAbstractView {
           TextField {
             id: email
 
-            onTextChanged: assistantModel.setEmail(text)
+            onTextChanged: assistantModel.email = text
           }
         }
       }
@@ -66,7 +66,7 @@ AssistantAbstractView {
           TextField {
             id: password
 
-            onTextChanged: assistantModel.setPassword(text)
+            onTextChanged: assistantModel.password = text
           }
         }
       }
@@ -108,7 +108,9 @@ AssistantAbstractView {
     onCreateStatusChanged: {
       requestBlock.stop(error)
       if (!error.length) {
-        // TODO.
+        assistant.pushView('ActivateLinphoneSipAccountWithEmail', {
+          assistantModel: assistantModel
+        })
       }
     }
   }

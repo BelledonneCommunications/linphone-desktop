@@ -12,13 +12,19 @@ Item {
   id: assistant
 
   readonly property string viewsPath: 'qrc:/ui/views/App/Main/Assistant/'
+  readonly property alias nViews: stack.depth
 
   // ---------------------------------------------------------------------------
 
-  function pushView (view) {
+  function pushView (view, properties) {
     stack.push(
-      Utils.isString(view) ? viewsPath + view + '.qml' : view
+      Utils.isString(view) ? viewsPath + view + '.qml' : view,
+      properties
     )
+  }
+
+  function getView (index) {
+    return stack.get(index)
   }
 
   function popView () {

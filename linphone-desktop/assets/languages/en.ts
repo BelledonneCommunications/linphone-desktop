@@ -2,6 +2,21 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>ActivateLinphoneSipAccountWithEmail</name>
+    <message>
+        <source>activateLinphoneSipAccount</source>
+        <translation>CREATE A LINPHONE ACCOUNT</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>ACTIVATE</translation>
+    </message>
+    <message>
+        <source>activationSteps</source>
+        <translation>To activate your account: Follow the instructions that we sent you at %1, then click on the button below.</translation>
+    </message>
+</context>
+<context>
     <name>App</name>
     <message>
         <source>selftestResult</source>
@@ -119,6 +134,14 @@
     <message>
         <source>accountAlreadyExists</source>
         <translation>Account already exists.</translation>
+    </message>
+    <message>
+        <source>smsActivationFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emailActivationFailed</source>
+        <translation>Please verify that you have validated your account or try again.</translation>
     </message>
 </context>
 <context>

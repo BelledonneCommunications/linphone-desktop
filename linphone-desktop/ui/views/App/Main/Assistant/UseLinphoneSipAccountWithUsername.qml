@@ -21,7 +21,7 @@ Form {
       TextField {
         id: username
 
-        onTextChanged: assistantModel.setUsername(text)
+        onTextChanged: assistantModel.username = text
       }
     }
   }
@@ -33,7 +33,7 @@ Form {
       TextField {
         id: password
 
-        onTextChanged: assistantModel.setPassword(text)
+        onTextChanged: assistantModel.password = text
       }
     }
   }

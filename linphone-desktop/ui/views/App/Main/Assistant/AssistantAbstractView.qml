@@ -19,6 +19,8 @@ Item {
   property alias description: description.text
   property alias title: title.text
 
+  property bool backEnabled: true
+
   default property alias _content: content.data
 
   // ---------------------------------------------------------------------------
@@ -94,6 +96,8 @@ Item {
 
     TextButtonA {
       text: qsTr('back')
+      visible: view.backEnabled
+
       onClicked: assistant.popView()
     }
 

@@ -27,12 +27,11 @@
 char *Utils::rstrstr (const char *a, const char *b) {
   size_t a_len = strlen(a);
   size_t b_len = strlen(b);
-  const char *s;
 
   if (b_len > a_len)
     return nullptr;
 
-  for (s = a + a_len - b_len; s >= a; --s) {
+  for (const char *s = a + a_len - b_len; s >= a; --s) {
     if (!strncmp(s, b, b_len))
       return const_cast<char *>(s);
   }
