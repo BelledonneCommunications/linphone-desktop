@@ -398,6 +398,10 @@ Url du serveur non configurée.</translation>
         <source>passwordConfirmationError</source>
         <translation>Les mots de passe ne correspondent pas.</translation>
     </message>
+    <message>
+        <source>quitWarning</source>
+        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Si vous quittez cette vue, vous devrez ajouter manuellement votre compte et le valider dans les 24 heures.</translation>
+    </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>

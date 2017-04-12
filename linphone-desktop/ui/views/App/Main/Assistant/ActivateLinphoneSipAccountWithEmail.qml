@@ -50,6 +50,7 @@ AssistantAbstractView {
     onActivateStatusChanged: {
       requestBlock.stop(error)
       if (!error.length) {
+        window.unlockView()
         window.setView('Home')
       }
     }

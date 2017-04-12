@@ -89,13 +89,15 @@ public:
   }
 
   void onIsAccountActivated (
-    const shared_ptr<linphone::AccountCreator> &,
+    const shared_ptr<linphone::AccountCreator> &creator,
     linphone::AccountCreatorStatus status,
     const string &
   ) override {
-    if (status == linphone::AccountCreatorStatusAccountActivated)
+    if (status == linphone::AccountCreatorStatusAccountActivated) {
+      CoreManager::getInstance()->getAccountSettingsModel()->addOrUpdateProxyConfig(creator->configure());
+
       emit m_assistant->activateStatusChanged("");
-    else {
+    } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit m_assistant->activateStatusChanged(tr("requestFailed"));
       else

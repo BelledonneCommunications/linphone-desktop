@@ -45,6 +45,7 @@ CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject
       m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
       m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
       m_instance->m_settings_model = new SettingsModel(m_instance);
+      m_instance->m_account_settings_model = new AccountSettingsModel(m_instance);
 
       emit m_instance->linphoneCoreCreated();
     }

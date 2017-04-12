@@ -398,6 +398,10 @@ Server url not configured.</translation>
         <source>passwordConfirmationError</source>
         <translation>The passwords you entered do not match.</translation>
     </message>
+    <message>
+        <source>quitWarning</source>
+        <translation>Your account has been created but is not yet validated. If you quit this view, you should add manually your account and validate it within 24 hours.</translation>
+    </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>

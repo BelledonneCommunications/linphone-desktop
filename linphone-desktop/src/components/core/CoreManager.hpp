@@ -25,6 +25,7 @@
 
 #include "../calls/CallsListModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
+#include "../settings/AccountSettingsModel.hpp"
 #include "../settings/SettingsModel.hpp"
 #include "../sip-addresses/SipAddressesModel.hpp"
 
@@ -86,6 +87,10 @@ public:
     return m_settings_model;
   }
 
+  AccountSettingsModel *getAccountSettingsModel () const {
+    return m_account_settings_model;
+  }
+
   // ---------------------------------------------------------------------------
   // Initialization.
   // ---------------------------------------------------------------------------
@@ -125,6 +130,7 @@ private:
   ContactsListModel *m_contacts_list_model;
   SipAddressesModel *m_sip_addresses_model;
   SettingsModel *m_settings_model;
+  AccountSettingsModel *m_account_settings_model;
 
   QTimer *m_cbs_timer;
 

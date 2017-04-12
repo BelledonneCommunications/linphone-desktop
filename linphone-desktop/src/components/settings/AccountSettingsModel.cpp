@@ -31,7 +31,28 @@ using namespace std;
 
 // =============================================================================
 
-QVariantMap AccountSettingsModel::getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxy_config) {
+bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  list<shared_ptr<linphone::ProxyConfig> > proxy_configs = core->getProxyConfigList();
+  if (find(proxy_configs.cbegin(), proxy_configs.cend(), proxy_config) != proxy_configs.cend()) {
+    if (proxy_config->done() == -1) {
+      qWarning() << QStringLiteral("Unable to update proxy config: `%1`.")
+        .arg(::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asString()));
+      return false;
+    }
+  } else if (core->addProxyConfig(proxy_config) == -1) {
+    qWarning() << QStringLiteral("Unable to add proxy config: `%1`.")
+      .arg(::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asString()));
+    return false;
+  }
+
+  emit accountSettingsUpdated();
+
+  return true;
+}
+
+QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
   Q_ASSERT(proxy_config != nullptr);
 
   QVariantMap map;
@@ -67,10 +88,9 @@ void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyCo
 }
 
 bool AccountSettingsModel::addOrUpdateProxyConfig (
-  const std::shared_ptr<linphone::ProxyConfig> &proxy_config,
+  const shared_ptr<linphone::ProxyConfig> &proxy_config,
   const QVariantMap &data
 ) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QString literal = data["sipAddress"].toString();
 
   // Sip address.
@@ -107,23 +127,10 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     : linphone::AVPFMode::AVPFModeDefault
   );
 
-  list<shared_ptr<linphone::ProxyConfig> > proxy_configs = core->getProxyConfigList();
-  if (find(proxy_configs.cbegin(), proxy_configs.cend(), proxy_config) != proxy_configs.cend()) {
-    if (proxy_config->done() == -1) {
-      qWarning() << QStringLiteral("Unable to update proxy config: `%1`.").arg(literal);
-      return false;
-    }
-  } else if (core->addProxyConfig(proxy_config) == -1) {
-    qWarning() << QStringLiteral("Unable to add proxy config: `%1`.").arg(literal);
-    return false;
-  }
-
-  emit accountSettingsUpdated();
-
-  return true;
+  return addOrUpdateProxyConfig(proxy_config);
 }
 
-std::shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
+shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
   return CoreManager::getInstance()->getCore()->createProxyConfig();
 }
 
@@ -223,7 +230,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
 // -----------------------------------------------------------------------------
 
-void AccountSettingsModel::setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address) {
+void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
 

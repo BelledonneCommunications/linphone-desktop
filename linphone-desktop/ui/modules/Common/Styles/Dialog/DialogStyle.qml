@@ -18,13 +18,13 @@ QtObject {
   }
 
   property QtObject confirmDialog: QtObject {
-    property int height: 150
-    property int width: 370
+    property int height: 200
+    property int width: 400
   }
 
   property QtObject description: QtObject {
     property color color: Colors.l
-    property int fontSize: 12
+    property int fontSize: 11
     property int verticalMargin: 25
   }
 }

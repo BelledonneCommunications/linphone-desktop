@@ -281,7 +281,6 @@ void App::registerTypes () {
     "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable."
   );
 
-  registerSingletonType<AccountSettingsModel>("AccountSettingsModel");
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
@@ -291,6 +290,7 @@ void App::registerTypes () {
   registerSharedSingletonType(App, "App", App::getInstance);
   registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
   registerSharedSingletonType(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
+  registerSharedSingletonType(AccountSettingsModel, "AccountSettingsModel", CoreManager::getInstance()->getAccountSettingsModel);
   registerSharedSingletonType(SipAddressesModel, "SipAddressesModel", CoreManager::getInstance()->getSipAddressesModel);
   registerSharedSingletonType(CallsListModel, "CallsListModel", CoreManager::getInstance()->getCallsListModel);
   registerSharedSingletonType(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);

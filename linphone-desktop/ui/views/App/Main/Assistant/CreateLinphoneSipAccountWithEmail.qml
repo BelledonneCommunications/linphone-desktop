@@ -89,7 +89,13 @@ AssistantAbstractView {
     RequestBlock {
       id: requestBlock
 
-      action: assistantModel.create
+      action: function () {
+        window.lockView({
+          descriptionText: qsTr('quitWarning')
+        })
+        assistantModel.create()
+      }
+
       width: parent.width
     }
   }
@@ -111,6 +117,8 @@ AssistantAbstractView {
         assistant.pushView('ActivateLinphoneSipAccountWithEmail', {
           assistantModel: assistantModel
         })
+      } else {
+        window.unlockView()
       }
     }
   }
