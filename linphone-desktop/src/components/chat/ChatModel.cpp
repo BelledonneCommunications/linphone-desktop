@@ -176,25 +176,8 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
 
   core->getSipAddressesModel()->connectToChatModel(this);
 
-  QObject::connect(
-    &(*m_core_handlers), &CoreHandlers::messageReceived,
-    this, [this](const shared_ptr<linphone::ChatMessage> &message) {
-      if (m_chat_room == message->getChatRoom()) {
-        insertMessageAtEnd(message);
-        resetMessagesCount();
-
-        emit messageReceived(message);
-      }
-    }
-  );
-
-  QObject::connect(
-    &(*m_core_handlers), &CoreHandlers::callStateChanged,
-    this, [this](const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
-      if (state == linphone::CallStateEnd || state == linphone::CallStateError)
-        insertCall(call->getCallLog());
-    }
-  );
+  QObject::connect(&(*m_core_handlers), &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
+  QObject::connect(&(*m_core_handlers), &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
 }
 
 ChatModel::~ChatModel () {
@@ -579,4 +562,20 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
 void ChatModel::resetMessagesCount () {
   m_chat_room->markAsRead();
   emit messagesCountReset();
+}
+
+// -----------------------------------------------------------------------------
+
+void ChatModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
+  if (m_chat_room == call->getChatRoom() && (state == linphone::CallStateEnd || state == linphone::CallStateError))
+    insertCall(call->getCallLog());
+}
+
+void ChatModel::handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message) {
+  if (m_chat_room == message->getChatRoom()) {
+    insertMessageAtEnd(message);
+    resetMessagesCount();
+
+    emit messageReceived(message);
+  }
 }

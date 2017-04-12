@@ -122,6 +122,9 @@ private:
 
   void resetMessagesCount ();
 
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+
   QList<ChatEntryData> m_entries;
   std::shared_ptr<linphone::ChatRoom> m_chat_room;
 
