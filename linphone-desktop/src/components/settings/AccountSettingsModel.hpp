@@ -31,9 +31,12 @@
 class AccountSettingsModel : public QObject {
   Q_OBJECT;
 
+  // Selected proxy config.
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountSettingsUpdated);
   Q_PROPERTY(QString sipAddress READ getSipAddress NOTIFY accountSettingsUpdated);
+  Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY accountSettingsUpdated);
 
+  // Default info.
   Q_PROPERTY(QString primaryDisplayname READ getPrimaryDisplayname WRITE setPrimaryDisplayname NOTIFY accountSettingsUpdated);
   Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY accountSettingsUpdated);
   Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY accountSettingsUpdated);
@@ -41,7 +44,16 @@ class AccountSettingsModel : public QObject {
   Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountSettingsUpdated);
 
 public:
-  AccountSettingsModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+  enum RegistrationState {
+    RegistrationStateRegistered,
+    RegistrationStateNotRegistered,
+    RegistrationStateInProgress
+  };
+
+  Q_ENUM(RegistrationState);
+
+  AccountSettingsModel (QObject *parent = Q_NULLPTR);
+  ~AccountSettingsModel () = default;
 
   bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
 
@@ -63,6 +75,10 @@ private:
 
   QString getSipAddress () const;
 
+  RegistrationState getRegistrationState () const;
+
+  // ---------------------------------------------------------------------------
+
   QString getPrimaryUsername () const;
   void setPrimaryUsername (const QString &username);
 
@@ -71,10 +87,19 @@ private:
 
   QString getPrimarySipAddress () const;
 
+  // ---------------------------------------------------------------------------
+
   QVariantList getAccounts () const;
 
   void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
   std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
+
+  // ---------------------------------------------------------------------------
+
+  void handleRegistrationStateChanged (
+    const std::shared_ptr<linphone::ProxyConfig> &proxy_config,
+    linphone::RegistrationState state
+  );
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig> );

@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
@@ -10,8 +11,6 @@ Item {
   id: accountStatus
 
   // ---------------------------------------------------------------------------
-
-  readonly property var _account: AccountSettingsModel
 
   signal clicked
 
@@ -25,12 +24,28 @@ Item {
       spacing: AccountStatusStyle.horizontalSpacing
       width: parent.width
 
-      PresenceLevel {
+      Item {
         Layout.alignment: Qt.AlignBottom
         Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottomMargin
         Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
         Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
-        level: OwnPresenceModel.presenceLevel
+
+        PresenceLevel {
+          anchors.fill: parent
+          level: OwnPresenceModel.presenceLevel
+          visible: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateRegistered
+        }
+
+        BusyIndicator {
+          anchors.fill: parent
+          running: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateInProgress
+        }
+
+        Icon {
+          iconSize: parent.width
+          icon: 'generic_error'
+          visible: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateNotRegistered
+        }
       }
 
       Text {
@@ -40,7 +55,7 @@ Item {
         elide: Text.ElideRight
         font.bold: true
         font.pointSize: AccountStatusStyle.username.fontSize
-        text: accountStatus._account.username
+        text: AccountSettingsModel.username
         verticalAlignment: Text.AlignBottom
       }
     }
@@ -50,7 +65,7 @@ Item {
       elide: Text.ElideRight
       font.pointSize: AccountStatusStyle.sipAddress.fontSize
       height: parent.height / 2
-      text: accountStatus._account.sipAddress
+      text: AccountSettingsModel.sipAddress
       verticalAlignment: Text.AlignTop
       width: parent.width
     }

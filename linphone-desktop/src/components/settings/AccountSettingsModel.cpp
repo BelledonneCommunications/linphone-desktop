@@ -31,6 +31,34 @@ using namespace std;
 
 // =============================================================================
 
+inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi (linphone::RegistrationState state) {
+  switch (state) {
+    case linphone::RegistrationStateNone:
+    case linphone::RegistrationStateCleared:
+    case linphone::RegistrationStateFailed:
+      return AccountSettingsModel::RegistrationStateNotRegistered;
+
+    case linphone::RegistrationStateProgress:
+      return AccountSettingsModel::RegistrationStateInProgress;
+
+    case linphone::RegistrationStateOk:
+      break;
+  }
+
+  return AccountSettingsModel::RegistrationStateRegistered;
+}
+
+// -----------------------------------------------------------------------------
+
+AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
+  QObject::connect(
+    &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::registrationStateChanged,
+    this, &AccountSettingsModel::handleRegistrationStateChanged
+  );
+}
+
+// -----------------------------------------------------------------------------
+
 bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
@@ -73,6 +101,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["registerEnabled"] = proxy_config->registerEnabled();
   map["publishPresence"] = proxy_config->publishEnabled();
   map["avpfEnabled"] = proxy_config->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
+  map["registrationState"] = mapLinphoneRegistrationStateToUi(proxy_config->getState());
 
   return map;
 }
@@ -163,6 +192,11 @@ QString AccountSettingsModel::getSipAddress () const {
   return ::Utils::linphoneStringToQString(getUsedSipAddress()->asStringUriOnly());
 }
 
+AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationState () const {
+  shared_ptr<linphone::ProxyConfig> proxy_config = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
+  return proxy_config ? mapLinphoneRegistrationStateToUi(proxy_config->getState()) : RegistrationStateNotRegistered;
+}
+
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getPrimaryUsername () const {
@@ -242,4 +276,13 @@ shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () c
   shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
 
   return proxy_config ? proxy_config->getIdentityAddress() : core->getPrimaryContactParsed();
+}
+
+// -----------------------------------------------------------------------------
+
+void AccountSettingsModel::handleRegistrationStateChanged (
+  const shared_ptr<linphone::ProxyConfig> &,
+  linphone::RegistrationState
+) {
+  emit accountSettingsUpdated();
 }

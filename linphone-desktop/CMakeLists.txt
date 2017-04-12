@@ -42,6 +42,7 @@ if(NOT WIN32)
 -Wall \
 -Wcast-align \
 -Wconversion \
+-Werror=return-type \
 -Wextra \
 -Wfloat-equal \
 -Winit-self \

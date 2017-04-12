@@ -78,17 +78,17 @@ void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
 }
 
 void CoreHandlers::onNotifyPresenceReceived (
-  const std::shared_ptr<linphone::Core> &,
-  const std::shared_ptr<linphone::Friend> &linphone_friend
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Friend> &linphone_friend
 ) {
   linphone_friend->getData<ContactModel>("contact-model").refreshPresence();
 }
 
 void CoreHandlers::onRegistrationStateChanged (
-  const shared_ptr<linphone::Core> &core,
-  const shared_ptr<linphone::ProxyConfig> &config,
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::ProxyConfig> &proxy_config,
   linphone::RegistrationState state,
-  const string &message
+  const string &
 ) {
-  // TODO.
+  emit registrationStateChanged(proxy_config, state);
 }
