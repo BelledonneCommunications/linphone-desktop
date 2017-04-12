@@ -46,6 +46,8 @@ ContactModel::ContactModel (QObject *parent, VcardModel *vcard) : QObject(parent
     throw invalid_argument("A contact is already linked to this vcard.");
 
   m_linphone_friend = linphone::Friend::newFromVcard(vcard->m_vcard);
+  m_linphone_friend->setData("contact-model", *this);
+
   m_vcard.reset(vcard);
 
   engine->setObjectOwnership(vcard, QQmlEngine::CppOwnership);
