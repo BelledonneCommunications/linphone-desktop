@@ -99,6 +99,8 @@ void CoreManager::setOtherPaths () {
   m_core->setZrtpCacheDatabasePath(Paths::getZrtpDataFilepath());
 
   m_core->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
+
+  m_core->setRootCa(Paths::getRootCaFilepath());
 }
 
 void CoreManager::setResourcesPaths () {

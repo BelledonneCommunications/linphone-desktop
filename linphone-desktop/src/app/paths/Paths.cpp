@@ -40,6 +40,7 @@
 #define PATH_CALL_HISTORY_LIST "/call-history.db"
 #define PATH_CONFIG "/linphonerc"
 #define PATH_FACTORY_CONFIG "/linphonerc-factory"
+#define PATH_ROOT_CA "/rootca.pem"
 #define PATH_FRIENDS_LIST "/friends.db"
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
 #define PATH_ZRTP_DATA "/zrtp-lime.db"
@@ -100,50 +101,56 @@ inline string getWritableFilePath (const QString &filename) {
   return getReadableFilePath(filename);
 }
 
-static QString getAppPackageDataDirpath () {
+// -----------------------------------------------------------------------------
+
+inline QString getAppPackageDataDirpath () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == "MacOS") {
     dir.cdUp();
     dir.cd("Resources");
-  } else {
+  } else
     dir.cdUp();
-  }
+
   dir.cd("share/linphone");
   return dir.absolutePath();
 }
 
-static QString getAppPackageMsPluginsDirpath () {
+inline QString getAppPackageMsPluginsDirpath () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == "MacOS") {
     dir.cdUp();
     dir.cd("Resources");
-  } else {
+  } else
     dir.cdUp();
-  }
+
   dir.cd(MSPLUGINS_DIR);
   return dir.absolutePath();
 }
 
-static QString getAppConfigFilepath () {
+inline QString getAppConfigFilepath () {
   if (QSysInfo::productType() == "macos")
     return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CONFIG;
 
   return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PATH_CONFIG;
 }
 
-static QString getAppCallHistoryFilepath () {
+inline QString getAppCallHistoryFilepath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CALL_HISTORY_LIST;
 }
 
-static QString getAppFactoryConfigFilepath () {
+inline QString getAppFactoryConfigFilepath () {
   return getAppPackageDataDirpath() + PATH_FACTORY_CONFIG;
 }
 
-static QString getAppFriendsFilepath () {
+inline QString getAppRootCaFilepath () {
+  return getAppPackageDataDirpath() + PATH_ROOT_CA;
+}
+
+inline QString getAppFriendsFilepath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_FRIENDS_LIST;
 }
 
-static QString getAppMessageHistoryFilepath () {
+inline QString getAppMessageHistoryFilepath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_MESSAGE_HISTORY_LIST;
 }
 
@@ -155,6 +162,10 @@ string Paths::getAvatarsDirpath () {
 
 string Paths::getCallHistoryFilepath () {
   return getWritableFilePath(getAppCallHistoryFilepath());
+}
+
+string Paths::getCapturesDirpath () {
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
 }
 
 string Paths::getConfigFilepath (const QString &config_path) {
@@ -188,12 +199,16 @@ string Paths::getPackageMsPluginsDirpath () {
   return getReadableDirectoryPath(getAppPackageMsPluginsDirpath());
 }
 
+string Paths::getRootCaFilepath () {
+  return getReadableFilePath(getAppRootCaFilepath());
+}
+
 string Paths::getThumbnailsDirpath () {
   return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_THUMBNAILS);
 }
 
-string Paths::getCapturesDirpath () {
-  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
+string Paths::getUserCertificatesDirpath () {
+  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_USER_CERTIFICATES);
 }
 
 string Paths::getZrtpDataFilepath () {
@@ -202,10 +217,6 @@ string Paths::getZrtpDataFilepath () {
 
 string Paths::getZrtpSecretsFilepath () {
   return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + PATH_ZRTP_SECRETS);
-}
-
-string Paths::getUserCertificatesDirpath () {
-  return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_USER_CERTIFICATES);
 }
 
 // -----------------------------------------------------------------------------
