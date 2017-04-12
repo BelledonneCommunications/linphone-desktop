@@ -25,7 +25,6 @@
 
 #include "../components/notifier/Notifier.hpp"
 #include "../externals/single-application/SingleApplication.hpp"
-#include "object-builders/AsyncObjectBuilder.hpp"
 
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
@@ -59,12 +58,12 @@ public:
     return m_notifier;
   }
 
-  QQuickWindow *getCallsWindow () const;
+  QQuickWindow *getCallsWindow ();
   QQuickWindow *getMainWindow () const;
 
   bool hasFocus () const;
 
-  Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
+  Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   static App *getInstance () {
     return static_cast<App *>(QApplication::instance());
@@ -101,8 +100,8 @@ private:
   DefaultTranslator *m_translator = nullptr;
   Notifier *m_notifier = nullptr;
 
-  AsyncObjectBuilder m_calls_window;
-  AsyncObjectBuilder m_settings_window;
+  QQuickWindow *m_calls_window = nullptr;
+  QQuickWindow *m_settings_window = nullptr;
 };
 
 #endif // APP_H_

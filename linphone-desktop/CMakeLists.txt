@@ -83,7 +83,6 @@ endif()
 set(SOURCES
   src/app/App.cpp
   src/app/logger/Logger.cpp
-  src/app/object-builders/AsyncObjectBuilder.cpp
   src/app/paths/Paths.cpp
   src/app/providers/AvatarProvider.cpp
   src/app/providers/ThumbnailProvider.cpp
@@ -121,7 +120,6 @@ set(SOURCES
 set(HEADERS
   src/app/App.hpp
   src/app/logger/Logger.hpp
-  src/app/object-builders/AsyncObjectBuilder.hpp
   src/app/paths/Paths.hpp
   src/app/providers/AvatarProvider.hpp
   src/app/providers/ThumbnailProvider.hpp

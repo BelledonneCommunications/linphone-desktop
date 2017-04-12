@@ -215,8 +215,11 @@ void App::tryToUsePreferredLocale () {
 
 // -----------------------------------------------------------------------------
 
-QQuickWindow *App::getCallsWindow () const {
-  return qobject_cast<QQuickWindow *>(m_calls_window.getObject());
+QQuickWindow *App::getCallsWindow () {
+  if (!m_calls_window)
+    m_calls_window = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
+
+  return m_calls_window;
 }
 
 QQuickWindow *App::getMainWindow () const {
@@ -225,14 +228,27 @@ QQuickWindow *App::getMainWindow () const {
   );
 }
 
-QQuickWindow *App::getSettingsWindow () const {
-  return qobject_cast<QQuickWindow *>(m_settings_window.getObject());
+QQuickWindow *App::getSettingsWindow () {
+  if (!m_settings_window) {
+    m_settings_window = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
+    QObject::connect(
+      m_settings_window, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+        if (visibility == QWindow::Hidden) {
+          qInfo() << "Update nat policy.";
+          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+          core->setNatPolicy(core->getNatPolicy());
+        }
+      }
+    );
+  }
+
+  return m_settings_window;
 }
 
 // -----------------------------------------------------------------------------
 
 bool App::hasFocus () const {
-  return getMainWindow()->isActive() || (m_calls_window.isCreated() && getCallsWindow()->isActive());
+  return getMainWindow()->isActive() || (m_calls_window && m_calls_window->isActive());
 }
 
 // -----------------------------------------------------------------------------
@@ -379,23 +395,6 @@ void App::openAppAfterInit () {
   #else
     getMainWindow()->showNormal();
   #endif   // ifndef __APPLE__
-
-  m_calls_window.createObject(&m_engine, QML_VIEW_CALLS_WINDOW);
-
-  m_settings_window.createObject(
-    &m_engine, QML_VIEW_SETTINGS_WINDOW, [this](QObject *object) {
-      QQuickWindow *window = qobject_cast<QQuickWindow *>(object);
-      QObject::connect(
-        window, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
-          if (visibility == QWindow::Hidden) {
-            qInfo() << "Update nat policy.";
-            shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-            core->setNatPolicy(core->getNatPolicy());
-          }
-        }
-      );
-    }
-  );
 }
 
 // -----------------------------------------------------------------------------
