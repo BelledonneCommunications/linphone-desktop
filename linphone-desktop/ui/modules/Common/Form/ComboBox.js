@@ -2,9 +2,13 @@
 // `ComboBox.qml` Logic.
 // =============================================================================
 
+.import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
+// =============================================================================
+
 function getSelectedEntryIcon () {
   var iconRole = comboBox.iconRole
-  if (iconRole.length === 0) {
+  if (iconRole == null || iconRole.length === 0) {
     return ''
   }
 
@@ -14,6 +18,15 @@ function getSelectedEntryIcon () {
   }
 
   var model = comboBox.model
+
+  if (Utils.isFunction(iconRole)) {
+    return iconRole(
+      Utils.isArray(model)
+        ? model[currentIndex]
+        : model.get(currentIndex)
+    )
+  }
+
   return (
     Utils.isArray(model)
       ? model[currentIndex][iconRole]
@@ -23,5 +36,11 @@ function getSelectedEntryIcon () {
 
 function getEntryIcon (item) {
   var iconRole = comboBox.iconRole
-  return (iconRole.length && item.flattenedModel[iconRole]) || ''
+  if (iconRole == null || iconRole.length === 0) {
+    return ''
+  }
+
+  return Utils.isFunction(iconRole)
+    ? iconRole(item.flattenedModel)
+    : item.flattenedModel[iconRole]
 }

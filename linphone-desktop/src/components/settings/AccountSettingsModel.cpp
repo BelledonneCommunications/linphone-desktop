@@ -248,7 +248,6 @@ QVariantList AccountSettingsModel::getAccounts () const {
   {
     QVariantMap account;
     account["sipAddress"] = ::Utils::linphoneStringToQString(core->getPrimaryContactParsed()->asStringUriOnly());
-    account["proxyConfig"].setValue(shared_ptr<linphone::ProxyConfig>());
     accounts << account;
   }
 

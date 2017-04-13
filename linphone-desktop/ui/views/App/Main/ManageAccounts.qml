@@ -62,6 +62,12 @@ DialogPlus {
           })
 
           model: AccountSettingsModel.accounts
+          iconRole: (function (data) {
+            var proxyConfig = data.proxyConfig
+            return proxyConfig && AccountSettingsModel.getProxyConfigDescription(proxyConfig).registrationState !== AccountSettingsModel.RegistrationStateRegistered
+              ? 'generic_error'
+              : ''
+          })
           textRole: 'sipAddress'
 
           onActivated: AccountSettingsModel.setDefaultProxyConfig(model[index].proxyConfig)
