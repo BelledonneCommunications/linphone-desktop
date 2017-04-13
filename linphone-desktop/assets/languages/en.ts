@@ -145,6 +145,33 @@
     </message>
 </context>
 <context>
+    <name>AuthenticationRequest</name>
+    <message>
+        <source>cancel</source>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>LOGIN</translation>
+    </message>
+    <message>
+        <source>identityLabel</source>
+        <translation>Identity</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>authentificationRequestDescription</source>
+        <translation>Unable to authenticate. Please verify your password.</translation>
+    </message>
+    <message>
+        <source>userIdLabel</source>
+        <translation>User ID (optional)</translation>
+    </message>
+</context>
+<context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>

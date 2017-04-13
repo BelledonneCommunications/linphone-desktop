@@ -85,6 +85,12 @@ ApplicationWindow {
       spacing: 0
 
       // -----------------------------------------------------------------------
+
+      Authentication {
+        onAuthenticationRequested: Logic.handleAuthenticationRequested(authInfo, sipAddress, userId)
+      }
+
+      // -----------------------------------------------------------------------
       // Toolbar properties.
       // -----------------------------------------------------------------------
 

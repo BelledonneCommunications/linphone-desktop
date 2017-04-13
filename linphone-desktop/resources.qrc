@@ -345,6 +345,8 @@
     <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithPhoneNumber.qml</file>
     <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithUsername.qml</file>
     <file>ui/views/App/Main/Assistant/UseOtherSipAccount.qml</file>
+    <file>ui/views/App/Main/AuthenticationRequest.js</file>
+    <file>ui/views/App/Main/AuthenticationRequest.qml</file>
     <file>ui/views/App/Main/ContactEdit.js</file>
     <file>ui/views/App/Main/ContactEdit.qml</file>
     <file>ui/views/App/Main/Contacts.qml</file>
@@ -375,6 +377,7 @@
     <file>ui/views/App/Styles/Main/Assistant/CreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Main/AssistantStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/UseLinphoneSipAccountStyle.qml</file>
+    <file>ui/views/App/Styles/Main/AuthenticationRequestStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>

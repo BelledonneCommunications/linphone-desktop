@@ -85,3 +85,13 @@ function updateSelectedEntry (view, props) {
     timeline.resetSelectedEntry()
   }
 }
+
+// -----------------------------------------------------------------------------
+
+function handleAuthenticationRequested (authInfo, sipAddress, userId) {
+  window.attachVirtualWindow(Qt.resolvedUrl('AuthenticationRequest.qml'), {
+    authInfo: authInfo,
+    sipAddress: sipAddress,
+    userId: userId
+  })
+}

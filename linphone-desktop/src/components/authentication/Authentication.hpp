@@ -1,5 +1,5 @@
 /*
- * Components.hpp
+ * Authentication.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,20 +16,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: April 6, 2017
+ *  Created on: April 13, 2017
  *      Author: Ronan Abhamon
  */
 
-#include "assistant/AssistantModel.hpp"
-#include "authentication/Authentication.hpp"
-#include "calls/CallsListModel.hpp"
-#include "camera/Camera.hpp"
-#include "chat/ChatProxyModel.hpp"
-#include "codecs/AudioCodecsModel.hpp"
-#include "codecs/VideoCodecsModel.hpp"
-#include "contacts/ContactsListProxyModel.hpp"
-#include "core/CoreManager.hpp"
-#include "presence/OwnPresenceModel.hpp"
-#include "settings/AccountSettingsModel.hpp"
-#include "smart-search-bar/SmartSearchBarModel.hpp"
-#include "timeline/TimelineModel.hpp"
+#ifndef AUTHENTICATION_H_
+#define AUTHENTICATION_H_
+
+#include <linphone++/linphone.hh>
+#include <QObject>
+
+// =============================================================================
+
+class Authentication : public QObject {
+  Q_OBJECT;
+
+public:
+  Authentication (QObject *parent = Q_NULLPTR);
+
+  ~Authentication () = default;
+
+signals:
+  void authenticationRequested (const QVariant &authInfo, const QString &sipAddress, const QString &userId);
+
+private:
+  void handleAuthenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
+};
+
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::AuthInfo> );
+
+#endif // AUTHENTICATION_H_

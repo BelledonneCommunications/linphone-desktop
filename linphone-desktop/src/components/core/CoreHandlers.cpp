@@ -34,10 +34,10 @@ using namespace std;
 
 void CoreHandlers::onAuthenticationRequested (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::AuthInfo> &,
+  const shared_ptr<linphone::AuthInfo> &auth_info,
   linphone::AuthMethod
 ) {
-  qDebug() << "Auth request";
+  emit authenticationRequested(auth_info);
 }
 
 void CoreHandlers::onCallStateChanged (

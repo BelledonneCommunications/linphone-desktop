@@ -34,6 +34,7 @@ class CoreHandlers :
   Q_OBJECT;
 
 signals:
+  void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &auth_info);
   void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sip_address, const std::shared_ptr<const linphone::PresenceModel> &presence_model);

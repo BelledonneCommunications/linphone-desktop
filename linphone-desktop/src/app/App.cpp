@@ -276,10 +276,11 @@ void App::registerTypes () {
   qInfo() << "Registering types...";
 
   qmlRegisterType<AssistantModel>("Linphone", 1, 0, "AssistantModel");
+  qmlRegisterType<Authentication>("Linphone", 1, 0, "Authentication");
   qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
-  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
   qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
+  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
 
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
@@ -394,7 +395,7 @@ void App::openAppAfterInit () {
       getMainWindow()->showNormal();
   #else
     getMainWindow()->showNormal();
-  #endif   // ifndef __APPLE__
+  #endif // ifndef __APPLE__
 }
 
 // -----------------------------------------------------------------------------

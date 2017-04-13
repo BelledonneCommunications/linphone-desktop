@@ -23,7 +23,7 @@ QtObject {
   }
 
   property QtObject description: QtObject {
-    property color color: Colors.l
+    property color color: Colors.j
     property int fontSize: 11
     property int verticalMargin: 25
   }

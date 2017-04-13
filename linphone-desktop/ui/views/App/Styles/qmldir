@@ -14,6 +14,7 @@ singleton CreateLinphoneSipAccountStyle            1.0 Main/Assistant/CreateLinp
 singleton UseLinphoneSipAccountStyle               1.0 Main/Assistant/UseLinphoneSipAccountStyle.qml
 
 singleton AssistantStyle                           1.0 Main/AssistantStyle.qml
+singleton AuthenticationRequestStyle               1.0 Main/AuthenticationRequestStyle.qml
 singleton ContactEditStyle                         1.0 Main/ContactEditStyle.qml
 singleton ContactsStyle                            1.0 Main/ContactsStyle.qml
 singleton ConversationStyle                        1.0 Main/ConversationStyle.qml

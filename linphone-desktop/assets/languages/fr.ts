@@ -145,6 +145,33 @@
     </message>
 </context>
 <context>
+    <name>AuthenticationRequest</name>
+    <message>
+        <source>cancel</source>
+        <translation>ANNULER</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>SE CONNECTER</translation>
+    </message>
+    <message>
+        <source>identityLabel</source>
+        <translation>Identité</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Mot de passe</translation>
+    </message>
+    <message>
+        <source>authentificationRequestDescription</source>
+        <translation>Impossible de vous authentifier. Merci de vérifier votre mot de passe.</translation>
+    </message>
+    <message>
+        <source>userIdLabel</source>
+        <translation>ID utilisateur (optionnel)</translation>
+    </message>
+</context>
+<context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
