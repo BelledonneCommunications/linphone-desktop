@@ -9,12 +9,18 @@ import Common.Styles 1.0
 // =============================================================================
 
 Rectangle {
+  id: dialog
+
   property alias buttons: buttons.data // Optionnal.
   property alias descriptionText: description.text // Optionnal.
   property bool centeredButtons: false
 
-  default property alias _content: content.data // Required.
+  default property alias _content: content.data
   property bool _disableExitStatus
+
+  readonly property bool contentIsEmpty: {
+    return _content == null || !_content.length
+  }
 
   // ---------------------------------------------------------------------------
 
@@ -54,13 +60,14 @@ Rectangle {
     DialogDescription {
       id: description
 
+      Layout.fillHeight: dialog.contentIsEmpty
       Layout.fillWidth: true
     }
 
     Item {
       id: content
 
-      Layout.fillHeight: true
+      Layout.fillHeight: !dialog.contentIsEmpty
       Layout.fillWidth: true
     }
 

@@ -66,6 +66,8 @@ public:
 
   Q_INVOKABLE std::shared_ptr<linphone::ProxyConfig> createProxyConfig ();
 
+  Q_INVOKABLE void eraseAllPasswords ();
+
 signals:
   void accountSettingsUpdated ();
 

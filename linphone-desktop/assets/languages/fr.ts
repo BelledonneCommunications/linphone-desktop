@@ -894,6 +894,10 @@ Url du serveur non configurée.</translation>
         <source>deleteAccountDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer ce compte ?</translation>
     </message>
+    <message>
+        <source>eraseAllPasswordsDescription</source>
+        <translation>Êtes-vous sûr de vouloir supprimer tous vos mots de passe ?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

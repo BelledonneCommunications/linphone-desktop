@@ -23,3 +23,13 @@ function deleteAccount (account) {
     }
   })
 }
+
+function eraseAllPasswords () {
+  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+    descriptionText: qsTr('eraseAllPasswordsDescription'),
+  }, function (status) {
+    if (status) {
+      Linphone.AccountSettingsModel.eraseAllPasswords()
+    }
+  })
+}

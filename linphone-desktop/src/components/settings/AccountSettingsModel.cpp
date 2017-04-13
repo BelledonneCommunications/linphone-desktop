@@ -171,6 +171,10 @@ shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
   return CoreManager::getInstance()->getCore()->createProxyConfig();
 }
 
+void AccountSettingsModel::eraseAllPasswords () {
+  CoreManager::getInstance()->getCore()->clearAllAuthInfo();
+}
+
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getUsername () const {

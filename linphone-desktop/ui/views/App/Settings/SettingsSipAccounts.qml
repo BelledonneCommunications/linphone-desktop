@@ -112,6 +112,8 @@ TabContainer {
 
       TextButtonB {
         text: qsTr('eraseAllPasswords')
+
+        onClicked: Logic.eraseAllPasswords()
       }
 
       TextButtonB {
