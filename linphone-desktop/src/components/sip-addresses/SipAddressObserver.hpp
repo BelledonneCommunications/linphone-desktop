@@ -39,7 +39,7 @@ class SipAddressObserver : public QObject {
   Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount NOTIFY unreadMessagesCountChanged);
 
 public:
-  SipAddressObserver (const QString &sip_address);
+  SipAddressObserver (const QString &sipAddress);
   ~SipAddressObserver () = default;
 
 signals:
@@ -49,13 +49,13 @@ signals:
 
 private:
   QString getSipAddress () const {
-    return m_sip_address;
+    return mSipAddress;
   }
 
   // ---------------------------------------------------------------------------
 
   ContactModel *getContact () const {
-    return m_contact;
+    return mContact;
   }
 
   void setContact (ContactModel *contact);
@@ -63,24 +63,24 @@ private:
   // ---------------------------------------------------------------------------
 
   Presence::PresenceStatus getPresenceStatus () const {
-    return m_presence_status;
+    return mPresenceStatus;
   }
 
-  void setPresenceStatus (const Presence::PresenceStatus &presence_status);
+  void setPresenceStatus (const Presence::PresenceStatus &presenceStatus);
 
   // ---------------------------------------------------------------------------
 
   int getUnreadMessagesCount () const {
-    return m_unread_messages_count;
+    return mUnreadMessagesCount;
   }
 
-  void setUnreadMessagesCount (int unread_messages_count);
+  void setUnreadMessagesCount (int unreadMessagesCount);
 
-  QString m_sip_address;
+  QString mSipAddress;
 
-  ContactModel *m_contact = nullptr;
-  Presence::PresenceStatus m_presence_status = Presence::PresenceStatus::Offline;
-  int m_unread_messages_count = 0;
+  ContactModel *mContact = nullptr;
+  Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
+  int mUnreadMessagesCount = 0;
 };
 
 Q_DECLARE_METATYPE(SipAddressObserver *);

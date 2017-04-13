@@ -34,42 +34,42 @@ using namespace std;
 
 // =============================================================================
 
-CoreManager *CoreManager::m_instance = nullptr;
+CoreManager *CoreManager::mInstance = nullptr;
 
-CoreManager::CoreManager (QObject *parent, const QString &config_path) : QObject(parent), m_handlers(make_shared<CoreHandlers>()) {
-  m_promise_build = QtConcurrent::run(this, &CoreManager::createLinphoneCore, config_path);
+CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(parent), mHandlers(make_shared<CoreHandlers>()) {
+  mPromiseBuild = QtConcurrent::run(this, &CoreManager::createLinphoneCore, configPath);
 
   QObject::connect(
-    &m_promise_watcher, &QFutureWatcher<void>::finished, this, []() {
-      m_instance->m_calls_list_model = new CallsListModel(m_instance);
-      m_instance->m_contacts_list_model = new ContactsListModel(m_instance);
-      m_instance->m_sip_addresses_model = new SipAddressesModel(m_instance);
-      m_instance->m_settings_model = new SettingsModel(m_instance);
-      m_instance->m_account_settings_model = new AccountSettingsModel(m_instance);
+    &mPromiseWatcher, &QFutureWatcher<void>::finished, this, []() {
+      mInstance->mCallsListModel = new CallsListModel(mInstance);
+      mInstance->mContactsListModel = new ContactsListModel(mInstance);
+      mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
+      mInstance->mSettingsModel = new SettingsModel(mInstance);
+      mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 
-      emit m_instance->linphoneCoreCreated();
+      emit mInstance->linphoneCoreCreated();
     }
   );
 
-  m_promise_watcher.setFuture(m_promise_build);
+  mPromiseWatcher.setFuture(mPromiseBuild);
 }
 
 void CoreManager::enableHandlers () {
-  m_cbs_timer->start();
+  mCbsTimer->start();
 }
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::init (QObject *parent, const QString &config_path) {
-  if (m_instance)
+void CoreManager::init (QObject *parent, const QString &configPath) {
+  if (mInstance)
     return;
 
-  m_instance = new CoreManager(parent, config_path);
+  mInstance = new CoreManager(parent, configPath);
 
-  QTimer *timer = m_instance->m_cbs_timer = new QTimer(m_instance);
+  QTimer *timer = mInstance->mCbsTimer = new QTimer(mInstance);
   timer->setInterval(20);
 
-  QObject::connect(timer, &QTimer::timeout, m_instance, &CoreManager::iterate);
+  QObject::connect(timer, &QTimer::timeout, mInstance, &CoreManager::iterate);
 }
 
 // -----------------------------------------------------------------------------
@@ -80,27 +80,27 @@ VcardModel *CoreManager::createDetachedVcardModel () {
 
 void CoreManager::forceRefreshRegisters () {
   qInfo() << QStringLiteral("Refresh registers.");
-  m_instance->m_core->refreshRegisters();
+  mInstance->mCore->refreshRegisters();
 }
 
 // -----------------------------------------------------------------------------
 
 void CoreManager::setDatabasesPaths () {
-  m_core->setFriendsDatabasePath(Paths::getFriendsListFilepath());
-  m_core->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
-  m_core->setChatDatabasePath(Paths::getMessageHistoryFilepath());
+  mCore->setFriendsDatabasePath(Paths::getFriendsListFilepath());
+  mCore->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
+  mCore->setChatDatabasePath(Paths::getMessageHistoryFilepath());
 }
 
 void CoreManager::setOtherPaths () {
-  m_core->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
+  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
 
   // This one is actually a database but it MUST be set after the zrtp secrets
   // as it allows automatic migration from old version(secrets, xml) to new version (data, sqlite).
-  m_core->setZrtpCacheDatabasePath(Paths::getZrtpDataFilepath());
+  mCore->setZrtpCacheDatabasePath(Paths::getZrtpDataFilepath());
 
-  m_core->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
+  mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
 
-  m_core->setRootCa(Paths::getRootCaFilepath());
+  mCore->setRootCa(Paths::getRootCaFilepath());
 }
 
 void CoreManager::setResourcesPaths () {
@@ -111,7 +111,7 @@ void CoreManager::setResourcesPaths () {
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::createLinphoneCore (const QString &config_path) {
+void CoreManager::createLinphoneCore (const QString &configPath) {
   qInfo() << QStringLiteral("Launch async linphone core creation.");
 
   // TODO: activate migration when ready to switch to this new version
@@ -119,10 +119,10 @@ void CoreManager::createLinphoneCore (const QString &config_path) {
 
   setResourcesPaths();
 
-  m_core = linphone::Factory::get()->createCore(m_handlers, Paths::getConfigFilepath(config_path), Paths::getFactoryConfigFilepath());
+  mCore = linphone::Factory::get()->createCore(mHandlers, Paths::getConfigFilepath(configPath), Paths::getFactoryConfigFilepath());
 
-  m_core->setVideoDisplayFilter("MSOGL");
-  m_core->usePreviewWindow(true);
+  mCore->setVideoDisplayFilter("MSOGL");
+  mCore->usePreviewWindow(true);
 
   setDatabasesPaths();
   setOtherPaths();
@@ -131,7 +131,7 @@ void CoreManager::createLinphoneCore (const QString &config_path) {
 // -----------------------------------------------------------------------------
 
 void CoreManager::iterate () {
-  m_instance->lockVideoRender();
-  m_instance->m_core->iterate();
-  m_instance->unlockVideoRender();
+  mInstance->lockVideoRender();
+  mInstance->mCore->iterate();
+  mInstance->unlockVideoRender();
 }

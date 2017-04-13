@@ -42,32 +42,32 @@ class VcardModel : public QObject {
   friend class ContactModel;
 
 public:
-  VcardModel (std::shared_ptr<linphone::Vcard> vcard) : m_vcard(vcard) {}
+  VcardModel (std::shared_ptr<linphone::Vcard> vcard) : mVcard(vcard) {}
 
   ~VcardModel ();
 
   QString getUsername () const;
   QVariantList getSipAddresses () const;
 
-  Q_INVOKABLE bool addSipAddress (const QString &sip_address);
-  Q_INVOKABLE void removeSipAddress (const QString &sip_address);
-  Q_INVOKABLE bool updateSipAddress (const QString &old_sip_address, const QString &sip_address);
+  Q_INVOKABLE bool addSipAddress (const QString &sipAddress);
+  Q_INVOKABLE void removeSipAddress (const QString &sipAddress);
+  Q_INVOKABLE bool updateSipAddress (const QString &oldSipAddress, const QString &sipAddress);
 
   Q_INVOKABLE bool addCompany (const QString &company);
   Q_INVOKABLE void removeCompany (const QString &company);
-  Q_INVOKABLE bool updateCompany (const QString &old_company, const QString &company);
+  Q_INVOKABLE bool updateCompany (const QString &oldCompany, const QString &company);
 
   Q_INVOKABLE bool addEmail (const QString &email);
   Q_INVOKABLE void removeEmail (const QString &email);
-  Q_INVOKABLE bool updateEmail (const QString &old_email, const QString &email);
+  Q_INVOKABLE bool updateEmail (const QString &oldEmail, const QString &email);
 
   Q_INVOKABLE bool addUrl (const QString &url);
   Q_INVOKABLE void removeUrl (const QString &url);
-  Q_INVOKABLE bool updateUrl (const QString &old_url, const QString &url);
+  Q_INVOKABLE bool updateUrl (const QString &oldUrl, const QString &url);
 
   Q_INVOKABLE void setStreet (const QString &street);
   Q_INVOKABLE void setLocality (const QString &locality);
-  Q_INVOKABLE void setPostalCode (const QString &postal_code);
+  Q_INVOKABLE void setPostalCode (const QString &postalCode);
   Q_INVOKABLE void setCountry (const QString &country);
 
 signals:
@@ -84,7 +84,7 @@ private:
   QVariantList getEmails () const;
   QVariantList getUrls () const;
 
-  std::shared_ptr<linphone::Vcard> m_vcard;
+  std::shared_ptr<linphone::Vcard> mVcard;
 };
 
 Q_DECLARE_METATYPE(VcardModel *);

@@ -55,21 +55,21 @@ public:
   AccountSettingsModel (QObject *parent = Q_NULLPTR);
   ~AccountSettingsModel () = default;
 
-  bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
+  bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
-  Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
+  Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
-  Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
+  Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
-  Q_INVOKABLE bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config, const QVariantMap &data);
-  Q_INVOKABLE void removeProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxy_config);
+  Q_INVOKABLE bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, const QVariantMap &data);
+  Q_INVOKABLE void removeProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
   Q_INVOKABLE std::shared_ptr<linphone::ProxyConfig> createProxyConfig ();
 
   Q_INVOKABLE void addAuthInfo (
-    const std::shared_ptr<linphone::AuthInfo> &auth_info,
+    const std::shared_ptr<linphone::AuthInfo> &authInfo,
     const QString &password,
-    const QString &user_id
+    const QString &userId
   );
 
   Q_INVOKABLE void eraseAllPasswords ();
@@ -105,7 +105,7 @@ private:
   // ---------------------------------------------------------------------------
 
   void handleRegistrationStateChanged (
-    const std::shared_ptr<linphone::ProxyConfig> &proxy_config,
+    const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
     linphone::RegistrationState state
   );
 };

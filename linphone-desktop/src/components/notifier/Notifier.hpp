@@ -56,11 +56,11 @@ private:
   QObject *createNotification (NotificationType type);
   void showNotification (QObject *notification, int timeout);
 
-  QQmlComponent *m_components[MaxNbTypes];
+  QQmlComponent *mComponents[MaxNbTypes];
 
-  int m_offset = 0;
-  int m_n_instances = 0;
-  QMutex m_mutex;
+  int mOffset = 0;
+  int mInstancesNumber = 0;
+  QMutex mMutex;
 };
 
 #endif // NOTIFIER_H_

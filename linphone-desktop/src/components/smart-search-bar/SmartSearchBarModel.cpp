@@ -32,7 +32,7 @@
 
 // =============================================================================
 
-const QRegExp SmartSearchBarModel::m_search_separators("^[^_.-;@ ][_.-;@ ]");
+const QRegExp SmartSearchBarModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
 
 // -----------------------------------------------------------------------------
 
@@ -50,54 +50,54 @@ QHash<int, QByteArray> SmartSearchBarModel::roleNames () const {
 // -----------------------------------------------------------------------------
 
 void SmartSearchBarModel::setFilter (const QString &pattern) {
-  m_filter = pattern;
+  mFilter = pattern;
   invalidate();
 }
 
 // -----------------------------------------------------------------------------
 
-bool SmartSearchBarModel::filterAcceptsRow (int source_row, const QModelIndex &source_parent) const {
-  const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
+bool SmartSearchBarModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
   return computeEntryWeight(index.data().toMap()) > 0;
 }
 
 bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const QVariantMap &map_a = sourceModel()->data(left).toMap();
-  const QVariantMap &map_b = sourceModel()->data(right).toMap();
+  const QVariantMap &mapA = sourceModel()->data(left).toMap();
+  const QVariantMap &mapB = sourceModel()->data(right).toMap();
 
-  const QString &sip_address_a = map_a["sipAddress"].toString();
-  const QString &sip_address_b = map_b["sipAddress"].toString();
+  const QString &sipAddressA = mapA["sipAddress"].toString();
+  const QString &sipAddressB = mapB["sipAddress"].toString();
 
   // TODO: Use a cache, do not compute the same value as `filterAcceptsRow`.
-  int weight_a = computeEntryWeight(map_a);
-  int weight_b = computeEntryWeight(map_b);
+  int weightA = computeEntryWeight(mapA);
+  int weightB = computeEntryWeight(mapB);
 
   // 1. Not the same weight.
-  if (weight_a != weight_b)
-    return weight_a > weight_b;
+  if (weightA != weightB)
+    return weightA > weightB;
 
-  const ContactModel *contact_a = map_a.value("contact").value<ContactModel *>();
-  const ContactModel *contact_b = map_b.value("contact").value<ContactModel *>();
+  const ContactModel *contactA = mapA.value("contact").value<ContactModel *>();
+  const ContactModel *contactB = mapB.value("contact").value<ContactModel *>();
 
   // 2. No contacts.
-  if (!contact_a && !contact_b)
-    return sip_address_a <= sip_address_b;
+  if (!contactA && !contactB)
+    return sipAddressA <= sipAddressB;
 
   // 3. No contact for a or b.
-  if (!contact_a || !contact_b)
-    return !!contact_a;
+  if (!contactA || !contactB)
+    return !!contactA;
 
   // 4. Same contact (address).
-  if (contact_a == contact_b)
-    return sip_address_a <= sip_address_b;
+  if (contactA == contactB)
+    return sipAddressA <= sipAddressB;
 
   // 5. Not the same contact name.
-  int diff = contact_a->m_linphone_friend->getName().compare(contact_b->m_linphone_friend->getName());
+  int diff = contactA->mLinphoneFriend->getName().compare(contactB->mLinphoneFriend->getName());
   if (diff)
     return diff <= 0;
 
   // 6. Same contact name, so compare sip addresses.
-  return sip_address_a <= sip_address_b;
+  return sipAddressA <= sipAddressB;
 }
 
 int SmartSearchBarModel::computeEntryWeight (const QVariantMap &entry) const {
@@ -114,10 +114,10 @@ int SmartSearchBarModel::computeStringWeight (const QString &string) const {
   int index = -1;
   int offset = -1;
 
-  while ((index = string.indexOf(m_filter, index + 1, Qt::CaseInsensitive)) != -1) {
-    int tmp_offset = index - string.lastIndexOf(m_search_separators, index) - 1;
-    if ((tmp_offset != -1 && tmp_offset < offset) || offset == -1)
-      if ((offset = tmp_offset) == 0) break;
+  while ((index = string.indexOf(mFilter, index + 1, Qt::CaseInsensitive)) != -1) {
+    int tmpOffset = index - string.lastIndexOf(mSearchSeparators, index) - 1;
+    if ((tmpOffset != -1 && tmpOffset < offset) || offset == -1)
+      if ((offset = tmpOffset) == 0) break;
   }
 
   switch (offset) {

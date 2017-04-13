@@ -51,7 +51,7 @@ using namespace std;
 // a separator like ` word`.
 //
 // - [_.-;@ ] is the main pattern (a separator).
-const QRegExp ContactsListProxyModel::m_search_separators("^[^_.-;@ ][_.-;@ ]");
+const QRegExp ContactsListProxyModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
 
 // -----------------------------------------------------------------------------
 
@@ -63,38 +63,38 @@ ContactsListProxyModel::ContactsListProxyModel (QObject *parent) : QSortFilterPr
 // -----------------------------------------------------------------------------
 
 void ContactsListProxyModel::setFilter (const QString &pattern) {
-  m_filter = pattern;
+  mFilter = pattern;
   invalidate();
 }
 
 // -----------------------------------------------------------------------------
 
 bool ContactsListProxyModel::filterAcceptsRow (
-  int source_row,
-  const QModelIndex &source_parent
+  int sourceRow,
+  const QModelIndex &sourceParent
 ) const {
-  const QModelIndex &index = sourceModel()->index(source_row, 0, source_parent);
+  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
   const ContactModel *contact = index.data().value<ContactModel *>();
 
-  m_weights[contact] = static_cast<unsigned int>(round(computeContactWeight(contact)));
+  mWeights[contact] = static_cast<unsigned int>(round(computeContactWeight(contact)));
 
-  return m_weights[contact] > 0 && (
-    !m_use_connected_filter ||
+  return mWeights[contact] > 0 && (
+    !mUseConnectedFilter ||
     contact->getPresenceLevel() != Presence::PresenceLevel::White
   );
 }
 
 bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const ContactModel *contact_a = sourceModel()->data(left).value<ContactModel *>();
-  const ContactModel *contact_b = sourceModel()->data(right).value<ContactModel *>();
+  const ContactModel *contactA = sourceModel()->data(left).value<ContactModel *>();
+  const ContactModel *contactB = sourceModel()->data(right).value<ContactModel *>();
 
-  unsigned int weight_a = m_weights[contact_a];
-  unsigned int weight_b = m_weights[contact_b];
+  unsigned int weightA = mWeights[contactA];
+  unsigned int weightB = mWeights[contactB];
 
   // Sort by weight and name.
-  return weight_a > weight_b || (
-    weight_a == weight_b &&
-    contact_a->m_linphone_friend->getName() <= contact_b->m_linphone_friend->getName()
+  return weightA > weightB || (
+    weightA == weightB &&
+    contactA->mLinphoneFriend->getName() <= contactB->mLinphoneFriend->getName()
   );
 }
 
@@ -105,12 +105,12 @@ float ContactsListProxyModel::computeStringWeight (const QString &string, float 
   int offset = -1;
 
   // Search pattern.
-  while ((index = string.indexOf(m_filter, index + 1, Qt::CaseInsensitive)) != -1) {
+  while ((index = string.indexOf(mFilter, index + 1, Qt::CaseInsensitive)) != -1) {
     // Search n chars between one separator and index.
-    int tmp_offset = index - string.lastIndexOf(m_search_separators, index) - 1;
+    int tmpOffset = index - string.lastIndexOf(mSearchSeparators, index) - 1;
 
-    if ((tmp_offset != -1 && tmp_offset < offset) || offset == -1)
-      if ((offset = tmp_offset) == 0) break;
+    if ((tmpOffset != -1 && tmpOffset < offset) || offset == -1)
+      if ((offset = tmpOffset) == 0) break;
   }
 
   switch (offset) {
@@ -129,7 +129,7 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel *contact)
   float weight = computeStringWeight(contact->getVcardModel()->getUsername(), USERNAME_WEIGHT);
 
   // Get all contact's addresses.
-  const list<shared_ptr<linphone::Address> > addresses = contact->m_linphone_friend->getAddresses();
+  const list<shared_ptr<linphone::Address> > addresses = contact->mLinphoneFriend->getAddresses();
 
   float size = static_cast<float>(addresses.size());
   for (auto it = addresses.cbegin(); it != addresses.cend(); ++it)
@@ -143,9 +143,9 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel *contact)
 
 // -----------------------------------------------------------------------------
 
-void ContactsListProxyModel::setConnectedFilter (bool use_connected_filter) {
-  if (use_connected_filter != m_use_connected_filter) {
-    m_use_connected_filter = use_connected_filter;
+void ContactsListProxyModel::setConnectedFilter (bool useConnectedFilter) {
+  if (useConnectedFilter != mUseConnectedFilter) {
+    mUseConnectedFilter = useConnectedFilter;
     invalidate();
   }
 }

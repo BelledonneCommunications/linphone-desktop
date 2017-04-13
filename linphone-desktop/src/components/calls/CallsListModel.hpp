@@ -43,10 +43,10 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-  CallModel *getCall (const std::shared_ptr<linphone::Call> &linphone_call) const;
+  CallModel *getCall (const std::shared_ptr<linphone::Call> &linphoneCall) const;
 
-  Q_INVOKABLE void launchAudioCall (const QString &sip_uri) const;
-  Q_INVOKABLE void launchVideoCall (const QString &sip_uri) const;
+  Q_INVOKABLE void launchAudioCall (const QString &sipUri) const;
+  Q_INVOKABLE void launchVideoCall (const QString &sipUri) const;
 
   Q_INVOKABLE int getRunningCallsNumber () const;
 
@@ -59,12 +59,12 @@ private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-  void addCall (const std::shared_ptr<linphone::Call> &linphone_call);
-  void removeCall (const std::shared_ptr<linphone::Call> &linphone_call);
+  void addCall (const std::shared_ptr<linphone::Call> &linphoneCall);
+  void removeCall (const std::shared_ptr<linphone::Call> &linphoneCall);
 
-  QList<CallModel *> m_list;
+  QList<CallModel *> mList;
 
-  std::shared_ptr<CoreHandlers> m_core_handlers;
+  std::shared_ptr<CoreHandlers> mCoreHandlers;
 };
 
 #endif // CALLS_LIST_MODEL_H_

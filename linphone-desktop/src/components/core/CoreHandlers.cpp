@@ -34,10 +34,10 @@ using namespace std;
 
 void CoreHandlers::onAuthenticationRequested (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::AuthInfo> &auth_info,
+  const shared_ptr<linphone::AuthInfo> &authInfo,
   linphone::AuthMethod
 ) {
-  emit authenticationRequested(auth_info);
+  emit authenticationRequested(authInfo);
 }
 
 void CoreHandlers::onCallStateChanged (
@@ -57,9 +57,9 @@ void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::ChatRoom> &,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
-  const string content_type = message->getContentType();
+  const string contentType = message->getContentType();
 
-  if (content_type == "text/plain" || content_type == "application/vnd.gsma.rcs-ft-http+xml") {
+  if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
     emit messageReceived(message);
 
     const App *app = App::getInstance();
@@ -71,24 +71,24 @@ void CoreHandlers::onMessageReceived (
 void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Friend> &,
-  const string &uri_or_tel,
-  const shared_ptr<const linphone::PresenceModel> &presence_model
+  const string &uriOrTel,
+  const shared_ptr<const linphone::PresenceModel> &presenceModel
 ) {
-  emit presenceReceived(::Utils::linphoneStringToQString(uri_or_tel), presence_model);
+  emit presenceReceived(::Utils::linphoneStringToQString(uriOrTel), presenceModel);
 }
 
 void CoreHandlers::onNotifyPresenceReceived (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::Friend> &linphone_friend
+  const shared_ptr<linphone::Friend> &linphoneFriend
 ) {
-  linphone_friend->getData<ContactModel>("contact-model").refreshPresence();
+  linphoneFriend->getData<ContactModel>("contact-model").refreshPresence();
 }
 
 void CoreHandlers::onRegistrationStateChanged (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::ProxyConfig> &proxy_config,
+  const shared_ptr<linphone::ProxyConfig> &proxyConfig,
   linphone::RegistrationState state,
   const string &
 ) {
-  emit registrationStateChanged(proxy_config, state);
+  emit registrationStateChanged(proxyConfig, state);
 }

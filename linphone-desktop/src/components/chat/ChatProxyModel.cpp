@@ -30,32 +30,32 @@ using namespace std;
 class ChatProxyModel::ChatModelFilter : public QSortFilterProxyModel {
 public:
   ChatModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {
-    setSourceModel(&m_chat_model);
+    setSourceModel(&mChatModel);
   }
 
   ChatModel::EntryType getEntryTypeFilter () {
-    return m_entry_type_filter;
+    return mEntryTypeFilter;
   }
 
   void setEntryTypeFilter (ChatModel::EntryType type) {
-    m_entry_type_filter = type;
+    mEntryTypeFilter = type;
     invalidate();
   }
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &) const override {
-    if (m_entry_type_filter == ChatModel::EntryType::GenericEntry)
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &) const override {
+    if (mEntryTypeFilter == ChatModel::EntryType::GenericEntry)
       return true;
 
-    QModelIndex index = sourceModel()->index(source_row, 0, QModelIndex());
+    QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
     const QVariantMap &data = index.data().toMap();
 
-    return data["type"].toInt() == m_entry_type_filter;
+    return data["type"].toInt() == mEntryTypeFilter;
   }
 
 private:
-  ChatModel m_chat_model;
-  ChatModel::EntryType m_entry_type_filter = ChatModel::EntryType::GenericEntry;
+  ChatModel mChatModel;
+  ChatModel::EntryType mEntryTypeFilter = ChatModel::EntryType::GenericEntry;
 };
 
 // =============================================================================
@@ -63,34 +63,34 @@ private:
 const int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  m_chat_model_filter = new ChatModelFilter(this);
+  mChatModelFilter = new ChatModelFilter(this);
 
-  setSourceModel(m_chat_model_filter);
+  setSourceModel(mChatModelFilter);
 
-  ChatModel *chat = static_cast<ChatModel *>(m_chat_model_filter->sourceModel());
+  ChatModel *chat = static_cast<ChatModel *>(mChatModelFilter->sourceModel());
 
   QObject::connect(
     chat, &ChatModel::messageReceived, this, [this](const shared_ptr<linphone::ChatMessage> &) {
-      m_n_max_displayed_entries++;
+      mMaxDisplayedEntries++;
     }
   );
 
   QObject::connect(
     chat, &ChatModel::messageSent, this, [this](const shared_ptr<linphone::ChatMessage> &) {
-      m_n_max_displayed_entries++;
+      mMaxDisplayedEntries++;
     }
   );
 }
 
 void ChatProxyModel::loadMoreEntries () {
   int count = rowCount();
-  int parent_count = m_chat_model_filter->rowCount();
+  int parentCount = mChatModelFilter->rowCount();
 
-  if (count < parent_count) {
-    // Do not increase `m_n_max_displayed_entries` if it's not necessary...
+  if (count < parentCount) {
+    // Do not increase `mMaxDisplayedEntries` if it's not necessary...
     // Limit qml calls.
-    if (count == m_n_max_displayed_entries)
-      m_n_max_displayed_entries += ENTRIES_CHUNK_SIZE;
+    if (count == mMaxDisplayedEntries)
+      mMaxDisplayedEntries += ENTRIES_CHUNK_SIZE;
 
     invalidateFilter();
 
@@ -101,59 +101,59 @@ void ChatProxyModel::loadMoreEntries () {
 }
 
 void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
-  if (m_chat_model_filter->getEntryTypeFilter() != type) {
-    m_chat_model_filter->setEntryTypeFilter(type);
+  if (mChatModelFilter->getEntryTypeFilter() != type) {
+    mChatModelFilter->setEntryTypeFilter(type);
     emit entryTypeFilterChanged(type);
   }
 }
 
 void ChatProxyModel::removeEntry (int id) {
-  QModelIndex source_index = mapToSource(index(id, 0));
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->removeEntry(
-    m_chat_model_filter->mapToSource(source_index).row()
+  QModelIndex sourceIndex = mapToSource(index(id, 0));
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->removeEntry(
+    mChatModelFilter->mapToSource(sourceIndex).row()
   );
 }
 
 void ChatProxyModel::removeAllEntries () {
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->removeAllEntries();
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->removeAllEntries();
 }
 
 void ChatProxyModel::sendMessage (const QString &message) {
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->sendMessage(message);
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendMessage(message);
 }
 
 void ChatProxyModel::resendMessage (int id) {
-  QModelIndex source_index = mapToSource(index(id, 0));
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->resendMessage(
-    m_chat_model_filter->mapToSource(source_index).row()
+  QModelIndex sourceIndex = mapToSource(index(id, 0));
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->resendMessage(
+    mChatModelFilter->mapToSource(sourceIndex).row()
   );
 }
 
 void ChatProxyModel::sendFileMessage (const QString &path) {
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->sendFileMessage(path);
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendFileMessage(path);
 }
 
-void ChatProxyModel::downloadFile (int id, const QString &download_path) {
-  QModelIndex source_index = mapToSource(index(id, 0));
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->downloadFile(
-    m_chat_model_filter->mapToSource(source_index).row(), download_path
+void ChatProxyModel::downloadFile (int id, const QString &downloadPath) {
+  QModelIndex sourceIndex = mapToSource(index(id, 0));
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->downloadFile(
+    mChatModelFilter->mapToSource(sourceIndex).row(), downloadPath
   );
 }
 
 // -----------------------------------------------------------------------------
 
-bool ChatProxyModel::filterAcceptsRow (int source_row, const QModelIndex &) const {
-  return m_chat_model_filter->rowCount() - source_row <= m_n_max_displayed_entries;
+bool ChatProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const {
+  return mChatModelFilter->rowCount() - sourceRow <= mMaxDisplayedEntries;
 }
 
 // -----------------------------------------------------------------------------
 
 QString ChatProxyModel::getSipAddress () const {
-  return static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->getSipAddress();
+  return static_cast<ChatModel *>(mChatModelFilter->sourceModel())->getSipAddress();
 }
 
-void ChatProxyModel::setSipAddress (const QString &sip_address) {
-  static_cast<ChatModel *>(m_chat_model_filter->sourceModel())->setSipAddress(
-    sip_address
+void ChatProxyModel::setSipAddress (const QString &sipAddress) {
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->setSipAddress(
+    sipAddress
   );
 }

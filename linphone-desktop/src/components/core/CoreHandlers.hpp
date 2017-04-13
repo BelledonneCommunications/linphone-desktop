@@ -34,16 +34,16 @@ class CoreHandlers :
   Q_OBJECT;
 
 signals:
-  void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &auth_info);
+  void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
   void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
-  void presenceReceived (const QString &sip_address, const std::shared_ptr<const linphone::PresenceModel> &presence_model);
-  void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxy_config, linphone::RegistrationState state);
+  void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
+  void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
 
 private:
   void onAuthenticationRequested (
     const std::shared_ptr<linphone::Core> &core,
-    const std::shared_ptr<linphone::AuthInfo> &auth_info,
+    const std::shared_ptr<linphone::AuthInfo> &authInfo,
     linphone::AuthMethod method
   ) override;
 
@@ -62,19 +62,19 @@ private:
 
   void onNotifyPresenceReceivedForUriOrTel (
     const std::shared_ptr<linphone::Core> &core,
-    const std::shared_ptr<linphone::Friend> &linphone_friend,
-    const std::string &uri_or_tel,
-    const std::shared_ptr<const linphone::PresenceModel> &presence_model
+    const std::shared_ptr<linphone::Friend> &linphoneFriend,
+    const std::string &uriOrTel,
+    const std::shared_ptr<const linphone::PresenceModel> &presenceModel
   ) override;
 
   void onNotifyPresenceReceived (
     const std::shared_ptr<linphone::Core> &core,
-    const std::shared_ptr<linphone::Friend> &linphone_friend
+    const std::shared_ptr<linphone::Friend> &linphoneFriend
   ) override;
 
   void onRegistrationStateChanged (
     const std::shared_ptr<linphone::Core> &core,
-    const std::shared_ptr<linphone::ProxyConfig> &proxy_config,
+    const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
     linphone::RegistrationState state,
     const std::string &message
   ) override;

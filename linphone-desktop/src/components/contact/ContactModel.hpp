@@ -40,12 +40,12 @@ class ContactModel : public QObject {
   friend class SmartSearchBarModel;
 
 public:
-  ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphone_friend);
+  ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphoneFriend);
   ContactModel (QObject *parent, VcardModel *vcard);
   ~ContactModel () = default;
 
   std::shared_ptr<VcardModel> getVcardModel () const {
-    return m_vcard;
+    return mVcard;
   }
 
   void refreshPresence ();
@@ -58,21 +58,21 @@ signals:
   void contactUpdated ();
   void presenceStatusChanged (Presence::PresenceStatus status);
   void presenceLevelChanged (Presence::PresenceLevel level);
-  void sipAddressAdded (const QString &sip_address);
-  void sipAddressRemoved (const QString &sip_address);
+  void sipAddressAdded (const QString &sipAddress);
+  void sipAddressRemoved (const QString &sipAddress);
 
 private:
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
 
   VcardModel *getVcardModelPtr () const {
-    return m_vcard.get();
+    return mVcard.get();
   }
 
-  QVariantList m_old_sip_addresses;
+  QVariantList mOldSipAddresses;
 
-  std::shared_ptr<VcardModel> m_vcard;
-  std::shared_ptr<linphone::Friend> m_linphone_friend;
+  std::shared_ptr<VcardModel> mVcard;
+  std::shared_ptr<linphone::Friend> mLinphoneFriend;
 };
 
 Q_DECLARE_METATYPE(ContactModel *);

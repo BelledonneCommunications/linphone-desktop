@@ -34,7 +34,7 @@ using namespace std;
 class AssistantModel::Handlers : public linphone::AccountCreatorListener {
 public:
   Handlers (AssistantModel *assistant) {
-    m_assistant = assistant;
+    mAssistant = assistant;
   }
 
   void onCreateAccount (
@@ -43,14 +43,14 @@ public:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusAccountCreated)
-      emit m_assistant->createStatusChanged("");
+      emit mAssistant->createStatusChanged("");
     else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
-        emit m_assistant->createStatusChanged(tr("requestFailed"));
+        emit mAssistant->createStatusChanged(tr("requestFailed"));
       else if (status == linphone::AccountCreatorStatusServerError)
-        emit m_assistant->createStatusChanged(tr("cannotSendSms"));
+        emit mAssistant->createStatusChanged(tr("cannotSendSms"));
       else
-        emit m_assistant->createStatusChanged(tr("accountAlreadyExists"));
+        emit mAssistant->createStatusChanged(tr("accountAlreadyExists"));
     }
   }
 
@@ -61,12 +61,12 @@ public:
   ) override {
     if (status == linphone::AccountCreatorStatusAccountExist || status == linphone::AccountCreatorStatusAccountExistWithAlias) {
       CoreManager::getInstance()->getCore()->addProxyConfig(creator->configure());
-      emit m_assistant->loginStatusChanged("");
+      emit mAssistant->loginStatusChanged("");
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
-        emit m_assistant->loginStatusChanged(tr("requestFailed"));
+        emit mAssistant->loginStatusChanged(tr("requestFailed"));
       else
-        emit m_assistant->loginStatusChanged(tr("loginWithUsernameFailed"));
+        emit mAssistant->loginStatusChanged(tr("loginWithUsernameFailed"));
     }
   }
 
@@ -79,12 +79,12 @@ public:
       status == linphone::AccountCreatorStatusAccountActivated ||
       status == linphone::AccountCreatorStatusAccountAlreadyActivated
     )
-      emit m_assistant->activateStatusChanged("");
+      emit mAssistant->activateStatusChanged("");
     else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
-        emit m_assistant->activateStatusChanged(tr("requestFailed"));
+        emit mAssistant->activateStatusChanged(tr("requestFailed"));
       else
-        emit m_assistant->activateStatusChanged(tr("smsActivationFailed"));
+        emit mAssistant->activateStatusChanged(tr("smsActivationFailed"));
     }
   }
 
@@ -96,12 +96,12 @@ public:
     if (status == linphone::AccountCreatorStatusAccountActivated) {
       CoreManager::getInstance()->getAccountSettingsModel()->addOrUpdateProxyConfig(creator->configure());
 
-      emit m_assistant->activateStatusChanged("");
+      emit mAssistant->activateStatusChanged("");
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
-        emit m_assistant->activateStatusChanged(tr("requestFailed"));
+        emit mAssistant->activateStatusChanged(tr("requestFailed"));
       else
-        emit m_assistant->activateStatusChanged(tr("emailActivationFailed"));
+        emit mAssistant->activateStatusChanged(tr("emailActivationFailed"));
     }
   }
 
@@ -142,40 +142,40 @@ public:
   // ) override {}
 
 private:
-  AssistantModel *m_assistant;
+  AssistantModel *mAssistant;
 };
 
 // -----------------------------------------------------------------------------
 
 AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
-  m_handlers = make_shared<AssistantModel::Handlers>(this);
+  mHandlers = make_shared<AssistantModel::Handlers>(this);
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  m_account_creator = core->createAccountCreator(
+  mAccountCreator = core->createAccountCreator(
       core->getConfig()->getString("assistant", "xmlrpc_url", DEFAULT_XMLRPC_URL)
     );
-  m_account_creator->setListener(m_handlers);
+  mAccountCreator->setListener(mHandlers);
 }
 
 // -----------------------------------------------------------------------------
 
 void AssistantModel::activate () {
-  if (m_account_creator->getEmail().empty())
-    m_account_creator->activateAccount();
+  if (mAccountCreator->getEmail().empty())
+    mAccountCreator->activateAccount();
   else
-    m_account_creator->isAccountActivated();
+    mAccountCreator->isAccountActivated();
 }
 
 void AssistantModel::create () {
-  m_account_creator->createAccount();
+  mAccountCreator->createAccount();
 }
 
 void AssistantModel::login () {
-  m_account_creator->isAccountExist();
+  mAccountCreator->isAccountExist();
 }
 
 void AssistantModel::reset () {
-  m_account_creator->reset();
+  mAccountCreator->reset();
 
   emit emailChanged("", "");
   emit passwordChanged("", "");
@@ -186,14 +186,14 @@ void AssistantModel::reset () {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getEmail () const {
-  return ::Utils::linphoneStringToQString(m_account_creator->getEmail());
+  return ::Utils::linphoneStringToQString(mAccountCreator->getEmail());
 }
 
 void AssistantModel::setEmail (const QString &email) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (m_account_creator->setEmail(::Utils::qStringToLinphoneString(email))) {
+  switch (mAccountCreator->setEmail(::Utils::qStringToLinphoneString(email))) {
     case linphone::AccountCreatorEmailStatusOk:
       break;
     case linphone::AccountCreatorEmailStatusMalformed:
@@ -208,14 +208,14 @@ void AssistantModel::setEmail (const QString &email) {
 }
 
 QString AssistantModel::getPassword () const {
-  return ::Utils::linphoneStringToQString(m_account_creator->getPassword());
+  return ::Utils::linphoneStringToQString(mAccountCreator->getPassword());
 }
 
 void AssistantModel::setPassword (const QString &password) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (m_account_creator->setPassword(::Utils::qStringToLinphoneString(password))) {
+  switch (mAccountCreator->setPassword(::Utils::qStringToLinphoneString(password))) {
     case linphone::AccountCreatorPasswordStatusOk:
       break;
     case linphone::AccountCreatorPasswordStatusTooShort:
@@ -238,27 +238,27 @@ void AssistantModel::setPassword (const QString &password) {
 }
 
 QString AssistantModel::getPhoneNumber () const {
-  return ::Utils::linphoneStringToQString(m_account_creator->getPhoneNumber());
+  return ::Utils::linphoneStringToQString(mAccountCreator->getPhoneNumber());
 }
 
-void AssistantModel::setPhoneNumber (const QString &phone_number) {
+void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
   // shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
   // TODO: use the future wrapped function: `set_phone_number`.
 
-  emit phoneNumberChanged(phone_number, error);
+  emit phoneNumberChanged(phoneNumber, error);
 }
 
 QString AssistantModel::getUsername () const {
-  return ::Utils::linphoneStringToQString(m_account_creator->getUsername());
+  return ::Utils::linphoneStringToQString(mAccountCreator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (m_account_creator->setUsername(::Utils::qStringToLinphoneString(username))) {
+  switch (mAccountCreator->setUsername(::Utils::qStringToLinphoneString(username))) {
     case linphone::AccountCreatorUsernameStatusOk:
       break;
     case linphone::AccountCreatorUsernameStatusTooShort:

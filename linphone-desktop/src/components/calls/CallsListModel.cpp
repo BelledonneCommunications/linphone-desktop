@@ -38,11 +38,11 @@ using namespace std;
 
 inline QList<CallModel *>::iterator findCall (
   QList<CallModel *> &list,
-  const shared_ptr<linphone::Call> &linphone_call
+  const shared_ptr<linphone::Call> &linphoneCall
 ) {
   return find_if(
-    list.begin(), list.end(), [linphone_call](CallModel *call) {
-      return linphone_call == call->getLinphoneCall();
+    list.begin(), list.end(), [linphoneCall](CallModel *call) {
+      return linphoneCall == call->getLinphoneCall();
     }
   );
 }
@@ -50,24 +50,24 @@ inline QList<CallModel *>::iterator findCall (
 // -----------------------------------------------------------------------------
 
 CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
-  m_core_handlers = CoreManager::getInstance()->getHandlers();
+  mCoreHandlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
-    &(*m_core_handlers), &CoreHandlers::callStateChanged,
-    this, [this](const shared_ptr<linphone::Call> &linphone_call, linphone::CallState state) {
+    &(*mCoreHandlers), &CoreHandlers::callStateChanged,
+    this, [this](const shared_ptr<linphone::Call> &linphoneCall, linphone::CallState state) {
       switch (state) {
         case linphone::CallStateIncomingReceived:
         case linphone::CallStateOutgoingInit:
-          addCall(linphone_call);
+          addCall(linphoneCall);
           break;
 
         case linphone::CallStateEnd:
         case linphone::CallStateError:
-          removeCall(linphone_call);
+          removeCall(linphoneCall);
           break;
 
         case linphone::CallStateStreamsRunning: {
-          int index = static_cast<int>(distance(m_list.begin(), findCall(m_list, linphone_call)));
-          emit callRunning(index, &linphone_call->getData<CallModel>("call-model"));
+          int index = static_cast<int>(distance(mList.begin(), findCall(mList, linphoneCall)));
+          emit callRunning(index, &linphoneCall->getData<CallModel>("call-model"));
         }
         break;
 
@@ -79,7 +79,7 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
 }
 
 int CallsListModel::rowCount (const QModelIndex &) const {
-  return m_list.count();
+  return mList.count();
 }
 
 QHash<int, QByteArray> CallsListModel::roleNames () const {
@@ -91,25 +91,25 @@ QHash<int, QByteArray> CallsListModel::roleNames () const {
 QVariant CallsListModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
-  if (!index.isValid() || row < 0 || row >= m_list.count())
+  if (!index.isValid() || row < 0 || row >= mList.count())
     return QVariant();
 
   if (role == Qt::DisplayRole)
-    return QVariant::fromValue(m_list[row]);
+    return QVariant::fromValue(mList[row]);
 
   return QVariant();
 }
 
-CallModel *CallsListModel::getCall (const shared_ptr<linphone::Call> &linphone_call) const {
-  auto it = findCall(*(const_cast<QList<CallModel *> *>(&m_list)), linphone_call);
-  return it != m_list.end() ? *it : nullptr;
+CallModel *CallsListModel::getCall (const shared_ptr<linphone::Call> &linphoneCall) const {
+  auto it = findCall(*(const_cast<QList<CallModel *> *>(&mList)), linphoneCall);
+  return it != mList.end() ? *it : nullptr;
 }
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::launchAudioCall (const QString &sip_uri) const {
+void CallsListModel::launchAudioCall (const QString &sipUri) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::qStringToLinphoneString(sip_uri));
+  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::qStringToLinphoneString(sipUri));
 
   if (!address)
     return;
@@ -121,9 +121,9 @@ void CallsListModel::launchAudioCall (const QString &sip_uri) const {
   core->inviteAddressWithParams(address, params);
 }
 
-void CallsListModel::launchVideoCall (const QString &sip_uri) const {
+void CallsListModel::launchVideoCall (const QString &sipUri) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::qStringToLinphoneString(sip_uri));
+  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::qStringToLinphoneString(sipUri));
 
   if (!address)
     return;
@@ -155,13 +155,13 @@ bool CallsListModel::removeRow (int row, const QModelIndex &parent) {
 bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) {
   int limit = row + count - 1;
 
-  if (row < 0 || count < 0 || limit >= m_list.count())
+  if (row < 0 || count < 0 || limit >= mList.count())
     return false;
 
   beginRemoveRows(parent, row, limit);
 
   for (int i = 0; i < count; ++i)
-    m_list.takeAt(row)->deleteLater();
+    mList.takeAt(row)->deleteLater();
 
   endRemoveRows();
 
@@ -170,38 +170,38 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphone_call) {
-  if (linphone_call->getDir() == linphone::CallDirOutgoing)
+void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphoneCall) {
+  if (linphoneCall->getDir() == linphone::CallDirOutgoing)
     App::getInstance()->getCallsWindow()->show();
 
-  CallModel *call = new CallModel(linphone_call);
+  CallModel *call = new CallModel(linphoneCall);
 
   qInfo() << "Add call:" << call;
 
   App::getInstance()->getEngine()->setObjectOwnership(call, QQmlEngine::CppOwnership);
-  linphone_call->setData("call-model", *call);
+  linphoneCall->setData("call-model", *call);
 
-  int row = m_list.count();
+  int row = mList.count();
 
   beginInsertRows(QModelIndex(), row, row);
-  m_list << call;
+  mList << call;
   endInsertRows();
 }
 
-void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphone_call) {
+void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphoneCall) {
   // TODO: It will be (maybe) necessary to use a single scheduled function in the future.
   QTimer::singleShot(
-    DELAY_BEFORE_REMOVE_CALL, this, [this, linphone_call]() {
-      CallModel *call = &linphone_call->getData<CallModel>("call-model");
-      linphone_call->unsetData("call-model");
+    DELAY_BEFORE_REMOVE_CALL, this, [this, linphoneCall]() {
+      CallModel *call = &linphoneCall->getData<CallModel>("call-model");
+      linphoneCall->unsetData("call-model");
 
       qInfo() << "Removing call:" << call;
 
-      int index = m_list.indexOf(call);
+      int index = mList.indexOf(call);
       if (index == -1 || !removeRow(index))
         qWarning() << "Unable to remove call:" << call;
 
-      if (m_list.empty())
+      if (mList.empty())
         App::getInstance()->getCallsWindow()->close();
     }
   );

@@ -50,23 +50,23 @@ public:
 
   Q_INVOKABLE void sendFileMessage (const QString &path);
 
-  Q_INVOKABLE void downloadFile (int id, const QString &download_path);
+  Q_INVOKABLE void downloadFile (int id, const QString &downloadPath);
 
 signals:
-  void sipAddressChanged (const QString &sip_address);
+  void sipAddressChanged (const QString &sipAddress);
   void moreEntriesLoaded (int n);
 
   void entryTypeFilterChanged (ChatModel::EntryType type);
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 
 private:
   QString getSipAddress () const;
-  void setSipAddress (const QString &sip_address);
+  void setSipAddress (const QString &sipAddress);
 
-  ChatModelFilter *m_chat_model_filter;
-  int m_n_max_displayed_entries = ENTRIES_CHUNK_SIZE;
+  ChatModelFilter *mChatModelFilter;
+  int mMaxDisplayedEntries = ENTRIES_CHUNK_SIZE;
 
   static const int ENTRIES_CHUNK_SIZE;
 };

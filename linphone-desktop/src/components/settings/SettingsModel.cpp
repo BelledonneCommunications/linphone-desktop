@@ -35,7 +35,7 @@ using namespace std;
 const string SettingsModel::UI_SECTION("ui");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
-  m_config = CoreManager::getInstance()->getCore()->getConfig();
+  mConfig = CoreManager::getInstance()->getCore()->getConfig();
 }
 
 // =============================================================================
@@ -103,13 +103,13 @@ QString SettingsModel::getRingPath () const {
 }
 
 void SettingsModel::setRingPath (const QString &path) {
-  QString cleaned_path = QDir::cleanPath(path);
+  QString cleanedPath = QDir::cleanPath(path);
 
   CoreManager::getInstance()->getCore()->setRing(
-    ::Utils::qStringToLinphoneString(cleaned_path)
+    ::Utils::qStringToLinphoneString(cleanedPath)
   );
 
-  emit ringPathChanged(cleaned_path);
+  emit ringPathChanged(cleanedPath);
 }
 
 // -----------------------------------------------------------------------------
@@ -182,22 +182,22 @@ void SettingsModel::setVideoFramerate (int framerate) {
 // =============================================================================
 
 int SettingsModel::getAutoAnswerDelay () const {
-  return m_config->getInt(UI_SECTION, "auto_answer_delay", 0);
+  return mConfig->getInt(UI_SECTION, "auto_answer_delay", 0);
 }
 
 void SettingsModel::setAutoAnswerDelay (int delay) {
-  m_config->setInt(UI_SECTION, "auto_answer_delay", delay);
+  mConfig->setInt(UI_SECTION, "auto_answer_delay", delay);
   emit autoAnswerDelayChanged(delay);
 }
 
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getAutoAnswerStatus () const {
-  return !!m_config->getInt(UI_SECTION, "auto_answer", 0);
+  return !!mConfig->getInt(UI_SECTION, "auto_answer", 0);
 }
 
 void SettingsModel::setAutoAnswerStatus (bool status) {
-  m_config->setInt(UI_SECTION, "auto_answer", status);
+  mConfig->setInt(UI_SECTION, "auto_answer", status);
   emit autoAnswerStatusChanged(status);
 }
 
@@ -429,10 +429,10 @@ bool SettingsModel::getIceEnabled () const {
 }
 
 void SettingsModel::setIceEnabled (bool status) {
-  shared_ptr<linphone::NatPolicy> nat_policy = CoreManager::getInstance()->getCore()->getNatPolicy();
+  shared_ptr<linphone::NatPolicy> natPolicy = CoreManager::getInstance()->getCore()->getNatPolicy();
 
-  nat_policy->enableIce(status);
-  nat_policy->enableStun(status);
+  natPolicy->enableIce(status);
+  natPolicy->enableStun(status);
 
   emit iceEnabledChanged(status);
 }
@@ -456,9 +456,9 @@ QString SettingsModel::getStunServer () const {
   );
 }
 
-void SettingsModel::setStunServer (const QString &stun_server) {
+void SettingsModel::setStunServer (const QString &stunServer) {
   CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServer(
-    ::Utils::qStringToLinphoneString(stun_server)
+    ::Utils::qStringToLinphoneString(stunServer)
   );
 }
 
@@ -482,28 +482,28 @@ void SettingsModel::setTurnUser (const QString &user) {
 
 QString SettingsModel::getTurnPassword () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::NatPolicy> nat_policy = core->getNatPolicy();
-  shared_ptr<const linphone::AuthInfo> auth_info = core->findAuthInfo(nat_policy->getStunServerUsername(), "", "");
+  shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
+  shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(natPolicy->getStunServerUsername(), "", "");
 
-  return auth_info ? ::Utils::linphoneStringToQString(auth_info->getPasswd()) : "";
+  return authInfo ? ::Utils::linphoneStringToQString(authInfo->getPasswd()) : "";
 }
 
 void SettingsModel::setTurnPassword (const QString &password) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::NatPolicy> nat_policy = core->getNatPolicy();
+  shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
 
-  const string &username = nat_policy->getStunServerUsername();
-  shared_ptr<const linphone::AuthInfo> auth_info = core->findAuthInfo(username, "", "");
+  const string &username = natPolicy->getStunServerUsername();
+  shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(username, "", "");
 
-  if (auth_info) {
-    shared_ptr<linphone::AuthInfo> auth_info_clone = auth_info->clone();
-    auth_info_clone->setPasswd(::Utils::qStringToLinphoneString(password));
+  if (authInfo) {
+    shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
+    clonedAuthInfo->setPasswd(::Utils::qStringToLinphoneString(password));
 
-    core->removeAuthInfo(auth_info);
-    core->addAuthInfo(auth_info_clone);
+    core->removeAuthInfo(authInfo);
+    core->addAuthInfo(clonedAuthInfo);
   } else {
-    auth_info = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::qStringToLinphoneString(password), "", "", "");
-    core->addAuthInfo(auth_info);
+    authInfo = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::qStringToLinphoneString(password), "", "", "");
+    core->addAuthInfo(authInfo);
   }
 
   emit turnPasswordChanged(password);
@@ -545,16 +545,16 @@ void SettingsModel::setDscpVideo (int dscp) {
 QString SettingsModel::getSavedScreenshotsFolder () const {
   return QDir::cleanPath(
     ::Utils::linphoneStringToQString(
-      m_config->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirpath())
+      mConfig->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirpath())
     )
   ) + QDir::separator();
 }
 
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
-  QString cleaned_folder = QDir::cleanPath(folder) + QDir::separator();
+  QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
 
-  m_config->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::qStringToLinphoneString(cleaned_folder));
-  emit savedScreenshotsFolderChanged(cleaned_folder);
+  mConfig->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::qStringToLinphoneString(cleanedFolder));
+  emit savedScreenshotsFolderChanged(cleanedFolder);
 }
 
 // -----------------------------------------------------------------------------
@@ -562,7 +562,7 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 QString SettingsModel::getSavedVideosFolder () const {
   return QDir::cleanPath(
     ::Utils::linphoneStringToQString(
-      m_config->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirpath())
+      mConfig->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirpath())
     )
   ) + QDir::separator();
 }
@@ -570,6 +570,6 @@ QString SettingsModel::getSavedVideosFolder () const {
 void SettingsModel::setSavedVideosFolder (const QString &folder) {
   QString _folder = QDir::cleanPath(folder) + QDir::separator();
 
-  m_config->setString(UI_SECTION, "saved_videos_folder", ::Utils::qStringToLinphoneString(_folder));
+  mConfig->setString(UI_SECTION, "saved_videos_folder", ::Utils::qStringToLinphoneString(_folder));
   emit savedVideosFolderChanged(_folder);
 }

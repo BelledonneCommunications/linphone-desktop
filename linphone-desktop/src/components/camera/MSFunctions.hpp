@@ -26,16 +26,16 @@
 #include <QOpenGLFunctions>
 
 #define GL_ASSERT() \
-  Q_ASSERT(m_instance->m_q_functions != NULL); \
-  Q_ASSERT(QOpenGLContext::currentContext()->functions() == m_instance->m_q_functions);
+  Q_ASSERT(mInstance->mQtFunctions != NULL); \
+  Q_ASSERT(QOpenGLContext::currentContext()->functions() == mInstance->mQtFunctions);
 
 #define GL_CALL(CALL) \
   GL_ASSERT() \
-  m_instance->m_q_functions->CALL;
+  mInstance->mQtFunctions->CALL;
 
 #define GL_CALL_RET(CALL) \
   GL_ASSERT() \
-  return m_instance->m_q_functions->CALL;
+  return mInstance->mQtFunctions->CALL;
 
 // =============================================================================
 
@@ -46,20 +46,20 @@ public:
   ~MSFunctions ();
 
   void bind (QOpenGLFunctions *f) {
-    m_q_functions = f; // Qt functions.
+    mQtFunctions = f; // Qt functions.
   }
 
   OpenGlFunctions *getFunctions () {
-    return m_functions; // Own implementation.
+    return mFunctions; // Own implementation.
   }
 
   // ---------------------------------------------------------------------------
 
   static MSFunctions *getInstance () {
-    if (!m_instance)
-      m_instance = new MSFunctions();
+    if (!mInstance)
+      mInstance = new MSFunctions();
 
-    return m_instance;
+    return mInstance;
   }
 
   // ---------------------------------------------------------------------------
@@ -213,10 +213,10 @@ public:
 private:
   MSFunctions ();
 
-  OpenGlFunctions *m_functions = nullptr;
-  QOpenGLFunctions *m_q_functions = nullptr;
+  OpenGlFunctions *mFunctions = nullptr;
+  QOpenGLFunctions *mQtFunctions = nullptr;
 
-  static MSFunctions *m_instance;
+  static MSFunctions *mInstance;
 };
 
 #undef GL_CALL

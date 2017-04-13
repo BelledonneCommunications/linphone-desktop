@@ -220,7 +220,7 @@ public:
   void setTurnEnabled (bool status);
 
   QString getStunServer () const;
-  void setStunServer (const QString &stun_server);
+  void setStunServer (const QString &stunServer);
 
   QString getTurnUser () const;
   void setTurnUser (const QString &user);
@@ -315,7 +315,7 @@ signals:
   void savedVideosFolderChanged (const QString &folder);
 
 private:
-  std::shared_ptr<linphone::Config> m_config;
+  std::shared_ptr<linphone::Config> mConfig;
 };
 
 #endif // SETTINGS_MODEL_H_

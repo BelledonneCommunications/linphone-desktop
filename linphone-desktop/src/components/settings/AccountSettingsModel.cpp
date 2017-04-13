@@ -59,21 +59,21 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
-bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
-  Q_ASSERT(proxy_config != nullptr);
+bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
+  Q_ASSERT(proxyConfig != nullptr);
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  list<shared_ptr<linphone::ProxyConfig> > proxy_configs = core->getProxyConfigList();
-  if (find(proxy_configs.cbegin(), proxy_configs.cend(), proxy_config) != proxy_configs.cend()) {
-    if (proxy_config->done() == -1) {
+  list<shared_ptr<linphone::ProxyConfig> > proxyConfigs = core->getProxyConfigList();
+  if (find(proxyConfigs.cbegin(), proxyConfigs.cend(), proxyConfig) != proxyConfigs.cend()) {
+    if (proxyConfig->done() == -1) {
       qWarning() << QStringLiteral("Unable to update proxy config: `%1`.")
-        .arg(::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asString()));
+        .arg(::Utils::linphoneStringToQString(proxyConfig->getIdentityAddress()->asString()));
       return false;
     }
-  } else if (core->addProxyConfig(proxy_config) == -1) {
+  } else if (core->addProxyConfig(proxyConfig) == -1) {
     qWarning() << QStringLiteral("Unable to add proxy config: `%1`.")
-      .arg(::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asString()));
+      .arg(::Utils::linphoneStringToQString(proxyConfig->getIdentityAddress()->asString()));
     return false;
   }
 
@@ -82,51 +82,51 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::Pr
   return true;
 }
 
-QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
-  Q_ASSERT(proxy_config != nullptr);
+QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
+  Q_ASSERT(proxyConfig != nullptr);
 
   QVariantMap map;
 
   {
-    const shared_ptr<const linphone::Address> address = proxy_config->getIdentityAddress();
+    const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
     map["sipAddress"] = address
-      ? ::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asStringUriOnly())
+      ? ::Utils::linphoneStringToQString(proxyConfig->getIdentityAddress()->asStringUriOnly())
       : "";
   }
 
-  map["serverAddress"] = ::Utils::linphoneStringToQString(proxy_config->getServerAddr());
-  map["registrationDuration"] = proxy_config->getPublishExpires();
-  map["transport"] = ::Utils::linphoneStringToQString(proxy_config->getTransport());
-  map["route"] = ::Utils::linphoneStringToQString(proxy_config->getRoute());
-  map["contactParams"] = ::Utils::linphoneStringToQString(proxy_config->getContactParameters());
-  map["avpfInterval"] = proxy_config->getAvpfRrInterval();
-  map["registerEnabled"] = proxy_config->registerEnabled();
-  map["publishPresence"] = proxy_config->publishEnabled();
-  map["avpfEnabled"] = proxy_config->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
-  map["registrationState"] = mapLinphoneRegistrationStateToUi(proxy_config->getState());
+  map["serverAddress"] = ::Utils::linphoneStringToQString(proxyConfig->getServerAddr());
+  map["registrationDuration"] = proxyConfig->getPublishExpires();
+  map["transport"] = ::Utils::linphoneStringToQString(proxyConfig->getTransport());
+  map["route"] = ::Utils::linphoneStringToQString(proxyConfig->getRoute());
+  map["contactParams"] = ::Utils::linphoneStringToQString(proxyConfig->getContactParameters());
+  map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
+  map["registerEnabled"] = proxyConfig->registerEnabled();
+  map["publishPresence"] = proxyConfig->publishEnabled();
+  map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
+  map["registrationState"] = mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   return map;
 }
 
-void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
-  Q_ASSERT(proxy_config != nullptr);
+void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
+  Q_ASSERT(proxyConfig != nullptr);
 
-  CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxy_config);
+  CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxyConfig);
   emit accountSettingsUpdated();
 }
 
-void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxy_config) {
-  Q_ASSERT(proxy_config != nullptr);
+void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
+  Q_ASSERT(proxyConfig != nullptr);
 
-  CoreManager::getInstance()->getCore()->removeProxyConfig(proxy_config);
+  CoreManager::getInstance()->getCore()->removeProxyConfig(proxyConfig);
   emit accountSettingsUpdated();
 }
 
 bool AccountSettingsModel::addOrUpdateProxyConfig (
-  const shared_ptr<linphone::ProxyConfig> &proxy_config,
+  const shared_ptr<linphone::ProxyConfig> &proxyConfig,
   const QVariantMap &data
 ) {
-  Q_ASSERT(proxy_config != nullptr);
+  Q_ASSERT(proxyConfig != nullptr);
 
   QString literal = data["sipAddress"].toString();
 
@@ -140,31 +140,31 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
       return false;
     }
 
-    proxy_config->setIdentityAddress(address);
+    proxyConfig->setIdentityAddress(address);
   }
 
   // Server address.
   {
-    QString server_address = data["serverAddress"].toString();
+    QString serverAddress = data["serverAddress"].toString();
 
-    if (proxy_config->setServerAddr(::Utils::qStringToLinphoneString(server_address))) {
-      qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(server_address);
+    if (proxyConfig->setServerAddr(::Utils::qStringToLinphoneString(serverAddress))) {
+      qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(serverAddress);
       return false;
     }
   }
 
-  proxy_config->setPublishExpires(data["registrationDuration"].toInt());
-  proxy_config->setRoute(::Utils::qStringToLinphoneString(data["route"].toString()));
-  proxy_config->setContactParameters(::Utils::qStringToLinphoneString(data["contactParams"].toString()));
-  proxy_config->setAvpfRrInterval(static_cast<uint8_t>(data["avpfInterval"].toInt()));
-  proxy_config->enableRegister(data["registerEnabled"].toBool());
-  proxy_config->enablePublish(data["publishEnabled"].toBool());
-  proxy_config->setAvpfMode(data["avpfEnabled"].toBool()
+  proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
+  proxyConfig->setRoute(::Utils::qStringToLinphoneString(data["route"].toString()));
+  proxyConfig->setContactParameters(::Utils::qStringToLinphoneString(data["contactParams"].toString()));
+  proxyConfig->setAvpfRrInterval(static_cast<uint8_t>(data["avpfInterval"].toInt()));
+  proxyConfig->enableRegister(data["registerEnabled"].toBool());
+  proxyConfig->enablePublish(data["publishEnabled"].toBool());
+  proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
     ? linphone::AVPFMode::AVPFModeEnabled
     : linphone::AVPFMode::AVPFModeDefault
   );
 
-  return addOrUpdateProxyConfig(proxy_config);
+  return addOrUpdateProxyConfig(proxyConfig);
 }
 
 shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
@@ -172,14 +172,14 @@ shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
 }
 
 void AccountSettingsModel::addAuthInfo (
-  const shared_ptr<linphone::AuthInfo> &auth_info,
+  const shared_ptr<linphone::AuthInfo> &authInfo,
   const QString &password,
-  const QString &user_id
+  const QString &userId
 ) {
-  auth_info->setPasswd(::Utils::qStringToLinphoneString(password));
-  auth_info->setUserid(::Utils::qStringToLinphoneString(user_id));
+  authInfo->setPasswd(::Utils::qStringToLinphoneString(password));
+  authInfo->setUserid(::Utils::qStringToLinphoneString(userId));
 
-  CoreManager::getInstance()->getCore()->addAuthInfo(auth_info);
+  CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
 }
 
 void AccountSettingsModel::eraseAllPasswords () {
@@ -190,22 +190,22 @@ void AccountSettingsModel::eraseAllPasswords () {
 
 QString AccountSettingsModel::getUsername () const {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
-  const string &display_name = address->getDisplayName();
+  const string &displayName = address->getDisplayName();
 
   return ::Utils::linphoneStringToQString(
-    display_name.empty() ? address->getUsername() : display_name
+    displayName.empty() ? address->getUsername() : displayName
   );
 }
 
 void AccountSettingsModel::setUsername (const QString &username) {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
-  shared_ptr<linphone::Address> new_address = address->clone();
+  shared_ptr<linphone::Address> newAddress = address->clone();
 
-  if (new_address->setDisplayName(::Utils::qStringToLinphoneString(username))) {
+  if (newAddress->setDisplayName(::Utils::qStringToLinphoneString(username))) {
     qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
-      .arg(::Utils::linphoneStringToQString(new_address->asStringUriOnly()));
+      .arg(::Utils::linphoneStringToQString(newAddress->asStringUriOnly()));
   } else {
-    setUsedSipAddress(new_address);
+    setUsedSipAddress(newAddress);
   }
 
   emit accountSettingsUpdated();
@@ -216,8 +216,8 @@ QString AccountSettingsModel::getSipAddress () const {
 }
 
 AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationState () const {
-  shared_ptr<linphone::ProxyConfig> proxy_config = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
-  return proxy_config ? mapLinphoneRegistrationStateToUi(proxy_config->getState()) : RegistrationStateNotRegistered;
+  shared_ptr<linphone::ProxyConfig> proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
+  return proxyConfig ? mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNotRegistered;
 }
 
 // -----------------------------------------------------------------------------
@@ -274,10 +274,10 @@ QVariantList AccountSettingsModel::getAccounts () const {
     accounts << account;
   }
 
-  for (const auto &proxy_config : core->getProxyConfigList()) {
+  for (const auto &proxyConfig : core->getProxyConfigList()) {
     QVariantMap account;
-    account["sipAddress"] = ::Utils::linphoneStringToQString(proxy_config->getIdentityAddress()->asStringUriOnly());
-    account["proxyConfig"].setValue(proxy_config);
+    account["sipAddress"] = ::Utils::linphoneStringToQString(proxyConfig->getIdentityAddress()->asStringUriOnly());
+    account["proxyConfig"].setValue(proxyConfig);
     accounts << account;
   }
 
@@ -288,16 +288,16 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
 void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
+  shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
 
-  proxy_config ? proxy_config->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
+  proxyConfig ? proxyConfig->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
 }
 
 shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::ProxyConfig> proxy_config = core->getDefaultProxyConfig();
+  shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
 
-  return proxy_config ? proxy_config->getIdentityAddress() : core->getPrimaryContactParsed();
+  return proxyConfig ? proxyConfig->getIdentityAddress() : core->getPrimaryContactParsed();
 }
 
 // -----------------------------------------------------------------------------

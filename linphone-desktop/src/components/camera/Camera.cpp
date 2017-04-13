@@ -47,24 +47,24 @@ struct ContextInfo {
 // -----------------------------------------------------------------------------
 
 CameraRenderer::CameraRenderer () {
-  m_context_info = new ContextInfo();
+  mContextInfo = new ContextInfo();
 }
 
 CameraRenderer::~CameraRenderer () {
-  qInfo() << QStringLiteral("Delete context info:") << m_context_info;
+  qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
 
   CoreManager *core = CoreManager::getInstance();
 
   core->lockVideoRender();
 
-  if (m_is_preview)
+  if (mIsPreview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
-  else if (m_linphone_call)
-    m_linphone_call->setNativeVideoWindowId(nullptr);
+  else if (mLinphoneCall)
+    mLinphoneCall->setNativeVideoWindowId(nullptr);
 
   core->unlockVideoRender();
 
-  delete m_context_info;
+  delete mContextInfo;
 }
 
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
@@ -78,10 +78,10 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   // It's not the same thread as render.
   core->lockVideoRender();
 
-  m_context_info->width = size.width();
-  m_context_info->height = size.height();
-  m_context_info->functions = MSFunctions::getInstance()->getFunctions();
-  m_update_context_info = true;
+  mContextInfo->width = size.width();
+  mContextInfo->height = size.height();
+  mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
+  mUpdateContextInfo = true;
 
   updateWindowId();
 
@@ -91,7 +91,7 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 }
 
 void CameraRenderer::render () {
-  if (!m_linphone_call)
+  if (!mLinphoneCall)
     return;
 
   // Draw with ms filter.
@@ -102,48 +102,48 @@ void CameraRenderer::render () {
     f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     CoreManager *core = CoreManager::getInstance();
-    MSFunctions *ms_functions = MSFunctions::getInstance();
+    MSFunctions *msFunctions = MSFunctions::getInstance();
 
     core->lockVideoRender();
 
-    ms_functions->bind(f);
-    m_linphone_call->oglRender(m_is_preview);
-    ms_functions->bind(nullptr);
+    msFunctions->bind(f);
+    mLinphoneCall->oglRender(mIsPreview);
+    msFunctions->bind(nullptr);
 
     core->unlockVideoRender();
   }
 
   // Synchronize opengl calls with QML.
-  if (m_window)
-    m_window->resetOpenGLState();
+  if (mWindow)
+    mWindow->resetOpenGLState();
 }
 
 void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
   // No mutex needed here. It's a synchronized area.
 
-  m_window = item->window();
+  mWindow = item->window();
 
   Camera *camera = qobject_cast<Camera *>(item);
 
-  m_linphone_call = camera->getCall()->getLinphoneCall();
-  m_is_preview = camera->m_is_preview;
+  mLinphoneCall = camera->getCall()->getLinphoneCall();
+  mIsPreview = camera->mIsPreview;
 
   updateWindowId();
 }
 
 void CameraRenderer::updateWindowId () {
-  if (!m_update_context_info)
+  if (!mUpdateContextInfo)
     return;
 
-  m_update_context_info = false;
+  mUpdateContextInfo = false;
 
   qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3):")
-    .arg(m_context_info->width).arg(m_context_info->height).arg(m_is_preview) << m_context_info;
+    .arg(mContextInfo->width).arg(mContextInfo->height).arg(mIsPreview) << mContextInfo;
 
-  if (m_is_preview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(m_context_info);
-  else if (m_linphone_call)
-    m_linphone_call->setNativeVideoWindowId(m_context_info);
+  if (mIsPreview)
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
+  else if (mLinphoneCall)
+    mLinphoneCall->setNativeVideoWindowId(mContextInfo);
 }
 
 // -----------------------------------------------------------------------------
@@ -155,16 +155,16 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   // The fbo content must be y-mirrored because the ms rendering is y-inverted.
   setMirrorVertically(true);
 
-  m_refresh_timer = new QTimer(this);
-  m_refresh_timer->setInterval(1 / MAX_FPS * 1000);
+  mRefreshTimer = new QTimer(this);
+  mRefreshTimer->setInterval(1 / MAX_FPS * 1000);
 
   QObject::connect(
-    m_refresh_timer, &QTimer::timeout,
+    mRefreshTimer, &QTimer::timeout,
     this, &QQuickFramebufferObject::update,
     Qt::DirectConnection
   );
 
-  m_refresh_timer->start();
+  mRefreshTimer->start();
 }
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
@@ -178,25 +178,25 @@ void Camera::mousePressEvent (QMouseEvent *) {
 // -----------------------------------------------------------------------------
 
 CallModel *Camera::getCall () const {
-  return m_call;
+  return mCall;
 }
 
 void Camera::setCall (CallModel *call) {
-  if (m_call != call) {
-    m_call = call;
+  if (mCall != call) {
+    mCall = call;
     update();
 
-    emit callChanged(m_call);
+    emit callChanged(mCall);
   }
 }
 
 bool Camera::getIsPreview () const {
-  return m_is_preview;
+  return mIsPreview;
 }
 
 void Camera::setIsPreview (bool status) {
-  if (m_is_preview != status) {
-    m_is_preview = status;
+  if (mIsPreview != status) {
+    mIsPreview = status;
     update();
 
     emit isPreviewChanged(status);

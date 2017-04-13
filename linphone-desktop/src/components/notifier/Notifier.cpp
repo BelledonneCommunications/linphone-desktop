@@ -59,10 +59,10 @@ using namespace std;
 
 inline int getNotificationSize (const QObject &object, const char *property) {
   QVariant variant = object.property(property);
-  bool so_far_so_good;
+  bool soFarSoGood;
 
-  int size = variant.toInt(&so_far_so_good);
-  if (!so_far_so_good || size < 0) {
+  int size = variant.toInt(&soFarSoGood);
+  if (!soFarSoGood || size < 0) {
     qWarning() << "Unable to get notification size.";
     return -1;
   }
@@ -89,13 +89,13 @@ Notifier::Notifier (QObject *parent) :
   QQmlEngine *engine = App::getInstance()->getEngine();
 
   // Build components.
-  m_components[Notifier::MessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_MESSAGE));
-  m_components[Notifier::FileMessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE));
-  m_components[Notifier::CallReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_CALL));
+  mComponents[Notifier::MessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_MESSAGE));
+  mComponents[Notifier::FileMessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE));
+  mComponents[Notifier::CallReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_CALL));
 
   // Check errors.
   for (int i = 0; i < Notifier::MaxNbTypes; ++i) {
-    QQmlComponent *component = m_components[i];
+    QQmlComponent *component = mComponents[i];
     if (component->isError()) {
       qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(i) << component->errors();
       abort();
@@ -105,37 +105,37 @@ Notifier::Notifier (QObject *parent) :
 
 Notifier::~Notifier () {
   for (int i = 0; i < Notifier::MaxNbTypes; ++i)
-    delete m_components[i];
+    delete mComponents[i];
 }
 
 // -----------------------------------------------------------------------------
 
 QObject *Notifier::createNotification (Notifier::NotificationType type) {
-  m_mutex.lock();
+  mMutex.lock();
 
-  Q_ASSERT(m_n_instances <= N_MAX_NOTIFICATIONS);
+  Q_ASSERT(mInstancesNumber <= N_MAX_NOTIFICATIONS);
 
   // Check existing instances.
-  if (m_n_instances == N_MAX_NOTIFICATIONS) {
+  if (mInstancesNumber == N_MAX_NOTIFICATIONS) {
     qWarning() << "Unable to create another notification";
-    m_mutex.unlock();
+    mMutex.unlock();
     return nullptr;
   }
 
   // Create instance and set attributes.
-  QObject *object = m_components[type]->create();
+  QObject *object = mComponents[type]->create();
   int offset = getNotificationSize(*object, NOTIFICATION_PROPERTY_HEIGHT);
 
-  if (offset == -1 || !::setProperty(*object, NOTIFICATION_PROPERTY_OFFSET, m_offset)) {
+  if (offset == -1 || !::setProperty(*object, NOTIFICATION_PROPERTY_OFFSET, mOffset)) {
     delete object;
-    m_mutex.unlock();
+    mMutex.unlock();
     return nullptr;
   }
 
-  m_offset = (offset + m_offset) + NOTIFICATION_SPACING;
-  m_n_instances++;
+  mOffset = (offset + mOffset) + NOTIFICATION_SPACING;
+  mInstancesNumber++;
 
-  m_mutex.unlock();
+  mMutex.unlock();
 
   return object;
 }
@@ -166,13 +166,13 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 // -----------------------------------------------------------------------------
 
 void Notifier::deleteNotification (QVariant notification) {
-  m_mutex.lock();
+  mMutex.lock();
 
   QObject *instance = notification.value<QObject *>();
 
   // Notification marked destroyed.
   if (instance->property("__valid").isValid()) {
-    m_mutex.unlock();
+    mMutex.unlock();
     return;
   }
 
@@ -181,13 +181,13 @@ void Notifier::deleteNotification (QVariant notification) {
   instance->setProperty("__valid", true);
   instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
 
-  m_n_instances--;
-  if (m_n_instances == 0)
-    m_offset = 0;
+  mInstancesNumber--;
+  if (mInstancesNumber == 0)
+    mOffset = 0;
 
-  Q_ASSERT(m_n_instances >= 0);
+  Q_ASSERT(mInstancesNumber >= 0);
 
-  m_mutex.unlock();
+  mMutex.unlock();
 
   instance->deleteLater();
 }

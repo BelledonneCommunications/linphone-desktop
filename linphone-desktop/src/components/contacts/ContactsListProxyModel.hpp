@@ -46,7 +46,7 @@ public:
   Q_INVOKABLE void setFilter (const QString &pattern);
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
@@ -54,19 +54,19 @@ private:
   float computeContactWeight (const ContactModel *contact) const;
 
   bool isConnectedFilterUsed () const {
-    return m_use_connected_filter;
+    return mUseConnectedFilter;
   }
 
-  void setConnectedFilter (bool use_connected_filter);
+  void setConnectedFilter (bool useConnectedFilter);
 
-  QString m_filter;
-  bool m_use_connected_filter = false;
+  QString mFilter;
+  bool mUseConnectedFilter = false;
 
   // It's just a cache to save values computed by `filterAcceptsRow`
   // and reused by `lessThan`.
-  mutable QHash<const ContactModel *, unsigned int> m_weights;
+  mutable QHash<const ContactModel *, unsigned int> mWeights;
 
-  static const QRegExp m_search_separators;
+  static const QRegExp mSearchSeparators;
 };
 
 #endif // CONTACTS_LIST_PROXY_MODEL_H_

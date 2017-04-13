@@ -27,12 +27,12 @@
 
 // =============================================================================
 
-MSFunctions *MSFunctions::m_instance = nullptr;
+MSFunctions *MSFunctions::mInstance = nullptr;
 
 // -----------------------------------------------------------------------------
 
 MSFunctions::MSFunctions () {
-  OpenGlFunctions *f = m_functions = new OpenGlFunctions();
+  OpenGlFunctions *f = mFunctions = new OpenGlFunctions();
 
   f->glActiveTexture = qtResolveGlActiveTexture;
   f->glAttachShader = qtResolveGlAttachShader;
@@ -73,5 +73,5 @@ MSFunctions::MSFunctions () {
 }
 
 MSFunctions::~MSFunctions () {
-  delete m_functions;
+  delete mFunctions;
 }

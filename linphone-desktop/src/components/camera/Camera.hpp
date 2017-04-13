@@ -53,13 +53,13 @@ protected:
 private:
   void updateWindowId ();
 
-  ContextInfo *m_context_info;
-  bool m_update_context_info = false;
+  ContextInfo *mContextInfo;
+  bool mUpdateContextInfo = false;
 
-  bool m_is_preview = false;
-  std::shared_ptr<linphone::Call> m_linphone_call;
+  bool mIsPreview = false;
+  std::shared_ptr<linphone::Call> mLinphoneCall;
 
-  QQuickWindow *m_window;
+  QQuickWindow *mWindow;
 };
 
 // -----------------------------------------------------------------------------
@@ -80,7 +80,7 @@ public:
 
 signals:
   void callChanged (CallModel *call);
-  void isPreviewChanged (bool is_preview);
+  void isPreviewChanged (bool isPreview);
 
 protected:
   void mousePressEvent (QMouseEvent *event) override;
@@ -92,10 +92,10 @@ private:
   bool getIsPreview () const;
   void setIsPreview (bool status);
 
-  bool m_is_preview = false;
-  CallModel *m_call = nullptr;
+  bool mIsPreview = false;
+  CallModel *mCall = nullptr;
 
-  QTimer *m_refresh_timer;
+  QTimer *mRefreshTimer;
 };
 
 #endif // CAMERA_H_

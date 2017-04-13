@@ -37,7 +37,7 @@ public:
   QHash<int, QByteArray> roleNames () const override;
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 };
 

@@ -49,15 +49,15 @@ public:
   Q_INVOKABLE void moveCodec (int source, int destination);
 
   Q_INVOKABLE void setBitrate (int id, int bitrate);
-  Q_INVOKABLE void setRecvFmtp (int id, const QString &recv_fmtp);
+  Q_INVOKABLE void setRecvFmtp (int id, const QString &recvFmtp);
 
 protected:
   bool moveRows (
-    const QModelIndex &source_parent,
-    int source_row,
+    const QModelIndex &sourceParent,
+    int sourceRow,
     int count,
-    const QModelIndex &destination_parent,
-    int destination_child
+    const QModelIndex &destinationParent,
+    int destinationChild
   ) override;
 
   void addCodec (std::shared_ptr<linphone::PayloadType> &codec);
@@ -65,7 +65,7 @@ protected:
   virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType> > &codecs) = 0;
 
 private:
-  QList<QVariantMap> m_codecs;
+  QList<QVariantMap> mCodecs;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType> );

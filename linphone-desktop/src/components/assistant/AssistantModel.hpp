@@ -50,7 +50,7 @@ public:
 signals:
   void emailChanged (const QString &email, const QString &error);
   void passwordChanged (const QString &password, const QString &error);
-  void phoneNumberChanged (const QString &phone_number, const QString &error);
+  void phoneNumberChanged (const QString &phoneNumber, const QString &error);
   void usernameChanged (const QString &username, const QString &error);
 
   void activateStatusChanged (const QString &error);
@@ -65,13 +65,13 @@ private:
   void setPassword (const QString &password);
 
   QString getPhoneNumber () const;
-  void setPhoneNumber (const QString &phone_number);
+  void setPhoneNumber (const QString &phoneNumber);
 
   QString getUsername () const;
   void setUsername (const QString &username);
 
-  std::shared_ptr<linphone::AccountCreator> m_account_creator;
-  std::shared_ptr<Handlers> m_handlers;
+  std::shared_ptr<linphone::AccountCreator> mAccountCreator;
+  std::shared_ptr<Handlers> mHandlers;
 };
 
 #endif // ASSISTANT_MODEL_H_

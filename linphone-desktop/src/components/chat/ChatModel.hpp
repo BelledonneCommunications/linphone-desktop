@@ -86,7 +86,7 @@ public:
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   QString getSipAddress () const;
-  void setSipAddress (const QString &sip_address);
+  void setSipAddress (const QString &sipAddress);
 
   void removeEntry (int id);
   void removeAllEntries ();
@@ -97,10 +97,10 @@ public:
 
   void sendFileMessage (const QString &path);
 
-  void downloadFile (int id, const QString &download_path);
+  void downloadFile (int id, const QString &downloadPath);
 
 signals:
-  void sipAddressChanged (const QString &sip_address);
+  void sipAddressChanged (const QString &sipAddress);
   void allEntriesRemoved ();
 
   void messageSent (const std::shared_ptr<linphone::ChatMessage> &message);
@@ -112,12 +112,12 @@ private:
   typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
 
   void fillMessageEntry (QVariantMap &dest, const std::shared_ptr<linphone::ChatMessage> &message);
-  void fillCallStartEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &call_log);
-  void fillCallEndEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &call_log);
+  void fillCallStartEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
+  void fillCallEndEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
 
   void removeEntry (ChatEntryData &pair);
 
-  void insertCall (const std::shared_ptr<linphone::CallLog> &call_log);
+  void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 
   void resetMessagesCount ();
@@ -125,11 +125,11 @@ private:
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 
-  QList<ChatEntryData> m_entries;
-  std::shared_ptr<linphone::ChatRoom> m_chat_room;
+  QList<ChatEntryData> mEntries;
+  std::shared_ptr<linphone::ChatRoom> mChatRoom;
 
-  std::shared_ptr<CoreHandlers> m_core_handlers;
-  std::shared_ptr<MessageHandlers> m_message_handlers;
+  std::shared_ptr<CoreHandlers> mCoreHandlers;
+  std::shared_ptr<MessageHandlers> mMessageHandlers;
 };
 
 #endif // CHAT_MODEL_H_

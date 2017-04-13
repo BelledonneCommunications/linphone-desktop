@@ -33,11 +33,11 @@ using namespace std;
 // =============================================================================
 
 ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(parent) {
-  m_linphone_friends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
+  mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 
   // Init contacts with linphone friends list.
-  for (const auto &friend_ : m_linphone_friends->getFriends()) {
-    ContactModel *contact = new ContactModel(this, friend_);
+  for (const auto &_friend : mLinphoneFriends->getFriends()) {
+    ContactModel *contact = new ContactModel(this, _friend);
 
     // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
     // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
@@ -48,7 +48,7 @@ ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(pare
 }
 
 int ContactsListModel::rowCount (const QModelIndex &) const {
-  return m_list.count();
+  return mList.count();
 }
 
 QHash<int, QByteArray> ContactsListModel::roleNames () const {
@@ -60,11 +60,11 @@ QHash<int, QByteArray> ContactsListModel::roleNames () const {
 QVariant ContactsListModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
-  if (!index.isValid() || row < 0 || row >= m_list.count())
+  if (!index.isValid() || row < 0 || row >= mList.count())
     return QVariant();
 
   if (role == Qt::DisplayRole)
-    return QVariant::fromValue(m_list[row]);
+    return QVariant::fromValue(mList[row]);
 
   return QVariant();
 }
@@ -76,15 +76,15 @@ bool ContactsListModel::removeRow (int row, const QModelIndex &parent) {
 bool ContactsListModel::removeRows (int row, int count, const QModelIndex &parent) {
   int limit = row + count - 1;
 
-  if (row < 0 || count < 0 || limit >= m_list.count())
+  if (row < 0 || count < 0 || limit >= mList.count())
     return false;
 
   beginRemoveRows(parent, row, limit);
 
   for (int i = 0; i < count; ++i) {
-    ContactModel *contact = m_list.takeAt(row);
+    ContactModel *contact = mList.takeAt(row);
 
-    m_linphone_friends->removeFriend(contact->m_linphone_friend);
+    mLinphoneFriends->removeFriend(contact->mLinphoneFriend);
 
     emit contactRemoved(contact);
     contact->deleteLater();
@@ -104,7 +104,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   qInfo() << "Add contact:" << contact;
 
   if (
-    m_linphone_friends->addFriend(contact->m_linphone_friend) !=
+    mLinphoneFriends->addFriend(contact->mLinphoneFriend) !=
     linphone::FriendListStatus::FriendListStatusOK
   ) {
     qWarning() << "Unable to add friend from vcard:" << vcard;
@@ -112,7 +112,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
     return nullptr;
   }
 
-  int row = m_list.count();
+  int row = mList.count();
 
   beginInsertRows(QModelIndex(), row, row);
   addContact(contact);
@@ -126,7 +126,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
 void ContactsListModel::removeContact (ContactModel *contact) {
   qInfo() << "Removing contact:" << contact;
 
-  int index = m_list.indexOf(contact);
+  int index = mList.indexOf(contact);
   if (index == -1 || !removeRow(index))
     qWarning() << "Unable to remove contact:" << contact;
 }
@@ -141,15 +141,15 @@ void ContactsListModel::addContact (ContactModel *contact) {
     }
   );
   QObject::connect(
-    contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sip_address) {
-      emit sipAddressAdded(contact, sip_address);
+    contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sipAddress) {
+      emit sipAddressAdded(contact, sipAddress);
     }
   );
   QObject::connect(
-    contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sip_address) {
-      emit sipAddressRemoved(contact, sip_address);
+    contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sipAddress) {
+      emit sipAddressRemoved(contact, sipAddress);
     }
   );
 
-  m_list << contact;
+  mList << contact;
 }

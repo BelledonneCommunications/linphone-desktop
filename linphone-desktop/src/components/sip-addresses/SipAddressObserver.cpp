@@ -24,30 +24,30 @@
 
 // =============================================================================
 
-SipAddressObserver::SipAddressObserver (const QString &sip_address) {
-  m_sip_address = sip_address;
+SipAddressObserver::SipAddressObserver (const QString &sipAddress) {
+  mSipAddress = sipAddress;
 }
 
 void SipAddressObserver::setContact (ContactModel *contact) {
-  if (contact == m_contact)
+  if (contact == mContact)
     return;
 
-  m_contact = contact;
+  mContact = contact;
   emit contactChanged(contact);
 }
 
-void SipAddressObserver::setPresenceStatus (const Presence::PresenceStatus &presence_status) {
-  if (presence_status == m_presence_status)
+void SipAddressObserver::setPresenceStatus (const Presence::PresenceStatus &presenceStatus) {
+  if (presenceStatus == mPresenceStatus)
     return;
 
-  m_presence_status = presence_status;
-  emit presenceStatusChanged(presence_status);
+  mPresenceStatus = presenceStatus;
+  emit presenceStatusChanged(presenceStatus);
 }
 
-void SipAddressObserver::setUnreadMessagesCount (int unread_messages_count) {
-  if (unread_messages_count == m_unread_messages_count)
+void SipAddressObserver::setUnreadMessagesCount (int unreadMessagesCount) {
+  if (unreadMessagesCount == mUnreadMessagesCount)
     return;
 
-  m_unread_messages_count = unread_messages_count;
-  emit unreadMessagesCountChanged(unread_messages_count);
+  mUnreadMessagesCount = unreadMessagesCount;
+  emit unreadMessagesCountChanged(unreadMessagesCount);
 }

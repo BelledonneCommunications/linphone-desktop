@@ -45,20 +45,20 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-  void connectToChatModel (ChatModel *chat_model);
+  void connectToChatModel (ChatModel *chatModel);
 
-  Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sip_address) const;
-  Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sip_address);
+  Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
+  Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
   // Sip addresses helpers.
   // ---------------------------------------------------------------------------
 
-  Q_INVOKABLE QString interpretUrl (const QString &sip_address) const;
+  Q_INVOKABLE QString interpretUrl (const QString &sipAddress) const;
 
-  Q_INVOKABLE QString getTransportFromSipAddress (const QString &sip_address) const;
-  Q_INVOKABLE QString addTransportToSipAddress (const QString &sip_address, const QString &transport) const;
-  Q_INVOKABLE bool sipAddressIsValid (const QString &sip_address) const;
+  Q_INVOKABLE QString getTransportFromSipAddress (const QString &sipAddress) const;
+  Q_INVOKABLE QString addTransportToSipAddress (const QString &sipAddress, const QString &transport) const;
+  Q_INVOKABLE bool sipAddressIsValid (const QString &sipAddress) const;
 
   // ---------------------------------------------------------------------------
 
@@ -71,16 +71,16 @@ private:
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);
 
-  void handleSipAddressAdded (ContactModel *contact, const QString &sip_address);
-  void handleSipAddressRemoved (ContactModel *contact, const QString &sip_address);
+  void handleSipAddressAdded (ContactModel *contact, const QString &sipAddress);
+  void handleSipAddressRemoved (ContactModel *contact, const QString &sipAddress);
 
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
-  void handlePresenceReceived (const QString &sip_address, const std::shared_ptr<const linphone::PresenceModel> &presence_model);
+  void handlePresenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 
-  void handleAllEntriesRemoved (const QString &sip_address);
+  void handleAllEntriesRemoved (const QString &sipAddress);
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
-  void handleMessagesCountReset (const QString &sip_address);
+  void handleMessagesCountReset (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
 
@@ -91,24 +91,24 @@ private:
   void addOrUpdateSipAddress (QVariantMap &map, const std::shared_ptr<linphone::ChatMessage> &message);
 
   template<class T>
-  void addOrUpdateSipAddress (const QString &sip_address, T data);
+  void addOrUpdateSipAddress (const QString &sipAddress, T data);
 
   // ---------------------------------------------------------------------------
 
-  void removeContactOfSipAddress (const QString &sip_address);
+  void removeContactOfSipAddress (const QString &sipAddress);
 
   void initSipAddresses ();
 
-  void updateObservers (const QString &sip_address, ContactModel *contact);
-  void updateObservers (const QString &sip_address, const Presence::PresenceStatus &presence_status);
-  void updateObservers (const QString &sip_address, int messages_count);
+  void updateObservers (const QString &sipAddress, ContactModel *contact);
+  void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
+  void updateObservers (const QString &sipAddress, int messagesCount);
 
-  QHash<QString, QVariantMap> m_sip_addresses;
-  QList<const QVariantMap *> m_refs;
+  QHash<QString, QVariantMap> mSipAddresses;
+  QList<const QVariantMap *> mRefs;
 
-  QMultiHash<QString, SipAddressObserver *> m_observers;
+  QMultiHash<QString, SipAddressObserver *> mObservers;
 
-  std::shared_ptr<CoreHandlers> m_core_handlers;
+  std::shared_ptr<CoreHandlers> mCoreHandlers;
 };
 
 #endif // SIP_ADDRESSES_MODEL_H_

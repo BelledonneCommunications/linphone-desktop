@@ -61,14 +61,14 @@ public:
 
   Q_ENUM(CallStatus);
 
-  CallModel (std::shared_ptr<linphone::Call> linphone_call);
+  CallModel (std::shared_ptr<linphone::Call> linphoneCall);
   ~CallModel () = default;
 
   std::shared_ptr<linphone::Call> getLinphoneCall () const {
-    return m_linphone_call;
+    return mLinphoneCall;
   }
 
-  static void setRecordFile (std::shared_ptr<linphone::CallParams> &call_params);
+  static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
 
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
@@ -96,7 +96,7 @@ private:
 
   CallStatus getStatus () const;
   bool isOutgoing () const {
-    return m_linphone_call->getDir() == linphone::CallDirOutgoing;
+    return mLinphoneCall->getDir() == linphone::CallDirOutgoing;
   }
 
   int getDuration () const;
@@ -117,11 +117,11 @@ private:
 
   bool getRecording () const;
 
-  bool m_paused_by_remote = false;
-  bool m_paused_by_user = false;
-  bool m_recording = false;
+  bool mPausedByRemote = false;
+  bool mPausedByUser = false;
+  bool mRecording = false;
 
-  std::shared_ptr<linphone::Call> m_linphone_call;
+  std::shared_ptr<linphone::Call> mLinphoneCall;
 };
 
 #endif // CALL_MODEL_H_

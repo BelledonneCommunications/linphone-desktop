@@ -30,12 +30,12 @@ using namespace std;
 
 // =============================================================================
 
-ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphone_friend) : QObject(parent) {
-  m_linphone_friend = linphone_friend;
-  m_vcard = make_shared<VcardModel>(linphone_friend->getVcard());
+ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphoneFriend) : QObject(parent) {
+  mLinphoneFriend = linphoneFriend;
+  mVcard = make_shared<VcardModel>(linphoneFriend->getVcard());
 
-  App::getInstance()->getEngine()->setObjectOwnership(m_vcard.get(), QQmlEngine::CppOwnership);
-  m_linphone_friend->setData("contact-model", *this);
+  App::getInstance()->getEngine()->setObjectOwnership(mVcard.get(), QQmlEngine::CppOwnership);
+  mLinphoneFriend->setData("contact-model", *this);
 }
 
 ContactModel::ContactModel (QObject *parent, VcardModel *vcard) : QObject(parent) {
@@ -45,17 +45,17 @@ ContactModel::ContactModel (QObject *parent, VcardModel *vcard) : QObject(parent
   if (engine->objectOwnership(vcard) == QQmlEngine::CppOwnership)
     throw invalid_argument("A contact is already linked to this vcard.");
 
-  m_linphone_friend = linphone::Friend::newFromVcard(vcard->m_vcard);
-  m_linphone_friend->setData("contact-model", *this);
+  mLinphoneFriend = linphone::Friend::newFromVcard(vcard->mVcard);
+  mLinphoneFriend->setData("contact-model", *this);
 
-  m_vcard.reset(vcard);
+  mVcard.reset(vcard);
 
   engine->setObjectOwnership(vcard, QQmlEngine::CppOwnership);
 }
 
 void ContactModel::refreshPresence () {
   Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(
-      m_linphone_friend->getConsolidatedPresence()
+      mLinphoneFriend->getConsolidatedPresence()
     );
 
   emit presenceStatusChanged(status);
@@ -63,41 +63,41 @@ void ContactModel::refreshPresence () {
 }
 
 void ContactModel::startEdit () {
-  m_linphone_friend->edit();
-  m_old_sip_addresses = m_vcard->getSipAddresses();
+  mLinphoneFriend->edit();
+  mOldSipAddresses = mVcard->getSipAddresses();
 }
 
 void ContactModel::endEdit () {
-  m_linphone_friend->done();
+  mLinphoneFriend->done();
 
-  QVariantList sip_addresses = m_vcard->getSipAddresses();
+  QVariantList sipAddresses = mVcard->getSipAddresses();
   QSet<QString> done;
 
-  for (const auto &variant_a : m_old_sip_addresses) {
+  for (const auto &variantA : mOldSipAddresses) {
 next:
-    const QString &sip_address = variant_a.toString();
-    if (done.contains(sip_address))
+    const QString &sipAddress = variantA.toString();
+    if (done.contains(sipAddress))
       continue;
-    done.insert(sip_address);
+    done.insert(sipAddress);
 
     // Check if old sip address exists in new set => No changes.
-    for (const auto &variant_b : sip_addresses) {
-      if (sip_address == variant_b.toString())
+    for (const auto &variantB : sipAddresses) {
+      if (sipAddress == variantB.toString())
         goto next;
     }
 
-    emit sipAddressRemoved(sip_address);
+    emit sipAddressRemoved(sipAddress);
   }
 
-  m_old_sip_addresses.clear();
+  mOldSipAddresses.clear();
 
-  for (const auto &variant : sip_addresses) {
-    const QString &sip_address = variant.toString();
-    if (done.contains(sip_address))
+  for (const auto &variant : sipAddresses) {
+    const QString &sipAddress = variant.toString();
+    if (done.contains(sipAddress))
       continue;
-    done.insert(sip_address);
+    done.insert(sipAddress);
 
-    emit sipAddressAdded(sip_address);
+    emit sipAddressAdded(sipAddress);
   }
 
   emit contactUpdated();
@@ -105,14 +105,14 @@ next:
 
 void ContactModel::abortEdit () {
   // TODO: call linphone friend abort function when available.
-  // m_linphone_friend->abort();
-  m_old_sip_addresses.clear();
+  // mLinphoneFriend->abort();
+  mOldSipAddresses.clear();
 
   emit contactUpdated();
 }
 
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {
-  return static_cast<Presence::PresenceStatus>(m_linphone_friend->getConsolidatedPresence());
+  return static_cast<Presence::PresenceStatus>(mLinphoneFriend->getConsolidatedPresence());
 }
 
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {

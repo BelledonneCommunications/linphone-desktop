@@ -48,11 +48,11 @@ public:
   void enableHandlers ();
 
   std::shared_ptr<linphone::Core> getCore () {
-    return m_core;
+    return mCore;
   }
 
   std::shared_ptr<CoreHandlers> getHandlers () {
-    return m_handlers;
+    return mHandlers;
   }
 
   // ---------------------------------------------------------------------------
@@ -60,11 +60,11 @@ public:
   // ---------------------------------------------------------------------------
 
   void lockVideoRender () {
-    m_mutex_video_render.lock();
+    mMutexVideoRender.lock();
   }
 
   void unlockVideoRender () {
-    m_mutex_video_render.unlock();
+    mMutexVideoRender.unlock();
   }
 
   // ---------------------------------------------------------------------------
@@ -72,33 +72,33 @@ public:
   // ---------------------------------------------------------------------------
 
   CallsListModel *getCallsListModel () const {
-    return m_calls_list_model;
+    return mCallsListModel;
   }
 
   ContactsListModel *getContactsListModel () const {
-    return m_contacts_list_model;
+    return mContactsListModel;
   }
 
   SipAddressesModel *getSipAddressesModel () const {
-    return m_sip_addresses_model;
+    return mSipAddressesModel;
   }
 
   SettingsModel *getSettingsModel () const {
-    return m_settings_model;
+    return mSettingsModel;
   }
 
   AccountSettingsModel *getAccountSettingsModel () const {
-    return m_account_settings_model;
+    return mAccountSettingsModel;
   }
 
   // ---------------------------------------------------------------------------
   // Initialization.
   // ---------------------------------------------------------------------------
 
-  static void init (QObject *parent, const QString &config_path);
+  static void init (QObject *parent, const QString &configPath);
 
   static CoreManager *getInstance () {
-    return m_instance;
+    return mInstance;
   }
 
   // ---------------------------------------------------------------------------
@@ -113,33 +113,33 @@ signals:
   void linphoneCoreCreated ();
 
 private:
-  CoreManager (QObject *parent, const QString &config_path);
+  CoreManager (QObject *parent, const QString &configPath);
 
   void setDatabasesPaths ();
   void setOtherPaths ();
   void setResourcesPaths ();
 
-  void createLinphoneCore (const QString &config_path);
+  void createLinphoneCore (const QString &configPath);
 
   void iterate ();
 
-  std::shared_ptr<linphone::Core> m_core;
-  std::shared_ptr<CoreHandlers> m_handlers;
+  std::shared_ptr<linphone::Core> mCore;
+  std::shared_ptr<CoreHandlers> mHandlers;
 
-  CallsListModel *m_calls_list_model;
-  ContactsListModel *m_contacts_list_model;
-  SipAddressesModel *m_sip_addresses_model;
-  SettingsModel *m_settings_model;
-  AccountSettingsModel *m_account_settings_model;
+  CallsListModel *mCallsListModel;
+  ContactsListModel *mContactsListModel;
+  SipAddressesModel *mSipAddressesModel;
+  SettingsModel *mSettingsModel;
+  AccountSettingsModel *mAccountSettingsModel;
 
-  QTimer *m_cbs_timer;
+  QTimer *mCbsTimer;
 
-  QFuture<void> m_promise_build;
-  QFutureWatcher<void> m_promise_watcher;
+  QFuture<void> mPromiseBuild;
+  QFutureWatcher<void> mPromiseWatcher;
 
-  QMutex m_mutex_video_render;
+  QMutex mMutexVideoRender;
 
-  static CoreManager *m_instance;
+  static CoreManager *mInstance;
 };
 
 #endif // CORE_MANAGER_H_

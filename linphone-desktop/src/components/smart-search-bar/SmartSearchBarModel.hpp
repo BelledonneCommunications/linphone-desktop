@@ -39,15 +39,15 @@ public:
   Q_INVOKABLE void setFilter (const QString &pattern);
 
 protected:
-  bool filterAcceptsRow (int source_row, const QModelIndex &source_parent) const override;
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
   int computeEntryWeight (const QVariantMap &entry) const;
   int computeStringWeight (const QString &string) const;
 
-  QString m_filter;
-  static const QRegExp m_search_separators;
+  QString mFilter;
+  static const QRegExp mSearchSeparators;
 };
 
 #endif // SMART_SEARCH_BAR_MODEL_H_

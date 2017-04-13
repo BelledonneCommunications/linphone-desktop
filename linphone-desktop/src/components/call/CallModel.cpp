@@ -36,9 +36,9 @@ using namespace std;
 
 // =============================================================================
 
-CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
-  Q_ASSERT(linphone_call != nullptr);
-  m_linphone_call = linphone_call;
+CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
+  Q_ASSERT(linphoneCall != nullptr);
+  mLinphoneCall = linphoneCall;
 
   // Deal with auto-answer.
   {
@@ -57,42 +57,42 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
 
   QObject::connect(
     &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::callStateChanged,
-    this, [this](const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
-      if (call != m_linphone_call)
+    this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
+      if (call != mLinphoneCall)
         return;
 
       switch (state) {
         case linphone::CallStateEnd:
         case linphone::CallStateError:
           stopAutoAnswerTimer();
-          m_paused_by_remote = false;
+          mPausedByRemote = false;
           break;
 
         case linphone::CallStateConnected:
         case linphone::CallStateRefered:
         case linphone::CallStateReleased:
         case linphone::CallStateStreamsRunning:
-          m_paused_by_remote = false;
+          mPausedByRemote = false;
           break;
 
         case linphone::CallStatePausedByRemote:
-          m_paused_by_remote = true;
+          mPausedByRemote = true;
           break;
 
         case linphone::CallStatePausing:
-          m_paused_by_user = true;
+          mPausedByUser = true;
           break;
 
         case linphone::CallStateResuming:
-          m_paused_by_user = false;
+          mPausedByUser = false;
           break;
 
         case linphone::CallStateUpdatedByRemote:
           if (
-            !m_linphone_call->getCurrentParams()->videoEnabled() &&
-            m_linphone_call->getRemoteParams()->videoEnabled()
+            !mLinphoneCall->getCurrentParams()->videoEnabled() &&
+            mLinphoneCall->getRemoteParams()->videoEnabled()
           ) {
-            m_linphone_call->deferUpdate();
+            mLinphoneCall->deferUpdate();
             emit videoRequested();
           }
 
@@ -109,8 +109,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphone_call) {
 
 // -----------------------------------------------------------------------------
 
-void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &call_params) {
-  call_params->setRecordFile(
+void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
+  callParams->setRecordFile(
     ::Utils::qStringToLinphoneString(
       CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder() +
       QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss")
@@ -124,31 +124,31 @@ void CallModel::accept () {
   stopAutoAnswerTimer();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
   params->enableVideo(false);
   setRecordFile(params);
 
   App::getInstance()->getCallsWindow()->show();
-  m_linphone_call->acceptWithParams(params);
+  mLinphoneCall->acceptWithParams(params);
 }
 
 void CallModel::acceptWithVideo () {
   stopAutoAnswerTimer();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
   params->enableVideo(true);
   setRecordFile(params);
 
   App::getInstance()->getCallsWindow()->show();
-  m_linphone_call->acceptWithParams(params);
+  mLinphoneCall->acceptWithParams(params);
 }
 
 void CallModel::terminate () {
   CoreManager *core = CoreManager::getInstance();
 
   core->lockVideoRender();
-  m_linphone_call->terminate();
+  mLinphoneCall->terminate();
   core->unlockVideoRender();
 }
 
@@ -158,54 +158,54 @@ void CallModel::transfer () {
 
 void CallModel::acceptVideoRequest () {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
   params->enableVideo(true);
 
-  m_linphone_call->acceptUpdate(params);
+  mLinphoneCall->acceptUpdate(params);
 }
 
 void CallModel::rejectVideoRequest () {
-  m_linphone_call->acceptUpdate(m_linphone_call->getCurrentParams());
+  mLinphoneCall->acceptUpdate(mLinphoneCall->getCurrentParams());
 }
 
 void CallModel::takeSnapshot () {
-  static QString old_name;
-  QString new_name = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss") + ".jpg";
+  static QString oldName;
+  QString newName = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss") + ".jpg";
 
-  if (new_name == old_name) {
+  if (newName == oldName) {
     qWarning() << "Unable to take snapshot. Wait one second.";
     return;
   }
 
-  old_name = new_name;
+  oldName = newName;
 
-  qInfo() << "Take snapshot of call:" << &m_linphone_call;
+  qInfo() << "Take snapshot of call:" << &mLinphoneCall;
 
-  m_linphone_call->takeVideoSnapshot(
+  mLinphoneCall->takeVideoSnapshot(
     ::Utils::qStringToLinphoneString(
-      CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + new_name
+      CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName
     )
   );
 }
 
 void CallModel::startRecording () {
-  if (m_recording)
+  if (mRecording)
     return;
 
-  qInfo() << "Start recording call:" << &m_linphone_call;
+  qInfo() << "Start recording call:" << &mLinphoneCall;
 
-  m_linphone_call->startRecording();
-  m_recording = true;
+  mLinphoneCall->startRecording();
+  mRecording = true;
 
   emit recordingChanged(true);
 }
 
 void CallModel::stopRecording () {
-  if (m_recording) {
-    qInfo() << "Stop recording call:" << &m_linphone_call;
+  if (mRecording) {
+    qInfo() << "Stop recording call:" << &mLinphoneCall;
 
-    m_recording = false;
-    m_linphone_call->stopRecording();
+    mRecording = false;
+    mLinphoneCall->stopRecording();
 
     emit recordingChanged(false);
   }
@@ -222,11 +222,11 @@ void CallModel::stopAutoAnswerTimer () const {
 }
 
 QString CallModel::getSipAddress () const {
-  return ::Utils::linphoneStringToQString(m_linphone_call->getRemoteAddress()->asStringUriOnly());
+  return ::Utils::linphoneStringToQString(mLinphoneCall->getRemoteAddress()->asStringUriOnly());
 }
 
 CallModel::CallStatus CallModel::getStatus () const {
-  switch (m_linphone_call->getState()) {
+  switch (mLinphoneCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
       return CallStatusConnected;
@@ -245,7 +245,7 @@ CallModel::CallStatus CallModel::getStatus () const {
 
     case linphone::CallStateUpdating:
     case linphone::CallStateUpdatedByRemote:
-      return m_paused_by_remote ? CallStatusPaused : CallStatusConnected;
+      return mPausedByRemote ? CallStatusPaused : CallStatusConnected;
 
     case linphone::CallStateEarlyUpdatedByRemote:
     case linphone::CallStateEarlyUpdating:
@@ -259,17 +259,17 @@ CallModel::CallStatus CallModel::getStatus () const {
       break;
   }
 
-  return m_linphone_call->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
+  return mLinphoneCall->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
 }
 
 // -----------------------------------------------------------------------------
 
 int CallModel::getDuration () const {
-  return m_linphone_call->getDuration();
+  return mLinphoneCall->getDuration();
 }
 
 float CallModel::getQuality () const {
-  return m_linphone_call->getCurrentQuality();
+  return mLinphoneCall->getCurrentQuality();
 }
 
 // -----------------------------------------------------------------------------
@@ -287,11 +287,11 @@ inline float computeVu (float volume) {
 }
 
 float CallModel::getMicroVu () const {
-  return computeVu(m_linphone_call->getRecordVolume());
+  return computeVu(mLinphoneCall->getRecordVolume());
 }
 
 float CallModel::getSpeakerVu () const {
-  return computeVu(m_linphone_call->getPlayVolume());
+  return computeVu(mLinphoneCall->getPlayVolume());
 }
 
 // -----------------------------------------------------------------------------
@@ -312,11 +312,11 @@ void CallModel::setMicroMuted (bool status) {
 // -----------------------------------------------------------------------------
 
 bool CallModel::getPausedByUser () const {
-  return m_paused_by_user;
+  return mPausedByUser;
 }
 
 void CallModel::setPausedByUser (bool status) {
-  switch (m_linphone_call->getState()) {
+  switch (mLinphoneCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
     case linphone::CallStatePaused:
@@ -326,25 +326,25 @@ void CallModel::setPausedByUser (bool status) {
   }
 
   if (status) {
-    if (!m_paused_by_user)
-      m_linphone_call->pause();
+    if (!mPausedByUser)
+      mLinphoneCall->pause();
 
     return;
   }
 
-  if (m_paused_by_user)
-    m_linphone_call->resume();
+  if (mPausedByUser)
+    mLinphoneCall->resume();
 }
 
 // -----------------------------------------------------------------------------
 
 bool CallModel::getVideoEnabled () const {
-  shared_ptr<const linphone::CallParams> params = m_linphone_call->getCurrentParams();
+  shared_ptr<const linphone::CallParams> params = mLinphoneCall->getCurrentParams();
   return params && params->videoEnabled() && getStatus() == CallStatusConnected;
 }
 
 void CallModel::setVideoEnabled (bool status) {
-  switch (m_linphone_call->getState()) {
+  switch (mLinphoneCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
       break;
@@ -355,16 +355,16 @@ void CallModel::setVideoEnabled (bool status) {
     return;
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(m_linphone_call);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
   params->enableVideo(status);
 
-  m_linphone_call->update(params);
+  mLinphoneCall->update(params);
 }
 
 // -----------------------------------------------------------------------------
 
 bool CallModel::getUpdating () const {
-  switch (m_linphone_call->getState()) {
+  switch (mLinphoneCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
     case linphone::CallStatePaused:
@@ -379,5 +379,5 @@ bool CallModel::getUpdating () const {
 }
 
 bool CallModel::getRecording () const {
-  return m_recording;
+  return mRecording;
 }
