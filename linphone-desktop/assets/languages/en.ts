@@ -875,10 +875,6 @@ Server url not configured.</translation>
         <translation></translation>
     </message>
     <message>
-        <source>registerHeader</source>
-        <translation>Register</translation>
-    </message>
-    <message>
         <source>eraseAllPasswords</source>
         <translation>ERASE PASSWORDS</translation>
     </message>

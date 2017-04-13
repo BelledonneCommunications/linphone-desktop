@@ -71,7 +71,6 @@ TabContainer {
         legendLineWidth: SettingsWindowStyle.sipAccounts.legendLineWidth
 
         titles: [
-          qsTr('registerHeader'),
           qsTr('editionHeader'),
           qsTr('deleteHeader')
         ]
@@ -81,10 +80,6 @@ TabContainer {
 
           delegate: FormTableLine {
             title: modelData.sipAddress
-
-            FormTableEntry {
-              Switch {}
-            }
 
             FormTableEntry {
               ActionButton {

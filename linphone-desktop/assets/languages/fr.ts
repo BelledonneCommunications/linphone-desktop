@@ -875,10 +875,6 @@ Url du serveur non configurée.</translation>
         <translation></translation>
     </message>
     <message>
-        <source>registerHeader</source>
-        <translation>S&apos;enregistrer</translation>
-    </message>
-    <message>
         <source>eraseAllPasswords</source>
         <translation>EFFACER MOTS DE PASSE</translation>
     </message>
