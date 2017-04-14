@@ -64,23 +64,23 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
 
   // List available locales.
   for (const auto &locale : QDir(LANGUAGES_PATH).entryList())
-    m_available_locales << QLocale(locale);
+    mAvailableLocales << QLocale(locale);
 
-  m_translator = new DefaultTranslator(this);
+  mTranslator = new DefaultTranslator(this);
 
   // Try to use system locale.
-  QLocale sys_locale = QLocale::system();
-  if (installLocale(*this, *m_translator, sys_locale)) {
-    m_locale = sys_locale.name();
-    qInfo() << QStringLiteral("Use system locale: %1").arg(m_locale);
+  QLocale sysLocale = QLocale::system();
+  if (installLocale(*this, *mTranslator, sysLocale)) {
+    mLocale = sysLocale.name();
+    qInfo() << QStringLiteral("Use system locale: %1").arg(mLocale);
     return;
   }
 
   // Use english.
-  m_locale = DEFAULT_LOCALE;
-  if (!installLocale(*this, *m_translator, QLocale(m_locale)))
+  mLocale = DEFAULT_LOCALE;
+  if (!installLocale(*this, *mTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
-  qInfo() << QStringLiteral("Use default locale: %1").arg(m_locale);
+  qInfo() << QStringLiteral("Use default locale: %1").arg(mLocale);
 }
 
 App::~App () {
@@ -108,29 +108,29 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 // -----------------------------------------------------------------------------
 
 inline void activeSplashScreen (App *app) {
-  QQuickWindow *splash_screen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
-  QObject::connect(CoreManager::getInstance(), &CoreManager::linphoneCoreCreated, splash_screen, [splash_screen] {
-    splash_screen->close();
-    splash_screen->deleteLater();
+  QQuickWindow *splashScreen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
+  QObject::connect(CoreManager::getInstance(), &CoreManager::linphoneCoreCreated, splashScreen, [splashScreen] {
+    splashScreen->close();
+    splashScreen->deleteLater();
   });
 }
 
 void App::initContentApp () {
   // Init core.
-  CoreManager::init(this, m_parser.value("config"));
-  qInfo() << "Activated selectors:" << QQmlFileSelector::get(&m_engine)->selector()->allSelectors();
+  CoreManager::init(this, mParser.value("config"));
+  qInfo() << "Activated selectors:" << QQmlFileSelector::get(&mEngine)->selector()->allSelectors();
 
   // Provide `+custom` folders for custom components.
-  (new QQmlFileSelector(&m_engine, this))->setExtraSelectors(QStringList("custom"));
+  (new QQmlFileSelector(&mEngine, this))->setExtraSelectors(QStringList("custom"));
 
   // Set modules paths.
-  m_engine.addImportPath(":/ui/modules");
-  m_engine.addImportPath(":/ui/scripts");
-  m_engine.addImportPath(":/ui/views");
+  mEngine.addImportPath(":/ui/modules");
+  mEngine.addImportPath(":/ui/scripts");
+  mEngine.addImportPath(":/ui/views");
 
   // Provide avatars/thumbnails providers.
-  m_engine.addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
-  m_engine.addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
+  mEngine.addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
+  mEngine.addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
 
   // Don't quit if last window is closed!!!
   setQuitOnLastWindowClosed(false);
@@ -139,12 +139,12 @@ void App::initContentApp () {
   registerTypes();
 
   // Enable notifications.
-  m_notifier = new Notifier(this);
+  mNotifier = new Notifier(this);
 
   // Load main view.
   qInfo() << "Loading main view...";
-  m_engine.load(QUrl(QML_VIEW_MAIN_WINDOW));
-  if (m_engine.rootObjects().isEmpty())
+  mEngine.load(QUrl(QML_VIEW_MAIN_WINDOW));
+  if (mEngine.rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
   // Load splashscreen.
@@ -153,7 +153,7 @@ void App::initContentApp () {
   QObject::connect(
     CoreManager::getInstance(),
     &CoreManager::linphoneCoreCreated,
-    this, m_parser.isSet("selftest") ? &App::quit : &App::openAppAfterInit
+    this, mParser.isSet("selftest") ? &App::quit : &App::openAppAfterInit
   );
 
   QObject::connect(
@@ -167,10 +167,10 @@ void App::initContentApp () {
 // -----------------------------------------------------------------------------
 
 void App::parseArgs () {
-  m_parser.setApplicationDescription(tr("applicationDescription"));
-  m_parser.addHelpOption();
-  m_parser.addVersionOption();
-  m_parser.addOptions({
+  mParser.setApplicationDescription(tr("applicationDescription"));
+  mParser.addHelpOption();
+  mParser.addVersionOption();
+  mParser.addOptions({
     { "config", tr("commandLineOptionConfig"), "file" },
     #ifndef __APPLE__
       { "iconified", tr("commandLineOptionIconified") },
@@ -179,13 +179,13 @@ void App::parseArgs () {
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
   });
 
-  m_parser.process(*this);
+  mParser.process(*this);
 
   // Initialize logger. (Do not do this before this point because the
   // application has to be created for the logs to be put in the correct
   // directory.)
   Logger::init();
-  if (m_parser.isSet("verbose")) {
+  if (mParser.isSet("verbose")) {
     Logger::getInstance()->setVerbose(true);
   }
 }
@@ -200,9 +200,9 @@ void App::tryToUsePreferredLocale () {
 
     if (installLocale(*this, *translator, QLocale(locale))) {
       // Use config.
-      m_translator->deleteLater();
-      m_translator = translator;
-      m_locale = locale;
+      mTranslator->deleteLater();
+      mTranslator = translator;
+      mLocale = locale;
 
       qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
     } else {
@@ -216,23 +216,23 @@ void App::tryToUsePreferredLocale () {
 // -----------------------------------------------------------------------------
 
 QQuickWindow *App::getCallsWindow () {
-  if (!m_calls_window)
-    m_calls_window = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
+  if (!mCallsWindow)
+    mCallsWindow = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
 
-  return m_calls_window;
+  return mCallsWindow;
 }
 
 QQuickWindow *App::getMainWindow () const {
   return qobject_cast<QQuickWindow *>(
-    const_cast<QQmlApplicationEngine *>(&m_engine)->rootObjects().at(0)
+    const_cast<QQmlApplicationEngine *>(&mEngine)->rootObjects().at(0)
   );
 }
 
 QQuickWindow *App::getSettingsWindow () {
-  if (!m_settings_window) {
-    m_settings_window = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
+  if (!mSettingsWindow) {
+    mSettingsWindow = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
     QObject::connect(
-      m_settings_window, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+      mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
         if (visibility == QWindow::Hidden) {
           qInfo() << "Update nat policy.";
           shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
@@ -242,13 +242,13 @@ QQuickWindow *App::getSettingsWindow () {
     );
   }
 
-  return m_settings_window;
+  return mSettingsWindow;
 }
 
 // -----------------------------------------------------------------------------
 
 bool App::hasFocus () const {
-  return getMainWindow()->isActive() || (m_calls_window && m_calls_window->isActive());
+  return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
 }
 
 // -----------------------------------------------------------------------------
@@ -319,19 +319,19 @@ void App::registerTypes () {
 
 void App::setTrayIcon () {
   QQuickWindow *root = getMainWindow();
-  QSystemTrayIcon *system_tray_icon = new QSystemTrayIcon(root);
+  QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(root);
 
   // trayIcon: Right click actions.
-  QAction *quit_action = new QAction("Quit", root);
-  root->connect(quit_action, &QAction::triggered, this, &App::quit);
+  QAction *quitAction = new QAction("Quit", root);
+  root->connect(quitAction, &QAction::triggered, this, &App::quit);
 
-  QAction *restore_action = new QAction("Restore", root);
-  root->connect(restore_action, &QAction::triggered, root, &QQuickWindow::showNormal);
+  QAction *restoreAction = new QAction("Restore", root);
+  root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
 
   // trayIcon: Left click actions.
   QMenu *menu = new QMenu();
   root->connect(
-    system_tray_icon, &QSystemTrayIcon::activated, [root](
+    systemTrayIcon, &QSystemTrayIcon::activated, [root](
       QSystemTrayIcon::ActivationReason reason
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
@@ -344,14 +344,14 @@ void App::setTrayIcon () {
   );
 
   // Build trayIcon menu.
-  menu->addAction(restore_action);
+  menu->addAction(restoreAction);
   menu->addSeparator();
-  menu->addAction(quit_action);
+  menu->addAction(quitAction);
 
-  system_tray_icon->setContextMenu(menu);
-  system_tray_icon->setIcon(QIcon(WINDOW_ICON_PATH));
-  system_tray_icon->setToolTip("Linphone");
-  system_tray_icon->show();
+  systemTrayIcon->setContextMenu(menu);
+  systemTrayIcon->setIcon(QIcon(WINDOW_ICON_PATH));
+  systemTrayIcon->setToolTip("Linphone");
+  systemTrayIcon->show();
 }
 
 // -----------------------------------------------------------------------------
@@ -373,7 +373,7 @@ void App::setConfigLocale (const QString &locale) {
 }
 
 QString App::getLocale () const {
-  return m_locale;
+  return mLocale;
 }
 
 // -----------------------------------------------------------------------------
@@ -391,7 +391,7 @@ void App::openAppAfterInit () {
     else
       setTrayIcon();
 
-    if (!m_parser.isSet("iconified"))
+    if (!mParser.isSet("iconified"))
       getMainWindow()->showNormal();
   #else
     getMainWindow()->showNormal();
@@ -401,7 +401,7 @@ void App::openAppAfterInit () {
 // -----------------------------------------------------------------------------
 
 void App::quit () {
-  if (m_parser.isSet("selftest"))
+  if (mParser.isSet("selftest"))
     cout << tr("selftestResult").toStdString() << endl;
 
   QApplication::quit();

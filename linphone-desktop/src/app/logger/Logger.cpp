@@ -55,9 +55,9 @@ using namespace std;
 
 // =============================================================================
 
-QMutex Logger::m_mutex;
+QMutex Logger::mMutex;
 
-Logger *Logger::m_instance = nullptr;
+Logger *Logger::mInstance = nullptr;
 
 // -----------------------------------------------------------------------------
 
@@ -79,10 +79,10 @@ static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt,
   else
     return;
 
-  QByteArray date_time = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
+  QByteArray dateTime = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
   char *msg = bctbx_strdup_vprintf(fmt, args);
 
-  fprintf(stderr, format, date_time.constData(), domain, msg);
+  fprintf(stderr, format, dateTime.constData(), domain, msg);
 
   bctbx_free(msg);
 
@@ -133,15 +133,15 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 
   #endif // ifdef QT_MESSAGELOGCONTEXT
 
-  QByteArray local_msg = msg.toLocal8Bit();
-  QByteArray date_time = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
+  QByteArray localMsg = msg.toLocal8Bit();
+  QByteArray dateTime = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
 
-  m_mutex.lock();
+  mMutex.lock();
 
-  fprintf(stderr, format, date_time.constData(), context_str, local_msg.constData());
-  bctbx_log(QT_DOMAIN, level, "QT: %s%s", context_str, local_msg.constData());
+  fprintf(stderr, format, dateTime.constData(), context_str, localMsg.constData());
+  bctbx_log(QT_DOMAIN, level, "QT: %s%s", context_str, localMsg.constData());
 
-  m_mutex.unlock();
+  mMutex.unlock();
 
   if (type == QtFatalMsg)
     abort();
@@ -150,16 +150,16 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 // -----------------------------------------------------------------------------
 
 void Logger::init () {
-  if (m_instance)
+  if (mInstance)
     return;
-  m_instance = new Logger();
+  mInstance = new Logger();
 
   qInstallMessageHandler(Logger::log);
 
   linphone_core_set_log_level(ORTP_MESSAGE);
   linphone_core_set_log_handler(
     [](const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
-      if (m_instance->isVerbose())
+      if (mInstance->isVerbose())
         linphoneLog(domain, type, fmt, args);
     }
   );

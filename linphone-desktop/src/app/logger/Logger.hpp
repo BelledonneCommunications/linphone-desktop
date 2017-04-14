@@ -32,17 +32,17 @@ public:
   ~Logger () = default;
 
   bool isVerbose () const {
-    return m_verbose;
+    return mVerbose;
   }
 
   void setVerbose (bool verbose) {
-    m_verbose = verbose;
+    mVerbose = verbose;
   }
 
   static void init ();
 
   static Logger *getInstance () {
-    return m_instance;
+    return mInstance;
   }
 
 private:
@@ -50,10 +50,10 @@ private:
 
   static void log (QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
-  bool m_verbose = false;
+  bool mVerbose = false;
 
-  static QMutex m_mutex;
-  static Logger *m_instance;
+  static QMutex mMutex;
+  static Logger *mInstance;
 };
 
 #endif // LOGGER_H_

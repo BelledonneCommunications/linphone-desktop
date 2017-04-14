@@ -168,9 +168,9 @@ string Paths::getCapturesDirpath () {
   return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
 }
 
-string Paths::getConfigFilepath (const QString &config_path) {
-  if (!config_path.isEmpty())
-    return getWritableFilePath(QFileInfo(config_path).absoluteFilePath());
+string Paths::getConfigFilepath (const QString &configPath) {
+  if (!configPath.isEmpty())
+    return getWritableFilePath(QFileInfo(configPath).absoluteFilePath());
 
   return getWritableFilePath(getAppConfigFilepath());
 }
@@ -221,61 +221,61 @@ string Paths::getZrtpSecretsFilepath () {
 
 // -----------------------------------------------------------------------------
 
-static void migrateFile (const QString &old_path, const QString &new_path) {
-  QFileInfo info(new_path);
+static void migrateFile (const QString &oldPath, const QString &newPath) {
+  QFileInfo info(newPath);
   ensureDirectoryPathExists(info.path());
 
-  if (QFile::copy(old_path, new_path)) {
-    QFile::remove(old_path);
-    qInfo() << "Migrated" << old_path << "to" << new_path;
+  if (QFile::copy(oldPath, newPath)) {
+    QFile::remove(oldPath);
+    qInfo() << "Migrated" << oldPath << "to" << newPath;
   } else {
-    qWarning() << "Failed migration of" << old_path << "to" << new_path;
+    qWarning() << "Failed migration of" << oldPath << "to" << newPath;
   }
 }
 
-static void migrateConfigurationFile (const QString &old_path, const QString &new_path) {
-  QFileInfo info(new_path);
+static void migrateConfigurationFile (const QString &oldPath, const QString &newPath) {
+  QFileInfo info(newPath);
   ensureDirectoryPathExists(info.path());
 
-  if (QFile::copy(old_path, new_path)) {
-    QFile old_file(old_path);
-    if (old_file.open(QIODevice::WriteOnly)) {
-      QTextStream stream(&old_file);
-      stream << "This file has been migrated to " << new_path;
+  if (QFile::copy(oldPath, newPath)) {
+    QFile oldFile(oldPath);
+    if (oldFile.open(QIODevice::WriteOnly)) {
+      QTextStream stream(&oldFile);
+      stream << "This file has been migrated to " << newPath;
     }
 
-    QFile::setPermissions(old_path, QFileDevice::ReadOwner);
-    qInfo() << "Migrated" << old_path << "to" << new_path;
+    QFile::setPermissions(oldPath, QFileDevice::ReadOwner);
+    qInfo() << "Migrated" << oldPath << "to" << newPath;
   } else {
-    qWarning() << "Failed migration of" << old_path << "to" << new_path;
+    qWarning() << "Failed migration of" << oldPath << "to" << newPath;
   }
 }
 
 void Paths::migrate () {
-  QString new_path = getAppConfigFilepath();
-  QString old_base_dir = QSysInfo::productType() == "windows"
+  QString newPath = getAppConfigFilepath();
+  QString oldBaseDir = QSysInfo::productType() == "windows"
     ? QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
-  QString old_path = old_base_dir + "/.linphonerc";
+  QString oldPath = oldBaseDir + "/.linphonerc";
 
-  if (!filePathExists(new_path) && filePathExists(old_path))
-    migrateConfigurationFile(old_path, new_path);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateConfigurationFile(oldPath, newPath);
 
-  new_path = getAppCallHistoryFilepath();
-  old_path = old_base_dir + "/.linphone-call-history.db";
+  newPath = getAppCallHistoryFilepath();
+  oldPath = oldBaseDir + "/.linphone-call-history.db";
 
-  if (!filePathExists(new_path) && filePathExists(old_path))
-    migrateFile(old_path, new_path);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateFile(oldPath, newPath);
 
-  new_path = getAppFriendsFilepath();
-  old_path = old_base_dir + "/.linphone-friends.db";
+  newPath = getAppFriendsFilepath();
+  oldPath = oldBaseDir + "/.linphone-friends.db";
 
-  if (!filePathExists(new_path) && filePathExists(old_path))
-    migrateFile(old_path, new_path);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateFile(oldPath, newPath);
 
-  new_path = getAppMessageHistoryFilepath();
-  old_path = old_base_dir + "/.linphone-history.db";
+  newPath = getAppMessageHistoryFilepath();
+  oldPath = oldBaseDir + "/.linphone-history.db";
 
-  if (!filePathExists(new_path) && filePathExists(old_path))
-    migrateFile(old_path, new_path);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateFile(oldPath, newPath);
 }

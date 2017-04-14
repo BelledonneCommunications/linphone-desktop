@@ -33,9 +33,9 @@ ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
     QQmlImageProviderBase::Image,
     QQmlImageProviderBase::ForceAsynchronousImageLoading
   ) {
-  m_thumbnails_path = Utils::linphoneStringToQString(Paths::getThumbnailsDirpath());
+  mThumbnailsPath = Utils::linphoneStringToQString(Paths::getThumbnailsDirpath());
 }
 
 QImage ThumbnailProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  return QImage(m_thumbnails_path + id);
+  return QImage(mThumbnailsPath + id);
 }

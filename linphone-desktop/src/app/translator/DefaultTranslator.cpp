@@ -43,28 +43,28 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
         continue;
 
       QString basename = info.baseName();
-      if (m_contexts.contains(basename))
+      if (mContexts.contains(basename))
         qWarning() << QStringLiteral("QML context `%1` already exists in contexts list.").arg(basename);
       else
-        m_contexts << basename;
+        mContexts << basename;
     }
   }
 }
 
 QString DefaultTranslator::translate (
   const char *context,
-  const char *source_text,
+  const char *sourceText,
   const char *disambiguation,
   int n
 ) const {
   if (!context)
     return QStringLiteral("");
 
-  QString translation = QTranslator::translate(context, source_text, disambiguation, n);
+  QString translation = QTranslator::translate(context, sourceText, disambiguation, n);
 
-  if (translation.length() == 0 && m_contexts.contains(context))
+  if (translation.length() == 0 && mContexts.contains(context))
     qWarning() << QStringLiteral("Unable to find a translation. (context=%1, label=%2)")
-      .arg(context).arg(source_text);
+      .arg(context).arg(sourceText);
 
   return translation;
 }

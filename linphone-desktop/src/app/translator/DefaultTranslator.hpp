@@ -35,13 +35,13 @@ public:
 
   QString translate (
     const char *context,
-    const char *source_text,
+    const char *sourceText,
     const char *disambiguation = Q_NULLPTR,
     int n = -1
   ) const override;
 
 private:
-  QSet<QString> m_contexts;
+  QSet<QString> mContexts;
 };
 
 #endif // DEFAULT_TRANSLATOR_H_

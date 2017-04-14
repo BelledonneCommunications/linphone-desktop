@@ -32,12 +32,12 @@ public:
   AvatarProvider ();
   ~AvatarProvider () = default;
 
-  QImage requestImage (const QString &id, QSize *size, const QSize &requested_size) override;
+  QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
 
   static const QString PROVIDER_ID;
 
 private:
-  QString m_avatars_path;
+  QString mAvatarsPath;
 };
 
 #endif // AVATAR_PROVIDER_H_

@@ -51,11 +51,11 @@ public:
   void tryToUsePreferredLocale ();
 
   QQmlEngine *getEngine () {
-    return &m_engine;
+    return &mEngine;
   }
 
   Notifier *getNotifier () const {
-    return m_notifier;
+    return mNotifier;
   }
 
   QQuickWindow *getCallsWindow ();
@@ -85,23 +85,23 @@ private:
   QString getLocale () const;
 
   QVariantList getAvailableLocales () const {
-    return m_available_locales;
+    return mAvailableLocales;
   }
 
   void openAppAfterInit ();
 
-  QCommandLineParser m_parser;
+  QCommandLineParser mParser;
 
-  QVariantList m_available_locales;
-  QString m_locale;
+  QVariantList mAvailableLocales;
+  QString mLocale;
 
-  QQmlApplicationEngine m_engine;
+  QQmlApplicationEngine mEngine;
 
-  DefaultTranslator *m_translator = nullptr;
-  Notifier *m_notifier = nullptr;
+  DefaultTranslator *mTranslator = nullptr;
+  Notifier *mNotifier = nullptr;
 
-  QQuickWindow *m_calls_window = nullptr;
-  QQuickWindow *m_settings_window = nullptr;
+  QQuickWindow *mCallsWindow = nullptr;
+  QQuickWindow *mSettingsWindow = nullptr;
 };
 
 #endif // APP_H_
