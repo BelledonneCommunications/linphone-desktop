@@ -328,8 +328,14 @@ Window {
     Component {
       id: cameraPreview
 
-      MouseArea {
-        property bool held: false
+      Camera {
+        Drag.active: cameraDrag.held
+        Drag.source: cameraDrag
+        Drag.hotSpot.x: width / 2
+        Drag.hotSpot.y: height / 2
+
+        call: incall.call
+        isPreview: true
 
         height: CallStyle.actionArea.userVideo.height
         width: CallStyle.actionArea.userVideo.width
@@ -337,34 +343,34 @@ Window {
         x: incall.width / 2 - width / 2
         y: incall.height - height
 
-        drag {
-          axis: Drag.XandYAxis
-          target: camera
-        }
+        MouseArea {
+          id: cameraDrag
 
-        onPressed: held = true
-        onReleased: {
-          held = false
-          y += camera.y
-          x += camera.x
+          property bool held: false
 
-          camera.x = 0
-          camera.y = 0
-        }
+          anchors.fill: parent
 
-        Camera {
-          id: camera
+          drag {
+            axis: Drag.XandYAxis
+            target: parent
+          }
 
-          Drag.active: parent.held
-          Drag.source: parent
-          Drag.hotSpot.x: width / 2
-          Drag.hotSpot.y: height / 2
+          onPressed: held = true
+          onReleased: {
+            held = false
 
-          call: incall.call
-          isPreview: true
+            if (parent.x < 0) {
+              parent.x = 0
+            } else if (parent.x + parent.width >= incall.width) {
+              parent.x = incall.width - parent.width
+            }
 
-          height: CallStyle.actionArea.userVideo.height
-          width: CallStyle.actionArea.userVideo.width
+            if (parent.y < 0) {
+              parent.y = 0
+            } else if (parent.y + parent.height >= incall.height) {
+              parent.y = incall.height - parent.height
+            }
+          }
         }
       }
     }
