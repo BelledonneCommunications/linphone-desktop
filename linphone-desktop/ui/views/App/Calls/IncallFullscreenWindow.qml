@@ -329,6 +329,8 @@ Window {
       id: cameraPreview
 
       Camera {
+        property bool scale: false
+
         Drag.active: cameraDrag.held
         Drag.source: cameraDrag
         Drag.hotSpot.x: width / 2
@@ -337,11 +339,22 @@ Window {
         call: incall.call
         isPreview: true
 
-        height: CallStyle.actionArea.userVideo.height
-        width: CallStyle.actionArea.userVideo.width
+        height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
+        width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
 
-        x: incall.width / 2 - width / 2
-        y: incall.height - height
+        Component.onCompleted: {
+          x = incall.width / 2 - width / 2
+          y = incall.height - height
+        }
+
+        // Workaround.
+        // x and y are not binded to functions because if the scale is updated,
+        // the position of the preview is reset.
+        Connections {
+          target: incall
+          onHeightChanged: y = incall.height - parent.height
+          onWidthChanged: x = incall.width / 2 - parent.width / 2
+        }
 
         MouseArea {
           id: cameraDrag
@@ -371,6 +384,8 @@ Window {
               parent.y = incall.height - parent.height
             }
           }
+
+          onWheel: parent.scale = wheel.angleDelta.y > 0
         }
       }
     }
