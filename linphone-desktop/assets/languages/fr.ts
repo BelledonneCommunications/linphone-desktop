@@ -170,6 +170,10 @@
         <source>userIdLabel</source>
         <translation>ID utilisateur (optionnel)</translation>
     </message>
+    <message>
+        <source>realmLabel</source>
+        <translation>Realm</translation>
+    </message>
 </context>
 <context>
     <name>Calls</name>

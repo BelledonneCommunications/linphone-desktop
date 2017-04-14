@@ -37,7 +37,7 @@ public:
   ~Authentication () = default;
 
 signals:
-  void authenticationRequested (const QVariant &authInfo, const QString &sipAddress, const QString &userId);
+  void authenticationRequested (const QVariant &authInfo, const QString &realm, const QString &sipAddress, const QString &userId);
 
 private:
   void handleAuthenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);

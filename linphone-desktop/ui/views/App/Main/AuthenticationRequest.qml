@@ -11,6 +11,7 @@ import 'AuthenticationRequest.js' as Logic
 DialogPlus {
   id: dialog
 
+  property alias realm: realm.text
   property alias sipAddress: identity.text
   property alias userId: userId.text
 
@@ -57,6 +58,18 @@ DialogPlus {
 
         TextField {
           id: identity
+
+          readOnly: true
+        }
+      }
+    }
+
+    FormLine {
+      FormGroup {
+        label: qsTr('realmLabel')
+
+        TextField {
+          id: realm
 
           readOnly: true
         }

@@ -39,6 +39,7 @@ Authentication::Authentication (QObject *parent) : QObject(parent) {
 void Authentication::handleAuthenticationRequested (const shared_ptr<linphone::AuthInfo> &authInfo) {
   emit authenticationRequested(
     QVariant::fromValue(authInfo),
+    ::Utils::linphoneStringToQString(authInfo->getRealm()),
     QStringLiteral("%1@%2").arg(
       ::Utils::linphoneStringToQString(authInfo->getUsername())
     ).arg(

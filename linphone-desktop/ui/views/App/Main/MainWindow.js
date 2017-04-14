@@ -88,9 +88,10 @@ function updateSelectedEntry (view, props) {
 
 // -----------------------------------------------------------------------------
 
-function handleAuthenticationRequested (authInfo, sipAddress, userId) {
+function handleAuthenticationRequested (authInfo, realm, sipAddress, userId) {
   window.attachVirtualWindow(Qt.resolvedUrl('AuthenticationRequest.qml'), {
     authInfo: authInfo,
+    realm: realm,
     sipAddress: sipAddress,
     userId: userId
   })

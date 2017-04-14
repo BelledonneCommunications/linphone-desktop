@@ -87,7 +87,7 @@ ApplicationWindow {
       // -----------------------------------------------------------------------
 
       Authentication {
-        onAuthenticationRequested: Logic.handleAuthenticationRequested(authInfo, sipAddress, userId)
+        onAuthenticationRequested: Logic.handleAuthenticationRequested(authInfo, realm, sipAddress, userId)
       }
 
       // -----------------------------------------------------------------------
