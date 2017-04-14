@@ -16,7 +16,7 @@ QtObject {
     property int rightButtonsGroupMargin: 50
 
     property QtObject userVideo: QtObject {
-      property int height: 90
+      property int height: 200
       property int width: 130
     }
 

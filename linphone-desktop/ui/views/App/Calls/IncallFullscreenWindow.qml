@@ -51,18 +51,18 @@ Window {
 
     Keys.onEscapePressed: incall.close()
 
-    Component {
-      id: camera
-
-      Camera {
-        call: incall.call
-      }
-    }
-
     Loader {
       anchors.fill: parent
       active: !incall.callsWindow.cameraActivated
       sourceComponent: camera
+
+      Component {
+        id: camera
+
+        Camera {
+          call: incall.call
+        }
+      }
     }
 
     // -------------------------------------------------------------------------
@@ -154,6 +154,8 @@ Window {
 
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
+
+          visible: !incall.hideButtons
 
           // Not a customizable style.
           color: 'white'
@@ -310,6 +312,59 @@ Window {
 
             onClicked: _exit(call.terminate)
           }
+        }
+      }
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Preview.
+  // ---------------------------------------------------------------------------
+
+  Loader {
+    active: !incall.callsWindow.cameraActivated
+    sourceComponent: cameraPreview
+
+    Component {
+      id: cameraPreview
+
+      MouseArea {
+        property bool held: false
+
+        height: CallStyle.actionArea.userVideo.height
+        width: CallStyle.actionArea.userVideo.width
+
+        x: incall.width / 2 - width / 2
+        y: incall.height - height
+
+        drag {
+          axis: Drag.XandYAxis
+          target: camera
+        }
+
+        onPressed: held = true
+        onReleased: {
+          held = false
+          y += camera.y
+          x += camera.x
+
+          camera.x = 0
+          camera.y = 0
+        }
+
+        Camera {
+          id: camera
+
+          Drag.active: parent.held
+          Drag.source: parent
+          Drag.hotSpot.x: width / 2
+          Drag.hotSpot.y: height / 2
+
+          call: incall.call
+          isPreview: true
+
+          height: CallStyle.actionArea.userVideo.height
+          width: CallStyle.actionArea.userVideo.width
         }
       }
     }

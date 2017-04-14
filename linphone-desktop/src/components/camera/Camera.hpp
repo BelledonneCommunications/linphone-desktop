@@ -82,9 +82,6 @@ signals:
   void callChanged (CallModel *call);
   void isPreviewChanged (bool isPreview);
 
-protected:
-  void mousePressEvent (QMouseEvent *event) override;
-
 private:
   CallModel *getCall () const;
   void setCall (CallModel *call);
