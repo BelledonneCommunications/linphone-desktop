@@ -318,6 +318,8 @@
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/SmartSearchBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
+    <file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
+    <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
     <file>ui/modules/Linphone/Timeline.qml</file>
     <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
     <file>ui/scripts/LinphoneUtils/qmldir</file>

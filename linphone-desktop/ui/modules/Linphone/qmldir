@@ -27,4 +27,6 @@ PresenceLevel       1.0 Presence/PresenceLevel.qml
 
 SmartSearchBar      1.0 SmartSearchBar.qml
 
+TelKeypad           1.0 TelKeypad.qml
+
 Timeline            1.0 Timeline.qml
