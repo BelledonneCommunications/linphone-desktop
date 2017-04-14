@@ -53,7 +53,7 @@ if(NOT WIN32)
 -Wuninitialized \
 -Wunused \
 ")
-  if(NOT CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
   endif()
   if(SUGGEST_OVERRIDE)
