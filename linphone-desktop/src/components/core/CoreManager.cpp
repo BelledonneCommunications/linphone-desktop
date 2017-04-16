@@ -89,15 +89,10 @@ void CoreManager::setDatabasesPaths () {
   mCore->setFriendsDatabasePath(Paths::getFriendsListFilepath());
   mCore->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
   mCore->setChatDatabasePath(Paths::getMessageHistoryFilepath());
+  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
 }
 
 void CoreManager::setOtherPaths () {
-  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
-
-  // This one is actually a database but it MUST be set after the zrtp secrets
-  // as it allows automatic migration from old version(secrets, xml) to new version (data, sqlite).
-  mCore->setZrtpCacheDatabasePath(Paths::getZrtpDataFilepath());
-
   mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
 
   mCore->setRootCa(Paths::getRootCaFilepath());

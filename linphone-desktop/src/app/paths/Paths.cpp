@@ -43,7 +43,6 @@
 #define PATH_ROOT_CA "/rootca.pem"
 #define PATH_FRIENDS_LIST "/friends.db"
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
-#define PATH_ZRTP_DATA "/zrtp-lime.db"
 #define PATH_ZRTP_SECRETS "/zidcache"
 
 using namespace std;
@@ -211,12 +210,8 @@ string Paths::getUserCertificatesDirpath () {
   return getWritableDirectoryPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_USER_CERTIFICATES);
 }
 
-string Paths::getZrtpDataFilepath () {
-  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_ZRTP_DATA);
-}
-
 string Paths::getZrtpSecretsFilepath () {
-  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::CacheLocation) + PATH_ZRTP_SECRETS);
+  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_ZRTP_SECRETS);
 }
 
 // -----------------------------------------------------------------------------
