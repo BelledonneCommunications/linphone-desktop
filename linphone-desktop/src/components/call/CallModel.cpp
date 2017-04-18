@@ -385,5 +385,6 @@ bool CallModel::getRecording () const {
 // -----------------------------------------------------------------------------
 
 void CallModel::sendDtmf (const QString &dtmf) {
+  qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(dtmf);
   mLinphoneCall->sendDtmf(dtmf.constData()[0].toLatin1());
 }

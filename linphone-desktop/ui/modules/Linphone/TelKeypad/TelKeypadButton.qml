@@ -8,6 +8,7 @@ import Linphone.Styles 1.0
 Item {
   id: button
 
+  property color color: TelKeypadStyle.button.color.normal
   property string icon: ''
   property string text: ''
 
@@ -19,7 +20,7 @@ Item {
     anchors.fill: parent
 
     background: Rectangle {
-      color: TelKeypadStyle.button.color.normal
+      color: button.color
     }
 
     contentItem: Text {

@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 
 // =============================================================================
 
@@ -71,11 +72,7 @@ Rectangle {
         icon: modelData.icon || ''
         text: modelData.text
 
-        onClicked: {
-          var text = modelData.text
-          console.info('Send dtmf: ' + text)
-          telKeypad.call.sendDtmf(text)
-        }
+        onClicked: telKeypad.call.sendDtmf(modelData.text)
       }
     }
   }
@@ -87,6 +84,8 @@ Rectangle {
 
     readonly property int delta: 5
 
+    property var _timeout
+    property int _id
     property var _mouseX
     property var _mouseY
 
@@ -103,12 +102,22 @@ Rectangle {
     onPressed: {
       _mouseX = mouse.x
       _mouseY = mouse.y
+      _id = parseInt(_mouseX / (parent.width / grid.columns)) + parseInt(_mouseY / (parent.height / grid.rows)) * grid.columns
     }
 
     onReleased: {
       if (Math.abs(_mouseX - mouse.x) <= delta && Math.abs(_mouseY - mouse.y) <= delta) {
-        var id = parseInt(_mouseX / (parent.width / grid.columns)) + parseInt(_mouseY / (parent.height / grid.rows)) * grid.columns
-        grid.children[id].clicked()
+        grid.children[_id].color = TelKeypadStyle.button.color.pressed
+
+        grid.children[_id].clicked()
+
+        if (_timeout) {
+          Utils.clearTimeout(_timeout)
+        }
+
+        _timeout = Utils.setTimeout(this, 100, (function (id) {
+          grid.children[id].color = TelKeypadStyle.button.color.normal
+        }).bind(this, _id))
       }
     }
   }
