@@ -92,18 +92,13 @@ void CoreManager::setDatabasesPaths () {
 }
 
 void CoreManager::setOtherPaths () {
-  if (mCore->getZrtpSecretsFile().empty())
-	  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
-
-  // This one is actually a database but it MUST be set after the zrtp secrets
-  // as it allows automatic migration from old version(secrets, xml) to new version (data, sqlite).
-  mCore->setZrtpCacheDatabasePath(Paths::getZrtpDataFilepath());
+  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
 
   if (mCore->getUserCertificatesPath().empty())
-	  mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
+    mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
 
   if (mCore->getRootCa().empty())
-	  mCore->setRootCa(Paths::getRootCaFilepath());
+    mCore->setRootCa(Paths::getRootCaFilepath());
 }
 
 void CoreManager::setResourcesPaths () {
