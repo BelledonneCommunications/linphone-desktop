@@ -92,7 +92,8 @@ void CoreManager::setDatabasesPaths () {
 }
 
 void CoreManager::setOtherPaths () {
-  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
+  if (mCore->getZrtpSecretsFile().empty())
+	mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
 
   if (mCore->getUserCertificatesPath().empty())
     mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
