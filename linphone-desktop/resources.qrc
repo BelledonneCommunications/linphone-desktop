@@ -156,6 +156,9 @@
     <file>assets/images/speaker_on_normal.svg</file>
     <file>assets/images/speaker_on_pressed.svg</file>
     <file>assets/images/splash_screen.svg</file>
+    <file>assets/images/tel_keypad_hovered.svg</file>
+    <file>assets/images/tel_keypad_normal.svg</file>
+    <file>assets/images/tel_keypad_pressed.svg</file>
     <file>assets/images/tooltip_arrow_bottom.svg</file>
     <file>assets/images/tooltip_arrow_left.svg</file>
     <file>assets/images/tooltip_arrow_right.svg</file>

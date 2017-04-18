@@ -106,6 +106,12 @@ Rectangle {
           iconSize: CallStyle.header.iconSize
 
           ActionButton {
+            icon: 'tel_keypad'
+
+            onClicked: telKeypad.visible = !telKeypad.visible
+          }
+
+          ActionButton {
             icon: 'screenshot'
             visible: call.videoEnabled
 
@@ -376,5 +382,6 @@ Rectangle {
     id: telKeypad
 
     call: incall.call
+    visible: false
   }
 }
