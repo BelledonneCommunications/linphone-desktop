@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.0
+import QtQuick.Layouts 1.3
 
 import Linphone.Styles 1.0
 
@@ -16,30 +16,44 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  Button {
+  Rectangle {
     anchors.fill: parent
+    color: button.color
 
-    background: Rectangle {
-      color: button.color
-    }
+    ColumnLayout {
+      anchors.fill: parent
 
-    contentItem: Text {
-      color: TelKeypadStyle.button.text.color
+      spacing: 0
 
-      font {
-        bold: true
-        pointSize: TelKeypadStyle.button.text.fontSize
+      Text {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+
+        color: TelKeypadStyle.button.text.color
+        elide: Text.ElideRight
+
+        font {
+          bold: true
+          pointSize: TelKeypadStyle.button.text.fontSize
+        }
+
+        text: button.text
+
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
       }
 
-      elide: Text.ElideRight
-      text: button.text
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: TelKeypadStyle.button.line.height
 
-      horizontalAlignment: Text.AlignHCenter
-      verticalAlignment: Text.AlignVCenter
+        Layout.bottomMargin: TelKeypadStyle.button.line.bottomMargin
+        Layout.leftMargin: TelKeypadStyle.button.line.leftMargin
+        Layout.rightMargin: TelKeypadStyle.button.line.rightMargin
+        Layout.topMargin: TelKeypadStyle.button.line.topMargin
+
+        color: TelKeypadStyle.button.line.color
+      }
     }
-
-    hoverEnabled: true
-
-    onClicked: button.clicked()
   }
 }

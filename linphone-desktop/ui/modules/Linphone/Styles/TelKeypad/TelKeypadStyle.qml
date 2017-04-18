@@ -18,9 +18,18 @@ QtObject {
       property color pressed: Colors.i
     }
 
+    property QtObject line: QtObject {
+      property color color: Colors.l50
+      property int bottomMargin: 4
+      property int height: 2
+      property int leftMargin: 8
+      property int rightMargin: 8
+      property int topMargin: 0
+    }
+
     property QtObject text: QtObject {
       property color color: Colors.d
-      property int fontSize: 10
+      property int fontSize: 11
     }
   }
 }
