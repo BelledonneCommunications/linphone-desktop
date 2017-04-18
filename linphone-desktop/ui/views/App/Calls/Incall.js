@@ -22,6 +22,8 @@ function handleStatusChanged (status) {
     if (fullscreen) {
       fullscreen.close()
     }
+
+    telKeypad.visible = false
   }
 }
 

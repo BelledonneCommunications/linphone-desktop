@@ -331,10 +331,13 @@ Window {
       Camera {
         property bool scale: false
 
-        Drag.active: cameraDrag.held
-        Drag.source: cameraDrag
-        Drag.hotSpot.x: width / 2
-        Drag.hotSpot.y: height / 2
+        function xPosition () {
+          return incall.width / 2 - width / 2
+        }
+
+        function yPosition () {
+          return incall.height - height
+        }
 
         call: incall.call
         isPreview: true
@@ -342,48 +345,12 @@ Window {
         height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
         width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
 
-        Component.onCompleted: {
-          x = incall.width / 2 - width / 2
-          y = incall.height - height
-        }
+        DragBox {
+          container: incall
+          draggable: parent
 
-        // Workaround.
-        // x and y are not binded to functions because if the scale is updated,
-        // the position of the preview is reset.
-        Connections {
-          target: incall
-          onHeightChanged: y = incall.height - parent.height
-          onWidthChanged: x = incall.width / 2 - parent.width / 2
-        }
-
-        MouseArea {
-          id: cameraDrag
-
-          property bool held: false
-
-          anchors.fill: parent
-
-          drag {
-            axis: Drag.XandYAxis
-            target: parent
-          }
-
-          onPressed: held = true
-          onReleased: {
-            held = false
-
-            if (parent.x < 0) {
-              parent.x = 0
-            } else if (parent.x + parent.width >= incall.width) {
-              parent.x = incall.width - parent.width
-            }
-
-            if (parent.y < 0) {
-              parent.y = 0
-            } else if (parent.y + parent.height >= incall.height) {
-              parent.y = incall.height - parent.height
-            }
-          }
+          xPosition: parent.xPosition
+          yPosition: parent.yPosition
 
           onWheel: parent.scale = wheel.angleDelta.y > 0
         }

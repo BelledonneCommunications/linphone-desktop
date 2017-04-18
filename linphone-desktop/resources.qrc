@@ -208,6 +208,7 @@
     <file>ui/modules/Common/Form/Tab/TabButton.qml</file>
     <file>ui/modules/Common/Form/Tab/TabContainer.qml</file>
     <file>ui/modules/Common/Form/TransparentTextInput.qml</file>
+    <file>ui/modules/Common/Helpers/DragBox.qml</file>
     <file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
@@ -298,13 +299,13 @@
     <file>ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/qmldir</file>
-    <file>ui/modules/Linphone/SmartSearchBar.qml</file>
+    <file>ui/modules/Linphone/SmartSearchBar/SmartSearchBar.qml</file>
     <file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Blocks/CardBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Blocks/RequestBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallControlsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/ChatStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
@@ -316,11 +317,12 @@
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
-    <file>ui/modules/Linphone/Styles/SmartSearchBarStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/TimelineStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/SmartSearchBar/SmartSearchBarStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
-    <file>ui/modules/Linphone/Timeline.qml</file>
+    <file>ui/modules/Linphone/Timeline/Timeline.qml</file>
     <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
     <file>ui/scripts/LinphoneUtils/qmldir</file>
     <file>ui/scripts/Utils/port-tools.js</file>

@@ -25,8 +25,8 @@ SipAddressesMenu    1.0 Menus/SipAddressesMenu.qml
 
 PresenceLevel       1.0 Presence/PresenceLevel.qml
 
-SmartSearchBar      1.0 SmartSearchBar.qml
+SmartSearchBar      1.0 SmartSearchBar/SmartSearchBar.qml
 
-TelKeypad           1.0 TelKeypad.qml
+TelKeypad           1.0 TelKeypad/TelKeypad.qml
 
-Timeline            1.0 Timeline.qml
+Timeline            1.0 Timeline/Timeline.qml

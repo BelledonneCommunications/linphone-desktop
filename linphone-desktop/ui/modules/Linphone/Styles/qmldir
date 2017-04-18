@@ -9,7 +9,7 @@ singleton AccountStatusStyle                   1.0 Account/AccountStatusStyle.qm
 singleton CardBlockStyle                       1.0 Blocks/CardBlockStyle.qml
 singleton RequestBlockStyle                    1.0 Blocks/RequestBlockStyle.qml
 
-singleton ChatStyle                            1.0 ChatStyle.qml
+singleton ChatStyle                            1.0 Chat/ChatStyle.qml
 
 singleton CallsStyle                           1.0 Calls/CallsStyle.qml
 singleton CallControlsStyle                    1.0 Calls/CallControlsStyle.qml
@@ -28,6 +28,8 @@ singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationRec
 singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
 singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationReceivedFileMessageStyle.qml
 
-singleton SmartSearchBarStyle                  1.0 SmartSearchBarStyle.qml
+singleton SmartSearchBarStyle                  1.0 SmartSearchBar/SmartSearchBarStyle.qml
 
-singleton TimelineStyle                        1.0 TimelineStyle.qml
+singleton TelKeypadStyle                       1.0 TelKeypad/TelKeypadStyle.qml
+
+singleton TimelineStyle                        1.0 Timeline/TimelineStyle.qml

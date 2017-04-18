@@ -381,3 +381,9 @@ bool CallModel::getUpdating () const {
 bool CallModel::getRecording () const {
   return mRecording;
 }
+
+// -----------------------------------------------------------------------------
+
+void CallModel::sendDtmf (const QString &dtmf) {
+  mLinphoneCall->sendDtmf(dtmf.constData()[0].toLatin1());
+}

@@ -83,6 +83,8 @@ public:
   Q_INVOKABLE void startRecording ();
   Q_INVOKABLE void stopRecording ();
 
+  Q_INVOKABLE void sendDtmf (const QString &dtmf);
+
 signals:
   void statusChanged (CallStatus status);
   void microMutedChanged (bool status);
