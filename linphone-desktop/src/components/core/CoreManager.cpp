@@ -89,12 +89,11 @@ void CoreManager::setDatabasesPaths () {
   mCore->setFriendsDatabasePath(Paths::getFriendsListFilepath());
   mCore->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
   mCore->setChatDatabasePath(Paths::getMessageHistoryFilepath());
-  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
 }
 
 void CoreManager::setOtherPaths () {
+  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
   mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
-
   mCore->setRootCa(Paths::getRootCaFilepath());
 }
 
