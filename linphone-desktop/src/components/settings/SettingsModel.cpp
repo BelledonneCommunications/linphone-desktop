@@ -385,8 +385,8 @@ void SettingsModel::setAdaptiveRateControlEnabled (bool status) {
 // -----------------------------------------------------------------------------
 
 QList<int> SettingsModel::getAudioPortRange () const {
-  linphone::IntRange range = CoreManager::getInstance()->getCore()->getAudioPortRange();
-  return QList<int>() << range.getMin() << range.getMax();
+  shared_ptr<linphone::Range> range = CoreManager::getInstance()->getCore()->getAudioPortsRange();
+  return QList<int>() << range->getMin() << range->getMax();
 }
 
 void SettingsModel::setAudioPortRange (const QList<int> &range) {
@@ -405,8 +405,8 @@ void SettingsModel::setAudioPortRange (const QList<int> &range) {
 // -----------------------------------------------------------------------------
 
 QList<int> SettingsModel::getVideoPortRange () const {
-  linphone::IntRange range = CoreManager::getInstance()->getCore()->getVideoPortRange();
-  return QList<int>() << range.getMin() << range.getMax();
+  shared_ptr<linphone::Range> range = CoreManager::getInstance()->getCore()->getVideoPortsRange();
+  return QList<int>() << range->getMin() << range->getMax();
 }
 
 void SettingsModel::setVideoPortRange (const QList<int> &range) {
