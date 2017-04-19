@@ -182,6 +182,12 @@ Window {
           visible: !hideButtons
 
           ActionButton {
+            icon: 'tel_keypad'
+
+            onClicked: telKeypad.visible = !telKeypad.visible
+          }
+
+          ActionButton {
             icon: 'screenshot'
 
             onClicked: call.takeSnapshot()
@@ -356,5 +362,16 @@ Window {
         }
       }
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // TelKeypad.
+  // ---------------------------------------------------------------------------
+
+  TelKeypad {
+    id: telKeypad
+
+    call: incall.call
+    visible: false
   }
 }
