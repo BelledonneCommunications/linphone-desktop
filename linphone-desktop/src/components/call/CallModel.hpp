@@ -128,6 +128,8 @@ private:
   QVariantList getVideoStats () const;
   void updateStats (const linphone::CallStats &callStats, QVariantList &stats);
 
+  QString iceStateToString (linphone::IceState state) const;
+
   bool mPausedByRemote = false;
   bool mPausedByUser = false;
   bool mRecording = false;

@@ -85,12 +85,16 @@ Rectangle {
 
         CallStatistics {
           id: callStatistics
+
+          call: incall.call
+
+          height: container.height
+          width: container.width
+
+          launcher: callQuality
+
           relativeTo: callQuality
           relativeY: info.height + elapsedTime.height * 2
-          call: incall.call
-          width: container.width
-          height: container.height
-          launcher: callQuality
         }
       }
 

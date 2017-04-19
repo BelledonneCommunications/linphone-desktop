@@ -426,25 +426,6 @@ inline QVariantMap createStat (const QString &key, const QString &value) {
   return m;
 }
 
-inline QString iceStateToString (linphone::IceState state) const {
-  switch (state) {
-    case linphone::IceStateNotActivated:
-      return tr("iceStateNotActivated");
-    case linphone::IceStateFailed:
-      return tr("iceStateFailed");
-    case linphone::IceStateInProgress:
-      return tr("iceStateInProgress");
-    case linphone::IceStateReflexiveConnection:
-      return tr("iceStateReflexiveConnection");
-    case linphone::IceStateHostConnection:
-      return tr("iceStateHostConnection");
-    case linphone::IceStateRelayConnection:
-      return tr("iceStateRelayConnection");
-    default:
-      return tr("iceStateInvalid");
-  }
-}
-
 void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList &stats) {
   QString family;
   shared_ptr<const linphone::CallParams> params = mLinphoneCall->getCurrentParams();
@@ -510,5 +491,24 @@ void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList 
     break;
     default:
       break;
+  }
+}
+
+QString CallModel::iceStateToString (linphone::IceState state) const {
+  switch (state) {
+    case linphone::IceStateNotActivated:
+      return tr("iceStateNotActivated");
+    case linphone::IceStateFailed:
+      return tr("iceStateFailed");
+    case linphone::IceStateInProgress:
+      return tr("iceStateInProgress");
+    case linphone::IceStateReflexiveConnection:
+      return tr("iceStateReflexiveConnection");
+    case linphone::IceStateHostConnection:
+      return tr("iceStateHostConnection");
+    case linphone::IceStateRelayConnection:
+      return tr("iceStateRelayConnection");
+    default:
+      return tr("iceStateInvalid");
   }
 }

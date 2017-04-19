@@ -16,10 +16,10 @@ var MAP_STATUS_TO_PARAMS = (function () {
         handler: (function () { call.pausedByUser = true }),
         name: qsTr('pauseCall')
       }, {
-        handler: (function () { call.transfer() }),
+        handler: call.transfer,
         name: qsTr('transferCall')
       }, {
-        handler: (function () { call.terminate() }),
+        handler: call.terminate,
         name: qsTr('terminateCall')
       }],
       component: callActions,
