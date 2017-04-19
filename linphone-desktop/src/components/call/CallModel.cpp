@@ -456,8 +456,8 @@ void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList 
 
   stats.clear();
 
-  stats << createStat(tr("callStatsCodec"), QString("%1 / %2kHz")
-    .arg(Utils::linphoneStringToQString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000));
+  stats << createStat(tr("callStatsCodec"), payloadType ? QString("%1 / %2kHz")
+    .arg(Utils::linphoneStringToQString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000) : "");
   stats << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats.getUploadBandwidth())));
   stats << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats.getDownloadBandwidth())));
   stats << createStat(tr("callStatsIceState"), iceStateToString(callStats.getIceState()));
