@@ -116,7 +116,7 @@ set(SOURCES
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
-  src/utils.cpp
+  src/Utils.cpp
 )
 
 set(HEADERS
@@ -155,7 +155,7 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp
   src/externals/single-application/SingleApplicationPrivate.hpp
-  src/utils.hpp
+  src/Utils.hpp
 )
 
 set(QRC_RESOURCES resources.qrc)

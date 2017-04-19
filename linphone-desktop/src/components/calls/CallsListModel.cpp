@@ -24,7 +24,7 @@
 #include <QTimer>
 
 #include "../../app/App.hpp"
-#include "../../utils.hpp"
+#include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "CallsListModel.hpp"

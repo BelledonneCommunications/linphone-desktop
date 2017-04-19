@@ -23,7 +23,7 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
-#include "../../utils.hpp"
+#include "../../Utils.hpp"
 #include "CoreManager.hpp"
 
 #include "CoreHandlers.hpp"

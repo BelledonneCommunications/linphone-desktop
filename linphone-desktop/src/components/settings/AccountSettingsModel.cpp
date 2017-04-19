@@ -22,7 +22,7 @@
 
 #include <QtDebug>
 
-#include "../../utils.hpp"
+#include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "AccountSettingsModel.hpp"

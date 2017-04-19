@@ -21,7 +21,7 @@
  */
 
 #include "../../app/paths/Paths.hpp"
-#include "../../utils.hpp"
+#include "../../Utils.hpp"
 
 #include "CoreManager.hpp"
 

@@ -21,7 +21,7 @@
  */
 
 #include "../components/Components.hpp"
-#include "../utils.hpp"
+#include "../Utils.hpp"
 
 #include "logger/Logger.hpp"
 #include "providers/AvatarProvider.hpp"

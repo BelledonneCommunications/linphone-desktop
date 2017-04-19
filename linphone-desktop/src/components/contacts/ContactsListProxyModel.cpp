@@ -24,7 +24,7 @@
 
 #include <cmath>
 
-#include "../../utils.hpp"
+#include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ContactsListProxyModel.hpp"

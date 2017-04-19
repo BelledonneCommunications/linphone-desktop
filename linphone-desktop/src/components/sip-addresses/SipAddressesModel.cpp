@@ -24,7 +24,7 @@
 #include <QSet>
 #include <QtDebug>
 
-#include "../../utils.hpp"
+#include "../../Utils.hpp"
 #include "../chat/ChatModel.hpp"
 #include "../core/CoreManager.hpp"
 
