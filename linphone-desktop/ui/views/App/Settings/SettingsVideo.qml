@@ -44,33 +44,25 @@ TabContainer {
             currentIndex: {
               var preset = SettingsModel.videoPreset
 
-              return Number(Utils.findIndex([ 'default', 'high-fps', 'custom' ], function (value) {
-                return preset === value
+              return Number(Utils.findIndex(model, function (value) {
+                return preset === value.value
               }))
             }
 
-            model: ListModel {
-              id: presets
-
-              ListElement {
-                key: qsTr('presetDefault')
-                value: 'default'
-              }
-
-              ListElement {
-                key: qsTr('presetHighFps')
-                value: 'high-fps'
-              }
-
-              ListElement {
-                key: qsTr('presetCustom')
-                value: 'custom'
-              }
-            }
+            model: [{
+              key: qsTr('presetDefault'),
+              value: 'default'
+            }, {
+              key: qsTr('presetHighFps'),
+              value: 'high-fps'
+            }, {
+              key: qsTr('presetCustom'),
+              value: 'custom'
+            }]
 
             textRole: 'key'
 
-            onActivated: SettingsModel.videoPreset = presets.get(index).value
+            onActivated: SettingsModel.videoPreset = model[index].value
           }
         }
       }
@@ -80,7 +72,19 @@ TabContainer {
           label: qsTr('videoSizeLabel')
 
           ComboBox {
-            // TODO
+            currentIndex: Utils.findIndex(model, function (definition) {
+              return definition.value.name === SettingsModel.videoDefinition.name
+            })
+            model: SettingsModel.supportedVideoDefinitions.map(function (definition) {
+              return {
+                key: definition.name + ' (' + definition.width + 'x' + definition.height + ')',
+                value: definition
+              }
+            })
+
+            textRole: 'key'
+
+            onActivated: SettingsModel.videoDefinition = model[index].value
           }
         }
 

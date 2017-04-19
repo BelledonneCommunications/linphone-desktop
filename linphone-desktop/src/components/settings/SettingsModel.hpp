@@ -56,6 +56,10 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QString videoPreset READ getVideoPreset WRITE setVideoPreset NOTIFY videoPresetChanged);
   Q_PROPERTY(int videoFramerate READ getVideoFramerate WRITE setVideoFramerate NOTIFY videoFramerateChanged);
 
+  Q_PROPERTY(QVariantList supportedVideoDefinitions READ getSupportedVideoDefinitions CONSTANT);
+
+  Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged);
+
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
@@ -164,6 +168,11 @@ public:
   int getVideoFramerate () const;
   void setVideoFramerate (int framerate);
 
+  QVariantList getSupportedVideoDefinitions () const;
+
+  QVariantMap getVideoDefinition () const;
+  void setVideoDefinition (const QVariantMap &definition);
+
   // Chat & calls. -------------------------------------------------------------
 
   bool getAutoAnswerStatus () const;
@@ -271,6 +280,8 @@ signals:
   void videoPresetChanged (const QString &preset);
   void videoFramerateChanged (int framerate);
 
+  void videoDefinitionChanged (const QVariantMap &definition);
+
   // Chat & calls. -------------------------------------------------------------
 
   void autoAnswerStatusChanged (bool status);
@@ -317,5 +328,7 @@ signals:
 private:
   std::shared_ptr<linphone::Config> mConfig;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<const linphone::VideoDefinition> );
 
 #endif // SETTINGS_MODEL_H_

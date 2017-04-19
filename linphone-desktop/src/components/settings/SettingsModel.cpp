@@ -177,6 +177,38 @@ void SettingsModel::setVideoFramerate (int framerate) {
   emit videoFramerateChanged(framerate);
 }
 
+// -----------------------------------------------------------------------------
+
+inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const linphone::VideoDefinition> &definition) {
+  QVariantMap map;
+
+  map["name"] = ::Utils::linphoneStringToQString(definition->getName());
+  map["width"] = definition->getWidth();
+  map["height"] = definition->getHeight();
+  map["__definition"] = QVariant::fromValue(definition);
+
+  return map;
+}
+
+QVariantList SettingsModel::getSupportedVideoDefinitions () const {
+  QVariantList list;
+  for (const auto &definition : linphone::Factory::get()->getSupportedVideoDefinitions())
+    list << createMapFromVideoDefinition(definition);
+  return list;
+}
+
+QVariantMap SettingsModel::getVideoDefinition () const {
+  return createMapFromVideoDefinition(CoreManager::getInstance()->getCore()->getPreferredVideoDefinition());
+}
+
+void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
+  CoreManager::getInstance()->getCore()->setPreferredVideoDefinition(
+    definition.value("__definition").value<shared_ptr<const linphone::VideoDefinition> >()->clone()
+  );
+
+  emit videoDefinitionChanged(definition);
+}
+
 // =============================================================================
 // Chat & calls.
 // =============================================================================
