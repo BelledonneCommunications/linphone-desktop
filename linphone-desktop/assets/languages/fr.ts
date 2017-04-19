@@ -219,31 +219,31 @@
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation type="unfinished"></translation>
+        <translation>Désactivé</translation>
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Échoué</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"></translation>
+        <translation>En cours</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Connexion réflexive</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Connexion hôte</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Connexion relais</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Invalide</translation>
     </message>
 </context>
 <context>
@@ -1127,6 +1127,10 @@ Url du serveur non configurée.</translation>
     <message>
         <source>videoCodecsTitle</source>
         <translation>Codecs vidéo</translation>
+    </message>
+    <message>
+        <source>showCameraPreview</source>
+        <translation>APERÇU DE LA VIDÉO</translation>
     </message>
 </context>
 <context>

@@ -101,6 +101,15 @@ TabContainer {
           }
         }
       }
+
+      FormEmptyLine {}
+    }
+
+    TextButtonB {
+      anchors.right: parent.right
+      text: qsTr('showCameraPreview')
+
+      onClicked: console.log('TODO')
     }
 
     // -------------------------------------------------------------------------

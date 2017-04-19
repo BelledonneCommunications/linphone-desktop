@@ -1128,6 +1128,10 @@ Server url not configured.</translation>
         <source>videoCodecsTitle</source>
         <translation>Video codecs</translation>
     </message>
+    <message>
+        <source>showCameraPreview</source>
+        <translation>VIDEO PREVIEW</translation>
+    </message>
 </context>
 <context>
     <name>SettingsWindow</name>
