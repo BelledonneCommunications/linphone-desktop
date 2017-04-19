@@ -152,7 +152,6 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   // Destroy it after timeout.
   QObject::connect(
     timer, &QTimer::timeout, this, [this, notification]() {
-      qDebug() << "toto";
       deleteNotification(QVariant::fromValue(notification));
     }
   );
