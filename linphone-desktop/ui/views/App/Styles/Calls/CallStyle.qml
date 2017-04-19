@@ -66,5 +66,9 @@ QtObject {
       property int fontSize: 10
       property int fullscreenFontSize: 12
     }
+
+    property QtObject stats: QtObject {
+      property int relativeY: 90
+    }
   }
 }

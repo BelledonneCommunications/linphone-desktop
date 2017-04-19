@@ -15,7 +15,7 @@ AbstractDropDownMenu {
   // ---------------------------------------------------------------------------
 
   function _computeHeight () {
-    return callStatistics.height
+    return CallStatisticsStyle.height
   }
 
   // ---------------------------------------------------------------------------
@@ -25,14 +25,16 @@ AbstractDropDownMenu {
 
     RowLayout {
       spacing: CallStatisticsStyle.spacing
+      width: parent.width
 
-      // ---------------------------------------------------------------------------
+      // -----------------------------------------------------------------------
 
       Text {
         Layout.preferredWidth: CallStatisticsStyle.key.width
 
         color: CallStatisticsStyle.key.color
         elide: Text.ElideRight
+
         font {
           pointSize: CallStatisticsStyle.key.fontSize
           bold: true
@@ -44,10 +46,11 @@ AbstractDropDownMenu {
         text: modelData.key
       }
 
-      // ---------------------------------------------------------------------------
+      // -----------------------------------------------------------------------
 
       Text {
         Layout.fillWidth: true
+
         color: CallStatisticsStyle.value.color
         elide: Text.ElideRight
         font.pointSize: CallStatisticsStyle.value.fontSize
@@ -63,17 +66,20 @@ AbstractDropDownMenu {
     id: media
 
     Column {
-      width: parent.width
-
       Text {
-        width: parent.width
         color: CallStatisticsStyle.title.color
+
         font {
           bold: true
           pointSize: CallStatisticsStyle.title.fontSize
         }
+
+        elide: Text.ElideRight
         horizontalAlignment: Text.AlignHCenter
         text: $label
+
+        height: contentHeight + CallStatisticsStyle.title.bottomMargin
+        width: parent.width
       }
 
       Repeater {
@@ -92,6 +98,7 @@ AbstractDropDownMenu {
     Row {
       anchors {
         fill: parent
+        topMargin: CallStatisticsStyle.topMargin
         leftMargin: CallStatisticsStyle.leftMargin
         rightMargin: CallStatisticsStyle.rightMargin
       }
@@ -99,6 +106,7 @@ AbstractDropDownMenu {
       Loader {
         property string $label: qsTr("audioStatsLabel")
         property var $data: callStatistics.call.audioStats
+
         sourceComponent: media
         width: parent.width / 2
       }
@@ -106,6 +114,7 @@ AbstractDropDownMenu {
       Loader {
         property string $label: qsTr("videoStatsLabel")
         property var $data: callStatistics.call.videoStats
+
         sourceComponent: media
         width: parent.width / 2
       }
