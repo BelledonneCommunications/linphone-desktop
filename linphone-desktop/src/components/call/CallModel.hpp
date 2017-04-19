@@ -126,7 +126,7 @@ private:
 
   QVariantList getAudioStats () const;
   QVariantList getVideoStats () const;
-  void updateStats (const linphone::CallStats &call_stats, QVariantList &stats);
+  void updateStats (const linphone::CallStats &callStats, QVariantList &stats);
   QString iceStateToString (linphone::IceState state) const;
 
   bool mPausedByRemote = false;
