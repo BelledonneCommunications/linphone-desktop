@@ -65,7 +65,7 @@ public:
   Q_ENUM(CallStatus);
 
   CallModel (std::shared_ptr<linphone::Call> linphoneCall);
-  ~CallModel () = default;
+  ~CallModel ();
 
   std::shared_ptr<linphone::Call> getLinphoneCall () const {
     return mLinphoneCall;

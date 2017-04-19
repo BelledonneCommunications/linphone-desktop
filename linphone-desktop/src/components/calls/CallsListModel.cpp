@@ -179,7 +179,6 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphoneCall) {
   qInfo() << "Add call:" << call;
 
   App::getInstance()->getEngine()->setObjectOwnership(call, QQmlEngine::CppOwnership);
-  linphoneCall->setData("call-model", *call);
 
   int row = mList.count();
 
@@ -193,7 +192,6 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphoneCall)
   QTimer::singleShot(
     DELAY_BEFORE_REMOVE_CALL, this, [this, linphoneCall]() {
       CallModel *call = &linphoneCall->getData<CallModel>("call-model");
-      linphoneCall->unsetData("call-model");
 
       qInfo() << "Removing call:" << call;
 

@@ -108,6 +108,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
   );
 }
 
+CallModel::~CallModel () {
+  mLinphoneCall->unsetData("call-model");
+}
+
 // -----------------------------------------------------------------------------
 
 void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
