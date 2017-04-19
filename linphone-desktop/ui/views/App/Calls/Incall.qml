@@ -90,7 +90,6 @@ Rectangle {
           width: container.width
 
           launcher: callQuality
-
           relativeTo: callQuality
           relativeY: CallStyle.header.stats.relativeY
         }
