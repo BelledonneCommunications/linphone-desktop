@@ -72,7 +72,7 @@ public:
   }
 
   static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
-  void updateStats (const linphone::CallStats &stats);
+  void updateStats (const std::shared_ptr<const linphone::CallStats> &stats);
 
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
@@ -126,7 +126,7 @@ private:
 
   QVariantList getAudioStats () const;
   QVariantList getVideoStats () const;
-  void updateStats (const linphone::CallStats &callStats, QVariantList &stats);
+  void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &stats);
 
   QString iceStateToString (linphone::IceState state) const;
 

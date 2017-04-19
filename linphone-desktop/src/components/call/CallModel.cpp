@@ -123,8 +123,8 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   );
 }
 
-void CallModel::updateStats (const linphone::CallStats &stats) {
-  switch (stats.getType()) {
+void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &stats) {
+  switch (stats->getType()) {
     case linphone::StreamTypeAudio:
       updateStats(stats, mAudioStats);
       break;
@@ -426,12 +426,12 @@ inline QVariantMap createStat (const QString &key, const QString &value) {
   return m;
 }
 
-void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList &stats) {
+void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &stats) {
   QString family;
   shared_ptr<const linphone::CallParams> params = mLinphoneCall->getCurrentParams();
   shared_ptr<const linphone::PayloadType> payloadType;
 
-  switch (callStats.getType()) {
+  switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
       payloadType = params->getUsedAudioPayloadType();
       break;
@@ -442,7 +442,7 @@ void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList 
       return;
   }
 
-  switch (callStats.getIpFamilyOfRemote()) {
+  switch (callStats->getIpFamilyOfRemote()) {
     case linphone::AddressFamilyInet:
       family = "IPv4";
       break;
@@ -459,16 +459,16 @@ void CallModel::updateStats (const linphone::CallStats &callStats, QVariantList 
   stats << createStat(tr("callStatsCodec"), payloadType
     ? QString("%1 / %2kHz").arg(Utils::linphoneStringToQString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
     : "");
-  stats << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats.getUploadBandwidth())));
-  stats << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats.getDownloadBandwidth())));
-  stats << createStat(tr("callStatsIceState"), iceStateToString(callStats.getIceState()));
+  stats << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
+  stats << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
+  stats << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
   stats << createStat(tr("callStatsIpFamily"), family);
-  stats << createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats.getSenderLossRate()));
-  stats << createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats.getReceiverLossRate()));
+  stats << createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats->getSenderLossRate()));
+  stats << createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats->getReceiverLossRate()));
 
-  switch (callStats.getType()) {
+  switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
-      stats << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats.getJitterBufferSizeMs()));
+      stats << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
       QString sentVideoDefinitionName = Utils::linphoneStringToQString(params->getSentVideoDefinition()->getName());

@@ -1,5 +1,5 @@
 /*
- * Camera.cpp
+ * CameraPreview.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,14 +16,14 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: April 19, 2017
  *      Author: Ronan Abhamon
  */
 
 #include "../core/CoreManager.hpp"
 #include "MSFunctions.hpp"
 
-#include "Camera.hpp"
+#include "CameraPreview.hpp"
 
 #include <QQuickWindow>
 #include <QThread>
@@ -44,28 +44,23 @@ struct ContextInfo {
 
 // -----------------------------------------------------------------------------
 
-CameraRenderer::CameraRenderer () {
+CameraPreviewRenderer::CameraPreviewRenderer () {
   mContextInfo = new ContextInfo();
 }
 
-CameraRenderer::~CameraRenderer () {
+CameraPreviewRenderer::~CameraPreviewRenderer () {
   qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
 
   CoreManager *core = CoreManager::getInstance();
 
   core->lockVideoRender();
-
-  if (mIsPreview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
-  else if (mLinphoneCall)
-    mLinphoneCall->setNativeVideoWindowId(nullptr);
-
+  CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
   core->unlockVideoRender();
 
   delete mContextInfo;
 }
 
-QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
+QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const QSize &size) {
   QOpenGLFramebufferObjectFormat format;
   format.setAttachment(QOpenGLFramebufferObject::CombinedDepthStencil);
   format.setInternalTextureFormat(GL_RGBA8);
@@ -88,7 +83,7 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   return new QOpenGLFramebufferObject(size, format);
 }
 
-void CameraRenderer::render () {
+void CameraPreviewRenderer::render () {
   // Draw with ms filter.
   {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
@@ -102,10 +97,7 @@ void CameraRenderer::render () {
     MSFunctions *msFunctions = MSFunctions::getInstance();
     msFunctions->bind(f);
 
-    if (mIsPreview)
-      coreManager->getCore()->previewOglRender();
-    else if (mLinphoneCall)
-      mLinphoneCall->oglRender();
+    coreManager->getCore()->previewOglRender();
 
     msFunctions->bind(nullptr);
     coreManager->unlockVideoRender();
@@ -116,37 +108,25 @@ void CameraRenderer::render () {
     mWindow->resetOpenGLState();
 }
 
-void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
-  // No mutex needed here. It's a synchronized area.
-
+void CameraPreviewRenderer::synchronize (QQuickFramebufferObject *item) {
   mWindow = item->window();
-
-  Camera *camera = qobject_cast<Camera *>(item);
-
-  mLinphoneCall = camera->getCall()->getLinphoneCall();
-  mIsPreview = camera->mIsPreview;
-
-  updateWindowId();
 }
 
-void CameraRenderer::updateWindowId () {
+void CameraPreviewRenderer::updateWindowId () {
   if (!mUpdateContextInfo)
     return;
 
   mUpdateContextInfo = false;
 
-  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3):")
-    .arg(mContextInfo->width).arg(mContextInfo->height).arg(mIsPreview) << mContextInfo;
+  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2):")
+    .arg(mContextInfo->width).arg(mContextInfo->height) << mContextInfo;
 
-  if (mIsPreview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
-  else if (mLinphoneCall)
-    mLinphoneCall->setNativeVideoWindowId(mContextInfo);
+  CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
 }
 
 // -----------------------------------------------------------------------------
 
-Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
+CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   // The fbo content must be y-mirrored because the ms rendering is y-inverted.
   setMirrorVertically(true);
 
@@ -162,34 +142,6 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   mRefreshTimer->start();
 }
 
-QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
-  return new CameraRenderer();
-}
-
-// -----------------------------------------------------------------------------
-
-CallModel *Camera::getCall () const {
-  return mCall;
-}
-
-void Camera::setCall (CallModel *call) {
-  if (mCall != call) {
-    mCall = call;
-    update();
-
-    emit callChanged(mCall);
-  }
-}
-
-bool Camera::getIsPreview () const {
-  return mIsPreview;
-}
-
-void Camera::setIsPreview (bool status) {
-  if (mIsPreview != status) {
-    mIsPreview = status;
-    update();
-
-    emit isPreviewChanged(status);
-  }
+QQuickFramebufferObject::Renderer *CameraPreview::createRenderer () const {
+  return new CameraPreviewRenderer();
 }

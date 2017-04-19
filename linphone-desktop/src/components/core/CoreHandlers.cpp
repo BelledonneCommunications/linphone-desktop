@@ -55,7 +55,7 @@ void CoreHandlers::onCallStateChanged (
 void CoreHandlers::onCallStatsUpdated (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,
-  const linphone::CallStats &stats
+  const shared_ptr<const linphone::CallStats> &stats
 ) {
   call->getData<CallModel>("call-model").updateStats(stats);
 }

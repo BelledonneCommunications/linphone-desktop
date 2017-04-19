@@ -278,6 +278,7 @@ void App::registerTypes () {
   qmlRegisterType<AssistantModel>("Linphone", 1, 0, "AssistantModel");
   qmlRegisterType<Authentication>("Linphone", 1, 0, "Authentication");
   qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
+  qmlRegisterType<Camera>("Linphone", 1, 0, "CameraPreview");
   qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
   qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");

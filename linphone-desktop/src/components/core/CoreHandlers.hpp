@@ -57,7 +57,7 @@ private:
   void onCallStatsUpdated (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Call> &call,
-    const linphone::CallStats &stats
+    const std::shared_ptr<const linphone::CallStats> &stats
   ) override;
 
   void onMessageReceived (

@@ -93,6 +93,7 @@ set(SOURCES
   src/components/call/CallModel.cpp
   src/components/calls/CallsListModel.cpp
   src/components/camera/Camera.cpp
+  src/components/camera/CameraPreview.cpp
   src/components/camera/MSFunctions.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
@@ -131,6 +132,7 @@ set(HEADERS
   src/components/call/CallModel.hpp
   src/components/calls/CallsListModel.hpp
   src/components/camera/Camera.hpp
+  src/components/camera/CameraPreview.hpp
   src/components/camera/MSFunctions.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp

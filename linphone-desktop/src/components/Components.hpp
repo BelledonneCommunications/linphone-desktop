@@ -24,6 +24,7 @@
 #include "authentication/Authentication.hpp"
 #include "calls/CallsListModel.hpp"
 #include "camera/Camera.hpp"
+#include "camera/CameraPreview.hpp"
 #include "chat/ChatProxyModel.hpp"
 #include "codecs/AudioCodecsModel.hpp"
 #include "codecs/VideoCodecsModel.hpp"
