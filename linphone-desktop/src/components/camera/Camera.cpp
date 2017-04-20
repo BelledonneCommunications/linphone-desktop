@@ -51,16 +51,16 @@ CameraRenderer::CameraRenderer () {
 CameraRenderer::~CameraRenderer () {
   qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
 
-  CoreManager *core = CoreManager::getInstance();
+  CoreManager *coreManager = CoreManager::getInstance();
 
-  core->lockVideoRender();
+  coreManager->lockVideoRender();
 
   if (mIsPreview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
+    coreManager->getCore()->setNativePreviewWindowId(nullptr);
   else if (mLinphoneCall)
     mLinphoneCall->setNativeVideoWindowId(nullptr);
 
-  core->unlockVideoRender();
+  coreManager->unlockVideoRender();
 
   delete mContextInfo;
 }
@@ -71,10 +71,10 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 
-  CoreManager *core = CoreManager::getInstance();
+  CoreManager *coreManager = CoreManager::getInstance();
 
   // It's not the same thread as render.
-  core->lockVideoRender();
+  coreManager->lockVideoRender();
 
   mContextInfo->width = size.width();
   mContextInfo->height = size.height();
@@ -83,7 +83,7 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 
   updateWindowId();
 
-  core->unlockVideoRender();
+  coreManager->unlockVideoRender();
 
   return new QOpenGLFramebufferObject(size, format);
 }
