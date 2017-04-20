@@ -256,7 +256,11 @@ TabContainer {
         FormGroup {
           label: qsTr('enableTlsLabel')
 
-          Switch {}
+          Switch {
+            checked: SettingsModel.tlsPort !== 0
+
+            onClicked: SettingsModel.tlsPort = checked ? 0 : -1
+          }
         }
       }
     }
