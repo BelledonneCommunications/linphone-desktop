@@ -308,8 +308,8 @@
     <file>ui/modules/Linphone/Styles/Blocks/CardBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Blocks/RequestBlockStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallControlsStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
@@ -375,6 +375,8 @@
     <file>ui/views/App/Settings/SettingsSipAccounts.js</file>
     <file>ui/views/App/Settings/SettingsSipAccounts.qml</file>
     <file>ui/views/App/Settings/SettingsUi.qml</file>
+    <file>ui/views/App/Settings/SettingsVideo.js</file>
+    <file>ui/views/App/Settings/SettingsVideoPreview.qml</file>
     <file>ui/views/App/Settings/SettingsVideo.qml</file>
     <file>ui/views/App/Settings/SettingsWindow.qml</file>
     <file>ui/views/App/SplashScreen/SplashScreen.qml</file>
@@ -397,6 +399,7 @@
     <file>ui/views/App/Styles/Main/ManageAccountsStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
     <file>ui/views/App/Styles/Settings/SettingsSipAccountsEditStyle.qml</file>
+    <file>ui/views/App/Styles/Settings/SettingsVideoPreviewStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
     <file>ui/views/App/Styles/SplashScreen/SplashScreenStyle.qml</file>
   </qresource>

@@ -126,7 +126,17 @@ void CameraPreviewRenderer::updateWindowId () {
 
 // -----------------------------------------------------------------------------
 
+QMutex CameraPreview::mCounterMutex;
+int CameraPreview::mCounter = 0;
+
+// -----------------------------------------------------------------------------
+
 CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(parent) {
+  mCounterMutex.lock();
+  if (++mCounter == 1)
+    CoreManager::getInstance()->getCore()->enableVideoPreview(true);
+  mCounterMutex.unlock();
+
   // The fbo content must be y-mirrored because the ms rendering is y-inverted.
   setMirrorVertically(true);
 
@@ -140,6 +150,13 @@ CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(pare
   );
 
   mRefreshTimer->start();
+}
+
+CameraPreview::~CameraPreview () {
+  mCounterMutex.lock();
+  if (--mCounter == 0)
+    CoreManager::getInstance()->getCore()->enableVideoPreview(false);
+  mCounterMutex.unlock();
 }
 
 QQuickFramebufferObject::Renderer *CameraPreview::createRenderer () const {

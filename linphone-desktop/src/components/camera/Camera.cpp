@@ -123,7 +123,11 @@ void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
 
   Camera *camera = qobject_cast<Camera *>(item);
 
-  mLinphoneCall = camera->getCall()->getLinphoneCall();
+  {
+    CallModel *model = camera->getCall();
+    mLinphoneCall = model ? model->getLinphoneCall() : nullptr;
+  }
+
   mIsPreview = camera->mIsPreview;
 
   updateWindowId();

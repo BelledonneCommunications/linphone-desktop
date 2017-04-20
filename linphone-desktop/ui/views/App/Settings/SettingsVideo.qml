@@ -6,6 +6,8 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'SettingsVideo.js' as Logic
+
 // =============================================================================
 
 TabContainer {
@@ -109,7 +111,7 @@ TabContainer {
       anchors.right: parent.right
       text: qsTr('showCameraPreview')
 
-      onClicked: console.log('TODO')
+      onClicked: Logic.showVideoPreview()
     }
 
     // -------------------------------------------------------------------------

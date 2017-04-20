@@ -23,6 +23,7 @@
 #ifndef CAMERA_PREVIEW_H_
 #define CAMERA_PREVIEW_H_
 
+#include <QMutex>
 #include <QOpenGLFramebufferObject>
 #include <QQuickFramebufferObject>
 
@@ -61,12 +62,15 @@ class CameraPreview : public QQuickFramebufferObject {
 
 public:
   CameraPreview (QQuickItem *parent = Q_NULLPTR);
-  ~CameraPreview () = default;
+  ~CameraPreview ();
 
   QQuickFramebufferObject::Renderer *createRenderer () const override;
 
 private:
   QTimer *mRefreshTimer;
+
+  static QMutex mCounterMutex;
+  static int mCounter;
 };
 
 #endif // CAMERA_PREVIEW_H_

@@ -25,7 +25,6 @@
 
 #include "CoreManager.hpp"
 
-#include <QDebug>
 #include <QDir>
 #include <QtConcurrent>
 #include <QTimer>

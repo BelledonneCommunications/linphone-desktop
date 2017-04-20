@@ -1134,6 +1134,13 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsVideoPreview</name>
+    <message>
+        <source>confirm</source>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

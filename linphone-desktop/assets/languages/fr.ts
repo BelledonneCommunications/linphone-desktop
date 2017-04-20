@@ -1134,6 +1134,13 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsVideoPreview</name>
+    <message>
+        <source>confirm</source>
+        <translation>VALIDER</translation>
+    </message>
+</context>
+<context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>

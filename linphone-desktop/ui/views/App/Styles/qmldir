@@ -24,6 +24,8 @@ singleton MainWindowMenuBarStyle                   1.0 Main/MainWindowMenuBarSty
 singleton MainWindowStyle                          1.0 Main/MainWindowStyle.qml
 singleton ManageAccountsStyle                      1.0 Main/ManageAccountsStyle.qml
 
-singleton SettingsWindowStyle                      1.0 Settings/SettingsWindowStyle.qml
 singleton SettingsSipAccountsEditStyle             1.0 Settings/SettingsSipAccountsEditStyle.qml
+singleton SettingsVideoPreviewStyle                1.0 Settings/SettingsVideoPreviewStyle.qml
+singleton SettingsWindowStyle                      1.0 Settings/SettingsWindowStyle.qml
+
 singleton SplashScreenStyle                        1.0 SplashScreen/SplashScreenStyle.qml
