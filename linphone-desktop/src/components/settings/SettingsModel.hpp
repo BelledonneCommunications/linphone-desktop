@@ -90,7 +90,8 @@ class SettingsModel : public QObject {
     NOTIFY adaptiveRateControlEnabledChanged
   );
 
-  // Q_PROPERTY(bool tcpPortEnabled READ getTcpPortEnabled WRITE setTcpPortEnabled NOTIFY tcpPortEnabledChanged);
+  Q_PROPERTY(int tcpPort READ getTcpPort WRITE setTcpPort NOTIFY tcpPortChanged);
+  Q_PROPERTY(int udpPort READ getUdpPort WRITE setUdpPort NOTIFY udpPortChanged);
 
   Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
   Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
@@ -213,8 +214,11 @@ public:
   bool getAdaptiveRateControlEnabled () const;
   void setAdaptiveRateControlEnabled (bool status);
 
-  // bool getTcpPortEnabled () const;
-  // void setTcpPortEnabled (bool status);
+  int getTcpPort () const;
+  void setTcpPort (int port);
+
+  int getUdpPort () const;
+  void setUdpPort (int port);
 
   QList<int> getAudioPortRange () const;
   void setAudioPortRange (const QList<int> &range);
@@ -303,7 +307,8 @@ signals:
 
   bool adaptiveRateControlEnabledChanged (bool status);
 
-  // void tcpPortEnabledChanged (bool status);
+  void tcpPortChanged (int port);
+  void udpPortChanged (int port);
 
   void audioPortRangeChanged (int a, int b);
   void videoPortRangeChanged (int a, int b);

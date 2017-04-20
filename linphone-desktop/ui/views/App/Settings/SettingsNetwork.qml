@@ -116,9 +116,13 @@ TabContainer {
 
           FormTableEntry {
             NumericField {
-              minValue: 0
+              minValue: 1
               maxValue: 65535
               readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+
+              text: SettingsModel.udpPort
+
+              onEditingFinished: SettingsModel.udpPort = text
             }
           }
 
@@ -126,13 +130,22 @@ TabContainer {
             Switch {
               id: randomSipUdpPort
 
+              readonly property int defaultPort: 5060
+
+              checked: SettingsModel.udpPort === -1
               enabled: enableSipUdpPort.checked
+
+              onClicked: SettingsModel.udpPort = checked ? defaultPort : -1
             }
           }
 
           FormTableEntry {
             Switch {
               id: enableSipUdpPort
+
+              checked: SettingsModel.udpPort !== 0
+
+              onClicked: SettingsModel.udpPort = checked ? 0 : -1
             }
           }
         }
@@ -142,10 +155,13 @@ TabContainer {
 
           FormTableEntry {
             NumericField {
-
-              minValue: 0
+              minValue: 1
               maxValue: 65535
               readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
+
+              text: SettingsModel.tcpPort
+
+              onEditingFinished: SettingsModel.tcpPort = text
             }
           }
 
@@ -153,13 +169,22 @@ TabContainer {
             Switch {
               id: randomSipTcpPort
 
+              readonly property int defaultPort: 5060
+
+              checked: SettingsModel.tcpPort === -1
               enabled: enableSipTcpPort.checked
+
+              onClicked: SettingsModel.tcpPort = checked ? defaultPort : -1
             }
           }
 
           FormTableEntry {
             Switch {
               id: enableSipTcpPort
+
+              checked: SettingsModel.tcpPort !== 0
+
+              onClicked: SettingsModel.tcpPort = checked ? 0 : -1
             }
           }
         }

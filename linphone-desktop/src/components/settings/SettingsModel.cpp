@@ -408,11 +408,35 @@ void SettingsModel::setAdaptiveRateControlEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
-// bool SettingsModel::getTcpPortEnabled () const {}
+int SettingsModel::getTcpPort () const {
+  return CoreManager::getInstance()->getCore()->getTransports()->getTcpPort();
+}
 
-// void SettingsModel::setTcpPortEnabled (bool status) {
-// emit tcpPortEnabledChanged(status);
-// }
+void SettingsModel::setTcpPort (int port) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Transports> transports = core->getTransports();
+
+  transports->setTcpPort(port);
+  core->setTransports(transports);
+
+  emit tcpPortChanged(port);
+}
+
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getUdpPort () const {
+  return CoreManager::getInstance()->getCore()->getTransports()->getUdpPort();
+}
+
+void SettingsModel::setUdpPort (int port) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Transports> transports = core->getTransports();
+
+  transports->setUdpPort(port);
+  core->setTransports(transports);
+
+  emit udpPortChanged(port);
+}
 
 // -----------------------------------------------------------------------------
 
