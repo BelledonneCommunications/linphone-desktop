@@ -123,6 +123,12 @@ TabContainer {
         onRowsInserted: Logic.updateVideoPreview()
         onRowsRemoved: Logic.updateVideoPreview()
       }
+
+      Connections {
+        target: window
+
+        onClosing: Logic.hideVideoPreview()
+      }
     }
 
     // -------------------------------------------------------------------------
