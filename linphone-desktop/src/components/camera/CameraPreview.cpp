@@ -51,11 +51,11 @@ CameraPreviewRenderer::CameraPreviewRenderer () {
 CameraPreviewRenderer::~CameraPreviewRenderer () {
   qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
 
-  CoreManager *core = CoreManager::getInstance();
+  CoreManager *coreManager = CoreManager::getInstance();
 
-  core->lockVideoRender();
-  CoreManager::getInstance()->getCore()->setNativePreviewWindowId(nullptr);
-  core->unlockVideoRender();
+  coreManager->lockVideoRender();
+  coreManager->getCore()->setNativePreviewWindowId(nullptr);
+  coreManager->unlockVideoRender();
 
   delete mContextInfo;
 }
@@ -66,10 +66,10 @@ QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const 
   format.setInternalTextureFormat(GL_RGBA8);
   format.setSamples(4);
 
-  CoreManager *core = CoreManager::getInstance();
+  CoreManager *coreManager = CoreManager::getInstance();
 
   // It's not the same thread as render.
-  core->lockVideoRender();
+  coreManager->lockVideoRender();
 
   mContextInfo->width = size.width();
   mContextInfo->height = size.height();
@@ -78,7 +78,7 @@ QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const 
 
   updateWindowId();
 
-  core->unlockVideoRender();
+  coreManager->unlockVideoRender();
 
   return new QOpenGLFramebufferObject(size, format);
 }
@@ -88,7 +88,7 @@ void CameraPreviewRenderer::render () {
   {
     QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
 
-    f->glClearColor(0.f, 0.f, 0.f, 0.f);
+    f->glClearColor(0.f, 0.f, 0.f, 1.f);
     f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     CoreManager *coreManager = CoreManager::getInstance();

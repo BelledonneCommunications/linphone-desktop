@@ -108,10 +108,21 @@ TabContainer {
     }
 
     TextButtonB {
+      id: showCameraPreview
+
       anchors.right: parent.right
+      enabled: CallsListModel.rowCount() === 0
+
       text: qsTr('showCameraPreview')
 
       onClicked: Logic.showVideoPreview()
+
+      Connections {
+        target: CallsListModel
+
+        onRowsInserted: Logic.updateVideoPreview()
+        onRowsRemoved: Logic.updateVideoPreview()
+      }
     }
 
     // -------------------------------------------------------------------------
