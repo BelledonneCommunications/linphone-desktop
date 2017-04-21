@@ -656,6 +656,10 @@ Server url not configured.</translation>
         <source>acceptVideoDescription</source>
         <translation>Your contact would like to turn on video.</translation>
     </message>
+    <message>
+        <source>pendingRequestLabel</source>
+        <translation>Please to wait, a request is pending.</translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>

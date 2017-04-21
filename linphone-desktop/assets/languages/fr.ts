@@ -656,6 +656,10 @@ Url du serveur non configurée.</translation>
         <source>acceptVideoDescription</source>
         <translation>Votre correspondant souhaite ajouter la vidéo.</translation>
     </message>
+    <message>
+        <source>pendingRequestLabel</source>
+        <translation>Merci de patienter, une requête est en attente.</translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>

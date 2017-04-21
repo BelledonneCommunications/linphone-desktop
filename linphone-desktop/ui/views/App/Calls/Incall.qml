@@ -317,6 +317,11 @@ Rectangle {
           updating: call.updating
 
           onClicked: call.videoEnabled = !enabled
+
+          TooltipArea {
+            text: qsTr('pendingRequestLabel')
+            visible: parent.updating
+          }
         }
 
         ActionButton {
@@ -366,6 +371,11 @@ Rectangle {
           updating: call.updating
 
           onClicked: call.pausedByUser = enabled
+
+          TooltipArea {
+            text: qsTr('pendingRequestLabel')
+            visible: parent.updating
+          }
         }
 
         ActionButton {
