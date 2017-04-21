@@ -28,9 +28,9 @@ TabContainer {
           label: qsTr('defaultDisplayNameLabel')
 
           TextField {
-            text: AccountSettingsModel.primarydisplayName
+            text: AccountSettingsModel.primaryDisplayName
 
-            onEditingFinished: AccountSettingsModel.primarydisplayName = text
+            onEditingFinished: AccountSettingsModel.primaryDisplayName = text
           }
         }
       }
