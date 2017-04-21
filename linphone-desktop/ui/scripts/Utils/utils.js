@@ -61,7 +61,7 @@ function encodeTextToQmlRichFormat (text, options) {
       ) + ' src="' + str + '" /></a>'
     }
 
-    return '<a href="' + uri + '">' + str + '</a>'
+    return '<a href="' + uri + '">' + unscapeHtml(str) + '</a>'
   }).join('')
   if (images.length > 0) {
     images = '<div>' + images + '</div>'
