@@ -567,7 +567,10 @@ void ChatModel::resetMessagesCount () {
 // -----------------------------------------------------------------------------
 
 void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
-  if (mChatRoom == call->getChatRoom() && (state == linphone::CallStateEnd || state == linphone::CallStateError))
+  if (
+    (state == linphone::CallStateEnd || state == linphone::CallStateError) &&
+    mChatRoom == CoreManager::getInstance()->getCore()->getChatRoom(call->getRemoteAddress())
+  )
     insertCall(call->getCallLog());
 }
 
