@@ -698,6 +698,20 @@ Url du serveur non configurée.</translation>
         <source>autoAnswerStatus</source>
         <translation>auto</translation>
     </message>
+    <message>
+        <source>menuTooltip</source>
+        <translation>Accéder à votre liste de contacts, en ajouter...</translation>
+    </message>
+    <message>
+        <source>smartSearchBarTooltip</source>
+        <translation>Utiliser la barre de recherche intelligente pour lancer des appels audio et vidéo,
+un chat ou ajouter un contact.</translation>
+    </message>
+    <message>
+        <source>timelineTooltip</source>
+        <translation>Cliquer sur une entrée pour voir vos derniers échanges,
+chatter ou voir l&apos;historique de conversation.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>

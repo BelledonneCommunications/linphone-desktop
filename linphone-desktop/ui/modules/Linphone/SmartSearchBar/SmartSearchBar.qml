@@ -16,6 +16,8 @@ SearchBox {
     searchBox.filter
   )
 
+  readonly property alias isOpen: searchBox._isOpen
+
   // ---------------------------------------------------------------------------
 
   signal addContact (string sipAddress)

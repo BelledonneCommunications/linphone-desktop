@@ -4,7 +4,8 @@ import QtQuick 2.7
 
 MouseArea {
   property alias text: tooltip.text
-  property var tooltipParent: this
+  property bool force: false
+  property var tooltipParent: parent
 
   property bool _visible: false
 
@@ -23,6 +24,16 @@ MouseArea {
     id: tooltip
 
     parent: tooltipParent
-    visible: _visible
+    visible: _visible || force
+
+    delay: -1
+    timeout: -1
+
+    // Workaround to always display tooltip.
+    onVisibleChanged: {
+      if (!visible && force) {
+        tooltip.visible = true
+      }
+    }
   }
 }

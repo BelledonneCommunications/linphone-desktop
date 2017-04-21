@@ -177,6 +177,11 @@ ApplicationWindow {
             })
 
             onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
+
+            TooltipArea {
+              text: qsTr('smartSearchBarTooltip')
+              visible: !smartSearchBar.isOpen
+            }
           }
         }
       }
@@ -213,6 +218,10 @@ ApplicationWindow {
             }]
 
             onEntrySelected: !entry ? setView('Home') : setView('Contacts')
+
+            TooltipArea {
+              text: qsTr('menuTooltip')
+            }
           }
 
           // History.
@@ -224,6 +233,10 @@ ApplicationWindow {
             model: TimelineModel
 
             onEntrySelected: setView('Conversation', { sipAddress: entry })
+
+            TooltipArea {
+              text: qsTr('timelineTooltip')
+            }
           }
         }
 

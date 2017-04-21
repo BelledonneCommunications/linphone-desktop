@@ -12,6 +12,17 @@ import App.Styles 1.0
 Rectangle {
   color: HomeStyle.color
 
+  // TODO: Remove me when smart tooltip will be available.
+  Component {
+    Item {
+      property var i18n: [
+        QT_TR_NOOP('showTooltips'),
+        QT_TR_NOOP('howToDescription'),
+        QT_TR_NOOP('howToTitle')
+      ]
+    }
+  }
+
   ListView {
     anchors.horizontalCenter: parent.horizontalCenter
     boundsBehavior: Flickable.StopAtBounds
@@ -26,13 +37,14 @@ Rectangle {
     }
 
     model: ListModel {
-      ListElement {
-        $component: 'checkBox'
-        $componentText: qsTr('showTooltips')
-        $description: qsTr('howToDescription')
-        $icon: 'home_use_linphone'
-        $title: qsTr('howToTitle')
-      }
+      // TODO: Uncomment me when smart tooltip will be available.
+      // ListElement {
+      //   $component: 'checkBox'
+      //   $componentText: qsTr('showTooltips')
+      //   $description: qsTr('howToDescription')
+      //   $icon: 'home_use_linphone'
+      //   $title: qsTr('howToTitle')
+      // }
 
       ListElement {
         $component: 'button'

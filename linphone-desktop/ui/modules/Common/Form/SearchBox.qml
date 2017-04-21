@@ -15,6 +15,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   readonly property alias filter: searchField.text
+  readonly property alias isOpen: searchBox._isOpen
 
   property alias delegate: list.delegate
   property alias header: list.header
