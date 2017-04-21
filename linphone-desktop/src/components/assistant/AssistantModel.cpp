@@ -207,6 +207,8 @@ void AssistantModel::setEmail (const QString &email) {
   emit emailChanged(email, error);
 }
 
+// -----------------------------------------------------------------------------
+
 QString AssistantModel::getPassword () const {
   return ::Utils::linphoneStringToQString(mAccountCreator->getPassword());
 }
@@ -237,6 +239,8 @@ void AssistantModel::setPassword (const QString &password) {
   emit passwordChanged(password, error);
 }
 
+// -----------------------------------------------------------------------------
+
 QString AssistantModel::getPhoneNumber () const {
   return ::Utils::linphoneStringToQString(mAccountCreator->getPhoneNumber());
 }
@@ -250,15 +254,43 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
   emit phoneNumberChanged(phoneNumber, error);
 }
 
+// -----------------------------------------------------------------------------
+
 QString AssistantModel::getUsername () const {
   return ::Utils::linphoneStringToQString(mAccountCreator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {
+  emit usernameChanged(
+    username,
+    mapAccountCreatorUsernameStatusToString(
+      mAccountCreator->setUsername(::Utils::qStringToLinphoneString(username))
+    )
+  );
+}
+
+// -----------------------------------------------------------------------------
+
+QString AssistantModel::getDisplayName () const {
+  return ::Utils::linphoneStringToQString(mAccountCreator->getDisplayName());
+}
+
+void AssistantModel::setDisplayName (const QString &displayName) {
+  emit displayNameChanged(
+    displayName,
+    mapAccountCreatorUsernameStatusToString(
+      mAccountCreator->setDisplayName(::Utils::qStringToLinphoneString(displayName))
+    )
+  );
+}
+
+// -----------------------------------------------------------------------------
+
+QString AssistantModel::mapAccountCreatorUsernameStatusToString (linphone::AccountCreatorUsernameStatus status) const {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (mAccountCreator->setUsername(::Utils::qStringToLinphoneString(username))) {
+  switch (status) {
     case linphone::AccountCreatorUsernameStatusOk:
       break;
     case linphone::AccountCreatorUsernameStatusTooShort:
@@ -276,5 +308,5 @@ void AssistantModel::setUsername (const QString &username) {
       break;
   }
 
-  emit usernameChanged(username, error);
+  return error;
 }

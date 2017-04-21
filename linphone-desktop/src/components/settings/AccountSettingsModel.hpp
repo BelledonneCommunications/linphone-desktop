@@ -91,7 +91,7 @@ private:
   void setPrimaryUsername (const QString &username);
 
   QString getPrimaryDisplayname () const;
-  void setPrimaryDisplayname (const QString &displayname);
+  void setPrimaryDisplayname (const QString &displayName);
 
   QString getPrimarySipAddress () const;
 

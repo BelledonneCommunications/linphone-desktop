@@ -25,12 +25,12 @@ TabContainer {
 
       FormLine {
         FormGroup {
-          label: qsTr('defaultDisplaynameLabel')
+          label: qsTr('defaultDisplayNameLabel')
 
           TextField {
-            text: AccountSettingsModel.primaryDisplayname
+            text: AccountSettingsModel.primarydisplayName
 
-            onEditingFinished: AccountSettingsModel.primaryDisplayname = text
+            onEditingFinished: AccountSettingsModel.primarydisplayName = text
           }
         }
       }

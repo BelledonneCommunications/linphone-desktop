@@ -37,6 +37,7 @@ class AssistantModel : public QObject {
   Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged);
   Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
+  Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged);
 
 public:
   AssistantModel (QObject *parent = Q_NULLPTR);
@@ -52,6 +53,7 @@ signals:
   void passwordChanged (const QString &password, const QString &error);
   void phoneNumberChanged (const QString &phoneNumber, const QString &error);
   void usernameChanged (const QString &username, const QString &error);
+  void displayNameChanged (const QString &displayName, const QString &error);
 
   void activateStatusChanged (const QString &error);
   void createStatusChanged (const QString &error);
@@ -69,6 +71,11 @@ private:
 
   QString getUsername () const;
   void setUsername (const QString &username);
+
+  QString getDisplayName () const;
+  void setDisplayName (const QString &displayName);
+
+  QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreatorUsernameStatus status) const;
 
   std::shared_ptr<linphone::AccountCreator> mAccountCreator;
   std::shared_ptr<Handlers> mHandlers;

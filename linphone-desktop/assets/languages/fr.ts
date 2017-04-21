@@ -515,6 +515,10 @@ Url du serveur non configurée.</translation>
         <source>quitWarning</source>
         <translation>Votre compte a été crée mais il n&apos;a pas été validé. Si vous quittez cette vue, vous devrez ajouter manuellement votre compte et le valider dans les 24 heures.</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Nom d&apos;affichage (optionnel)</translation>
+    </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
@@ -533,6 +537,10 @@ Url du serveur non configurée.</translation>
     <message>
         <source>usernameLabel</source>
         <translation>Nom d&apos;utilisateur</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Nom d&apos;affichage (optionnel)</translation>
     </message>
 </context>
 <context>
@@ -982,10 +990,6 @@ chatter ou voir l&apos;historique de conversation.</translation>
         <translation>Identité par défaut</translation>
     </message>
     <message>
-        <source>defaultDisplaynameLabel</source>
-        <translation>Nom d&apos;affichage</translation>
-    </message>
-    <message>
         <source>defaultUsernameLabel</source>
         <translation>Nom d&apos;utilisateur</translation>
     </message>
@@ -1024,6 +1028,10 @@ chatter ou voir l&apos;historique de conversation.</translation>
     <message>
         <source>eraseAllPasswordsDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer tous vos mots de passe ?</translation>
+    </message>
+    <message>
+        <source>defaultDisplayNameLabel</source>
+        <translation>Nom d&apos;affichage</translation>
     </message>
 </context>
 <context>

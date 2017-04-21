@@ -515,6 +515,10 @@ Server url not configured.</translation>
         <source>quitWarning</source>
         <translation>Your account has been created but is not yet validated. If you quit this view, you should add manually your account and validate it within 24 hours.</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Display name (optional)</translation>
+    </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
@@ -533,6 +537,10 @@ Server url not configured.</translation>
     <message>
         <source>usernameLabel</source>
         <translation>Username</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Display name (optional)</translation>
     </message>
 </context>
 <context>
@@ -983,10 +991,6 @@ to chat or see the conversation history.</translation>
         <translation>Default identity</translation>
     </message>
     <message>
-        <source>defaultDisplaynameLabel</source>
-        <translation>Display name</translation>
-    </message>
-    <message>
         <source>defaultUsernameLabel</source>
         <translation>Username</translation>
     </message>
@@ -1025,6 +1029,10 @@ to chat or see the conversation history.</translation>
     <message>
         <source>eraseAllPasswordsDescription</source>
         <translation>Are you sure you want to erase all passwords?</translation>
+    </message>
+    <message>
+        <source>defaultDisplayNameLabel</source>
+        <translation>Display name</translation>
     </message>
 </context>
 <context>

@@ -246,11 +246,11 @@ QString AccountSettingsModel::getPrimaryDisplayname () const {
   );
 }
 
-void AccountSettingsModel::setPrimaryDisplayname (const QString &displayname) {
+void AccountSettingsModel::setPrimaryDisplayname (const QString &displayName) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 
-  primary->setDisplayName(::Utils::qStringToLinphoneString(displayname));
+  primary->setDisplayName(::Utils::qStringToLinphoneString(displayName));
   core->setPrimaryContact(primary->asString());
 
   emit accountSettingsUpdated();

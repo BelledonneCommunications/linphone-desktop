@@ -49,6 +49,16 @@ AssistantAbstractView {
         }
       }
     }
+
+    FormLine {
+      FormGroup {
+        label: qsTr('displayNameLabel')
+
+        TextField {
+          onTextChanged: assistantModel.displayName = text
+        }
+      }
+    }
   }
 
   // ---------------------------------------------------------------------------

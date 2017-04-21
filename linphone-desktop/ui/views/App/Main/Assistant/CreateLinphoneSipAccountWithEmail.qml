@@ -45,6 +45,14 @@ AssistantAbstractView {
             onTextChanged: assistantModel.username = text
           }
         }
+
+        FormGroup {
+          label: qsTr('displayNameLabel')
+
+          TextField {
+            onTextChanged: assistantModel.displayName = text
+          }
+        }
       }
 
       FormLine {
