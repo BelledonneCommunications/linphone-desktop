@@ -327,6 +327,7 @@
     <file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
+    <file>ui/modules/Linphone/Timeline/Timeline.js</file>
     <file>ui/modules/Linphone/Timeline/Timeline.qml</file>
     <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
     <file>ui/scripts/LinphoneUtils/qmldir</file>

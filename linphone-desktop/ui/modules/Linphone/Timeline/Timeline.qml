@@ -4,7 +4,8 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
+
+import 'Timeline.js' as Logic
 
 // =============================================================================
 
@@ -14,8 +15,9 @@ ColumnLayout {
   // ---------------------------------------------------------------------------
 
   property alias model: view.model
-
   property string _selectedSipAddress
+
+  property var _newInsertedItem
 
   // ---------------------------------------------------------------------------
 
@@ -24,21 +26,11 @@ ColumnLayout {
   // ---------------------------------------------------------------------------
 
   function setSelectedEntry (sipAddress) {
-    var n = model.rowCount()
-
-    for (var i = 0; i < n; i++) {
-      _selectedSipAddress = sipAddress
-
-      if (sipAddress === model.data(model.index(i, 0)).sipAddress) {
-        view.currentIndex = i
-        return
-      }
-    }
+    Logic.setSelectedEntry(sipAddress)
   }
 
   function resetSelectedEntry () {
-    view.currentIndex = -1
-    _selectedSipAddress = ''
+    Logic.resetSelectedEntry()
   }
 
   // ---------------------------------------------------------------------------
@@ -50,37 +42,8 @@ ColumnLayout {
   Connections {
     target: model
 
-    // Handle if current entry was moved in timeline.
-    onDataChanged: {
-      var index = view.currentIndex
-      if (
-        index !== -1 &&
-        _selectedSipAddress !== model.data(model.index(index, 0)).sipAddress
-      ) {
-        setSelectedEntry(_selectedSipAddress)
-      }
-    }
-
-    // A timeline entry is removed from timeline if there is no history entry.
-    onRowsAboutToBeRemoved: {
-      var index = view.currentIndex
-      if (index >= first && index <= last) {
-        view.currentIndex = -1
-      }
-    }
-
-    // A entry is added when history is created.
-    onRowsInserted: {
-      if (_selectedSipAddress.length === 0) {
-        return
-      }
-
-      for (var i = first; i <= last; i++) {
-        if (_selectedSipAddress === model.data(model.index(i, 0)).sipAddress) {
-          view.currentIndex = i
-        }
-      }
-    }
+    onDataChanged: Logic.handleDataChanged(topLeft, bottomRight, roles)
+    onRowsAboutToBeRemoved: Logic.handleRowsAboutToBeRemoved (parent, first, last)
   }
 
   // ---------------------------------------------------------------------------
@@ -175,5 +138,7 @@ ColumnLayout {
         }
       }
     }
+
+    onCountChanged: Logic.handleCountChanged()
   }
 }
