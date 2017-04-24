@@ -37,6 +37,8 @@ class DefaultTranslator;
 class App : public SingleApplication {
   Q_OBJECT;
 
+  Q_PROPERTY(QString version READ getVersion CONSTANT);
+
   Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged);
   Q_PROPERTY(QString locale READ getLocale CONSTANT);
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
@@ -76,6 +78,8 @@ signals:
   void configLocaleChanged (const QString &locale);
 
 private:
+  QString getVersion () const;
+
   void registerTypes ();
   void setTrayIcon ();
 

@@ -79,7 +79,7 @@ VcardModel *CoreManager::createDetachedVcardModel () {
 
 void CoreManager::forceRefreshRegisters () {
   qInfo() << QStringLiteral("Refresh registers.");
-  mInstance->mCore->refreshRegisters();
+  mCore->refreshRegisters();
 }
 
 // -----------------------------------------------------------------------------
@@ -128,8 +128,14 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
 // -----------------------------------------------------------------------------
 
+QString CoreManager::getVersion () const {
+  return ::Utils::linphoneStringToQString(mCore->getVersion());
+}
+
+// -----------------------------------------------------------------------------
+
 void CoreManager::iterate () {
   mInstance->lockVideoRender();
-  mInstance->mCore->iterate();
+  mCore->iterate();
   mInstance->unlockVideoRender();
 }

@@ -104,7 +104,7 @@ AbstractDropDownMenu {
       }
 
       Loader {
-        property string $label: qsTr("audioStatsLabel")
+        property string $label: qsTr('audioStatsLabel')
         property var $data: callStatistics.call.audioStats
 
         sourceComponent: media
@@ -112,7 +112,7 @@ AbstractDropDownMenu {
       }
 
       Loader {
-        property string $label: qsTr("videoStatsLabel")
+        property string $label: qsTr('videoStatsLabel')
         property var $data: callStatistics.call.videoStats
 
         sourceComponent: media

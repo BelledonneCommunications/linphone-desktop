@@ -30,7 +30,7 @@ Window {
     fillMode: Image.PreserveAspectFit
     mipmap: true
 
-    source: SplashScreenStyle.image
+    source: Constants.imagesPath + 'splash_screen' + Constants.imagesFormat
 
     BusyIndicator {
       height: SplashScreenStyle.busyIndicator.height

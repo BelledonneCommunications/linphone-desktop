@@ -50,6 +50,10 @@
 
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
+#ifndef LINPHONE_VERSION
+  #define LINPHONE_VERSION "unknown"
+#endif // ifndef LINPHONE_VERSION
+
 using namespace std;
 
 // =============================================================================
@@ -249,6 +253,12 @@ QQuickWindow *App::getSettingsWindow () {
 
 bool App::hasFocus () const {
   return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
+}
+
+// -----------------------------------------------------------------------------
+
+QString App::getVersion () const {
+  return ::Utils::linphoneStringToQString(LINPHONE_VERSION);
 }
 
 // -----------------------------------------------------------------------------

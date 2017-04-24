@@ -7,16 +7,16 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
-// ============================================================================
+// =============================================================================
 
 MenuBar {
   id: container
 
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   property bool hide: false
 
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   // Workaround to hide toolbar.
   // Use private properties of MenuBar.
@@ -29,7 +29,7 @@ MenuBar {
     yScale: Number(!hide)
   }
 
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   style: MenuBarStyle {
     background: Rectangle {
@@ -109,9 +109,12 @@ MenuBar {
     }
   }
 
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // Options.
+  // ---------------------------------------------------------------------------
 
   Menu {
+
     title: qsTr('options')
 
     MenuItem {
@@ -138,23 +141,23 @@ MenuBar {
     }
   }
 
+  // ---------------------------------------------------------------------------
+  // Tools.
+  // ---------------------------------------------------------------------------
+
   Menu {
     title: qsTr('tools')
 
     MenuItem {
       text: qsTr('audioAssistant')
-    }
 
-    MenuSeparator {}
-
-    MenuItem {
-      text: qsTr('importContacts')
-    }
-
-    MenuItem {
-      text: qsTr('exportContacts')
+      onTriggered: console.log('TODO')
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // Help.
+  // ---------------------------------------------------------------------------
 
   Menu {
     title: qsTr('help')
@@ -162,12 +165,19 @@ MenuBar {
     MenuItem {
       shortcut: StandardKey.HelpContents
       text: qsTr('about')
+
+      onTriggered: {
+        window.detachVirtualWindow()
+        window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
+      }
     }
 
     MenuSeparator {}
 
     MenuItem {
       text: qsTr('checkForUpdates')
+
+      onTriggered: console.log('TODO')
     }
   }
 }

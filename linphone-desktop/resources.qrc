@@ -343,6 +343,7 @@
     <file>ui/views/App/Calls/Incall.qml</file>
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
+    <file>ui/views/App/Main/About.qml</file>
     <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithEmail.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantHome.qml</file>
@@ -383,6 +384,7 @@
     <file>ui/views/App/SplashScreen/SplashScreen.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
+    <file>ui/views/App/Styles/Main/AboutStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantHomeStyle.qml</file>

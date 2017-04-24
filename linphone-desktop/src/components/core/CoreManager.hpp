@@ -42,6 +42,8 @@ class QTimer;
 class CoreManager : public QObject {
   Q_OBJECT;
 
+  Q_PROPERTY(QString version READ getVersion CONSTANT);
+
 public:
   ~CoreManager () = default;
 
@@ -120,6 +122,8 @@ private:
   void setResourcesPaths ();
 
   void createLinphoneCore (const QString &configPath);
+
+  QString getVersion () const;
 
   void iterate ();
 

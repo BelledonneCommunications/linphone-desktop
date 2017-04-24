@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1">
 <context>
+    <name>About</name>
+    <message>
+        <source>ok</source>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
@@ -759,14 +766,6 @@ to chat or see the conversation history.</translation>
     <message>
         <source>quit</source>
         <translation>Quit</translation>
-    </message>
-    <message>
-        <source>importContacts</source>
-        <translation>Import contacts from vCards</translation>
-    </message>
-    <message>
-        <source>exportContacts</source>
-        <translation>Export contacts as vCards</translation>
     </message>
 </context>
 <context>
