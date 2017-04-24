@@ -76,8 +76,8 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   // It's not the same thread as render.
   coreManager->lockVideoRender();
 
-  mContextInfo->width = size.width();
-  mContextInfo->height = size.height();
+  mContextInfo->width = static_cast<GLuint>(size.width());
+  mContextInfo->height = static_cast<GLuint>(size.height());
   mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
   mUpdateContextInfo = true;
 
