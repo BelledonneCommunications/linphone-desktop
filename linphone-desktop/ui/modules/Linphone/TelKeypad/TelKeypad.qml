@@ -66,6 +66,8 @@ Rectangle {
       }]
 
       TelKeypadButton {
+        property var _timeout
+
         Layout.fillHeight: true
         Layout.fillWidth: true
 
@@ -84,7 +86,6 @@ Rectangle {
 
     readonly property int delta: 5
 
-    property var _timeout
     property int _id
     property var _mouseX
     property var _mouseY
@@ -107,15 +108,17 @@ Rectangle {
 
     onReleased: {
       if (Math.abs(_mouseX - mouse.x) <= delta && Math.abs(_mouseY - mouse.y) <= delta) {
-        grid.children[_id].color = TelKeypadStyle.button.color.pressed
+        var children = grid.children[_id]
 
-        grid.children[_id].clicked()
+        children.color = TelKeypadStyle.button.color.pressed
+        children.clicked()
 
-        if (_timeout) {
-          Utils.clearTimeout(_timeout)
+        var timeout = children._timeout
+        if (timeout) {
+          Utils.clearTimeout(timeout)
         }
 
-        _timeout = Utils.setTimeout(this, 100, (function (id) {
+        children._timeout = Utils.setTimeout(this, 100, (function (id) {
           grid.children[id].color = TelKeypadStyle.button.color.normal
         }).bind(this, _id))
       }
