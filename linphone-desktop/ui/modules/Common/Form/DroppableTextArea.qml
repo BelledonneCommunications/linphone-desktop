@@ -72,6 +72,10 @@ Item {
       selectByMouse: true
       wrapMode: TextArea.Wrap
 
+      // Workaround. Without this line, the scrollbar is not linked correctly
+      // to the text area.
+      width: parent.width
+
       Component.onCompleted: forceActiveFocus()
 
       Keys.onPressed: {
