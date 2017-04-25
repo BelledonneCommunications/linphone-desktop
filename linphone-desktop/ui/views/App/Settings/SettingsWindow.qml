@@ -119,7 +119,7 @@ ApplicationWindow {
 
       text: qsTr('validButton')
 
-      onClicked: window.hide()
+      onClicked: window.close()
     }
   }
 }
