@@ -163,7 +163,7 @@ void App::initContentApp () {
   QObject::connect(
     this, &App::receivedMessage, this, [this](int, QByteArray message) {
       if (message == "show")
-        getMainWindow()->showNormal();
+        Utils::smartShowWindow(getMainWindow());
     }
   );
 }
@@ -338,7 +338,9 @@ void App::setTrayIcon () {
   root->connect(quitAction, &QAction::triggered, this, &App::quit);
 
   QAction *restoreAction = new QAction("Restore", root);
-  root->connect(restoreAction, &QAction::triggered, root, &QQuickWindow::showNormal);
+  root->connect(restoreAction, &QAction::triggered, root, [root] {
+    Utils::smartShowWindow(root);
+  });
 
   // trayIcon: Left click actions.
   QMenu *menu = new QMenu();
@@ -348,7 +350,7 @@ void App::setTrayIcon () {
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
         if (root->visibility() == QWindow::Hidden)
-          root->showNormal();
+          Utils::smartShowWindow(root);
         else
           root->hide();
       }
@@ -404,9 +406,9 @@ void App::openAppAfterInit () {
       setTrayIcon();
 
     if (!mParser.isSet("iconified"))
-      getMainWindow()->showNormal();
+      Utils::smartShowWindow(getMainWindow());
   #else
-    getMainWindow()->showNormal();
+    Utils::smartShowWindow(getMainWindow());
   #endif // ifndef __APPLE__
 }
 

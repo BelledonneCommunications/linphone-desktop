@@ -205,6 +205,16 @@ function setTimeout (parent, delay, cb) {
   return timer
 }
 
+// -----------------------------------------------------------------------------
+
+// Bring a window to front.
+// See: http://stackoverflow.com/questions/6087887/bring-window-to-front-raise-show-activatewindow-don-t-work
+function smartShowWindow (window) {
+  window.show()
+  window.raise()
+  window.requestActivate()
+}
+
 // =============================================================================
 // GENERIC.
 // =============================================================================

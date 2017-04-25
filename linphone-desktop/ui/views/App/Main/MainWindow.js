@@ -28,11 +28,7 @@ function unlockView () {
 
 function setView (view, props) {
   function apply (view, props) {
-    if (window.visibility === Window.Minimized) {
-      window.visibility = Window.AutomaticVisibility
-    } else {
-      window.setVisible(true)
-    }
+    Utils.smartShowWindow(window)
 
     var item = mainLoader.item
 

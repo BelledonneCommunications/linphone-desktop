@@ -28,6 +28,8 @@
 
 // =============================================================================
 
+class QQuickWindow;
+
 namespace Utils {
   inline QString linphoneStringToQString (const std::string &string) {
     return QString::fromLocal8Bit(string.c_str(), static_cast<int>(string.size()));
@@ -50,6 +52,11 @@ namespace Utils {
     return findParentType<T>(parent);
   }
 
+  // Bring a window to front.
+  // See: http://stackoverflow.com/questions/6087887/bring-window-to-front-raise-show-activatewindow-don-t-work
+  void smartShowWindow (QQuickWindow *window);
+
+  // Reverse function of strstr.
   char *rstrstr (const char *a, const char *b);
 }
 
