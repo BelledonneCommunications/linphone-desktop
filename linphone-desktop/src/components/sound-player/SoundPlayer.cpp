@@ -25,10 +25,31 @@
 
 #include "SoundPlayer.hpp"
 
+using namespace std;
+
 // =============================================================================
 
+class SoundPlayer::Handlers : public linphone::PlayerListener {
+public:
+  Handlers (SoundPlayer *soundPlayer) {
+    mSoundPlayer = soundPlayer;
+  }
+
+private:
+  void onEofReached (const shared_ptr<linphone::Player> &) override {
+    mSoundPlayer->stop();
+  }
+
+  SoundPlayer *mSoundPlayer;
+};
+
+// -----------------------------------------------------------------------------
+
 SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
+  mHandlers = make_shared<SoundPlayer::Handlers>(this);
+
   mInternalPlayer = CoreManager::getInstance()->getCore()->createLocalPlayer("", "", nullptr);
+  mInternalPlayer->setListener(mHandlers);
 }
 
 // -----------------------------------------------------------------------------

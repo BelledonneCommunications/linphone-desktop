@@ -37,6 +37,7 @@ public:
     mAssistant = assistant;
   }
 
+private:
   void onCreateAccount (
     const shared_ptr<linphone::AccountCreator> &,
     linphone::AccountCreatorStatus status,

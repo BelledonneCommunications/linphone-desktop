@@ -34,6 +34,8 @@ namespace linphone {
 }
 
 class SoundPlayer : public QObject {
+  class Handlers;
+
   Q_OBJECT;
 
   Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged);
@@ -81,9 +83,11 @@ private:
 
   int getDuration () const;
 
-  std::shared_ptr<linphone::Player> mInternalPlayer;
   QString mSource;
   PlaybackState mPlaybackState = StoppedState;
+
+  std::shared_ptr<linphone::Player> mInternalPlayer;
+  std::shared_ptr<Handlers> mHandlers;
 };
 
 #endif // SOUND_PLAYER_H_
