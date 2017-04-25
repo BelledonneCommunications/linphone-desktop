@@ -20,10 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QTimer>
+
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "SoundPlayer.hpp"
+
+#define FORCE_CLOSE_TIMER_INTERVAL 20
 
 using namespace std;
 
@@ -37,7 +41,14 @@ public:
 
 private:
   void onEofReached (const shared_ptr<linphone::Player> &) override {
-    mSoundPlayer->stop();
+    QMutex &mutex = mSoundPlayer->mForceCloseMutex;
+
+    // Workaround.
+    // This callback is called in a standard thread of mediastreamer, not a QThread.
+    // Signals, connect functions, timers... are unavailable.
+    mutex.lock();
+    mSoundPlayer->mForceClose = true;
+    mutex.unlock();
   }
 
   SoundPlayer *mSoundPlayer;
@@ -46,6 +57,11 @@ private:
 // -----------------------------------------------------------------------------
 
 SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
+  mForceCloseTimer = new QTimer(this);
+  mForceCloseTimer->setInterval(FORCE_CLOSE_TIMER_INTERVAL);
+
+  QObject::connect(mForceCloseTimer, &QTimer::timeout, this, &SoundPlayer::handleEof);
+
   mHandlers = make_shared<SoundPlayer::Handlers>(this);
 
   mInternalPlayer = CoreManager::getInstance()->getCore()->createLocalPlayer("", "", nullptr);
@@ -63,6 +79,7 @@ void SoundPlayer::pause () {
     return;
   }
 
+  mForceCloseTimer->stop();
   mPlaybackState = SoundPlayer::PausedState;
 
   emit paused();
@@ -87,6 +104,7 @@ void SoundPlayer::play () {
     return;
   }
 
+  mForceCloseTimer->start();
   mPlaybackState = SoundPlayer::PlayingState;
 
   emit playing();
@@ -97,8 +115,10 @@ void SoundPlayer::stop () {
   if (mPlaybackState == SoundPlayer::StoppedState)
     return;
 
-  mInternalPlayer->close();
+  mForceCloseTimer->stop();
   mPlaybackState = SoundPlayer::StoppedState;
+
+  mInternalPlayer->close();
 
   emit stopped();
   emit playbackStateChanged(mPlaybackState);
@@ -114,6 +134,19 @@ void SoundPlayer::seek (int offset) {
 
 int SoundPlayer::getPosition () const {
   return mInternalPlayer->getCurrentPosition();
+}
+
+// -----------------------------------------------------------------------------
+
+void SoundPlayer::handleEof () {
+  mForceCloseMutex.lock();
+
+  if (mForceClose) {
+    mForceClose = false;
+    stop();
+  }
+
+  mForceCloseMutex.unlock();
 }
 
 // -----------------------------------------------------------------------------

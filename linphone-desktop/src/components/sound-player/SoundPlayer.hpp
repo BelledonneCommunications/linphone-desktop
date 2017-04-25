@@ -25,9 +25,12 @@
 
 #include <memory>
 
+#include <QMutex>
 #include <QObject>
 
 // =============================================================================
+
+class QTimer;
 
 namespace linphone {
   class Player;
@@ -55,13 +58,13 @@ public:
   SoundPlayer (QObject *parent = Q_NULLPTR);
   ~SoundPlayer () = default;
 
-  void pause ();
-  void play ();
-  void stop ();
+  Q_INVOKABLE void pause ();
+  Q_INVOKABLE void play ();
+  Q_INVOKABLE void stop ();
 
-  void seek (int offset);
+  Q_INVOKABLE void seek (int offset);
 
-  int getPosition () const;
+  Q_INVOKABLE int getPosition () const;
 
 signals:
   void sourceChanged (const QString &source);
@@ -73,6 +76,8 @@ signals:
   void playbackStateChanged (PlaybackState playbackState);
 
 private:
+  void handleEof ();
+
   void setError (const QString &message);
 
   QString getSource () const;
@@ -85,6 +90,11 @@ private:
 
   QString mSource;
   PlaybackState mPlaybackState = StoppedState;
+
+  bool mForceClose = false;
+  QMutex mForceCloseMutex;
+
+  QTimer *mForceCloseTimer;
 
   std::shared_ptr<linphone::Player> mInternalPlayer;
   std::shared_ptr<Handlers> mHandlers;

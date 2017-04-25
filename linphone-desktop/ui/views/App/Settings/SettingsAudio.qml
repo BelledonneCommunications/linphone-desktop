@@ -73,7 +73,40 @@ TabContainer {
           FileChooserButton {
             selectedFile: SettingsModel.ringPath
 
-            onAccepted: SettingsModel.ringPath = selectedFile
+            onAccepted: {
+              ringPlayer.stop()
+              SettingsModel.ringPath = selectedFile
+            }
+
+            ActionSwitch {
+              anchors {
+                left: parent.right
+                leftMargin: SettingsAudioStyle.ringPlayer.leftMargin
+              }
+
+              enabled: ringPlayer.playbackState === SoundPlayer.PlayingState
+              icon: 'pause'
+
+              onClicked: {
+                if (enabled) {
+                  ringPlayer.stop()
+                } else {
+                  ringPlayer.play()
+                }
+              }
+
+              SoundPlayer {
+                id: ringPlayer
+
+                source: SettingsModel.ringPath
+              }
+
+              Connections {
+                target: window
+
+                onClosing: ringPlayer.stop()
+              }
+            }
           }
         }
       }

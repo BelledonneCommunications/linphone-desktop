@@ -401,6 +401,7 @@
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/Main/ManageAccountsStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
+    <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsSipAccountsEditStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsVideoPreviewStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>

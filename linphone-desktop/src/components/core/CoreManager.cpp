@@ -29,6 +29,8 @@
 #include <QtConcurrent>
 #include <QTimer>
 
+#define CBS_CALL_INTERVAL 20
+
 using namespace std;
 
 // =============================================================================
@@ -66,7 +68,7 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
   mInstance = new CoreManager(parent, configPath);
 
   QTimer *timer = mInstance->mCbsTimer = new QTimer(mInstance);
-  timer->setInterval(20);
+  timer->setInterval(CBS_CALL_INTERVAL);
 
   QObject::connect(timer, &QTimer::timeout, mInstance, &CoreManager::iterate);
 }
