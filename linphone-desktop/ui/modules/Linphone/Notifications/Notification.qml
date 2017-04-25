@@ -36,7 +36,7 @@ DesktopPopup {
 
   // ---------------------------------------------------------------------------
 
-  flags: Qt.Popup
+  flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
 
   Component.onCompleted: {
     var window = _window = data[0]

@@ -50,8 +50,8 @@
 
 // Arbitrary hardcoded values.
 #define NOTIFICATION_SPACING 10
-#define N_MAX_NOTIFICATIONS 15
-#define MAX_TIMEOUT 60000
+#define N_MAX_NOTIFICATIONS 5
+#define MAX_TIMEOUT 30000
 
 using namespace std;
 
@@ -181,10 +181,10 @@ void Notifier::deleteNotification (QVariant notification) {
   instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
 
   mInstancesNumber--;
+  Q_ASSERT(mInstancesNumber >= 0);
+
   if (mInstancesNumber == 0)
     mOffset = 0;
-
-  Q_ASSERT(mInstancesNumber >= 0);
 
   mMutex.unlock();
 
