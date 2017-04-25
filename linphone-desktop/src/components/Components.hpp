@@ -20,6 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#ifndef COMPONENTS_H_
+#define COMPONENTS_H_
+
 #include "assistant/AssistantModel.hpp"
 #include "authentication/Authentication.hpp"
 #include "calls/CallsListModel.hpp"
@@ -33,4 +36,7 @@
 #include "presence/OwnPresenceModel.hpp"
 #include "settings/AccountSettingsModel.hpp"
 #include "smart-search-bar/SmartSearchBarModel.hpp"
+#include "sound-player/SoundPlayer.hpp"
 #include "timeline/TimelineModel.hpp"
+
+#endif // COMPONENTS_H_

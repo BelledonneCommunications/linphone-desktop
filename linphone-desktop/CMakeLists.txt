@@ -114,6 +114,7 @@ set(SOURCES
   src/components/sip-addresses/SipAddressesModel.cpp
   src/components/sip-addresses/SipAddressObserver.cpp
   src/components/smart-search-bar/SmartSearchBarModel.cpp
+  src/components/sound-player/SoundPlayer.cpp
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
@@ -154,6 +155,7 @@ set(HEADERS
   src/components/sip-addresses/SipAddressesModel.hpp
   src/components/sip-addresses/SipAddressObserver.hpp
   src/components/smart-search-bar/SmartSearchBarModel.hpp
+  src/components/sound-player/SoundPlayer.hpp
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp
   src/externals/single-application/SingleApplicationPrivate.hpp

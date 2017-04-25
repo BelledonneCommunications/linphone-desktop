@@ -293,6 +293,7 @@ void App::registerTypes () {
   qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
   qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
   qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
+  qmlRegisterType<SoundPlayer>("Linphone", 1, 0, "SoundPlayer");
 
   qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
