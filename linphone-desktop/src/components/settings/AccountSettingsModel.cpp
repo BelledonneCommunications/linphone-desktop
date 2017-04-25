@@ -240,13 +240,13 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
   emit accountSettingsUpdated();
 }
 
-QString AccountSettingsModel::getPrimaryDisplayname () const {
+QString AccountSettingsModel::getPrimaryDisplayName () const {
   return ::Utils::linphoneStringToQString(
     CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getDisplayName()
   );
 }
 
-void AccountSettingsModel::setPrimaryDisplayname (const QString &displayName) {
+void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 

@@ -37,7 +37,7 @@ class AccountSettingsModel : public QObject {
   Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY accountSettingsUpdated);
 
   // Default info.
-  Q_PROPERTY(QString primaryDisplayname READ getPrimaryDisplayname WRITE setPrimaryDisplayname NOTIFY accountSettingsUpdated);
+  Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY accountSettingsUpdated);
   Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY accountSettingsUpdated);
   Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY accountSettingsUpdated);
 
@@ -90,8 +90,8 @@ private:
   QString getPrimaryUsername () const;
   void setPrimaryUsername (const QString &username);
 
-  QString getPrimaryDisplayname () const;
-  void setPrimaryDisplayname (const QString &displayName);
+  QString getPrimaryDisplayName () const;
+  void setPrimaryDisplayName (const QString &displayName);
 
   QString getPrimarySipAddress () const;
 
