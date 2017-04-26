@@ -115,6 +115,8 @@ AssistantAbstractView {
   AssistantModel {
     id: assistantModel
 
+    configFilename: 'create-linphone-sip-account.rc'
+
     onEmailChanged: emailError = error
     onPasswordChanged: passwordError = error
     onUsernameChanged: usernameError = error

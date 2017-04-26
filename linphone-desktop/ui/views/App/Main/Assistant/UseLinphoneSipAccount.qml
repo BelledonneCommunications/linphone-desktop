@@ -58,6 +58,8 @@ AssistantAbstractView {
   AssistantModel {
     id: assistantModel
 
+    configFilename: 'use-linphone-sip-account.rc'
+
     onPasswordChanged: {
       if (checkBox.checked) {
         loader.item.passwordError = error

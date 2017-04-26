@@ -62,7 +62,9 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusAccountExist || status == linphone::AccountCreatorStatusAccountExistWithAlias) {
-      CoreManager::getInstance()->getCore()->addProxyConfig(creator->configure());
+      shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
+      Q_ASSERT(proxyConfig != nullptr);
+
       emit mAssistant->loginStatusChanged("");
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
@@ -96,7 +98,8 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusAccountActivated) {
-      CoreManager::getInstance()->getAccountSettingsModel()->addOrUpdateProxyConfig(creator->configure());
+      shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
+      Q_ASSERT(proxyConfig != nullptr);
 
       emit mAssistant->activateStatusChanged("");
     } else {

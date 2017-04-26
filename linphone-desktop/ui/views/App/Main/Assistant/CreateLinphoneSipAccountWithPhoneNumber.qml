@@ -68,6 +68,8 @@ AssistantAbstractView {
   AssistantModel {
     id: assistantModel
 
+    configFilename: 'create-linphone-sip-account.rc'
+
     onUsernameChanged: usernameError = error
 
     onCreateStatusChanged: {
