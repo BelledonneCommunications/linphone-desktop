@@ -33,7 +33,7 @@ AvatarProvider::AvatarProvider () : QQuickImageProvider(
     QQmlImageProviderBase::Image,
     QQmlImageProviderBase::ForceAsynchronousImageLoading
   ) {
-  mAvatarsPath = Utils::linphoneStringToQString(Paths::getAvatarsDirpath());
+  mAvatarsPath = Utils::linphoneStringToQString(Paths::getAvatarsDirPath());
 }
 
 QImage AvatarProvider::requestImage (const QString &id, QSize *, const QSize &) {

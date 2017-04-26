@@ -164,7 +164,7 @@ void Logger::init () {
     }
   );
 
-  linphone_core_set_log_collection_path(Paths::getLogsDirpath().c_str());
+  linphone_core_set_log_collection_path(Paths::getLogsDirPath().c_str());
   linphone_core_set_log_collection_max_file_size(MAX_LOGS_COLLECTION_SIZE);
   linphone_core_enable_log_collection(LinphoneLogCollectionEnabled);
 }

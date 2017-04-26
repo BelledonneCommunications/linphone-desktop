@@ -80,7 +80,7 @@ VcardModel::~VcardModel () {
 
     QString imagePath(
       ::Utils::linphoneStringToQString(
-        Paths::getAvatarsDirpath() +
+        Paths::getAvatarsDirPath() +
         photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
@@ -134,7 +134,7 @@ bool VcardModel::setAvatar (const QString &path) {
     .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
     .arg(info.suffix());
 
-  QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirpath()) + fileId;
+  QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirPath()) + fileId;
 
   if (!file.copy(dest))
     return false;
@@ -150,7 +150,7 @@ bool VcardModel::setAvatar (const QString &path) {
   if (oldPhoto) {
     QString imagePath(
       ::Utils::linphoneStringToQString(
-        Paths::getAvatarsDirpath() + oldPhoto->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+        Paths::getAvatarsDirPath() + oldPhoto->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
 

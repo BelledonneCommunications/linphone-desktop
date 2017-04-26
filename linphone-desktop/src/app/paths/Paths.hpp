@@ -30,21 +30,22 @@
 // =============================================================================
 
 namespace Paths {
-  std::string getAvatarsDirpath ();
-  std::string getCallHistoryFilepath ();
-  std::string getCapturesDirpath ();
-  std::string getConfigFilepath (const QString &configPath = QString());
-  std::string getFactoryConfigFilepath ();
-  std::string getFriendsListFilepath ();
-  std::string getLogsDirpath ();
-  std::string getMessageHistoryFilepath ();
-  std::string getPackageDataDirpath ();
-  std::string getPackageMsPluginsDirpath ();
-  std::string getRootCaFilepath ();
-  std::string getThumbnailsDirpath ();
-  std::string getUserCertificatesDirpath ();
-  std::string getZrtpDataFilepath ();
-  std::string getZrtpSecretsFilepath ();
+  std::string getAssistantConfigDirPath ();
+  std::string getAvatarsDirPath ();
+  std::string getCallHistoryFilePath ();
+  std::string getCapturesDirPath ();
+  std::string getConfigFilePath (const QString &configPath = QString());
+  std::string getFactoryConfigFilePath ();
+  std::string getFriendsListFilePath ();
+  std::string getLogsDirPath ();
+  std::string getMessageHistoryFilePath ();
+  std::string getPackageDataDirPath ();
+  std::string getPackageMsPluginsDirPath ();
+  std::string getRootCaFilePath ();
+  std::string getThumbnailsDirPath ();
+  std::string getUserCertificatesDirPath ();
+  std::string getZrtpDataFilePath ();
+  std::string getZrtpSecretsFilePath ();
 
   void migrate ();
 }

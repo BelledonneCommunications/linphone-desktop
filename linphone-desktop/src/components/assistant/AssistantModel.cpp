@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include "../../app/paths/Paths.hpp"
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -283,6 +284,27 @@ void AssistantModel::setDisplayName (const QString &displayName) {
       mAccountCreator->setDisplayName(::Utils::qStringToLinphoneString(displayName))
     )
   );
+}
+
+// -----------------------------------------------------------------------------
+
+QString AssistantModel::getConfigFilename () const {
+  return mConfigFilename;
+}
+
+void AssistantModel::setConfigFilename (const QString &configFilename) {
+  mConfigFilename = configFilename;
+
+  QString configPath = ::Utils::linphoneStringToQString(Paths::getAssistantConfigDirPath()) + configFilename;
+  qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(configPath);
+
+  CoreManager::getInstance()->getCore()->getConfig()->loadFromXmlFile(
+    ::Utils::qStringToLinphoneString(configPath),
+    nullptr,
+    nullptr
+  );
+
+  emit configFilenameChanged(configFilename);
 }
 
 // -----------------------------------------------------------------------------

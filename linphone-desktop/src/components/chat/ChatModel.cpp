@@ -73,7 +73,7 @@ inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
   QString uuid = QUuid::createUuid().toString();
   QString fileId = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
 
-  if (!thumbnail.save(::Utils::linphoneStringToQString(Paths::getThumbnailsDirpath()) + fileId, "jpg", 100)) {
+  if (!thumbnail.save(::Utils::linphoneStringToQString(Paths::getThumbnailsDirPath()) + fileId, "jpg", 100)) {
     qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnailPath);
     return;
   }
@@ -87,7 +87,7 @@ inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> 
 
     string fileId = message->getAppdata();
     if (!fileId.empty()) {
-      QString thumbnailPath = ::Utils::linphoneStringToQString(Paths::getThumbnailsDirpath() + fileId);
+      QString thumbnailPath = ::Utils::linphoneStringToQString(Paths::getThumbnailsDirPath() + fileId);
       if (!QFile::remove(thumbnailPath))
         qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
     }

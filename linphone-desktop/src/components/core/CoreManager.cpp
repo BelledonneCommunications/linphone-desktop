@@ -87,26 +87,26 @@ void CoreManager::forceRefreshRegisters () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::setDatabasesPaths () {
-  mCore->setFriendsDatabasePath(Paths::getFriendsListFilepath());
-  mCore->setCallLogsDatabasePath(Paths::getCallHistoryFilepath());
-  mCore->setChatDatabasePath(Paths::getMessageHistoryFilepath());
+  mCore->setFriendsDatabasePath(Paths::getFriendsListFilePath());
+  mCore->setCallLogsDatabasePath(Paths::getCallHistoryFilePath());
+  mCore->setChatDatabasePath(Paths::getMessageHistoryFilePath());
 }
 
 void CoreManager::setOtherPaths () {
   if (mCore->getZrtpSecretsFile().empty())
-    mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilepath());
+    mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
 
   if (mCore->getUserCertificatesPath().empty())
-    mCore->setUserCertificatesPath(Paths::getUserCertificatesDirpath());
+    mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
 
   if (mCore->getRootCa().empty())
-    mCore->setRootCa(Paths::getRootCaFilepath());
+    mCore->setRootCa(Paths::getRootCaFilePath());
 }
 
 void CoreManager::setResourcesPaths () {
   shared_ptr<linphone::Factory> factory = linphone::Factory::get();
-  factory->setMspluginsDir(Paths::getPackageMsPluginsDirpath());
-  factory->setTopResourcesDir(Paths::getPackageDataDirpath());
+  factory->setMspluginsDir(Paths::getPackageMsPluginsDirPath());
+  factory->setTopResourcesDir(Paths::getPackageDataDirPath());
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +119,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setResourcesPaths();
 
-  mCore = linphone::Factory::get()->createCore(mHandlers, Paths::getConfigFilepath(configPath), Paths::getFactoryConfigFilepath());
+  mCore = linphone::Factory::get()->createCore(mHandlers, Paths::getConfigFilePath(configPath), Paths::getFactoryConfigFilePath());
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
