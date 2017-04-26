@@ -283,14 +283,14 @@ install(FILES "${ASSETS_DIR}/linphonerc-factory"
 )
 
 set(ASSETS_ASSISTANT_DIR "${ASSETS_DIR}/assistant")
-set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/assistant")
+set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/linphone/assistant")
 
 install(FILES "${ASSETS_ASSISTANT_DIR}/use-other-sip-account.rc"
-  DESTINATION "${ASSISTANT_INSTALL_DATADIR}/use-other-sip-account.rc"
+  DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
 )
 install(FILES "${ASSETS_ASSISTANT_DIR}/create-linphone-sip-account.rc"
-  DESTINATION "${ASSISTANT_INSTALL_DATADIR}/create-linphone-sip-account.rc"
+  DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
 )
 install(FILES "${ASSETS_ASSISTANT_DIR}/use-linphone-sip-account.rc"
-  DESTINATION "${ASSISTANT_INSTALL_DATADIR}/use-linphone-sip-account.rc"
+  DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
 )
