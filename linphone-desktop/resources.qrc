@@ -320,7 +320,6 @@
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedCallStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedFileMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Notifications/NotificationStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
     <file>ui/modules/Linphone/Styles/SmartSearchBar/SmartSearchBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>

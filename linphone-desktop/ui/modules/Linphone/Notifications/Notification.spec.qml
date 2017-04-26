@@ -15,12 +15,20 @@ TestCase {
     compare(Utils.isObject(notification.notificationData), true)
   }
 
-  function test_notificationHeightProperty () {
-    compare(Utils.isInteger(notification.notificationHeight), true)
+  function test_notificationPopupX () {
+    compare(Utils.isInteger(notification.popupX), true)
   }
 
-  function test_notificationOffsetProperty () {
-    compare(Utils.isInteger(notification.notificationOffset), true)
+  function test_notificationPopupY () {
+    compare(Utils.isInteger(notification.popupY), true)
+  }
+
+  function test_notificationPopupHeight () {
+    compare(Utils.isInteger(notification.popupHeight), true)
+  }
+
+  function test_notificationPopupWidth () {
+    compare(Utils.isInteger(notification.popupWidth), true)
   }
 
   function test_notificationShowMethod () {
@@ -28,6 +36,9 @@ TestCase {
   }
 
   function test_childWindow () {
-    compare(Utils.qmlTypeof(notification.data[0], 'QQuickWindowQmlImpl'), true)
+    var window = notification.data[0]
+
+    compare(Utils.qmlTypeof(window, 'QQuickWindowQmlImpl'), true)
+    compare(window.objectName === '__internalWindow', true)
   }
 }

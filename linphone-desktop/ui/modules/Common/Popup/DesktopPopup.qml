@@ -47,6 +47,9 @@ Item {
   Window {
     id: popup
 
+    // Used for internal purposes only. Like Notifications.
+    objectName: '__internalWindow'
+
     flags: wrapper.flags
     opacity: 0
     height: _content[0] != null ? _content[0].height : 0

@@ -20,35 +20,53 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QQmlComponent>
+#include <QQuickWindow>
+#include <QScreen>
+#include <QtDebug>
+#include <QTimer>
+
 #include "../../app/App.hpp"
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "Notifier.hpp"
 
-#include <QQmlComponent>
-#include <QQuickWindow>
-#include <QtDebug>
-#include <QTimer>
-
+// -----------------------------------------------------------------------------
 // Notifications QML properties/methods.
+// -----------------------------------------------------------------------------
+
 #define NOTIFICATION_SHOW_METHOD_NAME "show"
 
 #define NOTIFICATION_PROPERTY_DATA "notificationData"
-#define NOTIFICATION_PROPERTY_HEIGHT "notificationHeight"
-#define NOTIFICATION_PROPERTY_OFFSET "notificationOffset"
+
+#define NOTIFICATION_PROPERTY_X "popupX"
+#define NOTIFICATION_PROPERTY_Y "popupY"
+
+#define NOTIFICATION_PROPERTY_WINDOW "__internalWindow"
 
 #define NOTIFICATION_PROPERTY_TIMER "__timer"
+
+// -----------------------------------------------------------------------------
+// Paths.
+// -----------------------------------------------------------------------------
 
 #define QML_NOTIFICATION_PATH_RECEIVED_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml"
 #define QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml"
 #define QML_NOTIFICATION_PATH_RECEIVED_CALL "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedCall.qml"
 
+// -----------------------------------------------------------------------------
+// Timeouts.
+// -----------------------------------------------------------------------------
+
 #define NOTIFICATION_TIMEOUT_RECEIVED_MESSAGE 10000
 #define NOTIFICATION_TIMEOUT_RECEIVED_FILE_MESSAGE 10000
 #define NOTIFICATION_TIMEOUT_RECEIVED_CALL 30000
 
+// -----------------------------------------------------------------------------
 // Arbitrary hardcoded values.
+// -----------------------------------------------------------------------------
+
 #define NOTIFICATION_SPACING 10
 #define N_MAX_NOTIFICATIONS 5
 #define MAX_TIMEOUT 30000
@@ -57,29 +75,25 @@ using namespace std;
 
 // =============================================================================
 
-inline int getNotificationSize (const QObject &object, const char *property) {
+inline int getIntegerFromNotification (const QObject &object, const char *property) {
   QVariant variant = object.property(property);
   bool soFarSoGood;
 
-  int size = variant.toInt(&soFarSoGood);
-  if (!soFarSoGood || size < 0) {
-    qWarning() << "Unable to get notification size.";
-    return -1;
+  int value = variant.toInt(&soFarSoGood);
+  if (!soFarSoGood) {
+    qWarning() << QStringLiteral("Unable to get int from: `%1`.").arg(property);
+    abort();
   }
 
-  return size;
+  return value;
 }
 
 template<class T>
-bool setProperty (QObject &object, const char *property, const T &value) {
-  QVariant qvariant(value);
-
-  if (!object.setProperty(property, qvariant)) {
+void setProperty (QObject &object, const char *property, const T &value) {
+  if (!object.setProperty(property, QVariant(value))) {
     qWarning() << QStringLiteral("Unable to set property: `%1`.").arg(property);
-    return false;
+    abort();
   }
-
-  return true;
 }
 
 // -----------------------------------------------------------------------------
@@ -117,28 +131,45 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
 
   // Check existing instances.
   if (mInstancesNumber == N_MAX_NOTIFICATIONS) {
-    qWarning() << "Unable to create another notification";
+    qWarning() << QStringLiteral("Unable to create another notification.");
     mMutex.unlock();
     return nullptr;
   }
 
   // Create instance and set attributes.
-  QObject *object = mComponents[type]->create();
-  int offset = getNotificationSize(*object, NOTIFICATION_PROPERTY_HEIGHT);
+  QObject *instance = mComponents[type]->create();
+  qInfo() << QStringLiteral("Create notification:") << instance;
 
-  if (offset == -1 || !::setProperty(*object, NOTIFICATION_PROPERTY_OFFSET, mOffset)) {
-    delete object;
-    mMutex.unlock();
-    return nullptr;
-  }
-
-  mOffset = (offset + mOffset) + NOTIFICATION_SPACING;
   mInstancesNumber++;
+
+  {
+    QQuickWindow *window = instance->findChild<QQuickWindow *>(NOTIFICATION_PROPERTY_WINDOW);
+    Q_ASSERT(window != nullptr);
+
+    QScreen *screen = window->screen();
+    Q_ASSERT(screen != nullptr);
+
+    QRect geometry = screen->availableGeometry();
+
+    // Set X/Y. (Not Pokémon games.)
+    int windowHeight = window->height();
+    int offset = geometry.y() + geometry.height() - windowHeight;
+
+    ::setProperty(*instance, NOTIFICATION_PROPERTY_X, geometry.x() + geometry.width() - window->width());
+    ::setProperty(*instance, NOTIFICATION_PROPERTY_Y, offset - (mOffset % offset));
+
+    // Update offset.
+    mOffset = (windowHeight + mOffset) + NOTIFICATION_SPACING;
+    if (mOffset - offset + geometry.y() >= 0)
+      mOffset = 0;
+  }
 
   mMutex.unlock();
 
-  return object;
+  return instance;
 }
+
+// -----------------------------------------------------------------------------
 
 void Notifier::showNotification (QObject *notification, int timeout) {
   // Display notification.
@@ -175,7 +206,7 @@ void Notifier::deleteNotification (QVariant notification) {
     return;
   }
 
-  qDebug() << "Delete notification.";
+  qInfo() << QStringLiteral("Delete notification:") << instance;
 
   instance->setProperty("__valid", true);
   instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
@@ -191,7 +222,7 @@ void Notifier::deleteNotification (QVariant notification) {
   instance->deleteLater();
 }
 
-// -----------------------------------------------------------------------------
+// =============================================================================
 
 void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &message) {
   QObject *notification = createNotification(Notifier::MessageReceived);
