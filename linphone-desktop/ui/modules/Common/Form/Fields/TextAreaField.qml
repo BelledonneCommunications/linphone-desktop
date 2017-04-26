@@ -10,8 +10,13 @@ Flickable {
   property alias text: textArea.text
   readonly property alias length: textArea.length
 
+  boundsBehavior: Flickable.StopAtBounds
   height: TextAreaFieldStyle.background.height
   width: TextAreaFieldStyle.background.width
+
+  ScrollBar.vertical: ForceScrollBar {
+    id: scrollBar
+  }
 
   TextArea.flickable: TextArea {
     id: textArea
@@ -38,9 +43,5 @@ Flickable {
     leftPadding: TextAreaFieldStyle.text.padding
     rightPadding: TextAreaFieldStyle.text.padding + Number(scrollBar.visible) * scrollBar.width
     topPadding: TextAreaFieldStyle.text.padding
-  }
-
-  ScrollBar.vertical: ForceScrollBar {
-    id: scrollBar
   }
 }

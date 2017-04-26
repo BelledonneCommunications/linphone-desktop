@@ -54,6 +54,7 @@ ApplicationWindow {
   // ---------------------------------------------------------------------------
 
   onActiveFocusItemChanged: Logic.handleActiveFocusItemChanged(activeFocusItem)
+  onClosing: Logic.handleClosing(close)
 
   // ---------------------------------------------------------------------------
 

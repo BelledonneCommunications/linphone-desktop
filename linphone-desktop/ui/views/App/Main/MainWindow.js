@@ -16,6 +16,13 @@ function handleActiveFocusItemChanged (activeFocusItem) {
   }
 }
 
+function handleClosing (close) {
+  if (Qt.platform.os === 'osx') {
+    close.accepted = false
+    window.showMinimized()
+  }
+}
+
 // -----------------------------------------------------------------------------
 
 function lockView (info) {
