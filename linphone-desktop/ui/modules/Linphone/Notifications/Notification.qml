@@ -20,7 +20,7 @@ DesktopPopup {
   }
 
   flags: {
-    return (Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) &
-      (Qt.platform.os === 'osx' ? Qt.Window : Qt.Tool)
+    return (Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) |
+      (Qt.platform.os === 'osx' ? Qt.Window : Qt.Popup)
   }
 }
