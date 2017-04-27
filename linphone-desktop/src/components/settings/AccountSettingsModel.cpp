@@ -109,8 +109,6 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 }
 
 void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
-  Q_ASSERT(proxyConfig != nullptr);
-
   CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxyConfig);
   emit accountSettingsUpdated();
 }

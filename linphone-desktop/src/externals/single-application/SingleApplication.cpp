@@ -256,7 +256,7 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
 
     cout << "[PROCESS ABNORMALLY TERMINATED]: " << signum << endl;
     #ifdef Q_OS_LINUX
-      cout << "Please to remove your ~/.ICEauthority file and rerun." << endl;
+      cout << "If you have used valgrind, please remove your ~/.ICEauthority file and rerun." << endl;
     #endif // ifdef Q_OS_UNIX
 
     ::exit(128 + signum);
