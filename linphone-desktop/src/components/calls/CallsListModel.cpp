@@ -176,7 +176,7 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphoneCall) {
 
   CallModel *call = new CallModel(linphoneCall);
 
-  qInfo() << "Add call:" << call;
+  qInfo() << QStringLiteral("Add call:") << call;
 
   App::getInstance()->getEngine()->setObjectOwnership(call, QQmlEngine::CppOwnership);
 
@@ -188,16 +188,15 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphoneCall) {
 }
 
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphoneCall) {
-  // TODO: It will be (maybe) necessary to use a single scheduled function in the future.
   QTimer::singleShot(
     DELAY_BEFORE_REMOVE_CALL, this, [this, linphoneCall]() {
       CallModel *call = &linphoneCall->getData<CallModel>("call-model");
 
-      qInfo() << "Removing call:" << call;
+      qInfo() << QStringLiteral("Removing call:") << call;
 
       int index = mList.indexOf(call);
       if (index == -1 || !removeRow(index))
-        qWarning() << "Unable to remove call:" << call;
+        qWarning() << QStringLiteral("Unable to remove call:") << call;
 
       if (mList.empty())
         App::getInstance()->getCallsWindow()->close();
