@@ -2,6 +2,7 @@
 // `MainWindow.qml` Logic.
 // =============================================================================
 
+.import Linphone 1.0 as Linphone
 .import QtQuick.Window 2.2 as Window
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -35,7 +36,7 @@ function unlockView () {
 
 function setView (view, props) {
   function apply (view, props) {
-    Utils.smartShowWindow(window)
+    Linphone.App.smartShowWindow(window)
 
     var item = mainLoader.item
 

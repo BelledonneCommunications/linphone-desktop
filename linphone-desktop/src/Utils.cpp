@@ -26,12 +26,6 @@
 
 // =============================================================================
 
-void Utils::smartShowWindow (QQuickWindow *window) {
-  window->show();
-  window->raise();
-  window->requestActivate();
-}
-
 char *Utils::rstrstr (const char *a, const char *b) {
   size_t a_len = strlen(a);
   size_t b_len = strlen(b);

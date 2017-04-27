@@ -172,7 +172,7 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphoneCall) {
   if (linphoneCall->getDir() == linphone::CallDirOutgoing)
-    Utils::smartShowWindow(App::getInstance()->getCallsWindow());
+    App::smartShowWindow(App::getInstance()->getCallsWindow());
 
   CallModel *call = new CallModel(linphoneCall);
 

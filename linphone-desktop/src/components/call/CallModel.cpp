@@ -148,7 +148,7 @@ void CallModel::accept () {
   params->enableVideo(false);
   setRecordFile(params);
 
-  Utils::smartShowWindow(App::getInstance()->getCallsWindow());
+  App::smartShowWindow(App::getInstance()->getCallsWindow());
   mLinphoneCall->acceptWithParams(params);
 }
 
@@ -160,7 +160,7 @@ void CallModel::acceptWithVideo () {
   params->enableVideo(true);
   setRecordFile(params);
 
-  Utils::smartShowWindow(App::getInstance()->getCallsWindow());
+  App::smartShowWindow(App::getInstance()->getCallsWindow());
   mLinphoneCall->acceptWithParams(params);
 }
 

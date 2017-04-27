@@ -69,6 +69,8 @@ public:
     return static_cast<App *>(QApplication::instance());
   }
 
+  Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
+
 public slots:
   void quit ();
 

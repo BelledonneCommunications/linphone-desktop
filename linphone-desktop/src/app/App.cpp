@@ -163,7 +163,7 @@ void App::initContentApp () {
   QObject::connect(
     this, &App::receivedMessage, this, [this](int, QByteArray message) {
       if (message == "show")
-        Utils::smartShowWindow(getMainWindow());
+        App::smartShowWindow(getMainWindow());
     }
   );
 }
@@ -251,6 +251,18 @@ QQuickWindow *App::getSettingsWindow () {
 
 // -----------------------------------------------------------------------------
 
+void App::smartShowWindow (QQuickWindow *window) {
+  window->setVisible(true);
+
+  if (window->visibility() == QWindow::Minimized)
+    window->show();
+
+  window->raise();
+  window->requestActivate();
+}
+
+// -----------------------------------------------------------------------------
+
 bool App::hasFocus () const {
   return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
 }
@@ -333,7 +345,7 @@ void App::setTrayIcon () {
 
   QAction *restoreAction = new QAction("Restore", root);
   root->connect(restoreAction, &QAction::triggered, root, [root] {
-    Utils::smartShowWindow(root);
+    App::smartShowWindow(root);
   });
 
   // trayIcon: Left click actions.
@@ -344,7 +356,7 @@ void App::setTrayIcon () {
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
         if (root->visibility() == QWindow::Hidden)
-          Utils::smartShowWindow(root);
+          App::smartShowWindow(root);
         else
           root->hide();
       }
@@ -400,9 +412,9 @@ void App::openAppAfterInit () {
       setTrayIcon();
 
     if (!mParser.isSet("iconified"))
-      Utils::smartShowWindow(getMainWindow());
+      App::smartShowWindow(getMainWindow());
   #else
-    Utils::smartShowWindow(getMainWindow());
+    App::smartShowWindow(getMainWindow());
   #endif // ifndef __APPLE__
 }
 
