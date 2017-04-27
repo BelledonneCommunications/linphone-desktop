@@ -19,5 +19,8 @@ DesktopPopup {
     deleteNotification(notification)
   }
 
-  flags: Qt.Tool | Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint
+  flags: {
+    return (Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) &
+      (Qt.platform.os === 'osx' ? Qt.Window : Qt.Tool)
+  }
 }
