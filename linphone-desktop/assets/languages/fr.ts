@@ -726,11 +726,6 @@ Url du serveur non configurée.</translation>
         <translation>Utiliser la barre de recherche intelligente pour lancer des appels audio et vidéo,
 un chat ou ajouter un contact.</translation>
     </message>
-    <message>
-        <source>timelineTooltip</source>
-        <translation>Cliquer sur une entrée pour voir vos derniers échanges,
-chatter ou voir l&apos;historique de conversation.</translation>
-    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>

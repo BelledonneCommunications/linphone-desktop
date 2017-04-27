@@ -234,10 +234,6 @@ ApplicationWindow {
             model: TimelineModel
 
             onEntrySelected: setView('Conversation', { sipAddress: entry })
-
-            TooltipArea {
-              text: qsTr('timelineTooltip')
-            }
           }
         }
 

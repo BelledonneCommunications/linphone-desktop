@@ -727,11 +727,6 @@ Server url not configured.</translation>
 calls, start a chat or add a new contact. Just enter
 your friend&apos;s SIP address or username.</translation>
     </message>
-    <message>
-        <source>timelineTooltip</source>
-        <translation>Click on one of your last exchange
-to chat or see the conversation history.</translation>
-    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
