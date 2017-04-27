@@ -211,7 +211,7 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
 
     initMsg.append(connectionType);
     initMsg.append(reinterpret_cast<const char *>(&instanceNumber), sizeof(quint32));
-    initMsg.append(QByteArray::number(qChecksum(initMsg.constData(), initMsg.length()), 256));
+    initMsg.append(QByteArray::number(qChecksum(initMsg.constData(), static_cast<uint>(initMsg.length())), 256));
 
     socket->write(initMsg);
     socket->flush();
@@ -296,12 +296,12 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
           initMsg += tmp;
           // Verify the checksum of the initMsg
           QByteArray checksum = QByteArray::number(
-              qChecksum(initMsg.constData(), initMsg.length()),
+              qChecksum(initMsg.constData(), static_cast<uint>(initMsg.length())),
               256
             );
           tmp = nextConnSocket->read(checksum.length());
           if (checksum == tmp)
-            break;         // Otherwise set to invalid connection (next line)
+            break; // Otherwise set to invalid connection (next line)
         }
         default:
           connectionType = InvalidConnection;
