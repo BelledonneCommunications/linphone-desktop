@@ -97,39 +97,29 @@ function handleCallRunning (index, call) {
   calls._selectedCall = call
 }
 
+function handleCountChanged (count) {
+  if (count === 0) {
+    return 0
+  }
+
+  var index = calls.currentIndex
+  if (index !== -1) {
+    return
+  }
+
+  var model = calls.model
+  index = count - 1
+
+  calls.currentIndex = index
+  calls._selectedCall = model.data(model.index(index, 0))
+}
+
 function handleRowsAboutToBeRemoved (_, first, last) {
   var index = calls.currentIndex
 
-  if (index >= first && index <= last) { // Remove current call.
-    var model = calls.model
-
-    if (model.rowCount() - (last - first + 1) <= 0) {
-      calls._selectedCall = null
-    } else {
-      if (first === 0) {
-        calls._selectedCall = model.data(model.index(last + 1, 0))
-      } else {
-        calls._selectedCall = model.data(model.index(0, 0))
-      }
-    }
-  }
-}
-
-function handleRowsRemoved (_, first, last) {
-  var index = calls.currentIndex
-
-  // The current call has been removed.
   if (index >= first && index <= last) {
-    if (calls.model.rowCount() === 0) {
-      calls.currentIndex = -1 // No calls.
-    } else {
-      calls.currentIndex = 0 // The first call becomes the selected call.
-    }
-  }
-
-  // Update the current index of the selected call if it was after the removed calls.
-  else if (last < index) {
-    calls.currentIndex = index - (last - first + 1)
+    calls.currentIndex = -1
+    calls._selectedCall = null
   }
 }
 
@@ -141,8 +131,10 @@ function handleRowsInserted (_, first, last) {
     var call = model.data(model.index(index, 0))
 
     if (call.isOutgoing) {
-      calls.currentIndex = first
-      calls._selectedCall = model.data(model.index(first, 0))
+      calls.currentIndex = -1
+      calls._selectedCall = null
+
+      return
     }
   }
 }

@@ -139,6 +139,6 @@ ColumnLayout {
       }
     }
 
-    onCountChanged: Logic.handleCountChanged()
+    onCountChanged: Logic.handleCountChanged(count)
   }
 }

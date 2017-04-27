@@ -43,7 +43,7 @@ function handleRowsAboutToBeRemoved (parent, first, last) {
   }
 }
 
-function handleCountChanged () {
+function handleCountChanged (_) {
   var sipAddress = timeline._selectedSipAddress
   if (sipAddress.length > 0) {
     setSelectedEntry(sipAddress)
