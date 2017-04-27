@@ -23,11 +23,11 @@
 #ifndef SIP_ADDRESSES_MODEL_H_
 #define SIP_ADDRESSES_MODEL_H_
 
+#include <QAbstractListModel>
+
 #include "../chat/ChatModel.hpp"
 #include "../contact/ContactModel.hpp"
 #include "SipAddressObserver.hpp"
-
-#include <QAbstractListModel>
 
 // =============================================================================
 

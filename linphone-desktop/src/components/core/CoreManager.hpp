@@ -23,6 +23,10 @@
 #ifndef CORE_MANAGER_H_
 #define CORE_MANAGER_H_
 
+#include <QFuture>
+#include <QFutureWatcher>
+#include <QMutex>
+
 #include "../calls/CallsListModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
 #include "../settings/AccountSettingsModel.hpp"
@@ -30,10 +34,6 @@
 #include "../sip-addresses/SipAddressesModel.hpp"
 
 #include "CoreHandlers.hpp"
-
-#include <QFuture>
-#include <QFutureWatcher>
-#include <QMutex>
 
 // =============================================================================
 

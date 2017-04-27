@@ -20,9 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QDebug>
-
 #include <cmath>
+
+#include <QDebug>
 
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"

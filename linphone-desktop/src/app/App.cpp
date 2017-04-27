@@ -20,6 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDir>
+#include <QFileSelector>
+#include <QMenu>
+#include <QQmlFileSelector>
+#include <QSystemTrayIcon>
+#include <QtDebug>
+#include <QTimer>
+
 #include "../components/Components.hpp"
 #include "../Utils.hpp"
 
@@ -29,14 +37,6 @@
 #include "translator/DefaultTranslator.hpp"
 
 #include "App.hpp"
-
-#include <QDir>
-#include <QFileSelector>
-#include <QMenu>
-#include <QQmlFileSelector>
-#include <QSystemTrayIcon>
-#include <QtDebug>
-#include <QTimer>
 
 #define DEFAULT_LOCALE "en"
 

@@ -20,8 +20,6 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QQuickWindow>
-
 #include "Utils.hpp"
 
 // =============================================================================

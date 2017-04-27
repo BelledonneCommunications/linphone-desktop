@@ -20,14 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDir>
+#include <QtConcurrent>
+#include <QTimer>
+
 #include "../../app/paths/Paths.hpp"
 #include "../../Utils.hpp"
 
 #include "CoreManager.hpp"
-
-#include <QDir>
-#include <QtConcurrent>
-#include <QTimer>
 
 #define CBS_CALL_INTERVAL 20
 

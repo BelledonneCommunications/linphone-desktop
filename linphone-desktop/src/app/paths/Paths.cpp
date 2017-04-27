@@ -27,9 +27,9 @@
 #include <QtDebug>
 
 #include "../../Utils.hpp"
+#include "config.h"
 
 #include "Paths.hpp"
-#include "config.h"
 
 #define PATH_ASSISTANT_CONFIG "/assistant/"
 #define PATH_AVATARS "/avatars/"

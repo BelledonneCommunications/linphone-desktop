@@ -20,14 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QQuickWindow>
+#include <QThread>
+#include <QTimer>
+
 #include "../core/CoreManager.hpp"
 #include "MSFunctions.hpp"
 
 #include "Camera.hpp"
-
-#include <QQuickWindow>
-#include <QThread>
-#include <QTimer>
 
 #define MAX_FPS 30
 

@@ -23,9 +23,9 @@
 #ifndef CHAT_PROXY_MODEL_H_
 #define CHAT_PROXY_MODEL_H_
 
-#include "ChatModel.hpp"
-
 #include <QSortFilterProxyModel>
+
+#include "ChatModel.hpp"
 
 // =============================================================================
 

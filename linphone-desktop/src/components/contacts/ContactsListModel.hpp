@@ -24,10 +24,9 @@
 #define CONTACTS_LIST_MODEL_H_
 
 #include <linphone++/linphone.hh>
+#include <QAbstractListModel>
 
 #include "../contact/ContactModel.hpp"
-
-#include <QAbstractListModel>
 
 // =============================================================================
 

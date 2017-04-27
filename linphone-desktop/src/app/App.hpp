@@ -23,12 +23,12 @@
 #ifndef APP_H_
 #define APP_H_
 
-#include "../components/notifier/Notifier.hpp"
-#include "../externals/single-application/SingleApplication.hpp"
-
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
+
+#include "../components/notifier/Notifier.hpp"
+#include "../externals/single-application/SingleApplication.hpp"
 
 // =============================================================================
 
