@@ -52,7 +52,7 @@ DialogPlus {
           color: AboutStyle.versionsBlock.appVersion.color
           elide: Text.ElideRight
           font.pointSize: AboutStyle.versionsBlock.appVersion.fontSize
-          text: 'Linphone Desktop ' + App.version
+          text: 'Linphone Desktop ' + Qt.application.version
 
           height: parent.height / 2
           width: parent.width

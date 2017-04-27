@@ -63,7 +63,7 @@ inline bool installLocale (App &app, QTranslator &translator, const QLocale &loc
 }
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
-  setApplicationVersion("4.0");
+  setApplicationVersion(LINPHONE_VERSION);
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
   // List available locales.
@@ -253,12 +253,6 @@ QQuickWindow *App::getSettingsWindow () {
 
 bool App::hasFocus () const {
   return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
-}
-
-// -----------------------------------------------------------------------------
-
-QString App::getVersion () const {
-  return ::Utils::linphoneStringToQString(LINPHONE_VERSION);
 }
 
 // -----------------------------------------------------------------------------
