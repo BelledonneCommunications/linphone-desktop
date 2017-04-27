@@ -232,6 +232,11 @@ elseif(APPLE)
 	file(COPY "${LINPHONE_OUTPUT_DIR}/share/sounds" DESTINATION "Linphone.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
 	file(COPY "${LINPHONE_OUTPUT_DIR}/share/Linphone/rootca.pem" DESTINATION "Linphone.app/Contents/Resources/share/linphone")
 	file(COPY "${LINPHONE_OUTPUT_DIR}/share/Linphone/linphonerc-factory" DESTINATION "Linphone.app/Contents/Resources/share/linphone")
+
+	file(COPY "${LINPHONE_OUTPUT_DIR}/share/Linphone/assistant/use-other-sip-account.rc" DESTINATION "Linphone.app/Contents/Resources/share/linphone/assistant")
+	file(COPY "${LINPHONE_OUTPUT_DIR}/share/Linphone/assistant/create-linphone-sip-account.rc" DESTINATION "Linphone.app/Contents/Resources/share/linphone/assistant")
+	file(COPY "${LINPHONE_OUTPUT_DIR}/share/Linphone/assistant/use-linphone-sip-account.rc" DESTINATION "Linphone.app/Contents/Resources/share/linphone/assistant")
+
 	file(GLOB SHARED_LIBRARIES "${CMAKE_CURRENT_BINARY_DIR}/Linphone.app/Contents/Frameworks/*.*.dylib")
 	foreach(_library ${SHARED_LIBRARIES})
 		get_filename_component(_library_filename ${_library} NAME)

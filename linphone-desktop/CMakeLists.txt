@@ -278,6 +278,10 @@ install(TARGETS ${TARGET_NAME}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
+# ------------------------------------------------------------------------------
+# Install rc files.
+# ------------------------------------------------------------------------------
+
 install(FILES "${ASSETS_DIR}/linphonerc-factory"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/linphone"
 )
