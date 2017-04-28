@@ -24,6 +24,7 @@ function handleCreation () {
 
     contactEdit._edition = true
   } else {
+
     contactEdit._vcard = contact.vcard
   }
 }

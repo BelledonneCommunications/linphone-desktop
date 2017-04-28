@@ -57,7 +57,7 @@ private:
   bool mUpdateContextInfo = false;
 
   bool mIsPreview = false;
-  std::shared_ptr<linphone::Call> mLinphoneCall;
+  std::shared_ptr<linphone::Call> mCall;
 
   QQuickWindow *mWindow;
 };
@@ -69,7 +69,7 @@ class Camera : public QQuickFramebufferObject {
 
   Q_OBJECT;
 
-  Q_PROPERTY(CallModel * call READ getCall WRITE setCall NOTIFY callChanged);
+  Q_PROPERTY(CallModel * call READ getCallModel WRITE setCallModel NOTIFY callChanged);
   Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
 
 public:
@@ -79,18 +79,18 @@ public:
   QQuickFramebufferObject::Renderer *createRenderer () const override;
 
 signals:
-  void callChanged (CallModel *call);
+  void callChanged (CallModel *callModel);
   void isPreviewChanged (bool isPreview);
 
 private:
-  CallModel *getCall () const;
-  void setCall (CallModel *call);
+  CallModel *getCallModel () const;
+  void setCallModel (CallModel *callModel);
 
   bool getIsPreview () const;
   void setIsPreview (bool status);
 
   bool mIsPreview = false;
-  CallModel *mCall = nullptr;
+  CallModel *mCallModel = nullptr;
 
   QTimer *mRefreshTimer;
 };

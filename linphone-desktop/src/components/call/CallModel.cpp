@@ -36,10 +36,10 @@ using namespace std;
 
 // =============================================================================
 
-CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
-  Q_ASSERT(linphoneCall != nullptr);
-  mLinphoneCall = linphoneCall;
-  mLinphoneCall->setData("call-model", *this);
+CallModel::CallModel (shared_ptr<linphone::Call> call) {
+  Q_ASSERT(call != nullptr);
+  mCall = call;
+  mCall->setData("call-model", *this);
 
   // Deal with auto-answer.
   {
@@ -59,7 +59,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
   QObject::connect(
     &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::callStateChanged,
     this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
-      if (call != mLinphoneCall)
+      if (call != mCall)
         return;
 
       switch (state) {
@@ -90,10 +90,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
 
         case linphone::CallStateUpdatedByRemote:
           if (
-            !mLinphoneCall->getCurrentParams()->videoEnabled() &&
-            mLinphoneCall->getRemoteParams()->videoEnabled()
+            !mCall->getCurrentParams()->videoEnabled() &&
+            mCall->getRemoteParams()->videoEnabled()
           ) {
-            mLinphoneCall->deferUpdate();
+            mCall->deferUpdate();
             emit videoRequested();
           }
 
@@ -109,7 +109,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> linphoneCall) {
 }
 
 CallModel::~CallModel () {
-  mLinphoneCall->unsetData("call-model");
+  mCall->unsetData("call-model");
 }
 
 // -----------------------------------------------------------------------------
@@ -123,13 +123,13 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   );
 }
 
-void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &stats) {
-  switch (stats->getType()) {
+void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats) {
+  switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
-      updateStats(stats, mAudioStats);
+      updateStats(callStats, mAudioStats);
       break;
     case linphone::StreamTypeVideo:
-      updateStats(stats, mVideoStats);
+      updateStats(callStats, mVideoStats);
       break;
     default:
       break;
@@ -144,31 +144,31 @@ void CallModel::accept () {
   stopAutoAnswerTimer();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
   params->enableVideo(false);
   setRecordFile(params);
 
   App::smartShowWindow(App::getInstance()->getCallsWindow());
-  mLinphoneCall->acceptWithParams(params);
+  mCall->acceptWithParams(params);
 }
 
 void CallModel::acceptWithVideo () {
   stopAutoAnswerTimer();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
   params->enableVideo(true);
   setRecordFile(params);
 
   App::smartShowWindow(App::getInstance()->getCallsWindow());
-  mLinphoneCall->acceptWithParams(params);
+  mCall->acceptWithParams(params);
 }
 
 void CallModel::terminate () {
   CoreManager *core = CoreManager::getInstance();
 
   core->lockVideoRender();
-  mLinphoneCall->terminate();
+  mCall->terminate();
   core->unlockVideoRender();
 }
 
@@ -178,14 +178,14 @@ void CallModel::transfer () {
 
 void CallModel::acceptVideoRequest () {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
   params->enableVideo(true);
 
-  mLinphoneCall->acceptUpdate(params);
+  mCall->acceptUpdate(params);
 }
 
 void CallModel::rejectVideoRequest () {
-  mLinphoneCall->acceptUpdate(mLinphoneCall->getCurrentParams());
+  mCall->acceptUpdate(mCall->getCurrentParams());
 }
 
 void CallModel::takeSnapshot () {
@@ -199,9 +199,9 @@ void CallModel::takeSnapshot () {
 
   oldName = newName;
 
-  qInfo() << "Take snapshot of call:" << &mLinphoneCall;
+  qInfo() << "Take snapshot of call:" << &mCall;
 
-  mLinphoneCall->takeVideoSnapshot(
+  mCall->takeVideoSnapshot(
     ::Utils::qStringToLinphoneString(
       CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName
     )
@@ -212,9 +212,9 @@ void CallModel::startRecording () {
   if (mRecording)
     return;
 
-  qInfo() << "Start recording call:" << &mLinphoneCall;
+  qInfo() << "Start recording call:" << &mCall;
 
-  mLinphoneCall->startRecording();
+  mCall->startRecording();
   mRecording = true;
 
   emit recordingChanged(true);
@@ -222,10 +222,10 @@ void CallModel::startRecording () {
 
 void CallModel::stopRecording () {
   if (mRecording) {
-    qInfo() << "Stop recording call:" << &mLinphoneCall;
+    qInfo() << "Stop recording call:" << &mCall;
 
     mRecording = false;
-    mLinphoneCall->stopRecording();
+    mCall->stopRecording();
 
     emit recordingChanged(false);
   }
@@ -242,11 +242,11 @@ void CallModel::stopAutoAnswerTimer () const {
 }
 
 QString CallModel::getSipAddress () const {
-  return ::Utils::linphoneStringToQString(mLinphoneCall->getRemoteAddress()->asStringUriOnly());
+  return ::Utils::linphoneStringToQString(mCall->getRemoteAddress()->asStringUriOnly());
 }
 
 CallModel::CallStatus CallModel::getStatus () const {
-  switch (mLinphoneCall->getState()) {
+  switch (mCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
       return CallStatusConnected;
@@ -279,17 +279,17 @@ CallModel::CallStatus CallModel::getStatus () const {
       break;
   }
 
-  return mLinphoneCall->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
+  return mCall->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
 }
 
 // -----------------------------------------------------------------------------
 
 int CallModel::getDuration () const {
-  return mLinphoneCall->getDuration();
+  return mCall->getDuration();
 }
 
 float CallModel::getQuality () const {
-  return mLinphoneCall->getCurrentQuality();
+  return mCall->getCurrentQuality();
 }
 
 // -----------------------------------------------------------------------------
@@ -307,11 +307,11 @@ inline float computeVu (float volume) {
 }
 
 float CallModel::getMicroVu () const {
-  return computeVu(mLinphoneCall->getRecordVolume());
+  return computeVu(mCall->getRecordVolume());
 }
 
 float CallModel::getSpeakerVu () const {
-  return computeVu(mLinphoneCall->getPlayVolume());
+  return computeVu(mCall->getPlayVolume());
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ bool CallModel::getPausedByUser () const {
 }
 
 void CallModel::setPausedByUser (bool status) {
-  switch (mLinphoneCall->getState()) {
+  switch (mCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
     case linphone::CallStatePaused:
@@ -347,24 +347,24 @@ void CallModel::setPausedByUser (bool status) {
 
   if (status) {
     if (!mPausedByUser)
-      mLinphoneCall->pause();
+      mCall->pause();
 
     return;
   }
 
   if (mPausedByUser)
-    mLinphoneCall->resume();
+    mCall->resume();
 }
 
 // -----------------------------------------------------------------------------
 
 bool CallModel::getVideoEnabled () const {
-  shared_ptr<const linphone::CallParams> params = mLinphoneCall->getCurrentParams();
+  shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
   return params && params->videoEnabled() && getStatus() == CallStatusConnected;
 }
 
 void CallModel::setVideoEnabled (bool status) {
-  switch (mLinphoneCall->getState()) {
+  switch (mCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
       break;
@@ -375,16 +375,16 @@ void CallModel::setVideoEnabled (bool status) {
     return;
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mLinphoneCall);
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
   params->enableVideo(status);
 
-  mLinphoneCall->update(params);
+  mCall->update(params);
 }
 
 // -----------------------------------------------------------------------------
 
 bool CallModel::getUpdating () const {
-  switch (mLinphoneCall->getState()) {
+  switch (mCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
     case linphone::CallStatePaused:
@@ -406,7 +406,7 @@ bool CallModel::getRecording () const {
 
 void CallModel::sendDtmf (const QString &dtmf) {
   qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(dtmf);
-  mLinphoneCall->sendDtmf(dtmf.constData()[0].toLatin1());
+  mCall->sendDtmf(dtmf.constData()[0].toLatin1());
 }
 
 // -----------------------------------------------------------------------------
@@ -426,9 +426,9 @@ inline QVariantMap createStat (const QString &key, const QString &value) {
   return m;
 }
 
-void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &stats) {
+void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList) {
   QString family;
-  shared_ptr<const linphone::CallParams> params = mLinphoneCall->getCurrentParams();
+  shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
   shared_ptr<const linphone::PayloadType> payloadType;
 
   switch (callStats->getType()) {
@@ -454,21 +454,21 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       break;
   }
 
-  stats.clear();
+  statsList.clear();
 
-  stats << createStat(tr("callStatsCodec"), payloadType
+  statsList << createStat(tr("callStatsCodec"), payloadType
     ? QString("%1 / %2kHz").arg(Utils::linphoneStringToQString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
     : "");
-  stats << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
-  stats << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
-  stats << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
-  stats << createStat(tr("callStatsIpFamily"), family);
-  stats << createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats->getSenderLossRate()));
-  stats << createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats->getReceiverLossRate()));
+  statsList << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
+  statsList << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
+  statsList << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
+  statsList << createStat(tr("callStatsIpFamily"), family);
+  statsList << createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats->getSenderLossRate()));
+  statsList << createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats->getReceiverLossRate()));
 
   switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
-      stats << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
+      statsList << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
       QString sentVideoDefinitionName = Utils::linphoneStringToQString(params->getSentVideoDefinition()->getName());
@@ -476,7 +476,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         .arg(params->getSentVideoDefinition()->getWidth())
         .arg(params->getSentVideoDefinition()->getHeight());
 
-      stats << createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
+      statsList << createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
         ? sentVideoDefinition
         : QString("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
 
@@ -485,7 +485,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         .arg(params->getReceivedVideoDefinition()->getWidth())
         .arg(params->getReceivedVideoDefinition()->getHeight());
 
-      stats << createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
+      statsList << createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
     }

@@ -57,8 +57,8 @@ CameraRenderer::~CameraRenderer () {
 
   if (mIsPreview)
     coreManager->getCore()->setNativePreviewWindowId(nullptr);
-  else if (mLinphoneCall)
-    mLinphoneCall->setNativeVideoWindowId(nullptr);
+  else if (mCall)
+    mCall->setNativeVideoWindowId(nullptr);
 
   coreManager->unlockVideoRender();
 
@@ -104,8 +104,8 @@ void CameraRenderer::render () {
 
     if (mIsPreview)
       coreManager->getCore()->previewOglRender();
-    else if (mLinphoneCall)
-      mLinphoneCall->oglRender();
+    else if (mCall)
+      mCall->oglRender();
 
     msFunctions->bind(nullptr);
     coreManager->unlockVideoRender();
@@ -124,8 +124,8 @@ void CameraRenderer::synchronize (QQuickFramebufferObject *item) {
   Camera *camera = qobject_cast<Camera *>(item);
 
   {
-    CallModel *model = camera->getCall();
-    mLinphoneCall = model ? model->getLinphoneCall() : nullptr;
+    CallModel *model = camera->getCallModel();
+    mCall = model ? model->getCall() : nullptr;
   }
 
   mIsPreview = camera->mIsPreview;
@@ -144,8 +144,8 @@ void CameraRenderer::updateWindowId () {
 
   if (mIsPreview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
-  else if (mLinphoneCall)
-    mLinphoneCall->setNativeVideoWindowId(mContextInfo);
+  else if (mCall)
+    mCall->setNativeVideoWindowId(mContextInfo);
 }
 
 // -----------------------------------------------------------------------------
@@ -172,16 +172,16 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 
 // -----------------------------------------------------------------------------
 
-CallModel *Camera::getCall () const {
-  return mCall;
+CallModel *Camera::getCallModel () const {
+  return mCallModel;
 }
 
-void Camera::setCall (CallModel *call) {
-  if (mCall != call) {
-    mCall = call;
+void Camera::setCallModel (CallModel *callModel) {
+  if (mCallModel != callModel) {
+    mCallModel = callModel;
     update();
 
-    emit callChanged(mCall);
+    emit callChanged(mCallModel);
   }
 }
 

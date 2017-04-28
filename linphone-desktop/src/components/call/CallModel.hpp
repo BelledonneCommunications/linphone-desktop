@@ -67,12 +67,12 @@ public:
   CallModel (std::shared_ptr<linphone::Call> linphoneCall);
   ~CallModel ();
 
-  std::shared_ptr<linphone::Call> getLinphoneCall () const {
-    return mLinphoneCall;
+  std::shared_ptr<linphone::Call> getCall () const {
+    return mCall;
   }
 
   static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
-  void updateStats (const std::shared_ptr<const linphone::CallStats> &stats);
+  void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats);
 
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
@@ -103,7 +103,7 @@ private:
 
   CallStatus getStatus () const;
   bool isOutgoing () const {
-    return mLinphoneCall->getDir() == linphone::CallDirOutgoing;
+    return mCall->getDir() == linphone::CallDirOutgoing;
   }
 
   int getDuration () const;
@@ -126,7 +126,7 @@ private:
 
   QVariantList getAudioStats () const;
   QVariantList getVideoStats () const;
-  void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &stats);
+  void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
 
   QString iceStateToString (linphone::IceState state) const;
 
@@ -137,7 +137,7 @@ private:
   QVariantList mAudioStats;
   QVariantList mVideoStats;
 
-  std::shared_ptr<linphone::Call> mLinphoneCall;
+  std::shared_ptr<linphone::Call> mCall;
 };
 
 #endif // CALL_MODEL_H_

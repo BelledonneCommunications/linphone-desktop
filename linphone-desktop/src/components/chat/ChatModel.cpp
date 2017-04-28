@@ -524,6 +524,7 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
     case linphone::CallStatusAborted:
     case linphone::CallStatusEarlyAborted:
       return; // Ignore aborted calls.
+
     case linphone::CallStatusSuccess:
     case linphone::CallStatusMissed:
     case linphone::CallStatusDeclined:

@@ -29,6 +29,8 @@
 // =============================================================================
 
 class VcardModel : public QObject {
+  friend class ContactModel;
+
   Q_OBJECT;
 
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY vcardUpdated);
@@ -38,8 +40,6 @@ class VcardModel : public QObject {
   Q_PROPERTY(QVariantList companies READ getCompanies NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList emails READ getEmails NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList urls READ getUrls NOTIFY vcardUpdated);
-
-  friend class ContactModel;
 
 public:
   VcardModel (std::shared_ptr<linphone::Vcard> vcard) : mVcard(vcard) {}

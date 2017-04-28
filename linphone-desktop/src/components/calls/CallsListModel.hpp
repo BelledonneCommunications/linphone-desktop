@@ -43,7 +43,7 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-  CallModel *getCall (const std::shared_ptr<linphone::Call> &linphoneCall) const;
+  CallModel *getCallModel (const std::shared_ptr<linphone::Call> &call) const;
 
   Q_INVOKABLE void launchAudioCall (const QString &sipUri) const;
   Q_INVOKABLE void launchVideoCall (const QString &sipUri) const;
@@ -53,14 +53,14 @@ public:
   Q_INVOKABLE void terminateAllCalls () const;
 
 signals:
-  void callRunning (int index, CallModel *call);
+  void callRunning (int index, CallModel *callModel);
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-  void addCall (const std::shared_ptr<linphone::Call> &linphoneCall);
-  void removeCall (const std::shared_ptr<linphone::Call> &linphoneCall);
+  void addCall (const std::shared_ptr<linphone::Call> &call);
+  void removeCall (const std::shared_ptr<linphone::Call> &call);
 
   QList<CallModel *> mList;
 

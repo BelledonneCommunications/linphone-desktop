@@ -36,13 +36,13 @@ using namespace std;
 
 // =============================================================================
 
-inline QList<CallModel *>::iterator findCall (
+inline QList<CallModel *>::iterator findCallModel (
   QList<CallModel *> &list,
-  const shared_ptr<linphone::Call> &linphoneCall
+  const shared_ptr<linphone::Call> &call
 ) {
   return find_if(
-    list.begin(), list.end(), [linphoneCall](CallModel *call) {
-      return linphoneCall == call->getLinphoneCall();
+    list.begin(), list.end(), [call](CallModel *callModel) {
+      return call == callModel->getCall();
     }
   );
 }
@@ -53,21 +53,21 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
   mCoreHandlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
     &(*mCoreHandlers), &CoreHandlers::callStateChanged,
-    this, [this](const shared_ptr<linphone::Call> &linphoneCall, linphone::CallState state) {
+    this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
       switch (state) {
         case linphone::CallStateIncomingReceived:
         case linphone::CallStateOutgoingInit:
-          addCall(linphoneCall);
+          addCall(call);
           break;
 
         case linphone::CallStateEnd:
         case linphone::CallStateError:
-          removeCall(linphoneCall);
+          removeCall(call);
           break;
 
         case linphone::CallStateStreamsRunning: {
-          int index = static_cast<int>(distance(mList.begin(), findCall(mList, linphoneCall)));
-          emit callRunning(index, &linphoneCall->getData<CallModel>("call-model"));
+          int index = static_cast<int>(distance(mList.begin(), findCallModel(mList, call)));
+          emit callRunning(index, &call->getData<CallModel>("call-model"));
         }
         break;
 
@@ -100,8 +100,8 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-CallModel *CallsListModel::getCall (const shared_ptr<linphone::Call> &linphoneCall) const {
-  auto it = findCall(*(const_cast<QList<CallModel *> *>(&mList)), linphoneCall);
+CallModel *CallsListModel::getCallModel (const shared_ptr<linphone::Call> &call) const {
+  auto it = findCallModel(*(const_cast<QList<CallModel *> *>(&mList)), call);
   return it != mList.end() ? *it : nullptr;
 }
 
@@ -170,33 +170,42 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::addCall (const shared_ptr<linphone::Call> &linphoneCall) {
-  if (linphoneCall->getDir() == linphone::CallDirOutgoing)
+void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
+  if (call->getDir() == linphone::CallDirOutgoing)
     App::smartShowWindow(App::getInstance()->getCallsWindow());
 
-  CallModel *call = new CallModel(linphoneCall);
+  CallModel *callModel = new CallModel(call);
 
-  qInfo() << QStringLiteral("Add call:") << call;
+  qInfo() << QStringLiteral("Add call:") << callModel;
 
-  App::getInstance()->getEngine()->setObjectOwnership(call, QQmlEngine::CppOwnership);
+  App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
 
   int row = mList.count();
 
   beginInsertRows(QModelIndex(), row, row);
-  mList << call;
+  mList << callModel;
   endInsertRows();
 }
 
-void CallsListModel::removeCall (const shared_ptr<linphone::Call> &linphoneCall) {
+void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
+  CallModel *callModel;
+
+  try {
+    callModel = &call->getData<CallModel>("call-model");
+  } catch (const out_of_range &) {
+    // Can be a bug. Or the call model not exists because the linphone call state
+    // `CallStateIncomingReceived`/`CallStateOutgoingInit` was not notified.
+    qWarning() << QStringLiteral("Unable to found call in:") << callModel;
+    return;
+  }
+
   QTimer::singleShot(
-    DELAY_BEFORE_REMOVE_CALL, this, [this, linphoneCall]() {
-      CallModel *call = &linphoneCall->getData<CallModel>("call-model");
+    DELAY_BEFORE_REMOVE_CALL, this, [this, callModel]() {
+      qInfo() << QStringLiteral("Removing call:") << callModel;
 
-      qInfo() << QStringLiteral("Removing call:") << call;
-
-      int index = mList.indexOf(call);
+      int index = mList.indexOf(callModel);
       if (index == -1 || !removeRow(index))
-        qWarning() << QStringLiteral("Unable to remove call:") << call;
+        qWarning() << QStringLiteral("Unable to remove call:") << callModel;
 
       if (mList.empty())
         App::getInstance()->getCallsWindow()->close();
