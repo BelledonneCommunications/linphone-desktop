@@ -35,6 +35,17 @@ Rectangle {
     onClicked: callControls.clicked()
   }
 
+  Icon {
+    id: signIcon
+
+    anchors {
+      left: parent.left
+      top: parent.top
+    }
+
+    iconSize: CallControlsStyle.signSize
+  }
+
   RowLayout {
     anchors {
       fill: parent
@@ -66,14 +77,4 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  Icon {
-    id: signIcon
-
-    anchors {
-      left: parent.left
-      top: parent.top
-    }
-
-    iconSize: CallControlsStyle.signSize
-  }
 }

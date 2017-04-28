@@ -518,6 +518,18 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
 }
 
 void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
+  linphone::CallStatus status = callLog->getStatus();
+
+  switch (status) {
+    case linphone::CallStatusAborted:
+    case linphone::CallStatusEarlyAborted:
+      return; // Ignore aborted calls.
+    case linphone::CallStatusSuccess:
+    case linphone::CallStatusMissed:
+    case linphone::CallStatusDeclined:
+      break;
+  }
+
   auto insertEntry = [this](
       const ChatEntryData &pair,
       const QList<ChatEntryData>::iterator *start = NULL
@@ -537,12 +549,6 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
 
       return it;
     };
-
-  linphone::CallStatus status = callLog->getStatus();
-
-  // Ignore aborted calls.
-  if (status == linphone::CallStatusAborted)
-    return;
 
   // Add start call.
   QVariantMap start;
