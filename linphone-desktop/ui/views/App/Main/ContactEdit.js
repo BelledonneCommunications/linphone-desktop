@@ -16,31 +16,37 @@ function handleCreation () {
 
   if (!contact) {
     var vcard = Linphone.CoreManager.createDetachedVcardModel()
-    contactEdit._vcard = vcard
 
     if (sipAddress && sipAddress.length > 0) {
       vcard.addSipAddress(sipAddress)
     }
 
+    contactEdit._vcard = vcard
     contactEdit._edition = true
   } else {
-
     contactEdit._vcard = contact.vcard
   }
 }
 
-function handleDestruction () {
-  var contact = contactEdit._contact
-
-  if (contactEdit._edition && contact) {
-    contact.abortEdit()
+function handleVcardChanged (vcard) {
+  if (!vcard) {
+    vcard = {}
   }
+
+  addresses.setData(vcard.sipAddresses)
+  companies.setData(vcard.companies)
+  emails.setData(vcard.emails)
+  urls.setData(vcard.urls)
 }
 
 // -----------------------------------------------------------------------------
 
 function editContact () {
-  contactEdit._contact.startEdit()
+  var contact = contactEdit._contact
+
+  contact.startEdit()
+
+  contactEdit._vcard = contact.vcard.clone()
   contactEdit._edition = true
 
   window.lockView({
@@ -64,12 +70,14 @@ function removeContact () {
 
 function save () {
   var contact = contactEdit._contact
+  var vcard = contactEdit._vcard
 
   if (contact) {
+    contact.vcard = vcard
     contact.endEdit()
     window.unlockView()
   } else {
-    contactEdit._contact = Linphone.ContactsListModel.addContact(contactEdit._vcard)
+    contactEdit._contact = Linphone.ContactsListModel.addContact(vcard)
   }
 
   contactEdit._edition = false
@@ -79,9 +87,11 @@ function cancel () {
   var contact = contactEdit._contact
 
   if (contact) {
+    contactEdit._vcard = contact.vcard
     contact.abortEdit()
-    contactEdit._edition = false
     window.unlockView()
+
+    contactEdit._edition = false
   } else {
     window.setView('Contacts')
   }
@@ -104,51 +114,41 @@ function setUsername (username) {
 
 // -----------------------------------------------------------------------------
 
-function handleSipAddressChanged (sipAddresses, index, defaultValue, newValue) {
+function handleValueChanged (fields, index, defaultValue, newValue, add, update) {
   if (newValue === defaultValue) {
     return
   }
 
   var vcard = contactEdit._vcard
   var soFarSoGood = (defaultValue.length === 0)
-    ? vcard.addSipAddress(newValue)
-    : vcard.updateSipAddress(defaultValue, newValue)
+    ? vcard[add](newValue)
+    : vcard[update](defaultValue, newValue)
 
-  sipAddresses.setInvalid(index, !soFarSoGood)
+  fields.setInvalid(index, !soFarSoGood)
 }
 
-function handleCompanyChanged (companies, index, defaultValue, newValue) {
-  var vcard = contactEdit._vcard
-  var soFarSoGood = (defaultValue.length === 0)
-    ? vcard.addCompany(newValue)
-    : vcard.updateCompany(defaultValue, newValue)
-
-  companies.setInvalid(index, !soFarSoGood)
+function handleSipAddressChanged () {
+  var args = Array.prototype.slice.call(arguments)
+  args.push('addSipAddress', 'updateSipAddress')
+  handleValueChanged.apply(this, args)
 }
 
-function handleEmailChanged (emails, index, defaultValue, newValue) {
-  var vcard = contactEdit._vcard
-  var soFarSoGood = (defaultValue.length === 0)
-    ? vcard.addEmail(newValue)
-    : vcard.updateEmail(defaultValue, newValue)
-
-  emails.setInvalid(index, !soFarSoGood)
+function handleCompanyChanged () {
+  var args = Array.prototype.slice.call(arguments)
+  args.push('addCompany', 'updateCompany')
+  handleValueChanged.apply(this, args)
 }
 
-function handleUrlChanged (urls, index, defaultValue, newValue) {
-  var url = Utils.extractFirstUri(newValue)
-  if (url === defaultValue) {
-    return
-  }
+function handleEmailChanged () {
+  var args = Array.prototype.slice.call(arguments)
+  args.push('addEmail', 'updateEmail')
+  handleValueChanged.apply(this, args)
+}
 
-  var vcard = contactEdit._vcard
-  var soFarSoGood = url && (
-    defaultValue.length === 0
-      ? vcard.addUrl(newValue)
-      : vcard.updateUrl(defaultValue, newValue)
-  )
-
-  urls.setInvalid(index, !soFarSoGood)
+function handleUrlChanged () {
+  var args = Array.prototype.slice.call(arguments)
+  args.push('addUrl', 'updateUrl')
+  handleValueChanged.apply(this, args)
 }
 
 // -----------------------------------------------------------------------------

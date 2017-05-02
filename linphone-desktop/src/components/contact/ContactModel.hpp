@@ -33,20 +33,17 @@ class ContactModel : public QObject {
 
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
   Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY presenceLevelChanged);
-  Q_PROPERTY(VcardModel * vcard READ getVcardModelPtr NOTIFY contactUpdated);
+  Q_PROPERTY(VcardModel * vcard READ getVcardModel WRITE setVcardModel NOTIFY contactUpdated);
 
+  // Grant access to `mLinphoneFriend`.
   friend class ContactsListModel;
   friend class ContactsListProxyModel;
   friend class SmartSearchBarModel;
 
 public:
   ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphoneFriend);
-  ContactModel (QObject *parent, VcardModel *vcard);
+  ContactModel (QObject *parent, VcardModel *vcardModel);
   ~ContactModel () = default;
-
-  std::shared_ptr<VcardModel> getVcardModel () const {
-    return mVcard;
-  }
 
   void refreshPresence ();
 
@@ -54,8 +51,12 @@ public:
   Q_INVOKABLE void endEdit ();
   Q_INVOKABLE void abortEdit ();
 
+  VcardModel *getVcardModel () const;
+  void setVcardModel (VcardModel *vcardModel);
+
 signals:
   void contactUpdated ();
+
   void presenceStatusChanged (Presence::PresenceStatus status);
   void presenceLevelChanged (Presence::PresenceLevel level);
   void sipAddressAdded (const QString &sipAddress);
@@ -65,13 +66,9 @@ private:
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
 
-  VcardModel *getVcardModelPtr () const {
-    return mVcard.get();
-  }
-
   QVariantList mOldSipAddresses;
 
-  std::shared_ptr<VcardModel> mVcard;
+  VcardModel *mVcardModel;
   std::shared_ptr<linphone::Friend> mLinphoneFriend;
 };
 

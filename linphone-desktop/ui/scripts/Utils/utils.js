@@ -332,7 +332,7 @@ function extractProperties (obj, pattern) {
 
 // -----------------------------------------------------------------------------
 
-// Returns an array from a `object` or `array` argument.
+// Returns an array from an `object` or `array` argument.
 function ensureArray (obj) {
   if (isArray(obj)) {
     return obj
@@ -498,18 +498,6 @@ function includes (obj, value, startIndex) {
   }
 
   return false
-}
-
-// -----------------------------------------------------------------------------
-
-function invert (obj) {
-  var out = {}
-
-  for (var key in obj) {
-    out[key] = obj[key]
-  }
-
-  return out
 }
 
 // -----------------------------------------------------------------------------

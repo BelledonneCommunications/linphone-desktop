@@ -31,27 +31,38 @@ using namespace std;
 // =============================================================================
 
 ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphoneFriend) : QObject(parent) {
-  mLinphoneFriend = linphoneFriend;
-  mVcard = make_shared<VcardModel>(linphoneFriend->getVcard());
+  Q_ASSERT(linphoneFriend != nullptr);
 
-  App::getInstance()->getEngine()->setObjectOwnership(mVcard.get(), QQmlEngine::CppOwnership);
+  mLinphoneFriend = linphoneFriend;
+
+  mVcardModel = new VcardModel(linphoneFriend->getVcard());
+  App::getInstance()->getEngine()->setObjectOwnership(mVcardModel, QQmlEngine::CppOwnership);
+
   mLinphoneFriend->setData("contact-model", *this);
 }
 
-ContactModel::ContactModel (QObject *parent, VcardModel *vcard) : QObject(parent) {
-  Q_ASSERT(vcard != nullptr);
+ContactModel::ContactModel (QObject *parent, VcardModel *vcardModel) : QObject(parent) {
+  Q_ASSERT(vcardModel != nullptr);
 
   QQmlEngine *engine = App::getInstance()->getEngine();
-  if (engine->objectOwnership(vcard) == QQmlEngine::CppOwnership)
-    throw invalid_argument("A contact is already linked to this vcard.");
+  if (engine->objectOwnership(vcardModel) == QQmlEngine::CppOwnership) {
+    qWarning() << QStringLiteral("A contact is already linked to this vcard:") << vcardModel;
+    abort();
+  }
 
-  mLinphoneFriend = linphone::Friend::newFromVcard(vcard->mVcard);
+  Q_ASSERT(vcardModel->mVcard != nullptr);
+
+  mLinphoneFriend = linphone::Friend::newFromVcard(vcardModel->mVcard);
   mLinphoneFriend->setData("contact-model", *this);
 
-  mVcard.reset(vcard);
+  mVcardModel = vcardModel;
 
-  engine->setObjectOwnership(vcard, QQmlEngine::CppOwnership);
+  engine->setObjectOwnership(vcardModel, QQmlEngine::CppOwnership);
+
+  qInfo() << QStringLiteral("Create contact from vcard:") << this << vcardModel;
 }
+
+// -----------------------------------------------------------------------------
 
 void ContactModel::refreshPresence () {
   Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(
@@ -62,15 +73,17 @@ void ContactModel::refreshPresence () {
   emit presenceLevelChanged(Presence::getPresenceLevel(status));
 }
 
+// -----------------------------------------------------------------------------
+
 void ContactModel::startEdit () {
   mLinphoneFriend->edit();
-  mOldSipAddresses = mVcard->getSipAddresses();
+  mOldSipAddresses = mVcardModel->getSipAddresses();
 }
 
 void ContactModel::endEdit () {
   mLinphoneFriend->done();
 
-  QVariantList sipAddresses = mVcard->getSipAddresses();
+  QVariantList sipAddresses = mVcardModel->getSipAddresses();
   QSet<QString> done;
 
   for (const auto &variantA : mOldSipAddresses) {
@@ -104,12 +117,12 @@ next:
 }
 
 void ContactModel::abortEdit () {
-  // TODO: call linphone friend abort function when available.
-  // mLinphoneFriend->abort();
   mOldSipAddresses.clear();
 
   emit contactUpdated();
 }
+
+// -----------------------------------------------------------------------------
 
 Presence::PresenceStatus ContactModel::getPresenceStatus () const {
   return static_cast<Presence::PresenceStatus>(mLinphoneFriend->getConsolidatedPresence());
@@ -117,4 +130,25 @@ Presence::PresenceStatus ContactModel::getPresenceStatus () const {
 
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(getPresenceStatus());
+}
+
+// -----------------------------------------------------------------------------
+
+VcardModel *ContactModel::getVcardModel () const {
+  return mVcardModel;
+}
+
+void ContactModel::setVcardModel (VcardModel *vcardModel) {
+  Q_ASSERT(vcardModel != nullptr);
+  Q_ASSERT(vcardModel != mVcardModel);
+
+  QQmlEngine *engine = App::getInstance()->getEngine();
+  engine->setObjectOwnership(vcardModel, QQmlEngine::CppOwnership);
+  engine->setObjectOwnership(mVcardModel, QQmlEngine::JavaScriptOwnership);
+
+  qInfo() << QStringLiteral("Set vcard on contact:") << this << vcardModel;
+  qInfo() << QStringLiteral("Remove vcard on contact:") << this << mVcardModel;
+
+  mLinphoneFriend->setVcard(vcardModel->mVcard);
+  mVcardModel = vcardModel;
 }

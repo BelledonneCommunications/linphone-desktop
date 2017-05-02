@@ -16,7 +16,6 @@ RowLayout {
   property alias title: text.text
   property bool readOnly: false
   property int inputMethodHints
-  property var defaultData: []
   property var minValues
   readonly property int count: values.count
 
@@ -193,15 +192,5 @@ RowLayout {
     }
 
     model: ListModel {}
-
-    // -------------------------------------------------------------------------
-    // Init values.
-    // -------------------------------------------------------------------------
-
-    Component.onCompleted: {
-      if (defaultData) {
-        setData(defaultData)
-      }
-    }
   }
 }

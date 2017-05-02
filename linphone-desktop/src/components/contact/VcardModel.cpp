@@ -71,6 +71,8 @@ inline shared_ptr<belcard::BelCardPhoto> findBelCardPhoto (const list<shared_ptr
 
 // -----------------------------------------------------------------------------
 
+VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) : mVcard(vcard) {}
+
 VcardModel::~VcardModel () {
   // If it's a detached Vcard, the linked photo must be destroyed from fs.
   if (App::getInstance()->getEngine()->objectOwnership(this) != QQmlEngine::CppOwnership) {
@@ -87,7 +89,16 @@ VcardModel::~VcardModel () {
 
     if (!QFile::remove(imagePath))
       qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
-  }
+
+    qInfo() << QStringLiteral("Destroy detached vcard:") << this;
+  } else
+    qInfo() << QStringLiteral("Destroy attached vcard:") << this;
+}
+
+// -----------------------------------------------------------------------------
+
+VcardModel *VcardModel::clone () const {
+  return new VcardModel(mVcard->clone());
 }
 
 // -----------------------------------------------------------------------------
@@ -113,7 +124,7 @@ QString VcardModel::getAvatar () const {
 
   // No path found.
   if (!photo)
-    return "";
+    return QStringLiteral("");
 
   // Returns right path.
   return QStringLiteral("image://%1/%2").arg(AvatarProvider::PROVIDER_ID).arg(

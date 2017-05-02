@@ -18,6 +18,8 @@ ColumnLayout  {
 
   property string sipAddress
 
+  readonly property alias vcard: contactEdit._vcard
+
   property bool _edition: false
   property var _contact
   property var _vcard
@@ -27,9 +29,19 @@ ColumnLayout  {
   spacing: 0
 
   Component.onCompleted: Logic.handleCreation()
-  Component.onDestruction: Logic.handleDestruction()
+
+  onVcardChanged: Logic.handleVcardChanged(vcard)
 
   // ---------------------------------------------------------------------------
+
+  Loader {
+    active: contactEdit._contact != null
+    sourceComponent: Connections {
+      target: contactEdit._contact
+
+      onContactUpdated: Logic.handleVcardChanged(contactEdit._contact.vcard)
+    }
+  }
 
   FileDialog {
     id: avatarChooser
@@ -163,163 +175,140 @@ ColumnLayout  {
 
     color: ContactEditStyle.content.color
 
-    Loader {
+    Flickable {
+      id: flick
+
+      ScrollBar.vertical: ForceScrollBar {}
+
       anchors.fill: parent
+      boundsBehavior: Flickable.StopAtBounds
+      clip: true
+      contentHeight: infoList.height
+      contentWidth: width - ScrollBar.vertical.width
+      flickableDirection: Flickable.VerticalFlick
 
-      active: _vcard != null
-      sourceComponent: Flickable {
-        id: flick
+      // -----------------------------------------------------------------------
 
-        ScrollBar.vertical: ForceScrollBar {}
+      ColumnLayout {
+        id: infoList
 
-        boundsBehavior: Flickable.StopAtBounds
-        clip: true
-        contentHeight: infoList.height
-        contentWidth: width - ScrollBar.vertical.width
-        flickableDirection: Flickable.VerticalFlick
+        width: flick.contentWidth
 
-        // ---------------------------------------------------------------------
+        ListForm {
+          id: addresses
 
-        Connections {
-          target: _vcard
+          Layout.leftMargin: ContactEditStyle.values.leftMargin
+          Layout.rightMargin: ContactEditStyle.values.rightMargin
+          Layout.topMargin: ContactEditStyle.values.topMargin
 
-          onVcardUpdated: {
-            addresses.setData(_vcard.sipAddresses)
-            companies.setData(_vcard.companies)
-            emails.setData(_vcard.emails)
-            urls.setData(_vcard.urls)
-          }
+          minValues: _contact ? 1 : 0
+          placeholder: qsTr('sipAccountsPlaceholder')
+          readOnly: !_edition
+          title: qsTr('sipAccounts')
+
+          onChanged: Logic.handleSipAddressChanged(addresses, index, defaultValue, newValue)
+          onRemoved: _vcard.removeSipAddress(value)
+        }
+
+        Rectangle {
+          Layout.fillWidth: true
+          Layout.preferredHeight: ContactEditStyle.values.separator.height
+          color: ContactEditStyle.values.separator.color
+        }
+
+        ListForm {
+          id: companies
+
+          Layout.leftMargin: ContactEditStyle.values.leftMargin
+          Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+          placeholder: qsTr('companiesPlaceholder')
+          readOnly: !_edition
+          title: qsTr('companies')
+
+          onChanged: Logic.handleCompanyChanged(companies, index, defaultValue, newValue)
+          onRemoved: _vcard.removeCompany(value)
+        }
+
+        Rectangle {
+          Layout.fillWidth: true
+          Layout.preferredHeight: ContactEditStyle.values.separator.height
+          color: ContactEditStyle.values.separator.color
+        }
+
+        ListForm {
+          id: emails
+
+          Layout.leftMargin: ContactEditStyle.values.leftMargin
+          Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+          placeholder: qsTr('emailsPlaceholder')
+          readOnly: !_edition
+          title: qsTr('emails')
+
+          onChanged: Logic.handleEmailChanged(emails, index, defaultValue, newValue)
+          onRemoved: _vcard.removeEmail(value)
+        }
+
+        Rectangle {
+          Layout.fillWidth: true
+          Layout.preferredHeight: ContactEditStyle.values.separator.height
+          color: ContactEditStyle.values.separator.color
+        }
+
+        ListForm {
+          id: urls
+
+          Layout.leftMargin: ContactEditStyle.values.leftMargin
+          Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+          placeholder: qsTr('webSitesPlaceholder')
+          readOnly: !_edition
+          title: qsTr('webSites')
+
+          onChanged: Logic.handleUrlChanged(urls, index, defaultValue, newValue)
+          onRemoved: _vcard.removeUrl(value)
+        }
+
+        Rectangle {
+          Layout.fillWidth: true
+          Layout.preferredHeight: ContactEditStyle.values.separator.height
+          color: ContactEditStyle.values.separator.color
+        }
+
+        StaticListForm {
+          Layout.leftMargin: ContactEditStyle.values.leftMargin
+          Layout.rightMargin: ContactEditStyle.values.rightMargin
+
+          fields: Logic.buildAddressFields()
+
+          readOnly: !_edition
+          title: qsTr('address')
+
+          onChanged: Logic.handleAddressChanged(index, value)
         }
 
         // ---------------------------------------------------------------------
+        // Edition buttons.
+        // ---------------------------------------------------------------------
 
-        ColumnLayout {
-          id: infoList
+        Row {
+          Layout.alignment: Qt.AlignHCenter
+          Layout.bottomMargin: ContactEditStyle.values.bottomMargin
+          Layout.topMargin: ContactEditStyle.buttons.topMargin
 
-          width: flick.contentWidth
+          spacing: ContactEditStyle.buttons.spacing
+          visible: _edition
 
-          ListForm {
-            id: addresses
-
-            Layout.leftMargin: ContactEditStyle.values.leftMargin
-            Layout.rightMargin: ContactEditStyle.values.rightMargin
-            Layout.topMargin: ContactEditStyle.values.topMargin
-
-            defaultData: _vcard.sipAddresses
-            minValues: _contact ? 1 : 0
-            placeholder: qsTr('sipAccountsPlaceholder')
-            readOnly: !_edition
-            title: qsTr('sipAccounts')
-
-            onChanged: Logic.handleSipAddressChanged(addresses, index, defaultValue, newValue)
-            onRemoved: _vcard.removeSipAddress(value)
+          TextButtonA {
+            text: qsTr('cancel')
+            onClicked: Logic.cancel()
           }
 
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: ContactEditStyle.values.separator.height
-            color: ContactEditStyle.values.separator.color
-          }
-
-          ListForm {
-            id: companies
-
-            Layout.leftMargin: ContactEditStyle.values.leftMargin
-            Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-            defaultData: _vcard.companies
-            placeholder: qsTr('companiesPlaceholder')
-            readOnly: !_edition
-            title: qsTr('companies')
-
-            onChanged: Logic.handleCompanyChanged(companies, index, defaultValue, newValue)
-            onRemoved: _vcard.removeCompany(value)
-          }
-
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: ContactEditStyle.values.separator.height
-            color: ContactEditStyle.values.separator.color
-          }
-
-          ListForm {
-            id: emails
-
-            Layout.leftMargin: ContactEditStyle.values.leftMargin
-            Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-            defaultData: _vcard.emails
-            inputMethodHints: Qt.ImhEmailCharactersOnly
-            placeholder: qsTr('emailsPlaceholder')
-            readOnly: !_edition
-            title: qsTr('emails')
-
-            onChanged: Logic.handleEmailChanged(emails, index, defaultValue, newValue)
-            onRemoved: _vcard.removeEmail(value)
-          }
-
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: ContactEditStyle.values.separator.height
-            color: ContactEditStyle.values.separator.color
-          }
-
-          ListForm {
-            id: urls
-
-            Layout.leftMargin: ContactEditStyle.values.leftMargin
-            Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-            defaultData: _vcard.urls
-            inputMethodHints: Qt.ImhUrlCharactersOnly
-            placeholder: qsTr('webSitesPlaceholder')
-            readOnly: !_edition
-            title: qsTr('webSites')
-
-            onChanged: Logic.handleUrlChanged(urls, index, defaultValue, newValue)
-            onRemoved: _vcard.removeUrl(value)
-          }
-
-          Rectangle {
-            Layout.fillWidth: true
-            Layout.preferredHeight: ContactEditStyle.values.separator.height
-            color: ContactEditStyle.values.separator.color
-          }
-
-          StaticListForm {
-            Layout.leftMargin: ContactEditStyle.values.leftMargin
-            Layout.rightMargin: ContactEditStyle.values.rightMargin
-
-            fields: Logic.buildAddressFields()
-
-            readOnly: !_edition
-            title: qsTr('address')
-
-            onChanged: Logic.handleAddressChanged(index, value)
-          }
-
-          // -------------------------------------------------------------------
-          // Edition buttons.
-          // -------------------------------------------------------------------
-
-          Row {
-            Layout.alignment: Qt.AlignHCenter
-            Layout.bottomMargin: ContactEditStyle.values.bottomMargin
-            Layout.topMargin: ContactEditStyle.buttons.topMargin
-
-            spacing: ContactEditStyle.buttons.spacing
-            visible: _edition
-
-            TextButtonA {
-              text: qsTr('cancel')
-              onClicked: Logic.cancel()
-            }
-
-            TextButtonB {
-              enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
-              text: qsTr('save')
-              onClicked: Logic.save()
-            }
+          TextButtonB {
+            enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
+            text: qsTr('save')
+            onClicked: Logic.save()
           }
         }
       }

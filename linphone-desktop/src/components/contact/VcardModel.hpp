@@ -29,7 +29,7 @@
 // =============================================================================
 
 class VcardModel : public QObject {
-  friend class ContactModel;
+  friend class ContactModel; // Grant access to `mVcard`.
 
   Q_OBJECT;
 
@@ -42,12 +42,14 @@ class VcardModel : public QObject {
   Q_PROPERTY(QVariantList urls READ getUrls NOTIFY vcardUpdated);
 
 public:
-  VcardModel (std::shared_ptr<linphone::Vcard> vcard) : mVcard(vcard) {}
+  VcardModel (std::shared_ptr<linphone::Vcard> vcard);
 
   ~VcardModel ();
 
   QString getUsername () const;
   QVariantList getSipAddresses () const;
+
+  Q_INVOKABLE VcardModel *clone () const;
 
   Q_INVOKABLE bool addSipAddress (const QString &sipAddress);
   Q_INVOKABLE void removeSipAddress (const QString &sipAddress);
