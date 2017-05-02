@@ -98,7 +98,10 @@ VcardModel::~VcardModel () {
 // -----------------------------------------------------------------------------
 
 VcardModel *VcardModel::clone () const {
-  return new VcardModel(mVcard->clone());
+  shared_ptr<linphone::Vcard> vcard = mVcard->clone();
+  Q_ASSERT(vcard != nullptr);
+
+  return new VcardModel(vcard);
 }
 
 // -----------------------------------------------------------------------------
