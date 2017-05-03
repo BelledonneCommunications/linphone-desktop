@@ -53,7 +53,7 @@ AssistantAbstractView {
       FormGroup {
         label: qsTr('passwordLabel')
 
-        TextField {
+        PasswordField {
           id: password
         }
       }

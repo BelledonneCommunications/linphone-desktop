@@ -71,7 +71,7 @@ AssistantAbstractView {
         FormGroup {
           label: qsTr('passwordLabel')
 
-          TextField {
+          PasswordField {
             id: password
 
             onTextChanged: assistantModel.password = text
@@ -83,7 +83,7 @@ AssistantAbstractView {
         FormGroup {
           label: qsTr('passwordConfirmationLabel')
 
-          TextField {
+          PasswordField {
             id: passwordConfirmation
 
             onTextChanged: error = password.text !== text

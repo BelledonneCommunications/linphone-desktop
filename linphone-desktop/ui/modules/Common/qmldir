@@ -35,6 +35,7 @@ TextButtonB          1.0 Form/Buttons/TextButtonB.qml
 
 HexField             1.0 Form/Fields/HexField.qml
 NumericField         1.0 Form/Fields/NumericField.qml
+PasswordField        1.0 Form/Fields/PasswordField.qml
 PortField            1.0 Form/Fields/PortField.qml
 TextAreaField        1.0 Form/Fields/TextAreaField.qml
 TextField            1.0 Form/Fields/TextField.qml

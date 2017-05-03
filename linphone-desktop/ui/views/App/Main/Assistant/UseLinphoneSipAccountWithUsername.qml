@@ -30,7 +30,7 @@ Form {
     FormGroup {
       label: qsTr('passwordLabel')
 
-      TextField {
+      PasswordField {
         id: password
 
         onTextChanged: assistantModel.password = text

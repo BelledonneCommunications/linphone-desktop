@@ -190,6 +190,7 @@
     <file>ui/modules/Common/Form/DroppableTextArea.qml</file>
     <file>ui/modules/Common/Form/Fields/HexField.qml</file>
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
+    <file>ui/modules/Common/Form/Fields/PasswordField.qml</file>
     <file>ui/modules/Common/Form/Fields/PortField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
