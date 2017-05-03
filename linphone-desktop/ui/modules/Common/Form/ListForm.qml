@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
-import Utils 1.0
+
+import 'ListForm.js' as Logic
 
 // =============================================================================
 
@@ -21,64 +22,21 @@ RowLayout {
 
   // ---------------------------------------------------------------------------
 
-  signal changed (int index, string defaultValue, string newValue)
+  signal changed (int index, string oldValue, string newValue)
   signal removed (int index, string value)
 
   // ---------------------------------------------------------------------------
 
-  function setInvalid (index, status) {
-    Utils.assert(
-      index >= 0 && index < values.model.count,
-      'Index ' + index + 'not exists.'
-    )
-
-    values.model.setProperty(index, '$isInvalid', status)
+  function setData () {
+    Logic.setData.apply(this, arguments)
   }
 
-  function setData (data) {
-    var model = values.model
-
-    model.clear()
-    data.forEach(function (data) {
-      model.append({ $value: data, $isInvalid: false })
-    })
+  function setInvalid () {
+    Logic.setInvalid.apply(this, arguments)
   }
 
-  function _addValue (value) {
-    values.model.append({ $value: value, $isInvalid: false })
-
-    if (value.length === 0) {
-      addButton.enabled = false
-    }
-  }
-
-  function _handleEditionFinished (index, text) {
-    var model = values.model
-    var defaultValue = model.get(index).$value
-
-    if (text.length === 0) {
-      // No changes. It must exists at least n min values.
-      if (minValues != null && minValues >= model.count) {
-        // Unable to set property directly. Qt uses a cache of the value.
-        model.remove(index)
-        model.insert(index, {
-          $isInvalid: false,
-          $value: defaultValue
-        })
-        return
-      }
-
-      model.remove(index)
-
-      if (defaultValue.length !== 0) {
-        listForm.removed(index, defaultValue)
-      }
-    } else if (text !== defaultValue) {
-      // Update changes.
-      listForm.changed(index, defaultValue, text)
-    }
-
-    addButton.enabled = true
+  function updateValue () {
+    Logic.updateValue.apply(this, arguments)
   }
 
   // ---------------------------------------------------------------------------
@@ -99,9 +57,9 @@ RowLayout {
 
       icon: 'add'
       iconSize: ListFormStyle.titleArea.iconSize
-      opacity: _edition ? 1 : 0
+      opacity: !listForm.readOnly ? 1 : 0
 
-      onClicked: _edition && _addValue('')
+      onClicked: !listForm.readOnly && Logic.addValue('')
     }
 
     Text {
@@ -140,7 +98,7 @@ RowLayout {
 
     MouseArea {
       anchors.fill: parent
-      onClicked: !listForm.readOnly && _addValue('')
+      onClicked: !listForm.readOnly && Logic.addValue('')
     }
   }
 
@@ -171,23 +129,9 @@ RowLayout {
         height: ListFormStyle.lineHeight
         width: parent.width
 
-        onEditingFinished: _handleEditionFinished(index, text)
+        Component.onCompleted: Logic.handleItemCreation.apply(this)
 
-        Component.onCompleted: {
-          if ($value.length === 0) {
-            // FIXME: Find the source of this problem.
-            //
-            // Magic code. If it's the first inserted value,
-            // an event or a callback steal the item focus.
-            // I suppose it's an internal Qt qml event...
-            //
-            // So, I choose to run a callback executed after this
-            // internal event.
-            Utils.setTimeout(values, 0, function () {
-              textInput.forceActiveFocus()
-            })
-          }
-        }
+        onEditingFinished: Logic.handleEditionFinished(index, text)
       }
     }
 

@@ -206,7 +206,7 @@ ColumnLayout  {
           readOnly: !_edition
           title: qsTr('sipAccounts')
 
-          onChanged: Logic.handleSipAddressChanged(addresses, index, defaultValue, newValue)
+          onChanged: Logic.handleSipAddressChanged(addresses, index, oldValue, newValue)
           onRemoved: _vcard.removeSipAddress(value)
         }
 
@@ -226,7 +226,7 @@ ColumnLayout  {
           readOnly: !_edition
           title: qsTr('companies')
 
-          onChanged: Logic.handleCompanyChanged(companies, index, defaultValue, newValue)
+          onChanged: Logic.handleCompanyChanged(companies, index, oldValue, newValue)
           onRemoved: _vcard.removeCompany(value)
         }
 
@@ -246,7 +246,7 @@ ColumnLayout  {
           readOnly: !_edition
           title: qsTr('emails')
 
-          onChanged: Logic.handleEmailChanged(emails, index, defaultValue, newValue)
+          onChanged: Logic.handleEmailChanged(emails, index, oldValue, newValue)
           onRemoved: _vcard.removeEmail(value)
         }
 
@@ -266,7 +266,7 @@ ColumnLayout  {
           readOnly: !_edition
           title: qsTr('webSites')
 
-          onChanged: Logic.handleUrlChanged(urls, index, defaultValue, newValue)
+          onChanged: Logic.handleUrlChanged(urls, index, oldValue, newValue)
           onRemoved: _vcard.removeUrl(value)
         }
 

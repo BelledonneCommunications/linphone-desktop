@@ -280,12 +280,12 @@ bool VcardModel::addSipAddress (const QString &sipAddress) {
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
   value->setValue(linphoneAddress->asStringUriOnly());
 
-  qInfo() << QStringLiteral("Add new sip address on vcard: `%1`.").arg(sipAddress);
-
   if (!belcard->addImpp(value)) {
     qWarning() << QStringLiteral("Unable to add sip address on vcard: `%1`.").arg(sipAddress);
     return false;
   }
+
+  qInfo() << QStringLiteral("Add new sip address on vcard: `%1`.").arg(sipAddress);
 
   emit vcardUpdated();
   return true;
@@ -338,12 +338,12 @@ bool VcardModel::addCompany (const QString &company) {
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
   value->setValue(::Utils::qStringToLinphoneString(company));
 
-  qInfo() << QStringLiteral("Add new company on vcard: `%1`.").arg(company);
-
   if (!belcard->addRole(value)) {
     qWarning() << QStringLiteral("Unable to add company on vcard: `%1`.").arg(company);
     return false;
   }
+
+  qInfo() << QStringLiteral("Add new company on vcard: `%1`.").arg(company);
 
   emit vcardUpdated();
   return true;
@@ -389,12 +389,12 @@ bool VcardModel::addEmail (const QString &email) {
   shared_ptr<belcard::BelCardEmail> value = belcard::BelCardGeneric::create<belcard::BelCardEmail>();
   value->setValue(::Utils::qStringToLinphoneString(email));
 
-  qInfo() << QStringLiteral("Add new email on vcard: `%1`.").arg(email);
-
   if (!belcard->addEmail(value)) {
     qWarning() << QStringLiteral("Unable to add email on vcard: `%1`.").arg(email);
     return false;
   }
+
+  qInfo() << QStringLiteral("Add new email on vcard: `%1`.").arg(email);
 
   emit vcardUpdated();
   return true;
@@ -440,12 +440,12 @@ bool VcardModel::addUrl (const QString &url) {
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
   value->setValue(::Utils::qStringToLinphoneString(url));
 
-  qInfo() << QStringLiteral("Add new url on vcard: `%1`.").arg(url);
-
   if (!belcard->addURL(value)) {
     qWarning() << QStringLiteral("Unable to add url on vcard: `%1`.").arg(url);
     return false;
   }
+
+  qInfo() << QStringLiteral("Add new url on vcard: `%1`.").arg(url);
 
   emit vcardUpdated();
   return true;

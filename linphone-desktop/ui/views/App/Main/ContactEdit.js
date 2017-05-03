@@ -116,15 +116,16 @@ function setUsername (username) {
 
 // -----------------------------------------------------------------------------
 
-function handleValueChanged (fields, index, defaultValue, newValue, add, update) {
-  if (newValue === defaultValue) {
+function handleValueChanged (fields, index, oldValue, newValue, add, update) {
+  if (newValue === oldValue) {
     return
   }
 
+  console.log('handle', oldValue, newValue)
   var vcard = contactEdit._vcard
-  var soFarSoGood = (defaultValue.length === 0)
+  var soFarSoGood = (oldValue.length === 0)
     ? vcard[add](newValue)
-    : vcard[update](defaultValue, newValue)
+    : vcard[update](oldValue, newValue)
 
   fields.setInvalid(index, !soFarSoGood)
 }
