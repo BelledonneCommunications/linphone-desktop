@@ -56,7 +56,7 @@ public:
   Q_ENUM(PlaybackState);
 
   SoundPlayer (QObject *parent = Q_NULLPTR);
-  ~SoundPlayer () = default;
+  ~SoundPlayer ();
 
   Q_INVOKABLE void pause ();
   Q_INVOKABLE void play ();

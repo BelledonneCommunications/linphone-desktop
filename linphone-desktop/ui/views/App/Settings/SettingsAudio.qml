@@ -74,7 +74,11 @@ TabContainer {
             selectedFile: SettingsModel.ringPath
 
             onAccepted: {
-              ringPlayer.stop()
+              var item = ringPlayer.item
+              if (item) {
+                item.stop()
+              }
+
               SettingsModel.ringPath = selectedFile
             }
 
@@ -84,27 +88,33 @@ TabContainer {
                 leftMargin: SettingsAudioStyle.ringPlayer.leftMargin
               }
 
-              enabled: ringPlayer.playbackState === SoundPlayer.PlayingState
+              enabled: {
+                var item = ringPlayer.item
+                return item && item.playbackState === SoundPlayer.PlayingState
+              }
+
               icon: 'pause'
 
               onClicked: {
+                var item = ringPlayer.item
+                if (!item) {
+                  return
+                }
+
                 if (enabled) {
-                  ringPlayer.stop()
+                  item.stop()
                 } else {
-                  ringPlayer.play()
+                  item.play()
                 }
               }
 
-              SoundPlayer {
+              Loader {
                 id: ringPlayer
 
-                source: SettingsModel.ringPath
-              }
-
-              Connections {
-                target: window
-
-                onClosing: ringPlayer.stop()
+                active: window.visible
+                sourceComponent: SoundPlayer {
+                  source: SettingsModel.ringPath
+                }
               }
             }
           }

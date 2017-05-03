@@ -68,6 +68,11 @@ SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
   mInternalPlayer->setListener(mHandlers);
 }
 
+SoundPlayer::~SoundPlayer () {
+  mForceCloseTimer->stop();
+  mInternalPlayer->close();
+}
+
 // -----------------------------------------------------------------------------
 
 void SoundPlayer::pause () {
