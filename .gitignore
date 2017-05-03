@@ -6,6 +6,7 @@ record_for_lc_*.wav
 .bc_tester_utils.tmp
 prepare.conf.user
 Project.lnk
+.clang_complete
 
 build-*-Debug
 build-*-Default
