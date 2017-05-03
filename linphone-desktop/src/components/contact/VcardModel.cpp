@@ -100,8 +100,12 @@ VcardModel::~VcardModel () {
 VcardModel *VcardModel::clone () const {
   shared_ptr<linphone::Vcard> vcard = mVcard->clone();
   Q_ASSERT(vcard != nullptr);
+  Q_ASSERT(vcard->getVcard() != nullptr);
 
-  return new VcardModel(vcard);
+  VcardModel *vcardModel = new VcardModel(vcard);
+  qInfo() << QStringLiteral("Clone vcard:") << this << vcardModel;
+
+  return vcardModel;
 }
 
 // -----------------------------------------------------------------------------
