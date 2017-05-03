@@ -61,6 +61,12 @@ Logger *Logger::mInstance = nullptr;
 
 // -----------------------------------------------------------------------------
 
+inline QByteArray getFormattedCurrentTime () {
+  return QDateTime::currentDateTime().toString("HH:mm:ss:zzz").toLocal8Bit();
+}
+
+// -----------------------------------------------------------------------------
+
 static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
   const char *format;
 
@@ -79,7 +85,7 @@ static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt,
   else
     return;
 
-  QByteArray dateTime = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
+  QByteArray dateTime = getFormattedCurrentTime();
   char *msg = bctbx_strdup_vprintf(fmt, args);
 
   fprintf(stderr, format, dateTime.constData(), domain, msg);
@@ -134,7 +140,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   #endif // ifdef QT_MESSAGELOGCONTEXT
 
   QByteArray localMsg = msg.toLocal8Bit();
-  QByteArray dateTime = QDateTime::currentDateTime().toString("HH:mm:ss").toLocal8Bit();
+  QByteArray dateTime = getFormattedCurrentTime();
 
   mMutex.lock();
 
