@@ -1,5 +1,5 @@
 /*
- * Authentication.cpp
+ * AuthenticationNotifier.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -23,20 +23,20 @@
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
-#include "Authentication.hpp"
+#include "AuthenticationNotifier.hpp"
 
 using namespace std;
 
 // =============================================================================
 
-Authentication::Authentication (QObject *parent) : QObject(parent) {
+AuthenticationNotifier::AuthenticationNotifier (QObject *parent) : QObject(parent) {
   QObject::connect(
     &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::authenticationRequested,
-    this, &Authentication::handleAuthenticationRequested
+    this, &AuthenticationNotifier::handleAuthenticationRequested
   );
 }
 
-void Authentication::handleAuthenticationRequested (const shared_ptr<linphone::AuthInfo> &authInfo) {
+void AuthenticationNotifier::handleAuthenticationRequested (const shared_ptr<linphone::AuthInfo> &authInfo) {
   emit authenticationRequested(
     QVariant::fromValue(authInfo),
     ::Utils::linphoneStringToQString(authInfo->getRealm()),

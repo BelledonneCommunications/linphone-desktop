@@ -1,5 +1,5 @@
 /*
- * Authentication.hpp
+ * AuthenticationNotifier.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,21 +20,21 @@
  *      Author: Ronan Abhamon
  */
 
-#ifndef AUTHENTICATION_H_
-#define AUTHENTICATION_H_
+#ifndef AUTHENTICATION_NOTIFIER_H_
+#define AUTHENTICATION_NOTIFIER_H_
 
 #include <linphone++/linphone.hh>
 #include <QObject>
 
 // =============================================================================
 
-class Authentication : public QObject {
+class AuthenticationNotifier : public QObject {
   Q_OBJECT;
 
 public:
-  Authentication (QObject *parent = Q_NULLPTR);
+  AuthenticationNotifier (QObject *parent = Q_NULLPTR);
 
-  ~Authentication () = default;
+  ~AuthenticationNotifier () = default;
 
 signals:
   void authenticationRequested (const QVariant &authInfo, const QString &realm, const QString &sipAddress, const QString &userId);
@@ -45,4 +45,4 @@ private:
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::AuthInfo> );
 
-#endif // AUTHENTICATION_H_
+#endif // AUTHENTICATION_NOTIFIER_H_

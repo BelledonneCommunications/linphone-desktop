@@ -95,7 +95,7 @@ set(SOURCES
   src/app/providers/ThumbnailProvider.cpp
   src/app/translator/DefaultTranslator.cpp
   src/components/assistant/AssistantModel.cpp
-  src/components/authentication/Authentication.cpp
+  src/components/authentication/AuthenticationNotifier.cpp
   src/components/call/CallModel.cpp
   src/components/calls/CallsListModel.cpp
   src/components/camera/Camera.cpp
@@ -135,7 +135,7 @@ set(HEADERS
   src/app/providers/ThumbnailProvider.hpp
   src/app/translator/DefaultTranslator.hpp
   src/components/assistant/AssistantModel.hpp
-  src/components/authentication/Authentication.hpp
+  src/components/authentication/AuthenticationNotifier.hpp
   src/components/call/CallModel.hpp
   src/components/calls/CallsListModel.hpp
   src/components/camera/Camera.hpp

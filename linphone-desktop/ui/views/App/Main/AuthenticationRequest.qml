@@ -35,7 +35,7 @@ DialogPlus {
   ]
 
   centeredButtons: true
-  descriptionText: qsTr('authentificationRequestDescription')
+  descriptionText: qsTr('authenticationRequestDescription')
 
   height: AuthenticationRequestStyle.height
   width: AuthenticationRequestStyle.width

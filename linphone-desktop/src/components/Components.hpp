@@ -24,7 +24,7 @@
 #define COMPONENTS_H_
 
 #include "assistant/AssistantModel.hpp"
-#include "authentication/Authentication.hpp"
+#include "authentication/AuthenticationNotifier.hpp"
 #include "calls/CallsListModel.hpp"
 #include "camera/Camera.hpp"
 #include "camera/CameraPreview.hpp"

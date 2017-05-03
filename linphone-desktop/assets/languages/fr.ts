@@ -170,7 +170,7 @@
         <translation>Mot de passe</translation>
     </message>
     <message>
-        <source>authentificationRequestDescription</source>
+        <source>authenticationRequestDescription</source>
         <translation>Impossible de vous authentifier. Merci de vérifier votre mot de passe.</translation>
     </message>
     <message>

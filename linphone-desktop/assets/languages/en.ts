@@ -170,7 +170,7 @@
         <translation>Password</translation>
     </message>
     <message>
-        <source>authentificationRequestDescription</source>
+        <source>authenticationRequestDescription</source>
         <translation>Unable to authenticate. Please verify your password.</translation>
     </message>
     <message>
