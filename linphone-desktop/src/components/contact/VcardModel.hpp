@@ -41,13 +41,30 @@ class VcardModel : public QObject {
   Q_PROPERTY(QVariantList emails READ getEmails NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList urls READ getUrls NOTIFY vcardUpdated);
 
+  // ---------------------------------------------------------------------------
+
 public:
   VcardModel (std::shared_ptr<linphone::Vcard> vcard);
 
   ~VcardModel ();
 
+  // ---------------------------------------------------------------------------
+
+  QString getAvatar () const;
+  bool setAvatar (const QString &path);
+
   QString getUsername () const;
+  void setUsername (const QString &username);
+
+  // ---------------------------------------------------------------------------
+
   QVariantList getSipAddresses () const;
+  QVariantMap getAddress () const;
+  QVariantList getEmails () const;
+  QVariantList getCompanies () const;
+  QVariantList getUrls () const;
+
+  // ---------------------------------------------------------------------------
 
   Q_INVOKABLE VcardModel *clone () const;
 
@@ -72,20 +89,14 @@ public:
   Q_INVOKABLE void setPostalCode (const QString &postalCode);
   Q_INVOKABLE void setCountry (const QString &country);
 
+  // ---------------------------------------------------------------------------
+
 signals:
   void vcardUpdated ();
 
+  // ---------------------------------------------------------------------------
+
 private:
-  void setUsername (const QString &username);
-
-  QString getAvatar () const;
-  bool setAvatar (const QString &path);
-
-  QVariantMap getAddress () const;
-  QVariantList getCompanies () const;
-  QVariantList getEmails () const;
-  QVariantList getUrls () const;
-
   std::shared_ptr<linphone::Vcard> mVcard;
 };
 

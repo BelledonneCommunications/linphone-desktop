@@ -56,7 +56,8 @@ inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const Q
   return nullptr;
 }
 
-inline shared_ptr<belcard::BelCardPhoto> findBelCardPhoto (const list<shared_ptr<belcard::BelCardPhoto> > &photos) {
+inline shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
+  const list<shared_ptr<belcard::BelCardPhoto> > &photos = belcard->getPhotos();
   auto it = find_if(
       photos.cbegin(), photos.cend(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
         return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
@@ -69,6 +70,21 @@ inline shared_ptr<belcard::BelCardPhoto> findBelCardPhoto (const list<shared_ptr
   return nullptr;
 }
 
+inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
+  shared_ptr<belcard::BelCardPhoto> oldPhoto = findBelcardPhoto(belcard);
+  if (oldPhoto) {
+    QString imagePath(
+      ::Utils::linphoneStringToQString(
+        Paths::getAvatarsDirPath() + oldPhoto->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+      )
+    );
+
+    if (!QFile::remove(imagePath))
+      qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
+    belcard->removePhoto(oldPhoto);
+  }
+}
+
 // -----------------------------------------------------------------------------
 
 VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) {
@@ -77,9 +93,11 @@ VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) {
 }
 
 VcardModel::~VcardModel () {
-  // If it's a detached Vcard, the linked photo must be destroyed from fs.
+  // If it's a detached Vcard and if necessary the linked photo must be destroyed from fs.
   if (App::getInstance()->getEngine()->objectOwnership(this) != QQmlEngine::CppOwnership) {
-    shared_ptr<belcard::BelCardPhoto> photo(findBelCardPhoto(mVcard->getVcard()->getPhotos()));
+    qInfo() << QStringLiteral("Destroy detached vcard:") << this;
+
+    shared_ptr<belcard::BelCardPhoto> photo(findBelcardPhoto(mVcard->getVcard()));
     if (!photo)
       return;
 
@@ -92,8 +110,6 @@ VcardModel::~VcardModel () {
 
     if (!QFile::remove(imagePath))
       qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
-
-    qInfo() << QStringLiteral("Destroy detached vcard:") << this;
   } else
     qInfo() << QStringLiteral("Destroy attached vcard:") << this;
 }
@@ -113,24 +129,9 @@ VcardModel *VcardModel::clone () const {
 
 // -----------------------------------------------------------------------------
 
-QString VcardModel::getUsername () const {
-  return ::Utils::linphoneStringToQString(mVcard->getFullName());
-}
-
-void VcardModel::setUsername (const QString &username) {
-  if (username.length() == 0 || username == getUsername())
-    return;
-
-  mVcard->setFullName(::Utils::qStringToLinphoneString(username));
-  emit vcardUpdated();
-}
-
-// -----------------------------------------------------------------------------
-
 QString VcardModel::getAvatar () const {
   // Find desktop avatar.
-  list<shared_ptr<belcard::BelCardPhoto> > photos = mVcard->getVcard()->getPhotos();
-  shared_ptr<belcard::BelCardPhoto> photo = findBelCardPhoto(photos);
+  shared_ptr<belcard::BelCardPhoto> photo = findBelcardPhoto(mVcard->getVcard());
 
   // No path found.
   if (!photo)
@@ -143,6 +144,16 @@ QString VcardModel::getAvatar () const {
 }
 
 bool VcardModel::setAvatar (const QString &path) {
+  shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
+
+  // Remove avatar if path is empty.
+  if (path.isEmpty()) {
+    removeBelcardPhoto(belcard);
+    emit vcardUpdated();
+
+    return true;
+  }
+
   // 1. Try to copy photo in avatars folder.
   QFile file(path);
 
@@ -162,33 +173,33 @@ bool VcardModel::setAvatar (const QString &path) {
 
   qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
 
-  // 2. Edit vcard.
-  shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  list<shared_ptr<belcard::BelCardPhoto> > photos = belcard->getPhotos();
+  // 2. Remove oldest photo.
+  removeBelcardPhoto(belcard);
 
-  // 3. Remove oldest photo.
-  shared_ptr<belcard::BelCardPhoto> oldPhoto = findBelCardPhoto(photos);
-  if (oldPhoto) {
-    QString imagePath(
-      ::Utils::linphoneStringToQString(
-        Paths::getAvatarsDirPath() + oldPhoto->getValue().substr(sizeof(VCARD_SCHEME) - 1)
-      )
-    );
-
-    if (!QFile::remove(imagePath))
-      qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
-    belcard->removePhoto(oldPhoto);
-  }
-
-  // 4. Update.
+  // 3. Update new photo.
   shared_ptr<belcard::BelCardPhoto> photo = belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
   photo->setValue(VCARD_SCHEME + ::Utils::qStringToLinphoneString(fileId));
+
+  emit vcardUpdated();
 
   if (!belcard->addPhoto(photo))
     return false;
 
-  emit vcardUpdated();
   return true;
+}
+
+// -----------------------------------------------------------------------------
+
+QString VcardModel::getUsername () const {
+  return ::Utils::linphoneStringToQString(mVcard->getFullName());
+}
+
+void VcardModel::setUsername (const QString &username) {
+  if (username.length() == 0 || username == getUsername())
+    return;
+
+  mVcard->setFullName(::Utils::qStringToLinphoneString(username));
+  emit vcardUpdated();
 }
 
 // -----------------------------------------------------------------------------

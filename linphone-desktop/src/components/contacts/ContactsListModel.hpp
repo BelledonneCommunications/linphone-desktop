@@ -50,6 +50,8 @@ public:
   Q_INVOKABLE ContactModel *addContact (VcardModel *vcard);
   Q_INVOKABLE void removeContact (ContactModel *contact);
 
+  Q_INVOKABLE void cleanAvatars ();
+
 signals:
   void contactAdded (ContactModel *contact);
   void contactRemoved (const ContactModel *contact);

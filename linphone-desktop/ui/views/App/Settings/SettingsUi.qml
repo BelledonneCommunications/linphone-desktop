@@ -6,6 +6,8 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'SettingsUi.js' as Logic
+
 // =============================================================================
 
 TabContainer {
@@ -106,6 +108,15 @@ TabContainer {
           }
         }
       }
+
+      FormEmptyLine {}
+    }
+
+    TextButtonB {
+      anchors.right: parent.right
+      text: qsTr('cleanAvatars')
+
+      onClicked: Logic.cleanAvatars()
     }
   }
 }

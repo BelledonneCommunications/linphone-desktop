@@ -39,7 +39,7 @@ ColumnLayout  {
     sourceComponent: Connections {
       target: contactEdit._contact
 
-      onContactUpdated: Logic.handleVcardChanged(contactEdit._contact.vcard)
+      onContactUpdated: Logic.handleContactUpdated()
     }
   }
 

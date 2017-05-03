@@ -1109,6 +1109,14 @@ un chat ou ajouter un contact.</translation>
         <source>systemLocale</source>
         <translation>Locale du système</translation>
     </message>
+    <message>
+        <source>cleanAvatars</source>
+        <translation>SUPPRIMER AVATARS</translation>
+    </message>
+    <message>
+        <source>cleanAvatarsDescription</source>
+        <translation>Voulez-vous vraiment supprimer tous les avatars ?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

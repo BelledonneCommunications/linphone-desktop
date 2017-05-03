@@ -303,7 +303,7 @@ void registerType (const char *name) {
 }
 
 void App::registerTypes () {
-  qInfo() << "Registering types...";
+  qInfo() << QStringLiteral("Registering types...");
 
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");

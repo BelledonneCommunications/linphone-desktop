@@ -8,6 +8,19 @@
 
 // =============================================================================
 
+function handleContactUpdated () {
+  var contact = contactEdit._contact
+
+  if (!contactEdit._edition) {
+    // Edition ended.
+    handleVcardChanged(contact.vcard)
+  } else {
+    // Edition not ended, the contact was updated in other place.
+    // Update fields with new data.
+    contactEdit._vcard = contact.vcard.clone()
+  }
+}
+
 function handleCreation () {
   var sipAddress = contactEdit.sipAddress
   var contact = contactEdit._contact = Linphone.SipAddressesModel.mapSipAddressToContact(
@@ -74,6 +87,8 @@ function save () {
   var contact = contactEdit._contact
   var vcard = contactEdit._vcard
 
+  contactEdit._edition = false
+
   if (contact) {
     contact.vcard = vcard
     contact.endEdit()
@@ -81,8 +96,6 @@ function save () {
   } else {
     contactEdit._contact = Linphone.ContactsListModel.addContact(vcard)
   }
-
-  contactEdit._edition = false
 }
 
 function cancel () {
@@ -121,7 +134,6 @@ function handleValueChanged (fields, index, oldValue, newValue, add, update) {
     return
   }
 
-  console.log('handle', oldValue, newValue)
   var vcard = contactEdit._vcard
   var soFarSoGood = (oldValue.length === 0)
     ? vcard[add](newValue)

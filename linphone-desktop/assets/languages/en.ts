@@ -1110,6 +1110,14 @@ your friend&apos;s SIP address or username.</translation>
         <source>systemLocale</source>
         <translation>System locale</translation>
     </message>
+    <message>
+        <source>cleanAvatars</source>
+        <translation>CLEAN AVATARS</translation>
+    </message>
+    <message>
+        <source>cleanAvatarsDescription</source>
+        <translation>Are you sure you want to clean all avatars?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

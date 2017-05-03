@@ -139,6 +139,18 @@ void ContactsListModel::removeContact (ContactModel *contact) {
 
 // -----------------------------------------------------------------------------
 
+void ContactsListModel::cleanAvatars () {
+  qInfo() << QStringLiteral("Delete all avatars.");
+
+  for (const auto &contact : mList) {
+    contact->startEdit();
+    contact->getVcardModel()->setAvatar("");
+    contact->endEdit();
+  }
+}
+
+// -----------------------------------------------------------------------------
+
 void ContactsListModel::addContact (ContactModel *contact) {
   QObject::connect(
     contact, &ContactModel::contactUpdated,
