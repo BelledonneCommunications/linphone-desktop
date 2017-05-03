@@ -71,7 +71,10 @@ inline shared_ptr<belcard::BelCardPhoto> findBelCardPhoto (const list<shared_ptr
 
 // -----------------------------------------------------------------------------
 
-VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) : mVcard(vcard) {}
+VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) {
+  Q_ASSERT(vcard != nullptr);
+  mVcard = vcard;
+}
 
 VcardModel::~VcardModel () {
   // If it's a detached Vcard, the linked photo must be destroyed from fs.

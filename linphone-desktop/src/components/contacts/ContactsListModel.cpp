@@ -36,12 +36,18 @@ ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(pare
   mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 
   // Init contacts with linphone friends list.
-  for (const auto &_friend : mLinphoneFriends->getFriends()) {
-    ContactModel *contact = new ContactModel(this, _friend);
+  QQmlEngine *engine = App::getInstance()->getEngine();
+  for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
+    if (!linphoneFriend->getVcard()) {
+      qWarning() << QStringLiteral("Ignore one linphone friend without vcard.");
+      continue;
+    }
+
+    ContactModel *contact = new ContactModel(this, linphoneFriend);
 
     // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
     // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
-    App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
+    engine->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
     addContact(contact);
   }
@@ -101,16 +107,16 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   ContactModel *contact = new ContactModel(this, vcard);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
-  qInfo() << "Add contact:" << contact;
-
   if (
     mLinphoneFriends->addFriend(contact->mLinphoneFriend) !=
     linphone::FriendListStatus::FriendListStatusOK
   ) {
-    qWarning() << "Unable to add friend from vcard:" << vcard;
+    qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcard;
     delete contact;
     return nullptr;
   }
+
+  qInfo() << QStringLiteral("Add contact on vcard:") << vcard << contact;
 
   int row = mList.count();
 
@@ -124,11 +130,11 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
 }
 
 void ContactsListModel::removeContact (ContactModel *contact) {
-  qInfo() << "Removing contact:" << contact;
+  qInfo() << QStringLiteral("Removing contact:") << contact;
 
   int index = mList.indexOf(contact);
   if (index == -1 || !removeRow(index))
-    qWarning() << "Unable to remove contact:" << contact;
+    qWarning() << QStringLiteral("Unable to remove contact:") << contact;
 }
 
 // -----------------------------------------------------------------------------

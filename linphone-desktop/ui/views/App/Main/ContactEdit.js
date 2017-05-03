@@ -15,6 +15,7 @@ function handleCreation () {
   )
 
   if (!contact) {
+    // Add a new contact.
     var vcard = Linphone.CoreManager.createDetachedVcardModel()
 
     if (sipAddress && sipAddress.length > 0) {
@@ -24,6 +25,7 @@ function handleCreation () {
     contactEdit._vcard = vcard
     contactEdit._edition = true
   } else {
+    // See or edit a contact.
     contactEdit._vcard = contact.vcard
   }
 }

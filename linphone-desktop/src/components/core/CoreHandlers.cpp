@@ -89,7 +89,9 @@ void CoreHandlers::onNotifyPresenceReceived (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Friend> &linphoneFriend
 ) {
-  linphoneFriend->getData<ContactModel>("contact-model").refreshPresence();
+  // Ignore friend without vcard because the `contact-model` data doesn't exist.
+  if (linphoneFriend->getVcard())
+    linphoneFriend->getData<ContactModel>("contact-model").refreshPresence();
 }
 
 void CoreHandlers::onRegistrationStateChanged (
