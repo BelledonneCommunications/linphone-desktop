@@ -278,6 +278,15 @@ bool App::hasFocus () const {
   } \
 )
 
+#define registerUncreatableType(TYPE, NAME) qmlRegisterUncreatableType<TYPE>( \
+  "Linphone", 1, 0, NAME, NAME " is uncreatable." \
+)
+
+template<class T>
+void registerMetaType (const char *name) {
+  qRegisterMetaType<T>(name);
+}
+
 template<class T>
 void registerSingletonType (const char *name) {
   qmlRegisterSingletonType<T>(
@@ -288,39 +297,36 @@ void registerSingletonType (const char *name) {
   );
 }
 
+template<class T>
+void registerType (const char *name) {
+  qmlRegisterType<T>("Linphone", 1, 0, name);
+}
+
 void App::registerTypes () {
   qInfo() << "Registering types...";
 
-  qmlRegisterType<AssistantModel>("Linphone", 1, 0, "AssistantModel");
-  qmlRegisterType<AuthenticationNotifier>("Linphone", 1, 0, "AuthenticationNotifier");
-  qmlRegisterType<Camera>("Linphone", 1, 0, "Camera");
-  qmlRegisterType<CameraPreview>("Linphone", 1, 0, "CameraPreview");
-  qmlRegisterType<ChatModel>("Linphone", 1, 0, "ChatModel");
-  qmlRegisterType<ChatProxyModel>("Linphone", 1, 0, "ChatProxyModel");
-  qmlRegisterType<ContactsListProxyModel>("Linphone", 1, 0, "ContactsListProxyModel");
-  qmlRegisterType<SmartSearchBarModel>("Linphone", 1, 0, "SmartSearchBarModel");
-  qmlRegisterType<SoundPlayer>("Linphone", 1, 0, "SoundPlayer");
-
-  qRegisterMetaType<ChatModel::EntryType>("ChatModel::EntryType");
-
-  qmlRegisterUncreatableType<CallModel>(
-    "Linphone", 1, 0, "CallModel", "CallModel is uncreatable."
-  );
-  qmlRegisterUncreatableType<ContactModel>(
-    "Linphone", 1, 0, "ContactModel", "ContactModel is uncreatable."
-  );
-  qmlRegisterUncreatableType<SipAddressObserver>(
-    "Linphone", 1, 0, "SipAddressObserver", "SipAddressObserver is uncreatable."
-  );
-  qmlRegisterUncreatableType<VcardModel>(
-    "Linphone", 1, 0, "VcardModel", "VcardModel is uncreatable."
-  );
+  registerType<AssistantModel>("AssistantModel");
+  registerType<AuthenticationNotifier>("AuthenticationNotifier");
+  registerType<Camera>("Camera");
+  registerType<CameraPreview>("CameraPreview");
+  registerType<ChatModel>("ChatModel");
+  registerType<ChatProxyModel>("ChatProxyModel");
+  registerType<ContactsListProxyModel>("ContactsListProxyModel");
+  registerType<SmartSearchBarModel>("SmartSearchBarModel");
+  registerType<SoundPlayer>("SoundPlayer");
 
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
   registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
+
+  registerMetaType<ChatModel::EntryType>("ChatModel::EntryType");
+
+  registerUncreatableType(CallModel, "CallModel");
+  registerUncreatableType(ContactModel, "ContactModel");
+  registerUncreatableType(SipAddressObserver, "SipAddressObserver");
+  registerUncreatableType(VcardModel, "VcardModel");
 
   registerSharedSingletonType(App, "App", App::getInstance);
   registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
@@ -331,6 +337,7 @@ void App::registerTypes () {
   registerSharedSingletonType(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);
 }
 
+#undef registerUncreatableType
 #undef registerSharedSingletonType
 
 // -----------------------------------------------------------------------------
