@@ -58,14 +58,13 @@ inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const Q
   return nullptr;
 }
 
+inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
+  return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
+}
+
 inline shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
   const list<shared_ptr<belcard::BelCardPhoto> > &photos = belcard->getPhotos();
-  auto it = find_if(
-      photos.cbegin(), photos.cend(), [](const shared_ptr<belcard::BelCardPhoto> &photo) {
-        return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
-      }
-    );
-
+  auto it = find_if(photos.cbegin(), photos.cend(), isLinphoneDesktopPhoto);
   if (it != photos.cend())
     return *it;
 
@@ -73,17 +72,22 @@ inline shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belc
 }
 
 inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
-  shared_ptr<belcard::BelCardPhoto> oldPhoto = findBelcardPhoto(belcard);
-  if (oldPhoto) {
+  list<shared_ptr<belcard::BelCardPhoto> > photos;
+  for (const auto photo : belcard->getPhotos()) {
+    if (isLinphoneDesktopPhoto(photo))
+      photos.push_back(photo);
+  }
+
+  for (const auto photo : photos) {
     QString imagePath(
       ::Utils::linphoneStringToQString(
-        Paths::getAvatarsDirPath() + oldPhoto->getValue().substr(sizeof(VCARD_SCHEME) - 1)
+        Paths::getAvatarsDirPath() + photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
 
     if (!QFile::remove(imagePath))
       qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
-    belcard->removePhoto(oldPhoto);
+    belcard->removePhoto(photo);
   }
 }
 
