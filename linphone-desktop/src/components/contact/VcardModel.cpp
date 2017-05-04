@@ -71,7 +71,7 @@ inline shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belc
   return nullptr;
 }
 
-inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
+inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, bool cleanPathsOnly = false) {
   list<shared_ptr<belcard::BelCardPhoto> > photos;
   for (const auto photo : belcard->getPhotos()) {
     if (isLinphoneDesktopPhoto(photo))
@@ -85,8 +85,13 @@ inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
       )
     );
 
-    if (!QFile::remove(imagePath))
-      qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
+    if (!cleanPathsOnly) {
+      if (!QFile::remove(imagePath))
+        qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
+      else
+        qInfo() << QStringLiteral("Remove `%1`.").arg(imagePath);
+    }
+
     belcard->removePhoto(photo);
   }
 }
@@ -101,24 +106,8 @@ VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) {
 VcardModel::~VcardModel () {
   if (!mIsReadOnly) {
     qInfo() << QStringLiteral("Destroy detached vcard:") << this;
-
-    // If it's a detached Vcard and if necessary the linked photo must be destroyed from fs.
-    if (mAvatarIsReadOnly)
-      return;
-
-    shared_ptr<belcard::BelCardPhoto> photo(findBelcardPhoto(mVcard->getVcard()));
-    if (!photo)
-      return;
-
-    QString imagePath(
-      ::Utils::linphoneStringToQString(
-        Paths::getAvatarsDirPath() +
-        photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
-      )
-    );
-
-    if (!QFile::remove(imagePath))
-      qWarning() << QStringLiteral("Unable to remove `%1`.").arg(imagePath);
+    if (!mAvatarIsReadOnly)
+      removeBelcardPhoto(mVcard->getVcard());
   } else
     qInfo() << QStringLiteral("Destroy attached vcard:") << this;
 }
@@ -143,47 +132,46 @@ bool VcardModel::setAvatar (const QString &path) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-
-  // Remove avatar if path is empty.
-  if (path.isEmpty()) {
-    removeBelcardPhoto(belcard);
-    emit vcardUpdated();
-
-    return true;
-  }
+  QString fileId;
+  QFile file;
 
   // 1. Try to copy photo in avatars folder.
-  QFile file(path);
+  if (!path.isEmpty()) {
+    file.setFileName(path);
 
-  if (!file.exists() || QImageReader::imageFormat(path).size() == 0)
-    return false;
+    if (!file.exists() || QImageReader::imageFormat(path).size() == 0)
+      return false;
 
-  QFileInfo info(file);
-  QString uuid = QUuid::createUuid().toString();
-  QString fileId = QStringLiteral("%1.%2")
-    .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
-    .arg(info.suffix());
+    QFileInfo info(file);
+    QString uuid = QUuid::createUuid().toString();
+    fileId = QStringLiteral("%1.%2")
+      .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
+      .arg(info.suffix());
 
-  QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirPath()) + fileId;
+    QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirPath()) + fileId;
 
-  if (!file.copy(dest))
-    return false;
+    if (!file.copy(dest))
+      return false;
 
-  qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
+    qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
+  }
 
   // 2. Remove oldest photo.
-  if (!mAvatarIsReadOnly)
-    removeBelcardPhoto(belcard);
+  removeBelcardPhoto(belcard, mAvatarIsReadOnly);
   mAvatarIsReadOnly = false;
 
   // 3. Update new photo.
-  shared_ptr<belcard::BelCardPhoto> photo = belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
-  photo->setValue(VCARD_SCHEME + ::Utils::qStringToLinphoneString(fileId));
+  if (!path.isEmpty()) {
+    shared_ptr<belcard::BelCardPhoto> photo = belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
+    photo->setValue(VCARD_SCHEME + ::Utils::qStringToLinphoneString(fileId));
+
+    if (!belcard->addPhoto(photo)) {
+      file.remove();
+      return false;
+    }
+  }
 
   emit vcardUpdated();
-
-  if (!belcard->addPhoto(photo))
-    return false;
 
   return true;
 }

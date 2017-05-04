@@ -12,8 +12,15 @@ function handleContactUpdated () {
   var contact = contactEdit._contact
 
   if (!contactEdit._edition) {
-    // Edition ended.
-    handleVcardChanged(contact.vcard)
+    var vcard = contact.vcard
+
+    if (contactEdit._vcard !== vcard) {
+      // Not in edition mode, the contact was updated in other place.
+      contactEdit._vcard = vcard
+    } else {
+      // Edition ended.
+      handleVcardChanged(contact.vcard)
+    }
   } else {
     // Edition not ended, the contact was updated in other place.
     // Update fields with new data.
