@@ -47,9 +47,9 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(contacts, &ContactsListModel::sipAddressAdded, this, &SipAddressesModel::handleSipAddressAdded);
   QObject::connect(contacts, &ContactsListModel::sipAddressRemoved, this, &SipAddressesModel::handleSipAddressRemoved);
 
-  QObject::connect(&(*mCoreHandlers), &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
-  QObject::connect(&(*mCoreHandlers), &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
-  QObject::connect(&(*mCoreHandlers), &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
+  QObject::connect(mCoreHandlers.get(), &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
+  QObject::connect(mCoreHandlers.get(), &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
+  QObject::connect(mCoreHandlers.get(), &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
 }
 
 // -----------------------------------------------------------------------------

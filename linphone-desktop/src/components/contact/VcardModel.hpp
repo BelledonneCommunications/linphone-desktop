@@ -50,6 +50,12 @@ public:
 
   // ---------------------------------------------------------------------------
 
+  bool getIsReadOnly () const {
+    return mIsReadOnly;
+  }
+
+  // ---------------------------------------------------------------------------
+
   QString getAvatar () const;
   bool setAvatar (const QString &path);
 
@@ -65,8 +71,6 @@ public:
   QVariantList getUrls () const;
 
   // ---------------------------------------------------------------------------
-
-  Q_INVOKABLE VcardModel *clone () const;
 
   Q_INVOKABLE bool addSipAddress (const QString &sipAddress);
   Q_INVOKABLE void removeSipAddress (const QString &sipAddress);
@@ -97,6 +101,9 @@ signals:
   // ---------------------------------------------------------------------------
 
 private:
+  bool mIsReadOnly = true;
+  bool mAvatarIsReadOnly = true;
+
   std::shared_ptr<linphone::Vcard> mVcard;
 };
 

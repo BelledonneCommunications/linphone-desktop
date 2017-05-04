@@ -143,9 +143,9 @@ void ContactsListModel::cleanAvatars () {
   qInfo() << QStringLiteral("Delete all avatars.");
 
   for (const auto &contact : mList) {
-    contact->startEdit();
-    contact->getVcardModel()->setAvatar("");
-    contact->endEdit();
+    VcardModel *vcardModel = contact->cloneVcardModel();
+    vcardModel->setAvatar("");
+    contact->setVcardModel(vcardModel);
   }
 }
 

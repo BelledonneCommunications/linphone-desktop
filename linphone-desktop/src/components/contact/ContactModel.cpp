@@ -34,32 +34,21 @@ ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linpho
   Q_ASSERT(linphoneFriend != nullptr);
 
   mLinphoneFriend = linphoneFriend;
-
-  mVcardModel = new VcardModel(linphoneFriend->getVcard());
-  App::getInstance()->getEngine()->setObjectOwnership(mVcardModel, QQmlEngine::CppOwnership);
-
   mLinphoneFriend->setData("contact-model", *this);
+
+  setVcardModelInternal(new VcardModel(linphoneFriend->getVcard()));
 }
 
 ContactModel::ContactModel (QObject *parent, VcardModel *vcardModel) : QObject(parent) {
   Q_ASSERT(vcardModel != nullptr);
-
-  QQmlEngine *engine = App::getInstance()->getEngine();
-  if (engine->objectOwnership(vcardModel) == QQmlEngine::CppOwnership) {
-    qWarning() << QStringLiteral("A contact is already linked to this vcard:") << vcardModel;
-    abort();
-  }
-
   Q_ASSERT(vcardModel->mVcard != nullptr);
+  Q_ASSERT(!vcardModel->mIsReadOnly);
 
   mLinphoneFriend = linphone::Friend::newFromVcard(vcardModel->mVcard);
   mLinphoneFriend->setData("contact-model", *this);
 
-  mVcardModel = vcardModel;
-
-  engine->setObjectOwnership(vcardModel, QQmlEngine::CppOwnership);
-
   qInfo() << QStringLiteral("Create contact from vcard:") << this << vcardModel;
+  setVcardModelInternal(vcardModel);
 }
 
 // -----------------------------------------------------------------------------
@@ -75,18 +64,47 @@ void ContactModel::refreshPresence () {
 
 // -----------------------------------------------------------------------------
 
-void ContactModel::startEdit () {
-  mLinphoneFriend->edit();
-  mOldSipAddresses = mVcardModel->getSipAddresses();
+VcardModel *ContactModel::getVcardModel () const {
+  return mVcardModel;
 }
 
-void ContactModel::endEdit () {
+void ContactModel::setVcardModel (VcardModel *vcardModel) {
+  VcardModel *oldVcardModel = mVcardModel;
+
+  qInfo() << QStringLiteral("Remove vcard on contact:") << this << oldVcardModel;
+  oldVcardModel->mIsReadOnly = false;
+  oldVcardModel->mAvatarIsReadOnly = vcardModel->getAvatar() == oldVcardModel->getAvatar();
+  oldVcardModel->deleteLater();
+
+  qInfo() << QStringLiteral("Set vcard on contact:") << this << vcardModel;
+  setVcardModelInternal(vcardModel);
+
+  // Flush vcard.
   mLinphoneFriend->done();
 
+  updateSipAddresses(oldVcardModel);
+}
+
+void ContactModel::setVcardModelInternal (VcardModel *vcardModel) {
+  Q_ASSERT(vcardModel != nullptr);
+  Q_ASSERT(vcardModel != mVcardModel);
+
+  mVcardModel = vcardModel;
+  mVcardModel->mAvatarIsReadOnly = false;
+  mVcardModel->mIsReadOnly = true;
+
+  App::getInstance()->getEngine()->setObjectOwnership(mVcardModel, QQmlEngine::CppOwnership);
+
+  if (mLinphoneFriend->getVcard() != vcardModel->mVcard)
+    mLinphoneFriend->setVcard(vcardModel->mVcard);
+}
+
+void ContactModel::updateSipAddresses (VcardModel *oldVcardModel) {
+  QVariantList oldSipAddresses = oldVcardModel->getSipAddresses();
   QVariantList sipAddresses = mVcardModel->getSipAddresses();
   QSet<QString> done;
 
-  for (const auto &variantA : mOldSipAddresses) {
+  for (const auto &variantA : oldSipAddresses) {
 next:
     const QString &sipAddress = variantA.toString();
     if (done.contains(sipAddress))
@@ -102,7 +120,7 @@ next:
     emit sipAddressRemoved(sipAddress);
   }
 
-  mOldSipAddresses.clear();
+  oldSipAddresses.clear();
 
   for (const auto &variant : sipAddresses) {
     const QString &sipAddress = variant.toString();
@@ -116,10 +134,21 @@ next:
   emit contactUpdated();
 }
 
-void ContactModel::abortEdit () {
-  mOldSipAddresses.clear();
+// -----------------------------------------------------------------------------
 
-  emit contactUpdated();
+VcardModel *ContactModel::cloneVcardModel () const {
+  shared_ptr<linphone::Vcard> vcard = mVcardModel->mVcard->clone();
+  Q_ASSERT(vcard != nullptr);
+  Q_ASSERT(vcard->getVcard() != nullptr);
+
+  mLinphoneFriend->edit();
+
+  VcardModel *vcardModel = new VcardModel(vcard);
+  vcardModel->mIsReadOnly = false;
+
+  qInfo() << QStringLiteral("Clone vcard from contact:") << this << vcardModel;
+
+  return vcardModel;
 }
 
 // -----------------------------------------------------------------------------
@@ -130,25 +159,4 @@ Presence::PresenceStatus ContactModel::getPresenceStatus () const {
 
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(getPresenceStatus());
-}
-
-// -----------------------------------------------------------------------------
-
-VcardModel *ContactModel::getVcardModel () const {
-  return mVcardModel;
-}
-
-void ContactModel::setVcardModel (VcardModel *vcardModel) {
-  Q_ASSERT(vcardModel != nullptr);
-  Q_ASSERT(vcardModel != mVcardModel);
-
-  QQmlEngine *engine = App::getInstance()->getEngine();
-  engine->setObjectOwnership(vcardModel, QQmlEngine::CppOwnership);
-  engine->setObjectOwnership(mVcardModel, QQmlEngine::JavaScriptOwnership);
-
-  qInfo() << QStringLiteral("Set vcard on contact:") << this << vcardModel;
-  qInfo() << QStringLiteral("Remove vcard on contact:") << this << mVcardModel;
-
-  mLinphoneFriend->setVcard(vcardModel->mVcard);
-  mVcardModel = vcardModel;
 }

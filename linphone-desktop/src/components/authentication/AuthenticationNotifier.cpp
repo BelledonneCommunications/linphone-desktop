@@ -31,7 +31,7 @@ using namespace std;
 
 AuthenticationNotifier::AuthenticationNotifier (QObject *parent) : QObject(parent) {
   QObject::connect(
-    &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::authenticationRequested,
+    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::authenticationRequested,
     this, &AuthenticationNotifier::handleAuthenticationRequested
   );
 }

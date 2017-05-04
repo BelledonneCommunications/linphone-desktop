@@ -57,7 +57,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
   }
 
   QObject::connect(
-    &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::callStateChanged,
+    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::callStateChanged,
     this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
       if (call != mCall)
         return;

@@ -17,7 +17,7 @@ function handleContactUpdated () {
   } else {
     // Edition not ended, the contact was updated in other place.
     // Update fields with new data.
-    contactEdit._vcard = contact.vcard.clone()
+    contactEdit._vcard = contact.cloneVcardModel()
   }
 }
 
@@ -59,9 +59,7 @@ function handleVcardChanged (vcard) {
 function editContact () {
   var contact = contactEdit._contact
 
-  contact.startEdit()
-
-  contactEdit._vcard = contact.vcard.clone()
+  contactEdit._vcard = contact.cloneVcardModel()
   contactEdit._edition = true
 
   window.lockView({
@@ -91,7 +89,6 @@ function save () {
 
   if (contact) {
     contact.vcard = vcard
-    contact.endEdit()
     window.unlockView()
   } else {
     contactEdit._contact = Linphone.ContactsListModel.addContact(vcard)
@@ -103,7 +100,6 @@ function cancel () {
 
   if (contact) {
     contactEdit._vcard = contact.vcard
-    contact.abortEdit()
     window.unlockView()
 
     contactEdit._edition = false

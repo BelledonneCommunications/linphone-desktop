@@ -52,7 +52,7 @@ inline QList<CallModel *>::iterator findCallModel (
 CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
   mCoreHandlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
-    &(*mCoreHandlers), &CoreHandlers::callStateChanged,
+    mCoreHandlers.get(), &CoreHandlers::callStateChanged,
     this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
       switch (state) {
         case linphone::CallStateIncomingReceived:
@@ -195,7 +195,7 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
   } catch (const out_of_range &) {
     // Can be a bug. Or the call model not exists because the linphone call state
     // `CallStateIncomingReceived`/`CallStateOutgoingInit` was not notified.
-    qWarning() << QStringLiteral("Unable to found linphone call:") << &(*call);
+    qWarning() << QStringLiteral("Unable to found linphone call:") << call.get();
     return;
   }
 

@@ -179,8 +179,8 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
 
   core->getSipAddressesModel()->connectToChatModel(this);
 
-  QObject::connect(&(*mCoreHandlers), &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
-  QObject::connect(&(*mCoreHandlers), &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
+  QObject::connect(mCoreHandlers.get(), &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
+  QObject::connect(mCoreHandlers.get(), &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
 }
 
 ChatModel::~ChatModel () {

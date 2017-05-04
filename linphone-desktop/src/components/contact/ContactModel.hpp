@@ -47,12 +47,10 @@ public:
 
   void refreshPresence ();
 
-  Q_INVOKABLE void startEdit ();
-  Q_INVOKABLE void endEdit ();
-  Q_INVOKABLE void abortEdit ();
-
   VcardModel *getVcardModel () const;
   void setVcardModel (VcardModel *vcardModel);
+
+  Q_INVOKABLE VcardModel *cloneVcardModel () const;
 
 signals:
   void contactUpdated ();
@@ -63,10 +61,11 @@ signals:
   void sipAddressRemoved (const QString &sipAddress);
 
 private:
+  void setVcardModelInternal (VcardModel *vcardModel);
+  void updateSipAddresses (VcardModel *oldVcardModel);
+
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
-
-  QVariantList mOldSipAddresses;
 
   VcardModel *mVcardModel;
   std::shared_ptr<linphone::Friend> mLinphoneFriend;

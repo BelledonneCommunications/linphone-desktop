@@ -52,7 +52,7 @@ inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi 
 
 AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
   QObject::connect(
-    &(*CoreManager::getInstance()->getHandlers()), &CoreHandlers::registrationStateChanged,
+    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,
     this, &AccountSettingsModel::handleRegistrationStateChanged
   );
 }
