@@ -44,7 +44,7 @@ class VcardModel : public QObject {
   // ---------------------------------------------------------------------------
 
 public:
-  VcardModel (std::shared_ptr<linphone::Vcard> vcard);
+  VcardModel (std::shared_ptr<linphone::Vcard> vcard, bool isReadOnly = true);
 
   ~VcardModel ();
 

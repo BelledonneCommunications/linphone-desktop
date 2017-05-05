@@ -98,9 +98,10 @@ inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, boo
 
 // -----------------------------------------------------------------------------
 
-VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard) {
+VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard, bool isReadOnly) {
   Q_ASSERT(vcard != nullptr);
   mVcard = vcard;
+  mIsReadOnly = isReadOnly;
 }
 
 VcardModel::~VcardModel () {
