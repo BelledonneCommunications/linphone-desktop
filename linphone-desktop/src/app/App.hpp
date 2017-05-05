@@ -40,6 +40,7 @@ class App : public SingleApplication {
   Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged);
   Q_PROPERTY(QString locale READ getLocale CONSTANT);
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
+  Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT);
 
 public:
   App (int &argc, char *argv[]);
@@ -70,7 +71,6 @@ public:
   }
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
-
   Q_INVOKABLE static QString convertUrlToLocalPath (const QUrl &url);
 
 public slots:
@@ -93,6 +93,10 @@ private:
   }
 
   void openAppAfterInit ();
+
+  static QString getQtVersion () {
+    return qVersion();
+  }
 
   QCommandLineParser mParser;
 
