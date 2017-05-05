@@ -67,7 +67,7 @@ private:
   Presence::PresenceStatus getPresenceStatus () const;
   Presence::PresenceLevel getPresenceLevel () const;
 
-  VcardModel *mVcardModel;
+  VcardModel *mVcardModel = nullptr;
   std::shared_ptr<linphone::Friend> mLinphoneFriend;
 };
 
