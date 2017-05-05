@@ -336,8 +336,9 @@ void VcardModel::removeSipAddress (const QString &sipAddress) {
 }
 
 bool VcardModel::updateSipAddress (const QString &oldSipAddress, const QString &sipAddress) {
-  removeSipAddress(oldSipAddress);
-  return addSipAddress(sipAddress);
+  bool soFarSoGood = addSipAddress(sipAddress);
+  removeSipAddress(oldSipAddress); // Remove after. Avoid `Unable to remove the only sip address...` error.
+  return soFarSoGood;
 }
 
 // -----------------------------------------------------------------------------
