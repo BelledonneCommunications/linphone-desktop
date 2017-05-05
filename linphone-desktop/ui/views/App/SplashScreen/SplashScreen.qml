@@ -19,6 +19,8 @@ Window {
   height: image.paintedHeight
   width: image.paintedWidth
 
+  onClosing: indicator.running = false
+
   Image {
     id: image
 
@@ -33,6 +35,8 @@ Window {
     source: Constants.imagesPath + 'splash_screen' + Constants.imagesFormat
 
     BusyIndicator {
+      id: indicator
+
       height: SplashScreenStyle.busyIndicator.height
       width: SplashScreenStyle.busyIndicator.width
 
