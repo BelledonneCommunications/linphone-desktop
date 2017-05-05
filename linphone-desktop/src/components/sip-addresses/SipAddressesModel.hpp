@@ -58,7 +58,8 @@ public:
 
   Q_INVOKABLE QString getTransportFromSipAddress (const QString &sipAddress) const;
   Q_INVOKABLE QString addTransportToSipAddress (const QString &sipAddress, const QString &transport) const;
-  Q_INVOKABLE bool sipAddressIsValid (const QString &sipAddress) const;
+
+  Q_INVOKABLE static bool sipAddressIsValid (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
 

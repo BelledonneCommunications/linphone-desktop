@@ -76,7 +76,9 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 // -----------------------------------------------------------------------------
 
 VcardModel *CoreManager::createDetachedVcardModel () {
-  return new VcardModel(linphone::Factory::get()->createVcard());
+  VcardModel *vcardModel = new VcardModel(linphone::Factory::get()->createVcard(), false);
+  qInfo() << QStringLiteral("Create detached vcard:") << vcardModel;
+  return vcardModel;
 }
 
 void CoreManager::forceRefreshRegisters () {

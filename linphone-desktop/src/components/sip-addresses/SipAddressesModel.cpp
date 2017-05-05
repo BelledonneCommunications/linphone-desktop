@@ -47,9 +47,10 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(contacts, &ContactsListModel::sipAddressAdded, this, &SipAddressesModel::handleSipAddressAdded);
   QObject::connect(contacts, &ContactsListModel::sipAddressRemoved, this, &SipAddressesModel::handleSipAddressRemoved);
 
-  QObject::connect(mCoreHandlers.get(), &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
-  QObject::connect(mCoreHandlers.get(), &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
-  QObject::connect(mCoreHandlers.get(), &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
+  CoreHandlers *intHandlers = mCoreHandlers.get();
+  QObject::connect(intHandlers, &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
+  QObject::connect(intHandlers, &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
+  QObject::connect(intHandlers, &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
 }
 
 // -----------------------------------------------------------------------------
@@ -183,12 +184,10 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
   return ::Utils::linphoneStringToQString(address->asString());
 }
 
-bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) const {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::qStringToLinphoneString(sipAddress)
-    );
-
-  return !!address;
+bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
+  return !!linphone::Factory::get()->createAddress(
+    ::Utils::qStringToLinphoneString(sipAddress)
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -347,8 +346,14 @@ void SipAddressesModel::handleMessagesCountReset (const QString &sipAddress) {
 // -----------------------------------------------------------------------------
 
 void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, ContactModel *contact) {
-  map["contact"] = QVariant::fromValue(contact);
-  updateObservers(map["sipAddress"].toString(), contact);
+  QString sipAddress = map["sipAddress"].toString();
+
+  if (contact)
+    map["contact"] = QVariant::fromValue(contact);
+  else if (map.remove("contact") == 0)
+    qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sipAddress);
+
+  updateObservers(sipAddress, contact);
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, const shared_ptr<linphone::Call> &call) {
@@ -406,16 +411,18 @@ void SipAddressesModel::removeContactOfSipAddress (const QString &sipAddress) {
     return;
   }
 
-  updateObservers(sipAddress, nullptr);
+  // Try to map other contact on this sip address.
+  ContactModel *contactModel = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(sipAddress);
+  updateObservers(sipAddress, contactModel);
 
-  if (it->remove("contact") == 0)
-    qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sipAddress);
+  qInfo() << QStringLiteral("Map new contact on sip address: `%1`.").arg(sipAddress) << contactModel;
+  addOrUpdateSipAddress(*it, contactModel);
 
   int row = mRefs.indexOf(&(*it));
   Q_ASSERT(row != -1);
 
   // History exists, signal changes.
-  if (it->contains("timestamp")) {
+  if (it->contains("timestamp") || contactModel) {
     emit dataChanged(index(row, 0), index(row, 0));
     return;
   }

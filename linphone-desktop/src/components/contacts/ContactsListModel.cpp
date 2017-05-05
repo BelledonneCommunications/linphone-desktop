@@ -112,6 +112,16 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 
 // -----------------------------------------------------------------------------
 
+ContactModel *ContactsListModel::findContactModelFromSipAddress (const QString &sipAddress) const {
+  auto it = find_if(mList.begin(), mList.end(), [sipAddress](ContactModel *contactModel) {
+        return contactModel->getVcardModel()->getSipAddresses().contains(sipAddress);
+      });
+
+  return it != mList.end() ? *it : nullptr;
+}
+
+// -----------------------------------------------------------------------------
+
 ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
   ContactModel *contact = new ContactModel(this, vcard);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
