@@ -35,14 +35,23 @@ using namespace std;
 ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(parent) {
   mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 
+  // Clean friends.
+  {
+    list<shared_ptr<linphone::Friend> > toRemove;
+    for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
+      if (!linphoneFriend->getVcard())
+        toRemove.push_back(linphoneFriend);
+    }
+
+    for (const auto &linphoneFriend : toRemove) {
+      qWarning() << QStringLiteral("Remove one linphone friend without vcard.");
+      mLinphoneFriends->removeFriend(linphoneFriend);
+    }
+  }
+
   // Init contacts with linphone friends list.
   QQmlEngine *engine = App::getInstance()->getEngine();
   for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
-    if (!linphoneFriend->getVcard()) {
-      qWarning() << QStringLiteral("Ignore one linphone friend without vcard.");
-      continue;
-    }
-
     ContactModel *contact = new ContactModel(this, linphoneFriend);
 
     // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
