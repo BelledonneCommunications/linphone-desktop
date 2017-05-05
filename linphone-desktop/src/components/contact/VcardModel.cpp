@@ -52,17 +52,14 @@ inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const Q
       }
     );
 
-  if (it != list.cend())
-    return *it;
-
-  return nullptr;
+  return it != list.cend() ? *it : nullptr;
 }
 
 inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
   return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
 }
 
-inline shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
+static shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
   const list<shared_ptr<belcard::BelCardPhoto> > &photos = belcard->getPhotos();
   auto it = find_if(photos.cbegin(), photos.cend(), isLinphoneDesktopPhoto);
   if (it != photos.cend())
@@ -71,7 +68,7 @@ inline shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belc
   return nullptr;
 }
 
-inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, bool cleanPathsOnly = false) {
+static void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, bool cleanPathsOnly = false) {
   list<shared_ptr<belcard::BelCardPhoto> > photos;
   for (const auto photo : belcard->getPhotos()) {
     if (isLinphoneDesktopPhoto(photo))
@@ -94,6 +91,21 @@ inline void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, boo
 
     belcard->removePhoto(photo);
   }
+}
+
+static string interpretSipAddress (const QString &sipAddress) {
+  string out;
+
+  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretUrl(
+      ::Utils::qStringToLinphoneString(sipAddress)
+    );
+
+  if (!linphoneAddress) {
+    qWarning() << QStringLiteral("Unable to interpret invalid sip address: `%1`.").arg(sipAddress);
+    return out;
+  }
+
+  return linphoneAddress->asStringUriOnly();
 }
 
 // -----------------------------------------------------------------------------
@@ -277,20 +289,14 @@ QVariantList VcardModel::getSipAddresses () const {
 bool VcardModel::addSipAddress (const QString &sipAddress) {
   CHECK_VCARD_IS_WRITABLE(this);
 
-  // Check sip address format.
-  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::qStringToLinphoneString(sipAddress)
-    );
-
-  if (!linphoneAddress) {
-    qWarning() << QStringLiteral("Unable to add invalid sip address on vcard: `%1`.").arg(sipAddress);
+  string interpretedSipAddress = interpretSipAddress(sipAddress);
+  if (interpretedSipAddress.empty())
     return false;
-  }
 
   // Add sip address in belcard.
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
-  value->setValue(linphoneAddress->asStringUriOnly());
+  value->setValue(interpretedSipAddress);
 
   if (!belcard->addImpp(value)) {
     qWarning() << QStringLiteral("Unable to add sip address on vcard: `%1`.").arg(sipAddress);
@@ -308,7 +314,9 @@ void VcardModel::removeSipAddress (const QString &sipAddress) {
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
   list<shared_ptr<belcard::BelCardImpp> > addresses = belcard->getImpp();
-  shared_ptr<belcard::BelCardImpp> value = findBelCardValue(addresses, sipAddress);
+  shared_ptr<belcard::BelCardImpp> value = findBelCardValue(
+      addresses, ::Utils::linphoneStringToQString(interpretSipAddress(sipAddress))
+    );
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove sip address on vcard: `%1`.").arg(sipAddress);
