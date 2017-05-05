@@ -428,12 +428,7 @@ void ChatModel::downloadFile (int id, const QString &downloadPath) {
       return;
   }
 
-  message->setFileTransferFilepath(
-    ::Utils::qStringToLinphoneString(downloadPath.startsWith("file://")
-      ? downloadPath.mid(sizeof("file://") - 1)
-      : downloadPath
-    )
-  );
+  message->setFileTransferFilepath(::Utils::qStringToLinphoneString(downloadPath));
   message->setListener(mMessageHandlers);
 
   if (message->downloadFile() < 0)

@@ -98,6 +98,6 @@ int main (int argc, char *argv[]) {
   // ---------------------------------------------------------------------------
 
   app.initContentApp();
-  qInfo() << "Running app...";
+  qInfo() << QStringLiteral("Running app...");
   return app.exec();
 }

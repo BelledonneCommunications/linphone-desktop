@@ -117,8 +117,8 @@ function cancel () {
 
 // -----------------------------------------------------------------------------
 
-function setAvatar (path) {
-  contactEdit._vcard.avatar = path.match(/^(?:file:\/\/)?(.*)$/)[1]
+function setAvatar (url) {
+  contactEdit._vcard.avatar = Linphone.App.convertUrlToLocalPath(url)
 }
 
 function setUsername (username) {

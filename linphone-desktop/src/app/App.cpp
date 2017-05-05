@@ -261,6 +261,10 @@ void App::smartShowWindow (QQuickWindow *window) {
   window->requestActivate();
 }
 
+QString App::convertUrlToLocalPath (const QUrl &url) {
+  return QDir::toNativeSeparators(url.toLocalFile());
+}
+
 // -----------------------------------------------------------------------------
 
 bool App::hasFocus () const {

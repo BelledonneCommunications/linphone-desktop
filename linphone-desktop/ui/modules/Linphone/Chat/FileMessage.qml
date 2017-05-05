@@ -186,7 +186,7 @@ Row {
           selectExisting: false
           title: qsTr('downloadFileTitle')
 
-          onAccepted: proxyModel.downloadFile(index, fileUrl)
+          onAccepted: proxyModel.downloadFile(index, App.convertUrlToLocalPath(fileUrl))
         }
 
         anchors.fill: parent
