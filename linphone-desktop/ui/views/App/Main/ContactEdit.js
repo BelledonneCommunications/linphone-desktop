@@ -99,6 +99,7 @@ function save () {
     window.unlockView()
   } else {
     contactEdit._contact = Linphone.ContactsListModel.addContact(vcard)
+    handleVcardChanged(vcard) // Called directly, because the vcard is not modified in the view.
   }
 }
 
