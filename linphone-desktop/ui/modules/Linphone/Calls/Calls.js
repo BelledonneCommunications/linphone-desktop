@@ -114,27 +114,32 @@ function handleCountChanged (count) {
   calls._selectedCall = model.data(model.index(index, 0))
 }
 
+function resetSelectedCall () {
+  calls.currentIndex = -1
+  calls._selectedCall = null
+}
+
 function handleRowsAboutToBeRemoved (_, first, last) {
   var index = calls.currentIndex
 
   if (index >= first && index <= last) {
-    calls.currentIndex = -1
-    calls._selectedCall = null
+    resetSelectedCall()
   }
 }
 
 function handleRowsInserted (_, first, last) {
   // The last inserted outgoing element become the selected call.
   var model = calls.model
-
   for (var index = last; index >= first; index--) {
     var call = model.data(model.index(index, 0))
 
     if (call.isOutgoing) {
-      calls.currentIndex = -1
-      calls._selectedCall = null
-
+      resetSelectedCall()
       return
     }
+  }
+
+  if (index === 0 && model.rowsCount() === 1) {
+    resetSelectedCall()
   }
 }
