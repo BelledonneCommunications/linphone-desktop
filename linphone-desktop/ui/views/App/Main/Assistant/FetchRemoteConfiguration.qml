@@ -1,13 +1,13 @@
+import QtQuick 2.7
+
 import Common 1.0
 import Linphone 1.0
+import Utils 1.0
 
 // =============================================================================
 
 AssistantAbstractView {
-  mainAction: (function () {
-    App.restart()
-  })
-
+  mainAction: requestBlock.execute
   mainActionEnabled: url.text.length > 0
   mainActionLabel: qsTr('confirmAction')
 
@@ -15,18 +15,55 @@ AssistantAbstractView {
 
   // ---------------------------------------------------------------------------
 
-  Form {
+  Connections {
+    target: SettingsModel
+
+    onRemoteProvisioningChanged: {
+      requestBlock.stop('')
+
+      window.detachVirtualWindow()
+      window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+        descriptionText: qsTr('remoteProvisioningUpdateDescription'),
+      }, function (status) {
+        if (status) {
+          App.restart()
+        } else {
+          window.setView('Home')
+        }
+      })
+    }
+
+    onRemoteProvisioningNotChanged: requestBlock.stop(qsTr('remoteProvisioningError'))
+  }
+
+  // ---------------------------------------------------------------------------
+
+  Column {
     anchors.fill: parent
-    orientation: Qt.Vertical
 
-    FormLine {
-      FormGroup {
-        label: qsTr('urlLabel')
+    Form {
+      orientation: Qt.Vertical
+      width: parent.width
 
-        TextField {
-          id: url
+      FormLine {
+        FormGroup {
+          label: qsTr('urlLabel')
+
+          TextField {
+            id: url
+          }
         }
       }
+    }
+
+    RequestBlock {
+      id: requestBlock
+
+      action: (function () {
+        SettingsModel.remoteProvisioning = url.text
+      })
+
+      width: parent.width
     }
   }
 }

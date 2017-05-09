@@ -645,3 +645,16 @@ void SettingsModel::setSavedVideosFolder (const QString &folder) {
   mConfig->setString(UI_SECTION, "saved_videos_folder", ::Utils::qStringToLinphoneString(_folder));
   emit savedVideosFolderChanged(_folder);
 }
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getRemoteProvisioning () const {
+  return ::Utils::linphoneStringToQString(CoreManager::getInstance()->getCore()->getProvisioningUri());
+}
+
+void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
+  if (!CoreManager::getInstance()->getCore()->setProvisioningUri(::Utils::qStringToLinphoneString(remoteProvisioning)))
+    emit remoteProvisioningChanged(remoteProvisioning);
+  else
+    emit remoteProvisioningNotChanged(remoteProvisioning);
+}

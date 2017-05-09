@@ -610,6 +610,14 @@ Server url not configured.</translation>
         <source>urlLabel</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>remoteProvisioningError</source>
+        <translation>Unable to set this remote provisioning uri.</translation>
+    </message>
+    <message>
+        <source>remoteProvisioningUpdateDescription</source>
+        <translation>It&apos;s necessary to restart the application. Do you want to restart now?</translation>
+    </message>
 </context>
 <context>
     <name>FileMessage</name>

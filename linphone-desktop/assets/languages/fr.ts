@@ -610,6 +610,14 @@ Url du serveur non configurée.</translation>
         <source>urlLabel</source>
         <translation>URL</translation>
     </message>
+    <message>
+        <source>remoteProvisioningError</source>
+        <translation>Impossible d&apos;utiliser cette URL de configuration.</translation>
+    </message>
+    <message>
+        <source>remoteProvisioningUpdateDescription</source>
+        <translation>Voulez-vous redémarrer maintenant pour prendre en compte ces modifications ?</translation>
+    </message>
 </context>
 <context>
     <name>FileMessage</name>

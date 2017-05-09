@@ -111,6 +111,8 @@ class SettingsModel : public QObject {
 
   // Misc. ---------------------------------------------------------------------
 
+  Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged);
+
   Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
   Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
 
@@ -262,6 +264,9 @@ public:
   QString getSavedVideosFolder () const;
   void setSavedVideosFolder (const QString &folder);
 
+  QString getRemoteProvisioning () const;
+  void setRemoteProvisioning (const QString &remoteProvisioning);
+
   // ---------------------------------------------------------------------------
 
   static const std::string UI_SECTION;
@@ -334,6 +339,9 @@ signals:
 
   void savedScreenshotsFolderChanged (const QString &folder);
   void savedVideosFolderChanged (const QString &folder);
+
+  void remoteProvisioningChanged (const QString &remoteProvisioning);
+  void remoteProvisioningNotChanged (const QString &remoteProvisioning);
 
 private:
   std::shared_ptr<linphone::Config> mConfig;
