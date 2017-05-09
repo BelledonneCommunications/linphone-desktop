@@ -13,7 +13,7 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
-  readonly property var selectedCall: _selectedCall
+  readonly property var selectedCall: calls._selectedCall
 
   property var _selectedCall
 
@@ -30,7 +30,7 @@ ListView {
   Connections {
     target: model
 
-    onCallRunning: Logic.handleCallRunning(index, call)
+    onCallRunning: Logic.handleCallRunning(index, callModel)
     onRowsAboutToBeRemoved: Logic.handleRowsAboutToBeRemoved(parent, first, last)
     onRowsInserted: Logic.handleRowsInserted(parent, first, last)
   }

@@ -139,7 +139,8 @@ function handleRowsInserted (_, first, last) {
     }
   }
 
-  if (index === 0 && model.rowsCount() === 1) {
+  // First received call.
+  if (first === 0 && model.rowCount() === 1) {
     resetSelectedCall()
   }
 }
