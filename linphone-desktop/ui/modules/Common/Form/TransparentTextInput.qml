@@ -101,7 +101,10 @@ Item {
 
     onEditingFinished: {
       cursorPosition = 0
-      parent.editingFinished()
+
+      if (!parent.readOnly) {
+        parent.editingFinished()
+      }
     }
   }
 }
