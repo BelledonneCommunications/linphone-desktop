@@ -136,6 +136,8 @@ void App::initContentApp () {
 
     QObject::connect(
       this, &App::receivedMessage, this, [this](int, QByteArray message) {
+        qInfo() << QStringLiteral("Received message from other application: `%1`.").arg(QString(message));
+
         if (message == "show")
           App::smartShowWindow(getMainWindow());
       }
