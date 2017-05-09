@@ -135,7 +135,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
     return nullptr;
   }
 
-  qInfo() << QStringLiteral("Add contact on vcard:") << vcard << contact;
+  qInfo() << QStringLiteral("Add contact from vcard:") << contact << vcard;
 
   int row = mList.count();
 

@@ -100,6 +100,8 @@ void ContactModel::setVcardModelInternal (VcardModel *vcardModel) {
 }
 
 void ContactModel::updateSipAddresses (VcardModel *oldVcardModel) {
+  Q_ASSERT(oldVcardModel != nullptr);
+
   QVariantList oldSipAddresses = oldVcardModel->getSipAddresses();
   QVariantList sipAddresses = mVcardModel->getSipAddresses();
   QSet<QString> done;
