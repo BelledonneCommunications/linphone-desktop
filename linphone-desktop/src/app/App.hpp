@@ -30,6 +30,8 @@
 #include "../components/notifier/Notifier.hpp"
 #include "../externals/single-application/SingleApplication.hpp"
 
+#define APP_CODE_RESTART 1000
+
 // =============================================================================
 
 class DefaultTranslator;
@@ -52,7 +54,7 @@ public:
   void tryToUsePreferredLocale ();
 
   QQmlEngine *getEngine () {
-    return &mEngine;
+    return mEngine;
   }
 
   Notifier *getNotifier () const {
@@ -64,11 +66,15 @@ public:
 
   bool hasFocus () const;
 
-  Q_INVOKABLE QQuickWindow *getSettingsWindow ();
-
   static App *getInstance () {
     return static_cast<App *>(QApplication::instance());
   }
+
+  Q_INVOKABLE void restart () {
+    exit(APP_CODE_RESTART);
+  }
+
+  Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
   Q_INVOKABLE static QString convertUrlToLocalPath (const QUrl &url);
@@ -81,7 +87,9 @@ signals:
 
 private:
   void registerTypes ();
+  void registerSharedTypes ();
   void setTrayIcon ();
+  void createNotifier ();
 
   QString getConfigLocale () const;
   void setConfigLocale (const QString &locale);
@@ -103,7 +111,7 @@ private:
   QVariantList mAvailableLocales;
   QString mLocale;
 
-  QQmlApplicationEngine mEngine;
+  QQmlApplicationEngine *mEngine = nullptr;
 
   DefaultTranslator *mTranslator = nullptr;
   Notifier *mNotifier = nullptr;

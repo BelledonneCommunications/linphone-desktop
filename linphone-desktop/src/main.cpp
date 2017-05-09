@@ -97,7 +97,12 @@ int main (int argc, char *argv[]) {
   // Init and run!
   // ---------------------------------------------------------------------------
 
-  app.initContentApp();
   qInfo() << QStringLiteral("Running app...");
-  return app.exec();
+
+  int ret;
+  do {
+    app.initContentApp();
+    ret = app.exec();
+  } while (ret == APP_CODE_RESTART);
+  return ret;
 }

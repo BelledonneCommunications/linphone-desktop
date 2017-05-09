@@ -1,10 +1,11 @@
 import Common 1.0
+import Linphone 1.0
 
 // =============================================================================
 
 AssistantAbstractView {
   mainAction: (function () {
-    console.log('TODO')
+    App.restart()
   })
 
   mainActionEnabled: url.text.length > 0

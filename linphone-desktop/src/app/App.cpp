@@ -89,6 +89,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
 
 App::~App () {
   qInfo() << QStringLiteral("Destroying app...");
+  delete mEngine;
 }
 
 // -----------------------------------------------------------------------------
@@ -120,35 +121,56 @@ inline void activeSplashScreen (App *app) {
 }
 
 void App::initContentApp () {
+  // Destroy qml components and linphone core if necessary.
+  if (mEngine) {
+    qInfo() << QStringLiteral("Restarting app...");
+    delete mEngine;
+
+    mCallsWindow = nullptr;
+    mSettingsWindow = nullptr;
+
+    CoreManager::uninit();
+  } else {
+    // Don't quit if last window is closed!!!
+    setQuitOnLastWindowClosed(false);
+
+    QObject::connect(
+      this, &App::receivedMessage, this, [this](int, QByteArray message) {
+        if (message == "show")
+          App::smartShowWindow(getMainWindow());
+      }
+    );
+  }
+
   // Init core.
   CoreManager::init(this, mParser.value("config"));
-  qInfo() << "Activated selectors:" << QQmlFileSelector::get(&mEngine)->selector()->allSelectors();
+
+  // Init engine content.
+  mEngine = new QQmlApplicationEngine();
+  qInfo() << QStringLiteral("Activated selectors:") << QQmlFileSelector::get(mEngine)->selector()->allSelectors();
 
   // Provide `+custom` folders for custom components.
-  (new QQmlFileSelector(&mEngine, this))->setExtraSelectors(QStringList("custom"));
+  (new QQmlFileSelector(mEngine, mEngine))->setExtraSelectors(QStringList("custom"));
 
   // Set modules paths.
-  mEngine.addImportPath(":/ui/modules");
-  mEngine.addImportPath(":/ui/scripts");
-  mEngine.addImportPath(":/ui/views");
+  mEngine->addImportPath(":/ui/modules");
+  mEngine->addImportPath(":/ui/scripts");
+  mEngine->addImportPath(":/ui/views");
 
   // Provide avatars/thumbnails providers.
-  mEngine.addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
-  mEngine.addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
+  mEngine->addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
+  mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
 
-  // Don't quit if last window is closed!!!
-  setQuitOnLastWindowClosed(false);
-
-  // Register types.
   registerTypes();
+  registerSharedTypes();
 
   // Enable notifications.
-  mNotifier = new Notifier(this);
+  createNotifier();
 
   // Load main view.
-  qInfo() << "Loading main view...";
-  mEngine.load(QUrl(QML_VIEW_MAIN_WINDOW));
-  if (mEngine.rootObjects().isEmpty())
+  qInfo() << QStringLiteral("Loading main view...");
+  mEngine->load(QUrl(QML_VIEW_MAIN_WINDOW));
+  if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
   // Load splashscreen.
@@ -158,13 +180,6 @@ void App::initContentApp () {
     CoreManager::getInstance(),
     &CoreManager::linphoneCoreCreated,
     this, mParser.isSet("selftest") ? &App::quit : &App::openAppAfterInit
-  );
-
-  QObject::connect(
-    this, &App::receivedMessage, this, [this](int, QByteArray message) {
-      if (message == "show")
-        App::smartShowWindow(getMainWindow());
-    }
   );
 }
 
@@ -228,7 +243,7 @@ QQuickWindow *App::getCallsWindow () {
 
 QQuickWindow *App::getMainWindow () const {
   return qobject_cast<QQuickWindow *>(
-    const_cast<QQmlApplicationEngine *>(&mEngine)->rootObjects().at(0)
+    const_cast<QQmlApplicationEngine *>(mEngine)->rootObjects().at(0)
   );
 }
 
@@ -238,7 +253,7 @@ QQuickWindow *App::getSettingsWindow () {
     QObject::connect(
       mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
         if (visibility == QWindow::Hidden) {
-          qInfo() << "Update nat policy.";
+          qInfo() << QStringLiteral("Update nat policy.");
           shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
           core->setNatPolicy(core->getNatPolicy());
         }
@@ -331,6 +346,10 @@ void App::registerTypes () {
   registerUncreatableType(ContactModel, "ContactModel");
   registerUncreatableType(SipAddressObserver, "SipAddressObserver");
   registerUncreatableType(VcardModel, "VcardModel");
+}
+
+void App::registerSharedTypes () {
+  qInfo() << QStringLiteral("Registering shared types...");
 
   registerSharedSingletonType(App, "App", App::getInstance);
   registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
@@ -348,7 +367,7 @@ void App::registerTypes () {
 
 void App::setTrayIcon () {
   QQuickWindow *root = getMainWindow();
-  QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(root);
+  QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(mEngine);
 
   // trayIcon: Right click actions.
   QAction *quitAction = new QAction("Quit", root);
@@ -383,6 +402,13 @@ void App::setTrayIcon () {
   systemTrayIcon->setIcon(QIcon(WINDOW_ICON_PATH));
   systemTrayIcon->setToolTip("Linphone");
   systemTrayIcon->show();
+}
+
+// -----------------------------------------------------------------------------
+
+void App::createNotifier () {
+  if (!mNotifier)
+    mNotifier = new Notifier(this);
 }
 
 // -----------------------------------------------------------------------------

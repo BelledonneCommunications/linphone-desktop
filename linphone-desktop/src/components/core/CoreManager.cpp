@@ -73,6 +73,13 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
   QObject::connect(timer, &QTimer::timeout, mInstance, &CoreManager::iterate);
 }
 
+void CoreManager::uninit () {
+  if (mInstance) {
+    delete mInstance;
+    mInstance = nullptr;
+  }
+}
+
 // -----------------------------------------------------------------------------
 
 VcardModel *CoreManager::createDetachedVcardModel () {

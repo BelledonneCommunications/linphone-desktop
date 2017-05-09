@@ -98,6 +98,7 @@ public:
   // ---------------------------------------------------------------------------
 
   static void init (QObject *parent, const QString &configPath);
+  static void uninit ();
 
   static CoreManager *getInstance () {
     return mInstance;
