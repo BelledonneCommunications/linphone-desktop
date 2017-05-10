@@ -11,3 +11,5 @@ Project.lnk
 build-*-Debug
 build-*-Default
 CMakeLists.txt.user
+
+vgcore.*
