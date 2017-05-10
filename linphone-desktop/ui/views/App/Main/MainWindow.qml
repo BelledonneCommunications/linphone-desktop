@@ -60,7 +60,7 @@ ApplicationWindow {
 
   Connections {
     target: CoreManager
-    onLinphoneCoreCreated: mainLoader.active = true
+    onCoreCreated: mainLoader.active = true
   }
 
   Shortcut {

@@ -21,6 +21,7 @@
  */
 
 #include <QtDebug>
+#include <QTimer>
 
 #include "../../app/App.hpp"
 #include "../../Utils.hpp"
@@ -31,6 +32,10 @@
 using namespace std;
 
 // =============================================================================
+
+inline void logGlobalState (linphone::GlobalState gstate) {
+  qInfo() << QStringLiteral("Global state: %1.").arg(gstate);
+}
 
 void CoreHandlers::onAuthenticationRequested (
   const shared_ptr<linphone::Core> &,
@@ -57,10 +62,15 @@ void CoreHandlers::onGlobalStateChanged (
   linphone::GlobalState gstate,
   const string &
 ) {
-  qInfo() << QStringLiteral("Global state: %1.").arg(gstate);
-
-  if (gstate == linphone::GlobalStateOn)
-    emit coreStarted ();
+  if (gstate == linphone::GlobalStateOn) {
+    QTimer::singleShot(
+      0, App::getInstance(), [this, gstate]() {
+        logGlobalState(gstate);
+        emit coreStarted();
+      }
+    );
+  } else
+    logGlobalState(gstate);
 }
 
 void CoreHandlers::onCallStatsUpdated (

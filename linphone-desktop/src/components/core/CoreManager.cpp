@@ -51,7 +51,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(
       qInfo() << QStringLiteral("Core created. Enable iterate.");
       mInstance->mCbsTimer->start();
 
-      emit mInstance->linphoneCoreCreated();
+      emit mInstance->coreCreated();
     }
   );
 
@@ -88,6 +88,8 @@ VcardModel *CoreManager::createDetachedVcardModel () {
 }
 
 void CoreManager::forceRefreshRegisters () {
+  Q_ASSERT(mCore != nullptr);
+
   qInfo() << QStringLiteral("Refresh registers.");
   mCore->refreshRegisters();
 }

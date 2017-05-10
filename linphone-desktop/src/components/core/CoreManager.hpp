@@ -48,10 +48,12 @@ public:
   ~CoreManager () = default;
 
   std::shared_ptr<linphone::Core> getCore () {
+    Q_ASSERT(mCore != nullptr);
     return mCore;
   }
 
   std::shared_ptr<CoreHandlers> getHandlers () {
+    Q_ASSERT(mHandlers != nullptr);
     return mHandlers;
   }
 
@@ -72,22 +74,27 @@ public:
   // ---------------------------------------------------------------------------
 
   CallsListModel *getCallsListModel () const {
+    Q_ASSERT(mCallsListModel != nullptr);
     return mCallsListModel;
   }
 
   ContactsListModel *getContactsListModel () const {
+    Q_ASSERT(mContactsListModel != nullptr);
     return mContactsListModel;
   }
 
   SipAddressesModel *getSipAddressesModel () const {
+    Q_ASSERT(mSipAddressesModel != nullptr);
     return mSipAddressesModel;
   }
 
   SettingsModel *getSettingsModel () const {
+    Q_ASSERT(mSettingsModel != nullptr);
     return mSettingsModel;
   }
 
   AccountSettingsModel *getAccountSettingsModel () const {
+    Q_ASSERT(mAccountSettingsModel != nullptr);
     return mAccountSettingsModel;
   }
 
@@ -99,6 +106,7 @@ public:
   static void uninit ();
 
   static CoreManager *getInstance () {
+    Q_ASSERT(mInstance != nullptr);
     return mInstance;
   }
 
@@ -111,7 +119,7 @@ public:
   Q_INVOKABLE void forceRefreshRegisters ();
 
 signals:
-  void linphoneCoreCreated ();
+  void coreCreated ();
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
