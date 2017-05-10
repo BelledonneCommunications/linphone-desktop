@@ -270,7 +270,8 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
 
     fillMessageEntry(map, message);
 
-    // TODO: Remove me in a future linphone core version.
+    // Old workaround.
+    // It can exist messages with a not delivered status. It's a linphone core bug.
     if (message->getState() == linphone::ChatMessageStateInProgress)
       map["status"] = linphone::ChatMessageStateNotDelivered;
 
