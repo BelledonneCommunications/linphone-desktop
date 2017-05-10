@@ -114,7 +114,7 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 
 inline void activeSplashScreen (App *app) {
   QQuickWindow *splashScreen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
-  QObject::connect(CoreManager::getInstance(), &CoreManager::linphoneCoreCreated, splashScreen, [splashScreen] {
+  QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {
     splashScreen->close();
     splashScreen->deleteLater();
   });
@@ -179,8 +179,8 @@ void App::initContentApp () {
   activeSplashScreen(this);
 
   QObject::connect(
-    CoreManager::getInstance(),
-    &CoreManager::linphoneCoreCreated,
+    CoreManager::getInstance()->getHandlers().get(),
+    &CoreHandlers::coreStarted,
     this, mParser.isSet("selftest") ? &App::quit : &App::openAppAfterInit
   );
 }
@@ -441,7 +441,6 @@ void App::openAppAfterInit () {
   tryToUsePreferredLocale();
 
   qInfo() << QStringLiteral("Linphone core created.");
-  CoreManager::getInstance()->enableHandlers();
 
   #ifndef __APPLE__
     // Enable TrayIconSystem.

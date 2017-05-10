@@ -36,6 +36,7 @@ class CoreHandlers :
 signals:
   void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
   void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void coreStarted ();
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
@@ -51,6 +52,12 @@ private:
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Call> &call,
     linphone::CallState state,
+    const std::string &message
+  ) override;
+
+  void onGlobalStateChanged (
+    const std::shared_ptr<linphone::Core> &core,
+    linphone::GlobalState gstate,
     const std::string &message
   ) override;
 

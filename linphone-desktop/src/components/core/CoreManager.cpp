@@ -48,15 +48,13 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(
       mInstance->mSettingsModel = new SettingsModel(mInstance);
       mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 
+      mInstance->mCbsTimer->start();
+
       emit mInstance->linphoneCoreCreated();
     }
   );
 
   mPromiseWatcher.setFuture(mPromiseBuild);
-}
-
-void CoreManager::enableHandlers () {
-  mCbsTimer->start();
 }
 
 // -----------------------------------------------------------------------------

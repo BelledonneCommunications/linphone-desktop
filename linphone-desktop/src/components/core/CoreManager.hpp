@@ -47,8 +47,6 @@ class CoreManager : public QObject {
 public:
   ~CoreManager () = default;
 
-  void enableHandlers ();
-
   std::shared_ptr<linphone::Core> getCore () {
     return mCore;
   }

@@ -52,6 +52,15 @@ void CoreHandlers::onCallStateChanged (
     App::getInstance()->getNotifier()->notifyReceivedCall(call);
 }
 
+void CoreHandlers::onGlobalStateChanged (
+  const shared_ptr<linphone::Core> &,
+  linphone::GlobalState gstate,
+  const string &
+) {
+  if (gstate == linphone::GlobalStateOn)
+    emit coreStarted ();
+}
+
 void CoreHandlers::onCallStatsUpdated (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,
