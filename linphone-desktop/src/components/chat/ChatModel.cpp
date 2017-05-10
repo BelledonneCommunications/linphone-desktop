@@ -344,15 +344,9 @@ void ChatModel::resendMessage (int id) {
   switch (map["status"].toInt()) {
     case MessageStatusFileTransferError:
     case MessageStatusNotDelivered: {
-      // TODO: Do not duplicate me! Use a linphone core function in the future.
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
-
-      shared_ptr<linphone::ChatMessage> message2 = message->clone();
-      message2->setListener(mMessageHandlers);
-      mChatRoom->sendChatMessage(message2);
-
-      removeEntry(id);
-      insertMessageAtEnd(message2);
+      message->setListener(mMessageHandlers);
+      message->resend();
 
       break;
     }

@@ -292,8 +292,10 @@ Window {
           ActionButton {
             Layout.preferredHeight: CallStyle.actionArea.iconSize
             Layout.preferredWidth: CallStyle.actionArea.iconSize
-            icon: 'options' // TODO: display options.
+            icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
+
+            visible: false // TODO: V2
           }
         }
 
