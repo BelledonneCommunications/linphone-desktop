@@ -302,9 +302,7 @@ void AssistantModel::setConfigFilename (const QString &configFilename) {
   qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(configPath);
 
   CoreManager::getInstance()->getCore()->getConfig()->loadFromXmlFile(
-    ::Utils::qStringToLinphoneString(configPath),
-    nullptr,
-    nullptr
+    ::Utils::qStringToLinphoneString(configPath)
   );
 
   emit configFilenameChanged(configFilename);
