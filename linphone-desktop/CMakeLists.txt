@@ -73,7 +73,7 @@ endif()
 # Define packages, libs, sources, headers, resources and languages.
 # ------------------------------------------------------------------------------
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
 
 if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
   include("${EP_linphone_CONFIG_DIR}/LinphoneConfig.cmake")
