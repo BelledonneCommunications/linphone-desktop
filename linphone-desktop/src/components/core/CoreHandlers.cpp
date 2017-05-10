@@ -57,6 +57,8 @@ void CoreHandlers::onGlobalStateChanged (
   linphone::GlobalState gstate,
   const string &
 ) {
+  qInfo() << QStringLiteral("Global state: %1.").arg(gstate);
+
   if (gstate == linphone::GlobalStateOn)
     emit coreStarted ();
 }
