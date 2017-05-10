@@ -48,6 +48,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(
       mInstance->mSettingsModel = new SettingsModel(mInstance);
       mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 
+      qInfo() << QStringLiteral("Core created. Enable iterate.");
       mInstance->mCbsTimer->start();
 
       emit mInstance->linphoneCoreCreated();
