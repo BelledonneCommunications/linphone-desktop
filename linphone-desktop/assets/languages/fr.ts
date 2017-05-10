@@ -26,7 +26,7 @@
 <context>
     <name>App</name>
     <message>
-        <source>selftestResult</source>
+        <source>selfTestResult</source>
         <translation>Linphone semble fonctionner normalement.</translation>
     </message>
     <message>
@@ -38,7 +38,7 @@
         <translation>Spécifier un fichier de configuration à utiliser.</translation>
     </message>
     <message>
-        <source>commandLineOptionSelftest</source>
+        <source>commandLineOptionSelfTest</source>
         <translation>Éxécuter un test automatique et retourner 0 en cas de succès.</translation>
     </message>
     <message>

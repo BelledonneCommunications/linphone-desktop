@@ -176,12 +176,14 @@ void App::initContentApp () {
     qFatal("Unable to open main window.");
 
   // Load splashscreen.
-  activeSplashScreen(this);
+  bool selfTest = mParser.isSet("self-test");
+  if (!selfTest)
+    activeSplashScreen(this);
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
     &CoreHandlers::coreStarted,
-    this, mParser.isSet("selftest") ? &App::quit : &App::openAppAfterInit
+    this, selfTest ? &App::quit : &App::openAppAfterInit
   );
 }
 
@@ -196,7 +198,7 @@ void App::parseArgs () {
     #ifndef __APPLE__
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef __APPLE__
-    { "selftest", tr("commandLineOptionSelftest") },
+    { "self-test", tr("commandLineOptionSelfTest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
   });
 
@@ -459,8 +461,8 @@ void App::openAppAfterInit () {
 // -----------------------------------------------------------------------------
 
 void App::quit () {
-  if (mParser.isSet("selftest"))
-    cout << tr("selftestResult").toStdString() << endl;
+  if (mParser.isSet("self-test"))
+    cout << tr("selfTestResult").toStdString() << endl;
 
   QApplication::quit();
 }
