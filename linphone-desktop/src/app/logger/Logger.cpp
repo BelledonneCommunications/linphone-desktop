@@ -23,6 +23,7 @@
 #include <bctoolbox/logging.h>
 #include <linphone/linphonecore.h>
 #include <QDateTime>
+#include <QThread>
 
 #include "../../Utils.hpp"
 #include "../paths/Paths.hpp"
@@ -43,7 +44,7 @@
   #define PURPLE ""
   #define RED ""
   #define RESET ""
-#endif // ifdef __linux__
+#endif // if defined(__linux__) || defined(__APPLE__)
 
 #define QT_DOMAIN "qt"
 
@@ -103,19 +104,19 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   BctbxLogLevel level;
 
   if (type == QtDebugMsg) {
-    format = GREEN "[%s][Debug]" PURPLE "%s" RESET "%s\n";
+    format = GREEN "[%s][%p][Debug]" PURPLE "%s" RESET "%s\n";
     level = BCTBX_LOG_DEBUG;
   } else if (type == QtInfoMsg) {
-    format = BLUE "[%s][Info]" PURPLE "%s" RESET "%s\n";
+    format = BLUE "[%s][%p][Info]" PURPLE "%s" RESET "%s\n";
     level = BCTBX_LOG_MESSAGE;
   } else if (type == QtWarningMsg) {
-    format = RED "[%s][Warning]" PURPLE "%s" RESET "%s\n";
+    format = RED "[%s][%p][Warning]" PURPLE "%s" RESET "%s\n";
     level = BCTBX_LOG_WARNING;
   } else if (type == QtCriticalMsg) {
-    format = RED "[%s][Critical]" PURPLE "%s" RESET "%s\n";
+    format = RED "[%s][%p][Critical]" PURPLE "%s" RESET "%s\n";
     level = BCTBX_LOG_ERROR;
   } else if (type == QtFatalMsg) {
-    format = RED "[%s][Fatal]" PURPLE "%s" RESET "%s\n";
+    format = RED "[%s][%p][Fatal]" PURPLE "%s" RESET "%s\n";
     level = BCTBX_LOG_FATAL;
   } else
     return;
@@ -144,7 +145,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 
   mMutex.lock();
 
-  fprintf(stderr, format, dateTime.constData(), context_str, localMsg.constData());
+  fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), context_str, localMsg.constData());
   bctbx_log(QT_DOMAIN, level, "QT: %s%s", context_str, localMsg.constData());
 
   mMutex.unlock();
