@@ -59,6 +59,8 @@ private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+
   void addCall (const std::shared_ptr<linphone::Call> &call);
   void removeCall (const std::shared_ptr<linphone::Call> &call);
 

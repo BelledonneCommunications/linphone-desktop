@@ -53,28 +53,7 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
   mCoreHandlers = CoreManager::getInstance()->getHandlers();
   QObject::connect(
     mCoreHandlers.get(), &CoreHandlers::callStateChanged,
-    this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
-      switch (state) {
-        case linphone::CallStateIncomingReceived:
-        case linphone::CallStateOutgoingInit:
-          addCall(call);
-          break;
-
-        case linphone::CallStateEnd:
-        case linphone::CallStateError:
-          removeCall(call);
-          break;
-
-        case linphone::CallStateStreamsRunning: {
-          int index = static_cast<int>(distance(mList.begin(), findCallModel(mList, call)));
-          emit callRunning(index, &call->getData<CallModel>("call-model"));
-        }
-        break;
-
-        default:
-          break;
-      }
-    }
+    this, &CallsListModel::handleCallStateChanged
   );
 }
 
@@ -147,6 +126,29 @@ void CallsListModel::terminateAllCalls () const {
 }
 
 // -----------------------------------------------------------------------------
+
+void CallsListModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
+  switch (state) {
+    case linphone::CallStateIncomingReceived:
+    case linphone::CallStateOutgoingInit:
+      addCall(call);
+      break;
+
+    case linphone::CallStateEnd:
+    case linphone::CallStateError:
+      removeCall(call);
+      break;
+
+    case linphone::CallStateStreamsRunning: {
+      int index = static_cast<int>(distance(mList.begin(), findCallModel(mList, call)));
+      emit callRunning(index, &call->getData<CallModel>("call-model"));
+    }
+    break;
+
+    default:
+      break;
+  }
+}
 
 bool CallsListModel::removeRow (int row, const QModelIndex &parent) {
   return removeRows(row, 1, parent);

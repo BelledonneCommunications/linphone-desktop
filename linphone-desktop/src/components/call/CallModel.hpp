@@ -98,6 +98,8 @@ signals:
   void statsUpdated ();
 
 private:
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+
   void stopAutoAnswerTimer () const;
 
   QString getSipAddress () const;

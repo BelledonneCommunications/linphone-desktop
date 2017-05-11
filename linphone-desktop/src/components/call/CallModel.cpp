@@ -59,54 +59,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::callStateChanged,
-    this, [this](const shared_ptr<linphone::Call> &call, linphone::CallState state) {
-      if (call != mCall)
-        return;
-
-      switch (state) {
-        case linphone::CallStateError:
-          setReason(call->getReason());
-        case linphone::CallStateEnd:
-          stopAutoAnswerTimer();
-          mPausedByRemote = false;
-          break;
-
-        case linphone::CallStateConnected:
-        case linphone::CallStateRefered:
-        case linphone::CallStateReleased:
-        case linphone::CallStateStreamsRunning:
-          mPausedByRemote = false;
-          break;
-
-        case linphone::CallStatePausedByRemote:
-          mPausedByRemote = true;
-          break;
-
-        case linphone::CallStatePausing:
-          mPausedByUser = true;
-          break;
-
-        case linphone::CallStateResuming:
-          mPausedByUser = false;
-          break;
-
-        case linphone::CallStateUpdatedByRemote:
-          if (
-            !mCall->getCurrentParams()->videoEnabled() &&
-            mCall->getRemoteParams()->videoEnabled()
-          ) {
-            mCall->deferUpdate();
-            emit videoRequested();
-          }
-
-          break;
-
-        default:
-          break;
-      }
-
-      emit statusChanged(getStatus());
-    }
+    this, &CallModel::handleCallStateChanged
   );
 }
 
@@ -235,6 +188,57 @@ void CallModel::stopRecording () {
 
 // -----------------------------------------------------------------------------
 
+void CallModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
+  if (call != mCall)
+    return;
+
+  switch (state) {
+    case linphone::CallStateError:
+      setReason(call->getReason());
+    case linphone::CallStateEnd:
+      stopAutoAnswerTimer();
+      mPausedByRemote = false;
+      break;
+
+    case linphone::CallStateConnected:
+    case linphone::CallStateRefered:
+    case linphone::CallStateReleased:
+    case linphone::CallStateStreamsRunning:
+      mPausedByRemote = false;
+      break;
+
+    case linphone::CallStatePausedByRemote:
+      mPausedByRemote = true;
+      break;
+
+    case linphone::CallStatePausing:
+      mPausedByUser = true;
+      break;
+
+    case linphone::CallStateResuming:
+      mPausedByUser = false;
+      break;
+
+    case linphone::CallStateUpdatedByRemote:
+      if (
+        !mCall->getCurrentParams()->videoEnabled() &&
+        mCall->getRemoteParams()->videoEnabled()
+      ) {
+        mCall->deferUpdate();
+        emit videoRequested();
+      }
+
+      break;
+
+    default:
+      break;
+  }
+
+  emit statusChanged(getStatus());
+}
+
+// -----------------------------------------------------------------------------
+
 void CallModel::stopAutoAnswerTimer () const {
   QTimer *timer = findChild<QTimer *>(AUTO_ANSWER_OBJECT_NAME, Qt::FindDirectChildrenOnly);
   if (timer) {
@@ -332,6 +336,9 @@ inline float computeVu (float volume) {
 
   return (volume - VU_MIN) / (VU_MAX - VU_MIN);
 }
+
+#undef VU_MIN
+#undef VU_MAX
 
 float CallModel::getMicroVu () const {
   return computeVu(mCall->getRecordVolume());
