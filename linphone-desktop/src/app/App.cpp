@@ -343,6 +343,7 @@ void App::registerTypes () {
   registerType<CameraPreview>("CameraPreview");
   registerType<ChatModel>("ChatModel");
   registerType<ChatProxyModel>("ChatProxyModel");
+  registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
   registerType<SmartSearchBarModel>("SmartSearchBarModel");
   registerType<SoundPlayer>("SoundPlayer");

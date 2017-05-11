@@ -1,5 +1,5 @@
 /*
- * Components.hpp
+ * ConferenceHelperModel.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,28 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: April 6, 2017
+ *  Created on: May 11, 2017
  *      Author: Ronan Abhamon
  */
 
-#ifndef COMPONENTS_H_
-#define COMPONENTS_H_
+#include <QSortFilterProxyModel>
 
-#include "assistant/AssistantModel.hpp"
-#include "authentication/AuthenticationNotifier.hpp"
-#include "calls/CallsListModel.hpp"
-#include "camera/Camera.hpp"
-#include "camera/CameraPreview.hpp"
-#include "chat/ChatProxyModel.hpp"
-#include "codecs/AudioCodecsModel.hpp"
-#include "codecs/VideoCodecsModel.hpp"
-#include "conference/ConferenceHelperModel.hpp"
-#include "contacts/ContactsListProxyModel.hpp"
-#include "core/CoreManager.hpp"
-#include "presence/OwnPresenceModel.hpp"
-#include "settings/AccountSettingsModel.hpp"
-#include "smart-search-bar/SmartSearchBarModel.hpp"
-#include "sound-player/SoundPlayer.hpp"
-#include "timeline/TimelineModel.hpp"
+// =============================================================================
 
-#endif // COMPONENTS_H_
+class ConferenceHelperModel : public QSortFilterProxyModel {
+  Q_OBJECT;
+
+public:
+  ConferenceHelperModel (QObject *parent = Q_NULLPTR);
+  ~ConferenceHelperModel () = default;
+
+  QHash<int, QByteArray> roleNames () const override;
+
+protected:
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+
+private:
+  QStringList mInConference;
+};
