@@ -146,12 +146,15 @@ Window {
         id: incall
 
         Incall {
-          // `{}` is a workaround to avoid `TypeError: Cannot read property...` in `Incall` component.
-          call: window.call || ({
-            recording: false,
-            updating: true,
-            videoEnabled: false
-          })
+          call: window.call
+        }
+      }
+
+      Component {
+        id: endedCall
+
+        EndedCall {
+          call: window.call
         }
       }
 
@@ -186,6 +189,10 @@ Window {
 
           if (status === CallModel.CallStatusOutgoing) {
             return outgoingCall
+          }
+
+          if (status === CallModel.CallStatusEnded) {
+            return endedCall
           }
 
           return incall

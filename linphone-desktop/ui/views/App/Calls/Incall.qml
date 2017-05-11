@@ -68,7 +68,6 @@ Rectangle {
         anchors.left: parent.left
         icon: 'call_quality_0'
         iconSize: CallStyle.header.iconSize
-        visible: call.status !== CallModel.CallStatusEnded
         useStates: false
 
         onClicked: callStatistics.showMenu()
@@ -111,42 +110,38 @@ Rectangle {
       // Video actions.
       // -----------------------------------------------------------------------
 
-      Loader {
+      ActionBar {
         id: cameraActions
 
         anchors.right: parent.right
-        active: call.status !== CallModel.CallStatusEnded
+        iconSize: CallStyle.header.iconSize
 
-        sourceComponent: ActionBar {
-          iconSize: CallStyle.header.iconSize
+        ActionButton {
+          icon: 'tel_keypad'
 
-          ActionButton {
-            icon: 'tel_keypad'
+          onClicked: telKeypad.visible = !telKeypad.visible
+        }
 
-            onClicked: telKeypad.visible = !telKeypad.visible
-          }
+        ActionButton {
+          icon: 'screenshot'
+          visible: call.videoEnabled
 
-          ActionButton {
-            icon: 'screenshot'
-            visible: call.videoEnabled
+          onClicked: call.takeSnapshot()
+        }
 
-            onClicked: call.takeSnapshot()
-          }
+        ActionSwitch {
+          enabled: call.recording
+          icon: 'record'
+          useStates: false
 
-          ActionSwitch {
-            enabled: call.recording
-            icon: 'record'
-            useStates: false
+          onClicked: !enabled ? call.startRecording() : call.stopRecording()
+        }
 
-            onClicked: !enabled ? call.startRecording() : call.stopRecording()
-          }
+        ActionButton {
+          icon: 'fullscreen'
+          visible: call.videoEnabled
 
-          ActionButton {
-            icon: 'fullscreen'
-            visible: call.videoEnabled
-
-            onClicked: Logic.showFullscreen()
-          }
+          onClicked: Logic.showFullscreen()
         }
       }
     }
@@ -245,8 +240,6 @@ Rectangle {
     Item {
       Layout.fillWidth: true
       Layout.preferredHeight: CallStyle.actionArea.height
-
-      visible: call.status !== CallModel.CallStatusEnded
 
       GridLayout {
         anchors {

@@ -339,6 +339,7 @@
     <file>ui/views/App/Calls/AbstractStartingCall.qml</file>
     <file>ui/views/App/Calls/CallsWindow.js</file>
     <file>ui/views/App/Calls/CallsWindow.qml</file>
+    <file>ui/views/App/Calls/EndedCall.qml</file>
     <file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
     <file>ui/views/App/Calls/Incall.js</file>
     <file>ui/views/App/Calls/Incall.qml</file>
