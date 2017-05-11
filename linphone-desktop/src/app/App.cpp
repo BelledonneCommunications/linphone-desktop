@@ -50,6 +50,8 @@
 
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
+#define SELF_TEST_DELAY 60000
+
 #ifndef LINPHONE_VERSION
   #define LINPHONE_VERSION "unknown"
 #endif // ifndef LINPHONE_VERSION
@@ -176,10 +178,16 @@ void App::initContentApp () {
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
-  // Load splashscreen.
   bool selfTest = mParser.isSet("self-test");
+
+  // Load splashscreen.
   if (!selfTest)
     activeSplashScreen(this);
+  // Set a self test limit.
+  else
+    QTimer::singleShot(SELF_TEST_DELAY, this, [] {
+      qFatal("Self test failed. :(");
+    });
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
