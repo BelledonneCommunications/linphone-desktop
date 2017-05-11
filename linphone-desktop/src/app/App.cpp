@@ -113,6 +113,7 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 // -----------------------------------------------------------------------------
 
 inline void activeSplashScreen (App *app) {
+  qInfo() << QStringLiteral("Open splash screen...");
   QQuickWindow *splashScreen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
   QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {
     splashScreen->close();
