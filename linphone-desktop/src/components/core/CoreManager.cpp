@@ -37,7 +37,7 @@ using namespace std;
 
 CoreManager *CoreManager::mInstance = nullptr;
 
-CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(parent), mHandlers(make_shared<CoreHandlers>()) {
+CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
   mPromiseBuild = QtConcurrent::run(this, &CoreManager::createLinphoneCore, configPath);
 
   QObject::connect(

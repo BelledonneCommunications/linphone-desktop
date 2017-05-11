@@ -28,10 +28,17 @@
 
 // =============================================================================
 
+class CoreManager;
+class QMutex;
+
 class CoreHandlers :
   public QObject,
   public linphone::CoreListener {
   Q_OBJECT;
+
+public:
+  CoreHandlers (CoreManager *coreManager);
+  ~CoreHandlers ();
 
 signals:
   void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
@@ -42,6 +49,14 @@ signals:
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
 
 private:
+  void handleCoreCreated ();
+  void handleCoreStarted ();
+  void notifyCoreStarted ();
+
+  // ---------------------------------------------------------------------------
+  // Linphone callbacks.
+  // ---------------------------------------------------------------------------
+
   void onAuthenticationRequested (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::AuthInfo> &authInfo,
@@ -91,6 +106,13 @@ private:
     linphone::RegistrationState state,
     const std::string &message
   ) override;
+
+  // ---------------------------------------------------------------------------
+
+  bool mCoreCreated = false;
+  bool mCoreStarted = false;
+
+  QMutex *mCoreStartedLock = nullptr;
 };
 
 #endif // CORE_HANDLERS_H_

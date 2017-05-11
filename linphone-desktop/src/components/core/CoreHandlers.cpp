@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QMutex>
 #include <QtDebug>
 #include <QThread>
 #include <QTimer>
@@ -34,19 +35,57 @@ using namespace std;
 
 // =============================================================================
 
-// Emit a signal in the app context.
-#define emitApp(EMIT) \
-  do { \
-    App *app = App::getInstance(); \
-    if (QThread::currentThread() != app->thread()) { \
-      QTimer::singleShot( \
-        0, app, [this]() { \
-          (EMIT); \
-        } \
-      ); \
-    } else \
-      (EMIT); \
-  } while (0)
+// Schedule a function in app context.
+void scheduleFunctionInApp (function<void()> func) {
+  App *app = App::getInstance();
+  if (QThread::currentThread() != app->thread()) {
+    QTimer::singleShot(0, app, func);
+  } else
+    func();
+}
+
+// -----------------------------------------------------------------------------
+
+CoreHandlers::CoreHandlers (CoreManager *coreManager) {
+  mCoreStartedLock = new QMutex();
+  QObject::connect(coreManager, &CoreManager::coreCreated, this, &CoreHandlers::handleCoreCreated);
+}
+
+CoreHandlers::~CoreHandlers () {
+  delete mCoreStartedLock;
+}
+
+// -----------------------------------------------------------------------------
+
+void CoreHandlers::handleCoreCreated () {
+  mCoreStartedLock->lock();
+
+  Q_ASSERT(mCoreCreated == false);
+  mCoreCreated = true;
+  notifyCoreStarted();
+
+  mCoreStartedLock->unlock();
+}
+
+void CoreHandlers::handleCoreStarted () {
+  mCoreStartedLock->lock();
+
+  Q_ASSERT(mCoreStarted == false);
+  mCoreStarted = true;
+  notifyCoreStarted();
+
+  mCoreStartedLock->unlock();
+}
+
+void CoreHandlers::notifyCoreStarted () {
+  if (mCoreCreated && mCoreStarted)
+    scheduleFunctionInApp(
+      [this]() {
+        qInfo() << QStringLiteral("Core started.");
+        emit coreStarted();
+      }
+    );
+}
 
 // -----------------------------------------------------------------------------
 
@@ -75,10 +114,8 @@ void CoreHandlers::onGlobalStateChanged (
   linphone::GlobalState gstate,
   const string &
 ) {
-  qInfo() << QStringLiteral("Global state: %1.").arg(gstate);
-
   if (gstate == linphone::GlobalStateOn)
-    emitApp(coreStarted());
+    handleCoreStarted();
 }
 
 void CoreHandlers::onCallStatsUpdated (

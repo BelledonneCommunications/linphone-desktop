@@ -442,7 +442,7 @@ QString App::getLocale () const {
 void App::openAppAfterInit () {
   tryToUsePreferredLocale();
 
-  qInfo() << QStringLiteral("Linphone core created.");
+  qInfo() << QStringLiteral("Open linphone app.");
 
   #ifndef __APPLE__
     // Enable TrayIconSystem.
