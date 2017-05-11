@@ -70,5 +70,10 @@ QtObject {
     property QtObject stats: QtObject {
       property int relativeY: 90
     }
+
+    property QtObject reason: QtObject {
+      property color color: Colors.i
+      property int fontSize: 12
+    }
   }
 }

@@ -33,6 +33,7 @@ class CallModel : public QObject {
 
   Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
+  Q_PROPERTY(QString reason READ getReason NOTIFY statusChanged);
 
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
 
@@ -105,6 +106,10 @@ private:
   bool isOutgoing () const {
     return mCall->getDir() == linphone::CallDirOutgoing;
   }
+
+  QString mReason;
+  void setReason (linphone::Reason reason);
+  QString getReason () const;
 
   int getDuration () const;
   float getQuality () const;

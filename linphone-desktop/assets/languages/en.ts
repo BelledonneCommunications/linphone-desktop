@@ -252,6 +252,22 @@
         <source>iceStateInvalid</source>
         <translation>Invalid</translation>
     </message>
+    <message>
+        <source>User declined the call</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User not found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>User is busy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incompatible media params</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallStatistics</name>

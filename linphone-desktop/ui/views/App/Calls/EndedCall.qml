@@ -75,6 +75,19 @@ Rectangle {
     Item {
       Layout.fillWidth: true
       Layout.preferredHeight: CallStyle.actionArea.height
+
+      Text {
+        width: parent.width
+
+        color: CallStyle.header.reason.color
+        font.pointSize: CallStyle.header.reason.fontSize
+        horizontalAlignment: Text.AlignHCenter
+
+        text: {
+          var call = endedCall.call
+          return call.reason
+        }
+      }
     }
   }
 }
