@@ -477,8 +477,10 @@ void SipAddressesModel::initSipAddresses () {
       mSipAddresses[sipAddress] = map;
   }
 
-  for (const auto &map : mSipAddresses)
+  for (const auto &map : mSipAddresses) {
+    qInfo() << QStringLiteral("Add sip address: `%1`.").arg(map["sipAddress"].toString());
     mRefs << &map;
+  }
 
   // Get sip addresses from contacts.
   for (auto &contact : CoreManager::getInstance()->getContactsListModel()->mList)
