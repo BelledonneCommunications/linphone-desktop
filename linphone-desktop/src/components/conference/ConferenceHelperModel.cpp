@@ -79,7 +79,7 @@ void ConferenceHelperModel::handleCallsAboutToBeRemoved (const QModelIndex &, in
   }
 
   if (soFarSoGood) {
-    invalidate();
+    invalidateFilter();
     emit inConferenceChanged(mInConference);
   }
 }
@@ -90,8 +90,10 @@ void ConferenceHelperModel::handleCallRunning (int, CallModel *callModel) {
     ? addToConference(sipAddress)
     : removeFromConference(sipAddress);
 
-  if (soFarSoGood)
+  if (soFarSoGood) {
+    invalidateFilter();
     emit inConferenceChanged(mInConference);
+  }
 }
 
 // -----------------------------------------------------------------------------
