@@ -31,17 +31,28 @@ ConfirmDialog {
     // Address selector.
     // -------------------------------------------------------------------------
 
-    Column {
-      Layout.alignment: Qt.AlignTop
+    Item {
+      Layout.fillHeight: true
       Layout.fillWidth: true
 
-      spacing: ConferenceManagerStyle.columns.selector.spacing
+      ColumnLayout {
+        anchors.fill: parent
+        spacing: ConferenceManagerStyle.columns.selector.spacing
 
-      TextField {
-        icon: 'search'
-        width: parent.width
+        TextField {
+          id: filter
 
-        onTextChanged: Logic.updateFilter(text)
+          Layout.fillWidth: true
+
+          icon: 'search'
+
+          onTextChanged: Logic.updateFilter(text)
+        }
+
+        ScrollableListViewField {
+          Layout.fillHeight: true
+          Layout.fillWidth: true
+        }
       }
     }
 
@@ -62,8 +73,9 @@ ConfirmDialog {
     // See and remove selected addresses.
     // -------------------------------------------------------------------------
 
-    Column {
-      Layout.alignment: Qt.AlignTop
+    ScrollableListViewField {
+      Layout.topMargin: filter.height + ConferenceManagerStyle.columns.selector.spacing
+      Layout.fillHeight: true
       Layout.fillWidth: true
     }
   }
