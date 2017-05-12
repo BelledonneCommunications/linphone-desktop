@@ -40,7 +40,6 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
   Q_ASSERT(call != nullptr);
   mCall = call;
   mCall->setData("call-model", *this);
-  mReason = "";
 
   // Deal with auto-answer.
   {
@@ -194,7 +193,7 @@ void CallModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &c
 
   switch (state) {
     case linphone::CallStateError:
-      setReason(call->getReason());
+      setCallErrorFromReason(call->getReason());
     case linphone::CallStateEnd:
       stopAutoAnswerTimer();
       mPausedByRemote = false;
@@ -290,27 +289,29 @@ CallModel::CallStatus CallModel::getStatus () const {
 
 // -----------------------------------------------------------------------------
 
-void CallModel::setReason (linphone::Reason reason) {
+void CallModel::setCallErrorFromReason (linphone::Reason reason) {
   switch (reason) {
     case linphone::ReasonDeclined:
-      mReason = tr("User declined the call");
+      mCallError = tr("callErrorDeclined");
       break;
     case linphone::ReasonNotFound:
-      mReason = tr("User not found");
+      mCallError = tr("callErrorNotFound");
       break;
     case linphone::ReasonBusy:
-      mReason = tr("User is busy");
+      mCallError = tr("callErrorBusy");
       break;
     case linphone::ReasonNotAcceptable:
-      mReason = tr("Incompatible media params");
+      mCallError = tr("callErrorNotAcceptable");
       break;
     default:
       break;
   }
+
+  emit callErrorChanged(mCallError);
 }
 
-QString CallModel::getReason () const {
-  return mReason;
+QString CallModel::getCallError () const {
+  return mCallError;
 }
 
 // -----------------------------------------------------------------------------

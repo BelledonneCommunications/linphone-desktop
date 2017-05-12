@@ -84,7 +84,7 @@ Rectangle {
 
         text: {
           var call = endedCall.call
-          return call ? call.reason : ''
+          return call ? call.callError : ''
         }
       }
     }

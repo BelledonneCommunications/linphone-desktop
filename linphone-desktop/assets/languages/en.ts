@@ -253,19 +253,19 @@
         <translation>Invalid</translation>
     </message>
     <message>
-        <source>User declined the call</source>
+        <source>callErrorDeclined</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User not found</source>
+        <source>callErrorNotFound</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>User is busy</source>
+        <source>callErrorBusy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Incompatible media params</source>
+        <source>callErrorNotAcceptable</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -33,7 +33,7 @@ class CallModel : public QObject {
 
   Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
-  Q_PROPERTY(QString reason READ getReason NOTIFY statusChanged);
+  Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged);
 
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
 
@@ -91,11 +91,12 @@ public:
   Q_INVOKABLE void sendDtmf (const QString &dtmf);
 
 signals:
-  void statusChanged (CallStatus status);
+  void callErrorChanged (const QString &callError);
   void microMutedChanged (bool status);
-  void videoRequested ();
   void recordingChanged (bool status);
   void statsUpdated ();
+  void statusChanged (CallStatus status);
+  void videoRequested ();
 
 private:
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
@@ -109,9 +110,8 @@ private:
     return mCall->getDir() == linphone::CallDirOutgoing;
   }
 
-  QString mReason;
-  void setReason (linphone::Reason reason);
-  QString getReason () const;
+  void setCallErrorFromReason (linphone::Reason reason);
+  QString getCallError () const;
 
   int getDuration () const;
   float getQuality () const;
@@ -140,6 +140,8 @@ private:
   bool mPausedByRemote = false;
   bool mPausedByUser = false;
   bool mRecording = false;
+
+  QString mCallError;
 
   QVariantList mAudioStats;
   QVariantList mVideoStats;
