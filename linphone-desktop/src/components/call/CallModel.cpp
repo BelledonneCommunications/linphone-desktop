@@ -153,13 +153,13 @@ void CallModel::takeSnapshot () {
   QString newName = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss") + ".jpg";
 
   if (newName == oldName) {
-    qWarning() << "Unable to take snapshot. Wait one second.";
+    qWarning() << QStringLiteral("Unable to take snapshot. Wait one second.");
     return;
   }
 
   oldName = newName;
 
-  qInfo() << "Take snapshot of call:" << &mCall;
+  qInfo() << QStringLiteral("Take snapshot of call:") << this;
 
   mCall->takeVideoSnapshot(
     ::Utils::qStringToLinphoneString(
@@ -172,7 +172,7 @@ void CallModel::startRecording () {
   if (mRecording)
     return;
 
-  qInfo() << "Start recording call:" << &mCall;
+  qInfo() << QStringLiteral("Start recording call:") << this;
 
   mCall->startRecording();
   mRecording = true;
@@ -182,7 +182,7 @@ void CallModel::startRecording () {
 
 void CallModel::stopRecording () {
   if (mRecording) {
-    qInfo() << "Stop recording call:" << &mCall;
+    qInfo() << QStringLiteral("Stop recording call:") << this;
 
     mRecording = false;
     mCall->stopRecording();
@@ -199,8 +199,8 @@ void CallModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &c
 
   switch (state) {
     case linphone::CallStateError:
-      setCallErrorFromReason(call->getReason());
     case linphone::CallStateEnd:
+      setCallErrorFromReason(call->getReason());
       stopAutoAnswerTimer();
       mPausedByRemote = false;
       break;
@@ -225,17 +225,24 @@ void CallModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &c
       break;
 
     case linphone::CallStateUpdatedByRemote:
-      if (
-        !mCall->getCurrentParams()->videoEnabled() &&
-        mCall->getRemoteParams()->videoEnabled()
-      ) {
+      if (!mCall->getCurrentParams()->videoEnabled() && mCall->getRemoteParams()->videoEnabled()) {
         mCall->deferUpdate();
         emit videoRequested();
       }
 
       break;
 
-    default:
+    case linphone::CallStateIdle:
+    case linphone::CallStateIncomingReceived:
+    case linphone::CallStateOutgoingInit:
+    case linphone::CallStateOutgoingProgress:
+    case linphone::CallStateOutgoingRinging:
+    case linphone::CallStateOutgoingEarlyMedia:
+    case linphone::CallStatePaused:
+    case linphone::CallStateIncomingEarlyMedia:
+    case linphone::CallStateUpdating:
+    case linphone::CallStateEarlyUpdatedByRemote:
+    case linphone::CallStateEarlyUpdating:
       break;
   }
 
@@ -308,6 +315,9 @@ void CallModel::setCallErrorFromReason (linphone::Reason reason) {
     default:
       break;
   }
+
+  if (!mCallError.isEmpty())
+    qInfo() << QStringLiteral("Call terminated with error (%1):").arg(mCallError) << this;
 
   emit callErrorChanged(mCallError);
 }
@@ -546,7 +556,7 @@ QString CallModel::iceStateToString (linphone::IceState state) const {
       return tr("iceStateHostConnection");
     case linphone::IceStateRelayConnection:
       return tr("iceStateRelayConnection");
-    default:
-      return tr("iceStateInvalid");
   }
+
+  return tr("iceStateInvalid");
 }
