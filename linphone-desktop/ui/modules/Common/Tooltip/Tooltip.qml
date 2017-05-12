@@ -51,8 +51,8 @@ ToolTip {
     } else if (a.y > b.y + b.height) {
       _edge = 'bottom'
     } else {
+      // Unable to get the tooltip arrow position.
       _edge = null
-      console.warn('Unable to get the tooltip arrow position.')
     }
   }
 

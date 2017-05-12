@@ -358,6 +358,13 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>ConferenceManager</name>
+    <message>
+        <source>conferenceManagerDescription</source>
+        <translation>Manage participants to your conference.</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>

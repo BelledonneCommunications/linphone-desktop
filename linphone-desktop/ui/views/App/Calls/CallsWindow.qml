@@ -94,7 +94,8 @@ Window {
 
             ActionButton {
               icon: 'new_conference'
-              // TODO: launch new conference
+
+              onClicked: Logic.openConferenceManager()
             }
           }
         }

@@ -339,6 +339,8 @@
     <file>ui/views/App/Calls/AbstractStartingCall.qml</file>
     <file>ui/views/App/Calls/CallsWindow.js</file>
     <file>ui/views/App/Calls/CallsWindow.qml</file>
+    <file>ui/views/App/Calls/ConferenceManager.js</file>
+    <file>ui/views/App/Calls/ConferenceManager.qml</file>
     <file>ui/views/App/Calls/EndedCall.qml</file>
     <file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
     <file>ui/views/App/Calls/Incall.js</file>
@@ -387,6 +389,7 @@
     <file>ui/views/App/SplashScreen/SplashScreen.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
+    <file>ui/views/App/Styles/Calls/ConferenceManagerStyle.qml</file>
     <file>ui/views/App/Styles/Main/AboutStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>

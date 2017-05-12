@@ -17,6 +17,7 @@ function handleClosing (close) {
     return
   }
 
+  window.detachVirtualWindow()
   window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('acceptClosingDescription'),
   }, function (status) {
@@ -27,4 +28,8 @@ function handleClosing (close) {
   })
 
   close.accepted = false
+}
+
+function openConferenceManager () {
+  window.attachVirtualWindow(Qt.resolvedUrl('ConferenceManager.qml'))
 }

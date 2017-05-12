@@ -47,6 +47,7 @@ private:
   int computeStringWeight (const QString &string) const;
 
   QString mFilter;
+
   static const QRegExp mSearchSeparators;
 };
 
