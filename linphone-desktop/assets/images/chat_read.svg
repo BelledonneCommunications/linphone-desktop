@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+    <title>chat_read</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chat_read">
+            <g id="Group-2">
+                <circle id="Oval" fill="#18A7AF" cx="12" cy="12" r="12"></circle>
+                <path d="M6.939201,10.9955745 C6.48364091,10.4768681 5.69384187,10.4256779 5.17513548,10.881238 C4.65642909,11.3367981 4.6052389,12.1265972 5.060799,12.6453035 L10.19145,18.4871267 C10.7237015,19.0931548 11.6820676,19.0439283 12.1494245,18.3865553 L19.0187735,8.72429318 C19.4187896,8.16164012 19.2869462,7.3812426 18.7242932,6.98122652 C18.1616401,6.58121045 17.3812426,6.71305377 16.9812265,7.27570682 L11.0273089,15.6503451 L6.939201,10.9955745 Z" id="chat_message_delivered" fill="#FFFFFF" fill-rule="nonzero"></path>
+            </g>
+        </g>
+    </g>
+</svg>

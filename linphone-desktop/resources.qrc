@@ -48,10 +48,12 @@
     <file>assets/images/camera_on_updating.svg</file>
     <file>assets/images/chat_amount.svg</file>
     <file>assets/images/chat_count.svg</file>
+    <file>assets/images/chat_delivered.svg</file>
     <file>assets/images/chat_error.svg</file>
     <file>assets/images/chat_hovered.svg</file>
     <file>assets/images/chat_normal.svg</file>
     <file>assets/images/chat_pressed.svg</file>
+    <file>assets/images/chat_read.svg</file>
     <file>assets/images/chat_send.svg</file>
     <file>assets/images/collapse.svg</file>
     <file>assets/images/contact_add_hovered.svg</file>

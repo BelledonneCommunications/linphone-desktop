@@ -32,20 +32,52 @@ Item {
       Component {
         id: icon
 
-        Icon {
-          property bool isNotDelivered: Utils.includes([
-            ChatModel.MessageStatusFileTransferError,
-            ChatModel.MessageStatusIdle,
-            ChatModel.MessageStatusInProgress,
-            ChatModel.MessageStatusNotDelivered
-          ], $chatEntry.status)
+        RowLayout {
+          Text {
+            property bool isNotDelivered: Utils.includes([
+              ChatModel.MessageStatusFileTransferError,
+              ChatModel.MessageStatusIdle,
+              ChatModel.MessageStatusInProgress,
+              ChatModel.MessageStatusNotDelivered
+            ], $chatEntry.status)
 
-          icon: isNotDelivered ? 'chat_error' : 'chat_send'
-          iconSize: ChatStyle.entry.message.outgoing.sendIconSize
+            property bool isRead: Utils.includes([
+              ChatModel.MessageStatusDisplayed
+            ], $chatEntry.status)
 
-          MouseArea {
-            anchors.fill: parent
-            onClicked: isNotDelivered && proxyModel.resendMessage(index)
+            text: isNotDelivered ? qsTr("Error") : isRead ? qsTr("Read") : qsTr("Delivered")
+            color: isNotDelivered ? Colors.error : isRead ? Colors.read : Colors.delivered
+            font.pointSize: ChatStyle.entry.message.outgoing.fontSize
+          }
+
+          Icon {
+            property bool isNotDelivered: Utils.includes([
+              ChatModel.MessageStatusFileTransferError,
+              ChatModel.MessageStatusIdle,
+              ChatModel.MessageStatusInProgress,
+              ChatModel.MessageStatusNotDelivered
+            ], $chatEntry.status)
+
+            property bool isRead: Utils.includes([
+              ChatModel.MessageStatusDisplayed
+            ], $chatEntry.status)
+
+            icon: isNotDelivered ? 'chat_error' : isRead ? 'chat_read' : 'chat_delivered'
+            iconSize: ChatStyle.entry.message.outgoing.sendIconSize
+
+            MouseArea {
+              anchors.fill: parent
+              onClicked: isNotDelivered && proxyModel.resendMessage(index)
+            }
+          }
+
+          ActionButton {
+            height: ChatStyle.entry.lineHeight
+            icon: 'delete'
+            iconSize: ChatStyle.entry.deleteIconSize
+            visible: isHoverEntry()
+
+            onClicked: removeEntry()
           }
         }
       }
@@ -62,15 +94,6 @@ Item {
         sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress
           ? indicator
           : icon
-      }
-
-      ActionButton {
-        height: ChatStyle.entry.lineHeight
-        icon: 'delete'
-        iconSize: ChatStyle.entry.deleteIconSize
-        visible: isHoverEntry()
-
-        onClicked: removeEntry()
       }
     }
   }
