@@ -33,35 +33,24 @@ Item {
         id: icon
 
         RowLayout {
+          property bool isNotDelivered: Utils.includes([
+            ChatModel.MessageStatusFileTransferError,
+            ChatModel.MessageStatusIdle,
+            ChatModel.MessageStatusInProgress,
+            ChatModel.MessageStatusNotDelivered
+          ], $chatEntry.status)
+
+          property bool isRead: Utils.includes([
+            ChatModel.MessageStatusDisplayed
+          ], $chatEntry.status)
+
           Text {
-            property bool isNotDelivered: Utils.includes([
-              ChatModel.MessageStatusFileTransferError,
-              ChatModel.MessageStatusIdle,
-              ChatModel.MessageStatusInProgress,
-              ChatModel.MessageStatusNotDelivered
-            ], $chatEntry.status)
-
-            property bool isRead: Utils.includes([
-              ChatModel.MessageStatusDisplayed
-            ], $chatEntry.status)
-
             text: isNotDelivered ? qsTr("Error") : isRead ? qsTr("Read") : qsTr("Delivered")
             color: isNotDelivered ? Colors.error : isRead ? Colors.read : Colors.delivered
             font.pointSize: ChatStyle.entry.message.outgoing.fontSize
           }
 
           Icon {
-            property bool isNotDelivered: Utils.includes([
-              ChatModel.MessageStatusFileTransferError,
-              ChatModel.MessageStatusIdle,
-              ChatModel.MessageStatusInProgress,
-              ChatModel.MessageStatusNotDelivered
-            ], $chatEntry.status)
-
-            property bool isRead: Utils.includes([
-              ChatModel.MessageStatusDisplayed
-            ], $chatEntry.status)
-
             icon: isNotDelivered ? 'chat_error' : isRead ? 'chat_read' : 'chat_delivered'
             iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
