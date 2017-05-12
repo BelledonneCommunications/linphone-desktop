@@ -23,6 +23,11 @@ QtObject {
     property QtObject vu: QtObject {
       property int spacing: 5
     }
+
+    property QtObject callError: QtObject {
+      property color color: Colors.i
+      property int fontSize: 12
+    }
   }
 
   property QtObject container: QtObject {
@@ -69,11 +74,6 @@ QtObject {
 
     property QtObject stats: QtObject {
       property int relativeY: 90
-    }
-
-    property QtObject reason: QtObject {
-      property color color: Colors.i
-      property int fontSize: 12
     }
   }
 }

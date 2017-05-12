@@ -77,15 +77,14 @@ Rectangle {
       Layout.preferredHeight: CallStyle.actionArea.height
 
       Text {
-        width: parent.width
-
-        color: CallStyle.header.reason.color
-        font.pointSize: CallStyle.header.reason.fontSize
+        color: CallStyle.actionArea.callError.color
+        font.pointSize: CallStyle.actionArea.callError.fontSize
         horizontalAlignment: Text.AlignHCenter
+        width: parent.width
 
         text: {
           var call = endedCall.call
-          return call.reason
+          return call ? call.reason : ''
         }
       }
     }
