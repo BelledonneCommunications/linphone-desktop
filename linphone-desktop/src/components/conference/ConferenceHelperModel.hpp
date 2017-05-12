@@ -24,8 +24,12 @@
 
 // =============================================================================
 
+class CallModel;
+
 class ConferenceHelperModel : public QSortFilterProxyModel {
   Q_OBJECT;
+
+  Q_PROPERTY(QStringList inConference READ getInConference NOTIFY inConferenceChanged);
 
 public:
   ConferenceHelperModel (QObject *parent = Q_NULLPTR);
@@ -33,9 +37,25 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
 
+  Q_INVOKABLE void setFilter (const QString &pattern);
+
+signals:
+  void inConferenceChanged (const QStringList &inConference);
+
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 
 private:
+  void handleCallRunning (int index, CallModel *callModel);
+  void handleCallsAboutToBeRemoved (const QModelIndex &parent, int first, int last);
+
+  bool addToConference (const QString &sipAddress);
+  bool removeFromConference (const QString &sipAddress);
+
+  QStringList getInConference () {
+    return mInConference;
+  }
+
   QStringList mInConference;
+  QStringList mToAdd;
 };

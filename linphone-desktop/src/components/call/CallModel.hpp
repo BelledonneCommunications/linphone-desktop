@@ -72,6 +72,8 @@ public:
     return mCall;
   }
 
+  QString getSipAddress () const;
+
   static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats);
 
@@ -102,8 +104,6 @@ private:
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
 
   void stopAutoAnswerTimer () const;
-
-  QString getSipAddress () const;
 
   CallStatus getStatus () const;
   bool isOutgoing () const {

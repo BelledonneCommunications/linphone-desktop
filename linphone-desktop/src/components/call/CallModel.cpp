@@ -68,6 +68,12 @@ CallModel::~CallModel () {
 
 // -----------------------------------------------------------------------------
 
+QString CallModel::getSipAddress () const {
+  return ::Utils::linphoneStringToQString(mCall->getRemoteAddress()->asStringUriOnly());
+}
+
+// -----------------------------------------------------------------------------
+
 void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(
     ::Utils::qStringToLinphoneString(
@@ -244,10 +250,6 @@ void CallModel::stopAutoAnswerTimer () const {
     timer->stop();
     timer->deleteLater();
   }
-}
-
-QString CallModel::getSipAddress () const {
-  return ::Utils::linphoneStringToQString(mCall->getRemoteAddress()->asStringUriOnly());
 }
 
 CallModel::CallStatus CallModel::getStatus () const {
