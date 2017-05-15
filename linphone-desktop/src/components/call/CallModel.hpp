@@ -110,8 +110,10 @@ private:
     return mCall->getDir() == linphone::CallDirOutgoing;
   }
 
-  void setCallErrorFromReason (linphone::Reason reason);
+  void acceptWithAutoAnswerDelay ();
+
   QString getCallError () const;
+  void setCallErrorFromReason (linphone::Reason reason);
 
   int getDuration () const;
   float getQuality () const;

@@ -51,7 +51,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
       timer->setSingleShot(true);
       timer->setObjectName(AUTO_ANSWER_OBJECT_NAME);
 
-      QObject::connect(timer, &QTimer::timeout, this, &CallModel::accept);
+      QObject::connect(timer, &QTimer::timeout, this, &CallModel::acceptWithAutoAnswerDelay);
       timer->start();
     }
   }
@@ -298,6 +298,19 @@ CallModel::CallStatus CallModel::getStatus () const {
 
 // -----------------------------------------------------------------------------
 
+void CallModel::acceptWithAutoAnswerDelay () {
+  // Use auto-answer if activated and it's the only call.
+  CoreManager *coreManager = CoreManager::getInstance();
+  if (coreManager->getSettingsModel()->getAutoAnswerStatus() && coreManager->getCore()->getCallsNb() == 1)
+    accept();
+}
+
+// -----------------------------------------------------------------------------
+
+QString CallModel::getCallError () const {
+  return mCallError;
+}
+
 void CallModel::setCallErrorFromReason (linphone::Reason reason) {
   switch (reason) {
     case linphone::ReasonDeclined:
@@ -320,10 +333,6 @@ void CallModel::setCallErrorFromReason (linphone::Reason reason) {
     qInfo() << QStringLiteral("Call terminated with error (%1):").arg(mCallError) << this;
 
   emit callErrorChanged(mCallError);
-}
-
-QString CallModel::getCallError () const {
-  return mCallError;
 }
 
 // -----------------------------------------------------------------------------
