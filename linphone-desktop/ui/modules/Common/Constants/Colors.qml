@@ -40,6 +40,4 @@ QtObject {
   property color z:   '#17A81A'
 
   property color error: '#FF0000'
-  property color read: '#18A7AF'
-  property color delivered: '#A7A7A7'
 }

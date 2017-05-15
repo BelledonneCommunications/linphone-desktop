@@ -809,21 +809,6 @@ un chat ou ajouter un contact.</translation>
     </message>
 </context>
 <context>
-    <name>OutgoingMessage</name>
-    <message>
-        <source>Error</source>
-        <translation>Erreur</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Lu</translation>
-    </message>
-    <message>
-        <source>Delivered</source>
-        <translation>Délivré</translation>
-    </message>
-</context>
-<context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>

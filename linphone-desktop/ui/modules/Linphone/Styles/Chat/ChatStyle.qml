@@ -96,8 +96,7 @@ QtObject {
 
       property QtObject outgoing: QtObject {
         property color backgroundColor: Colors.e
-        property int sendIconSize: 10
-        property int fontSize: 8
+        property int sendIconSize: 12
 
         property QtObject text: QtObject {
           property color color: Colors.r

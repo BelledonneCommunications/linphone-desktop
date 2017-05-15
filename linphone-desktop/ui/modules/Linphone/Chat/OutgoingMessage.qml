@@ -32,7 +32,7 @@ Item {
       Component {
         id: icon
 
-        RowLayout {
+        Icon {
           property bool isNotDelivered: Utils.includes([
             ChatModel.MessageStatusFileTransferError,
             ChatModel.MessageStatusIdle,
@@ -40,33 +40,16 @@ Item {
             ChatModel.MessageStatusNotDelivered
           ], $chatEntry.status)
 
-          property bool isRead: Utils.includes([
-            ChatModel.MessageStatusDisplayed
-          ], $chatEntry.status)
+          property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
 
-          Text {
-            text: isNotDelivered ? qsTr("Error") : isRead ? qsTr("Read") : qsTr("Delivered")
-            color: isNotDelivered ? Colors.error : isRead ? Colors.read : Colors.delivered
-            font.pointSize: ChatStyle.entry.message.outgoing.fontSize
-          }
+          icon: isNotDelivered
+            ? 'chat_error'
+            : (isRead ? 'chat_read' : 'chat_delivered')
+          iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
-          Icon {
-            icon: isNotDelivered ? 'chat_error' : isRead ? 'chat_read' : 'chat_delivered'
-            iconSize: ChatStyle.entry.message.outgoing.sendIconSize
-
-            MouseArea {
-              anchors.fill: parent
-              onClicked: isNotDelivered && proxyModel.resendMessage(index)
-            }
-          }
-
-          ActionButton {
-            height: ChatStyle.entry.lineHeight
-            icon: 'delete'
-            iconSize: ChatStyle.entry.deleteIconSize
-            visible: isHoverEntry()
-
-            onClicked: removeEntry()
+          MouseArea {
+            anchors.fill: parent
+            onClicked: isNotDelivered && proxyModel.resendMessage(index)
           }
         }
       }
@@ -83,6 +66,15 @@ Item {
         sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress
           ? indicator
           : icon
+      }
+
+      ActionButton {
+        height: ChatStyle.entry.lineHeight
+        icon: 'delete'
+        iconSize: ChatStyle.entry.deleteIconSize
+        visible: isHoverEntry()
+
+        onClicked: removeEntry()
       }
     }
   }

@@ -810,21 +810,6 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
-    <name>OutgoingMessage</name>
-    <message>
-        <source>Error</source>
-        <translation>Error</translation>
-    </message>
-    <message>
-        <source>Read</source>
-        <translation>Read</translation>
-    </message>
-    <message>
-        <source>Delivered</source>
-        <translation>Delivered</translation>
-    </message>
-</context>
-<context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
