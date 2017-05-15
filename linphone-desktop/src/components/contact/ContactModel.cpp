@@ -138,6 +138,50 @@ next:
 
 // -----------------------------------------------------------------------------
 
+void ContactModel::mergeVcardModel (VcardModel *vcardModel) {
+  Q_ASSERT(vcardModel != nullptr);
+
+  qInfo() << QStringLiteral("Merge vcard into contact:") << this << vcardModel;
+
+  // 1. Merge avatar.
+  if (vcardModel->getAvatar().isEmpty())
+    vcardModel->setAvatar(mVcardModel->getAvatar());
+
+  // 2. Merge sip addresses, companies, emails and urls.
+  for (const auto &sipAddress : mVcardModel->getSipAddresses())
+    vcardModel->addSipAddress(sipAddress.toString());
+  for (const auto &company : mVcardModel->getCompanies())
+    vcardModel->addCompany(company.toString());
+  for (const auto &email : mVcardModel->getEmails())
+    vcardModel->addEmail(email.toString());
+  for (const auto &url : mVcardModel->getUrls())
+    vcardModel->addUrl(url.toString());
+
+  // 3. Merge address.
+  {
+    const QVariantMap &oldAddress = vcardModel->getAddress();
+    QVariantMap newAddress = vcardModel->getAddress();
+
+    static const char *attributes[4] = { "street", "locality", "postalCode", "country" };
+    bool needMerge = true;
+
+    for (const auto &attribute : attributes)
+      if (!newAddress[attribute].toString().isEmpty()) {
+        needMerge = false;
+        break;
+      }
+
+    if (needMerge) {
+      for (const auto &attribute : attributes)
+        newAddress[attribute] = oldAddress[attribute];
+    }
+  }
+
+  setVcardModel(vcardModel);
+}
+
+// -----------------------------------------------------------------------------
+
 VcardModel *ContactModel::cloneVcardModel () const {
   shared_ptr<linphone::Vcard> vcard = mVcardModel->mVcard->clone();
   Q_ASSERT(vcard != nullptr);

@@ -43,16 +43,19 @@ using namespace std;
 // =============================================================================
 
 template<class T>
-inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const QString &value) {
-  string match = ::Utils::qStringToLinphoneString(value);
-
+inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const string &value) {
   auto it = find_if(
-      list.cbegin(), list.cend(), [&match](const shared_ptr<T> &entry) {
-        return match == entry->getValue();
+      list.cbegin(), list.cend(), [&value](const shared_ptr<T> &entry) {
+        return value == entry->getValue();
       }
     );
 
   return it != list.cend() ? *it : nullptr;
+}
+
+template<class T>
+inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const QString &value) {
+  return findBelCardValue(list, ::Utils::qStringToLinphoneString(value));
 }
 
 inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
@@ -141,6 +144,11 @@ QString VcardModel::getAvatar () const {
   );
 }
 
+inline QString getFileIdFromAppPath (const QString &path) {
+  const static QString appPrefix = QStringLiteral("image://%1/").arg(AvatarProvider::PROVIDER_ID);
+  return path.mid(appPrefix.length());
+}
+
 bool VcardModel::setAvatar (const QString &path) {
   CHECK_VCARD_IS_WRITABLE(this);
 
@@ -148,25 +156,30 @@ bool VcardModel::setAvatar (const QString &path) {
   QString fileId;
   QFile file;
 
-  // 1. Try to copy photo in avatars folder.
+  // 1. Try to copy photo in avatars folder if it's a right path file and
+  // not a application path like `image:`.
   if (!path.isEmpty()) {
-    file.setFileName(path);
+    if (path.startsWith("image:"))
+      fileId = getFileIdFromAppPath(path);
+    else {
+      file.setFileName(path);
 
-    if (!file.exists() || QImageReader::imageFormat(path).size() == 0)
-      return false;
+      if (!file.exists() || QImageReader::imageFormat(path).size() == 0)
+        return false;
 
-    QFileInfo info(file);
-    QString uuid = QUuid::createUuid().toString();
-    fileId = QStringLiteral("%1.%2")
-      .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
-      .arg(info.suffix());
+      QFileInfo info(file);
+      QString uuid = QUuid::createUuid().toString();
+      fileId = QStringLiteral("%1.%2")
+        .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
+        .arg(info.suffix());
 
-    QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirPath()) + fileId;
+      QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirPath()) + fileId;
 
-    if (!file.copy(dest))
-      return false;
+      if (!file.copy(dest))
+        return false;
 
-    qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
+      qInfo() << QStringLiteral("Update avatar of `%1`. (path=%2)").arg(getUsername()).arg(dest);
+    }
   }
 
   // 2. Remove oldest photo.
@@ -298,6 +311,9 @@ bool VcardModel::addSipAddress (const QString &sipAddress) {
 
   // Add sip address in belcard.
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
+  if (findBelCardValue(belcard->getImpp(), interpretedSipAddress))
+    return false;
+
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
   value->setValue(interpretedSipAddress);
 
@@ -359,6 +375,9 @@ bool VcardModel::addCompany (const QString &company) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
+  if (findBelCardValue(belcard->getRoles(), company))
+    return false;
+
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
   value->setValue(::Utils::qStringToLinphoneString(company));
 
@@ -410,6 +429,9 @@ bool VcardModel::addEmail (const QString &email) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
+  if (findBelCardValue(belcard->getEmails(), email))
+    return false;
+
   shared_ptr<belcard::BelCardEmail> value = belcard::BelCardGeneric::create<belcard::BelCardEmail>();
   value->setValue(::Utils::qStringToLinphoneString(email));
 
@@ -421,6 +443,7 @@ bool VcardModel::addEmail (const QString &email) {
   qInfo() << QStringLiteral("Add new email on vcard: `%1`.").arg(email);
 
   emit vcardUpdated();
+
   return true;
 }
 
@@ -461,6 +484,9 @@ bool VcardModel::addUrl (const QString &url) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
+  if (findBelCardValue(belcard->getURLs(), url))
+    return false;
+
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
   value->setValue(::Utils::qStringToLinphoneString(url));
 
@@ -472,6 +498,7 @@ bool VcardModel::addUrl (const QString &url) {
   qInfo() << QStringLiteral("Add new url on vcard: `%1`.").arg(url);
 
   emit vcardUpdated();
+
   return true;
 }
 

@@ -48,8 +48,9 @@ public:
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   ContactModel *findContactModelFromSipAddress (const QString &sipAddress) const;
+  ContactModel *findContactModelFromUsername (const QString &username) const;
 
-  Q_INVOKABLE ContactModel *addContact (VcardModel *vcard);
+  Q_INVOKABLE ContactModel *addContact (VcardModel *vcardModel);
   Q_INVOKABLE void removeContact (ContactModel *contact);
 
   Q_INVOKABLE void cleanAvatars ();

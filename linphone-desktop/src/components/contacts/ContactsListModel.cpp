@@ -113,8 +113,16 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 // -----------------------------------------------------------------------------
 
 ContactModel *ContactsListModel::findContactModelFromSipAddress (const QString &sipAddress) const {
-  auto it = find_if(mList.begin(), mList.end(), [sipAddress](ContactModel *contactModel) {
+  auto it = find_if(mList.begin(), mList.end(), [&sipAddress](ContactModel *contactModel) {
         return contactModel->getVcardModel()->getSipAddresses().contains(sipAddress);
+      });
+
+  return it != mList.end() ? *it : nullptr;
+}
+
+ContactModel *ContactsListModel::findContactModelFromUsername (const QString &username) const {
+  auto it = find_if(mList.begin(), mList.end(), [&username](ContactModel *contactModel) {
+        return contactModel->getVcardModel()->getUsername() == username;
       });
 
   return it != mList.end() ? *it : nullptr;
@@ -122,20 +130,27 @@ ContactModel *ContactsListModel::findContactModelFromSipAddress (const QString &
 
 // -----------------------------------------------------------------------------
 
-ContactModel *ContactsListModel::addContact (VcardModel *vcard) {
-  ContactModel *contact = new ContactModel(this, vcard);
+ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
+  // Try to merge vcardModel to an existing contact.
+  ContactModel *contact = findContactModelFromUsername(vcardModel->getUsername());
+  if (contact) {
+    contact->mergeVcardModel(vcardModel);
+    return contact;
+  }
+
+  contact = new ContactModel(this, vcardModel);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
   if (
     mLinphoneFriends->addFriend(contact->mLinphoneFriend) !=
     linphone::FriendListStatus::FriendListStatusOK
   ) {
-    qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcard;
+    qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcardModel;
     delete contact;
     return nullptr;
   }
 
-  qInfo() << QStringLiteral("Add contact from vcard:") << contact << vcard;
+  qInfo() << QStringLiteral("Add contact from vcard:") << contact << vcardModel;
 
   int row = mList.count();
 

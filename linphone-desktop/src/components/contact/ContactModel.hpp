@@ -50,6 +50,8 @@ public:
   VcardModel *getVcardModel () const;
   void setVcardModel (VcardModel *vcardModel);
 
+  void mergeVcardModel (VcardModel *vcardModel);
+
   Q_INVOKABLE VcardModel *cloneVcardModel () const;
 
 signals:
