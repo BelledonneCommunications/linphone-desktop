@@ -389,32 +389,35 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
   if (d->memory->create(sizeof(InstancesInfo))) {
     d->startPrimary(true);
     return;
-  } else {
-    // Attempt to attach to the memory segment
-    if (d->memory->attach()) {
-      d->memory->lock();
-      InstancesInfo *inst = static_cast<InstancesInfo *>(d->memory->data());
+  }
 
-      if (!inst->primary) {
-        d->startPrimary(false);
-        d->memory->unlock();
-        return;
-      }
+  // Attempt to attach to the memory segment
+  if (d->memory->attach()) {
+    d->memory->lock();
 
-      // Check if another instance can be started
-      if (allowSecondary) {
-        inst->secondary += 1;
-        d->instanceNumber = inst->secondary;
-        d->startSecondary();
-        if (d->options & Mode::SecondaryNotification) {
-          d->connectToPrimary(timeout, SecondaryInstance);
-        }
-        d->memory->unlock();
-        return;
-      }
+    InstancesInfo *inst = static_cast<InstancesInfo *>(d->memory->data());
+
+    if (!inst->primary) {
+      d->startPrimary(false);
+      d->memory->unlock();
+      return;
+    }
+
+    // Check if another instance can be started
+    if (allowSecondary) {
+      inst->secondary += 1;
+      d->instanceNumber = inst->secondary;
+
+      d->startSecondary();
+      if (d->options & Mode::SecondaryNotification)
+        d->connectToPrimary(timeout, SecondaryInstance);
 
       d->memory->unlock();
+
+      return;
     }
+
+    d->memory->unlock();
   }
 
   d->connectToPrimary(timeout, NewInstance);
