@@ -51,6 +51,12 @@ Item {
             anchors.fill: parent
             onClicked: isNotDelivered && proxyModel.resendMessage(index)
           }
+
+          TooltipArea {
+            text: isNotDelivered
+            ? qsTr("Error")
+            : (isRead ? qsTr("Read") : qsTr("Delivered"))
+          }
         }
       }
 

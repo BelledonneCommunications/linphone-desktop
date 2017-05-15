@@ -26,7 +26,6 @@ MouseArea {
     parent: tooltipParent
     visible: _visible || force
 
-    delay: -1
     timeout: -1
 
     // Workaround to always display tooltip.
