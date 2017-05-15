@@ -280,7 +280,10 @@ QVariantList VcardModel::getSipAddresses () const {
     shared_ptr<linphone::Address> linphoneAddress = core->createAddress(value);
 
     if (linphoneAddress)
-      list.append(::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly()));
+      list << ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
+    else
+      qWarning() << QStringLiteral("Unable to parse sip address: `%1`")
+        .arg(::Utils::linphoneStringToQString(value));
   }
 
   return list;
