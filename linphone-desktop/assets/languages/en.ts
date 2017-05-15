@@ -812,15 +812,15 @@ your friend&apos;s SIP address or username.</translation>
 <context>
     <name>OutgoingMessage</name>
     <message>
-        <source>Error</source>
+        <source>messageError</source>
         <translation>Error</translation>
     </message>
     <message>
-        <source>Read</source>
+        <source>messageRead</source>
         <translation>Read</translation>
     </message>
     <message>
-        <source>Delivered</source>
+        <source>messageDelivered</source>
         <translation>Delivered</translation>
     </message>
 </context>

@@ -54,8 +54,8 @@ Item {
 
           TooltipArea {
             text: isNotDelivered
-            ? qsTr("Error")
-            : (isRead ? qsTr("Read") : qsTr("Delivered"))
+              ? qsTr('messageError')
+              : (isRead ? qsTr('messageRead') : qsTr('messageDelivered'))
           }
         }
       }

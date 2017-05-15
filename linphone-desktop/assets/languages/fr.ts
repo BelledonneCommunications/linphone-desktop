@@ -811,15 +811,15 @@ un chat ou ajouter un contact.</translation>
 <context>
     <name>OutgoingMessage</name>
     <message>
-        <source>Error</source>
+        <source>messageError</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <source>Read</source>
+        <source>messageRead</source>
         <translation>Lu</translation>
     </message>
     <message>
-        <source>Delivered</source>
+        <source>messageDelivered</source>
         <translation>Délivré</translation>
     </message>
 </context>
