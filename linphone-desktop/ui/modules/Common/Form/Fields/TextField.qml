@@ -11,9 +11,13 @@ import Common.Styles 1.0
 Controls.TextField {
   id: textField
 
+  // ---------------------------------------------------------------------------
+
   property alias icon: icon.icon
   property string error: ''
   property var tools
+
+  // ---------------------------------------------------------------------------
 
   background: Rectangle {
     border {
@@ -59,6 +63,18 @@ Controls.TextField {
   font.pointSize: TextFieldStyle.text.fontSize
   rightPadding: TextFieldStyle.text.rightPadding + toolsContainer.width
   selectByMouse: true
+
+  // ---------------------------------------------------------------------------
+
+  onEditingFinished: cursorPosition = 0
+
+  onTextChanged: {
+    if (!focus) {
+      cursorPosition = 0
+    }
+  }
+
+  // ---------------------------------------------------------------------------
 
   Icon {
     id: icon
