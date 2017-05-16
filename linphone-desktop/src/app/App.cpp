@@ -55,7 +55,7 @@
 
 #ifndef LINPHONE_QT_GIT_VERSION
   #define LINPHONE_QT_GIT_VERSION "unknown"
-#endif // ifndef LINPHONE_VERSION
+#endif // ifndef LINPHONE_QT_GIT_VERSION
 
 using namespace std;
 
