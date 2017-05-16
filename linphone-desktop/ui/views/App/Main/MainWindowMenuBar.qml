@@ -22,7 +22,17 @@ Item {
       title: qsTr('options')
 
       MenuItem {
-        shortcut: 'Ctrl+P'
+        shortcut: Shortcut {
+          sequence: StandardKey.Preferences
+          onActivated: {
+            var window = App.getSettingsWindow()
+            if (window.visibility === Window.Minimized) {
+              window.visibility = Window.AutomaticVisibility
+            } else {
+              window.setVisible(true)
+            }
+          }
+        }
         text: qsTr('settings')
 
         onTriggered: {
@@ -38,7 +48,11 @@ Item {
       MenuSeparator {}
 
       MenuItem {
-        shortcut: StandardKey.Quit
+        shortcut: Shortcut {
+          sequence: StandardKey.Quit
+          context: Qt.ApplicationShortcut
+          onActivated: Qt.quit()
+        }
         text: qsTr('quit')
 
         onTriggered: Qt.quit()
@@ -67,7 +81,13 @@ Item {
       title: qsTr('help')
 
       MenuItem {
-        shortcut: StandardKey.HelpContents
+        shortcut: Shortcut {
+          sequence: StandardKey.HelpContents
+          onActivated: {
+            window.detachVirtualWindow()
+            window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
+          }
+        }
         text: qsTr('about')
 
         onTriggered: {
