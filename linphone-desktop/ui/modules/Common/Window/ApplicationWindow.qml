@@ -1,13 +1,11 @@
 import QtQuick 2.7
-
-// Explicit import to support Toolbar.
-import QtQuick.Controls 1.4 as Controls1
+import QtQuick.Controls 2.1
 
 import 'Window.js' as Logic
 
 // =============================================================================
 
-Controls1.ApplicationWindow {
+ApplicationWindow {
   default property alias _content: content.data
 
   // ---------------------------------------------------------------------------
