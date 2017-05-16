@@ -96,6 +96,13 @@ Item {
       }
 
       onTextChanged: _filter(text)
+
+      InvertedMouseArea {
+        anchors.fill: parent
+        enabled: searchBox._isOpen
+
+        onPressed: searchBox.closeMenu()
+      }
     }
 
     // -------------------------------------------------------------------------
