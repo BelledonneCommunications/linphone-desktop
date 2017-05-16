@@ -37,6 +37,7 @@
 #include "translator/DefaultTranslator.hpp"
 
 #include "App.hpp"
+#include "gitversion.h"
 
 #define DEFAULT_LOCALE "en"
 
@@ -52,8 +53,8 @@
 
 #define SELF_TEST_DELAY 60000
 
-#ifndef LINPHONE_VERSION
-  #define LINPHONE_VERSION "unknown"
+#ifndef LINPHONE_QT_GIT_VERSION
+  #define LINPHONE_QT_GIT_VERSION "unknown"
 #endif // ifndef LINPHONE_VERSION
 
 using namespace std;
@@ -65,7 +66,7 @@ inline bool installLocale (App &app, QTranslator &translator, const QLocale &loc
 }
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
-  setApplicationVersion(LINPHONE_VERSION);
+  setApplicationVersion(LINPHONE_QT_GIT_VERSION);
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
   // List available locales.

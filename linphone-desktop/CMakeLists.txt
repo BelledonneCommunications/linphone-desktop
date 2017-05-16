@@ -21,7 +21,7 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt)
+project(linphoneqt VERSION 3.9.0)
 
 set(EXECUTABLE_NAME linphone)
 set(TARGET_NAME linphone-qt)
@@ -262,6 +262,8 @@ if(WIN32)
 else()
   add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
 endif()
+  bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
+  add_dependencies(${TARGET_NAME} ${TARGET_NAME}-git-version)
   add_dependencies(${TARGET_NAME} update_translations)
 if(NOT WIN32)
   add_dependencies(update_translations check_qml)
