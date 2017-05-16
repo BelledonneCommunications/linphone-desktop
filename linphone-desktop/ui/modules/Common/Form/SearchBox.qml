@@ -123,6 +123,9 @@ Item {
       DropDownDynamicMenu {
         id: menu
 
+        implicitHeight: list.height
+        width: searchField.width
+
         // If the menu is focused, the main window loses the active status.
         // So It's necessary to map the keys events.
         Keys.forwardTo: searchField
@@ -133,7 +136,7 @@ Item {
           id: list
 
           headerPositioning: header ? ListView.OverlayHeader : ListView.InlineFooter
-          width: searchField.width
+          width: menu.width
         }
       }
     }
