@@ -18,6 +18,11 @@ Item {
 
   // ---------------------------------------------------------------------------
 
+  signal hidden
+  signal shown
+
+  // ---------------------------------------------------------------------------
+
   visible: false
 
   function show () {
@@ -79,5 +84,8 @@ Item {
     padding: 0
 
     Component.onCompleted: parent = Utils.getTopParent(this)
+
+    onClosed: wrapper.hidden()
+    onOpened: wrapper.shown()
   }
 }

@@ -223,14 +223,13 @@
     <file>ui/modules/Common/Indicators/VuMeter.qml</file>
     <file>ui/modules/Common/Menus/ActionMenuEntry.qml</file>
     <file>ui/modules/Common/Menus/ActionMenu.qml</file>
+    <file>ui/modules/Common/Menus/DropDownDynamicMenu.qml</file>
     <file>ui/modules/Common/Menus/Menu.qml</file>
     <file>ui/modules/Common/Misc/Borders.qml</file>
     <file>ui/modules/Common/Misc/Collapse.qml</file>
     <file>ui/modules/Common/Misc/ForceScrollBar.qml</file>
     <file>ui/modules/Common/Misc/Paned.qml</file>
-    <file>ui/modules/Common/Popup/AbstractDropDownMenu.qml</file>
     <file>ui/modules/Common/Popup/DesktopPopup.qml</file>
-    <file>ui/modules/Common/Popup/DropDownDynamicMenu.qml</file>
     <file>ui/modules/Common/Popup/Popup.qml</file>
     <file>ui/modules/Common/Popup/PopupShadow.qml</file>
     <file>ui/modules/Common/qmldir</file>

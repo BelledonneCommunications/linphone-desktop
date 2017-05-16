@@ -4,7 +4,7 @@
 
 .pragma library
 
-.import QtQuick 2.0 as QtQuick
+.import QtQuick 2.7 as QtQuick
 
 .import 'port-tools.js' as PortTools
 .import 'uri-tools.js' as UriTools

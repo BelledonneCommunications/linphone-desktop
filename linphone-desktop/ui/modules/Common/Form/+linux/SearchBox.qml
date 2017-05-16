@@ -89,10 +89,8 @@ Item {
     DropDownDynamicMenu {
       id: menu
 
-      launcher: searchField
       relativeTo: searchField
       relativeY: searchField.height
-      width: searchField.width
 
       // If the menu is focused, the main window loses the active status.
       // So It's necessary to map the keys events.
@@ -103,8 +101,8 @@ Item {
       ScrollableListView {
         id: list
 
-        anchors.fill: parent
         headerPositioning: header ? ListView.OverlayHeader : ListView.InlineFooter
+        width: searchField.width
       }
     }
   }
@@ -123,7 +121,7 @@ Item {
 
       ScriptAction {
         script: {
-          menu.showMenu()
+          menu.show()
 
           searchBox.menuOpened()
         }
@@ -136,7 +134,7 @@ Item {
 
       ScriptAction {
         script: {
-          menu.hideMenu()
+          menu.hide()
           searchField.focus = false
 
           searchBox.menuClosed()

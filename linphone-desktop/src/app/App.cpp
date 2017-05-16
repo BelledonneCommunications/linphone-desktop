@@ -28,6 +28,8 @@
 #include <QtDebug>
 #include <QTimer>
 
+#include "gitversion.h"
+
 #include "../components/Components.hpp"
 #include "../Utils.hpp"
 
@@ -37,7 +39,6 @@
 #include "translator/DefaultTranslator.hpp"
 
 #include "App.hpp"
-#include "gitversion.h"
 
 #define DEFAULT_LOCALE "en"
 
@@ -51,7 +52,7 @@
 
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
-#define SELF_TEST_DELAY 60000
+#define SELF_TEST_DELAY 300000
 
 #ifndef LINPHONE_QT_GIT_VERSION
   #define LINPHONE_QT_GIT_VERSION "unknown"
@@ -153,10 +154,10 @@ void App::initContentApp () {
 
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
-  qInfo() << QStringLiteral("Activated selectors:") << QQmlFileSelector::get(mEngine)->selector()->allSelectors();
 
   // Provide `+custom` folders for custom components.
   (new QQmlFileSelector(mEngine, mEngine))->setExtraSelectors(QStringList("custom"));
+  qInfo() << QStringLiteral("Activated selectors:") << QQmlFileSelector::get(mEngine)->selector()->allSelectors();
 
   // Set modules paths.
   mEngine->addImportPath(":/ui/modules");
