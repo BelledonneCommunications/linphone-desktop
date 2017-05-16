@@ -1,11 +1,14 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1 as Controls
 
+import Common.Styles 1.0
 import Utils 1.0
 
 // =============================================================================
 
 Item {
+  id: wrapper
+
   // Optionnal parameters, set the position of popup relative to this item.
   property var relativeTo
   property int relativeX: 0
@@ -15,7 +18,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-	visible: false
+  visible: false
 
   function show () {
     if (popup.visible) {
@@ -56,25 +59,25 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-	Controls.Popup {
-		id: popup
+  Controls.Popup {
+    id: popup
 
-		background: Rectangle {
+    height: wrapper._content.height
+    width: wrapper._content.width
+
+    background: Rectangle {
+      color: PopupStyle.backgroundColor
       height: popup.height
       width: popup.width
 
-			layer {
-				enabled: true
-				effect: PopupShadow {}
-			}
-		}
-
-    contentItem: Column {
-      id: internalData
+      layer {
+        enabled: true
+        effect: PopupShadow {}
+      }
     }
 
     padding: 0
 
     Component.onCompleted: parent = Utils.getTopParent(this)
-	}
+  }
 }

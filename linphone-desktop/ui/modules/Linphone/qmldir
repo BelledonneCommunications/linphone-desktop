@@ -31,3 +31,5 @@ SmartSearchBar      1.0 SmartSearchBar/SmartSearchBar.qml
 TelKeypad           1.0 TelKeypad/TelKeypad.qml
 
 Timeline            1.0 Timeline/Timeline.qml
+
+SipAddressesView    1.0 View/SipAddressesView.qml

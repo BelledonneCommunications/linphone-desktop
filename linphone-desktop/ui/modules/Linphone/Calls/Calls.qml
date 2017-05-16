@@ -64,7 +64,6 @@ ListView {
       Popup {
         id: popup
 
-        implicitWidth: actionMenu.width
         relativeTo: callControls
         relativeX: callControls.width
 

@@ -7,93 +7,17 @@ import Linphone.Styles 1.0
 
 // =============================================================================
 
-AbstractDropDownMenu {
+Popup {
   id: callStatistics
 
   property var call
 
   // ---------------------------------------------------------------------------
 
-  function _computeHeight () {
-    return CallStatisticsStyle.height
-  }
-
-  // ---------------------------------------------------------------------------
-
-  Component {
-    id: line
-
-    RowLayout {
-      spacing: CallStatisticsStyle.spacing
-      width: parent.width
-
-      // -----------------------------------------------------------------------
-
-      Text {
-        Layout.preferredWidth: CallStatisticsStyle.key.width
-
-        color: CallStatisticsStyle.key.color
-        elide: Text.ElideRight
-
-        font {
-          pointSize: CallStatisticsStyle.key.fontSize
-          bold: true
-        }
-
-        horizontalAlignment: Text.AlignRight
-        verticalAlignment: Text.AlignVCenter
-
-        text: modelData.key
-      }
-
-      // -----------------------------------------------------------------------
-
-      Text {
-        Layout.fillWidth: true
-
-        color: CallStatisticsStyle.value.color
-        elide: Text.ElideRight
-        font.pointSize: CallStatisticsStyle.value.fontSize
-
-        text: modelData.value
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-
-  Component {
-    id: media
-
-    Column {
-      Text {
-        color: CallStatisticsStyle.title.color
-
-        font {
-          bold: true
-          pointSize: CallStatisticsStyle.title.fontSize
-        }
-
-        elide: Text.ElideRight
-        horizontalAlignment: Text.AlignHCenter
-        text: $label
-
-        height: contentHeight + CallStatisticsStyle.title.bottomMargin
-        width: parent.width
-      }
-
-      Repeater {
-        model: $data
-        delegate: line
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-
   Rectangle {
-    anchors.fill: parent
     color: CallStatisticsStyle.color
+    height: CallStatisticsStyle.height
+    width: callStatistics.width
 
     Row {
       anchors {
@@ -117,6 +41,77 @@ AbstractDropDownMenu {
 
         sourceComponent: media
         width: parent.width / 2
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Line.
+    // -------------------------------------------------------------------------
+
+    Component {
+      id: line
+
+      RowLayout {
+        spacing: CallStatisticsStyle.spacing
+        width: parent.width
+
+        Text {
+          Layout.preferredWidth: CallStatisticsStyle.key.width
+
+          color: CallStatisticsStyle.key.color
+          elide: Text.ElideRight
+
+          font {
+            pointSize: CallStatisticsStyle.key.fontSize
+            bold: true
+          }
+
+          horizontalAlignment: Text.AlignRight
+          verticalAlignment: Text.AlignVCenter
+
+          text: modelData.key
+        }
+
+        Text {
+          Layout.fillWidth: true
+
+          color: CallStatisticsStyle.value.color
+          elide: Text.ElideRight
+          font.pointSize: CallStatisticsStyle.value.fontSize
+
+          text: modelData.value
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // Media.
+    // -------------------------------------------------------------------------
+
+    Component {
+      id: media
+
+      Column {
+        Text {
+          color: CallStatisticsStyle.title.color
+
+          font {
+            bold: true
+            pointSize: CallStatisticsStyle.title.fontSize
+          }
+
+          elide: Text.ElideRight
+          horizontalAlignment: Text.AlignHCenter
+          text: $label
+
+          height: contentHeight + CallStatisticsStyle.title.bottomMargin
+          width: parent.width
+        }
+
+        Repeater {
+          model: $data
+          delegate: line
+        }
       }
     }
   }

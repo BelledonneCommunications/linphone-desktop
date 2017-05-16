@@ -70,7 +70,7 @@ Rectangle {
         iconSize: CallStyle.header.iconSize
         useStates: false
 
-        onClicked: callStatistics.showMenu()
+        onClicked: callStatistics.show()
 
         // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
         Timer {
@@ -88,7 +88,6 @@ Rectangle {
           call: incall.call
           width: container.width
 
-          launcher: callQuality
           relativeTo: callQuality
           relativeY: CallStyle.header.stats.relativeY
         }
