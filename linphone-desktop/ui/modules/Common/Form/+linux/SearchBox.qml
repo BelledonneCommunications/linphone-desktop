@@ -33,7 +33,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  function hideMenu () {
+  function closeMenu () {
     if (!_isOpen) {
       return
     }
@@ -41,7 +41,7 @@ Item {
     _isOpen = false
   }
 
-  function showMenu () {
+  function openMenu () {
     if (_isOpen) {
       return
     }
@@ -68,16 +68,16 @@ Item {
       icon: 'search'
       width: parent.width
 
-      Keys.onEscapePressed: searchBox.hideMenu()
+      Keys.onEscapePressed: searchBox.closeMenu()
       Keys.onReturnPressed: {
-        searchBox.hideMenu()
+        searchBox.closeMenu()
         searchBox.enterPressed()
       }
 
       onActiveFocusChanged: {
         if (activeFocus && !_isOpen) {
           searchBox.menuRequested()
-          searchBox.showMenu()
+          searchBox.openMenu()
         }
       }
 
@@ -96,7 +96,7 @@ Item {
       // So It's necessary to map the keys events.
       Keys.forwardTo: searchField
 
-      onMenuClosed: searchBox.hideMenu()
+      onClosed: searchBox.closeMenu()
 
       ScrollableListView {
         id: list
@@ -121,7 +121,7 @@ Item {
 
       ScriptAction {
         script: {
-          menu.show()
+          menu.open()
 
           searchBox.menuOpened()
         }
@@ -134,7 +134,7 @@ Item {
 
       ScriptAction {
         script: {
-          menu.hide()
+          menu.close()
           searchField.focus = false
 
           searchBox.menuClosed()

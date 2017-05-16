@@ -35,7 +35,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: MenuStyle.backgroundColor
+  color: ApplicationMenuStyle.backgroundColor
   implicitHeight: content.height
   width: entryWidth
 
@@ -43,19 +43,19 @@ Rectangle {
     id: content
 
     anchors.centerIn: parent
-    spacing: MenuStyle.spacing
+    spacing: ApplicationMenuStyle.spacing
 
     Repeater {
       model: entries
 
       Rectangle {
         color: mouseArea.pressed
-          ? MenuStyle.entry.color.pressed
+          ? ApplicationMenuStyle.entry.color.pressed
           : (_selectedEntry === index
-             ? MenuStyle.entry.color.selected
+             ? ApplicationMenuStyle.entry.color.selected
              : (mouseArea.containsMouse
-                ? MenuStyle.entry.color.hovered
-                : MenuStyle.entry.color.normal
+                ? ApplicationMenuStyle.entry.color.hovered
+                : ApplicationMenuStyle.entry.color.normal
                )
             )
         height: menu.entryHeight
@@ -64,13 +64,13 @@ Rectangle {
         RowLayout {
           anchors {
             left: parent.left
-            leftMargin: MenuStyle.entry.leftMargin
+            leftMargin: ApplicationMenuStyle.entry.leftMargin
             right: parent.right
-            rightMargin: MenuStyle.entry.rightMargin
+            rightMargin: ApplicationMenuStyle.entry.rightMargin
             verticalCenter: parent.verticalCenter
           }
 
-          spacing: MenuStyle.entry.spacing
+          spacing: ApplicationMenuStyle.entry.spacing
 
           Icon {
             icon: modelData.icon + (
@@ -78,15 +78,15 @@ Rectangle {
                 ? '_selected'
                 : '_normal'
             )
-            iconSize: MenuStyle.entry.iconSize
+            iconSize: ApplicationMenuStyle.entry.iconSize
           }
 
           Text {
             Layout.fillWidth: true
             color: _selectedEntry === index
-              ? MenuStyle.entry.text.color.selected
-              : MenuStyle.entry.text.color.normal
-            font.pointSize: MenuStyle.entry.text.fontSize
+              ? ApplicationMenuStyle.entry.text.color.selected
+              : ApplicationMenuStyle.entry.text.color.normal
+            font.pointSize: ApplicationMenuStyle.entry.text.fontSize
             height: parent.height
             text: modelData.entryName
             verticalAlignment: Text.AlignVCenter
@@ -100,9 +100,9 @@ Rectangle {
 
           height: parent.height
           color: _selectedEntry === index
-            ? MenuStyle.entry.indicator.color
+            ? ApplicationMenuStyle.entry.indicator.color
             : 'transparent'
-          width: MenuStyle.entry.indicator.width
+          width: ApplicationMenuStyle.entry.indicator.width
         }
 
         MouseArea {

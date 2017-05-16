@@ -38,7 +38,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  function hideMenu () {
+  function closeMenu () {
     if (!_isOpen) {
       return
     }
@@ -46,7 +46,7 @@ Item {
     _isOpen = false
   }
 
-  function showMenu () {
+  function openMenu () {
     if (_isOpen) {
       return
     }
@@ -60,7 +60,7 @@ Item {
   }
 
   function _handleCoords () {
-    searchBox.hideMenu()
+    searchBox.closeMenu()
 
     var point = searchBox.mapToItem(null, 0, searchBox.height)
 
@@ -82,16 +82,16 @@ Item {
       icon: 'search'
       width: parent.width
 
-      Keys.onEscapePressed: searchBox.hideMenu()
+      Keys.onEscapePressed: searchBox.closeMenu()
       Keys.onReturnPressed: {
-        searchBox.hideMenu()
+        searchBox.closeMenu()
         searchBox.enterPressed()
       }
 
       onActiveFocusChanged: {
         if (activeFocus && !_isOpen) {
           searchBox.menuRequested()
-          searchBox.showMenu()
+          searchBox.openMenu()
         }
       }
 
@@ -118,7 +118,7 @@ Item {
 
       requestActivate: true
 
-      onVisibleChanged: !visible && searchBox.hideMenu()
+      onVisibleChanged: !visible && searchBox.closeMenu()
 
       DropDownDynamicMenu {
         id: menu
@@ -127,7 +127,7 @@ Item {
         // So It's necessary to map the keys events.
         Keys.forwardTo: searchField
 
-        onMenuClosed: searchBox.hideMenu()
+        onClosed: searchBox.closeMenu()
 
         ScrollableListView {
           id: list
@@ -153,8 +153,8 @@ Item {
 
       ScriptAction {
         script: {
-          menu.show()
-          desktopPopup.show()
+          menu.open()
+          desktopPopup.open()
 
           searchBox.menuOpened()
         }
@@ -167,9 +167,9 @@ Item {
 
       ScriptAction {
         script: {
-          menu.hide()
+          menu.close()
           searchField.focus = false
-          desktopPopup.hide()
+          desktopPopup.close()
 
           searchBox.menuClosed()
         }

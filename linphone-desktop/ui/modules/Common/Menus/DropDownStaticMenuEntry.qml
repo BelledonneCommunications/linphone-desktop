@@ -12,10 +12,10 @@ Rectangle {
   signal clicked
 
   color: mouseArea.pressed
-    ? ActionMenuStyle.entry.color.pressed
+    ? DropDownStaticMenuStyle.entry.color.pressed
     : (mouseArea.containsMouse
-       ? ActionMenuStyle.entry.color.hovered
-       : ActionMenuStyle.entry.color.normal
+       ? DropDownStaticMenuStyle.entry.color.hovered
+       : DropDownStaticMenuStyle.entry.color.normal
       )
   height: parent.entryHeight
   width: parent.entryWidth
@@ -25,14 +25,14 @@ Rectangle {
 
     anchors {
       left: parent.left
-      leftMargin: ActionMenuStyle.entry.leftMargin
+      leftMargin: DropDownStaticMenuStyle.entry.leftMargin
       right: parent.right
-      rightMargin: ActionMenuStyle.entry.rightMargin
+      rightMargin: DropDownStaticMenuStyle.entry.rightMargin
     }
 
-    color: ActionMenuStyle.entry.text.color
+    color: DropDownStaticMenuStyle.entry.text.color
     elide: Text.ElideRight
-    font.pointSize: ActionMenuStyle.entry.text.fontSize
+    font.pointSize: DropDownStaticMenuStyle.entry.text.fontSize
 
     height: parent.height
     verticalAlignment: Text.AlignVCenter

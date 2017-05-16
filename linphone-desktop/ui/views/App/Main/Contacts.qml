@@ -132,17 +132,17 @@ ColumnLayout {
 
                 ActionButton {
                   icon: 'video_call'
-                  onClicked: actions.itemAt(0).show()
+                  onClicked: actions.itemAt(0).open()
                 }
 
                 ActionButton {
                   icon: 'call'
-                  onClicked: actions.itemAt(1).show()
+                  onClicked: actions.itemAt(1).open()
                 }
 
                 ActionButton {
                   icon: 'chat'
-                  onClicked: actions.itemAt(2).show()
+                  onClicked: actions.itemAt(2).open()
                 }
               }
 

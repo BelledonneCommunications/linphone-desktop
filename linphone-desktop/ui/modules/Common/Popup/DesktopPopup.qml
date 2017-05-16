@@ -10,24 +10,24 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property alias popupX: popup.x
-  property alias popupY: popup.y
+  property alias popupX: window.x
+  property alias popupY: window.y
   property bool requestActivate: false
   property int flags: Qt.SplashScreen
 
-  readonly property alias popupWidth: popup.width
-  readonly property alias popupHeight: popup.height
+  readonly property alias popupWidth: window.width
+  readonly property alias popupHeight: window.height
 
   default property alias _content: content.data
   property bool _isOpen: false
 
   // ---------------------------------------------------------------------------
 
-  function show () {
+  function open () {
     _isOpen = true
   }
 
-  function hide () {
+  function close () {
     _isOpen = false
   }
 
@@ -45,7 +45,7 @@ Item {
   y: 0
 
   Window {
-    id: popup
+    id: window
 
     // Used for internal purposes only. Like Notifications.
     objectName: '__internalWindow'
@@ -70,7 +70,7 @@ Item {
 
     PropertyChanges {
       opacity: 1.0
-      target: popup
+      target: window
     }
   }
 
@@ -81,10 +81,10 @@ Item {
 
       ScriptAction {
         script: {
-          popup.showNormal()
+          window.showNormal()
 
           if (wrapper.requestActivate) {
-            popup.requestActivate()
+            window.requestActivate()
           }
         }
       }
@@ -95,7 +95,7 @@ Item {
       to: ''
 
       ScriptAction {
-        script: popup.hide()
+        script: window.hide()
       }
     }
   ]

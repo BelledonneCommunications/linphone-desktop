@@ -123,7 +123,7 @@ ColumnLayout  {
           ActionButton {
             icon: 'history'
 
-            onClicked: sipAddressesMenu.showMenu()
+            onClicked: sipAddressesMenu.open()
           }
         }
 

@@ -18,14 +18,12 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  signal hidden
-  signal shown
+  signal closed
+  signal opened
 
   // ---------------------------------------------------------------------------
 
-  visible: false
-
-  function show () {
+  function open () {
     if (popup.visible) {
       return
     }
@@ -51,7 +49,7 @@ Item {
     popup.open()
   }
 
-  function hide () {
+  function close () {
     if (!popup.visible) {
       return
     }
@@ -61,6 +59,10 @@ Item {
 
     popup.close()
   }
+
+  // ---------------------------------------------------------------------------
+
+  visible: false
 
   // ---------------------------------------------------------------------------
 
@@ -85,7 +87,7 @@ Item {
 
     Component.onCompleted: parent = Utils.getTopParent(this)
 
-    onClosed: wrapper.hidden()
-    onOpened: wrapper.shown()
+    onClosed: wrapper.closed()
+    onOpened: wrapper.opened()
   }
 }

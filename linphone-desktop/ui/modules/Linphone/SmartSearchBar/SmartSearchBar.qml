@@ -91,7 +91,7 @@ SearchBox {
               ActionButton {
                 icon: 'video_call'
                 onClicked: {
-                  searchBox.hideMenu()
+                  searchBox.closeMenu()
                   searchBox.launchVideoCall(interpretableSipAddress)
                 }
               }
@@ -99,7 +99,7 @@ SearchBox {
               ActionButton {
                 icon: 'call'
                 onClicked: {
-                  searchBox.hideMenu()
+                  searchBox.closeMenu()
                   searchBox.launchCall(interpretableSipAddress)
                 }
               }
@@ -107,7 +107,7 @@ SearchBox {
               ActionButton {
                 icon: 'chat'
                 onClicked: {
-                  searchBox.hideMenu()
+                  searchBox.closeMenu()
                   searchBox.launchChat(interpretableSipAddress)
                 }
               }
@@ -127,7 +127,7 @@ SearchBox {
         width: parent.width
 
         onClicked: {
-          searchBox.hideMenu()
+          searchBox.closeMenu()
           searchBox.addContact(interpretableSipAddress)
         }
 
@@ -218,7 +218,7 @@ SearchBox {
             hoverEnabled: true
 
             onClicked: {
-              searchBox.hideMenu()
+              searchBox.closeMenu()
               searchBox.entryClicked($entry)
             }
           }
@@ -234,7 +234,7 @@ SearchBox {
           ActionButton {
             icon: 'video_call'
             onClicked: {
-              searchBox.hideMenu()
+              searchBox.closeMenu()
               searchBox.launchVideoCall($entry.sipAddress)
             }
           }
@@ -242,7 +242,7 @@ SearchBox {
           ActionButton {
             icon: 'call'
             onClicked: {
-              searchBox.hideMenu()
+              searchBox.closeMenu()
               searchBox.launchCall($entry.sipAddress)
             }
           }
@@ -250,7 +250,7 @@ SearchBox {
           ActionButton {
             icon: 'chat'
             onClicked: {
-              searchBox.hideMenu()
+              searchBox.closeMenu()
               searchBox.launchChat($entry.sipAddress)
             }
           }

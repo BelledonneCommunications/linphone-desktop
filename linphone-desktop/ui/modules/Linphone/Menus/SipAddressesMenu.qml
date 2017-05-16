@@ -18,7 +18,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  function show () {
+  function open () {
     var length = sipAddresses.length
     if (!length) {
       return
@@ -28,7 +28,7 @@ Item {
       return sipAddressesMenu.sipAddressClicked(sipAddresses[0])
     }
 
-    menu.show()
+    menu.open()
   }
 
   function _fillModel () {
@@ -104,7 +104,7 @@ Item {
           hoverEnabled: true
 
           onClicked: {
-            menu.hide()
+            menu.close()
             sipAddressesMenu.sipAddressClicked($sipAddress)
           }
         }

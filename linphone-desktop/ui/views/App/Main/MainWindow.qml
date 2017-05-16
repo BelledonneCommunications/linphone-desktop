@@ -204,7 +204,7 @@ ApplicationWindow {
 
           spacing: 0
 
-          Menu {
+          ApplicationMenu {
             id: menu
 
             entryHeight: MainWindowStyle.menu.entryHeight

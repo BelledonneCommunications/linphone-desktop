@@ -13,7 +13,7 @@ function handleActiveFocusItemChanged (activeFocusItem) {
   var smartSearchBar = window._smartSearchBar
 
   if (activeFocusItem == null && smartSearchBar) {
-    smartSearchBar.hideMenu()
+    smartSearchBar.closeMenu()
   }
 }
 

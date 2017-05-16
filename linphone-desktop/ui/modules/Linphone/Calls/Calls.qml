@@ -59,30 +59,26 @@ ListView {
         : 'burger_menu'
       iconSize: CallsStyle.entry.iconMenuSize
 
-      onClicked: popup.show()
+      onClicked: menu.open()
 
-      Popup {
-        id: popup
+      DropDownStaticMenu {
+        id: menu
 
         relativeTo: callControls
         relativeX: callControls.width
 
-        ActionMenu {
-          id: actionMenu
+        entryHeight: CallsStyle.entry.height
+        entryWidth: CallsStyle.entry.width
 
-          entryHeight: CallsStyle.entry.height
-          entryWidth: CallsStyle.entry.width
+        Repeater {
+          model: params.actions
 
-          Repeater {
-            model: params.actions
+          DropDownStaticMenuEntry {
+            entryName: modelData.name
 
-            ActionMenuEntry {
-              entryName: modelData.name
-
-              onClicked: {
-                popup.hide()
-                params.actions[index].handler()
-              }
+            onClicked: {
+              menu.close()
+              params.actions[index].handler()
             }
           }
         }

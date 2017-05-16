@@ -24,7 +24,7 @@ function handleStatusChanged (status) {
     }
 
     telKeypad.visible = false
-    callStatistics.hide()
+    callStatistics.close()
   }
 }
 

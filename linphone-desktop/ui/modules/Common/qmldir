@@ -61,10 +61,10 @@ RoundedImage            1.0 Image/RoundedImage.qml
 
 VuMeter                 1.0 Indicators/VuMeter.qml
 
-ActionMenu              1.0 Menus/ActionMenu.qml
-ActionMenuEntry         1.0 Menus/ActionMenuEntry.qml
+ApplicationMenu         1.0 Menus/ApplicationMenu.qml
 DropDownDynamicMenu     1.0 Menus/DropDownDynamicMenu.qml
-Menu                    1.0 Menus/Menu.qml
+DropDownStaticMenu      1.0 Menus/DropDownStaticMenu.qml
+DropDownStaticMenuEntry 1.0 Menus/DropDownStaticMenuEntry.qml
 
 Borders                 1.0 Misc/Borders.qml
 Collapse                1.0 Misc/Collapse.qml

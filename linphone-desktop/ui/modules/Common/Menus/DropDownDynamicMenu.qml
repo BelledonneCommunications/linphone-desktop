@@ -22,17 +22,17 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  signal menuClosed
-  signal menuOpened
+  signal closed
+  signal opened
 
   // ---------------------------------------------------------------------------
 
-  function show () {
-    popup.show()
+  function open () {
+    popup.open()
   }
 
-  function hide () {
-    popup.hide()
+  function close () {
+    popup.close()
   }
 
   // ---------------------------------------------------------------------------
@@ -63,11 +63,15 @@ Item {
 
   // ---------------------------------------------------------------------------
 
+  visible: false
+
+  // ---------------------------------------------------------------------------
+
   Popup {
     id: popup
 
-    onShown: menu.menuOpened()
-    onHidden: menu.menuClosed()
+    onOpened: menu.opened()
+    onClosed: menu.closed()
 
     Item {
       id: menuContent
