@@ -44,14 +44,6 @@ ApplicationWindow {
   title: MainWindowStyle.title
 
   // ---------------------------------------------------------------------------
-  // Menu bar.
-  // ---------------------------------------------------------------------------
-
-  /*menuBar: MainWindowMenuBar {
-    hide: mainLoader.item ? !mainLoader.item.collapse.isCollapsed : true
-  }*/
-
-  // ---------------------------------------------------------------------------
 
   onActiveFocusItemChanged: Logic.handleActiveFocusItemChanged(activeFocusItem)
   onClosing: Logic.handleClosing(close)
@@ -185,17 +177,14 @@ ApplicationWindow {
             }
           }
 
-          Icon {
-            icon: 'burger_menu_normal'
-            iconSize: 16
+          ActionButton {
+            icon: 'burger_menu'
+            iconSize: MainWindowStyle.menuBurgerSize
+
+            onClicked: menuBar.open()
 
             MainWindowMenuBar {
-              id: mainmenu
-            }
-
-            MouseArea {
-              anchors.fill: parent
-              onClicked: mainmenu.open()
+              id: menuBar
             }
           }
         }

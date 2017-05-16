@@ -7,6 +7,7 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 QtObject {
+  property int menuBurgerSize: 16
   property int minimumHeight: 610
   property int minimumWidth: 950
   property int width: 950
