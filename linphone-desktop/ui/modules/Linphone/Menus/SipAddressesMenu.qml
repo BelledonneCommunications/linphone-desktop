@@ -10,7 +10,6 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property alias launcher: menu.launcher
   property alias relativeTo: menu.relativeTo
   property alias relativeX: menu.relativeX
   property alias relativeY: menu.relativeY
@@ -19,7 +18,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  function showMenu () {
+  function show () {
     var length = sipAddresses.length
     if (!length) {
       return
@@ -29,7 +28,7 @@ Item {
       return sipAddressesMenu.sipAddressClicked(sipAddresses[0])
     }
 
-    menu.showMenu()
+    menu.show()
   }
 
   function _fillModel () {
@@ -57,13 +56,12 @@ Item {
 
     entryHeight: SipAddressesMenuStyle.entry.height
     maxMenuHeight: SipAddressesMenuStyle.maxHeight
-    width: SipAddressesMenuStyle.entry.width
 
     ScrollableListView {
       id: list
 
-      anchors.fill: parent
       spacing: SipAddressesMenuStyle.spacing
+      width: SipAddressesMenuStyle.entry.width
 
       model: ListModel {
         id: model
@@ -106,7 +104,7 @@ Item {
           hoverEnabled: true
 
           onClicked: {
-            menu.hideMenu()
+            menu.hide()
             sipAddressesMenu.sipAddressClicked($sipAddress)
           }
         }
