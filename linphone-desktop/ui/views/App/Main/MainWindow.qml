@@ -47,9 +47,9 @@ ApplicationWindow {
   // Menu bar.
   // ---------------------------------------------------------------------------
 
-  menuBar: MainWindowMenuBar {
+  /*menuBar: MainWindowMenuBar {
     hide: mainLoader.item ? !mainLoader.item.collapse.isCollapsed : true
-  }
+  }*/
 
   // ---------------------------------------------------------------------------
 
@@ -182,6 +182,20 @@ ApplicationWindow {
             TooltipArea {
               text: qsTr('smartSearchBarTooltip')
               visible: !smartSearchBar.isOpen
+            }
+          }
+
+          Icon {
+            icon: 'burger_menu_normal'
+            iconSize: 16
+
+            MainWindowMenuBar {
+              id: mainmenu
+            }
+
+            MouseArea {
+              anchors.fill: parent
+              onClicked: mainmenu.open()
             }
           }
         }
