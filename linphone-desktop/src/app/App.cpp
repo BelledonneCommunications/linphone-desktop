@@ -144,7 +144,7 @@ void App::initContentApp () {
         qInfo() << QStringLiteral("Received message from other application: `%1`.").arg(QString(message));
 
         if (message == "show")
-          App::smartShowWindow(getMainWindow());
+          smartShowWindow(getMainWindow());
       }
     );
   }
@@ -391,7 +391,7 @@ void App::setTrayIcon () {
 
   QAction *restoreAction = new QAction("Restore", root);
   root->connect(restoreAction, &QAction::triggered, root, [root] {
-    App::smartShowWindow(root);
+    smartShowWindow(root);
   });
 
   // trayIcon: Left click actions.
@@ -402,7 +402,7 @@ void App::setTrayIcon () {
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
         if (root->visibility() == QWindow::Hidden)
-          App::smartShowWindow(root);
+          smartShowWindow(root);
         else
           root->hide();
       }
@@ -456,6 +456,8 @@ void App::openAppAfterInit () {
 
   qInfo() << QStringLiteral("Open linphone app.");
 
+  QQuickWindow *mainWindow = getMainWindow();
+
   #ifndef __APPLE__
     // Enable TrayIconSystem.
     if (!QSystemTrayIcon::isSystemTrayAvailable())
@@ -463,11 +465,20 @@ void App::openAppAfterInit () {
     else
       setTrayIcon();
 
-    if (!mParser.isSet("iconified"))
-      App::smartShowWindow(getMainWindow());
+    smartShowWindow(mainWindow);
   #else
-    App::smartShowWindow(getMainWindow());
+    if (!mParser.isSet("iconified"))
+      smartShowWindow(mainWindow);
   #endif // ifndef __APPLE__
+
+  // Display Assistant if it's the first time app launch.
+  {
+    shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
+    if (config->getInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 1)) {
+      QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, ""));
+      config->setInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 0);
+    }
+  }
 }
 
 // -----------------------------------------------------------------------------
