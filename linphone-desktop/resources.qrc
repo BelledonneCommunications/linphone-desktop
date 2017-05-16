@@ -231,7 +231,7 @@
     <file>ui/modules/Common/Popup/AbstractDropDownMenu.qml</file>
     <file>ui/modules/Common/Popup/DesktopPopup.qml</file>
     <file>ui/modules/Common/Popup/DropDownDynamicMenu.qml</file>
-    <file>ui/modules/Common/Popup/DropDownMenu.qml</file>
+    <file>ui/modules/Common/Popup/Popup.qml</file>
     <file>ui/modules/Common/Popup/PopupShadow.qml</file>
     <file>ui/modules/Common/qmldir</file>
     <file>ui/modules/Common/Styles/Animations/BusyIndicatorStyle.qml</file>

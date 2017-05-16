@@ -59,13 +59,12 @@ ListView {
         : 'burger_menu'
       iconSize: CallsStyle.entry.iconMenuSize
 
-      onClicked: menu.showMenu()
+      onClicked: popup.show()
 
-      DropDownMenu {
-        id: menu
+      Popup {
+        id: popup
 
         implicitWidth: actionMenu.width
-        launcher: button
         relativeTo: callControls
         relativeX: callControls.width
 
@@ -82,7 +81,7 @@ ListView {
               entryName: modelData.name
 
               onClicked: {
-                menu.hideMenu()
+                popup.hide()
                 params.actions[index].handler()
               }
             }
