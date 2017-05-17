@@ -119,8 +119,8 @@ set(SOURCES
   src/components/settings/AccountSettingsModel.cpp
   src/components/settings/SettingsModel.cpp
   src/components/sip-addresses/SipAddressesModel.cpp
+  src/components/sip-addresses/SipAddressesProxyModel.cpp
   src/components/sip-addresses/SipAddressObserver.cpp
-  src/components/smart-search-bar/SmartSearchBarModel.cpp
   src/components/sound-player/SoundPlayer.cpp
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
@@ -161,8 +161,8 @@ set(HEADERS
   src/components/settings/AccountSettingsModel.hpp
   src/components/settings/SettingsModel.hpp
   src/components/sip-addresses/SipAddressesModel.hpp
+  src/components/sip-addresses/SipAddressesProxyModel.hpp
   src/components/sip-addresses/SipAddressObserver.hpp
-  src/components/smart-search-bar/SmartSearchBarModel.hpp
   src/components/sound-player/SoundPlayer.hpp
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp

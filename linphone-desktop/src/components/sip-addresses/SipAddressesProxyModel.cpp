@@ -1,5 +1,5 @@
 /*
- * SmartSearchBarModel.cpp
+ * SipAddressesProxyModel.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -22,7 +22,7 @@
 
 #include "../core/CoreManager.hpp"
 
-#include "SmartSearchBarModel.hpp"
+#include "SipAddressesProxyModel.hpp"
 
 #define WEIGHT_POS_0 5
 #define WEIGHT_POS_1 4
@@ -32,36 +32,30 @@
 
 // =============================================================================
 
-const QRegExp SmartSearchBarModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
+const QRegExp SipAddressesProxyModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
 
 // -----------------------------------------------------------------------------
 
-SmartSearchBarModel::SmartSearchBarModel (QObject *parent) : QSortFilterProxyModel(parent) {
+SipAddressesProxyModel::SipAddressesProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(CoreManager::getInstance()->getSipAddressesModel());
   sort(0);
 }
 
-QHash<int, QByteArray> SmartSearchBarModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$entry";
-  return roles;
-}
-
 // -----------------------------------------------------------------------------
 
-void SmartSearchBarModel::setFilter (const QString &pattern) {
+void SipAddressesProxyModel::setFilter (const QString &pattern) {
   mFilter = pattern;
   invalidate();
 }
 
 // -----------------------------------------------------------------------------
 
-bool SmartSearchBarModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+bool SipAddressesProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
   return computeEntryWeight(index.data().toMap()) > 0;
 }
 
-bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+bool SipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
   const QVariantMap &mapA = sourceModel()->data(left).toMap();
   const QVariantMap &mapB = sourceModel()->data(right).toMap();
 
@@ -100,7 +94,7 @@ bool SmartSearchBarModel::lessThan (const QModelIndex &left, const QModelIndex &
   return sipAddressA <= sipAddressB;
 }
 
-int SmartSearchBarModel::computeEntryWeight (const QVariantMap &entry) const {
+int SipAddressesProxyModel::computeEntryWeight (const QVariantMap &entry) const {
   int weight = computeStringWeight(entry["sipAddress"].toString().mid(4));
 
   const ContactModel *contact = entry.value("contact").value<ContactModel *>();
@@ -110,7 +104,7 @@ int SmartSearchBarModel::computeEntryWeight (const QVariantMap &entry) const {
   return weight;
 }
 
-int SmartSearchBarModel::computeStringWeight (const QString &string) const {
+int SipAddressesProxyModel::computeStringWeight (const QString &string) const {
   int index = -1;
   int offset = -1;
 

@@ -154,7 +154,7 @@ ApplicationWindow {
             maxMenuHeight: MainWindowStyle.searchBox.maxHeight
             placeholderText: qsTr('mainSearchBarPlaceholder')
 
-            model: SmartSearchBarModel {}
+            model: SipAddressesProxyModel {}
 
             onAddContact: window.setView('ContactEdit', {
               sipAddress: sipAddress

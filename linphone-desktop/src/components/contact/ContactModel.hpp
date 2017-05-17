@@ -38,7 +38,7 @@ class ContactModel : public QObject {
   // Grant access to `mLinphoneFriend`.
   friend class ContactsListModel;
   friend class ContactsListProxyModel;
-  friend class SmartSearchBarModel;
+  friend class SipAddressesProxyModel;
 
 public:
   ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphoneFriend);

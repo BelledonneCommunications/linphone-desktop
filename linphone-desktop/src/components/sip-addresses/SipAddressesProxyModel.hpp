@@ -1,5 +1,5 @@
 /*
- * SmartSearchBarModel.hpp
+ * SipAddressesProxyModel.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,21 +20,19 @@
  *      Author: Ronan Abhamon
  */
 
-#ifndef SMART_SEARCH_BAR_MODEL_H_
-#define SMART_SEARCH_BAR_MODEL_H_
+#ifndef SIP_ADDRESSES_PROXY_MODEL_H_
+#define SIP_ADDRESSES_PROXY_MODEL_H_
 
 #include <QSortFilterProxyModel>
 
 // =============================================================================
 
-class SmartSearchBarModel : public QSortFilterProxyModel {
+class SipAddressesProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
 public:
-  SmartSearchBarModel (QObject *parent = Q_NULLPTR);
-  ~SmartSearchBarModel () = default;
-
-  QHash<int, QByteArray> roleNames () const override;
+  SipAddressesProxyModel (QObject *parent = Q_NULLPTR);
+  ~SipAddressesProxyModel () = default;
 
   Q_INVOKABLE void setFilter (const QString &pattern);
 
@@ -51,4 +49,4 @@ private:
   static const QRegExp mSearchSeparators;
 };
 
-#endif // SMART_SEARCH_BAR_MODEL_H_
+#endif // SIP_ADDRESSES_PROXY_MODEL_H_

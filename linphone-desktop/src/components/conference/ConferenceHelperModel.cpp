@@ -22,7 +22,7 @@
 
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
-#include "../smart-search-bar/SmartSearchBarModel.hpp"
+#include "../sip-addresses/SipAddressesProxyModel.hpp"
 
 #include "ConferenceHelperModel.hpp"
 
@@ -39,7 +39,7 @@ ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProx
   QObject::connect(calls, &CallsListModel::rowsAboutToBeRemoved, this, &ConferenceHelperModel::handleCallsAboutToBeRemoved);
   QObject::connect(calls, &CallsListModel::callRunning, this, &ConferenceHelperModel::handleCallRunning);
 
-  setSourceModel(new SmartSearchBarModel(this));
+  setSourceModel(new SipAddressesProxyModel(this));
 }
 
 QHash<int, QByteArray> ConferenceHelperModel::roleNames () const {
@@ -51,7 +51,7 @@ QHash<int, QByteArray> ConferenceHelperModel::roleNames () const {
 // -----------------------------------------------------------------------------
 
 void ConferenceHelperModel::setFilter (const QString &pattern) {
-  static_cast<SmartSearchBarModel *>(sourceModel())->setFilter(pattern);
+  static_cast<SipAddressesProxyModel *>(sourceModel())->setFilter(pattern);
 }
 
 // -----------------------------------------------------------------------------

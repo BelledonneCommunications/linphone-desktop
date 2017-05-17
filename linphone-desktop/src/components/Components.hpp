@@ -36,7 +36,7 @@
 #include "core/CoreManager.hpp"
 #include "presence/OwnPresenceModel.hpp"
 #include "settings/AccountSettingsModel.hpp"
-#include "smart-search-bar/SmartSearchBarModel.hpp"
+#include "sip-addresses/SipAddressesProxyModel.hpp"
 #include "sound-player/SoundPlayer.hpp"
 #include "timeline/TimelineModel.hpp"
 

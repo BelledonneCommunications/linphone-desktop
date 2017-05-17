@@ -207,7 +207,7 @@ SearchBox {
         Contact {
           Layout.fillHeight: true
           Layout.fillWidth: true
-          entry: $entry
+          entry: $sipAddress
 
           MouseArea {
             anchors.fill: parent
@@ -219,7 +219,7 @@ SearchBox {
 
             onClicked: {
               searchBox.closeMenu()
-              searchBox.entryClicked($entry)
+              searchBox.entryClicked($sipAddress)
             }
           }
         }
@@ -235,7 +235,7 @@ SearchBox {
             icon: 'video_call'
             onClicked: {
               searchBox.closeMenu()
-              searchBox.launchVideoCall($entry.sipAddress)
+              searchBox.launchVideoCall($sipAddress.sipAddress)
             }
           }
 
@@ -243,7 +243,7 @@ SearchBox {
             icon: 'call'
             onClicked: {
               searchBox.closeMenu()
-              searchBox.launchCall($entry.sipAddress)
+              searchBox.launchCall($sipAddress.sipAddress)
             }
           }
 
@@ -251,7 +251,7 @@ SearchBox {
             icon: 'chat'
             onClicked: {
               searchBox.closeMenu()
-              searchBox.launchChat($entry.sipAddress)
+              searchBox.launchChat($sipAddress.sipAddress)
             }
           }
         }
