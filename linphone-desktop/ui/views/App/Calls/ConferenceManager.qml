@@ -52,6 +52,25 @@ ConfirmDialog {
         ScrollableListViewField {
           Layout.fillHeight: true
           Layout.fillWidth: true
+
+          SipAddressesView {
+            id: view
+
+            anchors.fill: parent
+
+            actions: [{
+              icon: 'video_call',
+              handler: function (entry) {
+                console.log('toto')
+              }
+            }]
+
+            genSipAddress: filter.text
+
+            onEntryClicked: {
+              console.log('todo2')
+            }
+          }
         }
       }
     }

@@ -6,11 +6,11 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 SearchBox {
-  id: searchBox
+  id: searchBar
 
   // ---------------------------------------------------------------------------
 
-  readonly property alias isOpen: searchBox._isOpen
+  readonly property alias isOpen: searchBar._isOpen
 
   // ---------------------------------------------------------------------------
 
@@ -27,7 +27,10 @@ SearchBox {
 
   // ---------------------------------------------------------------------------
 
-  onEnterPressed: view.interpretableSipAddress.length > 0 && searchBox.launchCall(interpretableSipAddress)
+  onEnterPressed: {
+    var sipAddress = view.interpretableSipAddress
+    return sipAddress.length > 0 && searchBar.launchCall(sipAddress)
+  }
 
   // ---------------------------------------------------------------------------
 
@@ -37,35 +40,35 @@ SearchBox {
     actions: [{
       icon: 'video_call',
       handler: function (entry) {
-        searchBox.closeMenu()
-        searchBox.launchVideoCall(entry.sipAddress)
+        searchBar.closeMenu()
+        searchBar.launchVideoCall(entry.sipAddress)
       }
     }, {
       icon: 'call',
       handler: function (entry) {
-        searchBox.closeMenu()
-        searchBox.launchCall(entry.sipAddress)
+        searchBar.closeMenu()
+        searchBar.launchCall(entry.sipAddress)
       }
     }, {
       icon: 'chat',
       handler: function (entry) {
-        searchBox.closeMenu()
-        searchBox.launchChat(entry.sipAddress)
+        searchBar.closeMenu()
+        searchBar.launchChat(entry.sipAddress)
       }
     }]
 
     headerButtonDescription: qsTr('addContact')
     headerButtonIcon: 'contact_add'
     headerButtonAction: (function (sipAddress) {
-      searchBox.closeMenu()
-      searchBox.addContact(sipAddress)
+      searchBar.closeMenu()
+      searchBar.addContact(sipAddress)
     })
 
-    genSipAddress: searchBox.filter
+    genSipAddress: searchBar.filter
 
     onEntryClicked: {
-      searchBox.closeMenu()
-      searchBox.entryClicked(entry)
+      searchBar.closeMenu()
+      searchBar.entryClicked(entry)
     }
   }
 }

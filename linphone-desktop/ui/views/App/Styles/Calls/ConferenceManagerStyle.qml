@@ -9,7 +9,7 @@ QtObject {
   property int height: 420
   property int leftMargin: 35
   property int rightMargin: 35
-  property int width: 680
+  property int width: 740
 
   property QtObject columns: QtObject {
     property QtObject selector: QtObject {

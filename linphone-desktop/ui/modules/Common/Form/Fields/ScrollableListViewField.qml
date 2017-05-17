@@ -13,8 +13,4 @@ Rectangle {
 
   color: TextFieldStyle.background.color.normal
   radius: TextFieldStyle.background.radius
-
-  ScrollableListView {
-    anchors.fill: parent
-  }
 }
