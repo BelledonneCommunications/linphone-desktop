@@ -42,10 +42,6 @@ Item {
 
     var list = _content[0]
     Utils.assert(list != null, 'No list found.')
-    Utils.assert(
-      Utils.qmlTypeof(list, 'QQuickListView') || Utils.qmlTypeof(list, 'ScrollableListView'),
-      'No list view parameter.'
-    )
 
     var height = list.count * entryHeight
 

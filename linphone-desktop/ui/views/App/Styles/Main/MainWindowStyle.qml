@@ -28,12 +28,11 @@ QtObject {
   }
 
   property QtObject menu: QtObject {
-    property int entryHeight: 50
+    property int height: 50
     property int width: 250
   }
 
   property QtObject searchBox: QtObject {
-    property int entryHeight: 50 + SmartSearchBarStyle.entry.separator.height
     property int maxHeight: 300 // See Hick's law for good choice.
   }
 

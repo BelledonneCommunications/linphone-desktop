@@ -14,13 +14,13 @@ Item {
 
   readonly property alias filter: searchField.text
 
-  property alias delegate: list.delegate
-  property alias header: list.header
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
-
-  property alias model: list.model
   property alias placeholderText: searchField.placeholderText
+
+  default property alias _content: menu._content
+
+  readonly property var view: _content[0]
 
   property bool _isOpen: false
 
@@ -50,6 +50,7 @@ Item {
   }
 
   function _filter (text) {
+    var model = searchBox.view.model
     Utils.assert(model.setFilter != null, '`model.setFilter` must be defined.')
     model.setFilter(text)
   }
@@ -97,13 +98,18 @@ Item {
       Keys.forwardTo: searchField
 
       onClosed: searchBox.closeMenu()
+    }
 
-      ScrollableListView {
-        id: list
+    Binding {
+      target: searchBox.view
+      property: 'width'
+      value: searchField.width
+    }
 
-        headerPositioning: header ? ListView.OverlayHeader : ListView.InlineFooter
-        width: searchField.width
-      }
+    Binding {
+      target: searchBox.view
+      property: 'headerPositioning'
+      value: searchBox.view.header ? ListView.OverlayHeader : ListView.InlineFooter
     }
   }
 

@@ -7,12 +7,13 @@ import Common 1.0
 
 QtObject {
   property QtObject entry: QtObject {
-    property int rightMargin: 10
+    property int height: 50
     property int iconSize: 36
+    property int rightMargin: 10
 
     property QtObject color: QtObject {
-      property color normal: Colors.k
       property color hovered: Colors.y
+      property color normal: Colors.k
     }
 
     property QtObject indicator: QtObject {
@@ -27,10 +28,13 @@ QtObject {
   }
 
   property QtObject header: QtObject {
-    property int addButtonHeight: 40
     property int iconSize: 22
     property int leftMargin: 20
     property int rightMargin: 10
+
+    property QtObject button: QtObject {
+      property int height: 40
+    }
 
     property QtObject color: QtObject {
       property color normal: Colors.j

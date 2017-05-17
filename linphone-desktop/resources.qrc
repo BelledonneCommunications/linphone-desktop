@@ -325,13 +325,14 @@
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedFileMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/qmldir</file>
-    <file>ui/modules/Linphone/Styles/SmartSearchBar/SmartSearchBarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/View/SipAddressesViewStyle.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
     <file>ui/modules/Linphone/Timeline/Timeline.js</file>
     <file>ui/modules/Linphone/Timeline/Timeline.qml</file>
+    <file>ui/modules/Linphone/View/SipAddressesView.qml</file>
     <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
     <file>ui/scripts/LinphoneUtils/qmldir</file>
     <file>ui/scripts/Utils/port-tools.js</file>

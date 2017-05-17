@@ -150,11 +150,8 @@ ApplicationWindow {
 
             Layout.fillWidth: true
 
-            entryHeight: MainWindowStyle.searchBox.entryHeight
             maxMenuHeight: MainWindowStyle.searchBox.maxHeight
             placeholderText: qsTr('mainSearchBarPlaceholder')
-
-            model: SipAddressesProxyModel {}
 
             onAddContact: window.setView('ContactEdit', {
               sipAddress: sipAddress
@@ -210,7 +207,7 @@ ApplicationWindow {
           ApplicationMenu {
             id: menu
 
-            entryHeight: MainWindowStyle.menu.entryHeight
+            entryHeight: MainWindowStyle.menu.height
             entryWidth: MainWindowStyle.menu.width
 
             entries: [{

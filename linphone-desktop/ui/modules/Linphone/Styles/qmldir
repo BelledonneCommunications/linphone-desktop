@@ -28,8 +28,8 @@ singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationRec
 singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
 singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationReceivedFileMessageStyle.qml
 
-singleton SmartSearchBarStyle                  1.0 SmartSearchBar/SmartSearchBarStyle.qml
-
 singleton TelKeypadStyle                       1.0 TelKeypad/TelKeypadStyle.qml
 
 singleton TimelineStyle                        1.0 Timeline/TimelineStyle.qml
+
+singleton SipAddressesViewStyle                1.0 View/SipAddressesViewStyle.qml
