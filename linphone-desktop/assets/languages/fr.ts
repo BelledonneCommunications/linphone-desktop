@@ -761,32 +761,12 @@ un chat ou ajouter un contact.</translation>
 <context>
     <name>MainWindowMenuBar</name>
     <message>
-        <source>tools</source>
-        <translation>Outils</translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation>Aide</translation>
-    </message>
-    <message>
-        <source>options</source>
-        <translation>Options</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <source>audioAssistant</source>
-        <translation>Assistant audio</translation>
-    </message>
-    <message>
         <source>about</source>
         <translation>À propos</translation>
-    </message>
-    <message>
-        <source>checkForUpdates</source>
-        <translation>Vérifier les mises à jour</translation>
     </message>
     <message>
         <source>quit</source>

@@ -762,32 +762,12 @@ your friend&apos;s SIP address or username.</translation>
 <context>
     <name>MainWindowMenuBar</name>
     <message>
-        <source>tools</source>
-        <translation>Tools</translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation>Help</translation>
-    </message>
-    <message>
-        <source>options</source>
-        <translation>Options</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Settings</translation>
     </message>
     <message>
-        <source>audioAssistant</source>
-        <translation>Audio Assistant</translation>
-    </message>
-    <message>
         <source>about</source>
         <translation>About</translation>
-    </message>
-    <message>
-        <source>checkForUpdates</source>
-        <translation>Check for updates</translation>
     </message>
     <message>
         <source>quit</source>
