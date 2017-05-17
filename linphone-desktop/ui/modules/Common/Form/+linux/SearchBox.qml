@@ -13,14 +13,14 @@ Item {
   // ---------------------------------------------------------------------------
 
   readonly property alias filter: searchField.text
+  readonly property alias isOpen: searchBox._isOpen
+  readonly property var view: _content[0]
 
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
   property alias placeholderText: searchField.placeholderText
 
   default property alias _content: menu._content
-
-  readonly property var view: _content[0]
 
   property bool _isOpen: false
 
