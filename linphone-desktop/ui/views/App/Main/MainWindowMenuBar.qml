@@ -15,6 +15,43 @@ Item {
     menu.open()
   }
 
+  // ---------------------------------------------------------------------------
+  // Shortcuts.
+  // ---------------------------------------------------------------------------
+  
+  Shortcut {
+    id: settings_shortcut
+    sequence: StandardKey.Preferences
+    onActivated: {
+      var window = App.getSettingsWindow()
+      if (window.visibility === Window.Minimized) {
+        window.visibility = Window.AutomaticVisibility
+      } else {
+        window.setVisible(true)
+      }
+    }
+  }
+
+  Shortcut {
+    id: quit_shortcut
+    sequence: StandardKey.Quit
+    context: Qt.ApplicationShortcut
+    onActivated: Qt.quit()
+  }
+  
+  Shortcut {
+    id: about_shortcut
+    sequence: StandardKey.HelpContents
+    onActivated: {
+      window.detachVirtualWindow()
+      window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Menu.
+  // ---------------------------------------------------------------------------
+
   Menu {
     id: menu
 
@@ -22,40 +59,19 @@ Item {
       title: qsTr('options')
 
       MenuItem {
-        shortcut: Shortcut {
-          sequence: StandardKey.Preferences
-          onActivated: {
-            var window = App.getSettingsWindow()
-            if (window.visibility === Window.Minimized) {
-              window.visibility = Window.AutomaticVisibility
-            } else {
-              window.setVisible(true)
-            }
-          }
-        }
+        shortcut: settings_shortcut.sequence
         text: qsTr('settings')
 
-        onTriggered: {
-          var window = App.getSettingsWindow()
-          if (window.visibility === Window.Minimized) {
-            window.visibility = Window.AutomaticVisibility
-          } else {
-            window.setVisible(true)
-          }
-        }
+        onTriggered: settings_shortcut.onActivated()
       }
 
       MenuSeparator {}
 
       MenuItem {
-        shortcut: Shortcut {
-          sequence: StandardKey.Quit
-          context: Qt.ApplicationShortcut
-          onActivated: Qt.quit()
-        }
+        shortcut: quit_shortcut.sequence
         text: qsTr('quit')
 
-        onTriggered: Qt.quit()
+        onTriggered: quit_shortcut.onActivated()
       }
     }
 
@@ -81,19 +97,10 @@ Item {
       title: qsTr('help')
 
       MenuItem {
-        shortcut: Shortcut {
-          sequence: StandardKey.HelpContents
-          onActivated: {
-            window.detachVirtualWindow()
-            window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
-          }
-        }
+        shortcut: about_shortcut.sequence
         text: qsTr('about')
 
-        onTriggered: {
-          window.detachVirtualWindow()
-          window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
-        }
+        onTriggered: about_shortcut.onActivated()
       }
 
       MenuSeparator {}
