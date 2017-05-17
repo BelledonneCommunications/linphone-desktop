@@ -405,7 +405,6 @@
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
     <file>ui/views/App/Styles/Main/HomeStyle.qml</file>
     <file>ui/views/App/Styles/Main/InviteFriendsStyle.qml</file>
-    <file>ui/views/App/Styles/Main/MainWindowMenuBarStyle.qml</file>
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/Main/ManageAccountsStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>

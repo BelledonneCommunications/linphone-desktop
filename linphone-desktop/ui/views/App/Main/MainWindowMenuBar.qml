@@ -1,47 +1,44 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.1
-import QtQuick.Controls.Styles 1.4
-import QtQuick.Window 2.2
+
+// Experimental.
 import Qt.labs.platform 1.0
 
 import Linphone 1.0
 
-import App.Styles 1.0
-
 // =============================================================================
 
 Item {
-  function open() {
+  function open () {
     menu.open()
   }
 
   // ---------------------------------------------------------------------------
   // Shortcuts.
   // ---------------------------------------------------------------------------
-  
+
   Shortcut {
-    id: settings_shortcut
+    id: settingsShortcut
+
+    context: Qt.ApplicationShortcut
     sequence: StandardKey.Preferences
-    onActivated: {
-      var window = App.getSettingsWindow()
-      if (window.visibility === Window.Minimized) {
-        window.visibility = Window.AutomaticVisibility
-      } else {
-        window.setVisible(true)
-      }
-    }
+
+    onActivated: App.smartShowWindow(App.getSettingsWindow())
   }
 
   Shortcut {
-    id: quit_shortcut
-    sequence: StandardKey.Quit
+    id: quitShortcut
+
     context: Qt.ApplicationShortcut
+    sequence: StandardKey.Quit
+
     onActivated: Qt.quit()
   }
-  
+
   Shortcut {
-    id: about_shortcut
+    id: aboutShortcut
+
     sequence: StandardKey.HelpContents
+
     onActivated: {
       window.detachVirtualWindow()
       window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
@@ -59,19 +56,19 @@ Item {
       title: qsTr('options')
 
       MenuItem {
-        shortcut: settings_shortcut.sequence
+        shortcut: settingsShortcut.sequence
         text: qsTr('settings')
 
-        onTriggered: settings_shortcut.onActivated()
+        onTriggered: settingsShortcut.onActivated()
       }
 
       MenuSeparator {}
 
       MenuItem {
-        shortcut: quit_shortcut.sequence
+        shortcut: quitShortcut.sequence
         text: qsTr('quit')
 
-        onTriggered: quit_shortcut.onActivated()
+        onTriggered: quitShortcut.onActivated()
       }
     }
 
@@ -97,10 +94,10 @@ Item {
       title: qsTr('help')
 
       MenuItem {
-        shortcut: about_shortcut.sequence
+        shortcut: aboutShortcut.sequence
         text: qsTr('about')
 
-        onTriggered: about_shortcut.onActivated()
+        onTriggered: aboutShortcut.onActivated()
       }
 
       MenuSeparator {}
