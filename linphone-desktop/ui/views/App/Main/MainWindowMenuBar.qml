@@ -19,7 +19,7 @@ Item {
   Shortcut {
     id: settingsShortcut
 
-    sequence: "Ctrl+P"
+    sequence: 'Ctrl+P'
 
     onActivated: App.smartShowWindow(App.getSettingsWindow())
   }
