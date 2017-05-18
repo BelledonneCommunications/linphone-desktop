@@ -50,6 +50,8 @@ public:
   Q_INVOKABLE bool addToConference (const QString &sipAddress);
   Q_INVOKABLE bool removeFromConference (const QString &sipAddress);
 
+  Q_INVOKABLE void update ();
+
   bool contains (const QString &sipAddress) const {
     return mSipAddresses.contains(sipAddress);
   }

@@ -8,7 +8,24 @@ import App.Styles 1.0
 
 // =============================================================================
 
-ConfirmDialog {
+DialogPlus {
+  buttons: [
+    TextButtonA {
+      text: qsTr('cancel')
+
+      onClicked: exit(0)
+    },
+    TextButtonB {
+      text: qsTr('confirm')
+
+      onClicked: {
+        conferenceHelperModel.toAdd.update()
+        exit(1)
+      }
+    }
+  ]
+
+  centeredButtons: true
   descriptionText: qsTr('conferenceManagerDescription')
 
   height: ConferenceManagerStyle.height

@@ -363,6 +363,14 @@ Url du serveur non configurée.</translation>
         <source>conferenceManagerDescription</source>
         <translation>Gérer les participants de votre conférence.</translation>
     </message>
+    <message>
+        <source>cancel</source>
+        <translation>ANNULER</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>LANCER</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmDialog</name>

@@ -363,6 +363,14 @@ Server url not configured.</translation>
         <source>conferenceManagerDescription</source>
         <translation>Manage participants to your conference.</translation>
     </message>
+    <message>
+        <source>cancel</source>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>START</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmDialog</name>

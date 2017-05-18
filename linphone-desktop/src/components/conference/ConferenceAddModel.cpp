@@ -106,6 +106,19 @@ bool ConferenceAddModel::removeFromConference (const QString &sipAddress) {
 
 // -----------------------------------------------------------------------------
 
+void ConferenceAddModel::update () {
+  list<shared_ptr<linphone::Address> > linphoneAddresses;
+  for (const auto &map : mRefs)
+    linphoneAddresses.push_back(map->value("__linphoneAddress").value<shared_ptr<linphone::Address> > ());
+
+  mConferenceHelperModel->mConference->inviteParticipants(
+    linphoneAddresses,
+    CoreManager::getInstance()->getCore()->createCallParams(nullptr)
+  );
+}
+
+// -----------------------------------------------------------------------------
+
 void ConferenceAddModel::addToConference (const std::shared_ptr<linphone::Address> &linphoneAddress) {
   QString sipAddress = ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
   QVariantMap map;
