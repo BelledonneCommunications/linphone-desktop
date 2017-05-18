@@ -106,6 +106,7 @@ set(SOURCES
   src/components/codecs/AbstractCodecsModel.cpp
   src/components/codecs/AudioCodecsModel.cpp
   src/components/codecs/VideoCodecsModel.cpp
+  src/components/conference/ConferenceAddModel.cpp
   src/components/conference/ConferenceHelperModel.cpp
   src/components/contact/ContactModel.cpp
   src/components/contact/VcardModel.cpp
@@ -148,6 +149,7 @@ set(HEADERS
   src/components/codecs/AudioCodecsModel.hpp
   src/components/codecs/VideoCodecsModel.hpp
   src/components/Components.hpp
+  src/components/conference/ConferenceAddModel.hpp
   src/components/conference/ConferenceHelperModel.hpp
   src/components/contact/ContactModel.hpp
   src/components/contact/VcardModel.hpp

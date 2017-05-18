@@ -20,16 +20,26 @@
  *      Author: Ronan Abhamon
  */
 
+#ifndef CONFERENCE_HELPER_MODEL_H_
+#define CONFERENCE_HELPER_MODEL_H_
+
+#include <memory>
+
 #include <QSortFilterProxyModel>
 
 // =============================================================================
 
 class CallModel;
+class ConferenceAddModel;
+
+namespace linphone {
+  class Conference;
+}
 
 class ConferenceHelperModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
-  Q_PROPERTY(QStringList inConference READ getInConference NOTIFY inConferenceChanged);
+  Q_PROPERTY(ConferenceAddModel * toAdd READ getConferenceAddModel CONSTANT);
 
 public:
   ConferenceHelperModel (QObject *parent = Q_NULLPTR);
@@ -37,25 +47,21 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
 
-  Q_INVOKABLE void setFilter (const QString &pattern);
+  void update ();
 
-signals:
-  void inConferenceChanged (const QStringList &inConference);
+  Q_INVOKABLE void setFilter (const QString &pattern);
 
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 
 private:
-  void handleCallRunning (int index, CallModel *callModel);
-  void handleCallsAboutToBeRemoved (const QModelIndex &parent, int first, int last);
-
-  bool addToConference (const QString &sipAddress);
-  bool removeFromConference (const QString &sipAddress);
-
-  QStringList getInConference () {
-    return mInConference;
+  ConferenceAddModel *getConferenceAddModel () const {
+    return mConferenceAddModel;
   }
 
-  QStringList mInConference;
-  QStringList mToAdd;
+  ConferenceAddModel *mConferenceAddModel;
+
+  std::shared_ptr<linphone::Conference> mConference;
 };
+
+#endif // CONFERENCE_HELPER_MODEL_H_

@@ -6,8 +6,6 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
-import 'ConferenceManager.js' as Logic
-
 // =============================================================================
 
 ConfirmDialog {
@@ -46,7 +44,7 @@ ConfirmDialog {
 
           icon: 'search'
 
-          onTextChanged: Logic.updateFilter(text)
+          onTextChanged: conferenceHelperModel.setFilter(text)
         }
 
         ScrollableListViewField {
@@ -54,22 +52,22 @@ ConfirmDialog {
           Layout.fillWidth: true
 
           SipAddressesView {
-            id: view
-
             anchors.fill: parent
 
             actions: [{
-              icon: 'video_call',
+              icon: 'video_call', // TODO: replace me.
               handler: function (entry) {
-                console.log('toto')
+                conferenceHelperModel.toAdd.addToConference(entry.sipAddress)
               }
             }]
 
             genSipAddress: filter.text
 
-            onEntryClicked: {
-              console.log('todo2')
+            model: ConferenceHelperModel {
+              id: conferenceHelperModel
             }
+
+            onEntryClicked: actions[0].handler(entry)
           }
         }
       }
@@ -93,9 +91,22 @@ ConfirmDialog {
     // -------------------------------------------------------------------------
 
     ScrollableListViewField {
-      Layout.topMargin: filter.height + ConferenceManagerStyle.columns.selector.spacing
       Layout.fillHeight: true
       Layout.fillWidth: true
+      Layout.topMargin: filter.height + ConferenceManagerStyle.columns.selector.spacing
+
+      SipAddressesView {
+        anchors.fill: parent
+
+        actions: [{
+          icon: 'video_call', // TODO: replace me.
+          handler: function (entry) {
+            model.removeFromConference(entry.sipAddress)
+          }
+        }]
+
+        model: conferenceHelperModel.toAdd
+      }
     }
   }
 }

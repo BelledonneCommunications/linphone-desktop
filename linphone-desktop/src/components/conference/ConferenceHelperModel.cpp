@@ -20,24 +20,26 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../Utils.hpp"
+#include "../../app/App.hpp"
 #include "../core/CoreManager.hpp"
 #include "../sip-addresses/SipAddressesProxyModel.hpp"
+#include "ConferenceAddModel.hpp"
 
 #include "ConferenceHelperModel.hpp"
+
+using namespace std;
 
 // =============================================================================
 
 ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  CoreManager *coreManager = CoreManager::getInstance();
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  for (const auto &participant : coreManager->getCore()->getConference()->getParticipants())
-    mInConference << ::Utils::linphoneStringToQString(participant->asStringUriOnly());
+  mConference = core->getConference();
+  if (!mConference)
+    mConference = core->createConferenceWithParams(core->createConferenceParams());
 
-  CallsListModel *calls = coreManager->getCallsListModel();
-
-  QObject::connect(calls, &CallsListModel::rowsAboutToBeRemoved, this, &ConferenceHelperModel::handleCallsAboutToBeRemoved);
-  QObject::connect(calls, &CallsListModel::callRunning, this, &ConferenceHelperModel::handleCallRunning);
+  mConferenceAddModel = new ConferenceAddModel(this);
+  App::getInstance()->getEngine()->setObjectOwnership(mConferenceAddModel, QQmlEngine::CppOwnership);
 
   setSourceModel(new SipAddressesProxyModel(this));
 }
@@ -59,57 +61,6 @@ void ConferenceHelperModel::setFilter (const QString &pattern) {
 bool ConferenceHelperModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
   const QVariantMap &data = index.data().toMap();
-  const QString &sipAddress = data["sipAddress"].toString();
 
-  return !mInConference.contains(sipAddress) && !mToAdd.contains(sipAddress);
-}
-
-// -----------------------------------------------------------------------------
-
-void ConferenceHelperModel::handleCallsAboutToBeRemoved (const QModelIndex &, int first, int last) {
-  CallsListModel *calls = CoreManager::getInstance()->getCallsListModel();
-  bool soFarSoGood = false;
-
-  for (int i = first; i <= last; ++i) {
-    const CallModel *callModel = calls->data(calls->index(first, 0)).value<CallModel *>();
-    const QString &sipAddress = callModel->getSipAddress();
-
-    if (removeFromConference(sipAddress))
-      soFarSoGood = true;
-  }
-
-  if (soFarSoGood) {
-    invalidateFilter();
-    emit inConferenceChanged(mInConference);
-  }
-}
-
-void ConferenceHelperModel::handleCallRunning (int, CallModel *callModel) {
-  const QString &sipAddress = callModel->getSipAddress();
-  bool soFarSoGood = callModel->getCall()->getConference()
-    ? addToConference(sipAddress)
-    : removeFromConference(sipAddress);
-
-  if (soFarSoGood) {
-    invalidateFilter();
-    emit inConferenceChanged(mInConference);
-  }
-}
-
-// -----------------------------------------------------------------------------
-
-bool ConferenceHelperModel::addToConference (const QString &sipAddress) {
-  bool ret = !mInConference.contains(sipAddress);
-  if (ret) {
-    qInfo() << QStringLiteral("Add sip address to conference: `%1`.").arg(sipAddress);
-    mInConference << sipAddress;
-  }
-  return ret;
-}
-
-bool ConferenceHelperModel::removeFromConference (const QString &sipAddress) {
-  bool ret = mInConference.removeOne(sipAddress);
-  if (ret)
-    qInfo() << QStringLiteral("Remove sip address from conference: `%1`.").arg(sipAddress);
-  return ret;
+  return !mConferenceAddModel->contains(data["sipAddress"].toString());
 }

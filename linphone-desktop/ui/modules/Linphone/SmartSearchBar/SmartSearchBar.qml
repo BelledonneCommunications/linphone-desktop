@@ -66,6 +66,8 @@ SearchBox {
 
     genSipAddress: searchBar.filter
 
+    model: SipAddressesProxyModel {}
+
     onEntryClicked: {
       searchBar.closeMenu()
       searchBar.entryClicked(entry)
