@@ -36,7 +36,7 @@
 // Notifications QML properties/methods.
 // -----------------------------------------------------------------------------
 
-#define NOTIFICATION_SHOW_METHOD_NAME "show"
+#define NOTIFICATION_SHOW_METHOD_NAME "open"
 
 #define NOTIFICATION_PROPERTY_DATA "notificationData"
 
