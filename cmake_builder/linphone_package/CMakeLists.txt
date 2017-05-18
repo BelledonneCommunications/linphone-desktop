@@ -33,7 +33,7 @@ if(GIT_EXECUTABLE)
 		COMMAND ${GIT_EXECUTABLE} describe --always
 		OUTPUT_VARIABLE LINPHONE_GIT_REVISION
 		OUTPUT_STRIP_TRAILING_WHITESPACE
-		WORKING_DIRECTORY ${LINPHONE_SOURCE_DIR}
+		WORKING_DIRECTORY ${LINPHONE_DESKTOP_DIR}
 	)
 else()
 	set(LINPHONE_GIT_REVISION "0.0.0")
@@ -299,6 +299,10 @@ set(CPACK_PACKAGE_EXECUTABLES "linphone;Linphone")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Linphone")
 set(CPACK_RESOURCE_FILE_LICENSE "${LINPHONE_SOURCE_DIR}/COPYING")
 
+if(APPLE)
+	set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-mac")
+endif()
+
 if(WIN32)
 	set(CPACK_COMPONENT_LINPHONE_BASE_DISPLAY_NAME "Linphone")
 	set(CPACK_COMPONENT_LINPHONE_BASE_DESCRIPTION "Minimal installation of Linphone")
@@ -308,9 +312,7 @@ if(WIN32)
 		set(CPACK_COMPONENT_MSOPENH264_DESCRIPTION "Download OpenH264 Video Codec provided by Cisco Systems, Inc.")
 		set(CPACK_COMPONENT_MSOPENH264_DISABLED True)
 	endif()
-endif()
 
-if(WIN32)
 	# Use template from the current source directory to force uninstallation and ensure that linphone is not running before installation
 	set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 	set(CPACK_GENERATOR "NSIS")
