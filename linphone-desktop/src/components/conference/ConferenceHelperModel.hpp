@@ -37,13 +37,13 @@ namespace linphone {
 }
 
 class ConferenceHelperModel : public QSortFilterProxyModel {
-  friend class ConferenceAddModel;
-
   Q_OBJECT;
 
   Q_PROPERTY(ConferenceAddModel * toAdd READ getConferenceAddModel CONSTANT);
 
 public:
+  class ConferenceAddModel;
+
   ConferenceHelperModel (QObject *parent = Q_NULLPTR);
   ~ConferenceHelperModel () = default;
 

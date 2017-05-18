@@ -22,7 +22,6 @@
 
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
-#include "ConferenceHelperModel.hpp"
 
 #include "ConferenceAddModel.hpp"
 
@@ -30,7 +29,7 @@ using namespace std;
 
 // =============================================================================
 
-ConferenceAddModel::ConferenceAddModel (QObject *parent) : QAbstractListModel(parent) {
+ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) : QAbstractListModel(parent) {
   mConferenceHelperModel = qobject_cast<ConferenceHelperModel *>(parent);
   Q_ASSERT(mConferenceHelperModel != nullptr);
 
@@ -38,17 +37,17 @@ ConferenceAddModel::ConferenceAddModel (QObject *parent) : QAbstractListModel(pa
     addToConference(participant);
 }
 
-int ConferenceAddModel::rowCount (const QModelIndex &) const {
+int ConferenceHelperModel::ConferenceAddModel::rowCount (const QModelIndex &) const {
   return mRefs.count();
 }
 
-QHash<int, QByteArray> ConferenceAddModel::roleNames () const {
+QHash<int, QByteArray> ConferenceHelperModel::ConferenceAddModel::roleNames () const {
   QHash<int, QByteArray> roles;
   roles[Qt::DisplayRole] = "$sipAddress";
   return roles;
 }
 
-QVariant ConferenceAddModel::data (const QModelIndex &index, int role) const {
+QVariant ConferenceHelperModel::ConferenceAddModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
   if (!index.isValid() || row < 0 || row >= mRefs.count())
@@ -62,7 +61,7 @@ QVariant ConferenceAddModel::data (const QModelIndex &index, int role) const {
 
 // -----------------------------------------------------------------------------
 
-bool ConferenceAddModel::addToConference (const QString &sipAddress) {
+bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &sipAddress) {
   if (mSipAddresses.contains(sipAddress))
     return false;
 
@@ -83,7 +82,7 @@ bool ConferenceAddModel::addToConference (const QString &sipAddress) {
   return true;
 }
 
-bool ConferenceAddModel::removeFromConference (const QString &sipAddress) {
+bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QString &sipAddress) {
   auto it = mSipAddresses.find(sipAddress);
   if (it == mSipAddresses.end())
     return false;
@@ -106,7 +105,7 @@ bool ConferenceAddModel::removeFromConference (const QString &sipAddress) {
 
 // -----------------------------------------------------------------------------
 
-void ConferenceAddModel::update () {
+void ConferenceHelperModel::ConferenceAddModel::update () {
   list<shared_ptr<linphone::Address> > linphoneAddresses;
   for (const auto &map : mRefs)
     linphoneAddresses.push_back(map->value("__linphoneAddress").value<shared_ptr<linphone::Address> > ());
@@ -119,7 +118,7 @@ void ConferenceAddModel::update () {
 
 // -----------------------------------------------------------------------------
 
-void ConferenceAddModel::addToConference (const std::shared_ptr<linphone::Address> &linphoneAddress) {
+void ConferenceHelperModel::ConferenceAddModel::addToConference (const std::shared_ptr<linphone::Address> &linphoneAddress) {
   QString sipAddress = ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
   QVariantMap map;
 

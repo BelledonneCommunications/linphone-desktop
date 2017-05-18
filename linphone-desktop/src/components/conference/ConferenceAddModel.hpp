@@ -25,17 +25,15 @@
 
 #include <memory>
 
-#include <QAbstractListModel>
+#include "ConferenceHelperModel.hpp"
 
 // =============================================================================
-
-class ConferenceHelperModel;
 
 namespace linphone {
   class Address;
 }
 
-class ConferenceAddModel : public QAbstractListModel {
+class ConferenceHelperModel::ConferenceAddModel : public QAbstractListModel {
   Q_OBJECT;
 
 public:

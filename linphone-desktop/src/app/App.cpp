@@ -359,7 +359,7 @@ void App::registerTypes () {
   registerMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
   registerUncreatableType(CallModel, "CallModel");
-  registerUncreatableType(ConferenceAddModel, "ConferenceAddModel");
+  registerUncreatableType(ConferenceHelperModel::ConferenceAddModel, "ConferenceAddModel");
   registerUncreatableType(ContactModel, "ContactModel");
   registerUncreatableType(SipAddressObserver, "SipAddressObserver");
   registerUncreatableType(VcardModel, "VcardModel");
