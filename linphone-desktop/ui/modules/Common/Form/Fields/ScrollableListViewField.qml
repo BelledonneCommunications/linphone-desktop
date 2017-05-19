@@ -8,6 +8,8 @@ import Common.Styles 1.0
 Rectangle {
   id: field
 
+  property bool readOnly: false
+
   default property alias _content: content.data
 
   color: TextFieldStyle.background.color.normal
@@ -29,5 +31,13 @@ Rectangle {
 
     color: 'transparent'
     radius: field.radius
+  }
+
+  MouseArea {
+    anchors.fill: parent
+    hoverEnabled: true
+    visible: field.readOnly
+
+    onWheel: wheel.accepted = true
   }
 }

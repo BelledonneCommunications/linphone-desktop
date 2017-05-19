@@ -114,8 +114,11 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
   list<shared_ptr<linphone::Address> > linphoneAddresses;
-  for (const auto &map : mRefs)
-    linphoneAddresses.push_back(map->value("__linphoneAddress").value<shared_ptr<linphone::Address> > ());
+  for (const auto &map : mRefs) {
+    shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address> >();
+    Q_ASSERT(linphoneAddress != nullptr);
+    linphoneAddresses.push_back(linphoneAddress);
+  }
 
   mConferenceHelperModel->mConference->inviteParticipants(
     linphoneAddresses,

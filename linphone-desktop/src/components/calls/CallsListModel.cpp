@@ -25,6 +25,7 @@
 
 #include "../../app/App.hpp"
 #include "../../Utils.hpp"
+#include "../conference/ConferenceHelperModel.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "CallsListModel.hpp"
@@ -195,7 +196,7 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
   try {
     callModel = &call->getData<CallModel>("call-model");
   } catch (const out_of_range &) {
-    // Can be a bug. Or the call model not exists because the linphone call state
+    // The call model not exists because the linphone call state
     // `CallStateIncomingReceived`/`CallStateOutgoingInit` was not notified.
     qWarning() << QStringLiteral("Unable to found linphone call:") << call.get();
     return;
@@ -209,8 +210,10 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
       if (index == -1 || !removeRow(index))
         qWarning() << QStringLiteral("Unable to remove call:") << callModel;
 
-      if (mList.empty())
+      if (mList.empty() && ConferenceHelperModel::getInstancesNumber() == 0) {
+        qInfo() << QStringLiteral("Last call terminated, close calls window.");
         App::getInstance()->getCallsWindow()->close();
+      }
     }
   );
 }

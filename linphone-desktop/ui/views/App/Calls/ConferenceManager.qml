@@ -9,6 +9,11 @@ import App.Styles 1.0
 // =============================================================================
 
 DialogPlus {
+  id: conferenceManager
+
+  readonly property int maxParticipants: 10
+  readonly property int minParticipants: 2
+
   buttons: [
     TextButtonA {
       text: qsTr('cancel')
@@ -16,6 +21,7 @@ DialogPlus {
       onClicked: exit(0)
     },
     TextButtonB {
+      enabled: toAddView.count >= conferenceManager.minParticipants
       text: qsTr('confirm')
 
       onClicked: {
@@ -68,6 +74,8 @@ DialogPlus {
           Layout.fillHeight: true
           Layout.fillWidth: true
 
+          readOnly: toAddView.count >= conferenceManager.maxParticipants
+
           SipAddressesView {
             anchors.fill: parent
 
@@ -113,6 +121,8 @@ DialogPlus {
       Layout.topMargin: filter.height + ConferenceManagerStyle.columns.selector.spacing
 
       SipAddressesView {
+        id: toAddView
+
         anchors.fill: parent
 
         actions: [{
@@ -123,6 +133,8 @@ DialogPlus {
         }]
 
         model: conferenceHelperModel.toAdd
+
+        onEntryClicked: actions[0].handler(entry)
       }
     }
   }
