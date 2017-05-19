@@ -27,11 +27,17 @@ RowLayout {
       // The avatar is only visible for the first message of a incoming messages sequence.
       visible: {
         if (index <= 0) {
-          return true
+          return true // 1. First message, so visible.
         }
 
-        var entry = proxyModel.data(proxyModel.index(index - 1, 0))
-        return entry.type !== ChatModel.MessageEntry || entry.isOutgoing
+        var previousEntry = proxyModel.data(proxyModel.index(index - 1, 0))
+
+        // 2. Previous entry is a call event. => Visible.
+        // 3. I have sent a message before me contact. => Visible.
+        // 4. One hour between two incoming message. => Visible.
+        return previousEntry.type !== ChatModel.MessageEntry ||
+          previousEntry.isOutgoing ||
+          $chatEntry.timestamp.getTime() - previousEntry.timestamp.getTime() > 3600
       }
     }
   }
