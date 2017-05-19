@@ -93,6 +93,13 @@ void SipAddressesModel::connectToChatModel (ChatModel *chatModel) {
 
 // -----------------------------------------------------------------------------
 
+QVariantMap SipAddressesModel::find (const QString &sipAddress) const {
+  auto it = mSipAddresses.find(sipAddress);
+  return it == mSipAddresses.end() ? QVariantMap() : *it;
+}
+
+// -----------------------------------------------------------------------------
+
 ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sipAddress) const {
   auto it = mSipAddresses.find(sipAddress);
   if (it == mSipAddresses.end())

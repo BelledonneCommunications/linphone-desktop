@@ -39,7 +39,7 @@ namespace linphone {
 class ConferenceHelperModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
-  Q_PROPERTY(ConferenceAddModel * toAdd READ getConferenceAddModel CONSTANT);
+  Q_PROPERTY(ConferenceHelperModel::ConferenceAddModel * toAdd READ getConferenceAddModel CONSTANT);
 
 public:
   class ConferenceAddModel;

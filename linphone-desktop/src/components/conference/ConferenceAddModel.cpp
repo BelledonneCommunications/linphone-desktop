@@ -33,7 +33,14 @@ ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) 
   mConferenceHelperModel = qobject_cast<ConferenceHelperModel *>(parent);
   Q_ASSERT(mConferenceHelperModel != nullptr);
 
-  for (auto &participant : CoreManager::getInstance()->getCore()->getConference()->getParticipants())
+  CoreManager *coreManager = CoreManager::getInstance();
+
+  QObject::connect(
+    coreManager->getSipAddressesModel(), &SipAddressesModel::dataChanged,
+    this, &ConferenceAddModel::handleDataChanged
+  );
+
+  for (auto &participant : coreManager->getCore()->getConference()->getParticipants())
     addToConference(participant);
 }
 
@@ -118,13 +125,37 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
 
 // -----------------------------------------------------------------------------
 
-void ConferenceHelperModel::ConferenceAddModel::addToConference (const std::shared_ptr<linphone::Address> &linphoneAddress) {
+void ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_ptr<linphone::Address> &linphoneAddress) {
   QString sipAddress = ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
-  QVariantMap map;
+  QVariantMap map = CoreManager::getInstance()->getSipAddressesModel()->find(sipAddress);
 
   map["sipAddress"] = sipAddress;
   map["__linphoneAddress"] = QVariant::fromValue(linphoneAddress);
 
   mSipAddresses[sipAddress] = map;
   mRefs << &mSipAddresses[sipAddress];
+}
+
+// -----------------------------------------------------------------------------
+
+void ConferenceHelperModel::ConferenceAddModel::handleDataChanged (
+  const QModelIndex &topLeft,
+  const QModelIndex &bottomRight,
+  const QVector<int> &
+) {
+  SipAddressesModel *sipAddressesModel = CoreManager::getInstance()->getSipAddressesModel();
+
+  int limit = bottomRight.row();
+  for (int row = topLeft.row(); row <= limit; ++row) {
+    const QVariantMap &map = sipAddressesModel->data(sipAddressesModel->index(row, 0)).toMap();
+
+    auto it = mSipAddresses.find(map["sipAddress"].toString());
+    if (it != mSipAddresses.end()) {
+      (*it)["contact"] = map.value("contact");
+
+      int row = mRefs.indexOf(&(*it));
+      Q_ASSERT(row != -1);
+      emit dataChanged(index(row, 0), index(row, 0));
+    }
+  }
 }

@@ -47,6 +47,7 @@ public:
 
   void connectToChatModel (ChatModel *chatModel);
 
+  Q_INVOKABLE QVariantMap find (const QString &sipAddress) const;
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
   Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sipAddress);
 

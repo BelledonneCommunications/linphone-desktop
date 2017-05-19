@@ -57,6 +57,12 @@ public:
 private:
   void addToConference (const std::shared_ptr<linphone::Address> &linphoneAddress);
 
+  void handleDataChanged (
+    const QModelIndex &topLeft,
+    const QModelIndex &bottomRight,
+    const QVector<int> &roles = QVector<int>()
+  );
+
   QHash<QString, QVariantMap> mSipAddresses;
   QList<const QVariantMap *> mRefs;
 

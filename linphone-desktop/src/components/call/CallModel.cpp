@@ -193,7 +193,7 @@ void CallModel::stopRecording () {
 
 // -----------------------------------------------------------------------------
 
-void CallModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
+void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
   if (call != mCall)
     return;
 
