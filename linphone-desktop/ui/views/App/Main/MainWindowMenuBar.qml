@@ -48,27 +48,29 @@ Item {
   // Menu.
   // ---------------------------------------------------------------------------
 
-  Menu {
-    id: menu
+  MenuBar {
+    Menu {
+      id: menu
 
-    MenuItem {
-      shortcut: settingsShortcut.sequence
-      text: qsTr('settings')
+      MenuItem {
+        shortcut: settingsShortcut.sequence
+        text: qsTr('settings')
 
-      onTriggered: settingsShortcut.onActivated()
-    }
+        onTriggered: settingsShortcut.onActivated()
+      }
 
-    MenuItem {
-      text: qsTr('about')
+      MenuItem {
+        text: qsTr('about')
 
-      onTriggered: aboutShortcut.onActivated()
-    }
+        onTriggered: aboutShortcut.onActivated()
+      }
 
-    MenuItem {
-      shortcut: quitShortcut.sequence
-      text: qsTr('quit')
+      MenuItem {
+        shortcut: quitShortcut.sequence
+        text: qsTr('quit')
 
-      onTriggered: quitShortcut.onActivated()
+        onTriggered: quitShortcut.onActivated()
+      }
     }
   }
 }
