@@ -66,6 +66,14 @@ function setView (view, props) {
 
 // -----------------------------------------------------------------------------
 
+function openConferenceManager () {
+  var App = Linphone.App
+  var callsWindow = App.getCallsWindow()
+
+  App.smartShowWindow(callsWindow)
+  callsWindow.openConferenceManager()
+}
+
 function manageAccounts () {
   window.attachVirtualWindow(Qt.resolvedUrl('ManageAccounts.qml'))
 }

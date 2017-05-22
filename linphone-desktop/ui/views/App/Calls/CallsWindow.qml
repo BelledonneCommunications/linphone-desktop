@@ -32,6 +32,10 @@ Window {
     rightPaned.close()
   }
 
+  function openConferenceManager () {
+    Logic.openConferenceManager()
+  }
+
   // ---------------------------------------------------------------------------
 
   minimumHeight: CallsWindowStyle.minimumHeight

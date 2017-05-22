@@ -175,6 +175,12 @@ ApplicationWindow {
           }
 
           ActionButton {
+            icon: 'new_conference'
+
+            onClicked: Logic.openConferenceManager()
+          }
+
+          ActionButton {
             icon: 'burger_menu'
             iconSize: MainWindowStyle.menuBurgerSize
 

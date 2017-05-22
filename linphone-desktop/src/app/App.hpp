@@ -61,7 +61,6 @@ public:
     return mNotifier;
   }
 
-  QQuickWindow *getCallsWindow ();
   QQuickWindow *getMainWindow () const;
 
   bool hasFocus () const;
@@ -74,6 +73,7 @@ public:
     exit(APP_CODE_RESTART);
   }
 
+  Q_INVOKABLE QQuickWindow *getCallsWindow ();
   Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
