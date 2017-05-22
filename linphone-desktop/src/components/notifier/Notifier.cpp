@@ -256,7 +256,7 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
   if (!notification)
     return;
 
-  CallModel *callModel = CoreManager::getInstance()->getCallsListModel()->getCallModel(call);
+  CallModel *callModel = &call->getData<CallModel>("call-model");
 
   QObject::connect(
     callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
