@@ -110,7 +110,7 @@ Window {
           Layout.fillHeight: true
           Layout.fillWidth: true
 
-          model: CallsListModel
+          model: CallsListProxyModel {}
         }
       }
     }

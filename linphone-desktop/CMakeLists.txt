@@ -98,6 +98,7 @@ set(SOURCES
   src/components/authentication/AuthenticationNotifier.cpp
   src/components/call/CallModel.cpp
   src/components/calls/CallsListModel.cpp
+  src/components/calls/CallsListProxyModel.cpp
   src/components/camera/Camera.cpp
   src/components/camera/CameraPreview.cpp
   src/components/camera/MSFunctions.cpp
@@ -140,6 +141,7 @@ set(HEADERS
   src/components/authentication/AuthenticationNotifier.hpp
   src/components/call/CallModel.hpp
   src/components/calls/CallsListModel.hpp
+  src/components/calls/CallsListProxyModel.hpp
   src/components/camera/Camera.hpp
   src/components/camera/CameraPreview.hpp
   src/components/camera/MSFunctions.hpp

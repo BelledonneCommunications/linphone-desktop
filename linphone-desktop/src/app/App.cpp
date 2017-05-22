@@ -343,6 +343,7 @@ void App::registerTypes () {
 
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
+  registerType<CallsListProxyModel>("CallsListProxyModel");
   registerType<Camera>("Camera");
   registerType<CameraPreview>("CameraPreview");
   registerType<ChatModel>("ChatModel");
