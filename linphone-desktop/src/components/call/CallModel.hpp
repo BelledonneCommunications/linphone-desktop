@@ -37,6 +37,8 @@ class CallModel : public QObject {
 
   Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
 
+  Q_PROPERTY(bool isInConference READ isInConference NOTIFY isInConferenceChanged);
+
   Q_PROPERTY(int duration READ getDuration CONSTANT); // Constants but called with a timer in qml.
   Q_PROPERTY(float quality READ getQuality CONSTANT);
   Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
@@ -94,6 +96,7 @@ public:
 
 signals:
   void callErrorChanged (const QString &callError);
+  void isInConferenceChanged (bool status);
   void microMutedChanged (bool status);
   void recordingChanged (bool status);
   void statsUpdated ();
@@ -106,9 +109,16 @@ private:
   void stopAutoAnswerTimer () const;
 
   CallStatus getStatus () const;
+
   bool isOutgoing () const {
     return mCall->getDir() == linphone::CallDirOutgoing;
   }
+
+  bool isInConference () const {
+    return mIsInConference;
+  }
+
+  void updateIsInConference ();
 
   void acceptWithAutoAnswerDelay ();
 
@@ -138,6 +148,8 @@ private:
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
 
   QString iceStateToString (linphone::IceState state) const;
+
+  bool mIsInConference = false;
 
   bool mPausedByRemote = false;
   bool mPausedByUser = false;

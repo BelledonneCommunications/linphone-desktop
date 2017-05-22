@@ -45,5 +45,5 @@ bool CallsListProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &so
   const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
   shared_ptr<linphone::Call> call = index.data().value<CallModel *>()->getCall();
 
-  return call->getConference() != nullptr;
+  return call->getConference() == nullptr;
 }

@@ -37,15 +37,18 @@ using namespace std;
 
 // =============================================================================
 
-inline QList<CallModel *>::iterator findCallModel (
-  QList<CallModel *> &list,
-  const shared_ptr<linphone::Call> &call
-) {
-  return find_if(
-    list.begin(), list.end(), [call](CallModel *callModel) {
-      return call == callModel->getCall();
-    }
-  );
+inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::Call> &call) {
+  auto it = find_if(list.begin(), list.end(), [call](CallModel *callModel) {
+        return call == callModel->getCall();
+      });
+
+  Q_ASSERT(it != list.end());
+
+  return static_cast<int>(distance(list.begin(), it));
+}
+
+inline int findCallIndex (QList<CallModel *> &list, const CallModel &callModel) {
+  return findCallIndex(list, callModel.getCall());
 }
 
 // -----------------------------------------------------------------------------
@@ -136,7 +139,7 @@ void CallsListModel::handleCallStateChanged (const std::shared_ptr<linphone::Cal
       break;
 
     case linphone::CallStateStreamsRunning: {
-      int index = static_cast<int>(distance(mList.begin(), findCallModel(mList, call)));
+      int index = findCallIndex(mList, call);
       emit callRunning(index, &call->getData<CallModel>("call-model"));
     }
     break;
@@ -173,10 +176,16 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
     App::smartShowWindow(App::getInstance()->getCallsWindow());
 
   CallModel *callModel = new CallModel(call);
-
   qInfo() << QStringLiteral("Add call:") << callModel;
-
   App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
+
+  // This connection is (only) useful for `CallsListProxyModel`.
+  QObject::connect(
+    callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
+      int id = findCallIndex(mList, *callModel);
+      emit dataChanged(index(id, 0), index(id, 0));
+    }
+  );
 
   int row = mList.count();
 

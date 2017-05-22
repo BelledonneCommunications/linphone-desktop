@@ -197,6 +197,8 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
   if (call != mCall)
     return;
 
+  updateIsInConference();
+
   switch (state) {
     case linphone::CallStateError:
     case linphone::CallStateEnd:
@@ -251,6 +253,15 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 
 // -----------------------------------------------------------------------------
 
+void CallModel::updateIsInConference () {
+  if (mIsInConference != !!mCall->getConference()) {
+    mIsInConference = !mIsInConference;
+    emit isInConferenceChanged(mIsInConference);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
 void CallModel::stopAutoAnswerTimer () const {
   QTimer *timer = findChild<QTimer *>(AUTO_ANSWER_OBJECT_NAME, Qt::FindDirectChildrenOnly);
   if (timer) {
@@ -258,6 +269,8 @@ void CallModel::stopAutoAnswerTimer () const {
     timer->deleteLater();
   }
 }
+
+// -----------------------------------------------------------------------------
 
 CallModel::CallStatus CallModel::getStatus () const {
   switch (mCall->getState()) {
