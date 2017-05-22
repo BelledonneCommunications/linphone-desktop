@@ -59,7 +59,6 @@ Item {
     }
 
     MenuItem {
-      shortcut: aboutShortcut.sequence
       text: qsTr('about')
 
       onTriggered: aboutShortcut.onActivated()
