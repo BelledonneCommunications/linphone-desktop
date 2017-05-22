@@ -33,6 +33,13 @@ Rectangle {
     radius: field.radius
   }
 
+  Rectangle {
+    anchors.fill: parent
+    color: TextFieldStyle.background.color.readOnly
+    opacity: 0.8
+    visible: field.readOnly
+  }
+
   MouseArea {
     anchors.fill: parent
     hoverEnabled: true

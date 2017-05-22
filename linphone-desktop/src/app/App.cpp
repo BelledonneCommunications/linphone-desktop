@@ -140,8 +140,10 @@ void App::initContentApp () {
     setQuitOnLastWindowClosed(false);
 
     QObject::connect(
-      this, &App::receivedMessage, this, [this](int, QByteArray message) {
-        qInfo() << QStringLiteral("Received message from other application: `%1`.").arg(QString(message));
+      this, &App::receivedMessage, this, [this](int, QByteArray byteArray) {
+        QString message(byteArray);
+
+        qInfo() << QStringLiteral("Received message from other application: `%1`.").arg(message);
 
         if (message == "show")
           smartShowWindow(getMainWindow());

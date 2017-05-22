@@ -80,7 +80,7 @@ DialogPlus {
             anchors.fill: parent
 
             actions: [{
-              icon: 'video_call', // TODO: replace me.
+              icon: 'transfer',
               handler: function (entry) {
                 conferenceHelperModel.toAdd.addToConference(entry.sipAddress)
               }
@@ -126,7 +126,7 @@ DialogPlus {
         anchors.fill: parent
 
         actions: [{
-          icon: 'video_call', // TODO: replace me.
+          icon: 'cancel',
           handler: function (entry) {
             model.removeFromConference(entry.sipAddress)
           }

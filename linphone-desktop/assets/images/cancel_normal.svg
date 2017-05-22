@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+    <title>cancel_add_conference_default</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cancel_add_conference_default">
+            <g id="Group-3">
+                <path d="M20,40 C31.045695,40 40,31.045695 40,20 C40,8.954305 31.045695,0 20,0 C8.954305,0 0,8.954305 0,20 C0,31.045695 8.954305,40 20,40 Z" id="chat_default" fill="#96A6B1"></path>
+                <g id="Group-4" transform="translate(20.000000, 20.000000) rotate(-135.000000) translate(-20.000000, -20.000000) translate(12.000000, 12.000000)" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7.99397869,-5.68434189e-14 L7.99397869,14.9573643 L7.99498471,16 L7.99397869,-5.68434189e-14 Z M16,7.99397869 L1.04263566,7.99397869 L7.9225515e-13,7.99498471 L16,7.99397869 Z" id="Imported-Layers" transform="translate(8.000000, 8.000000) rotate(-360.000000) translate(-8.000000, -8.000000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

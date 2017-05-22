@@ -46,6 +46,9 @@
     <file>assets/images/camera_on_normal.svg</file>
     <file>assets/images/camera_on_pressed.svg</file>
     <file>assets/images/camera_on_updating.svg</file>
+    <file>assets/images/cancel_hovered.svg</file>
+    <file>assets/images/cancel_normal.svg</file>
+    <file>assets/images/cancel_pressed.svg</file>
     <file>assets/images/chat_amount.svg</file>
     <file>assets/images/chat_count.svg</file>
     <file>assets/images/chat_delivered.svg</file>
@@ -165,6 +168,9 @@
     <file>assets/images/tooltip_arrow_left.svg</file>
     <file>assets/images/tooltip_arrow_right.svg</file>
     <file>assets/images/tooltip_arrow_top.svg</file>
+    <file>assets/images/transfer_hovered.svg</file>
+    <file>assets/images/transfer_normal.svg</file>
+    <file>assets/images/transfer_pressed.svg</file>
     <file>assets/images/video_call_accept_hovered.svg</file>
     <file>assets/images/video_call_accept_normal.svg</file>
     <file>assets/images/video_call_accept_pressed.svg</file>

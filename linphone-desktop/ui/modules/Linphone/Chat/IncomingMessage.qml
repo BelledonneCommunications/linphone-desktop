@@ -33,8 +33,8 @@ RowLayout {
         var previousEntry = proxyModel.data(proxyModel.index(index - 1, 0))
 
         // 2. Previous entry is a call event. => Visible.
-        // 3. I have sent a message before me contact. => Visible.
-        // 4. One hour between two incoming message. => Visible.
+        // 3. I have sent a message before my contact. => Visible.
+        // 4. One hour between two incoming messages. => Visible.
         return previousEntry.type !== ChatModel.MessageEntry ||
           previousEntry.isOutgoing ||
           $chatEntry.timestamp.getTime() - previousEntry.timestamp.getTime() > 3600
