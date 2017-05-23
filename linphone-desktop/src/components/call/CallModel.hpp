@@ -25,7 +25,7 @@
 
 #include <linphone++/linphone.hh>
 #include <QObject>
-#include <QDebug>
+
 // =============================================================================
 
 class CallModel : public QObject {
@@ -76,6 +76,10 @@ public:
 
   QString getSipAddress () const;
 
+  bool isInConference () const {
+    return mIsInConference;
+  }
+
   static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats);
 
@@ -112,11 +116,6 @@ private:
 
   bool isOutgoing () const {
     return mCall->getDir() == linphone::CallDirOutgoing;
-  }
-
-  bool isInConference () const {
-    qDebug() << "toto" << mIsInConference;
-    return mIsInConference;
   }
 
   void updateIsInConference ();
