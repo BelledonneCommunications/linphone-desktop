@@ -28,6 +28,9 @@
 #include <QSortFilterProxyModel>
 
 // =============================================================================
+// Sip addresses not in conference.
+// Can filter the sip addresses with a pattern.
+// =============================================================================
 
 class CallModel;
 class ConferenceAddModel;

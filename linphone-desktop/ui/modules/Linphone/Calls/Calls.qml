@@ -136,7 +136,7 @@ ListView {
       readonly property var params: Logic.getParams($call)
 
       anchors.centerIn: parent
-      sourceComponent: params.component
+      sourceComponent: params ? params.component : null
     }
 
     SequentialAnimation on color {

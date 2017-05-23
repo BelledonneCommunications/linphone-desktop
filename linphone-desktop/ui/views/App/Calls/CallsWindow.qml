@@ -19,9 +19,10 @@ Window {
 
   // `{}` is a workaround to avoid `TypeError: Cannot read property...`.
   property var call: calls.selectedCall || ({
+    callError: '',
     isOutgoing: true,
-    sipAddress: '',
     recording: false,
+    sipAddress: '',
     updating: true,
     videoEnabled: false
   })

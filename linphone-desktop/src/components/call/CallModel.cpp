@@ -41,6 +41,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
   mCall = call;
   mCall->setData("call-model", *this);
 
+  updateIsInConference();
+
   // Deal with auto-answer.
   {
     SettingsModel *settings = CoreManager::getInstance()->getSettingsModel();
@@ -254,7 +256,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 // -----------------------------------------------------------------------------
 
 void CallModel::updateIsInConference () {
-  if (mIsInConference != !!mCall->getConference()) {
+  if (mIsInConference != mCall->getParams()->getLocalConferenceMode()) {
     mIsInConference = !mIsInConference;
     emit isInConferenceChanged(mIsInConference);
   }

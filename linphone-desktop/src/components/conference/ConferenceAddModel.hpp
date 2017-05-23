@@ -26,7 +26,10 @@
 #include <memory>
 
 #include "ConferenceHelperModel.hpp"
+#include "ConferenceModel.hpp"
 
+// =============================================================================
+// Sip addresses list to add to conference.
 // =============================================================================
 
 namespace linphone {
@@ -45,6 +48,8 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  bool addToConference (const std::shared_ptr<const linphone::Address> &linphoneAddress);
+
   Q_INVOKABLE bool addToConference (const QString &sipAddress);
   Q_INVOKABLE bool removeFromConference (const QString &sipAddress);
 
@@ -55,7 +60,7 @@ public:
   }
 
 private:
-  void addToConference (const std::shared_ptr<linphone::Address> &linphoneAddress);
+  void addToConferencePrivate (const std::shared_ptr<linphone::Address> &linphoneAddress);
 
   void handleDataChanged (
     const QModelIndex &topLeft,

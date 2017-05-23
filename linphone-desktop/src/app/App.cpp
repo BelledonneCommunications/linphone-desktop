@@ -349,6 +349,7 @@ void App::registerTypes () {
   registerType<ChatModel>("ChatModel");
   registerType<ChatProxyModel>("ChatProxyModel");
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
+  registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");

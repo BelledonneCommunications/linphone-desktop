@@ -25,7 +25,7 @@
 
 #include <linphone++/linphone.hh>
 #include <QObject>
-
+#include <QDebug>
 // =============================================================================
 
 class CallModel : public QObject {
@@ -115,6 +115,7 @@ private:
   }
 
   bool isInConference () const {
+    qDebug() << "toto" << mIsInConference;
     return mIsInConference;
   }
 
