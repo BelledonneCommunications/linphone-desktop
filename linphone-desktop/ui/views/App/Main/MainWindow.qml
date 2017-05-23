@@ -126,7 +126,7 @@ ApplicationWindow {
           }
 
           Column {
-            width: MainWindowStyle.autoAnswerStatus.width
+            Layout.preferredWidth: MainWindowStyle.autoAnswerStatus.width
 
             Icon {
               icon: SettingsModel.autoAnswerStatus
@@ -176,6 +176,7 @@ ApplicationWindow {
 
           ActionButton {
             icon: 'new_conference'
+            iconSize: MainWindowStyle.newConferenceSize
 
             onClicked: Logic.openConferenceManager()
           }

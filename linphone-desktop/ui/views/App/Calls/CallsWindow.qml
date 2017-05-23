@@ -17,7 +17,15 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  property var call: calls.selectedCall
+  // `{}` is a workaround to avoid `TypeError: Cannot read property...`.
+  property var call: calls.selectedCall || ({
+    isOutgoing: true,
+    sipAddress: '',
+    recording: false,
+    updating: true,
+    videoEnabled: false
+  })
+
   readonly property bool chatIsOpened: !rightPaned.isClosed()
 
   property string sipAddress: call ? call.sipAddress : ''

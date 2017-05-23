@@ -123,22 +123,27 @@ Rectangle {
 
         ActionButton {
           icon: 'screenshot'
-          visible: call.videoEnabled
+          visible: incall.call.videoEnabled
 
-          onClicked: call.takeSnapshot()
+          onClicked: incall.call.takeSnapshot()
         }
 
         ActionSwitch {
-          enabled: call.recording
+          enabled: incall.call.recording
           icon: 'record'
           useStates: false
 
-          onClicked: !enabled ? call.startRecording() : call.stopRecording()
+          onClicked: {
+            var call = incall.call
+            return !enabled
+              ? call.startRecording()
+              : call.stopRecording()
+          }
         }
 
         ActionButton {
           icon: 'fullscreen'
-          visible: call.videoEnabled
+          visible: incall.call.videoEnabled
 
           onClicked: Logic.showFullscreen()
         }
@@ -179,7 +184,7 @@ Rectangle {
 
         Avatar {
           backgroundColor: CallStyle.container.avatar.backgroundColor
-          foregroundColor: call.status === CallModel.CallStatusPaused
+          foregroundColor: incall.call.status === CallModel.CallStatusPaused
             ? CallStyle.container.pause.color
             : 'transparent'
           image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
@@ -200,7 +205,7 @@ Rectangle {
 
             text: '&#9616;&nbsp;&#9612;'
             textFormat: Text.RichText
-            visible: call.status === CallModel.CallStatusPaused
+            visible: incall.call.status === CallModel.CallStatusPaused
           }
         }
       }
@@ -210,7 +215,7 @@ Rectangle {
 
         anchors.centerIn: parent
 
-        active: call.videoEnabled && !_fullscreen
+        active: incall.call.videoEnabled && !_fullscreen
         sourceComponent: camera
 
         Component {
@@ -259,7 +264,7 @@ Rectangle {
               repeat: true
               running: micro.enabled
 
-              onTriggered: parent.value = call.microVu
+              onTriggered: parent.value = incall.call.microVu
             }
 
             enabled: micro.enabled
@@ -272,7 +277,7 @@ Rectangle {
             icon: 'micro'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: call.microMuted = enabled
+            onClicked: incall.call.microMuted = enabled
           }
         }
 
@@ -285,7 +290,7 @@ Rectangle {
               repeat: true
               running: speaker.enabled
 
-              onTriggered: parent.value = call.speakerVu
+              onTriggered: parent.value = incall.call.speakerVu
             }
 
             enabled: speaker.enabled
@@ -303,12 +308,12 @@ Rectangle {
         }
 
         ActionSwitch {
-          enabled: call.videoEnabled
+          enabled: incall.call.videoEnabled
           icon: 'camera'
           iconSize: CallStyle.actionArea.iconSize
-          updating: call.updating
+          updating: incall.call.updating
 
-          onClicked: call.videoEnabled = !enabled
+          onClicked: incall.call.videoEnabled = !enabled
 
           TooltipArea {
             text: qsTr('pendingRequestLabel')
@@ -335,7 +340,7 @@ Rectangle {
         height: CallStyle.actionArea.userVideo.height
         width: CallStyle.actionArea.userVideo.width
 
-        active: incall.width >= CallStyle.actionArea.lowWidth && call.videoEnabled && !_fullscreen
+        active: incall.width >= CallStyle.actionArea.lowWidth && incall.call.videoEnabled && !_fullscreen
         sourceComponent: cameraPreview
 
         Component {
@@ -360,9 +365,9 @@ Rectangle {
         ActionSwitch {
           enabled: !call.pausedByUser
           icon: 'pause'
-          updating: call.updating
+          updating: incall.call.updating
 
-          onClicked: call.pausedByUser = enabled
+          onClicked: incall.call.pausedByUser = enabled
 
           TooltipArea {
             text: qsTr('pendingRequestLabel')
@@ -373,7 +378,7 @@ Rectangle {
         ActionButton {
           icon: 'hangup'
 
-          onClicked: call.terminate()
+          onClicked: incall.call.terminate()
         }
 
         ActionButton {
