@@ -11,15 +11,13 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
-	property var call: null // TODO: Remove me
-
   color: CallStyle.backgroundColor
 
   // ---------------------------------------------------------------------------
 
-	ConferenceModel {
-		id: conference
-	}
+  ConferenceModel {
+    id: conference
+  }
 
   ColumnLayout {
     anchors {
@@ -30,7 +28,7 @@ Rectangle {
     spacing: 0
 
     // -------------------------------------------------------------------------
-    // Call info.
+    // Conference info.
     // -------------------------------------------------------------------------
 
     Item {
@@ -53,7 +51,14 @@ Rectangle {
 
         anchors.centerIn: parent
         horizontalAlignment: Text.AlignHCenter
-				text: qsTr('conferenceTitle')
+        text: qsTr('conferenceTitle')
+
+        color: CallStyle.header.conferenceDescription.color
+
+        font {
+          bold: true
+          pointSize: CallStyle.header.conferenceDescription.fontSize
+        }
 
         height: parent.height
         width: parent.width - rightActions.width - leftActions.width - CallStyle.header.conferenceDescription.width
@@ -75,27 +80,9 @@ Rectangle {
           useStates: false
 
           onClicked: !enabled
-					  ? conference.startRecording()
+            ? conference.startRecording()
             : conference.stopRecording()
         }
-      }
-    }
-
-    Text {
-      id: elapsedTime
-
-      Layout.fillWidth: true
-      color: CallStyle.header.elapsedTime.color
-      font.pointSize: CallStyle.header.elapsedTime.fontSize
-      horizontalAlignment: Text.AlignHCenter
-
-      Timer {
-        interval: 1000
-        repeat: true
-        running: true
-        triggeredOnStart: true
-
-        onTriggered: elapsedTime.text = Utils.formatElapsedTime(conference.duration)
       }
     }
 
@@ -151,32 +138,6 @@ Rectangle {
             iconSize: CallStyle.actionArea.iconSize
 
             onClicked: conference.microMuted = enabled
-          }
-        }
-
-        Row {
-          spacing: CallStyle.actionArea.vu.spacing
-
-          VuMeter {
-            Timer {
-              interval: 50
-              repeat: true
-              running: speaker.enabled
-
-              onTriggered: parent.value = conference.speakerVu
-            }
-
-            enabled: speaker.enabled
-          }
-
-          ActionSwitch {
-            id: speaker
-
-            enabled: true
-            icon: 'speaker'
-            iconSize: CallStyle.actionArea.iconSize
-
-            onClicked: console.log('TODO')
           }
         }
       }

@@ -66,6 +66,13 @@ QtObject {
       property int width: 150
     }
 
+    property QtObject conferenceDescription: QtObject {
+      property color color: Colors.x
+      property int fontSize: 12
+      property int height: 60
+      property int width: 150
+    }
+
     property QtObject elapsedTime: QtObject {
       property color color: Colors.j
       property int fontSize: 10

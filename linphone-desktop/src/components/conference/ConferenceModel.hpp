@@ -23,11 +23,13 @@
 #ifndef CONFERENCE_MODEL_H_
 #define CONFERENCE_MODEL_H_
 
-#include <QAbstractListModel>
+#include <QSortFilterProxyModel>
 
 // =============================================================================
 
-class ConferenceModel : public QAbstractListModel {
+class CallModel;
+
+class ConferenceModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
@@ -38,10 +40,8 @@ public:
   ConferenceModel (QObject *parent = Q_NULLPTR);
   ~ConferenceModel () = default;
 
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+protected:
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 
   Q_INVOKABLE void terminate ();
 
@@ -59,8 +59,6 @@ private:
   bool getRecording () const;
 
   bool mRecording = false;
-
-  QStringList mSipAddresses;
 };
 
 #endif // CONFERENCE_MODEL_H_

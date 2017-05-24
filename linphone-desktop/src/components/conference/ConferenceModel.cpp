@@ -24,7 +24,6 @@
 
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
-#include "ConferenceHelperModel.hpp"
 
 #include "ConferenceModel.hpp"
 
@@ -32,28 +31,13 @@ using namespace std;
 
 // =============================================================================
 
-ConferenceModel::ConferenceModel (QObject *parent) : QAbstractListModel(parent) {}
+ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(parent) {}
 
-int ConferenceModel::rowCount (const QModelIndex &index) const {
-  return mSipAddresses.count();
-}
+bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const CallModel *callModel = index.data().value<CallModel *>();
 
-QHash<int, QByteArray> ConferenceModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$sipAddress";
-  return roles;
-}
-
-QVariant ConferenceModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mSipAddresses.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return mSipAddresses[row];
-
-  return QVariant();
+  return callModel->getCall()->getParams()->getLocalConferenceMode();
 }
 
 // -----------------------------------------------------------------------------
