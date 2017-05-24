@@ -358,6 +358,17 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>Conference</name>
+    <message>
+        <source>conferenceTitle</source>
+        <translation>CONFERENCE</translation>
+    </message>
+    <message>
+        <source>pendingRequestLabel</source>
+        <translation>Please to wait, a request is pending.</translation>
+    </message>
+</context>
+<context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>

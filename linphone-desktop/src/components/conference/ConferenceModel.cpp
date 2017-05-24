@@ -20,7 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDateTime>
+
+#include "../../Utils.hpp"
+#include "../core/CoreManager.hpp"
+
 #include "ConferenceModel.hpp"
+
+using namespace std;
 
 // =============================================================================
 
@@ -46,4 +53,58 @@ QVariant ConferenceModel::data (const QModelIndex &index, int role) const {
     return mSipAddresses[row];
 
   return QVariant();
+}
+
+// -----------------------------------------------------------------------------
+
+void ConferenceModel::startRecording () {
+  if (mRecording)
+    return;
+
+  qInfo() << QStringLiteral("Start recording conference:") << this;
+
+  CoreManager *coreManager = CoreManager::getInstance();
+  coreManager->getCore()->startConferenceRecording(
+    ::Utils::qStringToLinphoneString(
+      QStringLiteral("%1%2.mkv")
+      .arg(coreManager->getSettingsModel()->getSavedVideosFolder())
+      .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss"))
+    )
+  );
+  mRecording = true;
+
+  emit recordingChanged(true);
+}
+
+void ConferenceModel::stopRecording () {
+  if (!mRecording)
+    return;
+
+  qInfo() << QStringLiteral("Stop recording conference:") << this;
+
+  mRecording = false;
+  CoreManager::getInstance()->getCore()->stopConferenceRecording();
+
+  emit recordingChanged(false);
+}
+
+// -----------------------------------------------------------------------------
+
+bool ConferenceModel::getMicroMuted () const {
+  return !CoreManager::getInstance()->getCore()->micEnabled();
+}
+
+void ConferenceModel::setMicroMuted (bool status) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  if (status == core->micEnabled()) {
+    core->enableMic(!status);
+    emit microMutedChanged(status);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
+bool ConferenceModel::getRecording () const {
+  return mRecording;
 }

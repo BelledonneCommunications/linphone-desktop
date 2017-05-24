@@ -28,6 +28,12 @@
 // =============================================================================
 
 class ConferenceModel : public QAbstractListModel {
+  Q_OBJECT;
+
+  Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
+
+  Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
+
 public:
   ConferenceModel (QObject *parent = Q_NULLPTR);
   ~ConferenceModel () = default;
@@ -37,7 +43,21 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  Q_INVOKABLE void startRecording ();
+  Q_INVOKABLE void stopRecording ();
+
+signals:
+  void microMutedChanged (bool status);
+  void recordingChanged (bool status);
+
 private:
+  bool getMicroMuted () const;
+  void setMicroMuted (bool status);
+
+  bool getRecording () const;
+
+  bool mRecording = false;
+
   QStringList mSipAddresses;
 };
 

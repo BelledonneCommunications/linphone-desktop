@@ -358,6 +358,17 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>Conference</name>
+    <message>
+        <source>conferenceTitle</source>
+        <translation>CONFÉRENCE</translation>
+    </message>
+    <message>
+        <source>pendingRequestLabel</source>
+        <translation>Merci de patienter, une requête est en attente.</translation>
+    </message>
+</context>
+<context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>

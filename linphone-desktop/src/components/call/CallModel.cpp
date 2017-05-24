@@ -79,9 +79,10 @@ QString CallModel::getSipAddress () const {
 void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(
     ::Utils::qStringToLinphoneString(
-      CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder() +
-      QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss")
-    ) + ".mkv"
+      QStringLiteral("%1%2.mkv")
+      .arg(CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder())
+      .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss"))
+    )
   );
 }
 
@@ -183,14 +184,15 @@ void CallModel::startRecording () {
 }
 
 void CallModel::stopRecording () {
-  if (mRecording) {
-    qInfo() << QStringLiteral("Stop recording call:") << this;
+  if (!mRecording)
+    return;
 
-    mRecording = false;
-    mCall->stopRecording();
+  qInfo() << QStringLiteral("Stop recording call:") << this;
 
-    emit recordingChanged(false);
-  }
+  mRecording = false;
+  mCall->stopRecording();
+
+  emit recordingChanged(false);
 }
 
 // -----------------------------------------------------------------------------
