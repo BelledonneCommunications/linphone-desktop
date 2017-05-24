@@ -115,29 +115,39 @@ Window {
         Layout.preferredHeight: CallStyle.header.contactDescription.height
         Layout.rightMargin: CallStyle.header.rightMargin
 
-        Icon {
-          id: callQuality
-
+        ActionBar {
           anchors.left: parent.left
-          icon: 'call_quality_0'
           iconSize: CallStyle.header.iconSize
           visible: !hideButtons
 
-          // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
-          Timer {
-            interval: 5000
-            repeat: true
-            running: true
-            triggeredOnStart: true
+          Icon {
+            id: callQuality
 
-            onTriggered: {
-              var quality = call.quality
-              callQuality.icon = 'call_quality_' + (
-                // Note: `quality` is in the [0, 5] interval.
-                // It's necessary to map in the `call_quality_` interval. ([0, 3])
-                quality >= 0 ? Math.round(quality / (5 / 3)) : 0
-              )
+            icon: 'call_quality_0'
+            iconSize: parent.iconSize
+
+            // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
+            Timer {
+              interval: 5000
+              repeat: true
+              running: true
+              triggeredOnStart: true
+
+              onTriggered: {
+                var quality = call.quality
+                callQuality.icon = 'call_quality_' + (
+                  // Note: `quality` is in the [0, 5] interval.
+                  // It's necessary to map in the `call_quality_` interval. ([0, 3])
+                  quality >= 0 ? Math.round(quality / (5 / 3)) : 0
+                )
+              }
             }
+          }
+
+          ActionButton {
+            icon: 'tel_keypad'
+
+            onClicked: telKeypad.visible = !telKeypad.visible
           }
         }
 
@@ -180,12 +190,6 @@ Window {
           anchors.right: parent.right
           iconSize: CallStyle.header.iconSize
           visible: !hideButtons
-
-          ActionButton {
-            icon: 'tel_keypad'
-
-            onClicked: telKeypad.visible = !telKeypad.visible
-          }
 
           ActionButton {
             icon: 'screenshot'

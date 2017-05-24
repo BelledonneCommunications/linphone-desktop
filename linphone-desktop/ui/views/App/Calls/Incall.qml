@@ -62,34 +62,45 @@ Rectangle {
       Layout.rightMargin: CallStyle.header.rightMargin
       Layout.preferredHeight: CallStyle.header.contactDescription.height
 
-      ActionButton {
-        id: callQuality
+      ActionBar {
+        id: leftActions
 
         anchors.left: parent.left
-        icon: 'call_quality_0'
         iconSize: CallStyle.header.iconSize
-        useStates: false
 
-        onClicked: callStatistics.open()
+        ActionButton {
+          id: callQuality
 
-        // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
-        Timer {
-          interval: 5000
-          repeat: true
-          running: true
-          triggeredOnStart: true
+          icon: 'call_quality_0'
+          useStates: false
 
-          onTriggered: Logic.updateCallQualityIcon()
+          onClicked: callStatistics.open()
+
+          // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
+          Timer {
+            interval: 5000
+            repeat: true
+            running: true
+            triggeredOnStart: true
+
+            onTriggered: Logic.updateCallQualityIcon()
+          }
+
+          CallStatistics {
+            id: callStatistics
+
+            call: incall.call
+            width: container.width
+
+            relativeTo: callQuality
+            relativeY: CallStyle.header.stats.relativeY
+          }
         }
 
-        CallStatistics {
-          id: callStatistics
+        ActionButton {
+          icon: 'tel_keypad'
 
-          call: incall.call
-          width: container.width
-
-          relativeTo: callQuality
-          relativeY: CallStyle.header.stats.relativeY
+          onClicked: telKeypad.visible = !telKeypad.visible
         }
       }
 
@@ -102,7 +113,7 @@ Rectangle {
         username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || sipAddress)
 
         height: parent.height
-        width: parent.width - cameraActions.width - callQuality.width - CallStyle.header.contactDescription.width
+        width: parent.width - rightActions.width - leftActions.width - CallStyle.header.contactDescription.width
       }
 
       // -----------------------------------------------------------------------
@@ -110,16 +121,10 @@ Rectangle {
       // -----------------------------------------------------------------------
 
       ActionBar {
-        id: cameraActions
+        id: rightActions
 
         anchors.right: parent.right
         iconSize: CallStyle.header.iconSize
-
-        ActionButton {
-          icon: 'tel_keypad'
-
-          onClicked: telKeypad.visible = !telKeypad.visible
-        }
 
         ActionButton {
           icon: 'screenshot'
