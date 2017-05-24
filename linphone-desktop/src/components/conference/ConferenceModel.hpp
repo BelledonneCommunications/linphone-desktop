@@ -33,7 +33,6 @@ class ConferenceModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
-
   Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
 
 public:

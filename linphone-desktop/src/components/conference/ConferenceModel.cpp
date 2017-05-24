@@ -31,7 +31,9 @@ using namespace std;
 
 // =============================================================================
 
-ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(parent) {}
+ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(parent) {
+  setSourceModel(CoreManager::getInstance()->getCallsListModel());
+}
 
 bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
