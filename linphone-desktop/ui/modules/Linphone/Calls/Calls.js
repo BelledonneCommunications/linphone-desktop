@@ -91,32 +91,60 @@ function getParams (call) {
 }
 
 // -----------------------------------------------------------------------------
+// Helpers.
+// -----------------------------------------------------------------------------
 
-function handleCallRunning (index, call) {
-  calls.currentIndex = index
+function updateSelectedCall (call, index) {
   calls._selectedCall = call
+  if (index != null) {
+    calls.currentIndex = index
+  }
+}
+
+function resetSelectedCall () {
+  updateSelectedCall(null, -1)
+}
+
+function setIndexWithCall (call) {
+  var count = calls.count
+  for (var i = 0; i < count; i++) {
+    if (call === model.data(model.index(i, 0))) {
+      updateSelectedCall(call, i)
+      return
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// View handlers.
+// -----------------------------------------------------------------------------
+
+function handleSelectedCall (call) {
+  setIndexWithCall(call)
 }
 
 function handleCountChanged (count) {
   if (count === 0) {
-    return 0
-  }
-
-  var index = calls.currentIndex
-  if (index !== -1) {
     return
   }
 
-  var model = calls.model
-  index = count - 1
+  var call = calls._selectedCall
 
-  calls.currentIndex = index
-  calls._selectedCall = model.data(model.index(index, 0))
+  if (call == null) {
+    var model = calls.model
+    var index = count - 1
+    updateSelectedCall(model.data(model.index(index, 0)), index)
+  } else {
+    setIndexWithCall(call)
+  }
 }
 
-function resetSelectedCall () {
-  calls.currentIndex = -1
-  calls._selectedCall = null
+// -----------------------------------------------------------------------------
+// Model handlers.
+// -----------------------------------------------------------------------------
+
+function handleCallRunning (call) {
+  updateSelectedCall(call)
 }
 
 function handleRowsAboutToBeRemoved (_, first, last) {
@@ -134,13 +162,13 @@ function handleRowsInserted (_, first, last) {
     var call = model.data(model.index(index, 0))
 
     if (call.isOutgoing) {
-      resetSelectedCall()
+      updateSelectedCall(call)
       return
     }
   }
 
   // First received call.
   if (first === 0 && model.rowCount() === 1) {
-    resetSelectedCall()
+    updateSelectedCall(model.data(model.index(0, 0)))
   }
 }

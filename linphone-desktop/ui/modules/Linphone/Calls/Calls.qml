@@ -26,11 +26,12 @@ ListView {
   // ---------------------------------------------------------------------------
 
   onCountChanged: Logic.handleCountChanged(count)
+  onSelectedCall: Logic.handleSelectedCall(call)
 
   Connections {
     target: model
 
-    onCallRunning: Logic.handleCallRunning(index, callModel)
+    onCallRunning: Logic.handleCallRunning(callModel)
     onRowsAboutToBeRemoved: Logic.handleRowsAboutToBeRemoved(parent, first, last)
     onRowsInserted: Logic.handleRowsInserted(parent, first, last)
   }
@@ -87,6 +88,8 @@ ListView {
   }
 
   // ---------------------------------------------------------------------------
+  // Calls.
+  // ---------------------------------------------------------------------------
 
   delegate: CallControls {
     id: _callControls
@@ -119,8 +122,7 @@ ListView {
 
     onClicked: {
       if ($call.status !== CallModel.CallStatusEnded) {
-        _selectedCall = $call
-        calls.currentIndex = index
+        Logic.updateSelectedCall($call, index)
       }
     }
 

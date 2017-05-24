@@ -31,6 +31,9 @@ RowLayout {
         }
 
         var previousEntry = proxyModel.data(proxyModel.index(index - 1, 0))
+        if (!previousEntry) {
+          return true
+        }
 
         // 2. Previous entry is a call event. => Visible.
         // 3. I have sent a message before my contact. => Visible.

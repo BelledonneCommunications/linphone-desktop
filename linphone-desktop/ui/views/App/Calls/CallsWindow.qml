@@ -23,6 +23,7 @@ Window {
     isOutgoing: true,
     recording: false,
     sipAddress: '',
+    type: false,
     updating: true,
     videoEnabled: false
   })
