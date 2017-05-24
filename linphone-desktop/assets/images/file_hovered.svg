@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="20px" viewBox="0 0 16 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+    <title>settings_file_1</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="settings_file_1" stroke="#6B7A86">
+            <g id="Group-13">
+                <g id="Group-12">
+                    <rect id="Rectangle-10-Copy" transform="translate(8.000000, 10.000000) rotate(-270.000000) translate(-8.000000, -10.000000) " x="-1.5" y="2.5" width="19" height="15" rx="3"></rect>
+                    <g id="Group-9" transform="translate(4.000000, 4.000000)" stroke-linecap="round">
+                        <path d="M0.444444444,4.5 L7.55555556,4.5" id="Line"></path>
+                        <path d="M0.444444444,1.5 L7.55555556,1.5" id="Line"></path>
+                        <path d="M0.444444444,10.5 L7.55555556,10.5" id="Line"></path>
+                        <path d="M0.444444444,7.5 L7.55555556,7.5" id="Line"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -50,7 +50,16 @@ TextField {
 
       Icon {
         anchors.centerIn: parent
-        // TODO: Set icon file or folder.
+
+        icon: (textField.selectFolder ? 'folder' : 'file') + (mouseArea.pressed
+          ? '_pressed'
+          : (
+            mouseArea.containsMouse
+              ? '_hovered'
+              : '_normal'
+          )
+        )
+
         iconSize: FileChooserButtonStyle.tools.button.iconSize
       }
     }

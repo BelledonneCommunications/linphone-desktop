@@ -13,8 +13,8 @@ Controls.TextField {
 
   // ---------------------------------------------------------------------------
 
-  property alias icon: icon.icon
   property string error: ''
+  property string icon: ''
   property var tools
 
   // ---------------------------------------------------------------------------

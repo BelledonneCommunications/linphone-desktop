@@ -82,8 +82,14 @@
     <file>assets/images/edit_normal.svg</file>
     <file>assets/images/edit_pressed.svg</file>
     <file>assets/images/ended_call.svg</file>
+    <file>assets/images/file_hovered.svg</file>
+    <file>assets/images/file_normal.svg</file>
+    <file>assets/images/file_pressed.svg</file>
     <file>assets/images/file_sign.svg</file>
     <file>assets/images/filter.svg</file>
+    <file>assets/images/folder_hovered.svg</file>
+    <file>assets/images/folder_normal.svg</file>
+    <file>assets/images/folder_pressed.svg</file>
     <file>assets/images/fullscreen_hovered.svg</file>
     <file>assets/images/fullscreen_normal.svg</file>
     <file>assets/images/fullscreen_pressed.svg</file>
