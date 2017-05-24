@@ -363,10 +363,6 @@ Server url not configured.</translation>
         <source>conferenceTitle</source>
         <translation>CONFERENCE</translation>
     </message>
-    <message>
-        <source>pendingRequestLabel</source>
-        <translation>Please to wait, a request is pending.</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceManager</name>

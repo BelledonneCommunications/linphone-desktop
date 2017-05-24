@@ -43,6 +43,8 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  Q_INVOKABLE void terminate ();
+
   Q_INVOKABLE void startRecording ();
   Q_INVOKABLE void stopRecording ();
 

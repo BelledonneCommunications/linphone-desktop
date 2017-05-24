@@ -24,6 +24,7 @@
 
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
+#include "ConferenceHelperModel.hpp"
 
 #include "ConferenceModel.hpp"
 
@@ -53,6 +54,18 @@ QVariant ConferenceModel::data (const QModelIndex &index, int role) const {
     return mSipAddresses[row];
 
   return QVariant();
+}
+
+// -----------------------------------------------------------------------------
+
+void ConferenceModel::terminate () {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  core->terminateConference();
+
+  for (const auto &call : core->getCalls()) {
+    if (call->getParams()->getLocalConferenceMode())
+      call->terminate();
+  }
 }
 
 // -----------------------------------------------------------------------------

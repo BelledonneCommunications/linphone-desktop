@@ -1,5 +1,4 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -8,8 +7,6 @@ import LinphoneUtils 1.0
 import Utils 1.0
 
 import App.Styles 1.0
-
-//import 'Conference.js' as Logic
 
 // =============================================================================
 
@@ -191,19 +188,6 @@ Rectangle {
           verticalCenter: parent.verticalCenter
         }
         iconSize: CallStyle.actionArea.iconSize
-
-        ActionSwitch {
-          enabled: !conference.pausedByUser
-          icon: 'pause'
-          updating: conference.updating
-
-          onClicked: conference.pausedByUser = enabled
-
-          TooltipArea {
-            text: qsTr('pendingRequestLabel')
-            visible: parent.updating
-          }
-        }
 
         ActionButton {
           icon: 'hangup'

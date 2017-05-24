@@ -12,12 +12,15 @@ var forceClose = false
 
 function handleClosing (close) {
   var callsList = Linphone.CallsListModel
+
+  window.detachVirtualWindow()
+
   if (forceClose || callsList.getRunningCallsNumber() === 0) {
+    forceClose = false
     callsList.terminateAllCalls()
     return
   }
 
-  window.detachVirtualWindow()
   window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('acceptClosingDescription'),
   }, function (status) {
