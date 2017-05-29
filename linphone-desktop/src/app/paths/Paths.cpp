@@ -128,9 +128,6 @@ inline QString getAppAssistantConfigDirPath () {
 }
 
 inline QString getAppConfigFilePath () {
-  if (QSysInfo::productType() == "macos")
-    return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CONFIG;
-
   return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PATH_CONFIG;
 }
 
