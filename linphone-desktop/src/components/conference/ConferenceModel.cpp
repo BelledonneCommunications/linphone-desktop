@@ -32,6 +32,13 @@ using namespace std;
 // =============================================================================
 
 ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(parent) {
+  QObject::connect(this, &ConferenceModel::rowsRemoved, [this] {
+    emit countChanged(rowCount());
+  });
+  QObject::connect(this, &ConferenceModel::rowsInserted, [this] {
+    emit countChanged(rowCount());
+  });
+
   setSourceModel(CoreManager::getInstance()->getCallsListModel());
 }
 

@@ -120,6 +120,7 @@ Window {
           Layout.fillHeight: true
           Layout.fillWidth: true
 
+          conferenceModel: ConferenceModel {}
           model: CallsListProxyModel {}
         }
       }
@@ -180,6 +181,14 @@ Window {
           proxyModel: ChatProxyModel {
             sipAddress: window.sipAddress
           }
+        }
+      }
+
+      Component {
+        id: conference
+
+        Conference {
+          conferenceModel: calls.conferenceModel
         }
       }
 

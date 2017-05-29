@@ -32,6 +32,8 @@ class CallModel;
 class ConferenceModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
+  Q_PROPERTY(int count READ getCount NOTIFY countChanged);
+
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
   Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
 
@@ -48,10 +50,16 @@ protected:
   Q_INVOKABLE void stopRecording ();
 
 signals:
+  void countChanged (int count);
+
   void microMutedChanged (bool status);
   void recordingChanged (bool status);
 
 private:
+  int getCount () const {
+    return rowCount();
+  }
+
   bool getMicroMuted () const;
   void setMicroMuted (bool status);
 

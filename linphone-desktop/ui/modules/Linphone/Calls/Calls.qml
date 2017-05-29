@@ -15,6 +15,8 @@ ListView {
 
   readonly property var selectedCall: calls._selectedCall
 
+  property var conferenceModel
+
   property var _selectedCall
 
   // ---------------------------------------------------------------------------
@@ -91,7 +93,10 @@ ListView {
   // ---------------------------------------------------------------------------
 
   header: ConferenceControls {
+    height: visible ? ConferenceControlsStyle.height : 0
     width: parent.width
+
+    visible: calls.conferenceModel.count > 0
   }
 
   // ---------------------------------------------------------------------------

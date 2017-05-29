@@ -44,7 +44,7 @@ function openConferenceManager () {
 function getContent () {
   var call = window.call
   if (call == null) {
-    return null
+    return conference
   }
 
   var status = call.status
