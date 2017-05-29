@@ -131,6 +131,10 @@ function handleCountChanged (count) {
   var call = calls._selectedCall
 
   if (call == null) {
+    if (calls.conferenceModel.count > 0) {
+      return
+    }
+
     var model = calls.model
     var index = count - 1
     updateSelectedCall(model.data(model.index(index, 0)), index)

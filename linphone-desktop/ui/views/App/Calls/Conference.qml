@@ -136,7 +136,10 @@ Rectangle {
             }
 
             Avatar {
-              readonly property int size: Math.min(parent.width, parent.height - contactDescription.height - parent.spacing)
+              readonly property int size: Math.min(
+                parent.width,
+                parent.height - contactDescription.height - parent.spacing
+              )
 
               anchors.horizontalCenter: parent.horizontalCenter
 
@@ -156,6 +159,22 @@ Rectangle {
               }
 
               username: contactDescription.username
+            }
+          }
+
+          VuMeter {
+            anchors {
+              bottom: parent.bottom
+              left: parent.left
+              leftMargin: ConferenceStyle.grid.spacing
+              bottomMargin: ConferenceStyle.grid.spacing
+            }
+
+            Timer {
+              interval: 50
+              repeat: true
+
+              onTriggered: parent.value = $call.speakerVu
             }
           }
         }
