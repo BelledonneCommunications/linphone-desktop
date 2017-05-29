@@ -33,7 +33,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.leftMargin: CallStyle.header.leftMargin
       Layout.rightMargin: CallStyle.header.rightMargin
-      Layout.preferredHeight: CallStyle.header.conferenceDescription.height
+      Layout.preferredHeight: ConferenceStyle.description.height
 
       ActionBar {
         id: leftActions
@@ -49,15 +49,15 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         text: qsTr('conferenceTitle')
 
-        color: CallStyle.header.conferenceDescription.color
+        color: ConferenceStyle.description.color
 
         font {
           bold: true
-          pointSize: CallStyle.header.conferenceDescription.fontSize
+          pointSize: ConferenceStyle.description.fontSize
         }
 
         height: parent.height
-        width: parent.width - rightActions.width - leftActions.width - CallStyle.header.conferenceDescription.width
+        width: parent.width - rightActions.width - leftActions.width - ConferenceStyle.description.width
       }
 
       // -----------------------------------------------------------------------
@@ -93,47 +93,66 @@ Rectangle {
       Layout.fillHeight: true
       Layout.margins: CallStyle.container.margins
 
-
       GridView {
         id: grid
 
         anchors.fill: parent
 
-        cellHeight: 145
-        cellWidth: 154
+        cellHeight: ConferenceStyle.grid.cell.height
+        cellWidth: ConferenceStyle.grid.cell.width
 
         model: ConferenceModel {
           id: conference
         }
 
-        delegate: ColumnLayout {
-          readonly property string sipAddress: $call.sipAddress
-          readonly property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
-
+        delegate: Item {
           height: grid.cellHeight
           width: grid.cellWidth
 
-          ContactDescription {
-            id: contactDescription
+          Column {
+            readonly property string sipAddress: $call.sipAddress
+            readonly property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
 
-            Layout.preferredHeight: 35
-            Layout.fillWidth: true
+            anchors {
+              fill: parent
+              margins: ConferenceStyle.grid.spacing
+            }
 
-            horizontalTextAlignment: Text.AlignHCenter
-            sipAddress: parent.sipAddressObserver.sipAddress
-            username: LinphoneUtils.getContactUsername(parent.sipAddressObserver.contact || parent.sipAddress)
-          }
+            spacing: ConferenceStyle.grid.cell.spacing
 
-          Avatar {
-            height: parent.width
-            width: parent.width
+            ContactDescription {
+              id: contactDescription
 
-            backgroundColor: CallStyle.container.avatar.backgroundColor
-            foregroundColor: incall.call.status === CallModel.CallStatusPaused
-              ? CallStyle.container.pause.color
-              : 'transparent'
-            image: parent.sipAddressObserver.contact && parent.sipAddressObserver.contact.vcard.avatar
-            username: contactDescription.username
+              height: ConferenceStyle.grid.cell.contactDescription.height
+              width: parent.width
+
+              horizontalTextAlignment: Text.AlignHCenter
+              sipAddress: parent.sipAddressObserver.sipAddress
+              username: LinphoneUtils.getContactUsername(parent.sipAddressObserver.contact || parent.sipAddress)
+            }
+
+            Avatar {
+              readonly property int size: Math.min(parent.width, parent.height - contactDescription.height - parent.spacing)
+
+              anchors.horizontalCenter: parent.horizontalCenter
+
+              height: size
+              width: size
+
+              backgroundColor: CallStyle.container.avatar.backgroundColor
+              foregroundColor: $call.status === CallModel.CallStatusPaused
+                ? CallStyle.container.pause.color
+                : 'transparent'
+
+              image: {
+                var contact = parent.sipAddressObserver.contact
+                if (contact) {
+                  return contact.vcard.avatar
+                }
+              }
+
+              username: contactDescription.username
+            }
           }
         }
       }
@@ -155,32 +174,6 @@ Rectangle {
         }
 
         spacing: ActionBarStyle.spacing
-
-        Row {
-          spacing: CallStyle.actionArea.vu.spacing
-
-          VuMeter {
-            Timer {
-              interval: 50
-              repeat: true
-              running: micro.enabled
-
-              onTriggered: parent.value = conference.microVu
-            }
-
-            enabled: micro.enabled
-          }
-
-          ActionSwitch {
-            id: micro
-
-            enabled: !conference.microMuted
-            icon: 'micro'
-            iconSize: CallStyle.actionArea.iconSize
-
-            onClicked: conference.microMuted = enabled
-          }
-        }
       }
 
       ActionBar {

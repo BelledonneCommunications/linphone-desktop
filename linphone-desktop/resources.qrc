@@ -405,6 +405,7 @@
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
     <file>ui/views/App/Styles/Calls/ConferenceManagerStyle.qml</file>
+    <file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
     <file>ui/views/App/Styles/Main/AboutStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>

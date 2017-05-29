@@ -7,6 +7,7 @@ module App.Styles
 singleton CallStyle                                1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                         1.0 Calls/CallsWindowStyle.qml
 singleton ConferenceManagerStyle                   1.0 Calls/ConferenceManagerStyle.qml
+singleton ConferenceStyle                          1.0 Calls/ConferenceStyle.qml
 
 singleton ActivateLinphoneSipAccountWithEmailStyle 1.0 Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml
 singleton AssistantAbstractViewStyle               1.0 Main/Assistant/AssistantAbstractViewStyle.qml
