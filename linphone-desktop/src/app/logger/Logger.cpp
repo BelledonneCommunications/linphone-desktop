@@ -121,23 +121,22 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   } else
     return;
 
-  const char *context_str = "";
+  const char *contextStr = "";
 
   #ifdef QT_MESSAGELOGCONTEXT
-
-    QByteArray context_arr;
-
+    QByteArray contextArr;
     {
       const char *file = context.file;
       const char *pos = file ? ::Utils::rstrstr(file, SRC_PATTERN) : file;
 
-      context_arr = QStringLiteral("%1:%2: ")
+      contextArr = QStringLiteral("%1:%2: ")
         .arg(pos ? pos + sizeof(SRC_PATTERN) - 1 : file)
         .arg(context.line)
         .toLocal8Bit();
-      context_str = context_arr.constData();
+      contextStr = contextArr.constData();
     }
-
+  #else
+    (void)context;
   #endif // ifdef QT_MESSAGELOGCONTEXT
 
   QByteArray localMsg = msg.toLocal8Bit();
@@ -145,8 +144,8 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 
   mMutex.lock();
 
-  fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), context_str, localMsg.constData());
-  bctbx_log(QT_DOMAIN, level, "QT: %s%s", context_str, localMsg.constData());
+  fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
+  bctbx_log(QT_DOMAIN, level, "QT: %s%s", contextStr, localMsg.constData());
 
   mMutex.unlock();
 
