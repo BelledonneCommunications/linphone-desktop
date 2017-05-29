@@ -18,7 +18,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   // `{}` is a workaround to avoid `TypeError: Cannot read property...`.
-  property var call: calls.selectedCall || ({
+  readonly property var call: calls.selectedCall || ({
     callError: '',
     isOutgoing: true,
     recording: false,
@@ -187,31 +187,7 @@ Window {
 
       childA: Loader {
         anchors.fill: parent
-
-        sourceComponent: {
-          if (!window.call) {
-            return null
-          }
-
-          var status = window.call.status
-          if (status == null) {
-            return null
-          }
-
-          if (status === CallModel.CallStatusIncoming) {
-            return incomingCall
-          }
-
-          if (status === CallModel.CallStatusOutgoing) {
-            return outgoingCall
-          }
-
-          if (status === CallModel.CallStatusEnded) {
-            return endedCall
-          }
-
-          return incall
-        }
+        sourceComponent: Logic.getContent()
       }
 
       childB: Loader {

@@ -11,5 +11,4 @@ QtObject {
   property int leftMargin: 12
   property int rightMargin: 12
   property int signSize: 40
-  property int width: 240
 }

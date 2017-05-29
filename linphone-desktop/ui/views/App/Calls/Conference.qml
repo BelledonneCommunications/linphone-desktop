@@ -11,6 +11,12 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
+  id: conference
+
+  property var conferenceModel
+
+  // ---------------------------------------------------------------------------
+
   color: CallStyle.backgroundColor
 
   // ---------------------------------------------------------------------------
@@ -71,13 +77,13 @@ Rectangle {
         iconSize: CallStyle.header.iconSize
 
         ActionSwitch {
-          enabled: conference.recording
+          enabled: conference.conferenceModel.recording
           icon: 'record'
           useStates: false
 
           onClicked: !enabled
-            ? conference.startRecording()
-            : conference.stopRecording()
+            ? conference.conferenceModel.startRecording()
+            : conference.conferenceModel.stopRecording()
         }
       }
     }
@@ -101,9 +107,7 @@ Rectangle {
         cellHeight: ConferenceStyle.grid.cell.height
         cellWidth: ConferenceStyle.grid.cell.width
 
-        model: ConferenceModel {
-          id: conference
-        }
+        model: conference.conferenceModel
 
         delegate: Item {
           height: grid.cellHeight
@@ -187,7 +191,7 @@ Rectangle {
         ActionButton {
           icon: 'hangup'
 
-          onClicked: conference.terminate()
+          onClicked: conference.conferenceModel.terminate()
         }
       }
     }

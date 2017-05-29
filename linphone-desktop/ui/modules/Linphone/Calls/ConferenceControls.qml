@@ -12,12 +12,8 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  default property alias _content: content.data
-
   property alias signIcon: signIcon.icon
-  property alias sipAddressColor: contact.sipAddressColor
-  property alias usernameColor: contact.usernameColor
-  property string sipAddress
+  property alias textColor: text.color
 
   // ---------------------------------------------------------------------------
 
@@ -54,22 +50,13 @@ Rectangle {
 
     spacing: 0
 
-    Contact {
-      id: contact
+    Text {
+      id: text
 
       Layout.fillHeight: true
       Layout.fillWidth: true
 
-      displayUnreadMessagesCount: true
-
-      entry: SipAddressesModel.getSipAddressObserver(sipAddress)
-    }
-
-    Item {
-      id: content
-
-      Layout.fillHeight: true
-      Layout.preferredWidth: callControls._content[0].width
+      text: qsTr('conference')
     }
   }
 }

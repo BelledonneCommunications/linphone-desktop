@@ -365,6 +365,13 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
+    <name>ConferenceControls</name>
+    <message>
+        <source>conference</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>

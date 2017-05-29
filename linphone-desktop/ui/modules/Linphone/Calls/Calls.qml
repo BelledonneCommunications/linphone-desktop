@@ -26,7 +26,6 @@ ListView {
   // ---------------------------------------------------------------------------
 
   onCountChanged: Logic.handleCountChanged(count)
-  onSelectedCall: Logic.handleSelectedCall(call)
 
   Connections {
     target: model
@@ -85,6 +84,14 @@ ListView {
         }
       }
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Conference.
+  // ---------------------------------------------------------------------------
+
+  header: ConferenceControls {
+    width: parent.width
   }
 
   // ---------------------------------------------------------------------------

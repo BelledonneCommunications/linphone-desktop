@@ -113,15 +113,13 @@ function setIndexWithCall (call) {
       return
     }
   }
+
+  updateSelectedCall(call, -1)
 }
 
 // -----------------------------------------------------------------------------
 // View handlers.
 // -----------------------------------------------------------------------------
-
-function handleSelectedCall (call) {
-  setIndexWithCall(call)
-}
 
 function handleCountChanged (count) {
   if (count === 0) {
@@ -144,7 +142,7 @@ function handleCountChanged (count) {
 // -----------------------------------------------------------------------------
 
 function handleCallRunning (call) {
-  updateSelectedCall(call)
+  setIndexWithCall(call)
 }
 
 function handleRowsAboutToBeRemoved (_, first, last) {

@@ -33,6 +33,37 @@ function handleClosing (close) {
   close.accepted = false
 }
 
+// -----------------------------------------------------------------------------
+
 function openConferenceManager () {
   window.attachVirtualWindow(Qt.resolvedUrl('ConferenceManager.qml'))
+}
+
+// -----------------------------------------------------------------------------
+
+function getContent () {
+  var call = window.call
+  if (call == null) {
+    return null
+  }
+
+  var status = call.status
+  if (status == null) {
+    return null
+  }
+
+  var CallModel = Linphone.CallModel
+  if (status === CallModel.CallStatusIncoming) {
+    return incomingCall
+  }
+
+  if (status === CallModel.CallStatusOutgoing) {
+    return outgoingCall
+  }
+
+  if (status === CallModel.CallStatusEnded) {
+    return endedCall
+  }
+
+  return incall
 }

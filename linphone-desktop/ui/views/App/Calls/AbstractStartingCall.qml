@@ -74,8 +74,8 @@ Rectangle {
           var width = container.width
 
           var size = height < CallStyle.container.avatar.maxSize && height > 0
-              ? height
-              : CallStyle.container.avatar.maxSize
+            ? height
+            : CallStyle.container.avatar.maxSize
           return size < width ? size : width
         }
 
