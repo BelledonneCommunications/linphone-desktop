@@ -49,7 +49,7 @@ function getContent () {
 
   var status = call.status
   if (status == null) {
-    return null
+    return calls.conferenceModel.count > 0 ? conference : null
   }
 
   var CallModel = Linphone.CallModel

@@ -144,7 +144,9 @@ function handleCountChanged (count) {
 // -----------------------------------------------------------------------------
 
 function handleCallRunning (call) {
-  setIndexWithCall(call)
+  if (!call.isInConference) {
+    setIndexWithCall(call)
+  }
 }
 
 function handleRowsAboutToBeRemoved (_, first, last) {
@@ -161,7 +163,7 @@ function handleRowsInserted (_, first, last) {
   for (var index = last; index >= first; index--) {
     var call = model.data(model.index(index, 0))
 
-    if (call.isOutgoing) {
+    if (call.isOutgoing && !call.isInConference) {
       updateSelectedCall(call)
       return
     }
@@ -169,6 +171,9 @@ function handleRowsInserted (_, first, last) {
 
   // First received call.
   if (first === 0 && model.rowCount() === 1) {
-    updateSelectedCall(model.data(model.index(0, 0)))
+    var call = model.data(model.index(0, 0))
+    if (!call.isInConference) {
+      updateSelectedCall(model.data(model.index(0, 0)))
+    }
   }
 }
