@@ -12,7 +12,6 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  property alias signIcon: signIcon.icon
   property alias textColor: text.color
 
   // ---------------------------------------------------------------------------
@@ -21,8 +20,8 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: CallControlsStyle.color
-  height: CallControlsStyle.height
+  color: ConferenceControlsStyle.color
+  height: ConferenceControlsStyle.height
 
   MouseArea {
     anchors.fill: parent
@@ -30,22 +29,11 @@ Rectangle {
     onClicked: callControls.clicked()
   }
 
-  Icon {
-    id: signIcon
-
-    anchors {
-      left: parent.left
-      top: parent.top
-    }
-
-    iconSize: CallControlsStyle.signSize
-  }
-
   RowLayout {
     anchors {
       fill: parent
-      leftMargin: CallControlsStyle.leftMargin
-      rightMargin: CallControlsStyle.rightMargin
+      leftMargin: ConferenceControlsStyle.leftMargin
+      rightMargin: ConferenceControlsStyle.rightMargin
     }
 
     spacing: 0
@@ -56,7 +44,10 @@ Rectangle {
       Layout.fillHeight: true
       Layout.fillWidth: true
 
+      font.bold: true
       text: qsTr('conference')
+
+      verticalAlignment: Text.AlignVCenter
     }
   }
 }

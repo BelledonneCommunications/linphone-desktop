@@ -107,6 +107,8 @@ function resetSelectedCall () {
 
 function setIndexWithCall (call) {
   var count = calls.count
+  var model = calls.model
+
   for (var i = 0; i < count; i++) {
     if (call === model.data(model.index(i, 0))) {
       updateSelectedCall(call, i)

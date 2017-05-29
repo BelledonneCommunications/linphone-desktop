@@ -368,7 +368,7 @@ Server url not configured.</translation>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"></translation>
+        <translation>CONFERENCE</translation>
     </message>
 </context>
 <context>

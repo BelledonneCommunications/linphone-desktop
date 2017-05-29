@@ -11,9 +11,10 @@ singleton RequestBlockStyle                    1.0 Blocks/RequestBlockStyle.qml
 
 singleton ChatStyle                            1.0 Chat/ChatStyle.qml
 
-singleton CallsStyle                           1.0 Calls/CallsStyle.qml
 singleton CallControlsStyle                    1.0 Calls/CallControlsStyle.qml
+singleton CallsStyle                           1.0 Calls/CallsStyle.qml
 singleton CallStatisticsStyle                  1.0 Calls/CallStatisticsStyle.qml
+singleton ConferenceControlsStyle              1.0 Calls/ConferenceControlsStyle.qml
 
 singleton CodecsViewerStyle                    1.0 Codecs/CodecsViewerStyle.qml
 

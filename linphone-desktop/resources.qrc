@@ -327,6 +327,7 @@
     <file>ui/modules/Linphone/Styles/Calls/CallControlsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Calls/ConferenceControlsStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
