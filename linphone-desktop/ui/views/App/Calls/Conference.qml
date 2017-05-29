@@ -144,7 +144,7 @@ Rectangle {
               width: size
 
               backgroundColor: CallStyle.container.avatar.backgroundColor
-              foregroundColor: $call.status === CallModel.CallStatusPaused
+              foregroundColor: $call && $call.status === CallModel.CallStatusPaused
                 ? CallStyle.container.pause.color
                 : 'transparent'
 

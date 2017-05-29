@@ -73,7 +73,7 @@ ListView {
         entryWidth: CallsStyle.entry.width
 
         Repeater {
-          model: params.actions
+          model: params ? params.actions : []
 
           DropDownStaticMenuEntry {
             entryName: modelData.name
@@ -93,10 +93,25 @@ ListView {
   // ---------------------------------------------------------------------------
 
   header: ConferenceControls {
+    readonly property bool isSelected: calls.currentIndex === -1 &&
+      calls._selectedCall == null &&
+      visible
+
     height: visible ? ConferenceControlsStyle.height : 0
     width: parent.width
 
     visible: calls.conferenceModel.count > 0
+
+    color: isSelected
+      ? CallsStyle.entry.color.selected
+      : CallsStyle.entry.color.normal
+
+    textColor: isSelected
+      ? CallsStyle.entry.usernameColor.selected
+      : CallsStyle.entry.usernameColor.normal
+
+    onClicked: Logic.resetSelectedCall()
+    onVisibleChanged: !visible && Logic.handleCountChanged(calls.count)
   }
 
   // ---------------------------------------------------------------------------
@@ -155,7 +170,7 @@ ListView {
 
     SequentialAnimation on color {
       loops: CallsStyle.entry.endCallAnimation.loops
-      running: $call.status === CallModel.CallStatusEnded
+      running: $call && $call.status === CallModel.CallStatusEnded
 
       ColorAnimation {
         duration: CallsStyle.entry.endCallAnimation.duration
