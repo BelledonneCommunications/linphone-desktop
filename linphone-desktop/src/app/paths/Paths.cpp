@@ -64,10 +64,6 @@ inline bool filePathExists (const QString &path) {
   return file.exists();
 }
 
-inline bool filePathExists (const string &path) {
-  return filePathExists(Utils::linphoneStringToQString(path));
-}
-
 inline void ensureDirPathExists (const QString &path) {
   QDir dir(path);
   if (!dir.exists() && !dir.mkpath(path))
@@ -156,6 +152,12 @@ inline QString getAppFriendsFilePath () {
 
 inline QString getAppMessageHistoryFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_MESSAGE_HISTORY_LIST;
+}
+
+// -----------------------------------------------------------------------------
+
+bool Paths::filePathExists (const string &path) {
+  return filePathExists(Utils::linphoneStringToQString(path));
 }
 
 // -----------------------------------------------------------------------------

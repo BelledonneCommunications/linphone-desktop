@@ -103,10 +103,15 @@ void CoreManager::setDatabasesPaths () {
 }
 
 void CoreManager::setOtherPaths () {
-  // Force paths. Ask me why if it's a problem for you.
-  mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
-  mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
-  mCore->setRootCa(Paths::getRootCaFilePath());
+  if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile())) {
+    mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
+  }
+  if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath())) {
+    mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
+  }
+  if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa())) {
+    mCore->setRootCa(Paths::getRootCaFilePath());
+  }
 }
 
 void CoreManager::setResourcesPaths () {

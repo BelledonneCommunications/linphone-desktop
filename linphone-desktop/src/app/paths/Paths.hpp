@@ -30,6 +30,8 @@
 // =============================================================================
 
 namespace Paths {
+  bool filePathExists (const std::string &path);
+
   std::string getAssistantConfigDirPath ();
   std::string getAvatarsDirPath ();
   std::string getCallHistoryFilePath ();
