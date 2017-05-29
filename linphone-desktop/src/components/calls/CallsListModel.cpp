@@ -85,6 +85,12 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
 
 // -----------------------------------------------------------------------------
 
+void CallsListModel::askForTransfer (CallModel *callModel) {
+  emit callTransferAsked(callModel);
+}
+
+// -----------------------------------------------------------------------------
+
 void CallsListModel::launchAudioCall (const QString &sipUri) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::qStringToLinphoneString(sipUri));

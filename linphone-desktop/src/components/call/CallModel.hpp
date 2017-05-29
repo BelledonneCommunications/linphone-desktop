@@ -86,7 +86,7 @@ public:
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
   Q_INVOKABLE void terminate ();
-  Q_INVOKABLE void transfer ();
+  Q_INVOKABLE void askForTransfer ();
 
   Q_INVOKABLE void acceptVideoRequest ();
   Q_INVOKABLE void rejectVideoRequest ();

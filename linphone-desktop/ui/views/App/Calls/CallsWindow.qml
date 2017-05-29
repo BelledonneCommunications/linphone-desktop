@@ -205,4 +205,13 @@ Window {
       }
     }
   }
+
+  // ---------------------------------------------------------------------------
+  // Handle transfer.
+  // ---------------------------------------------------------------------------
+
+  Connections {
+    target: CallsListModel
+    onCallTransferAsked: Logic.handleCallTransferAsked(callModel)
+  }
 }

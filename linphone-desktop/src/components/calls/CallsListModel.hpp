@@ -43,6 +43,8 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
+  void askForTransfer (CallModel *callModel);
+
   Q_INVOKABLE void launchAudioCall (const QString &sipUri) const;
   Q_INVOKABLE void launchVideoCall (const QString &sipUri) const;
 
@@ -52,6 +54,7 @@ public:
 
 signals:
   void callRunning (int index, CallModel *callModel);
+  void callTransferAsked (CallModel *callModel);
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());

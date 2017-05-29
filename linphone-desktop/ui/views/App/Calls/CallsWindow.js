@@ -67,3 +67,9 @@ function getContent () {
 
   return incall
 }
+
+// -----------------------------------------------------------------------------
+
+function handleCallTransferAsked (call) {
+  console.log('TODO: handle call transfer')
+}

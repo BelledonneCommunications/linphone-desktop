@@ -135,8 +135,8 @@ void CallModel::terminate () {
   core->unlockVideoRender();
 }
 
-void CallModel::transfer () {
-  // TODO
+void CallModel::askForTransfer () {
+  CoreManager::getInstance()->getCallsListModel()->askForTransfer(this);
 }
 
 void CallModel::acceptVideoRequest () {

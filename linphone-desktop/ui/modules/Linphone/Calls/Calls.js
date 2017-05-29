@@ -16,7 +16,7 @@ var MAP_STATUS_TO_PARAMS = (function () {
         handler: (function () { call.pausedByUser = true }),
         name: qsTr('pauseCall')
       }, {
-        handler: call.transfer,
+        handler: call.askForTransfer,
         name: qsTr('transferCall')
       }, {
         handler: call.terminate,
@@ -40,10 +40,10 @@ var MAP_STATUS_TO_PARAMS = (function () {
         handler: (function () { call.accept() })
       }, {
         name: qsTr('acceptVideoCall'),
-        handler: (function () { call.acceptWithVideo() })
+        handler: call.acceptWithVideo
       }, {
         name: qsTr('terminateCall'),
-        handler: (function () { call.terminate() })
+        handler: call.terminate
       }],
       component: callActions,
       string: 'incoming'
@@ -53,7 +53,7 @@ var MAP_STATUS_TO_PARAMS = (function () {
   map[CallModel.CallStatusOutgoing] = (function (call) {
     return {
       component: callAction,
-      handler: (function () { call.terminate() }),
+      handler: call.terminate,
       icon: 'hangup',
       string: 'outgoing'
     }
@@ -68,10 +68,10 @@ var MAP_STATUS_TO_PARAMS = (function () {
         handler: (function () { call.pausedByUser = true }),
         name: qsTr('pauseCall')
       }), {
-        handler: (function () { call.transfer() }),
+        handler: call.askForTransfer,
         name: qsTr('transferCall')
       }, {
-        handler: (function () { call.terminate() }),
+        handler: call.terminate,
         name: qsTr('terminateCall')
       }],
       component: callActions,
