@@ -171,6 +171,9 @@ void App::initContentApp () {
   mEngine->addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
   mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
 
+  mTextToSpeech = new QTextToSpeech(this);
+  QQmlEngine::setObjectOwnership(mTextToSpeech, QQmlEngine::CppOwnership);
+
   registerTypes();
   registerSharedTypes();
 

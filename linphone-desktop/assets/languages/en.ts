@@ -828,12 +828,9 @@ your friend&apos;s SIP address or username.</translation>
         <source>menuCopy</source>
         <translation>Copy</translation>
     </message>
-</context>
-<context>
-    <name>MessageMenu</name>
     <message>
-        <source>copy</source>
-        <translation>Copy</translation>
+        <source>menuPlayMe</source>
+        <translation>Play me!</translation>
     </message>
 </context>
 <context>

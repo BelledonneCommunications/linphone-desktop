@@ -74,6 +74,11 @@ Item {
         text: qsTr('menuCopy')
         onTriggered: Clipboard.text = $chatEntry.content
       }
+
+      MenuItem {
+        text: qsTr('menuPlayMe')
+        onTriggered: App.textToSpeech.say($chatEntry.content)
+      }
     }
 
     // Handle hovered link.

@@ -314,7 +314,6 @@
     <file>ui/modules/Linphone/Chat/FileMessage.qml</file>
     <file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
     <file>ui/modules/Linphone/Chat/Message.js</file>
-    <file>ui/modules/Linphone/Chat/MessageMenu.qml</file>
     <file>ui/modules/Linphone/Chat/Message.qml</file>
     <file>ui/modules/Linphone/Chat/OutgoingMessage.qml</file>
     <file>ui/modules/Linphone/Codecs/CodecAttribute.qml</file>

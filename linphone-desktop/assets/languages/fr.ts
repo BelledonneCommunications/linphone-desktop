@@ -827,12 +827,9 @@ un chat ou ajouter un contact.</translation>
         <source>menuCopy</source>
         <translation>Copier</translation>
     </message>
-</context>
-<context>
-    <name>MessageMenu</name>
     <message>
-        <source>copy</source>
-        <translation type="unfinished"></translation>
+        <source>menuPlayMe</source>
+        <translation>Joue-moi !</translation>
     </message>
 </context>
 <context>
