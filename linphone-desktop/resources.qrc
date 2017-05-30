@@ -371,6 +371,7 @@
     <file>ui/views/App/Calls/Incall.qml</file>
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
+    <file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
     <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithEmail.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantHome.qml</file>

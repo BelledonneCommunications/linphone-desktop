@@ -731,26 +731,6 @@ Url du serveur non configurée.</translation>
         <source>pendingRequestLabel</source>
         <translation>Merci de patienter, une requête est en attente.</translation>
     </message>
-    <message>
-        <source>Say:</source>
-        <translation>Dites :</translation>
-    </message>
-    <message>
-        <source>Your correspondent should say:</source>
-        <translation>Votre interlocuteur devrait dire :</translation>
-    </message>
-    <message>
-        <source>Deny</source>
-        <translation>REJETER</translation>
-    </message>
-    <message>
-        <source>Accept</source>
-        <translation>VALIDER</translation>
-    </message>
-    <message>
-        <source>Confirm the following SAS with peer:</source>
-        <translation>Confirmez le SAS suivant avec votre interlocuteur :</translation>
-    </message>
 </context>
 <context>
     <name>InviteFriends</name>
@@ -1362,6 +1342,29 @@ un chat ou ajouter un contact.</translation>
     <message>
         <source>transportLabel</source>
         <translation>Transport</translation>
+    </message>
+</context>
+<context>
+    <name>ZrtpTokenAuthentication</name>
+    <message>
+        <source>Confirm the following SAS with peer:</source>
+        <translation>Confirmez le SAS suivant avec votre interlocuteur :</translation>
+    </message>
+    <message>
+        <source>Say:</source>
+        <translation>Dites :</translation>
+    </message>
+    <message>
+        <source>Your correspondent should say:</source>
+        <translation>Votre interlocuteur devrait dire :</translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation>REJETER</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>VALIDER</translation>
     </message>
 </context>
 </TS>
