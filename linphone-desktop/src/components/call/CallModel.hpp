@@ -114,7 +114,7 @@ public:
 
   Q_INVOKABLE void sendDtmf (const QString &dtmf);
 
-  Q_INVOKABLE void verifyAuthenticationToken(bool verify);
+  Q_INVOKABLE void verifyAuthenticationToken (bool verify);
 
 signals:
   void callErrorChanged (const QString &callError);
@@ -164,13 +164,13 @@ private:
 
   CallEncryption getEncryption () const;
   bool isSecured () const;
+
   QString getLocalSAS () const;
   QString getRemoteSAS () const;
 
   QVariantList getAudioStats () const;
   QVariantList getVideoStats () const;
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
-
 
   QString iceStateToString (linphone::IceState state) const;
 

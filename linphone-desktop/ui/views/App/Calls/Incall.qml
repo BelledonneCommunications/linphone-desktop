@@ -107,7 +107,7 @@ Rectangle {
           id: callSecure
 
           icon: incall.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
-          onClicked: incall.call.encryption === CallModel.CallEncryptionZRTP ? zrtp.visible = true : zrtp.visible = false
+          onClicked: zrtp.visible = (incall.call.encryption === CallModel.CallEncryptionZRTP)
         }
       }
 
@@ -235,7 +235,7 @@ Rectangle {
 
           Camera {
             call: incall.call
-            height: zrtp.visible ? container.height - zrtp.height : container.height
+            height: container.height
             width: container.width
           }
         }

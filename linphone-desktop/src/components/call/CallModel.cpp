@@ -496,10 +496,15 @@ void CallModel::sendDtmf (const QString &dtmf) {
 
 // -----------------------------------------------------------------------------
 
+void CallModel::verifyAuthenticationToken (bool verify) {
+  mCall->setAuthenticationTokenVerified(verify);
+  emit securityUpdated();
+}
+
+// -----------------------------------------------------------------------------
+
 CallModel::CallEncryption CallModel::getEncryption () const {
-  shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
-  linphone::MediaEncryption encryption = params->getMediaEncryption();
-  switch (encryption) {
+  switch (mCall->getCurrentParams()->getMediaEncryption()) {
     case linphone::MediaEncryptionSRTP:
       return CallEncryptionSRTP;
     case linphone::MediaEncryptionZRTP:
@@ -507,41 +512,30 @@ CallModel::CallEncryption CallModel::getEncryption () const {
     case linphone::MediaEncryptionDTLS:
       return CallEncryptionDTLS;
     case linphone::MediaEncryptionNone:
-    default:
-      return CallEncryptionNone;
+      break;
   }
+
+  return CallEncryptionNone;
 }
 
 bool CallModel::isSecured () const {
   shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
   linphone::MediaEncryption encryption = params->getMediaEncryption();
-  return (encryption == linphone::MediaEncryptionZRTP && mCall->getAuthenticationTokenVerified()) 
-    || encryption == linphone::MediaEncryptionSRTP || encryption == linphone::MediaEncryptionDTLS;
+  return (
+    encryption == linphone::MediaEncryptionZRTP && mCall->getAuthenticationTokenVerified()
+  ) || encryption == linphone::MediaEncryptionSRTP || encryption == linphone::MediaEncryptionDTLS;
 }
 
-QString CallModel::getLocalSAS() const {
-  QString token = mCall->getAuthenticationToken().c_str();
-  linphone::CallDir direction = mCall->getDir();
-  if (direction == linphone::CallDirIncoming) {
-    return token.left(2).toUpper();
-  } else {
-    return token.right(2).toUpper();
-  }
+// -----------------------------------------------------------------------------
+
+QString CallModel::getLocalSAS () const {
+  QString token = ::Utils::coreStringToAppString(mCall->getAuthenticationToken());
+  return mCall->getDir() == linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
-QString CallModel::getRemoteSAS() const {
-  QString token = mCall->getAuthenticationToken().c_str();
-  linphone::CallDir direction = mCall->getDir();
-  if (direction == linphone::CallDirIncoming) {
-    return token.right(2).toUpper();
-  } else {
-    return token.left(2).toUpper();
-  }
-}
-
-void CallModel::verifyAuthenticationToken(bool verify) {
-  mCall->setAuthenticationTokenVerified(verify);
-  emit securityUpdated();
+QString CallModel::getRemoteSAS () const {
+  QString token = ::Utils::coreStringToAppString(mCall->getAuthenticationToken());
+  return mCall->getDir() != linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
 // -----------------------------------------------------------------------------
@@ -553,6 +547,8 @@ QVariantList CallModel::getAudioStats () const {
 QVariantList CallModel::getVideoStats () const {
   return mVideoStats;
 }
+
+// -----------------------------------------------------------------------------
 
 inline QVariantMap createStat (const QString &key, const QString &value) {
   QVariantMap m;
@@ -579,13 +575,13 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
   switch (callStats->getIpFamilyOfRemote()) {
     case linphone::AddressFamilyInet:
-      family = "IPv4";
+      family = QStringLiteral("IPv4");
       break;
     case linphone::AddressFamilyInet6:
-      family = "IPv6";
+      family = QStringLiteral("IPv6");
       break;
     default:
-      family = "Unknown";
+      family = QStringLiteral("Unknown");
       break;
   }
 
@@ -629,6 +625,8 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       break;
   }
 }
+
+// -----------------------------------------------------------------------------
 
 QString CallModel::iceStateToString (linphone::IceState state) const {
   switch (state) {
