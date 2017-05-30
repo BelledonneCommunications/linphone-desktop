@@ -833,7 +833,7 @@ your friend&apos;s SIP address or username.</translation>
     <name>MessageMenu</name>
     <message>
         <source>copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copy</translation>
     </message>
 </context>
 <context>
@@ -1362,23 +1362,23 @@ your friend&apos;s SIP address or username.</translation>
 <context>
     <name>ZrtpTokenAuthentication</name>
     <message>
-        <source>Confirm the following SAS with peer:</source>
-        <translation>Confirm the following SAS with peer:</translation>
+        <source>confirmSas</source>
+        <translation>Confirm the following SAS with peer.</translation>
     </message>
     <message>
-        <source>Say:</source>
+        <source>codeA</source>
         <translation>Say:</translation>
     </message>
     <message>
-        <source>Your correspondent should say:</source>
+        <source>codeB</source>
         <translation>Your correspondent should say:</translation>
     </message>
     <message>
-        <source>Deny</source>
+        <source>deny</source>
         <translation>DENY</translation>
     </message>
     <message>
-        <source>Accept</source>
+        <source>accept</source>
         <translation>ACCEPT</translation>
     </message>
 </context>

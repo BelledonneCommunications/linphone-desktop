@@ -1,96 +1,117 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 import Common 1.0
-import Common.Styles 1.0
-import Linphone 1.0
-import LinphoneUtils 1.0
-import Utils 1.0
 
 import App.Styles 1.0
 
-Item {
-    height: CallStyle.zrtpArea.height
-    visible: false
+// =============================================================================
+
+ColumnLayout {
+  id: zrtp
+
+  // ---------------------------------------------------------------------------
+
+  property var call
+
+  // ---------------------------------------------------------------------------
+
+  visible: false
+
+  // ---------------------------------------------------------------------------
+  // Main text.
+  // ---------------------------------------------------------------------------
+
+  Text {
     Layout.fillWidth: true
-    anchors.top: container.bottom
-    Layout.margins: CallStyle.container.margins
 
-    GridLayout {
-        anchors.centerIn: parent
-        columns: 1
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
 
-        Text {
-            Layout.fillWidth: true
-            anchors.horizontalCenter: parent.horizontalCenter
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-            text: qsTr("Confirm the following SAS with peer:")
-            elide: Text.ElideRight
-            font.pointSize: CallStyle.zrtpArea.fontSize
-            font.bold: true
-            color: Colors.j
-        }
+    text: qsTr('confirmSas')
 
-        RowLayout {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: CallStyle.zrtpArea.vu.spacing
-            Layout.fillWidth: true
+    color: CallStyle.zrtpArea.text.colorA
+    elide: Text.ElideRight
 
-            Text {
-                text: qsTr("Say:")
-                font.pointSize: CallStyle.zrtpArea.fontSize
-                color: Colors.j
-            }
-
-            Text {
-                text: incall.call.localSAS
-                font.pointSize: CallStyle.zrtpArea.fontSize
-                font.bold: true
-                color: Colors.i
-            }
-
-            Text {
-                text: "-"
-                font.pointSize: CallStyle.zrtpArea.fontSize
-                color: Colors.j
-            }
-
-            Text {
-                text: qsTr("Your correspondent should say:")
-                font.pointSize: CallStyle.zrtpArea.fontSize
-                color: Colors.j
-            }
-
-            Text {
-                text: incall.call.remoteSAS
-                font.pointSize: CallStyle.zrtpArea.fontSize
-                font.bold: true
-                color: Colors.i
-            }
-        }
-
-        RowLayout {
-            anchors.horizontalCenter: parent.horizontalCenter
-            spacing: CallStyle.zrtpArea.vu.spacing
-            Layout.fillWidth: true
-
-            TextButtonA {
-                text: qsTr('Deny')
-                onClicked: {
-                    zrtp.visible = false
-                    incall.call.verifyAuthenticationToken(false)
-                }
-            }
-            
-            TextButtonB {
-                text: qsTr('Accept')
-                onClicked: {
-                    zrtp.visible = false
-                    incall.call.verifyAuthenticationToken(true)
-                }
-            }
-        }
+    font {
+      bold: true
+      pointSize: CallStyle.zrtpArea.text.fontSize
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Rules.
+  // ---------------------------------------------------------------------------
+
+  Row {
+    Layout.alignment: Qt.AlignHCenter
+
+    spacing: CallStyle.zrtpArea.text.wordsSpacing
+
+    Text {
+      color: CallStyle.zrtpArea.text.colorA
+      font.pointSize: CallStyle.zrtpArea.text.fontSize
+      text: qsTr('codeA')
+    }
+
+    Text {
+      color: CallStyle.zrtpArea.text.colorB
+
+      font {
+        bold: true
+        pointSize: CallStyle.zrtpArea.text.fontSize
+      }
+
+      text: zrtp.call.localSAS
+    }
+
+    Text {
+      color: CallStyle.zrtpArea.text.colorA
+      font.pointSize: CallStyle.zrtpArea.text.fontSize
+      text: '-'
+    }
+
+    Text {
+      color: CallStyle.zrtpArea.text.colorA
+      font.pointSize: CallStyle.zrtpArea.text.fontSize
+      text: qsTr('codeB')
+    }
+
+    Text {
+      color: CallStyle.zrtpArea.text.colorB
+
+      font {
+        bold: true
+        pointSize: CallStyle.zrtpArea.text.fontSize
+      }
+
+      text: zrtp.call.remoteSAS
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Buttons.
+  // ---------------------------------------------------------------------------
+
+  Row {
+    Layout.alignment: Qt.AlignHCenter
+
+    spacing: CallStyle.zrtpArea.buttons.spacing
+
+    TextButtonA {
+      text: qsTr('deny')
+      onClicked: {
+        zrtp.visible = false
+        zrtp.call.verifyAuthenticationToken(false)
+      }
+    }
+
+    TextButtonB {
+      text: qsTr('accept')
+      onClicked: {
+        zrtp.visible = false
+        zrtp.call.verifyAuthenticationToken(true)
+      }
+    }
+  }
 }

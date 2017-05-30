@@ -79,10 +79,16 @@ QtObject {
 
   property QtObject zrtpArea: QtObject {
     property int height: 50
-    property int fontSize: 12
 
-    property QtObject vu: QtObject {
-      property int spacing: 5
+    property QtObject buttons: QtObject {
+      property int spacing: 10
+    }
+
+    property QtObject text: QtObject {
+      property color colorA: Colors.j
+      property color colorB: Colors.i
+      property int fontSize: 12
+      property int wordsSpacing: 5
     }
   }
 }

@@ -249,8 +249,19 @@ Rectangle {
       }
     }
 
+    // -------------------------------------------------------------------------
+    // Zrtp.
+    // -------------------------------------------------------------------------
+
     ZrtpTokenAuthentication {
       id: zrtp
+
+      Layout.fillWidth: true
+      Layout.margins: CallStyle.container.margins
+      Layout.preferredHeight: CallStyle.zrtpArea.height
+
+      call: incall.call
+      z: Constants.zPopup
     }
 
     // -------------------------------------------------------------------------

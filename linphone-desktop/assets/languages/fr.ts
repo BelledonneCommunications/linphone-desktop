@@ -1361,24 +1361,24 @@ un chat ou ajouter un contact.</translation>
 <context>
     <name>ZrtpTokenAuthentication</name>
     <message>
-        <source>Confirm the following SAS with peer:</source>
-        <translation>Confirmez le SAS suivant avec votre interlocuteur :</translation>
+        <source>confirmSas</source>
+        <translation>Confirmez le SAS suivant avec votre interlocuteur.</translation>
     </message>
     <message>
-        <source>Say:</source>
+        <source>codeA</source>
         <translation>Dites :</translation>
     </message>
     <message>
-        <source>Your correspondent should say:</source>
+        <source>codeB</source>
         <translation>Votre interlocuteur devrait dire :</translation>
     </message>
     <message>
-        <source>Deny</source>
-        <translation>REJETER</translation>
+        <source>deny</source>
+        <translation>REFUSER</translation>
     </message>
     <message>
-        <source>Accept</source>
-        <translation>VALIDER</translation>
+        <source>accept</source>
+        <translation>ACCEPTER</translation>
     </message>
 </context>
 </TS>
