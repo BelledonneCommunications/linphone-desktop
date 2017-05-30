@@ -55,7 +55,7 @@ inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const s
 
 template<class T>
 inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const QString &value) {
-  return findBelCardValue(list, ::Utils::qStringToLinphoneString(value));
+  return findBelCardValue(list, ::Utils::appStringToCoreString(value));
 }
 
 inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
@@ -100,7 +100,7 @@ static string interpretSipAddress (const QString &sipAddress) {
   string out;
 
   shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::qStringToLinphoneString(sipAddress)
+      ::Utils::appStringToCoreString(sipAddress)
     );
 
   if (!linphoneAddress) {
@@ -189,7 +189,7 @@ bool VcardModel::setAvatar (const QString &path) {
   // 3. Update new photo.
   if (!path.isEmpty()) {
     shared_ptr<belcard::BelCardPhoto> photo = belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
-    photo->setValue(VCARD_SCHEME + ::Utils::qStringToLinphoneString(fileId));
+    photo->setValue(VCARD_SCHEME + ::Utils::appStringToCoreString(fileId));
 
     if (!belcard->addPhoto(photo)) {
       file.remove();
@@ -214,7 +214,7 @@ void VcardModel::setUsername (const QString &username) {
   if (username.length() == 0 || username == getUsername())
     return;
 
-  mVcard->setFullName(::Utils::qStringToLinphoneString(username));
+  mVcard->setFullName(::Utils::appStringToCoreString(username));
   emit vcardUpdated();
 }
 
@@ -254,7 +254,7 @@ void VcardModel::setStreet (const QString &street) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
-  address->setStreet(::Utils::qStringToLinphoneString(street));
+  address->setStreet(::Utils::appStringToCoreString(street));
   emit vcardUpdated();
 }
 
@@ -262,7 +262,7 @@ void VcardModel::setLocality (const QString &locality) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
-  address->setLocality(::Utils::qStringToLinphoneString(locality));
+  address->setLocality(::Utils::appStringToCoreString(locality));
   emit vcardUpdated();
 }
 
@@ -270,7 +270,7 @@ void VcardModel::setPostalCode (const QString &postalCode) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
-  address->setPostalCode(::Utils::qStringToLinphoneString(postalCode));
+  address->setPostalCode(::Utils::appStringToCoreString(postalCode));
   emit vcardUpdated();
 }
 
@@ -278,7 +278,7 @@ void VcardModel::setCountry (const QString &country) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
-  address->setCountry(::Utils::qStringToLinphoneString(country));
+  address->setCountry(::Utils::appStringToCoreString(country));
   emit vcardUpdated();
 }
 
@@ -379,7 +379,7 @@ bool VcardModel::addCompany (const QString &company) {
     return false;
 
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
-  value->setValue(::Utils::qStringToLinphoneString(company));
+  value->setValue(::Utils::appStringToCoreString(company));
 
   if (!belcard->addRole(value)) {
     qWarning() << QStringLiteral("Unable to add company on vcard: `%1`.").arg(company);
@@ -433,7 +433,7 @@ bool VcardModel::addEmail (const QString &email) {
     return false;
 
   shared_ptr<belcard::BelCardEmail> value = belcard::BelCardGeneric::create<belcard::BelCardEmail>();
-  value->setValue(::Utils::qStringToLinphoneString(email));
+  value->setValue(::Utils::appStringToCoreString(email));
 
   if (!belcard->addEmail(value)) {
     qWarning() << QStringLiteral("Unable to add email on vcard: `%1`.").arg(email);
@@ -488,7 +488,7 @@ bool VcardModel::addUrl (const QString &url) {
     return false;
 
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
-  value->setValue(::Utils::qStringToLinphoneString(url));
+  value->setValue(::Utils::appStringToCoreString(url));
 
   if (!belcard->addURL(value)) {
     qWarning() << QStringLiteral("Unable to add url on vcard: `%1`.").arg(url);

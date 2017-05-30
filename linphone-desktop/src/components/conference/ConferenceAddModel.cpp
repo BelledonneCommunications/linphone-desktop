@@ -96,7 +96,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
 
   qInfo() << QStringLiteral("Add sip address to conference: `%1`.").arg(sipAddress);
   shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::qStringToLinphoneString(sipAddress)
+      ::Utils::appStringToCoreString(sipAddress)
     );
   addToConferencePrivate(linphoneAddress);
 

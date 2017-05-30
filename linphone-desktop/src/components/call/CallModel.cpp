@@ -78,7 +78,7 @@ QString CallModel::getSipAddress () const {
 
 void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(
-    ::Utils::qStringToLinphoneString(
+    ::Utils::appStringToCoreString(
       QStringLiteral("%1%2.mkv")
       .arg(CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder())
       .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh:mm:ss"))
@@ -142,7 +142,7 @@ void CallModel::askForTransfer () {
 }
 
 bool CallModel::transferTo (const QString &sipAddress) {
-  bool status = !!mCall->transfer(::Utils::qStringToLinphoneString(sipAddress));
+  bool status = !!mCall->transfer(::Utils::appStringToCoreString(sipAddress));
   if (status)
     qWarning() << QStringLiteral("Unable to transfer: `%1`.").arg(sipAddress);
   return status;
@@ -176,7 +176,7 @@ void CallModel::takeSnapshot () {
   qInfo() << QStringLiteral("Take snapshot of call:") << this;
 
   mCall->takeVideoSnapshot(
-    ::Utils::qStringToLinphoneString(
+    ::Utils::appStringToCoreString(
       CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName
     )
   );

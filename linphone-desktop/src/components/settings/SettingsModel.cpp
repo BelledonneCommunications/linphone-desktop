@@ -61,7 +61,7 @@ QString SettingsModel::getCaptureDevice () const {
 
 void SettingsModel::setCaptureDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setCaptureDevice(
-    ::Utils::qStringToLinphoneString(device)
+    ::Utils::appStringToCoreString(device)
   );
   emit captureDeviceChanged(device);
 }
@@ -76,7 +76,7 @@ QString SettingsModel::getPlaybackDevice () const {
 
 void SettingsModel::setPlaybackDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setPlaybackDevice(
-    ::Utils::qStringToLinphoneString(device)
+    ::Utils::appStringToCoreString(device)
   );
   emit playbackDeviceChanged(device);
 }
@@ -91,7 +91,7 @@ QString SettingsModel::getRingerDevice () const {
 
 void SettingsModel::setRingerDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setRingerDevice(
-    ::Utils::qStringToLinphoneString(device)
+    ::Utils::appStringToCoreString(device)
   );
   emit ringerDeviceChanged(device);
 }
@@ -106,7 +106,7 @@ void SettingsModel::setRingPath (const QString &path) {
   QString cleanedPath = QDir::cleanPath(path);
 
   CoreManager::getInstance()->getCore()->setRing(
-    ::Utils::qStringToLinphoneString(cleanedPath)
+    ::Utils::appStringToCoreString(cleanedPath)
   );
 
   emit ringPathChanged(cleanedPath);
@@ -146,7 +146,7 @@ QString SettingsModel::getVideoDevice () const {
 
 void SettingsModel::setVideoDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setVideoDevice(
-    ::Utils::qStringToLinphoneString(device)
+    ::Utils::appStringToCoreString(device)
   );
   emit videoDeviceChanged(device);
 }
@@ -161,7 +161,7 @@ QString SettingsModel::getVideoPreset () const {
 
 void SettingsModel::setVideoPreset (const QString &preset) {
   CoreManager::getInstance()->getCore()->setVideoPreset(
-    ::Utils::qStringToLinphoneString(preset)
+    ::Utils::appStringToCoreString(preset)
   );
   emit videoPresetChanged(preset);
 }
@@ -243,7 +243,7 @@ QString SettingsModel::getFileTransferUrl () const {
 
 void SettingsModel::setFileTransferUrl (const QString &url) {
   CoreManager::getInstance()->getCore()->setFileTransferServer(
-    ::Utils::qStringToLinphoneString(url)
+    ::Utils::appStringToCoreString(url)
   );
   emit fileTransferUrlChanged(url);
 }
@@ -530,7 +530,7 @@ QString SettingsModel::getStunServer () const {
 
 void SettingsModel::setStunServer (const QString &stunServer) {
   CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServer(
-    ::Utils::qStringToLinphoneString(stunServer)
+    ::Utils::appStringToCoreString(stunServer)
   );
 }
 
@@ -544,7 +544,7 @@ QString SettingsModel::getTurnUser () const {
 
 void SettingsModel::setTurnUser (const QString &user) {
   CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServerUsername(
-    ::Utils::qStringToLinphoneString(user)
+    ::Utils::appStringToCoreString(user)
   );
 
   emit turnUserChanged(user);
@@ -569,12 +569,12 @@ void SettingsModel::setTurnPassword (const QString &password) {
 
   if (authInfo) {
     shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
-    clonedAuthInfo->setPasswd(::Utils::qStringToLinphoneString(password));
+    clonedAuthInfo->setPasswd(::Utils::appStringToCoreString(password));
 
     core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);
   } else {
-    authInfo = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::qStringToLinphoneString(password), "", "", "");
+    authInfo = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::appStringToCoreString(password), "", "", "");
     core->addAuthInfo(authInfo);
   }
 
@@ -625,7 +625,7 @@ QString SettingsModel::getSavedScreenshotsFolder () const {
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
 
-  mConfig->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::qStringToLinphoneString(cleanedFolder));
+  mConfig->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::appStringToCoreString(cleanedFolder));
   emit savedScreenshotsFolderChanged(cleanedFolder);
 }
 
@@ -642,7 +642,7 @@ QString SettingsModel::getSavedVideosFolder () const {
 void SettingsModel::setSavedVideosFolder (const QString &folder) {
   QString _folder = QDir::cleanPath(folder) + QDir::separator();
 
-  mConfig->setString(UI_SECTION, "saved_videos_folder", ::Utils::qStringToLinphoneString(_folder));
+  mConfig->setString(UI_SECTION, "saved_videos_folder", ::Utils::appStringToCoreString(_folder));
   emit savedVideosFolderChanged(_folder);
 }
 
@@ -653,7 +653,7 @@ QString SettingsModel::getRemoteProvisioning () const {
 }
 
 void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
-  if (!CoreManager::getInstance()->getCore()->setProvisioningUri(::Utils::qStringToLinphoneString(remoteProvisioning)))
+  if (!CoreManager::getInstance()->getCore()->setProvisioningUri(::Utils::appStringToCoreString(remoteProvisioning)))
     emit remoteProvisioningChanged(remoteProvisioning);
   else
     emit remoteProvisioningNotChanged(remoteProvisioning);

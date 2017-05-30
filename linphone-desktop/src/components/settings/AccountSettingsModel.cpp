@@ -131,7 +131,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   // Sip address.
   {
     shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-        ::Utils::qStringToLinphoneString(literal)
+        ::Utils::appStringToCoreString(literal)
       );
     if (!address) {
       qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
@@ -145,15 +145,15 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   {
     QString serverAddress = data["serverAddress"].toString();
 
-    if (proxyConfig->setServerAddr(::Utils::qStringToLinphoneString(serverAddress))) {
+    if (proxyConfig->setServerAddr(::Utils::appStringToCoreString(serverAddress))) {
       qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(serverAddress);
       return false;
     }
   }
 
   proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
-  proxyConfig->setRoute(::Utils::qStringToLinphoneString(data["route"].toString()));
-  proxyConfig->setContactParameters(::Utils::qStringToLinphoneString(data["contactParams"].toString()));
+  proxyConfig->setRoute(::Utils::appStringToCoreString(data["route"].toString()));
+  proxyConfig->setContactParameters(::Utils::appStringToCoreString(data["contactParams"].toString()));
   proxyConfig->setAvpfRrInterval(static_cast<uint8_t>(data["avpfInterval"].toInt()));
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
   proxyConfig->enablePublish(data["publishEnabled"].toBool());
@@ -174,8 +174,8 @@ void AccountSettingsModel::addAuthInfo (
   const QString &password,
   const QString &userId
 ) {
-  authInfo->setPasswd(::Utils::qStringToLinphoneString(password));
-  authInfo->setUserid(::Utils::qStringToLinphoneString(userId));
+  authInfo->setPasswd(::Utils::appStringToCoreString(password));
+  authInfo->setUserid(::Utils::appStringToCoreString(userId));
 
   CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
 }
@@ -199,7 +199,7 @@ void AccountSettingsModel::setUsername (const QString &username) {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
   shared_ptr<linphone::Address> newAddress = address->clone();
 
-  if (newAddress->setDisplayName(::Utils::qStringToLinphoneString(username))) {
+  if (newAddress->setDisplayName(::Utils::appStringToCoreString(username))) {
     qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
       .arg(::Utils::coreStringToAppString(newAddress->asStringUriOnly()));
   } else {
@@ -231,7 +231,7 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 
   primary->setUsername(
-    username.isEmpty() ? "linphone" : ::Utils::qStringToLinphoneString(username)
+    username.isEmpty() ? "linphone" : ::Utils::appStringToCoreString(username)
   );
   core->setPrimaryContact(primary->asString());
 
@@ -248,7 +248,7 @@ void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 
-  primary->setDisplayName(::Utils::qStringToLinphoneString(displayName));
+  primary->setDisplayName(::Utils::appStringToCoreString(displayName));
   core->setPrimaryContact(primary->asString());
 
   emit accountSettingsUpdated();

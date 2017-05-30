@@ -444,7 +444,7 @@ QString App::getConfigLocale () const {
 
 void App::setConfigLocale (const QString &locale) {
   CoreManager::getInstance()->getCore()->getConfig()->setString(
-    SettingsModel::UI_SECTION, "locale", ::Utils::qStringToLinphoneString(locale)
+    SettingsModel::UI_SECTION, "locale", ::Utils::appStringToCoreString(locale)
   );
 
   emit configLocaleChanged(locale);

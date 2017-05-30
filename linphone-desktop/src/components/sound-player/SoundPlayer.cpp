@@ -97,7 +97,7 @@ void SoundPlayer::play () {
 
   if (
     (mPlaybackState == SoundPlayer::StoppedState || mPlaybackState == SoundPlayer::ErrorState) &&
-    mInternalPlayer->open(::Utils::qStringToLinphoneString(mSource))
+    mInternalPlayer->open(::Utils::appStringToCoreString(mSource))
   ) {
     qWarning() << QStringLiteral("Unable to open: `%1`").arg(mSource);
     return;

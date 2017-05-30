@@ -78,7 +78,7 @@ inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
     return;
   }
 
-  message->setAppdata(::Utils::qStringToLinphoneString(fileId));
+  message->setAppdata(::Utils::appStringToCoreString(fileId));
 }
 
 inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
@@ -259,7 +259,7 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  mChatRoom = core->getChatRoomFromUri(::Utils::qStringToLinphoneString(sipAddress));
+  mChatRoom = core->getChatRoomFromUri(::Utils::appStringToCoreString(sipAddress));
 
   if (mChatRoom->getUnreadMessagesCount() > 0)
     resetMessagesCount();
@@ -316,7 +316,7 @@ void ChatModel::sendMessage (const QString &message) {
   if (!mChatRoom)
     return;
 
-  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(::Utils::qStringToLinphoneString(message));
+  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(::Utils::appStringToCoreString(message));
   _message->setListener(mMessageHandlers);
 
   insertMessageAtEnd(_message);
@@ -376,10 +376,10 @@ void ChatModel::sendFileMessage (const QString &path) {
   content->setSubtype("octet-stream");
 
   content->setSize(static_cast<size_t>(fileSize));
-  content->setName(::Utils::qStringToLinphoneString(QFileInfo(file).fileName()));
+  content->setName(::Utils::appStringToCoreString(QFileInfo(file).fileName()));
 
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
-  message->setFileTransferFilepath(::Utils::qStringToLinphoneString(path));
+  message->setFileTransferFilepath(::Utils::appStringToCoreString(path));
   message->setListener(mMessageHandlers);
 
   createThumbnail(message);
@@ -423,7 +423,7 @@ void ChatModel::downloadFile (int id, const QString &downloadPath) {
       return;
   }
 
-  message->setFileTransferFilepath(::Utils::qStringToLinphoneString(downloadPath));
+  message->setFileTransferFilepath(::Utils::appStringToCoreString(downloadPath));
   message->setListener(mMessageHandlers);
 
   if (message->downloadFile() < 0)

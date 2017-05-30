@@ -95,7 +95,7 @@ void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
   QVariantMap &map = mCodecs[id];
   shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
 
-  codec->setRecvFmtp(::Utils::qStringToLinphoneString(recvFmtp));
+  codec->setRecvFmtp(::Utils::appStringToCoreString(recvFmtp));
   map["recvFmtp"] = ::Utils::coreStringToAppString(codec->getRecvFmtp());
 
   emit dataChanged(index(id, 0), index(id, 0));

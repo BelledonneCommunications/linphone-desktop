@@ -142,7 +142,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
 
 QString SipAddressesModel::interpretUrl (const QString &sipAddress) const {
   shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::qStringToLinphoneString(sipAddress)
+      ::Utils::appStringToCoreString(sipAddress)
     );
 
   return lAddress ? ::Utils::coreStringToAppString(lAddress->asStringUriOnly()) : "";
@@ -150,7 +150,7 @@ QString SipAddressesModel::interpretUrl (const QString &sipAddress) const {
 
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) const {
   const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::qStringToLinphoneString(sipAddress)
+      ::Utils::appStringToCoreString(sipAddress)
     );
 
   if (!address)
@@ -172,7 +172,7 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) const {
   shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::qStringToLinphoneString(sipAddress)
+      ::Utils::appStringToCoreString(sipAddress)
     );
 
   if (!address)
@@ -193,7 +193,7 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
 
 bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
   return !!linphone::Factory::get()->createAddress(
-    ::Utils::qStringToLinphoneString(sipAddress)
+    ::Utils::appStringToCoreString(sipAddress)
   );
 }
 

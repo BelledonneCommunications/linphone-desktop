@@ -198,7 +198,7 @@ void AssistantModel::setEmail (const QString &email) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (mAccountCreator->setEmail(::Utils::qStringToLinphoneString(email))) {
+  switch (mAccountCreator->setEmail(::Utils::appStringToCoreString(email))) {
     case linphone::AccountCreatorEmailStatusOk:
       break;
     case linphone::AccountCreatorEmailStatusMalformed:
@@ -222,7 +222,7 @@ void AssistantModel::setPassword (const QString &password) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (mAccountCreator->setPassword(::Utils::qStringToLinphoneString(password))) {
+  switch (mAccountCreator->setPassword(::Utils::appStringToCoreString(password))) {
     case linphone::AccountCreatorPasswordStatusOk:
       break;
     case linphone::AccountCreatorPasswordStatusTooShort:
@@ -269,7 +269,7 @@ void AssistantModel::setUsername (const QString &username) {
   emit usernameChanged(
     username,
     mapAccountCreatorUsernameStatusToString(
-      mAccountCreator->setUsername(::Utils::qStringToLinphoneString(username))
+      mAccountCreator->setUsername(::Utils::appStringToCoreString(username))
     )
   );
 }
@@ -284,7 +284,7 @@ void AssistantModel::setDisplayName (const QString &displayName) {
   emit displayNameChanged(
     displayName,
     mapAccountCreatorUsernameStatusToString(
-      mAccountCreator->setDisplayName(::Utils::qStringToLinphoneString(displayName))
+      mAccountCreator->setDisplayName(::Utils::appStringToCoreString(displayName))
     )
   );
 }
@@ -302,7 +302,7 @@ void AssistantModel::setConfigFilename (const QString &configFilename) {
   qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(configPath);
 
   CoreManager::getInstance()->getCore()->getConfig()->loadFromXmlFile(
-    ::Utils::qStringToLinphoneString(configPath)
+    ::Utils::appStringToCoreString(configPath)
   );
 
   emit configFilenameChanged(configFilename);

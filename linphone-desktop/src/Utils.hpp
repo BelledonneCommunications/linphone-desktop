@@ -33,21 +33,8 @@ namespace Utils {
     return QString::fromLocal8Bit(string.c_str(), static_cast<int>(string.size()));
   }
 
-  inline std::string qStringToLinphoneString (const QString &string) {
+  inline std::string appStringToCoreString (const QString &string) {
     return string.toLocal8Bit().constData();
-  }
-
-  template<class T>
-  T *findParentType (const QObject *object) {
-    QObject *parent = object->parent();
-    if (!parent)
-      return nullptr;
-
-    T *found = qobject_cast<T *>(parent);
-    if (found)
-      return found;
-
-    return findParentType<T>(parent);
   }
 
   // Reverse function of strstr.
