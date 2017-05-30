@@ -36,7 +36,7 @@ function handleClosing (close) {
 // -----------------------------------------------------------------------------
 
 function openConferenceManager () {
-  window.attachVirtualWindow(Qt.resolvedUrl('ConferenceManager.qml'))
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ConferenceManager.qml'))
 }
 
 // -----------------------------------------------------------------------------
