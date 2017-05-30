@@ -40,7 +40,7 @@ Item {
 
     onActivated: {
       window.detachVirtualWindow()
-      window.attachVirtualWindow(Qt.resolvedUrl('About.qml'))
+      window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/About.qml'))
     }
   }
 

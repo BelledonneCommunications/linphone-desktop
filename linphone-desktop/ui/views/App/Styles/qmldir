@@ -17,16 +17,17 @@ singleton AssistantHomeStyle                       1.0 Main/Assistant/AssistantH
 singleton CreateLinphoneSipAccountStyle            1.0 Main/Assistant/CreateLinphoneSipAccountStyle.qml
 singleton UseLinphoneSipAccountStyle               1.0 Main/Assistant/UseLinphoneSipAccountStyle.qml
 
-singleton AboutStyle                               1.0 Main/AboutStyle.qml
 singleton AssistantStyle                           1.0 Main/AssistantStyle.qml
-singleton AuthenticationRequestStyle               1.0 Main/AuthenticationRequestStyle.qml
 singleton ContactEditStyle                         1.0 Main/ContactEditStyle.qml
 singleton ContactsStyle                            1.0 Main/ContactsStyle.qml
 singleton ConversationStyle                        1.0 Main/ConversationStyle.qml
 singleton HomeStyle                                1.0 Main/HomeStyle.qml
 singleton InviteFriendsStyle                       1.0 Main/InviteFriendsStyle.qml
 singleton MainWindowStyle                          1.0 Main/MainWindowStyle.qml
-singleton ManageAccountsStyle                      1.0 Main/ManageAccountsStyle.qml
+
+singleton AboutStyle                               1.0 Main/Dialogs/AboutStyle.qml
+singleton AuthenticationRequestStyle               1.0 Main/Dialogs/AuthenticationRequestStyle.qml
+singleton ManageAccountsStyle                      1.0 Main/Dialogs/ManageAccountsStyle.qml
 
 singleton SettingsAudioStyle                       1.0 Settings/SettingsAudioStyle.qml
 singleton SettingsSipAccountsEditStyle             1.0 Settings/SettingsSipAccountsEditStyle.qml

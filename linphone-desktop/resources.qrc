@@ -365,7 +365,6 @@
     <file>ui/views/App/Calls/Incall.qml</file>
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
-    <file>ui/views/App/Main/About.qml</file>
     <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithEmail.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantHome.qml</file>
@@ -378,19 +377,20 @@
     <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithPhoneNumber.qml</file>
     <file>ui/views/App/Main/Assistant/UseLinphoneSipAccountWithUsername.qml</file>
     <file>ui/views/App/Main/Assistant/UseOtherSipAccount.qml</file>
-    <file>ui/views/App/Main/AuthenticationRequest.js</file>
-    <file>ui/views/App/Main/AuthenticationRequest.qml</file>
     <file>ui/views/App/Main/ContactEdit.js</file>
     <file>ui/views/App/Main/ContactEdit.qml</file>
     <file>ui/views/App/Main/Contacts.qml</file>
     <file>ui/views/App/Main/Conversation.js</file>
     <file>ui/views/App/Main/Conversation.qml</file>
+    <file>ui/views/App/Main/Dialogs/About.qml</file>
+    <file>ui/views/App/Main/Dialogs/AuthenticationRequest.js</file>
+    <file>ui/views/App/Main/Dialogs/AuthenticationRequest.qml</file>
+    <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
     <file>ui/views/App/Main/Home.qml</file>
     <file>ui/views/App/Main/InviteFriends.qml</file>
     <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
-    <file>ui/views/App/Main/ManageAccounts.qml</file>
     <file>ui/views/App/Settings/SettingsAudio.qml</file>
     <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
     <file>ui/views/App/Settings/SettingsNetwork.qml</file>
@@ -410,21 +410,21 @@
     <file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
-    <file>ui/views/App/Styles/Main/AboutStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantHomeStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/CreateLinphoneSipAccountStyle.qml</file>
     <file>ui/views/App/Styles/Main/AssistantStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/UseLinphoneSipAccountStyle.qml</file>
-    <file>ui/views/App/Styles/Main/AuthenticationRequestStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
     <file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
     <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
+    <file>ui/views/App/Styles/Main/Dialogs/AboutStyle.qml</file>
+    <file>ui/views/App/Styles/Main/Dialogs/AuthenticationRequestStyle.qml</file>
+    <file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>
     <file>ui/views/App/Styles/Main/HomeStyle.qml</file>
     <file>ui/views/App/Styles/Main/InviteFriendsStyle.qml</file>
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
-    <file>ui/views/App/Styles/Main/ManageAccountsStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
     <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsSipAccountsEditStyle.qml</file>
