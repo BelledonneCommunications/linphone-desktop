@@ -9,7 +9,7 @@
 // =============================================================================
 
 function computeAvatarSize (maxSize) {
-  var height = container.height
+  var height = zrtp.visible ? container.height - zrtp.height : container.height
   var width = container.width
 
   var size = height < maxSize && height > 0 ? height : maxSize

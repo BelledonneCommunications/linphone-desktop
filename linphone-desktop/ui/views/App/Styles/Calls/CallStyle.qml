@@ -76,4 +76,13 @@ QtObject {
       property int relativeY: 90
     }
   }
+
+  property QtObject zrtpArea: QtObject {
+    property int height: 50
+    property int fontSize: 12
+
+    property QtObject vu: QtObject {
+      property int spacing: 5
+    }
+  }
 }

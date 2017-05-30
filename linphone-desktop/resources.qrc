@@ -26,6 +26,12 @@
     <file>assets/images/call_accept_hovered.svg</file>
     <file>assets/images/call_accept_normal.svg</file>
     <file>assets/images/call_accept_pressed.svg</file>
+    <file>assets/images/call_chat_secure_hovered.svg</file>
+    <file>assets/images/call_chat_secure_normal.svg</file>
+    <file>assets/images/call_chat_secure_pressed.svg</file>
+    <file>assets/images/call_chat_unsecure_hovered.svg</file>
+    <file>assets/images/call_chat_unsecure_normal.svg</file>
+    <file>assets/images/call_chat_unsecure_pressed.svg</file>
     <file>assets/images/call_hovered.svg</file>
     <file>assets/images/call_normal.svg</file>
     <file>assets/images/call_pressed.svg</file>

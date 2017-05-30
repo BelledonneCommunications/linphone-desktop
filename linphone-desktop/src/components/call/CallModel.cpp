@@ -263,6 +263,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
       break;
   }
 
+  emit securityUpdated();
   emit statusChanged(getStatus());
 }
 
@@ -491,6 +492,56 @@ bool CallModel::getRecording () const {
 void CallModel::sendDtmf (const QString &dtmf) {
   qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(dtmf);
   mCall->sendDtmf(dtmf.constData()[0].toLatin1());
+}
+
+// -----------------------------------------------------------------------------
+
+CallModel::CallEncryption CallModel::getEncryption () const {
+  shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
+  linphone::MediaEncryption encryption = params->getMediaEncryption();
+  switch (encryption) {
+    case linphone::MediaEncryptionSRTP:
+      return CallEncryptionSRTP;
+    case linphone::MediaEncryptionZRTP:
+      return CallEncryptionZRTP;
+    case linphone::MediaEncryptionDTLS:
+      return CallEncryptionDTLS;
+    case linphone::MediaEncryptionNone:
+    default:
+      return CallEncryptionNone;
+  }
+}
+
+bool CallModel::isSecured () const {
+  shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
+  linphone::MediaEncryption encryption = params->getMediaEncryption();
+  return (encryption == linphone::MediaEncryptionZRTP && mCall->getAuthenticationTokenVerified()) 
+    || encryption == linphone::MediaEncryptionSRTP || encryption == linphone::MediaEncryptionDTLS;
+}
+
+QString CallModel::getLocalSAS() const {
+  QString token = mCall->getAuthenticationToken().c_str();
+  linphone::CallDir direction = mCall->getDir();
+  if (direction == linphone::CallDirIncoming) {
+    return token.left(2).toUpper();
+  } else {
+    return token.right(2).toUpper();
+  }
+}
+
+QString CallModel::getRemoteSAS() const {
+  QString token = mCall->getAuthenticationToken().c_str();
+  linphone::CallDir direction = mCall->getDir();
+  if (direction == linphone::CallDirIncoming) {
+    return token.right(2).toUpper();
+  } else {
+    return token.left(2).toUpper();
+  }
+}
+
+void CallModel::verifyAuthenticationToken(bool verify) {
+  mCall->setAuthenticationTokenVerified(verify);
+  emit securityUpdated();
 }
 
 // -----------------------------------------------------------------------------

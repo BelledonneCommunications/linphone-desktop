@@ -731,6 +731,26 @@ Server url not configured.</translation>
         <source>pendingRequestLabel</source>
         <translation>Please to wait, a request is pending.</translation>
     </message>
+    <message>
+        <source>Say:</source>
+        <translation>Say:</translation>
+    </message>
+    <message>
+        <source>Your correspondent should say:</source>
+        <translation>Your correspondent should say:</translation>
+    </message>
+    <message>
+        <source>Deny</source>
+        <translation>DENY</translation>
+    </message>
+    <message>
+        <source>Accept</source>
+        <translation>ACCEPT</translation>
+    </message>
+    <message>
+        <source>Confirm the following SAS with peer:</source>
+        <translation>Confirm the following SAS with peer:</translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>

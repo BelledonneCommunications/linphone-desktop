@@ -55,6 +55,11 @@ class CallModel : public QObject {
   Q_PROPERTY(QVariantList audioStats READ getAudioStats NOTIFY statsUpdated);
   Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated);
 
+  Q_PROPERTY(CallEncryption encryption READ getEncryption NOTIFY securityUpdated);
+  Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated);
+  Q_PROPERTY(QString localSAS READ getLocalSAS NOTIFY securityUpdated);
+  Q_PROPERTY(QString remoteSAS READ getRemoteSAS NOTIFY securityUpdated);
+
 public:
   enum CallStatus {
     CallStatusConnected,
@@ -66,6 +71,15 @@ public:
   };
 
   Q_ENUM(CallStatus);
+
+  enum CallEncryption {
+    CallEncryptionNone,
+    CallEncryptionSRTP,
+    CallEncryptionZRTP,
+    CallEncryptionDTLS
+  };
+
+  Q_ENUM(CallEncryption);
 
   CallModel (std::shared_ptr<linphone::Call> linphoneCall);
   ~CallModel ();
@@ -100,6 +114,8 @@ public:
 
   Q_INVOKABLE void sendDtmf (const QString &dtmf);
 
+  Q_INVOKABLE void verifyAuthenticationToken(bool verify);
+
 signals:
   void callErrorChanged (const QString &callError);
   void isInConferenceChanged (bool status);
@@ -108,6 +124,7 @@ signals:
   void statsUpdated ();
   void statusChanged (CallStatus status);
   void videoRequested ();
+  void securityUpdated ();
 
 private:
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
@@ -145,9 +162,15 @@ private:
 
   bool getRecording () const;
 
+  CallEncryption getEncryption () const;
+  bool isSecured () const;
+  QString getLocalSAS () const;
+  QString getRemoteSAS () const;
+
   QVariantList getAudioStats () const;
   QVariantList getVideoStats () const;
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
+
 
   QString iceStateToString (linphone::IceState state) const;
 
