@@ -154,7 +154,7 @@ inline QString getAppMessageHistoryFilePath () {
 // -----------------------------------------------------------------------------
 
 bool Paths::filePathExists (const string &path) {
-  return filePathExists(Utils::linphoneStringToQString(path));
+  return filePathExists(Utils::coreStringToAppString(path));
 }
 
 // -----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ QVariant ConferenceHelperModel::ConferenceAddModel::data (const QModelIndex &ind
 // -----------------------------------------------------------------------------
 
 bool ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_ptr<const linphone::Address> &linphoneAddress) {
-  const QString &sipAddress = ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
+  const QString &sipAddress = ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
   if (mSipAddresses.contains(sipAddress))
     return false;
 
@@ -145,7 +145,7 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
     if (!call->getParams()->getLocalConferenceMode())
       continue;
 
-    const QString &sipAddress = ::Utils::linphoneStringToQString(call->getRemoteAddress()->asStringUriOnly());
+    const QString &sipAddress = ::Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
     if (!mSipAddresses.contains(sipAddress))
       call->terminate();
   }
@@ -159,7 +159,7 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
 // -----------------------------------------------------------------------------
 
 void ConferenceHelperModel::ConferenceAddModel::addToConferencePrivate (const shared_ptr<linphone::Address> &linphoneAddress) {
-  QString sipAddress = ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
+  QString sipAddress = ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
   QVariantMap map = CoreManager::getInstance()->getSipAddressesModel()->find(sipAddress);
 
   map["sipAddress"] = sipAddress;

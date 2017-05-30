@@ -46,7 +46,7 @@ QStringList SettingsModel::getAudioDevices () const {
   QStringList list;
 
   for (const auto &device : CoreManager::getInstance()->getCore()->getSoundDevices())
-    list << ::Utils::linphoneStringToQString(device);
+    list << ::Utils::coreStringToAppString(device);
 
   return list;
 }
@@ -54,7 +54,7 @@ QStringList SettingsModel::getAudioDevices () const {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getCaptureDevice () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getCaptureDevice()
   );
 }
@@ -69,7 +69,7 @@ void SettingsModel::setCaptureDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getPlaybackDevice () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getPlaybackDevice()
   );
 }
@@ -84,7 +84,7 @@ void SettingsModel::setPlaybackDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getRingerDevice () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getRingerDevice()
   );
 }
@@ -99,7 +99,7 @@ void SettingsModel::setRingerDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getRingPath () const {
-  return ::Utils::linphoneStringToQString(CoreManager::getInstance()->getCore()->getRing());
+  return ::Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getRing());
 }
 
 void SettingsModel::setRingPath (const QString &path) {
@@ -131,7 +131,7 @@ QStringList SettingsModel::getVideoDevices () const {
   QStringList list;
 
   for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevices())
-    list << ::Utils::linphoneStringToQString(device);
+    list << ::Utils::coreStringToAppString(device);
 
   return list;
 }
@@ -139,7 +139,7 @@ QStringList SettingsModel::getVideoDevices () const {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getVideoDevice () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getVideoDevice()
   );
 }
@@ -154,7 +154,7 @@ void SettingsModel::setVideoDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getVideoPreset () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getVideoPreset()
   );
 }
@@ -182,7 +182,7 @@ void SettingsModel::setVideoFramerate (int framerate) {
 inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const linphone::VideoDefinition> &definition) {
   QVariantMap map;
 
-  map["name"] = ::Utils::linphoneStringToQString(definition->getName());
+  map["name"] = ::Utils::coreStringToAppString(definition->getName());
   map["width"] = definition->getWidth();
   map["height"] = definition->getHeight();
   map["__definition"] = QVariant::fromValue(definition);
@@ -236,7 +236,7 @@ void SettingsModel::setAutoAnswerStatus (bool status) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getFileTransferUrl () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getFileTransferServer()
   );
 }
@@ -523,7 +523,7 @@ void SettingsModel::setTurnEnabled (bool status) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getStunServer () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getNatPolicy()->getStunServer()
   );
 }
@@ -537,7 +537,7 @@ void SettingsModel::setStunServer (const QString &stunServer) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getTurnUser () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getNatPolicy()->getStunServerUsername()
   );
 }
@@ -557,7 +557,7 @@ QString SettingsModel::getTurnPassword () const {
   shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
   shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(natPolicy->getStunServerUsername(), "", "");
 
-  return authInfo ? ::Utils::linphoneStringToQString(authInfo->getPasswd()) : "";
+  return authInfo ? ::Utils::coreStringToAppString(authInfo->getPasswd()) : "";
 }
 
 void SettingsModel::setTurnPassword (const QString &password) {
@@ -616,7 +616,7 @@ void SettingsModel::setDscpVideo (int dscp) {
 
 QString SettingsModel::getSavedScreenshotsFolder () const {
   return QDir::cleanPath(
-    ::Utils::linphoneStringToQString(
+    ::Utils::coreStringToAppString(
       mConfig->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirPath())
     )
   ) + QDir::separator();
@@ -633,7 +633,7 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 
 QString SettingsModel::getSavedVideosFolder () const {
   return QDir::cleanPath(
-    ::Utils::linphoneStringToQString(
+    ::Utils::coreStringToAppString(
       mConfig->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirPath())
     )
   ) + QDir::separator();
@@ -649,7 +649,7 @@ void SettingsModel::setSavedVideosFolder (const QString &folder) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getRemoteProvisioning () const {
-  return ::Utils::linphoneStringToQString(CoreManager::getInstance()->getCore()->getProvisioningUri());
+  return ::Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getProvisioningUri());
 }
 
 void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {

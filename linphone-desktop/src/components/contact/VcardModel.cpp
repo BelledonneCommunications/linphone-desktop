@@ -80,7 +80,7 @@ static void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, boo
 
   for (const auto photo : photos) {
     QString imagePath(
-      ::Utils::linphoneStringToQString(
+      ::Utils::coreStringToAppString(
         Paths::getAvatarsDirPath() + photo->getValue().substr(sizeof(VCARD_SCHEME) - 1)
       )
     );
@@ -140,7 +140,7 @@ QString VcardModel::getAvatar () const {
 
   // Returns right path.
   return QStringLiteral("image://%1/%2").arg(AvatarProvider::PROVIDER_ID).arg(
-    ::Utils::linphoneStringToQString(photo->getValue().substr(sizeof(VCARD_SCHEME) - 1))
+    ::Utils::coreStringToAppString(photo->getValue().substr(sizeof(VCARD_SCHEME) - 1))
   );
 }
 
@@ -173,7 +173,7 @@ bool VcardModel::setAvatar (const QString &path) {
         .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
         .arg(info.suffix());
 
-      QString dest = ::Utils::linphoneStringToQString(Paths::getAvatarsDirPath()) + fileId;
+      QString dest = ::Utils::coreStringToAppString(Paths::getAvatarsDirPath()) + fileId;
 
       if (!file.copy(dest))
         return false;
@@ -205,7 +205,7 @@ bool VcardModel::setAvatar (const QString &path) {
 // -----------------------------------------------------------------------------
 
 QString VcardModel::getUsername () const {
-  return ::Utils::linphoneStringToQString(mVcard->getFullName());
+  return ::Utils::coreStringToAppString(mVcard->getFullName());
 }
 
 void VcardModel::setUsername (const QString &username) {
@@ -242,10 +242,10 @@ QVariantMap VcardModel::getAddress () const {
     return map;
 
   shared_ptr<belcard::BelCardAddress> address = addresses.front();
-  map["street"] = ::Utils::linphoneStringToQString(address->getStreet());
-  map["locality"] = ::Utils::linphoneStringToQString(address->getLocality());
-  map["postalCode"] = ::Utils::linphoneStringToQString(address->getPostalCode());
-  map["country"] = ::Utils::linphoneStringToQString(address->getCountry());
+  map["street"] = ::Utils::coreStringToAppString(address->getStreet());
+  map["locality"] = ::Utils::coreStringToAppString(address->getLocality());
+  map["postalCode"] = ::Utils::coreStringToAppString(address->getPostalCode());
+  map["country"] = ::Utils::coreStringToAppString(address->getCountry());
 
   return map;
 }
@@ -293,10 +293,10 @@ QVariantList VcardModel::getSipAddresses () const {
     shared_ptr<linphone::Address> linphoneAddress = core->createAddress(value);
 
     if (linphoneAddress)
-      list << ::Utils::linphoneStringToQString(linphoneAddress->asStringUriOnly());
+      list << ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
     else
       qWarning() << QStringLiteral("Unable to parse sip address: `%1`")
-        .arg(::Utils::linphoneStringToQString(value));
+        .arg(::Utils::coreStringToAppString(value));
   }
 
   return list;
@@ -334,7 +334,7 @@ void VcardModel::removeSipAddress (const QString &sipAddress) {
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
   list<shared_ptr<belcard::BelCardImpp> > addresses = belcard->getImpp();
   shared_ptr<belcard::BelCardImpp> value = findBelCardValue(
-      addresses, ::Utils::linphoneStringToQString(interpretSipAddress(sipAddress))
+      addresses, ::Utils::coreStringToAppString(interpretSipAddress(sipAddress))
     );
 
   if (!value) {
@@ -366,7 +366,7 @@ QVariantList VcardModel::getCompanies () const {
   QVariantList list;
 
   for (const auto &company : mVcard->getVcard()->getRoles())
-    list.append(::Utils::linphoneStringToQString(company->getValue()));
+    list.append(::Utils::coreStringToAppString(company->getValue()));
 
   return list;
 }
@@ -420,7 +420,7 @@ QVariantList VcardModel::getEmails () const {
   QVariantList list;
 
   for (const auto &email : mVcard->getVcard()->getEmails())
-    list.append(::Utils::linphoneStringToQString(email->getValue()));
+    list.append(::Utils::coreStringToAppString(email->getValue()));
 
   return list;
 }
@@ -475,7 +475,7 @@ QVariantList VcardModel::getUrls () const {
   QVariantList list;
 
   for (const auto &url : mVcard->getVcard()->getURLs())
-    list.append(::Utils::linphoneStringToQString(url->getValue()));
+    list.append(::Utils::coreStringToAppString(url->getValue()));
 
   return list;
 }

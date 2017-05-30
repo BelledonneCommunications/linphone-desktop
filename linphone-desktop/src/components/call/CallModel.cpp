@@ -71,7 +71,7 @@ CallModel::~CallModel () {
 // -----------------------------------------------------------------------------
 
 QString CallModel::getSipAddress () const {
-  return ::Utils::linphoneStringToQString(mCall->getRemoteAddress()->asStringUriOnly());
+  return ::Utils::coreStringToAppString(mCall->getRemoteAddress()->asStringUriOnly());
 }
 
 // -----------------------------------------------------------------------------
@@ -541,7 +541,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
   statsList.clear();
 
   statsList << createStat(tr("callStatsCodec"), payloadType
-    ? QString("%1 / %2kHz").arg(Utils::linphoneStringToQString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
+    ? QString("%1 / %2kHz").arg(Utils::coreStringToAppString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
     : "");
   statsList << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
   statsList << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
@@ -555,7 +555,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       statsList << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
-      QString sentVideoDefinitionName = Utils::linphoneStringToQString(params->getSentVideoDefinition()->getName());
+      QString sentVideoDefinitionName = Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
       QString sentVideoDefinition = QString("%1x%2")
         .arg(params->getSentVideoDefinition()->getWidth())
         .arg(params->getSentVideoDefinition()->getHeight());
@@ -564,7 +564,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         ? sentVideoDefinition
         : QString("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
 
-      QString receivedVideoDefinitionName = Utils::linphoneStringToQString(params->getReceivedVideoDefinition()->getName());
+      QString receivedVideoDefinitionName = Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
       QString receivedVideoDefinition = QString("%1x%2")
         .arg(params->getReceivedVideoDefinition()->getWidth())
         .arg(params->getReceivedVideoDefinition()->getHeight());

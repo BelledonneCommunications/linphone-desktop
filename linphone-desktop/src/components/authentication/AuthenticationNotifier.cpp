@@ -39,12 +39,12 @@ AuthenticationNotifier::AuthenticationNotifier (QObject *parent) : QObject(paren
 void AuthenticationNotifier::handleAuthenticationRequested (const shared_ptr<linphone::AuthInfo> &authInfo) {
   emit authenticationRequested(
     QVariant::fromValue(authInfo),
-    ::Utils::linphoneStringToQString(authInfo->getRealm()),
+    ::Utils::coreStringToAppString(authInfo->getRealm()),
     QStringLiteral("%1@%2").arg(
-      ::Utils::linphoneStringToQString(authInfo->getUsername())
+      ::Utils::coreStringToAppString(authInfo->getUsername())
     ).arg(
-      ::Utils::linphoneStringToQString(authInfo->getDomain())
+      ::Utils::coreStringToAppString(authInfo->getDomain())
     ),
-    ::Utils::linphoneStringToQString(authInfo->getUserid())
+    ::Utils::coreStringToAppString(authInfo->getUserid())
   );
 }

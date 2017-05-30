@@ -96,7 +96,7 @@ void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
   shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
 
   codec->setRecvFmtp(::Utils::qStringToLinphoneString(recvFmtp));
-  map["recvFmtp"] = ::Utils::linphoneStringToQString(codec->getRecvFmtp());
+  map["recvFmtp"] = ::Utils::coreStringToAppString(codec->getRecvFmtp());
 
   emit dataChanged(index(id, 0), index(id, 0));
 }
@@ -157,14 +157,14 @@ void AbstractCodecsModel::addCodec (shared_ptr<linphone::PayloadType> &codec) {
   map["bitrate"] = codec->getNormalBitrate();
   map["channels"] = codec->getChannels();
   map["clockRate"] = codec->getClockRate();
-  map["description"] = ::Utils::linphoneStringToQString(codec->getDescription());
+  map["description"] = ::Utils::coreStringToAppString(codec->getDescription());
   map["enabled"] = codec->enabled();
-  map["encoderDescription"] = ::Utils::linphoneStringToQString(codec->getEncoderDescription());
+  map["encoderDescription"] = ::Utils::coreStringToAppString(codec->getEncoderDescription());
   map["isUsable"] = codec->isUsable();
   map["isVbr"] = codec->isVbr();
-  map["mime"] = ::Utils::linphoneStringToQString(codec->getMimeType());
+  map["mime"] = ::Utils::coreStringToAppString(codec->getMimeType());
   map["number"] = codec->getNumber();
-  map["recvFmtp"] = ::Utils::linphoneStringToQString(codec->getRecvFmtp());
+  map["recvFmtp"] = ::Utils::coreStringToAppString(codec->getRecvFmtp());
   map["__codec"] = QVariant::fromValue(codec);
 
   mCodecs << map;

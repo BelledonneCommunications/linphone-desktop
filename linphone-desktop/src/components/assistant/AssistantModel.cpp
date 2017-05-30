@@ -191,7 +191,7 @@ void AssistantModel::reset () {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getEmail () const {
-  return ::Utils::linphoneStringToQString(mAccountCreator->getEmail());
+  return ::Utils::coreStringToAppString(mAccountCreator->getEmail());
 }
 
 void AssistantModel::setEmail (const QString &email) {
@@ -215,7 +215,7 @@ void AssistantModel::setEmail (const QString &email) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getPassword () const {
-  return ::Utils::linphoneStringToQString(mAccountCreator->getPassword());
+  return ::Utils::coreStringToAppString(mAccountCreator->getPassword());
 }
 
 void AssistantModel::setPassword (const QString &password) {
@@ -233,11 +233,11 @@ void AssistantModel::setPassword (const QString &password) {
       break;
     case linphone::AccountCreatorPasswordStatusInvalidCharacters:
       error = tr("passwordStatusInvalidCharacters")
-        .arg(::Utils::linphoneStringToQString(config->getString("assistant", "password_regex", "")));
+        .arg(::Utils::coreStringToAppString(config->getString("assistant", "password_regex", "")));
       break;
     case linphone::AccountCreatorPasswordStatusMissingCharacters:
       error = tr("passwordStatusMissingCharacters")
-        .arg(::Utils::linphoneStringToQString(config->getString("assistant", "missing_characters", "")));
+        .arg(::Utils::coreStringToAppString(config->getString("assistant", "missing_characters", "")));
       break;
   }
 
@@ -247,7 +247,7 @@ void AssistantModel::setPassword (const QString &password) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getPhoneNumber () const {
-  return ::Utils::linphoneStringToQString(mAccountCreator->getPhoneNumber());
+  return ::Utils::coreStringToAppString(mAccountCreator->getPhoneNumber());
 }
 
 void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
@@ -262,7 +262,7 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getUsername () const {
-  return ::Utils::linphoneStringToQString(mAccountCreator->getUsername());
+  return ::Utils::coreStringToAppString(mAccountCreator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {
@@ -277,7 +277,7 @@ void AssistantModel::setUsername (const QString &username) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getDisplayName () const {
-  return ::Utils::linphoneStringToQString(mAccountCreator->getDisplayName());
+  return ::Utils::coreStringToAppString(mAccountCreator->getDisplayName());
 }
 
 void AssistantModel::setDisplayName (const QString &displayName) {
@@ -298,7 +298,7 @@ QString AssistantModel::getConfigFilename () const {
 void AssistantModel::setConfigFilename (const QString &configFilename) {
   mConfigFilename = configFilename;
 
-  QString configPath = ::Utils::linphoneStringToQString(Paths::getAssistantConfigDirPath()) + configFilename;
+  QString configPath = ::Utils::coreStringToAppString(Paths::getAssistantConfigDirPath()) + configFilename;
   qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(configPath);
 
   CoreManager::getInstance()->getCore()->getConfig()->loadFromXmlFile(
@@ -325,7 +325,7 @@ QString AssistantModel::mapAccountCreatorUsernameStatusToString (linphone::Accou
       break;
     case linphone::AccountCreatorUsernameStatusInvalidCharacters:
       error = tr("usernameStatusInvalidCharacters")
-        .arg(::Utils::linphoneStringToQString(config->getString("assistant", "username_regex", "")));
+        .arg(::Utils::coreStringToAppString(config->getString("assistant", "username_regex", "")));
       break;
     case linphone::AccountCreatorUsernameStatusInvalid:
       error = tr("usernameStatusInvalid");

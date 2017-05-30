@@ -435,7 +435,7 @@ void App::createNotifier () {
 // -----------------------------------------------------------------------------
 
 QString App::getConfigLocale () const {
-  return ::Utils::linphoneStringToQString(
+  return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getConfig()->getString(
       SettingsModel::UI_SECTION, "locale", ""
     )

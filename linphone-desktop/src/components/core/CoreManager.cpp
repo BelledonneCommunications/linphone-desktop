@@ -142,7 +142,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getVersion () const {
-  return ::Utils::linphoneStringToQString(mCore->getVersion());
+  return ::Utils::coreStringToAppString(mCore->getVersion());
 }
 
 // -----------------------------------------------------------------------------

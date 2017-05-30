@@ -148,7 +148,7 @@ void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
   const string &uriOrTel,
   const shared_ptr<const linphone::PresenceModel> &presenceModel
 ) {
-  emit presenceReceived(::Utils::linphoneStringToQString(uriOrTel), presenceModel);
+  emit presenceReceived(::Utils::coreStringToAppString(uriOrTel), presenceModel);
 }
 
 void CoreHandlers::onNotifyPresenceReceived (

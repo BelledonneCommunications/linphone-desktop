@@ -230,8 +230,8 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
     return;
 
   QVariantMap map;
-  map["message"] = ::Utils::linphoneStringToQString(message->getText());
-  map["sipAddress"] = ::Utils::linphoneStringToQString(message->getFromAddress()->asStringUriOnly());
+  map["message"] = ::Utils::coreStringToAppString(message->getText());
+  map["sipAddress"] = ::Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
   map["window"].setValue(App::getInstance()->getMainWindow());
 
   ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
@@ -244,7 +244,7 @@ void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage
     return;
 
   QVariantMap map;
-  map["fileUri"] = ::Utils::linphoneStringToQString(message->getFileTransferFilepath());
+  map["fileUri"] = ::Utils::coreStringToAppString(message->getFileTransferFilepath());
   map["fileSize"] = static_cast<quint64>(message->getFileTransferInformation()->getSize());
 
   ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
