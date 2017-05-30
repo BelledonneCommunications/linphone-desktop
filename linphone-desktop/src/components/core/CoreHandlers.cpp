@@ -38,9 +38,9 @@ using namespace std;
 // Schedule a function in app context.
 void scheduleFunctionInApp (function<void()> func) {
   App *app = App::getInstance();
-  if (QThread::currentThread() != app->thread()) {
+  if (QThread::currentThread() != app->thread())
     QTimer::singleShot(0, app, func);
-  } else
+  else
     func();
 }
 
@@ -167,4 +167,53 @@ void CoreHandlers::onRegistrationStateChanged (
   const string &
 ) {
   emit registrationStateChanged(proxyConfig, state);
+}
+
+void CoreHandlers::onTransferStateChanged (
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Call> &call,
+  linphone::CallState state
+) {
+  switch (state) {
+    case linphone::CallStateEarlyUpdatedByRemote:
+    case linphone::CallStateEarlyUpdating:
+    case linphone::CallStateIdle:
+    case linphone::CallStateIncomingEarlyMedia:
+    case linphone::CallStateIncomingReceived:
+    case linphone::CallStateOutgoingEarlyMedia:
+    case linphone::CallStateOutgoingRinging:
+    case linphone::CallStatePaused:
+    case linphone::CallStatePausedByRemote:
+    case linphone::CallStatePausing:
+    case linphone::CallStateRefered:
+    case linphone::CallStateReleased:
+    case linphone::CallStateResuming:
+    case linphone::CallStateStreamsRunning:
+    case linphone::CallStateUpdatedByRemote:
+    case linphone::CallStateUpdating:
+      break; // Nothing.
+
+    // 1. Init.
+    case linphone::CallStateOutgoingInit:
+      qInfo() << QStringLiteral("Call transfer init.");
+      break;
+
+    // 2. In progress.
+    case linphone::CallStateOutgoingProgress:
+      qInfo() << QStringLiteral("Call transfer in progress.");
+      break;
+
+    // 3. Done.
+    case linphone::CallStateConnected:
+      qInfo() << QStringLiteral("Call transfer succeeded.");
+      emit callTransferSucceeded(call);
+      break;
+
+    // 4. Error.
+    case linphone::CallStateEnd:
+    case linphone::CallStateError:
+      qWarning() << QStringLiteral("Call transfer failed.");
+      emit callTransferFailed(call);
+      break;
+  }
 }

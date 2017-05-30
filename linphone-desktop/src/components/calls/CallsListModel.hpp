@@ -64,6 +64,7 @@ private:
 
   void addCall (const std::shared_ptr<linphone::Call> &call);
   void removeCall (const std::shared_ptr<linphone::Call> &call);
+  void removeCallCb (CallModel *callModel);
 
   QList<CallModel *> mList;
 

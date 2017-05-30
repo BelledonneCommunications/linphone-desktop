@@ -43,6 +43,8 @@ public:
 signals:
   void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
   void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
+  void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
   void coreStarted ();
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
@@ -105,6 +107,12 @@ private:
     const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
     linphone::RegistrationState state,
     const std::string &message
+  ) override;
+
+  void onTransferStateChanged (
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::Call> &call,
+    linphone::CallState state
   ) override;
 
   // ---------------------------------------------------------------------------

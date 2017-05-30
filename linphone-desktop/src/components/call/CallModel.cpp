@@ -135,9 +135,20 @@ void CallModel::terminate () {
   core->unlockVideoRender();
 }
 
+// -----------------------------------------------------------------------------
+
 void CallModel::askForTransfer () {
   CoreManager::getInstance()->getCallsListModel()->askForTransfer(this);
 }
+
+bool CallModel::transferTo (const QString &sipAddress) {
+  bool status = !!mCall->transfer(::Utils::qStringToLinphoneString(sipAddress));
+  if (status)
+    qWarning() << QStringLiteral("Unable to transfer: `%1`.").arg(sipAddress);
+  return status;
+}
+
+// -----------------------------------------------------------------------------
 
 void CallModel::acceptVideoRequest () {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();

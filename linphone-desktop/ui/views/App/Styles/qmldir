@@ -9,6 +9,8 @@ singleton CallsWindowStyle                         1.0 Calls/CallsWindowStyle.qm
 singleton ConferenceManagerStyle                   1.0 Calls/ConferenceManagerStyle.qml
 singleton ConferenceStyle                          1.0 Calls/ConferenceStyle.qml
 
+singleton CallTransferStyle                        1.0 Calls/Dialogs/CallTransferStyle.qml
+
 singleton ActivateLinphoneSipAccountWithEmailStyle 1.0 Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml
 singleton AssistantAbstractViewStyle               1.0 Main/Assistant/AssistantAbstractViewStyle.qml
 singleton AssistantHomeStyle                       1.0 Main/Assistant/AssistantHomeStyle.qml

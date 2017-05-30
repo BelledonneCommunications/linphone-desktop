@@ -281,6 +281,17 @@
     </message>
 </context>
 <context>
+    <name>CallTransfer</name>
+    <message>
+        <source>cancel</source>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>callTransferDescription</source>
+        <translation>Do you want to transfer this call ?</translation>
+    </message>
+</context>
+<context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>

@@ -212,18 +212,20 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
     return;
   }
 
-  QTimer::singleShot(
-    DELAY_BEFORE_REMOVE_CALL, this, [this, callModel]() {
-      qInfo() << QStringLiteral("Removing call:") << callModel;
+  QTimer::singleShot(DELAY_BEFORE_REMOVE_CALL, this, [this, callModel] {
+    removeCallCb(callModel);
+  });
+}
 
-      int index = mList.indexOf(callModel);
-      if (index == -1 || !removeRow(index))
-        qWarning() << QStringLiteral("Unable to remove call:") << callModel;
+void CallsListModel::removeCallCb (CallModel *callModel) {
+  qInfo() << QStringLiteral("Removing call:") << callModel;
 
-      if (mList.empty() && ConferenceHelperModel::getInstancesNumber() == 0) {
-        qInfo() << QStringLiteral("Last call terminated, close calls window.");
-        App::getInstance()->getCallsWindow()->close();
-      }
-    }
-  );
+  int index = mList.indexOf(callModel);
+  if (index == -1 || !removeRow(index))
+    qWarning() << QStringLiteral("Unable to remove call:") << callModel;
+
+  if (mList.empty() && ConferenceHelperModel::getInstancesNumber() == 0) {
+    qInfo() << QStringLiteral("Last call terminated, close calls window.");
+    App::getInstance()->getCallsWindow()->close();
+  }
 }

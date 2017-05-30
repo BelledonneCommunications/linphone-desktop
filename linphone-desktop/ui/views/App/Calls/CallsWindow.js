@@ -22,7 +22,7 @@ function handleClosing (close) {
   }
 
   window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
-    descriptionText: qsTr('acceptClosingDescription'),
+    descriptionText: qsTr('acceptClosingDescription')
   }, function (status) {
     if (status) {
       forceClose = true
@@ -71,5 +71,12 @@ function getContent () {
 // -----------------------------------------------------------------------------
 
 function handleCallTransferAsked (call) {
-  console.log('TODO: handle call transfer')
+  if (!call) {
+    return
+  }
+
+  window.detachVirtualWindow()
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/CallTransfer.qml'), {
+    call: call
+  })
 }
