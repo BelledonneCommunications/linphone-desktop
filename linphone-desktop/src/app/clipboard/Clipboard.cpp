@@ -1,5 +1,5 @@
 /*
- * ThumbnailProvider.cpp
+ * Clipboard.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,26 +16,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: May 30, 2017
  *      Author: Ronan Abhamon
  */
 
-#include "../../Utils.hpp"
-#include "../paths/Paths.hpp"
-
-#include "ThumbnailProvider.hpp"
+#include "Clipboard.hpp"
 
 // =============================================================================
-
-const QString ThumbnailProvider::PROVIDER_ID = "thumbnail";
-
-ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {
-  mThumbnailsPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
-}
-
-QImage ThumbnailProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  return QImage(mThumbnailsPath + id);
-}

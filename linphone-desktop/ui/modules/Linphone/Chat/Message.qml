@@ -1,6 +1,7 @@
 import QtQuick 2.7
 
 import Common 1.0
+import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -66,15 +67,24 @@ Item {
 
     onActiveFocusChanged: deselect()
 
+    Menu {
+      id: messageMenu
+
+      MenuItem {
+        text: qsTr('menuCopy')
+        onTriggered: Clipboard.text = $chatEntry.content
+      }
+    }
+
     // Handle hovered link.
     MouseArea {
-      id: mouseArea
-
       anchors.fill: parent
-      acceptedButtons: Qt.NoButton
+      acceptedButtons: Qt.RightButton
       cursorShape: parent.hoveredLink
         ? Qt.PointingHandCursor
         : Qt.IBeamCursor
+
+      onClicked: mouse.button === Qt.RightButton && messageMenu.open()
     }
   }
 

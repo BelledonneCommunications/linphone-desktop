@@ -42,6 +42,8 @@ singleton VuMeterStyle              1.0 Indicators/VuMeterStyle.qml
 
 singleton ApplicationMenuStyle      1.0 Menus/ApplicationMenuStyle.qml
 singleton DropDownStaticMenuStyle   1.0 Menus/DropDownStaticMenuStyle.qml
+singleton MenuItemStyle             1.0 Menus/MenuItemStyle.qml
+singleton MenuStyle                 1.0 Menus/MenuStyle.qml
 
 singleton CollapseStyle             1.0 Misc/CollapseStyle.qml
 singleton ForceScrollBarStyle       1.0 Misc/ForceScrollBarStyle.qml

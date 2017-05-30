@@ -80,7 +80,7 @@ inline void ensureFilePathExists (const QString &path) {
 }
 
 inline string getReadableDirPath (const QString &dirname) {
-  return Utils::appStringToCoreString(QDir::toNativeSeparators(dirname));
+  return ::Utils::appStringToCoreString(QDir::toNativeSeparators(dirname));
 }
 
 inline string getWritableDirPath (const QString &dirname) {
@@ -89,7 +89,7 @@ inline string getWritableDirPath (const QString &dirname) {
 }
 
 inline string getReadableFilePath (const QString &filename) {
-  return Utils::appStringToCoreString(QDir::toNativeSeparators(filename));
+  return ::Utils::appStringToCoreString(QDir::toNativeSeparators(filename));
 }
 
 inline string getWritableFilePath (const QString &filename) {

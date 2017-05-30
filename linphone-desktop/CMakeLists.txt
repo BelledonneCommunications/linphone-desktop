@@ -105,6 +105,7 @@ set(SOURCES
   src/components/camera/MSFunctions.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
+  src/components/clipboard/Clipboard.cpp
   src/components/codecs/AbstractCodecsModel.cpp
   src/components/codecs/AudioCodecsModel.cpp
   src/components/codecs/VideoCodecsModel.cpp
@@ -149,6 +150,7 @@ set(HEADERS
   src/components/camera/MSFunctions.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
+  src/components/clipboard/Clipboard.cpp
   src/components/codecs/AbstractCodecsModel.hpp
   src/components/codecs/AudioCodecsModel.hpp
   src/components/codecs/VideoCodecsModel.hpp

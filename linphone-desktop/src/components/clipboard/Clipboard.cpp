@@ -1,5 +1,5 @@
 /*
- * ThumbnailProvider.cpp
+ * Clipboard.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,26 +16,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: May 30, 2017
  *      Author: Ronan Abhamon
  */
 
-#include "../../Utils.hpp"
-#include "../paths/Paths.hpp"
+#include <QClipboard>
+#include <QGuiApplication>
 
-#include "ThumbnailProvider.hpp"
+#include "Clipboard.hpp"
 
 // =============================================================================
 
-const QString ThumbnailProvider::PROVIDER_ID = "thumbnail";
+Clipboard *Clipboard::mInstance = nullptr;
 
-ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {
-  mThumbnailsPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
+Clipboard::Clipboard (QObject *parent) : QObject(parent) {
+  connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &Clipboard::textChanged);
 }
 
-QImage ThumbnailProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  return QImage(mThumbnailsPath + id);
+// -----------------------------------------------------------------------------
+
+void Clipboard::init (QObject *parent) {
+  if (!mInstance)
+    mInstance = new Clipboard(parent);
+}
+
+QString Clipboard::getText () const {
+  return QGuiApplication::clipboard()->text(QClipboard::Clipboard);
+}
+
+void Clipboard::setText (const QString &text) {
+  QGuiApplication::clipboard()->setText(text, QClipboard::Clipboard);
 }

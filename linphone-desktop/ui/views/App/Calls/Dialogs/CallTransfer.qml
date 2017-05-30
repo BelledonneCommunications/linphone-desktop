@@ -9,13 +9,13 @@ import App.Styles 1.0
 // =============================================================================
 
 DialogPlus {
-	id: callTransfer
+  id: callTransfer
 
-	// ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
-	property var call
+  property var call
 
-	// ---------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
 
   buttons: [
     TextButtonA {
@@ -31,7 +31,7 @@ DialogPlus {
   height: CallTransferStyle.height
   width: CallTransferStyle.width
 
-	onCallChanged: !call && exit(0)
+  onCallChanged: !call && exit(0)
 
   // ---------------------------------------------------------------------------
 
@@ -87,7 +87,7 @@ DialogPlus {
               icon: 'transfer',
               handler: function (entry) {
                 callTransfer.call.transferTo(entry.sipAddress)
-								exit(1)
+                exit(1)
               }
             }]
 

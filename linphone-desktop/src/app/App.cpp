@@ -151,8 +151,9 @@ void App::initContentApp () {
     );
   }
 
-  // Init core.
+  // Init core and clipboard.
   CoreManager::init(this, mParser.value("config"));
+  Clipboard::init(this);
 
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
@@ -373,6 +374,7 @@ void App::registerSharedTypes () {
   qInfo() << QStringLiteral("Registering shared types...");
 
   registerSharedSingletonType(App, "App", App::getInstance);
+  registerSharedSingletonType(Clipboard, "Clipboard", Clipboard::getInstance);
   registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
   registerSharedSingletonType(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
   registerSharedSingletonType(AccountSettingsModel, "AccountSettingsModel", CoreManager::getInstance()->getAccountSettingsModel);

@@ -606,7 +606,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       statsList << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
-      QString sentVideoDefinitionName = Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
+      QString sentVideoDefinitionName = ::Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
       QString sentVideoDefinition = QString("%1x%2")
         .arg(params->getSentVideoDefinition()->getWidth())
         .arg(params->getSentVideoDefinition()->getHeight());
@@ -615,7 +615,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         ? sentVideoDefinition
         : QString("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
 
-      QString receivedVideoDefinitionName = Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
+      QString receivedVideoDefinitionName = ::Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
       QString receivedVideoDefinition = QString("%1x%2")
         .arg(params->getReceivedVideoDefinition()->getWidth())
         .arg(params->getReceivedVideoDefinition()->getHeight());

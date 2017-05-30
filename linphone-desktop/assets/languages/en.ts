@@ -823,6 +823,20 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
+    <name>Message</name>
+    <message>
+        <source>menuCopy</source>
+        <translation>Copy</translation>
+    </message>
+</context>
+<context>
+    <name>MessageMenu</name>
+    <message>
+        <source>copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>

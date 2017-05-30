@@ -1,5 +1,5 @@
 /*
- * ThumbnailProvider.cpp
+ * Clipboard.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,26 +16,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: May 30, 2017
  *      Author: Ronan Abhamon
  */
 
-#include "../../Utils.hpp"
-#include "../paths/Paths.hpp"
+#ifndef CLIPBOARD_H_
+#define CLIPBOARD_H_
 
-#include "ThumbnailProvider.hpp"
+#include <QObject>
 
 // =============================================================================
 
-const QString ThumbnailProvider::PROVIDER_ID = "thumbnail";
+class Clipboard : public QObject {
+  Q_OBJECT;
 
-ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {
-  mThumbnailsPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
-}
+  Q_PROPERTY(QString text READ getText WRITE setText NOTIFY textChanged);
 
-QImage ThumbnailProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  return QImage(mThumbnailsPath + id);
-}
+public:
+  ~Clipboard () = default;
+
+  static void init (QObject *parent);
+
+  static Clipboard *getInstance () {
+    Q_ASSERT(mInstance != nullptr);
+    return mInstance;
+  }
+
+signals:
+  void textChanged ();
+
+private:
+  Clipboard (QObject *parent);
+
+  QString getText () const;
+  void setText (const QString &text);
+
+  static Clipboard *mInstance;
+};
+
+#endif // ifndef CLIPBOARD_H_
