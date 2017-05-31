@@ -300,7 +300,7 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     target_link_libraries(${TARGET_NAME} ${Qt5${package}_LIBRARIES})
 
     string(TOUPPER "${package}" INCLUDE_NAME)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_${INCLUDE_NAME}_ENABLED")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${INCLUDE_NAME}_ENABLED")
   else ()
     message("Optional package ${package} not found.")
   endif ()
