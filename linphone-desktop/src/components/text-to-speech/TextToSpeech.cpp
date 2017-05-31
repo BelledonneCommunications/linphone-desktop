@@ -30,7 +30,7 @@
 
 #ifdef TEXTTOSPEECH_ENABLED
   TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {
-    mQtTextToSpeech = new QTTextToSpeech(this);
+    mQtTextToSpeech = new QTextToSpeech(this);
   }
 
   void TextToSpeech::say (const QString &text) {
