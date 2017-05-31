@@ -36,7 +36,7 @@ include(CheckCXXCompilerFlag)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-if(NOT WIN32)
+if (NOT WIN32)
   check_cxx_compiler_flag("-Wsuggest-override" SUGGEST_OVERRIDE)
   set(CUSTOM_FLAGS "\
 -Wall \
@@ -53,19 +53,19 @@ if(NOT WIN32)
 -Wuninitialized \
 -Wunused \
 ")
-  if(NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
-  endif()
-  if(SUGGEST_OVERRIDE)
+  endif ()
+  if (SUGGEST_OVERRIDE)
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override -Werror=suggest-override")
-  endif()
-endif()
+  endif ()
+endif ()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
 # See: http://stackoverflow.com/a/1372836
-if(WIN32)
+if (WIN32)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINSOCKAPI_")
-endif()
+endif ()
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
@@ -74,19 +74,20 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_
 # Define packages, libs, sources, headers, resources and languages.
 # ------------------------------------------------------------------------------
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network TextToSpeech)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
+set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
-if(LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
+if (LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
   include("${EP_linphone_CONFIG_DIR}/LinphoneConfig.cmake")
   include("${EP_linphone_CONFIG_DIR}/wrappers/cpp/LinphoneCxxConfig.cmake")
   include("${EP_bctoolbox_CONFIG_DIR}/BcToolboxConfig.cmake")
   include("${EP_belcard_CONFIG_DIR}/BelcardConfig.cmake")
-else()
+else ()
   find_package(Linphone REQUIRED)
   find_package(LinphoneCxx REQUIRED)
   find_package(BcToolbox REQUIRED)
   find_package(Belcard REQUIRED)
-endif()
+endif ()
 
 set(SOURCES
   src/app/App.cpp
@@ -127,6 +128,7 @@ set(SOURCES
   src/components/sip-addresses/SipAddressesProxyModel.cpp
   src/components/sip-addresses/SipAddressObserver.cpp
   src/components/sound-player/SoundPlayer.cpp
+  src/components/text-to-speech/TextToSpeech.cpp
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
@@ -173,6 +175,7 @@ set(HEADERS
   src/components/sip-addresses/SipAddressesProxyModel.hpp
   src/components/sip-addresses/SipAddressObserver.hpp
   src/components/sound-player/SoundPlayer.hpp
+  src/components/text-to-speech/TextToSpeech.hpp
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp
   src/externals/single-application/SingleApplicationPrivate.hpp
@@ -221,16 +224,16 @@ foreach (line ${QRC_RESOURCES_CONTENT})
   endif ()
 endforeach ()
 
-if(NOT WIN32)
+# ------------------------------------------------------------------------------
+# Init git hooks.
+# ------------------------------------------------------------------------------
+
+if (NOT WIN32)
   add_custom_target(
     check_qml DEPENDS ${QML_SOURCES}
     COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/check_qml_syntax"
   )
-endif()
-
-# ------------------------------------------------------------------------------
-# Init git hooks.
-# ------------------------------------------------------------------------------
+endif ()
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
@@ -249,13 +252,14 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BIN
 # ------------------------------------------------------------------------------
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
-if(CMAKE_INSTALL_RPATH)
+if (CMAKE_INSTALL_RPATH)
   get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
   get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
   get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
   list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
-endif()
+endif ()
 
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
@@ -266,26 +270,40 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 
 # Build.
 # Note: `update_translations` is provided by `languages/CMakeLists.txt`.
-if(WIN32)
+if (WIN32)
   add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} linphone.rc)
-else()
+else ()
   add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES})
-endif()
+endif ()
   bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
   add_dependencies(${TARGET_NAME} ${TARGET_NAME}-git-version)
   add_dependencies(${TARGET_NAME} update_translations)
-if(NOT WIN32)
+if (NOT WIN32)
   add_dependencies(update_translations check_qml)
-endif()
+endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
+
 foreach (package ${QT5_PACKAGES})
   target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
   # `qt5_create_translation` is provided from `LinguistTools` package.
   # But the `Qt5::LinguistTools` lib does not exist. Remove it.
   if (NOT (${package} STREQUAL LinguistTools))
     target_link_libraries(${TARGET_NAME} ${Qt5${package}_LIBRARIES})
-  endif()
+  endif ()
+endforeach ()
+
+foreach (package ${QT5_PACKAGES_OPTIONAL})
+  if ("${Qt5${package}_FOUND}")
+    message("Optional package ${package} found.")
+    target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
+    target_link_libraries(${TARGET_NAME} ${Qt5${package}_LIBRARIES})
+
+    string(TOUPPER "${package}" INCLUDE_NAME)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_${INCLUDE_NAME}_ENABLED")
+  else ()
+    message("Optional package ${package} not found.")
+  endif ()
 endforeach ()
 
 target_link_libraries(${TARGET_NAME} ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})

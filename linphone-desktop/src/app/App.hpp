@@ -26,7 +26,6 @@
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
-#include <QTextToSpeech>
 
 #include "../components/notifier/Notifier.hpp"
 #include "../externals/single-application/SingleApplication.hpp"
@@ -44,8 +43,6 @@ class App : public SingleApplication {
   Q_PROPERTY(QString locale READ getLocale CONSTANT);
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
   Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT);
-
-  Q_PROPERTY(QTextToSpeech * textToSpeech READ getTextToSpeech CONSTANT);
 
 public:
   App (int &argc, char *argv[]);
@@ -89,10 +86,6 @@ signals:
   void configLocaleChanged (const QString &locale);
 
 private:
-  QTextToSpeech *getTextToSpeech () const {
-    return mTextToSpeech;
-  }
-
   void registerTypes ();
   void registerSharedTypes ();
   void setTrayIcon ();
@@ -118,8 +111,6 @@ private:
   QVariantList mAvailableLocales;
   QString mLocale;
 
-  QTextToSpeech *mTextToSpeech = nullptr;
-
   QQmlApplicationEngine *mEngine = nullptr;
 
   DefaultTranslator *mTranslator = nullptr;
@@ -128,7 +119,5 @@ private:
   QQuickWindow *mCallsWindow = nullptr;
   QQuickWindow *mSettingsWindow = nullptr;
 };
-
-Q_DECLARE_METATYPE(QTextToSpeech *);
 
 #endif // APP_H_

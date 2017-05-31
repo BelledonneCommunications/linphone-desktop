@@ -151,9 +151,8 @@ void App::initContentApp () {
     );
   }
 
-  // Init core and clipboard.
+  // Init core.
   CoreManager::init(this, mParser.value("config"));
-  Clipboard::init(this);
 
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
@@ -170,9 +169,6 @@ void App::initContentApp () {
   // Provide avatars/thumbnails providers.
   mEngine->addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
   mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
-
-  mTextToSpeech = new QTextToSpeech(this);
-  QQmlEngine::setObjectOwnership(mTextToSpeech, QQmlEngine::CppOwnership);
 
   registerTypes();
   registerSharedTypes();
@@ -359,8 +355,10 @@ void App::registerTypes () {
   registerType<SoundPlayer>("SoundPlayer");
 
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
+  registerSingletonType<Clipboard>("Clipboard");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
+  registerSingletonType<TextToSpeech>("TextToSpeech");
   registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
@@ -377,7 +375,6 @@ void App::registerSharedTypes () {
   qInfo() << QStringLiteral("Registering shared types...");
 
   registerSharedSingletonType(App, "App", App::getInstance);
-  registerSharedSingletonType(Clipboard, "Clipboard", Clipboard::getInstance);
   registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
   registerSharedSingletonType(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
   registerSharedSingletonType(AccountSettingsModel, "AccountSettingsModel", CoreManager::getInstance()->getAccountSettingsModel);

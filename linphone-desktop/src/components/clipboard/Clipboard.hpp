@@ -33,25 +33,16 @@ class Clipboard : public QObject {
   Q_PROPERTY(QString text READ getText WRITE setText NOTIFY textChanged);
 
 public:
+  Clipboard (QObject *parent = Q_NULLPTR);
   ~Clipboard () = default;
-
-  static void init (QObject *parent);
-
-  static Clipboard *getInstance () {
-    Q_ASSERT(mInstance != nullptr);
-    return mInstance;
-  }
 
 signals:
   void textChanged ();
 
 private:
-  Clipboard (QObject *parent);
 
   QString getText () const;
   void setText (const QString &text);
-
-  static Clipboard *mInstance;
 };
 
 #endif // ifndef CLIPBOARD_H_

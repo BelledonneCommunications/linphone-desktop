@@ -77,7 +77,7 @@ Item {
 
       MenuItem {
         text: qsTr('menuPlayMe')
-        onTriggered: App.textToSpeech.say($chatEntry.content)
+        onTriggered: TextToSpeech.say($chatEntry.content)
       }
     }
 

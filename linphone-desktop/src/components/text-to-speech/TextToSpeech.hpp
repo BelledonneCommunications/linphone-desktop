@@ -1,5 +1,5 @@
 /*
- * Clipboard.cpp
+ * TextToSpeech.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,25 +16,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: May 30, 2017
+ *  Created on: May 31, 2017
  *      Author: Ronan Abhamon
  */
 
-#include <QClipboard>
-#include <QGuiApplication>
+#ifndef TEXT_TO_SPEECH_H_
+#define TEXT_TO_SPEECH_H_
 
-#include "Clipboard.hpp"
+#include <QObject>
 
 // =============================================================================
 
-Clipboard::Clipboard (QObject *parent) : QObject(parent) {
-  connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &Clipboard::textChanged);
-}
+class QTextToSpeech;
 
-QString Clipboard::getText () const {
-  return QGuiApplication::clipboard()->text(QClipboard::Clipboard);
-}
+class TextToSpeech : public QObject {
+  Q_OBJECT;
 
-void Clipboard::setText (const QString &text) {
-  QGuiApplication::clipboard()->setText(text, QClipboard::Clipboard);
-}
+public:
+  TextToSpeech (QObject *parent = Q_NULLPTR);
+  ~TextToSpeech () = default;
+
+  Q_INVOKABLE void say (const QString &text);
+
+private:
+  QTextToSpeech *mQtTextToSpeech = nullptr;
+};
+
+#endif // ifndef TEXT_TO_SPEECH_H_
