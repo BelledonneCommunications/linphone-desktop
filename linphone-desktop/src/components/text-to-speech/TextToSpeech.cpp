@@ -37,9 +37,17 @@
     mQtTextToSpeech->say(text);
   }
 
+  bool TextToSpeech::available () const {
+    return true;
+  }
+
 #else
   TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {}
 
   void TextToSpeech::say (const QString &) {}
+
+  bool TextToSpeech::available () const {
+    return false;
+  }
 
 #endif // ifdef TEXTTOSPEECH_ENABLED

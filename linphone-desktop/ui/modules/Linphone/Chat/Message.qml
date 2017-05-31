@@ -76,7 +76,9 @@ Item {
       }
 
       MenuItem {
+        enabled: TextToSpeech.available
         text: qsTr('menuPlayMe')
+
         onTriggered: TextToSpeech.say($chatEntry.content)
       }
     }

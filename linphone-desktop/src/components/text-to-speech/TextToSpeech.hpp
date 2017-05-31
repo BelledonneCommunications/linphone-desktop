@@ -32,6 +32,8 @@ class QTextToSpeech;
 class TextToSpeech : public QObject {
   Q_OBJECT;
 
+  Q_PROPERTY(bool available READ available CONSTANT);
+
 public:
   TextToSpeech (QObject *parent = Q_NULLPTR);
   ~TextToSpeech () = default;
@@ -39,6 +41,8 @@ public:
   Q_INVOKABLE void say (const QString &text);
 
 private:
+  bool available () const;
+
   QTextToSpeech *mQtTextToSpeech = nullptr;
 };
 

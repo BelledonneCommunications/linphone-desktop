@@ -18,11 +18,19 @@ MenuItem {
       )
     implicitHeight: MenuItemStyle.background.height
   }
+
   contentItem: Text {
-    color: MenuItemStyle.text.color
+    color: button.enabled
+      ? MenuItemStyle.text.color.enabled
+      : MenuItemStyle.text.color.disabled
+
     elide: Text.ElideRight
-    font.bold: true
-    font.pointSize: MenuItemStyle.text.fontSize
+
+    font {
+      bold: true
+      pointSize: MenuItemStyle.text.fontSize
+    }
+
     text: button.text
 
     leftPadding: MenuItemStyle.leftPadding
@@ -30,5 +38,6 @@ MenuItem {
 
     verticalAlignment: Text.AlignVCenter
   }
+
   hoverEnabled: true
 }

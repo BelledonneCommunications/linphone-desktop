@@ -20,7 +20,11 @@ QtObject {
   }
 
   property QtObject text: QtObject {
-    property color color: Colors.j
     property int fontSize: 10
+
+    property QtObject color: QtObject {
+      property color enabled: Colors.j
+      property color disabled: Colors.l50
+    }
   }
 }
