@@ -128,6 +128,7 @@ set(SOURCES
   src/components/sip-addresses/SipAddressesProxyModel.cpp
   src/components/sip-addresses/SipAddressObserver.cpp
   src/components/sound-player/SoundPlayer.cpp
+  src/components/telephone-numbers/TelephoneNumbers.cpp
   src/components/text-to-speech/TextToSpeech.cpp
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
@@ -175,6 +176,7 @@ set(HEADERS
   src/components/sip-addresses/SipAddressesProxyModel.hpp
   src/components/sip-addresses/SipAddressObserver.hpp
   src/components/sound-player/SoundPlayer.hpp
+  src/components/telephone-numbers/TelephoneNumbers.hpp
   src/components/text-to-speech/TextToSpeech.hpp
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp

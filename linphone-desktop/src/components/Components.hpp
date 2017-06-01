@@ -40,6 +40,7 @@
 #include "settings/AccountSettingsModel.hpp"
 #include "sip-addresses/SipAddressesProxyModel.hpp"
 #include "sound-player/SoundPlayer.hpp"
+#include "telephone-numbers/TelephoneNumbers.hpp"
 #include "text-to-speech/TextToSpeech.hpp"
 #include "timeline/TimelineModel.hpp"
 
