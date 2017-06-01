@@ -35,6 +35,7 @@ class AssistantModel : public QObject {
 
   Q_PROPERTY(QString email READ getEmail WRITE setEmail NOTIFY emailChanged);
   Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged);
+  Q_PROPERTY(QString countryCode READ getCountryCode WRITE setCountryCode NOTIFY countryCodeChanged);
   Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
   Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged);
@@ -52,6 +53,7 @@ public:
 signals:
   void emailChanged (const QString &email, const QString &error);
   void passwordChanged (const QString &password, const QString &error);
+  void countryCodeChanged (const QString &countryCode);
   void phoneNumberChanged (const QString &phoneNumber, const QString &error);
   void usernameChanged (const QString &username, const QString &error);
   void displayNameChanged (const QString &displayName, const QString &error);
@@ -69,6 +71,9 @@ private:
   QString getPassword () const;
   void setPassword (const QString &password);
 
+  QString getCountryCode () const;
+  void setCountryCode (const QString &countryCode);
+
   QString getPhoneNumber () const;
   void setPhoneNumber (const QString &phoneNumber);
 
@@ -83,6 +88,7 @@ private:
 
   QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreatorUsernameStatus status) const;
 
+  QString mCountryCode;
   QString mConfigFilename;
 
   std::shared_ptr<linphone::AccountCreator> mAccountCreator;

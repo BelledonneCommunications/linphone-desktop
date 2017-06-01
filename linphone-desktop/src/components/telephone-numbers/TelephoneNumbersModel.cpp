@@ -1,5 +1,5 @@
 /*
- * TelephoneNumbers.cpp
+ * TelephoneNumbersModel.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,11 +20,13 @@
  *      Author: Ronan Abhamon
  */
 
-#include "TelephoneNumbers.hpp"
+#include "TelephoneNumbersModel.hpp"
+
+using namespace std;
 
 // =============================================================================
 
-const QList<QPair<QLocale::Country, QString> > TelephoneNumbers::mCountryCodes = {
+const QList<QPair<QLocale::Country, QString> > TelephoneNumbersModel::mCountryCodes = {
   { QLocale::Afghanistan, "93" },
   { QLocale::Albania, "355" },
   { QLocale::Algeria, "213" },
@@ -252,19 +254,19 @@ const QList<QPair<QLocale::Country, QString> > TelephoneNumbers::mCountryCodes =
 
 // -----------------------------------------------------------------------------
 
-TelephoneNumbers::TelephoneNumbers (QObject *parent) : QAbstractListModel(parent) {}
+TelephoneNumbersModel::TelephoneNumbersModel (QObject *parent) : QAbstractListModel(parent) {}
 
-int TelephoneNumbers::rowCount (const QModelIndex &) const {
+int TelephoneNumbersModel::rowCount (const QModelIndex &) const {
   return mCountryCodes.count();
 }
 
-QHash<int, QByteArray> TelephoneNumbers::roleNames () const {
+QHash<int, QByteArray> TelephoneNumbersModel::roleNames () const {
   QHash<int, QByteArray> roles;
   roles[Qt::DisplayRole] = "$phoneNumber";
   return roles;
 }
 
-QVariant TelephoneNumbers::data (const QModelIndex &index, int role) const {
+QVariant TelephoneNumbersModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
   if (!index.isValid() || row < 0 || row >= mCountryCodes.count())
@@ -272,11 +274,24 @@ QVariant TelephoneNumbers::data (const QModelIndex &index, int role) const {
 
   if (role == Qt::DisplayRole) {
     const QPair<QLocale::Country, QString> &countryCode = mCountryCodes[row];
-    QVariantMap map;
 
+    QVariantMap map;
     map["countryCode"] = countryCode.second;
-    map["countryName"] = QLocale::countryToString(countryCode.first);
+    map["countryName"] = QStringLiteral("%1 (+%2)")
+      .arg(QLocale::countryToString(countryCode.first))
+      .arg(countryCode.second);
+    return map;
   }
 
   return QVariant();
+}
+
+int TelephoneNumbersModel::getDefaultIndex () const {
+  QLocale::Country country = QLocale().country();
+  const auto it = find_if(
+      mCountryCodes.cbegin(), mCountryCodes.cend(), [&country](const QPair<QLocale::Country, QString> &pair) {
+        return country == pair.first;
+      }
+    );
+  return it != mCountryCodes.cend() ? static_cast<int>(distance(mCountryCodes.cbegin(), it)) : 0;
 }

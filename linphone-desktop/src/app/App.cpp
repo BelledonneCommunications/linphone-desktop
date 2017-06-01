@@ -353,7 +353,7 @@ void App::registerTypes () {
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
-  registerType<TelephoneNumbers>("TelephoneNumbers");
+  registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<Clipboard>("Clipboard");

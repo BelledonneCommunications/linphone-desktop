@@ -1,5 +1,5 @@
 /*
- * TelephoneNumbers.hpp
+ * TelephoneNumbersModel.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,18 +20,22 @@
  *      Author: Ronan Abhamon
  */
 
-#ifndef TELEPHONE_NUMBERS_H_
-#define TELEPHONE_NUMBERS_H_
+#ifndef TELEPHONE_NUMBERS_MODEL_H_
+#define TELEPHONE_NUMBERS_MODEL_H_
 
 #include <QAbstractListModel>
 #include <QLocale>
 
 // =============================================================================
 
-class TelephoneNumbers : public QAbstractListModel {
+class TelephoneNumbersModel : public QAbstractListModel {
+  Q_OBJECT;
+
+  Q_PROPERTY(int defaultIndex READ getDefaultIndex CONSTANT);
+
 public:
-  TelephoneNumbers (QObject *parent = Q_NULLPTR);
-  ~TelephoneNumbers () = default;
+  TelephoneNumbersModel (QObject *parent = Q_NULLPTR);
+  ~TelephoneNumbersModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -39,7 +43,9 @@ public:
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:
+  int getDefaultIndex () const;
+
   static const QList<QPair<QLocale::Country, QString> > mCountryCodes;
 };
 
-#endif // ifndef TELEPHONE_NUMBERS_H_
+#endif // ifndef TELEPHONE_NUMBERS_MODEL_H_

@@ -53,7 +53,7 @@ ComboBox {
       font.pointSize: ComboBoxStyle.contentItem.text.fontSize
       rightPadding: comboBox.indicator.width + comboBox.spacing
 
-      text: comboBox.displayText
+      text: Logic.getSelectedEntryText()
     }
   }
 

@@ -150,6 +150,22 @@
         <source>emailActivationFailed</source>
         <translation>Merci de vérifier que vous avez validé votre compte ou réessayez plus tard.</translation>
     </message>
+    <message>
+        <source>phoneNumberStatusInvalid</source>
+        <translation>Numéro de tél. invalide !</translation>
+    </message>
+    <message>
+        <source>phoneNumberStatusTooShort</source>
+        <translation>Trop court !</translation>
+    </message>
+    <message>
+        <source>phoneNumberStatusTooLong</source>
+        <translation>Trop long !</translation>
+    </message>
+    <message>
+        <source>phoneNumberStatusInvalidCountryCode</source>
+        <translation>Indicatif tél. invalide !</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
@@ -604,6 +620,14 @@ Url du serveur non configurée.</translation>
     <message>
         <source>displayNameLabel</source>
         <translation>Nom d&apos;affichage (optionnel)</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>CRÉER</translation>
+    </message>
+    <message>
+        <source>quitWarning</source>
+        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Si vous quittez cette vue, vous devrez ajouter manuellement votre compte et le valider dans les 24 heures.</translation>
     </message>
 </context>
 <context>

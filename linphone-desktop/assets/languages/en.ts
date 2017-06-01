@@ -150,6 +150,22 @@
         <source>emailActivationFailed</source>
         <translation>Please verify that you have validated your account or try again.</translation>
     </message>
+    <message>
+        <source>phoneNumberStatusInvalid</source>
+        <translation>Invalid phone number!</translation>
+    </message>
+    <message>
+        <source>phoneNumberStatusTooShort</source>
+        <translation>Too short!</translation>
+    </message>
+    <message>
+        <source>phoneNumberStatusTooLong</source>
+        <translation>Too short!</translation>
+    </message>
+    <message>
+        <source>phoneNumberStatusInvalidCountryCode</source>
+        <translation>Invalid country code!</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
@@ -604,6 +620,14 @@ Server url not configured.</translation>
     <message>
         <source>displayNameLabel</source>
         <translation>Display name (optional)</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>CREATE</translation>
+    </message>
+    <message>
+        <source>quitWarning</source>
+        <translation>Your account has been created but is not yet validated. If you quit this view, you should add manually your account and validate it within 24 hours.</translation>
     </message>
 </context>
 <context>

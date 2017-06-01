@@ -34,6 +34,27 @@ function getSelectedEntryIcon () {
   ) || ''
 }
 
+function getSelectedEntryText () {
+  if (comboBox.currentIndex < 0) {
+    return ''
+  }
+
+  var text = comboBox.displayText
+  if (text.length > 0) {
+    return text
+  }
+
+  // With a `QAbstractListModel`, `text` is empty. QML bug?
+  var model = comboBox.model
+  if (model.data) {
+    var item = model.data(model.index(comboBox.currentIndex, 0))
+    var textRole = comboBox.textRole
+    return textRole.length > 0 ? item[textRole] : item
+  }
+
+  return ''
+}
+
 function getEntryIcon (item) {
   var iconRole = comboBox.iconRole
   if (iconRole == null || iconRole.length === 0) {

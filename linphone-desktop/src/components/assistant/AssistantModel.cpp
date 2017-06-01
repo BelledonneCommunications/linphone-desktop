@@ -180,6 +180,7 @@ void AssistantModel::login () {
 }
 
 void AssistantModel::reset () {
+  mCountryCode = "";
   mAccountCreator->reset();
 
   emit emailChanged("", "");
@@ -246,15 +247,43 @@ void AssistantModel::setPassword (const QString &password) {
 
 // -----------------------------------------------------------------------------
 
+QString AssistantModel::getCountryCode () const {
+  return mCountryCode;
+}
+
+void AssistantModel::setCountryCode (const QString &countryCode) {
+  mCountryCode = countryCode;
+  emit countryCodeChanged(countryCode);
+}
+
+// -----------------------------------------------------------------------------
+
 QString AssistantModel::getPhoneNumber () const {
   return ::Utils::coreStringToAppString(mAccountCreator->getPhoneNumber());
 }
 
 void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
-  // shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
+  shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  // TODO: use the future wrapped function: `set_phone_number`.
+  switch (mAccountCreator->setPhoneNumber(::Utils::appStringToCoreString(phoneNumber), ::Utils::appStringToCoreString(mCountryCode))) {
+    case linphone::AccountCreatorPhoneNumberStatusOk:
+      break;
+    case linphone::AccountCreatorPhoneNumberStatusInvalid:
+      error = tr("phoneNumberStatusInvalid");
+      break;
+    case linphone::AccountCreatorPhoneNumberStatusTooShort:
+      error = tr("phoneNumberStatusTooShort");
+      break;
+    case linphone::AccountCreatorPhoneNumberStatusTooLong:
+      error = tr("phoneNumberStatusTooLong");
+      break;
+    case linphone::AccountCreatorPhoneNumberStatusInvalidCountryCode:
+      error = tr("phoneNumberStatusInvalidCountryCode");
+      break;
+    default:
+      break;
+  }
 
   emit phoneNumberChanged(phoneNumber, error);
 }

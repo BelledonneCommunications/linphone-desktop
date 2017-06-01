@@ -40,7 +40,7 @@ DialogPlus {
 
         ComboBox {
           currentIndex: Utils.findIndex(OwnPresenceModel.statuses, function (status) {
-            return status.presenceStatus == OwnPresenceModel.presenceStatus
+            return status.presenceStatus === OwnPresenceModel.presenceStatus
           })
 
           model: OwnPresenceModel.statuses
