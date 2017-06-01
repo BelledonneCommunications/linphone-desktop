@@ -377,6 +377,7 @@
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
     <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithEmail.qml</file>
+    <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithPhoneNumber.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantHome.qml</file>
     <file>ui/views/App/Main/Assistant/CreateLinphoneSipAccount.qml</file>
@@ -422,6 +423,7 @@
     <file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>
+    <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithPhoneNumberStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantHomeStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/CreateLinphoneSipAccountStyle.qml</file>

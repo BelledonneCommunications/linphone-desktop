@@ -24,6 +24,21 @@
     </message>
 </context>
 <context>
+    <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
+    <message>
+        <source>activateLinphoneSipAccount</source>
+        <translation>CRÉER UN COMPTE LINPHONE</translation>
+    </message>
+    <message>
+        <source>confirmAction</source>
+        <translation>ACTIVER</translation>
+    </message>
+    <message>
+        <source>activationSteps</source>
+        <translation>Nous vous avons envoyé un SMS avec un code de validation au %1. Pour compléter la vérification de votre tél., merci d&apos;entrer le code à 4 chiffres ci-dessous.</translation>
+    </message>
+</context>
+<context>
     <name>App</name>
     <message>
         <source>selfTestResult</source>
@@ -592,7 +607,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Si vous quittez cette vue, vous devrez ajouter manuellement votre compte et le valider dans les 24 heures.</translation>
+        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Êtes-vous sûr de vouloir quitter cette vue ?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>

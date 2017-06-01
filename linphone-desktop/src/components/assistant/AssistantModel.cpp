@@ -110,42 +110,6 @@ private:
     }
   }
 
-  // void onLinkAccount (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
-  // void onActivateAlias (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
-  // void onIsAliasUsed (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
-  // void onIsAccountLinked (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
-  // void onRecoverAccount (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-  //
-  // void onUpdateAccount (
-  // const shared_ptr<linphone::AccountCreator> &creator,
-  // linphone::AccountCreatorStatus status,
-  // const string &resp
-  // ) override {}
-
 private:
   AssistantModel *mAssistant;
 };
@@ -316,6 +280,17 @@ void AssistantModel::setDisplayName (const QString &displayName) {
       mAccountCreator->setDisplayName(::Utils::appStringToCoreString(displayName))
     )
   );
+}
+
+// -----------------------------------------------------------------------------
+
+QString AssistantModel::getActivationCode () const {
+  return ::Utils::coreStringToAppString(mAccountCreator->getActivationCode());
+}
+
+void AssistantModel::setActivationCode (const QString &activationCode) {
+  mAccountCreator->setActivationCode(::Utils::appStringToCoreString(activationCode));
+  emit activationCodeChanged(activationCode);
 }
 
 // -----------------------------------------------------------------------------

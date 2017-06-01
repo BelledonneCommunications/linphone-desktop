@@ -39,6 +39,7 @@ class AssistantModel : public QObject {
   Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
   Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged);
+  Q_PROPERTY(QString activationCode READ getActivationCode WRITE setActivationCode NOTIFY activationCodeChanged);
   Q_PROPERTY(QString configFilename READ getConfigFilename WRITE setConfigFilename NOTIFY configFilenameChanged);
 
 public:
@@ -57,6 +58,7 @@ signals:
   void phoneNumberChanged (const QString &phoneNumber, const QString &error);
   void usernameChanged (const QString &username, const QString &error);
   void displayNameChanged (const QString &displayName, const QString &error);
+  void activationCodeChanged (const QString &activationCode);
 
   void activateStatusChanged (const QString &error);
   void createStatusChanged (const QString &error);
@@ -82,6 +84,9 @@ private:
 
   QString getDisplayName () const;
   void setDisplayName (const QString &displayName);
+
+  QString getActivationCode () const;
+  void setActivationCode (const QString &activationCode);
 
   QString getConfigFilename () const;
   void setConfigFilename (const QString &configFilename);
