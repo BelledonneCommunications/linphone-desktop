@@ -51,6 +51,8 @@ public:
 
   Q_INVOKABLE void reset ();
 
+  Q_INVOKABLE bool addOtherSipAccount (const QVariantMap &map);
+
 signals:
   void emailChanged (const QString &email, const QString &error);
   void passwordChanged (const QString &password, const QString &error);

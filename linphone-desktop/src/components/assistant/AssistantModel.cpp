@@ -21,6 +21,7 @@
  */
 
 #include "../../app/paths/Paths.hpp"
+#include "../../LinphoneUtils.hpp"
 #include "../../Utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -180,6 +181,59 @@ void AssistantModel::reset () {
   emit passwordChanged("", "");
   emit phoneNumberChanged("", "");
   emit usernameChanged("", "");
+}
+
+// -----------------------------------------------------------------------------
+
+bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
+  CoreManager *coreManager = CoreManager::getInstance();
+
+  shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+  shared_ptr<linphone::Core> core = coreManager->getCore();
+  shared_ptr<linphone::ProxyConfig> proxyConfig = core->createProxyConfig();
+
+  const QString &domain = map["sipDomain"].toString();
+
+  QString sipAddress = QStringLiteral("sip:%1@%2")
+    .arg(map["username"].toString()).arg(domain);
+
+  // Server address.
+  {
+    shared_ptr<linphone::Address> address = factory->createAddress(
+        ::Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain))
+      );
+    address->setTransport(LinphoneUtils::stringToTransportType(map["transport"].toString()));
+
+    if (proxyConfig->setServerAddr(address->asString())) {
+      qWarning() << QStringLiteral("Unable to add server address: `%1`.")
+        .arg(::Utils::coreStringToAppString(address->asString()));
+      return false;
+    }
+  }
+
+  // Sip Address.
+  shared_ptr<linphone::Address> address = factory->createAddress(::Utils::appStringToCoreString(sipAddress));
+  if (!address) {
+    qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(sipAddress);
+    return false;
+  }
+
+  address->setDisplayName(::Utils::appStringToCoreString(map["displayName"].toString()));
+  proxyConfig->setIdentityAddress(address);
+
+  // AuthInfo.
+  core->addAuthInfo(
+    factory->createAuthInfo(
+      address->getUsername(), // Username.
+      "", // User ID.
+      ::Utils::appStringToCoreString(map["password"].toString()), // Password.
+      "", // HA1.
+      "", // Realm.
+      address->getDomain() // Domain.
+    )
+  );
+
+  return coreManager->getAccountSettingsModel()->addOrUpdateProxyConfig(proxyConfig);
 }
 
 // -----------------------------------------------------------------------------

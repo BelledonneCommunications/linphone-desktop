@@ -133,6 +133,7 @@ set(SOURCES
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
+  src/LinphoneUtils.cpp
   src/Utils.cpp
 )
 
@@ -181,6 +182,7 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp
   src/externals/single-application/SingleApplicationPrivate.hpp
+  src/LinphoneUtils.hpp
   src/Utils.hpp
 )
 

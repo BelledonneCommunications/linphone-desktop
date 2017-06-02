@@ -1401,6 +1401,10 @@ un chat ou ajouter un contact.</translation>
         <source>transportLabel</source>
         <translation>Transport</translation>
     </message>
+    <message>
+        <source>addOtherSipAccountError</source>
+        <translation>Impossible d&apos;ajouter ce compte.</translation>
+    </message>
 </context>
 <context>
     <name>ZrtpTokenAuthentication</name>

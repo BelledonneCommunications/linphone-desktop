@@ -1402,6 +1402,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>transportLabel</source>
         <translation>Transport</translation>
     </message>
+    <message>
+        <source>addOtherSipAccountError</source>
+        <translation>Unable to add this account.</translation>
+    </message>
 </context>
 <context>
     <name>ZrtpTokenAuthentication</name>

@@ -24,6 +24,7 @@
 #include <QSet>
 #include <QtDebug>
 
+#include "../../LinphoneUtils.hpp"
 #include "../../Utils.hpp"
 #include "../chat/ChatModel.hpp"
 #include "../core/CoreManager.hpp"
@@ -132,8 +133,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
       const QString &sipAddress = model->getSipAddress();
       if (mObservers.remove(sipAddress, model) == 0)
         qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sipAddress);
-    }
-  );
+    });
 
   return model;
 }
@@ -178,15 +178,7 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
   if (!address)
     return "";
 
-  QString transportStr = transport.toUpper();
-  if (transportStr == "TCP")
-    address->setTransport(linphone::TransportType::TransportTypeTcp);
-  else if (transportStr == "UDP")
-    address->setTransport(linphone::TransportType::TransportTypeUdp);
-  else if (transportStr == "TLS")
-    address->setTransport(linphone::TransportType::TransportTypeTls);
-  else
-    address->setTransport(linphone::TransportType::TransportTypeDtls);
+  address->setTransport(LinphoneUtils::stringToTransportType(transport.toUpper()));
 
   return ::Utils::coreStringToAppString(address->asString());
 }
