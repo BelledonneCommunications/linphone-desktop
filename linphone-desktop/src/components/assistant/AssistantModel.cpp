@@ -32,6 +32,10 @@ using namespace std;
 
 // =============================================================================
 
+inline bool dealWithPhoneNumber (const shared_ptr<linphone::AccountCreator> &creator) {
+  return creator->getEmail().empty();
+}
+
 class AssistantModel::Handlers : public linphone::AccountCreatorListener {
 public:
   Handlers (AssistantModel *assistant) {
@@ -83,7 +87,7 @@ private:
       status == linphone::AccountCreatorStatusAccountActivated ||
       status == linphone::AccountCreatorStatusAccountAlreadyActivated
     ) {
-      if (creator->getEmail().empty()) {
+      if (dealWithPhoneNumber(creator)) {
         shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
         Q_ASSERT(proxyConfig != nullptr);
       }
@@ -151,7 +155,7 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 // -----------------------------------------------------------------------------
 
 void AssistantModel::activate () {
-  if (mAccountCreator->getEmail().empty())
+  if (dealWithPhoneNumber(mAccountCreator))
     mAccountCreator->activateAccount();
   else
     mAccountCreator->isAccountActivated();
@@ -162,7 +166,7 @@ void AssistantModel::create () {
 }
 
 void AssistantModel::login () {
-  if (mAccountCreator->getEmail().empty())
+  if (dealWithPhoneNumber(mAccountCreator))
     mAccountCreator->recoverAccount();
   else
     mAccountCreator->isAccountExist();
