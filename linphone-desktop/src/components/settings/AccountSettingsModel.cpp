@@ -156,7 +156,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   proxyConfig->setContactParameters(::Utils::appStringToCoreString(data["contactParams"].toString()));
   proxyConfig->setAvpfRrInterval(static_cast<uint8_t>(data["avpfInterval"].toInt()));
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
-  proxyConfig->enablePublish(data["publishEnabled"].toBool());
+  proxyConfig->enablePublish(data["publishPresence"].toBool());
   proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
     ? linphone::AVPFMode::AVPFModeEnabled
     : linphone::AVPFMode::AVPFModeDefault
