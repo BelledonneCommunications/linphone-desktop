@@ -12,7 +12,7 @@ DialogPlus {
   id: conferenceManager
 
   readonly property int maxParticipants: 10
-  readonly property int minParticipants: 2
+  readonly property int minParticipants: 1
 
   buttons: [
     TextButtonA {

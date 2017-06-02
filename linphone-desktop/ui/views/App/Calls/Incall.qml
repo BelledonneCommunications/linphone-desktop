@@ -78,7 +78,7 @@ Rectangle {
 
           // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
           Timer {
-            interval: 5000
+            interval: 500
             repeat: true
             running: true
             triggeredOnStart: true
