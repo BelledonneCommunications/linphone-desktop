@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>CRÉER UN COMPTE LINPHONE</translation>
+        <translation>ACTIVER UN COMPTE LINPHONE</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>CRÉER UN COMPTE LINPHONE</translation>
+        <translation>ACTIVER UN COMPTE LINPHONE</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;activation par SMS a échoué !</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -180,6 +180,10 @@
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
         <translation>Indicatif tél. invalide !</translation>
+    </message>
+    <message>
+        <source>loginWithPhoneNumberFailed</source>
+        <translation>La connection a échouée. Merci de vérifier votre numéro de tél.</translation>
     </message>
 </context>
 <context>
@@ -1339,6 +1343,10 @@ un chat ou ajouter un contact.</translation>
     <message>
         <source>useUsernameToLogin</source>
         <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
+    </message>
+    <message>
+        <source>quitWarning</source>
+        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Êtes-vous sûr de vouloir quitter cette vue ?</translation>
     </message>
 </context>
 <context>

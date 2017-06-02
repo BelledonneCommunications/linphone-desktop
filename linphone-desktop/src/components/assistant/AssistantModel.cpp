@@ -75,16 +75,21 @@ private:
   }
 
   void onActivateAccount (
-    const shared_ptr<linphone::AccountCreator> &,
+    const shared_ptr<linphone::AccountCreator> &creator,
     linphone::AccountCreatorStatus status,
     const string &
   ) override {
     if (
       status == linphone::AccountCreatorStatusAccountActivated ||
       status == linphone::AccountCreatorStatusAccountAlreadyActivated
-    )
+    ) {
+      if (creator->getEmail().empty()) {
+        shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
+        Q_ASSERT(proxyConfig != nullptr);
+      }
+
       emit mAssistant->activateStatusChanged("");
-    else {
+    } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit mAssistant->activateStatusChanged(tr("requestFailed"));
       else
@@ -107,6 +112,23 @@ private:
         emit mAssistant->activateStatusChanged(tr("requestFailed"));
       else
         emit mAssistant->activateStatusChanged(tr("emailActivationFailed"));
+    }
+  }
+
+  void onRecoverAccount (
+    const shared_ptr<linphone::AccountCreator> &,
+    linphone::AccountCreatorStatus status,
+    const string &
+  ) override {
+    if (status == linphone::AccountCreatorStatusRequestOk) {
+      emit mAssistant->recoverStatusChanged("");
+    } else {
+      if (status == linphone::AccountCreatorStatusRequestFailed)
+        emit mAssistant->recoverStatusChanged(tr("requestFailed"));
+      else if (status == linphone::AccountCreatorStatusServerError)
+        emit mAssistant->recoverStatusChanged(tr("cannotSendSms"));
+      else
+        emit mAssistant->recoverStatusChanged(tr("loginWithPhoneNumberFailed"));
     }
   }
 
@@ -140,7 +162,10 @@ void AssistantModel::create () {
 }
 
 void AssistantModel::login () {
-  mAccountCreator->isAccountExist();
+  if (mAccountCreator->getEmail().empty())
+    mAccountCreator->recoverAccount();
+  else
+    mAccountCreator->isAccountExist();
 }
 
 void AssistantModel::reset () {

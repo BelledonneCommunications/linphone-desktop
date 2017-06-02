@@ -1,9 +1,13 @@
 import Common 1.0
+import Linphone 1.0
 
 // =============================================================================
 
 Form {
-  property bool mainActionEnabled: country.currentIndex !== -1 && phoneNumber.text
+  property alias phoneNumberError: phoneNumber.error
+
+  property bool mainActionEnabled: phoneNumber.text.length &&
+    !phoneNumberError.length
 
   dealWithErrors: true
   orientation: Qt.Vertical
@@ -14,6 +18,18 @@ Form {
 
       ComboBox {
         id: country
+
+        currentIndex: model.defaultIndex
+        model: telephoneNumbersModel
+        textRole: 'countryName'
+
+        onActivated: {
+          assistantModel.setCountryCode(index)
+          var text = phoneNumber.text
+          if (text.length > 0) {
+            assistantModel.phoneNumber = text
+          }
+        }
       }
     }
   }
@@ -24,6 +40,10 @@ Form {
 
       TextField {
         id: phoneNumber
+
+        inputMethodHints: Qt.ImhDialableCharactersOnly
+
+        onTextChanged: assistantModel.phoneNumber = text
       }
     }
   }

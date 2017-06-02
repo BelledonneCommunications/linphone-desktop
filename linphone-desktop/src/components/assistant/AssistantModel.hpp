@@ -63,6 +63,7 @@ signals:
   void activateStatusChanged (const QString &error);
   void createStatusChanged (const QString &error);
   void loginStatusChanged (const QString &error);
+  void recoverStatusChanged (const QString &error);
 
   void configFilenameChanged (const QString &configFilename);
 

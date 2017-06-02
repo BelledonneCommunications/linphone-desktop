@@ -58,11 +58,24 @@ AssistantAbstractView {
   AssistantModel {
     id: assistantModel
 
+    function setCountryCode (index) {
+      var model = telephoneNumbersModel
+      assistantModel.countryCode = model.data(model.index(index, 0)).countryCode
+    }
+
     configFilename: 'use-linphone-sip-account.rc'
+
+    countryCode: setCountryCode(telephoneNumbersModel.defaultIndex)
 
     onPasswordChanged: {
       if (checkBox.checked) {
         loader.item.passwordError = error
+      }
+    }
+
+    onPhoneNumberChanged: {
+      if (!checkBox.checked) {
+        loader.item.phoneNumberError = error
       }
     }
 
@@ -78,5 +91,26 @@ AssistantAbstractView {
         window.setView('Home')
       }
     }
+
+    onRecoverStatusChanged: {
+      if (checkBox.checked) {
+        requestBlock.stop('')
+        return
+      }
+
+      requestBlock.stop(error)
+      if (!error.length) {
+        window.lockView({
+          descriptionText: qsTr('quitWarning')
+        })
+        assistant.pushView('ActivateLinphoneSipAccountWithPhoneNumber', {
+          assistantModel: assistantModel
+        })
+      }
+    }
+  }
+
+  TelephoneNumbersModel {
+    id: telephoneNumbersModel
   }
 }

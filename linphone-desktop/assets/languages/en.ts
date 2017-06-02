@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
+        <translation>ACTIVATE A LINPHONE ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
+        <translation>ACTIVATE A LINPHONE ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>SMS activation failed!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -180,6 +180,10 @@
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
         <translation>Invalid country code!</translation>
+    </message>
+    <message>
+        <source>loginWithPhoneNumberFailed</source>
+        <translation>Login failed. Please check your phone number.</translation>
     </message>
 </context>
 <context>
@@ -1340,6 +1344,10 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>useUsernameToLogin</source>
         <translation>Use username and password rather than your phone number.</translation>
+    </message>
+    <message>
+        <source>quitWarning</source>
+        <translation>Your account has been created but is not yet validated. Are you sure you want to quit this view?</translation>
     </message>
 </context>
 <context>
