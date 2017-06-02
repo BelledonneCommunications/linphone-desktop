@@ -94,10 +94,10 @@ Rectangle {
     draggable: parent
 
     xPosition: (function () {
-      return 0
+      return 50
     })
     yPosition: (function () {
-      return 0
+      return 50
     })
 
     onPressed: {
