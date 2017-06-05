@@ -34,7 +34,7 @@
 #include "config.h"
 
 #define VERSION_UPDATE_CHECK_OBJECT_NAME "version-update-check-timer"
-#define VERSION_UPDATE_CHECK_INTERVAL 86400000	/* 24 hours in milliseconds */
+#define VERSION_UPDATE_CHECK_INTERVAL 86400000  /* 24 hours in milliseconds. */
 
 using namespace std;
 
@@ -89,16 +89,16 @@ void CoreHandlers::notifyCoreStarted () {
         qInfo() << QStringLiteral("Core started.");
         emit coreStarted();
 
-#ifdef ENABLE_UPDATE_CHECK
-        QTimer *timer = new QTimer(this);
-        timer->setInterval(VERSION_UPDATE_CHECK_INTERVAL);
-        timer->setObjectName(VERSION_UPDATE_CHECK_OBJECT_NAME);
-        QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
-        timer->start();
-        App::checkForUpdate();
-#endif
-      }
-    );
+        #ifdef ENABLE_UPDATE_CHECK
+          QTimer *timer = new QTimer(this);
+          timer->setInterval(VERSION_UPDATE_CHECK_INTERVAL);
+
+          QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
+          timer->start();
+
+          App::checkForUpdate();
+        #endif // ifdef ENABLE_UPDATE_CHECK
+      });
 }
 
 // -----------------------------------------------------------------------------
@@ -238,7 +238,6 @@ void CoreHandlers::onVersionUpdateCheckResultReceived (
   const string &version,
   const string &url
 ) {
-  if (result == linphone::VersionUpdateCheckResultNewVersionAvailable) {
+  if (result == linphone::VersionUpdateCheckResultNewVersionAvailable)
     App::getInstance()->getNotifier()->notifyNewVersionAvailable(version, url);
-  }
 }

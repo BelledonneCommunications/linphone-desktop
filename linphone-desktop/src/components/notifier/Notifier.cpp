@@ -184,11 +184,9 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   notification->setProperty(NOTIFICATION_PROPERTY_TIMER, QVariant::fromValue(timer));
 
   // Destroy it after timeout.
-  QObject::connect(
-    timer, &QTimer::timeout, this, [this, notification]() {
+  QObject::connect(timer, &QTimer::timeout, this, [this, notification]() {
       deleteNotification(QVariant::fromValue(notification));
-    }
-  );
+    });
 
   // Called explicitly (by a click on notification for example)
   QObject::connect(notification, SIGNAL(deleteNotification(QVariant)), this, SLOT(deleteNotification(QVariant)));
@@ -261,12 +259,10 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
 
   CallModel *callModel = &call->getData<CallModel>("call-model");
 
-  QObject::connect(
-    callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
+  QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
       if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
         deleteNotification(QVariant::fromValue(notification));
-    }
-  );
+    });
 
   QVariantMap map;
   map["call"].setValue(callModel);
@@ -275,7 +271,7 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
   showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_CALL);
 }
 
-void Notifier::notifyNewVersionAvailable (const std::string &version, const std::string &url) {
+void Notifier::notifyNewVersionAvailable (const string &version, const string &url) {
   QObject *notification = createNotification(Notifier::NewVersionAvailable);
   if (!notification)
     return;
