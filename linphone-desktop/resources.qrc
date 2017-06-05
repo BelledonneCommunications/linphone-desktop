@@ -294,7 +294,6 @@
     <file>ui/modules/Common/Styles/Window/WindowStyle.qml</file>
     <file>ui/modules/Common/Tooltip/TooltipArea.qml</file>
     <file>ui/modules/Common/Tooltip/Tooltip.qml</file>
-    <file>ui/modules/Common/View/ScrollableListView.js</file>
     <file>ui/modules/Common/View/ScrollableListView.qml</file>
     <file>ui/modules/Common/Window/ApplicationWindow.qml</file>
     <file>ui/modules/Common/Window/VirtualWindow.qml</file>

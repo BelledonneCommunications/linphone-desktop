@@ -3,18 +3,10 @@ import QtQuick.Controls 2.1
 
 import Common 1.0
 
-import 'ScrollableListView.js' as Logic
-
 // =============================================================================
 
 ListView {
   id: view
-
-  // ---------------------------------------------------------------------------
-
-  function positionViewAtEnd () {
-    Logic.positionViewAtEnd()
-  }
 
   // ---------------------------------------------------------------------------
 
@@ -33,26 +25,7 @@ ListView {
 
   // ---------------------------------------------------------------------------
 
-  // TODO: Find a solution at this bug => https://bugreports.qt.io/browse/QTBUG-31573
-  SequentialAnimation {
-    id: scrollAnimation
-
-    ScriptAction {
-      script: {
-        view.contentY = view.contentY
-        view.contentY = Logic.getYEnd()
-        view.contentY = view.contentY
-      }
-    }
-
-    PauseAnimation {
-      duration: 200
-    }
-
-    ScriptAction {
-      script: {
-        view.contentY = Logic.getYEnd()
-      }
-    }
-  }
+  // TODO: Find a solution at this bug =>
+  // https://bugreports.qt.io/browse/QTBUG-31573
+  // https://bugreports.qt.io/browse/QTBUG-49989
 }
