@@ -40,6 +40,10 @@ AssistantAbstractView {
       onClicked: {
         assistantModel.reset()
         requestBlock.stop('')
+
+        if (!checked) {
+          assistantModel.setCountryCode(telephoneNumbersModel.defaultIndex)
+        }
       }
     }
 
