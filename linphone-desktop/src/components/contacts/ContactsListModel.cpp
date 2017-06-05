@@ -152,6 +152,9 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 
   qInfo() << QStringLiteral("Add contact from vcard:") << contact << vcardModel;
 
+  //make sure new subscribe is issued
+  mLinphoneFriends->updateSubscriptions();
+	
   int row = mList.count();
 
   beginInsertRows(QModelIndex(), row, row);
