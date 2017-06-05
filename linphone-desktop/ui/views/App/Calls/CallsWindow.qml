@@ -55,6 +55,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   onClosing: Logic.handleClosing(close)
+  onDetachedVirtualWindow: Logic.handleDetachedVirtualWindow()
 
   // ---------------------------------------------------------------------------
 
@@ -123,6 +124,8 @@ Window {
 
           conferenceModel: ConferenceModel {}
           model: CallsListProxyModel {}
+
+          onCountChanged: Logic.handleCountChanged(count)
         }
       }
     }

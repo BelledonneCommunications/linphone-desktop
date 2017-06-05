@@ -42,19 +42,15 @@ namespace linphone {
 class ConferenceHelperModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
-  Q_PROPERTY(ConferenceHelperModel::ConferenceAddModel * toAdd READ getConferenceAddModel CONSTANT);
+  Q_PROPERTY(ConferenceHelperModel::ConferenceAddModel *toAdd READ getConferenceAddModel CONSTANT);
 
 public:
   class ConferenceAddModel;
 
   ConferenceHelperModel (QObject *parent = Q_NULLPTR);
-  ~ConferenceHelperModel ();
+  ~ConferenceHelperModel () = default;
 
   QHash<int, QByteArray> roleNames () const override;
-
-  static int getInstancesNumber () {
-    return mInstancesNumber;
-  }
 
   Q_INVOKABLE void setFilter (const QString &pattern);
 
@@ -69,8 +65,6 @@ private:
   ConferenceAddModel *mConferenceAddModel;
 
   std::shared_ptr<linphone::Conference> mConference;
-
-  static int mInstancesNumber;
 };
 
 #endif // CONFERENCE_HELPER_MODEL_H_

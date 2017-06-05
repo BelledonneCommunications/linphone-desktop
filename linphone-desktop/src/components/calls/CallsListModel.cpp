@@ -147,8 +147,7 @@ void CallsListModel::handleCallStateChanged (const std::shared_ptr<linphone::Cal
     case linphone::CallStateStreamsRunning: {
       int index = findCallIndex(mList, call);
       emit callRunning(index, &call->getData<CallModel>("call-model"));
-    }
-    break;
+    } break;
 
     default:
       break;
@@ -186,12 +185,10 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
   App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
 
   // This connection is (only) useful for `CallsListProxyModel`.
-  QObject::connect(
-    callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
+  QObject::connect(callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
       int id = findCallIndex(mList, *callModel);
       emit dataChanged(index(id, 0), index(id, 0));
-    }
-  );
+    });
 
   int row = mList.count();
 
@@ -223,9 +220,4 @@ void CallsListModel::removeCallCb (CallModel *callModel) {
   int index = mList.indexOf(callModel);
   if (index == -1 || !removeRow(index))
     qWarning() << QStringLiteral("Unable to remove call:") << callModel;
-
-  if (mList.empty() && ConferenceHelperModel::getInstancesNumber() == 0) {
-    qInfo() << QStringLiteral("Last call terminated, close calls window.");
-    App::getInstance()->getCallsWindow()->close();
-  }
 }

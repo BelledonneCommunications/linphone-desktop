@@ -23,19 +23,17 @@ function attachVirtualWindow (component, properties, exitStatusHandler) {
   if (exitStatusHandler) {
     object.exitStatus.connect(exitStatusHandler)
   }
-  object.exitStatus.connect(function () {
-    var content = virtualWindow.unsetContent()
-    if (content) {
-      content.destroy()
-    }
-  })
+  object.exitStatus.connect(detachVirtualWindow)
 
   virtualWindow.setContent(object)
+
+  window.attachedVirtualWindow()
 }
 
 function detachVirtualWindow () {
   var object = virtualWindow.unsetContent()
   if (object) {
     object.destroy()
+    window.detachedVirtualWindow()
   }
 }

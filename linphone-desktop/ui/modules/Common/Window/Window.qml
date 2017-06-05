@@ -6,7 +6,16 @@ import 'Window.js' as Logic
 // =============================================================================
 
 Window {
+  id: window
+
   default property alias _content: content.data
+
+  readonly property bool virtualWindowVisible: virtualWindow.visible
+
+  // ---------------------------------------------------------------------------
+
+  signal attachedVirtualWindow
+  signal detachedVirtualWindow
 
   // ---------------------------------------------------------------------------
 

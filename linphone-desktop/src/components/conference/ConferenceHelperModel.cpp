@@ -31,8 +31,6 @@ using namespace std;
 
 // =============================================================================
 
-int ConferenceHelperModel::mInstancesNumber = 0;
-
 ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProxyModel(parent) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
@@ -44,18 +42,6 @@ ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProx
   App::getInstance()->getEngine()->setObjectOwnership(mConferenceAddModel, QQmlEngine::CppOwnership);
 
   setSourceModel(new SipAddressesProxyModel(this));
-
-  mInstancesNumber++;
-}
-
-ConferenceHelperModel::~ConferenceHelperModel () {
-  mInstancesNumber--;
-  Q_ASSERT(mInstancesNumber >= 0);
-
-  if (mInstancesNumber == 0 && CoreManager::getInstance()->getCallsListModel()->rowCount() == 0) {
-    qInfo() << QStringLiteral("Conference terminated and no calls, close calls window.");
-    App::getInstance()->getCallsWindow()->close();
-  }
 }
 
 QHash<int, QByteArray> ConferenceHelperModel::roleNames () const {

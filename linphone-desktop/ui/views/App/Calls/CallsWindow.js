@@ -8,16 +8,12 @@
 
 // =============================================================================
 
-var forceClose = false
-
 function handleClosing (close) {
   var callsList = Linphone.CallsListModel
 
   window.detachVirtualWindow()
 
-  if (forceClose || callsList.getRunningCallsNumber() === 0) {
-    forceClose = false
-    callsList.terminateAllCalls()
+  if (callsList.getRunningCallsNumber() === 0) {
     return
   }
 
@@ -25,7 +21,7 @@ function handleClosing (close) {
     descriptionText: qsTr('acceptClosingDescription')
   }, function (status) {
     if (status) {
-      forceClose = true
+      callsList.terminateAllCalls()
       window.close()
     }
   })
@@ -83,4 +79,20 @@ function handleCallTransferAsked (call) {
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/CallTransfer.qml'), {
     call: call
   })
+}
+
+function handleDetachedVirtualWindow () {
+  handleCountChanged(calls.count)
+}
+
+function windowMustBeClosed () {
+  return calls.count === 0 && !window.virtualWindowVisible
+}
+
+function handleCountChanged () {
+  if (windowMustBeClosed()) {
+    // Workaround, it's necessary to use a timeout because at last call termination
+    // a segfault is emit in `QOpenGLContext::functions() const ()`.
+    Utils.setTimeout(window, 0, function () { windowMustBeClosed() && window.close() })
+  }
 }
