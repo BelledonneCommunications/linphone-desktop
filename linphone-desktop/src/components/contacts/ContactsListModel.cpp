@@ -152,9 +152,9 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 
   qInfo() << QStringLiteral("Add contact from vcard:") << contact << vcardModel;
 
-  //make sure new subscribe is issued
+  // Make sure new subscribe is issued.
   mLinphoneFriends->updateSubscriptions();
-	
+
   int row = mList.count();
 
   beginInsertRows(QModelIndex(), row, row);
@@ -189,22 +189,15 @@ void ContactsListModel::cleanAvatars () {
 // -----------------------------------------------------------------------------
 
 void ContactsListModel::addContact (ContactModel *contact) {
-  QObject::connect(
-    contact, &ContactModel::contactUpdated,
-    this, [this, contact]() {
+  QObject::connect(contact, &ContactModel::contactUpdated, this, [this, contact]() {
       emit contactUpdated(contact);
-    }
-  );
-  QObject::connect(
-    contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sipAddress) {
+    });
+  QObject::connect(contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sipAddress) {
       emit sipAddressAdded(contact, sipAddress);
-    }
-  );
-  QObject::connect(
-    contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sipAddress) {
+    });
+  QObject::connect(contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sipAddress) {
       emit sipAddressRemoved(contact, sipAddress);
-    }
-  );
+    });
 
   mList << contact;
 }

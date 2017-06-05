@@ -8,6 +8,7 @@ singleton CallStyle                                      1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                               1.0 Calls/CallsWindowStyle.qml
 singleton ConferenceStyle                                1.0 Calls/ConferenceStyle.qml
 
+singleton CallSipAddressStyle                            1.0 Calls/Dialogs/CallSipAddressStyle.qml
 singleton CallTransferStyle                              1.0 Calls/Dialogs/CallTransferStyle.qml
 singleton ConferenceManagerStyle                         1.0 Calls/Dialogs/ConferenceManagerStyle.qml
 

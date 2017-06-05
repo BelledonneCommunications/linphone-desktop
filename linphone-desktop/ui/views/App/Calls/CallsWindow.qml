@@ -103,7 +103,8 @@ Window {
 
             ActionButton {
               icon: 'new_call'
-              // TODO: launch new call
+
+              onClicked: Logic.openCallSipAddress()
             }
 
             ActionButton {

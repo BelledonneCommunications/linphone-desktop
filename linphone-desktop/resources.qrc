@@ -367,6 +367,7 @@
     <file>ui/views/App/Calls/CallsWindow.js</file>
     <file>ui/views/App/Calls/CallsWindow.qml</file>
     <file>ui/views/App/Calls/Conference.qml</file>
+    <file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
     <file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
     <file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
     <file>ui/views/App/Calls/EndedCall.qml</file>
@@ -420,6 +421,7 @@
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
     <file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
+    <file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>

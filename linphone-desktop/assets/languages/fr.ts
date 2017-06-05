@@ -305,6 +305,17 @@
     </message>
 </context>
 <context>
+    <name>CallSipAddress</name>
+    <message>
+        <source>cancel</source>
+        <translation>ANNULER</translation>
+    </message>
+    <message>
+        <source>callSipAddressDescription</source>
+        <translation>Lancer un nouvel appel.</translation>
+    </message>
+</context>
+<context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
