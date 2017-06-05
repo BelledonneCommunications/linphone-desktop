@@ -887,6 +887,13 @@ un chat ou ajouter un contact.</translation>
     </message>
 </context>
 <context>
+    <name>Notifier</name>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation>Une nouvelle version (%1) de Linphone est disponible !</translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>

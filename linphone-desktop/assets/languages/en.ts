@@ -888,6 +888,13 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
+    <name>Notifier</name>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation>A new version (%1) of Linphone is available!</translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>

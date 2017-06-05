@@ -54,6 +54,7 @@
 #define QML_NOTIFICATION_PATH_RECEIVED_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml"
 #define QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml"
 #define QML_NOTIFICATION_PATH_RECEIVED_CALL "qrc:/ui/modules/Linphone/Notifications/NotificationReceivedCall.qml"
+#define QML_NOTIFICATION_PATH_NEW_VERSION_AVAILABLE "qrc:/ui/modules/Linphone/Notifications/NotificationNewVersionAvailable.qml"
 
 // -----------------------------------------------------------------------------
 // Timeouts.
@@ -62,6 +63,7 @@
 #define NOTIFICATION_TIMEOUT_RECEIVED_MESSAGE 10000
 #define NOTIFICATION_TIMEOUT_RECEIVED_FILE_MESSAGE 10000
 #define NOTIFICATION_TIMEOUT_RECEIVED_CALL 30000
+#define NOTIFICATION_TIMEOUT_NEW_VERSION_AVAILABLE 30000
 
 // -----------------------------------------------------------------------------
 // Arbitrary hardcoded values.
@@ -106,6 +108,7 @@ Notifier::Notifier (QObject *parent) :
   mComponents[Notifier::MessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_MESSAGE));
   mComponents[Notifier::FileMessageReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_FILE_MESSAGE));
   mComponents[Notifier::CallReceived] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_RECEIVED_CALL));
+  mComponents[Notifier::NewVersionAvailable] = new QQmlComponent(engine, QUrl(QML_NOTIFICATION_PATH_NEW_VERSION_AVAILABLE));
 
   // Check errors.
   for (int i = 0; i < Notifier::MaxNbTypes; ++i) {
@@ -270,4 +273,17 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
 
   ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
   showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_CALL);
+}
+
+void Notifier::notifyNewVersionAvailable (const std::string &version, const std::string &url) {
+  QObject *notification = createNotification(Notifier::NewVersionAvailable);
+  if (!notification)
+    return;
+
+  QVariantMap map;
+  map["message"] = tr("newVersionAvailable").arg(::Utils::coreStringToAppString(version));
+  map["url"] = ::Utils::coreStringToAppString(url);
+
+  ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
+  showNotification(notification, NOTIFICATION_TIMEOUT_NEW_VERSION_AVAILABLE);
 }

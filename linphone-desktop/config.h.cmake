@@ -21,3 +21,4 @@
 *******************************************************************************/
 
 #cmakedefine MSPLUGINS_DIR "${MSPLUGINS_DIR}"
+#cmakedefine ENABLE_UPDATE_CHECK 1

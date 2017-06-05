@@ -25,6 +25,7 @@ singleton MessagesCounterStyle                 1.0 Contact/MessagesCounterStyle.
 
 singleton SipAddressesMenuStyle                1.0 Menus/SipAddressesMenuStyle.qml
 
+singleton NotificationNewVersionAvailableStyle 1.0 Notifications/NotificationNewVersionAvailableStyle.qml
 singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationReceivedCallStyle.qml
 singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
 singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationReceivedFileMessageStyle.qml

@@ -115,6 +115,13 @@ private:
     linphone::CallState state
   ) override;
 
+  void onVersionUpdateCheckResultReceived (
+    const std::shared_ptr<linphone::Core> &,
+    linphone::VersionUpdateCheckResult result,
+	const std::string &version,
+    const std::string &url
+  ) override;
+
   // ---------------------------------------------------------------------------
 
   bool mCoreCreated = false;

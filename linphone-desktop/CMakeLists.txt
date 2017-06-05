@@ -29,6 +29,8 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(ASSETS_DIR assets)
 
+option(ENABLE_UPDATE_CHECK "Enable update check." NO)
+
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 

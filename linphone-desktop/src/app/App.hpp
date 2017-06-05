@@ -77,6 +77,7 @@ public:
   Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
+  Q_INVOKABLE static void checkForUpdate ();
   Q_INVOKABLE static QString convertUrlToLocalPath (const QUrl &url);
 
 public slots:

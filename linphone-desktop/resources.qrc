@@ -324,6 +324,7 @@
     <file>ui/modules/Linphone/Contact/MessagesCounter.qml</file>
     <file>ui/modules/Linphone/Menus/SipAddressesMenu.qml</file>
     <file>ui/modules/Linphone/Notifications/Notification.qml</file>
+    <file>ui/modules/Linphone/Notifications/NotificationNewVersionAvailable.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedCall.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml</file>
@@ -344,6 +345,7 @@
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/MessagesCounterStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Notifications/NotificationNewVersionAvailableStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedCallStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedFileMessageStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>

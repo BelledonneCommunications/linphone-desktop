@@ -1,2 +1,5 @@
+[misc]
+version_check_url_root=https://linphone.org/releases
+
 [sound]
 ec_filter=MSWebRTCAEC
