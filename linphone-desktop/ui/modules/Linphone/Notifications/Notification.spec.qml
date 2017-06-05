@@ -31,8 +31,8 @@ TestCase {
     compare(Utils.isInteger(notification.popupWidth), true)
   }
 
-  function test_notificationShowMethod () {
-    compare(Utils.isFunction(notification.show), true)
+  function test_notificationOpenMethod () {
+    compare(Utils.isFunction(notification.open), true)
   }
 
   function test_childWindow () {
