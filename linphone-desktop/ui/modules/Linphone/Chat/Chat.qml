@@ -65,7 +65,6 @@ Rectangle {
         // more entries.
         onEntryTypeFilterChanged: Logic.initView()
         onMoreEntriesLoaded: Logic.handleMoreEntriesLoaded(n)
-        onDataChanged: Logic.handleDataChanged(topLeft, bottomRight)
       }
 
       // -----------------------------------------------------------------------
@@ -208,5 +207,17 @@ Rectangle {
         onValidText: Logic.sendMessage(text)
       }
     }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Scroll at end if necessary.
+  // ---------------------------------------------------------------------------
+
+  Timer {
+    interval: 100
+    repeat: true
+    running: true
+
+    onTriggered: chat.bindToEnd && chat.positionViewAtEnd()
   }
 }

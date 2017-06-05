@@ -5,7 +5,6 @@
 function initView () {
   chat.tryToLoadMoreEntries = false
   chat.bindToEnd = true
-  chat.positionViewAtEnd()
 }
 
 function loadMoreEntries () {
@@ -46,15 +45,6 @@ function handleMovementEnded () {
 
 function handleMovementStarted () {
   chat.bindToEnd = false
-}
-
-function handleDataChanged (_, bottomRight) {
-  var n = chat.count
-  var index = bottomRight.row
-
-  if (chat.bindToEnd && index + 1 === n) {
-    chat.positionViewAtEnd()
-  }
 }
 
 function sendMessage (text) {
