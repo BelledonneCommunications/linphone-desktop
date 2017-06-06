@@ -28,7 +28,7 @@ Item {
   function _emitFiles (files) {
     // Filtering files, other urls are forbidden.
     files = files.reduce(function (files, file) {
-      if (file.startsWith('file:') {
+      if (file.startsWith('file:')) {
         files.push(Utils.getPathFromUri(file))
       }
 
