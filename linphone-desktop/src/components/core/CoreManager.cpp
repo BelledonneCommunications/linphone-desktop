@@ -29,6 +29,10 @@
 
 #include "CoreManager.hpp"
 
+#ifndef LINPHONE_QT_GIT_VERSION
+  #define LINPHONE_QT_GIT_VERSION "unknown"
+#endif // ifndef LINPHONE_QT_GIT_VERSION
+
 #define CBS_CALL_INTERVAL 20
 
 using namespace std;
@@ -40,8 +44,7 @@ CoreManager *CoreManager::mInstance = nullptr;
 CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
   mPromiseBuild = QtConcurrent::run(this, &CoreManager::createLinphoneCore, configPath);
 
-  QObject::connect(
-    &mPromiseWatcher, &QFutureWatcher<void>::finished, this, []() {
+  QObject::connect(&mPromiseWatcher, &QFutureWatcher<void>::finished, this, []() {
       mInstance->mCallsListModel = new CallsListModel(mInstance);
       mInstance->mContactsListModel = new ContactsListModel(mInstance);
       mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
@@ -52,8 +55,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(
       mInstance->mCbsTimer->start();
 
       emit mInstance->coreCreated();
-    }
-  );
+    });
 
   mPromiseWatcher.setFuture(mPromiseBuild);
 }
@@ -134,6 +136,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
+  mCore->setUserAgent("Linphone Desktop", LINPHONE_QT_GIT_VERSION);
 
   setDatabasesPaths();
   setOtherPaths();
