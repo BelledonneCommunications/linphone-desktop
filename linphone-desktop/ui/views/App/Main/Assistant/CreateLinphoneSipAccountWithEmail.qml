@@ -74,7 +74,10 @@ AssistantAbstractView {
           PasswordField {
             id: password
 
-            onTextChanged: assistantModel.password = text
+            onTextChanged: {
+              assistantModel.password = text
+              assistantModel.checkPassword()
+            }
           }
         }
       }
@@ -86,9 +89,7 @@ AssistantAbstractView {
           PasswordField {
             id: passwordConfirmation
 
-            onTextChanged: error = password.text !== text
-              ? qsTr('passwordConfirmationError')
-              : ''
+            onTextChanged: assistantModel.checkPassword()
           }
         }
       }
@@ -108,6 +109,12 @@ AssistantAbstractView {
 
   AssistantModel {
     id: assistantModel
+
+    function checkPassword () {
+      passwordConfirmation.error = password.text !== passwordConfirmation.text
+        ? qsTr('passwordConfirmationError')
+        : ''
+    }
 
     configFilename: 'create-linphone-sip-account.rc'
 
