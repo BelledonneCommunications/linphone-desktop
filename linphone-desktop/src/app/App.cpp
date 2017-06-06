@@ -37,6 +37,7 @@
 #include "providers/AvatarProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
+#include "cli/Cli.hpp"
 
 #include "App.hpp"
 
@@ -139,16 +140,13 @@ void App::initContentApp () {
     // Don't quit if last window is closed!!!
     setQuitOnLastWindowClosed(false);
 
-    QObject::connect(
-      this, &App::receivedMessage, this, [this](int, QByteArray byteArray) {
-        QString message(byteArray);
+    QObject::connect(this, &App::receivedMessage, this, [this](int, const QByteArray &byteArray) {
+        QString command(byteArray);
+        qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
+        executeCommand(command);
+      });
 
-        qInfo() << QStringLiteral("Received message from other application: `%1`.").arg(message);
-
-        if (message == "show")
-          smartShowWindow(getMainWindow());
-      }
-    );
+    mCli = new Cli(this);
   }
 
   // Init core.
@@ -207,12 +205,13 @@ void App::parseArgs () {
   mParser.addHelpOption();
   mParser.addVersionOption();
   mParser.addOptions({
-    { "config", tr("commandLineOptionConfig"), "file" },
+    { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
     #ifndef __APPLE__
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef __APPLE__
     { "self-test", tr("commandLineOptionSelfTest") },
-    { { "V", "verbose" }, tr("commandLineOptionVerbose") }
+    { { "V", "verbose" }, tr("commandLineOptionVerbose") },
+    { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
   });
 
   mParser.process(*this);
@@ -224,6 +223,18 @@ void App::parseArgs () {
   if (mParser.isSet("verbose")) {
     Logger::getInstance()->setVerbose(true);
   }
+}
+
+// -----------------------------------------------------------------------------
+
+QString App::getCommandArgument () {
+  return mParser.value("cmd");
+}
+
+// -----------------------------------------------------------------------------
+
+void App::executeCommand (const QString &command) {
+  mCli->executeCommand(command);
 }
 
 // -----------------------------------------------------------------------------
@@ -267,15 +278,13 @@ QQuickWindow *App::getMainWindow () const {
 QQuickWindow *App::getSettingsWindow () {
   if (!mSettingsWindow) {
     mSettingsWindow = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
-    QObject::connect(
-      mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+    QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
         if (visibility == QWindow::Hidden) {
           qInfo() << QStringLiteral("Update nat policy.");
           shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
           core->setNatPolicy(core->getNatPolicy());
         }
-      }
-    );
+      });
   }
 
   return mSettingsWindow;
@@ -329,12 +338,9 @@ void registerMetaType (const char *name) {
 
 template<class T>
 void registerSingletonType (const char *name) {
-  qmlRegisterSingletonType<T>(
-    "Linphone", 1, 0, name,
-    [](QQmlEngine *, QJSEngine *) -> QObject *{
+  qmlRegisterSingletonType<T>("Linphone", 1, 0, name, [](QQmlEngine *, QJSEngine *) -> QObject *{
       return new T();
-    }
-  );
+    });
 }
 
 template<class T>
@@ -408,8 +414,7 @@ void App::setTrayIcon () {
 
   // trayIcon: Left click actions.
   QMenu *menu = new QMenu();
-  root->connect(
-    systemTrayIcon, &QSystemTrayIcon::activated, [root](
+  root->connect(systemTrayIcon, &QSystemTrayIcon::activated, [root](
       QSystemTrayIcon::ActivationReason reason
     ) {
       if (reason == QSystemTrayIcon::Trigger) {
@@ -418,8 +423,7 @@ void App::setTrayIcon () {
         else
           root->hide();
       }
-    }
-  );
+    });
 
   // Build trayIcon menu.
   menu->addAction(restoreAction);
@@ -490,6 +494,13 @@ void App::openAppAfterInit () {
       QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, ""));
       config->setInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 0);
     }
+  }
+
+  // Execute command argument if needed.
+  {
+    const QString &commandArgument = getCommandArgument();
+    if (!commandArgument.isEmpty())
+      executeCommand(commandArgument);
   }
 }
 

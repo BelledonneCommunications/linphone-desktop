@@ -34,6 +34,7 @@
 
 // =============================================================================
 
+class Cli;
 class DefaultTranslator;
 
 class App : public SingleApplication {
@@ -50,6 +51,9 @@ public:
 
   void initContentApp ();
   void parseArgs ();
+
+  QString getCommandArgument ();
+  void executeCommand (const QString &command);
 
   void tryToUsePreferredLocale ();
 
@@ -119,6 +123,8 @@ private:
 
   QQuickWindow *mCallsWindow = nullptr;
   QQuickWindow *mSettingsWindow = nullptr;
+
+  Cli *mCli = nullptr;
 };
 
 #endif // APP_H_

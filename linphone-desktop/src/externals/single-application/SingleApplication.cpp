@@ -453,10 +453,9 @@ bool SingleApplication::sendMessage (QByteArray message, int timeout) {
 
   // Nobody to connect to
   if (isPrimary()) return false;
-
   // Make sure the socket is connected
-  d->connectToPrimary(timeout, Reconnect);
 
+  d->connectToPrimary(timeout, Reconnect);
   d->socket->write(message);
   bool dataWritten = d->socket->flush();
   d->socket->waitForBytesWritten(timeout);

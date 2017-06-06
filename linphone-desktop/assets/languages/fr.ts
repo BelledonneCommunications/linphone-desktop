@@ -64,6 +64,18 @@
         <source>commandLineOptionIconified</source>
         <translation>Lancer l&apos;application dans la zone de notification.</translation>
     </message>
+    <message>
+        <source>commandLineOptionConfigArg</source>
+        <translation>file</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCmd</source>
+        <translation>Éxécuter une ligne de commande.</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCmdArg</source>
+        <translation>ligne de commande</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -385,6 +397,17 @@
         <source>noFileTransferUrl</source>
         <translation>Impossible d&apos;envoyer un fichier.
 Url du serveur non configurée.</translation>
+    </message>
+</context>
+<context>
+    <name>Cli</name>
+    <message>
+        <source>showFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>showFunctionCall</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

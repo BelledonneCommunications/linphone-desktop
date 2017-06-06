@@ -64,6 +64,18 @@
         <source>commandLineOptionIconified</source>
         <translation>Start in the system tray, do not show the main interface.</translation>
     </message>
+    <message>
+        <source>commandLineOptionConfigArg</source>
+        <translation>file</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCmd</source>
+        <translation>Run a command line.</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCmdArg</source>
+        <translation>command line</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -385,6 +397,17 @@
         <source>noFileTransferUrl</source>
         <translation>Unable to send file.
 Server url not configured.</translation>
+    </message>
+</context>
+<context>
+    <name>Cli</name>
+    <message>
+        <source>showFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>showFunctionCall</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

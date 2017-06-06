@@ -93,6 +93,7 @@ endif ()
 
 set(SOURCES
   src/app/App.cpp
+  src/app/cli/Cli.cpp
   src/app/logger/Logger.cpp
   src/app/paths/Paths.cpp
   src/app/providers/AvatarProvider.cpp
@@ -141,6 +142,7 @@ set(SOURCES
 
 set(HEADERS
   src/app/App.hpp
+  src/app/cli/Cli.hpp
   src/app/logger/Logger.hpp
   src/app/paths/Paths.hpp
   src/app/providers/AvatarProvider.hpp
