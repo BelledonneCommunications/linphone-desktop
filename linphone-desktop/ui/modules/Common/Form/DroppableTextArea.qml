@@ -5,6 +5,8 @@ import QtQuick.Dialogs 1.2
 import Common 1.0
 import Common.Styles 1.0
 
+import Utils 1.0
+
 // =============================================================================
 
 Item {
@@ -26,10 +28,8 @@ Item {
   function _emitFiles (files) {
     // Filtering files, other urls are forbidden.
     files = files.reduce(function (files, file) {
-      var result = file.match(/^file:\/\/(.*)/)
-
-      if (result) {
-        files.push(result[1])
+      if (file.startsWith('file:') {
+        files.push(Utils.getPathFromUri(file))
       }
 
       return files
