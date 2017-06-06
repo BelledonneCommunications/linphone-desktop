@@ -481,10 +481,10 @@ void App::openAppAfterInit () {
     else
       setTrayIcon();
 
-    smartShowWindow(mainWindow);
-  #else
     if (!mParser.isSet("iconified"))
       smartShowWindow(mainWindow);
+  #else
+    smartShowWindow(mainWindow);
   #endif // ifndef __APPLE__
 
   // Display Assistant if it's the first time app launch.
