@@ -43,6 +43,8 @@
   #include <lmcons.h>
 #endif // ifdef Q_OS_WIN
 
+#include "../../Utils.hpp"
+
 #include "SingleApplication.hpp"
 #include "SingleApplicationPrivate.hpp"
 
@@ -302,7 +304,7 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
           tmp = nextConnSocket->read(checksum.length());
           if (checksum == tmp)
             break; // Otherwise set to invalid connection (next line)
-        }
+        } UTILS_NO_BREAK;
         default:
           connectionType = InvalidConnection;
       }
@@ -315,23 +317,13 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
     return;
   }
 
-  QObject::connect(
-    nextConnSocket,
-    &QLocalSocket::aboutToClose,
-    this,
-    [nextConnSocket, instanceId, this]() {
+  QObject::connect(nextConnSocket, &QLocalSocket::aboutToClose, this, [nextConnSocket, instanceId, this]() {
       Q_EMIT this->slotClientConnectionClosed(nextConnSocket, instanceId);
-    }
-  );
+    });
 
-  QObject::connect(
-    nextConnSocket,
-    &QLocalSocket::readyRead,
-    this,
-    [nextConnSocket, instanceId, this]() {
+  QObject::connect(nextConnSocket, &QLocalSocket::readyRead, this, [nextConnSocket, instanceId, this]() {
       Q_EMIT this->slotDataAvailable(nextConnSocket, instanceId);
-    }
-  );
+    });
 
   if (connectionType == NewInstance || (
         connectionType == SecondaryInstance &&

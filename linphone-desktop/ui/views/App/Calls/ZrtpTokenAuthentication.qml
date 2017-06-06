@@ -62,7 +62,7 @@ ColumnLayout {
         pointSize: CallStyle.zrtpArea.text.fontSize
       }
 
-      text: zrtp.call.localSAS
+      text: zrtp.call.localSas
     }
 
     Text {
@@ -85,7 +85,7 @@ ColumnLayout {
         pointSize: CallStyle.zrtpArea.text.fontSize
       }
 
-      text: zrtp.call.remoteSAS
+      text: zrtp.call.remoteSas
     }
   }
 

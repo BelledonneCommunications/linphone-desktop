@@ -504,18 +504,7 @@ void CallModel::verifyAuthenticationToken (bool verify) {
 // -----------------------------------------------------------------------------
 
 CallModel::CallEncryption CallModel::getEncryption () const {
-  switch (mCall->getCurrentParams()->getMediaEncryption()) {
-    case linphone::MediaEncryptionSRTP:
-      return CallEncryptionSRTP;
-    case linphone::MediaEncryptionZRTP:
-      return CallEncryptionZRTP;
-    case linphone::MediaEncryptionDTLS:
-      return CallEncryptionDTLS;
-    case linphone::MediaEncryptionNone:
-      break;
-  }
-
-  return CallEncryptionNone;
+  return static_cast<CallEncryption>(mCall->getCurrentParams()->getMediaEncryption());
 }
 
 bool CallModel::isSecured () const {
@@ -528,14 +517,31 @@ bool CallModel::isSecured () const {
 
 // -----------------------------------------------------------------------------
 
-QString CallModel::getLocalSAS () const {
+QString CallModel::getLocalSas () const {
   QString token = ::Utils::coreStringToAppString(mCall->getAuthenticationToken());
   return mCall->getDir() == linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
-QString CallModel::getRemoteSAS () const {
+QString CallModel::getRemoteSas () const {
   QString token = ::Utils::coreStringToAppString(mCall->getAuthenticationToken());
   return mCall->getDir() != linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
+}
+
+// -----------------------------------------------------------------------------
+
+QString CallModel::getSecuredString () const {
+  switch (mCall->getCurrentParams()->getMediaEncryption()) {
+    case linphone::MediaEncryptionSRTP:
+      return QStringLiteral("SRTP");
+    case linphone::MediaEncryptionZRTP:
+      return QStringLiteral("ZRTP");
+    case linphone::MediaEncryptionDTLS:
+      return QStringLiteral("DTLS");
+    case linphone::MediaEncryptionNone:
+      break;
+  }
+
+  return tr("noMediaEncryption");
 }
 
 // -----------------------------------------------------------------------------
@@ -619,8 +625,8 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       statsList << createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
-    }
-    break;
+    } break;
+
     default:
       break;
   }

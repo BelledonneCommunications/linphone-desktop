@@ -27,6 +27,18 @@
 
 // =============================================================================
 
+/*
+ * Define telling G++ that a 'break' statement has been deliberately omitted
+ * in switch block.
+ */
+#ifndef UTILS_NO_BREAK
+  #if defined(__GNUC__) && __GNUC__ >= 7
+    #define UTILS_NO_BREAK __attribute__((fallthrough))
+  #else
+    #define UTILS_NO_BREAK
+  #endif // if defined(__GNUC__) && __GNUC__ >= 7
+#endif // ifndef UTILS_NO_BREAK
+
 namespace Utils {
   inline QString coreStringToAppString (const std::string &string) {
     return QString::fromLocal8Bit(string.c_str(), static_cast<int>(string.size()));

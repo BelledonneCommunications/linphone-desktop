@@ -57,8 +57,9 @@ class CallModel : public QObject {
 
   Q_PROPERTY(CallEncryption encryption READ getEncryption NOTIFY securityUpdated);
   Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated);
-  Q_PROPERTY(QString localSAS READ getLocalSAS NOTIFY securityUpdated);
-  Q_PROPERTY(QString remoteSAS READ getRemoteSAS NOTIFY securityUpdated);
+  Q_PROPERTY(QString localSas READ getLocalSas NOTIFY securityUpdated);
+  Q_PROPERTY(QString remoteSas READ getRemoteSas NOTIFY securityUpdated);
+  Q_PROPERTY(QString securedString READ getSecuredString NOTIFY securityUpdated);
 
 public:
   enum CallStatus {
@@ -73,10 +74,10 @@ public:
   Q_ENUM(CallStatus);
 
   enum CallEncryption {
-    CallEncryptionNone,
-    CallEncryptionSRTP,
-    CallEncryptionZRTP,
-    CallEncryptionDTLS
+    CallEncryptionNone = linphone::MediaEncryptionNone,
+    CallEncryptionDtls = linphone::MediaEncryptionDTLS,
+    CallEncryptionSrtp = linphone::MediaEncryptionSRTP,
+    CallEncryptionZrtp = linphone::MediaEncryptionZRTP
   };
 
   Q_ENUM(CallEncryption);
@@ -165,8 +166,10 @@ private:
   CallEncryption getEncryption () const;
   bool isSecured () const;
 
-  QString getLocalSAS () const;
-  QString getRemoteSAS () const;
+  QString getLocalSas () const;
+  QString getRemoteSas () const;
+
+  QString getSecuredString () const;
 
   QVariantList getAudioStats () const;
   QVariantList getVideoStats () const;

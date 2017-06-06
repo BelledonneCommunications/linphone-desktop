@@ -315,6 +315,10 @@
         <source>callErrorNotAcceptable</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>noMediaEncryption</source>
+        <translation>None</translation>
+    </message>
 </context>
 <context>
     <name>CallSipAddress</name>

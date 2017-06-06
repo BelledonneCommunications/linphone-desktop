@@ -107,7 +107,12 @@ Rectangle {
           id: callSecure
 
           icon: incall.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
+
           onClicked: zrtp.visible = (incall.call.encryption === CallModel.CallEncryptionZRTP)
+
+          TooltipArea {
+            text: incall.call.securedString
+          }
         }
       }
 
