@@ -88,7 +88,7 @@ void Cli::addCommand (const QString &functionName, const QString &description, F
 void Cli::makeCommands () noexcept {
   addCommand("show", tr("showFunctionDescription"), cliShow);
   addCommand("call", tr("showFunctionCall"), cliCall, {
-    { "sipAddress", {} }
+    { "sip-address", {} }
   });
 }
 
