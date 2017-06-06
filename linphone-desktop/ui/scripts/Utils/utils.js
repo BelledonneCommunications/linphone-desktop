@@ -155,6 +155,25 @@ function openWindow (window, parent, options) {
 
 // -----------------------------------------------------------------------------
 
+function getPathFromUri (uri) {
+  var str = uri.toString()
+  if (startsWith(str, 'file://')) {
+    str = str.substring(7)
+
+    // Absolute path.
+    if (str.charAt(0) === '/') {
+      var os = Qt.platform.os
+      return os === 'windows' || os === 'winrt'
+        ? str.substring(1)
+        : str
+    }
+  }
+
+  return str
+}
+
+// -----------------------------------------------------------------------------
+
 // Test if a point is in a item.
 //
 // `source` is the item that generated the point.

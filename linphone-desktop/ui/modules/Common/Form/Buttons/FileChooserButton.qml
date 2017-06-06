@@ -82,7 +82,7 @@ TextField {
     }
 
     onAccepted: {
-      textField.selectedFile = fileUrl.toString().substring(7)
+      textField.selectedFile = Utils.getPathFromUri(fileUrl)
       textField.accepted(textField.selectedFile)
     }
 
