@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <linphone++/linphone.hh>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -30,7 +31,6 @@
 #include "config.h"
 
 #include "Paths.hpp"
-#include <linphone++/linphone.hh>
 
 #define PATH_ASSISTANT_CONFIG "/assistant/"
 #define PATH_AVATARS "/avatars/"
@@ -256,10 +256,10 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
 }
 
 static void setRlsUri (const QString &configPath) {
-  shared_ptr<linphone::Config> config = linphone::Config::newWithFactory(Utils::appStringToCoreString(configPath), "");
+  shared_ptr<linphone::Config> config = linphone::Config::newWithFactory(::Utils::appStringToCoreString(configPath), "");
   if (config->getString("sip", "rls_uri", "").empty()) {
     config->setString("sip", "rls_uri", "sips:rls@sip.linphone.org");
-	config->sync();
+    config->sync();
   }
 }
 
@@ -272,7 +272,7 @@ void Paths::migrate () {
 
   if (!filePathExists(newPath) && filePathExists(oldPath)) {
     migrateConfigurationFile(oldPath, newPath);
-	/* Define RLS uri so that presence switches from peer-to-peer mode to list mode */
+    /* Define RLS uri so that presence switches from peer-to-peer mode to list mode. */
     setRlsUri(newPath);
   }
 
