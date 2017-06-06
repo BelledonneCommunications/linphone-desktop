@@ -20,10 +20,12 @@ Window {
   property var callsWindow
 
   property bool hideButtons: false
+  property bool sFullScreen: true
 
   // ---------------------------------------------------------------------------
 
   function _exit (cb) {
+    incall.showNormal() 
     incall.close()
 
     if (cb) {
@@ -33,7 +35,12 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  onVisibilityChanged: visibility === Window.Windowed && showFullScreen()
+  onVisibilityChanged: {
+	if (sFullScreen && visibility === Window.Windowed) {
+		incall.showFullScreen()
+		sFullScreen = false
+	}
+}
 
   // ---------------------------------------------------------------------------
 
@@ -49,7 +56,10 @@ Window {
     color: '#000000' // Not a style.
     focus: true
 
-    Keys.onEscapePressed: incall.close()
+    Keys.onEscapePressed: {
+	incall.showNormal() 
+	incall.close()
+	}
 
     Loader {
       anchors.fill: parent
