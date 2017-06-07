@@ -32,7 +32,7 @@
 
 #include "Paths.hpp"
 
-#define PATH_ASSISTANT_CONFIG "/assistant/"
+#define PATH_ASSISTANT_CONFIG "/linphone/assistant/"
 #define PATH_AVATARS "/avatars/"
 #define PATH_CAPTURES "/captures/"
 #define PATH_LOGS "/logs/"
@@ -41,8 +41,8 @@
 
 #define PATH_CALL_HISTORY_LIST "/call-history.db"
 #define PATH_CONFIG "/linphonerc"
-#define PATH_FACTORY_CONFIG "/linphonerc-factory"
-#define PATH_ROOT_CA "/rootca.pem"
+#define PATH_FACTORY_CONFIG "/linphone/linphonerc-factory"
+#define PATH_ROOT_CA "/linphone/rootca.pem"
 #define PATH_FRIENDS_LIST "/friends.db"
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
 #define PATH_ZRTP_SECRETS "/zidcache"
@@ -100,26 +100,24 @@ inline string getWritableFilePath (const QString &filename) {
 
 // -----------------------------------------------------------------------------
 
-inline QString getAppPackageDataDirPath () {
+inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == "MacOS") {
     dir.cdUp();
     dir.cd("Resources");
   } else
     dir.cdUp();
+  return dir;
+}
 
-  dir.cd("share/linphone");
+inline QString getAppPackageDataDirPath () {
+  QDir dir = getAppPackageDir();
+  dir.cd("share");
   return dir.absolutePath();
 }
 
 inline QString getAppPackageMsPluginsDirPath () {
-  QDir dir(QCoreApplication::applicationDirPath());
-  if (dir.dirName() == "MacOS") {
-    dir.cdUp();
-    dir.cd("Resources");
-  } else
-    dir.cdUp();
-
+  QDir dir = getAppPackageDir();
   dir.cd(MSPLUGINS_DIR);
   return dir.absolutePath();
 }
