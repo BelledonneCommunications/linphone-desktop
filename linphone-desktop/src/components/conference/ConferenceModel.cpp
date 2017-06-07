@@ -40,6 +40,7 @@ ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(paren
   });
 
   setSourceModel(CoreManager::getInstance()->getCallsListModel());
+  emit conferenceChanged(true);
 }
 
 bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
@@ -113,4 +114,21 @@ void ConferenceModel::setMicroMuted (bool status) {
 
 bool ConferenceModel::getRecording () const {
   return mRecording;
+}
+
+void ConferenceModel::leave() {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  core->leaveConference();
+  emit conferenceChanged(false);
+}
+
+void ConferenceModel::join() {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  core->enterConference();
+  emit conferenceChanged(true);
+}
+
+bool ConferenceModel::isInConference () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  return core->isInConference();
 }

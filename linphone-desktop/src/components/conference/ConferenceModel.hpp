@@ -36,6 +36,7 @@ class ConferenceModel : public QSortFilterProxyModel {
 
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
   Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
+  Q_PROPERTY(bool isInConf READ isInConference NOTIFY conferenceChanged);
 
 public:
   ConferenceModel (QObject *parent = Q_NULLPTR);
@@ -48,12 +49,16 @@ protected:
 
   Q_INVOKABLE void startRecording ();
   Q_INVOKABLE void stopRecording ();
+  
+  Q_INVOKABLE void join ();
+  Q_INVOKABLE void leave ();
 
 signals:
   void countChanged (int count);
 
   void microMutedChanged (bool status);
   void recordingChanged (bool status);
+  void conferenceChanged(bool status);
 
 private:
   int getCount () const {
@@ -62,6 +67,8 @@ private:
 
   bool getMicroMuted () const;
   void setMicroMuted (bool status);
+
+  bool isInConference () const;
 
   bool getRecording () const;
 

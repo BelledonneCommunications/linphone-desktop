@@ -207,6 +207,14 @@ Rectangle {
         }
         iconSize: CallStyle.actionArea.iconSize
 
+        ActionSwitch {
+          icon: 'pause'
+
+          onClicked: {
+            conference.conferenceModel.isInConf ? conference.conferenceModel.leave() : conference.conferenceModel.join()
+          }
+        }
+
         ActionButton {
           icon: 'hangup'
 
