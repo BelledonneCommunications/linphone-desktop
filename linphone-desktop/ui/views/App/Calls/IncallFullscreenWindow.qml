@@ -20,11 +20,12 @@ Window {
   property var callsWindow
 
   property bool hideButtons: false
-  property bool sFullScreen: true
 
   // ---------------------------------------------------------------------------
 
-  function _exit (cb) {
+  function exit (cb) {
+    // It's necessary to call `showNormal` before close on MacOs
+    // because the dock will be hidden forever!
     incall.showNormal()
     incall.close()
 
@@ -35,18 +36,22 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  onVisibilityChanged: {
-    if (sFullScreen && visibility === Window.Windowed) {
-      incall.showFullScreen()
-      sFullScreen = false
+  Component.onCompleted: {
+    var show = function (visibility) {
+      if (visibility === Window.Windowed) {
+        incall.visibilityChanged.disconnect(show)
+        incall.showFullScreen()
+      }
     }
-}
+
+    incall.visibilityChanged.connect(show)
+  }
 
   // ---------------------------------------------------------------------------
 
   Shortcut {
     sequence: StandardKey.Close
-    onActivated: _exit()
+    onActivated: incall.exit()
   }
 
   // ---------------------------------------------------------------------------
@@ -56,10 +61,7 @@ Window {
     color: '#000000' // Not a style.
     focus: true
 
-    Keys.onEscapePressed: {
-      incall.showNormal()
-      incall.close()
-    }
+    Keys.onEscapePressed: incall.exit()
 
     Loader {
       anchors.fill: parent
@@ -218,7 +220,7 @@ Window {
           ActionButton {
             icon: 'fullscreen'
 
-            onClicked: _exit()
+            onClicked: incall.exit()
           }
         }
       }
@@ -300,7 +302,7 @@ Window {
             iconSize: CallStyle.actionArea.iconSize
             updating: call.updating
 
-            onClicked: _exit(function () { call.videoEnabled = false })
+            onClicked: incall.exit(function () { call.videoEnabled = false })
           }
 
           ActionButton {
@@ -326,13 +328,13 @@ Window {
             icon: 'pause'
             updating: call.updating
 
-            onClicked: _exit(function () { call.pausedByUser = enabled })
+            onClicked: incall.exit(function () { call.pausedByUser = enabled })
           }
 
           ActionButton {
             icon: 'hangup'
 
-            onClicked: _exit(call.terminate)
+            onClicked: incall.exit(call.terminate)
           }
         }
       }

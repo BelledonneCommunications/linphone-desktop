@@ -20,7 +20,7 @@ function handleStatusChanged (status) {
   if (status === Linphone.CallModel.CallStatusEnded) {
     var fullscreen = incall._fullscreen
     if (fullscreen) {
-      fullscreen.close()
+      fullscreen.exit()
     }
 
     telKeypad.visible = false
