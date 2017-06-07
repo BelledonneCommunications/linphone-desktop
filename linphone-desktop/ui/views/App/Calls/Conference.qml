@@ -189,14 +189,40 @@ Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: CallStyle.actionArea.height
 
-      RowLayout {
+      GridLayout {
         anchors {
           left: parent.left
           leftMargin: CallStyle.actionArea.leftButtonsGroupMargin
           verticalCenter: parent.verticalCenter
         }
 
-        spacing: ActionBarStyle.spacing
+        columns: incall.width < CallStyle.actionArea.lowWidth ? 2 : 4
+        rowSpacing: ActionBarStyle.spacing
+
+        Row {
+          spacing: CallStyle.actionArea.vu.spacing
+
+          VuMeter {
+            Timer {
+              interval: 50
+              repeat: true
+              running: micro.enabled
+
+              onTriggered: parent.value = conference.conferenceModel.microVu
+            }
+
+            enabled: micro.enabled
+          }
+
+          ActionSwitch {
+            id: micro
+
+            icon: 'micro'
+            iconSize: CallStyle.actionArea.iconSize
+
+            onClicked: conference.conferenceModel.microMuted = !conference.conferenceModel.microMuted
+          }
+        }
       }
 
       ActionBar {
