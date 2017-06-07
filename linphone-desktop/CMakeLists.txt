@@ -1,4 +1,4 @@
-###############################################################################
+################################################################################
 # CMakeLists.txt
 # Copyright (C) 2017  Belledonne Communications, Grenoble France
 #
@@ -281,7 +281,7 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 if (WIN32)
   add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} linphone.rc)
 else ()
-  add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES} )
+  add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
 endif ()
   bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
   add_dependencies(${TARGET_NAME} ${TARGET_NAME}-git-version)
@@ -291,15 +291,16 @@ if (NOT WIN32)
 endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
-#to start better integration into IDE
+
+# To start better integration into IDE.
 source_group(
-  "Qml" REGULAR_EXPRESSION ".+\.(qml)$"
+  "Qml" REGULAR_EXPRESSION ".+\.qml$"
 )
 source_group(
-  "Js" REGULAR_EXPRESSION ".+\.(js)$"
+  "Js" REGULAR_EXPRESSION ".+\.js)$"
 )
 source_group(
-  "Svg" REGULAR_EXPRESSION ".+\.(svg)$"
+  "Svg" REGULAR_EXPRESSION ".+\.svg$"
 )
 
 foreach (package ${QT5_PACKAGES})
