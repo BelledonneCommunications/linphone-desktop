@@ -266,6 +266,7 @@ Rectangle {
       Layout.preferredHeight: CallStyle.zrtpArea.height
 
       call: incall.call
+      visible: !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
       z: Constants.zPopup
     }
 
