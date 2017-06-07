@@ -24,7 +24,7 @@ Notification {
         top: parent.top
       }
 
-      icon: 'file_sign'
+      icon: 'update_sign'
       iconSize: NotificationNewVersionAvailableStyle.iconSize
     }
 
