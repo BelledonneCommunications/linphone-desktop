@@ -108,7 +108,7 @@ Rectangle {
 
           icon: incall.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
 
-          onClicked: zrtp.visible = (incall.call.encryption === CallModel.CallEncryptionZRTP)
+          onClicked: zrtp.visible = (incall.call.encryption === CallModel.CallEncryptionZrtp)
 
           TooltipArea {
             text: Logic.makeReadableSecuredString(incall.call.securedString)
