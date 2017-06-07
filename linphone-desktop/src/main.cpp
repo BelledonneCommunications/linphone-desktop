@@ -93,6 +93,7 @@ int main (int argc, char *argv[]) {
   }
 
   app.setFont(QFont(DEFAULT_FONT));
+  qInfo() << QStringLiteral("Main font:") << app.font();
 
   // ---------------------------------------------------------------------------
   // Init and run!
