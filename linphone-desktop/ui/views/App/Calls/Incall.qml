@@ -111,7 +111,7 @@ Rectangle {
           onClicked: zrtp.visible = (incall.call.encryption === CallModel.CallEncryptionZRTP)
 
           TooltipArea {
-            text: incall.call.securedString
+            text: Logic.makeReadableSecuredString(incall.call.securedString)
           }
         }
       }

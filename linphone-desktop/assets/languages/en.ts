@@ -315,10 +315,6 @@
         <source>callErrorNotAcceptable</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>noMediaEncryption</source>
-        <translation>None</translation>
-    </message>
 </context>
 <context>
     <name>CallSipAddress</name>
@@ -811,6 +807,14 @@ Server url not configured.</translation>
     <message>
         <source>pendingRequestLabel</source>
         <translation>Please to wait, a request is pending.</translation>
+    </message>
+    <message>
+        <source>securedStringFormat</source>
+        <translation>Call is encrypted with: %1.</translation>
+    </message>
+    <message>
+        <source>callNotSecured</source>
+        <translation>Call not encrypted.</translation>
     </message>
 </context>
 <context>

@@ -541,7 +541,7 @@ QString CallModel::getSecuredString () const {
       break;
   }
 
-  return tr("noMediaEncryption");
+  return QStringLiteral("");
 }
 
 // -----------------------------------------------------------------------------

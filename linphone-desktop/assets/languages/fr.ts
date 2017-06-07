@@ -315,10 +315,6 @@
         <source>callErrorNotAcceptable</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>noMediaEncryption</source>
-        <translation>Aucun</translation>
-    </message>
 </context>
 <context>
     <name>CallSipAddress</name>
@@ -811,6 +807,14 @@ Url du serveur non configurée.</translation>
     <message>
         <source>pendingRequestLabel</source>
         <translation>Merci de patienter, une requête est en attente.</translation>
+    </message>
+    <message>
+        <source>securedStringFormat</source>
+        <translation>L&apos;appel est chiffré avec: %1.</translation>
+    </message>
+    <message>
+        <source>callNotSecured</source>
+        <translation>Appel non chiffré.</translation>
     </message>
 </context>
 <context>

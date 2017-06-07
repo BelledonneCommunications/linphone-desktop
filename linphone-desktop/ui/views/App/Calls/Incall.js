@@ -64,6 +64,14 @@ function handleVideoRequested () {
   })
 }
 
+function makeReadableSecuredString (securedString) {
+  if (!securedString.length) {
+    return qsTr('callNotSecured')
+  }
+
+  return qsTr('securedStringFormat').replace('%1', securedString)
+}
+
 function showFullscreen () {
   if (incall._fullscreen) {
     return
