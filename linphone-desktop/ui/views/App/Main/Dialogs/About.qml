@@ -48,28 +48,32 @@ DialogPlus {
 
         spacing: 0
 
-        Text {
+        TextEdit {
           color: AboutStyle.versionsBlock.appVersion.color
-          elide: Text.ElideRight
+          selectByMouse: true
           font.pointSize: AboutStyle.versionsBlock.appVersion.fontSize
-          text: 'Linphone Desktop Qt' + App.qtVersion + ' - ' + Qt.application.version
+          text: 'Desktop Qt' + App.qtVersion + ' - ' + Qt.application.version
 
           height: parent.height / 2
           width: parent.width
 
           verticalAlignment: Text.AlignVCenter
+
+          onActiveFocusChanged: deselect()
         }
 
-        Text {
+        TextEdit {
           color: AboutStyle.versionsBlock.coreVersion.color
-          elide: Text.ElideRight
+          selectByMouse: true
           font.pointSize: AboutStyle.versionsBlock.coreVersion.fontSize
-          text: 'Linphone Core ' + CoreManager.version
+          text: 'Core ' + CoreManager.version
 
           height: parent.heigth / 2
           width: parent.width
 
           verticalAlignment: Text.AlignVCenter
+
+          onActiveFocusChanged: deselect()
         }
       }
     }
