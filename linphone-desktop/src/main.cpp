@@ -22,6 +22,7 @@
 
 #include <QDirIterator>
 #include <QFontDatabase>
+#include <QScreen>
 
 #include "app/App.hpp"
 
@@ -40,11 +41,11 @@ int main (int argc, char *argv[]) {
   // ---------------------------------------------------------------------------
 
   // Options to get a nice video render.
-  #ifdef _WIN32
+  #ifdef Q_OS_WIN
     QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
   #else
     QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
-  #endif // ifdef _WIN32
+  #endif // ifdef Q_OS_WIN
   QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
 
   {
@@ -92,8 +93,16 @@ int main (int argc, char *argv[]) {
     }
   }
 
-  app.setFont(QFont(DEFAULT_FONT));
-  qInfo() << QStringLiteral("Main font:") << app.font();
+  {
+    QFont font(DEFAULT_FONT);
+
+    #ifdef Q_OS_MACOS
+      // 72 dpi on MacOs...
+      font.setPointSizeF(font.pointSize() * 96.0 / 72.0);
+    #endif // ifdef Q_OS_MACOS
+
+    app.setFont(QFont(DEFAULT_FONT));
+  }
 
   // ---------------------------------------------------------------------------
   // Init and run!

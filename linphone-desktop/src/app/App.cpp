@@ -206,9 +206,9 @@ void App::parseArgs () {
   mParser.addVersionOption();
   mParser.addOptions({
     { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
-    #ifndef __APPLE__
+    #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
-    #endif // ifndef __APPLE__
+    #endif // ifndef Q_OS_MACOS
     { "self-test", tr("commandLineOptionSelfTest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") },
     { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
