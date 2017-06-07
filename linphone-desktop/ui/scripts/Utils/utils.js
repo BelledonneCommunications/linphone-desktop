@@ -179,7 +179,7 @@ function getUriFromSystemPath (path) {
 
   var os = Qt.platform.os
   if (os === 'windows' || os === 'winrt') {
-    return 'file://' + (/^[^:]+:/.exec(path) ? '' : '/')
+    return 'file://' + (/^\w:/.exec(path) ? '/' : '') + path
   }
 
   return 'file://' + path
@@ -284,6 +284,11 @@ function assert (condition, message) {
 // -----------------------------------------------------------------------------
 
 function basename (str) {
+  var os = Qt.platform.os
+  if (os === 'windows' || os === 'winrt') {
+    str = str.replace(/\\/g, '/')
+  }
+
   var str2 = str
   var length = str2.length - 1
 
@@ -303,6 +308,11 @@ function capitalizeFirstLetter (str) {
 // -----------------------------------------------------------------------------
 
 function dirname (str) {
+  var os = Qt.platform.os
+  if (os === 'windows' || os === 'winrt') {
+    str = str.replace(/\\/g, '/')
+  }
+
   var str2 = str
   var length = str2.length - 1
 
