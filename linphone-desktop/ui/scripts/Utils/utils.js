@@ -34,6 +34,39 @@ function clearTimeout (timer) {
 
 // -----------------------------------------------------------------------------
 
+function createObject (source, parent, options) {
+  if (options && options.isString) {
+    var object = Qt.createQmlObject(source, parent)
+
+    var properties = options && options.properties
+    if (properties) {
+      for (var key in properties) {
+        object[key] = properties[key]
+      }
+    }
+
+    return object
+  }
+
+  var component = Qt.createComponent(source)
+  if (component.status !== QtQuick.Component.Ready) {
+    console.debug('Component not ready.')
+    if (component.status === QtQuick.Component.Error) {
+      console.debug('Error: ' + component.errorString())
+    }
+    return // Error.
+  }
+
+  var object = component.createObject(parent, (options && options.properties) || {})
+  if (!object) {
+    console.debug('Error: unable to create dynamic object.')
+  }
+
+  return object
+}
+
+// -----------------------------------------------------------------------------
+
 function encodeTextToQmlRichFormat (text, options) {
   var images = ''
 
@@ -79,56 +112,6 @@ function extractFirstUri (str) {
 
 // -----------------------------------------------------------------------------
 
-// Returns the top (root) parent of one object.
-function getTopParent (object, useFakeParent) {
-  function _getTopParent (object, useFakeParent) {
-    return (useFakeParent && object.$parent) || object.parent
-  }
-
-  var parent = _getTopParent(object, useFakeParent)
-  var p
-  while ((p = _getTopParent(parent, useFakeParent)) != null) {
-    parent = p
-  }
-
-  return parent
-}
-
-// -----------------------------------------------------------------------------
-
-function createObject (source, parent, options) {
-  if (options && options.isString) {
-    var object = Qt.createQmlObject(source, parent)
-
-    var properties = options && options.properties
-    if (properties) {
-      for (var key in properties) {
-        object[key] = properties[key]
-      }
-    }
-
-    return object
-  }
-
-  var component = Qt.createComponent(source)
-  if (component.status !== QtQuick.Component.Ready) {
-    console.debug('Component not ready.')
-    if (component.status === QtQuick.Component.Error) {
-      console.debug('Error: ' + component.errorString())
-    }
-    return // Error.
-  }
-
-  var object = component.createObject(parent, (options && options.properties) || {})
-  if (!object) {
-    console.debug('Error: unable to create dynamic object.')
-  }
-
-  return object
-}
-
-// -----------------------------------------------------------------------------
-
 // Load by default a window in the ui/views folder.
 // If options.isString is equals to true, a marshalling component can
 // be used.
@@ -162,10 +145,7 @@ function getSystemPathFromUri (uri) {
 
     // Absolute path.
     if (str.charAt(0) === '/') {
-      var os = Qt.platform.os
-      return os === 'windows' || os === 'winrt'
-        ? str.substring(1)
-        : str
+      return runOnWindows() ? str.substring(1) : str
     }
   }
 
@@ -177,12 +157,35 @@ function getUriFromSystemPath (path) {
     return path
   }
 
-  var os = Qt.platform.os
-  if (os === 'windows' || os === 'winrt') {
+  if (runOnWindows()) {
     return 'file://' + (/^\w:/.exec(path) ? '/' : '') + path
   }
 
   return 'file://' + path
+}
+
+// -----------------------------------------------------------------------------
+
+// Returns the top (root) parent of one object.
+function getTopParent (object, useFakeParent) {
+  function _getTopParent (object, useFakeParent) {
+    return (useFakeParent && object.$parent) || object.parent
+  }
+
+  var parent = _getTopParent(object, useFakeParent)
+  var p
+  while ((p = _getTopParent(parent, useFakeParent)) != null) {
+    parent = p
+  }
+
+  return parent
+}
+
+// -----------------------------------------------------------------------------
+
+function runOnWindows () {
+  var os = Qt.platform.os
+  return os === 'windows' || os === 'winrt'
 }
 
 // -----------------------------------------------------------------------------
@@ -284,8 +287,7 @@ function assert (condition, message) {
 // -----------------------------------------------------------------------------
 
 function basename (str) {
-  var os = Qt.platform.os
-  if (os === 'windows' || os === 'winrt') {
+  if (runOnWindows()) {
     str = str.replace(/\\/g, '/')
   }
 
@@ -308,8 +310,7 @@ function capitalizeFirstLetter (str) {
 // -----------------------------------------------------------------------------
 
 function dirname (str) {
-  var os = Qt.platform.os
-  if (os === 'windows' || os === 'winrt') {
+  if (runOnWindows()) {
     str = str.replace(/\\/g, '/')
   }
 
