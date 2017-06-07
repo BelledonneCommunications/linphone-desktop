@@ -33,11 +33,12 @@
 #include "../components/Components.hpp"
 #include "../Utils.hpp"
 
+#include "cli/Cli.hpp"
 #include "logger/Logger.hpp"
+#include "paths/Paths.hpp"
 #include "providers/AvatarProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
-#include "cli/Cli.hpp"
 
 #include "App.hpp"
 
@@ -71,11 +72,27 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
   setApplicationVersion(LINPHONE_QT_GIT_VERSION);
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
+  parseArgs();
+
   // List available locales.
   for (const auto &locale : QDir(LANGUAGES_PATH).entryList())
     mAvailableLocales << QLocale(locale);
 
   mTranslator = new DefaultTranslator(this);
+
+  // Try to use preferred locale.
+  QString locale = ::Utils::coreStringToAppString(
+      linphone::Config::newWithFactory(
+        Paths::getConfigFilePath(mParser.value("config")), "")->getString(
+        SettingsModel::UI_SECTION, "locale", ""
+      )
+    );
+
+  if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
+    mLocale = locale;
+    qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
+    return;
+  }
 
   // Try to use system locale.
   QLocale sysLocale = QLocale::system();
@@ -200,33 +217,6 @@ void App::initContentApp () {
 
 // -----------------------------------------------------------------------------
 
-void App::parseArgs () {
-  mParser.setApplicationDescription(tr("applicationDescription"));
-  mParser.addHelpOption();
-  mParser.addVersionOption();
-  mParser.addOptions({
-    { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
-    #ifndef Q_OS_MACOS
-      { "iconified", tr("commandLineOptionIconified") },
-    #endif // ifndef Q_OS_MACOS
-    { "self-test", tr("commandLineOptionSelfTest") },
-    { { "V", "verbose" }, tr("commandLineOptionVerbose") },
-    { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
-  });
-
-  mParser.process(*this);
-
-  // Initialize logger. (Do not do this before this point because the
-  // application has to be created for the logs to be put in the correct
-  // directory.)
-  Logger::init();
-  if (mParser.isSet("verbose")) {
-    Logger::getInstance()->setVerbose(true);
-  }
-}
-
-// -----------------------------------------------------------------------------
-
 QString App::getCommandArgument () {
   return mParser.value("cmd");
 }
@@ -235,29 +225,6 @@ QString App::getCommandArgument () {
 
 void App::executeCommand (const QString &command) {
   mCli->executeCommand(command);
-}
-
-// -----------------------------------------------------------------------------
-
-void App::tryToUsePreferredLocale () {
-  QString locale = getConfigLocale();
-
-  if (!locale.isEmpty()) {
-    DefaultTranslator *translator = new DefaultTranslator(this);
-
-    if (installLocale(*this, *translator, QLocale(locale))) {
-      // Use config.
-      mTranslator->deleteLater();
-      mTranslator = translator;
-      mLocale = locale;
-
-      qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
-    } else {
-      // Reset config.
-      setConfigLocale("");
-      translator->deleteLater();
-    }
-  }
 }
 
 // -----------------------------------------------------------------------------
@@ -314,6 +281,33 @@ QString App::convertUrlToLocalPath (const QUrl &url) {
 
 bool App::hasFocus () const {
   return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
+}
+
+// -----------------------------------------------------------------------------
+
+void App::parseArgs () {
+  mParser.setApplicationDescription(tr("applicationDescription"));
+  mParser.addHelpOption();
+  mParser.addVersionOption();
+  mParser.addOptions({
+    { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
+    #ifndef Q_OS_MACOS
+      { "iconified", tr("commandLineOptionIconified") },
+    #endif // ifndef Q_OS_MACOS
+    { "self-test", tr("commandLineOptionSelfTest") },
+    { { "V", "verbose" }, tr("commandLineOptionVerbose") },
+    { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
+  });
+
+  mParser.process(*this);
+
+  // Initialize logger. (Do not do this before this point because the
+  // application has to be created for the logs to be put in the correct
+  // directory.)
+  Logger::init();
+  if (mParser.isSet("verbose")) {
+    Logger::getInstance()->setVerbose(true);
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -468,8 +462,6 @@ QString App::getLocale () const {
 // -----------------------------------------------------------------------------
 
 void App::openAppAfterInit () {
-  tryToUsePreferredLocale();
-
   qInfo() << QStringLiteral("Open linphone app.");
 
   QQuickWindow *mainWindow = getMainWindow();

@@ -50,12 +50,9 @@ public:
   ~App ();
 
   void initContentApp ();
-  void parseArgs ();
 
   QString getCommandArgument ();
   void executeCommand (const QString &command);
-
-  void tryToUsePreferredLocale ();
 
   QQmlEngine *getEngine () {
     return mEngine;
@@ -91,6 +88,8 @@ signals:
   void configLocaleChanged (const QString &locale);
 
 private:
+  void parseArgs ();
+
   void registerTypes ();
   void registerSharedTypes ();
   void setTrayIcon ();

@@ -70,7 +70,6 @@ int main (int argc, char *argv[]) {
   // ---------------------------------------------------------------------------
 
   App app(argc, argv);
-  app.parseArgs();
 
   if (app.isSecondary()) {
     QString command = app.getCommandArgument();
