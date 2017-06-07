@@ -155,7 +155,7 @@ function openWindow (window, parent, options) {
 
 // -----------------------------------------------------------------------------
 
-function getPathFromUri (uri) {
+function getSystemPathFromUri (uri) {
   var str = uri.toString()
   if (startsWith(str, 'file://')) {
     str = str.substring(7)
@@ -170,6 +170,19 @@ function getPathFromUri (uri) {
   }
 
   return str
+}
+
+function getUriFromSystemPath (path) {
+  if (path.startsWith('file://')) {
+    return path
+  }
+
+  var os = Qt.platform.os
+  if (os === 'windows' || os === 'winrt') {
+    return 'file://' + (/^[^:]+:/.exec(path) ? '' : '/')
+  }
+
+  return 'file://' + path
 }
 
 // -----------------------------------------------------------------------------

@@ -75,14 +75,11 @@ TextField {
         return ''
       }
 
-      var folder = Utils.dirname(textField.selectedFile)
-      return !Utils.startsWith(folder, 'file:')
-        ? 'file:' + folder
-        : folder
+      return Utils.getUriFromSystemPath(Utils.dirname(textField.selectedFile))
     }
 
     onAccepted: {
-      textField.selectedFile = Utils.getPathFromUri(fileUrl)
+      textField.selectedFile = Utils.getSystemPathFromUri(fileUrl)
       textField.accepted(textField.selectedFile)
     }
 

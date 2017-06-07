@@ -29,7 +29,7 @@ Item {
     // Filtering files, other urls are forbidden.
     files = files.reduce(function (files, file) {
       if (file.startsWith('file:')) {
-        files.push(Utils.getPathFromUri(file))
+        files.push(Utils.getSystemPathFromUri(file))
       }
 
       return files
