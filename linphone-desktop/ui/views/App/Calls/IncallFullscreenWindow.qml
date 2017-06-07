@@ -25,7 +25,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   function _exit (cb) {
-    incall.showNormal() 
+    incall.showNormal()
     incall.close()
 
     if (cb) {
@@ -36,10 +36,10 @@ Window {
   // ---------------------------------------------------------------------------
 
   onVisibilityChanged: {
-	if (sFullScreen && visibility === Window.Windowed) {
-		incall.showFullScreen()
-		sFullScreen = false
-	}
+    if (sFullScreen && visibility === Window.Windowed) {
+      incall.showFullScreen()
+      sFullScreen = false
+    }
 }
 
   // ---------------------------------------------------------------------------
@@ -57,9 +57,9 @@ Window {
     focus: true
 
     Keys.onEscapePressed: {
-	incall.showNormal() 
-	incall.close()
-	}
+      incall.showNormal()
+      incall.close()
+    }
 
     Loader {
       anchors.fill: parent

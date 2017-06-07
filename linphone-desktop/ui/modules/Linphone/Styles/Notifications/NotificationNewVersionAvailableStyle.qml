@@ -17,6 +17,6 @@ QtObject {
   property QtObject message: QtObject {
     property color color: Colors.h
     property int fontSize: 10
-	property real topPadding: 10
+    property int topPadding: 10
   }
 }
