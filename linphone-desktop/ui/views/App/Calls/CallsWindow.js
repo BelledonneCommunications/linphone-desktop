@@ -81,15 +81,11 @@ function handleCallTransferAsked (call) {
   })
 }
 
-function handleDetachedVirtualWindow () {
-  handleCountChanged(calls.count)
-}
-
 function windowMustBeClosed () {
-  return calls.count === 0 && !window.virtualWindowVisible
+  return Linphone.CallsListModel.rowCount() === 0 && !window.virtualWindowVisible
 }
 
-function handleCountChanged () {
+function tryToCloseWindow () {
   if (windowMustBeClosed()) {
     // Workaround, it's necessary to use a timeout because at last call termination
     // a segfault is emit in `QOpenGLContext::functions() const ()`.

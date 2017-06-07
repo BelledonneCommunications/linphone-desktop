@@ -55,7 +55,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   onClosing: Logic.handleClosing(close)
-  onDetachedVirtualWindow: Logic.handleDetachedVirtualWindow()
+  onDetachedVirtualWindow: Logic.tryToCloseWindow()
 
   // ---------------------------------------------------------------------------
 
@@ -124,8 +124,6 @@ Window {
 
           conferenceModel: ConferenceModel {}
           model: CallsListProxyModel {}
-
-          onCountChanged: Logic.handleCountChanged(count)
         }
       }
     }
@@ -212,10 +210,12 @@ Window {
 
   // ---------------------------------------------------------------------------
   // Handle transfer.
+  // Handle count changed. Not on proxy model!!!
   // ---------------------------------------------------------------------------
 
   Connections {
     target: CallsListModel
     onCallTransferAsked: Logic.handleCallTransferAsked(callModel)
+    onRowsRemoved: Logic.tryToCloseWindow()
   }
 }
