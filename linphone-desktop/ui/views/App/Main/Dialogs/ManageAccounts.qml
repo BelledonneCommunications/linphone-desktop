@@ -64,7 +64,12 @@ DialogPlus {
           model: AccountSettingsModel.accounts
           iconRole: (function (data) {
             var proxyConfig = data.proxyConfig
-            return proxyConfig && AccountSettingsModel.getProxyConfigDescription(proxyConfig).registrationState !== AccountSettingsModel.RegistrationStateRegistered
+            if (!proxyConfig) {
+              return ''
+            }
+
+            var description = AccountSettingsModel.getProxyConfigDescription(proxyConfig)
+            return description.registerEnabled && description.registrationState !== AccountSettingsModel.RegistrationStateRegistered
               ? 'generic_error'
               : ''
           })
