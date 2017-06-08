@@ -106,11 +106,9 @@ public:
 
 private:
   QList<ChatEntryData>::iterator findMessageEntry (const shared_ptr<linphone::ChatMessage> &message) {
-    return find_if(
-      mChatModel->mEntries.begin(), mChatModel->mEntries.end(), [&message](const ChatEntryData &pair) {
+    return find_if(mChatModel->mEntries.begin(), mChatModel->mEntries.end(), [&message](const ChatEntryData &pair) {
         return pair.second == message;
-      }
-    );
+      });
   }
 
   void signalDataChanged (const QList<ChatEntryData>::iterator &it) {
@@ -390,7 +388,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   emit messageSent(message);
 }
 
-void ChatModel::downloadFile (int id, const QString &downloadPath) {
+void ChatModel::downloadFile (int id) {
   if (!mChatRoom)
     return;
 
@@ -423,7 +421,20 @@ void ChatModel::downloadFile (int id, const QString &downloadPath) {
       return;
   }
 
-  message->setFileTransferFilepath(::Utils::appStringToCoreString(downloadPath));
+  bool soFarSoGood;
+  const QString &safeFilePath = ::Utils::getSafeFilePath(
+      QStringLiteral("%1%2")
+      .arg(CoreManager::getInstance()->getSettingsModel()->getDownloadFolder())
+      .arg(entry.first["fileName"].toString()),
+      &soFarSoGood
+    );
+
+  if (!soFarSoGood) {
+    qWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(id);
+    return;
+  }
+
+  message->setFileTransferFilepath(::Utils::appStringToCoreString(safeFilePath));
   message->setListener(mMessageHandlers);
 
   if (message->downloadFile() < 0)
@@ -486,16 +497,14 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
         // We are between `beginRemoveRows` and `endRemoveRows`.
         // A solution is to schedule a `removeEntry` call in the Qt main loop.
         shared_ptr<void> linphonePtr = pair.second;
-        QTimer::singleShot(
-          0, this, [this, linphonePtr]() {
+        QTimer::singleShot(0, this, [this, linphonePtr]() {
             auto it = find_if(mEntries.begin(), mEntries.end(), [linphonePtr](const ChatEntryData &pair) {
                   return pair.second == linphonePtr;
                 });
 
             if (it != mEntries.end())
               removeEntry(static_cast<int>(distance(mEntries.begin(), it)));
-          }
-        );
+          });
       }
 
       CoreManager::getInstance()->getCore()->removeCallLog(static_pointer_cast<linphone::CallLog>(pair.second));
@@ -525,12 +534,9 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
       const ChatEntryData &pair,
       const QList<ChatEntryData>::iterator *start = NULL
     ) {
-      auto it = lower_bound(
-          start ? *start : mEntries.begin(), mEntries.end(), pair,
-          [](const ChatEntryData &a, const ChatEntryData &b) {
+      auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), pair, [](const ChatEntryData &a, const ChatEntryData &b) {
             return a.first["timestamp"] < b.first["timestamp"];
-          }
-        );
+          });
 
       int row = static_cast<int>(distance(mEntries.begin(), it));
 

@@ -115,6 +115,7 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
   Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
+  Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
 
 public:
   enum MediaEncryption {
@@ -264,6 +265,9 @@ public:
   QString getSavedVideosFolder () const;
   void setSavedVideosFolder (const QString &folder);
 
+  QString getDownloadFolder () const;
+  void setDownloadFolder (const QString &folder);
+
   QString getRemoteProvisioning () const;
   void setRemoteProvisioning (const QString &remoteProvisioning);
 
@@ -339,6 +343,7 @@ signals:
 
   void savedScreenshotsFolderChanged (const QString &folder);
   void savedVideosFolderChanged (const QString &folder);
+  void downloadFolderChanged (const QString &folder);
 
   void remoteProvisioningChanged (const QString &remoteProvisioning);
   void remoteProvisioningNotChanged (const QString &remoteProvisioning);

@@ -50,7 +50,7 @@ public:
 
   Q_INVOKABLE void sendFileMessage (const QString &path);
 
-  Q_INVOKABLE void downloadFile (int id, const QString &downloadPath);
+  Q_INVOKABLE void downloadFile (int id);
 
 signals:
   void sipAddressChanged (const QString &sipAddress);

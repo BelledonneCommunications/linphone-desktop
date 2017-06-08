@@ -1,6 +1,5 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.1
-import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -179,23 +178,13 @@ Row {
       }
 
       MouseArea {
-        FileDialog {
-          id: fileDialog
-
-          folder: shortcuts.home
-          selectExisting: false
-          title: qsTr('downloadFileTitle')
-
-          onAccepted: proxyModel.downloadFile(index, App.convertUrlToLocalPath(fileUrl))
-        }
-
         anchors.fill: parent
         cursorShape: containsMouse
           ? Qt.PointingHandCursor
           : Qt.ArrowCursor
         hoverEnabled: true
 
-        onClicked: fileDialog.open()
+        onClicked: proxyModel.downloadFile(index)
         visible: !rectangle.isNotDelivered && !$chatEntry.isOutgoing
       }
     }

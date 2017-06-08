@@ -20,6 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QFileInfo>
+
 #include "Utils.hpp"
 
 // =============================================================================
@@ -38,3 +40,32 @@ char *Utils::rstrstr (const char *a, const char *b) {
 
   return nullptr;
 }
+
+// -----------------------------------------------------------------------------
+
+#define SAFE_FILE_PATH_LIMIT 100
+
+QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
+  if (soFarSoGood)
+    *soFarSoGood = true;
+
+  QFileInfo info(filePath);
+  if (!info.exists())
+    return filePath;
+
+  const QString &prefix = QStringLiteral("%1/%2").arg(info.absolutePath()).arg(info.baseName());
+  const QString &ext = info.completeSuffix();
+
+  for (int i = 1; i < SAFE_FILE_PATH_LIMIT; ++i) {
+    QString safePath = QStringLiteral("%1 (%3).%4").arg(prefix).arg(i).arg(ext);
+    if (!QFileInfo::exists(safePath))
+      return safePath;
+  }
+
+  if (soFarSoGood)
+    *soFarSoGood = false;
+
+  return QStringLiteral("");
+}
+
+#undef SAFE_FILE_PATH_LIMIT

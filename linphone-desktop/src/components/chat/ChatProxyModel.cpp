@@ -69,17 +69,13 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
 
   ChatModel *chat = static_cast<ChatModel *>(mChatModelFilter->sourceModel());
 
-  QObject::connect(
-    chat, &ChatModel::messageReceived, this, [this](const shared_ptr<linphone::ChatMessage> &) {
+  QObject::connect(chat, &ChatModel::messageReceived, this, [this](const shared_ptr<linphone::ChatMessage> &) {
       mMaxDisplayedEntries++;
-    }
-  );
+    });
 
-  QObject::connect(
-    chat, &ChatModel::messageSent, this, [this](const shared_ptr<linphone::ChatMessage> &) {
+  QObject::connect(chat, &ChatModel::messageSent, this, [this](const shared_ptr<linphone::ChatMessage> &) {
       mMaxDisplayedEntries++;
-    }
-  );
+    });
 }
 
 void ChatProxyModel::loadMoreEntries () {
@@ -133,10 +129,10 @@ void ChatProxyModel::sendFileMessage (const QString &path) {
   static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendFileMessage(path);
 }
 
-void ChatProxyModel::downloadFile (int id, const QString &downloadPath) {
+void ChatProxyModel::downloadFile (int id) {
   QModelIndex sourceIndex = mapToSource(index(id, 0));
   static_cast<ChatModel *>(mChatModelFilter->sourceModel())->downloadFile(
-    mChatModelFilter->mapToSource(sourceIndex).row(), downloadPath
+    mChatModelFilter->mapToSource(sourceIndex).row()
   );
 }
 

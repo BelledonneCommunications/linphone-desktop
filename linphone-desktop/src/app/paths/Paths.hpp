@@ -39,6 +39,7 @@ namespace Paths {
   std::string getConfigFilePath (const QString &configPath = QString());
   std::string getFactoryConfigFilePath ();
   std::string getFriendsListFilePath ();
+  std::string getDownloadDirPath ();
   std::string getLogsDirPath ();
   std::string getMessageHistoryFilePath ();
   std::string getPackageDataDirPath ();

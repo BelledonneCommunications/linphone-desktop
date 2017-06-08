@@ -761,13 +761,6 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>FileMessage</name>
-    <message>
-        <source>downloadFileTitle</source>
-        <translation>Download file</translation>
-    </message>
-</context>
-<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1291,6 +1284,10 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>cleanAvatarsDescription</source>
         <translation>Are you sure you want to clean all avatars?</translation>
+    </message>
+    <message>
+        <source>downloadLabel</source>
+        <translation>Download folder</translation>
     </message>
 </context>
 <context>

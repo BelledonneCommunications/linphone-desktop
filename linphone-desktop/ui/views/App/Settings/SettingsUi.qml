@@ -96,7 +96,9 @@ TabContainer {
             onAccepted: SettingsModel.savedScreenshotsFolder = selectedFile
           }
         }
+      }
 
+      FormLine {
         FormGroup {
           label: qsTr('savedVideosLabel')
 
@@ -105,6 +107,19 @@ TabContainer {
             selectFolder: true
 
             onAccepted: SettingsModel.savedVideosFolder = selectedFile
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('downloadLabel')
+
+          FileChooserButton {
+            selectedFile: SettingsModel.downloadFolder
+            selectFolder: true
+
+            onAccepted: SettingsModel.downloadFolder = selectedFile
           }
         }
       }

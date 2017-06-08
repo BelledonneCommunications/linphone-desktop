@@ -50,6 +50,10 @@ namespace Utils {
 
   // Reverse function of strstr.
   char *rstrstr (const char *a, const char *b);
+
+  // Returns the same path given in parameter if `filePath` exists.
+  // Otherwise returns a safe path with a unique number before the extension.
+  QString getSafeFilePath (const QString &filePath, bool *soFarSoGood = nullptr);
 }
 
 #endif // UTILS_H_

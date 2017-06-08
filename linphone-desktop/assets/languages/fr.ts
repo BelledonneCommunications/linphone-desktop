@@ -761,13 +761,6 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>FileMessage</name>
-    <message>
-        <source>downloadFileTitle</source>
-        <translation>Télécharger le fichier</translation>
-    </message>
-</context>
-<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1290,6 +1283,10 @@ un chat ou ajouter un contact.</translation>
     <message>
         <source>cleanAvatarsDescription</source>
         <translation>Voulez-vous vraiment supprimer tous les avatars ?</translation>
+    </message>
+    <message>
+        <source>downloadLabel</source>
+        <translation>Dossier des téléchargements</translation>
     </message>
 </context>
 <context>

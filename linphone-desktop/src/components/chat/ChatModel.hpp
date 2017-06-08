@@ -97,7 +97,7 @@ public:
 
   void sendFileMessage (const QString &path);
 
-  void downloadFile (int id, const QString &downloadPath);
+  void downloadFile (int id);
 
 signals:
   void sipAddressChanged (const QString &sipAddress);

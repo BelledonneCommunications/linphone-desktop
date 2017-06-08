@@ -28,6 +28,7 @@
 #include <QtDebug>
 
 #include "../../utils/Utils.hpp"
+
 #include "config.h"
 
 #include "Paths.hpp"
@@ -167,7 +168,7 @@ string Paths::getAvatarsDirPath () {
 }
 
 string Paths::getCallHistoryFilePath () {
-  return getWritableFilePath(getAppCallHistoryFilePath());
+  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_AVATARS);
 }
 
 string Paths::getCapturesDirPath () {
@@ -187,6 +188,10 @@ string Paths::getFactoryConfigFilePath () {
 
 string Paths::getFriendsListFilePath () {
   return getWritableFilePath(getAppFriendsFilePath());
+}
+
+std::string Paths::getDownloadDirPath () {
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 }
 
 string Paths::getLogsDirPath () {
