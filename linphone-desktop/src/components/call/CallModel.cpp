@@ -25,6 +25,7 @@
 #include <QTimer>
 
 #include "../../app/App.hpp"
+#include "../../utils/LinphoneUtils.hpp"
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -376,27 +377,12 @@ float CallModel::getQuality () const {
 
 // -----------------------------------------------------------------------------
 
-#define VU_MIN (-20.f)
-#define VU_MAX (4.f)
-
-inline float computeVu (float volume) {
-  if (volume < VU_MIN)
-    return 0.f;
-  if (volume > VU_MAX)
-    return 1.f;
-
-  return (volume - VU_MIN) / (VU_MAX - VU_MIN);
-}
-
-#undef VU_MIN
-#undef VU_MAX
-
 float CallModel::getMicroVu () const {
-  return computeVu(mCall->getRecordVolume());
+  return LinphoneUtils::computeVu(mCall->getRecordVolume());
 }
 
 float CallModel::getSpeakerVu () const {
-  return computeVu(mCall->getPlayVolume());
+  return LinphoneUtils::computeVu(mCall->getPlayVolume());
 }
 
 // -----------------------------------------------------------------------------
