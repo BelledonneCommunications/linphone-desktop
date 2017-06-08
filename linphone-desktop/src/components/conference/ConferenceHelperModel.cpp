@@ -21,6 +21,7 @@
  */
 
 #include "../../app/App.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 #include "../sip-addresses/SipAddressesProxyModel.hpp"
 #include "ConferenceAddModel.hpp"
@@ -32,16 +33,23 @@ using namespace std;
 // =============================================================================
 
 ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-
-  mConference = core->getConference();
+  mCore = CoreManager::getInstance()->getCore();
+  mConference = mCore->getConference();
   if (!mConference)
-    mConference = core->createConferenceWithParams(core->createConferenceParams());
+    mConference = mCore->createConferenceWithParams(mCore->createConferenceParams());
 
   mConferenceAddModel = new ConferenceAddModel(this);
   App::getInstance()->getEngine()->setObjectOwnership(mConferenceAddModel, QQmlEngine::CppOwnership);
 
+  QObject::connect(this, &CallsListModel::rowsRemoved, [this] {
+    invalidate();
+  });
+  QObject::connect(this, &CallsListModel::rowsInserted, [this] {
+    invalidate();
+  });
+
   setSourceModel(new SipAddressesProxyModel(this));
+  sort(0);
 }
 
 QHash<int, QByteArray> ConferenceHelperModel::roleNames () const {
@@ -63,4 +71,17 @@ bool ConferenceHelperModel::filterAcceptsRow (int sourceRow, const QModelIndex &
   const QVariantMap &data = index.data().toMap();
 
   return !mConferenceAddModel->contains(data["sipAddress"].toString());
+}
+
+// -----------------------------------------------------------------------------
+
+bool ConferenceHelperModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+  shared_ptr<linphone::Call> callA = mCore->findCallFromUri(
+      ::Utils::appStringToCoreString(left.data().toMap()["sipAddress"].toString())
+    );
+  shared_ptr<linphone::Call> callB = mCore->findCallFromUri(
+      ::Utils::appStringToCoreString(right.data().toMap()["sipAddress"].toString())
+    );
+
+  return callA && !callB;
 }

@@ -37,6 +37,7 @@ class ConferenceAddModel;
 
 namespace linphone {
   class Conference;
+  class Core;
 }
 
 class ConferenceHelperModel : public QSortFilterProxyModel {
@@ -56,6 +57,7 @@ public:
 
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
   ConferenceAddModel *getConferenceAddModel () const {
@@ -64,6 +66,7 @@ private:
 
   ConferenceAddModel *mConferenceAddModel;
 
+  std::shared_ptr<linphone::Core> mCore;
   std::shared_ptr<linphone::Conference> mConference;
 };
 
