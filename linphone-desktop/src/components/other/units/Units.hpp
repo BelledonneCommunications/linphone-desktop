@@ -30,14 +30,11 @@
 class Units : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(float dp READ getDp NOTIFY dpChanged);
+  Q_PROPERTY(float dp READ getDp CONSTANT);
 
 public:
   Units (QObject *parent = Q_NULLPTR);
   ~Units () = default;
-
-signals:
-  void dpChanged ();
 
 private:
   float getDp () const;
