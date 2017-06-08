@@ -71,7 +71,10 @@ Notification {
         hoverEnabled: true
 
         onClicked: notification._close(function () {
-          Qt.openUrlExternally(Utils.getUriFromSystemPath(notification._fileUri))
+          var uri = Utils.getUriFromSystemPath(notification._fileUri)
+          if (!Qt.openUrlExternally(uri)) {
+            Qt.openUrlExternally(Utils.dirname(uri))
+          }
         })
       }
     }
