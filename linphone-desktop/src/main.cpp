@@ -92,16 +92,7 @@ int main (int argc, char *argv[]) {
     }
   }
 
-  {
-    QFont font(DEFAULT_FONT);
-
-    #ifdef Q_OS_MACOS
-      // 72 dpi on MacOs...
-      font.setPixelSize(10 * QApplication::primaryScreen()->physicalDotsPerInch() / 72.0);
-    #endif // ifdef Q_OS_MACOS
-
-    app.setFont(font);
-  }
+  app.setFont(QFont(DEFAULT_FONT));
 
   // ---------------------------------------------------------------------------
   // Init and run!
