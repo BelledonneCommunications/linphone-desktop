@@ -161,8 +161,9 @@ Rectangle {
               username: contactDescription.username
 
               BusyIndicator {
-                width: parent.width / 2
-                height: parent.height / 2
+                color: CallStyle.header.busyIndicator.color
+                height: CallStyle.header.busyIndicator.height
+                width: CallStyle.header.busyIndicator.width
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -182,6 +183,7 @@ Rectangle {
             Timer {
               interval: 50
               repeat: true
+              running: true
 
               onTriggered: parent.value = $call.speakerVu
             }
