@@ -89,7 +89,7 @@ static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt,
   QByteArray dateTime = getFormattedCurrentTime();
   char *msg = bctbx_strdup_vprintf(fmt, args);
 
-  fprintf(stderr, format, dateTime.constData(), domain, msg);
+  fprintf(stderr, format, dateTime.constData(), domain ? domain : "linphone", msg);
 
   bctbx_free(msg);
 
@@ -163,12 +163,10 @@ void Logger::init () {
   qInstallMessageHandler(Logger::log);
 
   linphone_core_set_log_level(ORTP_MESSAGE);
-  linphone_core_set_log_handler(
-    [](const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
+  linphone_core_set_log_handler([](const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
       if (mInstance->isVerbose())
         linphoneLog(domain, type, fmt, args);
-    }
-  );
+    });
 
   linphone_core_set_log_collection_path(Paths::getLogsDirPath().c_str());
   linphone_core_set_log_collection_max_file_size(MAX_LOGS_COLLECTION_SIZE);
