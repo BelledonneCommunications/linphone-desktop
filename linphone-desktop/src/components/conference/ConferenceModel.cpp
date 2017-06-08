@@ -40,7 +40,12 @@ ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(paren
   });
 
   setSourceModel(CoreManager::getInstance()->getCallsListModel());
-  emit conferenceChanged(true);
+  emit conferenceChanged();
+
+  QObject::connect(
+    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::callStateChanged,
+    this, &ConferenceModel::handleCallStateChanged
+  );
 }
 
 bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
@@ -143,16 +148,23 @@ float ConferenceModel::getMicroVu () const {
 void ConferenceModel::leave() {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   core->leaveConference();
-  emit conferenceChanged(false);
+  emit conferenceChanged();
 }
 
 void ConferenceModel::join() {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   core->enterConference();
-  emit conferenceChanged(true);
+  emit conferenceChanged();
 }
 
 bool ConferenceModel::isInConference () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  qInfo() << QStringLiteral("Is in conf:") << core->isInConference();
   return core->isInConference();
+}
+
+// -----------------------------------------------------------------------------
+
+void ConferenceModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
+  emit conferenceChanged();
 }

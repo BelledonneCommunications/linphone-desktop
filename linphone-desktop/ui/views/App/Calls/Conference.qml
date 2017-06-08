@@ -216,6 +216,7 @@ Rectangle {
 
           ActionSwitch {
             id: micro
+            enabled: !conference.conferenceModel.microMuted
 
             icon: 'micro'
             iconSize: CallStyle.actionArea.iconSize
@@ -235,9 +236,14 @@ Rectangle {
 
         ActionSwitch {
           icon: 'pause'
+          enabled: conference.conferenceModel.isInConf
 
           onClicked: {
             conference.conferenceModel.isInConf ? conference.conferenceModel.leave() : conference.conferenceModel.join()
+          }
+
+          TooltipArea {
+            text: conference.conferenceModel.isInConf ? qsTr('leaveConf') : qsTr('joinBackConf')
           }
         }
 

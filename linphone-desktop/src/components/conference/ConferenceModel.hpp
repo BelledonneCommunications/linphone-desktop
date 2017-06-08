@@ -60,9 +60,11 @@ signals:
 
   void microMutedChanged (bool status);
   void recordingChanged (bool status);
-  void conferenceChanged(bool status);
+  void conferenceChanged();
 
 private:
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  
   int getCount () const {
     return rowCount();
   }
