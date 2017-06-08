@@ -96,7 +96,7 @@ Rectangle {
               color: ChatStyle.sectionHeading.text.color
               font {
                 bold: true
-                pointSize: ChatStyle.sectionHeading.text.fontSize
+                pointSize: ChatStyle.sectionHeading.text.pointSize
               }
               horizontalAlignment: Text.AlignHCenter
               verticalAlignment: Text.AlignVCenter
@@ -163,7 +163,7 @@ Rectangle {
               Layout.preferredWidth: ChatStyle.entry.time.width
 
               color: ChatStyle.entry.time.color
-              font.pointSize: ChatStyle.entry.time.fontSize
+              font.pointSize: ChatStyle.entry.time.pointSize
 
               text: $chatEntry.timestamp.toLocaleString(
                 Qt.locale(App.locale),

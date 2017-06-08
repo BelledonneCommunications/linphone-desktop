@@ -117,7 +117,7 @@ ToolTip {
     id: text
 
     color: TooltipStyle.color
-    font.pointSize: TooltipStyle.fontSize
+    font.pointSize: TooltipStyle.pointSize
     padding: TooltipStyle.padding + TooltipStyle.margins
     text: tooltip.text
   }

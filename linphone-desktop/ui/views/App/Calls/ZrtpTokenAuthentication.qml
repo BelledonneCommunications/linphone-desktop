@@ -35,7 +35,7 @@ ColumnLayout {
 
     font {
       bold: true
-      pointSize: CallStyle.zrtpArea.text.fontSize
+      pointSize: CallStyle.zrtpArea.text.pointSize
     }
   }
 
@@ -50,7 +50,7 @@ ColumnLayout {
 
     Text {
       color: CallStyle.zrtpArea.text.colorA
-      font.pointSize: CallStyle.zrtpArea.text.fontSize
+      font.pointSize: CallStyle.zrtpArea.text.pointSize
       text: qsTr('codeA')
     }
 
@@ -59,7 +59,7 @@ ColumnLayout {
 
       font {
         bold: true
-        pointSize: CallStyle.zrtpArea.text.fontSize
+        pointSize: CallStyle.zrtpArea.text.pointSize
       }
 
       text: zrtp.call.localSas
@@ -67,13 +67,13 @@ ColumnLayout {
 
     Text {
       color: CallStyle.zrtpArea.text.colorA
-      font.pointSize: CallStyle.zrtpArea.text.fontSize
+      font.pointSize: CallStyle.zrtpArea.text.pointSize
       text: '-'
     }
 
     Text {
       color: CallStyle.zrtpArea.text.colorA
-      font.pointSize: CallStyle.zrtpArea.text.fontSize
+      font.pointSize: CallStyle.zrtpArea.text.pointSize
       text: qsTr('codeB')
     }
 
@@ -82,7 +82,7 @@ ColumnLayout {
 
       font {
         bold: true
-        pointSize: CallStyle.zrtpArea.text.fontSize
+        pointSize: CallStyle.zrtpArea.text.pointSize
       }
 
       text: zrtp.call.remoteSas

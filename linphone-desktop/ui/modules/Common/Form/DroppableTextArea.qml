@@ -4,7 +4,6 @@ import QtQuick.Dialogs 1.2
 
 import Common 1.0
 import Common.Styles 1.0
-
 import Utils 1.0
 
 // =============================================================================
@@ -65,7 +64,7 @@ Item {
       }
 
       color: DroppableTextAreaStyle.text.color
-      font.pointSize: DroppableTextAreaStyle.text.fontSize
+      font.pointSize: DroppableTextAreaStyle.text.pointSize
       rightPadding: fileChooserButton.width +
         fileChooserButton.anchors.rightMargin +
         DroppableTextAreaStyle.fileChooserButton.margins
@@ -132,7 +131,7 @@ Item {
     Text {
       anchors.centerIn: parent
       color: DroppableTextAreaStyle.hoverContent.text.color
-      font.pointSize: DroppableTextAreaStyle.hoverContent.text.fontSize
+      font.pointSize: DroppableTextAreaStyle.hoverContent.text.pointSize
       text: qsTr('dropYourAttachment')
     }
   }

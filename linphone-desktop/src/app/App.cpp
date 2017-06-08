@@ -31,7 +31,7 @@
 #include "gitversion.h"
 
 #include "../components/Components.hpp"
-#include "../Utils.hpp"
+#include "../utils/Utils.hpp"
 
 #include "cli/Cli.hpp"
 #include "logger/Logger.hpp"
@@ -187,6 +187,7 @@ void App::initContentApp () {
 
   registerTypes();
   registerSharedTypes();
+  registerToolTypes();
 
   // Enable notifications.
   createNotifier();
@@ -332,14 +333,21 @@ void registerMetaType (const char *name) {
 
 template<class T>
 void registerSingletonType (const char *name) {
-  qmlRegisterSingletonType<T>("Linphone", 1, 0, name, [](QQmlEngine *, QJSEngine *) -> QObject *{
-      return new T();
+  qmlRegisterSingletonType<T>("Linphone", 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
+      return new T(engine);
     });
 }
 
 template<class T>
 void registerType (const char *name) {
   qmlRegisterType<T>("Linphone", 1, 0, name);
+}
+
+template<class T>
+void registerToolType (const char *name) {
+  qmlRegisterSingletonType<T>(name, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
+      return new T(engine);
+    });
 }
 
 void App::registerTypes () {
@@ -360,10 +368,8 @@ void App::registerTypes () {
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
-  registerSingletonType<Clipboard>("Clipboard");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
-  registerSingletonType<TextToSpeech>("TextToSpeech");
   registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
@@ -386,6 +392,14 @@ void App::registerSharedTypes () {
   registerSharedSingletonType(SipAddressesModel, "SipAddressesModel", CoreManager::getInstance()->getSipAddressesModel);
   registerSharedSingletonType(CallsListModel, "CallsListModel", CoreManager::getInstance()->getCallsListModel);
   registerSharedSingletonType(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);
+}
+
+void App::registerToolTypes () {
+  qInfo() << QStringLiteral("Registering tool types...");
+
+  registerToolType<Clipboard>("Clipboard");
+  registerToolType<TextToSpeech>("TextToSpeech");
+  registerToolType<Units>("Units");
 }
 
 #undef registerUncreatableType

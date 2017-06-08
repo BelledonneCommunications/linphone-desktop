@@ -24,7 +24,7 @@ Button {
   }
   contentItem: Text {
     color: SmallButtonStyle.text.color
-    font.pointSize: SmallButtonStyle.text.fontSize
+    font.pointSize: SmallButtonStyle.text.pointSize
     horizontalAlignment: Text.AlignHCenter
     text: button.text
     verticalAlignment: Text.AlignVCenter

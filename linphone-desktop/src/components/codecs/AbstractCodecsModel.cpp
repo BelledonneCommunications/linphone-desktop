@@ -20,7 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "AbstractCodecsModel.hpp"

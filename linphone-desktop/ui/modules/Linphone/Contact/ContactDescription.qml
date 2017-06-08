@@ -19,7 +19,7 @@ Column {
     color: usernameColor
     elide: Text.ElideRight
     font.bold: true
-    font.pointSize: ContactDescriptionStyle.username.fontSize
+    font.pointSize: ContactDescriptionStyle.username.pointSize
     height: parent.height / 2
     horizontalAlignment: horizontalTextAlignment
     verticalAlignment: Text.AlignBottom
@@ -31,7 +31,7 @@ Column {
 
     color: sipAddressColor
     elide: Text.ElideRight
-    font.pointSize: ContactDescriptionStyle.sipAddress.fontSize
+    font.pointSize: ContactDescriptionStyle.sipAddress.pointSize
     height: parent.height / 2
     horizontalAlignment: horizontalTextAlignment
     verticalAlignment: Text.AlignTop

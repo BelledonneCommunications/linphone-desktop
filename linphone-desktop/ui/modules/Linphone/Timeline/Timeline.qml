@@ -78,7 +78,7 @@ ColumnLayout {
 
       Text {
         color: TimelineStyle.legend.color
-        font.pointSize: TimelineStyle.legend.fontSize
+        font.pointSize: TimelineStyle.legend.pointSize
         height: parent.height
         text: qsTr('timelineTitle')
         verticalAlignment: Text.AlignVCenter

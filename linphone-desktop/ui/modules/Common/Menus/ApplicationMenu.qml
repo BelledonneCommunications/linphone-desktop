@@ -86,7 +86,7 @@ Rectangle {
             color: _selectedEntry === index
               ? ApplicationMenuStyle.entry.text.color.selected
               : ApplicationMenuStyle.entry.text.color.normal
-            font.pointSize: ApplicationMenuStyle.entry.text.fontSize
+            font.pointSize: ApplicationMenuStyle.entry.text.pointSize
             height: parent.height
             text: modelData.entryName
             verticalAlignment: Text.AlignVCenter

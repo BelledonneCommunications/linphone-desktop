@@ -49,7 +49,7 @@ Notification {
           color: NotificationNewVersionAvailableStyle.message.color
           elide: Text.ElideRight
           wrapMode: Text.Wrap
-          font.pointSize: NotificationNewVersionAvailableStyle.message.fontSize
+          font.pointSize: NotificationNewVersionAvailableStyle.message.pointSize
           text: notificationData.message
         }
       }

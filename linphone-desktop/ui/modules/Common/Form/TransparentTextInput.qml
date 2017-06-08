@@ -71,7 +71,7 @@ Item {
 
     font {
       italic: true
-      pointSize: TransparentTextInputStyle.placeholder.fontSize
+      pointSize: TransparentTextInputStyle.placeholder.pointSize
     }
 
     height: textInput.height
@@ -92,7 +92,7 @@ Item {
     color: activeFocus && !readOnly
       ? TransparentTextInputStyle.text.color.focused
       : TransparentTextInputStyle.text.color.normal
-    font.pointSize: TransparentTextInputStyle.text.fontSize
+    font.pointSize: TransparentTextInputStyle.text.pointSize
     selectByMouse: true
     verticalAlignment: TextInput.AlignVCenter
 

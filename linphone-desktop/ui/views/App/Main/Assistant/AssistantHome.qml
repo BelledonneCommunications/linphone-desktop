@@ -43,7 +43,7 @@ ColumnLayout {
 
         font {
           bold: true
-          pointSize: AssistantHomeStyle.info.title.fontSize
+          pointSize: AssistantHomeStyle.info.title.pointSize
         }
 
         text: qsTr('homeTitle')
@@ -55,7 +55,7 @@ ColumnLayout {
 
         color: AssistantHomeStyle.info.description.color
         elide: Text.ElideRight
-        font.pointSize: AssistantHomeStyle.info.description.fontSize
+        font.pointSize: AssistantHomeStyle.info.description.pointSize
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
 

@@ -74,7 +74,7 @@ TextField {
           contentItem: Text {
             color: NumericFieldStyle.tools.button.text.color
             text: buttonInstance.text
-            font.pointSize: NumericFieldStyle.tools.button.text.fontSize
+            font.pointSize: NumericFieldStyle.tools.button.text.pointSize
 
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

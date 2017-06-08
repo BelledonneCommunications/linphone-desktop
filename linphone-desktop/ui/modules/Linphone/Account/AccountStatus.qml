@@ -54,7 +54,7 @@ Item {
         color: AccountStatusStyle.username.color
         elide: Text.ElideRight
         font.bold: true
-        font.pointSize: AccountStatusStyle.username.fontSize
+        font.pointSize: AccountStatusStyle.username.pointSize
         text: AccountSettingsModel.username
         verticalAlignment: Text.AlignBottom
       }
@@ -63,7 +63,7 @@ Item {
     Text {
       color: AccountStatusStyle.sipAddress.color
       elide: Text.ElideRight
-      font.pointSize: AccountStatusStyle.sipAddress.fontSize
+      font.pointSize: AccountStatusStyle.sipAddress.pointSize
       height: parent.height / 2
       text: AccountSettingsModel.sipAddress
       verticalAlignment: Text.AlignTop

@@ -1,5 +1,5 @@
 /*
- * ThumbnailProvider.cpp
+ * Units.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,26 +16,31 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: June 8, 2017
  *      Author: Ronan Abhamon
  */
 
-#include "../../utils/Utils.hpp"
-#include "../paths/Paths.hpp"
+#ifndef UNITS_H_
+#define UNITS_H_
 
-#include "ThumbnailProvider.hpp"
+#include <QObject>
 
 // =============================================================================
 
-const QString ThumbnailProvider::PROVIDER_ID = "thumbnail";
+class Units : public QObject {
+  Q_OBJECT;
 
-ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {
-  mThumbnailsPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
-}
+  Q_PROPERTY(float dp READ getDp NOTIFY dpChanged);
 
-QImage ThumbnailProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  return QImage(mThumbnailsPath + id);
-}
+public:
+  Units (QObject *parent = Q_NULLPTR);
+  ~Units () = default;
+
+signals:
+  void dpChanged ();
+
+private:
+  float getDp () const;
+};
+
+#endif // UNITS_H_

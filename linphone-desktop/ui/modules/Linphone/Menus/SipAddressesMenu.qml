@@ -91,7 +91,7 @@ Item {
 
           color: SipAddressesMenuStyle.entry.text.color
           elide: Text.ElideRight
-          font.pointSize: SipAddressesMenuStyle.entry.text.fontSize
+          font.pointSize: SipAddressesMenuStyle.entry.text.pointSize
           height: parent.height
           text: $sipAddress
           verticalAlignment: Text.AlignVCenter

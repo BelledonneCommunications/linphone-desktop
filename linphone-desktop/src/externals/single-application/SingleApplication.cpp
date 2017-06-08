@@ -43,7 +43,7 @@
   #include <lmcons.h>
 #endif // ifdef Q_OS_WIN
 
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 
 #include "SingleApplication.hpp"
 #include "SingleApplicationPrivate.hpp"

@@ -172,7 +172,7 @@ Rectangle {
 
       Layout.fillWidth: true
       color: CallStyle.header.elapsedTime.color
-      font.pointSize: CallStyle.header.elapsedTime.fontSize
+      font.pointSize: CallStyle.header.elapsedTime.pointSize
       horizontalAlignment: Text.AlignHCenter
 
       Timer {
@@ -215,7 +215,7 @@ Rectangle {
             color: CallStyle.container.pause.text.color
 
             // `|| 1` => `pointSize` must be greater than 0.
-            font.pointSize: (width / CallStyle.container.pause.text.fontSizeFactor) || 1
+            font.pointSize: (width / CallStyle.container.pause.text.pointSizeFactor) || 1
 
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter

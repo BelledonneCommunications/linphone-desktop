@@ -68,7 +68,7 @@ Notification {
 
             font {
               italic: true
-              pointSize: NotificationReceivedMessageStyle.messageContainer.text.fontSize
+              pointSize: NotificationReceivedMessageStyle.messageContainer.text.pointSize
             }
 
             verticalAlignment: Text.AlignVCenter

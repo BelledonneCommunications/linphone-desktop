@@ -92,6 +92,8 @@ private:
 
   void registerTypes ();
   void registerSharedTypes ();
+  void registerToolTypes ();
+
   void setTrayIcon ();
   void createNotifier ();
 

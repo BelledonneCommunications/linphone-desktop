@@ -57,7 +57,7 @@ Row {
     color: ChatStyle.entry.event.text.color
     font {
       bold: true
-      pointSize: ChatStyle.entry.event.text.fontSize
+      pointSize: ChatStyle.entry.event.text.pointSize
     }
     height: parent.height
     text: qsTr(Utils.snakeToCamel(_type))

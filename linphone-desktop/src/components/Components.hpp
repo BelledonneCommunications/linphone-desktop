@@ -30,7 +30,6 @@
 #include "camera/Camera.hpp"
 #include "camera/CameraPreview.hpp"
 #include "chat/ChatProxyModel.hpp"
-#include "clipboard/Clipboard.hpp"
 #include "codecs/AudioCodecsModel.hpp"
 #include "codecs/VideoCodecsModel.hpp"
 #include "conference/ConferenceAddModel.hpp"
@@ -41,7 +40,10 @@
 #include "sip-addresses/SipAddressesProxyModel.hpp"
 #include "sound-player/SoundPlayer.hpp"
 #include "telephone-numbers/TelephoneNumbersModel.hpp"
-#include "text-to-speech/TextToSpeech.hpp"
 #include "timeline/TimelineModel.hpp"
+
+#include "other/clipboard/Clipboard.hpp"
+#include "other/text-to-speech/TextToSpeech.hpp"
+#include "other/units/Units.hpp"
 
 #endif // COMPONENTS_H_

@@ -51,7 +51,7 @@ DialogPlus {
         TextEdit {
           color: AboutStyle.versionsBlock.appVersion.color
           selectByMouse: true
-          font.pointSize: AboutStyle.versionsBlock.appVersion.fontSize
+          font.pointSize: AboutStyle.versionsBlock.appVersion.pointSize
           text: 'Desktop Qt' + App.qtVersion + ' - ' + Qt.application.version
 
           height: parent.height / 2
@@ -65,7 +65,7 @@ DialogPlus {
         TextEdit {
           color: AboutStyle.versionsBlock.coreVersion.color
           selectByMouse: true
-          font.pointSize: AboutStyle.versionsBlock.coreVersion.fontSize
+          font.pointSize: AboutStyle.versionsBlock.coreVersion.pointSize
           text: 'Core ' + CoreManager.version
 
           height: parent.heigth / 2
@@ -84,7 +84,7 @@ DialogPlus {
 
       Text {
         elide: Text.ElideRight
-        font.pointSize: AboutStyle.copyrightBlock.url.fontSize
+        font.pointSize: AboutStyle.copyrightBlock.url.pointSize
         linkColor: AboutStyle.copyrightBlock.url.color
         text: '<a href="https://www.linphone.org">https://www.linphone.org</a>'
 
@@ -106,7 +106,7 @@ DialogPlus {
       Text {
         color: AboutStyle.copyrightBlock.license.color
         elide: Text.ElideRight
-        font.pointSize: AboutStyle.copyrightBlock.license.fontSize
+        font.pointSize: AboutStyle.copyrightBlock.license.pointSize
 
         text: 'GNU General Public License V2\n\u00A9 2010-' +
           (new Date().toLocaleDateString(Qt.locale(), 'yyyy')) +

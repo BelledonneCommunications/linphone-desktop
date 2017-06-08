@@ -71,7 +71,7 @@ RowLayout {
 
       font {
         bold: true
-        pointSize: ListFormStyle.titleArea.text.fontSize
+        pointSize: ListFormStyle.titleArea.text.pointSize
       }
     }
   }
@@ -89,7 +89,7 @@ RowLayout {
 
     font {
       italic: true
-      pointSize: ListFormStyle.value.placeholder.fontSize
+      pointSize: ListFormStyle.value.placeholder.pointSize
     }
 
     padding: ListFormStyle.value.text.padding

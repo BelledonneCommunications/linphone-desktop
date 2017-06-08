@@ -22,10 +22,8 @@
 
 #include <stdexcept>
 
-#include <QObject>
-
 #include "../../components/core/CoreManager.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../App.hpp"
 
 #include "Cli.hpp"

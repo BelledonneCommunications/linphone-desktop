@@ -24,7 +24,7 @@ RowLayout {
 
     color: FormHGroupStyle.legend.color
     elide: Text.ElideRight
-    font.pointSize: FormHGroupStyle.legend.fontSize
+    font.pointSize: FormHGroupStyle.legend.pointSize
 
     horizontalAlignment: Text.AlignRight
     verticalAlignment: Text.AlignVCenter

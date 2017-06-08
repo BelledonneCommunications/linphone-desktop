@@ -109,7 +109,6 @@ set(SOURCES
   src/components/camera/MSFunctions.cpp
   src/components/chat/ChatModel.cpp
   src/components/chat/ChatProxyModel.cpp
-  src/components/clipboard/Clipboard.cpp
   src/components/codecs/AbstractCodecsModel.cpp
   src/components/codecs/AudioCodecsModel.cpp
   src/components/codecs/VideoCodecsModel.cpp
@@ -123,6 +122,9 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/notifier/Notifier.cpp
+  src/components/other/clipboard/Clipboard.cpp
+  src/components/other/text-to-speech/TextToSpeech.cpp
+  src/components/other/units/Units.cpp
   src/components/presence/OwnPresenceModel.cpp
   src/components/presence/Presence.cpp
   src/components/settings/AccountSettingsModel.cpp
@@ -132,12 +134,11 @@ set(SOURCES
   src/components/sip-addresses/SipAddressObserver.cpp
   src/components/sound-player/SoundPlayer.cpp
   src/components/telephone-numbers/TelephoneNumbersModel.cpp
-  src/components/text-to-speech/TextToSpeech.cpp
   src/components/timeline/TimelineModel.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
-  src/LinphoneUtils.cpp
-  src/Utils.cpp
+  src/utils/LinphoneUtils.cpp
+  src/utils/Utils.cpp
 )
 
 set(HEADERS
@@ -158,7 +159,6 @@ set(HEADERS
   src/components/camera/MSFunctions.hpp
   src/components/chat/ChatModel.hpp
   src/components/chat/ChatProxyModel.hpp
-  src/components/clipboard/Clipboard.cpp
   src/components/codecs/AbstractCodecsModel.hpp
   src/components/codecs/AudioCodecsModel.hpp
   src/components/codecs/VideoCodecsModel.hpp
@@ -173,6 +173,9 @@ set(HEADERS
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/notifier/Notifier.hpp
+  src/components/other/clipboard/Clipboard.cpp
+  src/components/other/text-to-speech/TextToSpeech.hpp
+  src/components/other/units/Units.hpp
   src/components/presence/OwnPresenceModel.hpp
   src/components/presence/Presence.hpp
   src/components/settings/AccountSettingsModel.hpp
@@ -182,12 +185,11 @@ set(HEADERS
   src/components/sip-addresses/SipAddressObserver.hpp
   src/components/sound-player/SoundPlayer.hpp
   src/components/telephone-numbers/TelephoneNumbersModel.hpp
-  src/components/text-to-speech/TextToSpeech.hpp
   src/components/timeline/TimelineModel.hpp
   src/externals/single-application/SingleApplication.hpp
   src/externals/single-application/SingleApplicationPrivate.hpp
-  src/LinphoneUtils.hpp
-  src/Utils.hpp
+  src/utils/LinphoneUtils.hpp
+  src/utils/Utils.hpp
 )
 
 set(QRC_RESOURCES resources.qrc)

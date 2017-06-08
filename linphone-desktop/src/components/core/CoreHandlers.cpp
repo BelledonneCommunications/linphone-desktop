@@ -26,7 +26,7 @@
 #include <QTimer>
 
 #include "../../app/App.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "CoreManager.hpp"
 
 #include "CoreHandlers.hpp"

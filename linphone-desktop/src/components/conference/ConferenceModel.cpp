@@ -22,7 +22,7 @@
 
 #include <QDateTime>
 
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ConferenceModel.hpp"

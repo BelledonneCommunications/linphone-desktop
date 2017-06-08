@@ -10,6 +10,6 @@ Text {
 
   font {
     bold: true
-    pointSize: CodecsViewerStyle.legend.fontSize
+    pointSize: CodecsViewerStyle.legend.pointSize
   }
 }

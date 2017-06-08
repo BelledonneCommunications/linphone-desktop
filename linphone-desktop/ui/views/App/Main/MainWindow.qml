@@ -138,7 +138,7 @@ ApplicationWindow {
             Text {
               clip: true
               color: MainWindowStyle.autoAnswerStatus.text.color
-              font.pointSize: MainWindowStyle.autoAnswerStatus.text.fontSize
+              font.pointSize: MainWindowStyle.autoAnswerStatus.text.pointSize
               text: qsTr('autoAnswerStatus')
               visible: SettingsModel.autoAnswerStatus
               width: parent.width

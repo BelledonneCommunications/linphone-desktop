@@ -39,7 +39,7 @@ RowLayout {
 
     font {
       bold: true
-      pointSize: ListFormStyle.titleArea.text.fontSize
+      pointSize: ListFormStyle.titleArea.text.pointSize
     }
 
     verticalAlignment: Text.AlignVCenter

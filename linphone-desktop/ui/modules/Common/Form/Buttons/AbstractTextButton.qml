@@ -65,7 +65,7 @@ Item {
       color: _getTextColor()
       font {
         bold: true
-        pointSize: AbstractTextButtonStyle.text.fontSize
+        pointSize: AbstractTextButtonStyle.text.pointSize
       }
 
       elide: Text.ElideRight

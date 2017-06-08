@@ -23,7 +23,7 @@
 #include <QtDebug>
 
 #include "../../app/App.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ContactsListModel.hpp"

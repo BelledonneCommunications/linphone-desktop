@@ -60,7 +60,7 @@ Controls.TextField {
   }
 
   color: TextFieldStyle.text.color
-  font.pointSize: TextFieldStyle.text.fontSize
+  font.pointSize: TextFieldStyle.text.pointSize
   rightPadding: TextFieldStyle.text.rightPadding + toolsContainer.width
   selectByMouse: true
 

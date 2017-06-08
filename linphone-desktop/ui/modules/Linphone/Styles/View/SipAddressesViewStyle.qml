@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick 2.7
 
 import Common 1.0
+import Units 1.0
 
 // =============================================================================
 
@@ -42,7 +43,7 @@ QtObject {
     }
 
     property QtObject text: QtObject {
-      property int fontSize: 9
+      property int pointSize: Units.dp * 9
 
       property QtObject color: QtObject {
         property color normal: Colors.k

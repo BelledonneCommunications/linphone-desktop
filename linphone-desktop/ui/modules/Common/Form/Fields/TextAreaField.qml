@@ -35,7 +35,7 @@ Flickable {
     }
 
     color: TextAreaFieldStyle.text.color
-    font.pointSize: TextAreaFieldStyle.text.fontSize
+    font.pointSize: TextAreaFieldStyle.text.pointSize
     selectByMouse: true
     wrapMode: TextArea.Wrap
 

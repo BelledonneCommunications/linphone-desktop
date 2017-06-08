@@ -29,7 +29,7 @@
 #include "../../app/App.hpp"
 #include "../../app/paths/Paths.hpp"
 #include "../../app/providers/AvatarProvider.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "VcardModel.hpp"

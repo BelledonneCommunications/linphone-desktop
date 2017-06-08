@@ -1,8 +1,9 @@
 import QtQuick 2.7
 
+import Clipboard 1.0
 import Common 1.0
-import Linphone 1.0
 import Linphone.Styles 1.0
+import TextToSpeech 1.0
 import Utils 1.0
 
 import 'Message.js' as Logic
@@ -16,7 +17,7 @@ Item {
 
   property alias backgroundColor: rectangle.color
   property alias color: message.color
-  property alias fontSize: message.font.pointSize
+  property alias pointSize: message.font.pointSize
 
   default property alias _content: content.data
 

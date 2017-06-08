@@ -113,7 +113,7 @@ ColumnLayout {
                 Layout.fillWidth: true
                 color: ContactsStyle.contact.presence.color
                 elide: Text.ElideRight
-                font.pointSize: ContactsStyle.contact.presence.fontSize
+                font.pointSize: ContactsStyle.contact.presence.pointSize
                 text: Presence.getPresenceStatusAsString($contact.presenceStatus)
               }
             }
@@ -247,7 +247,7 @@ ColumnLayout {
 
                 font {
                   bold: true
-                  pointSize: ContactsStyle.contact.username.fontSize
+                  pointSize: ContactsStyle.contact.username.pointSize
                 }
 
                 text: $contact.vcard.username

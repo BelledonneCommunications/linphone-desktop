@@ -24,7 +24,7 @@ Item {
     }
 
     color: DialogStyle.description.color
-    font.pointSize: DialogStyle.description.fontSize
+    font.pointSize: DialogStyle.description.pointSize
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
     wrapMode: Text.WordWrap

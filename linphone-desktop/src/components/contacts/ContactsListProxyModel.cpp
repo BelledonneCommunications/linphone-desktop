@@ -24,7 +24,7 @@
 
 #include <QDebug>
 
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ContactsListProxyModel.hpp"

@@ -100,7 +100,7 @@ ColumnLayout  {
 
         font {
           bold: true
-          pointSize: ContactEditStyle.bar.username.fontSize
+          pointSize: ContactEditStyle.bar.username.pointSize
         }
         forceFocus: true
         readOnly: !_edition

@@ -25,7 +25,7 @@
 #include <QTimer>
 
 #include "../../app/paths/Paths.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 
 #include "CoreManager.hpp"
 

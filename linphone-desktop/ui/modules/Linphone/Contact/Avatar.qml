@@ -60,7 +60,7 @@ Item {
         width = parent.width / AvatarStyle.initials.ratio
       }
 
-      return AvatarStyle.initials.fontSize * (width || 1)
+      return AvatarStyle.initials.pointSize * (width || 1)
     }
 
     text: _computeInitials()

@@ -33,7 +33,7 @@
 #include "../../app/App.hpp"
 #include "../../app/paths/Paths.hpp"
 #include "../../app/providers/ThumbnailProvider.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ChatModel.hpp"

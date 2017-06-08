@@ -32,7 +32,7 @@ Row {
 
     font {
       bold: false
-      pointSize: FormTableStyle.entry.text.fontSize
+      pointSize: FormTableStyle.entry.text.pointSize
     }
 
     visible: !formTableLine.parent.disableLineTitle

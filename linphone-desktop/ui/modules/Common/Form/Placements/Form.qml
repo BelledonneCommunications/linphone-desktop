@@ -27,7 +27,7 @@ Column {
       color: FormStyle.header.title.color
       font {
         bold: true
-        pointSize: FormStyle.header.title.fontSize
+        pointSize: FormStyle.header.title.pointSize
       }
     }
 

@@ -62,7 +62,7 @@ Popup {
           elide: Text.ElideRight
 
           font {
-            pointSize: CallStatisticsStyle.key.fontSize
+            pointSize: CallStatisticsStyle.key.pointSize
             bold: true
           }
 
@@ -77,7 +77,7 @@ Popup {
 
           color: CallStatisticsStyle.value.color
           elide: Text.ElideRight
-          font.pointSize: CallStatisticsStyle.value.fontSize
+          font.pointSize: CallStatisticsStyle.value.pointSize
 
           text: modelData.value
         }
@@ -97,7 +97,7 @@ Popup {
 
           font {
             bold: true
-            pointSize: CallStatisticsStyle.title.fontSize
+            pointSize: CallStatisticsStyle.title.pointSize
           }
 
           elide: Text.ElideRight

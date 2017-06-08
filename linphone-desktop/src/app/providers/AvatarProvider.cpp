@@ -20,7 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../paths/Paths.hpp"
 
 #include "AvatarProvider.hpp"

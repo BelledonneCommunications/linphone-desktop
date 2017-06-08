@@ -45,7 +45,7 @@ Item {
       elide: Text.ElideRight
 
       font {
-        pointSize: AssistantAbstractViewStyle.info.title.fontSize
+        pointSize: AssistantAbstractViewStyle.info.title.pointSize
         bold: true
       }
 
@@ -59,7 +59,7 @@ Item {
       color: AssistantAbstractViewStyle.info.description.color
       elide: Text.ElideRight
 
-      font.pointSize: AssistantAbstractViewStyle.info.description.fontSize
+      font.pointSize: AssistantAbstractViewStyle.info.description.pointSize
 
       horizontalAlignment: Text.AlignHCenter
       width: parent.width

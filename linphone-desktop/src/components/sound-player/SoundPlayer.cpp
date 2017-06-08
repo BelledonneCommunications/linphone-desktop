@@ -22,7 +22,7 @@
 
 #include <QTimer>
 
-#include "../../Utils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "SoundPlayer.hpp"

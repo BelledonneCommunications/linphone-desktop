@@ -38,7 +38,7 @@ Column {
 
       font {
         bold: true
-        pointSize: CardBlockStyle.title.fontSize
+        pointSize: CardBlockStyle.title.pointSize
       }
 
       height: CardBlockStyle.title.height
@@ -50,7 +50,7 @@ Column {
 
       color: CardBlockStyle.description.color
       elide: Text.ElideRight
-      font.pointSize: CardBlockStyle.description.fontSize
+      font.pointSize: CardBlockStyle.description.pointSize
       horizontalAlignment: Text.AlignHCenter
       wrapMode: Text.WordWrap
 

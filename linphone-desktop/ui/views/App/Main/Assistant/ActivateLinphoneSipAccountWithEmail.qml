@@ -25,7 +25,7 @@ AssistantAbstractView {
 
     Text {
       color: ActivateLinphoneSipAccountWithEmailStyle.activationSteps.color
-      font.pointSize: ActivateLinphoneSipAccountWithEmailStyle.activationSteps.fontSize
+      font.pointSize: ActivateLinphoneSipAccountWithEmailStyle.activationSteps.pointSize
       horizontalAlignment: Text.AlignHCenter
       text: qsTr('activationSteps').replace('%1', assistantModel.email)
       width: parent.width

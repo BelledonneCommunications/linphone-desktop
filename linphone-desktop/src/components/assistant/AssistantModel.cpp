@@ -21,8 +21,8 @@
  */
 
 #include "../../app/paths/Paths.hpp"
-#include "../../LinphoneUtils.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/LinphoneUtils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "AssistantModel.hpp"

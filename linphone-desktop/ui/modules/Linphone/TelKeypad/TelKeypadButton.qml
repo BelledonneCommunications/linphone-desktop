@@ -34,7 +34,7 @@ Item {
 
         font {
           bold: true
-          pointSize: TelKeypadStyle.button.text.fontSize
+          pointSize: TelKeypadStyle.button.text.pointSize
         }
 
         text: button.text

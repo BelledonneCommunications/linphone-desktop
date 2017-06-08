@@ -23,7 +23,7 @@ Item {
     }
     backgroundColor: ChatStyle.entry.message.outgoing.backgroundColor
     color: ChatStyle.entry.message.outgoing.text.color
-    fontSize: ChatStyle.entry.message.outgoing.text.fontSize
+    pointSize: ChatStyle.entry.message.outgoing.text.pointSize
     width: parent.width
 
     Row {

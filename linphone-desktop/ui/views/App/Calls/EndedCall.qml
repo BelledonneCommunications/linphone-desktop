@@ -45,7 +45,7 @@ Rectangle {
       Layout.fillWidth: true
 
       color: CallStyle.header.elapsedTime.color
-      font.pointSize: CallStyle.header.elapsedTime.fontSize
+      font.pointSize: CallStyle.header.elapsedTime.pointSize
       horizontalAlignment: Text.AlignHCenter
 
       text: {
@@ -78,7 +78,7 @@ Rectangle {
 
       Text {
         color: CallStyle.actionArea.callError.color
-        font.pointSize: CallStyle.actionArea.callError.fontSize
+        font.pointSize: CallStyle.actionArea.callError.pointSize
         horizontalAlignment: Text.AlignHCenter
         width: parent.width
 

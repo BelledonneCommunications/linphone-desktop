@@ -132,8 +132,8 @@ Row {
             font {
               bold: true
               pointSize: $chatEntry.isOutgoing
-                ? ChatStyle.entry.message.outgoing.text.fontSize
-                : ChatStyle.entry.message.incoming.text.fontSize
+                ? ChatStyle.entry.message.outgoing.text.pointSize
+                : ChatStyle.entry.message.incoming.text.pointSize
             }
 
             text: $chatEntry.fileName

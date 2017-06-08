@@ -37,7 +37,7 @@ Item {
 
     font {
       italic: true
-      pointSize: RequestBlockStyle.error.fontSize
+      pointSize: RequestBlockStyle.error.pointSize
     }
 
     height: parent.height

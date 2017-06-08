@@ -172,7 +172,7 @@ Window {
 
           anchors.fill: parent
 
-          font.pointSize: CallStyle.header.elapsedTime.fullscreenFontSize
+          font.pointSize: CallStyle.header.elapsedTime.fullscreen.pointSize
 
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter

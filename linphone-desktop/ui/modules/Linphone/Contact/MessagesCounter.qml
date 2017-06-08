@@ -34,7 +34,7 @@ Item {
       Text {
         anchors.centerIn: parent
         color: MessagesCounterStyle.text.color
-        font.pointSize: MessagesCounterStyle.text.fontSize
+        font.pointSize: MessagesCounterStyle.text.pointSize
         text: messagesCounter.count
       }
     }

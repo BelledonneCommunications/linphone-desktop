@@ -59,7 +59,7 @@ Rectangle {
 
         font {
           bold: true
-          pointSize: ConferenceStyle.description.fontSize
+          pointSize: ConferenceStyle.description.pointSize
         }
 
         height: parent.height

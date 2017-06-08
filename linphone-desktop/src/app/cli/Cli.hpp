@@ -29,6 +29,8 @@
 // =============================================================================
 
 class Cli : public QObject {
+  Q_OBJECT;
+
   typedef void (*Function)(const QHash<QString, QString> &);
 
   enum ArgumentType {

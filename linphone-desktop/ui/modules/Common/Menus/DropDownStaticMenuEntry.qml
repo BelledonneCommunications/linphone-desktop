@@ -32,7 +32,7 @@ Rectangle {
 
     color: DropDownStaticMenuStyle.entry.text.color
     elide: Text.ElideRight
-    font.pointSize: DropDownStaticMenuStyle.entry.text.fontSize
+    font.pointSize: DropDownStaticMenuStyle.entry.text.pointSize
 
     height: parent.height
     verticalAlignment: Text.AlignVCenter

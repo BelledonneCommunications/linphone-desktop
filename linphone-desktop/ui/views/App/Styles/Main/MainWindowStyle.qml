@@ -3,6 +3,7 @@ import QtQuick 2.7
 
 import Common 1.0
 import Linphone.Styles 1.0
+import Units 1.0
 
 // =============================================================================
 
@@ -23,7 +24,7 @@ QtObject {
     property int width: 24
 
     property QtObject text: QtObject {
-      property int fontSize: 8
+      property int pointSize: Units.dp * 8
       property color color: Colors.j75
     }
   }

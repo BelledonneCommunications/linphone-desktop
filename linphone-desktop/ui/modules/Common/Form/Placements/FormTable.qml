@@ -54,7 +54,7 @@ Column {
 
         font {
           bold: true
-          pointSize: FormTableStyle.entry.text.fontSize
+          pointSize: FormTableStyle.entry.text.pointSize
         }
       }
     }

@@ -28,7 +28,7 @@ MenuItem {
 
     font {
       bold: true
-      pointSize: MenuItemStyle.text.fontSize
+      pointSize: MenuItemStyle.text.pointSize
     }
 
     text: button.text

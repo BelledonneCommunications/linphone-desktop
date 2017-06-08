@@ -50,7 +50,7 @@ Notification {
 
           color: NotificationReceivedFileMessageStyle.fileName.color
           elide: Text.ElideRight
-          font.pointSize: NotificationReceivedFileMessageStyle.fileName.fontSize
+          font.pointSize: NotificationReceivedFileMessageStyle.fileName.pointSize
           text: Utils.basename(notification._fileUri)
         }
 
@@ -59,7 +59,7 @@ Notification {
 
           color: NotificationReceivedFileMessageStyle.fileSize.color
           elide: Text.ElideRight
-          font.pointSize: NotificationReceivedFileMessageStyle.fileSize.fontSize
+          font.pointSize: NotificationReceivedFileMessageStyle.fileSize.pointSize
           horizontalAlignment: Text.AlignRight
           text: Utils.formatSize(notification.notificationData.fileSize)
         }

@@ -137,7 +137,7 @@ ScrollableListView {
 
             font {
               bold: true
-              pointSize: SipAddressesViewStyle.header.text.fontSize
+              pointSize: SipAddressesViewStyle.header.text.pointSize
             }
 
             color: headerButton.pressed

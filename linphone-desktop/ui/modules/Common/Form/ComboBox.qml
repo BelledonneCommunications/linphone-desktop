@@ -50,7 +50,7 @@ ComboBox {
       color: ComboBoxStyle.contentItem.text.color
       elide: Text.ElideRight
 
-      font.pointSize: ComboBoxStyle.contentItem.text.fontSize
+      font.pointSize: ComboBoxStyle.contentItem.text.pointSize
       rightPadding: comboBox.indicator.width + comboBox.spacing
 
       text: Logic.getSelectedEntryText()
@@ -123,7 +123,7 @@ ComboBox {
 
         font {
           bold: comboBox.currentIndex === index
-          pointSize: ComboBoxStyle.delegate.contentItem.text.fontSize
+          pointSize: ComboBoxStyle.delegate.contentItem.text.pointSize
         }
 
         text: item.flattenedModel[textRole] || modelData

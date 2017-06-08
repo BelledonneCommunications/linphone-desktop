@@ -24,8 +24,8 @@
 #include <QSet>
 #include <QtDebug>
 
-#include "../../LinphoneUtils.hpp"
-#include "../../Utils.hpp"
+#include "../../utils/LinphoneUtils.hpp"
+#include "../../utils/Utils.hpp"
 #include "../chat/ChatModel.hpp"
 #include "../core/CoreManager.hpp"
 

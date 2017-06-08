@@ -24,7 +24,7 @@ ColumnLayout {
 
     color: FormVGroupStyle.legend.color
     elide: Text.ElideRight
-    font.pointSize: FormVGroupStyle.legend.fontSize
+    font.pointSize: FormVGroupStyle.legend.pointSize
     verticalAlignment: Text.AlignVCenter
   }
 
@@ -64,7 +64,7 @@ ColumnLayout {
 
     font {
       italic: true
-      pointSize: FormVGroupStyle.error.fontSize
+      pointSize: FormVGroupStyle.error.pointSize
     }
 
     text: _content && _content.error && _content.error.length ? _content.error : ''

@@ -82,7 +82,7 @@ Controls.TabButton {
 
       font {
         bold: true
-        pointSize: TabButtonStyle.text.fontSize
+        pointSize: TabButtonStyle.text.pointSize
       }
 
       elide: Text.ElideRight
