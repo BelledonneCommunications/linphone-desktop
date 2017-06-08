@@ -301,19 +301,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"></translation>
+        <translation>Remote party declined the call</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Remote party wasn&apos;t found</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>Remote party is busy</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"></translation>
+        <translation>Call is not acceptable by remote party</translation>
     </message>
 </context>
 <context>

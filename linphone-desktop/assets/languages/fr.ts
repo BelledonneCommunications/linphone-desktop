@@ -301,19 +301,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"></translation>
+        <translation>Le correspondant a décliné l&apos;appel</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Le correspondant n&apos;a pas été trouvé</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>Le correspondant est occupé</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"></translation>
+        <translation>Le correspondant ne peut accepter votre appel</translation>
     </message>
 </context>
 <context>
