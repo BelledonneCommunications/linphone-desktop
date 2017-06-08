@@ -145,7 +145,6 @@ void ConferenceModel::join () {
 
 bool ConferenceModel::isInConference () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  qInfo() << QStringLiteral("Is in conf:") << core->isInConference();
   return core->isInConference();
 }
 
