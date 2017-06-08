@@ -127,7 +127,7 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 
   QObject *object = component.create();
   QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
-  object->setParent(app->getMainWindow());
+  object->setParent(app->getEngine());
 
   return qobject_cast<QQuickWindow *>(object);
 }
