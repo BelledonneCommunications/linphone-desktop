@@ -159,6 +159,15 @@ Rectangle {
               }
 
               username: contactDescription.username
+
+              BusyIndicator {
+                width: parent.width / 2
+                height: parent.height / 2
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+
+                visible: $call && $call.status === CallModel.CallStatusOutgoing
+              }
             }
           }
 
