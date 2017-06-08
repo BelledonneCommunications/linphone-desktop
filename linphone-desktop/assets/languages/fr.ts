@@ -923,6 +923,10 @@ un chat ou ajouter un contact.</translation>
         <source>newVersionAvailable</source>
         <translation>Une nouvelle version (%1) de Linphone est disponible !</translation>
     </message>
+    <message>
+        <source>newFileMessage</source>
+        <translation>Pièce jointe reçue !</translation>
+    </message>
 </context>
 <context>
     <name>OutgoingMessage</name>

@@ -231,7 +231,10 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
     return;
 
   QVariantMap map;
-  map["message"] = ::Utils::coreStringToAppString(message->getText());
+  map["message"] = message->getFileTransferInformation()
+    ? tr("newFileMessage")
+    : ::Utils::coreStringToAppString(message->getText());
+
   map["sipAddress"] = ::Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
   map["window"].setValue(App::getInstance()->getMainWindow());
 

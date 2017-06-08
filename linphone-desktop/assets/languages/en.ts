@@ -924,6 +924,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>newVersionAvailable</source>
         <translation>A new version (%1) of Linphone is available!</translation>
     </message>
+    <message>
+        <source>newFileMessage</source>
+        <translation>New received attachment!</translation>
+    </message>
 </context>
 <context>
     <name>OutgoingMessage</name>
