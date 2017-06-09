@@ -213,10 +213,6 @@ ApplicationWindow {
             }]
 
             onEntrySelected: !entry ? setView('Home') : setView('Contacts')
-
-            TooltipArea {
-              text: qsTr('menuTooltip')
-            }
           }
 
           // History.

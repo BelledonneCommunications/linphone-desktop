@@ -868,10 +868,6 @@ Server url not configured.</translation>
         <translation>auto</translation>
     </message>
     <message>
-        <source>menuTooltip</source>
-        <translation>Access to your contact list and add new contacts.</translation>
-    </message>
-    <message>
         <source>smartSearchBarTooltip</source>
         <translation>Use the search bar to directly start audio and video
 calls, start a chat or add a new contact. Just enter
