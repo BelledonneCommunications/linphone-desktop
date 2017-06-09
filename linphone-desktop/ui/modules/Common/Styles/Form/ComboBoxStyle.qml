@@ -22,6 +22,7 @@ QtObject {
 
   property QtObject contentItem: QtObject {
     property int iconSize: 20
+    property int leftMargin: 10
     property int spacing: 5
 
     property QtObject text: QtObject {

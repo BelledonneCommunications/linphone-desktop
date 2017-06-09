@@ -33,27 +33,36 @@ ComboBox {
 
   // ---------------------------------------------------------------------------
 
-  contentItem: RowLayout {
-    spacing: ComboBoxStyle.contentItem.spacing
+  contentItem: Item {
+    height: comboBox.height
     width: comboBox.width
 
-    Icon {
-      icon: Logic.getSelectedEntryIcon()
-      iconSize: ComboBoxStyle.contentItem.iconSize
+    RowLayout {
+      anchors {
+        fill: parent
+        leftMargin: ComboBoxStyle.contentItem.leftMargin
+      }
 
-      visible: icon.length > 0
-    }
+      spacing: ComboBoxStyle.contentItem.spacing
 
-    Text {
-      Layout.fillWidth: true
+      Icon {
+        icon: Logic.getSelectedEntryIcon()
+        iconSize: ComboBoxStyle.contentItem.iconSize
 
-      color: ComboBoxStyle.contentItem.text.color
-      elide: Text.ElideRight
+        visible: icon.length > 0
+      }
 
-      font.pointSize: ComboBoxStyle.contentItem.text.pointSize
-      rightPadding: comboBox.indicator.width + comboBox.spacing
+      Text {
+        Layout.fillWidth: true
 
-      text: Logic.getSelectedEntryText()
+        color: ComboBoxStyle.contentItem.text.color
+        elide: Text.ElideRight
+
+        font.pointSize: ComboBoxStyle.contentItem.text.pointSize
+        rightPadding: comboBox.indicator.width + comboBox.spacing
+
+        text: Logic.getSelectedEntryText()
+      }
     }
   }
 
