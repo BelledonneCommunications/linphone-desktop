@@ -171,6 +171,7 @@ ApplicationWindow {
           ActionButton {
             icon: 'burger_menu'
             iconSize: MainWindowStyle.menuBurgerSize
+            visible: Qt.platform.os !== 'osx'
 
             onClicked: menuBar.open()
 
