@@ -26,6 +26,7 @@ Window {
   function exit (cb) {
     // It's necessary to call `showNormal` before close on MacOs
     // because the dock will be hidden forever!
+    incall.visible = false
     incall.showNormal()
     incall.close()
 
@@ -40,12 +41,15 @@ Window {
     var show = function (visibility) {
       if (visibility === Window.Windowed) {
         incall.visibilityChanged.disconnect(show)
+        incall.visible = true
         incall.showFullScreen()
       }
     }
 
     incall.visibilityChanged.connect(show)
   }
+
+  visible: false
 
   // ---------------------------------------------------------------------------
 
