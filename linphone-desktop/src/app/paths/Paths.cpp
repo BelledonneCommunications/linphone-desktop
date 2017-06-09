@@ -168,7 +168,7 @@ string Paths::getAvatarsDirPath () {
 }
 
 string Paths::getCallHistoryFilePath () {
-  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_AVATARS);
+  return getWritableFilePath(getAppCallHistoryFilePath());
 }
 
 string Paths::getCapturesDirPath () {
