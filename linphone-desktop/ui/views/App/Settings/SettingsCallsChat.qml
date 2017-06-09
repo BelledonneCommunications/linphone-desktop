@@ -105,7 +105,7 @@ TabContainer {
       }
 
       FormLine {
-        visible: SettingsModel.limeIsSupported
+        visible: false // TODO: Use `SettingsModel.limeIsSupported` binding in V2.
 
         FormGroup {
           label: qsTr('encryptWithLimeLabel')
