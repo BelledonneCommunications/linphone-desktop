@@ -32,7 +32,7 @@ QtObject {
   }
 
   property QtObject container: QtObject {
-    property int margins: 20
+    property int margins: 15
 
     property QtObject avatar: QtObject {
       property color backgroundColor: Colors.w
@@ -63,7 +63,7 @@ QtObject {
     }
 
     property QtObject contactDescription: QtObject {
-      property int height: 60
+      property int height: 50
       property int width: 150
     }
 

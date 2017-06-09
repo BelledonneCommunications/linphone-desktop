@@ -62,6 +62,25 @@ Rectangle {
       Layout.rightMargin: CallStyle.header.rightMargin
       Layout.preferredHeight: CallStyle.header.contactDescription.height
 
+      Text {
+        id: elapsedTime
+
+        anchors.bottom: parent.bottom
+        color: CallStyle.header.elapsedTime.color
+        font.pointSize: CallStyle.header.elapsedTime.pointSize
+        horizontalAlignment: Text.AlignHCenter
+        width: parent.width
+
+        Timer {
+          interval: 1000
+          repeat: true
+          running: true
+          triggeredOnStart: true
+
+          onTriggered: elapsedTime.text = Utils.formatElapsedTime(call.duration)
+        }
+      }
+
       ActionBar {
         id: leftActions
 
@@ -121,7 +140,7 @@ Rectangle {
 
         anchors.centerIn: parent
         horizontalTextAlignment: Text.AlignHCenter
-        sipAddress: _sipAddressObserver.sipAddress
+        sipAddress: ''
         username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || sipAddress)
 
         height: parent.height
@@ -164,24 +183,6 @@ Rectangle {
 
           onClicked: Logic.showFullscreen()
         }
-      }
-    }
-
-    Text {
-      id: elapsedTime
-
-      Layout.fillWidth: true
-      color: CallStyle.header.elapsedTime.color
-      font.pointSize: CallStyle.header.elapsedTime.pointSize
-      horizontalAlignment: Text.AlignHCenter
-
-      Timer {
-        interval: 1000
-        repeat: true
-        running: true
-        triggeredOnStart: true
-
-        onTriggered: elapsedTime.text = Utils.formatElapsedTime(call.duration)
       }
     }
 
