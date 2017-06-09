@@ -40,7 +40,6 @@ function setView (view, props) {
 
     var item = mainLoader.item
 
-    item.collapse.setCollapsed(true)
     updateSelectedEntry(view, props)
     window._currentView = view
     item.contentLoader.setSource(view + '.qml', props || {})

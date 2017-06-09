@@ -36,8 +36,7 @@ ApplicationWindow {
   // Window properties.
   // ---------------------------------------------------------------------------
 
-  maximumHeight: MainWindowStyle.toolBar.height
-  minimumHeight: MainWindowStyle.toolBar.height
+  minimumHeight: MainWindowStyle.minimumHeight
   minimumWidth: MainWindowStyle.minimumWidth
   width: MainWindowStyle.width
 
@@ -70,7 +69,6 @@ ApplicationWindow {
 
     sourceComponent: ColumnLayout {
       // Workaround to get these properties in `MainWindow.js`.
-      readonly property alias collapse: collapse
       readonly property alias contentLoader: contentLoader
       readonly property alias menu: menu
       readonly property alias timeline: timeline
@@ -100,17 +98,6 @@ ApplicationWindow {
             rightMargin: MainWindowStyle.toolBar.rightMargin
           }
           spacing: MainWindowStyle.toolBar.spacing
-
-          Collapse {
-            id: collapse
-
-            Layout.fillHeight: parent.height
-            target: window
-            targetHeight: MainWindowStyle.minimumHeight
-            visible: Qt.platform.os !== 'linux'
-
-            Component.onCompleted: setCollapsed(true)
-          }
 
           AccountStatus {
             id: accountStatus
@@ -250,8 +237,6 @@ ApplicationWindow {
 
           Layout.fillHeight: true
           Layout.fillWidth: true
-
-          visible: collapse.collapsed ? 1.0 : 0
 
           source: 'Home.qml'
         }

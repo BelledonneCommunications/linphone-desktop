@@ -216,7 +216,6 @@
     <file>ui/modules/Common/Form/Fields/ScrollableListViewField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextAreaField.qml</file>
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
-    <file>ui/modules/Common/Form/+linux/SearchBox.qml</file>
     <file>ui/modules/Common/Form/ListForm.js</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
@@ -247,7 +246,6 @@
     <file>ui/modules/Common/Menus/MenuItem.qml</file>
     <file>ui/modules/Common/Menus/Menu.qml</file>
     <file>ui/modules/Common/Misc/Borders.qml</file>
-    <file>ui/modules/Common/Misc/Collapse.qml</file>
     <file>ui/modules/Common/Misc/ForceScrollBar.qml</file>
     <file>ui/modules/Common/Misc/Paned.qml</file>
     <file>ui/modules/Common/Popup/DesktopPopup.qml</file>
@@ -286,7 +284,6 @@
     <file>ui/modules/Common/Styles/Menus/DropDownStaticMenuStyle.qml</file>
     <file>ui/modules/Common/Styles/Menus/MenuItemStyle.qml</file>
     <file>ui/modules/Common/Styles/Menus/MenuStyle.qml</file>
-    <file>ui/modules/Common/Styles/Misc/CollapseStyle.qml</file>
     <file>ui/modules/Common/Styles/Misc/ForceScrollBarStyle.qml</file>
     <file>ui/modules/Common/Styles/Misc/PanedStyle.qml</file>
     <file>ui/modules/Common/Styles/Popup/PopupStyle.qml</file>
@@ -324,8 +321,8 @@
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
     <file>ui/modules/Linphone/Contact/MessagesCounter.qml</file>
     <file>ui/modules/Linphone/Menus/SipAddressesMenu.qml</file>
-    <file>ui/modules/Linphone/Notifications/Notification.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationNewVersionAvailable.qml</file>
+    <file>ui/modules/Linphone/Notifications/Notification.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedCall.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml</file>

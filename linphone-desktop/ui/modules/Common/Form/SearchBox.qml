@@ -1,12 +1,10 @@
 import QtQuick 2.7
-import QtQuick.Window 2.2
 
 import Common 1.0
 import Utils 1.0
 
 // =============================================================================
-// A reusable search input which display a entries model in a menu.
-// Each entry can be filtered with the search input.
+// Specific GNU/Linux version of `SearchBox` component.
 // =============================================================================
 
 Item {
@@ -57,21 +55,12 @@ Item {
     model.setFilter(text)
   }
 
-  function _handleCoords () {
-    searchBox.closeMenu()
-
-    var point = searchBox.mapToItem(null, 0, searchBox.height)
-
-    desktopPopup.popupX = window.x + point.x
-    desktopPopup.popupY = window.y + point.y
-  }
-
   // ---------------------------------------------------------------------------
 
   implicitHeight: searchField.height
 
   Item {
-    implicitHeight: searchField.height
+    implicitHeight: searchField.height + menu.height
     width: parent.width
 
     TextField {
@@ -94,49 +83,21 @@ Item {
       }
 
       onTextChanged: _filter(text)
-
-      InvertedMouseArea {
-        anchors.fill: parent
-        enabled: searchBox._isOpen
-
-        onPressed: searchBox.closeMenu()
-      }
     }
 
     // -------------------------------------------------------------------------
 
-    Connections {
-      target: searchBox.Window.window
+    DropDownDynamicMenu {
+      id: menu
 
-      onHeightChanged: _handleCoords()
-      onWidthChanged: _handleCoords()
+      relativeTo: searchField
+      relativeY: searchField.height
 
-      onXChanged: _handleCoords()
-      onYChanged: _handleCoords()
+      // If the menu is focused, the main window loses the active status.
+      // So It's necessary to map the keys events.
+      Keys.forwardTo: searchField
 
-      onVisibilityChanged: _handleCoords()
-    }
-
-    // Wrap the search box menu in a window.
-    DesktopPopup {
-      id: desktopPopup
-
-      requestActivate: true
-
-      onVisibleChanged: !visible && searchBox.closeMenu()
-
-      DropDownDynamicMenu {
-        id: menu
-
-        implicitHeight: searchBox.view.height
-        width: searchField.width
-
-        // If the menu is focused, the main window loses the active status.
-        // So It's necessary to map the keys events.
-        Keys.forwardTo: searchField
-
-        onClosed: searchBox.closeMenu()
-      }
+      onClosed: searchBox.closeMenu()
     }
 
     Binding {
@@ -167,7 +128,6 @@ Item {
       ScriptAction {
         script: {
           menu.open()
-          desktopPopup.open()
 
           searchBox.menuOpened()
         }
@@ -182,7 +142,6 @@ Item {
         script: {
           menu.close()
           searchField.focus = false
-          desktopPopup.close()
 
           searchBox.menuClosed()
         }
