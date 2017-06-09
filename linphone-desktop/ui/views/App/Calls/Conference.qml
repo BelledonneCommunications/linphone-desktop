@@ -234,18 +234,20 @@ Rectangle {
           rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
           verticalCenter: parent.verticalCenter
         }
+
         iconSize: CallStyle.actionArea.iconSize
 
         ActionSwitch {
-          icon: 'pause'
           enabled: conference.conferenceModel.isInConf
+          icon: 'pause'
 
           onClicked: {
-            conference.conferenceModel.isInConf ? conference.conferenceModel.leave() : conference.conferenceModel.join()
-          }
-
-          TooltipArea {
-            text: conference.conferenceModel.isInConf ? qsTr('leaveConf') : qsTr('joinBackConf')
+            var model = conference.conferenceModel
+            if (model.isInConf) {
+              model.leave()
+            } else {
+              model.join()
+            }
           }
         }
 

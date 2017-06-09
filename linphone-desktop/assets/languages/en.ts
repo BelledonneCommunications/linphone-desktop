@@ -443,14 +443,6 @@ Server url not configured.</translation>
         <source>conferenceTitle</source>
         <translation>CONFERENCE</translation>
     </message>
-    <message>
-        <source>leaveConf</source>
-        <translation>Temporarily leave the conference</translation>
-    </message>
-    <message>
-        <source>joinBackConf</source>
-        <translation>Join back the conference</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceControls</name>

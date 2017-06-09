@@ -443,14 +443,6 @@ Url du serveur non configurée.</translation>
         <source>conferenceTitle</source>
         <translation>CONFÉRENCE</translation>
     </message>
-    <message>
-        <source>leaveConf</source>
-        <translation>Quitter temporairement la conférence</translation>
-    </message>
-    <message>
-        <source>joinBackConf</source>
-        <translation>Rejoindre la conférence</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceControls</name>
