@@ -135,7 +135,7 @@ Rectangle {
               username: LinphoneUtils.getContactUsername(parent.sipAddressObserver.contact || parent.sipAddress)
             }
 
-            Avatar {
+            IncallAvatar {
               readonly property int size: Math.min(
                 parent.width,
                 parent.height - contactDescription.height - parent.spacing
@@ -143,29 +143,20 @@ Rectangle {
 
               anchors.horizontalCenter: parent.horizontalCenter
 
+              call: $call
+
               height: size
               width: size
 
-              backgroundColor: CallStyle.container.avatar.backgroundColor
-              foregroundColor: $call && $call.status === CallModel.CallStatusPaused
-                ? CallStyle.container.pause.color
-                : 'transparent'
-
-              image: {
-                var contact = parent.sipAddressObserver.contact
-                if (contact) {
-                  return contact.vcard.avatar
-                }
-              }
-
-              username: contactDescription.username
-
               BusyIndicator {
+                anchors {
+                  horizontalCenter: parent.horizontalCenter
+                  verticalCenter: parent.verticalCenter
+                }
+
                 color: CallStyle.header.busyIndicator.color
                 height: CallStyle.header.busyIndicator.height
                 width: CallStyle.header.busyIndicator.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
 
                 visible: $call && $call.status === CallModel.CallStatusOutgoing
               }

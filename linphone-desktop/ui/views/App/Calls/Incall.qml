@@ -200,31 +200,11 @@ Rectangle {
       Component {
         id: avatar
 
-        Avatar {
-          backgroundColor: CallStyle.container.avatar.backgroundColor
-          foregroundColor: incall.call.status === CallModel.CallStatusPaused
-            ? CallStyle.container.pause.color
-            : 'transparent'
-          image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
-          username: contactDescription.username
+        IncallAvatar {
+          call: incall.call
 
           height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
           width: height
-
-          Text {
-            anchors.fill: parent
-            color: CallStyle.container.pause.text.color
-
-            // `|| 1` => `pointSize` must be greater than 0.
-            font.pointSize: (width / CallStyle.container.pause.text.pointSizeFactor) || 1
-
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-
-            text: '&#9616;&nbsp;&#9612;'
-            textFormat: Text.RichText
-            visible: incall.call.status === CallModel.CallStatusPaused
-          }
         }
       }
 
