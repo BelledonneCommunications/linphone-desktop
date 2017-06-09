@@ -45,7 +45,7 @@ ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(paren
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::callStateChanged,
-    this, &ConferenceModel::handleCallStateChanged
+    this, [this] { emit conferenceChanged(); }
   );
 }
 
@@ -125,31 +125,23 @@ bool ConferenceModel::getRecording () const {
 // -----------------------------------------------------------------------------
 
 float ConferenceModel::getMicroVu () const {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  return LinphoneUtils::computeVu(core->getConferenceLocalInputVolume());
+  return LinphoneUtils::computeVu(
+    CoreManager::getInstance()->getCore()->getConferenceLocalInputVolume()
+  );
 }
 
 // -----------------------------------------------------------------------------
 
 void ConferenceModel::leave () {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  core->leaveConference();
+  CoreManager::getInstance()->getCore()->leaveConference();
   emit conferenceChanged();
 }
 
 void ConferenceModel::join () {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  core->enterConference();
+  CoreManager::getInstance()->getCore()->enterConference();
   emit conferenceChanged();
 }
 
 bool ConferenceModel::isInConference () const {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  return core->isInConference();
-}
-
-// -----------------------------------------------------------------------------
-
-void ConferenceModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
-  emit conferenceChanged();
+  return CoreManager::getInstance()->getCore()->isInConference();
 }

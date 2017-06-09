@@ -51,7 +51,7 @@ protected:
 
   Q_INVOKABLE void startRecording ();
   Q_INVOKABLE void stopRecording ();
-  
+
   Q_INVOKABLE void join ();
   Q_INVOKABLE void leave ();
 
@@ -60,11 +60,9 @@ signals:
 
   void microMutedChanged (bool status);
   void recordingChanged (bool status);
-  void conferenceChanged();
+  void conferenceChanged ();
 
 private:
-  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
-  
   int getCount () const {
     return rowCount();
   }
