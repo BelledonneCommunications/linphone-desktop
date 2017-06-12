@@ -33,14 +33,14 @@ Item {
         id: icon
 
         Icon {
-          property bool isNotDelivered: Utils.includes([
+          readonly property bool isNotDelivered: Utils.includes([
             ChatModel.MessageStatusFileTransferError,
             ChatModel.MessageStatusIdle,
             ChatModel.MessageStatusInProgress,
             ChatModel.MessageStatusNotDelivered
           ], $chatEntry.status)
 
-          property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
+          readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
 
           icon: isNotDelivered
             ? 'chat_error'

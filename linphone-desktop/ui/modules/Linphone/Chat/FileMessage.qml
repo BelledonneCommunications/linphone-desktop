@@ -54,6 +54,8 @@ Row {
         ChatModel.MessageStatusNotDelivered
       ], $chatEntry.status)
 
+      readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
+
       color: $chatEntry.isOutgoing
         ? ChatStyle.entry.message.outgoing.backgroundColor
         : ChatStyle.entry.message.incoming.backgroundColor
@@ -200,7 +202,10 @@ Row {
         id: icon
 
         Icon {
-          icon: rectangle.isNotDelivered ? 'chat_error' : 'chat_send'
+          icon: rectangle.isNotDelivered
+            ? 'chat_error'
+            : (rectangle.isRead ? 'chat_read' : 'chat_delivered')
+
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
