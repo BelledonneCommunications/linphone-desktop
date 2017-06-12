@@ -113,13 +113,13 @@ const QString Cli::parseFunctionName (const QString &command) noexcept {
   const QStringList &texts = mRegExpFunctionName.capturedTexts();
   if (texts.size() < 2) {
     qWarning() << QStringLiteral("Unable to parse function name of command: `%1`.").arg(command);
-    return QStringLiteral("");
+    return QString("");
   }
 
   const QString functionName = texts[1];
   if (!mCommands.contains(functionName)) {
     qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
-    return QStringLiteral("");
+    return QString("");
   }
 
   return functionName;

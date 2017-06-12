@@ -68,5 +68,5 @@ QString Presence::getPresenceLevelIconName (const PresenceLevel &level) {
       return QStringLiteral("led_white");
   }
 
-  return QStringLiteral("");
+  return QString("");
 }

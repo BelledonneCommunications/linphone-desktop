@@ -136,7 +136,7 @@ QString VcardModel::getAvatar () const {
 
   // No path found.
   if (!photo)
-    return QStringLiteral("");
+    return QString("");
 
   // Returns right path.
   return QStringLiteral("image://%1/%2").arg(AvatarProvider::PROVIDER_ID).arg(

@@ -527,7 +527,7 @@ QString CallModel::getSecuredString () const {
       break;
   }
 
-  return QStringLiteral("");
+  return QString("");
 }
 
 // -----------------------------------------------------------------------------

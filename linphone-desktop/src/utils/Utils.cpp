@@ -65,7 +65,7 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
   if (soFarSoGood)
     *soFarSoGood = false;
 
-  return QStringLiteral("");
+  return QString("");
 }
 
 #undef SAFE_FILE_PATH_LIMIT

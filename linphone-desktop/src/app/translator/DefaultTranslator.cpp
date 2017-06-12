@@ -58,7 +58,7 @@ QString DefaultTranslator::translate (
   int n
 ) const {
   if (!context)
-    return QStringLiteral("");
+    return QString("");
 
   QString translation = QTranslator::translate(context, sourceText, disambiguation, n);
 

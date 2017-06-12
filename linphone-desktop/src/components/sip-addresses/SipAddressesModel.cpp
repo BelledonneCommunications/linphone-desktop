@@ -154,7 +154,7 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
     );
 
   if (!address)
-    return QStringLiteral("");
+    return QString("");
 
   switch (address->getTransport()) {
     case linphone::TransportTypeUdp:
@@ -167,7 +167,7 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
       return QStringLiteral("DTLS");
   }
 
-  return QStringLiteral("");
+  return QString("");
 }
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) const {
