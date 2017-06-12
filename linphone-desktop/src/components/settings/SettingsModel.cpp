@@ -182,6 +182,16 @@ void SettingsModel::setVideoFramerate (int framerate) {
 inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const linphone::VideoDefinition> &definition) {
   QVariantMap map;
 
+  if (!definition) {
+    Q_ASSERT(!CoreManager::getInstance()->getCore()->videoSupported());
+
+    map["name"] = QStringLiteral("Bad EGG");
+    map["width"] = QStringLiteral("?????");
+    map["height"] = QStringLiteral("?????");
+
+    return map;
+  }
+
   map["name"] = ::Utils::coreStringToAppString(definition->getName());
   map["width"] = definition->getWidth();
   map["height"] = definition->getHeight();

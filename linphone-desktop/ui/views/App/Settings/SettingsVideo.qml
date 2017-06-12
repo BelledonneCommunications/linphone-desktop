@@ -28,9 +28,9 @@ TabContainer {
           label: qsTr('videoInputDeviceLabel')
 
           ComboBox {
-            currentIndex: Utils.findIndex(model, function (device) {
+            currentIndex: Number(Utils.findIndex(model, function (device) {
               return device === SettingsModel.videoDevice
-            })
+            })) // Number cast => Index is null if app does not support video.
             model: SettingsModel.videoDevices
 
             onActivated: SettingsModel.videoDevice = model[index]
@@ -74,9 +74,9 @@ TabContainer {
           label: qsTr('videoSizeLabel')
 
           ComboBox {
-            currentIndex: Utils.findIndex(model, function (definition) {
+            currentIndex: Number(Utils.findIndex(model, function (definition) {
               return definition.value.name === SettingsModel.videoDefinition.name
-            })
+            })) // Number cast => Index is null if app does not support video.
             model: SettingsModel.supportedVideoDefinitions.map(function (definition) {
               return {
                 key: definition.name + ' (' + definition.width + 'x' + definition.height + ')',
