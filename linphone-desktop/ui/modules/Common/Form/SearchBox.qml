@@ -4,8 +4,6 @@ import Common 1.0
 import Utils 1.0
 
 // =============================================================================
-// Specific GNU/Linux version of `SearchBox` component.
-// =============================================================================
 
 Item {
   id: searchBox
@@ -141,7 +139,9 @@ Item {
       ScriptAction {
         script: {
           menu.close()
+
           searchField.focus = false
+          searchField.text = ''
 
           searchBox.menuClosed()
         }
