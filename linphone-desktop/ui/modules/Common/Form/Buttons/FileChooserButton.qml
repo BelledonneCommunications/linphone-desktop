@@ -71,16 +71,24 @@ TextField {
     id: fileDialog
 
     folder: {
-      if (!textField.selectedFile.length) {
+      var selectedFile = textField.selectedFile
+
+      if (!selectedFile.length) {
         return ''
       }
 
-      return Utils.getUriFromSystemPath(Utils.dirname(textField.selectedFile))
+      return Utils.getUriFromSystemPath(
+        textField.selectFolder
+          ? selectedFile
+          : Utils.dirname(selectedFile)
+      )
     }
 
     onAccepted: {
-      textField.selectedFile = Utils.getSystemPathFromUri(fileUrl)
-      textField.accepted(textField.selectedFile)
+      var selectedFile = Utils.getSystemPathFromUri(fileUrl)
+
+      textField.selectedFile = selectedFile
+      textField.accepted(selectedFile)
     }
 
     onRejected: textField.rejected()
