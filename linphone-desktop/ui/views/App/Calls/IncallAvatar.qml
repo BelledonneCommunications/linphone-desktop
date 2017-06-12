@@ -8,35 +8,35 @@ import App.Styles 1.0
 // =============================================================================
 
 Avatar {
-	property var call
+  property var call
 
-	readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.sipAddress)
-	readonly property var _username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || call.sipAddress)
+  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.sipAddress)
+  readonly property var _username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || call.sipAddress)
 
-	backgroundColor: CallStyle.container.avatar.backgroundColor
-	foregroundColor: call.status === CallModel.CallStatusPaused
-	  ? CallStyle.container.pause.color
-	  : 'transparent'
+  backgroundColor: CallStyle.container.avatar.backgroundColor
+  foregroundColor: call.status === CallModel.CallStatusPaused
+    ? CallStyle.container.pause.color
+    : 'transparent'
 
-	image: {
-		var contact = _sipAddressObserver.contact
-		return contact && contact.vcard.avatar
-	}
+  image: {
+    var contact = _sipAddressObserver.contact
+    return contact && contact.vcard.avatar
+  }
 
-	username: call.status === CallModel.CallStatusPaused ? '' : _username
+  username: call.status === CallModel.CallStatusPaused ? '' : _username
 
-	Text {
-		anchors.fill: parent
-		color: CallStyle.container.pause.text.color
+  Text {
+    anchors.fill: parent
+    color: CallStyle.container.pause.text.color
 
-		// `|| 1` => `pointSize` must be greater than 0.
-		font.pointSize: (width / CallStyle.container.pause.text.pointSizeFactor) || 1
+    // `|| 1` => `pointSize` must be greater than 0.
+    font.pointSize: (width / CallStyle.container.pause.text.pointSizeFactor) || 1
 
-		horizontalAlignment: Text.AlignHCenter
-		verticalAlignment: Text.AlignVCenter
+    horizontalAlignment: Text.AlignHCenter
+    verticalAlignment: Text.AlignVCenter
 
-		text: '&#9616;&nbsp;&#9612;'
-		textFormat: Text.RichText
-		visible: call.status === CallModel.CallStatusPaused
-	}
+    text: '&#9616;&nbsp;&#9612;'
+    textFormat: Text.RichText
+    visible: call.status === CallModel.CallStatusPaused
+  }
 }
