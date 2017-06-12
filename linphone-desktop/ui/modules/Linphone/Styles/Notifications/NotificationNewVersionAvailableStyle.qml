@@ -10,14 +10,12 @@ QtObject {
   property color color: Colors.k
   property int height: 55
   property int iconSize: 40
-  property int leftMargin: 25
+  property int leftMargin: 30
   property int rightMargin: 15
-  property int spacing: 10
   property int width: 300
 
   property QtObject message: QtObject {
     property color color: Colors.h
     property int pointSize: Units.dp * 10
-    property int topPadding: 10
   }
 }

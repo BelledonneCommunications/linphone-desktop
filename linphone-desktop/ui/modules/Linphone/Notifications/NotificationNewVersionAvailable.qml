@@ -37,31 +37,24 @@ Notification {
         rightMargin: NotificationNewVersionAvailableStyle.rightMargin
       }
 
-      sourceComponent: RowLayout {
+      sourceComponent: Text {
         anchors.fill: parent
-        spacing: NotificationNewVersionAvailableStyle.spacing
 
-        Text {
-          Layout.fillWidth: true
-          Layout.fillHeight: true
+        color: NotificationNewVersionAvailableStyle.message.color
+        font.pointSize: NotificationNewVersionAvailableStyle.message.pointSize
+        text: notificationData.message
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.Wrap
 
-          topPadding: NotificationNewVersionAvailableStyle.message.topPadding
-          color: NotificationNewVersionAvailableStyle.message.color
-          elide: Text.ElideRight
-          wrapMode: Text.Wrap
-          font.pointSize: NotificationNewVersionAvailableStyle.message.pointSize
-          text: notificationData.message
+        MouseArea {
+          anchors.fill: parent
+          cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+          hoverEnabled: true
+
+          onClicked: notification._close(function () {
+            Qt.openUrlExternally(notificationData.url)
+          })
         }
-      }
-
-      MouseArea {
-        anchors.fill: parent
-        cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-        hoverEnabled: true
-
-        onClicked: notification._close(function () {
-          Qt.openUrlExternally(notificationData.url)
-        })
       }
     }
   }
