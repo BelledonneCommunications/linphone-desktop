@@ -435,6 +435,12 @@ bool CallModel::getVideoEnabled () const {
 }
 
 void CallModel::setVideoEnabled (bool status) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  if (!core->videoSupported()) {
+    qWarning() << QStringLiteral("Unable to update video call property. (Video not supported.)");
+    return;
+  }
+
   switch (mCall->getState()) {
     case linphone::CallStateConnected:
     case linphone::CallStateStreamsRunning:
@@ -445,7 +451,6 @@ void CallModel::setVideoEnabled (bool status) {
   if (status == getVideoEnabled())
     return;
 
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
   params->enableVideo(status);
 
