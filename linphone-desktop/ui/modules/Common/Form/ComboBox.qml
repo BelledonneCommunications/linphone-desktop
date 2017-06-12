@@ -4,6 +4,8 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
+import Linphone 1.0
+import Utils 1.0
 
 import 'ComboBox.js' as Logic
 
@@ -40,7 +42,9 @@ ComboBox {
     RowLayout {
       anchors {
         fill: parent
-        leftMargin: ComboBoxStyle.contentItem.leftMargin
+        leftMargin: !Utils.startsWith(App.qtVersion, '5.8')
+          ? ComboBoxStyle.contentItem.leftMargin // >= 5.9
+          : 0 // 5.8
       }
 
       spacing: ComboBoxStyle.contentItem.spacing
