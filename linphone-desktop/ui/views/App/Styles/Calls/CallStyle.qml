@@ -91,7 +91,7 @@ QtObject {
     property QtObject text: QtObject {
       property color colorA: Colors.j
       property color colorB: Colors.i
-      property int pointSize: Units.dp * 12
+      property int pointSize: Units.dp * 10
       property int wordsSpacing: 5
     }
   }
