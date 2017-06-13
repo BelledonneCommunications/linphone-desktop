@@ -53,6 +53,7 @@ Item {
       id: menu
 
       MenuItem {
+        role: MenuItem.PreferencesRole
         shortcut: settingsShortcut.sequence
         text: qsTr('settings')
 
@@ -60,12 +61,14 @@ Item {
       }
 
       MenuItem {
+        role: MenuItem.AboutRole
         text: qsTr('about')
 
         onTriggered: aboutShortcut.onActivated()
       }
 
       MenuItem {
+        role: MenuItem.QuitRole
         shortcut: quitShortcut.sequence
         text: qsTr('quit')
 
