@@ -171,6 +171,10 @@ Rectangle {
               )
 
               verticalAlignment: Text.AlignVCenter
+
+              TooltipArea {
+                text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
+              }
             }
 
             // Display content.
