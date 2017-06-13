@@ -23,6 +23,21 @@ function handleCallStatisticsClosed () {
   })
 }
 
+function handleCameraFirstFrameReceived (width, height) {
+  // Cell phone???
+  if (height > width) {
+    return
+  }
+
+  var ratio = container.width / (width / (height / container.height))
+  var diff = container.height * ratio - container.height
+  if (diff < 0) {
+    return
+  }
+
+  window.height += diff
+}
+
 function handleStatusChanged (status) {
   if (status === Linphone.CallModel.CallStatusEnded) {
     var fullscreen = incall._fullscreen

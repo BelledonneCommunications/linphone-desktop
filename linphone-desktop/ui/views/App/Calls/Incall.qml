@@ -38,6 +38,7 @@ Rectangle {
   Connections {
     target: call
 
+    onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
     onStatusChanged: Logic.handleStatusChanged (status)
     onVideoRequested: Logic.handleVideoRequested()
   }
