@@ -106,10 +106,61 @@ Row {
         }
 
         Loader {
+          id: thumbnailProvider
+
           Layout.preferredHeight: ChatStyle.entry.message.file.thumbnail.height
           Layout.preferredWidth: ChatStyle.entry.message.file.thumbnail.width
 
           sourceComponent: $chatEntry.thumbnail ? thumbnail : extension
+
+          ScaleAnimator {
+            id: thumbnailProviderAnimator
+
+            target: thumbnailProvider
+
+            duration: ChatStyle.entry.message.file.animation.duration
+            easing.type: Easing.InOutQuad
+            from: 1.0
+          }
+
+          states: State {
+            name: 'hovered'
+          }
+
+          transitions: [
+            Transition {
+              from: ''
+              to: 'hovered'
+
+              ScriptAction {
+                script: {
+                  if (thumbnailProviderAnimator.running) {
+                    thumbnailProviderAnimator.running = false
+                  }
+
+                  thumbnailProvider.z = Constants.zPopup
+                  thumbnailProviderAnimator.to = ChatStyle.entry.message.file.animation.to
+                  thumbnailProviderAnimator.running = true
+                }
+              }
+            },
+            Transition {
+              from: 'hovered'
+              to: ''
+
+              ScriptAction {
+                script: {
+                  if (thumbnailProviderAnimator.running) {
+                    thumbnailProviderAnimator.running = false
+                  }
+
+                  thumbnailProviderAnimator.to = 1.0
+                  thumbnailProviderAnimator.running = true
+                  thumbnailProvider.z = 0
+                }
+              }
+            }
+          ]
         }
 
         // ---------------------------------------------------------------------
@@ -193,14 +244,30 @@ Row {
       }
 
       MouseArea {
+        function handleMouseMove (mouse) {
+          thumbnailProvider.state = Utils.pointIsInItem(this, thumbnailProvider, mouse)
+            ? 'hovered'
+            : ''
+        }
+
         anchors.fill: parent
         cursorShape: containsMouse
           ? Qt.PointingHandCursor
           : Qt.ArrowCursor
         hoverEnabled: true
-
-        onClicked: proxyModel.downloadFile(index)
         visible: !rectangle.isNotDelivered && !$chatEntry.isOutgoing
+
+        onMouseXChanged: handleMouseMove.call(this, mouse)
+        onMouseYChanged: handleMouseMove.call(this, mouse)
+
+        onClicked: {
+          // TODO: Handle open.
+          if (false && Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+            proxyModel.openFile(index)
+          } else {
+            proxyModel.downloadFile(index)
+          }
+        }
       }
     }
 

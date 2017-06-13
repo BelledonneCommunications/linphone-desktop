@@ -66,6 +66,21 @@ QtObject {
         property int spacing: 8
         property int width: 250
 
+        property QtObject animation: QtObject {
+          property int duration: 300
+          property real to: 1.5
+        }
+
+        property QtObject extension: QtObject {
+          property QtObject background: QtObject {
+            property color color: Colors.l50
+          }
+
+          property QtObject text: QtObject {
+            property color color: Colors.k
+          }
+        }
+
         property QtObject status: QtObject {
           property int spacing: 4
 
@@ -80,16 +95,6 @@ QtObject {
             property QtObject contentItem: QtObject {
               property color color: Colors.z
             }
-          }
-        }
-
-        property QtObject extension: QtObject {
-          property QtObject background: QtObject {
-            property color color: Colors.l50
-          }
-
-          property QtObject text: QtObject {
-            property color color: Colors.k
           }
         }
 
