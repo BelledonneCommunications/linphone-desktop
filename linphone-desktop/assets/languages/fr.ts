@@ -610,7 +610,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation>AVER UNE ADRESSE EMAIL</translation>
+        <translation>AVEC UNE ADRESSE EMAIL</translation>
     </message>
 </context>
 <context>
