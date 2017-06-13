@@ -365,11 +365,11 @@
     </message>
     <message>
         <source>resumeCall</source>
-        <translation>REPRENDRE L'APPEL</translation>
+        <translation>REPRENDRE L&apos;APPEL</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation>TRANSFERER L'APPEL</translation>
+        <translation>TRANSFERER L&apos;APPEL</translation>
     </message>
     <message>
         <source>pauseCall</source>
@@ -784,7 +784,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation>Voir les bulles d'aides.</translation>
+        <translation>Voir les bulles d&apos;aides.</translation>
     </message>
     <message>
         <source>inviteButton</source>
@@ -861,7 +861,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Utilisez la barre de recherche intelligente pour lancer des appels audio et vidéo, envoyer un message ou ajouter un contact. Entrez simplement l'adresse SIP ou le nom d'utilisateur de votre contact.</translation>
+        <translation>Utilisez la barre de recherche intelligente pour lancer des appels audio et vidéo, envoyer un message ou ajouter un contact. Entrez simplement l&apos;adresse SIP ou le nom d&apos;utilisateur de votre contact.</translation>
     </message>
 </context>
 <context>
@@ -974,7 +974,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation>Activer l'annulation d&apos;écho</translation>
+        <translation>Activer l&apos;annulation d&apos;écho</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
@@ -1387,7 +1387,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation>Utiliser un nom d'utilisateur et mot de passe plutôt que votre numéro de téléphone.</translation>
+        <translation>Utiliser un nom d&apos;utilisateur et mot de passe plutôt que votre numéro de téléphone.</translation>
     </message>
     <message>
         <source>quitWarning</source>

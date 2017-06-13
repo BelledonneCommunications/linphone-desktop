@@ -86,7 +86,9 @@ Item {
 
     // Handle hovered link.
     MouseArea {
-      anchors.fill: parent
+      height: parent.height
+      width: rectangle.width
+
       acceptedButtons: Qt.RightButton
       cursorShape: parent.hoveredLink
         ? Qt.PointingHandCursor

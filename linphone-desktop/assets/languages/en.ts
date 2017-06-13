@@ -127,11 +127,11 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Invalid characters detected (regex: `%1`.)</translation>
+        <translation>Invalid characters detected. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Invalid username</translation>
+        <translation>Invalid username.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -143,7 +143,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Invalid characters detected (regex: `%1`.)</translation>
+        <translation>Invalid characters detected. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -151,23 +151,23 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>Unable to send the request</translation>
+        <translation>Unable to send the request.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Incorrect email address</translation>
+        <translation>Incorrect email address.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Incorrect email address or invalid characters</translation>
+        <translation>Incorrect email address or invalid characters.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>Server error: cannot send sms</translation>
+        <translation>Server error: cannot send sms.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation>This account already exists</translation>
+        <translation>This account already exists.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
@@ -346,7 +346,7 @@
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation>Do you want to transfer this call ?</translation>
+        <translation>Do you want to transfer this call?</translation>
     </message>
 </context>
 <context>
@@ -641,7 +641,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>The passwords you entered do not match</translation>
+        <translation>The passwords you entered do not match.</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -772,7 +772,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Create or manage your Linphone account</translation>
+        <translation>Create or manage your Linphone account.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -889,11 +889,11 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation>Select a presence status</translation>
+        <translation>Presence status</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation>Select your active account</translation>
+        <translation>Active account</translation>
     </message>
 </context>
 <context>
