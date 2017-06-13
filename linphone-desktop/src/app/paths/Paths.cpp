@@ -175,11 +175,12 @@ string Paths::getCapturesDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
 }
 
-string Paths::getConfigFilePath (const QString &configPath) {
-  if (!configPath.isEmpty())
-    return getWritableFilePath(QFileInfo(configPath).absoluteFilePath());
+string Paths::getConfigFilePath (const QString &configPath, bool writable) {
+  const QString &path = configPath.isEmpty()
+    ? getAppConfigFilePath()
+    : QFileInfo(configPath).absoluteFilePath();
 
-  return getWritableFilePath(getAppConfigFilePath());
+  return writable ? getWritableFilePath(path) : getReadableFilePath(path);
 }
 
 string Paths::getFactoryConfigFilePath () {

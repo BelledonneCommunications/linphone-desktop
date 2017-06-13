@@ -83,7 +83,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
   // Try to use preferred locale.
   QString locale = ::Utils::coreStringToAppString(
       linphone::Config::newWithFactory(
-        Paths::getConfigFilePath(mParser.value("config")), "")->getString(
+        Paths::getConfigFilePath(mParser.value("config"), false), "")->getString(
         SettingsModel::UI_SECTION, "locale", ""
       )
     );

@@ -36,7 +36,7 @@ namespace Paths {
   std::string getAvatarsDirPath ();
   std::string getCallHistoryFilePath ();
   std::string getCapturesDirPath ();
-  std::string getConfigFilePath (const QString &configPath = QString());
+  std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
   std::string getFactoryConfigFilePath ();
   std::string getFriendsListFilePath ();
   std::string getDownloadDirPath ();
