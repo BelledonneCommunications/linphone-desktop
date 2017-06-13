@@ -93,7 +93,7 @@ Rectangle {
           icon: 'call_quality_0'
           useStates: false
 
-          onClicked: callStatistics.open()
+          onClicked: Logic.openCallStatistics()
 
           // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
           Timer {
@@ -113,6 +113,8 @@ Rectangle {
 
             relativeTo: callQuality
             relativeY: CallStyle.header.stats.relativeY
+
+            onClosed: Logic.handleCallStatisticsClosed()
           }
         }
 

@@ -16,6 +16,13 @@ function computeAvatarSize (maxSize) {
   return size < width ? size : width
 }
 
+function handleCallStatisticsClosed () {
+  // Prevent many clicks on call statistics button.
+  Utils.setTimeout(callQuality, 500, function () {
+    callQuality.enabled = true
+  })
+}
+
 function handleStatusChanged (status) {
   if (status === Linphone.CallModel.CallStatusEnded) {
     var fullscreen = incall._fullscreen
@@ -70,6 +77,11 @@ function makeReadableSecuredString (securedString) {
   }
 
   return qsTr('securedStringFormat').replace('%1', securedString)
+}
+
+function openCallStatistics () {
+  callQuality.enabled = false
+  callStatistics.open()
 }
 
 function showFullscreen () {
