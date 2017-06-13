@@ -107,6 +107,11 @@ ColumnLayout  {
         text: avatar.username
 
         onEditingFinished: Logic.setUsername(text)
+        onReadOnlyChanged: {
+          if (!readOnly) {
+            focus = true
+          }
+        }
       }
 
       Row {
