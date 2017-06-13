@@ -1275,6 +1275,10 @@ Url du serveur non configurée.</translation>
         <source>downloadLabel</source>
         <translation>Dossier des téléchargements</translation>
     </message>
+    <message>
+        <source>setLocaleDescription</source>
+        <translation>Voulez-vous redémarrer maintenant pour prendre en compte ces modifications ?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

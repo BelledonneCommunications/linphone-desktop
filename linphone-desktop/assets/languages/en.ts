@@ -1277,6 +1277,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>downloadLabel</source>
         <translation>Download folder</translation>
     </message>
+    <message>
+        <source>setLocaleDescription</source>
+        <translation>It is necessary to restart the application. Do you want to restart now?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
