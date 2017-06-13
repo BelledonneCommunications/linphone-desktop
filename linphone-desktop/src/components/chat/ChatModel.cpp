@@ -57,7 +57,7 @@ inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message
   return ::Utils::coreStringToAppString(message->getAppdata()).section(':', 1);
 }
 
-inline bool fileWasDownloaded (const std::shared_ptr<linphone::ChatMessage> &message) {
+inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
   const QString &path = getDownloadPath(message);
   return !path.isEmpty() && QFileInfo(path).isFile();
 }

@@ -137,7 +137,7 @@ void CallsListModel::terminateAllCalls () const {
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state) {
+void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
   switch (state) {
     case linphone::CallStateIncomingReceived:
     case linphone::CallStateOutgoingInit:

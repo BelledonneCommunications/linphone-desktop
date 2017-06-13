@@ -127,7 +127,7 @@ void CoreManager::setResourcesPaths () {
 void CoreManager::createLinphoneCore (const QString &configPath) {
   qInfo() << QStringLiteral("Launch async linphone core creation.");
 
-  // Migration of configuration and database files from GTK version of Linphone
+  // Migration of configuration and database files from GTK version of Linphone.
   Paths::migrate();
 
   setResourcesPaths();

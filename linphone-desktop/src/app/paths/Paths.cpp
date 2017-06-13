@@ -191,7 +191,7 @@ string Paths::getFriendsListFilePath () {
   return getWritableFilePath(getAppFriendsFilePath());
 }
 
-std::string Paths::getDownloadDirPath () {
+string Paths::getDownloadDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 }
 
