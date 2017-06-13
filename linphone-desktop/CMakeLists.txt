@@ -339,6 +339,10 @@ install(TARGETS ${TARGET_NAME}
 install(FILES "linphone.desktop"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
 )
+install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/icons"
+  RENAME "linphone.svg"
+)
 
 # ------------------------------------------------------------------------------
 # Install rc files.
