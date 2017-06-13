@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Pour activer votre compte : suivez les instructions que vous avez reçues à %1, puis cliquez sur le bouton Activer.</translation>
+        <translation>Pour activer votre compte : suivez les instructions que vous avez reçues à %1, puis cliquez sur le bouton ci-dessous.</translation>
     </message>
 </context>
 <context>
@@ -46,15 +46,15 @@
     </message>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>Afficher sur stdout les informations de debug.</translation>
+        <translation>afficher sur stdout les informations de debug</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>Spécifier un fichier de configuration à utiliser.</translation>
+        <translation>spécifier un fichier de configuration à utiliser</translation>
     </message>
     <message>
         <source>commandLineOptionSelfTest</source>
-        <translation>Éxécuter un test automatique et retourner 0 en cas de succès.</translation>
+        <translation>éxécuter un test automatique et retourner 0 en cas de succès</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation>Lancer l&apos;application dans la zone de notification.</translation>
+        <translation>lancer l&apos;application dans la zone de notification</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCmd</source>
-        <translation>Éxécuter une ligne de commande</translation>
+        <translation>éxécuter une ligne de commande</translation>
     </message>
     <message>
         <source>commandLineOptionCmdArg</source>
@@ -123,11 +123,11 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex: `%1`.)</translation>
+        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Nom d&apos;utilisateur invalide</translation>
+        <translation>Nom d&apos;utilisateur invalide.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -139,15 +139,15 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex: `%1`.)</translation>
+        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation>Caractères manquants : `%1`</translation>
+        <translation>Caractères manquants : `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>Impossible d&apos;envoyer la requête</translation>
+        <translation>Impossible d&apos;envoyer la requête.</translation>
     </message>
     <message>
         <source>loginWithUsernameFailed</source>
@@ -155,11 +155,11 @@
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Adresse incorrecte</translation>
+        <translation>Adresse incorrecte.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Adresse incorrecte ou caractères invalides</translation>
+        <translation>Adresse incorrecte ou caractères invalides.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
@@ -324,7 +324,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Lancer un nouvel appel</translation>
+        <translation>Lancer un nouvel appel.</translation>
     </message>
 </context>
 <context>
@@ -391,7 +391,7 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>Entrer votre message</translation>
+        <translation>Entrer votre message.</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -455,7 +455,7 @@ Url du serveur non configurée.</translation>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Gérer les participants de votre conférence</translation>
+        <translation>Gérer les participants de votre conférence.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -641,7 +641,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>Les mots de passe ne correspondent pas</translation>
+        <translation>Les mots de passe ne correspondent pas.</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -807,18 +807,18 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation>Appel non chiffré</translation>
+        <translation>Appel non chiffré.</translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation>Entrez l&apos;adresse email de votre ami</translation>
+        <translation>Adresse email de votre ami</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation>Vous pouvez modifier l&apos;invitation qui sera envoyée</translation>
+        <translation>Message</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -887,11 +887,11 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation>Sélectionner un statut de présence</translation>
+        <translation>Statut de présence</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation>Sélectionner votre compte principal</translation>
+        <translation>Compte principal</translation>
     </message>
 </context>
 <context>
@@ -1245,11 +1245,11 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation>Enregistrement des captures d&apos;écran</translation>
+        <translation>Dossier des captures d&apos;écran</translation>
     </message>
     <message>
         <source>savedVideosLabel</source>
-        <translation>Enregistrement des captures vidéo</translation>
+        <translation>Dossier des captures vidéo</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1273,7 +1273,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation>Enregistrement des pièces jointes</translation>
+        <translation>Dossier des téléchargements</translation>
     </message>
 </context>
 <context>
@@ -1448,7 +1448,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Impossible d&apos;ajouter ce compte</translation>
+        <translation>Impossible d&apos;ajouter ce compte.</translation>
     </message>
 </context>
 <context>

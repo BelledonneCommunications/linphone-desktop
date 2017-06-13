@@ -455,7 +455,7 @@ Server url not configured.</translation>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Manage participants to your conference</translation>
+        <translation>Manage participants to your conference.</translation>
     </message>
     <message>
         <source>cancel</source>
