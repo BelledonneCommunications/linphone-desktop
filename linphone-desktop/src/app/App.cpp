@@ -192,15 +192,8 @@ void App::initContentApp () {
   // Enable notifications.
   createNotifier();
 
-  // Load main view.
-  qInfo() << QStringLiteral("Loading main view...");
-  mEngine->load(QUrl(QML_VIEW_MAIN_WINDOW));
-  if (mEngine->rootObjects().isEmpty())
-    qFatal("Unable to open main window.");
-
-  bool selfTest = mParser.isSet("self-test");
-
   // Load splashscreen.
+  bool selfTest = mParser.isSet("self-test");
   if (!selfTest)
     activeSplashScreen(this);
   // Set a self test limit.
@@ -208,6 +201,12 @@ void App::initContentApp () {
     QTimer::singleShot(SELF_TEST_DELAY, this, [] {
       qFatal("Self test failed. :(");
     });
+
+  // Load main view.
+  qInfo() << QStringLiteral("Loading main view...");
+  mEngine->load(QUrl(QML_VIEW_MAIN_WINDOW));
+  if (mEngine->rootObjects().isEmpty())
+    qFatal("Unable to open main window.");
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
