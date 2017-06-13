@@ -46,15 +46,15 @@
     </message>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>Log to stdout some debug information while running.</translation>
+        <translation>log to stdout some debug information while running</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>Specify the linphone configuration file to be used.</translation>
+        <translation>specify the linphone configuration file to be used</translation>
     </message>
     <message>
         <source>commandLineOptionSelfTest</source>
-        <translation>Run self test and exit 0 if it succeeded.</translation>
+        <translation>run self test and exit 0 if it succeeded</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -62,7 +62,7 @@
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation>Start in the system tray, do not show the main interface.</translation>
+        <translation>start in the system tray, do not show the main interface</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCmd</source>
-        <translation>Run a command line</translation>
+        <translation>run a command line</translation>
     </message>
     <message>
         <source>commandLineOptionCmdArg</source>
@@ -301,19 +301,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>Remote party declined the call</translation>
+        <translation>Remote party declined the call.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>Remote party was not found</translation>
+        <translation>Remote party was not found.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation>Remote party is busy</translation>
+        <translation>Remote party is busy.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>Remote party cannot accept the call</translation>
+        <translation>Remote party cannot accept the call.</translation>
     </message>
 </context>
 <context>
@@ -324,7 +324,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Start a new call</translation>
+        <translation>Start a new call.</translation>
     </message>
 </context>
 <context>
@@ -1450,7 +1450,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Unable to add this account</translation>
+        <translation>Unable to add this account.</translation>
     </message>
 </context>
 <context>

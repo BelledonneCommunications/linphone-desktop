@@ -123,7 +123,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
+        <translation>Caractères invalides détectés. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -139,7 +139,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
+        <translation>Caractères invalides détectés. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -301,19 +301,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>Le correspondant a décliné l&apos;appel</translation>
+        <translation>Le correspondant a décliné l&apos;appel.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>Le correspondant n&apos;a pas été trouvé</translation>
+        <translation>Le correspondant n&apos;a pas été trouvé.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation>Le correspondant est occupé</translation>
+        <translation>Le correspondant est occupé.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>Le correspondant ne peut accepter votre appel</translation>
+        <translation>Le correspondant ne peut accepter votre appel.</translation>
     </message>
 </context>
 <context>
