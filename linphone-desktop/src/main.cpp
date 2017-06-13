@@ -73,7 +73,7 @@ int main (int argc, char *argv[]) {
 
   if (app.isSecondary()) {
     QString command = app.getCommandArgument();
-    app.sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), 0);
+    app.sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), -1);
     return 0;
   }
 
