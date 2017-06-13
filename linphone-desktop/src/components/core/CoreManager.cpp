@@ -138,6 +138,15 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->usePreviewWindow(true);
   mCore->setUserAgent("Linphone Desktop", LINPHONE_QT_GIT_VERSION);
 
+  // Force capture/display.
+  // Useful if the app was built without video support.
+  // (The capture/display attributes are reset by the core in this case.)
+  if (mCore->videoSupported()) {
+    shared_ptr<linphone::Config> config = mCore->getConfig();
+    config->setInt("video", "capture", 1);
+    config->setInt("video", "display", 1);
+  }
+
   setDatabasesPaths();
   setOtherPaths();
 }
