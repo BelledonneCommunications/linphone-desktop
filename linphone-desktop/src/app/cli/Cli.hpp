@@ -71,16 +71,16 @@ public:
 
   void executeCommand (const QString &command) noexcept;
 
+private:
+  void addCommand (const QString &functionName, const QString &description, Function function, const QHash<QString, Argument> &argsScheme = {}) noexcept;
+
   const QString parseFunctionName (const QString &command) noexcept;
   const QHash<QString, QString> parseArgs (const QString &command, const QString functionName, bool &soFarSoGood) noexcept;
 
-private:
-  void addCommand (const QString &functionName, const QString &description, Function function, const QHash<QString, Argument> &argsScheme = {}) noexcept;
-  void makeCommands () noexcept;
-
-  QRegExp mRegExpArgs;
-  QRegExp mRegExpFunctionName;
   QHash<QString, Command> mCommands;
+
+  static QRegExp mRegExpArgs;
+  static QRegExp mRegExpFunctionName;
 };
 
 #endif // CLI_H_

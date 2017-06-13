@@ -65,13 +65,16 @@ void Cli::Command::execute (const QHash<QString, QString> &args) {
 
 // =============================================================================
 
-Cli::Cli (QObject *parent) : QObject(parent) {
-  // FIXME: Do not accept args without value like: cmd toto.
-  // In the future `toto` could be a boolean argument.
-  mRegExpArgs = QRegExp("(?:(?:(\\w+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|([^\\s]+)\\s*))");
-  mRegExpFunctionName = QRegExp("^\\s*(\\w+)\\s*");
+// FIXME: Do not accept args without value like: cmd toto.
+// In the future `toto` could be a boolean argument.
+QRegExp Cli::mRegExpArgs("(?:(?:(\\w+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|([^\\s]+)\\s*))");
+QRegExp Cli::mRegExpFunctionName("^\\s*(\\w+)\\s*");
 
-  makeCommands();
+Cli::Cli (QObject *parent) : QObject(parent) {
+  addCommand("show", tr("showFunctionDescription"), cliShow);
+  addCommand("call", tr("showFunctionCall"), cliCall, {
+    { "sip-address", {} }
+  });
 }
 
 // -----------------------------------------------------------------------------
@@ -81,13 +84,6 @@ void Cli::addCommand (const QString &functionName, const QString &description, F
     qWarning() << QStringLiteral("Command already exists: `%1`.").arg(functionName);
   else
     mCommands[functionName] = Cli::Command(functionName, description, function, argsScheme);
-}
-
-void Cli::makeCommands () noexcept {
-  addCommand("show", tr("showFunctionDescription"), cliShow);
-  addCommand("call", tr("showFunctionCall"), cliCall, {
-    { "sip-address", {} }
-  });
 }
 
 // -----------------------------------------------------------------------------
