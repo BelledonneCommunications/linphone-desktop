@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ACTIVER UN COMPTE LINPHONE</translation>
+        <translation>ACTIVER VOTRE COMPTE LINPHONE</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -20,14 +20,14 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Pour activer votre compte : Suivez les instructions que vous avez reçues à %1, puis cliquez sur le bouton plus bas.</translation>
+        <translation>Pour activer votre compte : suivez les instructions que vous avez reçues à %1, puis cliquez sur le bouton Activer.</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ACTIVER UN COMPTE LINPHONE</translation>
+        <translation>ACTIVER VOTRE COMPTE LINPHONE</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Nous vous avons envoyé un SMS avec un code de validation au %1. Pour compléter la vérification de votre tél., merci d&apos;entrer le code à 4 chiffres ci-dessous.</translation>
+        <translation>Nous vous avons envoyé un SMS avec un code de validation au %1. Pour compléter la vérification de votre numéro, merci de saisir le code à 4 chiffres ci-dessous.</translation>
     </message>
 </context>
 <context>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCmd</source>
-        <translation>Éxécuter une ligne de commande.</translation>
+        <translation>Éxécuter une ligne de commande</translation>
     </message>
     <message>
         <source>commandLineOptionCmdArg</source>
@@ -123,11 +123,11 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
+        <translation>Caractères invalides détectés (regex: `%1`.)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Nom d&apos;utilisateur invalide.</translation>
+        <translation>Nom d&apos;utilisateur invalide</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -139,27 +139,27 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex: `%1`.)</translation>
+        <translation>Caractères invalides détectés (regex: `%1`.)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation>Caractères manquants : `%1`.</translation>
+        <translation>Caractères manquants : `%1`</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>Impossible d&apos;envoyer la requête.</translation>
+        <translation>Impossible d&apos;envoyer la requête</translation>
     </message>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation>La connection a échouée. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
+        <translation>La connection a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Adresse malformée.</translation>
+        <translation>Adresse incorrecte</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Adresse malformée ou caractères invalides.</translation>
+        <translation>Adresse incorrecte ou caractères invalides</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation>La connection a échouée. Merci de vérifier votre numéro de tél.</translation>
+        <translation>La connection a échoué. Merci de vérifier votre numéro.</translation>
     </message>
 </context>
 <context>
@@ -324,7 +324,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Lancer un nouvel appel.</translation>
+        <translation>Lancer un nouvel appel</translation>
     </message>
 </context>
 <context>
@@ -365,11 +365,11 @@
     </message>
     <message>
         <source>resumeCall</source>
-        <translation>REPRENDRE APPEL</translation>
+        <translation>REPRENDRE L'APPEL</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation>TRANSFERER APPEL</translation>
+        <translation>TRANSFERER L'APPEL</translation>
     </message>
     <message>
         <source>pauseCall</source>
@@ -391,7 +391,7 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>Entrer votre message.</translation>
+        <translation>Entrer votre message</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -434,7 +434,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation>Status</translation>
+        <translation>Statuts</translation>
     </message>
 </context>
 <context>
@@ -455,7 +455,7 @@ Url du serveur non configurée.</translation>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Gérer les participants de votre conférence.</translation>
+        <translation>Gérer les participants de votre conférence</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -489,7 +489,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>address</source>
-        <translation>ADRESSE(S)</translation>
+        <translation>ADRESSE</translation>
     </message>
     <message>
         <source>emails</source>
@@ -505,7 +505,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation>ENTREPRISES</translation>
+        <translation>ENTREPRISE(S)</translation>
     </message>
     <message>
         <source>save</source>
@@ -556,7 +556,7 @@ Url du serveur non configurée.</translation>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation>Rechercher contact</translation>
+        <translation>Rechercher un contact</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
@@ -568,7 +568,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation>AJOUTER CONTACT</translation>
+        <translation>AJOUTER UN CONTACT</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
@@ -610,7 +610,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation>AVER UNE ADRESSE E-MAIL</translation>
+        <translation>AVER UNE ADRESSE EMAIL</translation>
     </message>
 </context>
 <context>
@@ -629,7 +629,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation>E-mail</translation>
+        <translation>Email</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -641,11 +641,11 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>Les mots de passe ne correspondent pas.</translation>
+        <translation>Les mots de passe ne correspondent pas</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Êtes-vous sûr de vouloir quitter cette vue ?</translation>
+        <translation>Votre compte a été créé mais il n&apos;a pas été validé. Êtes-vous sûr de vouloir quitter cette vue ?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -660,7 +660,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation>Votre pays</translation>
+        <translation>Pays</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
@@ -680,7 +680,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Si vous quittez cette vue, vous devrez ajouter manuellement votre compte et le valider dans les 24 heures.</translation>
+        <translation>Votre compte a été créé mais il n&apos;a pas été validé. Si vous quittez cette vue, vous devrez ajouter et valider manuellement votre compte dans les 24 heures.</translation>
     </message>
 </context>
 <context>
@@ -710,11 +710,11 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation>Appel entrant refusé</translation>
+        <translation>Appel entrant décliné</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation>Appel sortant refusé</translation>
+        <translation>Appel sortant décliné</translation>
     </message>
     <message>
         <source>endedCall</source>
@@ -784,7 +784,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation>Voir les aides.</translation>
+        <translation>Voir les bulles d'aides.</translation>
     </message>
     <message>
         <source>inviteButton</source>
@@ -807,18 +807,18 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation>Appel non chiffré.</translation>
+        <translation>Appel non chiffré</translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation>Entrer l&apos;adresse email de votre ami</translation>
+        <translation>Entrez l&apos;adresse email de votre ami</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation>Modifier l&apos;invitation qui sera envoyée</translation>
+        <translation>Vous pouvez modifier l&apos;invitation qui sera envoyée</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -845,7 +845,7 @@ Url du serveur non configurée.</translation>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Chercher contact, commencer appel ou chat...</translation>
+        <translation>Chercher un contact, appeler ou envoyer un message...</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -861,8 +861,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Utiliser la barre de recherche intelligente pour lancer des appels audio et vidéo,
-un chat ou ajouter un contact.</translation>
+        <translation>Utilisez la barre de recherche intelligente pour lancer des appels audio et vidéo, envoyer un message ou ajouter un contact. Entrez simplement l'adresse SIP ou le nom d'utilisateur de votre contact.</translation>
     </message>
 </context>
 <context>
@@ -888,7 +887,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation>Sélectionner votre présence</translation>
+        <translation>Sélectionner un statut de présence</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
@@ -975,7 +974,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation>Activer annulation d&apos;écho</translation>
+        <translation>Activer l'annulation d&apos;écho</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
@@ -1160,11 +1159,11 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation>EFFACER MOTS DE PASSE</translation>
+        <translation>EFFACER LES MOTS DE PASSE</translation>
     </message>
     <message>
         <source>addAccount</source>
-        <translation>AJOUTER COMPTE</translation>
+        <translation>AJOUTER UN COMPTE</translation>
     </message>
     <message>
         <source>editionHeader</source>
@@ -1199,7 +1198,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation>Adresse serveur SIP</translation>
+        <translation>Adresse du serveur SIP</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
@@ -1246,11 +1245,11 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation>Dossier des captures d&apos;écrans</translation>
+        <translation>Enregistrement des captures d&apos;écran</translation>
     </message>
     <message>
         <source>savedVideosLabel</source>
-        <translation>Dossier des captures vidéos</translation>
+        <translation>Enregistrement des captures vidéo</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1266,7 +1265,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation>SUPPRIMER AVATARS</translation>
+        <translation>SUPPRIMER LES AVATARS</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
@@ -1274,7 +1273,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation>Dossier des téléchargements</translation>
+        <translation>Enregistrement des pièces jointes</translation>
     </message>
 </context>
 <context>
@@ -1366,7 +1365,7 @@ un chat ou ajouter un contact.</translation>
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation>AJOUTER CONTACT</translation>
+        <translation>AJOUTER CE CONTACT</translation>
     </message>
 </context>
 <context>
@@ -1388,18 +1387,18 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation>Utiliser un nom et mot de passe plutôt que votre numéro de téléphone.</translation>
+        <translation>Utiliser un nom d'utilisateur et mot de passe plutôt que votre numéro de téléphone.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Votre compte a été crée mais il n&apos;a pas été validé. Êtes-vous sûr de vouloir quitter cette vue ?</translation>
+        <translation>Votre compte a été créé mais il n&apos;a pas été validé. Êtes-vous sûr de vouloir quitter cette vue ?</translation>
     </message>
 </context>
 <context>
     <name>UseLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation>Votre pays</translation>
+        <translation>Pays</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
@@ -1449,7 +1448,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Impossible d&apos;ajouter ce compte.</translation>
+        <translation>Impossible d&apos;ajouter ce compte</translation>
     </message>
 </context>
 <context>
@@ -1472,7 +1471,7 @@ un chat ou ajouter un contact.</translation>
     </message>
     <message>
         <source>accept</source>
-        <translation>ACCEPTER</translation>
+        <translation>CONFIRMER</translation>
     </message>
 </context>
 </TS>

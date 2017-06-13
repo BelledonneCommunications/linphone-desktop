@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ACTIVATE A LINPHONE ACCOUNT</translation>
+        <translation>ACTIVATE YOUR LINPHONE ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -20,14 +20,14 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>To activate your account: Follow the instructions that we sent you at %1, then click on the button below.</translation>
+        <translation>To activate your account: follow the instructions that we sent at %1, then click below.</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ACTIVATE A LINPHONE ACCOUNT</translation>
+        <translation>ACTIVATE YOUR LINPHONE ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>Specify the linphone configuration file to use.</translation>
+        <translation>Specify the linphone configuration file to be used.</translation>
     </message>
     <message>
         <source>commandLineOptionSelfTest</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCmd</source>
-        <translation>Run a command line.</translation>
+        <translation>Run a command line</translation>
     </message>
     <message>
         <source>commandLineOptionCmdArg</source>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>This assistant will help you to configure and use your linphone account.</translation>
+        <translation>This assistant will help you configure and use your linphone account.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
@@ -127,11 +127,11 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Invalid characters detected. (regex: `%1`.)</translation>
+        <translation>Invalid characters detected (regex: `%1`.)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Invalid username.</translation>
+        <translation>Invalid username</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -143,7 +143,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Invalid characters detected. (regex: `%1`.)</translation>
+        <translation>Invalid characters detected (regex: `%1`.)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -151,23 +151,23 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>Unable to send the request.</translation>
+        <translation>Unable to send the request</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Malformed email.</translation>
+        <translation>Incorrect email address</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Malformed email or invalid characters.</translation>
+        <translation>Incorrect email address or invalid characters</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>Server error: Cannot send sms.</translation>
+        <translation>Server error: cannot send sms</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation>Account already exists.</translation>
+        <translation>This account already exists</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation>Too short!</translation>
+        <translation>Too long!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
@@ -305,7 +305,7 @@
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>Remote party wasn&apos;t found</translation>
+        <translation>Remote party was not found</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
@@ -313,7 +313,7 @@
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>Call is not acceptable by remote party</translation>
+        <translation>Remote party cannot accept the call</translation>
     </message>
 </context>
 <context>
@@ -324,7 +324,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Start a new call.</translation>
+        <translation>Start a new call</translation>
     </message>
 </context>
 <context>
@@ -455,7 +455,7 @@ Server url not configured.</translation>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Manage participants to your conference.</translation>
+        <translation>Manage participants to your conference</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -481,7 +481,7 @@ Server url not configured.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation>Do you really want remove this contact from your book?</translation>
+        <translation>Do you really want to remove this contact from your address book?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
@@ -572,7 +572,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation>Do you really want remove this contact from your book?</translation>
+        <translation>Do you really want to remove this contact from your address book?</translation>
     </message>
 </context>
 <context>
@@ -591,7 +591,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Are you sure you want to clean history?</translation>
+        <translation>Are you sure you want to clean this history?</translation>
     </message>
 </context>
 <context>
@@ -641,11 +641,11 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>The passwords you entered do not match.</translation>
+        <translation>The passwords you entered do not match</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Your account has been created but is not yet validated. Are you sure you want to quit this view?</translation>
+        <translation>Your account has been created but has not been validated yet. Are you sure you want to quit this view?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -660,7 +660,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation>Your country</translation>
+        <translation>Country</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
@@ -680,14 +680,14 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Your account has been created but is not yet validated. If you quit this view, you should add manually your account and validate it within 24 hours.</translation>
+        <translation>Your account has been created but has not been validated yet. If you quit this view, you would have to manually add and validate your account within 24 hours.</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation>Please choose one or many files</translation>
+        <translation>Please choose one or more files</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
@@ -718,7 +718,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation>Ended call</translation>
+        <translation>Terminated call</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
@@ -749,7 +749,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation>It&apos;s necessary to restart the application. Do you want to restart now?</translation>
+        <translation>It is necessary to restart the application. Do you want to restart now?</translation>
     </message>
 </context>
 <context>
@@ -772,7 +772,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Create or manage your Linphone account.</translation>
+        <translation>Create or manage your Linphone account</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -799,7 +799,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation>Please to wait, a request is pending.</translation>
+        <translation>Please wait, a request is pending.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
@@ -845,7 +845,7 @@ Server url not configured.</translation>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Search contact, start call, start chat...</translation>
+        <translation>Search contact, start a call or a chat...</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -861,8 +861,8 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Use the search bar to directly start audio and video
-calls, start a chat or add a new contact. Just enter
+        <translation>Use the intelligent search bar to directly start audio and video
+calls, send a message or add a new contact. Just enter
 your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
@@ -893,7 +893,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation>Select you active account</translation>
+        <translation>Select your active account</translation>
     </message>
 </context>
 <context>
@@ -915,7 +915,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>newFileMessage</source>
-        <translation>New received attachment!</translation>
+        <translation>New attachment received!</translation>
     </message>
 </context>
 <context>
@@ -999,7 +999,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>limeRequired</source>
-        <translation>Requis</translation>
+        <translation>Mandatory</translation>
     </message>
     <message>
         <source>limePreferred</source>
@@ -1034,7 +1034,7 @@ your friend&apos;s SIP address or username.</translation>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMFs send method</translation>
+        <translation>DTMFs sending method</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1126,7 +1126,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation>Dowload speed limit in Kbit/sec</translation>
+        <translation>Download speed limit in Kbit/sec</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
@@ -1267,11 +1267,11 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation>CLEAN AVATARS</translation>
+        <translation>ERASE AVATARS</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>Are you sure you want to clean all avatars?</translation>
+        <translation>Are you sure you want to erase all avatars?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
@@ -1393,14 +1393,14 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Your account has been created but is not yet validated. Are you sure you want to quit this view?</translation>
+        <translation>Your account has been created but has not been validated yet. Are you sure you want to quit this view?</translation>
     </message>
 </context>
 <context>
     <name>UseLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation>Your country</translation>
+        <translation>Country</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
@@ -1450,7 +1450,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Unable to add this account.</translation>
+        <translation>Unable to add this account</translation>
     </message>
 </context>
 <context>
@@ -1465,7 +1465,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation>Your correspondent should say:</translation>
+        <translation>Your contact should say:</translation>
     </message>
     <message>
         <source>deny</source>
@@ -1473,7 +1473,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>accept</source>
-        <translation>ACCEPT</translation>
+        <translation>CONFIRM</translation>
     </message>
 </context>
 </TS>
