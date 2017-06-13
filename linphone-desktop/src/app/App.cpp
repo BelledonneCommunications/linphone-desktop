@@ -273,10 +273,6 @@ void App::checkForUpdate () {
   CoreManager::getInstance()->getCore()->checkForUpdate(LINPHONE_QT_GIT_VERSION);
 }
 
-QString App::convertUrlToLocalPath (const QUrl &url) {
-  return QDir::toNativeSeparators(url.toLocalFile());
-}
-
 // -----------------------------------------------------------------------------
 
 bool App::hasFocus () const {

@@ -119,7 +119,7 @@ function cancel () {
 // -----------------------------------------------------------------------------
 
 function setAvatar (url) {
-  contactEdit._vcard.avatar = Linphone.App.convertUrlToLocalPath(url)
+  contactEdit._vcard.avatar = Utils.getSystemPathFromUri(url)
 }
 
 function setUsername (username) {
