@@ -31,7 +31,6 @@
 // =============================================================================
 
 class CallModel;
-class Camera;
 struct ContextInfo;
 
 namespace linphone {
@@ -39,8 +38,6 @@ namespace linphone {
 }
 
 class CameraRenderer : public QQuickFramebufferObject::Renderer {
-  friend class Camera;
-
 public:
   CameraRenderer ();
   ~CameraRenderer ();
@@ -52,10 +49,12 @@ protected:
 
 private:
   void updateWindowId ();
+  bool notifyReceivedVideoSize () const;
 
   ContextInfo *mContextInfo;
   bool mUpdateContextInfo = false;
 
+  bool mNotifyReceivedVideoSize = true;
   bool mIsPreview = false;
   std::shared_ptr<linphone::Call> mCall;
 

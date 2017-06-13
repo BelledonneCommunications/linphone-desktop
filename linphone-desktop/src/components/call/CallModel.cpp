@@ -104,6 +104,15 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
 // -----------------------------------------------------------------------------
 
+void CallModel::notifyCameraFirstFrameReceived (unsigned int width, unsigned int height) {
+  if (mNotifyCameraFirstFrameReceived) {
+    mNotifyCameraFirstFrameReceived = false;
+    emit cameraFirstFrameReceived(width, height);
+  }
+}
+
+// -----------------------------------------------------------------------------
+
 void CallModel::accept () {
   stopAutoAnswerTimer();
 
@@ -231,10 +240,12 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
       break;
 
     case linphone::CallStatePausedByRemote:
+      mNotifyCameraFirstFrameReceived = true;
       mPausedByRemote = true;
       break;
 
     case linphone::CallStatePausing:
+      mNotifyCameraFirstFrameReceived = true;
       mPausedByUser = true;
       break;
 

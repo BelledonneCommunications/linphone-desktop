@@ -104,8 +104,11 @@ void CameraRenderer::render () {
 
     if (mIsPreview)
       coreManager->getCore()->previewOglRender();
-    else if (mCall)
+    else if (mCall) {
       mCall->oglRender();
+      if (mNotifyReceivedVideoSize && notifyReceivedVideoSize())
+        mNotifyReceivedVideoSize = false;
+    }
 
     msFunctions->bind(nullptr);
     coreManager->unlockVideoRender();
@@ -146,6 +149,26 @@ void CameraRenderer::updateWindowId () {
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
   else if (mCall)
     mCall->setNativeVideoWindowId(mContextInfo);
+}
+
+bool CameraRenderer::notifyReceivedVideoSize () const {
+  shared_ptr<const linphone::VideoDefinition> videoDefinition = mCall->getCurrentParams()->getReceivedVideoDefinition();
+  unsigned int width = videoDefinition->getWidth();
+  unsigned int height = videoDefinition->getHeight();
+
+  if (width && height) {
+    qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Received video size (width: %1, height: %2):")
+      .arg(width).arg(height) << mContextInfo;
+
+    CallModel *callModel = &mCall->getData<CallModel>("call-model");
+    QTimer::singleShot(0, callModel, [callModel, width, height] {
+      callModel->notifyCameraFirstFrameReceived(width, height);
+    });
+
+    return true;
+  }
+
+  return false;
 }
 
 // -----------------------------------------------------------------------------

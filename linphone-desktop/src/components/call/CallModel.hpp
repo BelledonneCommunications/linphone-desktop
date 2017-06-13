@@ -98,6 +98,8 @@ public:
   static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats);
 
+  void notifyCameraFirstFrameReceived (unsigned int width, unsigned int height);
+
   Q_INVOKABLE void accept ();
   Q_INVOKABLE void acceptWithVideo ();
   Q_INVOKABLE void terminate ();
@@ -126,6 +128,8 @@ signals:
   void statusChanged (CallStatus status);
   void videoRequested ();
   void securityUpdated ();
+
+  void cameraFirstFrameReceived (unsigned int width, unsigned int height);
 
 private:
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
@@ -182,6 +186,8 @@ private:
   bool mPausedByRemote = false;
   bool mPausedByUser = false;
   bool mRecording = false;
+
+  bool mNotifyCameraFirstFrameReceived = true;
 
   QString mCallError;
 
