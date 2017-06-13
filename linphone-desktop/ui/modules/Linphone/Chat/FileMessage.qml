@@ -240,7 +240,7 @@ Row {
 
         icon: 'download'
         iconSize: ChatStyle.entry.message.file.iconSize
-        visible: !$chatEntry.isOutgoing
+        visible: !$chatEntry.isOutgoing && !$chatEntry.wasDownloaded
       }
 
       MouseArea {
@@ -257,18 +257,19 @@ Row {
         hoverEnabled: true
         visible: !rectangle.isNotDelivered && !$chatEntry.isOutgoing
 
-        onMouseXChanged: handleMouseMove.call(this, mouse)
-        onMouseYChanged: handleMouseMove.call(this, mouse)
-        onExited: thumbnailProvider.state = ''
-
         onClicked: {
-          // TODO: Handle open.
-          if (false && Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+          if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
             proxyModel.openFile(index)
-          } else {
+          } else if ($chatEntry.wasDownloaded) {
+            proxyModel.openFileDirectory(index)
+          } else  {
             proxyModel.downloadFile(index)
           }
         }
+
+        onExited: thumbnailProvider.state = ''
+        onMouseXChanged: handleMouseMove.call(this, mouse)
+        onMouseYChanged: handleMouseMove.call(this, mouse)
       }
     }
 

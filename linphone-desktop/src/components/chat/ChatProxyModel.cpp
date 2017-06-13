@@ -78,6 +78,26 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
     });
 }
 
+// -----------------------------------------------------------------------------
+
+#define CREATE_CALL_MODEL_FUNCTION_WITH_ID(METHOD) \
+  void ChatProxyModel::METHOD(int id) { \
+    QModelIndex sourceIndex = mapToSource(index(id, 0)); \
+    static_cast<ChatModel *>(mChatModelFilter->sourceModel())->METHOD( \
+      mChatModelFilter->mapToSource(sourceIndex).row() \
+    ); \
+  }
+
+CREATE_CALL_MODEL_FUNCTION_WITH_ID(downloadFile);
+CREATE_CALL_MODEL_FUNCTION_WITH_ID(openFile);
+CREATE_CALL_MODEL_FUNCTION_WITH_ID(openFileDirectory);
+CREATE_CALL_MODEL_FUNCTION_WITH_ID(removeEntry);
+CREATE_CALL_MODEL_FUNCTION_WITH_ID(resendMessage);
+
+#undef CREATE_CALL_MODEL_FUNCTION_WITH_ID
+
+// -----------------------------------------------------------------------------
+
 void ChatProxyModel::loadMoreEntries () {
   int count = rowCount();
   int parentCount = mChatModelFilter->rowCount();
@@ -103,13 +123,6 @@ void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
   }
 }
 
-void ChatProxyModel::removeEntry (int id) {
-  QModelIndex sourceIndex = mapToSource(index(id, 0));
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->removeEntry(
-    mChatModelFilter->mapToSource(sourceIndex).row()
-  );
-}
-
 void ChatProxyModel::removeAllEntries () {
   static_cast<ChatModel *>(mChatModelFilter->sourceModel())->removeAllEntries();
 }
@@ -118,22 +131,8 @@ void ChatProxyModel::sendMessage (const QString &message) {
   static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendMessage(message);
 }
 
-void ChatProxyModel::resendMessage (int id) {
-  QModelIndex sourceIndex = mapToSource(index(id, 0));
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->resendMessage(
-    mChatModelFilter->mapToSource(sourceIndex).row()
-  );
-}
-
 void ChatProxyModel::sendFileMessage (const QString &path) {
   static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendFileMessage(path);
-}
-
-void ChatProxyModel::downloadFile (int id) {
-  QModelIndex sourceIndex = mapToSource(index(id, 0));
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->downloadFile(
-    mChatModelFilter->mapToSource(sourceIndex).row()
-  );
 }
 
 // -----------------------------------------------------------------------------

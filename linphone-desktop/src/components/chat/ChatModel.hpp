@@ -98,6 +98,12 @@ public:
   void sendFileMessage (const QString &path);
 
   void downloadFile (int id);
+  void openFile (int id, bool showDirectory = false);
+  void openFileDirectory (int id) {
+    openFile(id, true);
+  }
+
+  bool fileWasDownloaded (int id);
 
 signals:
   void sipAddressChanged (const QString &sipAddress);
@@ -110,6 +116,8 @@ signals:
 
 private:
   typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
+
+  const ChatEntryData getFileMessageEntry (int id);
 
   void fillMessageEntry (QVariantMap &dest, const std::shared_ptr<linphone::ChatMessage> &message);
   void fillCallStartEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
