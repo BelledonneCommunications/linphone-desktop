@@ -870,7 +870,7 @@ your friend&apos;s SIP address or username.</translation>
     <name>MainWindowMenuBar</name>
     <message>
         <source>settings</source>
-        <translation>Settings</translation>
+        <translation>Preferences</translation>
     </message>
     <message>
         <source>about</source>

@@ -868,7 +868,7 @@ Url du serveur non configurée.</translation>
     <name>MainWindowMenuBar</name>
     <message>
         <source>settings</source>
-        <translation>Paramètres</translation>
+        <translation>Préférences</translation>
     </message>
     <message>
         <source>about</source>
