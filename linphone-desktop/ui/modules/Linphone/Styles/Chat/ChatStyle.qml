@@ -61,6 +61,7 @@ QtObject {
 
       property QtObject file: QtObject {
         property int height: 64
+        property int iconSize: 18
         property int margins: 8
         property int spacing: 8
         property int width: 250
@@ -71,6 +72,24 @@ QtObject {
           property QtObject bar: QtObject {
             property int height: 6
             property int radius: 3
+
+            property QtObject background: QtObject {
+              property color color: Colors.f
+            }
+
+            property QtObject contentItem: QtObject {
+              property color color: Colors.z
+            }
+          }
+        }
+
+        property QtObject extension: QtObject {
+          property QtObject background: QtObject {
+            property color color: Colors.l50
+          }
+
+          property QtObject text: QtObject {
+            property color color: Colors.k
           }
         }
 

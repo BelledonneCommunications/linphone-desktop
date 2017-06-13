@@ -89,12 +89,12 @@ Row {
           id: extension
 
           Rectangle {
-            color: Colors.l50
+            color: ChatStyle.entry.message.file.extension.background.color
 
             Text {
               anchors.fill: parent
 
-              color: Colors.k
+              color: ChatStyle.entry.message.file.extension.text.color
               font.bold: true
               elide: Text.ElideRight
               text: Utils.getExtension($chatEntry.fileName).toUpperCase()
@@ -152,13 +152,13 @@ Row {
             visible: $chatEntry.status === ChatModel.MessageStatusInProgress
 
             background: Rectangle {
-              color: Colors.f
+              color: ChatStyle.entry.message.file.status.bar.background.color
               radius: ChatStyle.entry.message.file.status.bar.radius
             }
 
             contentItem: Item {
               Rectangle {
-                color: Colors.z
+                color: ChatStyle.entry.message.file.status.bar.contentItem.color
                 height: parent.height
                 width: progressBar.visualPosition * parent.width
               }
@@ -177,6 +177,19 @@ Row {
             }
           }
         }
+      }
+
+      Icon {
+        anchors {
+          bottom: parent.bottom
+          bottomMargin: ChatStyle.entry.message.file.margins
+          right: parent.right
+          rightMargin: ChatStyle.entry.message.file.margins
+        }
+
+        icon: 'download'
+        iconSize: ChatStyle.entry.message.file.iconSize
+        visible: !$chatEntry.isOutgoing
       }
 
       MouseArea {
