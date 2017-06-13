@@ -37,7 +37,8 @@ class SettingsModel : public QObject {
 
   // Audio. --------------------------------------------------------------------
 
-  Q_PROPERTY(QStringList audioDevices READ getAudioDevices CONSTANT);
+  Q_PROPERTY(QStringList captureDevices READ getCaptureDevices CONSTANT);
+  Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices CONSTANT);
 
   Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged);
   Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged);
@@ -143,7 +144,8 @@ public:
 
   // Audio. --------------------------------------------------------------------
 
-  QStringList getAudioDevices () const;
+  QStringList getCaptureDevices () const;
+  QStringList getPlaybackDevices () const;
 
   QString getCaptureDevice () const;
   void setCaptureDevice (const QString &device);

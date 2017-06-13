@@ -29,7 +29,7 @@ TabContainer {
             currentIndex: Utils.findIndex(model, function (device) {
               return device === SettingsModel.playbackDevice
             })
-            model: SettingsModel.audioDevices
+            model: SettingsModel.playbackDevices
 
             onActivated: SettingsModel.playbackDevice = model[index]
           }
@@ -44,7 +44,7 @@ TabContainer {
             currentIndex: Utils.findIndex(model, function (device) {
               return device === SettingsModel.captureDevice
             })
-            model: SettingsModel.audioDevices
+            model: SettingsModel.captureDevices
 
             onActivated: SettingsModel.captureDevice = model[index]
           }
@@ -59,7 +59,7 @@ TabContainer {
             currentIndex: Utils.findIndex(model, function (device) {
               return device === SettingsModel.ringerDevice
             })
-            model: SettingsModel.audioDevices
+            model: SettingsModel.playbackDevices
 
             onActivated: SettingsModel.ringerDevice = model[index]
           }

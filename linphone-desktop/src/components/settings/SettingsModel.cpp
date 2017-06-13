@@ -42,11 +42,26 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 // Audio.
 // =============================================================================
 
-QStringList SettingsModel::getAudioDevices () const {
+QStringList SettingsModel::getCaptureDevices () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QStringList list;
 
-  for (const auto &device : CoreManager::getInstance()->getCore()->getSoundDevices())
-    list << ::Utils::coreStringToAppString(device);
+  for (const auto &device : core->getSoundDevices()) {
+    if (core->soundDeviceCanCapture(device))
+      list << ::Utils::coreStringToAppString(device);
+  }
+
+  return list;
+}
+
+QStringList SettingsModel::getPlaybackDevices () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  QStringList list;
+
+  for (const auto &device : core->getSoundDevices()) {
+    if (core->soundDeviceCanPlayback(device))
+      list << ::Utils::coreStringToAppString(device);
+  }
 
   return list;
 }
