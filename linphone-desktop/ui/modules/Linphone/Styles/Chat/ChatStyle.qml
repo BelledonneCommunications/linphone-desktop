@@ -67,7 +67,7 @@ QtObject {
         property int width: 250
 
         property QtObject animation: QtObject {
-          property int duration: 300
+          property int duration: 200
           property real to: 1.5
         }
 
@@ -96,11 +96,6 @@ QtObject {
               property color color: Colors.z
             }
           }
-        }
-
-        property QtObject thumbnail: QtObject {
-          property int height: 50
-          property int width: 50
         }
       }
 

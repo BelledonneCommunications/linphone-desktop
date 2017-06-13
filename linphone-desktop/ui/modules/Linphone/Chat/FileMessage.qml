@@ -108,8 +108,8 @@ Row {
         Loader {
           id: thumbnailProvider
 
-          Layout.preferredHeight: ChatStyle.entry.message.file.thumbnail.height
-          Layout.preferredWidth: ChatStyle.entry.message.file.thumbnail.width
+          Layout.fillHeight: true
+          Layout.preferredWidth: parent.height
 
           sourceComponent: $chatEntry.thumbnail ? thumbnail : extension
 
@@ -259,6 +259,7 @@ Row {
 
         onMouseXChanged: handleMouseMove.call(this, mouse)
         onMouseYChanged: handleMouseMove.call(this, mouse)
+        onExited: thumbnailProvider.state = ''
 
         onClicked: {
           // TODO: Handle open.
