@@ -814,11 +814,11 @@ Server url not configured.</translation>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation>Enter your friend&apos;s email address</translation>
+        <translation>Friend&apos;s email address</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation>You can modify the invitation that will be sent</translation>
+        <translation>Message</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -834,11 +834,18 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 wants to invite you on Linphone !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation type="unfinished"></translation>
+        <translation>Linphone invitation</translation>
+    </message>
+    <message>
+        <source>forcedMessage</source>
+        <translation>Download the application on your computer and start calling and chatting with Linphone users for free.
+
+Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>

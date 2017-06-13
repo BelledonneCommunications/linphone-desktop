@@ -834,11 +834,18 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 souhaite vous inviter sur Linphone !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation type="unfinished"></translation>
+        <translation>Invitation Linphone</translation>
+    </message>
+    <message>
+        <source>forcedMessage</source>
+        <translation>Téléchargez l’application sur votre ordinateur et appelez vos amis ou envoyez-leur un message sur Linphone gratuitement.
+
+Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>

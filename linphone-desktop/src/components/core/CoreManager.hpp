@@ -43,6 +43,7 @@ class CoreManager : public QObject {
   Q_OBJECT;
 
   Q_PROPERTY(QString version READ getVersion CONSTANT);
+  Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT);
 
 public:
   ~CoreManager () = default;
@@ -133,6 +134,8 @@ private:
   QString getVersion () const;
 
   void iterate ();
+
+  static QString getDownloadUrl ();
 
   std::shared_ptr<linphone::Core> mCore;
   std::shared_ptr<CoreHandlers> mHandlers;

@@ -35,6 +35,8 @@
 
 #define CBS_CALL_INTERVAL 20
 
+#define DOWNLOAD_URL "https://www.linphone.org/technical-corner/linphone/downloads"
+
 using namespace std;
 
 // =============================================================================
@@ -163,4 +165,10 @@ void CoreManager::iterate () {
   mInstance->lockVideoRender();
   mCore->iterate();
   mInstance->unlockVideoRender();
+}
+
+// -----------------------------------------------------------------------------
+
+QString CoreManager::getDownloadUrl () {
+  return QStringLiteral(DOWNLOAD_URL);
 }
