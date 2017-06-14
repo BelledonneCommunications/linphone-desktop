@@ -6,11 +6,11 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 SearchBox {
-  id: searchBar
+  id: searchBox
 
   // ---------------------------------------------------------------------------
 
-  readonly property alias isOpen: searchBar._isOpen
+  readonly property alias isOpen: searchBox._isOpen
 
   // ---------------------------------------------------------------------------
 
@@ -29,7 +29,7 @@ SearchBox {
 
   onEnterPressed: {
     var sipAddress = view.interpretableSipAddress
-    return sipAddress.length > 0 && searchBar.launchCall(sipAddress)
+    return sipAddress.length > 0 && searchBox.launchCall(sipAddress)
   }
 
   // ---------------------------------------------------------------------------
@@ -40,37 +40,37 @@ SearchBox {
     actions: [{
       icon: 'video_call',
       handler: function (entry) {
-        searchBar.closeMenu()
-        searchBar.launchVideoCall(entry.sipAddress)
+        searchBox.closeMenu()
+        searchBox.launchVideoCall(entry.sipAddress)
       }
     }, {
       icon: 'call',
       handler: function (entry) {
-        searchBar.closeMenu()
-        searchBar.launchCall(entry.sipAddress)
+        searchBox.closeMenu()
+        searchBox.launchCall(entry.sipAddress)
       }
     }, {
       icon: 'chat',
       handler: function (entry) {
-        searchBar.closeMenu()
-        searchBar.launchChat(entry.sipAddress)
+        searchBox.closeMenu()
+        searchBox.launchChat(entry.sipAddress)
       }
     }]
 
     headerButtonDescription: qsTr('addContact')
     headerButtonIcon: 'contact_add'
     headerButtonAction: (function (sipAddress) {
-      searchBar.closeMenu()
-      searchBar.addContact(sipAddress)
+      searchBox.closeMenu()
+      searchBox.addContact(sipAddress)
     })
 
-    genSipAddress: searchBar.filter
+    genSipAddress: searchBox.filter
 
     model: SipAddressesProxyModel {}
 
     onEntryClicked: {
-      searchBar.closeMenu()
-      searchBar.entryClicked(entry)
+      searchBox.closeMenu()
+      searchBox.entryClicked(entry)
     }
   }
 }

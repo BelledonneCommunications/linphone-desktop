@@ -76,6 +76,14 @@
         <source>commandLineOptionCmdArg</source>
         <translation>command line</translation>
     </message>
+    <message>
+        <source>commandLineOptionHelp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>commandLineOptionVersion</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
