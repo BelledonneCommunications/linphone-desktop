@@ -595,19 +595,19 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
   statsList.clear();
 
-  statsList << createStat(tr("callStatsCodec"), payloadType
+  statsList << ::createStat(tr("callStatsCodec"), payloadType
     ? QString("%1 / %2kHz").arg(Utils::coreStringToAppString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
     : "");
-  statsList << createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
-  statsList << createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
-  statsList << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
-  statsList << createStat(tr("callStatsIpFamily"), family);
-  statsList << createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats->getSenderLossRate()));
-  statsList << createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats->getReceiverLossRate()));
+  statsList << ::createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
+  statsList << ::createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
+  statsList << ::createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
+  statsList << ::createStat(tr("callStatsIpFamily"), family);
+  statsList << ::createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats->getSenderLossRate()));
+  statsList << ::createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats->getReceiverLossRate()));
 
   switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
-      statsList << createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
+      statsList << ::createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
       QString sentVideoDefinitionName = ::Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
@@ -615,7 +615,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         .arg(params->getSentVideoDefinition()->getWidth())
         .arg(params->getSentVideoDefinition()->getHeight());
 
-      statsList << createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
+      statsList << ::createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
         ? sentVideoDefinition
         : QString("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
 
@@ -624,7 +624,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         .arg(params->getReceivedVideoDefinition()->getWidth())
         .arg(params->getReceivedVideoDefinition()->getHeight());
 
-      statsList << createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
+      statsList << ::createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
     } break;

@@ -48,7 +48,7 @@ inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::C
 }
 
 inline int findCallIndex (QList<CallModel *> &list, const CallModel &callModel) {
-  return findCallIndex(list, callModel.getCall());
+  return ::findCallIndex(list, callModel.getCall());
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +150,7 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
       break;
 
     case linphone::CallStateStreamsRunning: {
-      int index = findCallIndex(mList, call);
+      int index = ::findCallIndex(mList, call);
       emit callRunning(index, &call->getData<CallModel>("call-model"));
     } break;
 
@@ -191,7 +191,7 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 
   // This connection is (only) useful for `CallsListProxyModel`.
   QObject::connect(callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
-      int id = findCallIndex(mList, *callModel);
+      int id = ::findCallIndex(mList, *callModel);
       emit dataChanged(index(id, 0), index(id, 0));
     });
 

@@ -128,7 +128,7 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 
 inline void activeSplashScreen (App *app) {
   qInfo() << QStringLiteral("Open splash screen...");
-  QQuickWindow *splashScreen = createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
+  QQuickWindow *splashScreen = ::createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
   QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {
     splashScreen->close();
     splashScreen->deleteLater();
@@ -187,7 +187,7 @@ void App::initContentApp () {
   // Load splashscreen.
   bool selfTest = mParser->isSet("self-test");
   if (!selfTest)
-    activeSplashScreen(this);
+    ::activeSplashScreen(this);
   // Set a self test limit.
   else
     QTimer::singleShot(SELF_TEST_DELAY, this, [] {
@@ -225,7 +225,7 @@ void App::executeCommand (const QString &command) {
 
 QQuickWindow *App::getCallsWindow () {
   if (!mCallsWindow)
-    mCallsWindow = createSubWindow(this, QML_VIEW_CALLS_WINDOW);
+    mCallsWindow = ::createSubWindow(this, QML_VIEW_CALLS_WINDOW);
 
   return mCallsWindow;
 }
@@ -238,7 +238,7 @@ QQuickWindow *App::getMainWindow () const {
 
 QQuickWindow *App::getSettingsWindow () {
   if (!mSettingsWindow) {
-    mSettingsWindow = createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
+    mSettingsWindow = ::createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
     QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
         if (visibility == QWindow::Hidden) {
           qInfo() << QStringLiteral("Update nat policy.");
@@ -450,15 +450,14 @@ void App::initLocale () {
   // Try to use preferred locale.
   QString locale;
   string configPath = Paths::getConfigFilePath(mParser->value("config"), false);
-  if (Paths::filePathExists(configPath)) {
+  if (Paths::filePathExists(configPath))
     locale = ::Utils::coreStringToAppString(
-      linphone::Config::newWithFactory(configPath, "")->getString(
-        SettingsModel::UI_SECTION, "locale", ""
-      )
-    );
-  }
+        linphone::Config::newWithFactory(configPath, "")->getString(
+          SettingsModel::UI_SECTION, "locale", ""
+        )
+      );
 
-  if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
+  if (!locale.isEmpty() && ::installLocale(*this, *mTranslator, QLocale(locale))) {
     mLocale = locale;
     qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
     return;
@@ -466,7 +465,7 @@ void App::initLocale () {
 
   // Try to use system locale.
   QLocale sysLocale = QLocale::system();
-  if (installLocale(*this, *mTranslator, sysLocale)) {
+  if (::installLocale(*this, *mTranslator, sysLocale)) {
     mLocale = sysLocale.name();
     qInfo() << QStringLiteral("Use system locale: %1").arg(mLocale);
     return;
@@ -474,7 +473,7 @@ void App::initLocale () {
 
   // Use english.
   mLocale = DEFAULT_LOCALE;
-  if (!installLocale(*this, *mTranslator, QLocale(mLocale)))
+  if (!::installLocale(*this, *mTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
   qInfo() << QStringLiteral("Use default locale: %1").arg(mLocale);
 }

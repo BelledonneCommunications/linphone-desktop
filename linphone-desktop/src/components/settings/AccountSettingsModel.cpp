@@ -103,7 +103,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["registerEnabled"] = proxyConfig->registerEnabled();
   map["publishPresence"] = proxyConfig->publishEnabled();
   map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
-  map["registrationState"] = mapLinphoneRegistrationStateToUi(proxyConfig->getState());
+  map["registrationState"] = ::mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   return map;
 }
@@ -215,7 +215,7 @@ QString AccountSettingsModel::getSipAddress () const {
 
 AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationState () const {
   shared_ptr<linphone::ProxyConfig> proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
-  return proxyConfig ? mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNotRegistered;
+  return proxyConfig ? ::mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNotRegistered;
 }
 
 // -----------------------------------------------------------------------------

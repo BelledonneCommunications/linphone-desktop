@@ -86,7 +86,7 @@ static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt,
   else
     return;
 
-  QByteArray dateTime = getFormattedCurrentTime();
+  QByteArray dateTime = ::getFormattedCurrentTime();
   char *msg = bctbx_strdup_vprintf(fmt, args);
 
   fprintf(stderr, format, dateTime.constData(), domain ? domain : "linphone", msg);
@@ -140,7 +140,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   #endif // ifdef QT_MESSAGELOGCONTEXT
 
   QByteArray localMsg = msg.toLocal8Bit();
-  QByteArray dateTime = getFormattedCurrentTime();
+  QByteArray dateTime = ::getFormattedCurrentTime();
 
   mMutex.lock();
 

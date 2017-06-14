@@ -44,18 +44,16 @@ using namespace std;
 
 template<class T>
 inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const string &value) {
-  auto it = find_if(
-      list.cbegin(), list.cend(), [&value](const shared_ptr<T> &entry) {
+  auto it = find_if(list.cbegin(), list.cend(), [&value](const shared_ptr<T> &entry) {
         return value == entry->getValue();
-      }
-    );
+      });
 
   return it != list.cend() ? *it : nullptr;
 }
 
 template<class T>
 inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const QString &value) {
-  return findBelCardValue(list, ::Utils::appStringToCoreString(value));
+  return ::findBelCardValue(list, ::Utils::appStringToCoreString(value));
 }
 
 inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
@@ -64,7 +62,7 @@ inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &pho
 
 static shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
   const list<shared_ptr<belcard::BelCardPhoto> > &photos = belcard->getPhotos();
-  auto it = find_if(photos.cbegin(), photos.cend(), isLinphoneDesktopPhoto);
+  auto it = find_if(photos.cbegin(), photos.cend(), ::isLinphoneDesktopPhoto);
   if (it != photos.cend())
     return *it;
 
@@ -74,7 +72,7 @@ static shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belc
 static void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, bool cleanPathsOnly = false) {
   list<shared_ptr<belcard::BelCardPhoto> > photos;
   for (const auto photo : belcard->getPhotos()) {
-    if (isLinphoneDesktopPhoto(photo))
+    if (::isLinphoneDesktopPhoto(photo))
       photos.push_back(photo);
   }
 
@@ -160,7 +158,7 @@ bool VcardModel::setAvatar (const QString &path) {
   // not a application path like `image:`.
   if (!path.isEmpty()) {
     if (path.startsWith("image:"))
-      fileId = getFileIdFromAppPath(path);
+      fileId = ::getFileIdFromAppPath(path);
     else {
       file.setFileName(path);
 
@@ -253,7 +251,7 @@ QVariantMap VcardModel::getAddress () const {
 void VcardModel::setStreet (const QString &street) {
   CHECK_VCARD_IS_WRITABLE(this);
 
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
+  shared_ptr<belcard::BelCardAddress> address = ::getOrCreateBelCardAddress(mVcard->getVcard());
   address->setStreet(::Utils::appStringToCoreString(street));
   emit vcardUpdated();
 }
@@ -261,7 +259,7 @@ void VcardModel::setStreet (const QString &street) {
 void VcardModel::setLocality (const QString &locality) {
   CHECK_VCARD_IS_WRITABLE(this);
 
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
+  shared_ptr<belcard::BelCardAddress> address = ::getOrCreateBelCardAddress(mVcard->getVcard());
   address->setLocality(::Utils::appStringToCoreString(locality));
   emit vcardUpdated();
 }
@@ -269,7 +267,7 @@ void VcardModel::setLocality (const QString &locality) {
 void VcardModel::setPostalCode (const QString &postalCode) {
   CHECK_VCARD_IS_WRITABLE(this);
 
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
+  shared_ptr<belcard::BelCardAddress> address = ::getOrCreateBelCardAddress(mVcard->getVcard());
   address->setPostalCode(::Utils::appStringToCoreString(postalCode));
   emit vcardUpdated();
 }
@@ -277,7 +275,7 @@ void VcardModel::setPostalCode (const QString &postalCode) {
 void VcardModel::setCountry (const QString &country) {
   CHECK_VCARD_IS_WRITABLE(this);
 
-  shared_ptr<belcard::BelCardAddress> address = getOrCreateBelCardAddress(mVcard->getVcard());
+  shared_ptr<belcard::BelCardAddress> address = ::getOrCreateBelCardAddress(mVcard->getVcard());
   address->setCountry(::Utils::appStringToCoreString(country));
   emit vcardUpdated();
 }
@@ -311,7 +309,7 @@ bool VcardModel::addSipAddress (const QString &sipAddress) {
 
   // Add sip address in belcard.
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  if (findBelCardValue(belcard->getImpp(), interpretedSipAddress))
+  if (::findBelCardValue(belcard->getImpp(), interpretedSipAddress))
     return false;
 
   shared_ptr<belcard::BelCardImpp> value = belcard::BelCardGeneric::create<belcard::BelCardImpp>();
@@ -333,7 +331,7 @@ void VcardModel::removeSipAddress (const QString &sipAddress) {
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
   list<shared_ptr<belcard::BelCardImpp> > addresses = belcard->getImpp();
-  shared_ptr<belcard::BelCardImpp> value = findBelCardValue(
+  shared_ptr<belcard::BelCardImpp> value = ::findBelCardValue(
       addresses, ::Utils::coreStringToAppString(interpretSipAddress(sipAddress))
     );
 
@@ -375,7 +373,7 @@ bool VcardModel::addCompany (const QString &company) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  if (findBelCardValue(belcard->getRoles(), company))
+  if (::findBelCardValue(belcard->getRoles(), company))
     return false;
 
   shared_ptr<belcard::BelCardRole> value = belcard::BelCardGeneric::create<belcard::BelCardRole>();
@@ -396,7 +394,7 @@ void VcardModel::removeCompany (const QString &company) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  shared_ptr<belcard::BelCardRole> value = findBelCardValue(belcard->getRoles(), company);
+  shared_ptr<belcard::BelCardRole> value = ::findBelCardValue(belcard->getRoles(), company);
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove company on vcard: `%1`.").arg(company);
@@ -429,7 +427,7 @@ bool VcardModel::addEmail (const QString &email) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  if (findBelCardValue(belcard->getEmails(), email))
+  if (::findBelCardValue(belcard->getEmails(), email))
     return false;
 
   shared_ptr<belcard::BelCardEmail> value = belcard::BelCardGeneric::create<belcard::BelCardEmail>();
@@ -451,7 +449,7 @@ void VcardModel::removeEmail (const QString &email) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  shared_ptr<belcard::BelCardEmail> value = findBelCardValue(belcard->getEmails(), email);
+  shared_ptr<belcard::BelCardEmail> value = ::findBelCardValue(belcard->getEmails(), email);
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove email on vcard: `%1`.").arg(email);
@@ -484,7 +482,7 @@ bool VcardModel::addUrl (const QString &url) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  if (findBelCardValue(belcard->getURLs(), url))
+  if (::findBelCardValue(belcard->getURLs(), url))
     return false;
 
   shared_ptr<belcard::BelCardURL> value = belcard::BelCardGeneric::create<belcard::BelCardURL>();
@@ -506,7 +504,7 @@ void VcardModel::removeUrl (const QString &url) {
   CHECK_VCARD_IS_WRITABLE(this);
 
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
-  shared_ptr<belcard::BelCardURL> value = findBelCardValue(belcard->getURLs(), url);
+  shared_ptr<belcard::BelCardURL> value = ::findBelCardValue(belcard->getURLs(), url);
 
   if (!value) {
     qWarning() << QStringLiteral("Unable to remove url on vcard: `%1`.").arg(url);

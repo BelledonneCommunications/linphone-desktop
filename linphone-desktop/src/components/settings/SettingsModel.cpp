@@ -218,12 +218,12 @@ inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const linphone
 QVariantList SettingsModel::getSupportedVideoDefinitions () const {
   QVariantList list;
   for (const auto &definition : linphone::Factory::get()->getSupportedVideoDefinitions())
-    list << createMapFromVideoDefinition(definition);
+    list << ::createMapFromVideoDefinition(definition);
   return list;
 }
 
 QVariantMap SettingsModel::getVideoDefinition () const {
-  return createMapFromVideoDefinition(CoreManager::getInstance()->getCore()->getPreferredVideoDefinition());
+  return ::createMapFromVideoDefinition(CoreManager::getInstance()->getCore()->getPreferredVideoDefinition());
 }
 
 void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
@@ -290,13 +290,13 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
   QVariantList list;
 
   if (core->mediaEncryptionSupported(linphone::MediaEncryptionDTLS))
-    list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
+    list << ::buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
 
   if (core->mediaEncryptionSupported(linphone::MediaEncryptionSRTP))
-    list << buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
+    list << ::buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
 
   if (core->mediaEncryptionSupported(linphone::MediaEncryptionZRTP))
-    list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
+    list << ::buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
 
   return list;
 }

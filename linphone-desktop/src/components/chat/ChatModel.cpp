@@ -58,12 +58,12 @@ inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message
 }
 
 inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString &path = getDownloadPath(message);
+  const QString &path = ::getDownloadPath(message);
   return !path.isEmpty() && QFileInfo(path).isFile();
 }
 
 inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  QString fileId = getFileId(message);
+  QString fileId = ::getFileId(message);
   if (!fileId.isEmpty() && !dest.contains("thumbnail"))
     dest["thumbnail"] = QStringLiteral("image://%1/%2")
       .arg(ThumbnailProvider::PROVIDER_ID).arg(fileId);
@@ -168,11 +168,11 @@ private:
 
     // File message downloaded.
     if (state == linphone::ChatMessageStateFileTransferDone && !message->isOutgoing()) {
-      createThumbnail(message);
-      fillThumbnailProperty((*it).first, message);
+      ::createThumbnail(message);
+      ::fillThumbnailProperty((*it).first, message);
 
       message->setAppdata(
-        ::Utils::appStringToCoreString(getFileId(message)) + ':' + message->getFileTransferFilepath()
+        ::Utils::appStringToCoreString(::getFileId(message)) + ':' + message->getFileTransferFilepath()
       );
       (*it).first["wasDownloaded"] = true;
 
@@ -402,7 +402,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   message->setFileTransferFilepath(::Utils::appStringToCoreString(path));
   message->setListener(mMessageHandlers);
 
-  createThumbnail(message);
+  ::createThumbnail(message);
 
   insertMessageAtEnd(message);
   mChatRoom->sendChatMessage(message);
@@ -462,7 +462,7 @@ void ChatModel::openFile (int id, bool showDirectory) {
     return;
   }
 
-  QFileInfo info(getDownloadPath(message));
+  QFileInfo info(::getDownloadPath(message));
   QDesktopServices::openUrl(
     QUrl(QStringLiteral("file:///%1").arg(showDirectory ? info.absolutePath() : info.absoluteFilePath()))
   );
@@ -514,7 +514,7 @@ void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::
     dest["fileName"] = ::Utils::coreStringToAppString(content->getName());
     dest["wasDownloaded"] = ::fileWasDownloaded(message);
 
-    fillThumbnailProperty(dest, message);
+    ::fillThumbnailProperty(dest, message);
   }
 }
 
@@ -546,7 +546,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
   switch (type) {
     case ChatModel::MessageEntry: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(pair.second);
-      removeFileMessageThumbnail(message);
+      ::removeFileMessageThumbnail(message);
       mChatRoom->deleteMessage(message);
       break;
     }

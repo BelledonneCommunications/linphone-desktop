@@ -77,19 +77,6 @@ using namespace std;
 
 // =============================================================================
 
-inline int getIntegerFromNotification (const QObject &object, const char *property) {
-  QVariant variant = object.property(property);
-  bool soFarSoGood;
-
-  int value = variant.toInt(&soFarSoGood);
-  if (!soFarSoGood) {
-    qWarning() << QStringLiteral("Unable to get int from: `%1`.").arg(property);
-    abort();
-  }
-
-  return value;
-}
-
 template<class T>
 void setProperty (QObject &object, const char *property, const T &value) {
   if (!object.setProperty(property, QVariant(value))) {

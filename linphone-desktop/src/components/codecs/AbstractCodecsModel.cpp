@@ -65,7 +65,7 @@ void AbstractCodecsModel::enableCodec (int id, bool status) {
   Q_ASSERT(id >= 0 && id < mCodecs.count());
 
   QVariantMap &map = mCodecs[id];
-  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+  shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
 
   codec->enable(status);
   map["enabled"] = codec->enabled();
@@ -81,7 +81,7 @@ void AbstractCodecsModel::setBitrate (int id, int bitrate) {
   Q_ASSERT(id >= 0 && id < mCodecs.count());
 
   QVariantMap &map = mCodecs[id];
-  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+  shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
 
   codec->setNormalBitrate(bitrate);
   map["bitrate"] = codec->getNormalBitrate();
@@ -93,7 +93,7 @@ void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
   Q_ASSERT(id >= 0 && id < mCodecs.count());
 
   QVariantMap &map = mCodecs[id];
-  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+  shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
 
   codec->setRecvFmtp(::Utils::appStringToCoreString(recvFmtp));
   map["recvFmtp"] = ::Utils::coreStringToAppString(codec->getRecvFmtp());
@@ -141,7 +141,7 @@ bool AbstractCodecsModel::moveRows (
   // Update linphone codecs list.
   list<shared_ptr<linphone::PayloadType> > codecs;
   for (const auto &map : mCodecs)
-    codecs.push_back(getCodecFromMap(map));
+    codecs.push_back(::getCodecFromMap(map));
   updateCodecs(codecs);
 
   endMoveRows();

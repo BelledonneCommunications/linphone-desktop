@@ -63,10 +63,10 @@ inline void addBuildStatus (QVariantList &list, Presence::PresenceStatus status)
 QVariantList OwnPresenceModel::getStatuses () const {
   QVariantList statuses;
 
-  addBuildStatus(statuses, Presence::Online);
-  addBuildStatus(statuses, Presence::Busy);
-  addBuildStatus(statuses, Presence::DoNotDisturb);
-  addBuildStatus(statuses, Presence::Offline);
+  ::addBuildStatus(statuses, Presence::Online);
+  ::addBuildStatus(statuses, Presence::Busy);
+  ::addBuildStatus(statuses, Presence::DoNotDisturb);
+  ::addBuildStatus(statuses, Presence::Offline);
 
   return statuses;
 }
