@@ -27,17 +27,18 @@
 
 #include <QSortFilterProxyModel>
 
+#include "ConferenceHelperModel.hpp"
+
 // =============================================================================
 // Sip addresses not in conference.
 // Can filter the sip addresses with a pattern.
 // =============================================================================
 
 class CallModel;
-class ConferenceAddModel;
 
 namespace linphone {
-  class Conference;
-  class Core;
+class Conference;
+class Core;
 }
 
 class ConferenceHelperModel : public QSortFilterProxyModel {
@@ -53,6 +54,10 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
 
+  ConferenceAddModel *getConferenceAddModel () const {
+    return mConferenceAddModel;
+  }
+
   Q_INVOKABLE void setFilter (const QString &pattern);
 
 protected:
@@ -60,9 +65,6 @@ protected:
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
-  ConferenceAddModel *getConferenceAddModel () const {
-    return mConferenceAddModel;
-  }
 
   ConferenceAddModel *mConferenceAddModel = nullptr;
 

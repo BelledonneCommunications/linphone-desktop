@@ -23,15 +23,21 @@
 #ifndef CLI_H_
 #define CLI_H_
 
+#include <memory>
+
 #include <QHash>
 #include <QObject>
 
 // =============================================================================
 
+namespace linphone {
+class Address;
+}
+
 class Cli : public QObject {
   Q_OBJECT;
 
-  typedef void (*Function)(const QHash<QString, QString> &);
+  typedef void (*Function)(QHash<QString, QString> &);
 
   enum ArgumentType {
     STRING
@@ -50,13 +56,15 @@ class Cli : public QObject {
   class Command {
 public:
     Command () = default;
-    Command (const QString &functionName, const QString &description, Function function, const QHash<QString, Argument> &argsScheme);
+    Command (
+      const QString &functionName,
+      const QString &description,
+      Function function,
+      const QHash<QString, Argument> &argsScheme
+    );
 
-    void execute (const QHash<QString, QString> &args);
-
-    bool argNameExists (const QString &argName) {
-      return mArgsScheme.contains(argName);
-    }
+    void execute (QHash<QString, QString> &args) const;
+    void executeUri (const std::shared_ptr<linphone::Address> &address) const;
 
 private:
     QString mFunctionName;
@@ -69,13 +77,18 @@ public:
   Cli (QObject *parent = Q_NULLPTR);
   ~Cli () = default;
 
-  void executeCommand (const QString &command) noexcept;
+  void executeCommand (const QString &command) const;
 
 private:
-  void addCommand (const QString &functionName, const QString &description, Function function, const QHash<QString, Argument> &argsScheme = {}) noexcept;
+  void addCommand (
+    const QString &functionName,
+    const QString &description,
+    Function function,
+    const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>()
+  );
 
-  const QString parseFunctionName (const QString &command) noexcept;
-  const QHash<QString, QString> parseArgs (const QString &command, const QString functionName, bool &soFarSoGood) noexcept;
+  QString parseFunctionName (const QString &command) const;
+  QHash<QString, QString> parseArgs (const QString &command) const;
 
   QHash<QString, Command> mCommands;
 

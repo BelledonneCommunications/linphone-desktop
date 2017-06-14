@@ -23,6 +23,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#include <QObject>
 #include <QString>
 
 // =============================================================================
@@ -54,6 +55,46 @@ namespace Utils {
   // Returns the same path given in parameter if `filePath` exists.
   // Otherwise returns a safe path with a unique number before the extension.
   QString getSafeFilePath (const QString &filePath, bool *soFarSoGood = nullptr);
+
+  // Connect once to a member function.
+  template<typename Func1, typename Func2>
+  static inline QMetaObject::Connection connectOnce (
+    typename QtPrivate::FunctionPointer<Func1>::Object *sender,
+    Func1 signal,
+    typename QtPrivate::FunctionPointer<Func2>::Object *receiver,
+    Func2 slot
+  ) {
+    QMetaObject::Connection connection = QObject::connect(sender, signal, receiver, slot);
+    QMetaObject::Connection *deleter = new QMetaObject::Connection();
+
+    *deleter = QObject::connect(sender, signal, [connection, deleter] {
+      QObject::disconnect(connection);
+      QObject::disconnect(*deleter);
+      delete deleter;
+    });
+
+    return connection;
+  }
+
+  // Connect once to a function.
+  template<typename Func1, typename Func2>
+  static inline QMetaObject::Connection connectOnce (
+    typename QtPrivate::FunctionPointer<Func1>::Object *sender,
+    Func1 signal,
+    const QObject *receiver,
+    Func2 slot
+  ) {
+    QMetaObject::Connection connection = QObject::connect(sender, signal, receiver, slot);
+    QMetaObject::Connection *deleter = new QMetaObject::Connection();
+
+    *deleter = QObject::connect(sender, signal, [connection, deleter] {
+      QObject::disconnect(connection);
+      QObject::disconnect(*deleter);
+      delete deleter;
+    });
+
+    return connection;
+  }
 }
 
 #endif // UTILS_H_

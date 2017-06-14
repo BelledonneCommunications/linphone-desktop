@@ -215,6 +215,13 @@ void App::initContentApp () {
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
+  // Execute command argument if needed.
+  {
+    const QString commandArgument = getCommandArgument();
+    if (!commandArgument.isEmpty())
+      mCli->executeCommand(commandArgument);
+  }
+
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
     &CoreHandlers::coreStarted,
@@ -225,10 +232,36 @@ void App::initContentApp () {
 // -----------------------------------------------------------------------------
 
 QString App::getCommandArgument () {
-  // TODO: Remove me when cmd option will be available.
-  return QString("");
-  // return mParser->value("cmd");
+  const QStringList &arguments = mParser->positionalArguments();
+  return arguments.empty() ? QString("") : arguments[0];
 }
+
+// -----------------------------------------------------------------------------
+
+void App::executeCommand (const QString &command) {
+  Q_CHECK_PTR(mCli);
+  mCli->executeCommand(command);
+}
+
+// -----------------------------------------------------------------------------
+
+#ifdef Q_OS_MACOS
+
+  bool App::event (QEvent *event) {
+    if (event->type() == QEvent::FileOpen) {
+      const QString url = static_cast<QFileOpenEvent *>(event)->url().toString();
+      if (isSecondary()) {
+        sendMessage(url.toLocal8Bit(), -1);
+        ::exit(EXIT_SUCCESS);
+      }
+
+      executeCommand(url);
+    }
+
+    return SingleApplication::event(event);
+  }
+
+#endif // ifdef Q_OS_MACOS
 
 // -----------------------------------------------------------------------------
 
@@ -281,30 +314,19 @@ bool App::hasFocus () const {
 // -----------------------------------------------------------------------------
 
 void App::createParser () {
-  // TODO: Remove me in the future.
-  static const char *disabledOptions[] = {
-    QT_TR_NOOP("commandLineOptionCmd"),
-    QT_TR_NOOP("commandLineOptionCmdArg")
-  };
-  (void)disabledOptions;
-
-  if (mParser)
-    delete mParser;
+  delete mParser;
 
   mParser = new QCommandLineParser();
-
   mParser->setApplicationDescription(tr("applicationDescription"));
   mParser->addOptions({
     { { "h", "help" }, tr("commandLineOptionHelp") },
     { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
+    { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
-    // TODO: Enable me in future version!
-    // ,
-    // { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
   });
 }
 

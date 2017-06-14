@@ -54,6 +54,11 @@ public:
   void initContentApp ();
 
   QString getCommandArgument ();
+  void executeCommand (const QString &command);
+
+  #ifdef Q_OS_MACOS
+    bool event (QEvent *event) override;
+  #endif // ifdef Q_OS_MACOS
 
   QQmlEngine *getEngine () {
     return mEngine;
@@ -117,10 +122,10 @@ private:
     return qVersion();
   }
 
-  QCommandLineParser *mParser = nullptr;
-
   QVariantList mAvailableLocales;
   QString mLocale;
+
+  QCommandLineParser *mParser = nullptr;
 
   QQmlApplicationEngine *mEngine = nullptr;
 

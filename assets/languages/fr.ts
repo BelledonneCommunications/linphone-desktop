@@ -421,6 +421,14 @@ Url du serveur non configurée.</translation>
         <source>showFunctionCall</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>joinConferenceFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initiateConferenceFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

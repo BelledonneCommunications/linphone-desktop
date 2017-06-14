@@ -84,8 +84,13 @@ AppController::AppController (int &argc, char *argv[]) {
 
   mApp = new App(argc, argv);
   if (mApp->isSecondary()) {
+    #ifdef Q_OS_MACOS
+      mApp->processEvents();
+    #endif // ifdef Q_OS_MACOS
+
     QString command = mApp->getCommandArgument();
     mApp->sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), -1);
+
     return;
   }
 

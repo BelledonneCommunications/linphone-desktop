@@ -24,6 +24,8 @@
 
 #include "../../app/App.hpp"
 #include "../../utils/Utils.hpp"
+#include "../conference/ConferenceAddModel.hpp"
+#include "../conference/ConferenceHelperModel.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "CallsListModel.hpp"
@@ -89,7 +91,7 @@ void CallsListModel::askForTransfer (CallModel *callModel) {
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::launchAudioCall (const QString &sipUri) const {
+void CallsListModel::launchAudioCall (const QString &sipUri, const QHash<QString, QString> &headers) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
   shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipUri));
@@ -99,6 +101,12 @@ void CallsListModel::launchAudioCall (const QString &sipUri) const {
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableVideo(false);
   CallModel::setRecordFile(params);
+
+  QHashIterator<QString, QString> iterator(headers);
+  while (iterator.hasNext()) {
+    iterator.next();
+    params->addCustomHeader(::Utils::appStringToCoreString(iterator.key()), ::Utils::appStringToCoreString(iterator.value()));
+  }
 
   core->inviteAddressWithParams(address, params);
 }
@@ -137,8 +145,50 @@ void CallsListModel::terminateAllCalls () const {
 
 void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
   switch (state) {
-    case linphone::CallStateIncomingReceived:
+    case linphone::CallStateIncomingReceived: {
+      // _______________________________________________________________________________________________________________________________________
+      // _______________________________________________________________________________________________________________________________________
+      addCall(call);
+      if (!call->getToHeader("method").empty()) {
+        shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+        qInfo() << QStringLiteral("----Header method----") << Utils::coreStringToAppString(call->getToHeader("method"));
+        if (call->getToHeader("method") == "join-conference") {
+          if (core->getConference() == NULL) {         // TODO change this condition, use isInConference() (need to be initiate)
+            qWarning() << QStringLiteral("Not in a conference,responding to join-conference as a call.");
+            break;
+          }
+          shared_ptr<linphone::Conference> currentConference = core->getConference();
+
+          QString conferenceIdHeader = Utils::coreStringToAppString(call->getToHeader("conference-id"));
+
+          qInfo() << QStringLiteral("conference id asked: '%1'").arg(conferenceIdHeader);
+          qWarning() << QStringLiteral("current conference id: '%1'").arg(Utils::coreStringToAppString(currentConference->getId()));
+          if (currentConference->getId().empty() || currentConference->getId() != Utils::appStringToCoreString(conferenceIdHeader)) {
+            qWarning() << QStringLiteral("trying to join conference with invalid conference-id, `%1`").arg(conferenceIdHeader);
+            qWarning() << QStringLiteral("join-conference managed as a call ");
+            break;
+          }
+          qInfo() << QStringLiteral("join conference: `%1`").arg(Utils::coreStringToAppString(currentConference->getId()));
+
+          ConferenceHelperModel helperModel;
+          ConferenceHelperModel::ConferenceAddModel *addModel = helperModel.getAddModel();
+
+          CallModel *callModel = &call->getData<CallModel>("call-model");
+          callModel->accept();
+          addModel->addToConference(call->getRemoteAddress());
+          addModel->update();
+
+          break;
+        }
+      }
+      break;
+    }
+    // _______________________________________________________________________________________________________________________________________
+    // _______________________________________________________________________________________________________________________________________
     case linphone::CallStateOutgoingInit:
+      if (!call->getToAddress()->getHeader("method").empty())
+        qInfo() << QStringLiteral("----Header method----") << Utils::coreStringToAppString(call->getToAddress()->getHeader("method"));
+
       addCall(call);
       break;
 

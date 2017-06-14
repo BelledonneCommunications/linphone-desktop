@@ -5,3 +5,5 @@ Abort
 
 notRunningInUninstall:
 
+DeleteRegKey HKCR "sip"
+DeleteRegKey HKCR "sip-linphone"
