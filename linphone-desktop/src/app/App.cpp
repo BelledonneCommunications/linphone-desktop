@@ -448,12 +448,15 @@ void App::createNotifier () {
 
 void App::initLocale () {
   // Try to use preferred locale.
-  QString locale = ::Utils::coreStringToAppString(
-      linphone::Config::newWithFactory(
-        Paths::getConfigFilePath(mParser->value("config"), false), "")->getString(
+  QString locale;
+  string configPath = Paths::getConfigFilePath(mParser->value("config"), false);
+  if (Paths::filePathExists(configPath)) {
+    locale = ::Utils::coreStringToAppString(
+      linphone::Config::newWithFactory(configPath, "")->getString(
         SettingsModel::UI_SECTION, "locale", ""
       )
     );
+  }
 
   if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
     mLocale = locale;
