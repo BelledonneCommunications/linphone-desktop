@@ -20,7 +20,7 @@
 #
 ############################################################################
 
-lcb_external_source_paths("../linphone-desktop")
+lcb_external_source_paths("..")
 
 lcb_dependencies("linphone" "ms2plugins")
 lcb_groupable(YES)

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Check QML files, quit on failure.
-sh './linphone-desktop/tools/check_qml_syntax'
+sh './tools/check_qml_syntax'
 
 if [[ $? != 0 ]] ; then
     exit 1
@@ -10,6 +10,6 @@ fi
 printf '\n'
 
 # Run unit tests.
-sh './linphone-desktop/tools/test_qml'
+sh './tools/test_qml'
 
 exit $?

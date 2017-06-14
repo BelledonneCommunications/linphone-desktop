@@ -1,15 +1,37 @@
+# Temporary files --------------------------------------------------------------
+
+*~
+.*
+\#*\#
+.#.*
+
+# Project configuration --------------------------------------------------------
+
+*.pro.user
+build*
+Project.lnk
 WORK
 OUTPUT
 Makefile
-submodules/tunnel
-record_for_lc_*.wav
-.bc_tester_utils.tmp
-prepare.conf.user
-Project.lnk
-.clang_complete
-
+CMakeLists.txt.user
 build-*-Debug
 build-*-Default
-CMakeLists.txt.user
+prepare.conf.user
+
+# Tags -------------------------------------------------------------------------
+
+GPATH
+GRTAGS
+GTAGS
+
+.ctags
+.clang_complete
+
+# QMLC/JSC ---------------------------------------------------------------------
+
+*.qmlc
+*.jsc
+
+# OTHER ------------------------------------------------------------------------
 
 vgcore.*
