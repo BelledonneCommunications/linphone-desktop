@@ -87,7 +87,7 @@ signals:
   void configLocaleChanged (const QString &locale);
 
 private:
-  void parseArgs ();
+  void createParser ();
 
   void registerTypes ();
   void registerSharedTypes ();

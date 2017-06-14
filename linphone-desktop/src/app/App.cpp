@@ -73,7 +73,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
   setApplicationVersion(LINPHONE_QT_GIT_VERSION);
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
-  parseArgs();
+  createParser();
+  mParser->process(*this);
 
   // Initialize logger. (Do not do this before this point because the
   // application has to be created for the logs to be put in the correct
@@ -91,7 +92,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
   initLocale();
 
   if (mParser->isSet("help")) {
-    parseArgs();
+    createParser();
     mParser->showHelp();
   }
 
@@ -272,7 +273,7 @@ bool App::hasFocus () const {
 
 // -----------------------------------------------------------------------------
 
-void App::parseArgs () {
+void App::createParser () {
   if (mParser)
     delete mParser;
 
@@ -290,8 +291,6 @@ void App::parseArgs () {
     { { "V", "verbose" }, tr("commandLineOptionVerbose") },
     { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
   });
-
-  mParser->process(*this);
 }
 
 // -----------------------------------------------------------------------------
