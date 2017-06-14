@@ -210,7 +210,9 @@ void App::initContentApp () {
 // -----------------------------------------------------------------------------
 
 QString App::getCommandArgument () {
-  return mParser->value("cmd");
+  // TODO: Remove me when cmd option will be available.
+  return "";
+  // return mParser->value("cmd");
 }
 
 // -----------------------------------------------------------------------------
