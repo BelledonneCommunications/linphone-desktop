@@ -35,7 +35,7 @@ function handleCameraFirstFrameReceived (width, height) {
     return
   }
 
-  window.height += diff
+  window.setHeight(window.height + diff)
 }
 
 function handleStatusChanged (status) {

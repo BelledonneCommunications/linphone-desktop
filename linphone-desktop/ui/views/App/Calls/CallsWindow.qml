@@ -46,6 +46,12 @@ Window {
     Logic.openConferenceManager()
   }
 
+  function setHeight (height) {
+    window.height = height > Screen.desktopAvailableHeight
+      ? Screen.desktopAvailableHeight
+      : height
+  }
+
   // ---------------------------------------------------------------------------
 
   minimumHeight: CallsWindowStyle.minimumHeight
