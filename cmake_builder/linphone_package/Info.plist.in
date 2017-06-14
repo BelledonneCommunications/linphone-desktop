@@ -4,6 +4,10 @@
 <dict>
     <key>CFBundleDevelopmentRegion</key>
     <string>English</string>
+    <key>CFBundleName</key>
+    <string>Linphone</string>
+    <key>CFBundleDisplayName</key>
+    <string>Linphone</string>
     <key>CFBundleExecutable</key>
     <string>linphone</string>
     <key>CFBundleGetInfoString</key>
