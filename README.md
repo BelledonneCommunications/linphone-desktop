@@ -6,29 +6,35 @@ Linphone is a free VoIP and video softphone based on the SIP protocol.
 
 Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
 
-1. Install some build tools: CMake, Python.
-2. Prepare the build by running the prepare.py script.
-3. Build the project using the appropriate build tool (make, ninja, Xcode, Visual Studio).
+1. Install some build tools: `CMake`, `Python` and `Qt5` (_5.8 or newer_).
+2. It's necessary to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5. Example:
 
-## Specific instructions for the Linux platform
+Qt5_DIR="~/Qt/5.9/gcc_64/lib/cmake/Qt5"
+
+3. The `PATH` environment variable must point to the Qt5 directory `bin`. Example:
+
+PATH="~/Qt/5.9/gcc_64/bin/:$PATH"
+
+4. Prepare the build by running the prepare.py script.
+5. Build the project using the appropriate build tool (`make`, `ninja`, `Xcode`, `Visual Studio (2013 or 2015 version)`).
+
+## Specific instructions for the GNU/Linux and Mac OS X platforms
 
 1. Prepare the build in a terminal by running the following command in the current directory:
+
         ./prepare.py
+
 2. Build the project in a terminal with:
+
         make
 
 ## Specific instructions for the Windows platform
 
 1. Open a Windows command line (cmd.exe) in the current directory and run:
+
         python prepare.py
-2. Open the generated Visual Studio solution (WORK/cmake/Project.sln) and build it.
 
-## Specific instructions for the Mac OS X platform
-
-1. Open iTerm.app in the current directory and run:
-        ./prepare.py
-2. Build the project with:
-        make
+2. Open the generated Visual Studio solution `Project.lnk` and build it.
 
 # Customizing your build
 
@@ -61,7 +67,7 @@ To get a list of the options you can pass, you can run:
 
         ./prepare.py --list-cmake-variables
 
-The options that enable you to configure what will be built are the ones beginning with "ENABLE_". So for example, you might want to build linphone without the opus codec support. To do so use:
+The options that enable you to configure what will be built are the ones beginning with `ENABLE_`. So for example, you might want to build linphone without the opus codec support. To do so use:
 
         ./prepare.py -DENABLE_OPUS=NO
 
@@ -70,6 +76,6 @@ The options that enable you to configure what will be built are the ones beginni
 Simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
 However if the compilation fails, you may need to rebuild everything from scratch using:
 
-        ./prepare.py -C && ./prepare.py [options]
+        ./prepare.py -c && ./prepare.py [options]
 
 Then you re-build as usual.
