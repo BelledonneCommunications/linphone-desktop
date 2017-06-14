@@ -274,6 +274,13 @@ bool App::hasFocus () const {
 // -----------------------------------------------------------------------------
 
 void App::createParser () {
+  // TODO: Remove me in the future.
+  static const char *disabledOptions[] = {
+    QT_TR_NOOP("commandLineOptionCmd"),
+    QT_TR_NOOP("commandLineOptionCmdArg")
+  };
+  (void)disabledOptions;
+
   if (mParser)
     delete mParser;
 
@@ -288,8 +295,10 @@ void App::createParser () {
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS
     { "self-test", tr("commandLineOptionSelfTest") },
-    { { "V", "verbose" }, tr("commandLineOptionVerbose") },
-    { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
+    { { "V", "verbose" }, tr("commandLineOptionVerbose") }
+    // TODO: Enable me in future version!
+    // ,
+    // { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
   });
 }
 
