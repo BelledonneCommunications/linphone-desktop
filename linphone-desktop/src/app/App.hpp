@@ -23,7 +23,6 @@
 #ifndef APP_H_
 #define APP_H_
 
-#include <QCommandLineParser>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 
@@ -36,6 +35,7 @@
 
 class Cli;
 class DefaultTranslator;
+class QCommandLineParser;
 
 class App : public SingleApplication {
   Q_OBJECT;
@@ -96,6 +96,8 @@ private:
   void setTrayIcon ();
   void createNotifier ();
 
+  void initLocale ();
+
   QString getConfigLocale () const;
   void setConfigLocale (const QString &locale);
 
@@ -111,7 +113,7 @@ private:
     return qVersion();
   }
 
-  QCommandLineParser mParser;
+  QCommandLineParser *mParser = nullptr;
 
   QVariantList mAvailableLocales;
   QString mLocale;

@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QCommandLineParser>
 #include <QDir>
 #include <QFileSelector>
 #include <QMenu>
@@ -74,44 +75,33 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
 
   parseArgs();
 
+  // Initialize logger. (Do not do this before this point because the
+  // application has to be created for the logs to be put in the correct
+  // directory.)
+  Logger::init();
+  if (mParser->isSet("verbose"))
+    Logger::getInstance()->setVerbose(true);
+
   // List available locales.
   for (const auto &locale : QDir(LANGUAGES_PATH).entryList())
     mAvailableLocales << QLocale(locale);
 
+  // Init locale.
   mTranslator = new DefaultTranslator(this);
+  initLocale();
 
-  // Try to use preferred locale.
-  QString locale = ::Utils::coreStringToAppString(
-      linphone::Config::newWithFactory(
-        Paths::getConfigFilePath(mParser.value("config"), false), "")->getString(
-        SettingsModel::UI_SECTION, "locale", ""
-      )
-    );
+  parseArgs();
 
-  if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
-    mLocale = locale;
-    qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
-    return;
-  }
-
-  // Try to use system locale.
-  QLocale sysLocale = QLocale::system();
-  if (installLocale(*this, *mTranslator, sysLocale)) {
-    mLocale = sysLocale.name();
-    qInfo() << QStringLiteral("Use system locale: %1").arg(mLocale);
-    return;
-  }
-
-  // Use english.
-  mLocale = DEFAULT_LOCALE;
-  if (!installLocale(*this, *mTranslator, QLocale(mLocale)))
-    qFatal("Unable to install default translator.");
-  qInfo() << QStringLiteral("Use default locale: %1").arg(mLocale);
+  if (mParser->isSet("help"))
+    mParser->showHelp();
+  if (mParser->isSet("version"))
+    mParser->showVersion();
 }
 
 App::~App () {
   qInfo() << QStringLiteral("Destroying app...");
   delete mEngine;
+  delete mParser;
 }
 
 // -----------------------------------------------------------------------------
@@ -167,7 +157,7 @@ void App::initContentApp () {
   }
 
   // Init core.
-  CoreManager::init(this, mParser.value("config"));
+  CoreManager::init(this, mParser->value("config"));
 
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
@@ -193,7 +183,7 @@ void App::initContentApp () {
   createNotifier();
 
   // Load splashscreen.
-  bool selfTest = mParser.isSet("self-test");
+  bool selfTest = mParser->isSet("self-test");
   if (!selfTest)
     activeSplashScreen(this);
   // Set a self test limit.
@@ -218,7 +208,7 @@ void App::initContentApp () {
 // -----------------------------------------------------------------------------
 
 QString App::getCommandArgument () {
-  return mParser.value("cmd");
+  return mParser->value("cmd");
 }
 
 // -----------------------------------------------------------------------------
@@ -282,10 +272,15 @@ bool App::hasFocus () const {
 // -----------------------------------------------------------------------------
 
 void App::parseArgs () {
-  mParser.setApplicationDescription(tr("applicationDescription"));
-  mParser.addHelpOption();
-  mParser.addVersionOption();
-  mParser.addOptions({
+  if (mParser)
+    delete mParser;
+
+  mParser = new QCommandLineParser();
+
+  mParser->setApplicationDescription(tr("applicationDescription"));
+  mParser->addOptions({
+    { { "h", "help" }, tr("commandLineOptionHelp") },
+    { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
@@ -295,15 +290,7 @@ void App::parseArgs () {
     { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") }
   });
 
-  mParser.process(*this);
-
-  // Initialize logger. (Do not do this before this point because the
-  // application has to be created for the logs to be put in the correct
-  // directory.)
-  Logger::init();
-  if (mParser.isSet("verbose")) {
-    Logger::getInstance()->setVerbose(true);
-  }
+  mParser->process(*this);
 }
 
 // -----------------------------------------------------------------------------
@@ -448,6 +435,36 @@ void App::createNotifier () {
 
 // -----------------------------------------------------------------------------
 
+void App::initLocale () {
+  // Try to use preferred locale.
+  QString locale = ::Utils::coreStringToAppString(
+      linphone::Config::newWithFactory(
+        Paths::getConfigFilePath(mParser->value("config"), false), "")->getString(
+        SettingsModel::UI_SECTION, "locale", ""
+      )
+    );
+
+  if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
+    mLocale = locale;
+    qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
+    return;
+  }
+
+  // Try to use system locale.
+  QLocale sysLocale = QLocale::system();
+  if (installLocale(*this, *mTranslator, sysLocale)) {
+    mLocale = sysLocale.name();
+    qInfo() << QStringLiteral("Use system locale: %1").arg(mLocale);
+    return;
+  }
+
+  // Use english.
+  mLocale = DEFAULT_LOCALE;
+  if (!installLocale(*this, *mTranslator, QLocale(mLocale)))
+    qFatal("Unable to install default translator.");
+  qInfo() << QStringLiteral("Use default locale: %1").arg(mLocale);
+}
+
 QString App::getConfigLocale () const {
   return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getConfig()->getString(
@@ -482,7 +499,7 @@ void App::openAppAfterInit () {
     else
       setTrayIcon();
 
-    if (!mParser.isSet("iconified"))
+    if (!mParser->isSet("iconified"))
       smartShowWindow(mainWindow);
   #else
     smartShowWindow(mainWindow);
@@ -508,7 +525,7 @@ void App::openAppAfterInit () {
 // -----------------------------------------------------------------------------
 
 void App::quit () {
-  if (mParser.isSet("self-test"))
+  if (mParser->isSet("self-test"))
     cout << tr("selfTestResult").toStdString() << endl;
 
   QApplication::quit();
