@@ -90,10 +90,11 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
   mTranslator = new DefaultTranslator(this);
   initLocale();
 
-  parseArgs();
-
-  if (mParser->isSet("help"))
+  if (mParser->isSet("help")) {
+    parseArgs();
     mParser->showHelp();
+  }
+
   if (mParser->isSet("version"))
     mParser->showVersion();
 }

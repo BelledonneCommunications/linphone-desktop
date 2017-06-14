@@ -78,11 +78,11 @@
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>affiche cette aide</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"></translation>
+        <translation>affiche la version de l&apos;application</translation>
     </message>
 </context>
 <context>
