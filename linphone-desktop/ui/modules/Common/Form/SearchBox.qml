@@ -69,8 +69,8 @@ Item {
 
       Keys.onEscapePressed: searchBox.closeMenu()
       Keys.onReturnPressed: {
-        searchBox.closeMenu()
         searchBox.enterPressed()
+        searchBox.closeMenu()
       }
 
       onActiveFocusChanged: {
