@@ -142,16 +142,16 @@ class DesktopPreparator(prepare.Preparator):
         ret = prepare.Preparator.check_environment(self)
         if platform.system() == 'Windows':
             ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
+        if platform.system() == 'Windows':
+            doxygen_prog = 'doxygen (http://www.stack.nl/~dimitri/doxygen/download.html)'
+            graphviz_prog = 'graphviz (http://graphviz.org/Download.php)'
+        else:
+            doxygen_prog = 'doxygen'
+            graphviz_prog = 'graphviz'
+        ret |= not self.check_is_installed('doxygen', doxygen_prog)
+        ret |= not self.check_is_installed('dot', graphviz_prog)
+        ret |= not self.check_python_module_is_present('pystache')
         if "python" in self.args.target or "python-raspberry" in self.args.target:
-            if platform.system() == 'Windows':
-                doxygen_prog = 'doxygen (http://www.stack.nl/~dimitri/doxygen/download.html)'
-                graphviz_prog = 'graphviz (http://graphviz.org/Download.php)'
-            else:
-                doxygen_prog = 'doxygen'
-                graphviz_prog = 'graphviz'
-            ret |= not self.check_is_installed('doxygen', doxygen_prog)
-            ret |= not self.check_is_installed('dot', graphviz_prog)
-            ret |= not self.check_python_module_is_present('pystache')
             ret |= not self.check_python_module_is_present('wheel')
         return ret
 
