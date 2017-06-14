@@ -121,7 +121,7 @@ VcardModel::~VcardModel () {
   if (!mIsReadOnly) {
     qInfo() << QStringLiteral("Destroy detached vcard:") << this;
     if (!mAvatarIsReadOnly)
-      removeBelcardPhoto(mVcard->getVcard());
+      ::removeBelcardPhoto(mVcard->getVcard());
   } else
     qInfo() << QStringLiteral("Destroy attached vcard:") << this;
 }
@@ -130,7 +130,7 @@ VcardModel::~VcardModel () {
 
 QString VcardModel::getAvatar () const {
   // Find desktop avatar.
-  shared_ptr<belcard::BelCardPhoto> photo = findBelcardPhoto(mVcard->getVcard());
+  shared_ptr<belcard::BelCardPhoto> photo = ::findBelcardPhoto(mVcard->getVcard());
 
   // No path found.
   if (!photo)
@@ -181,7 +181,7 @@ bool VcardModel::setAvatar (const QString &path) {
   }
 
   // 2. Remove oldest photo.
-  removeBelcardPhoto(belcard, mAvatarIsReadOnly);
+  ::removeBelcardPhoto(belcard, mAvatarIsReadOnly);
   mAvatarIsReadOnly = false;
 
   // 3. Update new photo.
@@ -303,7 +303,7 @@ QVariantList VcardModel::getSipAddresses () const {
 bool VcardModel::addSipAddress (const QString &sipAddress) {
   CHECK_VCARD_IS_WRITABLE(this);
 
-  string interpretedSipAddress = interpretSipAddress(sipAddress);
+  string interpretedSipAddress = ::interpretSipAddress(sipAddress);
   if (interpretedSipAddress.empty())
     return false;
 
@@ -332,7 +332,7 @@ void VcardModel::removeSipAddress (const QString &sipAddress) {
   shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
   list<shared_ptr<belcard::BelCardImpp> > addresses = belcard->getImpp();
   shared_ptr<belcard::BelCardImpp> value = ::findBelCardValue(
-      addresses, ::Utils::coreStringToAppString(interpretSipAddress(sipAddress))
+      addresses, ::Utils::coreStringToAppString(::interpretSipAddress(sipAddress))
     );
 
   if (!value) {

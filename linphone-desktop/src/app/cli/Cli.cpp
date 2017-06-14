@@ -71,8 +71,8 @@ QRegExp Cli::mRegExpArgs("(?:(?:(\\w+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\
 QRegExp Cli::mRegExpFunctionName("^\\s*(\\w+)\\s*");
 
 Cli::Cli (QObject *parent) : QObject(parent) {
-  addCommand("show", tr("showFunctionDescription"), cliShow);
-  addCommand("call", tr("showFunctionCall"), cliCall, {
+  addCommand("show", tr("showFunctionDescription"), ::cliShow);
+  addCommand("call", tr("showFunctionCall"), ::cliCall, {
     { "sip-address", {} }
   });
 }

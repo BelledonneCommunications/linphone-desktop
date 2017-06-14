@@ -275,26 +275,26 @@ void Paths::migrate () {
   QString oldPath = oldBaseDir + "/.linphonerc";
 
   if (!::filePathExists(newPath) && ::filePathExists(oldPath)) {
-    migrateConfigurationFile(oldPath, newPath);
+    ::migrateConfigurationFile(oldPath, newPath);
     /* Define RLS uri so that presence switches from peer-to-peer mode to list mode. */
-    setRlsUri(newPath);
+    ::setRlsUri(newPath);
   }
 
   newPath = ::getAppCallHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-call-history.db";
 
   if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    migrateFile(oldPath, newPath);
+    ::migrateFile(oldPath, newPath);
 
   newPath = ::getAppFriendsFilePath();
   oldPath = oldBaseDir + "/.linphone-friends.db";
 
   if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    migrateFile(oldPath, newPath);
+    ::migrateFile(oldPath, newPath);
 
   newPath = ::getAppMessageHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-history.db";
 
   if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    migrateFile(oldPath, newPath);
+    ::migrateFile(oldPath, newPath);
 }
