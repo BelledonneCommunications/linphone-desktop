@@ -9,7 +9,7 @@
 
 *.pro.user
 build*
-Project.lnk
+Project.sln.lnk
 WORK
 OUTPUT
 Makefile
