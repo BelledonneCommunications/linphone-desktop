@@ -100,11 +100,23 @@ void CoreManager::forceRefreshRegisters () {
 
 // -----------------------------------------------------------------------------
 
+#define SET_DATABASE_PATH(DATABASE, PATH) \
+  do { \
+    qInfo() << QStringLiteral("Set `%1` path: `%2`") \
+      .arg( # DATABASE) \
+      .arg(::Utils::coreStringToAppString(PATH)); \
+    mCore->set ## DATABASE ## DatabasePath(PATH); \
+  } while (0);
+
 void CoreManager::setDatabasesPaths () {
-  mCore->setFriendsDatabasePath(Paths::getFriendsListFilePath());
-  mCore->setCallLogsDatabasePath(Paths::getCallHistoryFilePath());
-  mCore->setChatDatabasePath(Paths::getMessageHistoryFilePath());
+  SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
+  SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
+  SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());
 }
+
+#undef SET_DATABASE_PATH
+
+// -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
   if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile())) {
