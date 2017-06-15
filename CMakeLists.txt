@@ -21,7 +21,7 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt VERSION 3.9.0)
+project(linphoneqt VERSION 4.0)
 
 set(EXECUTABLE_NAME linphone)
 set(TARGET_NAME linphone-qt)
