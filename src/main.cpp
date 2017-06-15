@@ -24,7 +24,13 @@
 #include <QFontDatabase>
 #include <QScreen>
 
+#include "gitversion.h"
+
 #include "app/App.hpp"
+
+// Must be unique. Used by `SingleApplication`.
+#define APPLICATION_NAME "Linphone Desktop"
+#define APPLICATION_VERSION LINPHONE_QT_GIT_VERSION
 
 #define DEFAULT_FONT "Noto Sans"
 
@@ -68,6 +74,9 @@ int main (int argc, char *argv[]) {
   // ---------------------------------------------------------------------------
   // App creation.
   // ---------------------------------------------------------------------------
+
+  QCoreApplication::setApplicationName(APPLICATION_NAME);
+  QCoreApplication::setApplicationVersion(APPLICATION_VERSION);
 
   App app(argc, argv);
 

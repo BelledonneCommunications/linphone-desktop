@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QCoreApplication>
 #include <QDir>
 #include <QtConcurrent>
 #include <QTimer>
@@ -28,10 +29,6 @@
 #include "../../utils/Utils.hpp"
 
 #include "CoreManager.hpp"
-
-#ifndef LINPHONE_QT_GIT_VERSION
-  #define LINPHONE_QT_GIT_VERSION "unknown"
-#endif // ifndef LINPHONE_QT_GIT_VERSION
 
 #define CBS_CALL_INTERVAL 20
 
@@ -154,7 +151,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
-  mCore->setUserAgent("Linphone Desktop", LINPHONE_QT_GIT_VERSION);
+  mCore->setUserAgent("Linphone Desktop", ::Utils::appStringToCoreString(QCoreApplication::applicationVersion()));
 
   // Force capture/display.
   // Useful if the app was built without video support.

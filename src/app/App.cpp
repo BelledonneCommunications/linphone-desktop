@@ -29,8 +29,6 @@
 #include <QtDebug>
 #include <QTimer>
 
-#include "gitversion.h"
-
 #include "../components/Components.hpp"
 #include "../utils/Utils.hpp"
 
@@ -57,10 +55,6 @@
 
 #define SELF_TEST_DELAY 300000
 
-#ifndef LINPHONE_QT_GIT_VERSION
-  #define LINPHONE_QT_GIT_VERSION "unknown"
-#endif // ifndef LINPHONE_QT_GIT_VERSION
-
 using namespace std;
 
 // =============================================================================
@@ -69,8 +63,7 @@ inline bool installLocale (App &app, QTranslator &translator, const QLocale &loc
   return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
 }
 
-App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true) {
-  setApplicationVersion(LINPHONE_QT_GIT_VERSION);
+App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
   createParser();
@@ -264,7 +257,9 @@ void App::smartShowWindow (QQuickWindow *window) {
 }
 
 void App::checkForUpdate () {
-  CoreManager::getInstance()->getCore()->checkForUpdate(LINPHONE_QT_GIT_VERSION);
+  CoreManager::getInstance()->getCore()->checkForUpdate(
+    ::Utils::appStringToCoreString(applicationVersion())
+  );
 }
 
 // -----------------------------------------------------------------------------
