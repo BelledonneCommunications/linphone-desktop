@@ -80,7 +80,7 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
 
 // -----------------------------------------------------------------------------
 
-#define CREATE_CALL_MODEL_FUNCTION_WITH_ID(METHOD) \
+#define CREATE_PARENT_MODEL_FUNCTION_WITH_ID(METHOD) \
   void ChatProxyModel::METHOD(int id) { \
     QModelIndex sourceIndex = mapToSource(index(id, 0)); \
     static_cast<ChatModel *>(mChatModelFilter->sourceModel())->METHOD( \
@@ -88,13 +88,35 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
     ); \
   }
 
-CREATE_CALL_MODEL_FUNCTION_WITH_ID(downloadFile);
-CREATE_CALL_MODEL_FUNCTION_WITH_ID(openFile);
-CREATE_CALL_MODEL_FUNCTION_WITH_ID(openFileDirectory);
-CREATE_CALL_MODEL_FUNCTION_WITH_ID(removeEntry);
-CREATE_CALL_MODEL_FUNCTION_WITH_ID(resendMessage);
+#define CREATE_PARENT_MODEL_FUNCTION(METHOD) \
+  void ChatProxyModel::METHOD() { \
+    static_cast<ChatModel *>(mChatModelFilter->sourceModel())->METHOD(); \
+  }
 
-#undef CREATE_CALL_MODEL_FUNCTION_WITH_ID
+CREATE_PARENT_MODEL_FUNCTION(removeAllEntries);
+CREATE_PARENT_MODEL_FUNCTION(sendFileMessage);
+CREATE_PARENT_MODEL_FUNCTION(sendMessage);
+
+CREATE_PARENT_MODEL_FUNCTION_WITH_ID(downloadFile);
+CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFile);
+CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFileDirectory);
+CREATE_PARENT_MODEL_FUNCTION_WITH_ID(removeEntry);
+CREATE_PARENT_MODEL_FUNCTION_WITH_ID(resendMessage);
+
+#undef CREATE_PARENT_MODEL_FUNCTION
+#undef CREATE_PARENT_MODEL_FUNCTION_WITH_ID
+
+// -----------------------------------------------------------------------------
+
+QString ChatProxyModel::getSipAddress () const {
+  return static_cast<ChatModel *>(mChatModelFilter->sourceModel())->getSipAddress();
+}
+
+void ChatProxyModel::setSipAddress (const QString &sipAddress) {
+  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->setSipAddress(
+    sipAddress
+  );
+}
 
 // -----------------------------------------------------------------------------
 
@@ -123,32 +145,8 @@ void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
   }
 }
 
-void ChatProxyModel::removeAllEntries () {
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->removeAllEntries();
-}
-
-void ChatProxyModel::sendMessage (const QString &message) {
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendMessage(message);
-}
-
-void ChatProxyModel::sendFileMessage (const QString &path) {
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->sendFileMessage(path);
-}
-
 // -----------------------------------------------------------------------------
 
 bool ChatProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const {
   return mChatModelFilter->rowCount() - sourceRow <= mMaxDisplayedEntries;
-}
-
-// -----------------------------------------------------------------------------
-
-QString ChatProxyModel::getSipAddress () const {
-  return static_cast<ChatModel *>(mChatModelFilter->sourceModel())->getSipAddress();
-}
-
-void ChatProxyModel::setSipAddress (const QString &sipAddress) {
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->setSipAddress(
-    sipAddress
-  );
 }
