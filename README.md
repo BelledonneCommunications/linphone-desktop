@@ -1,6 +1,6 @@
 # Linphone Desktop
 
-![Dialer screenshot](http://www.linphone.org/img/slideshow-computer.png)
+![screenshot](readme_screen.png)
 
 Linphone is a free VoIP and video softphone based on the SIP protocol.
 
