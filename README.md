@@ -38,6 +38,10 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 2. Open the generated Visual Studio solution `Project.lnk` and build it.
 
+# Known bugs and issues
+
+* __4K (High DPI Displays)__ If you encounter troubles with high DPI displays, it can be useful to set the `QT_AUTO_SCREEN_SCALE_FACTOR` environment variable to 1.
+
 # Customizing your build
 
 Some options can be given during the `prepare.py` step to customize the build. The basic usage of the `prepare.py` script is:
