@@ -31,11 +31,6 @@
 
 #include "CoreHandlers.hpp"
 
-#include "config.h"
-
-#define VERSION_UPDATE_CHECK_OBJECT_NAME "version-update-check-timer"
-#define VERSION_UPDATE_CHECK_INTERVAL 86400000  /* 24 hours in milliseconds. */
-
 using namespace std;
 
 // =============================================================================
@@ -78,16 +73,6 @@ void CoreHandlers::notifyCoreStarted () {
       [this]() {
         qInfo() << QStringLiteral("Core started.");
         emit coreStarted();
-
-        #ifdef ENABLE_UPDATE_CHECK
-          QTimer *timer = new QTimer(this);
-          timer->setInterval(VERSION_UPDATE_CHECK_INTERVAL);
-
-          QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
-          timer->start();
-
-          App::checkForUpdate();
-        #endif // ifdef ENABLE_UPDATE_CHECK
       });
 }
 

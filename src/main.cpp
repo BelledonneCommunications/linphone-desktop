@@ -28,7 +28,7 @@
 
 #include "app/App.hpp"
 
-// Must be unique. Used by `SingleApplication`.
+// Must be unique. Used by `SingleApplication` and `Paths`.
 #define APPLICATION_NAME "linphone"
 #define APPLICATION_VERSION LINPHONE_QT_GIT_VERSION
 

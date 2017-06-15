@@ -29,6 +29,8 @@
 #include <QtDebug>
 #include <QTimer>
 
+#include "config.h"
+
 #include "../components/Components.hpp"
 #include "../utils/Utils.hpp"
 
@@ -54,6 +56,8 @@
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
 #define SELF_TEST_DELAY 300000
+
+#define VERSION_UPDATE_CHECK_INTERVAL 86400000 // 24 hours in milliseconds.
 
 using namespace std;
 
@@ -254,12 +258,6 @@ void App::smartShowWindow (QQuickWindow *window) {
 
   window->raise();
   window->requestActivate();
-}
-
-void App::checkForUpdate () {
-  CoreManager::getInstance()->getCore()->checkForUpdate(
-    ::Utils::appStringToCoreString(applicationVersion())
-  );
 }
 
 // -----------------------------------------------------------------------------
@@ -528,6 +526,24 @@ void App::openAppAfterInit () {
     if (!commandArgument.isEmpty())
       executeCommand(commandArgument);
   }
+
+  #ifdef ENABLE_UPDATE_CHECK
+    QTimer *timer = new QTimer(mEngine);
+    timer->setInterval(VERSION_UPDATE_CHECK_INTERVAL);
+
+    QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
+    timer->start();
+
+    checkForUpdate();
+  #endif // ifdef ENABLE_UPDATE_CHECK
+}
+
+// -----------------------------------------------------------------------------
+
+void App::checkForUpdate () {
+  CoreManager::getInstance()->getCore()->checkForUpdate(
+    ::Utils::appStringToCoreString(applicationVersion())
+  );
 }
 
 // -----------------------------------------------------------------------------

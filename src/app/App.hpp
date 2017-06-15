@@ -78,7 +78,6 @@ public:
   Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
-  Q_INVOKABLE static void checkForUpdate ();
 
 public slots:
   void quit ();
@@ -108,6 +107,8 @@ private:
   }
 
   void openAppAfterInit ();
+
+  static void checkForUpdate ();
 
   static QString getQtVersion () {
     return qVersion();
