@@ -36,7 +36,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 
         python prepare.py
 
-2. Open the generated Visual Studio solution `Project.lnk` and build it.
+2. Open the generated Visual Studio solution `Project.sln.lnk` and build it.
 
 ## Known bugs and issues
 

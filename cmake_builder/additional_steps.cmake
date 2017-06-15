@@ -30,7 +30,7 @@ if(LINPHONE_BUILDER_TARGET STREQUAL linphoneqt AND WIN32)
 	add_custom_target(linphoneqt_winshortcut ALL DEPENDS "${SHORTCUT_PATH}" TARGET_linphone_builder)
 
 	# Create a shortcut to the solution file in the top directory
-	set(SHORTCUT_PATH "${CMAKE_SOURCE_DIR}/../../Project.lnk")
+	set(SHORTCUT_PATH "${CMAKE_SOURCE_DIR}/../../Project.sln.lnk")
 	set(SHORTCUT_TARGET_PATH "${LINPHONE_BUILDER_WORK_DIR}/cmake/Project.sln")
 	set(SHORTCUT_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/../..")
 	configure_file("${CMAKE_CURRENT_LIST_DIR}/linphone_package/winshortcut.vbs.in" "${CMAKE_CURRENT_BINARY_DIR}/solutionshortcut.vbs" @ONLY)
