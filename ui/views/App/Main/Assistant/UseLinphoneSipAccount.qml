@@ -83,12 +83,6 @@ AssistantAbstractView {
       }
     }
 
-    onUsernameChanged: {
-      if (checkBox.checked) {
-        loader.item.usernameError = error
-      }
-    }
-
     onLoginStatusChanged: {
       requestBlock.stop(error)
       if (!error.length) {
