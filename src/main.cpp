@@ -29,7 +29,7 @@
 #include "app/App.hpp"
 
 // Must be unique. Used by `SingleApplication`.
-#define APPLICATION_NAME "Linphone Desktop"
+#define APPLICATION_NAME "linphone"
 #define APPLICATION_VERSION LINPHONE_QT_GIT_VERSION
 
 #define DEFAULT_FONT "Noto Sans"
