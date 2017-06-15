@@ -85,3 +85,7 @@ However if the compilation fails, you may need to rebuild everything from scratc
         ./prepare.py -c && ./prepare.py [options]
 
 Then you re-build as usual.
+
+## License
+
+GPLv2 © [Linphone](https://linphone.org)
