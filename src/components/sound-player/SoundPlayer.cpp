@@ -64,8 +64,7 @@ SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
 
   mHandlers = make_shared<SoundPlayer::Handlers>(this);
 
-  mInternalPlayer = CoreManager::getInstance()->getCore()->createLocalPlayer("", "", nullptr);
-  mInternalPlayer->setListener(mHandlers);
+  buildInternalPlayer();
 }
 
 SoundPlayer::~SoundPlayer () {
@@ -117,16 +116,7 @@ void SoundPlayer::play () {
 }
 
 void SoundPlayer::stop () {
-  if (mPlaybackState == SoundPlayer::StoppedState)
-    return;
-
-  mForceCloseTimer->stop();
-  mPlaybackState = SoundPlayer::StoppedState;
-
-  mInternalPlayer->close();
-
-  emit stopped();
-  emit playbackStateChanged(mPlaybackState);
+  stop(false);
 }
 
 // -----------------------------------------------------------------------------
@@ -139,6 +129,40 @@ void SoundPlayer::seek (int offset) {
 
 int SoundPlayer::getPosition () const {
   return mInternalPlayer->getCurrentPosition();
+}
+
+// -----------------------------------------------------------------------------
+
+void SoundPlayer::buildInternalPlayer () {
+  CoreManager *coreManager = CoreManager::getInstance();
+  SettingsModel *settingsModel = coreManager->getSettingsModel();
+
+  mInternalPlayer = coreManager->getCore()->createLocalPlayer(
+      ::Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
+    );
+  mInternalPlayer->setListener(mHandlers);
+
+  QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
+    rebuildInternalPlayer();
+  });
+}
+
+void SoundPlayer::rebuildInternalPlayer () {
+  stop(true);
+  buildInternalPlayer();
+}
+
+void SoundPlayer::stop (bool force) {
+  if (mPlaybackState == SoundPlayer::StoppedState && !force)
+    return;
+
+  mForceCloseTimer->stop();
+  mPlaybackState = SoundPlayer::StoppedState;
+
+  mInternalPlayer->close();
+
+  emit stopped();
+  emit playbackStateChanged(mPlaybackState);
 }
 
 // -----------------------------------------------------------------------------

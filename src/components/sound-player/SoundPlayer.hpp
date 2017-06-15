@@ -76,6 +76,11 @@ signals:
   void playbackStateChanged (PlaybackState playbackState);
 
 private:
+  void buildInternalPlayer ();
+  void rebuildInternalPlayer ();
+
+  void stop (bool force);
+
   void handleEof ();
 
   void setError (const QString &message);
