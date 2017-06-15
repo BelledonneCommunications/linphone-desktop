@@ -121,6 +121,7 @@ public:
 
 signals:
   void coreCreated ();
+  void coreStarted ();
 
 private:
   CoreManager (QObject *parent, const QString &configPath);

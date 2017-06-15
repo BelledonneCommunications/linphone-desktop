@@ -72,16 +72,6 @@ void CoreHandlers::handleCoreCreated () {
   mCoreStartedLock->unlock();
 }
 
-void CoreHandlers::handleCoreStarted () {
-  mCoreStartedLock->lock();
-
-  Q_ASSERT(mCoreStarted == false);
-  mCoreStarted = true;
-  notifyCoreStarted();
-
-  mCoreStartedLock->unlock();
-}
-
 void CoreHandlers::notifyCoreStarted () {
   if (mCoreCreated && mCoreStarted)
     scheduleFunctionInApp(
@@ -128,8 +118,15 @@ void CoreHandlers::onGlobalStateChanged (
   linphone::GlobalState gstate,
   const string &
 ) {
-  if (gstate == linphone::GlobalStateOn)
-    handleCoreStarted();
+  if (gstate == linphone::GlobalStateOn) {
+    mCoreStartedLock->lock();
+
+    Q_ASSERT(mCoreStarted == false);
+    mCoreStarted = true;
+    notifyCoreStarted();
+
+    mCoreStartedLock->unlock();
+  }
 }
 
 void CoreHandlers::onCallStatsUpdated (

@@ -52,7 +52,6 @@ signals:
 
 private:
   void handleCoreCreated ();
-  void handleCoreStarted ();
   void notifyCoreStarted ();
 
   // ---------------------------------------------------------------------------

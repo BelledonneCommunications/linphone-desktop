@@ -46,18 +46,22 @@ CoreManager *CoreManager::mInstance = nullptr;
 CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
   mPromiseBuild = QtConcurrent::run(this, &CoreManager::createLinphoneCore, configPath);
 
-  QObject::connect(&mPromiseWatcher, &QFutureWatcher<void>::finished, this, []() {
-      mInstance->mCallsListModel = new CallsListModel(mInstance);
-      mInstance->mContactsListModel = new ContactsListModel(mInstance);
-      mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
-      mInstance->mSettingsModel = new SettingsModel(mInstance);
-      mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
+  QObject::connect(&mPromiseWatcher, &QFutureWatcher<void>::finished, this, [] {
+    qInfo() << QStringLiteral("Core created. Enable iterate.");
+    mInstance->mCbsTimer->start();
 
-      qInfo() << QStringLiteral("Core created. Enable iterate.");
-      mInstance->mCbsTimer->start();
+    emit mInstance->coreCreated();
+  });
 
-      emit mInstance->coreCreated();
-    });
+  QObject::connect(mHandlers.get(), &CoreHandlers::coreStarted, this, [] {
+    mInstance->mCallsListModel = new CallsListModel(mInstance);
+    mInstance->mContactsListModel = new ContactsListModel(mInstance);
+    mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
+    mInstance->mSettingsModel = new SettingsModel(mInstance);
+    mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
+
+    emit mInstance->coreStarted();
+  });
 
   mPromiseWatcher.setFuture(mPromiseBuild);
 }
