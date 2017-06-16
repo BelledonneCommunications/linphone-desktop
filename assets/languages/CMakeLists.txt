@@ -5,7 +5,7 @@
 # This line prevent `.ts` files deletion.
 # See: https://bugreports.qt.io/browse/QTBUG-31860
 #
-# On October 17, 2016, this issue is marked `invalid` but it's a
+# On October 17, 2016, this issue was marked `invalid` but it's a
 # bullshit. It's not tolerated to remove sources files.
 set_directory_properties(PROPERTIES CLEAN_NO_CUSTOM true)
 
@@ -26,8 +26,13 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${I18N_FILENAME}" "${I18N_CONTENT}")
 
 # Create `qm` files from `ts` files.
 qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES} OPTIONS -no-obsolete)
-# Translations target must be called by `make`|`make all`.
-add_custom_target(update_translations DEPENDS ${QM_FILES})
+
+# Update translations.
+add_custom_target(update_translations
+  COMMAND ${CMAKE_COMMAND} "-DLANGUAGES=\"${LANGUAGES}\"" -P "${CMAKE_CURRENT_SOURCE_DIR}/clean_translations.cmake"
+  DEPENDS ${QM_FILES}
+  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
 # Remove `*.qm` when `clean` is called.
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${QM_FILES}")
