@@ -140,14 +140,6 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
 
 // -----------------------------------------------------------------------------
 
-QString SipAddressesModel::interpretUrl (const QString &sipAddress) const {
-  shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::appStringToCoreString(sipAddress)
-    );
-
-  return lAddress ? ::Utils::coreStringToAppString(lAddress->asStringUriOnly()) : "";
-}
-
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) const {
   const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
       ::Utils::appStringToCoreString(sipAddress)
@@ -176,11 +168,25 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
     );
 
   if (!address)
-    return "";
+    return QString("");
 
   address->setTransport(LinphoneUtils::stringToTransportType(transport.toUpper()));
 
   return ::Utils::coreStringToAppString(address->asString());
+}
+
+// -----------------------------------------------------------------------------
+
+QString SipAddressesModel::interpretUrl (const QString &sipAddress) {
+  shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
+      ::Utils::appStringToCoreString(sipAddress)
+    );
+
+  return lAddress ? ::Utils::coreStringToAppString(lAddress->asStringUriOnly()) : "";
+}
+
+QString SipAddressesModel::interpretUrl (const QUrl &sipAddress) {
+  return sipAddress.toString();
 }
 
 bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {

@@ -135,6 +135,7 @@ set(SOURCES
   src/components/sound-player/SoundPlayer.cpp
   src/components/telephone-numbers/TelephoneNumbersModel.cpp
   src/components/timeline/TimelineModel.cpp
+  src/components/url-handlers/UrlHandlers.cpp
   src/externals/single-application/SingleApplication.cpp
   src/main.cpp
   src/utils/LinphoneUtils.cpp
@@ -186,6 +187,7 @@ set(HEADERS
   src/components/sound-player/SoundPlayer.hpp
   src/components/telephone-numbers/TelephoneNumbersModel.hpp
   src/components/timeline/TimelineModel.hpp
+  src/components/url-handlers/UrlHandlers.hpp
   src/externals/single-application/SingleApplication.hpp
   src/externals/single-application/SingleApplicationPrivate.hpp
   src/utils/LinphoneUtils.hpp

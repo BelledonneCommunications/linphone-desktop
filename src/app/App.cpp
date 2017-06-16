@@ -357,6 +357,7 @@ void App::registerTypes () {
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
   registerSingletonType<TimelineModel>("TimelineModel");
+  registerSingletonType<UrlHandlers>("UrlHandlers");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerMetaType<ChatModel::EntryType>("ChatModel::EntryType");

@@ -41,6 +41,7 @@
 #include "sound-player/SoundPlayer.hpp"
 #include "telephone-numbers/TelephoneNumbersModel.hpp"
 #include "timeline/TimelineModel.hpp"
+#include "url-handlers/UrlHandlers.hpp"
 
 #include "other/clipboard/Clipboard.hpp"
 #include "other/text-to-speech/TextToSpeech.hpp"

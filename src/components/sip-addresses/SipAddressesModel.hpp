@@ -24,6 +24,7 @@
 #define SIP_ADDRESSES_MODEL_H_
 
 #include <QAbstractListModel>
+#include <QUrl>
 
 #include "../chat/ChatModel.hpp"
 #include "../contact/ContactModel.hpp"
@@ -55,10 +56,11 @@ public:
   // Sip addresses helpers.
   // ---------------------------------------------------------------------------
 
-  Q_INVOKABLE QString interpretUrl (const QString &sipAddress) const;
-
   Q_INVOKABLE QString getTransportFromSipAddress (const QString &sipAddress) const;
   Q_INVOKABLE QString addTransportToSipAddress (const QString &sipAddress, const QString &transport) const;
+
+  Q_INVOKABLE static QString interpretUrl (const QString &sipAddress);
+  Q_INVOKABLE static QString interpretUrl (const QUrl &sipAddress);
 
   Q_INVOKABLE static bool sipAddressIsValid (const QString &sipAddress);
 

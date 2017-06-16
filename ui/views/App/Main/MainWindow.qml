@@ -262,4 +262,16 @@ ApplicationWindow {
 
     onClicked: CoreManager.forceRefreshRegisters()
   }
+
+  // ---------------------------------------------------------------------------
+  // Url handlers.
+  // ---------------------------------------------------------------------------
+
+  Connections {
+    target: UrlHandlers
+
+    onSip: window.setView('Conversation', {
+      sipAddress: sipAddress
+    })
+  }
 }

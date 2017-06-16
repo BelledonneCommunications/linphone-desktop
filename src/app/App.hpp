@@ -33,9 +33,10 @@
 
 // =============================================================================
 
+class QCommandLineParser;
+
 class Cli;
 class DefaultTranslator;
-class QCommandLineParser;
 
 class App : public SingleApplication {
   Q_OBJECT;
