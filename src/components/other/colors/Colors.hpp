@@ -29,12 +29,9 @@
 // =============================================================================
 
 #define ADD_COLOR(COLOR, VALUE) \
-signals: \
-  void COLOR ## Changed(const QColor &color); \
-private: \
   Q_PROPERTY(QColor COLOR MEMBER m ## COLOR WRITE set ## COLOR NOTIFY colorT ## COLOR ## Changed); \
   void set ## COLOR(const QColor &color) { \
-    m ## COLOR = QColor(color.rgb()); \
+    m ## COLOR = color; \
     emit colorT ## COLOR ## Changed(m ## COLOR); \
   } \
   QColor m ## COLOR = VALUE;
@@ -102,19 +99,11 @@ signals:
   void colorTeChanged (const QColor &color);
   void colorTfChanged (const QColor &color);
   void colorTgChanged (const QColor &color);
-  void colorTg10Changed (const QColor &color);
-  void colorTg20Changed (const QColor &color);
-  void colorTg90Changed (const QColor &color);
   void colorThChanged (const QColor &color);
   void colorTiChanged (const QColor &color);
-  void colorTi30Changed (const QColor &color);
   void colorTjChanged (const QColor &color);
-  void colorTj75Changed (const QColor &color);
   void colorTkChanged (const QColor &color);
-  void colorTk50Changed (const QColor &color);
   void colorTlChanged (const QColor &color);
-  void colorTl50Changed (const QColor &color);
-  void colorTl80Changed (const QColor &color);
   void colorTmChanged (const QColor &color);
   void colorTnChanged (const QColor &color);
   void colorToChanged (const QColor &color);
@@ -129,6 +118,7 @@ signals:
   void colorTxChanged (const QColor &color);
   void colorTyChanged (const QColor &color);
   void colorTzChanged (const QColor &color);
+
   void colorTerrorChanged (const QColor &color);
 };
 

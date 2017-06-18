@@ -20,8 +20,30 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QMetaProperty>
+
+#include "../../../utils/Utils.hpp"
+#include "../../core/CoreManager.hpp"
+
 #include "Colors.hpp"
+
+#define COLORS_SECTION "ui_colors"
+
+using namespace std;
 
 // =============================================================================
 
-Colors::Colors (QObject *parent) : QObject(parent) {}
+Colors::Colors (QObject *parent) : QObject(parent) {
+  shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
+  const QMetaObject *info = metaObject();
+
+  for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {
+    const QMetaProperty &metaProperty = info->property(i);
+
+    string colorName = metaProperty.name();
+    string colorValue = config->getString(COLORS_SECTION, colorName, "");
+
+    if (!colorValue.empty())
+      setProperty(colorName.c_str(), QColor(::Utils::coreStringToAppString(colorValue)));
+  }
+}
