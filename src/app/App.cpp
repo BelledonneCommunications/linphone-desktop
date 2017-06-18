@@ -385,6 +385,7 @@ void App::registerToolTypes () {
   qInfo() << QStringLiteral("Registering tool types...");
 
   registerToolType<Clipboard>("Clipboard");
+  registerToolType<Colors>("Colors");
   registerToolType<TextToSpeech>("TextToSpeech");
   registerToolType<Units>("Units");
 }

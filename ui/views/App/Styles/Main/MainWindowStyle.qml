@@ -1,7 +1,7 @@
 pragma Singleton
 import QtQuick 2.7
 
-import Common 1.0
+import Colors 1.0
 import Linphone.Styles 1.0
 import Units 1.0
 

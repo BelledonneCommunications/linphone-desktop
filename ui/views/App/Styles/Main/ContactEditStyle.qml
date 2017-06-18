@@ -1,7 +1,7 @@
 pragma Singleton
-import QtQuick 2.7
+import QtQml 2.2
 
-import Common 1.0
+import Colors 1.0
 import Units 1.0
 
 // =============================================================================

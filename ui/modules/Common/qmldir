@@ -6,7 +6,6 @@ module Common
 
 # Constants --------------------------------------------------------------------
 
-singleton Colors        1.0 Constants/Colors.qml
 singleton Constants     1.0 Constants/Constants.qml
 
 # Components -------------------------------------------------------------------

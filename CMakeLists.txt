@@ -122,6 +122,7 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/notifier/Notifier.cpp
+  src/components/other/colors/Colors.cpp
   src/components/other/clipboard/Clipboard.cpp
   src/components/other/text-to-speech/TextToSpeech.cpp
   src/components/other/units/Units.cpp
@@ -174,7 +175,8 @@ set(HEADERS
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/notifier/Notifier.hpp
-  src/components/other/clipboard/Clipboard.cpp
+  src/components/other/colors/Colors.hpp
+  src/components/other/clipboard/Clipboard.hpp
   src/components/other/text-to-speech/TextToSpeech.hpp
   src/components/other/units/Units.hpp
   src/components/presence/OwnPresenceModel.hpp
