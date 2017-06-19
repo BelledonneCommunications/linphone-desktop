@@ -37,17 +37,33 @@ Colors::Colors (QObject *parent) : QObject(parent) {
   QObject::connect(CoreManager::getInstance(), &CoreManager::coreCreated, this, &Colors::overrideColors);
 }
 
+// -----------------------------------------------------------------------------
+
 void Colors::overrideColors () {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   const QMetaObject *info = metaObject();
 
   for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {
-    const QMetaProperty &metaProperty = info->property(i);
-
-    string colorName = metaProperty.name();
-    string colorValue = config->getString(COLORS_SECTION, colorName, "");
+    const QMetaProperty metaProperty = info->property(i);
+    const string colorName = metaProperty.name();
+    const string colorValue = config->getString(COLORS_SECTION, colorName, "");
 
     if (!colorValue.empty())
       setProperty(colorName.c_str(), QColor(::Utils::coreStringToAppString(colorValue)));
   }
+}
+
+QStringList Colors::getColorNames () const {
+  static QStringList colorNames;
+  if (!colorNames.isEmpty())
+    return colorNames;
+
+  const QMetaObject *info = metaObject();
+  for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {
+    const QMetaProperty metaProperty = info->property(i);
+    if (metaProperty.isWritable())
+      colorNames << QString::fromLatin1(metaProperty.name());
+  }
+
+  return colorNames;
 }

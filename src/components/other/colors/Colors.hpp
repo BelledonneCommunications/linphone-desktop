@@ -50,6 +50,8 @@
 class Colors : public QObject {
   Q_OBJECT;
 
+  Q_PROPERTY(QStringList colorNames READ getColorNames CONSTANT);
+
   ADD_COLOR(a, "transparent");
   ADD_COLOR(b, "#5E5E5F");
   ADD_COLOR(c, "#CBCBCB");
@@ -124,6 +126,8 @@ signals:
 
 private:
   void overrideColors ();
+
+  QStringList getColorNames () const;
 };
 
 // -----------------------------------------------------------------------------
