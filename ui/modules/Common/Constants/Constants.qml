@@ -9,5 +9,5 @@ QtObject {
   property int sizeMax: 999999
 
   property string imagesFormat: '.svg'
-  property string imagesPath: 'qrc:/assets/images/'
+  property string imagesPath: 'image://internal/'
 }

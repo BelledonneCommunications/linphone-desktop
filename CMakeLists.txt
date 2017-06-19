@@ -97,6 +97,7 @@ set(SOURCES
   src/app/logger/Logger.cpp
   src/app/paths/Paths.cpp
   src/app/providers/AvatarProvider.cpp
+  src/app/providers/ImageProvider.cpp
   src/app/providers/ThumbnailProvider.cpp
   src/app/translator/DefaultTranslator.cpp
   src/components/assistant/AssistantModel.cpp
@@ -149,6 +150,7 @@ set(HEADERS
   src/app/logger/Logger.hpp
   src/app/paths/Paths.hpp
   src/app/providers/AvatarProvider.hpp
+  src/app/providers/ImageProvider.hpp
   src/app/providers/ThumbnailProvider.hpp
   src/app/translator/DefaultTranslator.hpp
   src/components/assistant/AssistantModel.hpp
