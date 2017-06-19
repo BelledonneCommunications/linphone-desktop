@@ -36,11 +36,12 @@
   } \
   QColor m ## COLOR = VALUE;
 
+// Alpha is in percent.
 #define ADD_COLOR_WITH_ALPHA(COLOR, ALPHA) \
   Q_PROPERTY(QColor COLOR ## ALPHA READ get ## COLOR ## ALPHA NOTIFY colorT ## COLOR ## Changed); \
   QColor get ## COLOR ## ALPHA() { \
     QColor color = m ## COLOR; \
-    color.setAlpha(ALPHA); \
+    color.setAlpha(ALPHA * 255 / 100); \
     return color; \
   }
 
