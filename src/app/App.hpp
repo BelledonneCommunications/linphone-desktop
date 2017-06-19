@@ -27,6 +27,7 @@
 #include <QQuickWindow>
 
 #include "../components/notifier/Notifier.hpp"
+#include "../components/other/colors/Colors.hpp"
 #include "../externals/single-application/SingleApplication.hpp"
 
 #define APP_CODE_RESTART 1000
@@ -63,6 +64,10 @@ public:
     return mNotifier;
   }
 
+  Colors *getColors () const {
+    return mColors;
+  }
+
   QQuickWindow *getMainWindow () const;
 
   bool hasFocus () const;
@@ -92,6 +97,7 @@ private:
   void registerTypes ();
   void registerSharedTypes ();
   void registerToolTypes ();
+  void registerSharedToolTypes ();
 
   void setTrayIcon ();
   void createNotifier ();
@@ -127,6 +133,8 @@ private:
 
   QQuickWindow *mCallsWindow = nullptr;
   QQuickWindow *mSettingsWindow = nullptr;
+
+  Colors *mColors = nullptr;
 
   Cli *mCli = nullptr;
 };

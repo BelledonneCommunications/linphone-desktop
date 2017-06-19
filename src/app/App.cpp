@@ -106,9 +106,7 @@ App::~App () {
 
 // -----------------------------------------------------------------------------
 
-inline QQuickWindow *createSubWindow (App *app, const char *path) {
-  QQmlEngine *engine = app->getEngine();
-
+inline QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char *path) {
   QQmlComponent component(engine, QUrl(path));
   if (component.isError()) {
     qWarning() << component.errors();
@@ -117,16 +115,16 @@ inline QQuickWindow *createSubWindow (App *app, const char *path) {
 
   QObject *object = component.create();
   QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
-  object->setParent(app->getEngine());
+  object->setParent(engine);
 
   return qobject_cast<QQuickWindow *>(object);
 }
 
 // -----------------------------------------------------------------------------
 
-inline void activeSplashScreen (App *app) {
+inline void activeSplashScreen (QQmlApplicationEngine *engine) {
   qInfo() << QStringLiteral("Open splash screen...");
-  QQuickWindow *splashScreen = ::createSubWindow(app, QML_VIEW_SPLASH_SCREEN);
+  QQuickWindow *splashScreen = ::createSubWindow(engine, QML_VIEW_SPLASH_SCREEN);
   QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {
     splashScreen->close();
     splashScreen->deleteLater();
@@ -176,17 +174,20 @@ void App::initContentApp () {
   mEngine->addImageProvider(ImageProvider::PROVIDER_ID, new ImageProvider());
   mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
 
+  mColors = new Colors(this);
+
   registerTypes();
   registerSharedTypes();
   registerToolTypes();
+  registerSharedToolTypes();
 
   // Enable notifications.
-  createNotifier();
+  mNotifier = new Notifier(mEngine);
 
   // Load splashscreen.
   bool selfTest = mParser->isSet("self-test");
   if (!selfTest)
-    ::activeSplashScreen(this);
+    ::activeSplashScreen(mEngine);
   // Set a self test limit.
   else
     QTimer::singleShot(SELF_TEST_DELAY, this, [] {
@@ -224,7 +225,7 @@ void App::executeCommand (const QString &command) {
 
 QQuickWindow *App::getCallsWindow () {
   if (!mCallsWindow)
-    mCallsWindow = ::createSubWindow(this, QML_VIEW_CALLS_WINDOW);
+    mCallsWindow = ::createSubWindow(mEngine, QML_VIEW_CALLS_WINDOW);
 
   return mCallsWindow;
 }
@@ -237,7 +238,7 @@ QQuickWindow *App::getMainWindow () const {
 
 QQuickWindow *App::getSettingsWindow () {
   if (!mSettingsWindow) {
-    mSettingsWindow = ::createSubWindow(this, QML_VIEW_SETTINGS_WINDOW);
+    mSettingsWindow = ::createSubWindow(mEngine, QML_VIEW_SETTINGS_WINDOW);
     QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
         if (visibility == QWindow::Hidden) {
           qInfo() << QStringLiteral("Update nat policy.");
@@ -338,6 +339,15 @@ void registerToolType (const char *name) {
     });
 }
 
+#define registerSharedToolType(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
+  NAME, 1, 0, NAME, \
+  [](QQmlEngine *, QJSEngine *) -> QObject *{ \
+    QObject *object = METHOD(); \
+    QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership); \
+    return object; \
+  } \
+)
+
 void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
 
@@ -387,12 +397,18 @@ void App::registerToolTypes () {
   qInfo() << QStringLiteral("Registering tool types...");
 
   registerToolType<Clipboard>("Clipboard");
-  registerToolType<Colors>("Colors");
   registerToolType<TextToSpeech>("TextToSpeech");
   registerToolType<Units>("Units");
 }
 
+void App::registerSharedToolTypes () {
+  qInfo() << QStringLiteral("Registering shared tool types...");
+
+  registerSharedToolType(Colors, "Colors", App::getInstance()->getColors);
+}
+
 #undef registerUncreatableType
+#undef registerSharedToolType
 #undef registerSharedSingletonType
 
 // -----------------------------------------------------------------------------
@@ -432,13 +448,6 @@ void App::setTrayIcon () {
   systemTrayIcon->setIcon(QIcon(WINDOW_ICON_PATH));
   systemTrayIcon->setToolTip("Linphone");
   systemTrayIcon->show();
-}
-
-// -----------------------------------------------------------------------------
-
-void App::createNotifier () {
-  if (!mNotifier)
-    mNotifier = new Notifier(this);
 }
 
 // -----------------------------------------------------------------------------

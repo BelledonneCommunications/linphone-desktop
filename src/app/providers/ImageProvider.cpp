@@ -28,6 +28,8 @@
 #include <QXmlStreamReader>
 #include <QtDebug>
 
+#include "../App.hpp"
+
 #include "ImageProvider.hpp"
 
 // Max image size in bytes. (100Kb)
@@ -35,28 +37,73 @@
 
 // =============================================================================
 
-const QString ImageProvider::PROVIDER_ID = "internal";
+static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteArray &value) {
+  QByteArray attribute = name;
+  attribute.append("=\"");
+  attribute.append(value);
+  attribute.append("\" ");
+  return attribute;
+}
 
-ImageProvider::ImageProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {}
+static QByteArray fillFillAndStroke (QXmlStreamAttributes &readerAttributes, bool &fill, bool &stroke, const Colors &colors) {
+  static QRegExp regex("^color-([^-]+)-(fill|stroke)$");
 
-// -----------------------------------------------------------------------------
-
-static QByteArray parseAttributes (QXmlStreamReader &reader) {
   QByteArray attributes;
-  for (const auto &attribute : reader.attributes()) {
-    const QByteArray prefix = attribute.prefix().toLatin1();
+  QByteArray value = readerAttributes.value("class").toLatin1();
+  if (!value.length())
+    return attributes;
+
+  for (const auto &subValue : value.split(' ')) {
+    regex.indexIn(subValue.trimmed());
+    const QStringList list = regex.capturedTexts();
+    if (list.length() != 3)
+      continue;
+
+    const QString colorName = list[1];
+    QVariant colorValue = colors.property(colorName.toStdString().c_str());
+    if (!colorValue.isValid()) {
+      qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(colorName);
+      continue;
+    }
+
+    QByteArray property = list[2].toLatin1();
+    if (property == QStringLiteral("fill"))
+      fill = true;
+    else
+      stroke = true;
+
+    attributes.append(
+      buildByteArrayAttribute(
+        property,
+        colorValue.value<QColor>().name().toLatin1()
+      )
+    );
+  }
+
+  return attributes;
+}
+
+static QByteArray parseAttributes (QXmlStreamReader &reader, const Colors &colors) {
+  QXmlStreamAttributes readerAttributes = reader.attributes();
+  bool fill = false, stroke = false;
+  QByteArray attributes = fillFillAndStroke(readerAttributes, fill, stroke, colors);
+
+  for (const auto &attribute : readerAttributes) {
+    QByteArray name = attribute.name().toLatin1();
+    if (fill && name == QStringLiteral("fill"))
+      continue;
+    if (stroke && name == QStringLiteral("stroke"))
+      continue;
+
+    QByteArray prefix = attribute.prefix().toLatin1();
+    QByteArray value = attribute.value().toLatin1();
+
     if (prefix.length() > 0) {
       attributes.append(prefix);
       attributes.append(":");
     }
 
-    attributes.append(attribute.name().toLatin1());
-    attributes.append("=\"");
-    attributes.append(attribute.value().toLatin1());
-    attributes.append("\" ");
+    attributes.append(buildByteArrayAttribute(name, value));
   }
 
   return attributes;
@@ -65,7 +112,7 @@ static QByteArray parseAttributes (QXmlStreamReader &reader) {
 static QByteArray parseDeclarations (QXmlStreamReader &reader) {
   QByteArray declarations;
   for (const auto &declaration : reader.namespaceDeclarations()) {
-    const QByteArray prefix = declaration.prefix().toLatin1();
+    QByteArray prefix = declaration.prefix().toLatin1();
     if (prefix.length() > 0) {
       declarations.append("xmlns:");
       declarations.append(prefix);
@@ -89,11 +136,11 @@ static QByteArray parseStartDocument (QXmlStreamReader &reader) {
   return startDocument;
 }
 
-static QByteArray parseStartElement (QXmlStreamReader &reader) {
+static QByteArray parseStartElement (QXmlStreamReader &reader, const Colors &colors) {
   QByteArray startElement = "<";
   startElement.append(reader.name().toLatin1());
   startElement.append(" ");
-  startElement.append(parseAttributes(reader));
+  startElement.append(parseAttributes(reader, colors));
   startElement.append(" ");
   startElement.append(parseDeclarations(reader));
   startElement.append(">");
@@ -110,6 +157,8 @@ static QByteArray parseEndElement (QXmlStreamReader &reader) {
 // -----------------------------------------------------------------------------
 
 static QByteArray computeContent (QFile &file) {
+  const Colors *colors = App::getInstance()->getColors();
+
   QByteArray content;
   QXmlStreamReader reader(&file);
   while (!reader.atEnd())
@@ -127,7 +176,7 @@ static QByteArray computeContent (QFile &file) {
         break;
 
       case QXmlStreamReader::StartElement:
-        content.append(parseStartElement(reader));
+        content.append(parseStartElement(reader, *colors));
         break;
 
       case QXmlStreamReader::EndElement:
@@ -145,6 +194,15 @@ static QByteArray computeContent (QFile &file) {
 
   return reader.hasError() ? QByteArray() : content;
 }
+
+// -----------------------------------------------------------------------------
+
+const QString ImageProvider::PROVIDER_ID = "internal";
+
+ImageProvider::ImageProvider () : QQuickImageProvider(
+    QQmlImageProviderBase::Image,
+    QQmlImageProviderBase::ForceAsynchronousImageLoading
+  ) {}
 
 // -----------------------------------------------------------------------------
 
