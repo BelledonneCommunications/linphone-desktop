@@ -5,7 +5,7 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="settings_video_selected" stroke-width="1.5" stroke="#FE5E00">
+        <g id="settings_video_selected" stroke-width="1.5" class="color-i-stroke" stroke="#FE5E00">
             <polygon id="videocall_icon" points="22.25 6.89355494 22.25 1.08716608 16.4942742 5.63134348 16.4942742 0.75 0.75 0.75 0.75 13.25 16.4942742 13.25 16.4942742 8.36865652 22.25 12.9128339"></polygon>
         </g>
     </g>
