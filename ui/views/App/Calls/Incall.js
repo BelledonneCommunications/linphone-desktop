@@ -87,7 +87,7 @@ function handleVideoRequested () {
 }
 
 function makeReadableSecuredString (securedString) {
-  if (!securedString.length) {
+  if (!securedString || !securedString.length) {
     return qsTr('callNotSecured')
   }
 

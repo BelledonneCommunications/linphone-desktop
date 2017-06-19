@@ -22,6 +22,7 @@ Window {
     callError: '',
     isOutgoing: true,
     recording: false,
+    localSas: '',
     sipAddress: '',
     type: false,
     updating: true,
