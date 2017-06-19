@@ -67,8 +67,8 @@ void ConferenceHelperModel::setFilter (const QString &pattern) {
 // -----------------------------------------------------------------------------
 
 bool ConferenceHelperModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
-  const QVariantMap &data = index.data().toMap();
+  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const QVariantMap data = index.data().toMap();
 
   return !mConferenceAddModel->contains(data["sipAddress"].toString());
 }

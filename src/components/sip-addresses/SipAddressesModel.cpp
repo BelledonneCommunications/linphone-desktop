@@ -130,7 +130,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
   mObservers.insert(sipAddress, model);
   QObject::connect(
     model, &SipAddressObserver::destroyed, this, [this, model]() {
-      const QString &sipAddress = model->getSipAddress();
+      const QString sipAddress = model->getSipAddress();
       if (mObservers.remove(sipAddress, model) == 0)
         qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sipAddress);
     });
@@ -255,7 +255,7 @@ void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QS
 }
 
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString &sipAddress = ::Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
+  const QString sipAddress = ::Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
   addOrUpdateSipAddress(sipAddress, message);
 }
 
@@ -459,7 +459,7 @@ void SipAddressesModel::initSipAddresses () {
   // Get sip addresses from calls.
   QSet<QString> addressDone;
   for (const auto &callLog : core->getCallLogs()) {
-    const QString &sipAddress = ::Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
+    const QString sipAddress = ::Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
 
     if (addressDone.contains(sipAddress))
       continue; // Already used.

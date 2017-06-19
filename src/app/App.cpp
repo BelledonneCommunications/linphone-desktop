@@ -524,7 +524,7 @@ void App::openAppAfterInit () {
 
   // Execute command argument if needed.
   {
-    const QString &commandArgument = getCommandArgument();
+    const QString commandArgument = getCommandArgument();
     if (!commandArgument.isEmpty())
       executeCommand(commandArgument);
   }

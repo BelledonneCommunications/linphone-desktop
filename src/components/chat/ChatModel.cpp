@@ -58,7 +58,7 @@ inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message
 }
 
 inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString &path = ::getDownloadPath(message);
+  const QString path = ::getDownloadPath(message);
   return !path.isEmpty() && QFileInfo(path).isFile();
 }
 
@@ -354,8 +354,8 @@ void ChatModel::resendMessage (int id) {
     return;
   }
 
-  const ChatEntryData &entry = mEntries[id];
-  const QVariantMap &map = entry.first;
+  const ChatEntryData entry = mEntries[id];
+  const QVariantMap map = entry.first;
 
   if (map["type"] != EntryType::MessageEntry) {
     qWarning() << QStringLiteral("Unable to resend entry %1. It's not a message.").arg(id);
@@ -413,7 +413,7 @@ void ChatModel::sendFileMessage (const QString &path) {
 // -----------------------------------------------------------------------------
 
 void ChatModel::downloadFile (int id) {
-  const ChatEntryData &entry = getFileMessageEntry(id);
+  const ChatEntryData entry = getFileMessageEntry(id);
   if (!entry.second)
     return;
 
@@ -432,7 +432,7 @@ void ChatModel::downloadFile (int id) {
   }
 
   bool soFarSoGood;
-  const QString &safeFilePath = ::Utils::getSafeFilePath(
+  const QString safeFilePath = ::Utils::getSafeFilePath(
       QStringLiteral("%1%2")
       .arg(CoreManager::getInstance()->getSettingsModel()->getDownloadFolder())
       .arg(entry.first["fileName"].toString()),
@@ -452,7 +452,7 @@ void ChatModel::downloadFile (int id) {
 }
 
 void ChatModel::openFile (int id, bool showDirectory) {
-  const ChatEntryData &entry = getFileMessageEntry(id);
+  const ChatEntryData entry = getFileMessageEntry(id);
   if (!entry.second)
     return;
 
@@ -469,7 +469,7 @@ void ChatModel::openFile (int id, bool showDirectory) {
 }
 
 bool ChatModel::fileWasDownloaded (int id) {
-  const ChatEntryData &entry = getFileMessageEntry(id);
+  const ChatEntryData entry = getFileMessageEntry(id);
   return entry.second && ::fileWasDownloaded(static_pointer_cast<linphone::ChatMessage>(entry.second));
 }
 
@@ -484,7 +484,7 @@ const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
     return ChatEntryData();
   }
 
-  const ChatEntryData &entry = mEntries[id];
+  const ChatEntryData entry = mEntries[id];
   if (entry.first["type"] != EntryType::MessageEntry) {
     qWarning() << QStringLiteral("Unable to download entry %1. It's not a message.").arg(id);
     return ChatEntryData();

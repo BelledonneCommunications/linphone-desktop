@@ -89,7 +89,7 @@ void Cli::addCommand (const QString &functionName, const QString &description, F
 // -----------------------------------------------------------------------------
 
 void Cli::executeCommand (const QString &command) noexcept {
-  const QString &functionName = parseFunctionName(command);
+  const QString functionName = parseFunctionName(command);
   if (functionName.isEmpty())
     return;
 
@@ -106,7 +106,7 @@ void Cli::executeCommand (const QString &command) noexcept {
 const QString Cli::parseFunctionName (const QString &command) noexcept {
   mRegExpFunctionName.indexIn(command);
 
-  const QStringList &texts = mRegExpFunctionName.capturedTexts();
+  const QStringList texts = mRegExpFunctionName.capturedTexts();
   if (texts.size() < 2) {
     qWarning() << QStringLiteral("Unable to parse function name of command: `%1`.").arg(command);
     return QString("");

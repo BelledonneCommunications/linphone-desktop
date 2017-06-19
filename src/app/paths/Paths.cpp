@@ -176,7 +176,7 @@ string Paths::getCapturesDirPath () {
 }
 
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
-  const QString &path = configPath.isEmpty()
+  const QString path = configPath.isEmpty()
     ? ::getAppConfigFilePath()
     : QFileInfo(configPath).absoluteFilePath();
 

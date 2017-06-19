@@ -42,7 +42,7 @@ QHash<int, QByteArray> TimelineModel::roleNames () const {
 // -----------------------------------------------------------------------------
 
 bool TimelineModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
   return index.data().toMap().contains("timestamp");
 }
 

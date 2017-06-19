@@ -51,16 +51,16 @@ void SipAddressesProxyModel::setFilter (const QString &pattern) {
 // -----------------------------------------------------------------------------
 
 bool SipAddressesProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
   return computeEntryWeight(index.data().toMap()) > 0;
 }
 
 bool SipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const QVariantMap &mapA = sourceModel()->data(left).toMap();
-  const QVariantMap &mapB = sourceModel()->data(right).toMap();
+  const QVariantMap mapA = sourceModel()->data(left).toMap();
+  const QVariantMap mapB = sourceModel()->data(right).toMap();
 
-  const QString &sipAddressA = mapA["sipAddress"].toString();
-  const QString &sipAddressB = mapB["sipAddress"].toString();
+  const QString sipAddressA = mapA["sipAddress"].toString();
+  const QString sipAddressB = mapB["sipAddress"].toString();
 
   // TODO: Use a cache, do not compute the same value as `filterAcceptsRow`.
   int weightA = computeEntryWeight(mapA);

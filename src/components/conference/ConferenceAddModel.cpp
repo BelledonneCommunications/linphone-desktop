@@ -71,7 +71,7 @@ QVariant ConferenceHelperModel::ConferenceAddModel::data (const QModelIndex &ind
 // -----------------------------------------------------------------------------
 
 bool ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_ptr<const linphone::Address> &linphoneAddress) {
-  const QString &sipAddress = ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
+  const QString sipAddress = ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
   if (mSipAddresses.contains(sipAddress))
     return false;
 
@@ -145,7 +145,7 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
     if (!call->getParams()->getLocalConferenceMode())
       continue;
 
-    const QString &sipAddress = ::Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
+    const QString sipAddress = ::Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
     if (!mSipAddresses.contains(sipAddress))
       call->terminate();
   }
@@ -180,7 +180,7 @@ void ConferenceHelperModel::ConferenceAddModel::handleDataChanged (
 
   int limit = bottomRight.row();
   for (int row = topLeft.row(); row <= limit; ++row) {
-    const QVariantMap &map = sipAddressesModel->data(sipAddressesModel->index(row, 0)).toMap();
+    const QVariantMap map = sipAddressesModel->data(sipAddressesModel->index(row, 0)).toMap();
 
     auto it = mSipAddresses.find(map["sipAddress"].toString());
     if (it != mSipAddresses.end()) {

@@ -188,7 +188,7 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
   shared_ptr<linphone::Core> core = coreManager->getCore();
   shared_ptr<linphone::ProxyConfig> proxyConfig = core->createProxyConfig();
 
-  const QString &domain = map["sipDomain"].toString();
+  const QString domain = map["sipDomain"].toString();
 
   QString sipAddress = QStringLiteral("sip:%1@%2")
     .arg(map["username"].toString()).arg(domain);

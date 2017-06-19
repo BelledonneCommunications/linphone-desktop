@@ -589,7 +589,7 @@ void SettingsModel::setTurnPassword (const QString &password) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
 
-  const string &username = natPolicy->getStunServerUsername();
+  const string username = natPolicy->getStunServerUsername();
   shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(username, "", "");
 
   if (authInfo) {

@@ -188,7 +188,7 @@ void AccountSettingsModel::eraseAllPasswords () {
 
 QString AccountSettingsModel::getUsername () const {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
-  const string &displayName = address->getDisplayName();
+  const string displayName = address->getDisplayName();
 
   return ::Utils::coreStringToAppString(
     displayName.empty() ? address->getUsername() : displayName

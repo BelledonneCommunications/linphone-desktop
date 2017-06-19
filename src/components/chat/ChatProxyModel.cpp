@@ -48,7 +48,7 @@ protected:
       return true;
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-    const QVariantMap &data = index.data().toMap();
+    const QVariantMap data = index.data().toMap();
 
     return data["type"].toInt() == mEntryTypeFilter;
   }

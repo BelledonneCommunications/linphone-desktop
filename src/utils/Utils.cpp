@@ -53,8 +53,8 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
   if (!info.exists())
     return filePath;
 
-  const QString &prefix = QStringLiteral("%1/%2").arg(info.absolutePath()).arg(info.baseName());
-  const QString &ext = info.completeSuffix();
+  const QString prefix = QStringLiteral("%1/%2").arg(info.absolutePath()).arg(info.baseName());
+  const QString ext = info.completeSuffix();
 
   for (int i = 1; i < SAFE_FILE_PATH_LIMIT; ++i) {
     QString safePath = QStringLiteral("%1 (%3).%4").arg(prefix).arg(i).arg(ext);

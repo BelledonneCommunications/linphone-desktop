@@ -31,17 +31,15 @@ using namespace std;
 CallsListProxyModel::CallsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   CallsListModel *callsListModel = CoreManager::getInstance()->getCallsListModel();
 
-  QObject::connect(
-    callsListModel, &CallsListModel::callRunning, this, [this](int index, CallModel *callModel) {
+  QObject::connect(callsListModel, &CallsListModel::callRunning, this, [this](int index, CallModel *callModel) {
       emit callRunning(index, callModel);
-    }
-  );
+    });
 
   setSourceModel(callsListModel);
   sort(0);
 }
 
 bool CallsListProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex &index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
   return !index.data().value<CallModel *>()->isInConference();
 }

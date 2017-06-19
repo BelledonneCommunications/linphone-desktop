@@ -108,7 +108,7 @@ void ContactModel::updateSipAddresses (VcardModel *oldVcardModel) {
 
   for (const auto &variantA : oldSipAddresses) {
 next:
-    const QString &sipAddress = variantA.toString();
+    const QString sipAddress = variantA.toString();
     if (done.contains(sipAddress))
       continue;
     done.insert(sipAddress);
@@ -125,7 +125,7 @@ next:
   oldSipAddresses.clear();
 
   for (const auto &variant : sipAddresses) {
-    const QString &sipAddress = variant.toString();
+    const QString sipAddress = variant.toString();
     if (done.contains(sipAddress))
       continue;
     done.insert(sipAddress);
@@ -159,7 +159,7 @@ void ContactModel::mergeVcardModel (VcardModel *vcardModel) {
 
   // 3. Merge address.
   {
-    const QVariantMap &oldAddress = vcardModel->getAddress();
+    const QVariantMap oldAddress = vcardModel->getAddress();
     QVariantMap newAddress = vcardModel->getAddress();
 
     static const char *attributes[4] = { "street", "locality", "postalCode", "country" };
