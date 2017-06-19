@@ -20,13 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QElapsedTimer>
 #include <QFile>
 #include <QFileInfo>
 #include <QImage>
 #include <QPainter>
 #include <QSvgRenderer>
-#include <QXmlStreamReader>
 #include <QtDebug>
+#include <QXmlStreamReader>
 
 #include "../App.hpp"
 
@@ -207,6 +208,9 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 // -----------------------------------------------------------------------------
 
 QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
+  QElapsedTimer timer;
+  timer.start();
+
   const QString path = QStringLiteral(":/assets/images/%1").arg(id);
 
   // 1. Read and update XML content.
@@ -244,6 +248,8 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
   // 4. Paint!
   QPainter painter(&image);
   renderer.render(&painter);
+
+  qInfo() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
 
   return image;
 }
