@@ -21,6 +21,7 @@
  */
 
 #include <QFile>
+#include <QFileInfo>
 #include <QImage>
 #include <QPainter>
 #include <QSvgRenderer>
@@ -28,6 +29,9 @@
 #include <QtDebug>
 
 #include "ImageProvider.hpp"
+
+// Max image size in bytes. (100Kb)
+#define MAX_IMAGE_SIZE 102400
 
 // =============================================================================
 
@@ -38,55 +42,139 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
     QQmlImageProviderBase::ForceAsynchronousImageLoading
   ) {}
 
-QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  const QString path = QStringLiteral(":/assets/images/%1").arg(id);
+// -----------------------------------------------------------------------------
 
-  // 1. Read and update XML content.
-  QFile file(path); // TODO: Check file size.
-  if (!file.open(QIODevice::ReadOnly))
-    return QImage(); // Invalid file.
+static QByteArray parseAttributes (QXmlStreamReader &reader) {
+  QByteArray attributes;
+  for (const auto &attribute : reader.attributes()) {
+    const QByteArray prefix = attribute.prefix().toLatin1();
+    if (prefix.length() > 0) {
+      attributes.append(prefix);
+      attributes.append(":");
+    }
 
-  QString content;
+    attributes.append(attribute.name().toLatin1());
+    attributes.append("=\"");
+    attributes.append(attribute.value().toLatin1());
+    attributes.append("\" ");
+  }
+
+  return attributes;
+}
+
+static QByteArray parseDeclarations (QXmlStreamReader &reader) {
+  QByteArray declarations;
+  for (const auto &declaration : reader.namespaceDeclarations()) {
+    const QByteArray prefix = declaration.prefix().toLatin1();
+    if (prefix.length() > 0) {
+      declarations.append("xmlns:");
+      declarations.append(prefix);
+    } else
+      declarations.append("xmlns");
+
+    declarations.append("=\"");
+    declarations.append(declaration.namespaceUri().toLatin1());
+    declarations.append("\" ");
+  }
+
+  return declarations;
+}
+
+static QByteArray parseStartDocument (QXmlStreamReader &reader) {
+  QByteArray startDocument = "<?xml version=\"";
+  startDocument.append(reader.documentVersion().toLatin1());
+  startDocument.append("\" encoding=\"");
+  startDocument.append(reader.documentEncoding().toLatin1());
+  startDocument.append("\"?>");
+  return startDocument;
+}
+
+static QByteArray parseStartElement (QXmlStreamReader &reader) {
+  QByteArray startElement = "<";
+  startElement.append(reader.name().toLatin1());
+  startElement.append(" ");
+  startElement.append(parseAttributes(reader));
+  startElement.append(" ");
+  startElement.append(parseDeclarations(reader));
+  startElement.append(">");
+  return startElement;
+}
+
+static QByteArray parseEndElement (QXmlStreamReader &reader) {
+  QByteArray endElement = "</";
+  endElement.append(reader.name().toLatin1());
+  endElement.append(">");
+  return endElement;
+}
+
+// -----------------------------------------------------------------------------
+
+static QByteArray computeContent (QFile &file) {
+  QByteArray content;
   QXmlStreamReader reader(&file);
   while (!reader.atEnd())
     switch (reader.readNext()) {
       case QXmlStreamReader::Comment:
       case QXmlStreamReader::DTD:
       case QXmlStreamReader::EndDocument:
-      case QXmlStreamReader::EntityReference:
       case QXmlStreamReader::Invalid:
       case QXmlStreamReader::NoToken:
       case QXmlStreamReader::ProcessingInstruction:
-      case QXmlStreamReader::StartDocument:
         break;
 
-      case QXmlStreamReader::StartElement: {
-        QXmlStreamNamespaceDeclarations declarations = reader.namespaceDeclarations();
-        QXmlStreamAttributes attributes = reader.attributes();
+      case QXmlStreamReader::StartDocument:
+        content.append(parseStartDocument(reader));
+        break;
 
-        for (const auto &declaration : declarations) {
-          qDebug() << "toto" << declaration.namespaceUri() << declaration.prefix();
-        }
-      } break; // TODO.
+      case QXmlStreamReader::StartElement:
+        content.append(parseStartElement(reader));
+        break;
 
       case QXmlStreamReader::EndElement:
-        content.append(QStringLiteral("</%1>").arg(reader.name().toString()));
+        content.append(parseEndElement(reader));
         break;
 
       case QXmlStreamReader::Characters:
-        content.append(reader.text());
+        content.append(reader.text().toLatin1());
+        break;
+
+      case QXmlStreamReader::EntityReference:
+        content.append(reader.name().toLatin1());
         break;
     }
 
-  qDebug() << content;
+  return reader.hasError() ? QByteArray() : content;
+}
 
-  if (reader.hasError())
-    return QImage(); // Invalid file.
+// -----------------------------------------------------------------------------
+
+QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
+  const QString path = QStringLiteral(":/assets/images/%1").arg(id);
+
+  // 1. Read and update XML content.
+  QFile file(path);
+  if (QFileInfo(file).size() > MAX_IMAGE_SIZE) {
+    qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
+    return QImage();
+  }
+
+  if (!file.open(QIODevice::ReadOnly)) {
+    qWarning() << QStringLiteral("Unable to open file: `%1`.").arg(path);
+    return QImage();
+  }
+
+  const QByteArray content = computeContent(file);
+  if (!content.length()) {
+    qWarning() << QStringLiteral("Unable to parse file: `%1`.").arg(path);
+    return QImage();
+  }
 
   // 2. Build svg renderer.
-  QSvgRenderer renderer(&reader);
-  if (!renderer.isValid())
-    return QImage(path); // Not a svg file.
+  QSvgRenderer renderer(content);
+  if (!renderer.isValid()) {
+    qWarning() << QStringLiteral("Invalid svg file: `%1`.").arg(path);
+    return QImage();
+  }
 
   // 3. Create en empty image.
   const QRectF viewBox = renderer.viewBoxF();
