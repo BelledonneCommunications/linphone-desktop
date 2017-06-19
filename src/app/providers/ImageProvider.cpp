@@ -20,9 +20,12 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QFile>
 #include <QImage>
 #include <QPainter>
 #include <QSvgRenderer>
+#include <QXmlStreamReader>
+#include <QtDebug>
 
 #include "ImageProvider.hpp"
 
@@ -38,19 +41,56 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
   const QString path = QStringLiteral(":/assets/images/%1").arg(id);
 
-  // 1. Build svg renderer.
-  QSvgRenderer renderer(path);
-  if (!renderer.isValid())
-    return QImage(path); // Not a svg file?
+  // 1. Read and update XML content.
+  QFile file(path);
+  if (!file.open(QIODevice::ReadOnly))
+    return QImage(); // Invalid file.
 
-  // 2. Create en empty image.
+  QString content;
+  QXmlStreamReader reader(&file);
+  bool soFarSoGood = true;
+
+  while (soFarSoGood && !reader.atEnd())
+    switch (reader.readNext()) {
+      case QXmlStreamReader::NoToken:
+      case QXmlStreamReader::Invalid:
+        break;
+
+      case QXmlStreamReader::StartDocument:
+      case QXmlStreamReader::EndDocument:
+      case QXmlStreamReader::StartElement: {
+        QXmlStreamAttributes attributes = reader.attributes();
+      } break;
+      case QXmlStreamReader::EndElement:
+        content.append(QStringLiteral("</%1>").arg(reader.name().toString()));
+        break;
+
+      case QXmlStreamReader::Characters:
+      case QXmlStreamReader::Comment:
+      case QXmlStreamReader::DTD:
+      case QXmlStreamReader::EntityReference:
+      case QXmlStreamReader::ProcessingInstruction:
+        break;
+    }
+
+  qDebug() << content;
+
+  if (!soFarSoGood || reader.hasError())
+    return QImage(); // Invalid file.
+
+  // 2. Build svg renderer.
+  QSvgRenderer renderer(&reader);
+  if (!renderer.isValid())
+    return QImage(path); // Not a svg file.
+
+  // 3. Create en empty image.
   const QRectF viewBox = renderer.viewBoxF();
   QImage image(static_cast<int>(viewBox.width()), static_cast<int>(viewBox.height()), QImage::Format_ARGB32);
   if (image.isNull())
     return QImage(); // Memory cannot be allocated.
   image.fill(0x00000000);
 
-  // 3. Paint!
+  // 4. Paint!
   QPainter painter(&image);
   renderer.render(&painter);
 
