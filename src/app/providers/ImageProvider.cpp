@@ -42,40 +42,45 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
   const QString path = QStringLiteral(":/assets/images/%1").arg(id);
 
   // 1. Read and update XML content.
-  QFile file(path);
+  QFile file(path); // TODO: Check file size.
   if (!file.open(QIODevice::ReadOnly))
     return QImage(); // Invalid file.
 
   QString content;
   QXmlStreamReader reader(&file);
-  bool soFarSoGood = true;
-
-  while (soFarSoGood && !reader.atEnd())
+  while (!reader.atEnd())
     switch (reader.readNext()) {
-      case QXmlStreamReader::NoToken:
+      case QXmlStreamReader::Comment:
+      case QXmlStreamReader::DTD:
+      case QXmlStreamReader::EndDocument:
+      case QXmlStreamReader::EntityReference:
       case QXmlStreamReader::Invalid:
+      case QXmlStreamReader::NoToken:
+      case QXmlStreamReader::ProcessingInstruction:
+      case QXmlStreamReader::StartDocument:
         break;
 
-      case QXmlStreamReader::StartDocument:
-      case QXmlStreamReader::EndDocument:
       case QXmlStreamReader::StartElement: {
+        QXmlStreamNamespaceDeclarations declarations = reader.namespaceDeclarations();
         QXmlStreamAttributes attributes = reader.attributes();
-      } break;
+
+        for (const auto &declaration : declarations) {
+          qDebug() << "toto" << declaration.namespaceUri() << declaration.prefix();
+        }
+      } break; // TODO.
+
       case QXmlStreamReader::EndElement:
         content.append(QStringLiteral("</%1>").arg(reader.name().toString()));
         break;
 
       case QXmlStreamReader::Characters:
-      case QXmlStreamReader::Comment:
-      case QXmlStreamReader::DTD:
-      case QXmlStreamReader::EntityReference:
-      case QXmlStreamReader::ProcessingInstruction:
+        content.append(reader.text());
         break;
     }
 
   qDebug() << content;
 
-  if (!soFarSoGood || reader.hasError())
+  if (reader.hasError())
     return QImage(); // Invalid file.
 
   // 2. Build svg renderer.
