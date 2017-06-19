@@ -108,5 +108,28 @@ TabContainer {
 
       onClicked: Logic.cleanAvatars()
     }
+
+    // -------------------------------------------------------------------------
+    // Other.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('otherTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('exitOnCloseLabel')
+
+          Switch {
+            id: autoAnswer
+
+            checked: SettingsModel.exitOnClose
+
+            onClicked: SettingsModel.exitOnClose = !checked
+          }
+        }
+      }
+    }
   }
 }

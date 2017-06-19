@@ -700,3 +700,14 @@ void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
   else
     emit remoteProvisioningNotChanged(remoteProvisioning);
 }
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getExitOnClose () const {
+  return !!mConfig->getInt(UI_SECTION, "exit_on_close", 0);
+}
+
+void SettingsModel::setExitOnClose (bool value) {
+  mConfig->setInt(UI_SECTION, "exit_on_close", value);
+  emit exitOnCloseChanged(value);
+}

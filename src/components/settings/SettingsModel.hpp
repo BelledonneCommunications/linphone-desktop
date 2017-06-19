@@ -118,6 +118,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
   Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
 
+  Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged);
+
 public:
   enum MediaEncryption {
     MediaEncryptionNone = linphone::MediaEncryptionNone,
@@ -273,6 +275,9 @@ public:
   QString getRemoteProvisioning () const;
   void setRemoteProvisioning (const QString &remoteProvisioning);
 
+  bool getExitOnClose () const;
+  void setExitOnClose (bool value);
+
   // ---------------------------------------------------------------------------
 
   static const std::string UI_SECTION;
@@ -349,6 +354,8 @@ signals:
 
   void remoteProvisioningChanged (const QString &remoteProvisioning);
   void remoteProvisioningNotChanged (const QString &remoteProvisioning);
+
+  void exitOnCloseChanged (bool value);
 
 private:
   std::shared_ptr<linphone::Config> mConfig;

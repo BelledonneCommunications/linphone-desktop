@@ -1296,6 +1296,14 @@ your friend&apos;s SIP address or username.</translation>
         <source>setLocaleDescription</source>
         <translation>It is necessary to restart the application. Do you want to restart now?</translation>
     </message>
+    <message>
+        <source>otherTitle</source>
+        <translation>Other</translation>
+    </message>
+    <message>
+        <source>exitOnCloseLabel</source>
+        <translation>Exit app on close window</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

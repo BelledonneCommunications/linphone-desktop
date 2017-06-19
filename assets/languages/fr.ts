@@ -1294,6 +1294,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>setLocaleDescription</source>
         <translation>Voulez-vous redémarrer maintenant pour prendre en compte ces modifications ?</translation>
     </message>
+    <message>
+        <source>otherTitle</source>
+        <translation>Divers</translation>
+    </message>
+    <message>
+        <source>exitOnCloseLabel</source>
+        <translation>Quitter à la fermeture de fenêtre</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

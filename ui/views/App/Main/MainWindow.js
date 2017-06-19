@@ -18,6 +18,11 @@ function handleActiveFocusItemChanged (activeFocusItem) {
 }
 
 function handleClosing (close) {
+  if (Linphone.SettingsModel.exitOnClose) {
+    Qt.quit()
+    return
+  }
+
   if (Qt.platform.os === 'osx') {
     close.accepted = false
     window.showMinimized()

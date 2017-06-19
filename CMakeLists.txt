@@ -233,8 +233,8 @@ foreach (line ${QRC_RESOURCES_CONTENT})
     result
     "${line}"
   )
-  string(REGEX MATCH "\\.[a-z]+$" isUi ${result})
-  if (NOT ${isUi} STREQUAL "")
+  string(REGEX MATCH "\\.[a-z]+$" is_ui ${result})
+  if (NOT ${is_ui} STREQUAL "")
     list(APPEND QML_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/${result}")
   endif ()
 endforeach ()
