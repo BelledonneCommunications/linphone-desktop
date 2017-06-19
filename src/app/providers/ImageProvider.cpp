@@ -46,11 +46,12 @@ static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteAr
   return attribute;
 }
 
-static QByteArray fillFillAndStroke (QXmlStreamAttributes &readerAttributes, bool &fill, bool &stroke, const Colors &colors) {
+static QByteArray fillFillAndStroke (const QXmlStreamAttributes &readerAttributes, bool &fill, bool &stroke, const Colors &colors) {
   static QRegExp regex("^color-([^-]+)-(fill|stroke)$");
 
   QByteArray attributes;
-  QByteArray value = readerAttributes.value("class").toLatin1();
+
+  const QByteArray value = readerAttributes.value("class").toLatin1();
   if (!value.length())
     return attributes;
 
@@ -61,13 +62,13 @@ static QByteArray fillFillAndStroke (QXmlStreamAttributes &readerAttributes, boo
       continue;
 
     const QString colorName = list[1];
-    QVariant colorValue = colors.property(colorName.toStdString().c_str());
+    const QVariant colorValue = colors.property(colorName.toStdString().c_str());
     if (!colorValue.isValid()) {
       qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(colorName);
       continue;
     }
 
-    QByteArray property = list[2].toLatin1();
+    const QByteArray property = list[2].toLatin1();
     if (property == QStringLiteral("fill"))
       fill = true;
     else
@@ -84,20 +85,20 @@ static QByteArray fillFillAndStroke (QXmlStreamAttributes &readerAttributes, boo
   return attributes;
 }
 
-static QByteArray parseAttributes (QXmlStreamReader &reader, const Colors &colors) {
-  QXmlStreamAttributes readerAttributes = reader.attributes();
+static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors &colors) {
+  const QXmlStreamAttributes readerAttributes = reader.attributes();
   bool fill = false, stroke = false;
   QByteArray attributes = fillFillAndStroke(readerAttributes, fill, stroke, colors);
 
   for (const auto &attribute : readerAttributes) {
-    QByteArray name = attribute.name().toLatin1();
+    const QByteArray name = attribute.name().toLatin1();
     if (fill && name == QStringLiteral("fill"))
       continue;
     if (stroke && name == QStringLiteral("stroke"))
       continue;
 
-    QByteArray prefix = attribute.prefix().toLatin1();
-    QByteArray value = attribute.value().toLatin1();
+    const QByteArray prefix = attribute.prefix().toLatin1();
+    const QByteArray value = attribute.value().toLatin1();
 
     if (prefix.length() > 0) {
       attributes.append(prefix);
@@ -110,10 +111,10 @@ static QByteArray parseAttributes (QXmlStreamReader &reader, const Colors &color
   return attributes;
 }
 
-static QByteArray parseDeclarations (QXmlStreamReader &reader) {
+static QByteArray parseDeclarations (const QXmlStreamReader &reader) {
   QByteArray declarations;
   for (const auto &declaration : reader.namespaceDeclarations()) {
-    QByteArray prefix = declaration.prefix().toLatin1();
+    const QByteArray prefix = declaration.prefix().toLatin1();
     if (prefix.length() > 0) {
       declarations.append("xmlns:");
       declarations.append(prefix);
@@ -128,7 +129,7 @@ static QByteArray parseDeclarations (QXmlStreamReader &reader) {
   return declarations;
 }
 
-static QByteArray parseStartDocument (QXmlStreamReader &reader) {
+static QByteArray parseStartDocument (const QXmlStreamReader &reader) {
   QByteArray startDocument = "<?xml version=\"";
   startDocument.append(reader.documentVersion().toLatin1());
   startDocument.append("\" encoding=\"");
@@ -137,7 +138,7 @@ static QByteArray parseStartDocument (QXmlStreamReader &reader) {
   return startDocument;
 }
 
-static QByteArray parseStartElement (QXmlStreamReader &reader, const Colors &colors) {
+static QByteArray parseStartElement (const QXmlStreamReader &reader, const Colors &colors) {
   QByteArray startElement = "<";
   startElement.append(reader.name().toLatin1());
   startElement.append(" ");
@@ -148,7 +149,7 @@ static QByteArray parseStartElement (QXmlStreamReader &reader, const Colors &col
   return startElement;
 }
 
-static QByteArray parseEndElement (QXmlStreamReader &reader) {
+static QByteArray parseEndElement (const QXmlStreamReader &reader) {
   QByteArray endElement = "</";
   endElement.append(reader.name().toLatin1());
   endElement.append(">");
