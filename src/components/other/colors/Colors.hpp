@@ -120,6 +120,9 @@ signals:
   void colorTzChanged (const QColor &color);
 
   void colorTerrorChanged (const QColor &color);
+
+private:
+  void overrideColors ();
 };
 
 // -----------------------------------------------------------------------------

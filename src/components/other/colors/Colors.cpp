@@ -34,6 +34,10 @@ using namespace std;
 // =============================================================================
 
 Colors::Colors (QObject *parent) : QObject(parent) {
+  QObject::connect(CoreManager::getInstance(), &CoreManager::coreCreated, this, &Colors::overrideColors);
+}
+
+void Colors::overrideColors () {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   const QMetaObject *info = metaObject();
 
