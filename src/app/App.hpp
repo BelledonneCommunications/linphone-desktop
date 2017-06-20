@@ -28,7 +28,7 @@
 
 #include "../components/notifier/Notifier.hpp"
 #include "../components/other/colors/Colors.hpp"
-#include "../externals/single-application/SingleApplication.hpp"
+#include "single-application/SingleApplication.hpp"
 
 #define APP_CODE_RESTART 1000
 

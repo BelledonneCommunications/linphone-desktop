@@ -77,9 +77,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_
 # ------------------------------------------------------------------------------
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
-if(ENABLE_DBUS)
-	list(APPEND QT5_PACKAGES DBus)
-endif()
+if (ENABLE_DBUS)
+  list(APPEND QT5_PACKAGES DBus)
+endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 if (LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
@@ -194,7 +194,6 @@ set(HEADERS
   src/components/telephone-numbers/TelephoneNumbersModel.hpp
   src/components/timeline/TimelineModel.hpp
   src/components/url-handlers/UrlHandlers.hpp
-  src/externals/single-application/SingleApplication.hpp
   src/utils/LinphoneUtils.hpp
   src/utils/Utils.hpp
 )
@@ -203,8 +202,8 @@ if(ENABLE_DBUS)
   list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
   list(APPEND HEADERS src/app/single-application/SingleApplicationDBusPrivate.hpp)
 else()
-  list(APPEND SOURCES src/externals/single-application/SingleApplication.cpp)
-  list(APPEND HEADERS src/externals/single-application/SingleApplicationPrivate.hpp)
+  list(APPEND SOURCES src/app/single-application/SingleApplication.cpp)
+  list(APPEND HEADERS src/app/single-application/SingleApplicationPrivate.hpp)
 endif()
 
 set(QRC_RESOURCES resources.qrc)

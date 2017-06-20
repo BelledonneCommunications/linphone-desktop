@@ -26,9 +26,7 @@
 #include <QtCore/QByteArray>
 #include <QtDBus/QtDBus>
 
-#include "../../utils/Utils.hpp"
-
-#include "../../externals/single-application/SingleApplication.hpp"
+#include "SingleApplication.hpp"
 #include "SingleApplicationDBusPrivate.hpp"
 
 // =============================================================================
@@ -36,24 +34,18 @@
 const char *SERVICE_NAME = "org.linphone.SingleApplication";
 
 SingleApplicationPrivate::SingleApplicationPrivate (SingleApplication *q_ptr)
-  : QDBusAbstractAdaptor(q_ptr), q_ptr(q_ptr) {
-}
-
-SingleApplicationPrivate::~SingleApplicationPrivate () {
-}
+  : QDBusAbstractAdaptor(q_ptr), q_ptr(q_ptr) {}
 
 QDBusConnection SingleApplicationPrivate::getBus () const {
-  if (options & SingleApplication::Mode::User) {
+  if (options & SingleApplication::Mode::User)
     return QDBusConnection::sessionBus();
-  } else {
-    return QDBusConnection::systemBus();
-  }
+
+  return QDBusConnection::systemBus();
 }
 
 void SingleApplicationPrivate::startPrimary () {
-  if (getBus().registerObject("/", this, QDBusConnection::ExportAllSlots) == false) {
-    qWarning() << "Failed to register single application object on DBus";
-  }
+  if (!getBus().registerObject("/", this, QDBusConnection::ExportAllSlots))
+    qWarning() << QStringLiteral("Failed to register single application object on DBus.");
   instanceNumber = 0;
 }
 
@@ -69,7 +61,7 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
   d->options = options;
 
   if (!d->getBus().isConnected()) {
-    qWarning() << "Cannot connect to the D-Bus session bus.";
+    qWarning() << QStringLiteral("Cannot connect to the D-Bus session bus.");
     delete d;
     ::exit(EXIT_FAILURE);
   }

@@ -22,8 +22,8 @@
 
 // See: https://github.com/itay-grudev/SingleApplication/
 
-#ifndef SINGLE_APPLICATION_H
-#define SINGLE_APPLICATION_H
+#ifndef SINGLE_APPLICATION_H_
+#define SINGLE_APPLICATION_H_
 
 #include <QApplication>
 #include <QtCore/QtGlobal>
@@ -123,4 +123,4 @@ private:
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(SingleApplication::Options)
 
-#endif // SINGLE_APPLICATION_H
+#endif // SINGLE_APPLICATION_H_

@@ -20,12 +20,12 @@
  *      Author: Ghislain MARY
  */
 
-#ifndef SINGLE_APPLICATION_DBUS_PRIVATE_H
-#define SINGLE_APPLICATION_DBUS_PRIVATE_H
-
-#include "../../externals/single-application/SingleApplication.hpp"
+#ifndef SINGLE_APPLICATION_DBUS_PRIVATE_H_
+#define SINGLE_APPLICATION_DBUS_PRIVATE_H_
 
 #include <QtDBus/QtDBus>
+
+#include "SingleApplication.hpp"
 
 // =============================================================================
 
@@ -40,7 +40,7 @@ class SingleApplicationPrivate : public QDBusAbstractAdaptor {
 
 public:
   Q_DECLARE_PUBLIC(SingleApplication) SingleApplicationPrivate (SingleApplication *q_ptr);
-  ~SingleApplicationPrivate ();
+  ~SingleApplicationPrivate () = default;
 
   QDBusConnection getBus () const;
 
@@ -52,7 +52,7 @@ public:
   quint32 instanceNumber;
 
 public Q_SLOTS:
-  void messageReceived(quint32 instanceId, QByteArray message);
+  void messageReceived (quint32 instanceId, QByteArray message);
 };
 
-#endif // SINGLE_APPLICATION_DBUS_PRIVATE_H
+#endif // SINGLE_APPLICATION_DBUS_PRIVATE_H_

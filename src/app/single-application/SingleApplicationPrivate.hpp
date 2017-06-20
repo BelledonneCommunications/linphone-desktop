@@ -29,8 +29,8 @@
 // version without notice, or may even be removed.
 //
 
-#ifndef SINGLE_APPLICATION_PRIVATE_H
-#define SINGLE_APPLICATION_PRIVATE_H
+#ifndef SINGLE_APPLICATION_PRIVATE_H_
+#define SINGLE_APPLICATION_PRIVATE_H_
 
 #include <QtCore/QMutex>
 #include <QtCore/QSharedMemory>
@@ -79,4 +79,4 @@ public Q_SLOTS:
   void slotClientConnectionClosed(QLocalSocket *, quint32);
 };
 
-#endif // SINGLE_APPLICATION_PRIVATE_H
+#endif // SINGLE_APPLICATION_PRIVATE_H_
