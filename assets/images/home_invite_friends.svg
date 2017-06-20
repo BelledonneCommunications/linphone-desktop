@@ -21,7 +21,7 @@
                     <mask id="mask-2" fill="white">
                         <use xlink:href="#path-1"></use>
                     </mask>
-                    <use id="Clip-12" fill="#EA601D" xlink:href="#path-1"></use>
+                    <use id="Clip-12" class="color-i-fill" fill="#FE5E00" xlink:href="#path-1"></use>
                 </g>
                 <g id="Group-18" transform="translate(98.000000, 110.000000)" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M32.2954,21.7427 C32.2954,22.1537 31.9614,22.4867 31.5514,22.4867 L1.4104,22.4867 C0.9994,22.4867 0.6664,22.1537 0.6664,21.7427 L0.6664,1.3197 C0.6664,0.9087 0.9994,0.5747 1.4104,0.5747 L31.5514,0.5747 C31.9614,0.5747 32.2954,0.9087 32.2954,1.3197 L32.2954,21.7427 Z" id="Stroke-14"></path>

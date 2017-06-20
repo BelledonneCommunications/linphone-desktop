@@ -19,7 +19,7 @@
                     <mask id="mask-2" fill="white">
                         <use xlink:href="#path-1"></use>
                     </mask>
-                    <use id="Clip-8" fill="#EA601D" xlink:href="#path-1"></use>
+                    <use id="Clip-8" class="color-i-fill" fill="#FE5E00" xlink:href="#path-1"></use>
                 </g>
                 <path d="M129.059,126.971 C129.059,128.736 127.628,130.167 125.864,130.167 L120.731,130.167 L117.682,137.137 L113.327,130.167 L105.197,130.167 C103.431,130.167 102,128.736 102,126.971 L102,114.196 C102,112.43 103.431,111 105.197,111 L125.864,111 C127.628,111 129.059,112.43 129.059,114.196 L129.059,126.971 Z" id="Stroke-10" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
             </g>

@@ -59,7 +59,8 @@
      style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1;stroke-linecap:round">
     <g
        id="add_clic"
-       style="stroke:#ff5e00">
+       class="color-i-style-stroke"
+       style="stroke:#FE5E00">
       <path
          d="m 17.5,9 c 0,4.694125 -3.805025,8.5 -8.5,8.5 C 4.305875,17.5 0.5,13.694125 0.5,9 0.5,4.3056625 4.305875,0.5 9,0.5 c 4.694975,0 8.5,3.8056625 8.5,8.5 z"
          id="path8"
