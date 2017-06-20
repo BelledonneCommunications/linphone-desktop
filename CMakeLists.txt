@@ -49,7 +49,6 @@ if (NOT WIN32)
 -Wextra \
 -Wfloat-equal \
 -Winit-self \
--Winline \
 -Wold-style-cast \
 -Woverloaded-virtual \
 -Wpointer-arith \
