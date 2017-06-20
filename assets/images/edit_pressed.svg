@@ -5,7 +5,7 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="settings_edit_default" stroke="#FF5E00">
+        <g id="settings_edit_default" class="color-i-stroke" stroke="#FE5E00">
             <path d="M3.23925194,12.4294194 L5.64097342,12.2360444 L14.5,2.7372 L13.3062823,1.63479722 L13.270401,1.60141111 L12.0770155,0.5 L3.21798895,9.99851389 L3.20303841,12.3953722 L3.23925194,12.4294194 L3.23925194,12.4294194 Z M10.2646776,2.442675 L12.6999548,4.69078333 L10.2646776,2.442675 Z M0.5,14.5 L4.84628861,14.5 L0.5,14.5 Z" id="Imported-Layers-Copy"></path>
         </g>
     </g>
