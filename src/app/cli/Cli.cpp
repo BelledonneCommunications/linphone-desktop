@@ -45,7 +45,12 @@ static void cliCall (const QHash<QString, QString> &args) {
 
 // =============================================================================
 
-Cli::Command::Command (const QString &functionName, const QString &description, Cli::Function function, const QHash<QString, Cli::Argument> &argsScheme) :
+Cli::Command::Command (
+  const QString &functionName,
+  const QString &description,
+  Cli::Function function,
+  const QHash<QString, Cli::Argument> &argsScheme
+) :
   mFunctionName(functionName),
   mDescription(description),
   mFunction(function),
@@ -68,7 +73,7 @@ void Cli::Command::execute (const QHash<QString, QString> &args) {
 // FIXME: Do not accept args without value like: cmd toto.
 // In the future `toto` could be a boolean argument.
 QRegExp Cli::mRegExpArgs("(?:(?:(\\w+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|([^\\s]+)\\s*))");
-QRegExp Cli::mRegExpFunctionName("^\\s*(\\w+)\\s*");
+QRegExp Cli::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 Cli::Cli (QObject *parent) : QObject(parent) {
   addCommand("show", tr("showFunctionDescription"), ::cliShow);
@@ -79,7 +84,12 @@ Cli::Cli (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
-void Cli::addCommand (const QString &functionName, const QString &description, Function function, const QHash<QString, Argument> &argsScheme) noexcept {
+void Cli::addCommand (
+  const QString &functionName,
+  const QString &description,
+  Function function,
+  const QHash<QString, Argument> &argsScheme
+) noexcept {
   if (mCommands.contains(functionName))
     qWarning() << QStringLiteral("Command already exists: `%1`.").arg(functionName);
   else
@@ -121,7 +131,11 @@ const QString Cli::parseFunctionName (const QString &command) noexcept {
   return functionName;
 }
 
-const QHash<QString, QString> Cli::parseArgs (const QString &command, const QString functionName, bool &soFarSoGood) noexcept {
+const QHash<QString, QString> Cli::parseArgs (
+  const QString &command,
+  const QString functionName,
+  bool &soFarSoGood
+) noexcept {
   QHash<QString, QString> args;
   int pos = 0;
 
