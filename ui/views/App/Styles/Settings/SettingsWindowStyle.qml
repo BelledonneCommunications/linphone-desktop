@@ -1,9 +1,12 @@
 pragma Singleton
 import QtQuick 2.7
 
+import Colors 1.0
+
 // =============================================================================
 
 QtObject {
+  property color color: Colors.k
   property int height: 640
   property int width: 1024
 

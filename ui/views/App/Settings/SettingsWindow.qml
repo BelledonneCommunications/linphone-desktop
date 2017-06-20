@@ -29,6 +29,11 @@ ApplicationWindow {
 
   // ---------------------------------------------------------------------------
 
+  Rectangle {
+    anchors.fill: parent
+    color: 'SettingsWindowStyle.color'
+  }
+
   ColumnLayout {
     anchors.fill: parent
     spacing: 0
