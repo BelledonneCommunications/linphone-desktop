@@ -20,10 +20,10 @@
  *      Author: Ronan Abhamon
  */
 
+#include <linphone++/linphone.hh>
 #include <QMetaProperty>
 
 #include "../../../utils/Utils.hpp"
-#include "../../core/CoreManager.hpp"
 
 #include "Colors.hpp"
 
@@ -33,14 +33,15 @@ using namespace std;
 
 // =============================================================================
 
-Colors::Colors (QObject *parent) : QObject(parent) {
-  QObject::connect(CoreManager::getInstance(), &CoreManager::coreCreated, this, &Colors::overrideColors);
+Colors::Colors (QObject *parent) : QObject(parent) {}
+
+void Colors::useConfig (const std::shared_ptr<linphone::Config> &config) {
+  overrideColors(config);
 }
 
 // -----------------------------------------------------------------------------
 
-void Colors::overrideColors () {
-  shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
+void Colors::overrideColors (const shared_ptr<linphone::Config> &config) {
   const QMetaObject *info = metaObject();
 
   for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {

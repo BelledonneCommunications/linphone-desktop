@@ -68,6 +68,16 @@ inline bool installLocale (App &app, QTranslator &translator, const QLocale &loc
   return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
 }
 
+inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
+  string configPath = Paths::getConfigFilePath(parser.value("config"), false);
+  if (Paths::filePathExists(configPath))
+    return linphone::Config::newWithFactory(configPath, "");
+
+  return nullptr;
+}
+
+// -----------------------------------------------------------------------------
+
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
   setWindowIcon(QIcon(WINDOW_ICON_PATH));
 
@@ -87,7 +97,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   // Init locale.
   mTranslator = new DefaultTranslator(this);
-  initLocale();
+  initLocale(::getConfigIfExists(*mParser));
 
   if (mParser->isSet("help")) {
     createParser();
@@ -175,6 +185,7 @@ void App::initContentApp () {
   mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
 
   mColors = new Colors(this);
+  mColors->useConfig(::getConfigIfExists(*mParser));
 
   registerTypes();
   registerSharedTypes();
@@ -452,16 +463,11 @@ void App::setTrayIcon () {
 
 // -----------------------------------------------------------------------------
 
-void App::initLocale () {
+void App::initLocale (const shared_ptr<linphone::Config> &config) {
   // Try to use preferred locale.
   QString locale;
-  string configPath = Paths::getConfigFilePath(mParser->value("config"), false);
-  if (Paths::filePathExists(configPath))
-    locale = ::Utils::coreStringToAppString(
-        linphone::Config::newWithFactory(configPath, "")->getString(
-          SettingsModel::UI_SECTION, "locale", ""
-        )
-      );
+  if (config)
+    locale = ::Utils::coreStringToAppString(config->getString(SettingsModel::UI_SECTION, "locale", ""));
 
   if (!locale.isEmpty() && ::installLocale(*this, *mTranslator, QLocale(locale))) {
     mLocale = locale;

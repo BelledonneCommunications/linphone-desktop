@@ -47,6 +47,10 @@
 
 // -----------------------------------------------------------------------------
 
+namespace linphone {
+  class Config;
+}
+
 class Colors : public QObject {
   Q_OBJECT;
 
@@ -94,6 +98,8 @@ public:
   Colors (QObject *parent = Q_NULLPTR);
   ~Colors () = default;
 
+  void useConfig (const std::shared_ptr<linphone::Config> &config);
+
 signals:
   void colorTaChanged (const QColor &color);
   void colorTbChanged (const QColor &color);
@@ -125,7 +131,7 @@ signals:
   void colorTerrorChanged (const QColor &color);
 
 private:
-  void overrideColors ();
+  void overrideColors (const std::shared_ptr<linphone::Config> &config);
 
   QStringList getColorNames () const;
 };

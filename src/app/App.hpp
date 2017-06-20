@@ -102,7 +102,7 @@ private:
   void setTrayIcon ();
   void createNotifier ();
 
-  void initLocale ();
+  void initLocale (const std::shared_ptr<linphone::Config> &config);
 
   QString getConfigLocale () const;
   void setConfigLocale (const QString &locale);
