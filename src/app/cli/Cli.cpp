@@ -105,12 +105,12 @@ void Cli::executeCommand (const QString &command) noexcept {
 
 const QString Cli::parseFunctionName (const QString &command) noexcept {
   mRegExpFunctionName.indexIn(command);
-
-  const QStringList texts = mRegExpFunctionName.capturedTexts();
-  if (texts.size() < 2) {
+  if (mRegExpFunctionName.pos(1) == -1) {
     qWarning() << QStringLiteral("Unable to parse function name of command: `%1`.").arg(command);
     return QString("");
   }
+
+  const QStringList texts = mRegExpFunctionName.capturedTexts();
 
   const QString functionName = texts[1];
   if (!mCommands.contains(functionName)) {
