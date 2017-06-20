@@ -66,15 +66,12 @@ static QByteArray parseFillAndStroke (
 
   QByteArray attributes;
 
-  const QByteArray classAttr = readerAttributes.value("class").toLatin1();
-  if (!classAttr.length())
-    return attributes;
-
-  for (const auto &classValue : classAttr.split(' ')) {
+  for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
     regex.indexIn(classValue.trimmed());
-    const QStringList list = regex.capturedTexts();
-    if (list.length() != 3)
+    if (regex.pos() == -1)
       continue;
+
+    const QStringList list = regex.capturedTexts();
 
     const QVariant colorValue = colors.property(list[1].toStdString().c_str());
     if (!colorValue.isValid()) {
@@ -82,36 +79,58 @@ static QByteArray parseFillAndStroke (
       continue;
     }
 
-    removeAttribute(readerAttributes, list[2]);
-    attributes.append(buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<QColor>().name().toLatin1()));
+    ::removeAttribute(readerAttributes, list[2]);
+    attributes.append(::buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<QColor>().name().toLatin1()));
   }
 
   return attributes;
 }
 
 static QByteArray parseStyle (
-  const QXmlStreamAttributes &readerAttributes,
+  QXmlStreamAttributes &readerAttributes,
   const Colors &colors
 ) {
-  return QByteArray();
-  // TODO.
-
   static QRegExp regex("^color-([^-]+)-style-(fill|stroke)$");
 
-  QByteArray attribute = "style=\"";
+  QByteArray attribute;
 
-  QByteArray fill;
-  QByteArray stroke;
-
-  const QByteArray classAttr = readerAttributes.value("class").toLatin1();
-  for (const auto &classValue : classAttr.split(' ')) {
+  QSet<QString> overrode;
+  for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
     regex.indexIn(classValue.trimmed());
-    const QStringList list = regex.capturedTexts();
-    if (list.length() != 3)
+    if (regex.pos() == -1)
       continue;
+
+    const QStringList list = regex.capturedTexts();
+
+    overrode.insert(list[2]);
+
+    const QVariant colorValue = colors.property(list[1].toStdString().c_str());
+    if (!colorValue.isValid()) {
+      qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
+      continue;
+    }
+
+    attribute.append(list[2].toLatin1());
+    attribute.append(":");
+    attribute.append(colorValue.value<QColor>().name().toLatin1());
+    attribute.append(";");
   }
 
-  attribute.append("\" ");
+  const QByteArrayList styleValues = readerAttributes.value("style").toLatin1().split(';');
+  for (const auto &styleValue : styleValues) {
+    const QByteArrayList list = styleValue.split(':');
+    if (list.length() > 0 && !overrode.contains(list[0])) {
+      attribute.append(styleValue);
+      attribute.append(";");
+    }
+  }
+
+  ::removeAttribute(readerAttributes, "style");
+
+  if (attribute.length() > 0) {
+    attribute.prepend("style=\"");
+    attribute.append("\" ");
+  }
 
   return attribute;
 }
@@ -119,20 +138,19 @@ static QByteArray parseStyle (
 static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors &colors) {
   QXmlStreamAttributes readerAttributes = reader.attributes();
 
-  QByteArray attributes = parseFillAndStroke(readerAttributes, colors);
-  attributes.append(parseStyle(readerAttributes, colors));
+  QByteArray attributes = ::parseFillAndStroke(readerAttributes, colors);
+  attributes.append(::parseStyle(readerAttributes, colors));
 
   for (const auto &attribute : readerAttributes) {
     const QByteArray prefix = attribute.prefix().toLatin1();
-    const QByteArray name = attribute.name().toLatin1();
-    const QByteArray value = attribute.value().toLatin1();
-
     if (prefix.length() > 0) {
       attributes.append(prefix);
       attributes.append(":");
     }
 
-    attributes.append(buildByteArrayAttribute(name, value));
+    attributes.append(
+      ::buildByteArrayAttribute(attribute.name().toLatin1(), attribute.value().toLatin1())
+    );
   }
 
   return attributes;
@@ -169,9 +187,9 @@ static QByteArray parseStartElement (const QXmlStreamReader &reader, const Color
   QByteArray startElement = "<";
   startElement.append(reader.name().toLatin1());
   startElement.append(" ");
-  startElement.append(parseAttributes(reader, colors));
+  startElement.append(::parseAttributes(reader, colors));
   startElement.append(" ");
-  startElement.append(parseDeclarations(reader));
+  startElement.append(::parseDeclarations(reader));
   startElement.append(">");
   return startElement;
 }
@@ -201,15 +219,15 @@ static QByteArray computeContent (QFile &file) {
         break;
 
       case QXmlStreamReader::StartDocument:
-        content.append(parseStartDocument(reader));
+        content.append(::parseStartDocument(reader));
         break;
 
       case QXmlStreamReader::StartElement:
-        content.append(parseStartElement(reader, *colors));
+        content.append(::parseStartElement(reader, *colors));
         break;
 
       case QXmlStreamReader::EndElement:
-        content.append(parseEndElement(reader));
+        content.append(::parseEndElement(reader));
         break;
 
       case QXmlStreamReader::Characters:
@@ -254,7 +272,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
     return QImage();
   }
 
-  const QByteArray content = computeContent(file);
+  const QByteArray content = ::computeContent(file);
   if (!content.length()) {
     qWarning() << QStringLiteral("Unable to parse file: `%1`.").arg(path);
     return QImage();
