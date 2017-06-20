@@ -29,6 +29,7 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(ASSETS_DIR assets)
 
+option(ENABLE_DBUS "Enable single instance handling via DBus." NO)
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 
 include(GNUInstallDirs)
@@ -77,6 +78,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_
 # ------------------------------------------------------------------------------
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
+if(ENABLE_DBUS)
+	list(APPEND QT5_PACKAGES DBus)
+endif()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 if (LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
@@ -138,7 +142,6 @@ set(SOURCES
   src/components/telephone-numbers/TelephoneNumbersModel.cpp
   src/components/timeline/TimelineModel.cpp
   src/components/url-handlers/UrlHandlers.cpp
-  src/externals/single-application/SingleApplication.cpp
   src/main.cpp
   src/utils/LinphoneUtils.cpp
   src/utils/Utils.cpp
@@ -193,10 +196,17 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/components/url-handlers/UrlHandlers.hpp
   src/externals/single-application/SingleApplication.hpp
-  src/externals/single-application/SingleApplicationPrivate.hpp
   src/utils/LinphoneUtils.hpp
   src/utils/Utils.hpp
 )
+
+if(ENABLE_DBUS)
+  list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
+  list(APPEND HEADERS src/app/single-application/SingleApplicationDBusPrivate.hpp)
+else()
+  list(APPEND SOURCES src/externals/single-application/SingleApplication.cpp)
+  list(APPEND HEADERS src/externals/single-application/SingleApplicationPrivate.hpp)
+endif()
 
 set(QRC_RESOURCES resources.qrc)
 

@@ -26,5 +26,9 @@ lcb_dependencies("linphone" "ms2plugins")
 lcb_groupable(YES)
 lcb_cmake_options("-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
 
+if(UNIX AND NOT APPLE)
+	lcb_cmake_options("-DENABLE_DBUS=${ENABLE_DBUS}")
+endif()
+
 # Add config step for packaging
 set(LINPHONE_BUILDER_ADDITIONAL_CONFIG_STEPS "${CMAKE_CURRENT_LIST_DIR}/additional_steps.cmake")
