@@ -20,6 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include <algorithm>
+
 #include <QElapsedTimer>
 #include <QFile>
 #include <QFileInfo>
@@ -36,7 +38,17 @@
 // Max image size in bytes. (100Kb)
 #define MAX_IMAGE_SIZE 102400
 
+using namespace std;
+
 // =============================================================================
+
+static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
+  auto it = find_if(readerAttributes.cbegin(), readerAttributes.cend(), [&name](const QXmlStreamAttribute &attribute) {
+        return name == attribute.name() && !attribute.prefix().length();
+      });
+  if (it != readerAttributes.cend())
+    readerAttributes.remove(static_cast<int>(distance(readerAttributes.cbegin(), it)));
+}
 
 static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteArray &value) {
   QByteArray attribute = name;
@@ -46,58 +58,73 @@ static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteAr
   return attribute;
 }
 
-static QByteArray fillFillAndStroke (const QXmlStreamAttributes &readerAttributes, bool &fill, bool &stroke, const Colors &colors) {
+static QByteArray parseFillAndStroke (
+  QXmlStreamAttributes &readerAttributes,
+  const Colors &colors
+) {
   static QRegExp regex("^color-([^-]+)-(fill|stroke)$");
 
   QByteArray attributes;
 
-  const QByteArray value = readerAttributes.value("class").toLatin1();
-  if (!value.length())
+  const QByteArray classAttr = readerAttributes.value("class").toLatin1();
+  if (!classAttr.length())
     return attributes;
 
-  for (const auto &subValue : value.split(' ')) {
-    regex.indexIn(subValue.trimmed());
+  for (const auto &classValue : classAttr.split(' ')) {
+    regex.indexIn(classValue.trimmed());
     const QStringList list = regex.capturedTexts();
     if (list.length() != 3)
       continue;
 
-    const QString colorName = list[1];
-    const QVariant colorValue = colors.property(colorName.toStdString().c_str());
+    const QVariant colorValue = colors.property(list[1].toStdString().c_str());
     if (!colorValue.isValid()) {
-      qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(colorName);
+      qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
       continue;
     }
 
-    const QByteArray property = list[2].toLatin1();
-    if (property == QStringLiteral("fill"))
-      fill = true;
-    else
-      stroke = true;
-
-    attributes.append(
-      buildByteArrayAttribute(
-        property,
-        colorValue.value<QColor>().name().toLatin1()
-      )
-    );
+    removeAttribute(readerAttributes, list[2]);
+    attributes.append(buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<QColor>().name().toLatin1()));
   }
 
   return attributes;
 }
 
+static QByteArray parseStyle (
+  const QXmlStreamAttributes &readerAttributes,
+  const Colors &colors
+) {
+  return QByteArray();
+  // TODO.
+
+  static QRegExp regex("^color-([^-]+)-style-(fill|stroke)$");
+
+  QByteArray attribute = "style=\"";
+
+  QByteArray fill;
+  QByteArray stroke;
+
+  const QByteArray classAttr = readerAttributes.value("class").toLatin1();
+  for (const auto &classValue : classAttr.split(' ')) {
+    regex.indexIn(classValue.trimmed());
+    const QStringList list = regex.capturedTexts();
+    if (list.length() != 3)
+      continue;
+  }
+
+  attribute.append("\" ");
+
+  return attribute;
+}
+
 static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors &colors) {
-  const QXmlStreamAttributes readerAttributes = reader.attributes();
-  bool fill = false, stroke = false;
-  QByteArray attributes = fillFillAndStroke(readerAttributes, fill, stroke, colors);
+  QXmlStreamAttributes readerAttributes = reader.attributes();
+
+  QByteArray attributes = parseFillAndStroke(readerAttributes, colors);
+  attributes.append(parseStyle(readerAttributes, colors));
 
   for (const auto &attribute : readerAttributes) {
-    const QByteArray name = attribute.name().toLatin1();
-    if (fill && name == QStringLiteral("fill"))
-      continue;
-    if (stroke && name == QStringLiteral("stroke"))
-      continue;
-
     const QByteArray prefix = attribute.prefix().toLatin1();
+    const QByteArray name = attribute.name().toLatin1();
     const QByteArray value = attribute.value().toLatin1();
 
     if (prefix.length() > 0) {
@@ -209,10 +236,11 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 // -----------------------------------------------------------------------------
 
 QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
+  const QString path = QStringLiteral(":/assets/images/%1").arg(id);
+  qInfo() << QStringLiteral("Image `%1` requested.").arg(path);
+
   QElapsedTimer timer;
   timer.start();
-
-  const QString path = QStringLiteral(":/assets/images/%1").arg(id);
 
   // 1. Read and update XML content.
   QFile file(path);
@@ -242,8 +270,11 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
   // 3. Create en empty image.
   const QRectF viewBox = renderer.viewBoxF();
   QImage image(static_cast<int>(viewBox.width()), static_cast<int>(viewBox.height()), QImage::Format_ARGB32);
-  if (image.isNull())
+  if (image.isNull()) {
+    qWarning() << QStringLiteral("Unable to create image of size `(%1, %2)` from path: `%3`.")
+      .arg(viewBox.width()).arg(viewBox.height()).arg(path);
     return QImage(); // Memory cannot be allocated.
+  }
   image.fill(0x00000000);
 
   // 4. Paint!
