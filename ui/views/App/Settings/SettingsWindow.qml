@@ -31,7 +31,7 @@ ApplicationWindow {
 
   Rectangle {
     anchors.fill: parent
-    color: 'SettingsWindowStyle.color'
+    color: SettingsWindowStyle.color
   }
 
   ColumnLayout {
