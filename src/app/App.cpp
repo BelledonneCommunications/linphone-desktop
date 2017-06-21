@@ -352,8 +352,8 @@ void registerToolType (const char *name) {
 
 #define registerSharedToolType(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
   NAME, 1, 0, NAME, \
-  [](QQmlEngine *, QJSEngine *) -> QObject *{ \
-    QObject *object = METHOD(); \
+  [](QQmlEngine *, QJSEngine *) ->  QObject *{ \
+    QObject *object = const_cast<TYPE *>(METHOD()); \
     QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership); \
     return object; \
   } \

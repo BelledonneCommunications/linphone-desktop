@@ -58,10 +58,7 @@ static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteAr
   return attribute;
 }
 
-static QByteArray parseFillAndStroke (
-  QXmlStreamAttributes &readerAttributes,
-  const Colors &colors
-) {
+static QByteArray parseFillAndStroke (QXmlStreamAttributes &readerAttributes, const Colors &colors) {
   static QRegExp regex("^color-([^-]+)-(fill|stroke)$");
 
   QByteArray attributes;
@@ -86,10 +83,7 @@ static QByteArray parseFillAndStroke (
   return attributes;
 }
 
-static QByteArray parseStyle (
-  QXmlStreamAttributes &readerAttributes,
-  const Colors &colors
-) {
+static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colors &colors) {
   static QRegExp regex("^color-([^-]+)-style-(fill|stroke)$");
 
   QByteArray attribute;

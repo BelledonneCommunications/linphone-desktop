@@ -64,7 +64,7 @@ public:
     return mNotifier;
   }
 
-  Colors *getColors () const {
+  const Colors *getColors () const {
     return mColors;
   }
 
