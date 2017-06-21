@@ -42,7 +42,8 @@ function handleStatusChanged (status) {
   if (status === Linphone.CallModel.CallStatusEnded) {
     var fullscreen = incall._fullscreen
     if (fullscreen) {
-      fullscreen.exit()
+      // Timeout => Avoid dead lock on mac.
+      Utils.setTimeout(window, 0, fullscreen.exit)
     }
 
     telKeypad.visible = false
@@ -104,10 +105,9 @@ function showFullscreen () {
     return
   }
 
-  incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), incall, {
+  incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), window, {
     properties: {
-      call: incall.call,
-      callsWindow: incall
+      caller: incall
     }
   })
 }

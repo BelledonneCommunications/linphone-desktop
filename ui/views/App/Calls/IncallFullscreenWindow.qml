@@ -17,8 +17,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   property var call
-  property var callsWindow
-
+  property var caller
   property bool hideButtons: false
 
   // ---------------------------------------------------------------------------
@@ -38,10 +37,10 @@ Window {
   // ---------------------------------------------------------------------------
 
   Component.onCompleted: {
+    incall.call = caller.call
     var show = function (visibility) {
       if (visibility === Window.Windowed) {
         incall.visibilityChanged.disconnect(show)
-        incall.visible = true
         incall.showFullScreen()
       }
     }
@@ -69,7 +68,12 @@ Window {
 
     Loader {
       anchors.fill: parent
-      active: !incall.callsWindow.cameraActivated
+
+      active: {
+        var caller = incall.caller
+        return caller && !caller.cameraActivated
+      }
+
       sourceComponent: camera
 
       Component {
@@ -350,7 +354,11 @@ Window {
   // ---------------------------------------------------------------------------
 
   Loader {
-    active: !incall.callsWindow.cameraActivated
+    active: {
+      var caller = incall.caller
+      return caller && !caller.cameraActivated
+    }
+
     sourceComponent: cameraPreview
 
     Component {
