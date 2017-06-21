@@ -194,6 +194,7 @@ Window {
 
           Component.onCompleted: {
             var updateDuration = function () {
+              var call = incall.caller.call
               text = Utils.formatElapsedTime(call.duration)
               Utils.setTimeout(elapsedTime, 1000, updateDuration)
             }
