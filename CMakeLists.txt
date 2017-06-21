@@ -154,6 +154,7 @@ set(HEADERS
   src/app/providers/AvatarProvider.hpp
   src/app/providers/ImageProvider.hpp
   src/app/providers/ThumbnailProvider.hpp
+  src/app/single-application/SingleApplication.hpp
   src/app/translator/DefaultTranslator.hpp
   src/components/assistant/AssistantModel.hpp
   src/components/authentication/AuthenticationNotifier.hpp
