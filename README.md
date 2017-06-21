@@ -32,11 +32,13 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 ### Specific instructions for the Windows platform
 
-1. Open a Windows command line (cmd.exe) in the current directory and run:
+1. Ensure that you have downloaded a `Qt 32-bit version`. (64-bit version is not supported at this moment by Linphone Desktop.) `MinGW` must be installed too.
+
+2. Open a Windows command line (cmd.exe) in the current directory and run:
 
         python prepare.py
 
-2. Open the generated Visual Studio solution `Project.sln.lnk` and build it.
+3. Open the generated Visual Studio solution `Project.sln.lnk` and build it.
 
 ## Known bugs and issues
 
