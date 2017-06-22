@@ -142,6 +142,8 @@ inline void activeSplashScreen (QQmlApplicationEngine *engine) {
 }
 
 void App::initContentApp () {
+  shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
+
   // Destroy qml components and linphone core if necessary.
   if (mEngine) {
     qInfo() << QStringLiteral("Restarting app...");
@@ -151,6 +153,8 @@ void App::initContentApp () {
     mSettingsWindow = nullptr;
 
     CoreManager::uninit();
+
+    initLocale(config);
   } else {
     // Don't quit if last window is closed!!!
     setQuitOnLastWindowClosed(false);
@@ -185,7 +189,7 @@ void App::initContentApp () {
   mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
 
   mColors = new Colors(this);
-  mColors->useConfig(::getConfigIfExists(*mParser));
+  mColors->useConfig(config);
 
   registerTypes();
   registerSharedTypes();
