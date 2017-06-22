@@ -7,8 +7,8 @@
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="chat_unsecure@x2">
             <g id="Group-2" transform="translate(0.000000, 0.180000)">
-                <rect id="Rectangle-4" fill="#FF0000" x="0" y="7.13541656" width="10" height="8.66666667"></rect>
-                <path d="M7.74999979,3.88630432 C7.74999979,2.19283123 6.44882738,0.820000052 4.84374987,0.820000052 C3.23867236,0.820000052 1.93749995,2.19283123 1.93749995,3.88630432 L1.93749995,11.8085172" id="Oval-6" stroke="#FF0000" stroke-width="2"></path>
+                <rect id="Rectangle-4" class="color-error-fill" fill="#FF0000" x="0" y="7.13541656" width="10" height="8.66666667"></rect>
+                <path d="M7.74999979,3.88630432 C7.74999979,2.19283123 6.44882738,0.820000052 4.84374987,0.820000052 C3.23867236,0.820000052 1.93749995,2.19283123 1.93749995,3.88630432 L1.93749995,11.8085172" id="Oval-6" class="color-error-stroke" stroke="#FF0000" stroke-width="2"></path>
             </g>
         </g>
     </g>

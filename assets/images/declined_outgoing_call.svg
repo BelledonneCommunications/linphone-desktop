@@ -5,7 +5,7 @@
     <desc>Created with Sketch.</desc>
     <defs></defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round">
-        <g id="call_lost" stroke="#FF0000" stroke-width="2">
+        <g id="call_lost" class="color-error-stroke" stroke="#FF0000" stroke-width="2">
             <path d="M12.9852814,5.74407768 L-1.15685425,5.74407768" id="Line" transform="translate(6.266032, 5.768485) rotate(-45.000000) translate(-6.266032, -5.768485) "></path>
             <path d="M11,11 L1,1" id="Line"></path>
         </g>
