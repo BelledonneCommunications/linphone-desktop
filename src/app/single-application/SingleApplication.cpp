@@ -251,15 +251,15 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
   }
 
   void SingleApplicationPrivate::terminate (int signum) {
+    if (signum == SIGINT) {
+      SingleApplication::instance()->quit();
+      return;
+    }
+
     while (!sharedMem.empty()) {
       delete sharedMem.back();
       sharedMem.pop_back();
     }
-
-    cout << "[PROCESS ABNORMALLY TERMINATED]: " << signum << endl;
-    #ifdef Q_OS_LINUX
-      cout << "If you have used valgrind, please remove your ~/.ICEauthority file and rerun." << endl;
-    #endif // ifdef Q_OS_UNIX
 
     ::exit(128 + signum);
   }
@@ -452,4 +452,8 @@ bool SingleApplication::sendMessage (QByteArray message, int timeout) {
   bool dataWritten = d->socket->flush();
   d->socket->waitForBytesWritten(timeout);
   return dataWritten;
+}
+
+void SingleApplication::quit () {
+  QCoreApplication::quit();
 }

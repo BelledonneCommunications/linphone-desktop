@@ -72,6 +72,8 @@ public:
 
   bool hasFocus () const;
 
+  void quit () override;
+
   static App *getInstance () {
     return static_cast<App *>(QApplication::instance());
   }
@@ -84,9 +86,6 @@ public:
   Q_INVOKABLE QQuickWindow *getSettingsWindow ();
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
-
-public slots:
-  void quit ();
 
 signals:
   void configLocaleChanged (const QString &locale);

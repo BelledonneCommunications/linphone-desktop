@@ -112,6 +112,8 @@ public:
    */
   bool sendMessage (QByteArray message, int timeout = 100);
 
+  virtual void quit ();
+
 Q_SIGNALS:
   void instanceStarted ();
   void receivedMessage (quint32 instanceId, QByteArray message);

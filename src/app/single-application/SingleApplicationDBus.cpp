@@ -119,3 +119,7 @@ void SingleApplicationPrivate::messageReceived (quint32 instanceId, QByteArray m
   Q_Q(SingleApplication);
   Q_EMIT q->receivedMessage(instanceId, message);
 }
+
+void SingleApplication::quit () {
+  QCoreApplication::quit();
+}
