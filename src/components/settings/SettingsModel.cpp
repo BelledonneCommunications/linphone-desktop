@@ -636,7 +636,7 @@ void SettingsModel::setDscpVideo (int dscp) {
 }
 
 // =============================================================================
-// Misc.
+// UI.
 // =============================================================================
 
 QString SettingsModel::getSavedScreenshotsFolder () const {
@@ -710,4 +710,28 @@ bool SettingsModel::getExitOnClose () const {
 void SettingsModel::setExitOnClose (bool value) {
   mConfig->setInt(UI_SECTION, "exit_on_close", value);
   emit exitOnCloseChanged(value);
+}
+
+// =============================================================================
+// Advanced.
+// =============================================================================
+
+QString SettingsModel::getLogsFolder () const {
+  return getLogsFolder(mConfig);
+}
+
+void SettingsModel::setLogsFolder (const QString &folder) {
+  // Do not update path in linphone core.
+  // Just update the config file.
+  mConfig->setString(UI_SECTION, "logs_folder", ::Utils::appStringToCoreString(folder));
+
+  emit logsFolderChanged(folder);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
+  return ::Utils::coreStringToAppString(
+    config->getString(UI_SECTION, "logs_folder", Paths::getLogsDirPath())
+  );
 }

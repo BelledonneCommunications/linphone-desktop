@@ -39,7 +39,7 @@ public:
     mVerbose = verbose;
   }
 
-  static void init ();
+  static void init (const QString &folder);
 
   static Logger *getInstance () {
     return mInstance;

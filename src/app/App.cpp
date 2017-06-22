@@ -84,10 +84,9 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
   createParser();
   mParser->process(*this);
 
-  // Initialize logger. (Do not do this before this point because the
-  // application has to be created for the logs to be put in the correct
-  // directory.)
-  Logger::init();
+  // Initialize logger.
+  shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
+  Logger::init(SettingsModel::getLogsFolder(config));
   if (mParser->isSet("verbose"))
     Logger::getInstance()->setVerbose(true);
 
@@ -97,7 +96,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   // Init locale.
   mTranslator = new DefaultTranslator(this);
-  initLocale(::getConfigIfExists(*mParser));
+  initLocale(config);
 
   if (mParser->isSet("help")) {
     createParser();

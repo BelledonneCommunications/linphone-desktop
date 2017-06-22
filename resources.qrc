@@ -403,6 +403,7 @@
     <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
+    <file>ui/views/App/Settings/SettingsAdvanced.qml</file>
     <file>ui/views/App/Settings/SettingsAudio.qml</file>
     <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
     <file>ui/views/App/Settings/SettingsNetwork.qml</file>

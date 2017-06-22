@@ -966,6 +966,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>SettingsAdvanced</name>
+    <message>
+        <source>logsTitle</source>
+        <translation>Logs</translation>
+    </message>
+    <message>
+        <source>logsFolderLabel</source>
+        <translation>Dossier des logs</translation>
+    </message>
+</context>
+<context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
@@ -1386,6 +1397,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>validButton</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>uiAdvanced</source>
+        <translation>Avancé</translation>
     </message>
 </context>
 <context>

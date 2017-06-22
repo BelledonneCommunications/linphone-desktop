@@ -155,7 +155,9 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 
 // -----------------------------------------------------------------------------
 
-void Logger::init () {
+void Logger::init (const QString &folder) {
+  Q_ASSERT(!folder.isEmpty());
+
   if (mInstance)
     return;
   mInstance = new Logger();
@@ -168,7 +170,8 @@ void Logger::init () {
         ::linphoneLog(domain, type, fmt, args);
     });
 
-  linphone_core_set_log_collection_path(Paths::getLogsDirPath().c_str());
+  linphone_core_set_log_collection_path(::Utils::appStringToCoreString(folder).c_str());
+
   linphone_core_set_log_collection_max_file_size(MAX_LOGS_COLLECTION_SIZE);
   linphone_core_enable_log_collection(LinphoneLogCollectionEnabled);
 }

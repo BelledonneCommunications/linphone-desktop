@@ -84,6 +84,12 @@ ApplicationWindow {
           text: qsTr('uiTab')
           width: implicitWidth
         }
+
+        TabButton {
+          icon: 'settings_advanced'
+          text: qsTr('uiAdvanced')
+          width: implicitWidth
+        }
       }
 
       Rectangle {
@@ -110,6 +116,7 @@ ApplicationWindow {
       SettingsCallsChat {}
       SettingsNetwork {}
       SettingsUi {}
+      SettingsAdvanced {}
     }
 
     // -------------------------------------------------------------------------

@@ -968,6 +968,17 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
+    <name>SettingsAdvanced</name>
+    <message>
+        <source>logsTitle</source>
+        <translation>Logs</translation>
+    </message>
+    <message>
+        <source>logsFolderLabel</source>
+        <translation>Logs folder</translation>
+    </message>
+</context>
+<context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
@@ -1388,6 +1399,10 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>validButton</source>
         <translation>OK</translation>
+    </message>
+    <message>
+        <source>uiAdvanced</source>
+        <translation>Advanced</translation>
     </message>
 </context>
 <context>

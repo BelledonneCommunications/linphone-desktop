@@ -110,7 +110,7 @@ class SettingsModel : public QObject {
   Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
   Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
 
-  // Misc. ---------------------------------------------------------------------
+  // UI. -----------------------------------------------------------------------
 
   Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged);
 
@@ -119,6 +119,10 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
 
   Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged);
+
+  // Advanced. -----------------------------------------------------------------
+
+  Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged);
 
 public:
   enum MediaEncryption {
@@ -261,7 +265,7 @@ public:
   int getDscpVideo () const;
   void setDscpVideo (int dscp);
 
-  // Misc. ---------------------------------------------------------------------
+  // UI. -----------------------------------------------------------------------
 
   QString getSavedScreenshotsFolder () const;
   void setSavedScreenshotsFolder (const QString &folder);
@@ -279,6 +283,13 @@ public:
   void setExitOnClose (bool value);
 
   // ---------------------------------------------------------------------------
+
+  QString getLogsFolder () const;
+  void setLogsFolder (const QString &folder);
+
+  // ---------------------------------------------------------------------------
+
+  static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
 
   static const std::string UI_SECTION;
 
@@ -346,7 +357,7 @@ signals:
   void dscpAudioChanged (int dscp);
   void dscpVideoChanged (int dscp);
 
-  // Misc. ---------------------------------------------------------------------
+  // UI. -----------------------------------------------------------------------
 
   void savedScreenshotsFolderChanged (const QString &folder);
   void savedVideosFolderChanged (const QString &folder);
@@ -356,6 +367,10 @@ signals:
   void remoteProvisioningNotChanged (const QString &remoteProvisioning);
 
   void exitOnCloseChanged (bool value);
+
+  // Advanced. -----------------------------------------------------------------
+
+  void logsFolderChanged (const QString &folder);
 
 private:
   std::shared_ptr<linphone::Config> mConfig;
