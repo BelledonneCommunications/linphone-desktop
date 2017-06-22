@@ -37,6 +37,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 2. Define the `Qt5_DIR` and `PATH` environment variable to the Qt5 installation path:
 
         Qt5_DIR="C:\Qt\5.9\msvc2015\lib\cmake"
+
 	PATH="C:\Qt\5.9\msvc2015\bin;%PATH%"
 
 3. Open a Windows command line (cmd.exe) in the current directory and run:
