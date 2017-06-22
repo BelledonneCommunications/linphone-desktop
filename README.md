@@ -11,7 +11,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 1. Install some build tools: `CMake`, `Python` and `Qt5` (_5.8 or newer_).
 2. It's necessary to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5. Example:
 
-        Qt5_DIR="~/Qt/5.9/gcc_64/lib/cmake/Qt5"
+        Qt5_DIR="~/Qt/5.9/gcc_64/lib/cmake"
 
 3. The `PATH` environment variable must point to the Qt5 directory `bin`. Example:
 
@@ -32,13 +32,18 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 ### Specific instructions for the Windows platform
 
-1. Ensure that you have downloaded a `Qt 32-bit version`. (64-bit version is not supported at this moment by Linphone Desktop.) `MinGW` must be installed too.
+1. Ensure that you have downloaded the `Qt msvc2015 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.) `MinGW` must be installed too.
 
-2. Open a Windows command line (cmd.exe) in the current directory and run:
+2. Define the `Qt5_DIR` and `PATH` environment variable to the Qt5 installation path:
+
+        Qt5_DIR="C:\Qt\5.9\msvc2015\lib\cmake"
+	PATH="C:\Qt\5.9\msvc2015\bin;%PATH%"
+
+3. Open a Windows command line (cmd.exe) in the current directory and run:
 
         python prepare.py
 
-3. Open the generated Visual Studio solution `Project.sln.lnk` and build it.
+4. Open the generated Visual Studio solution `Project.sln.lnk` and build it.
 
 ## Known bugs and issues
 
