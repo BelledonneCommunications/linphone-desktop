@@ -247,7 +247,7 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 
 // -----------------------------------------------------------------------------
 
-QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
+QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
   const QString path = QStringLiteral(":/assets/images/%1").arg(id);
   qInfo() << QStringLiteral("Image `%1` requested.").arg(path);
 
@@ -281,13 +281,21 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
 
   // 3. Create en empty image.
   const QRectF viewBox = renderer.viewBoxF();
-  QImage image(static_cast<int>(viewBox.width()), static_cast<int>(viewBox.height()), QImage::Format_ARGB32);
+  const int width = requestedSize.width();
+  const int height = requestedSize.height();
+  QImage image(
+    width > 0 ? width : static_cast<int>(viewBox.width()),
+    height > 0 ? height : static_cast<int>(viewBox.height()),
+    QImage::Format_ARGB32
+  );
   if (Q_UNLIKELY(image.isNull())) {
     qWarning() << QStringLiteral("Unable to create image of size `(%1, %2)` from path: `%3`.")
       .arg(viewBox.width()).arg(viewBox.height()).arg(path);
     return QImage(); // Memory cannot be allocated.
   }
   image.fill(0x00000000);
+
+  *size = image.size();
 
   // 4. Paint!
   QPainter painter(&image);
