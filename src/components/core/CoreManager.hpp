@@ -49,12 +49,12 @@ public:
   ~CoreManager () = default;
 
   std::shared_ptr<linphone::Core> getCore () {
-    Q_ASSERT(mCore != nullptr);
+    Q_CHECK_PTR(mCore);
     return mCore;
   }
 
   std::shared_ptr<CoreHandlers> getHandlers () {
-    Q_ASSERT(mHandlers != nullptr);
+    Q_CHECK_PTR(mHandlers);
     return mHandlers;
   }
 
@@ -75,27 +75,27 @@ public:
   // ---------------------------------------------------------------------------
 
   CallsListModel *getCallsListModel () const {
-    Q_ASSERT(mCallsListModel != nullptr);
+    Q_CHECK_PTR(mCallsListModel);
     return mCallsListModel;
   }
 
   ContactsListModel *getContactsListModel () const {
-    Q_ASSERT(mContactsListModel != nullptr);
+    Q_CHECK_PTR(mContactsListModel);
     return mContactsListModel;
   }
 
   SipAddressesModel *getSipAddressesModel () const {
-    Q_ASSERT(mSipAddressesModel != nullptr);
+    Q_CHECK_PTR(mSipAddressesModel);
     return mSipAddressesModel;
   }
 
   SettingsModel *getSettingsModel () const {
-    Q_ASSERT(mSettingsModel != nullptr);
+    Q_CHECK_PTR(mSettingsModel);
     return mSettingsModel;
   }
 
   AccountSettingsModel *getAccountSettingsModel () const {
-    Q_ASSERT(mAccountSettingsModel != nullptr);
+    Q_CHECK_PTR(mAccountSettingsModel);
     return mAccountSettingsModel;
   }
 
@@ -107,7 +107,7 @@ public:
   static void uninit ();
 
   static CoreManager *getInstance () {
-    Q_ASSERT(mInstance != nullptr);
+    Q_CHECK_PTR(mInstance);
     return mInstance;
   }
 
@@ -115,9 +115,11 @@ public:
 
   // Must be used in a qml scene.
   // Warning: The ownership of `VcardModel` is `QQmlEngine::JavaScriptOwnership` by default.
-  Q_INVOKABLE VcardModel *createDetachedVcardModel ();
+  Q_INVOKABLE VcardModel *createDetachedVcardModel () const;
 
   Q_INVOKABLE void forceRefreshRegisters ();
+
+  Q_INVOKABLE void sendLogs () const;
 
 signals:
   void coreCreated ();

@@ -64,7 +64,7 @@ private:
   ) override {
     if (status == linphone::AccountCreatorStatusAccountExist || status == linphone::AccountCreatorStatusAccountExistWithAlias) {
       shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-      Q_ASSERT(proxyConfig != nullptr);
+      Q_CHECK_PTR(proxyConfig);
 
       emit mAssistant->loginStatusChanged("");
     } else {
@@ -86,7 +86,7 @@ private:
     ) {
       if (creator->getEmail().empty()) {
         shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-        Q_ASSERT(proxyConfig != nullptr);
+        Q_CHECK_PTR(proxyConfig);
       }
 
       emit mAssistant->activateStatusChanged("");
@@ -105,7 +105,7 @@ private:
   ) override {
     if (status == linphone::AccountCreatorStatusAccountActivated) {
       shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-      Q_ASSERT(proxyConfig != nullptr);
+      Q_CHECK_PTR(proxyConfig);
 
       emit mAssistant->activateStatusChanged("");
     } else {

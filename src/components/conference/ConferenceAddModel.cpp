@@ -31,7 +31,7 @@ using namespace std;
 
 ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) : QAbstractListModel(parent) {
   mConferenceHelperModel = qobject_cast<ConferenceHelperModel *>(parent);
-  Q_ASSERT(mConferenceHelperModel != nullptr);
+  Q_CHECK_PTR(mConferenceHelperModel);
 
   CoreManager *coreManager = CoreManager::getInstance();
 
@@ -134,7 +134,7 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
   list<shared_ptr<linphone::Address> > linphoneAddresses;
   for (const auto &map : mRefs) {
     shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address> >();
-    Q_ASSERT(linphoneAddress != nullptr);
+    Q_CHECK_PTR(linphoneAddress);
     linphoneAddresses.push_back(linphoneAddress);
   }
 

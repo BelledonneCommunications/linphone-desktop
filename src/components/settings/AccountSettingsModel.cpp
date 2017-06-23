@@ -60,7 +60,7 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 // -----------------------------------------------------------------------------
 
 bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
-  Q_ASSERT(proxyConfig != nullptr);
+  Q_CHECK_PTR(proxyConfig);
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
@@ -83,7 +83,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::Pr
 }
 
 QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
-  Q_ASSERT(proxyConfig != nullptr);
+  Q_CHECK_PTR(proxyConfig);
 
   QVariantMap map;
 
@@ -114,7 +114,7 @@ void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::Pro
 }
 
 void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
-  Q_ASSERT(proxyConfig != nullptr);
+  Q_CHECK_PTR(proxyConfig);
 
   CoreManager::getInstance()->getCore()->removeProxyConfig(proxyConfig);
   emit accountSettingsUpdated();
@@ -124,7 +124,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   const shared_ptr<linphone::ProxyConfig> &proxyConfig,
   const QVariantMap &data
 ) {
-  Q_ASSERT(proxyConfig != nullptr);
+  Q_CHECK_PTR(proxyConfig);
 
   QString literal = data["sipAddress"].toString();
 

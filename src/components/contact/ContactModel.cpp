@@ -31,7 +31,7 @@ using namespace std;
 // =============================================================================
 
 ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphoneFriend) : QObject(parent) {
-  Q_ASSERT(linphoneFriend != nullptr);
+  Q_CHECK_PTR(linphoneFriend);
 
   mLinphoneFriend = linphoneFriend;
   mLinphoneFriend->setData("contact-model", *this);
@@ -40,8 +40,8 @@ ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linpho
 }
 
 ContactModel::ContactModel (QObject *parent, VcardModel *vcardModel) : QObject(parent) {
-  Q_ASSERT(vcardModel != nullptr);
-  Q_ASSERT(vcardModel->mVcard != nullptr);
+  Q_CHECK_PTR(vcardModel);
+  Q_CHECK_PTR(vcardModel->mVcard);
   Q_ASSERT(!vcardModel->mIsReadOnly);
 
   mLinphoneFriend = linphone::Friend::newFromVcard(vcardModel->mVcard);
@@ -86,7 +86,7 @@ void ContactModel::setVcardModel (VcardModel *vcardModel) {
 }
 
 void ContactModel::setVcardModelInternal (VcardModel *vcardModel) {
-  Q_ASSERT(vcardModel != nullptr);
+  Q_CHECK_PTR(vcardModel);
   Q_ASSERT(vcardModel != mVcardModel);
 
   mVcardModel = vcardModel;
@@ -100,7 +100,7 @@ void ContactModel::setVcardModelInternal (VcardModel *vcardModel) {
 }
 
 void ContactModel::updateSipAddresses (VcardModel *oldVcardModel) {
-  Q_ASSERT(oldVcardModel != nullptr);
+  Q_CHECK_PTR(oldVcardModel);
 
   QVariantList oldSipAddresses = oldVcardModel->getSipAddresses();
   QVariantList sipAddresses = mVcardModel->getSipAddresses();
@@ -139,7 +139,7 @@ next:
 // -----------------------------------------------------------------------------
 
 void ContactModel::mergeVcardModel (VcardModel *vcardModel) {
-  Q_ASSERT(vcardModel != nullptr);
+  Q_CHECK_PTR(vcardModel);
 
   qInfo() << QStringLiteral("Merge vcard into contact:") << this << vcardModel;
 
@@ -184,8 +184,8 @@ void ContactModel::mergeVcardModel (VcardModel *vcardModel) {
 
 VcardModel *ContactModel::cloneVcardModel () const {
   shared_ptr<linphone::Vcard> vcard = mVcardModel->mVcard->clone();
-  Q_ASSERT(vcard != nullptr);
-  Q_ASSERT(vcard->getVcard() != nullptr);
+  Q_CHECK_PTR(vcard);
+  Q_CHECK_PTR(vcard->getVcard());
 
   mLinphoneFriend->edit();
 

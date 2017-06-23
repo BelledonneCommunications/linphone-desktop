@@ -112,7 +112,7 @@ static string interpretSipAddress (const QString &sipAddress) {
 // -----------------------------------------------------------------------------
 
 VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard, bool isReadOnly) {
-  Q_ASSERT(vcard != nullptr);
+  Q_CHECK_PTR(vcard);
   mVcard = vcard;
   mIsReadOnly = isReadOnly;
 }

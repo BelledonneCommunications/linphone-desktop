@@ -86,7 +86,7 @@ void CoreManager::uninit () {
 
 // -----------------------------------------------------------------------------
 
-VcardModel *CoreManager::createDetachedVcardModel () {
+VcardModel *CoreManager::createDetachedVcardModel () const {
   VcardModel *vcardModel = new VcardModel(linphone::Factory::get()->createVcard(), false);
   qInfo() << QStringLiteral("Create detached vcard:") << vcardModel;
   return vcardModel;

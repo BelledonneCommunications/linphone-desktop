@@ -134,10 +134,10 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
 
   {
     QQuickWindow *window = instance->findChild<QQuickWindow *>(NOTIFICATION_PROPERTY_WINDOW);
-    Q_ASSERT(window != nullptr);
+    Q_CHECK_PTR(window);
 
     QScreen *screen = window->screen();
-    Q_ASSERT(screen != nullptr);
+    Q_CHECK_PTR(screen);
 
     QRect geometry = screen->availableGeometry();
 

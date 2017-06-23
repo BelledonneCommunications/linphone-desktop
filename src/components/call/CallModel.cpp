@@ -38,7 +38,7 @@ using namespace std;
 // =============================================================================
 
 CallModel::CallModel (shared_ptr<linphone::Call> call) {
-  Q_ASSERT(call != nullptr);
+  Q_CHECK_PTR(call);
   mCall = call;
   mCall->setData("call-model", *this);
 
