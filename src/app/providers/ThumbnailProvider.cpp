@@ -36,6 +36,8 @@ ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
   mThumbnailsPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
 }
 
-QImage ThumbnailProvider::requestImage (const QString &id, QSize *, const QSize &) {
-  return QImage(mThumbnailsPath + id);
+QImage ThumbnailProvider::requestImage (const QString &id, QSize *size, const QSize &) {
+  QImage image(mThumbnailsPath + id);
+  *size = image.size();
+  return image;
 }
