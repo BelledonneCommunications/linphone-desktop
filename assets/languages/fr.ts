@@ -983,6 +983,18 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsUploadUrlLabel</source>
         <translation>Url du serveur de logs</translation>
     </message>
+    <message>
+        <source>logsUploadFailed</source>
+        <translation>L&apos;envoi des logs a échoué.&gt;</translation>
+    </message>
+    <message>
+        <source>logsEnabledLabel</source>
+        <translation>Logs activés.</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>SUPPRIMER LOGS</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

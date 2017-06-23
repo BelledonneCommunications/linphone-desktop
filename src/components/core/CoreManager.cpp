@@ -40,7 +40,8 @@ using namespace std;
 
 CoreManager *CoreManager::mInstance = nullptr;
 
-CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
+CoreManager::CoreManager (QObject *parent, const QString &configPath) :
+  QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
   mPromiseBuild = QtConcurrent::run(this, &CoreManager::createLinphoneCore, configPath);
 
   QObject::connect(&mPromiseWatcher, &QFutureWatcher<void>::finished, this, [] {
@@ -50,7 +51,9 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(
     emit mInstance->coreCreated();
   });
 
-  QObject::connect(mHandlers.get(), &CoreHandlers::coreStarted, this, [] {
+  CoreHandlers *coreHandlers = mHandlers.get();
+
+  QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
     mInstance->mCallsListModel = new CallsListModel(mInstance);
     mInstance->mContactsListModel = new ContactsListModel(mInstance);
     mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
@@ -59,6 +62,11 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) : QObject(
 
     emit mInstance->coreStarted();
   });
+
+  QObject::connect(
+    coreHandlers, &CoreHandlers::logsUploadStateChanged,
+    this, &CoreManager::handleLogsUploadStateChanged
+  );
 
   mPromiseWatcher.setFuture(mPromiseBuild);
 }
@@ -186,6 +194,21 @@ void CoreManager::iterate () {
   mInstance->lockVideoRender();
   mCore->iterate();
   mInstance->unlockVideoRender();
+}
+
+// -----------------------------------------------------------------------------
+
+void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state) {
+  switch (state) {
+    case linphone::CoreLogCollectionUploadStateInProgress:
+      break;
+    case linphone::CoreLogCollectionUploadStateDelivered:
+      emit logsUploaded(true);
+      break;
+    case linphone::CoreLogCollectionUploadStateNotDelivered:
+      emit logsUploaded(false);
+      break;
+  }
 }
 
 // -----------------------------------------------------------------------------

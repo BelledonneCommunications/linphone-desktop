@@ -985,6 +985,18 @@ your friend&apos;s SIP address or username.</translation>
         <source>logsUploadUrlLabel</source>
         <translation>Logs upload server url</translation>
     </message>
+    <message>
+        <source>logsUploadFailed</source>
+        <translation>Failed to upload logs.</translation>
+    </message>
+    <message>
+        <source>logsEnabledLabel</source>
+        <translation>Logs enabled</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>CLEAN LOGS</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

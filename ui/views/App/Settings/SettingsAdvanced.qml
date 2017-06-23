@@ -38,6 +38,7 @@ TabContainer {
           label: qsTr('logsUploadUrlLabel')
 
           TextField {
+            readOnly: true
             text: SettingsModel.logsUploadUrl
 
             onEditingFinished: SettingsModel.logsUploadUrl = text
@@ -45,14 +46,50 @@ TabContainer {
         }
       }
 
+      FormLine {
+        FormGroup {
+          label: qsTr('logsEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.logsEnabled
+
+            onClicked: SettingsModel.logsEnabled = !checked
+          }
+        }
+      }
+
       FormEmptyLine {}
     }
 
-    TextButtonB {
+    Row {
       anchors.right: parent.right
-      text: qsTr('sendLogs')
+      spacing: 5
 
-      onClicked: CoreManager.sendLogs()
+      TextButtonB {
+        text: qsTr('cleanLogs')
+
+        onClicked: CoreManager.cleanLogs()
+      }
+
+      TextButtonB {
+        enabled: !sendLogsBlock.loading
+        text: qsTr('sendLogs')
+
+        onClicked: sendLogsBlock.execute()
+      }
+    }
+
+    RequestBlock {
+      id: sendLogsBlock
+
+      action: CoreManager.sendLogs
+      width: parent.width
+
+      Connections {
+        target: CoreManager
+
+        onLogsUploaded: sendLogsBlock.stop(success ? '' : qsTr('logsUploadFailed'))
+      }
     }
 
     // -------------------------------------------------------------------------

@@ -125,6 +125,8 @@ signals:
   void coreCreated ();
   void coreStarted ();
 
+  void logsUploaded (bool success);
+
 private:
   CoreManager (QObject *parent, const QString &configPath);
 
@@ -137,6 +139,8 @@ private:
   QString getVersion () const;
 
   void iterate ();
+
+  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state);
 
   static QString getDownloadUrl ();
 

@@ -39,7 +39,9 @@ public:
     mVerbose = verbose;
   }
 
-  static void init (const QString &folder);
+  void enable (bool status);
+
+  static void init (const QString &folder, bool enabled);
 
   static Logger *getInstance () {
     return mInstance;

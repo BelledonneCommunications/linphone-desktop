@@ -124,6 +124,7 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged);
   Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged);
+  Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged);
 
 public:
   enum MediaEncryption {
@@ -291,9 +292,13 @@ public:
   QString getLogsUploadUrl () const;
   void setLogsUploadUrl (const QString &url);
 
+  bool getLogsEnabled () const;
+  void setLogsEnabled (bool status);
+
   // ---------------------------------------------------------------------------
 
   static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
+  static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
 
   static const std::string UI_SECTION;
 
@@ -376,6 +381,7 @@ signals:
 
   void logsFolderChanged (const QString &folder);
   void logsUploadUrlChanged (const QString &url);
+  void logsEnabledChanged (bool status);
 
 private:
   std::shared_ptr<linphone::Config> mConfig;

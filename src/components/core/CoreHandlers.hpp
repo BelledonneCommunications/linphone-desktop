@@ -46,6 +46,7 @@ signals:
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
   void coreStarted ();
+  void logsUploadStateChanged (linphone::CoreLogCollectionUploadState state);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
@@ -71,16 +72,28 @@ private:
     const std::string &message
   ) override;
 
+  void onCallStatsUpdated (
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::Call> &call,
+    const std::shared_ptr<const linphone::CallStats> &stats
+  ) override;
+
   void onGlobalStateChanged (
     const std::shared_ptr<linphone::Core> &core,
     linphone::GlobalState gstate,
     const std::string &message
   ) override;
 
-  void onCallStatsUpdated (
+  void onLogCollectionUploadStateChanged (
     const std::shared_ptr<linphone::Core> &core,
-    const std::shared_ptr<linphone::Call> &call,
-    const std::shared_ptr<const linphone::CallStats> &stats
+    linphone::CoreLogCollectionUploadState state,
+    const std::string &info
+  ) override;
+
+  void onLogCollectionUploadProgressIndication (
+    const std::shared_ptr<linphone::Core> &lc,
+    size_t offset,
+    size_t total
   ) override;
 
   void onMessageReceived (

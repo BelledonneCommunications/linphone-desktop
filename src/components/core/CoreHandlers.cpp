@@ -98,6 +98,14 @@ void CoreHandlers::onCallStateChanged (
     App::getInstance()->getNotifier()->notifyReceivedCall(call);
 }
 
+void CoreHandlers::onCallStatsUpdated (
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Call> &call,
+  const shared_ptr<const linphone::CallStats> &stats
+) {
+  call->getData<CallModel>("call-model").updateStats(stats);
+}
+
 void CoreHandlers::onGlobalStateChanged (
   const shared_ptr<linphone::Core> &,
   linphone::GlobalState gstate,
@@ -114,12 +122,20 @@ void CoreHandlers::onGlobalStateChanged (
   }
 }
 
-void CoreHandlers::onCallStatsUpdated (
+void CoreHandlers::onLogCollectionUploadStateChanged (
   const shared_ptr<linphone::Core> &,
-  const shared_ptr<linphone::Call> &call,
-  const shared_ptr<const linphone::CallStats> &stats
+  linphone::CoreLogCollectionUploadState state,
+  const string &
 ) {
-  call->getData<CallModel>("call-model").updateStats(stats);
+  emit logsUploadStateChanged(state);
+}
+
+void CoreHandlers::onLogCollectionUploadProgressIndication (
+  const shared_ptr<linphone::Core> &,
+  size_t,
+  size_t
+) {
+  // TODO;
 }
 
 void CoreHandlers::onMessageReceived (

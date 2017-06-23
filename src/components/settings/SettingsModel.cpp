@@ -22,6 +22,7 @@
 
 #include <QDir>
 
+#include "../../app/logger/Logger.hpp"
 #include "../../app/paths/Paths.hpp"
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
@@ -746,8 +747,24 @@ void SettingsModel::setLogsUploadUrl (const QString &url) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getLogsEnabled () const {
+  return getLogsEnabled(mConfig);
+}
+
+void SettingsModel::setLogsEnabled (bool status) {
+  mConfig->setInt(UI_SECTION, "logs_enabled", status);
+  Logger::getInstance()->enable(status);
+  emit logsEnabledChanged(status);
+}
+
+// ---------------------------------------------------------------------------
+
 QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
   return ::Utils::coreStringToAppString(
     config->getString(UI_SECTION, "logs_folder", Paths::getLogsDirPath())
   );
+}
+
+bool SettingsModel::getLogsEnabled (const std::shared_ptr<linphone::Config> &config) {
+  return config->getInt(UI_SECTION, "logs_enabled", false);
 }
