@@ -86,7 +86,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   // Initialize logger.
   shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
-  Logger::init(SettingsModel::getLogsFolder(config), SettingsModel::getLogsEnabled(config));
+  Logger::init(config);
   if (mParser->isSet("verbose"))
     Logger::getInstance()->setVerbose(true);
 

@@ -120,12 +120,13 @@ public:
   Q_INVOKABLE void forceRefreshRegisters ();
 
   Q_INVOKABLE void sendLogs () const;
+  Q_INVOKABLE void cleanLogs () const;
 
 signals:
   void coreCreated ();
   void coreStarted ();
 
-  void logsUploaded (bool success);
+  void logsUploaded (const QString &url);
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
@@ -140,7 +141,7 @@ private:
 
   void iterate ();
 
-  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state);
+  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
 
   static QString getDownloadUrl ();
 

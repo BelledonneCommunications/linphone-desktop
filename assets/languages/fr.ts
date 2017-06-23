@@ -985,7 +985,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation>L&apos;envoi des logs a échoué.&gt;</translation>
+        <translation>L&apos;envoi des logs a échoué.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
@@ -994,6 +994,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cleanLogs</source>
         <translation>SUPPRIMER LOGS</translation>
+    </message>
+    <message>
+        <source>cleanLogsDescription</source>
+        <translation>Voulez-vous vraiment supprimer tous les logs ?</translation>
     </message>
 </context>
 <context>

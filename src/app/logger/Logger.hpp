@@ -23,6 +23,7 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
+#include <linphone++/linphone.hh>
 #include <QMutex>
 
 // =============================================================================
@@ -41,7 +42,7 @@ public:
 
   void enable (bool status);
 
-  static void init (const QString &folder, bool enabled);
+  static void init (const std::shared_ptr<linphone::Config> &config);
 
   static Logger *getInstance () {
     return mInstance;

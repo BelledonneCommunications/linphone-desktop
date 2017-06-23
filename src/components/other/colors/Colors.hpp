@@ -23,6 +23,7 @@
 #ifndef COLORS_H_
 #define COLORS_H_
 
+#include <linphone++/linphone.hh>
 #include <QColor>
 #include <QObject>
 
@@ -48,7 +49,7 @@
 // -----------------------------------------------------------------------------
 
 namespace linphone {
-  class Config;
+class Config;
 }
 
 class Colors : public QObject {

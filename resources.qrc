@@ -296,6 +296,8 @@
     <file>ui/modules/Common/Window/VirtualWindow.qml</file>
     <file>ui/modules/Common/Window/Window.js</file>
     <file>ui/modules/Common/Window/Window.qml</file>
+    <file>ui/modules/Konami/Konami.qml</file>
+    <file>ui/modules/Konami/qmldir</file>
     <file>ui/modules/Linphone/Account/AccountStatus.qml</file>
     <file>ui/modules/Linphone/Blocks/CardBlock.qml</file>
     <file>ui/modules/Linphone/Blocks/RequestBlock.qml</file>
@@ -403,6 +405,7 @@
     <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
+    <file>ui/views/App/Settings/SettingsAdvanced.js</file>
     <file>ui/views/App/Settings/SettingsAdvanced.qml</file>
     <file>ui/views/App/Settings/SettingsAudio.qml</file>
     <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
@@ -441,6 +444,7 @@
     <file>ui/views/App/Styles/Main/InviteFriendsStyle.qml</file>
     <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
     <file>ui/views/App/Styles/qmldir</file>
+    <file>ui/views/App/Styles/Settings/SettingsAdvancedStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsSipAccountsEditStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsVideoPreviewStyle.qml</file>

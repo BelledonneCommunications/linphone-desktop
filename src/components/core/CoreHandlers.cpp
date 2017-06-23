@@ -69,11 +69,10 @@ void CoreHandlers::handleCoreCreated () {
 
 void CoreHandlers::notifyCoreStarted () {
   if (mCoreCreated && mCoreStarted)
-    scheduleFunctionInApp(
-      [this]() {
-        qInfo() << QStringLiteral("Core started.");
-        emit coreStarted();
-      });
+    scheduleFunctionInApp([this] {
+      qInfo() << QStringLiteral("Core started.");
+      emit coreStarted();
+    });
 }
 
 // -----------------------------------------------------------------------------
@@ -125,9 +124,9 @@ void CoreHandlers::onGlobalStateChanged (
 void CoreHandlers::onLogCollectionUploadStateChanged (
   const shared_ptr<linphone::Core> &,
   linphone::CoreLogCollectionUploadState state,
-  const string &
+  const string &info
 ) {
-  emit logsUploadStateChanged(state);
+  emit logsUploadStateChanged(state, info);
 }
 
 void CoreHandlers::onLogCollectionUploadProgressIndication (

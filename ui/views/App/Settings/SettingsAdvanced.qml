@@ -5,6 +5,8 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
+import 'SettingsAdvanced.js' as Logic
+
 // =============================================================================
 
 TabContainer {
@@ -63,12 +65,12 @@ TabContainer {
 
     Row {
       anchors.right: parent.right
-      spacing: 5
+      spacing: SettingsAdvancedStyle.buttons.spacing
 
       TextButtonB {
         text: qsTr('cleanLogs')
 
-        onClicked: CoreManager.cleanLogs()
+        onClicked: Logic.cleanLogs()
       }
 
       TextButtonB {
@@ -88,7 +90,7 @@ TabContainer {
       Connections {
         target: CoreManager
 
-        onLogsUploaded: sendLogsBlock.stop(success ? '' : qsTr('logsUploadFailed'))
+        onLogsUploaded: Logic.handleLogsUploaded(url)
       }
     }
 

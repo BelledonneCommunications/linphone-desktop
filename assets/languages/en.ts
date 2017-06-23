@@ -997,6 +997,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>cleanLogs</source>
         <translation>CLEAN LOGS</translation>
     </message>
+    <message>
+        <source>cleanLogsDescription</source>
+        <translation>Are you sure you want to remove all logs?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

@@ -46,7 +46,7 @@ signals:
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
   void coreStarted ();
-  void logsUploadStateChanged (linphone::CoreLogCollectionUploadState state);
+  void logsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);

@@ -25,6 +25,7 @@
 #include <QDateTime>
 #include <QThread>
 
+#include "../../components/settings/SettingsModel.hpp"
 #include "../../utils/Utils.hpp"
 #include "../paths/Paths.hpp"
 
@@ -159,11 +160,13 @@ void Logger::enable (bool status) {
   linphone_core_enable_log_collection(status ? LinphoneLogCollectionEnabled : LinphoneLogCollectionDisabled);
 }
 
-void Logger::init (const QString &folder, bool enabled) {
-  Q_ASSERT(!folder.isEmpty());
-
+void Logger::init (const std::shared_ptr<linphone::Config> &config) {
   if (mInstance)
     return;
+
+  const QString folder = SettingsModel::getLogsFolder(config);
+  Q_ASSERT(!folder.isEmpty());
+
   mInstance = new Logger();
 
   qInstallMessageHandler(Logger::log);
@@ -177,5 +180,5 @@ void Logger::init (const QString &folder, bool enabled) {
   linphone_core_set_log_collection_path(::Utils::appStringToCoreString(folder).c_str());
 
   linphone_core_set_log_collection_max_file_size(MAX_LOGS_COLLECTION_SIZE);
-  mInstance->enable(enabled);
+  mInstance->enable(SettingsModel::getLogsEnabled(config));
 }

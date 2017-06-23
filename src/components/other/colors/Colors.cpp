@@ -20,7 +20,6 @@
  *      Author: Ronan Abhamon
  */
 
-#include <linphone++/linphone.hh>
 #include <QMetaProperty>
 
 #include "../../../utils/Utils.hpp"
@@ -28,10 +27,6 @@
 #include "Colors.hpp"
 
 #define COLORS_SECTION "ui_colors"
-
-#ifndef LINPHONE_FRIDAY
-#define LINPHONE_FRIDAY 1
-#endif // ifndef LINPHONE_FRIDAY
 
 #if LINPHONE_FRIDAY
 #include <QDate>
@@ -43,24 +38,29 @@ using namespace std;
 
 #if LINPHONE_FRIDAY
 
-  static void setLinphoneFridayColors (Colors &colors) {
-    colors.setProperty("i", QColor("#F48D8D"));
-    colors.setProperty("s", QColor("#F58585"));
-    colors.setProperty("t", QColor("#FFC5C5"));
+  inline bool isLinphoneFriday () {
+    return QDate::currentDate().dayOfWeek() == 5;
   }
 
 #endif // if LINPHONE_FRIDAY
 
 Colors::Colors (QObject *parent) : QObject(parent) {
   #if LINPHONE_FRIDAY
-    if (QDate::currentDate().dayOfWeek() == 5)
-      ::setLinphoneFridayColors(*this);
-
+    if (isLinphoneFriday()) {
+      setProperty("i", QColor("#F48D8D"));
+      setProperty("s", QColor("#F58585"));
+      setProperty("t", QColor("#FFC5C5"));
+    }
   #endif // if LINPHONE_FRIDAY
 }
 
 void Colors::useConfig (const std::shared_ptr<linphone::Config> &config) {
-  overrideColors(config);
+  #if LINPHONE_FRIDAY
+    if (!isLinphoneFriday())
+      overrideColors(config);
+  #else
+    overrideColors(config);
+  #endif // if LINPHONE_FRIDAY
 }
 
 // -----------------------------------------------------------------------------

@@ -107,12 +107,20 @@ void CoreManager::forceRefreshRegisters () {
   mCore->refreshRegisters();
 }
 
+// -----------------------------------------------------------------------------
+
 void CoreManager::sendLogs () const {
   Q_CHECK_PTR(mCore);
 
   qInfo() << QStringLiteral("Send logs to: `%1`.")
     .arg(::Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()));
   mCore->uploadLogCollection();
+}
+
+void CoreManager::cleanLogs () const {
+  Q_CHECK_PTR(mCore);
+
+  mCore->resetLogCollection();
 }
 
 // -----------------------------------------------------------------------------
@@ -198,15 +206,14 @@ void CoreManager::iterate () {
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state) {
+void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const string &info) {
   switch (state) {
     case linphone::CoreLogCollectionUploadStateInProgress:
       break;
+
     case linphone::CoreLogCollectionUploadStateDelivered:
-      emit logsUploaded(true);
-      break;
     case linphone::CoreLogCollectionUploadStateNotDelivered:
-      emit logsUploaded(false);
+      emit logsUploaded(::Utils::coreStringToAppString(info));
       break;
   }
 }
