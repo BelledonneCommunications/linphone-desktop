@@ -151,6 +151,7 @@ class DesktopPreparator(prepare.Preparator):
         ret |= not self.check_is_installed('doxygen', doxygen_prog)
         ret |= not self.check_is_installed('dot', graphviz_prog)
         ret |= not self.check_python_module_is_present('pystache')
+        ret |= not self.check_python_module_is_present('six')
         if "python" in self.args.target or "python-raspberry" in self.args.target:
             ret |= not self.check_python_module_is_present('wheel')
         return ret
