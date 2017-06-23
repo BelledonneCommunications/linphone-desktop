@@ -730,6 +730,22 @@ void SettingsModel::setLogsFolder (const QString &folder) {
 
 // -----------------------------------------------------------------------------
 
+QString SettingsModel::getLogsUploadUrl () const {
+  return ::Utils::coreStringToAppString(
+    CoreManager::getInstance()->getCore()->getLogCollectionUploadServerUrl()
+  );
+}
+
+void SettingsModel::setLogsUploadUrl (const QString &url) {
+  CoreManager::getInstance()->getCore()->setLogCollectionUploadServerUrl(
+    ::Utils::appStringToCoreString(url)
+  );
+
+  emit logsUploadUrlChanged(getLogsUploadUrl());
+}
+
+// -----------------------------------------------------------------------------
+
 QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
   return ::Utils::coreStringToAppString(
     config->getString(UI_SECTION, "logs_folder", Paths::getLogsDirPath())

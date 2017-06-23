@@ -32,12 +32,33 @@ TabContainer {
           }
         }
       }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('logsUploadUrlLabel')
+
+          TextField {
+            text: SettingsModel.logsUploadUrl
+
+            onEditingFinished: SettingsModel.logsUploadUrl = text
+          }
+        }
+      }
+
+      FormEmptyLine {}
     }
 
-		// -------------------------------------------------------------------------
-		// Internal features.
-		// -------------------------------------------------------------------------
+    TextButtonB {
+      anchors.right: parent.right
+      text: qsTr('sendLogs')
 
-		// Nothing for the moment.
+      onClicked: CoreManager.sendLogs()
+    }
+
+    // -------------------------------------------------------------------------
+    // Internal settings.
+    // -------------------------------------------------------------------------
+
+    // Nothing for the moment.
   }
 }

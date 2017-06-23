@@ -38,7 +38,6 @@ ApplicationWindow {
 
   minimumHeight: MainWindowStyle.minimumHeight
   minimumWidth: MainWindowStyle.minimumWidth
-  width: MainWindowStyle.width
 
   title: MainWindowStyle.title
 

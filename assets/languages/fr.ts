@@ -975,6 +975,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsFolderLabel</source>
         <translation>Dossier des logs</translation>
     </message>
+    <message>
+        <source>sendLogs</source>
+        <translation>ENVOYER LOGS</translation>
+    </message>
+    <message>
+        <source>logsUploadUrlLabel</source>
+        <translation>Url du serveur de logs</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

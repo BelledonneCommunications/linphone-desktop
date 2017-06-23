@@ -977,6 +977,14 @@ your friend&apos;s SIP address or username.</translation>
         <source>logsFolderLabel</source>
         <translation>Logs folder</translation>
     </message>
+    <message>
+        <source>sendLogs</source>
+        <translation>SEND LOGS</translation>
+    </message>
+    <message>
+        <source>logsUploadUrlLabel</source>
+        <translation>Logs upload server url</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

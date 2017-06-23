@@ -48,7 +48,7 @@
 
 #define QT_DOMAIN "qt"
 
-#define MAX_LOGS_COLLECTION_SIZE 104857600 /* 100MB. */
+#define MAX_LOGS_COLLECTION_SIZE 10485760 /* 10MB. */
 
 #define SRC_PATTERN "/linphone-desktop/src/"
 
