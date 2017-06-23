@@ -22,6 +22,7 @@
 
 #include <QDirIterator>
 #include <QFontDatabase>
+#include <QMessageBox>
 #include <QScreen>
 
 #include "gitversion.h"
@@ -31,6 +32,7 @@
 // Must be unique. Used by `SingleApplication` and `Paths`.
 #define APPLICATION_NAME "linphone"
 #define APPLICATION_VERSION LINPHONE_QT_GIT_VERSION
+#define APPLICATION_MINIMAL_QT_VERSION "5.8.0"
 
 #define DEFAULT_FONT "Noto Sans"
 
@@ -39,6 +41,8 @@ using namespace std;
 // =============================================================================
 
 int main (int argc, char *argv[]) {
+  QT_REQUIRE_VERSION(argc, argv, APPLICATION_MINIMAL_QT_VERSION);
+
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
 
