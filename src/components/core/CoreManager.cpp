@@ -93,10 +93,15 @@ VcardModel *CoreManager::createDetachedVcardModel () const {
 }
 
 void CoreManager::forceRefreshRegisters () {
-  Q_ASSERT(mCore != nullptr);
+  Q_CHECK_PTR(mCore);
 
   qInfo() << QStringLiteral("Refresh registers.");
   mCore->refreshRegisters();
+}
+
+void CoreManager::sendLogs () const {
+  Q_CHECK_PTR(mCore);
+  // TODO.
 }
 
 // -----------------------------------------------------------------------------
