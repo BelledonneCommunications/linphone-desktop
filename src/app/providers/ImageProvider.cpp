@@ -65,13 +65,13 @@ static QByteArray parseFillAndStroke (QXmlStreamAttributes &readerAttributes, co
 
   for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
     regex.indexIn(classValue.trimmed());
-    if (regex.pos() == -1)
+    if (Q_LIKELY(regex.pos() == -1))
       continue;
 
     const QStringList list = regex.capturedTexts();
 
     const QVariant colorValue = colors.property(list[1].toStdString().c_str());
-    if (!colorValue.isValid()) {
+    if (Q_UNLIKELY(!colorValue.isValid())) {
       qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
       continue;
     }
@@ -91,7 +91,7 @@ static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colo
   QSet<QString> overrode;
   for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
     regex.indexIn(classValue.trimmed());
-    if (regex.pos() == -1)
+    if (Q_LIKELY(regex.pos() == -1))
       continue;
 
     const QStringList list = regex.capturedTexts();
@@ -99,7 +99,7 @@ static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colo
     overrode.insert(list[2]);
 
     const QVariant colorValue = colors.property(list[1].toStdString().c_str());
-    if (!colorValue.isValid()) {
+    if (Q_UNLIKELY(!colorValue.isValid())) {
       qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
       continue;
     }
@@ -113,7 +113,7 @@ static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colo
   const QByteArrayList styleValues = readerAttributes.value("style").toLatin1().split(';');
   for (const auto &styleValue : styleValues) {
     const QByteArrayList list = styleValue.split(':');
-    if (list.length() > 0 && !overrode.contains(list[0])) {
+    if (Q_UNLIKELY(list.length() > 0 && !overrode.contains(list[0]))) {
       attribute.append(styleValue);
       attribute.append(";");
     }
@@ -137,7 +137,7 @@ static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors 
 
   for (const auto &attribute : readerAttributes) {
     const QByteArray prefix = attribute.prefix().toLatin1();
-    if (prefix.length() > 0) {
+    if (Q_UNLIKELY(prefix.length() > 0)) {
       attributes.append(prefix);
       attributes.append(":");
     }
@@ -154,7 +154,7 @@ static QByteArray parseDeclarations (const QXmlStreamReader &reader) {
   QByteArray declarations;
   for (const auto &declaration : reader.namespaceDeclarations()) {
     const QByteArray prefix = declaration.prefix().toLatin1();
-    if (prefix.length() > 0) {
+    if (Q_UNLIKELY(prefix.length() > 0)) {
       declarations.append("xmlns:");
       declarations.append(prefix);
     } else
@@ -256,25 +256,25 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
 
   // 1. Read and update XML content.
   QFile file(path);
-  if (QFileInfo(file).size() > MAX_IMAGE_SIZE) {
+  if (Q_UNLIKELY(QFileInfo(file).size() > MAX_IMAGE_SIZE)) {
     qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
     return QImage();
   }
 
-  if (!file.open(QIODevice::ReadOnly)) {
+  if (Q_UNLIKELY(!file.open(QIODevice::ReadOnly))) {
     qWarning() << QStringLiteral("Unable to open file: `%1`.").arg(path);
     return QImage();
   }
 
   const QByteArray content = ::computeContent(file);
-  if (!content.length()) {
+  if (Q_UNLIKELY(!content.length())) {
     qWarning() << QStringLiteral("Unable to parse file: `%1`.").arg(path);
     return QImage();
   }
 
   // 2. Build svg renderer.
   QSvgRenderer renderer(content);
-  if (!renderer.isValid()) {
+  if (Q_UNLIKELY(!renderer.isValid())) {
     qWarning() << QStringLiteral("Invalid svg file: `%1`.").arg(path);
     return QImage();
   }
@@ -282,7 +282,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *, const QSize &) {
   // 3. Create en empty image.
   const QRectF viewBox = renderer.viewBoxF();
   QImage image(static_cast<int>(viewBox.width()), static_cast<int>(viewBox.height()), QImage::Format_ARGB32);
-  if (image.isNull()) {
+  if (Q_UNLIKELY(image.isNull())) {
     qWarning() << QStringLiteral("Unable to create image of size `(%1, %2)` from path: `%3`.")
       .arg(viewBox.width()).arg(viewBox.height()).arg(path);
     return QImage(); // Memory cannot be allocated.
