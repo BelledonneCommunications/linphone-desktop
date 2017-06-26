@@ -236,5 +236,8 @@ void CoreHandlers::onVersionUpdateCheckResultReceived (
   const string &url
 ) {
   if (result == linphone::VersionUpdateCheckResultNewVersionAvailable)
-    App::getInstance()->getNotifier()->notifyNewVersionAvailable(version, url);
+    App::getInstance()->getNotifier()->notifyNewVersionAvailable(
+      ::Utils::coreStringToAppString(version),
+      ::Utils::coreStringToAppString(url)
+    );
 }

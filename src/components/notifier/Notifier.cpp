@@ -261,14 +261,14 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
   showNotification(notification, NOTIFICATION_TIMEOUT_RECEIVED_CALL);
 }
 
-void Notifier::notifyNewVersionAvailable (const string &version, const string &url) {
+void Notifier::notifyNewVersionAvailable (const QString &version, const QString &url) {
   QObject *notification = createNotification(Notifier::NewVersionAvailable);
   if (!notification)
     return;
 
   QVariantMap map;
-  map["message"] = tr("newVersionAvailable").arg(::Utils::coreStringToAppString(version));
-  map["url"] = ::Utils::coreStringToAppString(url);
+  map["message"] = tr("newVersionAvailable").arg(version);
+  map["url"] = url;
 
   ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, map);
   showNotification(notification, NOTIFICATION_TIMEOUT_NEW_VERSION_AVAILABLE);
