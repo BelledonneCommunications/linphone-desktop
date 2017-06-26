@@ -142,7 +142,6 @@ inline void activeSplashScreen (QQmlApplicationEngine *engine) {
 
 void App::initContentApp () {
   shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
-  const QString pluginsPath = ::Utils::coreStringToAppString(Paths::getPluginsDirPath());
 
   // Destroy qml components and linphone core if necessary.
   if (mEngine) {
@@ -168,7 +167,7 @@ void App::initContentApp () {
       });
 
     // Add plugins directory.
-    addLibraryPath(pluginsPath);
+    addLibraryPath(::Utils::coreStringToAppString(Paths::getPluginsDirPath()));
     qInfo() << QStringLiteral("Library paths:") << libraryPaths();
   }
 
@@ -186,8 +185,6 @@ void App::initContentApp () {
   mEngine->addImportPath(":/ui/modules");
   mEngine->addImportPath(":/ui/scripts");
   mEngine->addImportPath(":/ui/views");
-  mEngine->addImportPath(pluginsPath);
-  qInfo() << QStringLiteral("Engine import paths:") << mEngine->importPathList();
 
   // Provide avatars/thumbnails providers.
   mEngine->addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
