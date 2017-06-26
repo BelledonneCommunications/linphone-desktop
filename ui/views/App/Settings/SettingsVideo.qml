@@ -92,11 +92,11 @@ TabContainer {
 
         FormGroup {
           label: qsTr('videoFramerateLabel')
+          visible: SettingsModel.videoPreset === 'custom'
 
           NumericField {
             maxValue: 60
             minValue: 1
-            readOnly: SettingsModel.videoPreset !== 'custom'
             text: SettingsModel.videoFramerate
 
             onEditingFinished: SettingsModel.videoFramerate = text
