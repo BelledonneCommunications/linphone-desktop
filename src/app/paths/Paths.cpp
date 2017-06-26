@@ -35,7 +35,7 @@
 
 #define PATH_ASSISTANT_CONFIG "/linphone/assistant/"
 #define PATH_AVATARS "/avatars/"
-#define PATH_CAPTURES "/captures/"
+#define PATH_CAPTURES "/Linphone/captures/"
 #define PATH_LOGS "/logs/"
 #define PATH_THUMBNAILS "/thumbnails/"
 #define PATH_USER_CERTIFICATES "/usr-crt/"
@@ -172,7 +172,7 @@ string Paths::getCallHistoryFilePath () {
 }
 
 string Paths::getCapturesDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CAPTURES);
+  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + PATH_CAPTURES);
 }
 
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
