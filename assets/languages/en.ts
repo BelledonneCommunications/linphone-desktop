@@ -323,6 +323,14 @@
         <source>callErrorNotAcceptable</source>
         <translation>Remote party cannot accept the call.</translation>
     </message>
+    <message>
+        <source>callStatsReceivedFramerate</source>
+        <translation>Received framerate</translation>
+    </message>
+    <message>
+        <source>callStatsSentFramerate</source>
+        <translation>Sent framerate</translation>
+    </message>
 </context>
 <context>
     <name>CallSipAddress</name>

@@ -566,7 +566,6 @@ inline QVariantMap createStat (const QString &key, const QString &value) {
 }
 
 void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList) {
-  QString family;
   shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
   shared_ptr<const linphone::PayloadType> payloadType;
 
@@ -581,6 +580,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       return;
   }
 
+  QString family;
   switch (callStats->getIpFamilyOfRemote()) {
     case linphone::AddressFamilyInet:
       family = QStringLiteral("IPv4");
@@ -596,37 +596,40 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
   statsList.clear();
 
   statsList << ::createStat(tr("callStatsCodec"), payloadType
-    ? QString("%1 / %2kHz").arg(Utils::coreStringToAppString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
+    ? QStringLiteral("%1 / %2kHz").arg(Utils::coreStringToAppString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
     : "");
-  statsList << ::createStat(tr("callStatsUploadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
-  statsList << ::createStat(tr("callStatsDownloadBandwidth"), QString("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
+  statsList << ::createStat(tr("callStatsUploadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
+  statsList << ::createStat(tr("callStatsDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
   statsList << ::createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
   statsList << ::createStat(tr("callStatsIpFamily"), family);
-  statsList << ::createStat(tr("callStatsSenderLossRate"), QString("%1 %").arg(callStats->getSenderLossRate()));
-  statsList << ::createStat(tr("callStatsReceiverLossRate"), QString("%1 %").arg(callStats->getReceiverLossRate()));
+  statsList << ::createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(callStats->getSenderLossRate()));
+  statsList << ::createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(callStats->getReceiverLossRate()));
 
   switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
-      statsList << ::createStat(tr("callStatsJitterBuffer"), QString("%1 ms").arg(callStats->getJitterBufferSizeMs()));
+      statsList << ::createStat(tr("callStatsJitterBuffer"), QStringLiteral("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
-      QString sentVideoDefinitionName = ::Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
-      QString sentVideoDefinition = QString("%1x%2")
+      const QString sentVideoDefinitionName = ::Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
+      const QString sentVideoDefinition = QStringLiteral("%1x%2")
         .arg(params->getSentVideoDefinition()->getWidth())
         .arg(params->getSentVideoDefinition()->getHeight());
 
       statsList << ::createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
         ? sentVideoDefinition
-        : QString("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
+        : QStringLiteral("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
 
-      QString receivedVideoDefinitionName = ::Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
-      QString receivedVideoDefinition = QString("%1x%2")
+      const QString receivedVideoDefinitionName = ::Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
+      const QString receivedVideoDefinition = QString("%1x%2")
         .arg(params->getReceivedVideoDefinition()->getWidth())
         .arg(params->getReceivedVideoDefinition()->getHeight());
 
       statsList << ::createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
+
+      statsList << ::createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(params->getReceivedFramerate()));
+      statsList << ::createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(params->getSentFramerate()));
     } break;
 
     default:

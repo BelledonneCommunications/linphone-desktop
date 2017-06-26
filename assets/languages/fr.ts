@@ -323,6 +323,14 @@
         <source>callErrorNotAcceptable</source>
         <translation>Le correspondant ne peut accepter votre appel.</translation>
     </message>
+    <message>
+        <source>callStatsReceivedFramerate</source>
+        <translation>FPS reçues</translation>
+    </message>
+    <message>
+        <source>callStatsSentFramerate</source>
+        <translation>FPS envoyées</translation>
+    </message>
 </context>
 <context>
     <name>CallSipAddress</name>
