@@ -137,6 +137,8 @@ private:
 
   void resetMessagesCount ();
 
+  void updateIsRemoteComposing ();
+
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);

@@ -282,6 +282,7 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
   mChatRoom = core->getChatRoomFromUri(::Utils::appStringToCoreString(sipAddress));
+  updateIsRemoteComposing();
 
   if (mChatRoom->getUnreadMessagesCount() > 0)
     resetMessagesCount();
@@ -649,6 +650,14 @@ void ChatModel::resetMessagesCount () {
   emit messagesCountReset();
 }
 
+void ChatModel::updateIsRemoteComposing () {
+  bool isRemoteComposing = mChatRoom->isRemoteComposing();
+  if (isRemoteComposing != mIsRemoteComposing) {
+    mIsRemoteComposing = isRemoteComposing;
+    emit isRemoteComposingChanged(mIsRemoteComposing);
+  }
+}
+
 // -----------------------------------------------------------------------------
 
 void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
@@ -660,13 +669,8 @@ void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 }
 
 void ChatModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
-  if (mChatRoom == chatRoom) {
-    bool isRemoteComposing = mChatRoom->isRemoteComposing();
-    if (isRemoteComposing != mIsRemoteComposing) {
-      mIsRemoteComposing = isRemoteComposing;
-      emit isRemoteComposingChanged(mIsRemoteComposing);
-    }
-  }
+  if (mChatRoom == chatRoom)
+    updateIsRemoteComposing();
 }
 
 void ChatModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
