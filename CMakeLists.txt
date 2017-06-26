@@ -297,7 +297,7 @@ qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 # Build.
 # Note: `update_translations` is provided by `languages/CMakeLists.txt`.
 if (WIN32)
-  add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} linphone.rc)
+  add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} assets/linphone.rc)
 else ()
   add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
 endif ()
@@ -352,7 +352,7 @@ install(TARGETS ${TARGET_NAME}
   PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 )
 
-install(FILES "linphone.desktop"
+install(FILES "assets/linphone.desktop"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
 )
 install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
