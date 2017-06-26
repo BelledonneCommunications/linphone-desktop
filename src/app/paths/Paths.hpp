@@ -30,27 +30,28 @@
 // =============================================================================
 
 namespace Paths {
-  bool filePathExists (const std::string &path);
+bool filePathExists (const std::string &path);
 
-  std::string getAssistantConfigDirPath ();
-  std::string getAvatarsDirPath ();
-  std::string getCallHistoryFilePath ();
-  std::string getCapturesDirPath ();
-  std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
-  std::string getFactoryConfigFilePath ();
-  std::string getFriendsListFilePath ();
-  std::string getDownloadDirPath ();
-  std::string getLogsDirPath ();
-  std::string getMessageHistoryFilePath ();
-  std::string getPackageDataDirPath ();
-  std::string getPackageMsPluginsDirPath ();
-  std::string getRootCaFilePath ();
-  std::string getThumbnailsDirPath ();
-  std::string getUserCertificatesDirPath ();
-  std::string getZrtpDataFilePath ();
-  std::string getZrtpSecretsFilePath ();
+std::string getAssistantConfigDirPath ();
+std::string getAvatarsDirPath ();
+std::string getCallHistoryFilePath ();
+std::string getCapturesDirPath ();
+std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
+std::string getFactoryConfigFilePath ();
+std::string getFriendsListFilePath ();
+std::string getDownloadDirPath ();
+std::string getLogsDirPath ();
+std::string getMessageHistoryFilePath ();
+std::string getPackageDataDirPath ();
+std::string getPackageMsPluginsDirPath ();
+std::string getPluginsDirPath ();
+std::string getRootCaFilePath ();
+std::string getThumbnailsDirPath ();
+std::string getUserCertificatesDirPath ();
+std::string getZrtpDataFilePath ();
+std::string getZrtpSecretsFilePath ();
 
-  void migrate ();
+void migrate ();
 }
 
 #endif // PATHS_H_

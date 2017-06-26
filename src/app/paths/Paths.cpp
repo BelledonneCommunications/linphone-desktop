@@ -37,6 +37,7 @@
 #define PATH_AVATARS "/avatars/"
 #define PATH_CAPTURES "/Linphone/captures/"
 #define PATH_LOGS "/logs/"
+#define PATH_PLUGINS "/plugins/"
 #define PATH_THUMBNAILS "/thumbnails/"
 #define PATH_USER_CERTIFICATES "/usr-crt/"
 
@@ -139,6 +140,10 @@ inline QString getAppFactoryConfigFilePath () {
   return ::getAppPackageDataDirPath() + PATH_FACTORY_CONFIG;
 }
 
+inline QString getAppPluginsDirPath () {
+  return ::getAppPackageDataDirPath() + PATH_PLUGINS;
+}
+
 inline QString getAppRootCaFilePath () {
   return ::getAppPackageDataDirPath() + PATH_ROOT_CA;
 }
@@ -209,6 +214,10 @@ string Paths::getPackageDataDirPath () {
 
 string Paths::getPackageMsPluginsDirPath () {
   return ::getReadableDirPath(::getAppPackageMsPluginsDirPath());
+}
+
+string Paths::getPluginsDirPath () {
+  return ::getWritableDirPath(::getAppPluginsDirPath());
 }
 
 string Paths::getRootCaFilePath () {

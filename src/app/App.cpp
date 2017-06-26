@@ -158,13 +158,17 @@ void App::initContentApp () {
     // Don't quit if last window is closed!!!
     setQuitOnLastWindowClosed(false);
 
+    // Deal with received messages and CLI.
+    mCli = new Cli(this);
     QObject::connect(this, &App::receivedMessage, this, [this](int, const QByteArray &byteArray) {
         QString command(byteArray);
         qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
-        executeCommand(command);
+        mCli->executeCommand(command);
       });
 
-    mCli = new Cli(this);
+    // Add plugins directory.
+    addLibraryPath(::Utils::coreStringToAppString(Paths::getPluginsDirPath()));
+    qInfo() << QStringLiteral("Library paths:") << libraryPaths();
   }
 
   // Init core.
@@ -232,12 +236,6 @@ QString App::getCommandArgument () {
   // TODO: Remove me when cmd option will be available.
   return QString("");
   // return mParser->value("cmd");
-}
-
-// -----------------------------------------------------------------------------
-
-void App::executeCommand (const QString &command) {
-  mCli->executeCommand(command);
 }
 
 // -----------------------------------------------------------------------------
@@ -551,7 +549,7 @@ void App::openAppAfterInit () {
   {
     const QString commandArgument = getCommandArgument();
     if (!commandArgument.isEmpty())
-      executeCommand(commandArgument);
+      mCli->executeCommand(commandArgument);
   }
 
   #ifdef ENABLE_UPDATE_CHECK

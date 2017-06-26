@@ -54,7 +54,6 @@ public:
   void initContentApp ();
 
   QString getCommandArgument ();
-  void executeCommand (const QString &command);
 
   QQmlEngine *getEngine () {
     return mEngine;
