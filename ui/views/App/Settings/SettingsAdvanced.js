@@ -19,7 +19,7 @@ function cleanLogs () {
 }
 
 function handleLogsUploaded (url) {
-  if (url.length) {
+  if (url.length && Utils.startsWith(url, 'http')) {
     sendLogsBlock.stop('')
     Qt.openUrlExternally(
       'mailto:' + encodeURIComponent(Linphone.SettingsModel.logsEmail) +
