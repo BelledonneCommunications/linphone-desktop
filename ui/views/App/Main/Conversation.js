@@ -29,10 +29,7 @@ function getEditIcon () {
 }
 
 function getUsername () {
-  return LinphoneUtils.getContactUsername(
-    conversation._sipAddressObserver.contact ||
-    conversation.sipAddress
-  )
+  return LinphoneUtils.getContactUsername(conversation._sipAddressObserver)
 }
 
 function updateChatFilter (button) {

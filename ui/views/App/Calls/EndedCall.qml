@@ -38,7 +38,7 @@ Rectangle {
 
       horizontalTextAlignment: Text.AlignHCenter
       sipAddress: _sipAddressObserver.sipAddress
-      username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || sipAddress)
+      username: LinphoneUtils.getContactUsername(_sipAddressObserver)
     }
 
     Text {

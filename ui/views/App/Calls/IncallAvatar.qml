@@ -11,7 +11,7 @@ Avatar {
   property var call
 
   readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.sipAddress)
-  readonly property var _username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || call.sipAddress)
+  readonly property var _username: LinphoneUtils.getContactUsername(_sipAddressObserver)
 
   backgroundColor: CallStyle.container.avatar.backgroundColor
   foregroundColor: call.status === CallModel.CallStatusPaused

@@ -27,7 +27,7 @@ Row {
         width: ChatStyle.entry.message.incoming.avatarSize
 
         image: chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.avatar : ''
-        username: LinphoneUtils.getContactUsername(chat.sipAddressObserver.contact || proxyModel.sipAddress)
+        username: LinphoneUtils.getContactUsername(chat.sipAddressObserver)
       }
     }
 

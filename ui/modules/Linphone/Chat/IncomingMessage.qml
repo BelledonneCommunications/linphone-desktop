@@ -21,7 +21,7 @@ RowLayout {
       anchors.centerIn: parent
       height: ChatStyle.entry.message.incoming.avatarSize
       image: chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.vcard.avatar : ''
-      username: LinphoneUtils.getContactUsername(chat.sipAddressObserver.contact || proxyModel.sipAddress)
+      username: LinphoneUtils.getContactUsername(chat.sipAddressObserver)
       width: ChatStyle.entry.message.incoming.avatarSize
 
       // The avatar is only visible for the first message of a incoming messages sequence.

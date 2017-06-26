@@ -41,7 +41,7 @@ Rectangle {
         height: CallStyle.header.contactDescription.height
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.sipAddress
-        username: LinphoneUtils.getContactUsername(_sipAddressObserver.contact || call.sipAddress)
+        username: LinphoneUtils.getContactUsername(_sipAddressObserver)
         width: parent.width
       }
 

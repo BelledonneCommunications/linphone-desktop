@@ -132,7 +132,7 @@ Rectangle {
 
               horizontalTextAlignment: Text.AlignHCenter
               sipAddress: parent.sipAddressObserver.sipAddress
-              username: LinphoneUtils.getContactUsername(parent.sipAddressObserver.contact || parent.sipAddress)
+              username: LinphoneUtils.getContactUsername(parent.sipAddressObserver)
             }
 
             IncallAvatar {

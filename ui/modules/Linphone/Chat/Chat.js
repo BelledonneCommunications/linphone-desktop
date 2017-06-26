@@ -41,7 +41,7 @@ function getIsComposingMessage () {
   var sipAddressObserver = chat.sipAddressObserver
   return qsTr('isComposing').replace(
     '%1',
-    LinphoneUtils.getContactUsername(sipAddressObserver.contact || sipAddressObserver.sipAddress)
+    LinphoneUtils.getContactUsername(sipAddressObserver)
   )
 }
 

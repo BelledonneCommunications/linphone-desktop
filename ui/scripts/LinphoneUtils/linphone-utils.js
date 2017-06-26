@@ -8,9 +8,16 @@
 
 // =============================================================================
 
-// Returns the username of a contact object or URI string.
+// Returns the username of a contact/sipAddressObserver object or URI string.
 function getContactUsername (contact) {
-  return Utils.isString(contact)
-    ? contact.substring(4, contact.indexOf('@')) // 4 = length('sip:')
-    : contact.vcard.username
+  var object = contact.contact || // Contact object from `SipAddressObserver`.
+    (contact.vcard && contact) || // Contact object.
+    (contact.sipAddress) || // String from `SipAddressObserver`.
+    contact // String.
+
+  if (Utils.isString(object)) {
+    return object.substring(4, object.indexOf('@')) // 4 = length('sip:')
+  }
+
+  return object.vcard.username
 }
