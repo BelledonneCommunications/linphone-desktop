@@ -200,10 +200,15 @@ void App::initContentApp () {
 
   // Load splashscreen.
   bool selfTest = mParser->isSet("self-test");
-  if (!selfTest)
-    ::activeSplashScreen(mEngine);
-  // Set a self test limit.
-  else
+  if (!selfTest) {
+    #ifdef Q_OS_MACOS
+      ::activeSplashScreen(mEngine);
+    #else
+      if (!mParser->isSet("iconified"))
+        ::activeSplashScreen(mEngine);
+    #endif // ifdef Q_OS_MACOS
+  } else
+    // Set a self test limit.
     QTimer::singleShot(SELF_TEST_DELAY, this, [] {
       qFatal("Self test failed. :(");
     });
