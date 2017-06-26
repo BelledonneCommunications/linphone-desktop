@@ -74,7 +74,7 @@ TabContainer {
       }
 
       TextButtonB {
-        enabled: !sendLogsBlock.loading
+        enabled: !sendLogsBlock.loading && SettingsModel.logsEnabled
         text: qsTr('sendLogs')
 
         onClicked: sendLogsBlock.execute()
