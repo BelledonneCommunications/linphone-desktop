@@ -48,10 +48,11 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(contacts, &ContactsListModel::sipAddressAdded, this, &SipAddressesModel::handleSipAddressAdded);
   QObject::connect(contacts, &ContactsListModel::sipAddressRemoved, this, &SipAddressesModel::handleSipAddressRemoved);
 
-  CoreHandlers *intHandlers = mCoreHandlers.get();
-  QObject::connect(intHandlers, &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
-  QObject::connect(intHandlers, &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
-  QObject::connect(intHandlers, &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
+  CoreHandlers *coreHandlers = mCoreHandlers.get();
+  QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
+  QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
+  QObject::connect(coreHandlers, &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
+  QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &SipAddressesModel::handlerIsComposingChanged);
 }
 
 // -----------------------------------------------------------------------------
@@ -346,6 +347,17 @@ void SipAddressesModel::handleMessagesCountReset (const QString &sipAddress) {
   }
 
   updateObservers(sipAddress, 0);
+}
+
+void SipAddressesModel::handlerIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
+  auto it = mSipAddresses.find(::Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()));
+  if (it != mSipAddresses.end()) {
+    (*it)["isComposing"] = chatRoom->isRemoteComposing();
+
+    int row = mRefs.indexOf(&(*it));
+    Q_ASSERT(row != -1);
+    emit dataChanged(index(row, 0), index(row, 0));
+  }
 }
 
 // -----------------------------------------------------------------------------

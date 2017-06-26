@@ -86,6 +86,8 @@ private:
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
   void handleMessagesCountReset (const QString &sipAddress);
 
+  void handlerIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
+
   // ---------------------------------------------------------------------------
 
   // A sip address exists in this list if a contact is linked to it, or a call, or a message.

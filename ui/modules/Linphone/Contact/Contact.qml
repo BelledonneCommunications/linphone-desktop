@@ -65,7 +65,9 @@ Rectangle {
       Layout.alignment: Qt.AlignTop
 
       count: Number(entry.unreadMessagesCount)
-      visible: displayUnreadMessagesCount && entry.unreadMessagesCount > 0
+      isComposing: Boolean(entry.isComposing)
+
+      visible: item.displayUnreadMessagesCount
     }
   }
 }

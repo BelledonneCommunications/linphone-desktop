@@ -10,6 +10,7 @@ Item {
   id: messagesCounter
 
   property int count
+  property bool isComposing
 
   implicitHeight: counterIcon.height + MessagesCounterStyle.verticalMargins * 2
   implicitWidth: counterIcon.width + MessagesCounterStyle.horizontalMargins * 2
@@ -17,10 +18,15 @@ Item {
   Icon {
     id: counterIcon
 
+    property int composingIndex: 0
+
     anchors.centerIn: parent
 
-    icon: 'chat_count'
+    icon: messagesCounter.isComposing
+      ? ('chat_is_composing_' + counterIcon.composingIndex)
+      : 'chat_count'
     iconSize: MessagesCounterStyle.iconSize.message
+    visible: messagesCounter.count > 0 || messagesCounter.isComposing
 
     Icon {
       anchors {
@@ -30,6 +36,7 @@ Item {
 
       icon: 'chat_amount'
       iconSize: MessagesCounterStyle.iconSize.amount
+      visible: messagesCounter.count > 0
 
       Text {
         anchors.centerIn: parent
@@ -37,6 +44,20 @@ Item {
         font.pointSize: MessagesCounterStyle.text.pointSize
         text: messagesCounter.count
       }
+    }
+
+    Timer {
+      interval: 500
+      repeat: true
+      running: messagesCounter.isComposing
+
+      onRunningChanged: {
+        if (running) {
+          counterIcon.composingIndex = 0
+        }
+      }
+
+      onTriggered: counterIcon.composingIndex = (counterIcon.composingIndex + 1) % 4
     }
   }
 }

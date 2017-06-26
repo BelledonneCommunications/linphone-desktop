@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
+    <title>chat_in_writing_0</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="chat_in_writing_0">
+            <path d="M6.40657699,14.958235 C6.4063782,14.958235 4.02960743,17.4749743 1,16.7980486 C1,16.7980486 3.96659001,15.9311541 3.29347644,13.3085893 L3.27180799,13.1872479 C1.86653929,11.8936694 1,10.1230801 1,8.16948422 C1,4.20997633 4.5607827,1 8.95192433,1 C13.3432648,1 16.9036499,4.20997633 16.9036499,8.16948422 C16.9036499,12.1289921 13.3432648,15.3387695 8.95192433,15.3387695 C8.06133107,15.3387695 7.20552661,15.2072832 6.4061794,14.9638048 L6.40657699,14.958235 L6.40657699,14.958235 Z" stroke="#96A6B1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle fill="#D0D8DE" cx="6" cy="8" r="1"></circle>
+            <circle fill="#D0D8DE" cx="9" cy="8" r="1"></circle>
+            <circle fill="#D0D8DE" cx="12" cy="8" r="1"></circle>
+        </g>
+    </g>
+</svg>
