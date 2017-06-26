@@ -22,7 +22,8 @@ function handleLogsUploaded (url) {
   if (url.length) {
     sendLogsBlock.stop('')
     Qt.openUrlExternally(
-      'mailto:?subject=' + encodeURIComponent('Desktop Linphone Log') +
+      'mailto:' + encodeURIComponent(Linphone.SettingsModel.logsEmail) +
+      '?subject=' + encodeURIComponent('Desktop Linphone Log') +
       '&body=' + encodeURIComponent(url)
     )
   } else {

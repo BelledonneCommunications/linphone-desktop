@@ -759,6 +759,19 @@ void SettingsModel::setLogsEnabled (bool status) {
 
 // ---------------------------------------------------------------------------
 
+QString SettingsModel::getLogsEmail () const {
+  return ::Utils::coreStringToAppString(
+    mConfig->getString(UI_SECTION, "logs_email", "")
+  );
+}
+
+void SettingsModel::setLogsEmail (const QString &email) {
+  mConfig->setString(UI_SECTION, "logs_email", ::Utils::appStringToCoreString(email));
+  emit logsEmailChanged(email);
+}
+
+// ---------------------------------------------------------------------------
+
 QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
   return ::Utils::coreStringToAppString(
     config->getString(UI_SECTION, "logs_folder", Paths::getLogsDirPath())
