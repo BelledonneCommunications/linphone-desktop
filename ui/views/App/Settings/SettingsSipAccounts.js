@@ -9,7 +9,7 @@
 // =============================================================================
 
 function editAccount (account) {
-  window.attachVirtualWindow(Qt.resolvedUrl('SettingsSipAccountsEdit.qml'), {
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/SettingsSipAccountsEdit.qml'), {
     account: account
   })
 }

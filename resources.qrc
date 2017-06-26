@@ -405,19 +405,19 @@
     <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>
+    <file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.js</file>
+    <file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.qml</file>
+    <file>ui/views/App/Settings/Dialogs/SettingsVideoPreview.qml</file>
     <file>ui/views/App/Settings/SettingsAdvanced.js</file>
     <file>ui/views/App/Settings/SettingsAdvanced.qml</file>
     <file>ui/views/App/Settings/SettingsAudio.qml</file>
     <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
     <file>ui/views/App/Settings/SettingsNetwork.qml</file>
-    <file>ui/views/App/Settings/SettingsSipAccountsEdit.js</file>
-    <file>ui/views/App/Settings/SettingsSipAccountsEdit.qml</file>
     <file>ui/views/App/Settings/SettingsSipAccounts.js</file>
     <file>ui/views/App/Settings/SettingsSipAccounts.qml</file>
     <file>ui/views/App/Settings/SettingsUi.js</file>
     <file>ui/views/App/Settings/SettingsUi.qml</file>
     <file>ui/views/App/Settings/SettingsVideo.js</file>
-    <file>ui/views/App/Settings/SettingsVideoPreview.qml</file>
     <file>ui/views/App/Settings/SettingsVideo.qml</file>
     <file>ui/views/App/Settings/SettingsWindow.qml</file>
     <file>ui/views/App/SplashScreen/SplashScreen.qml</file>
