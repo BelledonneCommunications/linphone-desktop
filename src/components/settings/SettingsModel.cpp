@@ -583,7 +583,7 @@ QString SettingsModel::getTurnPassword () const {
   shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
   shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(natPolicy->getStunServerUsername(), "", "");
 
-  return authInfo ? ::Utils::coreStringToAppString(authInfo->getPasswd()) : "";
+  return authInfo ? ::Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
 }
 
 void SettingsModel::setTurnPassword (const QString &password) {

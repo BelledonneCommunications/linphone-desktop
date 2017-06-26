@@ -230,7 +230,7 @@ void App::initContentApp () {
 
 QString App::getCommandArgument () {
   // TODO: Remove me when cmd option will be available.
-  return "";
+  return QString("");
   // return mParser->value("cmd");
 }
 
@@ -542,7 +542,7 @@ void App::openAppAfterInit () {
   {
     shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
     if (config->getInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 1)) {
-      QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, ""));
+      QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
       config->setInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 0);
     }
   }

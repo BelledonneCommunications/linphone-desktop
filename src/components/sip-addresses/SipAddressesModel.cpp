@@ -183,7 +183,7 @@ QString SipAddressesModel::interpretUrl (const QString &sipAddress) {
       ::Utils::appStringToCoreString(sipAddress)
     );
 
-  return lAddress ? ::Utils::coreStringToAppString(lAddress->asStringUriOnly()) : "";
+  return lAddress ? ::Utils::coreStringToAppString(lAddress->asStringUriOnly()) : QString("");
 }
 
 QString SipAddressesModel::interpretUrl (const QUrl &sipAddress) {

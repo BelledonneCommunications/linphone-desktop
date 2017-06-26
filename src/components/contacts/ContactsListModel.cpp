@@ -181,7 +181,7 @@ void ContactsListModel::cleanAvatars () {
 
   for (const auto &contact : mList) {
     VcardModel *vcardModel = contact->cloneVcardModel();
-    vcardModel->setAvatar("");
+    vcardModel->setAvatar(QString(""));
     contact->setVcardModel(vcardModel);
   }
 }

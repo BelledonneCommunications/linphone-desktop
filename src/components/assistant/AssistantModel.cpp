@@ -46,7 +46,7 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusAccountCreated)
-      emit mAssistant->createStatusChanged("");
+      emit mAssistant->createStatusChanged(QString(""));
     else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit mAssistant->createStatusChanged(tr("requestFailed"));
@@ -66,7 +66,7 @@ private:
       shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
       Q_CHECK_PTR(proxyConfig);
 
-      emit mAssistant->loginStatusChanged("");
+      emit mAssistant->loginStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit mAssistant->loginStatusChanged(tr("requestFailed"));
@@ -89,7 +89,7 @@ private:
         Q_CHECK_PTR(proxyConfig);
       }
 
-      emit mAssistant->activateStatusChanged("");
+      emit mAssistant->activateStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit mAssistant->activateStatusChanged(tr("requestFailed"));
@@ -107,7 +107,7 @@ private:
       shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
       Q_CHECK_PTR(proxyConfig);
 
-      emit mAssistant->activateStatusChanged("");
+      emit mAssistant->activateStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit mAssistant->activateStatusChanged(tr("requestFailed"));
@@ -122,7 +122,7 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusRequestOk) {
-      emit mAssistant->recoverStatusChanged("");
+      emit mAssistant->recoverStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
         emit mAssistant->recoverStatusChanged(tr("requestFailed"));
@@ -170,13 +170,13 @@ void AssistantModel::login () {
 }
 
 void AssistantModel::reset () {
-  mCountryCode = "";
+  mCountryCode = QString("");
   mAccountCreator->reset();
 
-  emit emailChanged("", "");
-  emit passwordChanged("", "");
-  emit phoneNumberChanged("", "");
-  emit usernameChanged("", "");
+  emit emailChanged(QString(""), QString(""));
+  emit passwordChanged(QString(""), QString(""));
+  emit phoneNumberChanged(QString(""), QString(""));
+  emit usernameChanged(QString(""), QString(""));
 }
 
 // -----------------------------------------------------------------------------

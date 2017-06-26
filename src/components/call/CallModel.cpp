@@ -597,7 +597,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
   statsList << ::createStat(tr("callStatsCodec"), payloadType
     ? QStringLiteral("%1 / %2kHz").arg(Utils::coreStringToAppString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
-    : "");
+    : QString(""));
   statsList << ::createStat(tr("callStatsUploadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
   statsList << ::createStat(tr("callStatsDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
   statsList << ::createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
