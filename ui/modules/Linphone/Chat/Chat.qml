@@ -11,6 +11,8 @@ import 'Chat.js' as Logic
 // =============================================================================
 
 Rectangle {
+  id: container
+
   property alias proxyModel: chat.model
 
   // ---------------------------------------------------------------------------
@@ -196,6 +198,8 @@ Rectangle {
       Layout.preferredHeight: ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
 
       borderColor: ChatStyle.sendArea.border.color
+
+      bottomWidth: ChatStyle.sendArea.border.width
       topWidth: ChatStyle.sendArea.border.width
 
       DroppableTextArea {
@@ -208,8 +212,19 @@ Rectangle {
         placeholderText: qsTr('newMessagePlaceholder')
 
         onDropped: Logic.handleFilesDropped(files)
+        onTextChanged: Logic.handleTextChanged(text)
         onValidText: Logic.sendMessage(text)
       }
+    }
+
+    Text {
+      Layout.fillWidth: true
+
+      color: ChatStyle.composingText.color
+      font.pointSize: ChatStyle.composingText.pointSize
+      leftPadding: ChatStyle.composingText.leftPadding
+
+      text: Logic.getIsComposingMessage()
     }
   }
 

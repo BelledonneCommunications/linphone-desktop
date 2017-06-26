@@ -414,6 +414,10 @@
         <translation>Impossible d&apos;envoyer un fichier.
 Url du serveur non configurée.</translation>
     </message>
+    <message>
+        <source>isComposing</source>
+        <translation>%1 est en train d&apos;écrire...</translation>
+    </message>
 </context>
 <context>
     <name>Cli</name>

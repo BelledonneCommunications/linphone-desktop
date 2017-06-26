@@ -414,6 +414,10 @@
         <translation>Unable to send file.
 Server url not configured.</translation>
     </message>
+    <message>
+        <source>isComposing</source>
+        <translation>%1 is typing...</translation>
+    </message>
 </context>
 <context>
     <name>Cli</name>

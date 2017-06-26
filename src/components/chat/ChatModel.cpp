@@ -199,6 +199,20 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
 
   QObject::connect(mCoreHandlers.get(), &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
   QObject::connect(mCoreHandlers.get(), &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
+
+  // Deal with remote composing.
+  QTimer *timer = new QTimer(this);
+  timer->setInterval(500);
+
+  QObject::connect(timer, &QTimer::timeout, this, [this] {
+    bool isRemoteComposing = mChatRoom->isRemoteComposing();
+    if (isRemoteComposing != mIsRemoteComposing) {
+      mIsRemoteComposing = isRemoteComposing;
+      emit isRemoteComposingChanged(mIsRemoteComposing);
+    }
+  });
+
+  timer->start();
 }
 
 ChatModel::~ChatModel () {
@@ -259,7 +273,7 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 
 QString ChatModel::getSipAddress () const {
   if (!mChatRoom)
-    return "";
+    return QString("");
 
   return ::Utils::coreStringToAppString(
     mChatRoom->getPeerAddress()->asStringUriOnly()
@@ -303,6 +317,10 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
   endResetModel();
 
   emit sipAddressChanged(sipAddress);
+}
+
+bool ChatModel::getIsRemoteComposing () const {
+  return mIsRemoteComposing;
 }
 
 // -----------------------------------------------------------------------------
@@ -471,6 +489,10 @@ void ChatModel::openFile (int id, bool showDirectory) {
 bool ChatModel::fileWasDownloaded (int id) {
   const ChatEntryData entry = getFileMessageEntry(id);
   return entry.second && ::fileWasDownloaded(static_pointer_cast<linphone::ChatMessage>(entry.second));
+}
+
+void ChatModel::compose () {
+  return mChatRoom->compose();
 }
 
 // -----------------------------------------------------------------------------

@@ -35,6 +35,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
   Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
+  Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
 
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
@@ -54,8 +55,12 @@ public:
   Q_INVOKABLE void openFile (int id);
   Q_INVOKABLE void openFileDirectory (int id);
 
+  Q_INVOKABLE void compose ();
+
 signals:
   void sipAddressChanged (const QString &sipAddress);
+  bool isRemoteComposingChanged (bool status);
+
   void moreEntriesLoaded (int n);
 
   void entryTypeFilterChanged (ChatModel::EntryType type);
@@ -66,6 +71,8 @@ protected:
 private:
   QString getSipAddress () const;
   void setSipAddress (const QString &sipAddress);
+
+  bool getIsRemoteComposing () const;
 
   ChatModelFilter *mChatModelFilter;
   int mMaxDisplayedEntries = ENTRIES_CHUNK_SIZE;

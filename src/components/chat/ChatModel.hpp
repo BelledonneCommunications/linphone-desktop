@@ -38,6 +38,7 @@ class ChatModel : public QAbstractListModel {
   Q_OBJECT;
 
   Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
+  Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
 
 public:
   enum Roles {
@@ -88,6 +89,8 @@ public:
   QString getSipAddress () const;
   void setSipAddress (const QString &sipAddress);
 
+  bool getIsRemoteComposing () const;
+
   void removeEntry (int id);
   void removeAllEntries ();
 
@@ -105,8 +108,12 @@ public:
 
   bool fileWasDownloaded (int id);
 
+  void compose ();
+
 signals:
   void sipAddressChanged (const QString &sipAddress);
+  bool isRemoteComposingChanged (bool status);
+
   void allEntriesRemoved ();
 
   void messageSent (const std::shared_ptr<linphone::ChatMessage> &message);
@@ -132,6 +139,8 @@ private:
 
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+
+  bool mIsRemoteComposing = false;
 
   QList<ChatEntryData> mEntries;
   std::shared_ptr<linphone::ChatRoom> mChatRoom;

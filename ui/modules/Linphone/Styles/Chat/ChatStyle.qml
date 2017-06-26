@@ -33,6 +33,12 @@ QtObject {
     }
   }
 
+  property QtObject composingText: QtObject {
+    property color color: Colors.b
+    property int pointSize: Units.dp * 9
+    property int leftPadding: 6
+  }
+
   property QtObject entry: QtObject {
     property int bottomMargin: 10
     property int deleteIconSize: 17
@@ -101,7 +107,6 @@ QtObject {
 
       property QtObject images: QtObject {
         property int height: 48
-        // `width` can be used.
       }
 
       property QtObject incoming: QtObject {
