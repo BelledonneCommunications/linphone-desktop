@@ -197,22 +197,12 @@ ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
 
   core->getSipAddressesModel()->connectToChatModel(this);
 
-  QObject::connect(mCoreHandlers.get(), &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
-  QObject::connect(mCoreHandlers.get(), &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
-
-  // Deal with remote composing.
-  QTimer *timer = new QTimer(this);
-  timer->setInterval(500);
-
-  QObject::connect(timer, &QTimer::timeout, this, [this] {
-    bool isRemoteComposing = mChatRoom->isRemoteComposing();
-    if (isRemoteComposing != mIsRemoteComposing) {
-      mIsRemoteComposing = isRemoteComposing;
-      emit isRemoteComposingChanged(mIsRemoteComposing);
-    }
-  });
-
-  timer->start();
+  {
+    CoreHandlers *coreHandlers = mCoreHandlers.get();
+    QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
+    QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
+    QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
+  }
 }
 
 ChatModel::~ChatModel () {
@@ -667,6 +657,16 @@ void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
     mChatRoom == CoreManager::getInstance()->getCore()->getChatRoom(call->getRemoteAddress())
   )
     insertCall(call->getCallLog());
+}
+
+void ChatModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
+  if (mChatRoom == chatRoom) {
+    bool isRemoteComposing = mChatRoom->isRemoteComposing();
+    if (isRemoteComposing != mIsRemoteComposing) {
+      mIsRemoteComposing = isRemoteComposing;
+      emit isRemoteComposingChanged(mIsRemoteComposing);
+    }
+  }
 }
 
 void ChatModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {

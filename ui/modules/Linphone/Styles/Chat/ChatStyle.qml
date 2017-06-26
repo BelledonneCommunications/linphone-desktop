@@ -35,8 +35,9 @@ QtObject {
 
   property QtObject composingText: QtObject {
     property color color: Colors.b
-    property int pointSize: Units.dp * 9
+    property int height: 25
     property int leftPadding: 6
+    property int pointSize: Units.dp * 9
   }
 
   property QtObject entry: QtObject {

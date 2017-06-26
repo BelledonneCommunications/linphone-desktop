@@ -187,6 +187,16 @@ Rectangle {
           }
         }
       }
+
+      footer: Text {
+        color: ChatStyle.composingText.color
+        font.pointSize: ChatStyle.composingText.pointSize
+        height: visible ? ChatStyle.composingText.height : 0
+        leftPadding: ChatStyle.composingText.leftPadding
+        visible: text.length > 0
+
+        text: Logic.getIsComposingMessage()
+      }
     }
 
     // -------------------------------------------------------------------------
@@ -199,7 +209,6 @@ Rectangle {
 
       borderColor: ChatStyle.sendArea.border.color
 
-      bottomWidth: ChatStyle.sendArea.border.width
       topWidth: ChatStyle.sendArea.border.width
 
       DroppableTextArea {
@@ -215,16 +224,6 @@ Rectangle {
         onTextChanged: Logic.handleTextChanged(text)
         onValidText: Logic.sendMessage(text)
       }
-    }
-
-    Text {
-      Layout.fillWidth: true
-
-      color: ChatStyle.composingText.color
-      font.pointSize: ChatStyle.composingText.pointSize
-      leftPadding: ChatStyle.composingText.leftPadding
-
-      text: Logic.getIsComposingMessage()
     }
   }
 

@@ -121,6 +121,13 @@ void CoreHandlers::onGlobalStateChanged (
   }
 }
 
+void CoreHandlers::onIsComposingReceived (
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::ChatRoom> &room
+) {
+  emit isComposingChanged(room);
+}
+
 void CoreHandlers::onLogCollectionUploadStateChanged (
   const shared_ptr<linphone::Core> &,
   linphone::CoreLogCollectionUploadState state,
