@@ -19,8 +19,8 @@ Item {
 
     anchors {
       fill: parent
-      leftMargin: DialogStyle.leftMargin
-      rightMargin: DialogStyle.rightMargin
+      leftMargin: DialogStyle.description.leftMargin
+      rightMargin: DialogStyle.description.rightMargin
     }
 
     color: DialogStyle.description.color

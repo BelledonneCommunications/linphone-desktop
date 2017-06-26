@@ -69,6 +69,8 @@ Rectangle {
 
       Layout.fillHeight: !dialog.contentIsEmpty
       Layout.fillWidth: true
+      Layout.leftMargin: DialogStyle.content.leftMargin
+      Layout.rightMargin: DialogStyle.content.rightMargin
     }
 
     Row {
@@ -79,7 +81,7 @@ Rectangle {
         : Qt.AlignLeft
       Layout.bottomMargin: DialogStyle.buttons.bottomMargin
       Layout.leftMargin: !centeredButtons
-        ? DialogStyle.leftMargin
+        ? DialogStyle.buttons.leftMargin
         : undefined
       Layout.topMargin: DialogStyle.buttons.topMargin
       spacing: DialogStyle.buttons.spacing

@@ -40,12 +40,7 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   RowLayout {
-    anchors {
-      fill: parent
-      leftMargin: ConferenceManagerStyle.leftMargin
-      rightMargin: ConferenceManagerStyle.rightMargin
-    }
-
+    anchors.fill: parent
     spacing: 0
 
     // -------------------------------------------------------------------------
@@ -104,9 +99,9 @@ DialogPlus {
 
     Rectangle {
       Layout.fillHeight: true
-      Layout.leftMargin: ConferenceManagerStyle.leftMargin
+      Layout.leftMargin: ConferenceManagerStyle.columns.separator.leftMargin
       Layout.preferredWidth: ConferenceManagerStyle.columns.separator.width
-      Layout.rightMargin: ConferenceManagerStyle.rightMargin
+      Layout.rightMargin: ConferenceManagerStyle.columns.separator.rightMargin
 
       color: ConferenceManagerStyle.columns.separator.color
     }

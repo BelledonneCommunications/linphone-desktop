@@ -36,12 +36,7 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   ColumnLayout {
-    anchors {
-      fill: parent
-      leftMargin: CallTransferStyle.leftMargin
-      rightMargin: CallTransferStyle.rightMargin
-    }
-
+    anchors.fill: parent
     spacing: 0
 
     // -------------------------------------------------------------------------

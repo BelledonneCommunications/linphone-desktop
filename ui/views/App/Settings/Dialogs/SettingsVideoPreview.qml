@@ -25,10 +25,6 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   CameraPreview {
-    anchors {
-      fill: parent
-      leftMargin: SettingsVideoPreviewStyle.preview.leftMargin
-      rightMargin: SettingsVideoPreviewStyle.preview.rightMargin
-    }
+    anchors.fill: parent
   }
 }

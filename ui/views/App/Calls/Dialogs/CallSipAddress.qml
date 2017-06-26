@@ -26,12 +26,7 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   ColumnLayout {
-    anchors {
-      fill: parent
-      leftMargin: CallSipAddressStyle.leftMargin
-      rightMargin: CallSipAddressStyle.rightMargin
-    }
-
+    anchors.fill: parent
     spacing: 0
 
     // -------------------------------------------------------------------------

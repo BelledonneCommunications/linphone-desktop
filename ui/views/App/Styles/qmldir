@@ -2,7 +2,9 @@
 
 module App.Styles
 
-# Views styles -----------------------------------------------------------------
+# Views styles =================================================================
+
+# Calls Window -----------------------------------------------------------------
 
 singleton CallStyle                                      1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                               1.0 Calls/CallsWindowStyle.qml
@@ -11,6 +13,8 @@ singleton ConferenceStyle                                1.0 Calls/ConferenceSty
 singleton CallSipAddressStyle                            1.0 Calls/Dialogs/CallSipAddressStyle.qml
 singleton CallTransferStyle                              1.0 Calls/Dialogs/CallTransferStyle.qml
 singleton ConferenceManagerStyle                         1.0 Calls/Dialogs/ConferenceManagerStyle.qml
+
+# Main Window ------------------------------------------------------------------
 
 singleton ActivateLinphoneSipAccountWithEmailStyle       1.0 Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml
 singleton ActivateLinphoneSipAccountWithPhoneNumberStyle 1.0 Main/Assistant/ActivateLinphoneSipAccountWithPhoneNumberStyle.qml
@@ -31,10 +35,15 @@ singleton AboutStyle                                     1.0 Main/Dialogs/AboutS
 singleton AuthenticationRequestStyle                     1.0 Main/Dialogs/AuthenticationRequestStyle.qml
 singleton ManageAccountsStyle                            1.0 Main/Dialogs/ManageAccountsStyle.qml
 
+# Settings Window --------------------------------------------------------------
+
 singleton SettingsAdvancedStyle                          1.0 Settings/SettingsAdvancedStyle.qml
 singleton SettingsAudioStyle                             1.0 Settings/SettingsAudioStyle.qml
-singleton SettingsSipAccountsEditStyle                   1.0 Settings/SettingsSipAccountsEditStyle.qml
-singleton SettingsVideoPreviewStyle                      1.0 Settings/SettingsVideoPreviewStyle.qml
 singleton SettingsWindowStyle                            1.0 Settings/SettingsWindowStyle.qml
+
+singleton SettingsSipAccountsEditStyle                   1.0 Settings/Dialogs/SettingsSipAccountsEditStyle.qml
+singleton SettingsVideoPreviewStyle                      1.0 Settings/Dialogs/SettingsVideoPreviewStyle.qml
+
+# SplashScreen Window ----------------------------------------------------------
 
 singleton SplashScreenStyle                              1.0 SplashScreen/SplashScreenStyle.qml

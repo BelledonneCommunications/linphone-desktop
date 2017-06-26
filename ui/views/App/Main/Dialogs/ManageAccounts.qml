@@ -25,14 +25,8 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   Form {
+    anchors.fill: parent
     orientation: Qt.Vertical
-
-    anchors {
-      left: parent.left
-      leftMargin: ManageAccountsStyle.leftMargin
-      right: parent.right
-      rightMargin: ManageAccountsStyle.rightMargin
-    }
 
     FormLine {
       FormGroup {

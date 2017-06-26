@@ -24,12 +24,7 @@ DialogPlus {
   width: AboutStyle.width
 
   Column {
-    anchors {
-      fill: parent
-      leftMargin: AboutStyle.leftMargin
-      rightMargin: AboutStyle.rightMargin
-    }
-
+    anchors.fill: parent
     spacing: AboutStyle.spacing
 
     RowLayout {

@@ -43,12 +43,7 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   Form {
-    anchors {
-      left: parent.left
-      leftMargin: SettingsSipAccountsEditStyle.leftMargin
-      right: parent.right
-      rightMargin: SettingsSipAccountsEditStyle.rightMargin
-    }
+    anchors.fill: parent
 
     FormLine {
       FormGroup {

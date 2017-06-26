@@ -8,8 +8,6 @@ import Units 1.0
 
 QtObject {
   property int height: 225
-  property int leftMargin: 25
-  property int rightMargin: 25
   property int spacing: 20
   property int width: 400
 
