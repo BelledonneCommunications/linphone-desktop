@@ -16,7 +16,8 @@ function getContactUsername (contact) {
     contact // String.
 
   if (Utils.isString(object)) {
-    return object.substring(4, object.indexOf('@')) // 4 = length('sip:')
+    var index = object.indexOf('@')
+    return object.substring(4, index !== -1 ? index : undefined) // 4 = length('sip:')
   }
 
   return object.vcard.username
