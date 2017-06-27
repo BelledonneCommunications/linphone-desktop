@@ -17,7 +17,10 @@ function getContactUsername (contact) {
     return object.vcard.username
   }
 
-  object = contact.sipAddress || contact // String from `SipAddressObserver` or just a String.
+  object = Utils.isString(contact.sipAddress)
+    ? contact.sipAddress // String from `SipAddressObserver`.
+    : contact // Just a String.
+
   var index = object.indexOf('@')
   return object.substring(4, index !== -1 ? index : undefined) // 4 = length('sip:')
 }
