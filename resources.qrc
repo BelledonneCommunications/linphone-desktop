@@ -152,6 +152,7 @@
     <file>assets/images/pause_on_normal.svg</file>
     <file>assets/images/pause_on_pressed.svg</file>
     <file>assets/images/pause_on_updating.svg</file>
+    <file>assets/images/recording_sign.svg</file>
     <file>assets/images/record_off.svg</file>
     <file>assets/images/record_on.svg</file>
     <file>assets/images/screenshot_hovered.svg</file>
@@ -168,7 +169,6 @@
     <file>assets/images/settings_network_selected.svg</file>
     <file>assets/images/settings_sip_accounts_normal.svg</file>
     <file>assets/images/settings_sip_accounts_selected.svg</file>
-    <file>assets/images/settings_video_normal.svg</file>
     <file>assets/images/settings_video_selected.svg</file>
     <file>assets/images/snapshot_sign.svg</file>
     <file>assets/images/speaker_off_hovered.svg</file>
@@ -333,6 +333,7 @@
     <file>ui/modules/Linphone/Notifications/NotificationReceivedCall.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedFileMessage.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationReceivedMessage.qml</file>
+    <file>ui/modules/Linphone/Notifications/NotificationRecordingCompleted.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationSnapshotWasTaken.qml</file>
     <file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
     <file>ui/modules/Linphone/qmldir</file>

@@ -3,7 +3,7 @@ import Utils 1.0
 // =============================================================================
 
 NotificationBasic {
-  icon: 'snapshot_sign'
+  icon: 'recording_sign'
   message: Utils.basename(notificationData.filePath)
   handler: (function () {
     Qt.openUrlExternally(Utils.dirname(

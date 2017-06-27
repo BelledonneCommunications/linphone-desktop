@@ -89,13 +89,15 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
 
 void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats) {
   switch (callStats->getType()) {
+    case linphone::StreamTypeText:
+    case linphone::StreamTypeUnknown:
+      break;
+
     case linphone::StreamTypeAudio:
       updateStats(callStats, mAudioStats);
       break;
     case linphone::StreamTypeVideo:
       updateStats(callStats, mVideoStats);
-      break;
-    default:
       break;
   }
 
@@ -210,6 +212,10 @@ void CallModel::stopRecording () {
 
   mRecording = false;
   mCall->stopRecording();
+
+  App::getInstance()->getNotifier()->notifyRecordingCompleted(
+    ::Utils::coreStringToAppString(mCall->getParams()->getRecordFile())
+  );
 
   emit recordingChanged(false);
 }

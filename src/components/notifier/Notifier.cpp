@@ -79,7 +79,8 @@ const QHash<int, Notifier::Notification> Notifier::mNotifications = {
   { Notifier::ReceivedFileMessage, { "NotificationReceivedFileMessage.qml", 10 } },
   { Notifier::ReceivedCall, { "NotificationReceivedCall.qml", 30 } },
   { Notifier::NewVersionAvailable, { "NotificationNewVersionAvailable.qml", 30 } },
-  { Notifier::SnapshotWasTaken, { "NotificationSnapshotWasTaken.qml", 10 } }
+  { Notifier::SnapshotWasTaken, { "NotificationSnapshotWasTaken.qml", 10 } },
+  { Notifier::RecordingCompleted, { "NotificationRecordingCompleted.qml", 10 } }
 };
 
 // -----------------------------------------------------------------------------
@@ -276,6 +277,15 @@ void Notifier::notifyNewVersionAvailable (const QString &version, const QString 
 
 void Notifier::notifySnapshotWasTaken (const QString &filePath) {
   CREATE_NOTIFICATION(Notifier::SnapshotWasTaken);
+
+  QVariantMap map;
+  map["filePath"] = filePath;
+
+  SHOW_NOTIFICATION(map);
+}
+
+void Notifier::notifyRecordingCompleted (const QString &filePath) {
+  CREATE_NOTIFICATION(Notifier::RecordingCompleted);
 
   QVariantMap map;
   map["filePath"] = filePath;
