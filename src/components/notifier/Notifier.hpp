@@ -24,11 +24,11 @@
 #define NOTIFIER_H_
 
 #include <linphone++/linphone.hh>
-#include <QMutex>
 #include <QObject>
 
 // =============================================================================
 
+class QMutex;
 class QQmlComponent;
 
 class Notifier : public QObject {
@@ -39,11 +39,10 @@ public:
   ~Notifier ();
 
   enum NotificationType {
-    MessageReceived,
-    FileMessageReceived,
-    CallReceived,
-    NewVersionAvailable,
-    MaxNbTypes
+    ReceivedMessage,
+    ReceivedFileMessage,
+    ReceivedCall,
+    NewVersionAvailable
   };
 
   void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
@@ -55,14 +54,26 @@ public slots:
   void deleteNotification (QVariant notification);
 
 private:
+  struct Notification {
+    Notification (const QString &filename = QString(""), int timeout = 0) {
+      this->filename = filename;
+      this->timeout = timeout;
+    }
+
+    QString filename;
+    int timeout;
+  };
+
   QObject *createNotification (NotificationType type);
   void showNotification (QObject *notification, int timeout);
 
-  QQmlComponent *mComponents[MaxNbTypes];
-
   int mOffset = 0;
   int mInstancesNumber = 0;
-  QMutex mMutex;
+
+  QMutex *mMutex = nullptr;
+  QQmlComponent **mComponents = nullptr;
+
+  static const QHash<int, Notification> mNotifications;
 };
 
 #endif // NOTIFIER_H_
