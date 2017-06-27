@@ -23,6 +23,12 @@ Window {
   // ---------------------------------------------------------------------------
 
   function exit (cb) {
+    // `exit` is called by `Incall.qml`.
+    // The `incall` id can be null if the window was closed in this view.
+    if (!incall) {
+      return
+    }
+
     // It's necessary to call `showNormal` before close on MacOs
     // because the dock will be hidden forever!
     incall.visible = false
