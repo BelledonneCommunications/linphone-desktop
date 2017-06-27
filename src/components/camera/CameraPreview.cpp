@@ -141,7 +141,7 @@ CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(pare
   setMirrorVertically(true);
 
   mRefreshTimer = new QTimer(this);
-  mRefreshTimer->setInterval(1 / MAX_FPS * 1000);
+  mRefreshTimer->setInterval(1000 / MAX_FPS);
 
   QObject::connect(
     mRefreshTimer, &QTimer::timeout,
