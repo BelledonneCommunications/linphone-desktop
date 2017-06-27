@@ -185,11 +185,9 @@ void CallModel::takeSnapshot () {
 
   qInfo() << QStringLiteral("Take snapshot of call:") << this;
 
-  mCall->takeVideoSnapshot(
-    ::Utils::appStringToCoreString(
-      CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName
-    )
-  );
+  const QString filePath = CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName;
+  mCall->takeVideoSnapshot(::Utils::appStringToCoreString(filePath));
+  App::getInstance()->getNotifier()->notifySnapshotWasTaken(filePath);
 }
 
 void CallModel::startRecording () {

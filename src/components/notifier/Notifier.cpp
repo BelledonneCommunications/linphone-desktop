@@ -75,30 +75,27 @@ void setProperty (QObject &object, const char *property, const T &value) {
 // =============================================================================
 
 const QHash<int, Notifier::Notification> Notifier::mNotifications = {
-  { Notifier::ReceivedMessage, { "NotificationReceivedMessage.qml", 10000 } },
-  { Notifier::ReceivedFileMessage, { "NotificationReceivedFileMessage.qml", 10000 } },
-  { Notifier::ReceivedCall, { "NotificationReceivedCall.qml", 30000 } },
-  { Notifier::NewVersionAvailable, { "NotificationNewVersionAvailable.qml", 30000 } }
+  { Notifier::ReceivedMessage, { "NotificationReceivedMessage.qml", 10 } },
+  { Notifier::ReceivedFileMessage, { "NotificationReceivedFileMessage.qml", 10 } },
+  { Notifier::ReceivedCall, { "NotificationReceivedCall.qml", 30 } },
+  { Notifier::NewVersionAvailable, { "NotificationNewVersionAvailable.qml", 30 } },
+  { Notifier::SnapshotWasTaken, { "NotificationSnapshotWasTaken.qml", 10 } }
 };
 
 // -----------------------------------------------------------------------------
 
 Notifier::Notifier (QObject *parent) : QObject(parent) {
-  // Build components.
   const int nComponents = mNotifications.size();
   mComponents = new QQmlComponent *[nComponents];
 
   QQmlEngine *engine = App::getInstance()->getEngine();
-  for (const auto &key : mNotifications.keys())
-    mComponents[key] = new QQmlComponent(engine, QUrl(NOTIFICATIONS_PATH + Notifier::mNotifications[key].filename));
-
-  // Check errors.
-  for (int i = 0; i < nComponents; ++i) {
-    QQmlComponent *component = mComponents[i];
-    if (component->isError()) {
-      qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(i) << component->errors();
+  for (const auto &key : mNotifications.keys()) {
+    QQmlComponent *component = new QQmlComponent(engine, QUrl(NOTIFICATIONS_PATH + Notifier::mNotifications[key].filename));
+    if (Q_UNLIKELY(component->isError())) {
+      qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(key) << component->errors();
       abort();
     }
+    mComponents[key] = component;
   }
 
   mMutex = new QMutex();
@@ -217,7 +214,7 @@ void Notifier::deleteNotification (QVariant notification) {
   QObject * notification = createNotification(TYPE); \
   if (!notification) \
     return; \
-  const int timeout = mNotifications[TYPE].timeout;
+  const int timeout = mNotifications[TYPE].timeout * 1000;
 
 #define SHOW_NOTIFICATION(DATA) \
   ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, DATA); \
@@ -273,6 +270,15 @@ void Notifier::notifyNewVersionAvailable (const QString &version, const QString 
   QVariantMap map;
   map["message"] = tr("newVersionAvailable").arg(version);
   map["url"] = url;
+
+  SHOW_NOTIFICATION(map);
+}
+
+void Notifier::notifySnapshotWasTaken (const QString &filePath) {
+  CREATE_NOTIFICATION(Notifier::SnapshotWasTaken);
+
+  QVariantMap map;
+  map["filePath"] = filePath;
 
   SHOW_NOTIFICATION(map);
 }

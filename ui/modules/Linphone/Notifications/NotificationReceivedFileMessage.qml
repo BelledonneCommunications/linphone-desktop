@@ -2,7 +2,6 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
-import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -11,72 +10,59 @@ import Utils 1.0
 Notification {
   id: notification
 
+  icon: 'file_sign'
+  overrodeHeight: NotificationReceivedFileMessageStyle.overrodeHeight
+
   // ---------------------------------------------------------------------------
 
-  property string _fileUri: notificationData && notificationData.fileUri || ''
+  readonly property string fileUri: notificationData && notificationData.fileUri || ''
 
   // ---------------------------------------------------------------------------
 
-  Rectangle {
-    color: NotificationReceivedFileMessageStyle.color
-    height: NotificationReceivedFileMessageStyle.height
-    width: NotificationReceivedFileMessageStyle.width
+  Loader {
+    active: Boolean(notification.fileUri)
+    anchors {
+      fill: parent
 
-    Icon {
-      anchors {
-        left: parent.left
-        top: parent.top
-      }
-
-      icon: 'file_sign'
-      iconSize: NotificationReceivedFileMessageStyle.iconSize
+      leftMargin: NotificationReceivedFileMessageStyle.leftMargin
+      rightMargin: NotificationReceivedFileMessageStyle.rightMargin
     }
 
-    Loader {
-      active: notification._fileUri.length > 0
-      anchors {
-        fill: parent
+    sourceComponent: RowLayout {
+      anchors.fill: parent
+      spacing: NotificationReceivedFileMessageStyle.spacing
 
-        leftMargin: NotificationReceivedFileMessageStyle.leftMargin
-        rightMargin: NotificationReceivedFileMessageStyle.rightMargin
+      Text {
+        Layout.fillWidth: true
+
+        color: NotificationReceivedFileMessageStyle.fileName.color
+        elide: Text.ElideRight
+        font.pointSize: NotificationReceivedFileMessageStyle.fileName.pointSize
+        text: Utils.basename(notification.fileUri)
       }
 
-      sourceComponent: RowLayout {
-        anchors.fill: parent
-        spacing: NotificationReceivedFileMessageStyle.spacing
+      Text {
+        Layout.preferredWidth: NotificationReceivedFileMessageStyle.fileSize.width
 
-        Text {
-          Layout.fillWidth: true
+        color: NotificationReceivedFileMessageStyle.fileSize.color
+        elide: Text.ElideRight
+        font.pointSize: NotificationReceivedFileMessageStyle.fileSize.pointSize
+        horizontalAlignment: Text.AlignRight
+        text: Utils.formatSize(notification.notificationData.fileSize)
+      }
+    }
 
-          color: NotificationReceivedFileMessageStyle.fileName.color
-          elide: Text.ElideRight
-          font.pointSize: NotificationReceivedFileMessageStyle.fileName.pointSize
-          text: Utils.basename(notification._fileUri)
+    MouseArea {
+      anchors.fill: parent
+      cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+      hoverEnabled: true
+
+      onClicked: notification._close(function () {
+        var uri = Utils.getUriFromSystemPath(notification.fileUri)
+        if (!Qt.openUrlExternally(uri)) {
+          Qt.openUrlExternally(Utils.dirname(uri))
         }
-
-        Text {
-          Layout.preferredWidth: NotificationReceivedFileMessageStyle.fileSize.width
-
-          color: NotificationReceivedFileMessageStyle.fileSize.color
-          elide: Text.ElideRight
-          font.pointSize: NotificationReceivedFileMessageStyle.fileSize.pointSize
-          horizontalAlignment: Text.AlignRight
-          text: Utils.formatSize(notification.notificationData.fileSize)
-        }
-      }
-
-      MouseArea {
-        anchors.fill: parent
-        cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-        hoverEnabled: true
-
-        onClicked: notification._close(function () {
-          var uri = Utils.getUriFromSystemPath(notification._fileUri)
-          if (!Qt.openUrlExternally(uri)) {
-            Qt.openUrlExternally(Utils.dirname(uri))
-          }
-        })
-      }
+      })
     }
   }
 }

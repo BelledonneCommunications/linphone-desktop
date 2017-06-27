@@ -9,12 +9,10 @@ import Units 1.0
 QtObject {
   property color color: Colors.k
   property int bottomMargin: 15
-  property int iconSize: 40
   property int leftMargin: 15
+  property int overrodeHeight: 55
   property int rightMargin: 15
   property int spacing: 0
-  property int width: 300
-  property int height: 120
 
   property QtObject messageContainer: QtObject {
     property color color: Colors.m

@@ -10,85 +10,71 @@ import Linphone.Styles 1.0
 Notification {
   id: notification
 
-  // ---------------------------------------------------------------------------
-
-  property string _sipAddress: notificationData && notificationData.sipAddress || ''
+  icon: 'message_sign'
 
   // ---------------------------------------------------------------------------
 
-  Rectangle {
-    color: NotificationReceivedMessageStyle.color
-    height: NotificationReceivedMessageStyle.height
-    width: NotificationReceivedMessageStyle.width
+  readonly property string sipAddress: notificationData && notificationData.sipAddress || ''
 
-    Icon {
-      anchors {
-        left: parent.left
-        top: parent.top
-      }
+  // ---------------------------------------------------------------------------
 
-      icon: 'message_sign'
-      iconSize: NotificationReceivedMessageStyle.iconSize
+  Loader {
+    active: Boolean(notification.sipAddress)
+    anchors {
+      fill: parent
+
+      leftMargin: NotificationReceivedMessageStyle.leftMargin
+      rightMargin: NotificationReceivedMessageStyle.rightMargin
+      bottomMargin: NotificationReceivedMessageStyle.bottomMargin
     }
 
-    Loader {
-      active: notification._sipAddress.length > 0
-      anchors {
-        fill: parent
+    sourceComponent: ColumnLayout {
+      spacing: NotificationReceivedMessageStyle.spacing
 
-        leftMargin: NotificationReceivedMessageStyle.leftMargin
-        rightMargin: NotificationReceivedMessageStyle.rightMargin
-        bottomMargin: NotificationReceivedMessageStyle.bottomMargin
+      Contact {
+        Layout.fillWidth: true
+
+        entry: SipAddressesModel.getSipAddressObserver(notification.sipAddress)
       }
 
-      sourceComponent: ColumnLayout {
-        spacing: NotificationReceivedMessageStyle.spacing
+      Rectangle {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
 
-        Contact {
-          Layout.fillWidth: true
+        color: NotificationReceivedMessageStyle.messageContainer.color
+        radius: NotificationReceivedMessageStyle.messageContainer.radius
 
-          entry: SipAddressesModel.getSipAddressObserver(notification._sipAddress)
-        }
-
-        Rectangle {
-          Layout.fillHeight: true
-          Layout.fillWidth: true
-
-          color: NotificationReceivedMessageStyle.messageContainer.color
-          radius: NotificationReceivedMessageStyle.messageContainer.radius
-
-          Text {
-            anchors {
-              fill: parent
-              margins: NotificationReceivedMessageStyle.messageContainer.margins
-            }
-
-            color: NotificationReceivedMessageStyle.messageContainer.text.color
-            elide: Text.ElideRight
-
-            font {
-              italic: true
-              pointSize: NotificationReceivedMessageStyle.messageContainer.text.pointSize
-            }
-
-            verticalAlignment: Text.AlignVCenter
-            text: notification.notificationData.message
-            wrapMode: Text.Wrap
+        Text {
+          anchors {
+            fill: parent
+            margins: NotificationReceivedMessageStyle.messageContainer.margins
           }
+
+          color: NotificationReceivedMessageStyle.messageContainer.text.color
+          elide: Text.ElideRight
+
+          font {
+            italic: true
+            pointSize: NotificationReceivedMessageStyle.messageContainer.text.pointSize
+          }
+
+          verticalAlignment: Text.AlignVCenter
+          text: notification.notificationData.message
+          wrapMode: Text.Wrap
         }
       }
     }
+  }
 
-    MouseArea {
-      anchors.fill: parent
-      cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-      hoverEnabled: true
+  MouseArea {
+    anchors.fill: parent
+    cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+    hoverEnabled: true
 
-      onClicked: notification._close(function () {
-        notification.notificationData.window.setView('Conversation', {
-          sipAddress: notification._sipAddress
-        })
+    onClicked: notification._close(function () {
+      notification.notificationData.window.setView('Conversation', {
+        sipAddress: notification.sipAddress
       })
-    }
+    })
   }
 }

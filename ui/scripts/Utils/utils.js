@@ -287,6 +287,10 @@ function assert (condition, message) {
 // -----------------------------------------------------------------------------
 
 function basename (str) {
+  if (!str) {
+    return ''
+  }
+
   if (runOnWindows()) {
     str = str.replace(/\\/g, '/')
   }
@@ -310,6 +314,10 @@ function capitalizeFirstLetter (str) {
 // -----------------------------------------------------------------------------
 
 function dirname (str) {
+  if (!str) {
+    return ''
+  }
+
   if (runOnWindows()) {
     str = str.replace(/\\/g, '/')
   }

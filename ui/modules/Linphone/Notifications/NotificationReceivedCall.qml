@@ -10,87 +10,73 @@ import Linphone.Styles 1.0
 Notification {
   id: notification
 
-  // ---------------------------------------------------------------------------
-
-  property var _call: notificationData && notificationData.call
+  icon: 'call_sign_incoming'
 
   // ---------------------------------------------------------------------------
 
-  Rectangle {
-    color: NotificationReceivedCallStyle.color
-    height: NotificationReceivedCallStyle.height
-    width: NotificationReceivedCallStyle.width
+  readonly property var call: notificationData && notificationData.call
 
-    Icon {
-      anchors {
-        left: parent.left
-        top: parent.top
-      }
+  // ---------------------------------------------------------------------------
 
-      icon: 'call_sign_incoming'
-      iconSize: NotificationReceivedCallStyle.iconSize
+  Loader {
+    active: Boolean(notification.call)
+    anchors {
+      fill: parent
+
+      leftMargin: NotificationReceivedCallStyle.leftMargin
+      rightMargin: NotificationReceivedCallStyle.rightMargin
+      bottomMargin: NotificationReceivedCallStyle.bottomMargin
     }
 
-    Loader {
-      active: Boolean(notification._call)
-      anchors {
-        fill: parent
+    sourceComponent: ColumnLayout {
+      spacing: NotificationReceivedCallStyle.spacing
 
-        leftMargin: NotificationReceivedCallStyle.leftMargin
-        rightMargin: NotificationReceivedCallStyle.rightMargin
-        bottomMargin: NotificationReceivedCallStyle.bottomMargin
+      Contact {
+        Layout.fillWidth: true
+
+        entry: {
+          var call = notification.call
+          return SipAddressesModel.getSipAddressObserver(call ? call.sipAddress : '')
+        }
       }
 
-      sourceComponent: ColumnLayout {
-        spacing: NotificationReceivedCallStyle.spacing
+      // ---------------------------------------------------------------------
+      // Action buttons.
+      // ---------------------------------------------------------------------
 
-        Contact {
-          Layout.fillWidth: true
+      Item {
+        Layout.fillHeight: true
+        Layout.fillWidth: true
 
-          entry: {
-            var call = notification._call
-            return SipAddressesModel.getSipAddressObserver(call ? call.sipAddress : '')
+        ActionBar {
+          anchors.centerIn: parent
+          iconSize: NotificationReceivedCallStyle.actionArea.iconSize
+
+          ActionButton {
+            icon: 'video_call_accept'
+
+            onClicked: notification._close(notification.call.acceptWithVideo)
+          }
+
+          ActionButton {
+            icon: 'call_accept'
+
+            onClicked: notification._close(notification.call.accept)
           }
         }
 
-        // ---------------------------------------------------------------------
-        // Action buttons.
-        // ---------------------------------------------------------------------
-
-        Item {
-          Layout.fillHeight: true
-          Layout.fillWidth: true
-
-          ActionBar {
-            anchors.centerIn: parent
-            iconSize: NotificationReceivedCallStyle.actionArea.iconSize
-
-            ActionButton {
-              icon: 'video_call_accept'
-
-              onClicked: notification._close(notification._call.acceptWithVideo)
-            }
-
-            ActionButton {
-              icon: 'call_accept'
-
-              onClicked: notification._close(notification._call.accept)
-            }
+        ActionBar {
+          anchors {
+            right: parent.right
+            rightMargin: NotificationReceivedCallStyle.actionArea.rightButtonsGroupMargin
+            verticalCenter: parent.verticalCenter
           }
+          iconSize: NotificationReceivedCallStyle.actionArea.iconSize
 
-          ActionBar {
-            anchors {
-              right: parent.right
-              rightMargin: NotificationReceivedCallStyle.actionArea.rightButtonsGroupMargin
-              verticalCenter: parent.verticalCenter
-            }
-            iconSize: NotificationReceivedCallStyle.actionArea.iconSize
+          ActionButton {
+            icon: 'hangup'
 
-            ActionButton {
-              icon: 'hangup'
-
-              onClicked: notification._close(notification._call.terminate)
-            }
+            onClicked: notification._close(notification.call.terminate)
           }
         }
       }

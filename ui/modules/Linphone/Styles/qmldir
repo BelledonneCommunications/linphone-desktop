@@ -25,10 +25,11 @@ singleton MessagesCounterStyle                 1.0 Contact/MessagesCounterStyle.
 
 singleton SipAddressesMenuStyle                1.0 Menus/SipAddressesMenuStyle.qml
 
-singleton NotificationNewVersionAvailableStyle 1.0 Notifications/NotificationNewVersionAvailableStyle.qml
+singleton NotificationBasicStyle               1.0 Notifications/NotificationBasicStyle.qml
 singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationReceivedCallStyle.qml
-singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
 singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationReceivedFileMessageStyle.qml
+singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
+singleton NotificationStyle                    1.0 Notifications/NotificationStyle.qml
 
 singleton TelKeypadStyle                       1.0 TelKeypad/TelKeypadStyle.qml
 

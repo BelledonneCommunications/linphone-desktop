@@ -42,13 +42,15 @@ public:
     ReceivedMessage,
     ReceivedFileMessage,
     ReceivedCall,
-    NewVersionAvailable
+    NewVersionAvailable,
+    SnapshotWasTaken
   };
 
   void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
   void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message);
   void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
   void notifyNewVersionAvailable (const QString &version, const QString &url);
+  void notifySnapshotWasTaken (const QString &filePath);
 
 public slots:
   void deleteNotification (QVariant notification);
