@@ -8,7 +8,7 @@ import Units 1.0
 
 QtObject {
   property color color: Colors.e
-  property int height: 250
+  property int height: 280
   property int leftMargin: 12
   property int rightMargin: 12
   property int spacing: 8
