@@ -2,6 +2,8 @@
 // `Chat.qml` Logic.
 // =============================================================================
 
+.import QtQuick 2.7 as QtQuick
+
 .import Linphone 1.0 as Linphone
 
 .import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
@@ -51,7 +53,7 @@ function handleFilesDropped (files) {
 }
 
 function handleMoreEntriesLoaded (n) {
-  chat.positionViewAtIndex(n - 1, ListView.Beginning)
+  chat.positionViewAtIndex(n - 1, QtQuick.ListView.Beginning)
   chat.tryToLoadMoreEntries = false
 }
 
