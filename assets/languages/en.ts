@@ -829,6 +829,33 @@ Server url not configured.</translation>
         <source>callNotSecured</source>
         <translation>Call not encrypted.</translation>
     </message>
+    <message>
+        <source>takeSnapshotLabel</source>
+        <translation>Take a snapshot.</translation>
+    </message>
+    <message>
+        <source>startRecordingLabel</source>
+        <translation>Start recording.</translation>
+    </message>
+    <message>
+        <source>stopRecordingLabel</source>
+        <translation>Stop recording.</translation>
+    </message>
+</context>
+<context>
+    <name>IncallFullscreenWindow</name>
+    <message>
+        <source>takeSnapshotLabel</source>
+        <translation>Take a snapshot.</translation>
+    </message>
+    <message>
+        <source>startRecordingLabel</source>
+        <translation>Start recording.</translation>
+    </message>
+    <message>
+        <source>stopRecordingLabel</source>
+        <translation>Stop recording.</translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>

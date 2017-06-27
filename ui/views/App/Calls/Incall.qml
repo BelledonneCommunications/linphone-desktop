@@ -165,9 +165,15 @@ Rectangle {
           visible: incall.call.videoEnabled
 
           onClicked: incall.call.takeSnapshot()
+
+          TooltipArea {
+            text: qsTr('takeSnapshotLabel')
+          }
         }
 
         ActionSwitch {
+          id: recordingSwitch
+
           enabled: incall.call.recording
           icon: 'record'
           useStates: false
@@ -177,6 +183,12 @@ Rectangle {
             return !enabled
               ? call.startRecording()
               : call.stopRecording()
+          }
+
+          TooltipArea {
+            text: !recordingSwitch.enabled
+              ? qsTr('startRecordingLabel')
+              : qsTr('stopRecordingLabel')
           }
         }
 

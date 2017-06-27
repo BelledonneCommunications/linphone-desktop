@@ -216,14 +216,28 @@ Window {
             icon: 'screenshot'
 
             onClicked: call.takeSnapshot()
+
+            TooltipArea {
+              text: qsTr('takeSnapshotLabel')
+            }
           }
 
           ActionSwitch {
+            id: recordingSwitch
+
             enabled: call.recording
             icon: 'record'
             useStates: false
 
-            onClicked: !enabled ? call.startRecording() : call.stopRecording()
+            onClicked: !enabled
+              ? call.startRecording()
+              : call.stopRecording()
+
+            TooltipArea {
+              text: !recordingSwitch.enabled
+                ? qsTr('startRecordingLabel')
+                : qsTr('stopRecordingLabel')
+            }
           }
 
           ActionButton {

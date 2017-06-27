@@ -829,6 +829,33 @@ Url du serveur non configurée.</translation>
         <source>callNotSecured</source>
         <translation>Appel non chiffré.</translation>
     </message>
+    <message>
+        <source>takeSnapshotLabel</source>
+        <translation>Prendre une capture d&apos;écran.</translation>
+    </message>
+    <message>
+        <source>startRecordingLabel</source>
+        <translation>Commencer un enregistrement.</translation>
+    </message>
+    <message>
+        <source>stopRecordingLabel</source>
+        <translation>Stopper un enregistrement.</translation>
+    </message>
+</context>
+<context>
+    <name>IncallFullscreenWindow</name>
+    <message>
+        <source>takeSnapshotLabel</source>
+        <translation>Prendre une capture d&apos;écran.</translation>
+    </message>
+    <message>
+        <source>startRecordingLabel</source>
+        <translation>Commencer un enregistrement.</translation>
+    </message>
+    <message>
+        <source>stopRecordingLabel</source>
+        <translation>Stopper un enregistrement.</translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>
