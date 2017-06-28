@@ -20,8 +20,6 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QtDebug>
-
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 

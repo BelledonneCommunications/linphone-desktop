@@ -20,8 +20,6 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QSet>
-
 #include "../../app/App.hpp"
 
 #include "ContactModel.hpp"

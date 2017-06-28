@@ -159,7 +159,7 @@ void Logger::enable (bool status) {
   linphone_core_enable_log_collection(status ? LinphoneLogCollectionEnabled : LinphoneLogCollectionDisabled);
 }
 
-void Logger::init (const std::shared_ptr<linphone::Config> &config) {
+void Logger::init (const shared_ptr<linphone::Config> &config) {
   if (mInstance)
     return;
 

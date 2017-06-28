@@ -23,7 +23,6 @@
 #include <belcard/belcard.hpp>
 #include <QFileInfo>
 #include <QImageReader>
-#include <QtDebug>
 #include <QUuid>
 
 #include "../../app/App.hpp"

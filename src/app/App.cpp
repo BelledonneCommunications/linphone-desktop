@@ -26,7 +26,6 @@
 #include <QMenu>
 #include <QQmlFileSelector>
 #include <QSystemTrayIcon>
-#include <QtDebug>
 #include <QTimer>
 
 #include "config.h"

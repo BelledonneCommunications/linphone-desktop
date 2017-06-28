@@ -778,6 +778,6 @@ QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config
   );
 }
 
-bool SettingsModel::getLogsEnabled (const std::shared_ptr<linphone::Config> &config) {
+bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) {
   return config->getInt(UI_SECTION, "logs_enabled", false);
 }

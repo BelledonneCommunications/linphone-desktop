@@ -20,10 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QtDebug>
-
 #include "../../app/App.hpp"
-#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "ContactsListModel.hpp"

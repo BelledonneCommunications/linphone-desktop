@@ -20,11 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QMutex>
 #include <QQmlComponent>
-#include <QQuickWindow>
 #include <QScreen>
-#include <QtDebug>
 #include <QTimer>
 
 #include "../../app/App.hpp"

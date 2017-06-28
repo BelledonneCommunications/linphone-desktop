@@ -99,7 +99,7 @@ private:
   bool mForceClose = false;
   QMutex mForceCloseMutex;
 
-  QTimer *mForceCloseTimer;
+  QTimer *mForceCloseTimer = nullptr;
 
   std::shared_ptr<linphone::Player> mInternalPlayer;
   std::shared_ptr<Handlers> mHandlers;

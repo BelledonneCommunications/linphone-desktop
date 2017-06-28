@@ -24,9 +24,7 @@
 
 #include <QDateTime>
 #include <QDesktopServices>
-#include <QFileDialog>
 #include <QFileInfo>
-#include <QImage>
 #include <QTimer>
 #include <QUuid>
 

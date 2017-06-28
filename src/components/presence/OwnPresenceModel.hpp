@@ -23,8 +23,6 @@
 #ifndef OWN_PRESENCE_MODEL_H_
 #define OWN_PRESENCE_MODEL_H_
 
-#include <QObject>
-
 #include "../presence/Presence.hpp"
 
 // =============================================================================

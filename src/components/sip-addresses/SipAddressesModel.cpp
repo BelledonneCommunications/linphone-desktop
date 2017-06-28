@@ -21,12 +21,9 @@
  */
 
 #include <QDateTime>
-#include <QSet>
-#include <QtDebug>
 
 #include "../../utils/LinphoneUtils.hpp"
 #include "../../utils/Utils.hpp"
-#include "../chat/ChatModel.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "SipAddressesModel.hpp"
@@ -213,7 +210,7 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
 
 // -----------------------------------------------------------------------------
 
-void SipAddressesModel::handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel) {
+void SipAddressesModel::handleChatModelCreated (const shared_ptr<ChatModel> &chatModel) {
   ChatModel *ptr = chatModel.get();
 
   QObject::connect(ptr, &ChatModel::allEntriesRemoved, this, [this, ptr] {

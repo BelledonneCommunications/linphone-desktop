@@ -23,10 +23,7 @@
 #ifndef CONFERENCE_ADD_MODEL_H_
 #define CONFERENCE_ADD_MODEL_H_
 
-#include <memory>
-
 #include "ConferenceHelperModel.hpp"
-#include "ConferenceModel.hpp"
 
 // =============================================================================
 // Sip addresses list to add to conference.
@@ -71,7 +68,7 @@ private:
   QHash<QString, QVariantMap> mSipAddresses;
   QList<const QVariantMap *> mRefs;
 
-  ConferenceHelperModel *mConferenceHelperModel;
+  ConferenceHelperModel *mConferenceHelperModel = nullptr;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::Address> );

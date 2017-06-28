@@ -25,7 +25,6 @@
 
 #include <memory>
 
-#include <QOpenGLFramebufferObject>
 #include <QQuickFramebufferObject>
 
 // =============================================================================
@@ -58,7 +57,7 @@ private:
   bool mIsPreview = false;
   std::shared_ptr<linphone::Call> mCall;
 
-  QQuickWindow *mWindow;
+  QQuickWindow *mWindow = nullptr;
 };
 
 // -----------------------------------------------------------------------------
@@ -91,7 +90,7 @@ private:
   bool mIsPreview = false;
   CallModel *mCallModel = nullptr;
 
-  QTimer *mRefreshTimer;
+  QTimer *mRefreshTimer = nullptr;
 };
 
 #endif // CAMERA_H_

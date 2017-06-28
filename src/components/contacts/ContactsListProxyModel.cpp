@@ -22,8 +22,6 @@
 
 #include <cmath>
 
-#include <QDebug>
-
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 

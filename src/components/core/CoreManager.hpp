@@ -23,11 +23,10 @@
 #ifndef CORE_MANAGER_H_
 #define CORE_MANAGER_H_
 
-#include <QFuture>
 #include <QFutureWatcher>
-#include <QMutex>
 
 #include "../calls/CallsListModel.hpp"
+#include "../chat/ChatModel.hpp"
 #include "../contacts/ContactsListModel.hpp"
 #include "../settings/AccountSettingsModel.hpp"
 #include "../settings/SettingsModel.hpp"
@@ -152,15 +151,15 @@ private:
   std::shared_ptr<linphone::Core> mCore;
   std::shared_ptr<CoreHandlers> mHandlers;
 
-  CallsListModel *mCallsListModel;
-  ContactsListModel *mContactsListModel;
-  SipAddressesModel *mSipAddressesModel;
-  SettingsModel *mSettingsModel;
-  AccountSettingsModel *mAccountSettingsModel;
+  CallsListModel *mCallsListModel = nullptr;
+  ContactsListModel *mContactsListModel = nullptr;
+  SipAddressesModel *mSipAddressesModel = nullptr;
+  SettingsModel *mSettingsModel = nullptr;
+  AccountSettingsModel *mAccountSettingsModel = nullptr;
 
   QHash<QString, std::weak_ptr<ChatModel> > mChatModels;
 
-  QTimer *mCbsTimer;
+  QTimer *mCbsTimer = nullptr;
 
   QFuture<void> mPromiseBuild;
   QFutureWatcher<void> mPromiseWatcher;

@@ -24,7 +24,6 @@
 #define CAMERA_PREVIEW_H_
 
 #include <QMutex>
-#include <QOpenGLFramebufferObject>
 #include <QQuickFramebufferObject>
 
 // =============================================================================
@@ -50,7 +49,7 @@ private:
   ContextInfo *mContextInfo;
   bool mUpdateContextInfo = false;
 
-  QQuickWindow *mWindow;
+  QQuickWindow *mWindow = nullptr;
 };
 
 // -----------------------------------------------------------------------------
@@ -67,7 +66,7 @@ public:
   QQuickFramebufferObject::Renderer *createRenderer () const override;
 
 private:
-  QTimer *mRefreshTimer;
+  QTimer *mRefreshTimer = nullptr;
 
   static QMutex mCounterMutex;
   static int mCounter;

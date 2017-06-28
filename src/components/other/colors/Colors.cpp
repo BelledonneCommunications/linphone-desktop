@@ -46,7 +46,7 @@ using namespace std;
 
 Colors::Colors (QObject *parent) : QObject(parent) {
   #if LINPHONE_FRIDAY
-    if (isLinphoneFriday()) {
+    if (::isLinphoneFriday()) {
       setProperty("i", QColor("#F48D8D"));
       setProperty("s", QColor("#F58585"));
       setProperty("t", QColor("#FFC5C5"));
@@ -54,9 +54,9 @@ Colors::Colors (QObject *parent) : QObject(parent) {
   #endif // if LINPHONE_FRIDAY
 }
 
-void Colors::useConfig (const std::shared_ptr<linphone::Config> &config) {
+void Colors::useConfig (const shared_ptr<linphone::Config> &config) {
   #if LINPHONE_FRIDAY
-    if (!isLinphoneFriday())
+    if (!::isLinphoneFriday())
       overrideColors(config);
   #else
     overrideColors(config);

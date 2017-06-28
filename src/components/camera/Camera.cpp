@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QOpenGLFramebufferObject>
 #include <QQuickWindow>
 #include <QThread>
 #include <QTimer>

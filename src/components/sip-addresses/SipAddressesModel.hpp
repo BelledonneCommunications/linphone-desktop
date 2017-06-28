@@ -26,12 +26,11 @@
 #include <QAbstractListModel>
 #include <QUrl>
 
-#include "../chat/ChatModel.hpp"
-#include "../contact/ContactModel.hpp"
 #include "SipAddressObserver.hpp"
 
 // =============================================================================
 
+class ChatModel;
 class CoreHandlers;
 
 class SipAddressesModel : public QAbstractListModel {

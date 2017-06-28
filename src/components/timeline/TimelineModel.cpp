@@ -20,8 +20,6 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QDateTime>
-
 #include "../core/CoreManager.hpp"
 
 #include "TimelineModel.hpp"

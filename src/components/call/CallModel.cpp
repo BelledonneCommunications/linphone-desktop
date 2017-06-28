@@ -21,7 +21,6 @@
  */
 
 #include <QDateTime>
-#include <QtDebug>
 #include <QTimer>
 
 #include "../../app/App.hpp"

@@ -23,7 +23,6 @@
 #include <QDirIterator>
 #include <QFontDatabase>
 #include <QMessageBox>
-#include <QScreen>
 
 #include "gitversion.h"
 

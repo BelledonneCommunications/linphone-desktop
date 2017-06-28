@@ -64,7 +64,7 @@ private:
     return mConferenceAddModel;
   }
 
-  ConferenceAddModel *mConferenceAddModel;
+  ConferenceAddModel *mConferenceAddModel = nullptr;
 
   std::shared_ptr<linphone::Core> mCore;
   std::shared_ptr<linphone::Conference> mConference;

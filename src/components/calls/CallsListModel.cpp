@@ -20,12 +20,10 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QDebug>
 #include <QTimer>
 
 #include "../../app/App.hpp"
 #include "../../utils/Utils.hpp"
-#include "../conference/ConferenceHelperModel.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "CallsListModel.hpp"

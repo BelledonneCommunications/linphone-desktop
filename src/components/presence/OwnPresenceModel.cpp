@@ -20,9 +20,6 @@
  *      Author: Ghislain MARY
  */
 
-#include <QtDebug>
-
-#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "OwnPresenceModel.hpp"

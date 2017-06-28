@@ -33,6 +33,7 @@
 #include "codecs/AudioCodecsModel.hpp"
 #include "codecs/VideoCodecsModel.hpp"
 #include "conference/ConferenceAddModel.hpp"
+#include "conference/ConferenceModel.hpp"
 #include "contacts/ContactsListProxyModel.hpp"
 #include "core/CoreManager.hpp"
 #include "presence/OwnPresenceModel.hpp"

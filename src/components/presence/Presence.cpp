@@ -20,8 +20,6 @@
  *      Author: Ghislain MARY
  */
 
-#include <QtDebug>
-
 #include "Presence.hpp"
 
 // =============================================================================
