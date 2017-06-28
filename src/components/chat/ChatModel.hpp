@@ -37,9 +37,6 @@ class ChatModel : public QAbstractListModel {
 
   Q_OBJECT;
 
-  Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
-  Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
-
 public:
   enum Roles {
     ChatEntry = Qt::DisplayRole,
