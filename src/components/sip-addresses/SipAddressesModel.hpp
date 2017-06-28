@@ -46,8 +46,6 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-  void connectToChatModel (ChatModel *chatModel);
-
   Q_INVOKABLE QVariantMap find (const QString &sipAddress) const;
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
   Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sipAddress);
@@ -71,6 +69,8 @@ private:
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   // ---------------------------------------------------------------------------
+
+  void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
 
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);

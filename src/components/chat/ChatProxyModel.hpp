@@ -74,8 +74,13 @@ private:
 
   bool getIsRemoteComposing () const;
 
-  ChatModelFilter *mChatModelFilter;
+  void handleIsRemoteComposingChanged (bool status);
+  void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+  void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
+
   int mMaxDisplayedEntries = ENTRIES_CHUNK_SIZE;
+
+  std::shared_ptr<ChatModel> mChatModel;
 
   static const int ENTRIES_CHUNK_SIZE;
 };

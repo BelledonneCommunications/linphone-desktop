@@ -38,13 +38,15 @@ using namespace std;
 SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
   initSipAddresses();
 
-  mCoreHandlers = CoreManager::getInstance()->getHandlers();
+  CoreManager *coreManager = CoreManager::getInstance();
+
+  mCoreHandlers = coreManager->getHandlers();
+
+  QObject::connect(coreManager, &CoreManager::chatModelCreated, this, &SipAddressesModel::handleChatModelCreated);
 
   ContactsListModel *contacts = CoreManager::getInstance()->getContactsListModel();
-
   QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::handleContactAdded);
   QObject::connect(contacts, &ContactsListModel::contactRemoved, this, &SipAddressesModel::handleContactRemoved);
-
   QObject::connect(contacts, &ContactsListModel::sipAddressAdded, this, &SipAddressesModel::handleSipAddressAdded);
   QObject::connect(contacts, &ContactsListModel::sipAddressRemoved, this, &SipAddressesModel::handleSipAddressRemoved);
 
@@ -77,20 +79,6 @@ QVariant SipAddressesModel::data (const QModelIndex &index, int role) const {
     return QVariant::fromValue(*mRefs[row]);
 
   return QVariant();
-}
-
-// -----------------------------------------------------------------------------
-
-void SipAddressesModel::connectToChatModel (ChatModel *chatModel) {
-  QObject::connect(chatModel, &ChatModel::allEntriesRemoved, this, [this, chatModel] {
-    handleAllEntriesRemoved(chatModel->getSipAddress());
-  });
-
-  QObject::connect(chatModel, &ChatModel::messageSent, this, &SipAddressesModel::handleMessageSent);
-
-  QObject::connect(chatModel, &ChatModel::messagesCountReset, this, [this, chatModel] {
-    handleMessagesCountReset(chatModel->getSipAddress());
-  });
 }
 
 // -----------------------------------------------------------------------------
@@ -224,6 +212,20 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
 }
 
 // -----------------------------------------------------------------------------
+
+void SipAddressesModel::handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel) {
+  ChatModel *ptr = chatModel.get();
+
+  QObject::connect(ptr, &ChatModel::allEntriesRemoved, this, [this, ptr] {
+    handleAllEntriesRemoved(ptr->getSipAddress());
+  });
+
+  QObject::connect(ptr, &ChatModel::messageSent, this, &SipAddressesModel::handleMessageSent);
+
+  QObject::connect(ptr, &ChatModel::messagesCountReset, this, [this, ptr] {
+    handleMessagesCountReset(ptr->getSipAddress());
+  });
+}
 
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
   for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses())

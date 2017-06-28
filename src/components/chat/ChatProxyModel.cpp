@@ -20,6 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include "../core/CoreManager.hpp"
+
 #include "ChatProxyModel.hpp"
 
 using namespace std;
@@ -29,9 +31,7 @@ using namespace std;
 // Fetch the L last filtered chat entries.
 class ChatProxyModel::ChatModelFilter : public QSortFilterProxyModel {
 public:
-  ChatModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {
-    setSourceModel(&mChatModel);
-  }
+  ChatModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {}
 
   ChatModel::EntryType getEntryTypeFilter () {
     return mEntryTypeFilter;
@@ -54,7 +54,6 @@ protected:
   }
 
 private:
-  ChatModel mChatModel;
   ChatModel::EntryType mEntryTypeFilter = ChatModel::EntryType::GenericEntry;
 };
 
@@ -63,47 +62,32 @@ private:
 const int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  mChatModelFilter = new ChatModelFilter(this);
-
-  setSourceModel(mChatModelFilter);
-
-  ChatModel *chat = static_cast<ChatModel *>(mChatModelFilter->sourceModel());
-
-  QObject::connect(chat, &ChatModel::sipAddressChanged, this, [this](const QString &sipAddress) {
-      emit sipAddressChanged(sipAddress);
-    });
-
-  QObject::connect(chat, &ChatModel::isRemoteComposingChanged, this, [this](bool status) {
-      emit isRemoteComposingChanged(status);
-    });
-
-  QObject::connect(chat, &ChatModel::messageReceived, this, [this](const shared_ptr<linphone::ChatMessage> &) {
-      mMaxDisplayedEntries++;
-    });
-
-  QObject::connect(chat, &ChatModel::messageSent, this, [this](const shared_ptr<linphone::ChatMessage> &) {
-      mMaxDisplayedEntries++;
-    });
+  setSourceModel(new ChatModelFilter(this));
 }
 
 // -----------------------------------------------------------------------------
 
-#define CREATE_PARENT_MODEL_FUNCTION_WITH_ID(METHOD) \
-  void ChatProxyModel::METHOD(int id) { \
-    QModelIndex sourceIndex = mapToSource(index(id, 0)); \
-    static_cast<ChatModel *>(mChatModelFilter->sourceModel())->METHOD( \
-      mChatModelFilter->mapToSource(sourceIndex).row() \
-    ); \
-  }
+#define GET_CHAT_MODEL() \
+  if (!mChatModel) \
+    return; \
+  mChatModel
 
 #define CREATE_PARENT_MODEL_FUNCTION(METHOD) \
   void ChatProxyModel::METHOD() { \
-    static_cast<ChatModel *>(mChatModelFilter->sourceModel())->METHOD(); \
+    GET_CHAT_MODEL()->METHOD(); \
   }
 
 #define CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(METHOD, ARG_TYPE) \
   void ChatProxyModel::METHOD(ARG_TYPE value) { \
-    static_cast<ChatModel *>(mChatModelFilter->sourceModel())->METHOD(value); \
+    GET_CHAT_MODEL()->METHOD(value); \
+  }
+
+#define CREATE_PARENT_MODEL_FUNCTION_WITH_ID(METHOD) \
+  void ChatProxyModel::METHOD(int id) { \
+    QModelIndex sourceIndex = mapToSource(index(id, 0)); \
+    GET_CHAT_MODEL()->METHOD( \
+      static_cast<ChatModelFilter *>(sourceModel())->mapToSource(sourceIndex).row() \
+    ); \
   }
 
 CREATE_PARENT_MODEL_FUNCTION(compose);
@@ -118,31 +102,16 @@ CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFileDirectory);
 CREATE_PARENT_MODEL_FUNCTION_WITH_ID(removeEntry);
 CREATE_PARENT_MODEL_FUNCTION_WITH_ID(resendMessage);
 
+#undef GET_CHAT_MODEL
 #undef CREATE_PARENT_MODEL_FUNCTION
 #undef CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM
 #undef CREATE_PARENT_MODEL_FUNCTION_WITH_ID
 
 // -----------------------------------------------------------------------------
 
-QString ChatProxyModel::getSipAddress () const {
-  return static_cast<ChatModel *>(mChatModelFilter->sourceModel())->getSipAddress();
-}
-
-void ChatProxyModel::setSipAddress (const QString &sipAddress) {
-  static_cast<ChatModel *>(mChatModelFilter->sourceModel())->setSipAddress(
-    sipAddress
-  );
-}
-
-bool ChatProxyModel::getIsRemoteComposing () const {
-  return static_cast<ChatModel *>(mChatModelFilter->sourceModel())->getIsRemoteComposing();
-}
-
-// -----------------------------------------------------------------------------
-
 void ChatProxyModel::loadMoreEntries () {
   int count = rowCount();
-  int parentCount = mChatModelFilter->rowCount();
+  int parentCount = sourceModel()->rowCount();
 
   if (count < parentCount) {
     // Do not increase `mMaxDisplayedEntries` if it's not necessary...
@@ -159,8 +128,10 @@ void ChatProxyModel::loadMoreEntries () {
 }
 
 void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
-  if (mChatModelFilter->getEntryTypeFilter() != type) {
-    mChatModelFilter->setEntryTypeFilter(type);
+  ChatModelFilter *chatModelFilter = static_cast<ChatModelFilter *>(sourceModel());
+
+  if (chatModelFilter->getEntryTypeFilter() != type) {
+    chatModelFilter->setEntryTypeFilter(type);
     emit entryTypeFilterChanged(type);
   }
 }
@@ -168,5 +139,50 @@ void ChatProxyModel::setEntryTypeFilter (ChatModel::EntryType type) {
 // -----------------------------------------------------------------------------
 
 bool ChatProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const {
-  return mChatModelFilter->rowCount() - sourceRow <= mMaxDisplayedEntries;
+  return sourceModel()->rowCount() - sourceRow <= mMaxDisplayedEntries;
+}
+
+// -----------------------------------------------------------------------------
+
+QString ChatProxyModel::getSipAddress () const {
+  return mChatModel ? mChatModel->getSipAddress() : QString("");
+}
+
+void ChatProxyModel::setSipAddress (const QString &sipAddress) {
+  mMaxDisplayedEntries = ENTRIES_CHUNK_SIZE;
+
+  if (mChatModel) {
+    ChatModel *chatModel = mChatModel.get();
+    QObject::disconnect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
+    QObject::disconnect(chatModel, &ChatModel::messageReceived, this, &ChatProxyModel::handleMessageReceived);
+    QObject::disconnect(chatModel, &ChatModel::messageSent, this, &ChatProxyModel::handleMessageSent);
+  }
+
+  mChatModel = CoreManager::getInstance()->getChatModelFromSipAddress(sipAddress);
+  if (mChatModel) {
+    ChatModel *chatModel = mChatModel.get();
+    QObject::connect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
+    QObject::connect(chatModel, &ChatModel::messageReceived, this, &ChatProxyModel::handleMessageReceived);
+    QObject::connect(chatModel, &ChatModel::messageSent, this, &ChatProxyModel::handleMessageSent);
+  }
+
+  static_cast<ChatModelFilter *>(sourceModel())->setSourceModel(mChatModel.get());
+}
+
+bool ChatProxyModel::getIsRemoteComposing () const {
+  return mChatModel ? mChatModel->getIsRemoteComposing() : false;
+}
+
+// -----------------------------------------------------------------------------
+
+void ChatProxyModel::handleIsRemoteComposingChanged (bool status) {
+  emit isRemoteComposingChanged(status);
+}
+
+void ChatProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
+  mMaxDisplayedEntries++;
+}
+
+void ChatProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {
+  mMaxDisplayedEntries++;
 }

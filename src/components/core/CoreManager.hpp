@@ -58,6 +58,8 @@ public:
     return mHandlers;
   }
 
+  std::shared_ptr<ChatModel> getChatModelFromSipAddress (const QString &sipAddress);
+
   // ---------------------------------------------------------------------------
   // Video render lock.
   // ---------------------------------------------------------------------------
@@ -126,6 +128,8 @@ signals:
   void coreCreated ();
   void coreStarted ();
 
+  void chatModelCreated (const std::shared_ptr<ChatModel> chatModel);
+
   void logsUploaded (const QString &url);
 
 private:
@@ -153,6 +157,8 @@ private:
   SipAddressesModel *mSipAddressesModel;
   SettingsModel *mSettingsModel;
   AccountSettingsModel *mAccountSettingsModel;
+
+  QHash<QString, std::weak_ptr<ChatModel> > mChatModels;
 
   QTimer *mCbsTimer;
 

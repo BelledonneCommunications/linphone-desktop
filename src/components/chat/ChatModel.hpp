@@ -37,7 +37,7 @@ class ChatModel : public QAbstractListModel {
 
   Q_OBJECT;
 
-  Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
+  Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
 
 public:
@@ -75,7 +75,7 @@ public:
 
   Q_ENUM(MessageStatus);
 
-  ChatModel (QObject *parent = Q_NULLPTR);
+  ChatModel (const QString &sipAddress);
   ~ChatModel ();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
@@ -87,7 +87,6 @@ public:
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   QString getSipAddress () const;
-  void setSipAddress (const QString &sipAddress);
 
   bool getIsRemoteComposing () const;
 
@@ -111,7 +110,6 @@ public:
   void compose ();
 
 signals:
-  void sipAddressChanged (const QString &sipAddress);
   bool isRemoteComposingChanged (bool status);
 
   void allEntriesRemoved ();
@@ -123,6 +121,8 @@ signals:
 
 private:
   typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
+
+  void setSipAddress (const QString &sipAddress);
 
   const ChatEntryData getFileMessageEntry (int id);
 
@@ -136,8 +136,6 @@ private:
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 
   void resetMessagesCount ();
-
-  void updateIsRemoteComposing ();
 
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);

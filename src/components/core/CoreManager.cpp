@@ -73,6 +73,34 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 
 // -----------------------------------------------------------------------------
 
+shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &sipAddress) {
+  if (!sipAddress.length())
+    return nullptr;
+
+  Q_ASSERT(mCore->createAddress(::Utils::appStringToCoreString(sipAddress)) != nullptr);
+
+  // Create a new chat model.
+  if (!mChatModels.contains(sipAddress)) {
+    auto deleter = [this](ChatModel *chatModel) {
+        mChatModels.remove(chatModel->getSipAddress());
+      };
+
+    shared_ptr<ChatModel> chatModel(new ChatModel(sipAddress), deleter);
+    mChatModels[sipAddress] = chatModel;
+
+    emit chatModelCreated(chatModel);
+
+    return chatModel;
+  }
+
+  // Returns an existing chat model.
+  shared_ptr<ChatModel> chatModel = mChatModels[sipAddress].lock();
+  Q_CHECK_PTR(chatModel.get());
+  return chatModel;
+}
+
+// -----------------------------------------------------------------------------
+
 void CoreManager::init (QObject *parent, const QString &configPath) {
   if (mInstance)
     return;

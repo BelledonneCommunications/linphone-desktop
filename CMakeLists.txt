@@ -63,6 +63,8 @@ if (NOT WIN32)
   endif ()
 endif ()
 
+set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -DQT_NO_EXCEPTIONS")
+
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
 # See: http://stackoverflow.com/a/1372836
 if (WIN32)

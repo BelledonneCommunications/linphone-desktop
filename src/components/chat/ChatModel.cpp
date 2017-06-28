@@ -189,13 +189,13 @@ private:
 
 // -----------------------------------------------------------------------------
 
-ChatModel::ChatModel (QObject *parent) : QAbstractListModel(parent) {
+ChatModel::ChatModel (const QString &sipAddress) {
   CoreManager *core = CoreManager::getInstance();
 
   mCoreHandlers = core->getHandlers();
   mMessageHandlers = make_shared<MessageHandlers>(this);
 
-  core->getSipAddressesModel()->connectToChatModel(this);
+  setSipAddress(sipAddress);
 
   {
     CoreHandlers *coreHandlers = mCoreHandlers.get();
@@ -262,27 +262,16 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 }
 
 QString ChatModel::getSipAddress () const {
-  if (!mChatRoom)
-    return QString("");
-
   return ::Utils::coreStringToAppString(
     mChatRoom->getPeerAddress()->asStringUriOnly()
   );
 }
 
 void ChatModel::setSipAddress (const QString &sipAddress) {
-  if (sipAddress == getSipAddress() || sipAddress.isEmpty())
-    return;
-
-  beginResetModel();
-
-  // Invalid old sip address entries.
-  mEntries.clear();
-
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
   mChatRoom = core->getChatRoomFromUri(::Utils::appStringToCoreString(sipAddress));
-  updateIsRemoteComposing();
+  Q_CHECK_PTR(mChatRoom.get());
 
   if (mChatRoom->getUnreadMessagesCount() > 0)
     resetMessagesCount();
@@ -304,10 +293,6 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
   // Get calls.
   for (auto &callLog : core->getCallHistoryForAddress(mChatRoom->getPeerAddress()))
     insertCall(callLog);
-
-  endResetModel();
-
-  emit sipAddressChanged(sipAddress);
 }
 
 bool ChatModel::getIsRemoteComposing () const {
@@ -342,9 +327,6 @@ void ChatModel::removeAllEntries () {
 // -----------------------------------------------------------------------------
 
 void ChatModel::sendMessage (const QString &message) {
-  if (!mChatRoom)
-    return;
-
   shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(::Utils::appStringToCoreString(message));
   _message->setListener(mMessageHandlers);
 
@@ -355,9 +337,6 @@ void ChatModel::sendMessage (const QString &message) {
 }
 
 void ChatModel::resendMessage (int id) {
-  if (!mChatRoom)
-    return;
-
   if (id < 0 || id > mEntries.count()) {
     qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
     return;
@@ -387,9 +366,6 @@ void ChatModel::resendMessage (int id) {
 }
 
 void ChatModel::sendFileMessage (const QString &path) {
-  if (!mChatRoom)
-    return;
-
   QFile file(path);
   if (!file.exists())
     return;
@@ -483,15 +459,12 @@ bool ChatModel::fileWasDownloaded (int id) {
 }
 
 void ChatModel::compose () {
-  return mChatRoom->compose();
+  mChatRoom->compose();
 }
 
 // -----------------------------------------------------------------------------
 
 const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
-  if (!mChatRoom)
-    return ChatEntryData();
-
   if (id < 0 || id > mEntries.count()) {
     qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
     return ChatEntryData();
@@ -650,14 +623,6 @@ void ChatModel::resetMessagesCount () {
   emit messagesCountReset();
 }
 
-void ChatModel::updateIsRemoteComposing () {
-  bool isRemoteComposing = mChatRoom->isRemoteComposing();
-  if (isRemoteComposing != mIsRemoteComposing) {
-    mIsRemoteComposing = isRemoteComposing;
-    emit isRemoteComposingChanged(mIsRemoteComposing);
-  }
-}
-
 // -----------------------------------------------------------------------------
 
 void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
@@ -669,8 +634,13 @@ void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 }
 
 void ChatModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
-  if (mChatRoom == chatRoom)
-    updateIsRemoteComposing();
+  if (mChatRoom == chatRoom) {
+    bool isRemoteComposing = mChatRoom->isRemoteComposing();
+    if (isRemoteComposing != mIsRemoteComposing) {
+      mIsRemoteComposing = isRemoteComposing;
+      emit isRemoteComposingChanged(mIsRemoteComposing);
+    }
+  }
 }
 
 void ChatModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
