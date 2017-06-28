@@ -77,10 +77,10 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
   if (!sipAddress.length())
     return nullptr;
 
-  Q_ASSERT(mCore->createAddress(::Utils::appStringToCoreString(sipAddress)) != nullptr);
-
   // Create a new chat model.
   if (!mChatModels.contains(sipAddress)) {
+    Q_ASSERT(mCore->createAddress(::Utils::appStringToCoreString(sipAddress)) != nullptr);
+
     auto deleter = [this](ChatModel *chatModel) {
         mChatModels.remove(chatModel->getSipAddress());
       };
