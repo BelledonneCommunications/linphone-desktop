@@ -23,7 +23,6 @@
 #include <stdexcept>
 
 #include "../../components/core/CoreManager.hpp"
-#include "../../utils/Utils.hpp"
 #include "../App.hpp"
 
 #include "Cli.hpp"

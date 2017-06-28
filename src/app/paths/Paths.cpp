@@ -23,7 +23,6 @@
 #include <linphone++/linphone.hh>
 #include <QCoreApplication>
 #include <QDir>
-#include <QFile>
 #include <QStandardPaths>
 #include <QtDebug>
 

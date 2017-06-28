@@ -27,7 +27,6 @@
 
 #include "../../components/settings/SettingsModel.hpp"
 #include "../../utils/Utils.hpp"
-#include "../paths/Paths.hpp"
 
 #include "Logger.hpp"
 

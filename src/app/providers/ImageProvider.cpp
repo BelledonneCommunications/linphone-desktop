@@ -20,16 +20,10 @@
  *      Author: Ronan Abhamon
  */
 
-#include <algorithm>
-
 #include <QElapsedTimer>
-#include <QFile>
 #include <QFileInfo>
-#include <QImage>
 #include <QPainter>
 #include <QSvgRenderer>
-#include <QtDebug>
-#include <QXmlStreamReader>
 
 #include "../App.hpp"
 
