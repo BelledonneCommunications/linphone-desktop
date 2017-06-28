@@ -27,7 +27,6 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QImage>
-#include <QtDebug>
 #include <QTimer>
 #include <QUuid>
 
@@ -272,6 +271,8 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
 
   mChatRoom = core->getChatRoomFromUri(::Utils::appStringToCoreString(sipAddress));
   Q_CHECK_PTR(mChatRoom.get());
+
+  handleIsComposingChanged(mChatRoom);
 
   if (mChatRoom->getUnreadMessagesCount() > 0)
     resetMessagesCount();
