@@ -31,7 +31,7 @@
 // Must be unique. Used by `SingleApplication` and `Paths`.
 #define APPLICATION_NAME "linphone"
 #define APPLICATION_VERSION LINPHONE_QT_GIT_VERSION
-#define APPLICATION_MINIMAL_QT_VERSION "5.8.0"
+#define APPLICATION_MINIMAL_QT_VERSION "5.9.0"
 
 #define DEFAULT_FONT "Noto Sans"
 

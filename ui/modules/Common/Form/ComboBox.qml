@@ -42,9 +42,7 @@ ComboBox {
     RowLayout {
       anchors {
         fill: parent
-        leftMargin: !Utils.startsWith(App.qtVersion, '5.8')
-          ? ComboBoxStyle.contentItem.leftMargin // >= 5.9
-          : 0 // 5.8
+        leftMargin: ComboBoxStyle.contentItem.leftMargin
       }
 
       spacing: ComboBoxStyle.contentItem.spacing
