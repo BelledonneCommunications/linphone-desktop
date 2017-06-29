@@ -55,11 +55,11 @@ void MessagesCountNotifier::updateUnreadMessagesCount () {
 void MessagesCountNotifier::notifyUnreadMessagesCount () {
   qInfo() << QStringLiteral("Notify unread messages count: %1.").arg(mUnreadMessagesCount);
 
-  #ifdef Q_OS_LINUX
+  #if defined(Q_OS_LINUX)
     // TODO.
-  #elif Q_OS_MACOS
+  #elif defined(Q_OS_MACOS)
     // TODO.
-  #elif Q_OS_WIN
+  #elif defined(Q_OS_WIN)
     // TODO.
   #endif // ifdef Q_OS_LINUX
 }
