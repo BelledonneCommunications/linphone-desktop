@@ -27,6 +27,7 @@
 
 #include "../../app/paths/Paths.hpp"
 #include "../../utils/Utils.hpp"
+#include "MessagesCountNotifier.hpp"
 
 #include "CoreManager.hpp"
 
@@ -54,6 +55,8 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
   CoreHandlers *coreHandlers = mHandlers.get();
 
   QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
+    new MessagesCountNotifier(mInstance);
+
     mInstance->mCallsListModel = new CallsListModel(mInstance);
     mInstance->mContactsListModel = new ContactsListModel(mInstance);
     mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);

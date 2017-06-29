@@ -159,6 +159,8 @@ void ChatProxyModel::setSipAddress (const QString &sipAddress) {
   }
 
   mChatModel = CoreManager::getInstance()->getChatModelFromSipAddress(sipAddress);
+  mChatModel->resetMessagesCount();
+
   if (mChatModel) {
     ChatModel *chatModel = mChatModel.get();
     QObject::connect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
@@ -181,6 +183,7 @@ void ChatProxyModel::handleIsRemoteComposingChanged (bool status) {
 
 void ChatProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
   mMaxDisplayedEntries++;
+  mChatModel->resetMessagesCount();
 }
 
 void ChatProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {

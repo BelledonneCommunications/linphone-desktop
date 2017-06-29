@@ -106,6 +106,8 @@ public:
 
   void compose ();
 
+  void resetMessagesCount ();
+
 signals:
   bool isRemoteComposingChanged (bool status);
 
@@ -131,8 +133,6 @@ private:
 
   void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
-
-  void resetMessagesCount ();
 
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);

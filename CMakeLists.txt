@@ -127,6 +127,7 @@ set(SOURCES
   src/components/contacts/ContactsListProxyModel.cpp
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
+  src/components/core/MessagesCountNotifier.cpp
   src/components/notifier/Notifier.cpp
   src/components/other/colors/Colors.cpp
   src/components/other/clipboard/Clipboard.cpp
@@ -181,6 +182,7 @@ set(HEADERS
   src/components/contacts/ContactsListProxyModel.hpp
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
+  src/components/core/MessagesCountNotifier.hpp
   src/components/notifier/Notifier.hpp
   src/components/other/colors/Colors.hpp
   src/components/other/clipboard/Clipboard.hpp

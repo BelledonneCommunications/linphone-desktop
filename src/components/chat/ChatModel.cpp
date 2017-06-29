@@ -272,9 +272,6 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
 
   handleIsComposingChanged(mChatRoom);
 
-  if (mChatRoom->getUnreadMessagesCount() > 0)
-    resetMessagesCount();
-
   // Get messages.
   for (auto &message : mChatRoom->getHistory(0)) {
     QVariantMap map;
@@ -461,6 +458,13 @@ void ChatModel::compose () {
   mChatRoom->compose();
 }
 
+void ChatModel::resetMessagesCount () {
+  if (mChatRoom->getUnreadMessagesCount() > 0) {
+    mChatRoom->markAsRead();
+    emit messagesCountReset();
+  }
+}
+
 // -----------------------------------------------------------------------------
 
 const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
@@ -617,11 +621,6 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
   endInsertRows();
 }
 
-void ChatModel::resetMessagesCount () {
-  mChatRoom->markAsRead();
-  emit messagesCountReset();
-}
-
 // -----------------------------------------------------------------------------
 
 void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
@@ -645,8 +644,6 @@ void ChatModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &
 void ChatModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
   if (mChatRoom == message->getChatRoom()) {
     insertMessageAtEnd(message);
-    resetMessagesCount();
-
     emit messageReceived(message);
   }
 }

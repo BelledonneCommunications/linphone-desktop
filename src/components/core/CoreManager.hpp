@@ -127,7 +127,7 @@ signals:
   void coreCreated ();
   void coreStarted ();
 
-  void chatModelCreated (const std::shared_ptr<ChatModel> chatModel);
+  void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
 
   void logsUploaded (const QString &url);
 
