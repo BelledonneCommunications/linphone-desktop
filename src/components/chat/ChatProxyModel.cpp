@@ -159,9 +159,10 @@ void ChatProxyModel::setSipAddress (const QString &sipAddress) {
   }
 
   mChatModel = CoreManager::getInstance()->getChatModelFromSipAddress(sipAddress);
-  mChatModel->resetMessagesCount();
 
   if (mChatModel) {
+    mChatModel->resetMessagesCount();
+
     ChatModel *chatModel = mChatModel.get();
     QObject::connect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
     QObject::connect(chatModel, &ChatModel::messageReceived, this, &ChatProxyModel::handleMessageReceived);
