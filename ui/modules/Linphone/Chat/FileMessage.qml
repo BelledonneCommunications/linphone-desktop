@@ -26,7 +26,7 @@ Row {
         height: ChatStyle.entry.message.incoming.avatarSize
         width: ChatStyle.entry.message.incoming.avatarSize
 
-        image: chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.avatar : ''
+        image: chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.vcard.avatar : ''
         username: LinphoneUtils.getContactUsername(chat.sipAddressObserver)
       }
     }
