@@ -24,6 +24,14 @@
 
 #include "MessagesCountNotifier.hpp"
 
+#if defined(Q_OS_LINUX)
+  // TODO.
+#elif defined(Q_OS_MACOS)
+  #include "MessagesCountNotifierMacOS.h"
+#elif defined(Q_OS_WIN)
+  // TODO.
+#endif
+
 using namespace std;
 
 // =============================================================================
@@ -58,10 +66,10 @@ void MessagesCountNotifier::notifyUnreadMessagesCount () {
   #if defined(Q_OS_LINUX)
     // TODO.
   #elif defined(Q_OS_MACOS)
-    // TODO.
+    ::notifyUnreadMessagesCountMacOS(mUnreadMessagesCount);
   #elif defined(Q_OS_WIN)
     // TODO.
-  #endif // ifdef Q_OS_LINUX
+  #endif
 }
 
 // -----------------------------------------------------------------------------

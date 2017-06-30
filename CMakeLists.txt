@@ -203,6 +203,9 @@ set(HEADERS
   src/utils/Utils.hpp
 )
 
+if(APPLE)
+  list(APPEND SOURCES src/components/core/MessagesCountNotifierMacOS.m)
+endif()
 if(ENABLE_DBUS)
   list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
   list(APPEND HEADERS src/app/single-application/SingleApplicationDBusPrivate.hpp)
@@ -348,6 +351,9 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 target_link_libraries(${TARGET_NAME} ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
+if(APPLE)
+	target_link_libraries(${TARGET_NAME} "-framework Cocoa")
+endif()
 
 install(TARGETS ${TARGET_NAME}
   RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
