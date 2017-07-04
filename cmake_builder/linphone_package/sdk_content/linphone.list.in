@@ -1,6 +1,4 @@
 @LIBDIR@/@LIBPREFIX@linphone*.@LIBEXT@
-@LIBDIR@/@LIBPREFIX@iconv*.@LIBEXT@
-@LIBDIR@/@LIBPREFIX@intl*.@LIBEXT@
 include/linphone/*
 lib/linphone*.lib
 share/doc/linphone-*

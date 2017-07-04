@@ -53,33 +53,6 @@ set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/linphone-sdk-tmp")
 file(REMOVE_RECURSE "${LINPHONE_SDK_TMP}")
 file(COPY "${LINPHONE_OUTPUT_DIR}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/desktop" "${LINPHONE_SDK_TMP}")
-if(APPLE)
-	set(RPATH_CHANGE_CMDS
-		-change /opt/local/lib/libintl.8.dylib @rpath/libintl.8.dylib
-		-change /opt/local/lib/libiconv.2.dylib @rpath/libiconv.2.dylib
-	)
-	file(COPY
-		/opt/local/lib/libintl.8.dylib
-		/opt/local/lib/libintl.dylib
-		/opt/local/lib/libiconv.dylib
-		/opt/local/lib/libiconv.2.dylib
-		DESTINATION ${LINPHONE_SDK_TMP}/lib
-	)
-	execute_process(COMMAND install_name_tool
-		-id @rpath/libintl.8.dylib
-		-change /opt/local/lib/libiconv.2.dylib @rpath/libiconv.2.dylib
-		${LINPHONE_SDK_TMP}/lib/libintl.8.dylib
-	)
-	execute_process(COMMAND install_name_tool
-		-id @rpath/libiconv.2.dylib
-		${LINPHONE_SDK_TMP}/lib/libiconv.2.dylib
-	)
-	execute_process(COMMAND install_name_tool
-		-change /opt/local/lib/libintl.8.dylib @rpath/libintl.8.dylib
-		-change /opt/local/lib/libiconv.2.dylib @rpath/libiconv.2.dylib
-		${LINPHONE_SDK_TMP}/lib/liblinphone.dylib
-	)
-endif()
 
 # Generates a zip archive containing the development files of liblinphone
 macro(add_list_file NAME)
