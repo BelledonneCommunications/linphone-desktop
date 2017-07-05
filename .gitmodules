@@ -98,3 +98,6 @@
 [submodule "submodules/mediastreamer2"]
 	path = submodules/mediastreamer2
 	url = git://git.linphone.org/mediastreamer2.git
+[submodule "submodules/mswasapi"]
+	path = submodules/mswasapi
+	url = git://git.linphone.org/mswasapi.git
