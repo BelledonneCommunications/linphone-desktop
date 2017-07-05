@@ -216,7 +216,7 @@ string Paths::getPackageMsPluginsDirPath () {
 }
 
 string Paths::getPluginsDirPath () {
-  return ::getWritableDirPath(::getAppPluginsDirPath());
+  return ::getReadableDirPath(::getAppPluginsDirPath());
 }
 
 string Paths::getRootCaFilePath () {
