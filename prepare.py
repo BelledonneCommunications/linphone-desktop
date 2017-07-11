@@ -155,10 +155,6 @@ class DesktopPreparator(prepare.Preparator):
         if "python" in self.args.target or "python-raspberry" in self.args.target:
             ret |= not self.check_python_module_is_present('wheel')
 
-        if os.path.isdir('submodules/oRTP'):
-            import shutil
-            shutil.rmtree('submodules/oRTP')
-
         return ret
 
     def show_missing_dependencies(self):
