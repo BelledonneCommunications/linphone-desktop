@@ -147,6 +147,7 @@ set(SOURCES
   src/main.cpp
   src/utils/LinphoneUtils.cpp
   src/utils/Utils.cpp
+  src/utils/QExifImageHeader.cpp
 )
 
 set(HEADERS
@@ -201,6 +202,7 @@ set(HEADERS
   src/components/url-handlers/UrlHandlers.hpp
   src/utils/LinphoneUtils.hpp
   src/utils/Utils.hpp
+  src/utils/QExifImageHeader.h
 )
 
 if(APPLE)

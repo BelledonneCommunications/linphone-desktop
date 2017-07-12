@@ -32,6 +32,7 @@
 #include "../../app/paths/Paths.hpp"
 #include "../../app/providers/ThumbnailProvider.hpp"
 #include "../../utils/Utils.hpp"
+#include "../../utils/QExifImageHeader.h"
 #include "../core/CoreManager.hpp"
 
 #include "ChatModel.hpp"
@@ -71,15 +72,35 @@ inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
     return;
 
   QString thumbnailPath = ::Utils::coreStringToAppString(message->getFileTransferFilepath());
-
   QImage image(thumbnailPath);
   if (image.isNull())
     return;
 
+  int rotation = 0;
+  QExifImageHeader exifImageHeader;
+  if (exifImageHeader.loadFromJpeg(thumbnailPath)) {
+    rotation = (int) exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort();
+  }
+
   QImage thumbnail = image.scaled(
-      THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
-      Qt::KeepAspectRatio, Qt::SmoothTransformation
-    );
+    THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
+    Qt::KeepAspectRatio, Qt::SmoothTransformation
+  );
+
+  if (rotation != 0) {
+    QTransform transform;
+    if (rotation == 3 || rotation == 4) {
+      transform.rotate(180);
+    } else if (rotation == 5 || rotation == 6) {
+      transform.rotate(90);
+    } else if (rotation == 7 || rotation == 8) {
+      transform.rotate(-90);
+    }
+    thumbnail = thumbnail.transformed(transform);
+    if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7) {
+      thumbnail = thumbnail.mirrored(true, false);
+    }
+  }
 
   QString uuid = QUuid::createUuid().toString();
   QString fileId = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
