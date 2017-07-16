@@ -65,11 +65,11 @@ void MessagesCountNotifier::notifyUnreadMessagesCount () {
   int count = mUnreadMessagesCount > 99 ? 99 : mUnreadMessagesCount;
 
   #if defined(Q_OS_LINUX)
-    // TODO.
+    (void)count;
   #elif defined(Q_OS_MACOS)
     ::notifyUnreadMessagesCountMacOS(count);
   #elif defined(Q_OS_WIN)
-    // TODO.
+    (void)count;
   #endif // if defined(Q_OS_LINUX)
 }
 
