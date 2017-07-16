@@ -22,5 +22,4 @@
 
 // =============================================================================
 
-extern "C" void notifyUnreadMessagesCountMacOS(int count);
-
+extern "C" void notifyUnreadMessagesCountMacOS (int count);

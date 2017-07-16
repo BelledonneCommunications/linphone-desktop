@@ -27,7 +27,7 @@
 // =============================================================================
 
 namespace linphone {
-  class ChatMessage;
+class ChatMessage;
 }
 
 class ChatModel;

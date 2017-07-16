@@ -22,15 +22,15 @@
 
 #include "../core/CoreManager.hpp"
 
-#include "MessagesCountNotifier.hpp"
-
 #if defined(Q_OS_LINUX)
   // TODO.
 #elif defined(Q_OS_MACOS)
   #include "MessagesCountNotifierMacOS.h"
 #elif defined(Q_OS_WIN)
   // TODO.
-#endif
+#endif // if defined(Q_OS_LINUX)
+
+#include "MessagesCountNotifier.hpp"
 
 using namespace std;
 
@@ -62,14 +62,15 @@ void MessagesCountNotifier::updateUnreadMessagesCount () {
 
 void MessagesCountNotifier::notifyUnreadMessagesCount () {
   qInfo() << QStringLiteral("Notify unread messages count: %1.").arg(mUnreadMessagesCount);
+  int count = mUnreadMessagesCount > 99 ? 99 : mUnreadMessagesCount;
 
   #if defined(Q_OS_LINUX)
     // TODO.
   #elif defined(Q_OS_MACOS)
-    ::notifyUnreadMessagesCountMacOS(mUnreadMessagesCount);
+    ::notifyUnreadMessagesCountMacOS(count);
   #elif defined(Q_OS_WIN)
     // TODO.
-  #endif
+  #endif // if defined(Q_OS_LINUX)
 }
 
 // -----------------------------------------------------------------------------
