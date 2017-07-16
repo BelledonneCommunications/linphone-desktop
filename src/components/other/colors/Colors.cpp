@@ -66,12 +66,15 @@ void Colors::useConfig (const shared_ptr<linphone::Config> &config) {
 // -----------------------------------------------------------------------------
 
 void Colors::overrideColors (const shared_ptr<linphone::Config> &config) {
+  if (!config)
+    return;
+
   const QMetaObject *info = metaObject();
 
   for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {
     const QMetaProperty metaProperty = info->property(i);
     const string colorName = metaProperty.name();
-    const string colorValue = config ? config->getString(COLORS_SECTION, colorName, "") : "";
+    const string colorValue = config->getString(COLORS_SECTION, colorName, "");
 
     if (!colorValue.empty())
       setProperty(colorName.c_str(), QColor(::Utils::coreStringToAppString(colorValue)));
