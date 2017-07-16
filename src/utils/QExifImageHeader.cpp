@@ -41,8 +41,6 @@
 
 // This file was copied from Qt Extended 4.5
 
-#include "QExifImageHeader.h"
-
 #include <QFile>
 #include <QImage>
 #include <QDataStream>
@@ -50,6 +48,10 @@
 #include <QDateTime>
 #include <QtDebug>
 #include <QTextCodec>
+
+#include "Utils.hpp"
+
+#include "QExifImageHeader.h"
 
 /*!
     \typedef QExifSRational
@@ -484,19 +486,18 @@ QString QExifValue::toString () const {
           QTextCodec *codec = QTextCodec::codecForName("JIS X 0208");
           if (codec)
             return codec->toUnicode(string);
-        }
-                          break;
+        } break;
         case UnicodeEncoding: {
           QTextCodec *codec = QTextCodec::codecForName("UTF-16");
           if (codec)
             return codec->toUnicode(string);
-        }
+        } UTILS_NO_BREAK;
         case UndefinedEncoding:
           return QString::fromLocal8Bit(string.constData(), string.length());
         default:
           break;
       }
-    }
+    } UTILS_NO_BREAK;
     default:
       return QString();
   }
@@ -1025,27 +1026,17 @@ quint32 QExifImageHeader::sizeOf (const QExifValue &value) const {
   switch (value.type()) {
     case QExifValue::Byte:
     case QExifValue::Undefined:
-      return value.count() > 4
-             ? 12 + value.count()
-             : 12;
+      return value.count() > 4 ? 12 + value.count() : 12;
     case QExifValue::Ascii:
-      return value.count() > 4
-             ? 12 + value.count()
-             : 12;
+      return value.count() > 4 ? 12 + value.count() : 12;
     case QExifValue::Short:
-      return value.count() > 2
-             ? 12 + value.count() * sizeof(quint16)
-             : 12;
+      return value.count() > 2 ? static_cast<quint32>(12 + value.count() * sizeof(quint16)) : 12;
     case QExifValue::Long:
     case QExifValue::SignedLong:
-      return value.count() > 1
-             ? 12 + value.count() * sizeof(quint32)
-             : 12;
+      return value.count() > 1 ? static_cast<quint32>(12 + value.count() * sizeof(quint32)) : 12;
     case QExifValue::Rational:
     case QExifValue::SignedRational:
-      return value.count() > 0
-             ? 12 + value.count() * sizeof(quint32) * 2
-             : 12;
+      return value.count() > 0 ? static_cast<quint32>(12 + value.count() * sizeof(quint32) * 2) : 12;
     default:
       return 0;
   }
@@ -1471,7 +1462,7 @@ QMap<T, QExifValue> QExifImageHeader::readIfdValues (
 bool QExifImageHeader::read (QIODevice *device) {
   clear();
 
-  int startPos = device->pos();
+  int startPos = static_cast<int>(device->pos());
 
   QDataStream stream(device);
 
@@ -1590,7 +1581,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count() * sizeof(quint16);
+        offset += static_cast<quint32>(value.count() * sizeof(quint16));
       }
       break;
     case QExifValue::Long:
@@ -1601,7 +1592,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count() * sizeof(quint32);
+        offset += static_cast<quint32>(value.count() * sizeof(quint32));
       }
       break;
     case QExifValue::SignedLong:
@@ -1612,7 +1603,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count() * sizeof(qint32);
+        offset += static_cast<quint32>(value.count() * sizeof(qint32));
       }
       break;
     case QExifValue::Rational:
@@ -1621,7 +1612,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count() * sizeof(quint32) * 2;
+        offset += static_cast<quint32>(value.count() * sizeof(quint32) * 2);
       }
       break;
     case QExifValue::SignedRational:
@@ -1630,7 +1621,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count() * sizeof(qint32) * 2;
+        offset += static_cast<quint32>(value.count() * sizeof(qint32) * 2);
       }
       break;
     default:
@@ -1739,7 +1730,7 @@ qint64 QExifImageHeader::write (QIODevice *device) const {
     device->write("\x00\x00\x00\x08", 4);
   }
 
-  quint16 count = d->imageIfdValues.count() + 1;
+  quint16 count = static_cast<quint16>(d->imageIfdValues.count() + 1);
   quint32 offset = 26;
 
   if (!d->gpsIfdValues.isEmpty()) {

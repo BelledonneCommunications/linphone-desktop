@@ -41,8 +41,8 @@
 
 // This file was copied from Qt Extended 4.5
 
-#ifndef QEXIFIMAGEHEADER_H
-#define QEXIFIMAGEHEADER_H
+#ifndef QEXIFIMAGEHEADER_H_
+#define QEXIFIMAGEHEADER_H_
 
 #include <QPair>
 #include <QVector>
@@ -333,4 +333,4 @@ private:
   QExifImageHeaderPrivate *d;
 };
 
-#endif // ifndef QEXIFIMAGEHEADER_H
+#endif // ifndef QEXIFIMAGEHEADER_H_

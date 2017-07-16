@@ -28,7 +28,7 @@
 // =============================================================================
 
 /*
- * Define telling G++ that a 'break' statement has been deliberately omitted
+ * Define telling g++ that a 'break' statement has been deliberately omitted
  * in switch block.
  */
 #ifndef UTILS_NO_BREAK
