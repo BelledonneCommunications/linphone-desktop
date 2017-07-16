@@ -78,28 +78,26 @@ inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
 
   int rotation = 0;
   QExifImageHeader exifImageHeader;
-  if (exifImageHeader.loadFromJpeg(thumbnailPath)) {
-    rotation = (int) exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort();
-  }
+  if (exifImageHeader.loadFromJpeg(thumbnailPath))
+    rotation = static_cast<int>(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
 
   QImage thumbnail = image.scaled(
-    THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
-    Qt::KeepAspectRatio, Qt::SmoothTransformation
-  );
+      THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
+      Qt::KeepAspectRatio, Qt::SmoothTransformation
+    );
 
   if (rotation != 0) {
     QTransform transform;
-    if (rotation == 3 || rotation == 4) {
+    if (rotation == 3 || rotation == 4)
       transform.rotate(180);
-    } else if (rotation == 5 || rotation == 6) {
+    else if (rotation == 5 || rotation == 6)
       transform.rotate(90);
-    } else if (rotation == 7 || rotation == 8) {
+    else if (rotation == 7 || rotation == 8)
       transform.rotate(-90);
-    }
+
     thumbnail = thumbnail.transformed(transform);
-    if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7) {
+    if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
       thumbnail = thumbnail.mirrored(true, false);
-    }
   }
 
   QString uuid = QUuid::createUuid().toString();

@@ -46,10 +46,10 @@ if (NOT WIN32)
 -Wcast-align \
 -Wconversion \
 -Werror=return-type \
+-Werror=old-style-cast \
 -Wextra \
 -Wfloat-equal \
 -Winit-self \
--Wold-style-cast \
 -Woverloaded-virtual \
 -Wpointer-arith \
 -Wuninitialized \
