@@ -354,7 +354,7 @@ endforeach ()
 
 target_link_libraries(${TARGET_NAME} ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
 if(APPLE)
-	target_link_libraries(${TARGET_NAME} "-framework Cocoa")
+  target_link_libraries(${TARGET_NAME} "-framework Cocoa")
 endif()
 
 install(TARGETS ${TARGET_NAME}
