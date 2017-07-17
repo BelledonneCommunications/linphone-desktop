@@ -23,8 +23,14 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.0)
 
+set(APP_LIBRARY app-library)
+
 set(EXECUTABLE_NAME linphone)
+set(TESTER_EXECUTABLE_NAME "${EXECUTABLE_NAME}-tester")
+
 set(TARGET_NAME linphone-qt)
+set(TESTER_TARGET_NAME "${TARGET_NAME}-tester")
+
 set(CMAKE_CXX_STANDARD 11)
 
 set(ASSETS_DIR assets)
@@ -98,6 +104,7 @@ endif ()
 
 set(SOURCES
   src/app/App.cpp
+  src/app/AppController.cpp
   src/app/cli/Cli.cpp
   src/app/logger/Logger.cpp
   src/app/paths/Paths.cpp
@@ -144,7 +151,6 @@ set(SOURCES
   src/components/telephone-numbers/TelephoneNumbersModel.cpp
   src/components/timeline/TimelineModel.cpp
   src/components/url-handlers/UrlHandlers.cpp
-  src/main.cpp
   src/utils/LinphoneUtils.cpp
   src/utils/Utils.cpp
   src/utils/QExifImageHeader.cpp
@@ -152,6 +158,7 @@ set(SOURCES
 
 set(HEADERS
   src/app/App.hpp
+  src/app/AppController.hpp
   src/app/cli/Cli.hpp
   src/app/logger/Logger.hpp
   src/app/paths/Paths.hpp
@@ -204,6 +211,13 @@ set(HEADERS
   src/utils/Utils.hpp
   src/utils/QExifImageHeader.h
 )
+
+set(TESTS
+  src/tests/SelfTest.cpp
+)
+
+set(MAIN_FILE src/app/main.cpp)
+set(TESTER_MAIN_FILE src/tests/main.cpp)
 
 if(APPLE)
   list(APPEND SOURCES src/components/core/MessagesCountNotifierMacOS.m)
@@ -288,6 +302,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BIN
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
+find_package(Qt5 COMPONENTS Test REQUIRED)
 
 if (CMAKE_INSTALL_RPATH)
   get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
@@ -304,46 +319,44 @@ list(APPEND QRC_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${
 qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 
 # Build.
-# Note: `update_translations` is provided by `languages/CMakeLists.txt`.
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
+set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
+add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
+add_dependencies(${APP_LIBRARY} update_translations)
+
 if (WIN32)
-  add_executable(${TARGET_NAME} WIN32 ${SOURCES} ${HEADERS} ${RESOURCES} assets/linphone.rc)
+  add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> assets/linphone.rc ${MAIN_FILE})
+  add_executable(${TESTER_TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> assets/linphone.rc ${TESTER_MAIN_FILE} ${TESTS})
 else ()
-  add_executable(${TARGET_NAME} ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
+  add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
+  add_executable(${TESTER_TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${TESTER_MAIN_FILE} ${TESTS})
 endif ()
-  bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
-  add_dependencies(${TARGET_NAME} ${TARGET_NAME}-git-version)
-  add_dependencies(${TARGET_NAME} update_translations)
+
 if (NOT WIN32)
   add_dependencies(update_translations check_qml)
 endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
+set_target_properties(${TESTER_TARGET_NAME} PROPERTIES OUTPUT_NAME "${TESTER_EXECUTABLE_NAME}")
 
-# To start better integration into IDE.
-source_group(
-  "Qml" REGULAR_EXPRESSION ".+\.qml$"
-)
-source_group(
-  "Js" REGULAR_EXPRESSION ".+\.js)$"
-)
-source_group(
-  "Svg" REGULAR_EXPRESSION ".+\.svg$"
-)
+set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
+set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
 
 foreach (package ${QT5_PACKAGES})
-  target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
+  list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
   # `qt5_create_translation` is provided from `LinguistTools` package.
   # But the `Qt5::LinguistTools` lib does not exist. Remove it.
   if (NOT (${package} STREQUAL LinguistTools))
-    target_link_libraries(${TARGET_NAME} ${Qt5${package}_LIBRARIES})
+    list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
   endif ()
 endforeach ()
 
 foreach (package ${QT5_PACKAGES_OPTIONAL})
   if ("${Qt5${package}_FOUND}")
     message("Optional package ${package} found.")
-    target_include_directories(${TARGET_NAME} SYSTEM PRIVATE "${Qt5${package}_INCLUDE_DIRS}")
-    target_link_libraries(${TARGET_NAME} ${Qt5${package}_LIBRARIES})
+    list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
+    list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
 
     string(TOUPPER "${package}" INCLUDE_NAME)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${INCLUDE_NAME}_ENABLED")
@@ -352,17 +365,25 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
   endif ()
 endforeach ()
 
-target_link_libraries(${TARGET_NAME} ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES})
-if(APPLE)
-  target_link_libraries(${TARGET_NAME} "-framework Cocoa")
-endif()
+if (APPLE)
+  list(APPEND LIBRARIES "-framework Cocoa")
+endif ()
 
-install(TARGETS ${TARGET_NAME}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-  PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-)
+target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+target_include_directories(${TESTER_TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+
+target_link_libraries(${TARGET_NAME} ${LIBRARIES})
+target_link_libraries(${TESTER_TARGET_NAME} ${LIBRARIES} Qt5::Test)
+
+foreach (target ${TARGET_NAME} ${TESTER_TARGET_NAME})
+  install(TARGETS ${target}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+  )
+endforeach ()
 
 install(FILES "assets/linphone.desktop"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
@@ -391,4 +412,18 @@ install(FILES "${ASSETS_ASSISTANT_DIR}/create-linphone-sip-account.rc"
 )
 install(FILES "${ASSETS_ASSISTANT_DIR}/use-linphone-sip-account.rc"
   DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
+)
+
+# ------------------------------------------------------------------------------
+# To start better integration into IDE.
+# ------------------------------------------------------------------------------
+
+source_group(
+  "Qml" REGULAR_EXPRESSION ".+\.qml$"
+)
+source_group(
+  "Js" REGULAR_EXPRESSION ".+\.js)$"
+)
+source_group(
+  "Svg" REGULAR_EXPRESSION ".+\.svg$"
 )

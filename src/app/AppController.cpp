@@ -1,5 +1,5 @@
 /*
- * main.cpp
+ * AppController.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,7 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: February 2, 2017
+ *  Created on: July 17, 2017
  *      Author: Ronan Abhamon
  */
 
@@ -26,7 +26,7 @@
 
 #include "gitversion.h"
 
-#include "app/App.hpp"
+#include "AppController.hpp"
 
 // Must be unique. Used by `SingleApplication` and `Paths`.
 #define APPLICATION_NAME "linphone"
@@ -39,7 +39,14 @@ using namespace std;
 
 // =============================================================================
 
-int main (int argc, char *argv[]) {
+#ifndef QT_NO_DEBUG
+  bool AppController::mCreated = false;
+#endif // ifndef QT_NO_DEBUG
+
+AppController::AppController (int &argc, char *argv[]) {
+  Q_ASSERT(!mCreated);
+  mCreated = true;
+
   QT_REQUIRE_VERSION(argc, argv, APPLICATION_MINIMAL_QT_VERSION);
 
   // Disable QML cache. Avoid malformed cache.
@@ -81,12 +88,11 @@ int main (int argc, char *argv[]) {
   QCoreApplication::setApplicationName(APPLICATION_NAME);
   QCoreApplication::setApplicationVersion(APPLICATION_VERSION);
 
-  App app(argc, argv);
-
-  if (app.isSecondary()) {
-    QString command = app.getCommandArgument();
-    app.sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), -1);
-    return 0;
+  mApp = new App(argc, argv);
+  if (mApp->isSecondary()) {
+    QString command = mApp->getCommandArgument();
+    mApp->sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), -1);
+    return;
   }
 
   // ---------------------------------------------------------------------------
@@ -104,18 +110,9 @@ int main (int argc, char *argv[]) {
     }
   }
 
-  app.setFont(QFont(DEFAULT_FONT));
+  mApp->setFont(QFont(DEFAULT_FONT));
+}
 
-  // ---------------------------------------------------------------------------
-  // Init and run!
-  // ---------------------------------------------------------------------------
-
-  qInfo() << QStringLiteral("Running app...");
-
-  int ret;
-  do {
-    app.initContentApp();
-    ret = app.exec();
-  } while (ret == APP_CODE_RESTART);
-  return ret;
+AppController::~AppController () {
+  delete mApp;
 }
