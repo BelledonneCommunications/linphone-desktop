@@ -55,8 +55,6 @@
 
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
-#define SELF_TEST_DELAY 300000
-
 #define VERSION_UPDATE_CHECK_INTERVAL 86400000 // 24 hours in milliseconds.
 
 using namespace std;
@@ -202,19 +200,12 @@ void App::initContentApp () {
   mNotifier = new Notifier(mEngine);
 
   // Load splashscreen.
-  bool selfTest = mParser->isSet("self-test");
-  if (!selfTest) {
-    #ifdef Q_OS_MACOS
+  #ifdef Q_OS_MACOS
+    ::activeSplashScreen(mEngine);
+  #else
+    if (!mParser->isSet("iconified"))
       ::activeSplashScreen(mEngine);
-    #else
-      if (!mParser->isSet("iconified"))
-        ::activeSplashScreen(mEngine);
-    #endif // ifdef Q_OS_MACOS
-  } else
-    // Set a self test limit.
-    QTimer::singleShot(SELF_TEST_DELAY, this, [] {
-      qFatal("Self test failed. :(");
-    });
+  #endif // ifdef Q_OS_MACOS
 
   // Load main view.
   qInfo() << QStringLiteral("Loading main view...");
@@ -225,7 +216,7 @@ void App::initContentApp () {
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
     &CoreHandlers::coreStarted,
-    this, selfTest ? &App::quit : &App::openAppAfterInit
+    this, &App::openAppAfterInit
   );
 }
 
@@ -308,7 +299,6 @@ void App::createParser () {
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS
-    { "self-test", tr("commandLineOptionSelfTest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
     // TODO: Enable me in future version!
     // ,
@@ -568,13 +558,4 @@ void App::checkForUpdate () {
   CoreManager::getInstance()->getCore()->checkForUpdate(
     ::Utils::appStringToCoreString(applicationVersion())
   );
-}
-
-// -----------------------------------------------------------------------------
-
-void App::quit () {
-  if (mParser->isSet("self-test"))
-    cout << tr("selfTestResult").toStdString() << endl;
-
-  QApplication::quit();
 }

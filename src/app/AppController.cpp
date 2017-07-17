@@ -39,15 +39,9 @@ using namespace std;
 
 // =============================================================================
 
-#ifndef QT_NO_DEBUG
-  bool AppController::mCreated = false;
-#endif // ifndef QT_NO_DEBUG
-
 AppController::AppController (int &argc, char *argv[]) {
-  Q_ASSERT(!mCreated);
-  mCreated = true;
-
   QT_REQUIRE_VERSION(argc, argv, APPLICATION_MINIMAL_QT_VERSION);
+  Q_ASSERT(!mApp);
 
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");

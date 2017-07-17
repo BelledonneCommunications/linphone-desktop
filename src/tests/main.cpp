@@ -20,22 +20,70 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QTest>
+#include <QTimer>
+
 #include "../app/AppController.hpp"
+#include "../utils/Utils.hpp"
+
+#include "self-test/SelfTest.hpp"
 
 // =============================================================================
 
+static QHash<QString, QObject *> initializeTests () {
+  QHash<QString, QObject *> hash;
+  // TODO: Add tests here.
+  return hash;
+}
+
+// -----------------------------------------------------------------------------
+
 int main (int argc, char *argv[]) {
-  AppController controller(argc, argv);
+  int fakeArgc = 1;
+  AppController controller(fakeArgc, argv);
   App *app = controller.getApp();
   if (app->isSecondary())
-    return 0;
+    qFatal("Unable to run test with secondary app.");
 
-  qInfo() << QStringLiteral("Running test...");
+  const QHash<QString, QObject *> tests = initializeTests();
 
-  int ret;
-  do {
-    app->initContentApp();
-    ret = app->exec();
-  } while (ret == APP_CODE_RESTART);
+  QObject *test = nullptr;
+  if (argc > 1) {
+    if (!strcmp(argv[1], "self-test"))
+      // Execute only self-test.
+      QTimer::singleShot(0, [app] {
+        QTest::qExec(new SelfTest(app));
+        QCoreApplication::quit();
+      });
+    else {
+      // Execute only one test.
+      const QString testName = ::Utils::coreStringToAppString(argv[1]);
+      test = tests[testName];
+      if (!test) {
+        qWarning() << QStringLiteral("Unable to run invalid test: `%1`.").arg(testName);
+        return EXIT_FAILURE;
+      }
+
+      QTimer::singleShot(0, [app, test, argc, argv] {
+        QTest::qExec(new SelfTest(app));
+        QTest::qExec(test, argc - 1, argv + 1);
+        QCoreApplication::quit();
+      });
+    }
+  } else
+    // Execute all tests.
+    QTimer::singleShot(0, [app, &tests] {
+      QTest::qExec(new SelfTest(app));
+      for (const auto &test : tests)
+        QTest::qExec(test);
+      QCoreApplication::quit();
+    });
+
+  app->initContentApp();
+  int ret = app->exec();
+
+  for (auto &test : tests)
+    delete test;
+
   return ret;
 }

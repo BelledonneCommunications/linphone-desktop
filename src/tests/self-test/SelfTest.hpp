@@ -1,5 +1,5 @@
 /*
- * AppController.hpp
+ * SelfTest.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,20 +20,16 @@
  *      Author: Ronan Abhamon
  */
 
-#include "App.hpp"
+#include <QObject>
 
 // =============================================================================
 
-class AppController {
+class SelfTest : public QObject {
+  Q_OBJECT;
+
 public:
-  AppController (int &argc, char *argv[]);
-  ~AppController ();
+  SelfTest (QObject *parent = Q_NULLPTR) : QObject(parent) {}
 
-  App *getApp () const {
-    Q_CHECK_PTR(mApp);
-    return mApp;
-  }
-
-private:
-  App *mApp = nullptr;
+private slots:
+  void checkAppStartup ();
 };

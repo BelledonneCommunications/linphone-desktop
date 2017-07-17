@@ -20,17 +20,18 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QSignalSpy>
 #include <QTest>
+
+#include "../../components/core/CoreManager.hpp"
+
+#include "SelfTest.hpp"
+
+#define SELF_TEST_DELAY 5000
 
 // =============================================================================
 
-class SelfTest : public QObject {
-  Q_OBJECT;
-
-private slots:
-  void t1 () {
-    QVERIFY(true);
-  }
-};
-
-#include "SelfTest.moc"
+void SelfTest::checkAppStartup () {
+  QSignalSpy spy(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted);
+  QVERIFY(spy.wait(SELF_TEST_DELAY));
+}
