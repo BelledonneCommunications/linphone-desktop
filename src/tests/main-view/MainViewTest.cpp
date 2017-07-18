@@ -1,5 +1,5 @@
 /*
- * SelfTest.cpp
+ * MainViewTest.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,28 +16,30 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: July 17, 2017
+ *  Created on: July 18, 2017
  *      Author: Ronan Abhamon
  */
 
-#include <QSignalSpy>
 #include <QTest>
 
-#include "../../components/core/CoreManager.hpp"
+#include "../../app/App.hpp"
 #include "../TestUtils.hpp"
 
-#include "SelfTest.hpp"
+#include "MainViewTest.hpp"
 
 // =============================================================================
 
-void SelfTest::checkAppStartup () {
-  QSignalSpy spyCoreStarted(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted);
-  QSignalSpy spyLoaderReady(TestUtils::getMainLoaderFromMainWindow(), SIGNAL(loaded()));
+void MainViewTest::showManageAccountsPopup () {
+  QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
 
-  QVERIFY(spyCoreStarted.wait(5000));
+  QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 35));
+  QTest::qWait(1000);
 
-  if (spyLoaderReady.count() == 1)
-    return;
+  const char name[] = "DialogPlus_QMLTYPE_";
+  QQuickItem *virtualWindowContent = TestUtils::getVirtualWindowContainer(
+      TestUtils::getVirtualWindow(mainWindow)
+    )->childItems().at(0);
 
-  QVERIFY(spyLoaderReady.wait(1000));
+  QVERIFY(!strncmp(virtualWindowContent->metaObject()->className(), name, sizeof name - 1));
+  QVERIFY(virtualWindowContent->objectName() == "manageAccounts");
 }

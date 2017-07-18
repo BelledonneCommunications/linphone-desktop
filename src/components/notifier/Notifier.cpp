@@ -43,7 +43,7 @@
 #define NOTIFICATION_PROPERTY_X "popupX"
 #define NOTIFICATION_PROPERTY_Y "popupY"
 
-#define NOTIFICATION_PROPERTY_WINDOW "__internalWindow"
+#define NOTIFICATION_PROPERTY_WINDOW "internalWindow"
 
 #define NOTIFICATION_PROPERTY_TIMER "__timer"
 

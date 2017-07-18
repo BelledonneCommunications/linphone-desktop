@@ -1,5 +1,5 @@
 /*
- * SelfTest.cpp
+ * MainViewTest.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,28 +16,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: July 17, 2017
+ *  Created on: July 18, 2017
  *      Author: Ronan Abhamon
  */
 
-#include <QSignalSpy>
-#include <QTest>
-
-#include "../../components/core/CoreManager.hpp"
-#include "../TestUtils.hpp"
-
-#include "SelfTest.hpp"
+#include <QObject>
 
 // =============================================================================
 
-void SelfTest::checkAppStartup () {
-  QSignalSpy spyCoreStarted(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted);
-  QSignalSpy spyLoaderReady(TestUtils::getMainLoaderFromMainWindow(), SIGNAL(loaded()));
+class MainViewTest : public QObject {
+  Q_OBJECT;
 
-  QVERIFY(spyCoreStarted.wait(5000));
+public:
+  MainViewTest () = default;
 
-  if (spyLoaderReady.count() == 1)
-    return;
-
-  QVERIFY(spyLoaderReady.wait(1000));
-}
+private slots:
+  void showManageAccountsPopup ();
+};

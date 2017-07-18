@@ -39,6 +39,6 @@ TestCase {
     var window = notification.data[0]
 
     compare(Utils.qmlTypeof(window, 'QQuickWindowQmlImpl'), true)
-    compare(window.objectName === '__internalWindow', true)
+    compare(window.objectName === 'internalWindow', true)
   }
 }

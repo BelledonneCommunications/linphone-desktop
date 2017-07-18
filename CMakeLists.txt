@@ -213,8 +213,12 @@ set(HEADERS
 )
 
 set(TESTS
+  src/tests/main-view/MainViewTest.cpp
+  src/tests/main-view/MainViewTest.hpp
   src/tests/self-test/SelfTest.cpp
   src/tests/self-test/SelfTest.hpp
+  src/tests/TestUtils.cpp
+  src/tests/TestUtils.hpp
 )
 
 set(MAIN_FILE src/app/main.cpp)
