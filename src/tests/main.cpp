@@ -46,14 +46,16 @@ int main (int argc, char *argv[]) {
   if (app->isSecondary())
     qFatal("Unable to run test with secondary app.");
 
+  int testsRet = 0;
+
   const QHash<QString, QObject *> tests = initializeTests();
 
   QObject *test = nullptr;
   if (argc > 1) {
     if (!strcmp(argv[1], "self-test"))
       // Execute only self-test.
-      QTimer::singleShot(0, [app] {
-        QTest::qExec(new SelfTest(app));
+      QTimer::singleShot(0, [app, &testsRet] {
+        testsRet = QTest::qExec(new SelfTest(app));
         QCoreApplication::quit();
       });
     else {
@@ -65,18 +67,22 @@ int main (int argc, char *argv[]) {
         return EXIT_FAILURE;
       }
 
-      QTimer::singleShot(0, [app, test, argc, argv] {
-        QTest::qExec(new SelfTest(app));
-        QTest::qExec(test, argc - 1, argv + 1);
+      QTimer::singleShot(0, [app, &testsRet, test, argc, argv] {
+        testsRet = QTest::qExec(new SelfTest(app));
+        if (!testsRet)
+          QTest::qExec(test, argc - 1, argv + 1);
         QCoreApplication::quit();
       });
     }
   } else
     // Execute all tests.
-    QTimer::singleShot(0, [app, &tests] {
-      QTest::qExec(new SelfTest(app));
-      for (const auto &test : tests)
-        QTest::qExec(test);
+    QTimer::singleShot(0, [app, &testsRet, &tests] {
+      testsRet = QTest::qExec(new SelfTest(app));
+      if (!testsRet)
+        for (const auto &test : tests) {
+          testsRet |= QTest::qExec(test);
+        }
+
       QCoreApplication::quit();
     });
 
@@ -86,5 +92,10 @@ int main (int argc, char *argv[]) {
   for (auto &test : tests)
     delete test;
 
-  return ret;
+  if (testsRet)
+    qWarning() << QStringLiteral("One or many tests are failed. :(");
+  else
+    qInfo() << QStringLiteral("Tests seems OK. :)");
+
+  return testsRet || ret;
 }

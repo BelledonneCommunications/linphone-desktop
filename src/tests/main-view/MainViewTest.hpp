@@ -29,6 +29,7 @@ class MainViewTest : public QObject {
 
 public:
   MainViewTest () = default;
+  ~MainViewTest () = default;
 
 private slots:
   void showManageAccountsPopup ();
