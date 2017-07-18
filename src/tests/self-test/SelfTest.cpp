@@ -23,6 +23,7 @@
 #include <QSignalSpy>
 #include <QTest>
 
+#include "../../app/App.hpp"
 #include "../../components/core/CoreManager.hpp"
 #include "../TestUtils.hpp"
 
@@ -36,8 +37,8 @@ void SelfTest::checkAppStartup () {
 
   QVERIFY(spyCoreStarted.wait(5000));
 
-  if (spyLoaderReady.count() == 1)
-    return;
+  if (spyLoaderReady.count() != 1)
+    QVERIFY(spyLoaderReady.wait(1000));
 
-  QVERIFY(spyLoaderReady.wait(1000));
+  QVERIFY(QTest::qWaitForWindowExposed(App::getInstance()->getMainWindow()));
 }
