@@ -322,11 +322,6 @@ void App::createParser () {
 )
 
 template<class T>
-void registerMetaType (const char *name) {
-  qRegisterMetaType<T>(name);
-}
-
-template<class T>
 void registerSingletonType (const char *name) {
   qmlRegisterSingletonType<T>("Linphone", 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
       return new T(engine);
@@ -357,6 +352,9 @@ void registerToolType (const char *name) {
 void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
 
+  qRegisterMetaType<std::shared_ptr<linphone::ProxyConfig> >();
+  qRegisterMetaType<ChatModel::EntryType>();
+
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
   registerType<CallsListProxyModel>("CallsListProxyModel");
@@ -376,8 +374,6 @@ void App::registerTypes () {
   registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<UrlHandlers>("UrlHandlers");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
-
-  registerMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
   registerUncreatableType(CallModel, "CallModel");
   registerUncreatableType(ChatModel, "ChatModel");
