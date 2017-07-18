@@ -32,14 +32,21 @@
 void MainViewTest::showManageAccountsPopup () {
   QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
 
+  // Open popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 35));
   QTest::qWait(1000);
 
   const char name[] = "DialogPlus_QMLTYPE_";
-  QQuickItem *virtualWindowContent = TestUtils::getVirtualWindowContainer(
-      TestUtils::getVirtualWindow(mainWindow)
-    )->childItems().at(0);
+  QQuickItem *virtualWindow = TestUtils::getVirtualWindow(mainWindow);
+  QQuickItem *virtualWindowContent = TestUtils::getVirtualWindowContainer(virtualWindow)->childItems().at(0);
 
+  QVERIFY(virtualWindowContent);
   QVERIFY(!strncmp(virtualWindowContent->metaObject()->className(), name, sizeof name - 1));
   QVERIFY(virtualWindowContent->objectName() == "manageAccounts");
+
+  // Close popup.
+  QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
+  QTest::qWait(1000);
+
+  QVERIFY(TestUtils::getVirtualWindowContainer(virtualWindow)->childItems().empty());
 }

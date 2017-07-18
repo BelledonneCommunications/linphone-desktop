@@ -50,10 +50,7 @@ void TestUtils::printItemTree (const QQuickItem *item) {
 // -----------------------------------------------------------------------------
 
 QQuickItem *TestUtils::getMainLoaderFromMainWindow () {
-  QQuickWindow *window = App::getInstance()->getMainWindow();
-  Q_CHECK_PTR(window);
-
-  QList<QQuickItem *> items = window->contentItem()->childItems();
+  QList<QQuickItem *> items = App::getInstance()->getMainWindow()->contentItem()->childItems();
   Q_ASSERT(!items.empty());
 
   for (int i = 0; i < 3; ++i) {
@@ -96,8 +93,5 @@ QQuickItem *TestUtils::getVirtualWindowContainer (const QQuickItem *virtualWindo
   QList<QQuickItem *> items = virtualWindow->childItems();
   Q_ASSERT(items.size() == 2);
 
-  QQuickItem *container = items.at(1);
-  Q_ASSERT(!container->childItems().empty());
-
-  return container;
+  return items.at(1);
 }
