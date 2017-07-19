@@ -136,7 +136,11 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
       return false;
     }
 
-    proxyConfig->setIdentityAddress(address);
+    if (proxyConfig->setIdentityAddress(address)) {
+      qWarning() << QStringLiteral("Unable to set identity address: `%1`.")
+        .arg(::Utils::coreStringToAppString(address->asStringUriOnly()));
+      return false;
+    }
   }
 
   // Server address.
