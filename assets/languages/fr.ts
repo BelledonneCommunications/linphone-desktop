@@ -1317,6 +1317,18 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>confirm</source>
         <translation>CONFIRMER</translation>
     </message>
+    <message>
+        <source>invalidSipAddress</source>
+        <translation>Adresse sip invalide.</translation>
+    </message>
+    <message>
+        <source>invalidServerAddress</source>
+        <translation>Adresse du serveur invalide.</translation>
+    </message>
+    <message>
+        <source>invalidRoute</source>
+        <translation>Route invalide.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

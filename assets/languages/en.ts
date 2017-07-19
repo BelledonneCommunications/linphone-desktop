@@ -1319,6 +1319,18 @@ your friend&apos;s SIP address or username.</translation>
         <source>confirm</source>
         <translation>CONFIRM</translation>
     </message>
+    <message>
+        <source>invalidSipAddress</source>
+        <translation>Invalid sip address.</translation>
+    </message>
+    <message>
+        <source>invalidServerAddress</source>
+        <translation>Invalid server address.</translation>
+    </message>
+    <message>
+        <source>invalidRoute</source>
+        <translation>Invalid route.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

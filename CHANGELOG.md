@@ -13,6 +13,7 @@
 - Add a `Logs` menu entry in `Settings Window`, it provides send, remove, activate buttons...
 - Supports EXIF orientation for file transfer images preview.
 - Echo canceller supports 48kHz.
+- Better GUI when a proxy config is modified in `Settings Window`.
 
 ### Fixes
 

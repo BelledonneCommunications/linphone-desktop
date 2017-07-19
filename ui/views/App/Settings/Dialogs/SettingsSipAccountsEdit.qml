@@ -52,6 +52,8 @@ DialogPlus {
         TextField {
           id: sipAddress
 
+          error: dialog._sipAddressOk ? '' : qsTr('invalidSipAddress')
+
           onTextChanged: Logic.handleSipAddressChanged(text)
         }
       }
@@ -63,6 +65,8 @@ DialogPlus {
 
         TextField {
           id: serverAddress
+
+          error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')
 
           onTextChanged: Logic.handleServerAddressChanged(text)
         }
@@ -100,6 +104,8 @@ DialogPlus {
 
         TextField {
           id: route
+
+          error: dialog._routeOk ? '' : qsTr('invalidRoute')
 
           onTextChanged: Logic.handleRouteChanged(text)
         }
