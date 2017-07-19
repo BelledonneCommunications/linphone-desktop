@@ -26,7 +26,10 @@ ComboBox {
       width: ComboBoxStyle.background.border.width
     }
 
-    color: ComboBoxStyle.background.color
+    color: comboBox.enabled
+      ? ComboBoxStyle.background.color.normal
+      : ComboBoxStyle.background.color.readOnly
+
     radius: ComboBoxStyle.background.radius
 
     implicitHeight: ComboBoxStyle.background.height
