@@ -39,7 +39,7 @@ void MainViewTest::showAboutPopup () {
 
   // Close popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
-  QTRY_VERIFY_WITH_TIMEOUT(!TestUtils::getVirtualWindowContent(mainWindow), 1000);
+  QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
 }
 
 void MainViewTest::showManageAccountsPopup () {
@@ -52,7 +52,7 @@ void MainViewTest::showManageAccountsPopup () {
 
   // Close popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
-  QTRY_VERIFY_WITH_TIMEOUT(!TestUtils::getVirtualWindowContent(mainWindow), 1000);
+  QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
 }
 
 void MainViewTest::showSettingsWindow () {
