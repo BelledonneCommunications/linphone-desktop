@@ -102,6 +102,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   if (mParser->isSet("version"))
     mParser->showVersion();
+
+  qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
 }
 
 App::~App () {
@@ -462,7 +464,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
 
   if (!locale.isEmpty() && ::installLocale(*this, *mTranslator, QLocale(locale))) {
     mLocale = locale;
-    qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
     return;
   }
 
@@ -470,7 +471,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   QLocale sysLocale = QLocale::system();
   if (::installLocale(*this, *mTranslator, sysLocale)) {
     mLocale = sysLocale.name();
-    qInfo() << QStringLiteral("Use system locale: %1").arg(mLocale);
     return;
   }
 
@@ -478,7 +478,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   mLocale = DEFAULT_LOCALE;
   if (!::installLocale(*this, *mTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
-  qInfo() << QStringLiteral("Use default locale: %1").arg(mLocale);
 }
 
 QString App::getConfigLocale () const {
