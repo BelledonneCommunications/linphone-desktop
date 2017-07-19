@@ -112,6 +112,7 @@ class DesktopPreparator(prepare.Preparator):
         self.argparser.add_argument('-ac', '--all-codecs', help="Enable all codecs, including the non-free ones", action='store_true')
         self.argparser.add_argument('-sys', '--use-system-dependencies', help="Find dependencies on the system.", action='store_true')
         self.argparser.add_argument('-p', '--package', help="Build an installation package (only on Mac OSX and Windows).", action='store_true')
+        self.argparser.add_argument('-ps', '--package-source', help="Build source packages for the dependencies.", action='store_true')
 
     def parse_args(self):
         prepare.Preparator.parse_args(self)
