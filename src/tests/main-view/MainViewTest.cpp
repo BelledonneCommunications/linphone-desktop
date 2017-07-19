@@ -20,6 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QQmlProperty>
+#include <QSignalSpy>
 #include <QTest>
 
 #include "../../app/App.hpp"
@@ -42,6 +44,8 @@ void MainViewTest::showAboutPopup () {
   QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
 }
 
+// -----------------------------------------------------------------------------
+
 void MainViewTest::showManageAccountsPopup () {
   QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
 
@@ -55,6 +59,8 @@ void MainViewTest::showManageAccountsPopup () {
   QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
 }
 
+// -----------------------------------------------------------------------------
+
 void MainViewTest::showSettingsWindow () {
   App *app = App::getInstance();
 
@@ -67,4 +73,30 @@ void MainViewTest::showSettingsWindow () {
   // Hide window.
   TestUtils::executeKeySequence(settingsWindow, QKeySequence::Close);
   QVERIFY(!settingsWindow->isVisible());
+}
+
+// -----------------------------------------------------------------------------
+
+void MainViewTest::testMainMenuEntries_data () {
+  QTest::addColumn<int>("y");
+  QTest::addColumn<QString>("source");
+
+  QTest::newRow("home view 1") << 100 << "qrc:/ui/views/App/Main/Home.qml";
+  QTest::newRow("contacts view 1") << 150 << "qrc:/ui/views/App/Main/Contacts.qml";
+  QTest::newRow("home view 2") << 100 << "qrc:/ui/views/App/Main/Home.qml";
+  QTest::newRow("contacts view 2") << 150 << "qrc:/ui/views/App/Main/Contacts.qml";
+}
+
+void MainViewTest::testMainMenuEntries () {
+  QQuickItem *contentLoader = App::getInstance()->getMainWindow()->findChild<QQuickItem *>("__contentLoader");
+  QVERIFY(contentLoader);
+
+  QSignalSpy spyLoaderReady(contentLoader, SIGNAL(loaded()));
+
+  QFETCH(int, y);
+  QTest::mouseClick(App::getInstance()->getMainWindow(), Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(110, y));
+  QVERIFY(spyLoaderReady.count() == 1);
+
+  QFETCH(QString, source);
+  QCOMPARE(QQmlProperty::read(contentLoader, "source").toString(), source);
 }

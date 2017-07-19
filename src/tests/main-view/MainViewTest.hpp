@@ -35,4 +35,7 @@ private slots:
   void showAboutPopup ();
   void showManageAccountsPopup ();
   void showSettingsWindow ();
+
+  void testMainMenuEntries_data ();
+  void testMainMenuEntries ();
 };
