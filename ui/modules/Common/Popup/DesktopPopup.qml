@@ -48,7 +48,7 @@ Item {
     id: window
 
     // Used for internal purposes only. Like Notifications.
-    objectName: 'internalWindow'
+    objectName: '__internalWindow'
 
     flags: wrapper.flags
     opacity: 0

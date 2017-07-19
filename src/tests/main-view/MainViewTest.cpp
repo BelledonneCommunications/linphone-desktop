@@ -42,7 +42,7 @@ void MainViewTest::showManageAccountsPopup () {
 
   QVERIFY(virtualWindowContent);
   QVERIFY(!strncmp(virtualWindowContent->metaObject()->className(), name, sizeof name - 1));
-  QCOMPARE(virtualWindowContent->objectName(), QStringLiteral("manageAccounts"));
+  QCOMPARE(virtualWindowContent->objectName(), QStringLiteral("__manageAccounts"));
 
   // Close popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));

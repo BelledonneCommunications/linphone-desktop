@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QQmlProperty>
 #include <QSignalSpy>
 #include <QTest>
 
@@ -32,12 +33,16 @@
 // =============================================================================
 
 void SelfTest::checkAppStartup () {
-  QSignalSpy spyCoreStarted(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted);
-  QSignalSpy spyLoaderReady(TestUtils::getMainLoaderFromMainWindow(), SIGNAL(loaded()));
+  CoreManager *coreManager = CoreManager::getInstance();
+  QQuickItem *mainLoader = TestUtils::getMainLoaderFromMainWindow();
 
-  QVERIFY(spyCoreStarted.wait(5000));
+  QSignalSpy spyCoreStarted(coreManager->getHandlers().get(), &CoreHandlers::coreStarted);
+  QSignalSpy spyLoaderReady(mainLoader, SIGNAL(loaded()));
 
-  if (spyLoaderReady.count() != 1)
+  if (!coreManager->started())
+    QVERIFY(spyCoreStarted.wait(5000));
+
+  if (!QQmlProperty::read(mainLoader, "item").value<QObject *>())
     QVERIFY(spyLoaderReady.wait(1000));
 
   QVERIFY(QTest::qWaitForWindowExposed(App::getInstance()->getMainWindow()));

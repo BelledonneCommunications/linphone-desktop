@@ -47,6 +47,10 @@ class CoreManager : public QObject {
 public:
   ~CoreManager () = default;
 
+  bool started () const {
+    return mStarted;
+  }
+
   std::shared_ptr<linphone::Core> getCore () {
     Q_CHECK_PTR(mCore);
     return mCore;
@@ -150,6 +154,8 @@ private:
 
   std::shared_ptr<linphone::Core> mCore;
   std::shared_ptr<CoreHandlers> mHandlers;
+
+  bool mStarted = false;
 
   CallsListModel *mCallsListModel = nullptr;
   ContactsListModel *mContactsListModel = nullptr;
