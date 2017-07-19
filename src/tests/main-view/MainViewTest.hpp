@@ -32,5 +32,6 @@ public:
   ~MainViewTest () = default;
 
 private slots:
+  void showAboutPopup ();
   void showManageAccountsPopup ();
 };

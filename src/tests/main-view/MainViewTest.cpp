@@ -29,6 +29,22 @@
 
 // =============================================================================
 
+void MainViewTest::showAboutPopup () {
+  QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
+
+  // Open popup.
+  TestUtils::executeKeySequence(mainWindow, QKeySequence::HelpContents);
+  QTest::qWait(1000);
+
+  CHECK_VIRTUAL_WINDOW_CONTENT_INFO(mainWindow, "DialogPlus_QMLTYPE_", "__about");
+
+  // Close popup.
+  QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
+  QTest::qWait(1000);
+
+  QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
+}
+
 void MainViewTest::showManageAccountsPopup () {
   QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
 
@@ -36,17 +52,11 @@ void MainViewTest::showManageAccountsPopup () {
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 35));
   QTest::qWait(1000);
 
-  const char name[] = "DialogPlus_QMLTYPE_";
-  QQuickItem *virtualWindow = TestUtils::getVirtualWindow(mainWindow);
-  QQuickItem *virtualWindowContent = TestUtils::getVirtualWindowContainer(virtualWindow)->childItems().at(0);
-
-  QVERIFY(virtualWindowContent);
-  QVERIFY(!strncmp(virtualWindowContent->metaObject()->className(), name, sizeof name - 1));
-  QCOMPARE(virtualWindowContent->objectName(), QStringLiteral("__manageAccounts"));
+  CHECK_VIRTUAL_WINDOW_CONTENT_INFO(mainWindow, "DialogPlus_QMLTYPE_", "__manageAccounts");
 
   // Close popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
   QTest::qWait(1000);
 
-  QVERIFY(TestUtils::getVirtualWindowContainer(virtualWindow)->childItems().empty());
+  QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
 }

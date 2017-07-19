@@ -24,6 +24,7 @@
   #undef QT_NO_DEBUG
 #endif // ifdef QT_NO_DEBUG
 
+#include <QTest>
 #include <QtGlobal>
 
 #include "../app/App.hpp"
@@ -31,6 +32,19 @@
 #include "TestUtils.hpp"
 
 // =============================================================================
+
+void TestUtils::executeKeySequence (QQuickWindow *window, QKeySequence sequence) {
+  for (int i = 0; i < sequence.count(); ++i) {
+    int key = sequence[i];
+    QTest::keyClick(
+      window,
+      Qt::Key(key & ~Qt::KeyboardModifierMask),
+      Qt::KeyboardModifiers(key & Qt::KeyboardModifierMask)
+    );
+  }
+}
+
+// -----------------------------------------------------------------------------
 
 static void printItemTree (const QQuickItem *item, QString &output, int spaces) {
   output.append(QString().leftJustified(spaces, ' '));
@@ -66,7 +80,7 @@ QQuickItem *TestUtils::getMainLoaderFromMainWindow () {
 
 // -----------------------------------------------------------------------------
 
-QQuickItem *TestUtils::getVirtualWindow (const QQuickWindow *window) {
+QQuickItem *TestUtils::getVirtualWindowContent (const QQuickWindow *window) {
   Q_CHECK_PTR(window);
 
   QList<QQuickItem *> items = window->contentItem()->childItems();
@@ -82,16 +96,9 @@ QQuickItem *TestUtils::getVirtualWindow (const QQuickWindow *window) {
   QQuickItem *virtualWindow = items.at(1);
   Q_ASSERT(!strncmp(virtualWindow->metaObject()->className(), name, sizeof name - 1));
 
-  return virtualWindow;
-}
-
-// -----------------------------------------------------------------------------
-
-QQuickItem *TestUtils::getVirtualWindowContainer (const QQuickItem *virtualWindow) {
-  Q_CHECK_PTR(virtualWindow);
-
-  QList<QQuickItem *> items = virtualWindow->childItems();
+  items = virtualWindow->childItems();
   Q_ASSERT(items.size() == 2);
 
-  return items.at(1);
+  items = items.at(1)->childItems();
+  return items.empty() ? nullptr : items.at(0);
 }

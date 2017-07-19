@@ -25,10 +25,20 @@
 
 // =============================================================================
 
+#define CHECK_VIRTUAL_WINDOW_CONTENT_INFO(WINDOW, TYPE, NAME) \
+  do { \
+    QQuickItem *virtualWindowContent = TestUtils::getVirtualWindowContent(WINDOW); \
+    QVERIFY(virtualWindowContent); \
+    QVERIFY(!strncmp(virtualWindowContent->metaObject()->className(), TYPE, sizeof TYPE - 1)); \
+    QCOMPARE(virtualWindowContent->objectName(), QStringLiteral(NAME)); \
+  } while (0)
+
 namespace TestUtils {
+  void executeKeySequence (QQuickWindow *window, QKeySequence sequence);
+
   void printItemTree (const QQuickItem *item);
 
   QQuickItem *getMainLoaderFromMainWindow ();
-  QQuickItem *getVirtualWindow (const QQuickWindow *window);
-  QQuickItem *getVirtualWindowContainer (const QQuickItem *virtualWindow);
+
+  QQuickItem *getVirtualWindowContent (const QQuickWindow *window);
 }
