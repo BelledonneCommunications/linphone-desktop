@@ -27,8 +27,8 @@
 
 #define CHECK_VIRTUAL_WINDOW_CONTENT_INFO(WINDOW, TYPE, NAME) \
   do { \
-    QQuickItem *virtualWindowContent = TestUtils::getVirtualWindowContent(WINDOW); \
-    QVERIFY(virtualWindowContent); \
+    QQuickItem *virtualWindowContent; \
+    QTRY_VERIFY_WITH_TIMEOUT(virtualWindowContent = TestUtils::getVirtualWindowContent(WINDOW), 1000); \
     QVERIFY(!strncmp(virtualWindowContent->metaObject()->className(), TYPE, sizeof TYPE - 1)); \
     QCOMPARE(virtualWindowContent->objectName(), QStringLiteral(NAME)); \
   } while (0)

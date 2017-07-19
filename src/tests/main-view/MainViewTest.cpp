@@ -34,15 +34,12 @@ void MainViewTest::showAboutPopup () {
 
   // Open popup.
   TestUtils::executeKeySequence(mainWindow, QKeySequence::HelpContents);
-  QTest::qWait(1000);
 
   CHECK_VIRTUAL_WINDOW_CONTENT_INFO(mainWindow, "DialogPlus_QMLTYPE_", "__about");
 
   // Close popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
-  QTest::qWait(1000);
-
-  QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
+  QTRY_VERIFY_WITH_TIMEOUT(!TestUtils::getVirtualWindowContent(mainWindow), 1000);
 }
 
 void MainViewTest::showManageAccountsPopup () {
@@ -50,13 +47,24 @@ void MainViewTest::showManageAccountsPopup () {
 
   // Open popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(100, 35));
-  QTest::qWait(1000);
 
   CHECK_VIRTUAL_WINDOW_CONTENT_INFO(mainWindow, "DialogPlus_QMLTYPE_", "__manageAccounts");
 
   // Close popup.
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(476, 392));
-  QTest::qWait(1000);
+  QTRY_VERIFY_WITH_TIMEOUT(!TestUtils::getVirtualWindowContent(mainWindow), 1000);
+}
 
-  QVERIFY(!TestUtils::getVirtualWindowContent(mainWindow));
+void MainViewTest::showSettingsWindow () {
+  App *app = App::getInstance();
+
+  // Open window.
+  QTest::keyClick(app->getMainWindow(), Qt::Key_P, Qt::ControlModifier);
+  QQuickWindow *settingsWindow = app->getSettingsWindow();
+
+  QVERIFY(QTest::qWaitForWindowExposed(settingsWindow));
+
+  // Hide window.
+  TestUtils::executeKeySequence(settingsWindow, QKeySequence::Close);
+  QVERIFY(!settingsWindow->isVisible());
 }
