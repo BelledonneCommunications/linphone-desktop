@@ -34,9 +34,6 @@
 [submodule "submodules/belr"]
 	path = submodules/belr
 	url = git://git.linphone.org/belr.git
-[submodule "submodules/externals/libmatroska-c"]
-	path = submodules/externals/libmatroska-c
-	url = git://git.linphone.org/libmatroska-c.git
 [submodule "submodules/bctoolbox"]
 	path = submodules/bctoolbox
 	url = git://git.linphone.org/bctoolbox.git
@@ -101,3 +98,6 @@
 [submodule "submodules/mswasapi"]
 	path = submodules/mswasapi
 	url = git://git.linphone.org/mswasapi.git
+[submodule "submodules/bcmatroska2"]
+	path = submodules/bcmatroska2
+	url = git://git.linphone.org/bcmatroska2.git
