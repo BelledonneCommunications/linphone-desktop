@@ -24,8 +24,9 @@ lcb_external_source_paths("..")
 
 lcb_dependencies("linphone" "ms2plugins")
 lcb_groupable(YES)
-lcb_cmake_options("-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
+lcb_package_source(YES)
 
+lcb_cmake_options("-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
 if(UNIX AND NOT APPLE)
 	lcb_cmake_options("-DENABLE_DBUS=${ENABLE_DBUS}")
 endif()
