@@ -88,13 +88,15 @@ void MainViewTest::testMainMenuEntries_data () {
 }
 
 void MainViewTest::testMainMenuEntries () {
-  QQuickItem *contentLoader = App::getInstance()->getMainWindow()->findChild<QQuickItem *>("__contentLoader");
+  QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
+
+  QQuickItem *contentLoader = mainWindow->findChild<QQuickItem *>("__contentLoader");
   QVERIFY(contentLoader);
 
   QSignalSpy spyLoaderReady(contentLoader, SIGNAL(loaded()));
 
   QFETCH(int, y);
-  QTest::mouseClick(App::getInstance()->getMainWindow(), Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(110, y));
+  QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(110, y));
   QVERIFY(spyLoaderReady.count() == 1);
 
   QFETCH(QString, source);

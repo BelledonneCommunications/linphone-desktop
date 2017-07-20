@@ -213,6 +213,8 @@ set(HEADERS
 )
 
 set(TESTS
+  src/tests/assistant-view/AssistantViewTest.cpp
+  src/tests/assistant-view/AssistantViewTest.hpp
   src/tests/main-view/MainViewTest.cpp
   src/tests/main-view/MainViewTest.hpp
   src/tests/self-test/SelfTest.cpp

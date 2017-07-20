@@ -20,6 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#ifndef TEST_UTILS_H_
+#define TEST_UTILS_H_
+
 #include <QQuickItem>
 #include <QQuickWindow>
 
@@ -42,3 +45,5 @@ namespace TestUtils {
 
   QQuickItem *getVirtualWindowContent (const QQuickWindow *window);
 }
+
+#endif // ifndef TEST_UTILS_H_

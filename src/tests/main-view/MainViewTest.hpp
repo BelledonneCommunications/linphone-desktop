@@ -20,6 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#ifndef MAIN_VIEW_TEST_H_
+#define MAIN_VIEW_TEST_H_
+
 #include <QObject>
 
 // =============================================================================
@@ -39,3 +42,5 @@ private slots:
   void testMainMenuEntries_data ();
   void testMainMenuEntries ();
 };
+
+#endif // ifndef MAIN_VIEW_TEST_H_

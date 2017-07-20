@@ -1,5 +1,5 @@
 /*
- * SelfTest.hpp
+ * AssistantViewTest.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,25 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: July 17, 2017
+ *  Created on: July 20, 2017
  *      Author: Ronan Abhamon
  */
 
-#ifndef SELF_TEST_H_
-#define SELF_TEST_H_
+#ifndef ASSISTANT_VIEW_TEST_H_
+#define ASSISTANT_VIEW_TEST_H_
 
 #include <QObject>
 
 // =============================================================================
 
-class SelfTest : public QObject {
+class AssistantViewTest : public QObject {
   Q_OBJECT;
 
 public:
-  SelfTest (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+  AssistantViewTest () = default;
+  ~AssistantViewTest () = default;
 
 private slots:
-  void checkAppStartup ();
+  void showAssistantView ();
 };
 
-#endif // ifndef SELF_TEST_H_
+#endif // ifndef ASSISTANT_VIEW_TEST_H_

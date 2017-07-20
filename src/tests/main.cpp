@@ -26,6 +26,7 @@
 #include "../app/AppController.hpp"
 #include "../utils/Utils.hpp"
 
+#include "assistant-view/AssistantViewTest.hpp"
 #include "main-view/MainViewTest.hpp"
 #include "self-test/SelfTest.hpp"
 
@@ -33,6 +34,7 @@
 
 static QHash<QString, QObject *> initializeTests () {
   QHash<QString, QObject *> hash;
+  hash["assistant-view"] = new AssistantViewTest();
   hash["main-view"] = new MainViewTest();
   return hash;
 }
