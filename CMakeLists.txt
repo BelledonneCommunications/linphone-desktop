@@ -21,7 +21,7 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt VERSION 4.0)
+project(linphoneqt VERSION 4.1.0)
 
 set(APP_LIBRARY app-library)
 
