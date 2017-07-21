@@ -63,6 +63,8 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
     mInstance->mSettingsModel = new SettingsModel(mInstance);
     mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 
+    mInstance->mStarted = true;
+
     emit mInstance->coreStarted();
   });
 

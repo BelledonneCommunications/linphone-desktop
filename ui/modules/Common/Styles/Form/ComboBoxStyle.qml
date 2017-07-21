@@ -8,7 +8,6 @@ import Units 1.0
 
 QtObject {
   property QtObject background: QtObject {
-    property color color: Colors.k
     property int height: 36
     property int iconSize: 10
     property int radius: 4
@@ -17,6 +16,11 @@ QtObject {
     property QtObject border: QtObject {
       property color color: Colors.c
       property int width: 1
+    }
+
+    property QtObject color: QtObject {
+      property color normal: Colors.k
+      property color readOnly: Colors.e
     }
   }
 

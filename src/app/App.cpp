@@ -55,8 +55,6 @@
 
 #define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
 
-#define SELF_TEST_DELAY 300000
-
 #define VERSION_UPDATE_CHECK_INTERVAL 86400000 // 24 hours in milliseconds.
 
 using namespace std;
@@ -104,6 +102,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   if (mParser->isSet("version"))
     mParser->showVersion();
+
+  qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
 }
 
 App::~App () {
@@ -202,19 +202,12 @@ void App::initContentApp () {
   mNotifier = new Notifier(mEngine);
 
   // Load splashscreen.
-  bool selfTest = mParser->isSet("self-test");
-  if (!selfTest) {
-    #ifdef Q_OS_MACOS
+  #ifdef Q_OS_MACOS
+    ::activeSplashScreen(mEngine);
+  #else
+    if (!mParser->isSet("iconified"))
       ::activeSplashScreen(mEngine);
-    #else
-      if (!mParser->isSet("iconified"))
-        ::activeSplashScreen(mEngine);
-    #endif // ifdef Q_OS_MACOS
-  } else
-    // Set a self test limit.
-    QTimer::singleShot(SELF_TEST_DELAY, this, [] {
-      qFatal("Self test failed. :(");
-    });
+  #endif // ifdef Q_OS_MACOS
 
   // Load main view.
   qInfo() << QStringLiteral("Loading main view...");
@@ -225,7 +218,7 @@ void App::initContentApp () {
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
     &CoreHandlers::coreStarted,
-    this, selfTest ? &App::quit : &App::openAppAfterInit
+    this, &App::openAppAfterInit
   );
 }
 
@@ -308,7 +301,6 @@ void App::createParser () {
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS
-    { "self-test", tr("commandLineOptionSelfTest") },
     { { "V", "verbose" }, tr("commandLineOptionVerbose") }
     // TODO: Enable me in future version!
     // ,
@@ -330,11 +322,6 @@ void App::createParser () {
 #define registerUncreatableType(TYPE, NAME) qmlRegisterUncreatableType<TYPE>( \
   "Linphone", 1, 0, NAME, NAME " is uncreatable." \
 )
-
-template<class T>
-void registerMetaType (const char *name) {
-  qRegisterMetaType<T>(name);
-}
 
 template<class T>
 void registerSingletonType (const char *name) {
@@ -367,6 +354,9 @@ void registerToolType (const char *name) {
 void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
 
+  qRegisterMetaType<std::shared_ptr<linphone::ProxyConfig> >();
+  qRegisterMetaType<ChatModel::EntryType>();
+
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
   registerType<CallsListProxyModel>("CallsListProxyModel");
@@ -386,8 +376,6 @@ void App::registerTypes () {
   registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<UrlHandlers>("UrlHandlers");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
-
-  registerMetaType<ChatModel::EntryType>("ChatModel::EntryType");
 
   registerUncreatableType(CallModel, "CallModel");
   registerUncreatableType(ChatModel, "ChatModel");
@@ -476,7 +464,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
 
   if (!locale.isEmpty() && ::installLocale(*this, *mTranslator, QLocale(locale))) {
     mLocale = locale;
-    qInfo() << QStringLiteral("Use preferred locale: %1").arg(locale);
     return;
   }
 
@@ -484,7 +471,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   QLocale sysLocale = QLocale::system();
   if (::installLocale(*this, *mTranslator, sysLocale)) {
     mLocale = sysLocale.name();
-    qInfo() << QStringLiteral("Use system locale: %1").arg(mLocale);
     return;
   }
 
@@ -492,7 +478,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   mLocale = DEFAULT_LOCALE;
   if (!::installLocale(*this, *mTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
-  qInfo() << QStringLiteral("Use default locale: %1").arg(mLocale);
 }
 
 QString App::getConfigLocale () const {
@@ -568,13 +553,4 @@ void App::checkForUpdate () {
   CoreManager::getInstance()->getCore()->checkForUpdate(
     ::Utils::appStringToCoreString(applicationVersion())
   );
-}
-
-// -----------------------------------------------------------------------------
-
-void App::quit () {
-  if (mParser->isSet("self-test"))
-    cout << tr("selfTestResult").toStdString() << endl;
-
-  QApplication::quit();
 }

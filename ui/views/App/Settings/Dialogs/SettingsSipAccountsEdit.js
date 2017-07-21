@@ -73,7 +73,7 @@ function validProxyConfig () {
 // -----------------------------------------------------------------------------
 
 function handleRouteChanged (route) {
-  dialog._routeOk = route.length === 0 || Linphone.SipAddressesModel.sipAddressIsValid(route)
+  dialog._routeOk = route.length === 0 || Linphone.SipAddressesModel.addressIsValid(route)
 }
 
 function handleServerAddressChanged (address) {

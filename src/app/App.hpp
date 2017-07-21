@@ -71,8 +71,6 @@ public:
 
   bool hasFocus () const;
 
-  void quit () override;
-
   static App *getInstance () {
     return static_cast<App *>(QApplication::instance());
   }

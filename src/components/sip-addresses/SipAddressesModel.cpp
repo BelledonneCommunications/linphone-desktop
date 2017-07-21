@@ -175,10 +175,17 @@ QString SipAddressesModel::interpretUrl (const QUrl &sipAddress) {
   return sipAddress.toString();
 }
 
-bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
+bool SipAddressesModel::addressIsValid (const QString &address) {
   return !!linphone::Factory::get()->createAddress(
-    ::Utils::appStringToCoreString(sipAddress)
+    ::Utils::appStringToCoreString(address)
   );
+}
+
+bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
+      ::Utils::appStringToCoreString(sipAddress)
+    );
+  return address && !address->getUsername().empty();
 }
 
 // -----------------------------------------------------------------------------

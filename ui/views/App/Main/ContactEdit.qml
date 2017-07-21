@@ -109,7 +109,7 @@ ColumnLayout  {
         onEditingFinished: Logic.setUsername(text)
         onReadOnlyChanged: {
           if (!readOnly) {
-            focus = true
+            forceActiveFocus()
           }
         }
       }

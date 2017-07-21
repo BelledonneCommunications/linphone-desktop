@@ -41,20 +41,12 @@
 <context>
     <name>App</name>
     <message>
-        <source>selfTestResult</source>
-        <translation>Linphone seems to be running correctly.</translation>
-    </message>
-    <message>
         <source>commandLineOptionVerbose</source>
         <translation>log to stdout some debug information while running</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
         <translation>specify the linphone configuration file to be used</translation>
-    </message>
-    <message>
-        <source>commandLineOptionSelfTest</source>
-        <translation>run self test and exit 0 if it succeeded</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -1326,6 +1318,18 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>confirm</source>
         <translation>CONFIRM</translation>
+    </message>
+    <message>
+        <source>invalidSipAddress</source>
+        <translation>Invalid sip address.</translation>
+    </message>
+    <message>
+        <source>invalidServerAddress</source>
+        <translation>Invalid server address.</translation>
+    </message>
+    <message>
+        <source>invalidRoute</source>
+        <translation>Invalid route.</translation>
     </message>
 </context>
 <context>

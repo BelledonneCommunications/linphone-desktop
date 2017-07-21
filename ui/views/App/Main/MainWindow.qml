@@ -231,6 +231,8 @@ ApplicationWindow {
         Loader {
           id: contentLoader
 
+          objectName: '__contentLoader'
+
           Layout.fillHeight: true
           Layout.fillWidth: true
 

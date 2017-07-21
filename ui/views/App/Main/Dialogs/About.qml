@@ -19,6 +19,7 @@ DialogPlus {
   ]
 
   centeredButtons: true
+  objectName: '__about'
 
   height: AboutStyle.height
   width: AboutStyle.width

@@ -18,6 +18,7 @@ DialogPlus {
   ]
 
   centeredButtons: true
+  objectName: '__manageAccounts'
 
   height: ManageAccountsStyle.height
   width: ManageAccountsStyle.width

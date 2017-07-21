@@ -41,20 +41,12 @@
 <context>
     <name>App</name>
     <message>
-        <source>selfTestResult</source>
-        <translation>Linphone semble fonctionner normalement.</translation>
-    </message>
-    <message>
         <source>commandLineOptionVerbose</source>
         <translation>afficher sur stdout les informations de debug</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
         <translation>spécifier un fichier de configuration à utiliser</translation>
-    </message>
-    <message>
-        <source>commandLineOptionSelfTest</source>
-        <translation>éxécuter un test automatique et retourner 0 en cas de succès</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -1324,6 +1316,18 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>confirm</source>
         <translation>CONFIRMER</translation>
+    </message>
+    <message>
+        <source>invalidSipAddress</source>
+        <translation>Adresse sip invalide.</translation>
+    </message>
+    <message>
+        <source>invalidServerAddress</source>
+        <translation>Adresse du serveur invalide.</translation>
+    </message>
+    <message>
+        <source>invalidRoute</source>
+        <translation>Route invalide.</translation>
     </message>
 </context>
 <context>

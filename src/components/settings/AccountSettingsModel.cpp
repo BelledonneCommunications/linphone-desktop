@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include "../../app/paths/Paths.hpp"
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
@@ -136,7 +137,11 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
       return false;
     }
 
-    proxyConfig->setIdentityAddress(address);
+    if (proxyConfig->setIdentityAddress(address)) {
+      qWarning() << QStringLiteral("Unable to set identity address: `%1`.")
+        .arg(::Utils::coreStringToAppString(address->asStringUriOnly()));
+      return false;
+    }
   }
 
   // Server address.
@@ -164,7 +169,13 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 }
 
 shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
-  return CoreManager::getInstance()->getCore()->createProxyConfig();
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  core->getConfig()->loadFromXmlFile(
+    Paths::getAssistantConfigDirPath() + "create-linphone-sip-account.rc"
+  );
+
+  return core->createProxyConfig();
 }
 
 void AccountSettingsModel::addAuthInfo (
