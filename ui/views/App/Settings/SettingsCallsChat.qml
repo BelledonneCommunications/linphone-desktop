@@ -86,6 +86,19 @@ TabContainer {
           }
         }
       }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('autoAnswerWithVideoLabel')
+
+          Switch {
+            checked: SettingsModel.autoAnswerVideoStatus
+            enabled: autoAnswer.checked
+
+            onClicked: SettingsModel.autoAnswerVideoStatus = !checked
+          }
+        }
+      }
     }
 
     Form {

@@ -1110,6 +1110,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>autoAnswerDelayLabel</source>
         <translation>Delay (in ms)</translation>
     </message>
+    <message>
+        <source>autoAnswerWithVideoLabel</source>
+        <translation>Auto answer (with video)</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

@@ -64,6 +64,7 @@ class SettingsModel : public QObject {
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
+  Q_PROPERTY(bool autoAnswerVideoStatus READ getAutoAnswerVideoStatus WRITE setAutoAnswerVideoStatus NOTIFY autoAnswerVideoStatusChanged);
   Q_PROPERTY(int autoAnswerDelay READ getAutoAnswerDelay WRITE setAutoAnswerDelay NOTIFY autoAnswerDelayChanged);
 
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
@@ -193,6 +194,9 @@ public:
 
   bool getAutoAnswerStatus () const;
   void setAutoAnswerStatus (bool status);
+
+  bool getAutoAnswerVideoStatus () const;
+  void setAutoAnswerVideoStatus (bool status);
 
   int getAutoAnswerDelay () const;
   void setAutoAnswerDelay (int delay);
@@ -333,6 +337,7 @@ signals:
   // Chat & calls. -------------------------------------------------------------
 
   void autoAnswerStatusChanged (bool status);
+  void autoAnswerVideoStatusChanged (bool status);
   void autoAnswerDelayChanged (int delay);
 
   void fileTransferUrlChanged (const QString &url);

@@ -261,6 +261,17 @@ void SettingsModel::setAutoAnswerStatus (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getAutoAnswerVideoStatus () const {
+  return !!mConfig->getInt(UI_SECTION, "auto_answer_with_video", 0);
+}
+
+void SettingsModel::setAutoAnswerVideoStatus (bool status) {
+  mConfig->setInt(UI_SECTION, "auto_answer_with_video", status);
+  emit autoAnswerVideoStatusChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 QString SettingsModel::getFileTransferUrl () const {
   return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getFileTransferServer()

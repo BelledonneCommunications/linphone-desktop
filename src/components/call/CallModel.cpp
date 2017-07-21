@@ -343,10 +343,16 @@ CallModel::CallStatus CallModel::getStatus () const {
 // -----------------------------------------------------------------------------
 
 void CallModel::acceptWithAutoAnswerDelay () {
-  // Use auto-answer if activated and it's the only call.
   CoreManager *coreManager = CoreManager::getInstance();
-  if (coreManager->getSettingsModel()->getAutoAnswerStatus() && coreManager->getCore()->getCallsNb() == 1)
-    accept();
+  SettingsModel *settingsModel = coreManager->getSettingsModel();
+
+  // Use auto-answer if activated and it's the only call.
+  if (settingsModel->getAutoAnswerStatus() && coreManager->getCore()->getCallsNb() == 1) {
+    if (mCall->getRemoteParams()->videoEnabled() && settingsModel->getAutoAnswerVideoStatus())
+      acceptWithVideo();
+    else
+      accept();
+  }
 }
 
 // -----------------------------------------------------------------------------

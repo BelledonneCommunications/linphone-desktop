@@ -1108,6 +1108,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>autoAnswerDelayLabel</source>
         <translation>Délai (en ms)</translation>
     </message>
+    <message>
+        <source>autoAnswerWithVideoLabel</source>
+        <translation>Répondre autom. (avec vidéo)</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
