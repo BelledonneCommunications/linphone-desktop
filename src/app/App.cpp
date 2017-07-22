@@ -173,6 +173,13 @@ void App::initContentApp () {
   // Init core.
   CoreManager::init(this, mParser->value("config"));
 
+  // Execute command argument if needed.
+  if (!mEngine) {
+    const QString commandArgument = getCommandArgument();
+    if (!commandArgument.isEmpty())
+      mCli->executeCommand(commandArgument);
+  }
+
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
 
@@ -214,13 +221,6 @@ void App::initContentApp () {
   mEngine->load(QUrl(QML_VIEW_MAIN_WINDOW));
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
-
-  // Execute command argument if needed.
-  {
-    const QString commandArgument = getCommandArgument();
-    if (!commandArgument.isEmpty())
-      mCli->executeCommand(commandArgument);
-  }
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
@@ -549,13 +549,6 @@ void App::openAppAfterInit () {
       QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
       config->setInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 0);
     }
-  }
-
-  // Execute command argument if needed.
-  {
-    const QString commandArgument = getCommandArgument();
-    if (!commandArgument.isEmpty())
-      mCli->executeCommand(commandArgument);
   }
 
   #ifdef ENABLE_UPDATE_CHECK
