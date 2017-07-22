@@ -24,6 +24,7 @@
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 #include "../sip-addresses/SipAddressesProxyModel.hpp"
+#include "ConferenceAddModel.hpp"
 
 #include "ConferenceHelperModel.hpp"
 
