@@ -102,6 +102,15 @@ TabContainer {
       FormEmptyLine {}
     }
 
+    // -------------------------------------------------------------------------
+    // Data.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('dataTitle')
+      width: parent.width
+    }
+
     TextButtonB {
       anchors.right: parent.right
       text: qsTr('cleanAvatars')

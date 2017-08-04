@@ -1394,6 +1394,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>exitOnCloseLabel</source>
         <translation>Exit app on close window</translation>
     </message>
+    <message>
+        <source>dataTitle</source>
+        <translation>UI Data</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

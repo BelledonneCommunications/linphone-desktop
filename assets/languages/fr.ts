@@ -1392,6 +1392,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>exitOnCloseLabel</source>
         <translation>Quitter à la fermeture de fenêtre</translation>
     </message>
+    <message>
+        <source>dataTitle</source>
+        <translation>Données</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
