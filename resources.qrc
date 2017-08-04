@@ -52,6 +52,7 @@
     <file>assets/images/camera_on_normal.svg</file>
     <file>assets/images/camera_on_pressed.svg</file>
     <file>assets/images/camera_on_updating.svg</file>
+    <file>assets/images/camera.svg</file>
     <file>assets/images/cancel_hovered.svg</file>
     <file>assets/images/cancel_normal.svg</file>
     <file>assets/images/cancel_pressed.svg</file>
@@ -132,6 +133,7 @@
     <file>assets/images/micro_on_hovered.svg</file>
     <file>assets/images/micro_on_normal.svg</file>
     <file>assets/images/micro_on_pressed.svg</file>
+    <file>assets/images/micro.svg</file>
     <file>assets/images/missed_incoming_call.svg</file>
     <file>assets/images/missed_outgoing_call.svg</file>
     <file>assets/images/new_call_hovered.svg</file>
@@ -178,6 +180,7 @@
     <file>assets/images/speaker_on_hovered.svg</file>
     <file>assets/images/speaker_on_normal.svg</file>
     <file>assets/images/speaker_on_pressed.svg</file>
+    <file>assets/images/speaker.svg</file>
     <file>assets/images/splash_screen.svg</file>
     <file>assets/images/tel_keypad_hovered.svg</file>
     <file>assets/images/tel_keypad_normal.svg</file>
@@ -380,6 +383,7 @@
     <file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
     <file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
     <file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
+    <file>ui/views/App/Calls/Dialogs/MultimediaParameters.qml</file>
     <file>ui/views/App/Calls/EndedCall.qml</file>
     <file>ui/views/App/Calls/IncallAvatar.qml</file>
     <file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
@@ -437,6 +441,7 @@
     <file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
     <file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
+    <file>ui/views/App/Styles/Calls/Dialogs/MultimediaParametersStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/ActivateLinphoneSipAccountWithPhoneNumberStyle.qml</file>
     <file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>

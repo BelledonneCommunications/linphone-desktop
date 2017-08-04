@@ -9,10 +9,12 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'Incall.js' as Logic
+
 // =============================================================================
 
 Window {
-  id: incall
+  id: window
 
   // ---------------------------------------------------------------------------
 
@@ -24,16 +26,16 @@ Window {
 
   function exit (cb) {
     // `exit` is called by `Incall.qml`.
-    // The `incall` id can be null if the window was closed in this view.
-    if (!incall) {
+    // The `window` id can be null if the window was closed in this view.
+    if (!window) {
       return
     }
 
     // It's necessary to call `showNormal` before close on MacOs
     // because the dock will be hidden forever!
-    incall.visible = false
-    incall.showNormal()
-    incall.close()
+    window.visible = false
+    window.showNormal()
+    window.close()
 
     if (cb) {
       cb()
@@ -43,15 +45,15 @@ Window {
   // ---------------------------------------------------------------------------
 
   Component.onCompleted: {
-    incall.call = caller.call
+    window.call = caller.call
     var show = function (visibility) {
       if (visibility === Window.Windowed) {
-        incall.visibilityChanged.disconnect(show)
-        incall.showFullScreen()
+        window.visibilityChanged.disconnect(show)
+        window.showFullScreen()
       }
     }
 
-    incall.visibilityChanged.connect(show)
+    window.visibilityChanged.connect(show)
   }
 
   visible: false
@@ -60,7 +62,7 @@ Window {
 
   Shortcut {
     sequence: StandardKey.Close
-    onActivated: incall.exit()
+    onActivated: window.exit()
   }
 
   // ---------------------------------------------------------------------------
@@ -70,13 +72,13 @@ Window {
     color: '#000000' // Not a style.
     focus: true
 
-    Keys.onEscapePressed: incall.exit()
+    Keys.onEscapePressed: window.exit()
 
     Loader {
       anchors.fill: parent
 
       active: {
-        var caller = incall.caller
+        var caller = window.caller
         return caller && !caller.cameraActivated
       }
 
@@ -86,7 +88,7 @@ Window {
         id: camera
 
         Camera {
-          call: incall.call
+          call: window.call
         }
       }
     }
@@ -191,7 +193,7 @@ Window {
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
 
-          visible: !incall.hideButtons
+          visible: !window.hideButtons
 
           // Not a customizable style.
           color: 'white'
@@ -200,7 +202,7 @@ Window {
 
           Component.onCompleted: {
             var updateDuration = function () {
-              var call = incall.caller.call
+              var call = window.caller.call
               text = Utils.formatElapsedTime(call.duration)
               Utils.setTimeout(elapsedTime, 1000, updateDuration)
             }
@@ -249,7 +251,7 @@ Window {
           ActionButton {
             icon: 'fullscreen'
 
-            onClicked: incall.exit()
+            onClicked: window.exit()
           }
         }
       }
@@ -331,16 +333,17 @@ Window {
             iconSize: CallStyle.actionArea.iconSize
             updating: call.updating
 
-            onClicked: incall.exit(function () { call.videoEnabled = false })
+            onClicked: window.exit(function () { call.videoEnabled = false })
           }
 
           ActionButton {
             Layout.preferredHeight: CallStyle.actionArea.iconSize
             Layout.preferredWidth: CallStyle.actionArea.iconSize
+
             icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
 
-            visible: false // TODO: V2
+            onClicked: Logic.openMediaParameters()
           }
         }
 
@@ -357,13 +360,13 @@ Window {
             icon: 'pause'
             updating: call.updating
 
-            onClicked: incall.exit(function () { call.pausedByUser = enabled })
+            onClicked: window.exit(function () { call.pausedByUser = enabled })
           }
 
           ActionButton {
             icon: 'hangup'
 
-            onClicked: incall.exit(call.terminate)
+            onClicked: window.exit(call.terminate)
           }
         }
       }
@@ -376,7 +379,7 @@ Window {
 
   Loader {
     active: {
-      var caller = incall.caller
+      var caller = window.caller
       return caller && !caller.cameraActivated
     }
 
@@ -389,21 +392,21 @@ Window {
         property bool scale: false
 
         function xPosition () {
-          return incall.width / 2 - width / 2
+          return window.width / 2 - width / 2
         }
 
         function yPosition () {
-          return incall.height - height
+          return window.height - height
         }
 
-        call: incall.call
+        call: window.call
         isPreview: true
 
         height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
         width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
 
         DragBox {
-          container: incall
+          container: window
           draggable: parent
 
           xPosition: parent.xPosition
@@ -422,7 +425,7 @@ Window {
   TelKeypad {
     id: telKeypad
 
-    call: incall.call
+    call: window.call
     visible: false
   }
 }

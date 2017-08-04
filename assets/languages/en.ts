@@ -962,6 +962,13 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
+    <name>MultimediaParameters</name>
+    <message>
+        <source>ok</source>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>

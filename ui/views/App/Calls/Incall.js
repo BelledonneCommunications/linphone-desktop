@@ -52,6 +52,11 @@ function handleStatusChanged (status) {
 }
 
 function handleVideoRequested () {
+  if (window.virtualWindowVisible) {
+    call.rejectVideoRequest()
+    return
+  }
+
   var call = incall.call
 
   // Close dialog after 10s.
@@ -98,6 +103,10 @@ function makeReadableSecuredString (securedString) {
 function openCallStatistics () {
   callQuality.enabled = false
   callStatistics.open()
+}
+
+function openMediaParameters () {
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'))
 }
 
 function showFullscreen () {

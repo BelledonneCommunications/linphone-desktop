@@ -960,6 +960,13 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MultimediaParameters</name>
+    <message>
+        <source>ok</source>
+        <translation>OK</translation>
+    </message>
+</context>
+<context>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
