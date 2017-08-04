@@ -62,12 +62,22 @@ Item {
 
       Component {
         id: indicator
-        BusyIndicator {}
+
+        Item {
+          anchors.fill: parent
+
+          BusyIndicator {
+            anchors.centerIn: parent
+
+            height: ChatStyle.entry.message.outgoing.busyIndicatorSize
+            width: ChatStyle.entry.message.outgoing.busyIndicatorSize
+          }
+        }
       }
 
       Loader {
         height: ChatStyle.entry.lineHeight
-        width: ChatStyle.entry.message.outgoing.sendIconSize
+        width: ChatStyle.entry.message.outgoing.areaSize
 
         sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress
           ? indicator

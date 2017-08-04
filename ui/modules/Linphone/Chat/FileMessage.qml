@@ -284,6 +284,8 @@ Row {
         id: icon
 
         Icon {
+          anchors.centerIn: parent
+
           icon: rectangle.isNotDelivered
             ? 'chat_error'
             : (rectangle.isRead ? 'chat_read' : 'chat_delivered')
@@ -299,12 +301,22 @@ Row {
 
       Component {
         id: indicator
-        BusyIndicator {}
+
+        Item {
+          anchors.fill: parent
+
+          BusyIndicator {
+            anchors.centerIn: parent
+
+            height: ChatStyle.entry.message.outgoing.busyIndicatorSize
+            width: ChatStyle.entry.message.outgoing.busyIndicatorSize
+          }
+        }
       }
 
       Loader {
         height: ChatStyle.entry.lineHeight
-        width: ChatStyle.entry.message.outgoing.sendIconSize
+        width: ChatStyle.entry.message.outgoing.areaSize
 
         sourceComponent: $chatEntry.isOutgoing
           ? (

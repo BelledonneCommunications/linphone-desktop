@@ -122,6 +122,8 @@ QtObject {
 
       property QtObject outgoing: QtObject {
         property color backgroundColor: Colors.e
+        property int areaSize: 16
+        property int busyIndicatorSize: 16
         property int sendIconSize: 12
 
         property QtObject text: QtObject {

@@ -137,7 +137,7 @@ Rectangle {
             ChatStyle.entry.message.extraContent.spacing +
             ChatStyle.entry.message.extraContent.rightMargin +
             ChatStyle.entry.message.extraContent.leftMargin +
-            ChatStyle.entry.message.outgoing.sendIconSize
+            ChatStyle.entry.message.outgoing.areaSize
         }
 
         color: ChatStyle.color
