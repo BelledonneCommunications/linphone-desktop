@@ -31,6 +31,7 @@
 #include "config.h"
 
 #include "../components/Components.hpp"
+#include "../utils/LinphoneUtils.hpp"
 #include "../utils/Utils.hpp"
 
 #include "cli/Cli.hpp"
@@ -46,7 +47,6 @@
 #define DEFAULT_LOCALE "en"
 
 #define LANGUAGES_PATH ":/languages/"
-#define WINDOW_ICON_PATH ":/assets/images/linphone_logo.svg"
 
 // The main windows of Linphone desktop.
 #define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/Main/MainWindow.qml"

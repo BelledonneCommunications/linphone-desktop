@@ -27,7 +27,14 @@
 
 #include "../../app/paths/Paths.hpp"
 #include "../../utils/Utils.hpp"
-#include "MessagesCountNotifier.hpp"
+
+#if defined(Q_OS_LINUX)
+  #include "messages-count-notifier/MessagesCountNotifierLinux.hpp"
+#elif defined(Q_OS_MACOS)
+  #include "messages-count-notifier/MessagesCountNotifierMacOS.hpp"
+#elif defined(Q_OS_WIN)
+  #include "messages-count-notifier/MessagesCountNotifierWindows.hpp"
+#endif // if defined(Q_OS_LINUX)
 
 #include "CoreManager.hpp"
 

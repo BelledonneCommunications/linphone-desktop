@@ -134,10 +134,10 @@ set(SOURCES
   src/components/contacts/ContactsListProxyModel.cpp
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
-  src/components/core/MessagesCountNotifier.cpp
+  src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.cpp
   src/components/notifier/Notifier.cpp
-  src/components/other/colors/Colors.cpp
   src/components/other/clipboard/Clipboard.cpp
+  src/components/other/colors/Colors.cpp
   src/components/other/text-to-speech/TextToSpeech.cpp
   src/components/other/units/Units.cpp
   src/components/presence/OwnPresenceModel.cpp
@@ -190,10 +190,10 @@ set(HEADERS
   src/components/contacts/ContactsListProxyModel.hpp
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
-  src/components/core/MessagesCountNotifier.hpp
+  src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.hpp
   src/components/notifier/Notifier.hpp
-  src/components/other/colors/Colors.hpp
   src/components/other/clipboard/Clipboard.hpp
+  src/components/other/colors/Colors.hpp
   src/components/other/text-to-speech/TextToSpeech.hpp
   src/components/other/units/Units.hpp
   src/components/presence/OwnPresenceModel.hpp
@@ -226,16 +226,28 @@ set(TESTS
 set(MAIN_FILE src/app/main.cpp)
 set(TESTER_MAIN_FILE src/tests/main.cpp)
 
-if(APPLE)
-  list(APPEND SOURCES src/components/core/MessagesCountNotifierMacOS.m)
-endif()
-if(ENABLE_DBUS)
+if (UNIX AND NOT APPLE)
+  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierLinux.cpp)
+  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierLinux.hpp)
+endif ()
+
+if (WIN32)
+  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierWindow.cpp)
+  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierWindow.hpp)
+endif ()
+
+if (APPLE)
+  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.m)
+  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.hpp)
+endif ()
+
+if (ENABLE_DBUS)
   list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
   list(APPEND HEADERS src/app/single-application/SingleApplicationDBusPrivate.hpp)
-else()
+else ()
   list(APPEND SOURCES src/app/single-application/SingleApplication.cpp)
   list(APPEND HEADERS src/app/single-application/SingleApplicationPrivate.hpp)
-endif()
+endif ()
 
 set(QRC_RESOURCES resources.qrc)
 

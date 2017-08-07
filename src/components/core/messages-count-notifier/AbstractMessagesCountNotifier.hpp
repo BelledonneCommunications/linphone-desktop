@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifier.hpp
+ * AbstractMessagesCountNotifier.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -27,21 +27,24 @@
 // =============================================================================
 
 namespace linphone {
-class ChatMessage;
+  class ChatMessage;
 }
 
 class ChatModel;
 
-class MessagesCountNotifier : public QObject {
+class AbstractMessagesCountNotifier : public QObject {
   Q_OBJECT;
 
 public:
-  MessagesCountNotifier (QObject *parent = Q_NULLPTR);
-  ~MessagesCountNotifier () = default;
+  AbstractMessagesCountNotifier (QObject *parent = Q_NULLPTR);
+  virtual ~AbstractMessagesCountNotifier () = default;
+
+protected:
+  virtual void notifyUnreadMessagesCount (int n) = 0;
 
 private:
   void updateUnreadMessagesCount ();
-  void notifyUnreadMessagesCount ();
+  void internalNotifyUnreadMessagesCount ();
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);

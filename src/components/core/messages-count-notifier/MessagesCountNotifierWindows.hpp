@@ -1,5 +1,5 @@
 /*
- * LinphoneUtils.hpp
+ * MessagesCountNotifierWindows.hpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,37 +16,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 2, 2017
+ *  Created on: August 7, 2017
  *      Author: Ronan Abhamon
  */
 
-#ifndef LINPHONE_UTILS_H_
-#define LINPHONE_UTILS_H_
-
-#include <linphone++/linphone.hh>
-#include <QString>
+#include "AbstractMessagesCountNotifier.hpp"
 
 // =============================================================================
 
-#define WINDOW_ICON_PATH ":/assets/images/linphone_logo.svg"
+class MessagesCountNotifier : public AbstractMessagesCountNotifier {
+public:
+  MessagesCountNotifier (QObject *parent = Q_NULLPTR);
 
-#define VU_MIN (-20.f)
-#define VU_MAX (4.f)
-
-namespace LinphoneUtils {
-  inline float computeVu (float volume) {
-    if (volume < VU_MIN)
-      return 0.f;
-    if (volume > VU_MAX)
-      return 1.f;
-
-    return (volume - VU_MIN) / (VU_MAX - VU_MIN);
-  }
-
-  linphone::TransportType stringToTransportType (const QString &transport);
-}
-
-#undef VU_MIN
-#undef VU_MAX
-
-#endif // ifndef LINPHONE_UTILS_H_
+protected:
+  void notifyUnreadMessagesCount (int n) override;
+};

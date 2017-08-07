@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierMacOS.h
+ * MessagesCountNotifierMacOS.m
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,6 +20,11 @@
  *      Author: Ghislain MARY
  */
 
+#import <Cocoa/Cocoa.h>
+
 // =============================================================================
 
-extern "C" void notifyUnreadMessagesCountMacOS (int count);
+void notifyUnreadMessagesCountMacOS (int n) {
+  NSString *badgeStr = (n > 0) ? [NSString stringWithFormat:@"%d", n] : @"";
+  [[NSApp dockTile] setBadgeLabel:badgeStr];
+}

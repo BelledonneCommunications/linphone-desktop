@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierMacOS.m
+ * MessagesCountNotifierWindows.cpp
  * Copyright (C) 2017  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,15 +16,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 30, 2017
- *      Author: Ghislain MARY
+ *  Created on: August 7, 2017
+ *      Author: Ronan Abhamon
  */
 
-#import <Cocoa/Cocoa.h>
+#include "MessagesCountNotifierWindows.hpp"
 
 // =============================================================================
 
-void notifyUnreadMessagesCountMacOS(int count) {
-  NSString *badgeStr = (count > 0) ? [NSString stringWithFormat:@"%d", count] : @"";
-  [[NSApp dockTile] setBadgeLabel:badgeStr];
+MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessagesCountNotifier(parent) {
+  // TODO.
+}
+
+void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
+  // TODO.
+  (void)n;
 }
