@@ -31,7 +31,7 @@
 #if defined(Q_OS_LINUX)
   #include "messages-count-notifier/MessagesCountNotifierLinux.hpp"
 #elif defined(Q_OS_MACOS)
-  #include "messages-count-notifier/MessagesCountNotifierMacOS.hpp"
+  #include "messages-count-notifier/MessagesCountNotifierMacOs.hpp"
 #elif defined(Q_OS_WIN)
   #include "messages-count-notifier/MessagesCountNotifierWindows.hpp"
 #endif // if defined(Q_OS_LINUX)
