@@ -540,7 +540,7 @@ quint32 QExifValue::toLong () const {
       case Long:
         return static_cast<const QExifLongValuePrivate *>(d.constData())->value.at(0);
       case SignedLong:
-        return static_cast<const QExifSignedLongValuePrivate *>(d.constData())->value.at(0);
+        return static_cast<quint32>(static_cast<const QExifSignedLongValuePrivate *>(d.constData())->value.at(0));
     }
   }
   return 0;
@@ -598,7 +598,7 @@ qint32 QExifValue::toSignedLong () const {
       case Short:
         return static_cast<const QExifShortValuePrivate *>(d.constData())->value.at(0);
       case Long:
-        return static_cast<const QExifLongValuePrivate *>(d.constData())->value.at(0);
+        return static_cast<qint32>(static_cast<const QExifLongValuePrivate *>(d.constData())->value.at(0));
       case SignedLong:
         return static_cast<const QExifSignedLongValuePrivate *>(d.constData())->value.at(0);
     }
@@ -1544,7 +1544,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count();
+        offset += static_cast<quint32>(value.count());
       }
       break;
     case QExifValue::Undefined:
@@ -1556,7 +1556,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count();
+        offset += static_cast<quint32>(value.count());
       }
       break;
     case QExifValue::Ascii:
@@ -1569,7 +1569,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += value.count();
+        offset += static_cast<quint32>(value.count());
       }
       break;
     case QExifValue::Short:
