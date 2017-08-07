@@ -229,7 +229,7 @@ function qmlTypeof (object, className) {
 // delay is in milliseconds.
 function setTimeout (parent, delay, cb) {
   var timer = new (function (parent) {
-    return Qt.createQmlObject('import QtQuick 2.7; Timer { }', parent)
+    return Qt.createQmlObject('import QtQml 2.2; Timer { }', parent)
   })(parent)
 
   timer.interval = delay
