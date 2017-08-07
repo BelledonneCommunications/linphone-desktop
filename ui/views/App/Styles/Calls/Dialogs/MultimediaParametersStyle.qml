@@ -4,7 +4,7 @@ import QtQml 2.2
 // =============================================================================
 
 QtObject {
-  property int height: 262
+  property int height: 312
   property int width: 450
 
   property QtObject column: QtObject {
@@ -13,6 +13,7 @@ QtObject {
     property QtObject entry: QtObject {
       property int iconSize: 24
       property int spacing: 10
+      property int spacing2: 5
     }
   }
 }

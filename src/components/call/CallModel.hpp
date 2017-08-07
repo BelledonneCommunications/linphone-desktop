@@ -61,6 +61,9 @@ class CallModel : public QObject {
   Q_PROPERTY(QString remoteSas READ getRemoteSas NOTIFY securityUpdated);
   Q_PROPERTY(QString securedString READ getSecuredString NOTIFY securityUpdated);
 
+  Q_PROPERTY(float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged);
+  Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged);
+
 public:
   enum CallStatus {
     CallStatusConnected,
@@ -128,6 +131,8 @@ signals:
   void statusChanged (CallStatus status);
   void videoRequested ();
   void securityUpdated ();
+  void speakerVolumeGainChanged (float volume);
+  void microVolumeGainChanged (float volume);
 
   void cameraFirstFrameReceived (unsigned int width, unsigned int height);
 
@@ -180,6 +185,12 @@ private:
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
 
   QString iceStateToString (linphone::IceState state) const;
+
+  float getSpeakerVolumeGain () const;
+  void setSpeakerVolumeGain (float volume);
+
+  float getMicroVolumeGain () const;
+  void setMicroVolumeGain (float volume);
 
   bool mIsInConference = false;
 

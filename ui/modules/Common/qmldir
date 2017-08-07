@@ -23,6 +23,7 @@ ComboBox                1.0 Form/ComboBox.qml
 DroppableTextArea       1.0 Form/DroppableTextArea.qml
 ListForm                1.0 Form/ListForm.qml
 SearchBox               1.0 Form/SearchBox.qml
+Slider                  1.0 Form/Slider.qml
 StaticListForm          1.0 Form/StaticListForm.qml
 Switch                  1.0 Form/Switch.qml
 TransparentTextInput    1.0 Form/TransparentTextInput.qml

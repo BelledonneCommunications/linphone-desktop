@@ -106,7 +106,9 @@ function openCallStatistics () {
 }
 
 function openMediaParameters () {
-  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'))
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'), {
+    call: incall.call
+  })
 }
 
 function showFullscreen () {

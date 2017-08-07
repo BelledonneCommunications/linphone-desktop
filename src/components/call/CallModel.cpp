@@ -105,6 +105,28 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
 // -----------------------------------------------------------------------------
 
+float CallModel::getSpeakerVolumeGain () const {
+  return mCall->getSpeakerVolumeGain();
+}
+
+void CallModel::setSpeakerVolumeGain (float volume) {
+  Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
+  mCall->setSpeakerVolumeGain(volume);
+  emit speakerVolumeGainChanged(mCall->getSpeakerVolumeGain());
+}
+
+float CallModel::getMicroVolumeGain () const {
+  return mCall->getMicrophoneVolumeGain();
+}
+
+void CallModel::setMicroVolumeGain (float volume) {
+  Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
+  mCall->setMicrophoneVolumeGain(volume);
+  emit microVolumeGainChanged(mCall->getMicrophoneVolumeGain());
+}
+
+// -----------------------------------------------------------------------------
+
 void CallModel::notifyCameraFirstFrameReceived (unsigned int width, unsigned int height) {
   if (mNotifyCameraFirstFrameReceived) {
     mNotifyCameraFirstFrameReceived = false;

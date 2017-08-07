@@ -236,6 +236,7 @@
     <file>ui/modules/Common/Form/Placements/FormTable.qml</file>
     <file>ui/modules/Common/Form/Placements/FormVGroup.qml</file>
     <file>ui/modules/Common/Form/SearchBox.qml</file>
+    <file>ui/modules/Common/Form/Slider.qml</file>
     <file>ui/modules/Common/Form/StaticListForm.qml</file>
     <file>ui/modules/Common/Form/Switch.qml</file>
     <file>ui/modules/Common/Form/Tab/TabBar.qml</file>
@@ -283,6 +284,7 @@
     <file>ui/modules/Common/Styles/Form/Placements/FormTableStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Placements/FormVGroupStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SearchBoxStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/SliderStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/SwitchStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
