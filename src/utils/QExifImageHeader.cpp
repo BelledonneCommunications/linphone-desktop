@@ -1352,7 +1352,7 @@ QExifValue QExifImageHeader::readIfdValue (QDataStream &stream, int startPos, co
         return QExifValue(QString::fromUtf8(header.offsetAscii, header.count - 1));
       }
     case QExifValue::Short: {
-      QVector<quint16> value(header.count);
+      QVector<quint16> value(static_cast<quint16>(header.count));
 
       if (header.count > 2) {
         stream.device()->seek(startPos + header.offset);
@@ -1366,7 +1366,7 @@ QExifValue QExifImageHeader::readIfdValue (QDataStream &stream, int startPos, co
       return QExifValue(value);
     }
     case QExifValue::Long: {
-      QVector<quint32> value(header.count);
+      QVector<quint32> value(static_cast<quint32>(header.count));
 
       if (header.count > 1) {
         stream.device()->seek(startPos + header.offset);
