@@ -38,13 +38,9 @@ AbstractMessagesCountNotifier::AbstractMessagesCountNotifier (QObject *parent) :
     coreManager->getHandlers().get(), &CoreHandlers::messageReceived,
     this, &AbstractMessagesCountNotifier::handleMessageReceived
   );
-
-  updateUnreadMessagesCount();
 }
 
 // -----------------------------------------------------------------------------
-
-void AbstractMessagesCountNotifier::notifyUnreadMessagesCount (int) {}
 
 void AbstractMessagesCountNotifier::updateUnreadMessagesCount () {
   mUnreadMessagesCount = 0;

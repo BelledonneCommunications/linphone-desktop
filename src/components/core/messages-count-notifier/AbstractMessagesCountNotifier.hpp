@@ -39,11 +39,12 @@ public:
   AbstractMessagesCountNotifier (QObject *parent = Q_NULLPTR);
   virtual ~AbstractMessagesCountNotifier () = default;
 
+  void updateUnreadMessagesCount ();
+
 protected:
   virtual void notifyUnreadMessagesCount (int n) = 0;
 
 private:
-  void updateUnreadMessagesCount ();
   void internalNotifyUnreadMessagesCount ();
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
