@@ -24,9 +24,11 @@
 #include <QPainter>
 #include <QSvgRenderer>
 #include <QSystemTrayIcon>
+#include <QTimer>
 
 #include "../../../app/App.hpp"
 #include "../../../utils/LinphoneUtils.hpp"
+#include "../../../utils/Utils.hpp"
 
 #include "MessagesCountNotifierLinux.hpp"
 
@@ -35,6 +37,7 @@
 
 #define ICON_COUNTER_BACKGROUND_COLOR "#FF3C31"
 #define ICON_COUNTER_BACKGROUND_RADIUS 100
+#define ICON_COUNTER_BLINK_INTERVAL 1000
 #define ICON_COUNTER_TEXT_COLOR "#FFFBFA"
 #define ICON_COUNTER_TEXT_PIXEL_SIZE 144
 
@@ -52,10 +55,21 @@ MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessage
   renderer.render(&painter);
 
   mBuf = new QPixmap(buf);
+  mBufWithCounter = new QPixmap();
+
+  mBlinkTimer = new QTimer(this);
+  mBlinkTimer->setInterval(ICON_COUNTER_BLINK_INTERVAL);
+  QObject::connect(mBlinkTimer, &QTimer::timeout, this, &MessagesCountNotifier::update);
+
+  Utils::connectOnce(
+    App::getInstance(), &App::focusWindowChanged,
+    this, &MessagesCountNotifier::updateUnreadMessagesCount
+  );
 }
 
 MessagesCountNotifier::~MessagesCountNotifier () {
   delete mBuf;
+  delete mBufWithCounter;
 }
 
 void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
@@ -64,15 +78,16 @@ void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
     return;
 
   if (!n) {
+    mBlinkTimer->stop();
     sysTrayIcon->setIcon(QIcon(*mBuf));
     return;
   }
 
-  QPixmap buf(*mBuf);
-  QPainter p(&buf);
+  *mBufWithCounter = *mBuf;
+  QPainter p(mBufWithCounter);
 
-  const int width = buf.width();
-  const int height = buf.height();
+  const int width = mBufWithCounter->width();
+  const int height = mBufWithCounter->height();
 
   // Draw background.
   {
@@ -90,5 +105,16 @@ void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
     p.drawText(QRect(0, 0, width, height), Qt::AlignCenter, QString::number(n));
   }
 
-  sysTrayIcon->setIcon(QIcon(buf));
+  // Change counter.
+  mBlinkTimer->stop();
+  mBlinkTimer->start();
+  mDisplayCounter = true;
+  update();
+}
+
+void MessagesCountNotifier::update () {
+  QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
+  Q_CHECK_PTR(sysTrayIcon);
+  sysTrayIcon->setIcon(QIcon(mDisplayCounter ? *mBufWithCounter : *mBuf));
+  mDisplayCounter = !mDisplayCounter;
 }

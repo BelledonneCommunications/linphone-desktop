@@ -24,6 +24,8 @@
 
 // =============================================================================
 
+class QTimer;
+
 class MessagesCountNotifier : public AbstractMessagesCountNotifier {
 public:
   MessagesCountNotifier (QObject *parent = Q_NULLPTR);
@@ -33,5 +35,10 @@ protected:
   void notifyUnreadMessagesCount (int n) override;
 
 private:
+  void update ();
+
   const QPixmap *mBuf = nullptr;
+  QPixmap *mBufWithCounter = nullptr;
+  QTimer *mBlinkTimer = nullptr;
+  bool mDisplayCounter = false;
 };
