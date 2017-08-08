@@ -35,6 +35,7 @@
 // =============================================================================
 
 class QCommandLineParser;
+class QSystemTrayIcon;
 
 class Cli;
 class DefaultTranslator;
@@ -70,6 +71,10 @@ public:
 
   const Colors *getColors () const {
     return mColors;
+  }
+
+  QSystemTrayIcon *getSystemTrayIcon () const {
+    return mSystemTrayIcon;
   }
 
   QQuickWindow *getMainWindow () const;
@@ -136,6 +141,8 @@ private:
   QQuickWindow *mSettingsWindow = nullptr;
 
   Colors *mColors = nullptr;
+
+  QSystemTrayIcon *mSystemTrayIcon = nullptr;
 
   Cli *mCli = nullptr;
 };

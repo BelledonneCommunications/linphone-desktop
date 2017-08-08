@@ -24,15 +24,14 @@
 
 // =============================================================================
 
-class QSvgRenderer;
-
 class MessagesCountNotifier : public AbstractMessagesCountNotifier {
 public:
   MessagesCountNotifier (QObject *parent = Q_NULLPTR);
+  ~MessagesCountNotifier ();
 
 protected:
   void notifyUnreadMessagesCount (int n) override;
 
 private:
-  QSvgRenderer *mSvgRenderer = nullptr;
+  const QPixmap *mBuf = nullptr;
 };

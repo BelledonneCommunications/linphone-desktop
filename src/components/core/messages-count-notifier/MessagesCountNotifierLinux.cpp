@@ -20,19 +20,75 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QIcon>
+#include <QPainter>
 #include <QSvgRenderer>
+#include <QSystemTrayIcon>
 
+#include "../../../app/App.hpp"
 #include "../../../utils/LinphoneUtils.hpp"
 
 #include "MessagesCountNotifierLinux.hpp"
 
+#define ICON_WIDTH 256
+#define ICON_HEIGHT 256
+
+#define ICON_COUNTER_BACKGROUND_COLOR "#FF3C31"
+#define ICON_COUNTER_BACKGROUND_RADIUS 100
+#define ICON_COUNTER_TEXT_COLOR "#FFFBFA"
+#define ICON_COUNTER_TEXT_PIXEL_SIZE 144
+
 // =============================================================================
 
 MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessagesCountNotifier(parent) {
-  mSvgRenderer = new QSvgRenderer(QStringLiteral(WINDOW_ICON_PATH), this);
+  QSvgRenderer renderer(QStringLiteral(WINDOW_ICON_PATH));
+  if (!renderer.isValid())
+    qFatal("Invalid SVG Image.");
+
+  QPixmap buf(ICON_WIDTH, ICON_HEIGHT);
+  buf.fill(QColor(Qt::transparent));
+
+  QPainter painter(&buf);
+  renderer.render(&painter);
+
+  mBuf = new QPixmap(buf);
+}
+
+MessagesCountNotifier::~MessagesCountNotifier () {
+  delete mBuf;
 }
 
 void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
-  // TODO.
-  (void)n;
+  QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
+  if (!sysTrayIcon)
+    return;
+
+  if (!n) {
+    sysTrayIcon->setIcon(QIcon(*mBuf));
+    return;
+  }
+
+  QPixmap buf(*mBuf);
+  QPainter p(&buf);
+
+  const int width = buf.width();
+  const int height = buf.height();
+
+  // Draw background.
+  {
+    p.setBrush(QColor(ICON_COUNTER_BACKGROUND_COLOR));
+    p.drawEllipse(QPointF(width / 2, height / 2), ICON_COUNTER_BACKGROUND_RADIUS, ICON_COUNTER_BACKGROUND_RADIUS);
+  }
+
+  // Draw text.
+  {
+    QFont font = p.font();
+    font.setPixelSize(ICON_COUNTER_TEXT_PIXEL_SIZE);
+
+    p.setFont(font);
+    p.setPen(QPen(QColor(ICON_COUNTER_TEXT_COLOR), 1));
+    p.drawText(QRect(0, 0, width, height), Qt::AlignCenter, QString::number(n));
+  }
+
+  sysTrayIcon->setIcon(QIcon(buf));
 }

@@ -474,6 +474,8 @@ void App::setTrayIcon () {
   systemTrayIcon->setIcon(QIcon(WINDOW_ICON_PATH));
   systemTrayIcon->setToolTip("Linphone");
   systemTrayIcon->show();
+
+  mSystemTrayIcon = systemTrayIcon;
 }
 
 // -----------------------------------------------------------------------------
