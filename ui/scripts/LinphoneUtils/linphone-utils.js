@@ -28,7 +28,7 @@ function _getDisplayNameFromString  (str) {
     return
   }
 
-  return str.substring(0, end).trim()
+  return str.substring(0, end).trim() || undefined
 }
 
 function _getDisplayName (str) {

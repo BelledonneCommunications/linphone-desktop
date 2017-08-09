@@ -148,7 +148,7 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
   QHash<QString, QString> args;
   for (const auto &argName : mArgsScheme.keys())
     args[argName] = ::Utils::coreStringToAppString(address->getHeader(::Utils::appStringToCoreString(argName)));
-  args["sip-address"] = ::Utils::coreStringToAppString(address->asString());
+  args["sip-address"] = ::Utils::coreStringToAppString(address->asStringUriOnly());
 
   execute(args);
 }
