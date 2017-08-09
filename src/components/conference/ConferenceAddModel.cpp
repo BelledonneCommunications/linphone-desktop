@@ -90,15 +90,17 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
   if (mSipAddresses.contains(sipAddress))
     return false;
 
-  int row = rowCount();
+  shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(
+      ::Utils::appStringToCoreString(sipAddress)
+    );
+  if (!address || address->getUsername().empty())
+    return false;
 
+  int row = rowCount();
   beginInsertRows(QModelIndex(), row, row);
 
   qInfo() << QStringLiteral("Add sip address to conference: `%1`.").arg(sipAddress);
-  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::appStringToCoreString(sipAddress)
-    );
-  addToConferencePrivate(linphoneAddress);
+  addToConferencePrivate(address);
 
   endInsertRows();
 
