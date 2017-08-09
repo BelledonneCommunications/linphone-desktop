@@ -123,7 +123,7 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
 
   // Check missing arguments.
   for (const auto &argName : mArgsScheme.keys()) {
-    if (!args.contains(argName) && !mArgsScheme[argName].isOptional) {
+    if (!mArgsScheme[argName].isOptional && (!args.contains(argName) || args[argName].isEmpty())) {
       qWarning() << QStringLiteral("Missing argument for command: `%1 (%2)`.")
         .arg(mFunctionName).arg(argName);
       return;
@@ -220,6 +220,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) const {
     return;
   }
 
+  //TODO: check if there is any header when the `method` header is missing.
   const QString functionName = ::Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
     ? QStringLiteral("call")
     : ::Utils::coreStringToAppString(address->getHeader("method"));
