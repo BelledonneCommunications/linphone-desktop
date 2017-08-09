@@ -45,8 +45,8 @@ public:
 
   void askForTransfer (CallModel *callModel);
 
-  Q_INVOKABLE void launchAudioCall (const QString &sipUri, const QHash<QString, QString> &headers = {}) const;
-  Q_INVOKABLE void launchVideoCall (const QString &sipUri) const;
+  Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers = {}) const;
+  Q_INVOKABLE void launchVideoCall (const QString &sipAddress) const;
 
   Q_INVOKABLE int getRunningCallsNumber () const;
 

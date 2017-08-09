@@ -33,5 +33,5 @@ UrlHandlers::UrlHandlers (QObject *parent) : QObject(parent) {
 }
 
 void UrlHandlers::handleSip (const QUrl &url) {
-  emit sip(SipAddressesModel::interpretUrl(url));
+  emit sip(SipAddressesModel::interpretSipAddress(url));
 }

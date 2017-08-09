@@ -163,15 +163,17 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
 
 // -----------------------------------------------------------------------------
 
-QString SipAddressesModel::interpretUrl (const QString &sipAddress) {
+QString SipAddressesModel::interpretSipAddress (const QString &sipAddress) {
   shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
       ::Utils::appStringToCoreString(sipAddress)
     );
 
-  return lAddress ? ::Utils::coreStringToAppString(lAddress->asStringUriOnly()) : QString("");
+  if (lAddress && !lAddress->getUsername().empty())
+    return ::Utils::coreStringToAppString(lAddress->asStringUriOnly());
+  return QString("");
 }
 
-QString SipAddressesModel::interpretUrl (const QUrl &sipAddress) {
+QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
   return sipAddress.toString();
 }
 

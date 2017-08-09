@@ -96,7 +96,7 @@ static void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, boo
 static string interpretSipAddress (const QString &sipAddress) {
   string out;
 
-  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretUrl(
+  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->interpretSipAddress(
       ::Utils::appStringToCoreString(sipAddress)
     );
 

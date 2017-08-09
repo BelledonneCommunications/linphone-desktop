@@ -91,10 +91,10 @@ void CallsListModel::askForTransfer (CallModel *callModel) {
 
 // -----------------------------------------------------------------------------
 
-void CallsListModel::launchAudioCall (const QString &sipUri, const QHash<QString, QString> &headers) const {
+void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipUri));
+  shared_ptr<linphone::Address> address = core->interpretSipAddress(::Utils::appStringToCoreString(sipAddress));
   if (!address)
     return;
 
@@ -111,15 +111,15 @@ void CallsListModel::launchAudioCall (const QString &sipUri, const QHash<QString
   core->inviteAddressWithParams(address, params);
 }
 
-void CallsListModel::launchVideoCall (const QString &sipUri) const {
+void CallsListModel::launchVideoCall (const QString &sipAddress) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   if (!core->videoSupported()) {
     qWarning() << QStringLiteral("Unable to launch video call. (Video not supported.) Launching audio call...");
-    launchAudioCall(sipUri);
+    launchAudioCall(sipAddress);
     return;
   }
 
-  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipUri));
+  shared_ptr<linphone::Address> address = core->interpretSipAddress(::Utils::appStringToCoreString(sipAddress));
   if (!address)
     return;
 

@@ -52,7 +52,7 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 
   // Check identity.
   {
-    shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(args["sip-address"]));
+    shared_ptr<linphone::Address> address = core->interpretSipAddress(::Utils::appStringToCoreString(args["sip-address"]));
     address->clean();
 
     const string sipAddress = address->asString();
