@@ -232,8 +232,8 @@ if (UNIX AND NOT APPLE)
 endif ()
 
 if (WIN32)
-  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierWindow.cpp)
-  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierWindow.hpp)
+  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierWindows.cpp)
+  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierWindows.hpp)
 endif ()
 
 if (APPLE)
