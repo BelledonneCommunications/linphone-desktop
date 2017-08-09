@@ -31,7 +31,7 @@
 // =============================================================================
 
 namespace linphone {
-class Address;
+  class Address;
 }
 
 class Cli : public QObject {
@@ -54,7 +54,7 @@ class Cli : public QObject {
   };
 
   class Command {
-public:
+  public:
     Command () = default;
     Command (
       const QString &functionName,
@@ -66,7 +66,7 @@ public:
     void execute (QHash<QString, QString> &args) const;
     void executeUri (const std::shared_ptr<linphone::Address> &address) const;
 
-private:
+  private:
     QString mFunctionName;
     QString mDescription;
     Function mFunction = nullptr;
@@ -77,11 +77,11 @@ public:
   Cli (QObject *parent = Q_NULLPTR);
   ~Cli () = default;
 
-   enum CommandFormat {
-     UnknownFormat,
-     CliFormat,
-     UriFormat
-   };
+  enum CommandFormat {
+    UnknownFormat,
+    CliFormat,
+    UriFormat
+  };
 
   void executeCommand (const QString &command, CommandFormat *format = nullptr) const;
 

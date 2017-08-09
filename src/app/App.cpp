@@ -182,7 +182,7 @@ void App::initContentApp () {
     if (!commandArgument.isEmpty()) {
       Cli::CommandFormat format;
       mCli->executeCommand(commandArgument, &format);
-      if (format==Cli::UriFormat)
+      if (format == Cli::UriFormat)
         mustBeIconified = true;
     }
   }
@@ -229,12 +229,10 @@ void App::initContentApp () {
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
-  QObject::connect(
-    CoreManager::getInstance()->getHandlers().get(),
-    &CoreHandlers::coreStarted, [this, mustBeIconified] () {
+  QObject::connect(CoreManager::getInstance()->getHandlers().get(),
+    &CoreHandlers::coreStarted, [this, mustBeIconified]() {
       openAppAfterInit(mustBeIconified);
-    }
-  );
+    });
 }
 
 // -----------------------------------------------------------------------------
