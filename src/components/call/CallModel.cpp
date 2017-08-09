@@ -71,7 +71,7 @@ CallModel::~CallModel () {
 // -----------------------------------------------------------------------------
 
 QString CallModel::getSipAddress () const {
-  return ::Utils::coreStringToAppString(mCall->getRemoteAddress()->asStringUriOnly());
+  return ::Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
 }
 
 // -----------------------------------------------------------------------------

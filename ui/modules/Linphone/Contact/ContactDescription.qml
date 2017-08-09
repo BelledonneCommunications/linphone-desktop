@@ -1,7 +1,7 @@
 import QtQuick 2.7
 
+import Linphone 1.0
 import Linphone.Styles 1.0
-import LinphoneUtils 1.0
 
 // =============================================================================
 
@@ -29,7 +29,7 @@ Column {
   }
 
   Text {
-    text: LinphoneUtils.cleanSipAddress(sipAddress)
+    text: SipAddressesModel.cleanSipAddress(sipAddress)
 
     color: sipAddressColor
     elide: Text.ElideRight

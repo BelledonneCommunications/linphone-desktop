@@ -99,9 +99,10 @@ ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sipAddre
 
 SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sipAddress) {
   SipAddressObserver *model = new SipAddressObserver(sipAddress);
+  const QString cleanedSipAddress = cleanSipAddress(sipAddress);
 
   {
-    auto it = mSipAddresses.find(sipAddress);
+    auto it = mSipAddresses.find(cleanedSipAddress);
     if (it != mSipAddresses.end()) {
       model->setContact(it->value("contact").value<ContactModel *>());
       model->setPresenceStatus(
@@ -113,10 +114,10 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
     }
   }
 
-  mObservers.insert(sipAddress, model);
+  mObservers.insert(cleanedSipAddress, model);
   QObject::connect(
     model, &SipAddressObserver::destroyed, this, [this, model]() {
-      const QString sipAddress = model->getSipAddress();
+      const QString sipAddress = cleanSipAddress(model->getSipAddress());
       if (mObservers.remove(sipAddress, model) == 0)
         qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sipAddress);
     });
@@ -188,6 +189,13 @@ bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
       ::Utils::appStringToCoreString(sipAddress)
     );
   return address && !address->getUsername().empty();
+}
+
+QString SipAddressesModel::cleanSipAddress (const QString &sipAddress) {
+  const int index = sipAddress.lastIndexOf('<');
+  if (index == -1)
+    return sipAddress;
+  return sipAddress.mid(index + 1, sipAddress.lastIndexOf('>') - index - 1);
 }
 
 // -----------------------------------------------------------------------------

@@ -62,6 +62,8 @@ public:
   Q_INVOKABLE static bool addressIsValid (const QString &address);
   Q_INVOKABLE static bool sipAddressIsValid (const QString &sipAddress);
 
+  Q_INVOKABLE static QString cleanSipAddress (const QString &sipAddress);
+
   // ---------------------------------------------------------------------------
 
 private:
