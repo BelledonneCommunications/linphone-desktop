@@ -36,6 +36,13 @@
     QCOMPARE(virtualWindowContent->objectName(), QStringLiteral(NAME)); \
   } while (0)
 
+#define INIT_GUI_TEST() \
+  QQuickWindow * mainWindow = App::getInstance()->getMainWindow(); \
+  App::smartShowWindow(mainWindow); \
+  QQuickItem *contentLoader = mainWindow->findChild<QQuickItem *>("__contentLoader"); \
+  QVERIFY(contentLoader); \
+  QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(110, 100));
+
 namespace TestUtils {
   void executeKeySequence (QQuickWindow *window, QKeySequence sequence);
 

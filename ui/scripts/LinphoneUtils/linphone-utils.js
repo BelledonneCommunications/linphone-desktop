@@ -37,7 +37,7 @@ function _getDisplayName (str) {
     return name
   }
 
-  return _getDisplayNameFromString (str)
+  return _getDisplayNameFromString(str)
 }
 
 // -----------------------------------------------------------------------------

@@ -31,6 +31,12 @@
 
 // =============================================================================
 
+void MainViewTest::init () {
+  INIT_GUI_TEST();
+}
+
+// -----------------------------------------------------------------------------
+
 void MainViewTest::showAboutPopup () {
   QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
 

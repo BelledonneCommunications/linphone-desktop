@@ -21,27 +21,28 @@
  */
 
 #include <QQmlProperty>
-#include <QQuickItem>
 #include <QSignalSpy>
 #include <QTest>
 
 #include "../../app/App.hpp"
+#include "../TestUtils.hpp"
 
 #include "AssistantViewTest.hpp"
 
 // =============================================================================
 
+void AssistantViewTest::init () {
+  INIT_GUI_TEST();
+}
+
 void AssistantViewTest::showAssistantView () {
   QQuickWindow *mainWindow = App::getInstance()->getMainWindow();
-
-  // Ensure home view is selected.
   QQuickItem *contentLoader = mainWindow->findChild<QQuickItem *>("__contentLoader");
-  QVERIFY(contentLoader);
-  QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(110, 100));
 
   // Show assistant view.
   QSignalSpy spyLoaderReady(contentLoader, SIGNAL(loaded()));
   QTest::mouseClick(mainWindow, Qt::LeftButton, Qt::KeyboardModifiers(), QPoint(705, 485));
+
   QVERIFY(spyLoaderReady.count() == 1);
   QCOMPARE(
     QQmlProperty::read(contentLoader, "source").toString(),

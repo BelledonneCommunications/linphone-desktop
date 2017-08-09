@@ -35,6 +35,8 @@ public:
   ~AssistantViewTest () = default;
 
 private slots:
+  void init ();
+
   void showAssistantView ();
 };
 
