@@ -84,3 +84,10 @@ function getContactUsername (contact) {
   name = _getUsername(object)
   return name == null ? 'Bad EGG' : name
 }
+
+function cleanSipAddress (sipAddress) {
+  var index = sipAddress.indexOf('<')
+  return index === -1
+    ? sipAddress
+    : sipAddress.substring(index + 1, sipAddress.lastIndexOf('>'))
+}

@@ -1,12 +1,14 @@
 import QtQuick 2.7
 
 import Linphone.Styles 1.0
+import LinphoneUtils 1.0
 
 // =============================================================================
 
 Column {
-  property alias sipAddress: sipAddress.text
   property alias username: username.text
+  property string sipAddress
+
   property color sipAddressColor: ContactDescriptionStyle.sipAddress.color
   property color usernameColor: ContactDescriptionStyle.username.color
   property int horizontalTextAlignment
@@ -27,7 +29,7 @@ Column {
   }
 
   Text {
-    id: sipAddress
+    text: LinphoneUtils.cleanSipAddress(sipAddress)
 
     color: sipAddressColor
     elide: Text.ElideRight
