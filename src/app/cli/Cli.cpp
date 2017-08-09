@@ -189,7 +189,7 @@ void Cli::addCommand (
 
 // -----------------------------------------------------------------------------
 
-void Cli::executeCommand (const QString &command) const {
+void Cli::executeCommand (const QString &command, CommandFormat *format) const {
   shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
       ::Utils::appStringToCoreString(command)
     );
@@ -202,10 +202,18 @@ void Cli::executeCommand (const QString &command) const {
       mCommands[functionName].execute(args);
     }
 
+    if (format)
+      *format = CliFormat;
+
     return;
   }
 
+  if (format)
+    *format = UriFormat;
+
   // Execute uri command.
+  qInfo() << QStringLiteral("Execute uri command: `%1`.").arg(command);
+
   string scheme = address->getScheme();
   if (address->getUsername().empty() || (scheme != "sip" && scheme != "sip-linphone")) {
     qWarning() << QStringLiteral("Not a valid uri: `%1`.").arg(command);

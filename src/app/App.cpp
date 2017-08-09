@@ -141,6 +141,7 @@ inline void activeSplashScreen (QQmlApplicationEngine *engine) {
 
 void App::initContentApp () {
   shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
+  bool mustBeIconified = false;
 
   // Destroy qml components and linphone core if necessary.
   if (mEngine) {
@@ -168,6 +169,8 @@ void App::initContentApp () {
     // Add plugins directory.
     addLibraryPath(::Utils::coreStringToAppString(Paths::getPluginsDirPath()));
     qInfo() << QStringLiteral("Library paths:") << libraryPaths();
+
+    mustBeIconified = mParser->isSet("iconified");
   }
 
   // Init core.
@@ -176,8 +179,12 @@ void App::initContentApp () {
   // Execute command argument if needed.
   if (!mEngine) {
     const QString commandArgument = getCommandArgument();
-    if (!commandArgument.isEmpty())
-      mCli->executeCommand(commandArgument);
+    if (!commandArgument.isEmpty()) {
+      Cli::CommandFormat format;
+      mCli->executeCommand(commandArgument, &format);
+      if (format==Cli::UriFormat)
+        mustBeIconified = true;
+    }
   }
 
   // Init engine content.
@@ -212,7 +219,7 @@ void App::initContentApp () {
   #ifdef Q_OS_MACOS
     ::activeSplashScreen(mEngine);
   #else
-    if (!mParser->isSet("iconified"))
+    if (!mustBeIconified)
       ::activeSplashScreen(mEngine);
   #endif // ifdef Q_OS_MACOS
 
@@ -224,8 +231,9 @@ void App::initContentApp () {
 
   QObject::connect(
     CoreManager::getInstance()->getHandlers().get(),
-    &CoreHandlers::coreStarted,
-    this, &App::openAppAfterInit
+    &CoreHandlers::coreStarted, [this, mustBeIconified] () {
+      openAppAfterInit(mustBeIconified);
+    }
   );
 }
 
@@ -526,7 +534,7 @@ QString App::getLocale () const {
 
 // -----------------------------------------------------------------------------
 
-void App::openAppAfterInit () {
+void App::openAppAfterInit (bool mustBeIconified) {
   qInfo() << QStringLiteral("Open linphone app.");
 
   QQuickWindow *mainWindow = getMainWindow();
@@ -538,7 +546,7 @@ void App::openAppAfterInit () {
     else
       setTrayIcon();
 
-    if (!mParser->isSet("iconified"))
+    if (!mustBeIconified)
       smartShowWindow(mainWindow);
   #else
     smartShowWindow(mainWindow);

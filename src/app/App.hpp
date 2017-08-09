@@ -119,7 +119,7 @@ private:
     return mAvailableLocales;
   }
 
-  void openAppAfterInit ();
+  void openAppAfterInit (bool mustBeIconified = false);
 
   static void checkForUpdate ();
 

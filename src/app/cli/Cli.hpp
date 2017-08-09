@@ -77,7 +77,13 @@ public:
   Cli (QObject *parent = Q_NULLPTR);
   ~Cli () = default;
 
-  void executeCommand (const QString &command) const;
+   enum CommandFormat {
+     UnknownFormat,
+     CliFormat,
+     UriFormat
+   };
+
+  void executeCommand (const QString &command, CommandFormat *format = nullptr) const;
 
 private:
   void addCommand (
