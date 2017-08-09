@@ -94,7 +94,7 @@ void CallsListModel::askForTransfer (CallModel *callModel) {
 void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  shared_ptr<linphone::Address> address = core->interpretSipAddress(::Utils::appStringToCoreString(sipAddress));
+  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipAddress));
   if (!address)
     return;
 
@@ -119,7 +119,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
     return;
   }
 
-  shared_ptr<linphone::Address> address = core->interpretSipAddress(::Utils::appStringToCoreString(sipAddress));
+  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipAddress));
   if (!address)
     return;
 
