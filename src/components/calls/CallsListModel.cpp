@@ -95,7 +95,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
   shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipAddress));
-  if (!address)
+  if (!address || address->getUsername().empty())
     return;
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
@@ -120,7 +120,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
   }
 
   shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipAddress));
-  if (!address)
+  if (!address || address->getUsername().empty())
     return;
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);

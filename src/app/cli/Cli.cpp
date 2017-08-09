@@ -53,7 +53,7 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
   // Check identity.
   {
     shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(args["sip-address"]));
-    if (!address) {
+    if (!address || address->getUsername().empty()) {
       qWarning() << QStringLiteral("Unable to parse invalid sip address.");
       return;
     }
