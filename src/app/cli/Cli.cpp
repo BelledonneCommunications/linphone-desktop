@@ -144,12 +144,24 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
   }
 }
 
+void Cli::Command::decode (QHash <QString,QString> &args) const{
+  QByteArray qa;
+  for (const auto &argName : args.keys()) {
+    if (argName != QString("sip-address")) {
+      qa.append(args[argName]);
+      args[argName] = QByteArray::fromBase64(qa);
+      qa.clear();
+    }
+  }
+}
+
 void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) const {
   QHash<QString, QString> args;
   for (const auto &argName : mArgsScheme.keys())
     args[argName] = ::Utils::coreStringToAppString(address->getHeader(::Utils::appStringToCoreString(argName)));
+  address->clean();
   args["sip-address"] = ::Utils::coreStringToAppString(address->asStringUriOnly());
-
+  decode(args);
   execute(args);
 }
 
