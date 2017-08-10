@@ -43,6 +43,11 @@ static void cliCall (QHash<QString, QString> &args) {
 
 static void cliJoinConference (QHash<QString, QString> &args) {
   const QString sipAddress = args.take("sip-address");
+  const string displayName = ::Utils::appStringToCoreString(args.take("display-name"));
+  shared_ptr<linphone::ProxyConfig> proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
+  shared_ptr<linphone::Address> address = proxyConfig->getIdentityAddress()->clone();
+  address->setDisplayName(displayName);
+  proxyConfig->setIdentityAddress(address);
   args["method"] = QStringLiteral("join-conference");
   CoreManager::getInstance()->getCallsListModel()->launchAudioCall(sipAddress, args);
 }
