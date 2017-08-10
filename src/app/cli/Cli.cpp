@@ -186,7 +186,7 @@ Cli::Cli (QObject *parent) : QObject(parent) {
     { "sip-address", {} }, { "conference-id", {} }
   });
   addCommand("join-conference", tr("joinConferenceFunctionDescription"), ::cliJoinConference, {
-    { "sip-address", {} }, { "conference-id", {} }, { "display-name", {} }
+    { "sip-address", {} }, { "conference-id", {} }, { "display-name", {STRING, true } }
   });
 }
 
