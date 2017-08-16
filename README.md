@@ -47,7 +47,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 ## Known bugs and issues
 
-* __4K (High DPI Displays)__ If you encounter troubles with high DPI displays, it can be useful to set the `QT_AUTO_SCREEN_SCALE_FACTOR` environment variable to 1.
+* __4K (High DPI Displays)__ If you encounter troubles with high DPI displays on Windows, please to see this link: https://bugreports.qt.io/browse/QTBUG-53022
 
 ## Customizing your build
 
