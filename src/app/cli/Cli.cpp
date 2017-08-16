@@ -149,24 +149,14 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
   }
 }
 
-void Cli::Command::decode (QHash <QString,QString> &args) const{
-  QByteArray qa;
-  for (const auto &argName : args.keys()) {
-    if (argName != QString("sip-address")) {
-      qa.append(args[argName]);
-      args[argName] = QByteArray::fromBase64(qa);
-      qa.clear();
-    }
-  }
-}
-
 void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) const {
   QHash<QString, QString> args;
-  for (const auto &argName : mArgsScheme.keys())
-    args[argName] = ::Utils::coreStringToAppString(address->getHeader(::Utils::appStringToCoreString(argName)));
+  for (const auto &argName : mArgsScheme.keys()) {
+    const string header = address->getHeader(::Utils::appStringToCoreString(argName));
+    args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), header.length()));
+  }
   address->clean();
   args["sip-address"] = ::Utils::coreStringToAppString(address->asStringUriOnly());
-  decode(args);
   execute(args);
 }
 
@@ -237,7 +227,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) const {
     return;
   }
 
-  //TODO: check if there is any header when the `method` header is missing.
+  // TODO: Check if there is any header when the `method` header is missing.
   const QString functionName = ::Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
     ? QStringLiteral("call")
     : ::Utils::coreStringToAppString(address->getHeader("method"));

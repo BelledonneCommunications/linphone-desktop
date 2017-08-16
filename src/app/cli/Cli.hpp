@@ -63,7 +63,6 @@ class Cli : public QObject {
       const QHash<QString, Argument> &argsScheme
     );
 
-    void decode (QHash<QString, QString> &args) const;
     void execute (QHash<QString, QString> &args) const;
     void executeUri (const std::shared_ptr<linphone::Address> &address) const;
 
