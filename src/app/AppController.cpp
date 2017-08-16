@@ -75,6 +75,8 @@ AppController::AppController (int &argc, char *argv[]) {
     QSurfaceFormat::setDefaultFormat(format);
   }
 
+  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
   // ---------------------------------------------------------------------------
   // App creation.
   // ---------------------------------------------------------------------------
