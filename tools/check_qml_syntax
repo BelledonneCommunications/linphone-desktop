@@ -18,34 +18,30 @@ cd $SCRIPT_DIR/..
 # ==============================================================================
 
 if ! [ -x "$( command -v "$LINTER" )" ]; then
-  printf "${RED}Unable to found `$LINTER`. No tests can be executed.${NC}\n"
-  exit 0
+  printf "${RED}Unable to found `$LINTER`.${NC}\n"
+  exit 1
 fi
 
-"${LINTER}" -v
+"${LINTER}" -v 2> /dev/null 1>&2
 if [[ $? != 0 ]] ; then
-    printf "${RED}Unable to check qml syntax.${NC}\n"
-    exit 0
+  printf "${RED}Unable to check qml syntax.${NC}\n"
+  exit 1
 fi
 
 printf "${BLUE}Checking qml files...${NC}\n"
 
 so_far_so_good=0
-while read line
-do
-    result=$(
-        printf "$line" |
-        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/\s*file\s*>\s*$/\1/p'
-    )
-    if [[ ! -z  $result ]] && ! $LINTER "$result"; then
-        so_far_so_good=1
-    fi
-done < $RESOURCES_FILE
+while read file; do
+  $LINTER "$file"
+  if [[ $? != 0 ]] ; then
+    so_far_so_good=1
+  fi
+done < <(git diff --name-only --cached | grep -E '\.qml|js|js\.spec$')
 
 if [[ $so_far_so_good == 0 ]]; then
-    printf "${GREEN}Done. No qml error found.\n"
+  printf "${GREEN}Done. No qml error found.\n"
 else
-    printf "${RED}One or more errors were found. Please to fix them.\n"
+  printf "${RED}One or more errors were found. Please to fix them.\n"
 fi
 printf "${NC}"
 

@@ -28,38 +28,42 @@ if ! [ -x "$( command -v "$TEST_RUNNER" )" ]; then
   exit 0
 fi
 
-so_far_so_good=0
+git diff --name-only --cached | grep -Eq '\.qml|js|js\.spec$'
+if [[ $? != 0 ]] ; then
+  exit 0
+fi
 
 # Check all `*.spec.qml` files.
+so_far_so_good=0
 while read line
 do
-    source_file=$(
-        printf "$line" |
-        sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/\s*file\s*>\s*$/\1/p'
+  source_file=$(
+    printf "$line" |
+      sed -n 's/^\s*<\s*file\s*>\s*\(.*\.\(qml\|js\)\)\s*<\s*\/\s*file\s*>\s*$/\1/p'
     )
-    if [[ ! -z  $source_file ]]; then
-        spec_file="${source_file%.*}.${TEST_FILE_EXTENSION}"
+  if [[ ! -z  $source_file ]]; then
+    spec_file="${source_file%.*}.${TEST_FILE_EXTENSION}"
 
-        if [ -f $spec_file ]; then
-            printf "${BLUE}Running unit qml tests of '${source_file}'...${NC}\n"
-            $TEST_RUNNER -import $DEV_MODULES_PATH -import $MODULES_PATH -import $SCRIPTS_PATH -input "$spec_file"
+    if [ -f $spec_file ]; then
+      printf "${BLUE}Running unit qml tests of '${source_file}'...${NC}\n"
+      $TEST_RUNNER -import $DEV_MODULES_PATH -import $MODULES_PATH -import $SCRIPTS_PATH -input "$spec_file"
 
-            if [[ $? == 0 ]]; then
-                printf "${GREEN}All unit tests have succeeded for '${spec_file}'.\n"
-            else
-                printf "${RED}Unit tests have failed for '${spec_file}'.\n"
-                so_far_so_good=1
-            fi
-            printf "${NC}\n"
-        fi
+      if [[ $? == 0 ]]; then
+        printf "${GREEN}All unit tests have succeeded for '${spec_file}'.\n"
+      else
+        printf "${RED}Unit tests have failed for '${spec_file}'.\n"
+        so_far_so_good=1
+      fi
+      printf "${NC}\n"
     fi
+  fi
 done < $RESOURCES_FILE
 
 if [[ $so_far_so_good == 0 ]]; then
-    printf "${GREEN}Done. All tests have succeeded.\n"
+  printf "${GREEN}Done. All tests have succeeded.\n"
 else
-    printf "${RED}Fail. One or many tests have failed.\n"
-    so_far_so_good=1
+  printf "${RED}Fail. One or many tests have failed.\n"
+  so_far_so_good=1
 fi
 printf "${NC}\n"
 

@@ -20,14 +20,14 @@ echo '<!DOCTYPE RCC><RCC version="1.0">
 
 for filename in $(find ui/modules/ ui/scripts/ ui/views/ assets/ -type f | sort)
 do
-    basename="${filename##*/}"
-    extension="${filename##*.}"
+  basename="${filename##*/}"
+  extension="${filename##*.}"
 
-    if [[ $extension == @(svg|png|jpg|js|ttf) ||
-          $basename == qmldir ||
-          ($extension == qml && $basename != *\.spec\.qml) ]]; then
-        echo "    <file>$filename</file>" >> $RESOURCES_FILE
-    fi
+  if [[ $extension == @(svg|png|jpg|js|ttf) ||
+    $basename == qmldir ||
+    ($extension == qml && $basename != *\.spec\.qml) ]]; then
+      echo "    <file>$filename</file>" >> $RESOURCES_FILE
+  fi
 done
 
 echo '  </qresource>
