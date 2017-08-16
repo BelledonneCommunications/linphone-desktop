@@ -116,10 +116,10 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
 
   mObservers.insert(cleanedSipAddress, model);
   QObject::connect(
-    model, &SipAddressObserver::destroyed, this, [this, model]() {
-      const QString sipAddress = cleanSipAddress(model->getSipAddress());
-      if (mObservers.remove(sipAddress, model) == 0)
-        qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(sipAddress);
+    model, &SipAddressObserver::destroyed, this, [this, model, cleanedSipAddress]() {
+      // Do not use `model` methods here. `model` is partially destroyed here!
+      if (mObservers.remove(cleanedSipAddress, model) == 0)
+        qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(cleanedSipAddress);
     });
 
   return model;
