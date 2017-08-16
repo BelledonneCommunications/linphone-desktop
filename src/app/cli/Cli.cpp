@@ -43,18 +43,29 @@ static void cliCall (QHash<QString, QString> &args) {
 
 static void cliJoinConference (QHash<QString, QString> &args) {
   const QString sipAddress = args.take("sip-address");
-  if (!args["default-display-name"].isEmpty()) {
-    const shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-    const shared_ptr<linphone::ProxyConfig> defaultProxyConfig = core->getDefaultProxyConfig();
-    shared_ptr<linphone::Address> address;
-    if (!defaultProxyConfig) {
-      address = core->getPrimaryContactParsed();
-      address->setDisplayName(::Utils::appStringToCoreString(args.take("default-display-name")));
-      core->setPrimaryContact(address->asString());
-    }
-  }
+  const shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Address> address;
+  address = core->getPrimaryContactParsed();
+  address->setDisplayName(::Utils::appStringToCoreString(args.take("display-name")));
+  core->setPrimaryContact(address->asString());
   args["method"] = QStringLiteral("join-conference");
   CoreManager::getInstance()->getCallsListModel()->launchAudioCall(sipAddress, args);
+}
+
+
+static void cliJoinConferenceAs (QHash<QString, QString> &args) {
+  const QString toSipAddress = args.take("sip-address");
+  const QString fromSipAddress = args.take("guest-sip-address");
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Address> currentSipAddress = core->getDefaultProxyConfig()->getIdentityAddress()->clone();
+  currentSipAddress->clean();
+  if (fromSipAddress!=::Utils::coreStringToAppString(currentSipAddress->asStringUriOnly())) {
+    qWarning() << QStringLiteral("guest sip address `%1` is not one of yours.")
+                  .arg(fromSipAddress);
+    return;
+  }
+  args["method"] = QStringLiteral("join-conference");
+  CoreManager::getInstance()->getCallsListModel()->launchAudioCall(toSipAddress, args);
 }
 
 static void cliInitiateConference (QHash<QString, QString> &args) {
@@ -182,7 +193,10 @@ Cli::Cli (QObject *parent) : QObject(parent) {
     { "sip-address", {} }, { "conference-id", {} }
   });
   addCommand("join-conference", tr("joinConferenceFunctionDescription"), ::cliJoinConference, {
-    { "sip-address", {} }, { "conference-id", {} }, { "default-display-name", {STRING, true} }
+    { "sip-address", {} }, { "conference-id", {} }, { "display-name", {} }
+  });
+  addCommand("join-conference-as", tr("joinConferenceAsFunctionDescription"), ::cliJoinConferenceAs, {
+    { "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
   });
 }
 
