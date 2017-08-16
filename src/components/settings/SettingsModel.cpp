@@ -29,6 +29,10 @@
 
 #include "SettingsModel.hpp"
 
+#ifndef DEFAULT_RLS_URI
+  #define DEFAULT_RLS_URI "sips:rls@sip.linphone.org"
+#endif // ifndef RLS_URI
+
 using namespace std;
 
 // =============================================================================
@@ -37,6 +41,7 @@ const string SettingsModel::UI_SECTION("ui");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
   mConfig = CoreManager::getInstance()->getCore()->getConfig();
+  configureRlsUri();
 }
 
 // =============================================================================
@@ -645,6 +650,62 @@ int SettingsModel::getDscpVideo () const {
 void SettingsModel::setDscpVideo (int dscp) {
   CoreManager::getInstance()->getCore()->setVideoDscp(dscp);
   emit dscpVideoChanged(dscp);
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getRlsUriEnabled () const {
+  return !!mConfig->getInt(UI_SECTION, "rls_uri_enabled", true);
+}
+
+void SettingsModel::setRlsUriEnabled (bool status) {
+  mConfig->setInt(UI_SECTION, "rls_uri_enabled", status);
+  mConfig->setString("sip", "rls_uri", status ? DEFAULT_RLS_URI : "");
+  emit rlsUriEnabledChanged(status);
+}
+
+static string getRlsUriDomain () {
+  static string domain;
+  if (!domain.empty())
+    return domain;
+
+  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(DEFAULT_RLS_URI);
+  Q_CHECK_PTR(linphoneAddress);
+  domain = linphoneAddress->getDomain();
+  return domain;
+}
+
+void SettingsModel::configureRlsUri () {
+  // Ensure rls uri is empty.
+  if (!getRlsUriEnabled()) {
+    mConfig->setString("sip", "rls_uri", "");
+    return;
+  }
+
+  // Set rls uri if necessary.
+  const string domain = getRlsUriDomain();
+  for (const auto &proxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
+    if (proxyConfig->getDomain() == domain) {
+      mConfig->setString("sip", "rls_uri", DEFAULT_RLS_URI);
+      return;
+    }
+
+  mConfig->setString("sip", "rls_uri", "");
+}
+
+void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfig> &proxyConfig) {
+  if (!getRlsUriEnabled()) {
+    mConfig->setString("sip", "rls_uri", "");
+    return;
+  }
+
+  const string domain = getRlsUriDomain();
+  if (proxyConfig->getDomain() == domain) {
+    mConfig->setString("sip", "rls_uri", DEFAULT_RLS_URI);
+    return;
+  }
+
+  mConfig->setString("sip", "rls_uri", "");
 }
 
 // =============================================================================

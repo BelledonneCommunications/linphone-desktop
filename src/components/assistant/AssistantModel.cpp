@@ -40,6 +40,12 @@ public:
   }
 
 private:
+  void createProxyConfig (const shared_ptr<linphone::AccountCreator> &creator) {
+    shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
+    Q_CHECK_PTR(proxyConfig);
+    CoreManager::getInstance()->getSettingsModel()->configureRlsUri(proxyConfig);
+  }
+
   void onCreateAccount (
     const shared_ptr<linphone::AccountCreator> &,
     linphone::AccountCreatorStatus status,
@@ -63,9 +69,7 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusAccountExist || status == linphone::AccountCreatorStatusAccountExistWithAlias) {
-      shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-      Q_CHECK_PTR(proxyConfig);
-
+      createProxyConfig(creator);
       emit mAssistant->loginStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)
@@ -84,10 +88,8 @@ private:
       status == linphone::AccountCreatorStatusAccountActivated ||
       status == linphone::AccountCreatorStatusAccountAlreadyActivated
     ) {
-      if (creator->getEmail().empty()) {
-        shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-        Q_CHECK_PTR(proxyConfig);
-      }
+      if (creator->getEmail().empty())
+        createProxyConfig(creator);
 
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
@@ -104,9 +106,7 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreatorStatusAccountActivated) {
-      shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-      Q_CHECK_PTR(proxyConfig);
-
+      createProxyConfig(creator);
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreatorStatusRequestFailed)

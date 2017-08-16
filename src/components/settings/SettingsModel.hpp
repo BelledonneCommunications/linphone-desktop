@@ -111,6 +111,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
   Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
 
+  Q_PROPERTY(bool rlsUriEnabled READ getRlsUriEnabled WRITE setRlsUriEnabled NOTIFY rlsUriEnabledChanged);
+
   // UI. -----------------------------------------------------------------------
 
   Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged);
@@ -272,6 +274,12 @@ public:
   int getDscpVideo () const;
   void setDscpVideo (int dscp);
 
+  bool getRlsUriEnabled () const;
+  void setRlsUriEnabled (bool status);
+
+  void configureRlsUri ();
+  void configureRlsUri (const std::shared_ptr<const linphone::ProxyConfig> &proxyConfig);
+
   // UI. -----------------------------------------------------------------------
 
   QString getSavedScreenshotsFolder () const;
@@ -374,6 +382,8 @@ signals:
   void dscpSipChanged (int dscp);
   void dscpAudioChanged (int dscp);
   void dscpVideoChanged (int dscp);
+
+  void rlsUriEnabledChanged (bool status);
 
   // UI. -----------------------------------------------------------------------
 

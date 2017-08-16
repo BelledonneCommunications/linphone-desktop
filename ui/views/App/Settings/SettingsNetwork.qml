@@ -97,6 +97,31 @@ TabContainer {
     }
 
     // -------------------------------------------------------------------------
+    // Presence.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('presenceTitle')
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('rlsUriLabel')
+
+          ExclusiveButtons {
+            selectedButton: Number(!SettingsModel.rlsUriEnabled)
+            texts: [
+              qsTr('rlsUriAuto'),
+              qsTr('rlsUriDisabled')
+            ]
+
+            onClicked: SettingsModel.rlsUriEnabled = !button
+          }
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // Network protocol and ports.
     // -------------------------------------------------------------------------
 

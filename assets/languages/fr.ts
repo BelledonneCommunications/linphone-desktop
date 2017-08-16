@@ -1238,6 +1238,22 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>enableAdaptiveRateControlLabel</source>
         <translation>Activer le contrôle de débit adaptif</translation>
     </message>
+    <message>
+        <source>presenceTitle</source>
+        <translation>Présence</translation>
+    </message>
+    <message>
+        <source>rlsUriLabel</source>
+        <translation>Utiliser l&apos;URI RLS</translation>
+    </message>
+    <message>
+        <source>rlsUriAuto</source>
+        <translation>AUTO</translation>
+    </message>
+    <message>
+        <source>rlsUriDisabled</source>
+        <translation>JAMAIS</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

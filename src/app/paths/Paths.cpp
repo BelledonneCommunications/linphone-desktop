@@ -48,10 +48,6 @@
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
 #define PATH_ZRTP_SECRETS "/zidcache"
 
-#ifndef RLS_URI
-  #define RLS_URI "sips:rls@sip.linphone.org"
-#endif // ifndef RLS_URI
-
 using namespace std;
 
 // =============================================================================
@@ -271,14 +267,6 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
   }
 }
 
-inline void setRlsUri (const QString &configPath) {
-  shared_ptr<linphone::Config> config = linphone::Config::newWithFactory(::Utils::appStringToCoreString(configPath), "");
-  if (config->getString("sip", "rls_uri", "").empty()) {
-    config->setString("sip", "rls_uri", RLS_URI);
-    config->sync();
-  }
-}
-
 void Paths::migrate () {
   QString newPath = ::getAppConfigFilePath();
   QString oldBaseDir = QSysInfo::productType() == "windows"
@@ -286,11 +274,8 @@ void Paths::migrate () {
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   QString oldPath = oldBaseDir + "/.linphonerc";
 
-  if (!::filePathExists(newPath) && ::filePathExists(oldPath)) {
+  if (!::filePathExists(newPath) && ::filePathExists(oldPath))
     ::migrateConfigurationFile(oldPath, newPath);
-    /* Define RLS uri so that presence switches from peer-to-peer mode to list mode. */
-    ::setRlsUri(newPath);
-  }
 
   newPath = ::getAppCallHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-call-history.db";

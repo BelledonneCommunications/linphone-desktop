@@ -1240,6 +1240,22 @@ your friend&apos;s SIP address or username.</translation>
         <source>enableAdaptiveRateControlLabel</source>
         <translation>Enable adaptive rate control</translation>
     </message>
+    <message>
+        <source>presenceTitle</source>
+        <translation>Presence</translation>
+    </message>
+    <message>
+        <source>rlsUriLabel</source>
+        <translation>Use RLS URI</translation>
+    </message>
+    <message>
+        <source>rlsUriAuto</source>
+        <translation>AUTO</translation>
+    </message>
+    <message>
+        <source>rlsUriDisabled</source>
+        <translation>NEVER</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

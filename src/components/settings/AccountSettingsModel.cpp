@@ -61,7 +61,8 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
   Q_CHECK_PTR(proxyConfig);
 
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  CoreManager *coreManager = CoreManager::getInstance();
+  shared_ptr<linphone::Core> core = coreManager->getCore();
 
   list<shared_ptr<linphone::ProxyConfig> > proxyConfigs = core->getProxyConfigList();
   if (find(proxyConfigs.cbegin(), proxyConfigs.cend(), proxyConfig) != proxyConfigs.cend()) {
@@ -70,12 +71,15 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::Pr
         .arg(::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
       return false;
     }
-  } else if (core->addProxyConfig(proxyConfig) == -1) {
-    qWarning() << QStringLiteral("Unable to add proxy config: `%1`.")
-      .arg(::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
-    return false;
+    coreManager->getSettingsModel()->configureRlsUri();
+  } else {
+    if (core->addProxyConfig(proxyConfig) == -1) {
+      qWarning() << QStringLiteral("Unable to add proxy config: `%1`.")
+        .arg(::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
+      return false;
+    }
+    coreManager->getSettingsModel()->configureRlsUri(proxyConfig);
   }
-
   emit accountSettingsUpdated();
 
   return true;
@@ -115,7 +119,10 @@ void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::Pro
 void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
   Q_CHECK_PTR(proxyConfig);
 
-  CoreManager::getInstance()->getCore()->removeProxyConfig(proxyConfig);
+  CoreManager *coreManager = CoreManager::getInstance();
+  coreManager->getCore()->removeProxyConfig(proxyConfig);
+  coreManager->getSettingsModel()->configureRlsUri();
+
   emit accountSettingsUpdated();
 }
 
