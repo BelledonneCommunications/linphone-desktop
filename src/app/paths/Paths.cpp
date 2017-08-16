@@ -48,6 +48,10 @@
 #define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
 #define PATH_ZRTP_SECRETS "/zidcache"
 
+#ifndef RLS_URI
+  #define RLS_URI "sips:rls@sip.linphone.org"
+#endif // ifndef RLS_URI
+
 using namespace std;
 
 // =============================================================================
@@ -267,10 +271,10 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
   }
 }
 
-static void setRlsUri (const QString &configPath) {
+inline void setRlsUri (const QString &configPath) {
   shared_ptr<linphone::Config> config = linphone::Config::newWithFactory(::Utils::appStringToCoreString(configPath), "");
   if (config->getString("sip", "rls_uri", "").empty()) {
-    config->setString("sip", "rls_uri", "sips:rls@sip.linphone.org");
+    config->setString("sip", "rls_uri", RLS_URI);
     config->sync();
   }
 }
