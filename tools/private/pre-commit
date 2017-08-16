@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Check QML files, quit on failure.
-sh './tools/check_qml_syntax'
+'./tools/check_qml_syntax'
 
 if [[ $? != 0 ]] ; then
     exit 1
@@ -10,6 +10,6 @@ fi
 printf '\n'
 
 # Run unit tests.
-sh './tools/test_qml'
+'./tools/test_qml'
 
 exit $?
