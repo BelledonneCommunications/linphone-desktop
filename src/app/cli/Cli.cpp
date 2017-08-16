@@ -43,28 +43,39 @@ static void cliCall (QHash<QString, QString> &args) {
 
 static void cliJoinConference (QHash<QString, QString> &args) {
   const QString sipAddress = args.take("sip-address");
-  const shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Address> address;
-  address = core->getPrimaryContactParsed();
-  address->setDisplayName(::Utils::appStringToCoreString(args.take("display-name")));
-  core->setPrimaryContact(address->asString());
+
+  CoreManager *coreManager = CoreManager::getInstance();
+  const shared_ptr<linphone::Core> core = coreManager->getCore();
+
+  {
+    shared_ptr<linphone::Address> address = core->getPrimaryContactParsed();
+    address->setDisplayName(::Utils::appStringToCoreString(args.take("display-name")));
+    core->setPrimaryContact(address->asString());
+  }
+
   args["method"] = QStringLiteral("join-conference");
-  CoreManager::getInstance()->getCallsListModel()->launchAudioCall(sipAddress, args);
+  coreManager->getCallsListModel()->launchAudioCall(sipAddress, args);
 }
 
 static void cliJoinConferenceAs (QHash<QString, QString> &args) {
-  const QString toSipAddress = args.take("sip-address");
   const QString fromSipAddress = args.take("guest-sip-address");
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Address> currentSipAddress = core->getDefaultProxyConfig()->getIdentityAddress()->clone();
-  currentSipAddress->clean();
-  if (fromSipAddress != ::Utils::coreStringToAppString(currentSipAddress->asStringUriOnly())) {
-    qWarning() << QStringLiteral("guest sip address `%1` is not one of yours.")
-      .arg(fromSipAddress);
-    return;
+  const QString toSipAddress = args.take("sip-address");
+
+  CoreManager *coreManager = CoreManager::getInstance();
+  shared_ptr<linphone::Core> core = coreManager->getCore();
+
+  {
+    shared_ptr<linphone::Address> currentSipAddress = core->getDefaultProxyConfig()->getIdentityAddress()->clone();
+    currentSipAddress->clean();
+    if (fromSipAddress != ::Utils::coreStringToAppString(currentSipAddress->asStringUriOnly())) {
+      qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default proxy config.")
+        .arg(fromSipAddress);
+      return;
+    }
   }
+
   args["method"] = QStringLiteral("join-conference");
-  CoreManager::getInstance()->getCallsListModel()->launchAudioCall(toSipAddress, args);
+  coreManager->getCallsListModel()->launchAudioCall(toSipAddress, args);
 }
 
 static void cliInitiateConference (QHash<QString, QString> &args) {
