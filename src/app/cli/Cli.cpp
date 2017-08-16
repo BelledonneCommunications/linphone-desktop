@@ -43,11 +43,16 @@ static void cliCall (QHash<QString, QString> &args) {
 
 static void cliJoinConference (QHash<QString, QString> &args) {
   const QString sipAddress = args.take("sip-address");
-  const string displayName = ::Utils::appStringToCoreString(args.take("display-name"));
-  shared_ptr<linphone::ProxyConfig> proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
-  shared_ptr<linphone::Address> address = proxyConfig->getIdentityAddress()->clone();
-  address->setDisplayName(displayName);
-  proxyConfig->setIdentityAddress(address);
+  if (!args["default-display-name"].isEmpty()) {
+    const shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+    const shared_ptr<linphone::ProxyConfig> defaultProxyConfig = core->getDefaultProxyConfig();
+    shared_ptr<linphone::Address> address;
+    if (!defaultProxyConfig) {
+      address = core->getPrimaryContactParsed();
+      address->setDisplayName(::Utils::appStringToCoreString(args.take("default-display-name")));
+      core->setPrimaryContact(address->asString());
+    }
+  }
   args["method"] = QStringLiteral("join-conference");
   CoreManager::getInstance()->getCallsListModel()->launchAudioCall(sipAddress, args);
 }
@@ -151,6 +156,7 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
 
 void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) const {
   QHash<QString, QString> args;
+  //TODO: check if there is too much headers.
   for (const auto &argName : mArgsScheme.keys()) {
     const string header = address->getHeader(::Utils::appStringToCoreString(argName));
     args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), header.length()));
@@ -176,7 +182,7 @@ Cli::Cli (QObject *parent) : QObject(parent) {
     { "sip-address", {} }, { "conference-id", {} }
   });
   addCommand("join-conference", tr("joinConferenceFunctionDescription"), ::cliJoinConference, {
-    { "sip-address", {} }, { "conference-id", {} }, { "display-name", {STRING, true } }
+    { "sip-address", {} }, { "conference-id", {} }, { "default-display-name", {STRING, true} }
   });
 }
 
@@ -227,7 +233,6 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) const {
     return;
   }
 
-  // TODO: Check if there is any header when the `method` header is missing.
   const QString functionName = ::Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
     ? QStringLiteral("call")
     : ::Utils::coreStringToAppString(address->getHeader("method"));
