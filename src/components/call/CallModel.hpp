@@ -85,7 +85,7 @@ public:
 
   Q_ENUM(CallEncryption);
 
-  CallModel (std::shared_ptr<linphone::Call> linphoneCall);
+  CallModel (std::shared_ptr<linphone::Call> call);
   ~CallModel ();
 
   std::shared_ptr<linphone::Call> getCall () const {
