@@ -19,13 +19,13 @@ cd $SCRIPT_DIR/..
 
 if ! [ -x "$( command -v "$LINTER" )" ]; then
   printf "${RED}Unable to find ${LINTER}.${NC}\n"
-  exit 1
+  exit 0
 fi
 
 "${LINTER}" -v 2> /dev/null 1>&2
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to check qml syntax.${NC}\n"
-  exit 1
+  exit 0
 fi
 
 printf "${BLUE}Checking qml files...${NC}\n"
