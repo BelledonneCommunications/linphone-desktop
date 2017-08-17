@@ -18,7 +18,7 @@ cd $SCRIPT_DIR/..
 # ==============================================================================
 
 if ! [ -x "$( command -v "$LINTER" )" ]; then
-  printf "${RED}Unable to find `${LINTER}`.${NC}\n"
+  printf "${RED}Unable to find ${LINTER}.${NC}\n"
   exit 1
 fi
 
