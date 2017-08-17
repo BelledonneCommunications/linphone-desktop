@@ -24,7 +24,7 @@ cd $SCRIPT_DIR/..
 # ==============================================================================
 
 if ! [ -x "$( command -v "$TEST_RUNNER" )" ]; then
-  printf "${RED}Unable to found `$TEST_RUNNER`. No tests can be executed.${NC}\n"
+  printf "${RED}Unable to find `$TEST_RUNNER`. No tests can be executed.${NC}\n"
   exit 0
 fi
 

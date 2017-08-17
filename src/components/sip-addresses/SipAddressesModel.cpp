@@ -327,7 +327,7 @@ void SipAddressesModel::handlePresenceReceived (
 void SipAddressesModel::handleAllEntriesRemoved (const QString &sipAddress) {
   auto it = mSipAddresses.find(sipAddress);
   if (it == mSipAddresses.end()) {
-    qWarning() << QStringLiteral("Unable to found sip address: `%1`.").arg(sipAddress);
+    qWarning() << QStringLiteral("Unable to find sip address: `%1`.").arg(sipAddress);
     return;
   }
 
