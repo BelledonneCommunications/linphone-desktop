@@ -27,6 +27,7 @@
 #include <QFileInfo>
 #include <QTimer>
 #include <QUuid>
+#include <QMimeDatabase>
 
 #include "../../app/App.hpp"
 #include "../../app/paths/Paths.hpp"
@@ -392,8 +393,15 @@ void ChatModel::sendFileMessage (const QString &path) {
   }
 
   shared_ptr<linphone::Content> content = CoreManager::getInstance()->getCore()->createContent();
-  content->setType("application");
-  content->setSubtype("octet-stream");
+  {
+    QStringList mimeType = QMimeDatabase().mimeTypeForFile(path).name().split('/');
+    if (mimeType.length() != 2) {
+      qWarning() << QStringLiteral("Unable to get supported mime type for: `%1`.").arg(path);
+      return;
+    }
+    content->setType(::Utils::appStringToCoreString(mimeType[0]));
+    content->setSubtype(::Utils::appStringToCoreString(mimeType[1]));
+  }
 
   content->setSize(static_cast<size_t>(fileSize));
   content->setName(::Utils::appStringToCoreString(QFileInfo(file).fileName()));
