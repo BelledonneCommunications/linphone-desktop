@@ -60,18 +60,22 @@ static void cliJoinConference (QHash<QString, QString> &args) {
 static void cliJoinConferenceAs (QHash<QString, QString> &args) {
   const QString fromSipAddress = args.take("guest-sip-address");
   const QString toSipAddress = args.take("sip-address");
-
   CoreManager *coreManager = CoreManager::getInstance();
-  shared_ptr<linphone::Core> core = coreManager->getCore();
+  shared_ptr<linphone::ProxyConfig> proxyConfig = coreManager->getCore()->getDefaultProxyConfig();
 
-  {
-    shared_ptr<linphone::Address> currentSipAddress = core->getDefaultProxyConfig()->getIdentityAddress()->clone();
-    currentSipAddress->clean();
-    if (fromSipAddress != ::Utils::coreStringToAppString(currentSipAddress->asStringUriOnly())) {
-      qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default proxy config.")
-        .arg(fromSipAddress);
-      return;
-    }
+  if (!proxyConfig) {
+    qWarning() << QStringLiteral("You have no proxy config.");
+    return;
+  }
+
+  const shared_ptr<const linphone::Address> currentSipAddress = proxyConfig->getIdentityAddress();
+  const shared_ptr<const linphone::Address> askedSipAddress = linphone::Factory::get()->createAddress(
+                                                          ::Utils::appStringToCoreString(fromSipAddress)
+                                                          );
+  if (!currentSipAddress->weakEqual(askedSipAddress)) {
+    qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default proxy config.")
+                  .arg(fromSipAddress);
+    return;
   }
 
   args["method"] = QStringLiteral("join-conference");
@@ -124,7 +128,8 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
     qWarning() << QStringLiteral("Unable to join created conference: `%1`.").arg(id);
     return;
   }
-
+  App *app = App::getInstance();
+  app->smartShowWindow(app->getCallsWindow());
   // TODO: Set the view to the "waiting call view".
 }
 
