@@ -70,11 +70,11 @@ static void cliJoinConferenceAs (QHash<QString, QString> &args) {
 
   const shared_ptr<const linphone::Address> currentSipAddress = proxyConfig->getIdentityAddress();
   const shared_ptr<const linphone::Address> askedSipAddress = linphone::Factory::get()->createAddress(
-                                                          ::Utils::appStringToCoreString(fromSipAddress)
-                                                          );
+      ::Utils::appStringToCoreString(fromSipAddress)
+    );
   if (!currentSipAddress->weakEqual(askedSipAddress)) {
     qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default proxy config.")
-                  .arg(fromSipAddress);
+      .arg(fromSipAddress);
     return;
   }
 
