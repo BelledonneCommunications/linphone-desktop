@@ -150,6 +150,9 @@ void App::initContentApp () {
 
     mCallsWindow = nullptr;
     mSettingsWindow = nullptr;
+    mNotifier = nullptr;
+    mColors = nullptr;
+    mSystemTrayIcon = nullptr;
 
     CoreManager::uninit();
 
