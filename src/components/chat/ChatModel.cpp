@@ -42,7 +42,9 @@
 #define THUMBNAIL_IMAGE_FILE_WIDTH 100
 
 // Not enabled by default.
-#define LIMIT_FILE_SIZE 0
+#ifndef LIMIT_FILE_SIZE
+  #define LIMIT_FILE_SIZE 0
+#endif
 
 // In Bytes. (500)
 #define FILE_SIZE_LIMIT 524288000
