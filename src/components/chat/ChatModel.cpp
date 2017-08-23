@@ -41,7 +41,10 @@
 #define THUMBNAIL_IMAGE_FILE_HEIGHT 100
 #define THUMBNAIL_IMAGE_FILE_WIDTH 100
 
-// In Bytes.
+// Not enabled by default.
+#define LIMIT_FILE_SIZE 0
+
+// In Bytes. (500)
 #define FILE_SIZE_LIMIT 524288000
 
 using namespace std;
@@ -387,10 +390,13 @@ void ChatModel::sendFileMessage (const QString &path) {
     return;
 
   qint64 fileSize = file.size();
-  if (fileSize > FILE_SIZE_LIMIT) {
-    qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(FILE_SIZE_LIMIT);
-    return;
-  }
+
+  #if LIMIT_FILE_SIZE
+    if (fileSize > FILE_SIZE_LIMIT) {
+      qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(FILE_SIZE_LIMIT);
+      return;
+    }
+  #endif
 
   shared_ptr<linphone::Content> content = CoreManager::getInstance()->getCore()->createContent();
   {
