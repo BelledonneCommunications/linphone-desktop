@@ -62,7 +62,7 @@ Logger *Logger::mInstance = nullptr;
 
 // -----------------------------------------------------------------------------
 
-inline QByteArray getFormattedCurrentTime () {
+static inline QByteArray getFormattedCurrentTime () {
   return QDateTime::currentDateTime().toString("HH:mm:ss:zzz").toLocal8Bit();
 }
 

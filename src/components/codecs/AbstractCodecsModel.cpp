@@ -29,7 +29,7 @@ using namespace std;
 
 // =============================================================================
 
-inline shared_ptr<linphone::PayloadType> getCodecFromMap (const QVariantMap &map) {
+static inline shared_ptr<linphone::PayloadType> getCodecFromMap (const QVariantMap &map) {
   return map.value("__codec").value<shared_ptr<linphone::PayloadType> >();
 }
 

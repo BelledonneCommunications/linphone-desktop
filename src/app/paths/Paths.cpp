@@ -52,12 +52,12 @@ using namespace std;
 
 // =============================================================================
 
-inline bool dirPathExists (const QString &path) {
+static inline bool dirPathExists (const QString &path) {
   QDir dir(path);
   return dir.exists();
 }
 
-inline bool filePathExists (const QString &path) {
+static inline bool filePathExists (const QString &path) {
   QFileInfo info(path);
   if (!::dirPathExists(info.path()))
     return false;
@@ -66,13 +66,13 @@ inline bool filePathExists (const QString &path) {
   return file.exists();
 }
 
-inline void ensureDirPathExists (const QString &path) {
+static inline void ensureDirPathExists (const QString &path) {
   QDir dir(path);
   if (!dir.exists() && !dir.mkpath(path))
     qFatal("Unable to access at directory: `%s`", path.toStdString().c_str());
 }
 
-inline void ensureFilePathExists (const QString &path) {
+static inline void ensureFilePathExists (const QString &path) {
   QFileInfo info(path);
   ::ensureDirPathExists(info.path());
 
@@ -81,27 +81,27 @@ inline void ensureFilePathExists (const QString &path) {
     qFatal("Unable to access at path: `%s`", path.toStdString().c_str());
 }
 
-inline string getReadableDirPath (const QString &dirname) {
+static inline string getReadableDirPath (const QString &dirname) {
   return ::Utils::appStringToCoreString(QDir::toNativeSeparators(dirname));
 }
 
-inline string getWritableDirPath (const QString &dirname) {
+static inline string getWritableDirPath (const QString &dirname) {
   ::ensureDirPathExists(dirname);
   return ::getReadableDirPath(dirname);
 }
 
-inline string getReadableFilePath (const QString &filename) {
+static inline string getReadableFilePath (const QString &filename) {
   return ::Utils::appStringToCoreString(QDir::toNativeSeparators(filename));
 }
 
-inline string getWritableFilePath (const QString &filename) {
+static inline string getWritableFilePath (const QString &filename) {
   ::ensureFilePathExists(filename);
   return ::getReadableFilePath(filename);
 }
 
 // -----------------------------------------------------------------------------
 
-inline QDir getAppPackageDir () {
+static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == "MacOS") {
     dir.cdUp();
@@ -111,47 +111,47 @@ inline QDir getAppPackageDir () {
   return dir;
 }
 
-inline QString getAppPackageDataDirPath () {
+static inline QString getAppPackageDataDirPath () {
   QDir dir = ::getAppPackageDir();
   dir.cd("share");
   return dir.absolutePath();
 }
 
-inline QString getAppPackageMsPluginsDirPath () {
+static inline QString getAppPackageMsPluginsDirPath () {
   QDir dir = ::getAppPackageDir();
   dir.cd(MSPLUGINS_DIR);
   return dir.absolutePath();
 }
 
-inline QString getAppAssistantConfigDirPath () {
+static inline QString getAppAssistantConfigDirPath () {
   return ::getAppPackageDataDirPath() + PATH_ASSISTANT_CONFIG;
 }
 
-inline QString getAppConfigFilePath () {
+static inline QString getAppConfigFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PATH_CONFIG;
 }
 
-inline QString getAppCallHistoryFilePath () {
+static inline QString getAppCallHistoryFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CALL_HISTORY_LIST;
 }
 
-inline QString getAppFactoryConfigFilePath () {
+static inline QString getAppFactoryConfigFilePath () {
   return ::getAppPackageDataDirPath() + PATH_FACTORY_CONFIG;
 }
 
-inline QString getAppPluginsDirPath () {
+static inline QString getAppPluginsDirPath () {
   return ::getAppPackageDataDirPath() + PATH_PLUGINS;
 }
 
-inline QString getAppRootCaFilePath () {
+static inline QString getAppRootCaFilePath () {
   return ::getAppPackageDataDirPath() + PATH_ROOT_CA;
 }
 
-inline QString getAppFriendsFilePath () {
+static inline QString getAppFriendsFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_FRIENDS_LIST;
 }
 
-inline QString getAppMessageHistoryFilePath () {
+static inline QString getAppMessageHistoryFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_MESSAGE_HISTORY_LIST;
 }
 

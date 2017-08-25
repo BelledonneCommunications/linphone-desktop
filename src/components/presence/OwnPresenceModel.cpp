@@ -45,7 +45,7 @@ void OwnPresenceModel::setPresenceStatus (Presence::PresenceStatus status) {
 
 // -----------------------------------------------------------------------------
 
-inline void addBuildStatus (QVariantList &list, Presence::PresenceStatus status) {
+static inline void addBuildStatus (QVariantList &list, Presence::PresenceStatus status) {
   Presence::PresenceLevel level = Presence::getPresenceLevel(status);
 
   QVariantMap map;

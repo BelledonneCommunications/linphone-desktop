@@ -37,7 +37,7 @@ using namespace std;
 
 // =============================================================================
 
-inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::Call> &call) {
+static inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::Call> &call) {
   auto it = find_if(list.begin(), list.end(), [call](CallModel *callModel) {
         return call == callModel->getCall();
       });
@@ -47,7 +47,7 @@ inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::C
   return static_cast<int>(distance(list.begin(), it));
 }
 
-inline int findCallIndex (QList<CallModel *> &list, const CallModel &callModel) {
+static inline int findCallIndex (QList<CallModel *> &list, const CallModel &callModel) {
   return ::findCallIndex(list, callModel.getCall());
 }
 
@@ -143,7 +143,7 @@ void CallsListModel::terminateAllCalls () const {
 
 // -----------------------------------------------------------------------------
 
-inline void joinConference (const shared_ptr<linphone::Call> &call) {
+static void joinConference (const shared_ptr<linphone::Call> &call) {
   if (call->getToHeader("method") != "join-conference")
     return;
 

@@ -38,7 +38,7 @@ using namespace std;
 
 #if LINPHONE_FRIDAY
 
-  inline bool isLinphoneFriday () {
+  static inline bool isLinphoneFriday () {
     return QDate::currentDate().dayOfWeek() == 5;
   }
 

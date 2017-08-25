@@ -53,27 +53,27 @@ using namespace std;
 
 // =============================================================================
 
-inline QString getFileId (const shared_ptr<linphone::ChatMessage> &message) {
+static inline QString getFileId (const shared_ptr<linphone::ChatMessage> &message) {
   return ::Utils::coreStringToAppString(message->getAppdata()).section(':', 0, 0);
 }
 
-inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message) {
+static inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message) {
   return ::Utils::coreStringToAppString(message->getAppdata()).section(':', 1);
 }
 
-inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
+static inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
   const QString path = ::getDownloadPath(message);
   return !path.isEmpty() && QFileInfo(path).isFile();
 }
 
-inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
+static inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
   QString fileId = ::getFileId(message);
   if (!fileId.isEmpty() && !dest.contains("thumbnail"))
     dest["thumbnail"] = QStringLiteral("image://%1/%2")
       .arg(ThumbnailProvider::PROVIDER_ID).arg(fileId);
 }
 
-inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
+static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
   if (!message->getAppdata().empty())
     return;
 
@@ -117,7 +117,7 @@ inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
   message->setAppdata(::Utils::appStringToCoreString(fileId));
 }
 
-inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
+static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
   if (message && message->getFileTransferInformation()) {
     message->cancelFileTransfer();
 

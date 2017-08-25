@@ -200,7 +200,7 @@ void SettingsModel::setVideoFramerate (int framerate) {
 
 // -----------------------------------------------------------------------------
 
-inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const linphone::VideoDefinition> &definition) {
+static inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const linphone::VideoDefinition> &definition) {
   QVariantMap map;
 
   if (!definition) {
@@ -298,7 +298,7 @@ bool SettingsModel::getLimeIsSupported () const {
 
 // -----------------------------------------------------------------------------
 
-inline QVariant buildEncryptionDescription (SettingsModel::MediaEncryption encryption, const char *description) {
+static inline QVariant buildEncryptionDescription (SettingsModel::MediaEncryption encryption, const char *description) {
   return QVariantList() << encryption << description;
 }
 

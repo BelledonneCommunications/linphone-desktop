@@ -589,7 +589,7 @@ QVariantList CallModel::getVideoStats () const {
 
 // -----------------------------------------------------------------------------
 
-inline QVariantMap createStat (const QString &key, const QString &value) {
+static inline QVariantMap createStat (const QString &key, const QString &value) {
   QVariantMap m;
   m["key"] = key;
   m["value"] = value;

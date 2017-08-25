@@ -61,11 +61,11 @@ using namespace std;
 
 // =============================================================================
 
-inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
+static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
   return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
 }
 
-inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
+static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
   string configPath = Paths::getConfigFilePath(parser.value("config"), false);
   if (Paths::filePathExists(configPath))
     return linphone::Config::newWithFactory(configPath, "");
@@ -114,7 +114,7 @@ App::~App () {
 
 // -----------------------------------------------------------------------------
 
-inline QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char *path) {
+static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char *path) {
   QQmlComponent component(engine, QUrl(path));
   if (component.isError()) {
     qWarning() << component.errors();
@@ -130,7 +130,7 @@ inline QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 
 // -----------------------------------------------------------------------------
 
-inline void activeSplashScreen (QQmlApplicationEngine *engine) {
+static void activeSplashScreen (QQmlApplicationEngine *engine) {
   qInfo() << QStringLiteral("Open splash screen...");
   QQuickWindow *splashScreen = ::createSubWindow(engine, QML_VIEW_SPLASH_SCREEN);
   QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {

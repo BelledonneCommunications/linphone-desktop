@@ -42,7 +42,7 @@ using namespace std;
 // =============================================================================
 
 template<class T>
-inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const string &value) {
+static inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const string &value) {
   auto it = find_if(list.cbegin(), list.cend(), [&value](const shared_ptr<T> &entry) {
         return value == entry->getValue();
       });
@@ -51,11 +51,11 @@ inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const s
 }
 
 template<class T>
-inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const QString &value) {
+static inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T> > &list, const QString &value) {
   return ::findBelCardValue(list, ::Utils::appStringToCoreString(value));
 }
 
-inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
+static inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
   return !photo->getValue().compare(0, sizeof(VCARD_SCHEME) - 1, VCARD_SCHEME);
 }
 
@@ -126,7 +126,7 @@ QString VcardModel::getAvatar () const {
   );
 }
 
-inline QString getFileIdFromAppPath (const QString &path) {
+static inline QString getFileIdFromAppPath (const QString &path) {
   const static QString appPrefix = QStringLiteral("image://%1/").arg(AvatarProvider::PROVIDER_ID);
   return path.mid(appPrefix.length());
 }
@@ -202,7 +202,7 @@ void VcardModel::setUsername (const QString &username) {
 
 // -----------------------------------------------------------------------------
 
-inline shared_ptr<belcard::BelCardAddress> getOrCreateBelCardAddress (shared_ptr<belcard::BelCard> belcard) {
+static inline shared_ptr<belcard::BelCardAddress> getOrCreateBelCardAddress (shared_ptr<belcard::BelCard> belcard) {
   list<shared_ptr<belcard::BelCardAddress> > addresses = belcard->getAddresses();
   shared_ptr<belcard::BelCardAddress> address;
 

@@ -30,7 +30,7 @@ using namespace std;
 
 // =============================================================================
 
-inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi (linphone::RegistrationState state) {
+static inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi (linphone::RegistrationState state) {
   switch (state) {
     case linphone::RegistrationStateNone:
     case linphone::RegistrationStateCleared:
