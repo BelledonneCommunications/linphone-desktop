@@ -58,7 +58,8 @@ class Cli : public QObject {
     Command () = default;
     Command (
       const QString &functionName,
-      const QString &description,
+      const QString &functionDescription,
+      const QString &cliDescription,
       Function function,
       const QHash<QString, Argument> &argsScheme
     );
@@ -66,9 +67,19 @@ class Cli : public QObject {
     void execute (QHash<QString, QString> &args) const;
     void executeUri (const std::shared_ptr<linphone::Address> &address) const;
 
+    QString getFunctionDescription() {
+      return mFunctionDescription;
+    }
+
+    QString getCliDescription() {
+      return mCliDescription;
+    }
+
+
   private:
+    QString mFunctionDescription;
+    QString mCliDescription;
     QString mFunctionName;
-    QString mDescription;
     Function mFunction = nullptr;
     QHash<QString, Argument> mArgsScheme;
   };
@@ -85,10 +96,13 @@ public:
 
   void executeCommand (const QString &command, CommandFormat *format = nullptr) const;
 
+  void showHelp();
+
 private:
   void addCommand (
     const QString &functionName,
-    const QString &description,
+    const QString &functionDescription,
+    const QString &cliDescription,
     Function function,
     const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>()
   );

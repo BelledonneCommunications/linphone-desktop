@@ -100,6 +100,12 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
     mParser->showHelp();
   }
 
+  if(mParser->isSet("cli-help")){
+    mCli = new Cli(this);
+    mCli->showHelp();
+    ::exit(EXIT_SUCCESS);
+  }
+
   if (mParser->isSet("version"))
     mParser->showVersion();
 
@@ -327,11 +333,12 @@ void App::createParser () {
 
   mParser = new QCommandLineParser();
   mParser->setApplicationDescription(tr("applicationDescription"));
+  mParser->addPositionalArgument("command",tr("commandLineDescription"),"[command]");
   mParser->addOptions({
     { { "h", "help" }, tr("commandLineOptionHelp") },
+    { "cli-help", tr("commandLineCliHelp") },
     { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
-    { { "c", "cmd" }, tr("commandLineOptionCmd"), tr("commandLineOptionCmdArg") },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS

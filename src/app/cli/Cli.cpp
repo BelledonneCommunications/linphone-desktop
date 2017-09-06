@@ -137,12 +137,14 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 
 Cli::Command::Command (
   const QString &functionName,
-  const QString &description,
+  const QString &functionDescription,
+  const QString &cliDescription,
   Cli::Function function,
   const QHash<QString, Cli::Argument> &argsScheme
 ) :
   mFunctionName(functionName),
-  mDescription(description),
+  mFunctionDescription(functionDescription),
+  mCliDescription(cliDescription),
   mFunction(function),
   mArgsScheme(argsScheme) {}
 
@@ -200,17 +202,17 @@ QRegExp Cli::mRegExpArgs("(?:(?:([\\w-]+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\
 QRegExp Cli::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 Cli::Cli (QObject *parent) : QObject(parent) {
-  addCommand("show", tr("showFunctionDescription"), ::cliShow);
-  addCommand("call", tr("showFunctionCall"), ::cliCall, {
+  addCommand("show", tr("showFunctionDescription"), tr("showCliDescription"), ::cliShow);
+  addCommand("call", tr("callFunctionDescription"), tr("callCliDescription"), ::cliCall, {
     { "sip-address", {} }
   });
-  addCommand("initiate-conference", tr("initiateConferenceFunctionDescription"), ::cliInitiateConference, {
+  addCommand("initiate-conference", tr("initiateConferenceFunctionDescription"), tr("initiateConferenceCliDescription"), ::cliInitiateConference, {
     { "sip-address", {} }, { "conference-id", {} }
   });
-  addCommand("join-conference", tr("joinConferenceFunctionDescription"), ::cliJoinConference, {
+  addCommand("join-conference", tr("joinConferenceFunctionDescription"), tr("joinConferenceCliDescription"), ::cliJoinConference, {
     { "sip-address", {} }, { "conference-id", {} }, { "display-name", {} }
   });
-  addCommand("join-conference-as", tr("joinConferenceAsFunctionDescription"), ::cliJoinConferenceAs, {
+  addCommand("join-conference-as", tr("joinConferenceAsFunctionDescription"), tr("joinConferenceAsCliDescription"), ::cliJoinConferenceAs, {
     { "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
   });
 }
@@ -219,14 +221,22 @@ Cli::Cli (QObject *parent) : QObject(parent) {
 
 void Cli::addCommand (
   const QString &functionName,
-  const QString &description,
+  const QString &functionDescription,
+  const QString &cliDescription,
   Function function,
   const QHash<QString, Argument> &argsScheme
 ) {
-  if (mCommands.contains(functionName))
+  if (mCommands.contains(functionName)) {
     qWarning() << QStringLiteral("Command already exists: `%1`.").arg(functionName);
-  else
-    mCommands[functionName] = Cli::Command(functionName, description, function, argsScheme);
+    return;
+  }
+  mCommands[functionName] = Cli::Command(
+    functionName,
+    functionDescription,
+    cliDescription,
+    function,
+    argsScheme
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,6 +282,104 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) const {
   }
 
   mCommands[functionName].executeUri(address);
+}
+
+QString splitWord(QString word, int &curPos, const int lineLength, const QString &padding) {
+  QString out;
+  out += word.mid(0,lineLength - curPos) + "\n" + padding;
+  curPos = padding.length();
+  word = word.mid(lineLength - curPos);
+  while(word.length() > lineLength - curPos) {
+    out += word.mid(0,lineLength - curPos);
+    word = word.mid(lineLength - curPos);
+    out += "\n" + padding;
+  }
+  out += word;
+  curPos = word.length() + padding.length();
+  return out;
+}
+
+QString indentedWord(QString word, int &curPos, const int lineLength, const QString &padding){
+  QString out;
+  if (curPos + word.length() > lineLength ) {
+    if (padding.length() + word.length() > lineLength) {
+      out += splitWord(word, curPos, lineLength, padding);
+    } else  {
+      out += QStringLiteral("\n");
+      out += padding + word;
+      curPos = padding.length();
+    }
+  } else {
+    out += word;
+    curPos += word.length();
+  }
+  return out;
+}
+
+static string multilineIndent (const QString &str, int indentationNumber = 0) {
+
+  static const int lineLength(80);
+  static const QRegExp spaceRegexp("(\\s)");
+  const QString padding(indentationNumber * 2, ' ');
+
+  QString out = padding;
+
+  int indentedTextCurPos = padding.length();
+
+  int spacePos = 0;
+  int wordPos = spacePos;
+  QString word;
+
+  while ((spacePos = spaceRegexp.indexIn(str, spacePos)) != -1) {
+    word = str.mid(wordPos,spacePos-wordPos);
+    out += indentedWord(word, indentedTextCurPos, lineLength, padding);
+    switch (str[spacePos].unicode()) {
+      case '\n':
+        out += "\n" + padding;
+        indentedTextCurPos = padding.length();
+        break;
+      case '\t': //tabulated as a space
+      case ' ':
+        if (indentedTextCurPos == lineLength) {
+          out += "\n" + padding;
+          indentedTextCurPos = padding.length();
+        } else {
+          out += " ";
+          indentedTextCurPos += 1;
+        }
+        break;
+
+      case '\r':
+      case '\f':
+        break;
+
+      default :
+        break;
+    }
+    spacePos += 1;
+    wordPos = spacePos;
+  }
+  word = str.mid(wordPos);
+  out += indentedWord(word, indentedTextCurPos,lineLength, padding);
+  out += "\n";
+
+  return ::Utils::appStringToCoreString(out);
+}
+
+void Cli::showHelp() {
+  cout << multilineIndent(tr("linphoneCliDescription"),0);
+  cout << "\n" << "Usage : " << "\n";
+  cout << multilineIndent(tr("uriCommandLineSyntax"),0);
+  cout <<multilineIndent(tr("cliCommandLineSyntax"),0);
+  cout << "\n";
+  cout << multilineIndent(tr("commandsName"));
+
+  cout << "\n";
+  for (const auto &method : mCommands.keys()) {
+    cout << multilineIndent(mCommands[method].getCliDescription(),1);
+    cout << multilineIndent(mCommands[method].getFunctionDescription(),2);
+    cout << "\n";
+  }
 }
 
 // -----------------------------------------------------------------------------

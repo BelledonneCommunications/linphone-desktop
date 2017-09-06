@@ -61,20 +61,20 @@
         <translation>file</translation>
     </message>
     <message>
-        <source>commandLineOptionCmd</source>
-        <translation>éxécuter une ligne de commande</translation>
-    </message>
-    <message>
-        <source>commandLineOptionCmdArg</source>
-        <translation>ligne de commande</translation>
-    </message>
-    <message>
         <source>commandLineOptionHelp</source>
         <translation>affiche cette aide</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
         <translation>affiche la version de l&apos;application</translation>
+    </message>
+    <message>
+        <source>commandLineCliHelp</source>
+        <translation>affiche le menu d&apos;aide pour l&apos;utilisation de Linphone en CLI.</translation>
+    </message>
+    <message>
+        <source>commandLineDescription</source>
+        <translation>envoie un ordre à l&apos;application Linphone, voir --cli-help pour plus de détails.</translation>
     </message>
 </context>
 <context>
@@ -414,24 +414,60 @@ Url du serveur non configurée.</translation>
 <context>
     <name>Cli</name>
     <message>
+        <source>linphoneCliDescription</source>
+        <translation>Moyen d&apos;effectuer des actions sur l&apos;application Linphone en ligne de commande.</translation>
+    </message>
+    <message>
+        <source>uriCommandLineSyntax</source>
+        <translation>linphone sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;valeur-en-base64&gt;]*)</translation>
+    </message>
+    <message>
+        <source>cliCommandLineSyntax</source>
+        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;valeur&gt;]*)&quot;</translation>
+    </message>
+    <message>
+        <source>commandsName</source>
+        <translation>liste des commandes :</translation>
+    </message>
+    <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Affiche la fenêtre principale de l&apos;application.</translation>
     </message>
     <message>
-        <source>showFunctionCall</source>
-        <translation type="unfinished"></translation>
+        <source>showCliDescription</source>
+        <translation>&quot;show&quot;</translation>
     </message>
     <message>
-        <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <source>callFunctionDescription</source>
+        <translation>Initie un appel vers &lt;sip-address&gt;.</translation>
+    </message>
+    <message>
+        <source>callCliDescription</source>
+        <translation>&quot;call sip-address=&lt;sip-address&gt;&quot;</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Initie une conférence d&apos;id &lt;id&gt;.</translation>
+    </message>
+    <message>
+        <source>initiateConferenceCliDescription</source>
+        <translation>&quot;initiate-conference sip-address=&lt;ma sip-address&gt; conference-id=&lt;id&gt;&quot;</translation>
+    </message>
+    <message>
+        <source>joinConferenceFunctionDescription</source>
+        <translation>Rejoint la conférence n°&lt;id&gt; hébergée par la &lt;sip-address de l&apos;host&gt; en tant que &lt;nom&gt;. Si vous êtes connecté à une proxy config, voir join-conference-as.</translation>
+    </message>
+    <message>
+        <source>joinConferenceCliDescription</source>
+        <translation>&quot;join-conference sip-address=&lt;sip-address de l&apos;host&gt; conference-id=&lt;id&gt; display-name=&lt;nom&gt;&quot;</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Rejoint la conférence n°&lt;id&gt; hébergée par la &lt;sip-address de l&apos;host&gt; en tant que &lt;ma sip-address&gt;. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
+    </message>
+    <message>
+        <source>joinConferenceAsCliDescription</source>
+        <translation>&quot;join-conference-as sip-address=&lt;sip-address  de l&apos;host&gt; conference-id=&lt;id&gt; guest-sip-address=&lt;ma sip-address&gt;&quot;</translation>
     </message>
 </context>
 <context>
