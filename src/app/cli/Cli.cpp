@@ -219,13 +219,11 @@ static string multilineIndent (const QString &str, int indentationNumber = 0) {
 Cli::Command::Command (
   const QString &functionName,
   const char *functionDescription,
-  const char *cliDescription,
   Cli::Function function,
   const QHash<QString, Cli::Argument> &argsScheme
 ) :
   mFunctionName(functionName),
   mFunctionDescription(functionDescription),
-  mCliDescription(cliDescription),
   mFunction(function),
   mArgsScheme(argsScheme) {}
 
@@ -275,6 +273,30 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
   execute(args);
 }
 
+QString Cli::Command::getFunctionSyntax () const {
+  QString functionSyntax;
+  functionSyntax += QStringLiteral("\"");
+  functionSyntax += mFunctionName;
+  for (auto &argName : mArgsScheme.keys()){
+    functionSyntax += QStringLiteral(" ");
+    functionSyntax += mArgsScheme[argName].isOptional ? QStringLiteral("[") : QStringLiteral("");
+    functionSyntax += argName;
+    functionSyntax += QStringLiteral("=<");
+    switch (mArgsScheme[argName].type) {
+      case STRING :
+        functionSyntax += QStringLiteral("str");
+        break;
+      default:
+        functionSyntax += QStringLiteral("value");
+        break;
+    }
+    functionSyntax += QString(">");
+    functionSyntax += mArgsScheme[argName].isOptional ? QStringLiteral("]") : QStringLiteral("");
+  }
+  functionSyntax += QStringLiteral("\"");
+  return functionSyntax;
+}
+
 // =============================================================================
 
 // FIXME: Do not accept args without value like: cmd toto.
@@ -283,17 +305,17 @@ QRegExp Cli::mRegExpArgs("(?:(?:([\\w-]+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\
 QRegExp Cli::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 QMap<QString, Cli::Command> Cli::mCommands = {
-  createCommand("show", QT_TR_NOOP("showFunctionDescription"), QT_TR_NOOP("showCliDescription"), ::cliShow),
-  createCommand("call", QT_TR_NOOP("callFunctionDescription"), QT_TR_NOOP("callCliDescription"), ::cliCall, {
+  createCommand("show", QT_TR_NOOP("showFunctionDescription"), ::cliShow),
+  createCommand("call", QT_TR_NOOP("callFunctionDescription"), ::cliCall, {
     { "sip-address", {} }
   }),
-  createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), QT_TR_NOOP("initiateConferenceCliDescription"), ::cliInitiateConference, {
+  createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), ::cliInitiateConference, {
     { "sip-address", {} }, { "conference-id", {} }
   }),
-  createCommand("join-conference", QT_TR_NOOP("joinConferenceFunctionDescription"), QT_TR_NOOP("joinConferenceCliDescription"), ::cliJoinConference, {
+  createCommand("join-conference", QT_TR_NOOP("joinConferenceFunctionDescription"), ::cliJoinConference, {
     { "sip-address", {} }, { "conference-id", {} }, { "display-name", {} }
   }),
-  createCommand("join-conference-as", QT_TR_NOOP("joinConferenceAsFunctionDescription"), QT_TR_NOOP("joinConferenceAsCliDescription"), ::cliJoinConferenceAs, {
+  createCommand("join-conference-as", QT_TR_NOOP("joinConferenceAsFunctionDescription"), ::cliJoinConferenceAs, {
     { "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
   })
 };
@@ -354,7 +376,7 @@ void Cli::showHelp () {
     multilineIndent(tr("commandsName")) << endl;
 
   for (const auto &method : mCommands.keys())
-    cout << multilineIndent(tr(mCommands[method].getCliDescription()), 1) <<
+    cout << multilineIndent(mCommands[method].getFunctionSyntax(), 1) <<
       multilineIndent(tr(mCommands[method].getFunctionDescription()), 2) <<
       endl;
 }
@@ -364,11 +386,10 @@ void Cli::showHelp () {
 pair<QString, Cli::Command> Cli::createCommand (
   const QString &functionName,
   const char *functionDescription,
-  const char *cliDescription,
   Function function,
   const QHash<QString, Argument> &argsScheme
 ) {
-  return { functionName, Cli::Command(functionName, functionDescription, cliDescription, function, argsScheme) };
+  return { functionName, Cli::Command(functionName, functionDescription, function, argsScheme) };
 }
 
 // -----------------------------------------------------------------------------

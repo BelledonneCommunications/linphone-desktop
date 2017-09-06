@@ -434,40 +434,20 @@ Url du serveur non configurée.</translation>
         <translation>Affiche la fenêtre principale de l&apos;application.</translation>
     </message>
     <message>
-        <source>showCliDescription</source>
-        <translation>&quot;show&quot;</translation>
-    </message>
-    <message>
         <source>callFunctionDescription</source>
-        <translation>Initie un appel vers &lt;sip-address&gt;.</translation>
-    </message>
-    <message>
-        <source>callCliDescription</source>
-        <translation>&quot;call sip-address=&lt;sip-address&gt;&quot;</translation>
+        <translation>Initie un appel vers la sip-address.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Initie une conférence d&apos;id &lt;id&gt;.</translation>
-    </message>
-    <message>
-        <source>initiateConferenceCliDescription</source>
-        <translation>&quot;initiate-conference sip-address=&lt;ma sip-address&gt; conference-id=&lt;id&gt;&quot;</translation>
+        <translation>Initie une conférence.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation>Rejoint la conférence n°&lt;id&gt; hébergée par la &lt;sip-address de l&apos;host&gt; en tant que &lt;nom&gt;. Si vous êtes connecté à une proxy config, voir join-conference-as.</translation>
-    </message>
-    <message>
-        <source>joinConferenceCliDescription</source>
-        <translation>&quot;join-conference sip-address=&lt;sip-address de l&apos;host&gt; conference-id=&lt;id&gt; display-name=&lt;nom&gt;&quot;</translation>
+        <translation>Rejoint la conférence hébergée par la sip-address avec un display-name. Si vous êtes connecté à une proxy config, voir join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>Rejoint la conférence n°&lt;id&gt; hébergée par la &lt;sip-address de l&apos;host&gt; en tant que &lt;ma sip-address&gt;. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
-    </message>
-    <message>
-        <source>joinConferenceAsCliDescription</source>
-        <translation>&quot;join-conference-as sip-address=&lt;sip-address  de l&apos;host&gt; conference-id=&lt;id&gt; guest-sip-address=&lt;ma sip-address&gt;&quot;</translation>
+        <translation>Rejoint la conférence hébergée par la sip-address avec la guest-sip-address. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
     </message>
 </context>
 <context>

@@ -60,7 +60,6 @@ class Cli : public QObject {
     Command (
       const QString &functionName,
       const char *functionDescription,
-      const char *cliDescription,
       Function function,
       const QHash<QString, Argument> &argsScheme
     );
@@ -72,14 +71,11 @@ class Cli : public QObject {
       return mFunctionDescription;
     }
 
-    const char *getCliDescription () const {
-      return mCliDescription;
-    }
+    QString getFunctionSyntax () const ;
 
   private:
     QString mFunctionName;
     const char *mFunctionDescription;
-    const char *mCliDescription;
     Function mFunction = nullptr;
     QHash<QString, Argument> mArgsScheme;
   };
@@ -103,7 +99,6 @@ private:
   static std::pair<QString, Command> createCommand (
     const QString &functionName,
     const char *functionDescription,
-    const char *cliDescription,
     Function function,
     const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>()
   );
