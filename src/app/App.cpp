@@ -100,9 +100,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
     mParser->showHelp();
   }
 
-  if(mParser->isSet("cli-help")){
-    mCli = new Cli(this);
-    mCli->showHelp();
+  if (mParser->isSet("cli-help")) {
+    Cli::showHelp();
     ::exit(EXIT_SUCCESS);
   }
 
@@ -168,11 +167,10 @@ void App::initContentApp () {
     setQuitOnLastWindowClosed(false);
 
     // Deal with received messages and CLI.
-    mCli = new Cli(this);
     QObject::connect(this, &App::receivedMessage, this, [this](int, const QByteArray &byteArray) {
         QString command(byteArray);
         qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
-        mCli->executeCommand(command);
+        Cli::executeCommand(command);
       });
 
     // Add plugins directory.
@@ -190,7 +188,7 @@ void App::initContentApp () {
     const QString commandArgument = getCommandArgument();
     if (!commandArgument.isEmpty()) {
       Cli::CommandFormat format;
-      mCli->executeCommand(commandArgument, &format);
+      Cli::executeCommand(commandArgument, &format);
       if (format == Cli::UriFormat)
         mustBeIconified = true;
     }
@@ -254,8 +252,7 @@ QString App::getCommandArgument () {
 // -----------------------------------------------------------------------------
 
 void App::executeCommand (const QString &command) {
-  Q_CHECK_PTR(mCli);
-  mCli->executeCommand(command);
+  Cli::executeCommand(command);
 }
 
 // -----------------------------------------------------------------------------
@@ -333,10 +330,10 @@ void App::createParser () {
 
   mParser = new QCommandLineParser();
   mParser->setApplicationDescription(tr("applicationDescription"));
-  mParser->addPositionalArgument("command",tr("commandLineDescription"),"[command]");
+  mParser->addPositionalArgument("command", tr("commandLineDescription"), "[command]");
   mParser->addOptions({
     { { "h", "help" }, tr("commandLineOptionHelp") },
-    { "cli-help", tr("commandLineCliHelp") },
+    { "cli-help", tr("commandLineOptionCliHelp") },
     { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
     #ifndef Q_OS_MACOS

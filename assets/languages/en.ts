@@ -69,12 +69,12 @@
         <translation>show app version</translation>
     </message>
     <message>
-        <source>commandLineCliHelp</source>
-        <translation>displays the help menu to use Linphone with the CLI.</translation>
+        <source>commandLineOptionCliHelp</source>
+        <translation>displays the help menu to use Linphone with the CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>send aan order to the application towards a command line.</translation>
+        <translation>send an order to the application towards a command line</translation>
     </message>
 </context>
 <context>

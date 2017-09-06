@@ -69,12 +69,12 @@
         <translation>affiche la version de l&apos;application</translation>
     </message>
     <message>
-        <source>commandLineCliHelp</source>
-        <translation>affiche le menu d&apos;aide pour l&apos;utilisation de Linphone en CLI.</translation>
+        <source>commandLineOptionCliHelp</source>
+        <translation>affiche le menu d&apos;aide pour l&apos;utilisation de Linphone en CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>envoie un ordre à l&apos;application Linphone, voir --cli-help pour plus de détails.</translation>
+        <translation>envoie un ordre à l&apos;application Linphone, voir --cli-help pour plus de détails</translation>
     </message>
 </context>
 <context>

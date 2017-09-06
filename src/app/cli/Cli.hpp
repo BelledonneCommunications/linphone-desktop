@@ -26,6 +26,7 @@
 #include <memory>
 
 #include <QHash>
+#include <QMap>
 #include <QObject>
 
 // =============================================================================
@@ -58,8 +59,8 @@ class Cli : public QObject {
     Command () = default;
     Command (
       const QString &functionName,
-      const QString &functionDescription,
-      const QString &cliDescription,
+      const char *functionDescription,
+      const char *cliDescription,
       Function function,
       const QHash<QString, Argument> &argsScheme
     );
@@ -67,25 +68,23 @@ class Cli : public QObject {
     void execute (QHash<QString, QString> &args) const;
     void executeUri (const std::shared_ptr<linphone::Address> &address) const;
 
-    QString getFunctionDescription() {
+    const char *getFunctionDescription () const {
       return mFunctionDescription;
     }
 
-    QString getCliDescription() {
+    const char *getCliDescription () const {
       return mCliDescription;
     }
 
-
   private:
-    QString mFunctionDescription;
-    QString mCliDescription;
     QString mFunctionName;
+    const char *mFunctionDescription;
+    const char *mCliDescription;
     Function mFunction = nullptr;
     QHash<QString, Argument> mArgsScheme;
   };
 
 public:
-  Cli (QObject *parent = Q_NULLPTR);
   ~Cli () = default;
 
   enum CommandFormat {
@@ -94,23 +93,25 @@ public:
     UriFormat
   };
 
-  void executeCommand (const QString &command, CommandFormat *format = nullptr) const;
+  static void executeCommand (const QString &command, CommandFormat *format = nullptr);
 
-  void showHelp();
+  static void showHelp ();
 
 private:
-  void addCommand (
+  Cli ();
+
+  static std::pair<QString, Command> createCommand (
     const QString &functionName,
-    const QString &functionDescription,
-    const QString &cliDescription,
+    const char *functionDescription,
+    const char *cliDescription,
     Function function,
     const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>()
   );
 
-  QString parseFunctionName (const QString &command) const;
-  QHash<QString, QString> parseArgs (const QString &command) const;
+  static QString parseFunctionName (const QString &command);
+  static QHash<QString, QString> parseArgs (const QString &command);
 
-  QHash<QString, Command> mCommands;
+  static QMap<QString, Command> mCommands;
 
   static QRegExp mRegExpArgs;
   static QRegExp mRegExpFunctionName;

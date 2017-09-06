@@ -37,7 +37,6 @@
 class QCommandLineParser;
 class QSystemTrayIcon;
 
-class Cli;
 class DefaultTranslator;
 
 class App : public SingleApplication {
@@ -143,8 +142,6 @@ private:
   Colors *mColors = nullptr;
 
   QSystemTrayIcon *mSystemTrayIcon = nullptr;
-
-  Cli *mCli = nullptr;
 };
 
 #endif // APP_H_
