@@ -98,10 +98,11 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
 
     auto deleter = [this](ChatModel *chatModel) {
         mChatModels.remove(chatModel->getSipAddress());
+        delete chatModel;
       };
 
     shared_ptr<ChatModel> chatModel(new ChatModel(sipAddress), deleter);
-    mChatModels[sipAddress] = chatModel;
+    mChatModels[chatModel->getSipAddress()] = chatModel;
 
     emit chatModelCreated(chatModel);
 
