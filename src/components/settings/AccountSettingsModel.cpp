@@ -93,7 +93,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   {
     const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
     map["sipAddress"] = address
-      ? ::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly())
+      ? ::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
       : QString("");
   }
 
