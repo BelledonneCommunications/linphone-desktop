@@ -348,7 +348,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
   qInfo() << QStringLiteral("Execute uri command: `%1`.").arg(command);
 
   string scheme = address->getScheme();
-  if (address->getUsername().empty() || (scheme != "sip" && scheme != "sip-linphone")) {
+  if (scheme != "sip" && scheme != "sip-linphone") {
     qWarning() << QStringLiteral("Not a valid uri: `%1`.").arg(command);
     return;
   }

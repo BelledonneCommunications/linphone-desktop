@@ -26,7 +26,7 @@ ScrollableListView {
   property var headerButtonAction
 
   readonly property string interpretableSipAddress: SipAddressesModel.interpretSipAddress(
-    genSipAddress
+    genSipAddress, false
   )
 
   // ---------------------------------------------------------------------------

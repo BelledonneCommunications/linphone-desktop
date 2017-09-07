@@ -139,7 +139,7 @@ bool VcardModel::setAvatar (const QString &path) {
   QFile file;
 
   // 1. Try to copy photo in avatars folder if it's a right path file and
-  // not a application path like `image:`.
+  // not an application path like `image:`.
   if (!path.isEmpty()) {
     if (path.startsWith("image:"))
       fileId = ::getFileIdFromAppPath(path);

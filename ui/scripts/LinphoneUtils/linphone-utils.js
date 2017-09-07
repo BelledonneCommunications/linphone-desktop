@@ -51,7 +51,7 @@ function _getUsername (str) {
 
   var end = str.indexOf('@', start + 1)
   if (end === -1) {
-    return
+    return str.substring(start)
   }
 
   return str.substring(start, end)

@@ -93,7 +93,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
   shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(
       ::Utils::appStringToCoreString(sipAddress)
     );
-  if (!address || address->getUsername().empty())
+  if (!address)
     return false;
 
   int row = rowCount();

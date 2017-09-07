@@ -164,12 +164,12 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
 
 // -----------------------------------------------------------------------------
 
-QString SipAddressesModel::interpretSipAddress (const QString &sipAddress) {
+QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool checkUsername) {
   shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
       ::Utils::appStringToCoreString(sipAddress)
     );
 
-  if (lAddress && !lAddress->getUsername().empty())
+  if (lAddress && (!checkUsername || !lAddress->getUsername().empty()))
     return ::Utils::coreStringToAppString(lAddress->asStringUriOnly());
   return QString("");
 }
