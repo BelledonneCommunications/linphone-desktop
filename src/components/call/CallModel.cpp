@@ -44,7 +44,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
   updateIsInConference();
 
   // Deal with auto-answer.
-  {
+  if (!isOutgoing()) {
     SettingsModel *settings = CoreManager::getInstance()->getSettingsModel();
 
     if (settings->getAutoAnswerStatus()) {
