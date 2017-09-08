@@ -113,10 +113,13 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
   shared_ptr<linphone::Conference> conference = core->getConference();
   const QString id = args["conference-id"];
 
+
+  App *app = App::getInstance();
   if (conference) {
     if (conference->getId() == ::Utils::appStringToCoreString(id)) {
       qInfo() << QStringLiteral("Conference `%1` already exists.").arg(id);
       // TODO: Set the view to the "waiting call view".
+      app->smartShowWindow(app->getCallsWindow());
       return;
     }
 
@@ -133,9 +136,8 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
     qWarning() << QStringLiteral("Unable to join created conference: `%1`.").arg(id);
     return;
   }
-  App *app = App::getInstance();
-  app->smartShowWindow(app->getCallsWindow());
   // TODO: Set the view to the "waiting call view".
+  app->smartShowWindow(app->getCallsWindow());
 }
 
 // =============================================================================
