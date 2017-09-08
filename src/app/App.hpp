@@ -54,7 +54,6 @@ public:
   void initContentApp ();
 
   QString getCommandArgument ();
-  void executeCommand (const QString &command);
 
   #ifdef Q_OS_MACOS
     bool event (QEvent *event) override;

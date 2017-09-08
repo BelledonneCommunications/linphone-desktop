@@ -251,12 +251,6 @@ QString App::getCommandArgument () {
 
 // -----------------------------------------------------------------------------
 
-void App::executeCommand (const QString &command) {
-  Cli::executeCommand(command);
-}
-
-// -----------------------------------------------------------------------------
-
 #ifdef Q_OS_MACOS
 
   bool App::event (QEvent *event) {
@@ -267,7 +261,7 @@ void App::executeCommand (const QString &command) {
         ::exit(EXIT_SUCCESS);
       }
 
-      executeCommand(url);
+      Cli::executeCommand(url);
     }
 
     return SingleApplication::event(event);
