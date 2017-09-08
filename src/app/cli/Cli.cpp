@@ -96,7 +96,12 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
     address->clean();
 
     const string sipAddress = address->asString();
-    const string identity = core->getIdentity();
+    shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
+    if (!proxyConfig) {
+      qWarning() << QStringLiteral("Not connected to a proxy config");
+      return;
+    }
+    const string identity = proxyConfig->getIdentityAddress()->asStringUriOnly();
     if (sipAddress != identity) {
       qWarning() << QStringLiteral("Received different sip address from identity : `%1 != %2`.")
         .arg(::Utils::coreStringToAppString(identity))
