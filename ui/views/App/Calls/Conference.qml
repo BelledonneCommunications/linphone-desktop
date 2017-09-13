@@ -48,7 +48,7 @@ Rectangle {
         iconSize: CallStyle.header.iconSize
       }
 
-      Text {
+      TextEdit {
         id: conferenceDescription
 
         anchors.centerIn: parent
