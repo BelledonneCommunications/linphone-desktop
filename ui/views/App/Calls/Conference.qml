@@ -48,11 +48,11 @@ Rectangle {
         iconSize: CallStyle.header.iconSize
       }
 
-      TextEdit {
+      TextInput {
         id: conferenceDescription
 
         anchors.centerIn: parent
-        horizontalAlignment: Text.AlignHCenter
+        horizontalAlignment: TextInput.AlignHCenter
         text: qsTr('conferenceTitle')
 
         color: ConferenceStyle.description.color
@@ -64,7 +64,13 @@ Rectangle {
 
         height: parent.height
         width: parent.width - rightActions.width - leftActions.width - ConferenceStyle.description.width
+        focus: true
+
+        onEditingFinished: function() {
+          conferenceDescription.focus= false
+        }
       }
+
 
       // -----------------------------------------------------------------------
       // Video actions.
