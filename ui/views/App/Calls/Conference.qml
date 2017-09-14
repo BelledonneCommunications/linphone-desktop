@@ -52,7 +52,8 @@ Rectangle {
         id: conferenceDescription
 
         anchors.centerIn: parent
-        horizontalAlignment: TextInput.AlignHCenter
+
+        horizontalAlignment: TextInput.AlignHLeft
         text: qsTr('conferenceTitle')
 
         color: ConferenceStyle.description.color
@@ -66,8 +67,8 @@ Rectangle {
         width: parent.width - rightActions.width - leftActions.width - ConferenceStyle.description.width
         focus: true
 
-        onEditingFinished: function() {
-          conferenceDescription.focus= false
+        onEditingFinished:  {
+          conferenceDescription.focus = false
         }
       }
 
