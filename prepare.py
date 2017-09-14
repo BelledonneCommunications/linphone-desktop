@@ -73,6 +73,22 @@ class DesktopRaspberryTarget(prepare.Target):
         ]
 
 
+class NoUITarget(prepare.Target):
+
+    def __init__(self, group_builders=False):
+        prepare.Target.__init__(self, 'no-ui')
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        self.config_file = 'configs/config-desktop.cmake'
+	self.output = 'OUTPUT/' + self.name
+        self.external_source_path = os.path.join(current_path, 'submodules')
+        self.packaging_args = [
+            "-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib",
+            "-DENABLE_RELATIVE_PREFIX=YES"
+        ]
+
+
+
+
 class PythonTarget(prepare.Target):
 
     def __init__(self):
@@ -101,7 +117,8 @@ desktop_targets = {
     'desktop': DesktopTarget(),
     'python': PythonTarget(),
     'desktop-raspberry': DesktopRaspberryTarget(),
-    'python-raspberry': PythonRaspberryTarget()
+    'python-raspberry': PythonRaspberryTarget(),
+    'no-ui' : NoUITarget()
 }
 
 class DesktopPreparator(prepare.Preparator):
