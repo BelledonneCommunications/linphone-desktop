@@ -48,12 +48,12 @@ Rectangle {
         iconSize: CallStyle.header.iconSize
       }
 
-      TextInput {
+      Text {
         id: conferenceDescription
 
         anchors.centerIn: parent
 
-        horizontalAlignment: TextInput.AlignHLeft
+        horizontalAlignment: Text.AlignHCenter
         text: qsTr('conferenceTitle')
 
         color: ConferenceStyle.description.color
@@ -65,11 +65,6 @@ Rectangle {
 
         height: parent.height
         width: parent.width - rightActions.width - leftActions.width - ConferenceStyle.description.width
-        focus: true
-
-        onEditingFinished:  {
-          conferenceDescription.focus = false
-        }
       }
 
 
