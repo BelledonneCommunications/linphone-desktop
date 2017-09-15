@@ -79,7 +79,7 @@ class NoUITarget(prepare.Target):
         prepare.Target.__init__(self, 'no-ui')
         current_path = os.path.dirname(os.path.realpath(__file__))
         self.config_file = 'configs/config-desktop.cmake'
-	self.output = 'OUTPUT/' + self.name
+        self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'submodules')
         self.packaging_args = [
             "-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib",
