@@ -45,6 +45,7 @@ class CallModel : public QObject {
   Q_PROPERTY(float speakerVu READ getSpeakerVu CONSTANT);
 
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
+  Q_PROPERTY(bool audioMuted READ getAudioMuted WRITE setAudioMuted NOTIFY audioMutedChanged);
 
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
   Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged);
@@ -126,6 +127,7 @@ signals:
   void callErrorChanged (const QString &callError);
   void isInConferenceChanged (bool status);
   void microMutedChanged (bool status);
+  void audioMutedChanged (bool status);
   void recordingChanged (bool status);
   void statsUpdated ();
   void statusChanged (CallStatus status);
@@ -161,6 +163,9 @@ private:
 
   bool getMicroMuted () const;
   void setMicroMuted (bool status);
+  
+  bool getAudioMuted () const;
+  void setAudioMuted (bool status);
 
   bool getPausedByUser () const;
   void setPausedByUser (bool status);

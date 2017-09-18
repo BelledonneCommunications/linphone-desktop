@@ -444,6 +444,18 @@ void CallModel::setMicroMuted (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool CallModel::getAudioMuted () const {
+  // TODO
+  return false;
+}
+
+void CallModel::setAudioMuted (bool status) {
+  // TODO
+  emit audioMutedChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool CallModel::getPausedByUser () const {
   return mPausedByUser;
 }
