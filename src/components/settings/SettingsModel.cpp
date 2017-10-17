@@ -52,7 +52,7 @@ QStringList SettingsModel::getCaptureDevices () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QStringList list;
 
-  for (const auto &device : core->getSoundDevicesList()) {
+  for (const auto &device : core->getSoundDevices()) {
     if (core->soundDeviceCanCapture(device))
       list << ::Utils::coreStringToAppString(device);
   }
@@ -64,7 +64,7 @@ QStringList SettingsModel::getPlaybackDevices () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QStringList list;
 
-  for (const auto &device : core->getSoundDevicesList()) {
+  for (const auto &device : core->getSoundDevices()) {
     if (core->soundDeviceCanPlayback(device))
       list << ::Utils::coreStringToAppString(device);
   }
@@ -151,7 +151,7 @@ void SettingsModel::setEchoCancellationEnabled (bool status) {
 QStringList SettingsModel::getVideoDevices () const {
   QStringList list;
 
-  for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevicesList())
+  for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevices())
     list << ::Utils::coreStringToAppString(device);
 
   return list;
