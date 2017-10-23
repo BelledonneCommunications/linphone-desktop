@@ -20,6 +20,8 @@
  *      Author: Nicolas Follet
  */
 
+#include <iostream>
+
 #include "../../components/core/CoreManager.hpp"
 #include "../../utils/Utils.hpp"
 #include "../App.hpp"
