@@ -653,6 +653,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
       statsList << ::createStat(tr("callStatsJitterBuffer"), QStringLiteral("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
+      statsList << ::createStat(tr("callStatsEstimatedDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getEstimatedDownloadBandwidth())));
       const QString sentVideoDefinitionName = ::Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
       const QString sentVideoDefinition = QStringLiteral("%1x%2")
         .arg(params->getSentVideoDefinition()->getWidth())

@@ -244,6 +244,10 @@
         <translation>Download bandwidth</translation>
     </message>
     <message>
+        <source>callStatsEstimatedDownloadBandwidth</source>
+        <translation>Estimated download bandwidth</translation>
+    </message>
+    <message>
         <source>callStatsIceState</source>
         <translation>ICE state</translation>
     </message>

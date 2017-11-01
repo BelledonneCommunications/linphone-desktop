@@ -244,6 +244,10 @@
         <translation>Bande passante de réception</translation>
     </message>
     <message>
+        <source>callStatsEstimatedDownloadBandwidth</source>
+        <translation>Bande passante de réception estimée</translation>
+    </message>
+    <message>
         <source>callStatsIceState</source>
         <translation>État ICE</translation>
     </message>
