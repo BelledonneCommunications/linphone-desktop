@@ -27,6 +27,7 @@
 #include "../App.hpp"
 
 #include "Cli.hpp"
+#include "iostream"
 
 using namespace std;
 
