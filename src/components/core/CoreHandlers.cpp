@@ -203,7 +203,7 @@ void CoreHandlers::onTransferStateChanged (
     case linphone::CallStatePaused:
     case linphone::CallStatePausedByRemote:
     case linphone::CallStatePausing:
-    case linphone::CallStateRefered:
+    case linphone::CallStateReferred:
     case linphone::CallStateReleased:
     case linphone::CallStateResuming:
     case linphone::CallStateStreamsRunning:

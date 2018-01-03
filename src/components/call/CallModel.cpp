@@ -258,7 +258,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
       break;
 
     case linphone::CallStateConnected:
-    case linphone::CallStateRefered:
+    case linphone::CallStateReferred:
     case linphone::CallStateReleased:
     case linphone::CallStateStreamsRunning:
       mPausedByRemote = false;
@@ -333,7 +333,7 @@ CallModel::CallStatus CallModel::getStatus () const {
 
     case linphone::CallStateEnd:
     case linphone::CallStateError:
-    case linphone::CallStateRefered:
+    case linphone::CallStateReferred:
     case linphone::CallStateReleased:
       return CallStatusEnded;
 
