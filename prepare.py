@@ -162,7 +162,7 @@ class DesktopPreparator(prepare.Preparator):
             ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
         if platform.system() == 'Windows':
             doxygen_prog = 'doxygen (http://www.stack.nl/~dimitri/doxygen/download.html)'
-            graphviz_prog = 'graphviz (http://graphviz.org/Download.php)'
+            graphviz_prog = 'graphviz (http://www.graphviz.org/download/)'
         else:
             doxygen_prog = 'doxygen'
             graphviz_prog = 'graphviz'
