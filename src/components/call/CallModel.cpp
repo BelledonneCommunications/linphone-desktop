@@ -31,6 +31,7 @@
 #include "CallModel.hpp"
 
 #define AUTO_ANSWER_OBJECT_NAME "auto-answer-timer"
+#define DTMF_SOUND_DELAY 200
 
 using namespace std;
 
@@ -535,8 +536,10 @@ bool CallModel::getRecording () const {
 // -----------------------------------------------------------------------------
 
 void CallModel::sendDtmf (const QString &dtmf) {
-  qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(dtmf);
-  mCall->sendDtmf(dtmf.constData()[0].toLatin1());
+  const char key = dtmf.constData()[0].toLatin1();
+  qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(key);
+  mCall->sendDtmf(key);
+  CoreManager::getInstance()->getCore()->playDtmf(key, DTMF_SOUND_DELAY);
 }
 
 // -----------------------------------------------------------------------------
