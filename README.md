@@ -8,7 +8,7 @@ Linphone is a free VoIP and video softphone based on the SIP protocol.
 
 Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
 
-1. Install some build tools: `CMake`, `Python` `Java` (build dependency for `belle-sip`) and `Qt5` (_5.9 or newer_).
+1. Install some build tools: `CMake`, `Python` `Java` (build dependency for `belle-sip`) and `Qt5` (_5.9 or newer_). `C++11` support is required!
 2. It's necessary to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5. Example:
 
         Qt5_DIR="~/Qt/5.9/gcc_64/lib/cmake"
