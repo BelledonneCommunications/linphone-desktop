@@ -9,7 +9,6 @@ Item {
   id: button
 
   property color color: TelKeypadStyle.button.color.normal
-  property string icon: ''
   property string text: ''
 
   signal clicked

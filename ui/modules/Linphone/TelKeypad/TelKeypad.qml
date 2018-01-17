@@ -30,40 +30,19 @@ Rectangle {
 
     anchors.fill: parent
 
-    columns: 3 // Not a style.
+    columns: 4 // Not a style.
     rows: 4 // Same idea.
 
     columnSpacing: TelKeypadStyle.columnSpacing
     rowSpacing: TelKeypadStyle.rowSpacing
 
     Repeater {
-      model: [{
-        text: '1',
-        icon: 'answering_machine'
-      }, {
-        text: '2'
-      },{
-        text: '3'
-      }, {
-        text: '4'
-      }, {
-        text: '5'
-      }, {
-        text: '6'
-      }, {
-        text: '7'
-      }, {
-        text: '8'
-      }, {
-        text: '9'
-      }, {
-        text: '*'
-      }, {
-        text: '0',
-        icon: 'plus'
-      }, {
-        text: '#'
-      }]
+      model: [
+        '1', '2', '3', 'A',
+        '4', '5', '6', 'B',
+        '7', '8', '9', 'C',
+        '*', '0', '#', 'D',
+      ]
 
       TelKeypadButton {
         property var _timeout
@@ -71,10 +50,9 @@ Rectangle {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        icon: modelData.icon || ''
-        text: modelData.text
+        text: modelData
 
-        onClicked: telKeypad.call.sendDtmf(modelData.text)
+        onClicked: telKeypad.call.sendDtmf(modelData)
       }
     }
   }

@@ -10,7 +10,7 @@ QtObject {
   property int columnSpacing: 0
   property int height: 180
   property int rowSpacing: 0
-  property int width: 150
+  property int width: 180
   property color color: Colors.k
 
   property QtObject button: QtObject {
