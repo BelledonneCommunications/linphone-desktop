@@ -43,7 +43,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 
         python prepare.py -G "Visual Studio 14 2015"
 
-4. Open the generated Visual Studio solution `Project.sln.lnk` and build it.
+4. Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `Release` option is selected in Visual Studio. (With `Win32`!)
 
 ## Known bugs and issues
 
