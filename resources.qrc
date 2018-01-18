@@ -368,6 +368,7 @@
     <file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
     <file>ui/modules/Linphone/Styles/View/SipAddressesViewStyle.qml</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
+    <file>ui/modules/Linphone/TelKeypad/TelKeypad.js</file>
     <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
     <file>ui/modules/Linphone/Timeline/Timeline.js</file>
     <file>ui/modules/Linphone/Timeline/Timeline.qml</file>

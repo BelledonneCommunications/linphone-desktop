@@ -3,7 +3,8 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone.Styles 1.0
-import Utils 1.0
+
+import 'TelKeypad.js' as Logic
 
 // =============================================================================
 
@@ -22,6 +23,14 @@ Rectangle {
 
   height: TelKeypadStyle.height
   width: TelKeypadStyle.width
+
+  Keys.onPressed: {
+    var index = Logic.mapKeyToButtonIndex(event.key)
+    if (index != null) {
+      event.accepted = true;
+      Logic.sendDtmf(index)
+    }
+  }
 
   // ---------------------------------------------------------------------------
 
@@ -82,24 +91,11 @@ Rectangle {
       _mouseX = mouse.x
       _mouseY = mouse.y
       _id = parseInt(_mouseX / (parent.width / grid.columns)) + parseInt(_mouseY / (parent.height / grid.rows)) * grid.columns
+
+      telKeypad.focus = true
     }
 
-    onReleased: {
-      if (Math.abs(_mouseX - mouse.x) <= delta && Math.abs(_mouseY - mouse.y) <= delta) {
-        var children = grid.children[_id]
-
-        children.color = TelKeypadStyle.button.color.pressed
-        children.clicked()
-
-        var timeout = children._timeout
-        if (timeout) {
-          Utils.clearTimeout(timeout)
-        }
-
-        children._timeout = Utils.setTimeout(this, 100, (function (id) {
-          grid.children[id].color = TelKeypadStyle.button.color.normal
-        }).bind(this, _id))
-      }
-    }
+    onReleased: Math.abs(_mouseX - mouse.x) <= delta && Math.abs(_mouseY - mouse.y) <= delta &&
+      Logic.sendDtmf(_id)
   }
 }
