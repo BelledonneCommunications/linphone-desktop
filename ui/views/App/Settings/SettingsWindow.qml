@@ -48,43 +48,43 @@ ApplicationWindow {
         id: tabBar
 
         TabButton {
-          icon: 'settings_sip_accounts'
+          iconName: 'settings_sip_accounts'
           text: qsTr('sipAccountsTab')
           width: implicitWidth
         }
 
         TabButton {
-          icon: 'settings_audio'
+          iconName: 'settings_audio'
           text: qsTr('audioTab')
           width: implicitWidth
         }
 
         TabButton {
-          icon: 'settings_video'
+          iconName: 'settings_video'
           text: qsTr('videoTab')
           width: implicitWidth
         }
 
         TabButton {
-          icon: 'settings_call'
+          iconName: 'settings_call'
           text: qsTr('callsAndChatTab')
           width: implicitWidth
         }
 
         TabButton {
-          icon: 'settings_network'
+          iconName: 'settings_network'
           text: qsTr('networkTab')
           width: implicitWidth
         }
 
         TabButton {
-          icon: 'settings_advanced'
+          iconName: 'settings_advanced'
           text: qsTr('uiTab')
           width: implicitWidth
         }
 
         TabButton {
-          icon: 'settings_advanced'
+          iconName: 'settings_advanced'
           text: qsTr('uiAdvanced')
           width: implicitWidth
         }
