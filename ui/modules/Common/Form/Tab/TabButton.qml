@@ -12,8 +12,8 @@ Controls.TabButton {
 
   // ---------------------------------------------------------------------------
 
-  property string icon
   property int iconSize: TabButtonStyle.icon.size
+  property string iconName
 
   readonly property bool _isSelected: parent.parent.currentItem === button
 
@@ -66,9 +66,9 @@ Controls.TabButton {
       Layout.leftMargin: TabButtonStyle.text.leftPadding
 
       icon: {
-        var icon = button.icon
-        return icon.length
-          ? (icon + '_' + (button._isSelected ? 'selected' : 'normal'))
+        var iconName = button.iconName
+        return iconName.length
+          ? (iconName + '_' + (button._isSelected ? 'selected' : 'normal'))
           : ''
       }
       iconSize: button.iconSize
