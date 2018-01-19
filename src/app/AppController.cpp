@@ -23,6 +23,7 @@
 #include <QDirIterator>
 #include <QFontDatabase>
 #include <QMessageBox>
+#include <QQuickStyle>
 
 #include "gitversion.h"
 
@@ -83,6 +84,7 @@ AppController::AppController (int &argc, char *argv[]) {
   QCoreApplication::setApplicationVersion(APPLICATION_VERSION);
 
   mApp = new App(argc, argv);
+  QQuickStyle::setStyle("Default");
   if (mApp->isSecondary()) {
     QString command = mApp->getCommandArgument();
     mApp->sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), -1);
