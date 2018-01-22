@@ -33,10 +33,13 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
     QFileInfo info(it.next());
 
     if (info.suffix() == "qml") {
-      // Ignore extra selectors.
       QString dir = info.absoluteDir().absolutePath();
-      if (dir.contains("+linux") || dir.contains("+mac") || dir.contains("+windows"))
-        continue;
+
+      // Ignore extra selectors.
+      // TODO: Remove 5.9 support in July 2018.
+      for (const auto &selector : { "+linux", "+mac", "+windows", "+5.9" })
+        if (dir.contains(selector))
+          goto end;
 
       // Ignore default imports.
       if (dir.startsWith(":/QtQuick"))
@@ -48,6 +51,7 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
       else
         mContexts << basename;
     }
+    end:;
   }
 }
 
