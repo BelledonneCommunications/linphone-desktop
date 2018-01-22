@@ -395,6 +395,7 @@
     <file>ui/views/App/Calls/IncomingCall.qml</file>
     <file>ui/views/App/Calls/OutgoingCall.qml</file>
     <file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
+    <file>ui/views/App/Main/+5.9/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithEmail.qml</file>
     <file>ui/views/App/Main/Assistant/ActivateLinphoneSipAccountWithPhoneNumber.qml</file>
     <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
@@ -419,6 +420,7 @@
     <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
     <file>ui/views/App/Main/Home.qml</file>
     <file>ui/views/App/Main/InviteFriends.qml</file>
+    <file>ui/views/App/Main/+mac/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.js</file>
     <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
     <file>ui/views/App/Main/MainWindow.qml</file>

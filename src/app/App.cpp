@@ -23,6 +23,7 @@
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFileSelector>
+#include <QLibraryInfo>
 #include <QMenu>
 #include <QQmlFileSelector>
 #include <QSystemTrayIcon>
@@ -197,8 +198,15 @@ void App::initContentApp () {
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
 
-  // Provide `+custom` folders for custom components.
-  (new QQmlFileSelector(mEngine, mEngine))->setExtraSelectors(QStringList("custom"));
+  // Provide `+custom` folders for custom components and `5.9` for old components.
+  // TODO: Remove 5.9 support in 6 months. (~ July 2018).
+  {
+    QStringList selectors("custom");
+    const QVersionNumber &version = QLibraryInfo::version();
+    if (version.majorVersion() == 5 && version.minorVersion() == 9)
+      selectors.push_back("5.9");
+    (new QQmlFileSelector(mEngine, mEngine))->setExtraSelectors(selectors);
+  }
   qInfo() << QStringLiteral("Activated selectors:") << QQmlFileSelector::get(mEngine)->selector()->allSelectors();
 
   // Set modules paths.

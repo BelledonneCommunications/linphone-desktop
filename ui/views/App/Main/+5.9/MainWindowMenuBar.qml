@@ -1,5 +1,7 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.3
+
+// Experimental.
+import Qt.labs.platform 1.0
 
 import Linphone 1.0
 
@@ -46,25 +48,32 @@ Item {
   // Menu.
   // ---------------------------------------------------------------------------
 
-  Menu {
-    id: menu
+  MenuBar {
+    Menu {
+      id: menu
 
-    MenuItem {
-      text: qsTr('settings')
+      MenuItem {
+        role: MenuItem.PreferencesRole
+        shortcut: settingsShortcut.sequence
+        text: qsTr('settings')
 
-      onTriggered: settingsShortcut.onActivated()
-    }
+        onTriggered: settingsShortcut.onActivated()
+      }
 
-    MenuItem {
-      text: qsTr('about')
+      MenuItem {
+        role: MenuItem.AboutRole
+        text: qsTr('about')
 
-      onTriggered: aboutShortcut.onActivated()
-    }
+        onTriggered: aboutShortcut.onActivated()
+      }
 
-    MenuItem {
-      text: qsTr('quit')
+      MenuItem {
+        role: MenuItem.QuitRole
+        shortcut: quitShortcut.sequence
+        text: qsTr('quit')
 
-      onTriggered: quitShortcut.onActivated()
+        onTriggered: quitShortcut.onActivated()
+      }
     }
   }
 }
