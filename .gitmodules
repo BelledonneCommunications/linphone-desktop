@@ -63,9 +63,6 @@
 [submodule "submodules/externals/srtp"]
 	path = submodules/externals/srtp
 	url = git://git.linphone.org/srtp.git
-[submodule "submodules/externals/antlr3"]
-	path = submodules/externals/antlr3
-	url = git://git.linphone.org/antlr3.git
 [submodule "submodules/externals/v4l-utils"]
 	path = submodules/externals/v4l-utils
 	url = git://linuxtv.org/v4l-utils.git
