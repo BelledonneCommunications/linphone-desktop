@@ -167,11 +167,11 @@ void App::initContentApp () {
     setQuitOnLastWindowClosed(false);
 
     // Deal with received messages and CLI.
-    QObject::connect(this, &App::receivedMessage, this, [this](int, const QByteArray &byteArray) {
-        QString command(byteArray);
-        qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
-        Cli::executeCommand(command);
-      });
+    QObject::connect(this, &App::receivedMessage, this, [](int, const QByteArray &byteArray) {
+      QString command(byteArray);
+      qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
+      Cli::executeCommand(command);
+    });
 
     // Add plugins directory.
     addLibraryPath(::Utils::coreStringToAppString(Paths::getPluginsDirPath()));
