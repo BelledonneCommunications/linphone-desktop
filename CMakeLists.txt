@@ -94,10 +94,12 @@ if (LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
   include("${EP_linphone_CONFIG_DIR}/wrappers/cpp/LinphoneCxxConfig.cmake")
   include("${EP_bctoolbox_CONFIG_DIR}/BcToolboxConfig.cmake")
   include("${EP_belcard_CONFIG_DIR}/BelcardConfig.cmake")
+  include("${EP_ms2_CONFIG_DIR}/Mediastreamer2Config.cmake")
 else ()
   find_package(LinphoneCxx REQUIRED)
   find_package(BcToolbox REQUIRED)
   find_package(Belcard REQUIRED)
+  find_package(Mediastreamer2 REQUIRED)
 endif ()
 
 set(SOURCES
@@ -357,7 +359,7 @@ endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 set_target_properties(${TESTER_TARGET_NAME} PROPERTIES OUTPUT_NAME "${TESTER_EXECUTABLE_NAME}")
 
-set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}")
+set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}")
 set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONECXX_LIBRARIES})
 
 foreach (package ${QT5_PACKAGES})
