@@ -21,7 +21,6 @@
  */
 
 #include <bctoolbox/logging.h>
-#include <linphone/linphonecore.h>
 #include <QDateTime>
 #include <QThread>
 
@@ -68,34 +67,56 @@ static inline QByteArray getFormattedCurrentTime () {
 
 // -----------------------------------------------------------------------------
 
-static void linphoneLog (const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
-  const char *format;
+class LinphoneLogger : public linphone::LoggingServiceListener {
+public:
+  LinphoneLogger (const Logger *logger) : mLogger(logger) {}
 
-  if (type == ORTP_DEBUG)
-    format = GREEN "[%s][Debug]" YELLOW "Core:%s: " RESET "%s\n";
-  else if (type == ORTP_TRACE)
-    format = BLUE "[%s][Trace]" YELLOW "Core:%s: " RESET "%s\n";
-  else if (type == ORTP_MESSAGE)
-    format = BLUE "[%s][Info]" YELLOW "Core:%s: " RESET "%s\n";
-  else if (type == ORTP_WARNING)
-    format = RED "[%s][Warning]" YELLOW "Core:%s: " RESET "%s\n";
-  else if (type == ORTP_ERROR)
-    format = RED "[%s][Error]" YELLOW "Core:%s: " RESET "%s\n";
-  else if (type == ORTP_FATAL)
-    format = RED "[%s][Fatal]" YELLOW "Core:%s: " RESET "%s\n";
-  else
-    return;
+private:
+  void onLogMessageWritten (
+    const shared_ptr<linphone::LoggingService> &,
+    const string &domain,
+    linphone::LogLevel level,
+    const string &message
+  ) override {
+    if (!mLogger->isVerbose())
+      return;
 
-  QByteArray dateTime = ::getFormattedCurrentTime();
-  char *msg = bctbx_strdup_vprintf(fmt, args);
+    const char *format;
+    switch (level) {
+      case linphone::LogLevel::LogLevelDebug:
+        format = GREEN "[%s][Debug]" YELLOW "Core:%s: " RESET "%s\n";
+        break;
+      case linphone::LogLevel::LogLevelTrace:
+        format = BLUE "[%s][Trace]" YELLOW "Core:%s: " RESET "%s\n";
+        break;
+      case linphone::LogLevel::LogLevelMessage:
+        format = BLUE "[%s][Info]" YELLOW "Core:%s: " RESET "%s\n";
+        break;
+      case linphone::LogLevel::LogLevelWarning:
+        format = RED "[%s][Warning]" YELLOW "Core:%s: " RESET "%s\n";
+        break;
+      case linphone::LogLevel::LogLevelError:
+        format = RED "[%s][Error]" YELLOW "Core:%s: " RESET "%s\n";
+        break;
+      case linphone::LogLevel::LogLevelFatal:
+        format = RED "[%s][Fatal]" YELLOW "Core:%s: " RESET "%s\n";
+        break;
+    }
 
-  fprintf(stderr, format, dateTime.constData(), domain ? domain : "linphone", msg);
+    fprintf(
+      stderr,
+      format,
+      ::getFormattedCurrentTime().constData(),
+      domain.empty() ? domain.c_str() : "linphone",
+      message.c_str()
+    );
 
-  bctbx_free(msg);
+    if (level == linphone::LogLevel::LogLevelFatal)
+      terminate();
+  };
 
-  if (type == ORTP_FATAL)
-    abort();
-}
+  const Logger *mLogger;
+};
 
 // -----------------------------------------------------------------------------
 
@@ -150,13 +171,17 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   mMutex.unlock();
 
   if (type == QtFatalMsg)
-    abort();
+    terminate();
 }
 
 // -----------------------------------------------------------------------------
 
 void Logger::enable (bool status) {
-  linphone_core_enable_log_collection(status ? LinphoneLogCollectionEnabled : LinphoneLogCollectionDisabled);
+  linphone::Core::enableLogCollection(
+    status
+      ? linphone::LogCollectionStateEnabled
+      : linphone::LogCollectionStateDisabled
+  );
 }
 
 void Logger::init (const shared_ptr<linphone::Config> &config) {
@@ -170,14 +195,14 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 
   qInstallMessageHandler(Logger::log);
 
-  linphone_core_set_log_level(ORTP_MESSAGE);
-  linphone_core_set_log_handler([](const char *domain, OrtpLogLevel type, const char *fmt, va_list args) {
-      if (mInstance->isVerbose())
-        ::linphoneLog(domain, type, fmt, args);
-    });
+  {
+    shared_ptr<linphone::LoggingService> loggingService = linphone::LoggingService::get();
+    loggingService->setLogLevel(linphone::LogLevel::LogLevelMessage);
+    loggingService->setListener(make_shared<LinphoneLogger>(mInstance));
+  }
 
-  linphone_core_set_log_collection_path(::Utils::appStringToCoreString(folder).c_str());
+  linphone::Core::setLogCollectionPath(::Utils::appStringToCoreString(folder));
+  linphone::Core::setLogCollectionMaxFileSize(MAX_LOGS_COLLECTION_SIZE);
 
-  linphone_core_set_log_collection_max_file_size(MAX_LOGS_COLLECTION_SIZE);
   mInstance->enable(SettingsModel::getLogsEnabled(config));
 }
