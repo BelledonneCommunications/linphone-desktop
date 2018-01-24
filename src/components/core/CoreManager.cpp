@@ -74,7 +74,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
     mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 
     mInstance->mStarted = true;
-
+    mInstance->migrate();
     emit mInstance->coreStarted();
   });
 
@@ -232,6 +232,32 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setDatabasesPaths();
   setOtherPaths();
+}
+
+#define RC_VERSION_NAME "rc_version"
+#define RC_VERSION_CURRENT 1
+
+void CoreManager::migrate () {
+  shared_ptr<linphone::Config> config = mCore->getConfig();
+  int rcVersion = config->getInt(SettingsModel::UI_SECTION, RC_VERSION_NAME, 0);
+  if (rcVersion == RC_VERSION_CURRENT)
+    return;
+  if (rcVersion > RC_VERSION_CURRENT) {
+    qWarning() << "RC file version (" << rcVersion << ") is more recent than app rc file version (" << RC_VERSION_CURRENT << ")!!!";
+    return;
+  }
+
+  qInfo() << "Migrate from old rc file (" << rcVersion << "to" << RC_VERSION_CURRENT << ").";
+
+  // Add message_expires param on old proxy configs.
+  for (const auto &proxyConfig : mCore->getProxyConfigList()) {
+    if (proxyConfig->getDomain() == "sip.linphone.org") {
+    proxyConfig->setContactParameters("message-expires=604800");
+    proxyConfig->setExpires(3600);
+    proxyConfig->done();
+	}
+  }
+  config->setInt(SettingsModel::UI_SECTION, RC_VERSION_NAME, RC_VERSION_CURRENT);
 }
 
 // -----------------------------------------------------------------------------
