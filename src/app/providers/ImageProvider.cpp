@@ -35,7 +35,7 @@ using namespace std;
 
 namespace {
   // Max image size in bytes. (100Kb)
-  constexpr size_t cMaxImageSize = 102400;
+  constexpr qint64 cMaxImageSize = 102400;
 }
 
 static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
