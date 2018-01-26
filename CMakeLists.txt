@@ -45,6 +45,11 @@ include(CheckCXXCompilerFlag)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+# Avoid cmake warning if CMP0071 is not set.
+if (POLICY CMP0071)
+  cmake_policy(SET CMP0071 NEW)
+endif ()
+
 if (NOT WIN32)
   check_cxx_compiler_flag("-Wsuggest-override" SUGGEST_OVERRIDE)
   set(CUSTOM_FLAGS "\
