@@ -143,7 +143,7 @@ private:
   void setResourcesPaths ();
 
   void createLinphoneCore (const QString &configPath);
-  void migrate();
+  void migrate ();
 
   QString getVersion () const;
 
