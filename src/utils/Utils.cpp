@@ -26,6 +26,10 @@
 
 // =============================================================================
 
+namespace {
+  constexpr int cSafeFilePathLimit = 100;
+}
+
 char *Utils::rstrstr (const char *a, const char *b) {
   size_t a_len = strlen(a);
   size_t b_len = strlen(b);
@@ -43,8 +47,6 @@ char *Utils::rstrstr (const char *a, const char *b) {
 
 // -----------------------------------------------------------------------------
 
-#define SAFE_FILE_PATH_LIMIT 100
-
 QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
   if (soFarSoGood)
     *soFarSoGood = true;
@@ -56,7 +58,7 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
   const QString prefix = QStringLiteral("%1/%2").arg(info.absolutePath()).arg(info.baseName());
   const QString ext = info.completeSuffix();
 
-  for (int i = 1; i < SAFE_FILE_PATH_LIMIT; ++i) {
+  for (int i = 1; i < cSafeFilePathLimit; ++i) {
     QString safePath = QStringLiteral("%1 (%3).%4").arg(prefix).arg(i).arg(ext);
     if (!QFileInfo::exists(safePath))
       return safePath;
@@ -67,5 +69,3 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
 
   return QString("");
 }
-
-#undef SAFE_FILE_PATH_LIMIT

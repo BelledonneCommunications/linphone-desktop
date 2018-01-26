@@ -27,11 +27,13 @@
 
 #include "SoundPlayer.hpp"
 
-#define FORCE_CLOSE_TIMER_INTERVAL 20
-
 using namespace std;
 
 // =============================================================================
+
+namespace {
+  int cForceCloseTimerInterval = 20;
+}
 
 class SoundPlayer::Handlers : public linphone::PlayerListener {
 public:
@@ -58,7 +60,7 @@ private:
 
 SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
   mForceCloseTimer = new QTimer(this);
-  mForceCloseTimer->setInterval(FORCE_CLOSE_TIMER_INTERVAL);
+  mForceCloseTimer->setInterval(cForceCloseTimerInterval);
 
   QObject::connect(mForceCloseTimer, &QTimer::timeout, this, &SoundPlayer::handleEof);
 

@@ -26,22 +26,22 @@
 
 #include "Colors.hpp"
 
-#define COLORS_SECTION "ui_colors"
-
 #if LINPHONE_FRIDAY
-#include <QDate>
+  #include <QDate>
 #endif // if LINPHONE_FRIDAY
 
 using namespace std;
 
 // =============================================================================
 
-#if LINPHONE_FRIDAY
+namespace {
+  constexpr char cColorsSection[] = "ui_colors";
+}
 
+#if LINPHONE_FRIDAY
   static inline bool isLinphoneFriday () {
     return QDate::currentDate().dayOfWeek() == 5;
   }
-
 #endif // if LINPHONE_FRIDAY
 
 Colors::Colors (QObject *parent) : QObject(parent) {
@@ -74,7 +74,7 @@ void Colors::overrideColors (const shared_ptr<linphone::Config> &config) {
   for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {
     const QMetaProperty metaProperty = info->property(i);
     const string colorName = metaProperty.name();
-    const string colorValue = config->getString(COLORS_SECTION, colorName, "");
+    const string colorValue = config->getString(cColorsSection, colorName, "");
 
     if (!colorValue.empty())
       setProperty(colorName.c_str(), QColor(::Utils::coreStringToAppString(colorValue)));

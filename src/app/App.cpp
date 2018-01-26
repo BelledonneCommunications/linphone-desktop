@@ -45,25 +45,27 @@
 
 #include "App.hpp"
 
-#define DEFAULT_LOCALE "en"
-
-#define LANGUAGES_PATH ":/languages/"
-
-// The main windows of Linphone desktop.
-#define QML_VIEW_MAIN_WINDOW "qrc:/ui/views/App/Main/MainWindow.qml"
-#define QML_VIEW_CALLS_WINDOW "qrc:/ui/views/App/Calls/CallsWindow.qml"
-#define QML_VIEW_SETTINGS_WINDOW "qrc:/ui/views/App/Settings/SettingsWindow.qml"
-
-#define QML_VIEW_SPLASH_SCREEN "qrc:/ui/views/App/SplashScreen/SplashScreen.qml"
-
-#define VERSION_UPDATE_CHECK_INTERVAL 86400000 // 24 hours in milliseconds.
-
 using namespace std;
 
 // =============================================================================
 
+namespace {
+  constexpr char cDefaultLocale[] = "en";
+
+  constexpr char cLanguagePath[] = ":/languages/";
+
+  // The main windows of Linphone desktop.
+  constexpr char cQmlViewMainWindow[] = "qrc:/ui/views/App/Main/MainWindow.qml";
+  constexpr char cQmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
+  constexpr char cQmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
+
+  constexpr char cQmlViewSplashScreen[] = "qrc:/ui/views/App/SplashScreen/SplashScreen.qml";
+
+  constexpr int cVersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
+}
+
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
-  return translator.load(locale, LANGUAGES_PATH) && app.installTranslator(&translator);
+  return translator.load(locale, cLanguagePath) && app.installTranslator(&translator);
 }
 
 static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
@@ -89,7 +91,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
     Logger::getInstance()->setVerbose(true);
 
   // List available locales.
-  for (const auto &locale : QDir(LANGUAGES_PATH).entryList())
+  for (const auto &locale : QDir(cLanguagePath).entryList())
     mAvailableLocales << QLocale(locale);
 
   // Init locale.
@@ -138,7 +140,7 @@ static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 
 static void activeSplashScreen (QQmlApplicationEngine *engine) {
   qInfo() << QStringLiteral("Open splash screen...");
-  QQuickWindow *splashScreen = ::createSubWindow(engine, QML_VIEW_SPLASH_SCREEN);
+  QQuickWindow *splashScreen = ::createSubWindow(engine, cQmlViewSplashScreen);
   QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {
     splashScreen->close();
     splashScreen->deleteLater();
@@ -240,7 +242,7 @@ void App::initContentApp () {
 
   // Load main view.
   qInfo() << QStringLiteral("Loading main view...");
-  mEngine->load(QUrl(QML_VIEW_MAIN_WINDOW));
+  mEngine->load(QUrl(cQmlViewMainWindow));
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
@@ -281,7 +283,7 @@ QString App::getCommandArgument () {
 
 QQuickWindow *App::getCallsWindow () {
   if (!mCallsWindow)
-    mCallsWindow = ::createSubWindow(mEngine, QML_VIEW_CALLS_WINDOW);
+    mCallsWindow = ::createSubWindow(mEngine, cQmlViewCallsWindow);
 
   return mCallsWindow;
 }
@@ -294,7 +296,7 @@ QQuickWindow *App::getMainWindow () const {
 
 QQuickWindow *App::getSettingsWindow () {
   if (!mSettingsWindow) {
-    mSettingsWindow = ::createSubWindow(mEngine, QML_VIEW_SETTINGS_WINDOW);
+    mSettingsWindow = ::createSubWindow(mEngine, cQmlViewSettingsWindow);
     QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
         if (visibility == QWindow::Hidden) {
           qInfo() << QStringLiteral("Update nat policy.");
@@ -514,7 +516,7 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   }
 
   // Use english.
-  mLocale = DEFAULT_LOCALE;
+  mLocale = cDefaultLocale;
   if (!::installLocale(*this, *mTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
 }
@@ -570,7 +572,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
 
   #ifdef ENABLE_UPDATE_CHECK
     QTimer *timer = new QTimer(mEngine);
-    timer->setInterval(VERSION_UPDATE_CHECK_INTERVAL);
+    timer->setInterval(cVersionUpdateCheckInterval);
 
     QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
     timer->start();

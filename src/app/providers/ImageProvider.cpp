@@ -29,12 +29,14 @@
 
 #include "ImageProvider.hpp"
 
-// Max image size in bytes. (100Kb)
-#define MAX_IMAGE_SIZE 102400
-
 using namespace std;
 
 // =============================================================================
+
+namespace {
+  // Max image size in bytes. (100Kb)
+  constexpr size_t cMaxImageSize = 102400;
+}
 
 static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
   auto it = find_if(readerAttributes.cbegin(), readerAttributes.cend(), [&name](const QXmlStreamAttribute &attribute) {
@@ -250,7 +252,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
 
   // 1. Read and update XML content.
   QFile file(path);
-  if (Q_UNLIKELY(QFileInfo(file).size() > MAX_IMAGE_SIZE)) {
+  if (Q_UNLIKELY(QFileInfo(file).size() > cMaxImageSize)) {
     qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
     return QImage();
   }

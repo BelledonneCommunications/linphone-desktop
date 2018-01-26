@@ -24,13 +24,15 @@
 
 #include "SipAddressesProxyModel.hpp"
 
-#define WEIGHT_POS_0 5
-#define WEIGHT_POS_1 4
-#define WEIGHT_POS_2 3
-#define WEIGHT_POS_3 2
-#define WEIGHT_POS_OTHER 1
-
 // =============================================================================
+
+namespace {
+  constexpr int cWeightPos0 = 5;
+  constexpr int cWeightPos1 = 4;
+  constexpr int cWeightPos2 = 3;
+  constexpr int cWeightPos3 = 2;
+  constexpr int cWeightPosOther = 1;
+}
 
 const QRegExp SipAddressesProxyModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
 
@@ -116,12 +118,12 @@ int SipAddressesProxyModel::computeStringWeight (const QString &string) const {
 
   switch (offset) {
     case -1: return 0;
-    case 0: return WEIGHT_POS_0;
-    case 1: return WEIGHT_POS_1;
-    case 2: return WEIGHT_POS_2;
-    case 3: return WEIGHT_POS_3;
+    case 0: return cWeightPos0;
+    case 1: return cWeightPos1;
+    case 2: return cWeightPos2;
+    case 3: return cWeightPos3;
     default: break;
   }
 
-  return WEIGHT_POS_OTHER;
+  return cWeightPosOther;
 }
