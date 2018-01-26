@@ -35,7 +35,7 @@
 
 void TestUtils::executeKeySequence (QQuickWindow *window, QKeySequence sequence) {
   for (int i = 0; i < sequence.count(); ++i) {
-    int key = sequence[i];
+    uint key = static_cast<uint>(sequence[static_cast<uint>(i)]);
     QTest::keyClick(
       window,
       Qt::Key(key & ~Qt::KeyboardModifierMask),

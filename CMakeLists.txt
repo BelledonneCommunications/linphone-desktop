@@ -51,13 +51,15 @@ if (NOT WIN32)
 -Wall \
 -Wcast-align \
 -Wconversion \
--Werror=return-type \
 -Werror=old-style-cast \
+-Werror=return-type \
 -Wextra \
 -Wfloat-equal \
 -Winit-self \
+-Wnon-virtual-dtor \
 -Woverloaded-virtual \
 -Wpointer-arith \
+-Wsign-conversion \
 -Wuninitialized \
 -Wunused \
 ")
