@@ -608,6 +608,10 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
     case linphone::CallStatusEarlyAborted:
       return; // Ignore aborted calls.
 
+    case linphone::CallStatusAcceptedElsewhere:
+    case linphone::CallStatusDeclinedElsewhere:
+      return; // Ignore accepted calls on other device.
+
     case linphone::CallStatusSuccess:
     case linphone::CallStatusMissed:
     case linphone::CallStatusDeclined:
@@ -615,21 +619,21 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   }
 
   auto insertEntry = [this](
-      const ChatEntryData &pair,
-      const QList<ChatEntryData>::iterator *start = NULL
-    ) {
-      auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), pair, [](const ChatEntryData &a, const ChatEntryData &b) {
-            return a.first["timestamp"] < b.first["timestamp"];
-          });
+    const ChatEntryData &pair,
+    const QList<ChatEntryData>::iterator *start = NULL
+  ) {
+    auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), pair, [](const ChatEntryData &a, const ChatEntryData &b) {
+      return a.first["timestamp"] < b.first["timestamp"];
+    });
 
-      int row = static_cast<int>(distance(mEntries.begin(), it));
+    int row = static_cast<int>(distance(mEntries.begin(), it));
 
-      beginInsertRows(QModelIndex(), row, row);
-      it = mEntries.insert(it, pair);
-      endInsertRows();
+    beginInsertRows(QModelIndex(), row, row);
+    it = mEntries.insert(it, pair);
+    endInsertRows();
 
-      return it;
-    };
+    return it;
+  };
 
   // Add start call.
   QVariantMap start;
