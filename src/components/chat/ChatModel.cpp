@@ -85,7 +85,7 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
   int rotation = 0;
   QExifImageHeader exifImageHeader;
   if (exifImageHeader.loadFromJpeg(thumbnailPath))
-    rotation = static_cast<int>(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
+    rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
 
   QImage thumbnail = image.scaled(
       THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
@@ -148,7 +148,7 @@ private:
   }
 
   void signalDataChanged (const QList<ChatEntryData>::iterator &it) {
-    int row = static_cast<int>(distance(mChatModel->mEntries.begin(), it));
+    int row = int(distance(mChatModel->mEntries.begin(), it));
     emit mChatModel->dataChanged(mChatModel->index(row, 0), mChatModel->index(row, 0));
   }
 
@@ -175,7 +175,7 @@ private:
     if (it == mChatModel->mEntries.end())
       return;
 
-    (*it).first["fileOffset"] = static_cast<quint64>(offset);
+    (*it).first["fileOffset"] = quint64(offset);
 
     signalDataChanged(it);
   }
@@ -411,7 +411,7 @@ void ChatModel::sendFileMessage (const QString &path) {
     content->setSubtype(::Utils::appStringToCoreString(mimeType[1]));
   }
 
-  content->setSize(static_cast<size_t>(fileSize));
+  content->setSize(size_t(fileSize));
   content->setName(::Utils::appStringToCoreString(QFileInfo(file).fileName()));
 
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
@@ -534,7 +534,7 @@ void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
-    dest["fileSize"] = static_cast<quint64>(content->getSize());
+    dest["fileSize"] = quint64(content->getSize());
     dest["fileName"] = ::Utils::coreStringToAppString(content->getName());
     dest["wasDownloaded"] = ::fileWasDownloaded(message);
 
@@ -587,7 +587,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
                 });
 
             if (it != mEntries.end())
-              removeEntry(static_cast<int>(distance(mEntries.begin(), it)));
+              removeEntry(int(distance(mEntries.begin(), it)));
           });
       }
 
@@ -626,7 +626,7 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
       return a.first["timestamp"] < b.first["timestamp"];
     });
 
-    int row = static_cast<int>(distance(mEntries.begin(), it));
+    int row = int(distance(mEntries.begin(), it));
 
     beginInsertRows(QModelIndex(), row, row);
     it = mEntries.insert(it, pair);

@@ -74,7 +74,7 @@ bool ContactsListProxyModel::filterAcceptsRow (
   const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
   const ContactModel *contact = index.data().value<ContactModel *>();
 
-  mWeights[contact] = static_cast<unsigned int>(round(computeContactWeight(contact)));
+  mWeights[contact] = uint(round(computeContactWeight(contact)));
 
   return mWeights[contact] > 0 && (
     !mUseConnectedFilter ||
@@ -129,7 +129,7 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel *contact)
   // Get all contact's addresses.
   const list<shared_ptr<linphone::Address> > addresses = contact->mLinphoneFriend->getAddresses();
 
-  float size = static_cast<float>(addresses.size());
+  float size = float(addresses.size());
   for (auto it = addresses.cbegin(); it != addresses.cend(); ++it)
     weight += computeStringWeight(
         ::Utils::coreStringToAppString((*it)->asStringUriOnly()),

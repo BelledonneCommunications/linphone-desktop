@@ -241,7 +241,7 @@ void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage
 
   QVariantMap map;
   map["fileUri"] = ::Utils::coreStringToAppString(message->getFileTransferFilepath());
-  map["fileSize"] = static_cast<quint64>(message->getFileTransferInformation()->getSize());
+  map["fileSize"] = quint64(message->getFileTransferInformation()->getSize());
 
   SHOW_NOTIFICATION(map);
 }

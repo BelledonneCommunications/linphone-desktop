@@ -30,21 +30,23 @@
 
 #include "CallsListModel.hpp"
 
-/* Delay before removing call in ms. */
-#define DELAY_BEFORE_REMOVE_CALL 3000
-
 using namespace std;
 
 // =============================================================================
 
+namespace {
+  /* Delay before removing call in ms. */
+  constexpr int cDelayBeforeRemoveCall = 3000;
+}
+
 static inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::Call> &call) {
   auto it = find_if(list.begin(), list.end(), [call](CallModel *callModel) {
-        return call == callModel->getCall();
-      });
+    return call == callModel->getCall();
+  });
 
   Q_ASSERT(it != list.end());
 
-  return static_cast<int>(distance(list.begin(), it));
+  return int(distance(list.begin(), it));
 }
 
 static inline int findCallIndex (QList<CallModel *> &list, const CallModel &callModel) {
@@ -253,7 +255,7 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
     return;
   }
 
-  QTimer::singleShot(DELAY_BEFORE_REMOVE_CALL, this, [this, callModel] {
+  QTimer::singleShot(cDelayBeforeRemoveCall, this, [this, callModel] {
     removeCallCb(callModel);
   });
 }

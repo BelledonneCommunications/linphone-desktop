@@ -213,7 +213,7 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
 
     initMsg.append(connectionType);
     initMsg.append(reinterpret_cast<const char *>(&instanceNumber), sizeof(quint32));
-    initMsg.append(QByteArray::number(qChecksum(initMsg.constData(), static_cast<uint>(initMsg.length())), 256));
+    initMsg.append(QByteArray::number(qChecksum(initMsg.constData(), uint(initMsg.length())), 256));
 
     socket->write(initMsg);
     socket->flush();
@@ -304,11 +304,11 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
           initMsg += connectionType;
           tmp = nextConnSocket->read(sizeof(quint32));
           const char *data = tmp.constData();
-          instanceId = static_cast<quint32>(*data);
+          instanceId = quint32(*data);
           initMsg += tmp;
           // Verify the checksum of the initMsg
           QByteArray checksum = QByteArray::number(
-              qChecksum(initMsg.constData(), static_cast<uint>(initMsg.length())),
+              qChecksum(initMsg.constData(), uint(initMsg.length())),
               256
             );
           tmp = nextConnSocket->read(checksum.length());

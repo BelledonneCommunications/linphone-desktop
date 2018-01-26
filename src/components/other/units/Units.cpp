@@ -28,7 +28,7 @@ Units::Units (QObject *parent) : QObject(parent) {}
 
 float Units::getDp () const {
   #ifdef Q_OS_MACOS
-    return static_cast<float>(96.0 / 72.0);
+    return float(96.0 / 72.0);
   #endif // ifdef Q_OS_MACOS
 
   return 1.0;

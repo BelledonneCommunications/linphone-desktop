@@ -43,7 +43,7 @@ static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QStri
         return name == attribute.name() && !attribute.prefix().length();
       });
   if (it != readerAttributes.cend())
-    readerAttributes.remove(static_cast<int>(distance(readerAttributes.cbegin(), it)));
+    readerAttributes.remove(int(distance(readerAttributes.cbegin(), it)));
 }
 
 static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteArray &value) {
@@ -280,8 +280,8 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
   const int width = requestedSize.width();
   const int height = requestedSize.height();
   QImage image(
-    width > 0 ? width : static_cast<int>(viewBox.width()),
-    height > 0 ? height : static_cast<int>(viewBox.height()),
+    width > 0 ? width : int(viewBox.width()),
+    height > 0 ? height : int(viewBox.height()),
     QImage::Format_ARGB32
   );
   if (Q_UNLIKELY(image.isNull())) {

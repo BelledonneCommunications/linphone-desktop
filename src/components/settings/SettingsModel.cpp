@@ -29,13 +29,13 @@
 
 #include "SettingsModel.hpp"
 
-#ifndef DEFAULT_RLS_URI
-  #define DEFAULT_RLS_URI "sips:rls@sip.linphone.org"
-#endif // ifndef RLS_URI
-
 using namespace std;
 
 // =============================================================================
+
+namespace {
+  constexpr char cDefaultRlsUri[] = "sips:rls@sip.linphone.org";
+}
 
 const string SettingsModel::UI_SECTION("ui");
 
@@ -190,11 +190,11 @@ void SettingsModel::setVideoPreset (const QString &preset) {
 // -----------------------------------------------------------------------------
 
 int SettingsModel::getVideoFramerate () const {
-  return static_cast<int>(CoreManager::getInstance()->getCore()->getPreferredFramerate());
+  return int(CoreManager::getInstance()->getCore()->getPreferredFramerate());
 }
 
 void SettingsModel::setVideoFramerate (int framerate) {
-  CoreManager::getInstance()->getCore()->setPreferredFramerate(static_cast<float>(framerate));
+  CoreManager::getInstance()->getCore()->setPreferredFramerate(float(framerate));
   emit videoFramerateChanged(framerate);
 }
 
@@ -660,7 +660,7 @@ bool SettingsModel::getRlsUriEnabled () const {
 
 void SettingsModel::setRlsUriEnabled (bool status) {
   mConfig->setInt(UI_SECTION, "rls_uri_enabled", status);
-  mConfig->setString("sip", "rls_uri", status ? DEFAULT_RLS_URI : "");
+  mConfig->setString("sip", "rls_uri", status ? cDefaultRlsUri : "");
   emit rlsUriEnabledChanged(status);
 }
 
@@ -669,7 +669,7 @@ static string getRlsUriDomain () {
   if (!domain.empty())
     return domain;
 
-  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(DEFAULT_RLS_URI);
+  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(cDefaultRlsUri);
   Q_CHECK_PTR(linphoneAddress);
   domain = linphoneAddress->getDomain();
   return domain;
@@ -686,7 +686,7 @@ void SettingsModel::configureRlsUri () {
   const string domain = getRlsUriDomain();
   for (const auto &proxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
     if (proxyConfig->getDomain() == domain) {
-      mConfig->setString("sip", "rls_uri", DEFAULT_RLS_URI);
+      mConfig->setString("sip", "rls_uri", cDefaultRlsUri);
       return;
     }
 
@@ -701,7 +701,7 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 
   const string domain = getRlsUriDomain();
   if (proxyConfig->getDomain() == domain) {
-    mConfig->setString("sip", "rls_uri", DEFAULT_RLS_URI);
+    mConfig->setString("sip", "rls_uri", cDefaultRlsUri);
     return;
   }
 

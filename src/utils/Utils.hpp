@@ -42,7 +42,7 @@
 
 namespace Utils {
   inline QString coreStringToAppString (const std::string &string) {
-    return QString::fromLocal8Bit(string.c_str(), static_cast<int>(string.size()));
+    return QString::fromLocal8Bit(string.c_str(), int(string.size()));
   }
 
   inline std::string appStringToCoreString (const QString &string) {

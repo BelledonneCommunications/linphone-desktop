@@ -276,7 +276,7 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
   // TODO: check if there is too much headers.
   for (const auto &argName : mArgsScheme.keys()) {
     const string header = address->getHeader(::Utils::appStringToCoreString(argName));
-    args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), static_cast<int>(header.length())));
+    args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
   }
   address->clean();
   args["sip-address"] = ::Utils::coreStringToAppString(address->asStringUriOnly());

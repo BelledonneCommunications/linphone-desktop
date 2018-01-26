@@ -164,7 +164,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
   proxyConfig->setRoute(::Utils::appStringToCoreString(data["route"].toString()));
   proxyConfig->setContactParameters(::Utils::appStringToCoreString(data["contactParams"].toString()));
-  proxyConfig->setAvpfRrInterval(static_cast<uint8_t>(data["avpfInterval"].toInt()));
+  proxyConfig->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
   proxyConfig->enablePublish(data["publishPresence"].toBool());
   proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()

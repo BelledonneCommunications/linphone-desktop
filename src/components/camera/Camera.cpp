@@ -30,11 +30,13 @@
 
 #include "Camera.hpp"
 
-#define MAX_FPS 30
-
 using namespace std;
 
 // =============================================================================
+
+namespace {
+  constexpr int cMaxFps = 30;
+}
 
 struct ContextInfo {
   GLuint width;
@@ -77,8 +79,8 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   // It's not the same thread as render.
   coreManager->lockVideoRender();
 
-  mContextInfo->width = static_cast<GLuint>(size.width());
-  mContextInfo->height = static_cast<GLuint>(size.height());
+  mContextInfo->width = GLuint(size.width());
+  mContextInfo->height = GLuint(size.height());
   mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
   mUpdateContextInfo = true;
 
@@ -179,7 +181,7 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setMirrorVertically(true);
 
   mRefreshTimer = new QTimer(this);
-  mRefreshTimer->setInterval(1000 / MAX_FPS);
+  mRefreshTimer->setInterval(1000 / cMaxFps);
 
   QObject::connect(
     mRefreshTimer, &QTimer::timeout,

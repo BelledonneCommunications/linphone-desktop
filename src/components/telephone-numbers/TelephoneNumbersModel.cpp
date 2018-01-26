@@ -293,5 +293,5 @@ int TelephoneNumbersModel::getDefaultIndex () const {
         return country == pair.first;
       }
     );
-  return it != mCountryCodes.cend() ? static_cast<int>(distance(mCountryCodes.cbegin(), it)) : 0;
+  return it != mCountryCodes.cend() ? int(distance(mCountryCodes.cbegin(), it)) : 0;
 }
