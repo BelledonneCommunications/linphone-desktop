@@ -256,11 +256,21 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
       return;
     }
 
+    // Dangerous signals. Exit directly after shared memory destruction.
+    // Don't touch sockets => avoid dead locks.
+    for (int crashSig : { SIGABRT, SIGBUS, SIGSEGV })
+      if (signum == crashSig) {
+        for (SingleApplicationPrivate *d : sharedMem)
+          delete d->memory;
+        goto forceExit;
+      }
+
     while (!sharedMem.empty()) {
       delete sharedMem.back();
       sharedMem.pop_back();
     }
 
+  forceExit:
     ::exit(128 + signum);
   }
 
