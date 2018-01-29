@@ -1026,17 +1026,17 @@ quint32 QExifImageHeader::sizeOf (const QExifValue &value) const {
   switch (value.type()) {
     case QExifValue::Byte:
     case QExifValue::Undefined:
-      return value.count() > 4 ? 12 + value.count() : 12;
+      return quint32(value.count() > 4 ? 12 + value.count() : 12);
     case QExifValue::Ascii:
-      return value.count() > 4 ? 12 + value.count() : 12;
+      return quint32(value.count() > 4 ? 12 + value.count() : 12);
     case QExifValue::Short:
-      return value.count() > 2 ? quint32(12 + value.count() * sizeof(quint16)) : 12;
+    return value.count() > 2 ? quint32(12 + quint32(value.count()) * sizeof(quint16)) : 12;
     case QExifValue::Long:
     case QExifValue::SignedLong:
-      return value.count() > 1 ? quint32(12 + value.count() * sizeof(quint32)) : 12;
+      return value.count() > 1 ? quint32(12 + quint32(value.count()) * sizeof(quint32)) : 12;
     case QExifValue::Rational:
     case QExifValue::SignedRational:
-      return value.count() > 0 ? quint32(12 + value.count() * sizeof(quint32) * 2) : 12;
+      return value.count() > 0 ? quint32(12 + quint32(value.count()) * sizeof(quint32) * 2) : 12;
     default:
       return 0;
   }
@@ -1320,95 +1320,95 @@ QList<ExifIfdHeader> QExifImageHeader::readIfdHeaders (QDataStream &stream) cons
 QExifValue QExifImageHeader::readIfdValue (QDataStream &stream, int startPos, const ExifIfdHeader &header) const {
   switch (header.type) {
     case QExifValue::Byte: {
-      QVector<quint8> value(header.count);
+      QVector<quint8> value(int(header.count));
 
       if (header.count > 4) {
-        stream.device()->seek(startPos + header.offset);
+        stream.device()->seek(startPos + qint64(header.offset));
 
         for (quint32 i = 0; i < header.count; i++)
-          stream >> value[i];
+          stream >> value[int(i)];
       } else {
         for (quint32 i = 0; i < header.count; i++)
-          value[i] = header.offsetBytes[i];
+          value[int(i)] = header.offsetBytes[i];
       }
       return QExifValue(value);
     }
     case QExifValue::Undefined:
       if (header.count > 4) {
-        stream.device()->seek(startPos + header.offset);
+        stream.device()->seek(startPos + qint64(header.offset));
 
         return QExifValue(stream.device()->read(header.count));
       } else {
-        return QExifValue(QByteArray::fromRawData(header.offsetAscii, header.count));
+        return QExifValue(QByteArray::fromRawData(header.offsetAscii, int(header.count)));
       }
     case QExifValue::Ascii:
       if (header.count > 4) {
-        stream.device()->seek(startPos + header.offset);
+        stream.device()->seek(startPos + qint64(header.offset));
 
         QByteArray ascii = stream.device()->read(header.count);
 
         return QExifValue(QString::fromUtf8(ascii.constData(), ascii.size() - 1));
       } else {
-        return QExifValue(QString::fromUtf8(header.offsetAscii, header.count - 1));
+        return QExifValue(QString::fromUtf8(header.offsetAscii, int(header.count) - 1));
       }
     case QExifValue::Short: {
-      QVector<quint16> value(quint16(header.count));
+      QVector<quint16> value(int(header.count));
 
       if (header.count > 2) {
-        stream.device()->seek(startPos + header.offset);
+        stream.device()->seek(startPos + qint64(header.offset));
 
         for (quint32 i = 0; i < header.count; i++)
-          stream >> value[i];
+          stream >> value[int(i)];
       } else {
         for (quint32 i = 0; i < header.count; i++)
-          value[i] = header.offsetShorts[i];
+          value[int(i)] = header.offsetShorts[i];
       }
       return QExifValue(value);
     }
     case QExifValue::Long: {
-      QVector<quint32> value(quint32(header.count));
+      QVector<quint32> value(int(header.count));
 
       if (header.count > 1) {
-        stream.device()->seek(startPos + header.offset);
+        stream.device()->seek(startPos + qint64(header.offset));
 
         for (quint32 i = 0; i < header.count; i++)
-          stream >> value[i];
+          stream >> value[int(i)];
       } else if (header.count == 1) {
         value[0] = header.offset;
       }
       return QExifValue(value);
     }
     case QExifValue::SignedLong: {
-      QVector<qint32> value(header.count);
+      QVector<qint32> value(int(header.count));
 
       if (header.count > 1) {
-        stream.device()->seek(startPos + header.offset);
+        stream.device()->seek(startPos + qint64(header.offset));
 
         for (quint32 i = 0; i < header.count; i++)
-          stream >> value[i];
+          stream >> value[int(i)];
       } else if (header.count == 1) {
-        value[0] = header.offset;
+        value[0] = int(header.offset);
       }
       return QExifValue(value);
     }
                                  break;
     case QExifValue::Rational: {
-      QVector<QExifURational> value(header.count);
+      QVector<QExifURational> value(int(header.count));
 
-      stream.device()->seek(startPos + header.offset);
+      stream.device()->seek(startPos + qint64(header.offset));
 
       for (quint32 i = 0; i < header.count; i++)
-        stream >> value[i];
+        stream >> value[int(i)];
 
       return QExifValue(value);
     }
     case QExifValue::SignedRational: {
-      QVector<QExifSRational> value(header.count);
+      QVector<QExifSRational> value(int(header.count));
 
-      stream.device()->seek(startPos + header.offset);
+      stream.device()->seek(startPos + qint64(header.offset));
 
       for (quint32 i = 0; i < header.count; i++)
-        stream >> value[i];
+        stream >> value[int(i)];
 
       return QExifValue(value);
     }
@@ -1442,7 +1442,7 @@ QMap<T, QExifValue> QExifImageHeader::readIfdValues (
   const QExifValue &pointer
 ) const {
   if (pointer.type() == QExifValue::Long && pointer.count() == 1) {
-    stream.device()->seek(startPos + pointer.toLong());
+    stream.device()->seek(qint64(startPos) + pointer.toLong());
 
     QList<ExifIfdHeader> headers = readIfdHeaders(stream);
 
@@ -1489,7 +1489,7 @@ bool QExifImageHeader::read (QIODevice *device) {
   if (id != 0x002A)
     return false;
 
-  device->seek(startPos + offset);
+  device->seek(startPos + qint64(offset));
 
   QList<ExifIfdHeader> headers = readIfdHeaders(stream);
 
@@ -1506,7 +1506,7 @@ bool QExifImageHeader::read (QIODevice *device) {
   d->exifIfdValues.remove(ExifExtendedTag(InteroperabilityIfdPointer));
 
   if (offset) {
-    device->seek(startPos + offset);
+    device->seek(startPos + qint64(offset));
 
     QMap<quint16, QExifValue> thumbnailIfdValues = readIfdValues<quint16>(
         stream, startPos, readIfdHeaders(stream));
@@ -1516,7 +1516,7 @@ bool QExifImageHeader::read (QIODevice *device) {
 
     if (jpegOffset.type() == QExifValue::Long && jpegOffset.count() == 1 &&
         jpegLength.type() == QExifValue::Long && jpegLength.count() == 1) {
-      device->seek(startPos + jpegOffset.toLong());
+      device->seek(startPos + qint64(jpegOffset.toLong()));
 
       d->thumbnailData = device->read(jpegLength.toLong());
 
@@ -1581,7 +1581,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += quint32(value.count() * sizeof(quint16));
+        offset += quint32(value.count()) * quint32(sizeof(quint16));
       }
       break;
     case QExifValue::Long:
@@ -1592,7 +1592,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += quint32(value.count() * sizeof(quint32));
+        offset += quint32(value.count()) * quint32(sizeof(quint32));
       }
       break;
     case QExifValue::SignedLong:
@@ -1603,7 +1603,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += quint32(value.count() * sizeof(qint32));
+        offset += quint32(value.count()) * quint32(sizeof(quint32));
       }
       break;
     case QExifValue::Rational:
@@ -1612,7 +1612,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += quint32(value.count() * sizeof(quint32) * 2);
+        offset += quint32(value.count()) * quint32(sizeof(quint32)) * 2;
       }
       break;
     case QExifValue::SignedRational:
@@ -1621,7 +1621,7 @@ quint32 QExifImageHeader::writeExifHeader (QDataStream &stream, quint16 tag, con
       } else {
         stream << offset;
 
-        offset += quint32(value.count() * sizeof(qint32) * 2);
+        offset += quint32(value.count()) * quint32(sizeof(quint32)) * 2;
       }
       break;
     default:
@@ -1687,7 +1687,7 @@ quint32 QExifImageHeader::writeExifHeaders (
   const QMap<T, QExifValue> &values,
   quint32 offset
 ) const {
-  offset += values.count() * 12;
+  offset += quint32(values.count() * 12);
 
   for (typename QMap<T, QExifValue>::const_iterator i = values.constBegin(); i != values.constEnd(); i++)
     offset = writeExifHeader(stream, i.key(), i.value(), offset);
@@ -1827,7 +1827,7 @@ qint64 QExifImageHeader::write (QIODevice *device) const {
 
     device->write(d->thumbnailData);
 
-    offset += d->thumbnailData.size();
+    offset += quint32(d->thumbnailData.size());
   }
 
   Q_ASSERT(startPos + offset == device->pos());
