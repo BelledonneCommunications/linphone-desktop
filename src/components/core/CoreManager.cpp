@@ -38,13 +38,21 @@
 
 #include "CoreManager.hpp"
 
-#define CBS_CALL_INTERVAL 20
-
-#define DOWNLOAD_URL "https://www.linphone.org/technical-corner/linphone/downloads"
-
 using namespace std;
 
 // =============================================================================
+
+namespace {
+  constexpr int cCbsCallInterval = 20;
+
+  // TODO: Remove hardcoded values. Use config directly.
+  constexpr char cLinphoneDomain[] = "sip.linphone.org";
+  constexpr char cDefaultContactParameters[] = "message-expires=604800";
+  constexpr int cDefaultExpires = 3600;
+  constexpr char cDownloadUrl[] = "https://www.linphone.org/technical-corner/linphone/downloads";
+}
+
+// -----------------------------------------------------------------------------
 
 CoreManager *CoreManager::mInstance = nullptr;
 
@@ -125,7 +133,7 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
   mInstance = new CoreManager(parent, configPath);
 
   QTimer *timer = mInstance->mCbsTimer = new QTimer(mInstance);
-  timer->setInterval(CBS_CALL_INTERVAL);
+  timer->setInterval(cCbsCallInterval);
 
   QObject::connect(timer, &QTimer::timeout, mInstance, &CoreManager::iterate);
 }
@@ -254,9 +262,9 @@ void CoreManager::migrate () {
 
   // Add message_expires param on old proxy configs.
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
-    if (proxyConfig->getDomain() == "sip.linphone.org") {
-      proxyConfig->setContactParameters("message-expires=604800");
-      proxyConfig->setExpires(3600);
+    if (proxyConfig->getDomain() == cLinphoneDomain) {
+      proxyConfig->setContactParameters(cDefaultContactParameters);
+      proxyConfig->setExpires(cDefaultExpires);
       proxyConfig->done();
     }
   }
@@ -294,5 +302,5 @@ void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploa
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getDownloadUrl () {
-  return QStringLiteral(DOWNLOAD_URL);
+  return cDownloadUrl;
 }
