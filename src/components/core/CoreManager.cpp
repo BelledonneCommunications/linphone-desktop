@@ -45,6 +45,9 @@ using namespace std;
 namespace {
   constexpr int cCbsCallInterval = 20;
 
+  constexpr char cRcVersionName[] = "rc_version";
+  constexpr int cRcVersionCurrent = 1;
+
   // TODO: Remove hardcoded values. Use config directly.
   constexpr char cLinphoneDomain[] = "sip.linphone.org";
   constexpr char cDefaultContactParameters[] = "message-expires=604800";
@@ -243,22 +246,19 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   setOtherPaths();
 }
 
-#define RC_VERSION_NAME "rc_version"
-#define RC_VERSION_CURRENT 1
-
 void CoreManager::migrate () {
   shared_ptr<linphone::Config> config = mCore->getConfig();
-  int rcVersion = config->getInt(SettingsModel::UI_SECTION, RC_VERSION_NAME, 0);
-  if (rcVersion == RC_VERSION_CURRENT)
+  int rcVersion = config->getInt(SettingsModel::UI_SECTION, cRcVersionName, 0);
+  if (rcVersion == cRcVersionCurrent)
     return;
-  if (rcVersion > RC_VERSION_CURRENT) {
+  if (rcVersion > cRcVersionCurrent) {
     qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
-      .arg(rcVersion).arg(RC_VERSION_CURRENT);
+      .arg(rcVersion).arg(cRcVersionCurrent);
     return;
   }
 
   qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
-    .arg(rcVersion).arg(RC_VERSION_CURRENT);
+    .arg(rcVersion).arg(cRcVersionCurrent);
 
   // Add message_expires param on old proxy configs.
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
@@ -268,7 +268,7 @@ void CoreManager::migrate () {
       proxyConfig->done();
     }
   }
-  config->setInt(SettingsModel::UI_SECTION, RC_VERSION_NAME, RC_VERSION_CURRENT);
+  config->setInt(SettingsModel::UI_SECTION, cRcVersionName, cRcVersionCurrent);
 }
 
 // -----------------------------------------------------------------------------
