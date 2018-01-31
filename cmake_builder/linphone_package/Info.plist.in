@@ -41,6 +41,8 @@
 			<array>
 				<string>sip</string>
 				<string>sip-linphone</string>
+				<string>sips</string>
+				<string>sips-linphone</string>
 			</array>
 		</dict>
 	</array>

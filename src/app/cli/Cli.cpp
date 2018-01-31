@@ -334,8 +334,8 @@ QMap<QString, Cli::Command> Cli::mCommands = {
 
 void Cli::executeCommand (const QString &command, CommandFormat *format) {
   shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::appStringToCoreString(command)
-    );
+    ::Utils::appStringToCoreString(command)
+  );
 
   // Execute cli command.
   if (!address) {
@@ -358,11 +358,14 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
   qInfo() << QStringLiteral("Execute uri command: `%1`.").arg(command);
 
   string scheme = address->getScheme();
-  if (scheme != "sip" && scheme != "sip-linphone") {
-    qWarning() << QStringLiteral("Not a valid uri: `%1`.").arg(command);
-    return;
-  }
+  for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone" })
+    if (scheme == validScheme)
+      goto success;
+  qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.")
+	.arg(command).arg(::Utils::coreStringToAppString(scheme));
+  return;
 
+success:
   const QString functionName = ::Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
     ? QStringLiteral("call")
     : ::Utils::coreStringToAppString(address->getHeader("method"));

@@ -11,3 +11,17 @@ WriteRegExpandStr HKCR "sip-linphone\DefaultIcon" "" "@LINPHONE_DESKTOP_DIR@/ass
 WriteRegStr HKCR "sip-linphone\shell" "" "open"
 WriteRegStr HKCR "sip-linphone\shell\open" "" "command"
 WriteRegStr HKCR "sip-linphone\shell\open\command" "" "$INSTDIR\bin\linphone.exe $\"%1$\""
+
+WriteRegStr HKCR "sips" "" "URL:sips Protocol"
+WriteRegStr HKCR "sips" "URL Protocol" "" 
+WriteRegExpandStr HKCR "sips\DefaultIcon" "" "@LINPHONE_DESKTOP_DIR@/assets/linphone.ico,1"
+WriteRegStr HKCR "sips\shell" "" "open"
+WriteRegStr HKCR "sips\shell\open" "" "command"
+WriteRegStr HKCR "sips\shell\open\command" "" "$INSTDIR\bin\linphone.exe $\"%1$\""
+
+WriteRegStr HKCR "sips-linphone" "" "URL:sips-linphone Protocol"
+WriteRegStr HKCR "sips-linphone" "URL Protocol" ""
+WriteRegExpandStr HKCR "sips-linphone\DefaultIcon" "" "@LINPHONE_DESKTOP_DIR@/assets/linphone.ico,1"
+WriteRegStr HKCR "sips-linphone\shell" "" "open"
+WriteRegStr HKCR "sips-linphone\shell\open" "" "command"
+WriteRegStr HKCR "sips-linphone\shell\open\command" "" "$INSTDIR\bin\linphone.exe $\"%1$\""

@@ -7,3 +7,5 @@ notRunningInUninstall:
 
 DeleteRegKey HKCR "sip"
 DeleteRegKey HKCR "sip-linphone"
+DeleteRegKey HKCR "sips"
+DeleteRegKey HKCR "sips-linphone"

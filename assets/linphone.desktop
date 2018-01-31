@@ -7,7 +7,7 @@ Exec=linphone %u
 Icon=linphone
 Terminal=false
 Categories=Network;Telephony;
-MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;
+MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;
 
 
 # Translations
