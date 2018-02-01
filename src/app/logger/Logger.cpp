@@ -196,7 +196,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
   qInstallMessageHandler(Logger::log);
 
   {
-    shared_ptr<linphone::LoggingService> loggingService = linphone::LoggingService::get();
+    shared_ptr<linphone::LoggingService> loggingService = mInstance->mLoggingService = linphone::LoggingService::get();
     loggingService->setLogLevel(linphone::LogLevel::LogLevelMessage);
     loggingService->setListener(make_shared<LinphoneLogger>(mInstance));
   }

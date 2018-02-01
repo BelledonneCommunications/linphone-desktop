@@ -57,6 +57,8 @@ private:
 
   static QMutex mMutex;
   static Logger *mInstance;
+
+  std::shared_ptr<linphone::LoggingService> mLoggingService;
 };
 
 #endif // LOGGER_H_
