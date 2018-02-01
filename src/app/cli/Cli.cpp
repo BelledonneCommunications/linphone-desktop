@@ -362,7 +362,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
     if (scheme == validScheme)
       goto success;
   qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.")
-	.arg(command).arg(::Utils::coreStringToAppString(scheme));
+    .arg(command).arg(::Utils::coreStringToAppString(scheme));
   return;
 
 success:

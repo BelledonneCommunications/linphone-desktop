@@ -9,7 +9,6 @@ Terminal=false
 Categories=Network;Telephony;
 MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;
 
-
 # Translations
 Name[de]=Linphone
 Name[he]=Linphone
