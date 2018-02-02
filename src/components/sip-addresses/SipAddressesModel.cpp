@@ -469,7 +469,7 @@ void SipAddressesModel::initSipAddresses () {
 
   // Get sip addresses from chatrooms.
   for (const auto &chatRoom : core->getChatRooms()) {
-    list<shared_ptr<linphone::ChatMessage> > history = chatRoom->getHistory(0);
+    list<shared_ptr<linphone::ChatMessage> > history = chatRoom->getHistory(1);
 
     if (history.size() == 0)
       continue;
