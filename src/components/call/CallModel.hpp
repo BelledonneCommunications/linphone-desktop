@@ -78,10 +78,10 @@ public:
   Q_ENUM(CallStatus);
 
   enum CallEncryption {
-    CallEncryptionNone = linphone::MediaEncryptionNone,
-    CallEncryptionDtls = linphone::MediaEncryptionDTLS,
-    CallEncryptionSrtp = linphone::MediaEncryptionSRTP,
-    CallEncryptionZrtp = linphone::MediaEncryptionZRTP
+    CallEncryptionNone = int(linphone::MediaEncryption::None),
+    CallEncryptionDtls = int(linphone::MediaEncryption::DTLS),
+    CallEncryptionSrtp = int(linphone::MediaEncryption::SRTP),
+    CallEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
   };
 
   Q_ENUM(CallEncryption);
@@ -139,14 +139,14 @@ signals:
   void cameraFirstFrameReceived (unsigned int width, unsigned int height);
 
 private:
-  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 
   void stopAutoAnswerTimer () const;
 
   CallStatus getStatus () const;
 
   bool isOutgoing () const {
-    return mCall->getDir() == linphone::CallDirOutgoing;
+    return mCall->getDir() == linphone::Call::Dir::Outgoing;
   }
 
   void updateIsInConference ();

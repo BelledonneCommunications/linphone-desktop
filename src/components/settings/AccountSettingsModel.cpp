@@ -32,15 +32,15 @@ using namespace std;
 
 static inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi (linphone::RegistrationState state) {
   switch (state) {
-    case linphone::RegistrationStateNone:
-    case linphone::RegistrationStateCleared:
-    case linphone::RegistrationStateFailed:
+    case linphone::RegistrationState::None:
+    case linphone::RegistrationState::Cleared:
+    case linphone::RegistrationState::Failed:
       return AccountSettingsModel::RegistrationStateNotRegistered;
 
-    case linphone::RegistrationStateProgress:
+    case linphone::RegistrationState::Progress:
       return AccountSettingsModel::RegistrationStateInProgress;
 
-    case linphone::RegistrationStateOk:
+    case linphone::RegistrationState::Ok:
       break;
   }
 
@@ -105,7 +105,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();
   map["publishPresence"] = proxyConfig->publishEnabled();
-  map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
+  map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::Enabled;
   map["registrationState"] = ::mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   return map;
@@ -168,8 +168,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
   proxyConfig->enablePublish(data["publishPresence"].toBool());
   proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
-    ? linphone::AVPFMode::AVPFModeEnabled
-    : linphone::AVPFMode::AVPFModeDefault
+    ? linphone::AVPFMode::Enabled
+    : linphone::AVPFMode::Default
   );
 
   return addOrUpdateProxyConfig(proxyConfig);

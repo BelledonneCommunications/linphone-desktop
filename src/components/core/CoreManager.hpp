@@ -148,7 +148,7 @@ private:
 
   void iterate ();
 
-  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
+  void handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
 
   static QString getDownloadUrl ();
 

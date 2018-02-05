@@ -253,13 +253,13 @@ void CoreManager::iterate () {
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const string &info) {
+void CoreManager::handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const string &info) {
   switch (state) {
-    case linphone::CoreLogCollectionUploadStateInProgress:
+    case linphone::Core::LogCollectionUploadState::InProgress:
       break;
 
-    case linphone::CoreLogCollectionUploadStateDelivered:
-    case linphone::CoreLogCollectionUploadStateNotDelivered:
+    case linphone::Core::LogCollectionUploadState::Delivered:
+    case linphone::Core::LogCollectionUploadState::NotDelivered:
       emit logsUploaded(::Utils::coreStringToAppString(info));
       break;
   }

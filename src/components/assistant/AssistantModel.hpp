@@ -94,7 +94,7 @@ private:
   QString getConfigFilename () const;
   void setConfigFilename (const QString &configFilename);
 
-  QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreatorUsernameStatus status) const;
+  QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreator::UsernameStatus status) const;
 
   QString mCountryCode;
   QString mConfigFilename;
