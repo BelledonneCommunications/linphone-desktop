@@ -93,6 +93,13 @@ However if the compilation fails, you may need to rebuild everything from scratc
 
 Then you re-build as usual.
 
+## Contributing
+
+### Languages
+
+Linphone is getting a full internationalization support, using Transifex platform.
+If you want you can contribute at: https://www.transifex.com/belledonne-communications/linphone-desktop/languages/
+
 ## License
 
 GPLv2 © [Linphone](https://linphone.org)
