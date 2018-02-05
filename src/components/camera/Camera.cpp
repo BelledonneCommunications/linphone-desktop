@@ -156,6 +156,8 @@ void CameraRenderer::updateWindowId () {
 
 bool CameraRenderer::notifyReceivedVideoSize () const {
   shared_ptr<const linphone::VideoDefinition> videoDefinition = mCall->getCurrentParams()->getReceivedVideoDefinition();
+  if(! (videoDefinition)) {
+    return false;
   unsigned int width = videoDefinition->getWidth();
   unsigned int height = videoDefinition->getHeight();
 
