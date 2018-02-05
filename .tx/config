@@ -1,0 +1,8 @@
+[main]
+host = https://www.transifex.com
+
+[linphone-desktop.ts]
+file_filter = assets/languages/<lang>.ts
+source_file = assets/languages/en.ts
+source_lang = en
+type = QT
