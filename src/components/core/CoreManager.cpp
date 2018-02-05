@@ -215,7 +215,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setResourcesPaths();
 
-  mCore = linphone::Factory::get()->createCore(mHandlers, Paths::getConfigFilePath(configPath), Paths::getFactoryConfigFilePath());
+  mCore = linphone::Factory::get()->createCore(Paths::getConfigFilePath(configPath), Paths::getFactoryConfigFilePath(), nullptr);
+  mCore->addListener(mHandlers);
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
@@ -229,6 +230,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     config->setInt("video", "capture", 1);
     config->setInt("video", "display", 1);
   }
+
+  mCore->start();
 
   setDatabasesPaths();
   setOtherPaths();
