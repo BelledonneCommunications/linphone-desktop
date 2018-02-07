@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="fr_FR">
 <context>
     <name>About</name>
     <message>
@@ -114,6 +114,10 @@
 <context>
     <name>AssistantModel</name>
     <message>
+        <source>loginWithUsernameFailed</source>
+        <translation>La connection a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
+    </message>
+    <message>
         <source>usernameStatusTooShort</source>
         <translation>Trop court ! (%1 caractères min.)</translation>
     </message>
@@ -148,10 +152,6 @@
     <message>
         <source>requestFailed</source>
         <translation>Impossible d&apos;envoyer la requête.</translation>
-    </message>
-    <message>
-        <source>loginWithUsernameFailed</source>
-        <translation>La connection a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>

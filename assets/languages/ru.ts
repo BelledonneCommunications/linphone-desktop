@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="ru">
 <context>
     <name>About</name>
     <message>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished">Identity</translation>
+        <translation>Личность</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -245,7 +245,7 @@
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished">Estimated download bandwidth</translation>
+        <translation>Предполагаемая входящая скорость</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
@@ -281,27 +281,27 @@
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation type="unfinished">Failed</translation>
+        <translation>Неудачно</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished">In progress</translation>
+        <translation>В процессе</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished">Reflexive connection</translation>
+        <translation>Рефлексивное соединение</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished">Host connection</translation>
+        <translation>Подключение хоста</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished">Relay connection</translation>
+        <translation>Релейное соединение</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished">Invalid</translation>
+        <translation>Недопустимый</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
@@ -447,11 +447,11 @@
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished">Join the conference hosted by the sip-address as display-name. If you are connected to a proxy config, see join-conference-as.</translation>
+        <translation>Присоединитесь к конференции по sip-адресу. Если вы подключены к конфигурации прокси, см. join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished">Join the conference hosted by the sip-address as with the guest-sip-address. If you are not connected to a proxy-config, see join-conference.</translation>
+        <translation>Присоединитесь к конференции по sip-адресу. Если вы не подключены к конфигурации прокси, см. join-conference-as.</translation>
     </message>
 </context>
 <context>
@@ -735,7 +735,7 @@
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished">Drop your attachment</translation>
+        <translation>Поместите вложение</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
@@ -789,7 +789,7 @@
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished">Unable to set this remote provisioning uri.</translation>
+        <translation>Невозможно установить эту удаленную настройку uri.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
@@ -980,7 +980,7 @@
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished">Play me!</translation>
+        <translation>Играй!</translation>
     </message>
 </context>
 <context>
@@ -1220,7 +1220,7 @@
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished">Enabled port</translation>
+        <translation>Включенный порт</translation>
     </message>
     <message>
         <source>enableTlsLabel</source>
@@ -1228,7 +1228,7 @@
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation type="unfinished">DSCP Fields</translation>
+        <translation>Поля DSCP</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
@@ -1264,7 +1264,7 @@
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation type="unfinished">Use RLS URI</translation>
+        <translation>Использовать RLS URI</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
@@ -1279,7 +1279,7 @@
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished">Default identity</translation>
+        <translation>Удостоверение по умолчанию</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
@@ -1342,11 +1342,11 @@
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished">Route</translation>
+        <translation>Маршрут</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished">Contact params</translation>
+        <translation>Контактные параметры</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
@@ -1354,7 +1354,7 @@
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished">AVPF regular RTCP interval (sec)</translation>
+        <translation>AVPF обычный RTCP интервал (сек)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
@@ -1382,7 +1382,7 @@
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished">Invalid route.</translation>
+        <translation>Неверный маршрут.</translation>
     </message>
 </context>
 <context>
@@ -1437,7 +1437,7 @@
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished">UI Data</translation>
+        <translation>Данные пользовательского интерфейса</translation>
     </message>
 </context>
 <context>
