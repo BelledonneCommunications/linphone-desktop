@@ -561,7 +561,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation>Sip hesabı</translation>
+        <translation>SIP hesabı</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
@@ -1376,7 +1376,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation>Geçersiz sip adresi.</translation>
+        <translation>Geçersiz SIP adresi.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>

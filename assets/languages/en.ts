@@ -561,7 +561,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation>Sip account</translation>
+        <translation>SIP account</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
@@ -1296,10 +1296,6 @@ your friend&apos;s SIP address or username.</translation>
         <translation>Proxy accounts</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>eraseAllPasswords</source>
         <translation>ERASE PASSWORDS</translation>
     </message>
@@ -1380,7 +1376,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation>Invalid sip address.</translation>
+        <translation>Invalid SIP address.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>

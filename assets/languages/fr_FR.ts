@@ -1294,10 +1294,6 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Comptes SIP</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>eraseAllPasswords</source>
         <translation>EFFACER LES MOTS DE PASSE</translation>
     </message>
@@ -1378,7 +1374,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation>Adresse sip invalide.</translation>
+        <translation>Adresse SIP invalide.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
