@@ -41,10 +41,11 @@ Item {
           ], $chatEntry.status)
 
           readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
+          readonly property bool isDeliveredToUser: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
 
           icon: isNotDelivered
             ? 'chat_error'
-            : (isRead ? 'chat_read' : 'chat_delivered')
+            : (isRead ? 'chat_read' : (isDeliveredToUser ? 'chat_delivered' : ''))
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
