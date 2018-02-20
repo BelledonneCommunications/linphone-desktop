@@ -96,7 +96,6 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
       ? ::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
       : QString("");
   }
-
   map["serverAddress"] = ::Utils::coreStringToAppString(proxyConfig->getServerAddr());
   map["registrationDuration"] = proxyConfig->getPublishExpires();
   map["transport"] = ::Utils::coreStringToAppString(proxyConfig->getTransport());
@@ -107,6 +106,14 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["publishPresence"] = proxyConfig->publishEnabled();
   map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
   map["registrationState"] = ::mapLinphoneRegistrationStateToUi(proxyConfig->getState());
+
+  shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
+  map["iceEnabled"] = natPolicy->iceEnabled();
+  map["turnEnabled"] = natPolicy->turnEnabled();
+  map["stunServer"] = ::Utils::coreStringToAppString(natPolicy->getStunServer());
+  map["turnUser"] = ::Utils::coreStringToAppString(natPolicy->getStunServerUsername());
+  shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
+  map["turnPassword"] = authInfo ? ::Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
 
   return map;
 }
@@ -171,6 +178,33 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     ? linphone::AVPFMode::AVPFModeEnabled
     : linphone::AVPFMode::AVPFModeDefault
   );
+
+  shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
+  natPolicy->enableIce(data["iceEnabled"].toBool());
+  natPolicy->enableStun(data["iceEnabled"].toBool());
+  natPolicy->enableTurn(data["turnEnabled"].toBool());
+  natPolicy->setStunServer(::Utils::appStringToCoreString(data["stunServer"].toString()));
+  natPolicy->setStunServerUsername(::Utils::appStringToCoreString(data["turnUser"].toString()));
+
+  shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
+  shared_ptr<linphone::Core> core = proxyConfig->getCore();
+  if (authInfo) {
+    shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
+    clonedAuthInfo->setPasswd(::Utils::appStringToCoreString(data["turnPassword"].toString()));
+
+    core->removeAuthInfo(authInfo);
+    core->addAuthInfo(clonedAuthInfo);
+  } else {
+    authInfo = linphone::Factory::get()->createAuthInfo(
+      ::Utils::appStringToCoreString(data["turnUser"].toString()),
+      ::Utils::appStringToCoreString(data["turnUser"].toString()),
+      ::Utils::appStringToCoreString(data["turnPassword"].toString()),
+      "",
+      "",
+      ""
+    );
+    core->addAuthInfo(authInfo);
+  }
 
   return addOrUpdateProxyConfig(proxyConfig);
 }

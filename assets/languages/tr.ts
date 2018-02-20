@@ -1386,6 +1386,34 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>invalidRoute</source>
         <translation>Geçersiz rota.</translation>
     </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>ICE&apos;yi etkinleştir</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>STUN/TURN sunucusu</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>TURN&apos;u etkinleştir</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>TURN kullanıcısı</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>TURN parolası</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT ve Güvenlik Duvarı</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

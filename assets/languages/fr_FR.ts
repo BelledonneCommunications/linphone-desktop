@@ -1384,6 +1384,34 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>invalidRoute</source>
         <translation>Route invalide.</translation>
     </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>Activer ICE</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>Serveur STUN/TURN</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Activer TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>Utilisateur TURN</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>Mot de passe TURN</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT et Pare-feu</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation>Paramètres principaux du compte SIP</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

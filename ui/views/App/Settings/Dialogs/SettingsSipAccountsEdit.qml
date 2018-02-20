@@ -42,131 +42,206 @@ DialogPlus {
 
   // ---------------------------------------------------------------------------
 
-  Form {
-    anchors.fill: parent
+  TabContainer {
+    Column {
+      width: parent.width
 
-    FormLine {
-      FormGroup {
-        label: qsTr('sipAddressLabel') + '*'
+      Form {
+        title: qsTr('mainSipAccountSettingsTitle')
+        width: parent.width
 
-        TextField {
-          id: sipAddress
+        FormLine {
+          FormGroup {
+            label: qsTr('sipAddressLabel') + '*'
 
-          error: dialog._sipAddressOk ? '' : qsTr('invalidSipAddress')
+            TextField {
+              id: sipAddress
 
-          onTextChanged: Logic.handleSipAddressChanged(text)
+              error: dialog._sipAddressOk ? '' : qsTr('invalidSipAddress')
+
+              onTextChanged: Logic.handleSipAddressChanged(text)
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('serverAddressLabel') + '*'
+
+            TextField {
+              id: serverAddress
+
+              error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')
+
+              onTextChanged: Logic.handleServerAddressChanged(text)
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('registrationDurationLabel')
+
+            NumericField {
+              id: registrationDuration
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('transportLabel')
+
+            ComboBox {
+              id: transport
+
+              enabled: dialog._serverAddressOk
+              model: [ 'UDP', 'TCP', 'TLS', 'DTLS' ]
+
+              onActivated: Logic.handleTransportChanged(model[index])
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('routeLabel')
+
+            TextField {
+              id: route
+
+              error: dialog._routeOk ? '' : qsTr('invalidRoute')
+
+              onTextChanged: Logic.handleRouteChanged(text)
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('contactParamsLabel')
+
+            TextField {
+              id: contactParams
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('avpfIntervalLabel')
+
+            NumericField {
+              id: avpfInterval
+
+              maxValue: 5
+              minValue: 1
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('registerEnabledLabel')
+
+            Switch {
+              id: registerEnabled
+
+              onClicked: checked = !checked
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('publishPresenceLabel')
+
+            Switch {
+              id: publishPresence
+
+              onClicked: checked = !checked
+            }
+          }
+        }
+
+        FormLine {
+          FormGroup {
+            label: qsTr('avpfEnabledLabel')
+
+            Switch {
+              id: avpfEnabled
+
+              onClicked: checked = !checked
+            }
+          }
         }
       }
-    }
 
-    FormLine {
-      FormGroup {
-        label: qsTr('serverAddressLabel') + '*'
+      // -----------------------------------------------------------------------
+      // NAT and Firewall.
+      // -----------------------------------------------------------------------
 
-        TextField {
-          id: serverAddress
+      Form {
+        title: qsTr('natAndFirewallTitle')
+        width: parent.width
 
-          error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')
+        FormLine {
+          FormGroup {
+            label: qsTr('enableIceLabel')
 
-          onTextChanged: Logic.handleServerAddressChanged(text)
+            Switch {
+              id: iceEnabled
+
+              onClicked: checked = !checked
+            }
+          }
+
+          FormGroup {
+            label: qsTr('stunServerLabel')
+
+            TextField {
+              id: stunServer
+
+              readOnly: !iceEnabled.checked
+            }
+          }
         }
-      }
-    }
 
-    FormLine {
-      FormGroup {
-        label: qsTr('registrationDurationLabel')
+        FormLine {
+          FormGroup {
+            label: qsTr('enableTurnLabel')
 
-        NumericField {
-          id: registrationDuration
+            Switch {
+              id: turnEnabled
+
+              enabled: iceEnabled.checked
+
+              onClicked: checked = !checked
+            }
+          }
+
+          FormGroup {
+            label: qsTr('turnUserLabel')
+
+            TextField {
+              id: turnUser
+
+              readOnly: !turnEnabled.checked || !turnEnabled.enabled
+            }
+          }
         }
-      }
-    }
 
-    FormLine {
-      FormGroup {
-        label: qsTr('transportLabel')
+        FormLine {
+          FormGroup {}
 
-        ComboBox {
-          id: transport
+          FormGroup {
+            label: qsTr('turnPasswordLabel')
 
-          enabled: dialog._serverAddressOk
-          model: [ 'UDP', 'TCP', 'TLS', 'DTLS' ]
-
-          onActivated: Logic.handleTransportChanged(model[index])
-        }
-      }
-    }
-
-    FormLine {
-      FormGroup {
-        label: qsTr('routeLabel')
-
-        TextField {
-          id: route
-
-          error: dialog._routeOk ? '' : qsTr('invalidRoute')
-
-          onTextChanged: Logic.handleRouteChanged(text)
-        }
-      }
-    }
-
-    FormLine {
-      FormGroup {
-        label: qsTr('contactParamsLabel')
-
-        TextField {
-          id: contactParams
-        }
-      }
-    }
-
-    FormLine {
-      FormGroup {
-        label: qsTr('avpfIntervalLabel')
-
-        NumericField {
-          id: avpfInterval
-
-          maxValue: 5
-          minValue: 1
-        }
-      }
-    }
-
-    FormLine {
-      FormGroup {
-        label: qsTr('registerEnabledLabel')
-
-        Switch {
-          id: registerEnabled
-
-          onClicked: checked = !checked
-        }
-      }
-    }
-
-    FormLine {
-      FormGroup {
-        label: qsTr('publishPresenceLabel')
-
-        Switch {
-          id: publishPresence
-
-          onClicked: checked = !checked
-        }
-      }
-    }
-
-    FormLine {
-      FormGroup {
-        label: qsTr('avpfEnabledLabel')
-
-        Switch {
-          id: avpfEnabled
-
-          onClicked: checked = !checked
+            TextField {
+              id: turnPassword
+              readOnly: !turnEnabled.checked || !turnEnabled.enabled || !turnUser.text.length
+            }
+          }
         }
       }
     }

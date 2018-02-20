@@ -36,6 +36,11 @@ function initForm (account) {
   registerEnabled.checked = config.registerEnabled
   publishPresence.checked = config.publishPresence
   avpfEnabled.checked = config.avpfEnabled
+  iceEnabled.checked = config.iceEnabled
+  turnEnabled.checked = config.turnEnabled
+  stunServer.text = config.stunServer
+  turnPassword.text = config.turnPassword
+  turnUser.text = config.turnUser
 
   if (account) {
     dialog._sipAddressOk = true
@@ -62,7 +67,12 @@ function validProxyConfig () {
     avpfInterval: avpfInterval.text,
     registerEnabled: registerEnabled.checked,
     publishPresence: publishPresence.checked,
-    avpfEnabled: avpfEnabled.checked
+    avpfEnabled: avpfEnabled.checked,
+    iceEnabled: iceEnabled.checked,
+    turnEnabled: turnEnabled.checked,
+    stunServer: stunServer.text,
+    turnUser: turnUser.text,
+    turnPassword: turnPassword.text
   })) {
     dialog.exit(1)
   } else {
@@ -108,3 +118,5 @@ function handleTransportChanged (transport) {
     dialog._serverAddressOk = false
   }
 }
+
+// -----------------------------------------------------------------------------

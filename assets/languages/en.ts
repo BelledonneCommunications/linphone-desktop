@@ -1386,6 +1386,34 @@ your friend&apos;s SIP address or username.</translation>
         <source>invalidRoute</source>
         <translation>Invalid route.</translation>
     </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>Enable ICE</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>STUN/TURN server</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Enable TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>TURN user</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>TURN password</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT and Firewall</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation>Main SIP account settings</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>

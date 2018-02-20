@@ -1384,6 +1384,34 @@
         <source>invalidRoute</source>
         <translation>Неверный маршрут.</translation>
     </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>Включить ICE</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>Сервер STUN/TURN</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Включить TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>Пользователь TURN</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>Пароль TURN</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT и межсетевой экран</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>
