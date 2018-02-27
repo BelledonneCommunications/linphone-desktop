@@ -163,7 +163,7 @@ private:
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
 
-  QHash<QString, std::weak_ptr<ChatModel> > mChatModels;
+  QHash<QString, std::weak_ptr<ChatModel>> mChatModels;
 
   QTimer *mCbsTimer = nullptr;
 
