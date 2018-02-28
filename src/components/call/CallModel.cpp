@@ -44,9 +44,11 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
 
   updateIsInConference();
 
+  CoreManager *coreManager = CoreManager::getInstance();
+
   // Deal with auto-answer.
   if (!isOutgoing()) {
-    SettingsModel *settings = CoreManager::getInstance()->getSettingsModel();
+    SettingsModel *settings = coreManager->getSettingsModel();
 
     if (settings->getAutoAnswerStatus()) {
       QTimer *timer = new QTimer(this);
@@ -59,9 +61,14 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
     }
   }
 
+  CoreHandlers *coreHandlers = coreManager->getHandlers().get();
   QObject::connect(
-    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::callStateChanged,
+    coreHandlers, &CoreHandlers::callStateChanged,
     this, &CallModel::handleCallStateChanged
+  );
+  QObject::connect(
+    coreHandlers, &CoreHandlers::callEncryptionChanged,
+    this, &CallModel::handleCallEncryptionChanged
   );
 }
 
@@ -244,6 +251,11 @@ void CallModel::stopRecording () {
 
 // -----------------------------------------------------------------------------
 
+void CallModel::handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call) {
+  if (call == mCall)
+    emit securityUpdated();
+}
+
 void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
   if (call != mCall)
     return;
@@ -301,7 +313,6 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
       break;
   }
 
-  emit securityUpdated();
   emit statusChanged(getStatus());
 }
 

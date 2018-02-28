@@ -85,6 +85,15 @@ void CoreHandlers::onAuthenticationRequested (
   emit authenticationRequested(authInfo);
 }
 
+void CoreHandlers::onCallEncryptionChanged (
+  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Call> &call,
+  bool,
+  const string &
+) {
+  emit callEncryptionChanged(call);
+}
+
 void CoreHandlers::onCallStateChanged (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,

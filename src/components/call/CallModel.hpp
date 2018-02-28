@@ -139,6 +139,7 @@ signals:
   void cameraFirstFrameReceived (unsigned int width, unsigned int height);
 
 private:
+  void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
 
   void stopAutoAnswerTimer () const;
@@ -163,7 +164,7 @@ private:
 
   bool getMicroMuted () const;
   void setMicroMuted (bool status);
-  
+
   bool getAudioMuted () const;
   void setAudioMuted (bool status);
 
