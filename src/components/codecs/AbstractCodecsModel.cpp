@@ -160,7 +160,7 @@ void AbstractCodecsModel::addCodec (shared_ptr<linphone::PayloadType> &codec) {
   map["description"] = ::Utils::coreStringToAppString(codec->getDescription());
   map["enabled"] = codec->enabled();
   map["encoderDescription"] = ::Utils::coreStringToAppString(codec->getEncoderDescription());
-  map["isUsable"] = codec->isUsable();
+  map["isUsable"] = codec->isUsable(); // TODO: Notify in UI when unusable.
   map["isVbr"] = codec->isVbr();
   map["mime"] = ::Utils::coreStringToAppString(codec->getMimeType());
   map["number"] = codec->getNumber();
