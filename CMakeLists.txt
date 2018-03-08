@@ -145,6 +145,7 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.cpp
+  src/components/file/FileExtractor.cpp
   src/components/notifier/Notifier.cpp
   src/components/other/clipboard/Clipboard.cpp
   src/components/other/colors/Colors.cpp
@@ -201,6 +202,7 @@ set(HEADERS
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.hpp
+  src/components/file/FileExtractor.hpp
   src/components/notifier/Notifier.hpp
   src/components/other/clipboard/Clipboard.hpp
   src/components/other/colors/Colors.hpp
@@ -218,8 +220,8 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/components/url-handlers/UrlHandlers.hpp
   src/utils/LinphoneUtils.hpp
-  src/utils/Utils.hpp
   src/utils/QExifImageHeader.h
+  src/utils/Utils.hpp
 )
 
 set(TESTS
