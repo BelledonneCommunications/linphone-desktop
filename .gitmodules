@@ -107,3 +107,6 @@
 [submodule "submodules/externals/soci"]
 	path = submodules/externals/soci
 	url = git://git.linphone.org/soci
+[submodule "submodules/externals/minizip"]
+	path = submodules/externals/minizip
+	url = git://git.linphone.org/minizip
