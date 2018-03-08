@@ -1,6 +1,6 @@
 ############################################################################
-# linphoneqt.cmake
-# Copyright (C) 2017-2018  Belledonne Communications, Grenoble France
+# FindMinizip.txt
+# Copyright (C) 2018  Belledonne Communications, Grenoble France
 #
 ############################################################################
 #
@@ -19,17 +19,30 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 ############################################################################
+#
+# - Find the minizip include file and library
+#
+#  MINIZIP_FOUND - system has minizip
+#  MINIZIP_INCLUDE_DIRS - the minizip include directory
+#  MINIZIP_LIBRARIES - The libraries needed to use minizip
 
-lcb_external_source_paths("..")
+find_path(MINIZIP_INCLUDE_DIRS
+	NAMES mz.h
+	PATH_SUFFIXES include
+)
 
-lcb_dependencies("linphone" "ms2plugins" "minizip")
-lcb_groupable(YES)
-lcb_package_source(YES)
-
-lcb_cmake_options("-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
-if(UNIX AND NOT APPLE)
-	lcb_cmake_options("-DENABLE_DBUS=${ENABLE_DBUS}")
+if(MINIZIP_INCLUDE_DIRS)
+	set(HAVE_MZ_H 1)
 endif()
 
-# Add config step for packaging
-set(LINPHONE_BUILDER_ADDITIONAL_CONFIG_STEPS "${CMAKE_CURRENT_LIST_DIR}/additional_steps.cmake")
+find_library(MINIZIP_LIBRARIES
+	NAMES minizip minizipd
+)
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Minizip
+	DEFAULT_MSG
+	MINIZIP_INCLUDE_DIRS MINIZIP_LIBRARIES HAVE_MZ_H
+)
+
+mark_as_advanced(MINIZIP_INCLUDE_DIRS MINIZIP_LIBRARIES HAVE_MZ_H)
