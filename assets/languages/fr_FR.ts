@@ -1002,6 +1002,29 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation>CONFIRM</translation>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation>Extraction de %1...</translation>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation>Téléchargement de %1...</translation>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation>Installation de %1 terminée !</translation>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation>L&apos;installation de %1 a échoué !</translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
@@ -1668,6 +1691,13 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>accept</source>
         <translation>CONFIRMER</translation>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
+        <translation>Voulez-vous installer %1 (%2) ?</translation>
     </message>
 </context>
 </TS>

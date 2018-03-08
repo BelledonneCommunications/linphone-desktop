@@ -2,6 +2,7 @@ import QtQuick 2.7
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneUtils 1.0
 
 import App.Styles 1.0
 
@@ -16,6 +17,8 @@ AssistantAbstractView {
   mainActionLabel: qsTr('confirmAction')
 
   title: qsTr('useLinphoneSipAccountTitle')
+
+
 
   // ---------------------------------------------------------------------------
 
@@ -86,7 +89,14 @@ AssistantAbstractView {
     onLoginStatusChanged: {
       requestBlock.stop(error)
       if (!error.length) {
-        window.setView('Home')
+        var codecInfo = VideoCodecsModel.getCodecInfo('H264')
+        if (codecInfo.downloadUrl) {
+          LinphoneUtils.openCodecOnlineInstallerDialog(window, codecInfo, function cb (window) {
+            window.setView('Home')
+          })
+        } else {
+          window.setView('Home')
+        }
       }
     }
 

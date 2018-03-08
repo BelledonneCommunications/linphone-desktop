@@ -145,6 +145,7 @@ set(SOURCES
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
   src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.cpp
+  src/components/file/FileDownloader.cpp
   src/components/file/FileExtractor.cpp
   src/components/notifier/Notifier.cpp
   src/components/other/clipboard/Clipboard.cpp
@@ -163,8 +164,8 @@ set(SOURCES
   src/components/timeline/TimelineModel.cpp
   src/components/url-handlers/UrlHandlers.cpp
   src/utils/LinphoneUtils.cpp
-  src/utils/Utils.cpp
   src/utils/QExifImageHeader.cpp
+  src/utils/Utils.cpp
 )
 
 set(HEADERS
@@ -202,6 +203,7 @@ set(HEADERS
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
   src/components/core/messages-count-notifier/AbstractMessagesCountNotifier.hpp
+  src/components/file/FileDownloader.hpp
   src/components/file/FileExtractor.hpp
   src/components/notifier/Notifier.hpp
   src/components/other/clipboard/Clipboard.hpp

@@ -41,12 +41,12 @@
 #endif // ifndef UTILS_NO_BREAK
 
 namespace Utils {
-  inline QString coreStringToAppString (const std::string &string) {
-    return QString::fromLocal8Bit(string.c_str(), int(string.size()));
+  inline QString coreStringToAppString (const std::string &str) {
+    return QString::fromLocal8Bit(str.c_str(), int(str.size()));
   }
 
-  inline std::string appStringToCoreString (const QString &string) {
-    return string.toLocal8Bit().constData();
+  inline std::string appStringToCoreString (const QString &str) {
+    return qPrintable(str);
   }
 
   // Reverse function of strstr.

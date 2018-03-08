@@ -40,6 +40,7 @@ namespace {
   constexpr char cPathAssistantConfig[] = "/linphone/assistant/";
   constexpr char cPathAvatars[] = "/avatars/";
   constexpr char cPathCaptures[] = "/Linphone/captures/";
+  constexpr char cPathCodecs[] =  "/codecs/";
   constexpr char cPathLogs[] = "/logs/";
   constexpr char cPathPlugins[] = "/plugins/";
   constexpr char cPathThumbnails[] = "/thumbnails/";
@@ -181,6 +182,10 @@ string Paths::getCapturesDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + cPathCaptures);
 }
 
+string Paths::getCodecsDirPath () {
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathCodecs);
+}
+
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
   const QString path = configPath.isEmpty()
     ? getAppConfigFilePath()
@@ -215,10 +220,6 @@ string Paths::getPackageDataDirPath () {
 
 string Paths::getPackageMsPluginsDirPath () {
   return getReadableDirPath(getAppPackageMsPluginsDirPath());
-}
-
-string Paths::getPluginsDirPath () {
-  return getReadableDirPath(getAppPluginsDirPath());
 }
 
 string Paths::getRootCaFilePath () {

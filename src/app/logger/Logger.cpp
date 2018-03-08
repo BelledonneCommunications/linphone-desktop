@@ -159,7 +159,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
       contextStr = contextArr.constData();
     }
   #else
-    (void)context;
+    Q_UNUSED(context);
   #endif // ifdef QT_MESSAGELOGCONTEXT
 
   QByteArray localMsg = msg.toLocal8Bit();

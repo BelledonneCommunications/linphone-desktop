@@ -34,8 +34,8 @@ public:
   AudioCodecsModel (QObject *parent = Q_NULLPTR);
   ~AudioCodecsModel () = default;
 
-protected:
-  void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType> > &codecs) override;
+private:
+  void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) override;
 };
 
 #endif // AUDIO_CODECS_MODEL_H_

@@ -30,5 +30,5 @@ MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessage
 
 void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
   // TODO.
-  (void)n;
+  Q_UNUSED(n);
 }

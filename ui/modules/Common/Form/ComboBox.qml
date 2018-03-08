@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
-import Linphone 1.0
 import Utils 1.0
 
 import 'ComboBox.js' as Logic

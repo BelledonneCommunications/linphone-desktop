@@ -1004,6 +1004,29 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
 </context>
 <context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
@@ -1670,6 +1693,13 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <message>
         <source>accept</source>
         <translation>ONAYLA</translation>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

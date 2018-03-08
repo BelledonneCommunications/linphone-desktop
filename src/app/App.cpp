@@ -176,10 +176,6 @@ void App::initContentApp () {
       Cli::executeCommand(command);
     });
 
-    // Add plugins directory.
-    addLibraryPath(::Utils::coreStringToAppString(Paths::getPluginsDirPath()));
-    qInfo() << QStringLiteral("Library paths:") << libraryPaths();
-
     mustBeIconified = mParser->isSet("iconified");
   }
 
@@ -405,6 +401,7 @@ void App::registerTypes () {
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
+  registerType<FileDownloader>("FileDownloader");
   registerType<FileExtractor>("FileExtractor");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");

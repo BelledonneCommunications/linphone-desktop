@@ -20,7 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#include <mz_os.h>
 #include <mz_strm_bzip.h>
+#include <mz_strm.h>
 #include <mz.h>
 #include <QDebug>
 #include <QDir>
@@ -31,16 +33,60 @@
 
 using namespace std;
 
-static int openMinizipStream (void **stream, const char *filePath) {
-  *stream = nullptr;
-  if (!mz_stream_bzip_create(stream))
-    return MZ_MEM_ERROR;
-  Q_CHECK_PTR(*stream);
-  qInfo() << QStringLiteral("Opening `%1`...").arg(filePath);
-  return mz_stream_bzip_open(*stream, filePath, MZ_OPEN_MODE_READ);
-}
+class FileExtractor::ExtractStream {
+public:
+  ExtractStream () : mFileStream(nullptr), mBzipStream(nullptr) {}
+
+  ~ExtractStream () {
+    if (mBzipStream) {
+      mz_stream_bzip_close(mBzipStream);
+      mz_stream_bzip_delete(&mBzipStream);
+    }
+
+    if (mFileStream) {
+      mz_stream_os_close(mFileStream);
+      mz_stream_os_delete(&mFileStream);
+    }
+  }
+
+  void *getInternalStream () const {
+    return mBzipStream;
+  }
+
+  int load (const char *filePath) {
+    Q_ASSERT(!mFileStream);
+    Q_ASSERT(!mBzipStream);
+
+    // 1. Open file stream.
+    if (!mz_stream_os_create(&mFileStream))
+      return MZ_MEM_ERROR;
+    Q_CHECK_PTR(mFileStream);
+
+    int error;
+    if ((error = mz_stream_os_open(mFileStream, filePath, MZ_OPEN_MODE_READ)) != MZ_OK)
+      return error;
+
+    // 2. Open bzip stream.
+    if (!mz_stream_bzip_create(&mBzipStream))
+      return MZ_MEM_ERROR;
+    Q_CHECK_PTR(mBzipStream);
+    if ((error = mz_stream_bzip_open(mBzipStream, NULL, MZ_OPEN_MODE_READ)) != MZ_OK)
+      return error;
+
+    // 3. Link file stream to bzip stream.
+    return mz_stream_set_base(mBzipStream, mFileStream);
+  }
+
+private:
+  void *mFileStream;
+  void *mBzipStream;
+};
 
 // -----------------------------------------------------------------------------
+
+FileExtractor::FileExtractor (QObject *parent) : QObject(parent) {}
+
+FileExtractor::~FileExtractor () {}
 
 void FileExtractor::extract () {
   if (mExtracting) {
@@ -56,7 +102,9 @@ void FileExtractor::extract () {
 
   // 1. Open archive stream.
   // TODO: Test extension.
-  int error = openMinizipStream(&mStream, mFile.toLatin1().constData());
+  Q_ASSERT(!mStream);
+  mStream.reset(new ExtractStream());
+  int error = mStream->load(mFile.toLatin1().constData());
   if (error != MZ_OK) {
     emitExtractFailed(error);
     return;
@@ -145,10 +193,15 @@ void FileExtractor::setExtracting (bool extracting) {
 }
 
 void FileExtractor::clean () {
-  mz_stream_bzip_delete(&mStream);
+  mStream.reset(nullptr);
   mDestinationFile.close();
-  mTimer->stop();
-  mTimer->deleteLater();
+
+  if (mTimer) {
+    mTimer->stop();
+    mTimer->deleteLater();
+    mTimer = nullptr;
+  }
+
   setExtracting(false);
 }
 
@@ -175,14 +228,19 @@ void FileExtractor::emitOutputError () {
 
 void FileExtractor::handleExtraction () {
   char buffer[4096];
-  int32_t readBytes = mz_stream_bzip_read(mStream, buffer, sizeof buffer);
+
+  void *stream = mStream.data()->getInternalStream();
+
+  int32_t readBytes = mz_stream_bzip_read(stream, buffer, sizeof buffer);
   if (readBytes == 0)
     emitExtractFinished();
   else if (readBytes < 0)
     emitExtractFailed(readBytes);
   else {
-    setReadBytes(mReadBytes + readBytes);
-    if (mDestinationFile.write(buffer, sizeof buffer) == -1)
+    int64_t inputReadBytes;
+    mz_stream_bzip_get_prop_int64(stream, MZ_STREAM_PROP_TOTAL_IN, &inputReadBytes);
+    setReadBytes(inputReadBytes);
+    if (mDestinationFile.write(buffer, readBytes) == -1)
       emitOutputError();
   }
 }

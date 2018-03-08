@@ -20,17 +20,18 @@
  *      Author: Ronan Abhamon
  */
 
+#include "../../app/paths/Paths.hpp"
 #include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "AbstractCodecsModel.hpp"
 
-using namespace std;
-
 // =============================================================================
 
+using namespace std;
+
 static inline shared_ptr<linphone::PayloadType> getCodecFromMap (const QVariantMap &map) {
-  return map.value("__codec").value<shared_ptr<linphone::PayloadType> >();
+  return map.value("__codec").value<shared_ptr<linphone::PayloadType>>();
 }
 
 // -----------------------------------------------------------------------------
@@ -65,12 +66,12 @@ void AbstractCodecsModel::enableCodec (int id, bool status) {
   Q_ASSERT(id >= 0 && id < mCodecs.count());
 
   QVariantMap &map = mCodecs[id];
-  shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
-
-  codec->enable(status);
-  map["enabled"] = codec->enabled();
-
-  emit dataChanged(index(id, 0), index(id, 0));
+  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+  if (codec) {
+    codec->enable(status);
+    map["enabled"] = codec->enabled();
+    emit dataChanged(index(id, 0), index(id, 0));
+  }
 }
 
 void AbstractCodecsModel::moveCodec (int source, int destination) {
@@ -81,12 +82,12 @@ void AbstractCodecsModel::setBitrate (int id, int bitrate) {
   Q_ASSERT(id >= 0 && id < mCodecs.count());
 
   QVariantMap &map = mCodecs[id];
-  shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
-
-  codec->setNormalBitrate(bitrate);
-  map["bitrate"] = codec->getNormalBitrate();
-
-  emit dataChanged(index(id, 0), index(id, 0));
+  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+  if (codec) {
+    codec->setNormalBitrate(bitrate);
+    map["bitrate"] = codec->getNormalBitrate();
+    emit dataChanged(index(id, 0), index(id, 0));
+  }
 }
 
 void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
@@ -94,11 +95,11 @@ void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
 
   QVariantMap &map = mCodecs[id];
   shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
-
-  codec->setRecvFmtp(::Utils::appStringToCoreString(recvFmtp));
-  map["recvFmtp"] = ::Utils::coreStringToAppString(codec->getRecvFmtp());
-
-  emit dataChanged(index(id, 0), index(id, 0));
+  if (codec) {
+    codec->setRecvFmtp(Utils::appStringToCoreString(recvFmtp));
+    map["recvFmtp"] = Utils::coreStringToAppString(codec->getRecvFmtp());
+    emit dataChanged(index(id, 0), index(id, 0));
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -110,6 +111,8 @@ bool AbstractCodecsModel::moveRows (
   const QModelIndex &destinationParent,
   int destinationChild
 ) {
+  // TODO: Do not move downloadable codecs.
+
   int limit = sourceRow + count - 1;
 
   {
@@ -139,9 +142,13 @@ bool AbstractCodecsModel::moveRows (
   }
 
   // Update linphone codecs list.
-  list<shared_ptr<linphone::PayloadType> > codecs;
-  for (const auto &map : mCodecs)
-    codecs.push_back(::getCodecFromMap(map));
+  list<shared_ptr<linphone::PayloadType>> codecs;
+  for (const auto &map : mCodecs) {
+    // Do not update downloadable codecs.
+    shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
+    if (codec)
+      codecs.push_back(codec);
+  }
   updateCodecs(codecs);
 
   endMoveRows();
@@ -157,15 +164,40 @@ void AbstractCodecsModel::addCodec (shared_ptr<linphone::PayloadType> &codec) {
   map["bitrate"] = codec->getNormalBitrate();
   map["channels"] = codec->getChannels();
   map["clockRate"] = codec->getClockRate();
-  map["description"] = ::Utils::coreStringToAppString(codec->getDescription());
+  map["description"] = Utils::coreStringToAppString(codec->getDescription());
   map["enabled"] = codec->enabled();
-  map["encoderDescription"] = ::Utils::coreStringToAppString(codec->getEncoderDescription());
+  map["encoderDescription"] = Utils::coreStringToAppString(codec->getEncoderDescription());
   map["isUsable"] = codec->isUsable(); // TODO: Notify in UI when unusable.
   map["isVbr"] = codec->isVbr();
-  map["mime"] = ::Utils::coreStringToAppString(codec->getMimeType());
+  map["mime"] = Utils::coreStringToAppString(codec->getMimeType());
   map["number"] = codec->getNumber();
-  map["recvFmtp"] = ::Utils::coreStringToAppString(codec->getRecvFmtp());
+  map["recvFmtp"] = Utils::coreStringToAppString(codec->getRecvFmtp());
   map["__codec"] = QVariant::fromValue(codec);
 
   mCodecs << map;
+}
+
+void AbstractCodecsModel::addDownloadableCodec (
+  const QString &mime,
+  const QString &downloadUrl,
+  const QString &encoderDescription
+) {
+  QVariantMap map;
+
+  map["mime"] = mime;
+  map["downloadUrl"] = downloadUrl;
+  map["encoderDescription"] = encoderDescription;
+
+  mCodecs << map;
+}
+
+QVariantMap AbstractCodecsModel::getCodecInfo (const QString &mime) const {
+  for (const auto &codec : mCodecs)
+    if (codec.value("mime") == mime)
+      return codec;
+  return QVariantMap();
+};
+
+QString AbstractCodecsModel::getCodecsFolder () const {
+  return Utils::coreStringToAppString(Paths::getCodecsDirPath());
 }

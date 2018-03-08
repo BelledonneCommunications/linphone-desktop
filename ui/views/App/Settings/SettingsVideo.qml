@@ -142,6 +142,8 @@ TabContainer {
       CodecsViewer {
         model: VideoCodecsModel
         width: parent.width
+
+        onDownloadRequested: Logic.handleCodecDownloadRequested(codecInfo)
       }
     }
   }

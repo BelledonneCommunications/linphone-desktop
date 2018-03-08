@@ -4,8 +4,12 @@
 
 .pragma library
 
+.import Linphone 1.0 as Linphone
+
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
+// =============================================================================
+// Contact/SIP address helpers.
 // =============================================================================
 
 function _getDisplayNameFromQuotedString (str) {
@@ -83,4 +87,44 @@ function getContactUsername (contact) {
   // Use username.
   name = _getUsername(object)
   return name == null ? 'Bad EGG' : name
+}
+
+// =============================================================================
+// Codec helpers.
+// =============================================================================
+
+function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
+  var VideoCodecsModel = Linphone.VideoCodecsModel
+  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+    descriptionText: qsTr('downloadCodecDescription')
+      .replace('%1', codecInfo.mime)
+      .replace('%2', codecInfo.encoderDescription)
+  }, function (status) {
+    if (status) {
+      window.attachVirtualWindow(buildDialogUri('OnlineInstallerDialog'), {
+        downloadUrl: codecInfo.downloadUrl,
+        extract: true,
+        fileName: codecInfo.mime,
+        installFolder: VideoCodecsModel.codecsFolder
+      }, function (status) {
+        if (status) {
+          VideoCodecsModel.reload()
+        }
+        if (cb) {
+          cb(window)
+        }
+      })
+    }
+    else if (cb) {
+      cb(window)
+    }
+  })
+}
+
+// =============================================================================
+// QML helpers.
+// =============================================================================
+
+function buildDialogUri (component) {
+  return 'qrc:/ui/modules/Linphone/Dialog/' + component + '.qml'
 }

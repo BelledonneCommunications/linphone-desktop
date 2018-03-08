@@ -36,6 +36,8 @@ namespace linphone {
 class AbstractCodecsModel : public QAbstractListModel {
   Q_OBJECT;
 
+  Q_PROPERTY(QString codecsFolder READ getCodecsFolder CONSTANT);
+
 public:
   AbstractCodecsModel (QObject *parent = Q_NULLPTR);
   virtual ~AbstractCodecsModel () = default;
@@ -51,6 +53,10 @@ public:
   Q_INVOKABLE void setBitrate (int id, int bitrate);
   Q_INVOKABLE void setRecvFmtp (int id, const QString &recvFmtp);
 
+  Q_INVOKABLE virtual void reload () {};
+
+  Q_INVOKABLE QVariantMap getCodecInfo (const QString &mime) const;
+
 protected:
   bool moveRows (
     const QModelIndex &sourceParent,
@@ -61,10 +67,12 @@ protected:
   ) override;
 
   void addCodec (std::shared_ptr<linphone::PayloadType> &codec);
+  void addDownloadableCodec (const QString &mime, const QString &downloadUrl, const QString &encoderDescription);
 
-  virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType> > &codecs) = 0;
+  QString getCodecsFolder () const;
 
-private:
+  virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) = 0;
+
   QList<QVariantMap> mCodecs;
 };
 

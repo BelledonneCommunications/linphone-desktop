@@ -34,15 +34,15 @@ namespace Paths {
   std::string getAvatarsDirPath ();
   std::string getCallHistoryFilePath ();
   std::string getCapturesDirPath ();
+  std::string getCodecsDirPath ();
   std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
+  std::string getDownloadDirPath ();
   std::string getFactoryConfigFilePath ();
   std::string getFriendsListFilePath ();
-  std::string getDownloadDirPath ();
   std::string getLogsDirPath ();
   std::string getMessageHistoryFilePath ();
   std::string getPackageDataDirPath ();
   std::string getPackageMsPluginsDirPath ();
-  std::string getPluginsDirPath ();
   std::string getRootCaFilePath ();
   std::string getThumbnailsDirPath ();
   std::string getUserCertificatesDirPath ();

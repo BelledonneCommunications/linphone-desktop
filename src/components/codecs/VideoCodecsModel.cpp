@@ -20,19 +20,79 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDirIterator>
+#include <QLibrary>
+
+#include "../../app/paths/Paths.hpp"
+#include "../../utils/Utils.hpp"
 #include "../core/CoreManager.hpp"
 
 #include "VideoCodecsModel.hpp"
 
-using namespace std;
-
 // =============================================================================
 
-VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
-  for (auto &codec : CoreManager::getInstance()->getCore()->getVideoPayloadTypes())
-    addCodec(codec);
+using namespace std;
+
+namespace {
+  constexpr char cH264Description[] = "Provided by CISCO SYSTEM,INC";
+
+  #ifdef Q_OS_LINUX
+    constexpr char cLibraryExtension[] = "so";
+    #ifdef Q_PROCESSOR_X86_64
+      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux64.4.so.bz2";
+    #else
+      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux32.4.so.bz2";
+    #endif // ifdef Q_PROCESSOR_X86_64
+  #elif defined(Q_OS_WIN)
+    constexpr char cLibraryExtension[] = "dll";
+    #ifdef Q_OS_WIN64
+      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win64.dll.bz2";
+    #elif defined(Q_OS_WIN32)
+      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win32.dll.bz2";
+    #endif // ifdef Q_OS_WIN64
+  #endif // ifdef Q_OS_LINUX
 }
 
-void VideoCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType> > &codecs) {
+VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
+  load();
+}
+
+void VideoCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType>> &codecs) {
   CoreManager::getInstance()->getCore()->setVideoPayloadTypes(codecs);
+}
+
+void VideoCodecsModel::load () {
+  mCodecs.clear();
+
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+
+  // Load downloaded codecs like OpenH264.
+  #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+    QDirIterator it(Utils::coreStringToAppString(Paths::getCodecsDirPath()));
+    while (it.hasNext()) {
+      QFileInfo info(it.next());
+      if (info.suffix() == cLibraryExtension)
+        QLibrary(info.filePath()).load();
+    }
+    core->reloadMsPlugins("");
+  #endif
+
+  // Add codecs.
+  auto codecs = core->getVideoPayloadTypes();
+  for (auto &codec : codecs)
+    addCodec(codec);
+
+  // Add downloadable codecs.
+  #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+    if (find_if(codecs.begin(), codecs.end(), [](const shared_ptr<linphone::PayloadType> &codec) {
+      return codec->getMimeType() == "H264";
+    }) == codecs.end())
+      addDownloadableCodec("H264", cPluginUrlH264, cH264Description);
+  #endif
+}
+
+void VideoCodecsModel::reload () {
+  beginResetModel();
+  load();
+  endResetModel();
 }

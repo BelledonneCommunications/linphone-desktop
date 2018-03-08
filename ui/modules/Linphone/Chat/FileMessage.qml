@@ -212,6 +212,8 @@ Row {
                 color: ChatStyle.entry.message.file.status.bar.contentItem.color
                 height: parent.height
                 width: progressBar.visualPosition * parent.width
+
+                radius: ChatStyle.entry.message.file.status.bar.radius
               }
             }
           }

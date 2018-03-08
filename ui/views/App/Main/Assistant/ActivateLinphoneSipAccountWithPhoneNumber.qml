@@ -2,6 +2,7 @@ import QtQuick 2.7
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneUtils 1.0
 
 import App.Styles 1.0
 
@@ -62,8 +63,16 @@ AssistantAbstractView {
     onActivateStatusChanged: {
       requestBlock.stop(error)
       if (!error.length) {
-        window.unlockView()
-        window.setView('Home')
+        function quitToHome (window) {
+          window.unlockView()
+          window.setView('Home')
+        }
+        var codecInfo = VideoCodecsModel.getCodecInfo('H264')
+        if (codecInfo.downloadUrl) {
+          LinphoneUtils.openCodecOnlineInstallerDialog(window, codecInfo, quitToHome)
+        } else {
+          quitToHome(window)
+        }
       }
     }
   }

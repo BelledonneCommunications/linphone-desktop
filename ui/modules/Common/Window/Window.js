@@ -20,10 +20,10 @@ function attachVirtualWindow (component, properties, exitStatusHandler) {
     properties: properties
   })
 
+  object.exitStatus.connect(detachVirtualWindow)
   if (exitStatusHandler) {
     object.exitStatus.connect(exitStatusHandler)
   }
-  object.exitStatus.connect(detachVirtualWindow)
 
   virtualWindow.setContent(object)
 

@@ -24,15 +24,15 @@
 
 #include "AudioCodecsModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 AudioCodecsModel::AudioCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
   for (auto &codec : CoreManager::getInstance()->getCore()->getAudioPayloadTypes())
     addCodec(codec);
 }
 
-void AudioCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType> > &codecs) {
+void AudioCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType>> &codecs) {
   CoreManager::getInstance()->getCore()->setAudioPayloadTypes(codecs);
 }

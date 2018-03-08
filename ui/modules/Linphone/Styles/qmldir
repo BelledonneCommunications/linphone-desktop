@@ -23,6 +23,8 @@ singleton ContactDescriptionStyle              1.0 Contact/ContactDescriptionSty
 singleton ContactStyle                         1.0 Contact/ContactStyle.qml
 singleton MessagesCounterStyle                 1.0 Contact/MessagesCounterStyle.qml
 
+singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogStyle.qml
+
 singleton SipAddressesMenuStyle                1.0 Menus/SipAddressesMenuStyle.qml
 
 singleton NotificationBasicStyle               1.0 Notifications/NotificationBasicStyle.qml

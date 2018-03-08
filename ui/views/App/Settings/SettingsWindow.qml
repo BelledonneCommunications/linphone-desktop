@@ -12,7 +12,6 @@ import App.Styles 1.0
 ApplicationWindow {
   id: window
 
-
   minimumHeight: SettingsWindowStyle.height
   minimumWidth: SettingsWindowStyle.width
 

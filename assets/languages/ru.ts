@@ -1002,6 +1002,29 @@
     </message>
 </context>
 <context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
@@ -1668,6 +1691,13 @@
     <message>
         <source>accept</source>
         <translation>ПОДТВЕРДИТЬ</translation>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

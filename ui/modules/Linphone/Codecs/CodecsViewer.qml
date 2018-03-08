@@ -8,7 +8,15 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 Column {
+  id: codecsViewer
+
+  // ---------------------------------------------------------------------------
+
   property alias model: view.model
+
+  // ---------------------------------------------------------------------------
+
+  signal downloadRequested (var codecInfo)
 
   // ---------------------------------------------------------------------------
   // Header.
@@ -75,9 +83,9 @@ Column {
 
     height: count * CodecsViewerStyle.attribute.height
 
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     // One codec.
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     delegate: MouseArea {
       id: dragArea
@@ -110,6 +118,8 @@ Column {
       Rectangle {
         id: content
 
+        readonly property bool isDownloadable: Boolean($codec.downloadUrl)
+
         Drag.active: dragArea.held
         Drag.source: dragArea
         Drag.hotSpot.x: width / 2
@@ -139,25 +149,26 @@ Column {
 
           CodecAttribute {
             Layout.preferredWidth: CodecsViewerStyle.column.encoderDescriptionWidth
-            text: $codec.encoderDescription
+            text: $codec.encoderDescription || ''
           }
 
           CodecAttribute {
             Layout.preferredWidth: CodecsViewerStyle.column.clockRateWidth
-            text: $codec.clockRate
+            text: $codec.clockRate || ''
           }
 
           NumericField {
             Layout.preferredWidth: CodecsViewerStyle.column.bitrateWidth
-            readOnly: !$codec.isVbr
-            text: $codec.bitrate
+            readOnly: content.isDownloadable || !$codec.isVbr
+            text: $codec.bitrate || ''
 
             onEditingFinished: view.model.setBitrate(index, text)
           }
 
           TextField {
             Layout.preferredWidth: CodecsViewerStyle.column.recvFmtpWidth
-            text: $codec.recvFmtp
+            readOnly: content.isDownloadable
+            text: $codec.recvFmtp || ''
 
             onEditingFinished: view.model.setRecvFmtp(index, text)
           }
@@ -165,9 +176,11 @@ Column {
           Switch {
             Layout.fillWidth: true
 
-            checked: $codec.enabled
+            checked: Boolean($codec.enabled)
 
-            onClicked: view.model.enableCodec(index, !checked)
+            onClicked: !checked && content.isDownloadable
+              ? downloadRequested($codec)
+              : view.model.enableCodec(index, !checked)
           }
         }
       }

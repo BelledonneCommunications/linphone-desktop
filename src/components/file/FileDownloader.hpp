@@ -1,5 +1,5 @@
 /*
- * FileExtractor.hpp
+ * FileDownloader.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,53 +16,47 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: March 8, 2018
- *      Author: Ronan Abhamon
+ *  Created on: February 6, 2018
+ *      Author: Danmei Chen
  */
 
-#ifndef FILE_EXTRACTOR_H_
-#define FILE_EXTRACTOR_H_
-
-#include <QFile>
-#include <QTimer>
+#include <QObject>
+#include <QtNetwork>
 
 // =============================================================================
 
-// Supports only bzip file.
-class FileExtractor : public QObject {
-  class ExtractStream;
+class QSslError;
 
+class FileDownloader : public QObject {
   Q_OBJECT;
 
   // TODO: Add an error property to use in UI.
 
-  Q_PROPERTY(QString file READ getFile WRITE setFile NOTIFY fileChanged);
-  Q_PROPERTY(QString extractFolder READ getExtractFolder WRITE setExtractFolder NOTIFY extractFolderChanged);
+  Q_PROPERTY(QUrl url READ getUrl WRITE setUrl NOTIFY urlChanged);
+  Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
   Q_PROPERTY(qint64 readBytes READ getReadBytes NOTIFY readBytesChanged);
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
-  Q_PROPERTY(bool extracting READ getExtracting NOTIFY extractingChanged);
+  Q_PROPERTY(bool downloading READ getDownloading NOTIFY downloadingChanged);
 
 public:
-  FileExtractor (QObject *parent = nullptr);
-  ~FileExtractor ();
-
-  Q_INVOKABLE void extract ();
+  Q_INVOKABLE void download ();
+  Q_INVOKABLE bool remove();
 
 signals:
-  void fileChanged (const QString &file);
-  void extractFolderChanged (const QString &extractFolder);
+  void urlChanged (const QUrl &url);
+  void downloadFolderChanged (const QString &downloadFolder);
   void readBytesChanged (qint64 readBytes);
   void totalBytesChanged (qint64 totalBytes);
-  void extractingChanged (bool extracting);
-  void extractFinished ();
-  void extractFailed ();
+  void downloadingChanged (bool downloading);
+  void downloadFinished (const QString &filePath);
+  void downloadFailed();
 
 private:
-  QString getFile () const;
-  void setFile (const QString &file);
+  QUrl getUrl () const;
+  void setUrl (const QUrl &url);
 
-  QString getExtractFolder () const;
-  void setExtractFolder (const QString &extractFolder);
+  QString getDownloadFolder () const;
+  void setDownloadFolder (const QString &downloadFolder);
 
   qint64 getReadBytes () const;
   void setReadBytes (qint64 readBytes);
@@ -70,28 +64,25 @@ private:
   qint64 getTotalBytes () const;
   void setTotalBytes (qint64 totalBytes);
 
-  bool getExtracting () const;
-  void setExtracting (bool extracting);
+  bool getDownloading () const;
+  void setDownloading (bool downloading);
 
-  void clean ();
-
-  void emitExtractFinished ();
-  void emitExtractFailed (int error);
   void emitOutputError ();
 
-  void handleExtraction ();
+  void handleReadyData ();
+  void handleDownloadFinished ();
 
-  QString mFile;
-  QString mExtractFolder;
+  void handleSslErrors (const QList<QSslError> &errors);
+  void handleDownloadProgress (qint64 readBytes, qint64 totalBytes);
+
+  QUrl mUrl;
+  QString mDownloadFolder;
   QFile mDestinationFile;
 
   qint64 mReadBytes = 0;
   qint64 mTotalBytes = 0;
-  bool mExtracting = false;
+  bool mDownloading = false;
 
-  QScopedPointer<ExtractStream> mStream;
-
-  QTimer *mTimer = nullptr;
+  QPointer<QNetworkReply> mNetworkReply;
+  QNetworkAccessManager mManager;
 };
-
-#endif // FILE_EXTRACTOR_H_
