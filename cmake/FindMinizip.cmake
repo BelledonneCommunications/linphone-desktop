@@ -1,5 +1,5 @@
 ############################################################################
-# FindMinizip.txt
+# FindMinizip.cmake
 # Copyright (C) 2018  Belledonne Communications, Grenoble France
 #
 ############################################################################
@@ -37,6 +37,7 @@ endif()
 
 find_library(MINIZIP_LIBRARIES
 	NAMES minizip minizipd
+	NO_CMAKE_SYSTEM_PATH
 )
 
 include(FindPackageHandleStandardArgs)
