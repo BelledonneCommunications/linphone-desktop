@@ -97,7 +97,11 @@ class PythonTarget(prepare.Target):
         self.config_file = 'configs/config-python.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'submodules')
-        self.additional_args += ["-DLINPHONE_BUILDER_PYTHON_VERSION={}.{}".format(sys.version_info.major, sys.version_info.minor)]
+        external_builders_path = os.path.join(current_path, 'cmake_builder')
+        self.additional_args += [
+            "-DLINPHONE_BUILDER_EXTERNAL_BUILDERS_PATH=" + external_builders_path,
+            "-DLINPHONE_BUILDER_PYTHON_VERSION={}.{}".format(sys.version_info.major, sys.version_info.minor)
+        ]
 
 
 class PythonRaspberryTarget(prepare.Target):
