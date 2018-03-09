@@ -20,15 +20,95 @@
  *      Author: Ronan Abhamon
  */
 
-#include <mz_strm.h>
+#include <mz_strm_bzip.h>
+#include <mz.h>
 #include <QDebug>
+#include <QDir>
 
 #include "FileExtractor.hpp"
 
 // =============================================================================
 
+using namespace std;
+
+static const char *minizipErrorToString (int error) {
+  switch (error) {
+    case MZ_OK:
+      return "ok";
+    case MZ_STREAM_ERROR:
+      return "stream error";
+    case MZ_DATA_ERROR:
+      return "data error";
+    case MZ_MEM_ERROR:
+      return "memory error";
+    case MZ_END_OF_LIST:
+      return "end of list";
+    case MZ_END_OF_STREAM:
+      return "end of stream";
+    case MZ_PARAM_ERROR:
+      return "param error";
+    case MZ_FORMAT_ERROR:
+      return "format error";
+    case MZ_INTERNAL_ERROR:
+      return "internal error";
+    case MZ_CRC_ERROR:
+      return "crc error";
+    case MZ_CRYPT_ERROR:
+      return "crypt error";
+    case MZ_EXIST_ERROR:
+      return "exist error";
+    case MZ_PASSWORD_ERROR:
+      return "password error";
+  }
+
+  Q_ASSERT(false);
+  return "";
+}
+
+static int openMinizipStream (void **stream, const char *filePath) {
+  *stream = nullptr;
+  if (!mz_stream_bzip_create(stream))
+    return MZ_MEM_ERROR;
+  return mz_stream_bzip_open(stream, filePath, MZ_OPEN_MODE_READ);
+}
+
+// -----------------------------------------------------------------------------
+
 void FileExtractor::extract () {
-  // TODO.
+  if (mExtracting) {
+    qWarning() << "Unable to extract file. Already extracting!";
+    return;
+  }
+  setExtracting(true);
+
+  QFileInfo fileInfo(mFile);
+
+  setReadBytes(0);
+  setTotalBytes(fileInfo.size());
+
+  // 1. Open archive stream.
+  // TODO: Test extension.
+  int error = openMinizipStream(&mStream, mFile.toLatin1().constData());
+  if (error != MZ_OK) {
+    emitExtractFailed(error);
+    return;
+  }
+
+  // 2. Open output file.
+  // TODO: Deal with existing files.
+  Q_ASSERT(!mDestinationFile.isOpen());
+  mDestinationFile.setFileName(
+    QDir::cleanPath(mExtractFolder) + QDir::separator() + fileInfo.completeBaseName()
+  );
+  if (!mDestinationFile.open(QIODevice::WriteOnly)) {
+    emitOutputError();
+    return;
+  }
+
+  // 3. Connect!
+  mTimer = new QTimer(this);
+  QObject::connect(mTimer, &QTimer::timeout, this, &FileExtractor::handleExtraction);
+  mTimer->start();
 }
 
 QString FileExtractor::getFile () const {
@@ -96,17 +176,50 @@ void FileExtractor::setExtracting (bool extracting) {
   }
 }
 
-void FileExtractor::handleReadyData () {
-  // TODO.
+void FileExtractor::clean () {
+  mz_stream_bzip_delete(&mStream);
+  mDestinationFile.close();
+  mTimer->stop();
+  mTimer->deleteLater();
+  setExtracting(false);
 }
 
-void FileExtractor::handleExtractFinished () {
-  // TODO.
-
+void FileExtractor::emitExtractFailed (int error) {
+  qWarning() << QStringLiteral("Unable to open extract file: `%1` (%2).")
+    .arg(mFile).arg(minizipErrorToString(error));
+  mDestinationFile.remove();
+  clean();
+  emit extractFailed();
 }
 
-void FileExtractor::handleExtractProgress (qint64 readBytes, qint64 totalBytes) {
-  // TODO.
-  Q_UNUSED(readBytes);
-  Q_UNUSED(totalBytes);
+void FileExtractor::emitExtractFinished () {
+  clean();
+  emit extractFinished();
+}
+
+void FileExtractor::emitOutputError () {
+  qWarning() << QStringLiteral("Could not write into `%1` (%2).")
+    .arg(mDestinationFile.fileName()).arg(mDestinationFile.errorString());
+  mDestinationFile.remove();
+  clean();
+  emit extractFailed();
+}
+
+void FileExtractor::handleExtraction () {
+  char buffer[4096];
+  int32_t readBytes = mz_stream_bzip_read(mStream, buffer, sizeof buffer);
+  switch (readBytes) {
+    case MZ_OK:
+      break;
+    case MZ_END_OF_STREAM:
+      emitExtractFinished();
+      return;
+    default:
+      emitExtractFailed(readBytes);
+      return;
+  }
+
+  setReadBytes(readBytes);
+  if (mDestinationFile.write(buffer, sizeof buffer) == -1)
+    emitOutputError();
 }

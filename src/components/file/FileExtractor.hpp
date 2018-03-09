@@ -24,13 +24,15 @@
 #define FILE_EXTRACTOR_H_
 
 #include <QFile>
+#include <QTimer>
 
 // =============================================================================
 
+// Supports only bzip file.
 class FileExtractor : public QObject {
   Q_OBJECT;
 
-	Q_PROPERTY(QString file READ getFile WRITE setFile NOTIFY fileChanged);
+  Q_PROPERTY(QString file READ getFile WRITE setFile NOTIFY fileChanged);
   Q_PROPERTY(QString extractFolder READ getExtractFolder WRITE setExtractFolder NOTIFY extractFolderChanged);
   Q_PROPERTY(qint64 readBytes READ getReadBytes NOTIFY readBytesChanged);
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
@@ -64,10 +66,13 @@ private:
   bool getExtracting () const;
   void setExtracting (bool extracting);
 
-  void handleReadyData ();
-  void handleExtractFinished ();
+  void clean ();
 
-  void handleExtractProgress (qint64 readBytes, qint64 totalBytes);
+  void emitExtractFinished ();
+  void emitExtractFailed (int error);
+  void emitOutputError ();
+
+  void handleExtraction ();
 
   QString mFile;
   QString mExtractFolder;
@@ -76,6 +81,10 @@ private:
   qint64 mReadBytes = 0;
   qint64 mTotalBytes = 0;
   bool mExtracting = false;
+
+  void *mStream = nullptr;
+
+  QTimer *mTimer = nullptr;
 };
 
 #endif // FILE_EXTRACTOR_H_
