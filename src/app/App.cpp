@@ -298,12 +298,12 @@ QQuickWindow *App::getSettingsWindow () {
   if (!mSettingsWindow) {
     mSettingsWindow = ::createSubWindow(mEngine, cQmlViewSettingsWindow);
     QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
-        if (visibility == QWindow::Hidden) {
-          qInfo() << QStringLiteral("Update nat policy.");
-          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-          core->setNatPolicy(core->getNatPolicy());
-        }
-      });
+      if (visibility == QWindow::Hidden) {
+        qInfo() << QStringLiteral("Update nat policy.");
+        shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+        core->setNatPolicy(core->getNatPolicy());
+      }
+    });
   }
 
   return mSettingsWindow;
@@ -377,8 +377,8 @@ void registerType (const char *name) {
 template<class T>
 void registerToolType (const char *name) {
   qmlRegisterSingletonType<T>(name, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
-      return new T(engine);
-    });
+    return new T(engine);
+  });
 }
 
 #define registerSharedToolType(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
@@ -405,6 +405,7 @@ void App::registerTypes () {
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
+  registerType<FileExtractor>("FileExtractor");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
@@ -472,15 +473,15 @@ void App::setTrayIcon () {
   // trayIcon: Left click actions.
   QMenu *menu = new QMenu();
   root->connect(systemTrayIcon, &QSystemTrayIcon::activated, [root](
-      QSystemTrayIcon::ActivationReason reason
-    ) {
-      if (reason == QSystemTrayIcon::Trigger) {
-        if (root->visibility() == QWindow::Hidden)
-          smartShowWindow(root);
-        else
-          root->hide();
+    QSystemTrayIcon::ActivationReason reason
+  ) {
+    if (reason == QSystemTrayIcon::Trigger) {
+      if (root->visibility() == QWindow::Hidden)
+        smartShowWindow(root);
+      else
+        root->hide();
       }
-    });
+  });
 
   // Build trayIcon menu.
   menu->addAction(restoreAction);
