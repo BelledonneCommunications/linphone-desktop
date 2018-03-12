@@ -73,6 +73,21 @@ class DesktopRaspberryTarget(prepare.Target):
         ]
 
 
+class DesktopRpmTarget(prepare.Target):
+
+    def __init__(self, group_builders=False):
+        prepare.Target.__init__(self, 'desktop-rpm')
+        current_path = os.path.dirname(os.path.realpath(__file__))
+        self.config_file = 'configs/config-desktop-rpm.cmake'
+        self.output = 'OUTPUT/' + self.name
+        self.external_source_path = os.path.join(current_path, 'submodules')
+        external_builders_path = os.path.join(current_path, 'cmake_builder')
+        self.additional_args = [
+            "-DLINPHONE_BUILDER_EXTERNAL_BUILDERS_PATH=" + external_builders_path,
+            "-DLINPHONE_BUILDER_TARGET=linphoneqt"
+        ]
+
+
 class NoUITarget(prepare.Target):
 
     def __init__(self, group_builders=False):
@@ -119,10 +134,11 @@ class PythonRaspberryTarget(prepare.Target):
 
 desktop_targets = {
     'desktop': DesktopTarget(),
-    'python': PythonTarget(),
     'desktop-raspberry': DesktopRaspberryTarget(),
-    'python-raspberry': PythonRaspberryTarget(),
-    'no-ui' : NoUITarget()
+    'desktop-rpm': DesktopRpmTarget(),
+    'no-ui' : NoUITarget(),
+    'python': PythonTarget(),
+    'python-raspberry': PythonRaspberryTarget()
 }
 
 class DesktopPreparator(prepare.Preparator):

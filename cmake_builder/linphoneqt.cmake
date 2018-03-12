@@ -25,6 +25,7 @@ lcb_external_source_paths("..")
 lcb_dependencies("linphone" "ms2plugins" "minizip")
 lcb_groupable(YES)
 lcb_package_source(YES)
+lcb_spec_file("linphoneqt.spec")
 
 lcb_cmake_options("-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
 if(UNIX AND NOT APPLE)
