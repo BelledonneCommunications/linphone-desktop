@@ -35,7 +35,9 @@ static int openMinizipStream (void **stream, const char *filePath) {
   *stream = nullptr;
   if (!mz_stream_bzip_create(stream))
     return MZ_MEM_ERROR;
-  return mz_stream_bzip_open(stream, filePath, MZ_OPEN_MODE_READ);
+  Q_CHECK_PTR(*stream);
+  qInfo() << QStringLiteral("Opening `%1`...").arg(filePath);
+  return mz_stream_bzip_open(*stream, filePath, MZ_OPEN_MODE_READ);
 }
 
 // -----------------------------------------------------------------------------
