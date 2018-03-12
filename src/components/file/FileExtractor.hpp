@@ -48,7 +48,7 @@ signals:
   void totalBytesChanged (qint64 totalBytes);
   void extractingChanged (bool extracting);
   void extractFinished ();
-  void extractFailed();
+  void extractFailed ();
 
 private:
   QString getFile () const;

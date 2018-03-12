@@ -31,40 +31,6 @@
 
 using namespace std;
 
-static const char *minizipErrorToString (int error) {
-  switch (error) {
-    case MZ_OK:
-      return "ok";
-    case MZ_STREAM_ERROR:
-      return "stream error";
-    case MZ_DATA_ERROR:
-      return "data error";
-    case MZ_MEM_ERROR:
-      return "memory error";
-    case MZ_END_OF_LIST:
-      return "end of list";
-    case MZ_END_OF_STREAM:
-      return "end of stream";
-    case MZ_PARAM_ERROR:
-      return "param error";
-    case MZ_FORMAT_ERROR:
-      return "format error";
-    case MZ_INTERNAL_ERROR:
-      return "internal error";
-    case MZ_CRC_ERROR:
-      return "crc error";
-    case MZ_CRYPT_ERROR:
-      return "crypt error";
-    case MZ_EXIST_ERROR:
-      return "exist error";
-    case MZ_PASSWORD_ERROR:
-      return "password error";
-  }
-
-  Q_ASSERT(false);
-  return "";
-}
-
 static int openMinizipStream (void **stream, const char *filePath) {
   *stream = nullptr;
   if (!mz_stream_bzip_create(stream))
@@ -185,8 +151,8 @@ void FileExtractor::clean () {
 }
 
 void FileExtractor::emitExtractFailed (int error) {
-  qWarning() << QStringLiteral("Unable to open extract file: `%1` (%2).")
-    .arg(mFile).arg(minizipErrorToString(error));
+  qWarning() << QStringLiteral("Unable to extract file: `%1` (code: %2).")
+    .arg(mFile).arg(error);
   mDestinationFile.remove();
   clean();
   emit extractFailed();
@@ -208,18 +174,13 @@ void FileExtractor::emitOutputError () {
 void FileExtractor::handleExtraction () {
   char buffer[4096];
   int32_t readBytes = mz_stream_bzip_read(mStream, buffer, sizeof buffer);
-  switch (readBytes) {
-    case MZ_OK:
-      break;
-    case MZ_END_OF_STREAM:
-      emitExtractFinished();
-      return;
-    default:
-      emitExtractFailed(readBytes);
-      return;
+  if (readBytes == 0)
+    emitExtractFinished();
+  else if (readBytes < 0)
+    emitExtractFailed(readBytes);
+  else {
+    setReadBytes(mReadBytes + readBytes);
+    if (mDestinationFile.write(buffer, sizeof buffer) == -1)
+      emitOutputError();
   }
-
-  setReadBytes(readBytes);
-  if (mDestinationFile.write(buffer, sizeof buffer) == -1)
-    emitOutputError();
 }
