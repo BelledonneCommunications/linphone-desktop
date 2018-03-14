@@ -25,13 +25,13 @@
 #include <QPainter>
 #include <QSvgRenderer>
 
-#include "../App.hpp"
+#include "app/App.hpp"
 
 #include "ImageProvider.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 namespace {
   // Max image size in bytes. (100Kb)
@@ -40,8 +40,8 @@ namespace {
 
 static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
   auto it = find_if(readerAttributes.cbegin(), readerAttributes.cend(), [&name](const QXmlStreamAttribute &attribute) {
-        return name == attribute.name() && !attribute.prefix().length();
-      });
+    return name == attribute.name() && !attribute.prefix().length();
+  });
   if (it != readerAttributes.cend())
     readerAttributes.remove(int(distance(readerAttributes.cbegin(), it)));
 }
@@ -72,8 +72,8 @@ static QByteArray parseFillAndStroke (QXmlStreamAttributes &readerAttributes, co
       continue;
     }
 
-    ::removeAttribute(readerAttributes, list[2]);
-    attributes.append(::buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<QColor>().name().toLatin1()));
+    removeAttribute(readerAttributes, list[2]);
+    attributes.append(buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<QColor>().name().toLatin1()));
   }
 
   return attributes;
@@ -115,7 +115,7 @@ static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colo
     }
   }
 
-  ::removeAttribute(readerAttributes, "style");
+  removeAttribute(readerAttributes, "style");
 
   if (attribute.length() > 0) {
     attribute.prepend("style=\"");
@@ -128,8 +128,8 @@ static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colo
 static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors &colors) {
   QXmlStreamAttributes readerAttributes = reader.attributes();
 
-  QByteArray attributes = ::parseFillAndStroke(readerAttributes, colors);
-  attributes.append(::parseStyle(readerAttributes, colors));
+  QByteArray attributes = parseFillAndStroke(readerAttributes, colors);
+  attributes.append(parseStyle(readerAttributes, colors));
 
   for (const auto &attribute : readerAttributes) {
     const QByteArray prefix = attribute.prefix().toLatin1();
@@ -139,7 +139,7 @@ static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors 
     }
 
     attributes.append(
-      ::buildByteArrayAttribute(attribute.name().toLatin1(), attribute.value().toLatin1())
+      buildByteArrayAttribute(attribute.name().toLatin1(), attribute.value().toLatin1())
     );
   }
 
@@ -177,9 +177,9 @@ static QByteArray parseStartElement (const QXmlStreamReader &reader, const Color
   QByteArray startElement = "<";
   startElement.append(reader.name().toLatin1());
   startElement.append(" ");
-  startElement.append(::parseAttributes(reader, colors));
+  startElement.append(parseAttributes(reader, colors));
   startElement.append(" ");
-  startElement.append(::parseDeclarations(reader));
+  startElement.append(parseDeclarations(reader));
   startElement.append(">");
   return startElement;
 }
@@ -209,15 +209,15 @@ static QByteArray computeContent (QFile &file) {
         break;
 
       case QXmlStreamReader::StartDocument:
-        content.append(::parseStartDocument(reader));
+        content.append(parseStartDocument(reader));
         break;
 
       case QXmlStreamReader::StartElement:
-        content.append(::parseStartElement(reader, *colors));
+        content.append(parseStartElement(reader, *colors));
         break;
 
       case QXmlStreamReader::EndElement:
-        content.append(::parseEndElement(reader));
+        content.append(parseEndElement(reader));
         break;
 
       case QXmlStreamReader::Characters:
@@ -237,9 +237,9 @@ static QByteArray computeContent (QFile &file) {
 const QString ImageProvider::PROVIDER_ID = "internal";
 
 ImageProvider::ImageProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {}
+  QQmlImageProviderBase::Image,
+  QQmlImageProviderBase::ForceAsynchronousImageLoading
+) {}
 
 // -----------------------------------------------------------------------------
 

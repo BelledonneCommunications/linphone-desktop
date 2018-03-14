@@ -20,8 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../utils/Utils.hpp"
-#include "../paths/Paths.hpp"
+#include "app/paths/Paths.hpp"
+#include "utils/Utils.hpp"
 
 #include "ThumbnailProvider.hpp"
 
@@ -30,10 +30,10 @@
 const QString ThumbnailProvider::PROVIDER_ID = "thumbnail";
 
 ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {
-  mThumbnailsPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
+  QQmlImageProviderBase::Image,
+  QQmlImageProviderBase::ForceAsynchronousImageLoading
+) {
+  mThumbnailsPath = Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
 }
 
 QImage ThumbnailProvider::requestImage (const QString &id, QSize *size, const QSize &) {

@@ -20,8 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../utils/Utils.hpp"
-#include "../paths/Paths.hpp"
+#include "app/paths/Paths.hpp"
+#include "utils/Utils.hpp"
 
 #include "AvatarProvider.hpp"
 
@@ -30,10 +30,10 @@
 const QString AvatarProvider::PROVIDER_ID = "avatar";
 
 AvatarProvider::AvatarProvider () : QQuickImageProvider(
-    QQmlImageProviderBase::Image,
-    QQmlImageProviderBase::ForceAsynchronousImageLoading
-  ) {
-  mAvatarsPath = ::Utils::coreStringToAppString(Paths::getAvatarsDirPath());
+  QQmlImageProviderBase::Image,
+  QQmlImageProviderBase::ForceAsynchronousImageLoading
+) {
+  mAvatarsPath = Utils::coreStringToAppString(Paths::getAvatarsDirPath());
 }
 
 QImage AvatarProvider::requestImage (const QString &id, QSize *size, const QSize &) {
