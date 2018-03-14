@@ -22,12 +22,13 @@
 
 #include <iostream>
 
-#include "../../components/core/CoreManager.hpp"
-#include "../../utils/Utils.hpp"
-#include "../App.hpp"
+#include "app/App.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "Cli.hpp"
-#include "iostream"
+
+// =============================================================================
 
 using namespace std;
 
@@ -52,7 +53,7 @@ static void cliJoinConference (QHash<QString, QString> &args) {
 
   {
     shared_ptr<linphone::Address> address = core->getPrimaryContactParsed();
-    address->setDisplayName(::Utils::appStringToCoreString(args.take("display-name")));
+    address->setDisplayName(Utils::appStringToCoreString(args.take("display-name")));
     core->setPrimaryContact(address->asString());
   }
 
@@ -73,8 +74,8 @@ static void cliJoinConferenceAs (QHash<QString, QString> &args) {
 
   const shared_ptr<const linphone::Address> currentSipAddress = proxyConfig->getIdentityAddress();
   const shared_ptr<const linphone::Address> askedSipAddress = linphone::Factory::get()->createAddress(
-      ::Utils::appStringToCoreString(fromSipAddress)
-    );
+    Utils::appStringToCoreString(fromSipAddress)
+  );
   if (!currentSipAddress->weakEqual(askedSipAddress)) {
     qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default proxy config.")
       .arg(fromSipAddress);
@@ -90,7 +91,7 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 
   // Check identity.
   {
-    shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(args["sip-address"]));
+    shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(args["sip-address"]));
     if (!address || address->getUsername().empty()) {
       qWarning() << QStringLiteral("Unable to parse invalid sip address.");
       return;
@@ -107,8 +108,8 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
     const string identity = proxyConfig->getIdentityAddress()->asStringUriOnly();
     if (sipAddress != identity) {
       qWarning() << QStringLiteral("Received different sip address from identity : `%1 != %2`.")
-        .arg(::Utils::coreStringToAppString(identity))
-        .arg(::Utils::coreStringToAppString(sipAddress));
+        .arg(Utils::coreStringToAppString(identity))
+        .arg(Utils::coreStringToAppString(sipAddress));
       return;
     }
   }
@@ -119,7 +120,7 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 
   App *app = App::getInstance();
   if (conference) {
-    if (conference->getId() == ::Utils::appStringToCoreString(id)) {
+    if (conference->getId() == Utils::appStringToCoreString(id)) {
       qInfo() << QStringLiteral("Conference `%1` already exists.").arg(id);
       // TODO: Set the view to the "waiting call view".
       app->smartShowWindow(app->getCallsWindow());
@@ -127,13 +128,13 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
     }
 
     qInfo() << QStringLiteral("Remove existing conference with id: `%1`.")
-      .arg(::Utils::coreStringToAppString(conference->getId()));
+      .arg(Utils::coreStringToAppString(conference->getId()));
     core->terminateConference();
   }
 
   qInfo() << QStringLiteral("Create conference with id: `%1`.").arg(id);
   conference = core->createConferenceWithParams(core->createConferenceParams());
-  conference->setId(::Utils::appStringToCoreString(id));
+  conference->setId(Utils::appStringToCoreString(id));
 
   if (core->enterConference() == -1) {
     qWarning() << QStringLiteral("Unable to join created conference: `%1`.").arg(id);
@@ -221,7 +222,7 @@ static string multilineIndent (const QString &str, int indentationNumber = 0) {
   out += indentedWord(word, indentedTextCurPos, lineLength, padding);
   out += "\n";
 
-  return ::Utils::appStringToCoreString(out);
+  return Utils::appStringToCoreString(out);
 }
 
 // =============================================================================
@@ -264,7 +265,7 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
     (*mFunction)(args);
   else {
     Function f = mFunction;
-    ::Utils::connectOnce(coreManager->getHandlers().get(), &CoreHandlers::coreStarted, coreManager, [f, args] {
+    Utils::connectOnce(coreManager->getHandlers().get(), &CoreHandlers::coreStarted, coreManager, [f, args] {
       QHash<QString, QString> fuckConst = args;
       (*f)(fuckConst);
     });
@@ -275,11 +276,11 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
   QHash<QString, QString> args;
   // TODO: check if there is too much headers.
   for (const auto &argName : mArgsScheme.keys()) {
-    const string header = address->getHeader(::Utils::appStringToCoreString(argName));
+    const string header = address->getHeader(Utils::appStringToCoreString(argName));
     args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
   }
   address->clean();
-  args["sip-address"] = ::Utils::coreStringToAppString(address->asStringUriOnly());
+  args["sip-address"] = Utils::coreStringToAppString(address->asStringUriOnly());
   execute(args);
 }
 
@@ -315,17 +316,17 @@ QRegExp Cli::mRegExpArgs("(?:(?:([\\w-]+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\
 QRegExp Cli::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 QMap<QString, Cli::Command> Cli::mCommands = {
-  createCommand("show", QT_TR_NOOP("showFunctionDescription"), ::cliShow),
-  createCommand("call", QT_TR_NOOP("callFunctionDescription"), ::cliCall, {
+  createCommand("show", QT_TR_NOOP("showFunctionDescription"), cliShow),
+  createCommand("call", QT_TR_NOOP("callFunctionDescription"), cliCall, {
     { "sip-address", {} }
   }),
-  createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), ::cliInitiateConference, {
+  createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), cliInitiateConference, {
     { "sip-address", {} }, { "conference-id", {} }
   }),
-  createCommand("join-conference", QT_TR_NOOP("joinConferenceFunctionDescription"), ::cliJoinConference, {
+  createCommand("join-conference", QT_TR_NOOP("joinConferenceFunctionDescription"), cliJoinConference, {
     { "sip-address", {} }, { "conference-id", {} }, { "display-name", {} }
   }),
-  createCommand("join-conference-as", QT_TR_NOOP("joinConferenceAsFunctionDescription"), ::cliJoinConferenceAs, {
+  createCommand("join-conference-as", QT_TR_NOOP("joinConferenceAsFunctionDescription"), cliJoinConferenceAs, {
     { "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
   })
 };
@@ -334,7 +335,7 @@ QMap<QString, Cli::Command> Cli::mCommands = {
 
 void Cli::executeCommand (const QString &command, CommandFormat *format) {
   shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-    ::Utils::appStringToCoreString(command)
+    Utils::appStringToCoreString(command)
   );
 
   // Execute cli command.
@@ -362,13 +363,13 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
     if (scheme == validScheme)
       goto success;
   qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.")
-    .arg(command).arg(::Utils::coreStringToAppString(scheme));
+    .arg(command).arg(Utils::coreStringToAppString(scheme));
   return;
 
 success:
-  const QString functionName = ::Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
+  const QString functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
     ? QStringLiteral("call")
-    : ::Utils::coreStringToAppString(address->getHeader("method"));
+    : Utils::coreStringToAppString(address->getHeader("method"));
 
   if (!functionName.isEmpty() && !mCommands.contains(functionName)) {
     qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);

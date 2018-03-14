@@ -21,11 +21,12 @@
  */
 
 #include <bctoolbox/logging.h>
+#include <linphone++/linphone.hh>
 #include <QDateTime>
 #include <QThread>
 
-#include "../../components/settings/SettingsModel.hpp"
-#include "../../utils/Utils.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/Utils.hpp"
 
 #include "Logger.hpp"
 
@@ -45,15 +46,15 @@
   #define RESET ""
 #endif // if defined(__linux__) || defined(__APPLE__)
 
-#define QT_DOMAIN "qt"
-
-#define MAX_LOGS_COLLECTION_SIZE 10485760 /* 10MB. */
-
-#define SRC_PATTERN "/linphone-desktop/src/"
+// =============================================================================
 
 using namespace std;
 
-// =============================================================================
+namespace {
+  constexpr char cQtDomain[] = "qt";
+  constexpr size_t cMaxLogsCollectionSize = 10485760; // 10MB.
+  constexpr char cSrcPattern[] = "/linphone-desktop/src/";
+}
 
 QMutex Logger::mMutex;
 
@@ -81,24 +82,25 @@ private:
     if (!mLogger->isVerbose())
       return;
 
+    using LogLevel = linphone::LogLevel;
     const char *format;
     switch (level) {
-      case linphone::LogLevel::LogLevelDebug:
+      case LogLevel::LogLevelDebug:
         format = GREEN "[%s][Debug]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case linphone::LogLevel::LogLevelTrace:
+      case LogLevel::LogLevelTrace:
         format = BLUE "[%s][Trace]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case linphone::LogLevel::LogLevelMessage:
+      case LogLevel::LogLevelMessage:
         format = BLUE "[%s][Info]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case linphone::LogLevel::LogLevelWarning:
+      case LogLevel::LogLevelWarning:
         format = RED "[%s][Warning]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case linphone::LogLevel::LogLevelError:
+      case LogLevel::LogLevelError:
         format = RED "[%s][Error]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case linphone::LogLevel::LogLevelFatal:
+      case LogLevel::LogLevelFatal:
         format = RED "[%s][Fatal]" YELLOW "Core:%s: " RESET "%s\n";
         break;
     }
@@ -106,12 +108,12 @@ private:
     fprintf(
       stderr,
       format,
-      ::getFormattedCurrentTime().constData(),
+      getFormattedCurrentTime().constData(),
       domain.empty() ? domain.c_str() : "linphone",
       message.c_str()
     );
 
-    if (level == linphone::LogLevel::LogLevelFatal)
+    if (level == LogLevel::LogLevelFatal)
       terminate();
   };
 
@@ -148,10 +150,10 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
     QByteArray contextArr;
     {
       const char *file = context.file;
-      const char *pos = file ? ::Utils::rstrstr(file, SRC_PATTERN) : file;
+      const char *pos = file ? Utils::rstrstr(file, cSrcPattern) : file;
 
       contextArr = QStringLiteral("%1:%2: ")
-        .arg(pos ? pos + sizeof(SRC_PATTERN) - 1 : file)
+        .arg(pos ? pos + sizeof(cSrcPattern) - 1 : file)
         .arg(context.line)
         .toLocal8Bit();
       contextStr = contextArr.constData();
@@ -161,12 +163,12 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   #endif // ifdef QT_MESSAGELOGCONTEXT
 
   QByteArray localMsg = msg.toLocal8Bit();
-  QByteArray dateTime = ::getFormattedCurrentTime();
+  QByteArray dateTime = getFormattedCurrentTime();
 
   mMutex.lock();
 
   fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
-  bctbx_log(QT_DOMAIN, level, "QT: %s%s", contextStr, localMsg.constData());
+  bctbx_log(cQtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
 
   mMutex.unlock();
 
@@ -201,8 +203,8 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
     loggingService->setListener(make_shared<LinphoneLogger>(mInstance));
   }
 
-  linphone::Core::setLogCollectionPath(::Utils::appStringToCoreString(folder));
-  linphone::Core::setLogCollectionMaxFileSize(MAX_LOGS_COLLECTION_SIZE);
+  linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));
+  linphone::Core::setLogCollectionMaxFileSize(cMaxLogsCollectionSize);
 
   mInstance->enable(SettingsModel::getLogsEnabled(config));
 }

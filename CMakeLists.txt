@@ -331,6 +331,8 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BIN
 # Build.
 # ------------------------------------------------------------------------------
 
+include_directories(src/)
+
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 find_package(Qt5 COMPONENTS Test REQUIRED)

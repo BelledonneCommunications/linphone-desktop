@@ -23,10 +23,16 @@
 #ifndef LOGGER_H_
 #define LOGGER_H_
 
-#include <linphone++/linphone.hh>
+#include <memory>
+
 #include <QMutex>
 
 // =============================================================================
+
+namespace linphone {
+  class Config;
+  class LoggingService;
+}
 
 class Logger {
 public:

@@ -26,31 +26,33 @@
 #include <QStandardPaths>
 #include <QtDebug>
 
-#include "../../utils/Utils.hpp"
+#include "utils/Utils.hpp"
 
 #include "config.h"
 
 #include "Paths.hpp"
 
-#define PATH_ASSISTANT_CONFIG "/linphone/assistant/"
-#define PATH_AVATARS "/avatars/"
-#define PATH_CAPTURES "/Linphone/captures/"
-#define PATH_LOGS "/logs/"
-#define PATH_PLUGINS "/plugins/"
-#define PATH_THUMBNAILS "/thumbnails/"
-#define PATH_USER_CERTIFICATES "/usr-crt/"
-
-#define PATH_CALL_HISTORY_LIST "/call-history.db"
-#define PATH_CONFIG "/linphonerc"
-#define PATH_FACTORY_CONFIG "/linphone/linphonerc-factory"
-#define PATH_ROOT_CA "/linphone/rootca.pem"
-#define PATH_FRIENDS_LIST "/friends.db"
-#define PATH_MESSAGE_HISTORY_LIST "/message-history.db"
-#define PATH_ZRTP_SECRETS "/zidcache"
+// =============================================================================
 
 using namespace std;
 
-// =============================================================================
+namespace {
+  constexpr char cPathAssistantConfig[] = "/linphone/assistant/";
+  constexpr char cPathAvatars[] = "/avatars/";
+  constexpr char cPathCaptures[] = "/Linphone/captures/";
+  constexpr char cPathLogs[] = "/logs/";
+  constexpr char cPathPlugins[] = "/plugins/";
+  constexpr char cPathThumbnails[] = "/thumbnails/";
+  constexpr char cPathUserCertificates[] = "/usr-crt/";
+
+  constexpr char cPathCallHistoryList[] = "/call-history.db";
+  constexpr char cPathConfig[] = "/linphonerc";
+  constexpr char cPathFactoryConfig[] = "/linphone/linphonerc-factory";
+  constexpr char cPathRootCa[] = "/linphone/rootca.pem";
+  constexpr char cPathFriendsList[] = "/friends.db";
+  constexpr char cPathMessageHistoryList[] = "/message-history.db";
+  constexpr char cPathZrtpSecrets[] = "/zidcache";
+}
 
 static inline bool dirPathExists (const QString &path) {
   QDir dir(path);
@@ -59,7 +61,7 @@ static inline bool dirPathExists (const QString &path) {
 
 static inline bool filePathExists (const QString &path) {
   QFileInfo info(path);
-  if (!::dirPathExists(info.path()))
+  if (!dirPathExists(info.path()))
     return false;
 
   QFile file(path);
@@ -74,7 +76,7 @@ static inline void ensureDirPathExists (const QString &path) {
 
 static inline void ensureFilePathExists (const QString &path) {
   QFileInfo info(path);
-  ::ensureDirPathExists(info.path());
+  ensureDirPathExists(info.path());
 
   QFile file(path);
   if (!file.exists() && !file.open(QIODevice::ReadWrite))
@@ -82,21 +84,21 @@ static inline void ensureFilePathExists (const QString &path) {
 }
 
 static inline string getReadableDirPath (const QString &dirname) {
-  return ::Utils::appStringToCoreString(QDir::toNativeSeparators(dirname));
+  return Utils::appStringToCoreString(QDir::toNativeSeparators(dirname));
 }
 
 static inline string getWritableDirPath (const QString &dirname) {
-  ::ensureDirPathExists(dirname);
-  return ::getReadableDirPath(dirname);
+  ensureDirPathExists(dirname);
+  return getReadableDirPath(dirname);
 }
 
 static inline string getReadableFilePath (const QString &filename) {
-  return ::Utils::appStringToCoreString(QDir::toNativeSeparators(filename));
+  return Utils::appStringToCoreString(QDir::toNativeSeparators(filename));
 }
 
 static inline string getWritableFilePath (const QString &filename) {
-  ::ensureFilePathExists(filename);
-  return ::getReadableFilePath(filename);
+  ensureFilePathExists(filename);
+  return getReadableFilePath(filename);
 }
 
 // -----------------------------------------------------------------------------
@@ -112,134 +114,134 @@ static inline QDir getAppPackageDir () {
 }
 
 static inline QString getAppPackageDataDirPath () {
-  QDir dir = ::getAppPackageDir();
+  QDir dir = getAppPackageDir();
   dir.cd("share");
   return dir.absolutePath();
 }
 
 static inline QString getAppPackageMsPluginsDirPath () {
-  QDir dir = ::getAppPackageDir();
+  QDir dir = getAppPackageDir();
   dir.cd(MSPLUGINS_DIR);
   return dir.absolutePath();
 }
 
 static inline QString getAppAssistantConfigDirPath () {
-  return ::getAppPackageDataDirPath() + PATH_ASSISTANT_CONFIG;
+  return getAppPackageDataDirPath() + cPathAssistantConfig;
 }
 
 static inline QString getAppConfigFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PATH_CONFIG;
+  return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + cPathConfig;
 }
 
 static inline QString getAppCallHistoryFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_CALL_HISTORY_LIST;
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathCallHistoryList;
 }
 
 static inline QString getAppFactoryConfigFilePath () {
-  return ::getAppPackageDataDirPath() + PATH_FACTORY_CONFIG;
+  return getAppPackageDataDirPath() + cPathFactoryConfig;
 }
 
 static inline QString getAppPluginsDirPath () {
-  return ::getAppPackageDataDirPath() + PATH_PLUGINS;
+  return getAppPackageDataDirPath() + cPathPlugins;
 }
 
 static inline QString getAppRootCaFilePath () {
-  return ::getAppPackageDataDirPath() + PATH_ROOT_CA;
+  return getAppPackageDataDirPath() + cPathRootCa;
 }
 
 static inline QString getAppFriendsFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_FRIENDS_LIST;
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathFriendsList;
 }
 
 static inline QString getAppMessageHistoryFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_MESSAGE_HISTORY_LIST;
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathMessageHistoryList;
 }
 
 // -----------------------------------------------------------------------------
 
 bool Paths::filePathExists (const string &path) {
-  return ::filePathExists(Utils::coreStringToAppString(path));
+  return filePathExists(Utils::coreStringToAppString(path));
 }
 
 // -----------------------------------------------------------------------------
 
 string Paths::getAssistantConfigDirPath () {
-  return ::getReadableDirPath(::getAppAssistantConfigDirPath());
+  return getReadableDirPath(getAppAssistantConfigDirPath());
 }
 
 string Paths::getAvatarsDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_AVATARS);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathAvatars);
 }
 
 string Paths::getCallHistoryFilePath () {
-  return ::getWritableFilePath(::getAppCallHistoryFilePath());
+  return getWritableFilePath(getAppCallHistoryFilePath());
 }
 
 string Paths::getCapturesDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + PATH_CAPTURES);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + cPathCaptures);
 }
 
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
   const QString path = configPath.isEmpty()
-    ? ::getAppConfigFilePath()
+    ? getAppConfigFilePath()
     : QFileInfo(configPath).absoluteFilePath();
 
   return writable ? ::getWritableFilePath(path) : ::getReadableFilePath(path);
 }
 
 string Paths::getFactoryConfigFilePath () {
-  return ::getReadableFilePath(::getAppFactoryConfigFilePath());
+  return getReadableFilePath(getAppFactoryConfigFilePath());
 }
 
 string Paths::getFriendsListFilePath () {
-  return ::getWritableFilePath(::getAppFriendsFilePath());
+  return getWritableFilePath(getAppFriendsFilePath());
 }
 
 string Paths::getDownloadDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
 }
 
 string Paths::getLogsDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_LOGS);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathLogs);
 }
 
 string Paths::getMessageHistoryFilePath () {
-  return ::getWritableFilePath(::getAppMessageHistoryFilePath());
+  return getWritableFilePath(getAppMessageHistoryFilePath());
 }
 
 string Paths::getPackageDataDirPath () {
-  return ::getReadableDirPath(::getAppPackageDataDirPath());
+  return getReadableDirPath(getAppPackageDataDirPath());
 }
 
 string Paths::getPackageMsPluginsDirPath () {
-  return ::getReadableDirPath(::getAppPackageMsPluginsDirPath());
+  return getReadableDirPath(getAppPackageMsPluginsDirPath());
 }
 
 string Paths::getPluginsDirPath () {
-  return ::getReadableDirPath(::getAppPluginsDirPath());
+  return getReadableDirPath(getAppPluginsDirPath());
 }
 
 string Paths::getRootCaFilePath () {
-  return ::getReadableFilePath(::getAppRootCaFilePath());
+  return getReadableFilePath(getAppRootCaFilePath());
 }
 
 string Paths::getThumbnailsDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_THUMBNAILS);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathThumbnails);
 }
 
 string Paths::getUserCertificatesDirPath () {
-  return ::getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_USER_CERTIFICATES);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathUserCertificates);
 }
 
 string Paths::getZrtpSecretsFilePath () {
-  return ::getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PATH_ZRTP_SECRETS);
+  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathZrtpSecrets);
 }
 
 // -----------------------------------------------------------------------------
 
 static void migrateFile (const QString &oldPath, const QString &newPath) {
   QFileInfo info(newPath);
-  ::ensureDirPathExists(info.path());
+  ensureDirPathExists(info.path());
 
   if (QFile::copy(oldPath, newPath)) {
     QFile::remove(oldPath);
@@ -251,7 +253,7 @@ static void migrateFile (const QString &oldPath, const QString &newPath) {
 
 static void migrateConfigurationFile (const QString &oldPath, const QString &newPath) {
   QFileInfo info(newPath);
-  ::ensureDirPathExists(info.path());
+  ensureDirPathExists(info.path());
 
   if (QFile::copy(oldPath, newPath)) {
     QFile oldFile(oldPath);
@@ -268,30 +270,30 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
 }
 
 void Paths::migrate () {
-  QString newPath = ::getAppConfigFilePath();
+  QString newPath = getAppConfigFilePath();
   QString oldBaseDir = QSysInfo::productType() == "windows"
     ? QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   QString oldPath = oldBaseDir + "/.linphonerc";
 
-  if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    ::migrateConfigurationFile(oldPath, newPath);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateConfigurationFile(oldPath, newPath);
 
-  newPath = ::getAppCallHistoryFilePath();
+  newPath = getAppCallHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-call-history.db";
 
-  if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    ::migrateFile(oldPath, newPath);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateFile(oldPath, newPath);
 
-  newPath = ::getAppFriendsFilePath();
+  newPath = getAppFriendsFilePath();
   oldPath = oldBaseDir + "/.linphone-friends.db";
 
-  if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    ::migrateFile(oldPath, newPath);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateFile(oldPath, newPath);
 
-  newPath = ::getAppMessageHistoryFilePath();
+  newPath = getAppMessageHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-history.db";
 
-  if (!::filePathExists(newPath) && ::filePathExists(oldPath))
-    ::migrateFile(oldPath, newPath);
+  if (!filePathExists(newPath) && filePathExists(oldPath))
+    migrateFile(oldPath, newPath);
 }
