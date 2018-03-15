@@ -29,41 +29,41 @@ if [[ $? != 0 ]] ; then
 fi
 
 ./init-repository --module-subset=default,\
-  -qtandroidextras,\
-  -qtcharts,\
-  -qtdoc,\
-  -qtlocation,\
-  -qtmacextras,\
-  -qtnetworkauth,\
-  -qtpurchasing,\
-  -qtremoteobjects,\
-  -qtrepotools,\
-  -qtscript,\
-  -qtscxml,\
-  -qtsensors,\
-  -qtspeech,\
-  -qtspeech,\
-  -qttools,\
-  -qtwebchannel,\
-  -qtwebengine,\
-  -qtwebglplugin,\
-  -qtwebsockets,\
-  -qtwebview,\
-  -qtwinextras,\
-  -qtx11extras,\
-  -qtxmlpatterns \
-  -f
+-qtandroidextras,\
+-qtcharts,\
+-qtdoc,\
+-qtlocation,\
+-qtmacextras,\
+-qtnetworkauth,\
+-qtpurchasing,\
+-qtremoteobjects,\
+-qtrepotools,\
+-qtscript,\
+-qtscxml,\
+-qtsensors,\
+-qtspeech,\
+-qtspeech,\
+-qttools,\
+-qtwebchannel,\
+-qtwebengine,\
+-qtwebglplugin,\
+-qtwebsockets,\
+-qtwebview,\
+-qtwinextras,\
+-qtx11extras,\
+-qtxmlpatterns \
+-f
 
 ./configure -opensource -confirm-license -release -static -c++std c++11 -ccache -silent -nomake examples -nomake tests \
-  -prefix "/opt/${QT_VERSION}" \
-  -qt-freetype \
-  -qt-harfbuzz \
-  -qt-libjpeg \
-  -qt-libpng \
-  -qt-pcre \
-  -qt-xcb \
-  -qt-xkbcommon \
-  -system-zlib
+-prefix "/opt/qt${QT_VERSION}" \
+-qt-freetype \
+-qt-harfbuzz \
+-qt-libjpeg \
+-qt-libpng \
+-qt-pcre \
+-qt-xcb \
+-qt-xkbcommon \
+-system-zlib
 
 if [[ $? != 0 ]] ; then
   printf "${RED}Unknown configure option.${NC}\n"
