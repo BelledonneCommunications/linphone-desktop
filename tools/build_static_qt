@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# See: http://wiki.qt.io/Building_Qt_5_from_Git
+# See: http://doc.qt.io/qt-5/configure-options.html
+
+REPO_URL='git://code.qt.io/qt/qt5.git'
+REPO_FOLDER=qt5_static
+QT_VERSION='5.10'
+
+# ==============================================================================
+
+RED='\e[1;31m'
+NC='\e[0m'
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd $SCRIPT_DIR/..
+
+# ==============================================================================
+
+if [ ! -d "${REPO_FOLDER}/.git" ]; then
+  git clone $REPO_URL $REPO_FOLDER
+fi
+
+cd $REPO_FOLDER
+git checkout $QT_VERSION
+if [[ $? != 0 ]] ; then
+  printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
+  exit 1
+fi
+
+./init-repository --module-subset=default,-qtwebengine,-qtandroidextras,-qtcharts,-qtscript,-qtmacextras,-qtdoc,-qtlocation,-qtnetworkauth,-qtpurchasing,-qtremoteobjects,-qtrepotools,-qtscxml,-qtsensors,-qtspeech,-qtspeech,-qttools,-qtwebchannel,-qtwebglplugin,-qtwebsockets,-qtwebview,-qtwinextras,-qtx11extras,-qtxmlpatterns -f
+./configure -opensource -confirm-license -release -static -c++std c++11 -ccache -silent -nomake examples -nomake tests -system-zlib -qt-libjpeg -qt-libpng -qt-xcb -qt-xkbcommon -qt-freetype -qt-pcre -qt-harfbuzz
+if [[ $? != 0 ]] ; then
+  printf "${RED}Unknown configure option.${NC}\n"
+  exit 1
+fi
+
+make -r -j5
