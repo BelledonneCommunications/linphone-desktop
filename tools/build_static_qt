@@ -13,23 +13,58 @@ RED='\e[1;31m'
 NC='\e[0m'
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $SCRIPT_DIR/..
+cd "${SCRIPT_DIR}/.."
 
 # ==============================================================================
 
 if [ ! -d "${REPO_FOLDER}/.git" ]; then
-  git clone $REPO_URL $REPO_FOLDER
+  git clone "${REPO_URL}" "${REPO_FOLDER}"
 fi
 
-cd $REPO_FOLDER
-git checkout $QT_VERSION
+cd "${REPO_FOLDER}"
+git checkout "${QT_VERSION}"
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
   exit 1
 fi
 
-./init-repository --module-subset=default,-qtwebengine,-qtandroidextras,-qtcharts,-qtscript,-qtmacextras,-qtdoc,-qtlocation,-qtnetworkauth,-qtpurchasing,-qtremoteobjects,-qtrepotools,-qtscxml,-qtsensors,-qtspeech,-qtspeech,-qttools,-qtwebchannel,-qtwebglplugin,-qtwebsockets,-qtwebview,-qtwinextras,-qtx11extras,-qtxmlpatterns -f
-./configure -opensource -confirm-license -release -static -c++std c++11 -ccache -silent -nomake examples -nomake tests -system-zlib -qt-libjpeg -qt-libpng -qt-xcb -qt-xkbcommon -qt-freetype -qt-pcre -qt-harfbuzz
+./init-repository --module-subset=default,\
+  -qtandroidextras,\
+  -qtcharts,\
+  -qtdoc,\
+  -qtlocation,\
+  -qtmacextras,\
+  -qtnetworkauth,\
+  -qtpurchasing,\
+  -qtremoteobjects,\
+  -qtrepotools,\
+  -qtscript,\
+  -qtscxml,\
+  -qtsensors,\
+  -qtspeech,\
+  -qtspeech,\
+  -qttools,\
+  -qtwebchannel,\
+  -qtwebengine,\
+  -qtwebglplugin,\
+  -qtwebsockets,\
+  -qtwebview,\
+  -qtwinextras,\
+  -qtx11extras,\
+  -qtxmlpatterns \
+  -f
+
+./configure -opensource -confirm-license -release -static -c++std c++11 -ccache -silent -nomake examples -nomake tests \
+  -prefix "/opt/${QT_VERSION}" \
+  -qt-freetype \
+  -qt-harfbuzz \
+  -qt-libjpeg \
+  -qt-libpng \
+  -qt-pcre \
+  -qt-xcb \
+  -qt-xkbcommon \
+  -system-zlib
+
 if [[ $? != 0 ]] ; then
   printf "${RED}Unknown configure option.${NC}\n"
   exit 1
