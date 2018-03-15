@@ -36,7 +36,7 @@ while read file; do
   if [[ $? != 0 ]] ; then
     so_far_so_good=1
   fi
-done < <(git diff --name-only --cached | grep -E '\.qml|js|js\.spec$')
+done < <(git diff --name-only --cached --diff-filter=d | grep -E '\.qml|js|js\.spec$')
 
 if [[ $so_far_so_good == 0 ]]; then
   printf "${GREEN}Done. No qml error found.\n"
