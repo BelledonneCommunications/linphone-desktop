@@ -43,8 +43,6 @@ fi
 -qtscxml,\
 -qtsensors,\
 -qtspeech,\
--qtspeech,\
--qttools,\
 -qtwebchannel,\
 -qtwebengine,\
 -qtwebglplugin,\
