@@ -21,8 +21,21 @@ cd "${SCRIPT_DIR}/.."
 if [ ! -d "${REPO_FOLDER}/.git" ]; then
   git clone "${REPO_URL}" "${REPO_FOLDER}"
 fi
-
 cd "${REPO_FOLDER}"
+
+while test $# -gt 0
+do
+  case "$1" in
+    --clean)
+      echo "Clean..."
+      git submodule foreach 'git clean -dfx'
+      ;;
+    --*) echo "Invalid option: $1"
+      ;;
+  esac
+  shift
+done
+
 git checkout "${QT_VERSION}"
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
@@ -53,8 +66,8 @@ fi
 -qtxmlpatterns \
 -f
 
-./configure -opensource -confirm-license -release -static -c++std c++11 -ccache -silent -nomake examples -nomake tests \
--prefix "/opt/qt${QT_VERSION}" \
+./configure -opensource -confirm-license -release -c++std c++11 -ccache -silent -nomake examples -nomake tests \
+-prefix "/opt/qt-${QT_VERSION}" \
 -qt-freetype \
 -qt-harfbuzz \
 -qt-libjpeg \
@@ -72,5 +85,5 @@ fi
 make -r -j5
 
 printf "${NC}Please export configuration variables like this:${NC}\n"
-printf "${BLUE}export PATH=\"/opt/qt${QT_VERSION}/bin/:\$PATH\"${NC}\n"
-printf "${BLUE}export Qt5_DIR=\"/opt/qt${QT_VERSION}/lib/cmake/\"${NC}\n"
+printf "${BLUE}export PATH=\"/opt/qt-${QT_VERSION}/bin/:\$PATH\"${NC}\n"
+printf "${BLUE}export Qt5_DIR=\"/opt/qt-${QT_VERSION}/lib/cmake/\"${NC}\n"
