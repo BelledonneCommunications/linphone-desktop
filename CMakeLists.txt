@@ -448,21 +448,10 @@ install(FILES "${ASSETS_ASSISTANT_DIR}/use-linphone-sip-account.rc"
 )
 
 # ------------------------------------------------------------------------------
-# CPack settings.
+# CPack settings & RPM.
 # ------------------------------------------------------------------------------
 
-set(CPACK_SOURCE_GENERATOR "TGZ")
-set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PROJECT_NAME}-${PROJECT_VERSION}")
-set(CPACK_SOURCE_IGNORE_FILES
-  "^${CMAKE_BINARY_DIR}"
-  "/\\\\..+"
-  "OUTPUT"
-  "WORK"
-  "cmake_builder"
-  "submodules"
-)
-
-include(CPack)
+add_subdirectory(build)
 
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.

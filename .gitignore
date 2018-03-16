@@ -8,7 +8,6 @@
 # Project configuration --------------------------------------------------------
 
 *.pro.user
-build*
 Project.sln.lnk
 WORK
 OUTPUT
@@ -35,3 +34,4 @@ GTAGS
 # OTHER ------------------------------------------------------------------------
 
 vgcore.*
+linphone.spec
