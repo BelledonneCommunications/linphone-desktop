@@ -109,8 +109,8 @@ else ()
   find_package(BcToolbox REQUIRED)
   find_package(Belcard REQUIRED)
   find_package(Mediastreamer2 REQUIRED)
-  find_package(Minizip REQUIRED)
 endif ()
+find_package(Minizip REQUIRED)
 
 set(SOURCES
   src/app/App.cpp
