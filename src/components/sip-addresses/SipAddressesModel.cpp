@@ -136,13 +136,13 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
     return QString("");
 
   switch (address->getTransport()) {
-    case linphone::TransportTypeUdp:
+    case linphone::TransportType::Udp:
       return QStringLiteral("UDP");
-    case linphone::TransportTypeTcp:
+    case linphone::TransportType::Tcp:
       return QStringLiteral("TCP");
-    case linphone::TransportTypeTls:
+    case linphone::TransportType::Tls:
       return QStringLiteral("TLS");
-    case linphone::TransportTypeDtls:
+    case linphone::TransportType::Dtls:
       return QStringLiteral("DTLS");
   }
 
@@ -278,13 +278,13 @@ void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMe
 
 void SipAddressesModel::handleCallStateChanged (
   const shared_ptr<linphone::Call> &call,
-  linphone::CallState state
+  linphone::Call::State state
 ) {
   // Ignore aborted calls.
-  if (call->getCallLog()->getStatus() == linphone::CallStatus::CallStatusAborted)
+  if (call->getCallLog()->getStatus() == linphone::Call::Status::Aborted)
     return;
 
-  if (state == linphone::CallStateEnd || state == linphone::CallStateError)
+  if (state == linphone::Call::State::End || state == linphone::Call::State::Error)
     addOrUpdateSipAddress(
       ::Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()), call
     );
@@ -297,16 +297,16 @@ void SipAddressesModel::handlePresenceReceived (
   Presence::PresenceStatus status;
 
   switch (presenceModel->getConsolidatedPresence()) {
-    case linphone::ConsolidatedPresenceOnline:
+    case linphone::ConsolidatedPresence::Online:
       status = Presence::PresenceStatus::Online;
       break;
-    case linphone::ConsolidatedPresenceBusy:
+    case linphone::ConsolidatedPresence::Busy:
       status = Presence::PresenceStatus::Busy;
       break;
-    case linphone::ConsolidatedPresenceDoNotDisturb:
+    case linphone::ConsolidatedPresence::DoNotDisturb:
       status = Presence::PresenceStatus::DoNotDisturb;
       break;
-    case linphone::ConsolidatedPresenceOffline:
+    case linphone::ConsolidatedPresence::Offline:
       status = Presence::PresenceStatus::Offline;
       break;
   }
@@ -392,7 +392,7 @@ void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, ContactModel *c
 void SipAddressesModel::addOrUpdateSipAddress (QVariantMap &map, const shared_ptr<linphone::Call> &call) {
   const shared_ptr<linphone::CallLog> callLog = call->getCallLog();
 
-  map["timestamp"] = callLog->getStatus() == linphone::CallStatus::CallStatusSuccess
+  map["timestamp"] = callLog->getStatus() == linphone::Call::Status::Success
     ? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
     : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 }
@@ -469,7 +469,7 @@ void SipAddressesModel::initSipAddresses () {
 
   // Get sip addresses from chatrooms.
   for (const auto &chatRoom : core->getChatRooms()) {
-    list<shared_ptr<linphone::ChatMessage> > history = chatRoom->getHistory(0);
+    list<shared_ptr<linphone::ChatMessage> > history = chatRoom->getHistory(1);
 
     if (history.size() == 0)
       continue;
@@ -492,7 +492,7 @@ void SipAddressesModel::initSipAddresses () {
     if (addressDone.contains(sipAddress))
       continue; // Already used.
 
-    if (callLog->getStatus() == linphone::CallStatusAborted)
+    if (callLog->getStatus() == linphone::Call::Status::Aborted)
       continue; // Ignore aborted calls.
 
     addressDone << sipAddress;
@@ -501,7 +501,7 @@ void SipAddressesModel::initSipAddresses () {
     map["sipAddress"] = sipAddress;
 
     // The duration can be wrong if status is not success.
-    map["timestamp"] = callLog->getStatus() == linphone::CallStatus::CallStatusSuccess
+    map["timestamp"] = callLog->getStatus() == linphone::Call::Status::Success
       ? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
       : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 

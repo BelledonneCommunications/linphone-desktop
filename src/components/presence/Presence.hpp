@@ -36,10 +36,10 @@ class Presence : public QObject {
 
 public:
   enum PresenceStatus {
-    Online = linphone::ConsolidatedPresenceOnline,
-    Busy = linphone::ConsolidatedPresenceBusy,
-    DoNotDisturb = linphone::ConsolidatedPresenceDoNotDisturb,
-    Offline = linphone::ConsolidatedPresenceOffline
+    Online = int(linphone::ConsolidatedPresence::Online),
+    Busy = int(linphone::ConsolidatedPresence::Busy),
+    DoNotDisturb = int(linphone::ConsolidatedPresence::DoNotDisturb),
+    Offline = int(linphone::ConsolidatedPresence::Offline)
   };
 
   Q_ENUM(PresenceStatus);

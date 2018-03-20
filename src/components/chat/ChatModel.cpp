@@ -180,7 +180,7 @@ private:
     signalDataChanged(it);
   }
 
-  void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessageState state) override {
+  void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) override {
     if (!mChatModel)
       return;
 
@@ -189,7 +189,7 @@ private:
       return;
 
     // File message downloaded.
-    if (state == linphone::ChatMessageStateFileTransferDone && !message->isOutgoing()) {
+    if (state == linphone::ChatMessage::State::FileTransferDone && !message->isOutgoing()) {
       ::createThumbnail(message);
       ::fillThumbnailProperty((*it).first, message);
 
@@ -201,7 +201,7 @@ private:
       App::getInstance()->getNotifier()->notifyReceivedFileMessage(message);
     }
 
-    (*it).first["status"] = state;
+    (*it).first["status"] = int(state);
 
     signalDataChanged(it);
   }
@@ -305,8 +305,8 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
 
     // Old workaround.
     // It can exist messages with a not delivered status. It's a linphone core bug.
-    if (message->getState() == linphone::ChatMessageStateInProgress)
-      map["status"] = linphone::ChatMessageStateNotDelivered;
+    if (message->getState() == linphone::ChatMessage::State::InProgress)
+      map["status"] = int(linphone::ChatMessage::State::NotDelivered);
 
     mEntries << qMakePair(map, static_pointer_cast<void>(message));
   }
@@ -435,7 +435,7 @@ void ChatModel::downloadFile (int id) {
 
   shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
 
-  switch (message->getState()) {
+  switch (int(message->getState())) {
     case MessageStatusDelivered:
     case MessageStatusDeliveredToUser:
     case MessageStatusDisplayed:
@@ -529,8 +529,8 @@ void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::
   dest["type"] = EntryType::MessageEntry;
   dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
   dest["content"] = ::Utils::coreStringToAppString(message->getText());
-  dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessageStateIdle;
-  dest["status"] = message->getState();
+  dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessage::State::Idle;
+  dest["status"] = int(message->getState());
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
@@ -547,8 +547,8 @@ void ChatModel::fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;
-  dest["isOutgoing"] = callLog->getDir() == linphone::CallDirOutgoing;
-  dest["status"] = callLog->getStatus();
+  dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
+  dest["status"] = int(callLog->getStatus());
   dest["isStart"] = true;
 }
 
@@ -557,8 +557,8 @@ void ChatModel::fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::
 
   dest["type"] = EntryType::CallEntry;
   dest["timestamp"] = timestamp;
-  dest["isOutgoing"] = callLog->getDir() == linphone::CallDirOutgoing;
-  dest["status"] = callLog->getStatus();
+  dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
+  dest["status"] = int(callLog->getStatus());
   dest["isStart"] = false;
 }
 
@@ -576,7 +576,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
     }
 
     case ChatModel::CallEntry: {
-      if (pair.first["status"].toInt() == linphone::CallStatusSuccess) {
+      if (pair.first["status"].toInt() == int(linphone::Call::Status::Success)) {
         // WARNING: Unable to remove symmetric call here. (start/end)
         // We are between `beginRemoveRows` and `endRemoveRows`.
         // A solution is to schedule a `removeEntry` call in the Qt main loop.
@@ -601,16 +601,16 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
 }
 
 void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
-  linphone::CallStatus status = callLog->getStatus();
+  linphone::Call::Status status = callLog->getStatus();
 
   switch (status) {
-    case linphone::CallStatusAborted:
-    case linphone::CallStatusEarlyAborted:
+    case linphone::Call::Status::Aborted:
+    case linphone::Call::Status::EarlyAborted:
       return; // Ignore aborted calls.
 
-    case linphone::CallStatusSuccess:
-    case linphone::CallStatusMissed:
-    case linphone::CallStatusDeclined:
+    case linphone::Call::Status::Success:
+    case linphone::Call::Status::Missed:
+    case linphone::Call::Status::Declined:
       break;
   }
 
@@ -637,7 +637,7 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   auto it = insertEntry(qMakePair(start, static_pointer_cast<void>(callLog)));
 
   // Add end call. (if necessary)
-  if (status == linphone::CallStatusSuccess) {
+  if (status == linphone::Call::Status::Success) {
     QVariantMap end;
     fillCallEndEntry(end, callLog);
     insertEntry(qMakePair(end, static_pointer_cast<void>(callLog)), &it);
@@ -658,9 +658,9 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
+void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
   if (
-    (state == linphone::CallStateEnd || state == linphone::CallStateError) &&
+    (state == linphone::Call::State::End || state == linphone::Call::State::Error) &&
     mChatRoom == CoreManager::getInstance()->getCore()->getChatRoom(call->getRemoteAddress())
   )
     insertCall(call->getCallLog());

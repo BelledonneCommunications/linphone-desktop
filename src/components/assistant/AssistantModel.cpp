@@ -48,15 +48,15 @@ private:
 
   void onCreateAccount (
     const shared_ptr<linphone::AccountCreator> &,
-    linphone::AccountCreatorStatus status,
+    linphone::AccountCreator::Status status,
     const string &
   ) override {
-    if (status == linphone::AccountCreatorStatusAccountCreated)
+    if (status == linphone::AccountCreator::Status::AccountCreated)
       emit mAssistant->createStatusChanged(QString(""));
     else {
-      if (status == linphone::AccountCreatorStatusRequestFailed)
+      if (status == linphone::AccountCreator::Status::RequestFailed)
         emit mAssistant->createStatusChanged(tr("requestFailed"));
-      else if (status == linphone::AccountCreatorStatusServerError)
+      else if (status == linphone::AccountCreator::Status::ServerError)
         emit mAssistant->createStatusChanged(tr("cannotSendSms"));
       else
         emit mAssistant->createStatusChanged(tr("accountAlreadyExists"));
@@ -65,14 +65,14 @@ private:
 
   void onIsAccountExist (
     const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
+    linphone::AccountCreator::Status status,
     const string &
   ) override {
-    if (status == linphone::AccountCreatorStatusAccountExist || status == linphone::AccountCreatorStatusAccountExistWithAlias) {
+    if (status == linphone::AccountCreator::Status::AccountExist || status == linphone::AccountCreator::Status::AccountExistWithAlias) {
       createProxyConfig(creator);
       emit mAssistant->loginStatusChanged(QString(""));
     } else {
-      if (status == linphone::AccountCreatorStatusRequestFailed)
+      if (status == linphone::AccountCreator::Status::RequestFailed)
         emit mAssistant->loginStatusChanged(tr("requestFailed"));
       else
         emit mAssistant->loginStatusChanged(tr("loginWithUsernameFailed"));
@@ -81,19 +81,19 @@ private:
 
   void onActivateAccount (
     const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
+    linphone::AccountCreator::Status status,
     const string &
   ) override {
     if (
-      status == linphone::AccountCreatorStatusAccountActivated ||
-      status == linphone::AccountCreatorStatusAccountAlreadyActivated
+      status == linphone::AccountCreator::Status::AccountActivated ||
+      status == linphone::AccountCreator::Status::AccountAlreadyActivated
     ) {
       if (creator->getEmail().empty())
         createProxyConfig(creator);
 
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
-      if (status == linphone::AccountCreatorStatusRequestFailed)
+      if (status == linphone::AccountCreator::Status::RequestFailed)
         emit mAssistant->activateStatusChanged(tr("requestFailed"));
       else
         emit mAssistant->activateStatusChanged(tr("smsActivationFailed"));
@@ -102,14 +102,14 @@ private:
 
   void onIsAccountActivated (
     const shared_ptr<linphone::AccountCreator> &creator,
-    linphone::AccountCreatorStatus status,
+    linphone::AccountCreator::Status status,
     const string &
   ) override {
-    if (status == linphone::AccountCreatorStatusAccountActivated) {
+    if (status == linphone::AccountCreator::Status::AccountActivated) {
       createProxyConfig(creator);
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
-      if (status == linphone::AccountCreatorStatusRequestFailed)
+      if (status == linphone::AccountCreator::Status::RequestFailed)
         emit mAssistant->activateStatusChanged(tr("requestFailed"));
       else
         emit mAssistant->activateStatusChanged(tr("emailActivationFailed"));
@@ -118,15 +118,15 @@ private:
 
   void onRecoverAccount (
     const shared_ptr<linphone::AccountCreator> &,
-    linphone::AccountCreatorStatus status,
+    linphone::AccountCreator::Status status,
     const string &
   ) override {
-    if (status == linphone::AccountCreatorStatusRequestOk) {
+    if (status == linphone::AccountCreator::Status::RequestOk) {
       emit mAssistant->recoverStatusChanged(QString(""));
     } else {
-      if (status == linphone::AccountCreatorStatusRequestFailed)
+      if (status == linphone::AccountCreator::Status::RequestFailed)
         emit mAssistant->recoverStatusChanged(tr("requestFailed"));
-      else if (status == linphone::AccountCreatorStatusServerError)
+      else if (status == linphone::AccountCreator::Status::ServerError)
         emit mAssistant->recoverStatusChanged(tr("cannotSendSms"));
       else
         emit mAssistant->recoverStatusChanged(tr("loginWithPhoneNumberFailed"));
@@ -243,12 +243,12 @@ void AssistantModel::setEmail (const QString &email) {
   QString error;
 
   switch (mAccountCreator->setEmail(::Utils::appStringToCoreString(email))) {
-    case linphone::AccountCreatorEmailStatusOk:
+    case linphone::AccountCreator::EmailStatus::Ok:
       break;
-    case linphone::AccountCreatorEmailStatusMalformed:
+    case linphone::AccountCreator::EmailStatus::Malformed:
       error = tr("emailStatusMalformed");
       break;
-    case linphone::AccountCreatorEmailStatusInvalidCharacters:
+    case linphone::AccountCreator::EmailStatus::InvalidCharacters:
       error = tr("emailStatusMalformedInvalidCharacters");
       break;
   }
@@ -267,19 +267,19 @@ void AssistantModel::setPassword (const QString &password) {
   QString error;
 
   switch (mAccountCreator->setPassword(::Utils::appStringToCoreString(password))) {
-    case linphone::AccountCreatorPasswordStatusOk:
+    case linphone::AccountCreator::PasswordStatus::Ok:
       break;
-    case linphone::AccountCreatorPasswordStatusTooShort:
+    case linphone::AccountCreator::PasswordStatus::TooShort:
       error = tr("passwordStatusTooShort").arg(config->getInt("assistant", "password_min_length", 1));
       break;
-    case linphone::AccountCreatorPasswordStatusTooLong:
+    case linphone::AccountCreator::PasswordStatus::TooLong:
       error = tr("passwordStatusTooLong").arg(config->getInt("assistant", "password_max_length", -1));
       break;
-    case linphone::AccountCreatorPasswordStatusInvalidCharacters:
+    case linphone::AccountCreator::PasswordStatus::InvalidCharacters:
       error = tr("passwordStatusInvalidCharacters")
         .arg(::Utils::coreStringToAppString(config->getString("assistant", "password_regex", "")));
       break;
-    case linphone::AccountCreatorPasswordStatusMissingCharacters:
+    case linphone::AccountCreator::PasswordStatus::MissingCharacters:
       error = tr("passwordStatusMissingCharacters")
         .arg(::Utils::coreStringToAppString(config->getString("assistant", "missing_characters", "")));
       break;
@@ -310,18 +310,18 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
   QString error;
 
   switch (mAccountCreator->setPhoneNumber(::Utils::appStringToCoreString(phoneNumber), ::Utils::appStringToCoreString(mCountryCode))) {
-    case linphone::AccountCreatorPhoneNumberStatusOk:
+    case int(linphone::AccountCreator::PhoneNumberStatus::Ok):
       break;
-    case linphone::AccountCreatorPhoneNumberStatusInvalid:
+    case int(linphone::AccountCreator::PhoneNumberStatus::Invalid):
       error = tr("phoneNumberStatusInvalid");
       break;
-    case linphone::AccountCreatorPhoneNumberStatusTooShort:
+    case int(linphone::AccountCreator::PhoneNumberStatus::TooShort):
       error = tr("phoneNumberStatusTooShort");
       break;
-    case linphone::AccountCreatorPhoneNumberStatusTooLong:
+    case int(linphone::AccountCreator::PhoneNumberStatus::TooLong):
       error = tr("phoneNumberStatusTooLong");
       break;
-    case linphone::AccountCreatorPhoneNumberStatusInvalidCountryCode:
+    case int(linphone::AccountCreator::PhoneNumberStatus::InvalidCountryCode):
       error = tr("phoneNumberStatusInvalidCountryCode");
       break;
     default:
@@ -393,24 +393,24 @@ void AssistantModel::setConfigFilename (const QString &configFilename) {
 
 // -----------------------------------------------------------------------------
 
-QString AssistantModel::mapAccountCreatorUsernameStatusToString (linphone::AccountCreatorUsernameStatus status) const {
+QString AssistantModel::mapAccountCreatorUsernameStatusToString (linphone::AccountCreator::UsernameStatus status) const {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
   switch (status) {
-    case linphone::AccountCreatorUsernameStatusOk:
+    case linphone::AccountCreator::UsernameStatus::Ok:
       break;
-    case linphone::AccountCreatorUsernameStatusTooShort:
+    case linphone::AccountCreator::UsernameStatus::TooShort:
       error = tr("usernameStatusTooShort").arg(config->getInt("assistant", "username_min_length", 1));
       break;
-    case linphone::AccountCreatorUsernameStatusTooLong:
+    case linphone::AccountCreator::UsernameStatus::TooLong:
       error = tr("usernameStatusTooLong").arg(config->getInt("assistant", "username_max_length", -1));
       break;
-    case linphone::AccountCreatorUsernameStatusInvalidCharacters:
+    case linphone::AccountCreator::UsernameStatus::InvalidCharacters:
       error = tr("usernameStatusInvalidCharacters")
         .arg(::Utils::coreStringToAppString(config->getString("assistant", "username_regex", "")));
       break;
-    case linphone::AccountCreatorUsernameStatusInvalid:
+    case linphone::AccountCreator::UsernameStatus::Invalid:
       error = tr("usernameStatusInvalid");
       break;
   }

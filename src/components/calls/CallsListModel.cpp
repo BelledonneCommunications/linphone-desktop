@@ -172,23 +172,23 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
   addModel->update();
 }
 
-void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
+void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
   switch (state) {
-    case linphone::CallStateIncomingReceived:
+    case linphone::Call::State::IncomingReceived:
       addCall(call);
       ::joinConference(call);
       break;
 
-    case linphone::CallStateOutgoingInit:
+    case linphone::Call::State::OutgoingInit:
       addCall(call);
       break;
 
-    case linphone::CallStateEnd:
-    case linphone::CallStateError:
+    case linphone::Call::State::End:
+    case linphone::Call::State::Error:
       removeCall(call);
       break;
 
-    case linphone::CallStateStreamsRunning: {
+    case linphone::Call::State::StreamsRunning: {
       int index = ::findCallIndex(mList, call);
       emit callRunning(index, &call->getData<CallModel>("call-model"));
     } break;
@@ -221,7 +221,7 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
-  if (call->getDir() == linphone::CallDirOutgoing)
+  if (call->getDir() == linphone::Call::Dir::Outgoing)
     App::smartShowWindow(App::getInstance()->getCallsWindow());
 
   CallModel *callModel = new CallModel(call);

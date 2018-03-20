@@ -26,11 +26,11 @@
 
 linphone::TransportType LinphoneUtils::stringToTransportType (const QString &transport) {
   if (transport == "TCP")
-    return linphone::TransportType::TransportTypeTcp;
+    return linphone::TransportType::Tcp;
   if (transport == "UDP")
-    return linphone::TransportType::TransportTypeUdp;
+    return linphone::TransportType::Udp;
   if (transport == "TLS")
-    return linphone::TransportType::TransportTypeTls;
+    return linphone::TransportType::Tls;
 
-  return linphone::TransportType::TransportTypeDtls;
+  return linphone::TransportType::Dtls;
 }

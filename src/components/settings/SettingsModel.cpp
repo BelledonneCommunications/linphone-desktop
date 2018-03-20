@@ -306,13 +306,13 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QVariantList list;
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryptionDTLS))
+  if (core->mediaEncryptionSupported(linphone::MediaEncryption::DTLS))
     list << ::buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryptionSRTP))
+  if (core->mediaEncryptionSupported(linphone::MediaEncryption::SRTP))
     list << ::buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryptionZRTP))
+  if (core->mediaEncryptionSupported(linphone::MediaEncryption::ZRTP))
     list << ::buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
 
   return list;

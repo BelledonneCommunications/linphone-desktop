@@ -94,15 +94,18 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
 
   // Create a new chat model.
   if (!mChatModels.contains(sipAddress)) {
-    Q_ASSERT(mCore->createAddress(::Utils::appStringToCoreString(sipAddress)) != nullptr);
+    Q_CHECK_PTR(mCore->createAddress(::Utils::appStringToCoreString(sipAddress)));
 
-    auto deleter = [this](ChatModel *chatModel) {
-        mChatModels.remove(chatModel->getSipAddress());
-        delete chatModel;
-      };
+    // Don't use chatModel->getSipAddress() in lambda.
+    // If it is a migration chat room the chat room sip address can be changed!!!
+    auto deleter = [this, sipAddress](ChatModel *chatModel) {
+      bool removed = mChatModels.remove(sipAddress);
+      Q_ASSERT(removed);
+      delete chatModel;
+    };
 
     shared_ptr<ChatModel> chatModel(new ChatModel(sipAddress), deleter);
-    mChatModels[chatModel->getSipAddress()] = chatModel;
+    mChatModels[sipAddress] = chatModel;
 
     emit chatModelCreated(chatModel);
 
@@ -111,7 +114,7 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
 
   // Returns an existing chat model.
   shared_ptr<ChatModel> chatModel = mChatModels[sipAddress].lock();
-  Q_CHECK_PTR(chatModel.get());
+  Q_CHECK_PTR(chatModel);
   return chatModel;
 }
 
@@ -215,7 +218,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setResourcesPaths();
 
-  mCore = linphone::Factory::get()->createCore(mHandlers, Paths::getConfigFilePath(configPath), Paths::getFactoryConfigFilePath());
+  mCore = linphone::Factory::get()->createCore(Paths::getConfigFilePath(configPath), Paths::getFactoryConfigFilePath(), nullptr);
+  mCore->addListener(mHandlers);
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
@@ -229,6 +233,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     config->setInt("video", "capture", 1);
     config->setInt("video", "display", 1);
   }
+
+  mCore->start();
 
   setDatabasesPaths();
   setOtherPaths();
@@ -250,13 +256,13 @@ void CoreManager::iterate () {
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const string &info) {
+void CoreManager::handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const string &info) {
   switch (state) {
-    case linphone::CoreLogCollectionUploadStateInProgress:
+    case linphone::Core::LogCollectionUploadState::InProgress:
       break;
 
-    case linphone::CoreLogCollectionUploadStateDelivered:
-    case linphone::CoreLogCollectionUploadStateNotDelivered:
+    case linphone::Core::LogCollectionUploadState::Delivered:
+    case linphone::Core::LogCollectionUploadState::NotDelivered:
       emit logsUploaded(::Utils::coreStringToAppString(info));
       break;
   }

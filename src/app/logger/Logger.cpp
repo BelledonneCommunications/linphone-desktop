@@ -20,7 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include <bctoolbox/logging.h>
+#include <linphone++/linphone.hh>
 #include <linphone/linphonecore.h>
 #include <QDateTime>
 #include <QThread>

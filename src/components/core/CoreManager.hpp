@@ -148,7 +148,7 @@ private:
 
   void iterate ();
 
-  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
+  void handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
 
   static QString getDownloadUrl ();
 
@@ -163,7 +163,7 @@ private:
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
 
-  QHash<QString, std::weak_ptr<ChatModel> > mChatModels;
+  QHash<QString, std::weak_ptr<ChatModel>> mChatModels;
 
   QTimer *mCbsTimer = nullptr;
 

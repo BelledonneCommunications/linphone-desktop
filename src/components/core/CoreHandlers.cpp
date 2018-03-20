@@ -88,12 +88,12 @@ void CoreHandlers::onAuthenticationRequested (
 void CoreHandlers::onCallStateChanged (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,
-  linphone::CallState state,
+  linphone::Call::State state,
   const string &
 ) {
   emit callStateChanged(call, state);
 
-  if (call->getState() == linphone::CallStateIncomingReceived)
+  if (call->getState() == linphone::Call::State::IncomingReceived)
     App::getInstance()->getNotifier()->notifyReceivedCall(call);
 }
 
@@ -110,7 +110,7 @@ void CoreHandlers::onGlobalStateChanged (
   linphone::GlobalState gstate,
   const string &
 ) {
-  if (gstate == linphone::GlobalStateOn) {
+  if (gstate == linphone::GlobalState::On) {
     mCoreStartedLock->lock();
 
     Q_ASSERT(mCoreStarted == false);
@@ -130,7 +130,7 @@ void CoreHandlers::onIsComposingReceived (
 
 void CoreHandlers::onLogCollectionUploadStateChanged (
   const shared_ptr<linphone::Core> &,
-  linphone::CoreLogCollectionUploadState state,
+  linphone::Core::LogCollectionUploadState state,
   const string &info
 ) {
   emit logsUploadStateChanged(state, info);
@@ -190,46 +190,46 @@ void CoreHandlers::onRegistrationStateChanged (
 void CoreHandlers::onTransferStateChanged (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,
-  linphone::CallState state
+  linphone::Call::State state
 ) {
   switch (state) {
-    case linphone::CallStateEarlyUpdatedByRemote:
-    case linphone::CallStateEarlyUpdating:
-    case linphone::CallStateIdle:
-    case linphone::CallStateIncomingEarlyMedia:
-    case linphone::CallStateIncomingReceived:
-    case linphone::CallStateOutgoingEarlyMedia:
-    case linphone::CallStateOutgoingRinging:
-    case linphone::CallStatePaused:
-    case linphone::CallStatePausedByRemote:
-    case linphone::CallStatePausing:
-    case linphone::CallStateReferred:
-    case linphone::CallStateReleased:
-    case linphone::CallStateResuming:
-    case linphone::CallStateStreamsRunning:
-    case linphone::CallStateUpdatedByRemote:
-    case linphone::CallStateUpdating:
+    case linphone::Call::State::EarlyUpdatedByRemote:
+    case linphone::Call::State::EarlyUpdating:
+    case linphone::Call::State::Idle:
+    case linphone::Call::State::IncomingEarlyMedia:
+    case linphone::Call::State::IncomingReceived:
+    case linphone::Call::State::OutgoingEarlyMedia:
+    case linphone::Call::State::OutgoingRinging:
+    case linphone::Call::State::Paused:
+    case linphone::Call::State::PausedByRemote:
+    case linphone::Call::State::Pausing:
+    case linphone::Call::State::Referred:
+    case linphone::Call::State::Released:
+    case linphone::Call::State::Resuming:
+    case linphone::Call::State::StreamsRunning:
+    case linphone::Call::State::UpdatedByRemote:
+    case linphone::Call::State::Updating:
       break; // Nothing.
 
     // 1. Init.
-    case linphone::CallStateOutgoingInit:
+    case linphone::Call::State::OutgoingInit:
       qInfo() << QStringLiteral("Call transfer init.");
       break;
 
     // 2. In progress.
-    case linphone::CallStateOutgoingProgress:
+    case linphone::Call::State::OutgoingProgress:
       qInfo() << QStringLiteral("Call transfer in progress.");
       break;
 
     // 3. Done.
-    case linphone::CallStateConnected:
+    case linphone::Call::State::Connected:
       qInfo() << QStringLiteral("Call transfer succeeded.");
       emit callTransferSucceeded(call);
       break;
 
     // 4. Error.
-    case linphone::CallStateEnd:
-    case linphone::CallStateError:
+    case linphone::Call::State::End:
+    case linphone::Call::State::Error:
       qWarning() << QStringLiteral("Call transfer failed.");
       emit callTransferFailed(call);
       break;
@@ -242,7 +242,7 @@ void CoreHandlers::onVersionUpdateCheckResultReceived (
   const string &version,
   const string &url
 ) {
-  if (result == linphone::VersionUpdateCheckResultNewVersionAvailable)
+  if (result == linphone::VersionUpdateCheckResult::NewVersionAvailable)
     App::getInstance()->getNotifier()->notifyNewVersionAvailable(
       ::Utils::coreStringToAppString(version),
       ::Utils::coreStringToAppString(url)
