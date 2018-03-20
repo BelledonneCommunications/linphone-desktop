@@ -4,7 +4,7 @@
 # See: http://doc.qt.io/qt-5/configure-options.html
 
 REPO_URL='git://code.qt.io/qt/qt5.git'
-REPO_FOLDER=qt5_static
+REPO_FOLDER=qt5
 QT_VERSION='5.10'
 
 # ==============================================================================
