@@ -47,6 +47,10 @@ public:
   ~FileExtractor ();
 
   Q_INVOKABLE void extract ();
+  Q_INVOKABLE bool remove ();
+  Q_INVOKABLE bool rename (const QString &newFileName);
+  Q_INVOKABLE void setExtractFolder (const QString &extractFolder);
+  Q_INVOKABLE void setFile (const QString &file);
 
 signals:
   void fileChanged (const QString &file);
@@ -59,10 +63,8 @@ signals:
 
 private:
   QString getFile () const;
-  void setFile (const QString &file);
 
   QString getExtractFolder () const;
-  void setExtractFolder (const QString &extractFolder);
 
   qint64 getReadBytes () const;
   void setReadBytes (qint64 readBytes);

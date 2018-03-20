@@ -112,10 +112,12 @@ void FileExtractor::extract () {
 
   // 2. Open output file.
   // TODO: Deal with existing files.
-  Q_ASSERT(!mDestinationFile.isOpen());
+  Q_ASSERT(!mDestinationFile.isOpen()); 
   mDestinationFile.setFileName(
     QDir::cleanPath(mExtractFolder) + QDir::separator() + fileInfo.completeBaseName()
   );
+  //TODO not sure
+  mDestinationFile.remove();
   if (!mDestinationFile.open(QIODevice::WriteOnly)) {
     emitOutputError();
     return;
@@ -125,6 +127,18 @@ void FileExtractor::extract () {
   mTimer = new QTimer(this);
   QObject::connect(mTimer, &QTimer::timeout, this, &FileExtractor::handleExtraction);
   mTimer->start();
+}
+
+bool FileExtractor::remove () {
+  return mDestinationFile.exists() && !mDestinationFile.isOpen() && mDestinationFile.remove();
+}
+
+bool FileExtractor::rename (const QString &newFileName) {
+  const QString filePath = mExtractFolder + newFileName + "." + QFileInfo(mDestinationFile).suffix();
+  //delete old file 
+  QFile oldFile(filePath);
+  if(oldFile.exists()) oldFile.remove();
+  return mDestinationFile.exists() && !mDestinationFile.isOpen() && mDestinationFile.rename(filePath);
 }
 
 QString FileExtractor::getFile () const {

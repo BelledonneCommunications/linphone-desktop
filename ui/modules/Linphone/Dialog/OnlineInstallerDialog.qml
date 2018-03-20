@@ -17,6 +17,7 @@ DialogPlus {
   property alias installFolder: fileDownloader.downloadFolder
   property bool extract: false
   property string fileName
+  property string newFileName
 
   property bool _installing: false
   property int _exitStatus: -1 // Not downloaded for the moment.
@@ -29,8 +30,11 @@ DialogPlus {
   }
 
   function _endInstall (exitStatus) {
-    if (dialog.extract)
+    if (dialog.extract) {
        fileDownloader.remove()
+       fileDownloader.writeVersion(newFileName)
+       fileExtractor.rename(newFileName)
+    }
     dialog._exitStatus = exitStatus
     dialog._installing = false
   }
@@ -108,13 +112,16 @@ DialogPlus {
     }
 
     Text {
+      id: text
+      property var target: fileDownloader
+
       anchors.right: parent.right
       color: OnlineInstallerDialogStyle.column.text.color
       font.pointSize: OnlineInstallerDialogStyle.column.text.pointSize
 
       text: {
-        var fileSize = Utils.formatSize(fileDownloader.totalBytes)
-        return Utils.formatSize(fileDownloader.readBytes) + '/' + fileSize
+        var fileSize = Utils.formatSize(target.totalBytes)
+        return Utils.formatSize(target.readBytes) + '/' + fileSize
       }
     }
 
@@ -126,6 +133,7 @@ DialogPlus {
         fileExtractor.file = filePath
         if (dialog.extract) {
           progressBar.target = fileExtractor
+          text.target = fileExtractor
           fileExtractor.extract()
         } else {
           dialog._endInstall(1)

@@ -105,6 +105,7 @@ function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
         downloadUrl: codecInfo.downloadUrl,
         extract: true,
         fileName: codecInfo.mime,
+        newFileName: codecInfo.fileName,
         installFolder: VideoCodecsModel.codecsFolder
       }, function (status) {
         if (status) {
