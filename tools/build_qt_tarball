@@ -66,4 +66,4 @@ fi
 -f
 
 cd ..
-tar --transform "s/^qt5/qt-${QT_VERSION}/" --exclude .git -czvf qt-${QT_VERSION}.tar.gz qt5/
+tar --transform "s/^qt5/qt-${QT_VERSION}/" -czvf qt-${QT_VERSION}.tar.gz qt5/
