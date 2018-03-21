@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+QT_VERSION='5.10.1'
+
+# ==============================================================================
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "${SCRIPT_DIR}/.."
+
+# ==============================================================================
+
+mkdir -p rpm-qt-${QT_VERSION}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+cp qt-${QT_VERSION}.tar.gz rpm-qt-${QT_VERSION}/rpmbuild/SOURCES
+
+rpmbuild -bb \
+  --define '_qt5_dir /opt/com.belledonne-communications/linphone' \
+  --define "_qt5_version ${QT_VERSION}" \
+  --define "_topdir $PWD/rpm-qt-${QT_VERSION}/rpmbuild" \
+  build/rpm/qt5.spec

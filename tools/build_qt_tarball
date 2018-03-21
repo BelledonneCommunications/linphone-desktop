@@ -5,12 +5,11 @@
 
 REPO_URL='git://code.qt.io/qt/qt5.git'
 REPO_FOLDER=qt5
-QT_VERSION='5.10'
+QT_VERSION='5.10.1'
 
 # ==============================================================================
 
 RED='\e[1;31m'
-BLUE='\e[1;34m'
 NC='\e[0m'
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
@@ -66,24 +65,5 @@ fi
 -qtxmlpatterns \
 -f
 
-./configure -opensource -confirm-license -release -c++std c++11 -ccache -silent -nomake examples -nomake tests \
--prefix "/opt/qt-${QT_VERSION}" \
--qt-freetype \
--qt-harfbuzz \
--qt-libjpeg \
--qt-libpng \
--qt-pcre \
--qt-xcb \
--qt-xkbcommon \
--system-zlib
-
-if [[ $? != 0 ]] ; then
-  printf "${RED}Unknown configure option.${NC}\n"
-  exit 1
-fi
-
-make -r -j5
-
-printf "${NC}Please export configuration variables like this:${NC}\n"
-printf "${BLUE}export PATH=\"/opt/qt-${QT_VERSION}/bin/:\$PATH\"${NC}\n"
-printf "${BLUE}export Qt5_DIR=\"/opt/qt-${QT_VERSION}/lib/cmake/\"${NC}\n"
+cd ..
+tar --transform "s/^qt5/qt-${QT_VERSION}/" --exclude .git -czvf qt-${QT_VERSION}.tar.gz qt5/
