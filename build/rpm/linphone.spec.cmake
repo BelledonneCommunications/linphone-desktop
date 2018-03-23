@@ -28,6 +28,7 @@ Requires:       %{pkg_prefix}belcard
 Requires:       %{pkg_prefix}liblinphone
 Requires:       %{pkg_prefix}mediastreamer
 Requires:       %{pkg_prefix}minizip
+Requires:       %{pkg_prefix}qt
 
 %description
 A free (libre) SIP video-phone.
