@@ -192,6 +192,10 @@ void AbstractCodecsModel::addDownloadableCodec (
 }
 
 QVariantMap AbstractCodecsModel::getCodecInfo (const QString &mime) const {
+  // TODO: Remove me in 4.2 release.
+  qDebug() << "Enable me in 4.2 release.";
+  return QVariantMap();
+
   for (const auto &codec : mCodecs)
     if (codec.value("mime") == mime)
       return codec;

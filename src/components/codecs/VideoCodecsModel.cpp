@@ -20,6 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QDebug>
 #include <QDirIterator>
 #include <QLibrary>
 
@@ -83,6 +84,10 @@ void VideoCodecsModel::load () {
     addCodec(codec);
 
   // Add downloadable codecs.
+  // TODO: Remove me in 4.2 release.
+  qDebug() << "Enable downloadable codecs in 4.2 release.";
+  return;
+
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
     if (find_if(codecs.begin(), codecs.end(), [](const shared_ptr<linphone::PayloadType> &codec) {
       return codec->getMimeType() == "H264";
