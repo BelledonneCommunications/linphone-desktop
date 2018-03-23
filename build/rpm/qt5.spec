@@ -8,7 +8,7 @@
 %define _qt5_plugindir %{_qt5_dir}/plugins
 %define _qt5_translationdir %{_qt5_dir}/translations
 
-Name: qt
+Name: linphone-qt
 Summary: Qt5
 Version: %{_qt5_version}
 Release: 1
