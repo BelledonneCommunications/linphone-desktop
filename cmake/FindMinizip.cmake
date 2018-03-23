@@ -37,7 +37,6 @@ endif()
 
 find_library(MINIZIP_LIBRARIES
 	NAMES minizip minizipd
-	NO_CMAKE_SYSTEM_PATH
 )
 
 include(FindPackageHandleStandardArgs)
