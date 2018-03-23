@@ -74,8 +74,4 @@ cd ..
 mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
-rpmbuild -bb \
-  --define '_qt5_dir /opt/com.belledonne-communications/linphone' \
-  --define "_qt5_version ${QT_VERSION}" \
-  --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" \
-  build/rpm/qt5.spec
+rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec
