@@ -1,19 +1,81 @@
 #!/usr/bin/env bash
 
+# See: http://wiki.qt.io/Building_Qt_5_from_Git
+# See: http://doc.qt.io/qt-5/configure-options.html
+
+REPO_URL='git://code.qt.io/qt/qt5.git'
 QT_VERSION='5.10.1'
 
+RPM_NAME=linphone-qt-${QT_VERSION}
+
+REPO_FOLDER=linphone-qt
+RPM_FOLDER=rpm-${RPM_NAME}
+
 # ==============================================================================
+
+RED='\e[1;31m'
+NC='\e[0m'
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd "${SCRIPT_DIR}/.."
 
 # ==============================================================================
 
-mkdir -p rpm-qt-${QT_VERSION}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-cp qt-${QT_VERSION}.tar.gz rpm-qt-${QT_VERSION}/rpmbuild/SOURCES
+if [ ! -d "${REPO_FOLDER}/.git" ]; then
+  git clone "${REPO_URL}" "${REPO_FOLDER}"
+fi
+cd "${REPO_FOLDER}"
+
+while test $# -gt 0
+do
+  case "$1" in
+    --clean)
+      echo "Clean..."
+      git submodule foreach 'git clean -dfx'
+      ;;
+    --*) echo "Invalid option: $1"
+      ;;
+  esac
+  shift
+done
+
+git checkout "${QT_VERSION}"
+if [[ $? != 0 ]] ; then
+  printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
+  exit 1
+fi
+
+./init-repository --module-subset=default,\
+-qtandroidextras,\
+-qtcharts,\
+-qtdoc,\
+-qtlocation,\
+-qtmacextras,\
+-qtnetworkauth,\
+-qtpurchasing,\
+-qtremoteobjects,\
+-qtrepotools,\
+-qtscript,\
+-qtscxml,\
+-qtsensors,\
+-qtspeech,\
+-qtwebchannel,\
+-qtwebengine,\
+-qtwebglplugin,\
+-qtwebsockets,\
+-qtwebview,\
+-qtwinextras,\
+-qtx11extras,\
+-qtxmlpatterns \
+-f
+
+cd ..
+
+mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
 rpmbuild -bb \
   --define '_qt5_dir /opt/com.belledonne-communications/linphone' \
   --define "_qt5_version ${QT_VERSION}" \
-  --define "_topdir $PWD/rpm-qt-${QT_VERSION}/rpmbuild" \
+  --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" \
   build/rpm/qt5.spec
