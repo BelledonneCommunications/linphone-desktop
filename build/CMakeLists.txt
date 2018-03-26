@@ -20,7 +20,7 @@
 #
 ############################################################################
 
-if (NOT CPACK_PACKAGE_NAME)
+if(NOT CPACK_PACKAGE_NAME)
   set(CPACK_PACKAGE_NAME "linphone")
 endif ()
 
@@ -41,10 +41,12 @@ set(CPACK_SOURCE_IGNORE_FILES
   "WORK"
   "cmake_builder"
   "submodules"
+  "qt5.spec"
+  "libmng.spec"
 )
 
 bc_project_build_version(${PROJECT_VERSION} PROJECT_VERSION_BUILD)
-if (PROJECT_VERSION_BUILD)
+if(PROJECT_VERSION_BUILD)
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_FILE_NAME}-${PROJECT_VERSION_BUILD}")
 endif ()
 
