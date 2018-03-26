@@ -98,7 +98,8 @@ class NoUITarget(prepare.Target):
         self.external_source_path = os.path.join(current_path, 'submodules')
         self.packaging_args = [
             "-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib",
-            "-DENABLE_RELATIVE_PREFIX=YES"
+            "-DENABLE_RELATIVE_PREFIX=YES",
+            "-DENABLE_CXX_WRAPPER=OFF"
         ]
 
 
@@ -178,6 +179,9 @@ class DesktopPreparator(prepare.Preparator):
 
     def check_environment(self):
         ret = prepare.Preparator.check_environment(self)
+
+	if "no-ui" in self.targets:
+            return ret
         if platform.system() == 'Windows':
             ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
         if platform.system() == 'Windows':
