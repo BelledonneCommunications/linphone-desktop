@@ -180,7 +180,7 @@ class DesktopPreparator(prepare.Preparator):
     def check_environment(self):
         ret = prepare.Preparator.check_environment(self)
 
-	if "no-ui" in self.targets:
+        if "no-ui" in self.targets:
             return ret
         if platform.system() == 'Windows':
             ret |= not self.check_is_installed('mingw-get', 'MinGW (https://sourceforge.net/projects/mingw/files/Installer/)')
