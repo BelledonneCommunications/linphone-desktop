@@ -57,8 +57,15 @@ make install DESTDIR=%{buildroot}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-%postun -p /sbin/ldconfig
+%post
+	/sbin/ldconfig
+	xdg-icon-resource install --novendor --mode system --context apps %{_datarootdir}/icons/hicolor/scalable/apps/linphone.svg linphone;
+	xdg-desktop-menu install --novendor --mode system %{_datarootdir}/applications/linphone.desktop
+
+%postun
+	xdg-desktop-menu uninstall --mode system linphone.desktop
+	xdg-icon-resource uninstall --mode system linphone
+	/sbin/ldconfig
 
 %files
 %defattr(-,root,root,-)

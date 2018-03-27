@@ -420,7 +420,9 @@ foreach (target ${TARGET_NAME} ${TESTER_TARGET_NAME})
   )
 endforeach ()
 
-install(FILES "assets/linphone.desktop"
+configure_file("assets/linphone.desktop.cmake" "linphone.desktop" @ONLY)
+
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/linphone.desktop"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
 )
 install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
