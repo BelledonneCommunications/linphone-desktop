@@ -429,6 +429,9 @@ install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
   DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
   RENAME "linphone.svg"
 )
+install(DIRECTORY "${ASSETS_DIR}/icons/hicolor"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/icons"
+)
 
 # ------------------------------------------------------------------------------
 # Install rc files.

@@ -59,12 +59,18 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 	/sbin/ldconfig
-	xdg-icon-resource install --novendor --mode system --theme hicolor --context apps --size scalable %{_datarootdir}/icons/hicolor/scalable/apps/linphone.svg linphone;
+	for i in 16 22 24 32 64 128
+	do
+		xdg-icon-resource install --novendor --mode system --theme hicolor --context apps --size $i %{_datarootdir}/icons/hicolor/${i}x${i}/apps/linphone.png linphone
+	done
 	xdg-desktop-menu install --novendor --mode system %{_datarootdir}/applications/linphone.desktop
 
 %postun
-	xdg-desktop-menu uninstall --mode system --theme hicolor --context apps --size scalable linphone.desktop
-	xdg-icon-resource uninstall --mode system linphone
+	xdg-desktop-menu uninstall --mode system linphone.desktop
+	for i in 16 22 24 32 64 128
+	do
+		xdg-icon-resource uninstall --mode system --theme hicolor --context apps --size $i linphone
+	done
 	/sbin/ldconfig
 
 %files
