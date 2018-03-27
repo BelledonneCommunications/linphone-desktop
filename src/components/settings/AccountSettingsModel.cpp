@@ -108,6 +108,8 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["registrationState"] = ::mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
+  if (!natPolicy)
+    natPolicy = proxyConfig->getCore()->createNatPolicy();
   map["iceEnabled"] = natPolicy->iceEnabled();
   map["turnEnabled"] = natPolicy->turnEnabled();
   map["stunServer"] = ::Utils::coreStringToAppString(natPolicy->getStunServer());
@@ -180,6 +182,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   );
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
+  if (!natPolicy)
+    natPolicy = proxyConfig->getCore()->createNatPolicy();
   natPolicy->enableIce(data["iceEnabled"].toBool());
   natPolicy->enableStun(data["iceEnabled"].toBool());
   natPolicy->enableTurn(data["turnEnabled"].toBool());
