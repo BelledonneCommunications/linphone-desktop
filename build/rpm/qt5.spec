@@ -121,7 +121,7 @@ make install INSTALL_ROOT=%{buildroot}
 %{_qt5_libdir}/libQt5Widgets.so.5*
 %{_qt5_libdir}/libQt5XcbQpa.so.5*
 %{_qt5_libdir}/libQt5Xml.so.5*
-%{_qt5_plugindir}/audio/libqtaudio_alsa.so
+%{_qt5_plugindir}/audio/*.so
 %{_qt5_plugindir}/bearer/*.so
 %{_qt5_plugindir}/canbus/*.so
 %{_qt5_plugindir}/designer/libqquickwidget.so
