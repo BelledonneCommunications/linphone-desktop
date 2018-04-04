@@ -42,7 +42,6 @@ Qt is a software toolkit for developing applications.
   -release \
   -shared \
   -c++std c++11 \
-  -ccache \
   -silent \
   -nomake examples \
   -nomake tests \
