@@ -102,7 +102,13 @@ void CoreHandlers::onCallStateChanged (
 ) {
   emit callStateChanged(call, state);
 
-  if (call->getState() == linphone::CallStateIncomingReceived)
+  SettingsModel *settingsModel = CoreManager::getInstance()->getSettingsModel();
+  if (
+    call->getState() == linphone::CallStateIncomingReceived && (
+      !settingsModel->getAutoAnswerStatus() ||
+      settingsModel->getAutoAnswerDelay() > 0
+    )
+  )
     App::getInstance()->getNotifier()->notifyReceivedCall(call);
 }
 
