@@ -52,12 +52,11 @@ function handleStatusChanged (status) {
 }
 
 function handleVideoRequested () {
-  if (window.virtualWindowVisible) {
+  var call = incall.call
+  if (window.virtualWindowVisible || !Linphone.SettingsModel.videoSupported) {
     call.rejectVideoRequest()
     return
   }
-
-  var call = incall.call
 
   // Close dialog after 10s.
   var timeout = Utils.setTimeout(incall, 10000, function () {
