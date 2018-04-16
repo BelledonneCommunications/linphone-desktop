@@ -91,20 +91,26 @@ ScrollableListView {
             }
 
             ActionBar {
+              id: defaultContactActionBar
+
               iconSize: SipAddressesViewStyle.entry.iconSize
 
               Repeater {
                 model: sipAddressesView.actions
 
-                ActionButton {
-                  enabled: {
-                    var status = sipAddressesView.actions[index].enabled
-                    return status === undefined || status
+                Loader {
+                  active: {
+                    var active = sipAddressesView.actions[index].active
+                    return active === undefined || active
                   }
-                  icon: modelData.icon
-                  onClicked: sipAddressesView.actions[index].handler({
-                    sipAddress: sipAddressesView.interpretableSipAddress
-                  })
+                  sourceComponent: ActionButton {
+                    icon: modelData.icon
+                    iconSize: defaultContactActionBar.iconSize
+
+                    onClicked: sipAddressesView.actions[index].handler({
+                      sipAddress: sipAddressesView.interpretableSipAddress
+                    })
+                  }
                 }
               }
             }
@@ -227,18 +233,24 @@ ScrollableListView {
         // ---------------------------------------------------------------------
 
         ActionBar {
+          id: actionBar
+
           iconSize: SipAddressesViewStyle.entry.iconSize
 
           Repeater {
             model: sipAddressesView.actions
 
-            ActionButton {
-              enabled: {
-                var status = sipAddressesView.actions[index].enabled
-                return status === undefined || status
+            Loader {
+              active: {
+                var active = sipAddressesView.actions[index].active
+                return active === undefined || active
               }
-              icon: modelData.icon
-              onClicked: sipAddressesView.actions[index].handler($sipAddress)
+              sourceComponent: ActionButton {
+                icon: modelData.icon
+                iconSize: actionBar.iconSize
+
+                onClicked: sipAddressesView.actions[index].handler($sipAddress)
+              }
             }
           }
         }

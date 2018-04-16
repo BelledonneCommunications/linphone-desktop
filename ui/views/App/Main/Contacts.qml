@@ -124,16 +124,22 @@ ColumnLayout {
 
             Item {
               ActionBar {
+                id: actionBar
+
                 anchors {
                   left: parent.left
                   verticalCenter: parent.verticalCenter
                 }
                 iconSize: ContactsStyle.contact.actionButtonsSize
 
-                ActionButton {
-                  enabled: SettingsModel.videoSupported
-                  icon: 'video_call'
-                  onClicked: actions.itemAt(0).open()
+                Loader {
+                  active: SettingsModel.videoSupported
+                  sourceComponent: ActionButton {
+                    icon: 'video_call'
+                    iconSize: actionBar.iconSize
+
+                    onClicked: actions.itemAt(0).open()
+                  }
                 }
 
                 ActionButton {

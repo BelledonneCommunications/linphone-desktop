@@ -70,13 +70,19 @@ ColumnLayout  {
         spacing: ConversationStyle.bar.actions.spacing
 
         ActionBar {
+          id: actionBar
+
           anchors.verticalCenter: parent.verticalCenter
           iconSize: ConversationStyle.bar.actions.call.iconSize
 
-          ActionButton {
-            enabled: SettingsModel.videoSupported
-            icon: 'video_call'
-            onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
+          Loader {
+            active: SettingsModel.videoSupported
+            sourceComponent: ActionButton {
+              icon: 'video_call'
+              iconSize: actionBar.iconSize
+
+              onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
+            }
           }
 
           ActionButton {

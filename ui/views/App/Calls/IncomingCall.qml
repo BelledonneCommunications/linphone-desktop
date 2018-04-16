@@ -1,3 +1,5 @@
+import QtQuick 2.7
+
 import Common 1.0
 import Linphone 1.0
 
@@ -7,13 +9,19 @@ import App.Styles 1.0
 
 AbstractStartingCall {
   ActionBar {
+    id: actionBar
+
     anchors.centerIn: parent
     iconSize: CallStyle.actionArea.iconSize
 
-    ActionButton {
-      enabled: SettingsModel.videoSupported
-      icon: 'video_call_accept'
-      onClicked: call.acceptWithVideo()
+    Loader {
+      active: SettingsModel.videoSupported
+      sourceComponent: ActionButton {
+        icon: 'video_call_accept'
+        iconSize: actionBar.iconSize
+
+        onClicked: call.acceptWithVideo()
+      }
     }
 
     ActionButton {
