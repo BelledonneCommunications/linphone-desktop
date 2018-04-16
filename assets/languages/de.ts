@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Um Ihren Account zu aktivieren, folgen Sie den Anweisungen, die wir an %1 gesendet haben. Anschließend klicken Sie hier:</translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Wir haben eine SMS mit einem Validierungs-Code an %1 gesendet. Um die Verifizierung der Telefonnummer abzuschließen, geben Sie bitten den vierstelligen Code unten ein.</translation>
     </message>
 </context>
 <context>
@@ -115,35 +115,35 @@
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Login fehlgeschlagen. Bitte überprüfen Sie Ihren Benutzernamen und das Passwort.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Zu kurz (mindestens %1 Zeichen)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Zu lang (maximal %1 Zeichen)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Ungültige Zeichen gefunden. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Ungültige Benutzername.</translation>
+        <translation>Ungültiger Benutzername.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Zu kurz! (mindestens %1 Zeichen)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Zu lang! (maximal %1 Zeichen)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Ungültige Zeichen gefunden. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -151,7 +151,7 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>Das Senden der Anfrage ist fehlgeschlagen.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
@@ -159,11 +159,11 @@
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Falsche E-Mail-Adresse oder ungültige Zeichen.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>Server-Fehler: SMS konnte nicht versendet werden.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Bitte vergewissern Sie sich, dass Sie ihren Account veriziert haben oder versuchen Sie es erneut.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -191,11 +191,11 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"/>
+        <translation>Ungültiger Länder-Code!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation type="unfinished"/>
+        <translation>Login fehlgeschlagen. Bitte überprüfen Sie Ihre Telefonnummer.</translation>
     </message>
 </context>
 <context>
@@ -218,7 +218,7 @@
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation type="unfinished"/>
+        <translation>Authentifizierung fehlgeschlagen. Bitte überprüfen Sie Ihr Passwort.</translation>
     </message>
     <message>
         <source>userIdLabel</source>
@@ -226,7 +226,7 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"/>
+        <translation>Realm</translation>
     </message>
 </context>
 <context>
@@ -237,19 +237,19 @@
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Upload-Bandbreite</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Download-Bandbreite</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Geschätzte Download-Bandbreite</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"/>
+        <translation>ICE Status</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
@@ -257,23 +257,23 @@
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"/>
+        <translation>Sender Verlustrate</translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"/>
+        <translation>Empfänger Verlustrate</translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation type="unfinished"/>
+        <translation>Jitter Puffer</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Gesendete Video-Definition</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Empfangene Video-Definition</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
@@ -285,15 +285,15 @@
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"/>
+        <translation>In Arbeit</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"/>
+        <translation>Reflexive Verbindung</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"/>
+        <translation>Host Verbindung</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
@@ -305,27 +305,27 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"/>
+        <translation>Gegenstelle hat den Anruf abgelehnt.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"/>
+        <translation>Gegenstelle wurde nicht gefunden.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"/>
+        <translation>Gegenstelle ist besetzt.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"/>
+        <translation>Die Gegenstelle kann den Anruf nicht annehmen.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation type="unfinished"/>
+        <translation>Erhaltene Framerate</translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation type="unfinished"/>
+        <translation>Gesendete Framerate</translation>
     </message>
 </context>
 <context>
@@ -336,7 +336,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"/>
+        <translation>Einen neuen Anruf starten.</translation>
     </message>
 </context>
 <context>
@@ -392,26 +392,27 @@
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Anrufe</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sind Sie sicher, dass sie alle Anrufe beenden möchten?</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Geben Sie ihre Nachricht ein.</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"/>
+        <translation>Datei kann nicht gesendet werden.
+Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 schreibt gerade...</translation>
     </message>
 </context>
 <context>
@@ -430,19 +431,19 @@
     </message>
     <message>
         <source>commandsName</source>
-        <translation type="unfinished"/>
+        <translation>Kommandoliste :</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Zeigt das Hauptfenster der Anwendung.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Initiiere Anruf zur SIP-Adresse.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Initiiere eine Konferenz.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -465,7 +466,7 @@
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"/>
+        <translation>Rate (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
@@ -498,7 +499,7 @@
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"/>
+        <translation>Verwalten Sie die Teilnehmer Ihrer Konferenz.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -528,7 +529,7 @@
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation>SIP-KONTO/-EN</translation>
+        <translation>SIP-ACCOUNT(S)</translation>
     </message>
     <message>
         <source>address</source>
@@ -544,7 +545,7 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Wählen Sie ihr Avatar.</translation>
     </message>
     <message>
         <source>companies</source>
@@ -560,7 +561,7 @@
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>SIP Account</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
@@ -568,7 +569,7 @@
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Email</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
@@ -588,7 +589,7 @@
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"/>
+        <translation>Ort</translation>
     </message>
     <message>
         <source>abortEditionDescriptionText</source>
@@ -599,7 +600,7 @@
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Suche Kontakt</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
@@ -615,7 +616,7 @@
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Möchten sie diesen Kontakt wirklich aus Ihrem Adressbuch löschen?</translation>
     </message>
 </context>
 <context>
@@ -626,7 +627,7 @@
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"/>
+        <translation>ANRUFE</translation>
     </message>
     <message>
         <source>displayMessages</source>
@@ -634,18 +635,18 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"/>
+        <translation>Möchten Sie diese Historie wirklich löschen?</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccount</name>
     <message>
         <source>createLinphoneSipAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Wie wäre es, wenn Sie einen Account erstellen?</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>ERSTELLE EINEN LINPHONE ACCOUNT</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -672,7 +673,7 @@
     </message>
     <message>
         <source>emailLabel</source>
-        <translation type="unfinished"/>
+        <translation>Email</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -684,11 +685,11 @@
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"/>
+        <translation>Die eingegebenen Passwörter stimmen nicht überein.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Ihr Account wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -730,15 +731,15 @@
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Bitte wählen Sie eine oder mehrere Dateien</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"/>
+        <translation>Anhang fallen lassen.</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Datei senden</translation>
     </message>
 </context>
 <context>
@@ -753,15 +754,15 @@
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Abgelehnter eingehender Anruf</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Abgelehnter ausgehender Anruf</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"/>
+        <translation>Abgebrochener Anruf</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
@@ -780,7 +781,7 @@
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"/>
+        <translation>HOLE REMOTE-KONFIGURATION</translation>
     </message>
     <message>
         <source>urlLabel</source>
@@ -803,19 +804,19 @@
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"/>
+        <translation>WIE MAN LINPHONE NUTZT</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"/>
+        <translation>Laden Sie Ihre Freunde bei Linphone ein.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>FREUNDE EINLADEN</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"/>
+        <translation>Erstellen oder verwalten Sie ihren Linphone Account.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -827,7 +828,7 @@
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"/>
+        <translation>Zeige Tooltips</translation>
     </message>
     <message>
         <source>inviteButton</source>
@@ -838,11 +839,11 @@
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ihr Kontakt würde gerne die Videoübertragung aktivieren.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation type="unfinished"/>
+        <translation>Bitte warten, Anfrage wird verarbeitet.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
@@ -884,7 +885,7 @@
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"/>
+        <translation>Email Adresse des Freundes</translation>
     </message>
     <message>
         <source>messageLabel</source>
@@ -900,11 +901,11 @@
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Freunde einladen</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"/>
+        <translation>%1 möchte Sie bei Linphone einladen !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
@@ -919,11 +920,11 @@
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Suche Kontakte, starte einen Anruf oder Chat...</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"/>
+        <translation>HOME</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -976,7 +977,7 @@
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"/>
+        <translation>Spiel mich ab!</translation>
     </message>
 </context>
 <context>
@@ -990,7 +991,7 @@
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"/>
+        <translation>Eine neue Version (%1) von Linphone ist verfügbar!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1009,7 +1010,7 @@
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation type="unfinished"/>
+        <translation>Zugestellt</translation>
     </message>
 </context>
 <context>
@@ -1028,7 +1029,7 @@
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"/>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>
@@ -1047,11 +1048,11 @@
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"/>
+        <translation>Server URL für Log-Upload</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation type="unfinished"/>
+        <translation>Logs konnten nicht hochgeladen werden.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
@@ -1063,7 +1064,7 @@
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sind Sie sicher, dass sie alle Logs löschen möchten?</translation>
     </message>
 </context>
 <context>
@@ -1082,11 +1083,11 @@
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Gerät für Anrufgeräusch</translation>
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"/>
+        <translation>Anrufgeräusch</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
@@ -1125,7 +1126,7 @@
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Anrufe</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
@@ -1152,7 +1153,7 @@
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished"/>
+        <translation>MFV Übertragungsmodus</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1160,7 +1161,7 @@
     </message>
     <message>
         <source>transportTitle</source>
-        <translation type="unfinished"/>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
@@ -1200,11 +1201,11 @@
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Audio RTP UDP Port</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Video RTP UDP Port</translation>
     </message>
     <message>
         <source>portHeader</source>
@@ -1216,7 +1217,7 @@
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>Aktivierter Port</translation>
     </message>
     <message>
         <source>enableTlsLabel</source>
@@ -1232,11 +1233,11 @@
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>Audio RTP Stream</translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>Video RTP Stream</translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
@@ -1244,15 +1245,15 @@
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Downloadgeschwindigkeitslimit in Kbit/sek</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Uploadgeschwindigkeitslimit in Kbit/sek</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"/>
+        <translation>Aktiviere adaptive Ratenbegrenzung</translation>
     </message>
     <message>
         <source>presenceTitle</source>
@@ -1260,7 +1261,7 @@
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation type="unfinished"/>
+        <translation>Benutze RLS URI</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
@@ -1287,7 +1288,7 @@
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Proxy Accounts</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
@@ -1307,11 +1308,11 @@
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sind Sie sicher, dass sie diesen Account löschen möchten?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sind Sie sicher, dass sie alle Passwörter löschen möchten?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1326,7 +1327,7 @@
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
@@ -1370,7 +1371,7 @@
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"/>
+        <translation>Ungültige SIP Adresse.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
@@ -1379,6 +1380,34 @@
     <message>
         <source>invalidRoute</source>
         <translation>Ungültige Route.</translation>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>STUN/TURN Server</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Aktiviere TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>TURN Benutzer</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>TURN Passwort</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT und Firewall</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1389,11 +1418,11 @@
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ordner für gespeicherter Screenshots</translation>
     </message>
     <message>
         <source>savedVideosLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ordner für gespeicherte Videos</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1405,7 +1434,7 @@
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"/>
+        <translation>Systemgebietsschema</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
@@ -1417,19 +1446,19 @@
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"/>
+        <translation>Download-Ordner</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ein Neustart der Anwendung ist notwendig. Möchten Sie die Anwendung jetzt neu starten?</translation>
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"/>
+        <translation>Anderes</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"/>
+        <translation>Beende App beim Schließen des Fensters.</translation>
     </message>
     <message>
         <source>dataTitle</source>
@@ -1440,7 +1469,7 @@
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Videoausgabegerät</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
@@ -1448,11 +1477,11 @@
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"/>
+        <translation>Videoaufzeichnungsparameter</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"/>
+        <translation>Videovoreinstellungen</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -1460,7 +1489,7 @@
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"/>
+        <translation>Hohe FPS</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -1506,7 +1535,7 @@
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"/>
+        <translation>Anrufe und Chat</translation>
     </message>
     <message>
         <source>networkTab</source>
@@ -1536,7 +1565,7 @@
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"/>
+        <translation>Vorherige</translation>
     </message>
 </context>
 <context>
@@ -1600,7 +1629,7 @@
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP Domäne</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1608,11 +1637,11 @@
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"/>
+        <translation>Account kann nicht hinzugefügt werden.</translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1660,7 @@
     </message>
     <message>
         <source>deny</source>
-        <translation type="unfinished"/>
+        <translation>ABLEHNEN</translation>
     </message>
     <message>
         <source>accept</source>
