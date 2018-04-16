@@ -131,6 +131,7 @@ ColumnLayout {
                 iconSize: ContactsStyle.contact.actionButtonsSize
 
                 ActionButton {
+                  enabled: SettingsModel.videoSupported
                   icon: 'video_call'
                   onClicked: actions.itemAt(0).open()
                 }

@@ -74,6 +74,7 @@ ColumnLayout  {
           iconSize: ConversationStyle.bar.actions.call.iconSize
 
           ActionButton {
+            enabled: SettingsModel.videoSupported
             icon: 'video_call'
             onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
           }
