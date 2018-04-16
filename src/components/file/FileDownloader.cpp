@@ -78,13 +78,15 @@ void FileDownloader::download () {
   QNetworkRequest request(mUrl);
   mNetworkReply = mManager.get(request);
 
+  QNetworkReply *data = mNetworkReply.data();
+
   #if QT_CONFIG(ssl)
-    QObject::connect(mNetworkReply.data(), &QNetworkReply::sslErrors, this, &FileDownloader::handleSslErrors);
+    QObject::connect(data, &QNetworkReply::sslErrors, this, &FileDownloader::handleSslErrors);
   #endif
 
-  QObject::connect(mNetworkReply.data(), &QNetworkReply::downloadProgress, this, &FileDownloader::handleDownloadProgress);
-  QObject::connect(mNetworkReply.data(), &QNetworkReply::readyRead, this, &FileDownloader::handleReadyData);
-  QObject::connect(mNetworkReply.data(), &QNetworkReply::finished, this, &FileDownloader::handleDownloadFinished);
+  QObject::connect(data, &QNetworkReply::downloadProgress, this, &FileDownloader::handleDownloadProgress);
+  QObject::connect(data, &QNetworkReply::readyRead, this, &FileDownloader::handleReadyData);
+  QObject::connect(data, &QNetworkReply::finished, this, &FileDownloader::handleDownloadFinished);
 
   if (mDownloadFolder.isEmpty()) {
     mDownloadFolder = CoreManager::getInstance()->getSettingsModel()->getDownloadFolder();

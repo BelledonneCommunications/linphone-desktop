@@ -58,20 +58,20 @@ make install DESTDIR=%{buildroot}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-	/sbin/ldconfig
-	for i in 16 22 24 32 64 128
-	do
-		xdg-icon-resource install --novendor --mode system --theme hicolor --context apps --size $i %{_datarootdir}/icons/hicolor/${i}x${i}/apps/linphone.png linphone
-	done
-	xdg-desktop-menu install --novendor --mode system %{_datarootdir}/applications/linphone.desktop
+  /sbin/ldconfig
+  for i in 16 22 24 32 64 128
+  do
+    xdg-icon-resource install --novendor --mode system --theme hicolor --context apps --size $i %{_datarootdir}/icons/hicolor/${i}x${i}/apps/linphone.png linphone
+  done
+  xdg-desktop-menu install --novendor --mode system %{_datarootdir}/applications/linphone.desktop
 
 %postun
-	xdg-desktop-menu uninstall --mode system linphone.desktop
-	for i in 16 22 24 32 64 128
-	do
-		xdg-icon-resource uninstall --mode system --theme hicolor --context apps --size $i linphone
-	done
-	/sbin/ldconfig
+  xdg-desktop-menu uninstall --mode system linphone.desktop
+  for i in 16 22 24 32 64 128
+  do
+    xdg-icon-resource uninstall --mode system --theme hicolor --context apps --size $i linphone
+  done
+  /sbin/ldconfig
 
 %files
 %defattr(-,root,root,-)
