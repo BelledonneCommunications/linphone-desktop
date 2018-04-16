@@ -592,7 +592,7 @@
         <translation>Населённый пункт</translation>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
+        <source>abortEditDescriptionText</source>
         <translation>Вы уверены, что хотите отменить изменение контакта?</translation>
     </message>
 </context>
@@ -1325,7 +1325,7 @@
         <translation>ДОБАВИТЬ АККАУНТ</translation>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation>Изменить</translation>
     </message>
     <message>

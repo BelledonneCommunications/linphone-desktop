@@ -591,7 +591,7 @@
         <translation>Vietovė</translation>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
+        <source>abortEditDescriptionText</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1298,7 +1298,7 @@
         <translation>PRIDĖTI PASKYRĄ</translation>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation>Taisyti</translation>
     </message>
     <message>

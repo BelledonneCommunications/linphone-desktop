@@ -592,7 +592,7 @@ Url du serveur non configurée.</translation>
         <translation>Localité</translation>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
+        <source>abortEditDescriptionText</source>
         <translation>Êtes-vous sûr de vouloir annuler l&apos;édition du contact ?</translation>
     </message>
 </context>
@@ -1325,7 +1325,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>AJOUTER UN COMPTE</translation>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation>Éditer</translation>
     </message>
     <message>

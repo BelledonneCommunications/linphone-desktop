@@ -70,7 +70,7 @@ function editContact () {
   contactEdit._edition = true
 
   window.lockView({
-    descriptionText: qsTr('abortEditionDescriptionText')
+    descriptionText: qsTr('abortEditDescriptionText')
   })
 }
 

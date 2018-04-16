@@ -592,7 +592,7 @@ Server URL ist nicht konfiguriert.</translation>
         <translation>Ort</translation>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
+        <source>abortEditDescriptionText</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1299,7 +1299,7 @@ Server URL ist nicht konfiguriert.</translation>
         <translation>KONTO HINZUFÜGEN</translation>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation>Bearbeiten</translation>
     </message>
     <message>

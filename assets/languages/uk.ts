@@ -592,7 +592,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
+        <source>abortEditDescriptionText</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1299,7 +1299,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation type="unfinished"/>
     </message>
     <message>

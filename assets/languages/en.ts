@@ -592,8 +592,8 @@ Server url not configured.</translation>
         <translation>Locality</translation>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
-        <translation>Are you sure you want to cancel the contact edition?</translation>
+        <source>abortEditDescriptionText</source>
+        <translation>Are you sure you want to cancel the contact modification?</translation>
     </message>
 </context>
 <context>
@@ -1327,7 +1327,7 @@ your friend&apos;s SIP address or username.</translation>
         <translation>ADD ACCOUNT</translation>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation>Edit</translation>
     </message>
     <message>

@@ -592,7 +592,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <translation>Semt</translation>
     </message>
     <message>
-        <source>abortEditionDescriptionText</source>
+        <source>abortEditDescriptionText</source>
         <translation>Kişi düzenlemesini iptal etmek istediğinize emin misiniz?</translation>
     </message>
 </context>
@@ -1327,7 +1327,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <translation>HESAP EKLE</translation>
     </message>
     <message>
-        <source>editionHeader</source>
+        <source>editHeader</source>
         <translation>Düzenle</translation>
     </message>
     <message>

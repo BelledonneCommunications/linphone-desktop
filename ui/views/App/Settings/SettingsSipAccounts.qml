@@ -71,7 +71,7 @@ TabContainer {
         legendLineWidth: SettingsWindowStyle.sipAccounts.legendLineWidth
 
         titles: [
-          qsTr('editionHeader'),
+          qsTr('editHeader'),
           qsTr('deleteHeader')
         ]
 
