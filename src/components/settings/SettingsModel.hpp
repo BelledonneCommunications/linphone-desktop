@@ -61,6 +61,8 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged);
 
+  Q_PROPERTY(bool videoSupported READ getVideoSupported CONSTANT);
+
   // Chat & calls. -------------------------------------------------------------
 
   Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
@@ -191,6 +193,8 @@ public:
 
   QVariantMap getVideoDefinition () const;
   void setVideoDefinition (const QVariantMap &definition);
+
+  bool getVideoSupported () const;
 
   // Chat & calls. -------------------------------------------------------------
 

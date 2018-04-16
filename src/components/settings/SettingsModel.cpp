@@ -240,6 +240,10 @@ void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
   emit videoDefinitionChanged(definition);
 }
 
+bool SettingsModel::getVideoSupported () const {
+  return CoreManager::getInstance()->getCore()->videoSupported();
+}
+
 // =============================================================================
 // Chat & calls.
 // =============================================================================

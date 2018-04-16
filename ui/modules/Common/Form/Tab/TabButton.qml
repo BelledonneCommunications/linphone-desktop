@@ -24,13 +24,17 @@ Controls.TabButton {
       return TabButtonStyle.backgroundColor.selected
     }
 
-    return button.down
-      ? TabButtonStyle.backgroundColor.pressed
-      : (
-        button.hovered
-          ? TabButtonStyle.backgroundColor.hovered
-          : TabButtonStyle.backgroundColor.normal
+    return button.enabled
+      ? (
+        button.down
+          ? TabButtonStyle.backgroundColor.pressed
+          : (
+            button.hovered
+              ? TabButtonStyle.backgroundColor.hovered
+              : TabButtonStyle.backgroundColor.normal
+          )
       )
+      : TabButtonStyle.backgroundColor.disabled
   }
 
   function _getTextColor () {
@@ -38,13 +42,17 @@ Controls.TabButton {
       return TabButtonStyle.text.color.selected
     }
 
-    return button.down
-      ? TabButtonStyle.text.color.pressed
-      : (
-        button.hovered
-          ? TabButtonStyle.text.color.hovered
-          : TabButtonStyle.text.color.normal
+    return button.enabled
+      ? (
+        button.down
+          ? TabButtonStyle.text.color.pressed
+          : (
+            button.hovered
+              ? TabButtonStyle.text.color.hovered
+              : TabButtonStyle.text.color.normal
+          )
       )
+      : TabButtonStyle.text.color.disabled
   }
 
   // ---------------------------------------------------------------------------

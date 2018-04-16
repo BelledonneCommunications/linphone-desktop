@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -59,6 +60,8 @@ ApplicationWindow {
         }
 
         TabButton {
+          enabled: SettingsModel.videoSupported
+
           iconName: 'settings_video'
           text: qsTr('videoTab')
           width: implicitWidth
