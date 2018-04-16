@@ -1,4 +1,5 @@
 import Common 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -10,8 +11,8 @@ AbstractStartingCall {
     iconSize: CallStyle.actionArea.iconSize
 
     ActionButton {
+      enabled: SettingsModel.videoSupported
       icon: 'video_call_accept'
-
       onClicked: call.acceptWithVideo()
     }
 

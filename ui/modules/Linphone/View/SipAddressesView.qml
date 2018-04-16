@@ -97,6 +97,10 @@ ScrollableListView {
                 model: sipAddressesView.actions
 
                 ActionButton {
+                  enabled: {
+                    var status = sipAddressesView.actions[index].enabled
+                    return status === undefined || status
+                  }
                   icon: modelData.icon
                   onClicked: sipAddressesView.actions[index].handler({
                     sipAddress: sipAddressesView.interpretableSipAddress
@@ -229,6 +233,10 @@ ScrollableListView {
             model: sipAddressesView.actions
 
             ActionButton {
+              enabled: {
+                var status = sipAddressesView.actions[index].enabled
+                return status === undefined || status
+              }
               icon: modelData.icon
               onClicked: sipAddressesView.actions[index].handler($sipAddress)
             }

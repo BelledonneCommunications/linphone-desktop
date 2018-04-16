@@ -53,14 +53,13 @@ Notification {
           iconSize: NotificationReceivedCallStyle.actionArea.iconSize
 
           ActionButton {
+            enabled: SettingsModel.videoSupported
             icon: 'video_call_accept'
-
             onClicked: notification._close(notification.call.acceptWithVideo)
           }
 
           ActionButton {
             icon: 'call_accept'
-
             onClicked: notification._close(notification.call.accept)
           }
         }

@@ -38,6 +38,7 @@ SearchBox {
     id: view
 
     actions: [{
+      enabled: SettingsModel.videoSupported,
       icon: 'video_call',
       handler: function (entry) {
         searchBox.closeMenu()

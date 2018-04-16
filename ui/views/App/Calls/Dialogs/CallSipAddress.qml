@@ -59,6 +59,7 @@ DialogPlus {
             anchors.fill: parent
 
             actions: [{
+              enabled: SettingsModel.videoSupported,
               icon: 'video_call',
               handler: function (entry) {
                 CallsListModel.launchVideoCall(entry.sipAddress)
