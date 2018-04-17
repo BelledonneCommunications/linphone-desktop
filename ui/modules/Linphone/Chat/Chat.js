@@ -72,7 +72,7 @@ function handleTextChanged () {
 }
 
 function sendMessage (text) {
-  textArea.item.text = ''
+  textArea.text = ''
   chat.bindToEnd = true
   container.proxyModel.sendMessage(text)
 }

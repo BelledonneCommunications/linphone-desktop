@@ -38,12 +38,12 @@ SearchBox {
     id: view
 
     actions: [{
-      active: SettingsModel.videoSupported,
       icon: 'video_call',
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchVideoCall(entry.sipAddress)
-      }
+      },
+      visible: SettingsModel.videoSupported
     }, {
       icon: 'call',
       handler: function (entry) {

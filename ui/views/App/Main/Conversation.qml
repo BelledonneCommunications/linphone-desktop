@@ -70,19 +70,14 @@ ColumnLayout  {
         spacing: ConversationStyle.bar.actions.spacing
 
         ActionBar {
-          id: actionBar
-
           anchors.verticalCenter: parent.verticalCenter
           iconSize: ConversationStyle.bar.actions.call.iconSize
 
-          Loader {
-            active: SettingsModel.videoSupported
-            sourceComponent: ActionButton {
-              icon: 'video_call'
-              iconSize: actionBar.iconSize
+          ActionButton {
+            icon: 'video_call'
+            visible: SettingsModel.videoSupported
 
-              onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
-            }
+            onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
           }
 
           ActionButton {
@@ -118,33 +113,30 @@ ColumnLayout  {
   // Messages/Calls filters.
   // ---------------------------------------------------------------------------
 
-  Loader {
+  Borders {
     Layout.fillWidth: true
     Layout.preferredHeight: active ? ConversationStyle.filters.height : 0
 
-    active: SettingsModel.chatEnabled
-    sourceComponent: Borders {
-      anchors.fill: parent
-      borderColor: ConversationStyle.filters.border.color
-      bottomWidth: ConversationStyle.filters.border.bottomWidth
-      color: ConversationStyle.filters.backgroundColor
-      topWidth: ConversationStyle.filters.border.topWidth
+    borderColor: ConversationStyle.filters.border.color
+    bottomWidth: ConversationStyle.filters.border.bottomWidth
+    color: ConversationStyle.filters.backgroundColor
+    topWidth: ConversationStyle.filters.border.topWidth
+    visible: SettingsModel.chatEnabled
 
-      ExclusiveButtons {
-        anchors {
-          left: parent.left
-          leftMargin: ConversationStyle.filters.leftMargin
-          verticalCenter: parent.verticalCenter
-        }
-
-        texts: [
-          qsTr('displayCallsAndMessages'),
-          qsTr('displayCalls'),
-          qsTr('displayMessages')
-        ]
-
-        onClicked: Logic.updateChatFilter(button)
+    ExclusiveButtons {
+      anchors {
+        left: parent.left
+        leftMargin: ConversationStyle.filters.leftMargin
+        verticalCenter: parent.verticalCenter
       }
+
+      texts: [
+        qsTr('displayCallsAndMessages'),
+        qsTr('displayCalls'),
+        qsTr('displayMessages')
+      ]
+
+      onClicked: Logic.updateChatFilter(button)
     }
   }
 

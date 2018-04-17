@@ -14,19 +14,15 @@ AbstractStartingCall {
     anchors.centerIn: parent
     iconSize: CallStyle.actionArea.iconSize
 
-    Loader {
-      active: SettingsModel.videoSupported
-      sourceComponent: ActionButton {
-        icon: 'video_call_accept'
-        iconSize: actionBar.iconSize
+    ActionButton {
+      icon: 'video_call_accept'
+      visible: SettingsModel.videoSupported
 
-        onClicked: call.acceptWithVideo()
-      }
+      onClicked: call.acceptWithVideo()
     }
 
     ActionButton {
       icon: 'call_accept'
-
       onClicked: call.accept()
     }
   }

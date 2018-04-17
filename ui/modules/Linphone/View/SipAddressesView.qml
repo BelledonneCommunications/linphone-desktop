@@ -240,17 +240,14 @@ ScrollableListView {
           Repeater {
             model: sipAddressesView.actions
 
-            Loader {
-              active: {
-                var active = sipAddressesView.actions[index].active
-                return active === undefined || active
+            ActionButton {
+              icon: modelData.icon
+              visible: {
+                var visible = sipAddressesView.actions[index].visible
+                return visible === undefined || visible
               }
-              sourceComponent: ActionButton {
-                icon: modelData.icon
-                iconSize: actionBar.iconSize
 
-                onClicked: sipAddressesView.actions[index].handler($sipAddress)
-              }
+              onClicked: sipAddressesView.actions[index].handler($sipAddress)
             }
           }
         }

@@ -59,12 +59,12 @@ DialogPlus {
             anchors.fill: parent
 
             actions: [{
-              active: SettingsModel.videoSupported,
               icon: 'video_call',
               handler: function (entry) {
                 CallsListModel.launchVideoCall(entry.sipAddress)
                 exit(1)
-              }
+              },
+              visible: SettingsModel.videoSupported
             }, {
               icon: 'call',
               handler: function (entry) {

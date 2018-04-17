@@ -343,20 +343,17 @@ Rectangle {
           }
         }
 
-        Loader {
-          active: SettingsModel.videoSupported
-          sourceComponent: ActionSwitch {
-            enabled: incall.call.videoEnabled
-            icon: 'camera'
-            iconSize: CallStyle.actionArea.iconSize
-            updating: incall.call.updating
+        ActionSwitch {
+          enabled: incall.call.videoEnabled
+          icon: 'camera'
+          updating: incall.call.updating
+          visible: SettingsModel.videoSupported
 
-            onClicked: incall.call.videoEnabled = !enabled
+          onClicked: incall.call.videoEnabled = !enabled
 
-            TooltipArea {
-              text: qsTr('pendingRequestLabel')
-              visible: parent.updating
-            }
+          TooltipArea {
+            text: qsTr('pendingRequestLabel')
+            visible: parent.updating
           }
         }
 

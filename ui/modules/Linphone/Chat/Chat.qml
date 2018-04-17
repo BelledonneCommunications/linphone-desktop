@@ -203,33 +203,26 @@ Rectangle {
     // Send area.
     // -------------------------------------------------------------------------
 
-    Loader {
-      id: textArea
-
+    Borders {
       Layout.fillWidth: true
-      Layout.preferredHeight: active ? ChatStyle.sendArea.height + ChatStyle.sendArea.border.width : 0
+      Layout.preferredHeight: ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
 
-      active: SettingsModel.chatEnabled
-      sourceComponent: Borders {
-        property alias text: textArea.text
+      borderColor: ChatStyle.sendArea.border.color
+      topWidth: ChatStyle.sendArea.border.width
+      visible: SettingsModel.chatEnabled
+
+      DroppableTextArea {
+        id: textArea
 
         anchors.fill: parent
-        borderColor: ChatStyle.sendArea.border.color
-        topWidth: ChatStyle.sendArea.border.width
 
-        DroppableTextArea {
-          id: textArea
+        dropEnabled: SettingsModel.fileTransferUrl.length > 0
+        dropDisabledReason: qsTr('noFileTransferUrl')
+        placeholderText: qsTr('newMessagePlaceholder')
 
-          anchors.fill: parent
-
-          dropEnabled: SettingsModel.fileTransferUrl.length > 0
-          dropDisabledReason: qsTr('noFileTransferUrl')
-          placeholderText: qsTr('newMessagePlaceholder')
-
-          onDropped: Logic.handleFilesDropped(files)
-          onTextChanged: Logic.handleTextChanged(text)
-          onValidText: Logic.sendMessage(text)
-        }
+        onDropped: Logic.handleFilesDropped(files)
+        onTextChanged: Logic.handleTextChanged(text)
+        onValidText: Logic.sendMessage(text)
       }
     }
   }

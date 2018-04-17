@@ -54,14 +54,11 @@ Notification {
           anchors.centerIn: parent
           iconSize: NotificationReceivedCallStyle.actionArea.iconSize
 
-          Loader {
-            active: SettingsModel.videoSupported
-            sourceComponent: ActionButton {
-              icon: 'video_call_accept'
-              iconSize: acceptActionBar.iconSize
+          ActionButton {
+            icon: 'video_call_accept'
+            visible: SettingsModel.videoSupported
 
-              onClicked: notification._close(notification.call.acceptWithVideo)
-            }
+            onClicked: notification._close(notification.call.acceptWithVideo)
           }
 
           ActionButton {

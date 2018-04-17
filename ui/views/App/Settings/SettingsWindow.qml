@@ -62,7 +62,6 @@ ApplicationWindow {
 
         TabButton {
           enabled: SettingsModel.videoSupported
-
           iconName: 'settings_video'
           text: qsTr('videoTab')
           width: implicitWidth
