@@ -346,6 +346,7 @@ Rectangle {
         ActionSwitch {
           enabled: incall.call.videoEnabled
           icon: 'camera'
+          iconSize: CallStyle.actionArea.iconSize
           updating: incall.call.updating
           visible: SettingsModel.videoSupported
 
