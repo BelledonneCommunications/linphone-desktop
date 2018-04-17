@@ -1186,6 +1186,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>chatEnabledLabel</source>
         <translation>Chat activé</translation>
     </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation>Enregistrement d&apos;appel activé</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

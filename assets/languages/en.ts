@@ -1188,6 +1188,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>chatEnabledLabel</source>
         <translation>Chat enabled</translation>
     </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation>Call recorder enabled</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

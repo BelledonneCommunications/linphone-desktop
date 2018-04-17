@@ -177,12 +177,19 @@ Rectangle {
           enabled: incall.call.recording
           icon: 'record'
           useStates: false
+          visible: SettingsModel.callRecorderEnabled
 
           onClicked: {
             var call = incall.call
             return !enabled
               ? call.startRecording()
               : call.stopRecording()
+          }
+
+          onVisibleChanged: {
+            if (!visible) {
+              call.stopRecording()
+            }
           }
 
           TooltipArea {

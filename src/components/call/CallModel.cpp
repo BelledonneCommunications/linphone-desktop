@@ -23,19 +23,21 @@
 #include <QDateTime>
 #include <QTimer>
 
-#include "../../app/App.hpp"
-#include "../../utils/LinphoneUtils.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/App.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
 
 #include "CallModel.hpp"
 
-#define AUTO_ANSWER_OBJECT_NAME "auto-answer-timer"
-#define DTMF_SOUND_DELAY 200
+// =============================================================================
 
 using namespace std;
 
-// =============================================================================
+namespace {
+  constexpr char cAutoAnswerObjectName[] = "auto-answer-timer";
+  constexpr int cDtmfSoundDelay = 200;
+}
 
 CallModel::CallModel (shared_ptr<linphone::Call> call) {
   Q_CHECK_PTR(call);
@@ -54,7 +56,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
       QTimer *timer = new QTimer(this);
       timer->setInterval(settings->getAutoAnswerDelay());
       timer->setSingleShot(true);
-      timer->setObjectName(AUTO_ANSWER_OBJECT_NAME);
+      timer->setObjectName(cAutoAnswerObjectName);
 
       QObject::connect(timer, &QTimer::timeout, this, &CallModel::acceptWithAutoAnswerDelay);
       timer->start();
@@ -328,7 +330,7 @@ void CallModel::updateIsInConference () {
 // -----------------------------------------------------------------------------
 
 void CallModel::stopAutoAnswerTimer () const {
-  QTimer *timer = findChild<QTimer *>(AUTO_ANSWER_OBJECT_NAME, Qt::FindDirectChildrenOnly);
+  QTimer *timer = findChild<QTimer *>(cAutoAnswerObjectName, Qt::FindDirectChildrenOnly);
   if (timer) {
     timer->stop();
     timer->deleteLater();
@@ -550,7 +552,7 @@ void CallModel::sendDtmf (const QString &dtmf) {
   const char key = dtmf.constData()[0].toLatin1();
   qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(key);
   mCall->sendDtmf(key);
-  CoreManager::getInstance()->getCore()->playDtmf(key, DTMF_SOUND_DELAY);
+  CoreManager::getInstance()->getCore()->playDtmf(key, cDtmfSoundDelay);
 }
 
 // -----------------------------------------------------------------------------

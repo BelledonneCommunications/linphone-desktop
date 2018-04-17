@@ -99,6 +99,20 @@ TabContainer {
           }
         }
       }
+
+      FormLine {
+        visible: SettingsModel.developerSettingsEnabled
+
+        FormGroup {
+          label: qsTr('callRecorderEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.callRecorderEnabled
+
+            onClicked: SettingsModel.callRecorderEnabled = !checked
+          }
+        }
+      }
     }
 
     Form {

@@ -1188,6 +1188,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>chatEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

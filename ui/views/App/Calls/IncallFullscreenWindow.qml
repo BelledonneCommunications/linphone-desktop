@@ -236,6 +236,7 @@ Window {
             enabled: call.recording
             icon: 'record'
             useStates: false
+            visible: SettingsModel.callRecorderEnabled
 
             onClicked: !enabled
               ? call.startRecording()
