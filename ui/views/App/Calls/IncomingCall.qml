@@ -9,8 +9,6 @@ import App.Styles 1.0
 
 AbstractStartingCall {
   ActionBar {
-    id: actionBar
-
     anchors.centerIn: parent
     iconSize: CallStyle.actionArea.iconSize
 

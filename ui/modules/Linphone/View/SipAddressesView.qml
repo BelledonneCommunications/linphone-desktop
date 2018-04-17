@@ -233,8 +233,6 @@ ScrollableListView {
         // ---------------------------------------------------------------------
 
         ActionBar {
-          id: actionBar
-
           iconSize: SipAddressesViewStyle.entry.iconSize
 
           Repeater {
