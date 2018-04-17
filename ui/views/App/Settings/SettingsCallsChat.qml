@@ -106,6 +106,8 @@ TabContainer {
       width: parent.width
 
       FormLine {
+        visible: SettingsModel.developerSettingsEnabled
+
         FormGroup {
           label: qsTr('chatEnabledLabel')
 

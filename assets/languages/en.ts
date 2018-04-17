@@ -1094,6 +1094,14 @@ your friend&apos;s SIP address or username.</translation>
         <source>cleanLogsDescription</source>
         <translation>Are you sure you want to remove all logs?</translation>
     </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation>Developer settings</translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation> Developer settings enabled</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

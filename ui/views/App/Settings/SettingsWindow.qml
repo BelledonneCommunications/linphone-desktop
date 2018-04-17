@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
+import Konami 1.0
 import Linphone 1.0
 
 import App.Styles 1.0
@@ -97,6 +98,17 @@ ApplicationWindow {
         Layout.preferredHeight: TabButtonStyle.text.height
 
         color: TabButtonStyle.backgroundColor.normal
+
+        MouseArea {
+          anchors.fill: parent
+
+          onClicked: konami.forceActiveFocus()
+
+          Konami {
+            id: konami
+            onTriggered: SettingsModel.developerSettingsEnabled = true
+          }
+        }
       }
     }
 

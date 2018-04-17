@@ -1092,6 +1092,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>cleanLogsDescription</source>
         <translation>Voulez-vous vraiment supprimer tous les logs ?</translation>
     </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation>Mode développeur</translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation>Mode développeur activé</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

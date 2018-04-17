@@ -1092,6 +1092,14 @@
         <source>cleanLogsDescription</source>
         <translation>Вы уверены, что хотите удалить все журналы?</translation>
     </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

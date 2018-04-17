@@ -22,16 +22,16 @@
 
 #include <QDir>
 
-#include "../../app/logger/Logger.hpp"
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/logger/Logger.hpp"
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "SettingsModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 namespace {
   constexpr char cDefaultRlsUri[] = "sips:rls@sip.linphone.org";
@@ -54,7 +54,7 @@ QStringList SettingsModel::getCaptureDevices () const {
 
   for (const auto &device : core->getSoundDevices()) {
     if (core->soundDeviceCanCapture(device))
-      list << ::Utils::coreStringToAppString(device);
+      list << Utils::coreStringToAppString(device);
   }
 
   return list;
@@ -66,7 +66,7 @@ QStringList SettingsModel::getPlaybackDevices () const {
 
   for (const auto &device : core->getSoundDevices()) {
     if (core->soundDeviceCanPlayback(device))
-      list << ::Utils::coreStringToAppString(device);
+      list << Utils::coreStringToAppString(device);
   }
 
   return list;
@@ -75,14 +75,14 @@ QStringList SettingsModel::getPlaybackDevices () const {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getCaptureDevice () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getCaptureDevice()
   );
 }
 
 void SettingsModel::setCaptureDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setCaptureDevice(
-    ::Utils::appStringToCoreString(device)
+    Utils::appStringToCoreString(device)
   );
   emit captureDeviceChanged(device);
 }
@@ -90,14 +90,14 @@ void SettingsModel::setCaptureDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getPlaybackDevice () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getPlaybackDevice()
   );
 }
 
 void SettingsModel::setPlaybackDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setPlaybackDevice(
-    ::Utils::appStringToCoreString(device)
+    Utils::appStringToCoreString(device)
   );
   emit playbackDeviceChanged(device);
 }
@@ -105,14 +105,14 @@ void SettingsModel::setPlaybackDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getRingerDevice () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getRingerDevice()
   );
 }
 
 void SettingsModel::setRingerDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setRingerDevice(
-    ::Utils::appStringToCoreString(device)
+    Utils::appStringToCoreString(device)
   );
   emit ringerDeviceChanged(device);
 }
@@ -120,14 +120,14 @@ void SettingsModel::setRingerDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getRingPath () const {
-  return ::Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getRing());
+  return Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getRing());
 }
 
 void SettingsModel::setRingPath (const QString &path) {
   QString cleanedPath = QDir::cleanPath(path);
 
   CoreManager::getInstance()->getCore()->setRing(
-    ::Utils::appStringToCoreString(cleanedPath)
+    Utils::appStringToCoreString(cleanedPath)
   );
 
   emit ringPathChanged(cleanedPath);
@@ -152,7 +152,7 @@ QStringList SettingsModel::getVideoDevices () const {
   QStringList list;
 
   for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevices())
-    list << ::Utils::coreStringToAppString(device);
+    list << Utils::coreStringToAppString(device);
 
   return list;
 }
@@ -160,14 +160,14 @@ QStringList SettingsModel::getVideoDevices () const {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getVideoDevice () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getVideoDevice()
   );
 }
 
 void SettingsModel::setVideoDevice (const QString &device) {
   CoreManager::getInstance()->getCore()->setVideoDevice(
-    ::Utils::appStringToCoreString(device)
+    Utils::appStringToCoreString(device)
   );
   emit videoDeviceChanged(device);
 }
@@ -175,14 +175,14 @@ void SettingsModel::setVideoDevice (const QString &device) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getVideoPreset () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getVideoPreset()
   );
 }
 
 void SettingsModel::setVideoPreset (const QString &preset) {
   CoreManager::getInstance()->getCore()->setVideoPreset(
-    ::Utils::appStringToCoreString(preset)
+    Utils::appStringToCoreString(preset)
   );
   emit videoPresetChanged(preset);
 }
@@ -213,7 +213,7 @@ static inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const l
     return map;
   }
 
-  map["name"] = ::Utils::coreStringToAppString(definition->getName());
+  map["name"] = Utils::coreStringToAppString(definition->getName());
   map["width"] = definition->getWidth();
   map["height"] = definition->getHeight();
   map["__definition"] = QVariant::fromValue(definition);
@@ -291,14 +291,14 @@ void SettingsModel::setChatEnabled (bool status) {
 }
 
 QString SettingsModel::getFileTransferUrl () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getFileTransferServer()
   );
 }
 
 void SettingsModel::setFileTransferUrl (const QString &url) {
   CoreManager::getInstance()->getCore()->setFileTransferServer(
-    ::Utils::appStringToCoreString(url)
+    Utils::appStringToCoreString(url)
   );
   emit fileTransferUrlChanged(url);
 }
@@ -578,28 +578,28 @@ void SettingsModel::setTurnEnabled (bool status) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getStunServer () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getNatPolicy()->getStunServer()
   );
 }
 
 void SettingsModel::setStunServer (const QString &stunServer) {
   CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServer(
-    ::Utils::appStringToCoreString(stunServer)
+    Utils::appStringToCoreString(stunServer)
   );
 }
 
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getTurnUser () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getNatPolicy()->getStunServerUsername()
   );
 }
 
 void SettingsModel::setTurnUser (const QString &user) {
   CoreManager::getInstance()->getCore()->getNatPolicy()->setStunServerUsername(
-    ::Utils::appStringToCoreString(user)
+    Utils::appStringToCoreString(user)
   );
 
   emit turnUserChanged(user);
@@ -612,7 +612,7 @@ QString SettingsModel::getTurnPassword () const {
   shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
   shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(natPolicy->getStunServerUsername(), "", "");
 
-  return authInfo ? ::Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
+  return authInfo ? Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
 }
 
 void SettingsModel::setTurnPassword (const QString &password) {
@@ -624,12 +624,12 @@ void SettingsModel::setTurnPassword (const QString &password) {
 
   if (authInfo) {
     shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
-    clonedAuthInfo->setPasswd(::Utils::appStringToCoreString(password));
+    clonedAuthInfo->setPasswd(Utils::appStringToCoreString(password));
 
     core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);
   } else {
-    authInfo = linphone::Factory::get()->createAuthInfo(username, username, ::Utils::appStringToCoreString(password), "", "", "");
+    authInfo = linphone::Factory::get()->createAuthInfo(username, username, Utils::appStringToCoreString(password), "", "", "");
     core->addAuthInfo(authInfo);
   }
 
@@ -727,7 +727,7 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 
 QString SettingsModel::getSavedScreenshotsFolder () const {
   return QDir::cleanPath(
-    ::Utils::coreStringToAppString(
+    Utils::coreStringToAppString(
       mConfig->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirPath())
     )
   ) + QDir::separator();
@@ -736,7 +736,7 @@ QString SettingsModel::getSavedScreenshotsFolder () const {
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
 
-  mConfig->setString(UI_SECTION, "saved_screenshots_folder", ::Utils::appStringToCoreString(cleanedFolder));
+  mConfig->setString(UI_SECTION, "saved_screenshots_folder", Utils::appStringToCoreString(cleanedFolder));
   emit savedScreenshotsFolderChanged(cleanedFolder);
 }
 
@@ -744,7 +744,7 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 
 QString SettingsModel::getSavedVideosFolder () const {
   return QDir::cleanPath(
-    ::Utils::coreStringToAppString(
+    Utils::coreStringToAppString(
       mConfig->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirPath())
     )
   ) + QDir::separator();
@@ -753,7 +753,7 @@ QString SettingsModel::getSavedVideosFolder () const {
 void SettingsModel::setSavedVideosFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
 
-  mConfig->setString(UI_SECTION, "saved_videos_folder", ::Utils::appStringToCoreString(cleanedFolder));
+  mConfig->setString(UI_SECTION, "saved_videos_folder", Utils::appStringToCoreString(cleanedFolder));
   emit savedVideosFolderChanged(cleanedFolder);
 }
 
@@ -761,7 +761,7 @@ void SettingsModel::setSavedVideosFolder (const QString &folder) {
 
 QString SettingsModel::getDownloadFolder () const {
   return QDir::cleanPath(
-    ::Utils::coreStringToAppString(
+    Utils::coreStringToAppString(
       mConfig->getString(UI_SECTION, "download_folder", Paths::getDownloadDirPath())
     )
   ) + QDir::separator();
@@ -770,18 +770,18 @@ QString SettingsModel::getDownloadFolder () const {
 void SettingsModel::setDownloadFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
 
-  mConfig->setString(UI_SECTION, "download_folder", ::Utils::appStringToCoreString(cleanedFolder));
+  mConfig->setString(UI_SECTION, "download_folder", Utils::appStringToCoreString(cleanedFolder));
   emit downloadFolderChanged(cleanedFolder);
 }
 
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getRemoteProvisioning () const {
-  return ::Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getProvisioningUri());
+  return Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getProvisioningUri());
 }
 
 void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
-  if (!CoreManager::getInstance()->getCore()->setProvisioningUri(::Utils::appStringToCoreString(remoteProvisioning)))
+  if (!CoreManager::getInstance()->getCore()->setProvisioningUri(Utils::appStringToCoreString(remoteProvisioning)))
     emit remoteProvisioningChanged(remoteProvisioning);
   else
     emit remoteProvisioningNotChanged(remoteProvisioning);
@@ -809,7 +809,7 @@ QString SettingsModel::getLogsFolder () const {
 void SettingsModel::setLogsFolder (const QString &folder) {
   // Do not update path in linphone core.
   // Just update the config file.
-  mConfig->setString(UI_SECTION, "logs_folder", ::Utils::appStringToCoreString(folder));
+  mConfig->setString(UI_SECTION, "logs_folder", Utils::appStringToCoreString(folder));
 
   emit logsFolderChanged(folder);
 }
@@ -817,14 +817,14 @@ void SettingsModel::setLogsFolder (const QString &folder) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getLogsUploadUrl () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getLogCollectionUploadServerUrl()
   );
 }
 
 void SettingsModel::setLogsUploadUrl (const QString &url) {
   CoreManager::getInstance()->getCore()->setLogCollectionUploadServerUrl(
-    ::Utils::appStringToCoreString(url)
+    Utils::appStringToCoreString(url)
   );
 
   emit logsUploadUrlChanged(getLogsUploadUrl());
@@ -845,24 +845,35 @@ void SettingsModel::setLogsEnabled (bool status) {
 // ---------------------------------------------------------------------------
 
 QString SettingsModel::getLogsEmail () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     mConfig->getString(UI_SECTION, "logs_email", "")
   );
 }
 
 void SettingsModel::setLogsEmail (const QString &email) {
-  mConfig->setString(UI_SECTION, "logs_email", ::Utils::appStringToCoreString(email));
+  mConfig->setString(UI_SECTION, "logs_email", Utils::appStringToCoreString(email));
   emit logsEmailChanged(email);
 }
 
 // ---------------------------------------------------------------------------
 
 QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
-  return ::Utils::coreStringToAppString(config
+  return Utils::coreStringToAppString(config
     ? config->getString(UI_SECTION, "logs_folder", Paths::getLogsDirPath())
     : Paths::getLogsDirPath());
 }
 
 bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) {
   return config ? config->getInt(UI_SECTION, "logs_enabled", false) : false;
+}
+
+// ---------------------------------------------------------------------------
+
+bool SettingsModel::getDeveloperSettingsEnabled () const {
+  return !!mConfig->getInt(UI_SECTION, "developer_settings", 0);
+}
+
+void SettingsModel::setDeveloperSettingsEnabled (bool status) {
+  mConfig->setInt(UI_SECTION, "developer_settings", status);
+  emit developerSettingsEnabledChanged(status);
 }

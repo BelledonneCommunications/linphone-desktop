@@ -95,9 +95,25 @@ TabContainer {
     }
 
     // -------------------------------------------------------------------------
-    // Internal settings.
+    // Developer settings.
     // -------------------------------------------------------------------------
 
-    // Nothing for the moment.
+    Form {
+      title: qsTr('developerSettingsTitle')
+      visible: SettingsModel.developerSettingsEnabled
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('developerSettingsEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.developerSettingsEnabled
+
+            onClicked: SettingsModel.developerSettingsEnabled = !checked
+          }
+        }
+      }
+    }
   }
 }

@@ -1094,6 +1094,14 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>cleanLogsDescription</source>
         <translation>Tüm günlükleri temizlemek istediğinize emin misiniz?</translation>
     </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
