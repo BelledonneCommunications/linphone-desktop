@@ -1174,6 +1174,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>autoAnswerWithVideoLabel</source>
         <translation>Répondre autom. (avec vidéo)</translation>
     </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation>Chat activé</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

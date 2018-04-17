@@ -1176,6 +1176,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>autoAnswerWithVideoLabel</source>
         <translation>Auto answer (with video)</translation>
     </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation>Chat enabled</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

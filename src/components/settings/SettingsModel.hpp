@@ -69,6 +69,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(bool autoAnswerVideoStatus READ getAutoAnswerVideoStatus WRITE setAutoAnswerVideoStatus NOTIFY autoAnswerVideoStatusChanged);
   Q_PROPERTY(int autoAnswerDelay READ getAutoAnswerDelay WRITE setAutoAnswerDelay NOTIFY autoAnswerDelayChanged);
 
+  Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged);
+
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
   Q_PROPERTY(bool limeIsSupported READ getLimeIsSupported CONSTANT);
@@ -206,6 +208,9 @@ public:
 
   int getAutoAnswerDelay () const;
   void setAutoAnswerDelay (int delay);
+
+  bool getChatEnabled () const;
+  void setChatEnabled (bool status);
 
   QString getFileTransferUrl () const;
   void setFileTransferUrl (const QString &url);
@@ -351,6 +356,8 @@ signals:
   void autoAnswerStatusChanged (bool status);
   void autoAnswerVideoStatusChanged (bool status);
   void autoAnswerDelayChanged (int delay);
+
+  void chatEnabledChanged (bool status);
 
   void fileTransferUrlChanged (const QString &url);
 

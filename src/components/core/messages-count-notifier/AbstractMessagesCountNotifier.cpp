@@ -38,6 +38,10 @@ AbstractMessagesCountNotifier::AbstractMessagesCountNotifier (QObject *parent) :
     coreManager->getHandlers().get(), &CoreHandlers::messageReceived,
     this, &AbstractMessagesCountNotifier::handleMessageReceived
   );
+  QObject::connect(
+    coreManager->getSettingsModel(), &SettingsModel::chatEnabledChanged,
+    this, &AbstractMessagesCountNotifier::internalNotifyUnreadMessagesCount
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -54,7 +58,7 @@ void AbstractMessagesCountNotifier::internalNotifyUnreadMessagesCount () {
   qInfo() << QStringLiteral("Notify unread messages count: %1.").arg(mUnreadMessagesCount);
   int n = mUnreadMessagesCount > 99 ? 99 : mUnreadMessagesCount;
 
-  notifyUnreadMessagesCount(n);
+  notifyUnreadMessagesCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
 }
 
 // -----------------------------------------------------------------------------

@@ -170,7 +170,7 @@ void CoreHandlers::onMessageReceived (
     emit messageReceived(message);
 
     const App *app = App::getInstance();
-    if (!app->hasFocus())
+    if (!app->hasFocus() && CoreManager::getInstance()->getSettingsModel()->getChatEnabled())
       app->getNotifier()->notifyReceivedMessage(message);
   }
 }

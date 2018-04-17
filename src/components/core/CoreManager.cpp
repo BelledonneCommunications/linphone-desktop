@@ -25,8 +25,8 @@
 #include <QtConcurrent>
 #include <QTimer>
 
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/Utils.hpp"
+#include "app/paths/Paths.hpp"
+#include "utils/Utils.hpp"
 
 #if defined(Q_OS_LINUX)
   #include "messages-count-notifier/MessagesCountNotifierLinux.hpp"
@@ -38,9 +38,9 @@
 
 #include "CoreManager.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 namespace {
   constexpr int cCbsCallInterval = 20;
@@ -73,16 +73,16 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
   CoreHandlers *coreHandlers = mHandlers.get();
 
   QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
-    {
-      MessagesCountNotifier *messagesCountNotifier = new MessagesCountNotifier(mInstance);
-      messagesCountNotifier->updateUnreadMessagesCount();
-    }
-
     mInstance->mCallsListModel = new CallsListModel(mInstance);
     mInstance->mContactsListModel = new ContactsListModel(mInstance);
     mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
     mInstance->mSettingsModel = new SettingsModel(mInstance);
     mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
+
+    {
+      MessagesCountNotifier *messagesCountNotifier = new MessagesCountNotifier(mInstance);
+      messagesCountNotifier->updateUnreadMessagesCount();
+    }
 
     mInstance->migrate();
 
@@ -106,12 +106,12 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
 
   // Create a new chat model.
   if (!mChatModels.contains(sipAddress)) {
-    Q_ASSERT(mCore->createAddress(::Utils::appStringToCoreString(sipAddress)) != nullptr);
+    Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(sipAddress)) != nullptr);
 
     auto deleter = [this](ChatModel *chatModel) {
-        mChatModels.remove(chatModel->getSipAddress());
-        delete chatModel;
-      };
+      mChatModels.remove(chatModel->getSipAddress());
+      delete chatModel;
+    };
 
     shared_ptr<ChatModel> chatModel(new ChatModel(sipAddress), deleter);
     mChatModels[chatModel->getSipAddress()] = chatModel;
@@ -169,7 +169,7 @@ void CoreManager::sendLogs () const {
   Q_CHECK_PTR(mCore);
 
   qInfo() << QStringLiteral("Send logs to: `%1`.")
-    .arg(::Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()));
+    .arg(Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()));
   mCore->uploadLogCollection();
 }
 
@@ -185,7 +185,7 @@ void CoreManager::cleanLogs () const {
   do { \
     qInfo() << QStringLiteral("Set `%1` path: `%2`") \
       .arg( # DATABASE) \
-      .arg(::Utils::coreStringToAppString(PATH)); \
+      .arg(Utils::coreStringToAppString(PATH)); \
     mCore->set ## DATABASE ## DatabasePath(PATH); \
   } while (0);
 
@@ -200,15 +200,12 @@ void CoreManager::setDatabasesPaths () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
-  if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile())) {
+  if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile()))
     mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
-  }
-  if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath())) {
+  if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath()))
     mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
-  }
-  if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa())) {
+  if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa()))
     mCore->setRootCa(Paths::getRootCaFilePath());
-  }
 }
 
 void CoreManager::setResourcesPaths () {
@@ -227,11 +224,15 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setResourcesPaths();
 
-  mCore = linphone::Factory::get()->createCore(mHandlers, Paths::getConfigFilePath(configPath), Paths::getFactoryConfigFilePath());
+  mCore = linphone::Factory::get()->createCore(
+    mHandlers,
+    Paths::getConfigFilePath(configPath),
+    Paths::getFactoryConfigFilePath()
+  );
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
-  mCore->setUserAgent("Linphone Desktop", ::Utils::appStringToCoreString(QCoreApplication::applicationVersion()));
+  mCore->setUserAgent("Linphone Desktop", Utils::appStringToCoreString(QCoreApplication::applicationVersion()));
 
   // Force capture/display.
   // Useful if the app was built without video support.
@@ -274,7 +275,7 @@ void CoreManager::migrate () {
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getVersion () const {
-  return ::Utils::coreStringToAppString(mCore->getVersion());
+  return Utils::coreStringToAppString(mCore->getVersion());
 }
 
 // -----------------------------------------------------------------------------
@@ -294,7 +295,7 @@ void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploa
 
     case linphone::CoreLogCollectionUploadStateDelivered:
     case linphone::CoreLogCollectionUploadStateNotDelivered:
-      emit logsUploaded(::Utils::coreStringToAppString(info));
+      emit logsUploaded(Utils::coreStringToAppString(info));
       break;
   }
 }

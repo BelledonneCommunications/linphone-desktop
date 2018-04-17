@@ -33,11 +33,12 @@ function getUsername () {
 }
 
 function updateChatFilter (button) {
+  var ChatModel = Linphone.ChatModel
   if (button === 0) {
-    chatProxyModel.setEntryTypeFilter(Linphone.ChatModel.GenericEntry)
+    chatProxyModel.setEntryTypeFilter(ChatModel.GenericEntry)
   } else if (button === 1) {
-    chatProxyModel.setEntryTypeFilter(Linphone.ChatModel.CallEntry)
+    chatProxyModel.setEntryTypeFilter(ChatModel.CallEntry)
   } else {
-    chatProxyModel.setEntryTypeFilter(Linphone.ChatModel.MessageEntry)
+    chatProxyModel.setEntryTypeFilter(ChatModel.MessageEntry)
   }
 }

@@ -107,6 +107,18 @@ TabContainer {
 
       FormLine {
         FormGroup {
+          label: qsTr('chatEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.chatEnabled
+
+            onClicked: SettingsModel.chatEnabled = !checked
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
           label: qsTr('fileServerLabel')
 
           TextField {

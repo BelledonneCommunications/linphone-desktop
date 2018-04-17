@@ -390,6 +390,8 @@ Rectangle {
       }
 
       ActionBar {
+        id: bottomActions
+
         anchors {
           right: parent.right
           rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
@@ -417,7 +419,7 @@ Rectangle {
         }
 
         ActionButton {
-          icon: 'chat'
+          icon: SettingsModel.chatEnabled ? 'chat' : 'history'
 
           onClicked: {
             if (window.chatIsOpened) {

@@ -1174,6 +1174,10 @@
         <source>autoAnswerWithVideoLabel</source>
         <translation>Принимать вызов автоматически (с видео)</translation>
     </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

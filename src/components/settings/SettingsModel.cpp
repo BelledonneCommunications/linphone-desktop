@@ -281,6 +281,15 @@ void SettingsModel::setAutoAnswerVideoStatus (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getChatEnabled () const {
+  return !!mConfig->getInt(UI_SECTION, "chat_enabled", 1);
+}
+
+void SettingsModel::setChatEnabled (bool status) {
+  mConfig->setInt(UI_SECTION, "chat_enabled", status);
+  emit chatEnabledChanged(status);
+}
+
 QString SettingsModel::getFileTransferUrl () const {
   return ::Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getFileTransferServer()

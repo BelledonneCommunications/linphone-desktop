@@ -51,7 +51,7 @@ SearchBox {
         searchBox.launchCall(entry.sipAddress)
       }
     }, {
-      icon: 'chat',
+      icon: SettingsModel.chatEnabled ? 'chat' : 'history',
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchChat(entry.sipAddress)

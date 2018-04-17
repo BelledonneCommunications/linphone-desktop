@@ -148,7 +148,7 @@ ColumnLayout {
                 }
 
                 ActionButton {
-                  icon: 'chat'
+                  icon: SettingsModel.chatEnabled ? 'chat' : 'history'
                   onClicked: actions.itemAt(2).open()
                 }
               }

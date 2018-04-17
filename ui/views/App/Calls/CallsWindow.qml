@@ -188,7 +188,18 @@ Window {
 
         Chat {
           proxyModel: ChatProxyModel {
+            Component.onCompleted: {
+              if (!SettingsModel.chatEnabled) {
+                setEntryTypeFilter(ChatModel.CallEntry)
+              }
+            }
+
             sipAddress: window.sipAddress
+          }
+
+          Connections {
+            target: SettingsModel
+            onChatEnabledChanged: proxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
           }
         }
       }

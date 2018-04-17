@@ -1176,6 +1176,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>autoAnswerWithVideoLabel</source>
         <translation>Kendiliğinden yanıtla (görüntüyle)</translation>
     </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

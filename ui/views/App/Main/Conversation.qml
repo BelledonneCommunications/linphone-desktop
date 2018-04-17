@@ -118,29 +118,33 @@ ColumnLayout  {
   // Messages/Calls filters.
   // ---------------------------------------------------------------------------
 
-  Borders {
+  Loader {
     Layout.fillWidth: true
-    Layout.preferredHeight: ConversationStyle.filters.height
+    Layout.preferredHeight: active ? ConversationStyle.filters.height : 0
 
-    borderColor: ConversationStyle.filters.border.color
-    bottomWidth: ConversationStyle.filters.border.bottomWidth
-    color: ConversationStyle.filters.backgroundColor
-    topWidth: ConversationStyle.filters.border.topWidth
+    active: SettingsModel.chatEnabled
+    sourceComponent: Borders {
+      anchors.fill: parent
+      borderColor: ConversationStyle.filters.border.color
+      bottomWidth: ConversationStyle.filters.border.bottomWidth
+      color: ConversationStyle.filters.backgroundColor
+      topWidth: ConversationStyle.filters.border.topWidth
 
-    ExclusiveButtons {
-      anchors {
-        left: parent.left
-        leftMargin: ConversationStyle.filters.leftMargin
-        verticalCenter: parent.verticalCenter
+      ExclusiveButtons {
+        anchors {
+          left: parent.left
+          leftMargin: ConversationStyle.filters.leftMargin
+          verticalCenter: parent.verticalCenter
+        }
+
+        texts: [
+          qsTr('displayCallsAndMessages'),
+          qsTr('displayCalls'),
+          qsTr('displayMessages')
+        ]
+
+        onClicked: Logic.updateChatFilter(button)
       }
-
-      texts: [
-        qsTr('displayCallsAndMessages'),
-        qsTr('displayCalls'),
-        qsTr('displayMessages')
-      ]
-
-      onClicked: Logic.updateChatFilter(button)
     }
   }
 
@@ -155,7 +159,18 @@ ColumnLayout  {
     proxyModel: ChatProxyModel {
       id: chatProxyModel
 
+      Component.onCompleted: {
+        if (!SettingsModel.chatEnabled) {
+          setEntryTypeFilter(ChatModel.CallEntry)
+        }
+      }
+
       sipAddress: conversation.sipAddress
     }
+  }
+
+  Connections {
+    target: SettingsModel
+    onChatEnabledChanged: chatProxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
   }
 }
