@@ -870,10 +870,18 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 // ---------------------------------------------------------------------------
 
 bool SettingsModel::getDeveloperSettingsEnabled () const {
-  return !!mConfig->getInt(UI_SECTION, "developer_settings", 0);
+  #ifdef DEBUG
+    return !!mConfig->getInt(UI_SECTION, "developer_settings", 0);
+  #else
+    return false;
+  #endif // ifdef DEBUG
 }
 
 void SettingsModel::setDeveloperSettingsEnabled (bool status) {
-  mConfig->setInt(UI_SECTION, "developer_settings", status);
-  emit developerSettingsEnabledChanged(status);
+  #ifdef DEBUG
+    mConfig->setInt(UI_SECTION, "developer_settings", status);
+    emit developerSettingsEnabledChanged(status);
+  #else
+    qWarning() << QStringLiteral("Unable to change developer settings mode in release version.");
+  #endif // ifdef DEBUG
 }
