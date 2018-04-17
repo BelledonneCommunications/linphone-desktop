@@ -160,7 +160,7 @@ void CoreHandlers::onLogCollectionUploadProgressIndication (
 }
 
 void CoreHandlers::onMessageReceived (
-  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Core> &core,
   const shared_ptr<linphone::ChatRoom> &,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
@@ -168,7 +168,7 @@ void CoreHandlers::onMessageReceived (
 
   if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
     emit messageReceived(message);
-
+    core->playLocal("OUTPUT/desktop/share/sounds/linphone/incoming_chat.wav");
     const App *app = App::getInstance();
     if (!app->hasFocus() && CoreManager::getInstance()->getSettingsModel()->getChatEnabled())
       app->getNotifier()->notifyReceivedMessage(message);
