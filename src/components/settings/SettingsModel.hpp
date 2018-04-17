@@ -73,6 +73,8 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged);
 
+  Q_PROPERTY(bool chatSoundNotificationEnabled READ getChatSoundNotificationEnabled WRITE setChatSoundNotificationEnabled NOTIFY chatSoundNotificationEnabledChanged);
+
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
   Q_PROPERTY(bool limeIsSupported READ getLimeIsSupported CONSTANT);
@@ -218,6 +220,9 @@ public:
 
   bool getChatEnabled () const;
   void setChatEnabled (bool status);
+
+  bool getChatSoundNotificationEnabled () const;
+  void setChatSoundNotificationEnabled (bool status);
 
   QString getFileTransferUrl () const;
   void setFileTransferUrl (const QString &url);
@@ -372,6 +377,8 @@ signals:
   void callRecorderEnabledChanged (bool status);
 
   void chatEnabledChanged (bool status);
+
+  void chatSoundNotificationEnabledChanged (bool status);
 
   void fileTransferUrlChanged (const QString &url);
 

@@ -1190,6 +1190,10 @@
         <source>callRecorderEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chatSoundNotificationEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

@@ -168,10 +168,28 @@ void CoreHandlers::onMessageReceived (
 
   if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
     emit messageReceived(message);
-    core->playLocal("OUTPUT/desktop/share/sounds/linphone/incoming_chat.wav");
+
+    // 1. Do not notify if chat is not activated.
+    if (!CoreManager::getInstance()->getSettingsModel()->getChatEnabled())
+      return;
+
+    // 2. Notify with Notification popup.
     const App *app = App::getInstance();
-    if (!app->hasFocus() && CoreManager::getInstance()->getSettingsModel()->getChatEnabled())
+    if (!app->hasFocus())
       app->getNotifier()->notifyReceivedMessage(message);
+
+    // 3. Notify with sound.
+    if (!CoreManager::getInstance()->getSettingsModel()->getChatSoundNotificationEnabled())
+      return;
+
+    if (
+      !app->hasFocus() ||
+      !CoreManager::getInstance()->chatModelExists(
+        Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly())
+      )
+    )
+      // TODO: Provide a way to choose sound file.
+      core->playLocal(linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav");
   }
 }
 

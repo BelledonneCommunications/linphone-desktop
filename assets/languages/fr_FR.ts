@@ -1190,6 +1190,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>callRecorderEnabledLabel</source>
         <translation>Enregistrement d&apos;appel activé</translation>
     </message>
+    <message>
+        <source>chatSoundNotificationEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

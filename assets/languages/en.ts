@@ -1192,6 +1192,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>callRecorderEnabledLabel</source>
         <translation>Call recorder enabled</translation>
     </message>
+    <message>
+        <source>chatSoundNotificationEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

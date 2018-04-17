@@ -62,6 +62,7 @@ public:
   }
 
   std::shared_ptr<ChatModel> getChatModelFromSipAddress (const QString &sipAddress);
+  bool chatModelExists (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
   // Video render lock.

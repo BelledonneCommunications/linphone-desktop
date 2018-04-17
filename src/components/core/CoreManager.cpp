@@ -127,6 +127,10 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
   return chatModel;
 }
 
+bool CoreManager::chatModelExists (const QString &sipAddress) {
+  return mChatModels.contains(sipAddress);
+}
+
 // -----------------------------------------------------------------------------
 
 void CoreManager::init (QObject *parent, const QString &configPath) {

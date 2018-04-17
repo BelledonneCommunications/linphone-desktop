@@ -137,6 +137,18 @@ TabContainer {
 
       FormLine {
         FormGroup {
+          label: qsTr('chatSoundNotificationEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.chatSoundNotificationEnabled
+
+            onClicked: SettingsModel.chatSoundNotificationEnabled = !checked
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
           label: qsTr('fileServerLabel')
 
           TextField {

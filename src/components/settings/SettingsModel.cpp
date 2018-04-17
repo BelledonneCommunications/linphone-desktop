@@ -303,6 +303,17 @@ void SettingsModel::setChatEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getChatSoundNotificationEnabled () const {
+  return !!mConfig->getInt(UI_SECTION, "chat_sound_notification_enabled", 1);
+}
+
+void SettingsModel::setChatSoundNotificationEnabled (bool status) {
+  mConfig->setInt(UI_SECTION, "chat_sound_notification_enabled", status);
+  emit chatSoundNotificationEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 QString SettingsModel::getFileTransferUrl () const {
   return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getFileTransferServer()
