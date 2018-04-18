@@ -384,7 +384,7 @@ void CallModel::acceptWithAutoAnswerDelay () {
 
   // Use auto-answer if activated and it's the only call.
   if (settingsModel->getAutoAnswerStatus() && coreManager->getCore()->getCallsNb() == 1) {
-    if (mCall->getRemoteParams()->videoEnabled() && settingsModel->getAutoAnswerVideoStatus())
+    if (mCall->getRemoteParams()->videoEnabled() && settingsModel->getAutoAnswerVideoStatus() && settingsModel->getVideoSupported())
       acceptWithVideo();
     else
       accept();

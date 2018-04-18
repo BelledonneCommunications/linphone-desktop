@@ -250,6 +250,7 @@ TabContainer {
           readonly property int defaultPort: 9078
 
           title: qsTr('videoRtpUdpPortLabel')
+          visible: SettingsModel.videoSupported
 
           FormTableEntry {
             PortField {
@@ -401,6 +402,7 @@ TabContainer {
 
         FormGroup {
           label: qsTr('videoRtpStreamFieldLabel')
+          visible: SettingsModel.videoSupported
 
           HexField {
             text: SettingsModel.dscpVideo

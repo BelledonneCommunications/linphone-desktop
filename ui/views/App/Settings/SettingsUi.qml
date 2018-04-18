@@ -58,9 +58,12 @@ TabContainer {
 
     Form {
       title: qsTr('pathsTitle')
+      visible: SettingsModel.videoSupported || SettingsModel.callRecorderEnabled || SettingsModel.chatEnabled
       width: parent.width
 
       FormLine {
+        visible: SettingsModel.videoSupported
+
         FormGroup {
           label: qsTr('savedScreenshotsLabel')
 
@@ -74,6 +77,8 @@ TabContainer {
       }
 
       FormLine {
+        visible: SettingsModel.callRecorderEnabled
+
         FormGroup {
           label: qsTr('savedVideosLabel')
 
@@ -87,6 +92,8 @@ TabContainer {
       }
 
       FormLine {
+        visible: SettingsModel.chatEnabled
+
         FormGroup {
           label: qsTr('downloadLabel')
 
@@ -131,8 +138,6 @@ TabContainer {
           label: qsTr('exitOnCloseLabel')
 
           Switch {
-            id: autoAnswer
-
             checked: SettingsModel.exitOnClose
 
             onClicked: SettingsModel.exitOnClose = !checked
