@@ -36,7 +36,7 @@ function getComponentFromEntry (chatEntry) {
 }
 
 function getIsComposingMessage () {
-  if (!container.proxyModel.isRemoteComposing) {
+  if (!container.proxyModel.isRemoteComposing || !Linphone.SettingsModel.chatEnabled) {
     return ''
   }
 
