@@ -478,7 +478,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation>Statuts</translation>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
@@ -1082,7 +1082,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation>Logs activés</translation>
+        <translation>Activer les logs</translation>
     </message>
     <message>
         <source>cleanLogs</source>
@@ -1098,7 +1098,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation>Mode développeur activé</translation>
+        <translation>Activer le mode développeur</translation>
     </message>
 </context>
 <context>
@@ -1184,15 +1184,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation>Chat activé</translation>
+        <translation>Activer le chat</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation>Enregistrement d&apos;appel activé</translation>
+        <translation>Activer l'enregistrement d&apos;appel</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation>Son des notifications activé</translation>
+        <translation>Activer le son des notifications</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>

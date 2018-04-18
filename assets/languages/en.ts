@@ -1084,7 +1084,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation>Logs enabled</translation>
+        <translation>Enable logs</translation>
     </message>
     <message>
         <source>cleanLogs</source>
@@ -1100,7 +1100,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation> Developer settings enabled</translation>
+        <translation>Enable developer settings</translation>
     </message>
 </context>
 <context>
@@ -1186,19 +1186,19 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation>Chat enabled</translation>
+        <translation>Enable chat</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation>Call recorder enabled</translation>
+        <translation>Enable call recorder</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation>Notification sound enabled</translation>
+        <translation>Enable notification sound</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation>Sound notification</translation>
+        <translation>Notification sound</translation>
     </message>
 </context>
 <context>
