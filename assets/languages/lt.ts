@@ -12,69 +12,69 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Norėdami aktyvuoti savo paskyrą: sekite jums į %1 išsiųstas instrukcijas, o tuomet spustelėkite žemiau.</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>SMS žinutę su patvirtinimo kodu išsiuntėme į %1. Norėdami užbaigti savo telefono numerio patvirtinimą, žemiau įveskite 4 skaitmenų kodą.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation>paleidus, registruoti kai kurią derinimo informaciją į stdout</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation>nurodyti norimą naudoti linphone konfigūracijos failą</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation>Nemokamas (laisvas) SIP vaizdo telefonas.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>paleisti sistemos dėkle, nerodyti pagrindinės sąsajos</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>failas</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>rodyti šią pagalbą</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>rodyti programos versiją</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation>rodo pagalbos meniu, skirtą naudoti Linphone su komandų eilute</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation>siųsti programai įsakymą į komandų eilutę</translation>
     </message>
 </context>
 <context>
@@ -88,114 +88,114 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>NAUDOTI LINPHONE PASKYRĄ</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>NAUDOTI SIP PASKYRĄ</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>GAUTI NUOTOLINĘ KONFIGŪRACIJĄ</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>SVEIKI</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>Šis pagelbiklis padės jums sukonfigūruoti ir naudoti savo linphone paskyrą.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Prisijungimas nepavyko. Patikrinkite savo naudotojo vardą/slaptažodį.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Per trumpas! (mažiausiai %1 simb.)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Per ilgas! (daugiausiai %1 simb.)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Neteisingas naudotojo vardas.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Per trumpas! (mažiausiai %1 simb.)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Per ilgas! (daugiausiai %1 simb.)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko išsiųsti užklausos.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Neteisingas el. pašto adresas.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Neteisingas el. pašto adresas arba neteisingi simboliai.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>Serverio klaida: nepavyko išsiųsti sms.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"/>
+        <translation>Tokia paskyra jau yra.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Aktyvavimas SMS žinute nepavyko!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Įsitikinkite, kad esate patvirtinę savo paskyrą ir bandykite dar kartą.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Neteisingas telefono numeris!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Per trumpas!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Per ilgas!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"/>
+        <translation>Neteisingas šalies kodas!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation type="unfinished"/>
+        <translation>Prisijungimas nepavyko. Patikrinkite savo telefono numerį.</translation>
     </message>
 </context>
 <context>
@@ -218,7 +218,7 @@
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko nustatyti tapatybę. Patikrinkite savo slaptažodį.</translation>
     </message>
     <message>
         <source>userIdLabel</source>
@@ -226,30 +226,30 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation type="unfinished"/>
+        <translation>Kodekas</translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Išsiuntimo sparta</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Atsiuntimo sparta</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Apskaičiuotoji atsiuntimo sparta</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"/>
+        <translation>ICE būsena</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
@@ -257,27 +257,27 @@
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation type="unfinished"/>
+        <translation>Jitter buferis</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Išsiųsto vaizdo apibrėžimas</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Gauto vaizdo apibrėžimas</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation type="unfinished"/>
+        <translation>Neaktyvuota</translation>
     </message>
     <message>
         <source>iceStateFailed</source>
@@ -285,47 +285,47 @@
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"/>
+        <translation>Eigoje</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Neteisinga</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -336,18 +336,18 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"/>
+        <translation>Pradėti naują skambutį.</translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Garsas</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Vaizdas</translation>
     </message>
 </context>
 <context>
@@ -358,75 +358,76 @@
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"/>
+        <translation>PRATĘSTI SKAMBUTĮ</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>pauseCall</source>
-        <translation type="unfinished"/>
+        <translation>PRISTABDYTI SKAMBUTĮ</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Skambučiai</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ar norite baigti visus skambučius?</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Įrašykite savo žinutę</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko išsiųsti failą.
+Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 rašo...</translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation type="unfinished"/>
+        <translation>Būdai valdyti Linphone programą per komandų eilutę.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -438,19 +439,19 @@
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Inicijuoti skambutį į sip adresą.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Inicijuoti konferenciją</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -465,11 +466,11 @@
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"/>
+        <translation>Dažnis (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"/>
+        <translation>Pralaidumas (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
@@ -484,21 +485,21 @@
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>KONFERENCIJA</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"/>
+        <translation>KONFERENCIJA</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"/>
+        <translation>Tvarkykite savo konferencijos dalyvius.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -506,7 +507,7 @@
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>PRADĖTI</translation>
     </message>
 </context>
 <context>
@@ -544,11 +545,11 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Pasirinkite savo avatarą</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"/>
+        <translation>KOMPANIJOS</translation>
     </message>
     <message>
         <source>save</source>
@@ -560,11 +561,11 @@
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>SIP paskyra</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Kompanija</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
@@ -592,22 +593,22 @@
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti kontakto</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"/>
+        <translation>Visi</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"/>
+        <translation>Prisijungę</translation>
     </message>
     <message>
         <source>addContact</source>
@@ -634,33 +635,33 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ar tikrai norite išvalyti šią istoriją?</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccount</name>
     <message>
         <source>createLinphoneSipAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Kaip norėtumėte susikurti savo paskyrą?</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
-        <translation type="unfinished"/>
+        <translation>NAUDOJANT TELEFONO NUMERĮ</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation type="unfinished"/>
+        <translation>NAUDOJANT EL. PAŠTO ADRESĄ</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -680,7 +681,7 @@
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Pakartokite slaptažodį</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
@@ -688,18 +689,18 @@
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Jūsų paskyra buvo sukurta, tačiau dar nebuvo patvirtinta. Ar tikrai norite išeiti iš šio rodinio?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Rodomas vardas (nebūtina)</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -715,7 +716,7 @@
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Rodomas vardas (nebūtina)</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -723,7 +724,7 @@
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Jūsų paskyra buvo sukurta, tačiau dar nebuvo patvirtinta. Ar tikrai norite išeiti iš šio rodinio?</translation>
     </message>
 </context>
 <context>
@@ -734,96 +735,96 @@
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"/>
+        <translation>Vilkite priedą</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Siųsti failą</translation>
     </message>
 </context>
 <context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>GAUTI</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"/>
+        <translation>GAUTI NUOTOLINĘ KONFIGŪRACIJĄ</translation>
     </message>
     <message>
         <source>urlLabel</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"/>
+        <translation>Yra būtina paleisti programą iš naujo. Ar norite tai atlikti dabar?</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"/>
+        <translation>Reikia pagalbos kaip naudotis Linphone?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"/>
+        <translation>KAIP NAUDOTIS LINPHONE</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"/>
+        <translation>Pakvieskite savo draugus į Linphone.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>PAKVIESTI SAVO DRAUGUS</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"/>
+        <translation>Susikurkite ar tvarkykite savo Linphone paskyrą.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>PASKYRŲ PAGELBIKLIS</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"/>
+        <translation>PAGELBIKLIS</translation>
     </message>
     <message>
         <source>showTooltips</source>
@@ -838,57 +839,57 @@
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"/>
+        <translation>Jūsų kontaktas norėtų įjungti vaizdą.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation type="unfinished"/>
+        <translation>Skambutis yra šifruotas, naudojant: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation type="unfinished"/>
+        <translation>Skambutis nėra šifruotas.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"/>
+        <translation>Draugo el. pašto adresas</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished"/>
+        <translation>Žinutė</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -900,42 +901,47 @@
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Pakviesti draugus</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"/>
+        <translation>%1 nori pakviesti jus į Linphone!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation type="unfinished"/>
+        <translation>Linphone pakvietimas</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"/>
+        <translation>Atsisiųskite programą į savo kompiuterį ir skambinkite bei kalbėkitės su Linphone naudotojais nemokamai.
+
+Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Ieškoti kontaktų, pradėti skambutį ar pokalbį...</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"/>
+        <translation>PRADŽIA</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation type="unfinished"/>
+        <translation>KONTAKTAI</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Naudokite išmaniąją paieškos juostą, norėdami tiesiogiai pradėti
+garso ir vaizdo skambučius, siųsti žinutę ar pridėti naują kontaktą.
+Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
 </context>
 <context>
@@ -961,11 +967,11 @@
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished"/>
+        <translation>Aktyvi paskyra</translation>
     </message>
 </context>
 <context>
@@ -976,7 +982,7 @@
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -998,6 +1004,29 @@
     </message>
 </context>
 <context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
@@ -1005,65 +1034,73 @@
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"/>
+        <translation>Perskaityta</translation>
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation type="unfinished"/>
+        <translation>Pristatyta</translation>
     </message>
 </context>
 <context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"/>
+        <translation>Pasiekiamas</translation>
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation type="unfinished"/>
+        <translation>Užsiėmęs</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation type="unfinished"/>
+        <translation>Netrukdyti</translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"/>
+        <translation>Atsijungęs</translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Žurnalai</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation type="unfinished"/>
+        <translation>Žurnalų aplankas</translation>
     </message>
     <message>
         <source>sendLogs</source>
-        <translation type="unfinished"/>
+        <translation>SIŲSTI ŽURNALUS</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"/>
+        <translation>Žurnalų įkėlimo serverio url</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation type="unfinished"/>
+        <translation>Nepavyko įkelti žurnalų.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Žurnalai įjungti</translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation type="unfinished"/>
+        <translation>IŠVALYTI ŽURNALUS</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ar tikrai norite pašalinti visus žurnalus?</translation>
+    </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1074,23 +1111,23 @@
     </message>
     <message>
         <source>playbackDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Atkūrimo įrenginys</translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Įjungti aido malšinimą</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
@@ -1101,11 +1138,11 @@
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Failų serveris</translation>
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limeDisabled</source>
@@ -1113,19 +1150,19 @@
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished"/>
+        <translation>Pokalbiai</translation>
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Skambučiai</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
@@ -1137,22 +1174,30 @@
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Automatiškai atsiliepti</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation type="unfinished"/>
+        <translation>Delsa (ms)</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1160,15 +1205,15 @@
     </message>
     <message>
         <source>transportTitle</source>
-        <translation type="unfinished"/>
+        <translation>Perdavimas</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"/>
+        <translation>NAT ir užkarda</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Įjungti ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -1224,7 +1269,7 @@
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation type="unfinished"/>
+        <translation>DSCP laukai</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
@@ -1240,23 +1285,23 @@
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation type="unfinished"/>
+        <translation>Siuntimo spartos valdymas</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Atsiuntimo spartos riba, Kbit/sek.</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Išsiuntimo spartos riba, Kbit/sek.</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
@@ -1264,7 +1309,7 @@
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
@@ -1315,7 +1360,7 @@
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Rodomas vardas</translation>
     </message>
 </context>
 <context>
@@ -1326,7 +1371,7 @@
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Perdavimas</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
@@ -1338,27 +1383,27 @@
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Kontakto parametrai</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
@@ -1370,7 +1415,7 @@
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"/>
+        <translation>Neteisingas SIP adresas.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
@@ -1378,7 +1423,35 @@
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation>Įjungti ICE</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation>STUN/TURN serveris</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation>Įjungti TURN</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation>TURN naudotojas</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation>TURN slaptažodis</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation>NAT ir užkarda</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation>Pagrindinės SIP paskyros nustatymai</translation>
     </message>
 </context>
 <context>
@@ -1389,11 +1462,11 @@
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Įrašytų ekrano kopijų aplankas</translation>
     </message>
     <message>
         <source>savedVideosLabel</source>
-        <translation type="unfinished"/>
+        <translation>Įrašytų vaizdo įrašų aplankas</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1405,19 +1478,19 @@
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"/>
+        <translation>Sistemos lokalės</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"/>
+        <translation>Atsiuntimų aplankas</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
@@ -1425,46 +1498,46 @@
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"/>
+        <translation>Kita</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"/>
+        <translation>Užverus langą, išeiti iš programos</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"/>
+        <translation>Naudotojo sąsajos duomenys</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Vaizdo įvesties įrenginys</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished"/>
+        <translation>Kadrų dažnis</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"/>
+        <translation>Vaizdo paėmimo parametrai</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"/>
+        <translation>Išankstinės vaizdo parinktys</translation>
     </message>
     <message>
         <source>presetDefault</source>
-        <translation type="unfinished"/>
+        <translation>Numatytosios</translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"/>
+        <translation>Didelis kadr./s skaičius</translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"/>
+        <translation>Tinkinta</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
@@ -1506,7 +1579,7 @@
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"/>
+        <translation>Skambučiai ir pokalbiai</translation>
     </message>
     <message>
         <source>networkTab</source>
@@ -1522,7 +1595,7 @@
     </message>
     <message>
         <source>uiAdvanced</source>
-        <translation type="unfinished"/>
+        <translation>Išplėstiniai</translation>
     </message>
 </context>
 <context>
@@ -1536,26 +1609,26 @@
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"/>
+        <translation>Anksčiau</translation>
     </message>
 </context>
 <context>
     <name>UseLinphoneSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"/>
+        <translation>Verčiau naudoti naudotojo vardą ir slaptažodį, o ne telefono numerį.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Jūsų paskyra buvo sukurta, tačiau dar nebuvo patvirtinta. Ar tikrai norite išeiti iš šio rodinio?</translation>
     </message>
 </context>
 <context>
@@ -1584,11 +1657,11 @@
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>NAUDOTI SIP PASKYRĄ</translation>
     </message>
     <message>
         <source>usernameLabel</source>
@@ -1596,11 +1669,11 @@
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Rodomas vardas (nebūtina)</translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP sritis</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1608,7 +1681,7 @@
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Perdavimas</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
@@ -1619,15 +1692,15 @@
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"/>
+        <translation>Jūsų kontaktas turėtų sakyti:</translation>
     </message>
     <message>
         <source>deny</source>
@@ -1636,6 +1709,13 @@
     <message>
         <source>accept</source>
         <translation>PATVIRTINTI</translation>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

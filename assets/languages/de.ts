@@ -42,19 +42,19 @@
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -70,11 +70,11 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -96,7 +96,7 @@
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>homeTitle</source>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
@@ -297,7 +297,7 @@
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -419,11 +419,11 @@ Server URL ist nicht konfiguriert.</translation>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
@@ -447,11 +447,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -525,7 +525,7 @@ Server URL ist nicht konfiguriert.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Möchten sie diesen Kontakt wirklich aus Ihrem Adressbuch löschen?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
@@ -593,7 +593,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -724,7 +724,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Ihr Account wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
     </message>
 </context>
 <context>
@@ -789,18 +789,18 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>howToTitle</source>
@@ -913,7 +913,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -936,7 +936,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -996,6 +996,29 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>newFileMessage</source>
         <translation>Neuen Anhang erhalten!</translation>
+    </message>
+</context>
+<context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1065,6 +1088,14 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>cleanLogsDescription</source>
         <translation>Sind Sie sicher, dass sie alle Logs löschen möchten?</translation>
+    </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1147,6 +1178,14 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>autoAnswerWithVideoLabel</source>
         <translation>Automatische Antwort (mit Video)</translation>
+    </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1335,7 +1374,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>routeLabel</source>
@@ -1343,15 +1382,15 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
@@ -1383,7 +1422,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">ICE aktivieren</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -1407,7 +1446,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1442,7 +1481,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>downloadLabel</source>
@@ -1462,7 +1501,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1493,7 +1532,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
@@ -1580,11 +1619,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Ihr Account wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
     </message>
 </context>
 <context>
@@ -1648,15 +1687,15 @@ Server URL ist nicht konfiguriert.</translation>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>deny</source>
@@ -1665,6 +1704,13 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>accept</source>
         <translation>BESTÄTIGEN</translation>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

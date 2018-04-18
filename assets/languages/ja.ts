@@ -16,11 +16,11 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -31,30 +31,30 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation>実行中にデバッグ情報を標準出力へ出力する</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>システムトレイで起動し、メインインターフェイスを表示しない</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -70,11 +70,11 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"/>
+        <translation>誤った文字: `%1`</translation>
     </message>
     <message>
         <source>requestFailed</source>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>アカウントを確認したことを確認するか、もう一度お試しください。</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -210,7 +210,7 @@
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -226,7 +226,7 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -245,7 +245,7 @@
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsIceState</source>
@@ -253,7 +253,7 @@
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
@@ -269,11 +269,11 @@
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
@@ -289,15 +289,15 @@
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -336,7 +336,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"/>
+        <translation>新しい通話を始める</translation>
     </message>
 </context>
 <context>
@@ -358,7 +358,7 @@
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation type="unfinished"/>
+        <translation>この通話を転送しますか？</translation>
     </message>
 </context>
 <context>
@@ -373,26 +373,26 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"/>
+        <translation>電話を切る</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"/>
+        <translation>電話を再開する</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"/>
+        <translation>電話を転送する</translation>
     </message>
     <message>
         <source>pauseCall</source>
-        <translation type="unfinished"/>
+        <translation>電話を保留する</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
@@ -419,15 +419,15 @@
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -435,11 +435,11 @@
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>アプリケーションのメイン画面を表示する</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>SIPアドレスへの呼び出しを開始します。</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
@@ -447,11 +447,11 @@
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -466,15 +466,15 @@
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"/>
+        <translation>レート (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"/>
+        <translation>ビットレート (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"/>
+        <translation>パラメータ</translation>
     </message>
     <message>
         <source>codecStatus</source>
@@ -499,7 +499,7 @@
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
@@ -507,7 +507,7 @@
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>開始</translation>
     </message>
 </context>
 <context>
@@ -525,7 +525,7 @@
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>あなたのアドレス帳からこの連絡先を削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>sipAccounts</source>
@@ -549,7 +549,7 @@
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>save</source>
@@ -561,7 +561,7 @@
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>SIPアカウント</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
@@ -577,7 +577,7 @@
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>postalCode</source>
@@ -589,18 +589,18 @@
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>連絡先を検索</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
@@ -616,7 +616,7 @@
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>あなたのアドレス帳からこの連絡先を削除してもよろしいですか？</translation>
     </message>
 </context>
 <context>
@@ -627,7 +627,7 @@
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayMessages</source>
@@ -642,7 +642,7 @@
     <name>CreateLinphoneSipAccount</name>
     <message>
         <source>createLinphoneSipAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>どのようにアカウントを作成しますか？</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
@@ -650,22 +650,22 @@
     </message>
     <message>
         <source>withPhoneNumber</source>
-        <translation type="unfinished"/>
+        <translation>電話番号を利用</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation type="unfinished"/>
+        <translation>メールアドレスを利用</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>LINPHONEアカウントを作成</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>作成</translation>
     </message>
     <message>
         <source>usernameLabel</source>
@@ -685,11 +685,11 @@
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"/>
+        <translation>入力されたパスワードが一致しません。</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>アカウントは作成されましたが、まだ確認されていません。この画面を終了してもよろしいですか？</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -720,22 +720,22 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>作成</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>アカウントは作成されましたが、まだ確認が完了していません。このビューを終了するには、24時間以内に手動でアカウントを追加して検証する必要があります。</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
@@ -754,11 +754,11 @@
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>endedCall</source>
@@ -766,22 +766,22 @@
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>不在着信</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>urlLabel</source>
@@ -789,22 +789,22 @@
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"/>
+        <translation>リモートプロビジョニングファイルがセット出来ませんでした。</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"/>
+        <translation>アプリケーションを再起動する必要があります。今すぐ再起動しますか？</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"/>
+        <translation>Linphoneの使い方にヘルプが必要ですか？</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>inviteDescription</source>
@@ -812,7 +812,7 @@
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>あなたの友人を招待する</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
@@ -828,18 +828,18 @@
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"/>
+        <translation>ツールチップを表示</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"/>
+        <translation>あなたの連絡先がビデオをオンにしました。</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
@@ -905,7 +905,7 @@
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"/>
+        <translation>%1 があなたをLinphoneに招待しています。</translation>
     </message>
     <message>
         <source>defaultSubject</source>
@@ -913,18 +913,18 @@
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>連絡先を検索するか、通話もしくはチャットを始める</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -936,7 +936,7 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -947,7 +947,7 @@
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
@@ -962,7 +962,7 @@
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation>プレゼンス状態</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
@@ -973,11 +973,11 @@
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -995,7 +995,30 @@
     </message>
     <message>
         <source>newFileMessage</source>
-        <translation type="unfinished"/>
+        <translation>新しい添付ファイルが届きました！</translation>
+    </message>
+</context>
+<context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1006,7 +1029,7 @@
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>messageDelivered</source>
@@ -1017,7 +1040,7 @@
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presenceBusy</source>
@@ -1064,7 +1087,15 @@
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation type="unfinished"/>
+        <translation>全てのログを削除してもよろしいですか？</translation>
+    </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1083,7 +1114,7 @@
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ringLabel</source>
@@ -1106,7 +1137,7 @@
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limeDisabled</source>
@@ -1114,19 +1145,19 @@
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"/>
+        <translation>必須</translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>encryptionLabel</source>
@@ -1134,7 +1165,7 @@
     </message>
     <message>
         <source>noEncryption</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
@@ -1147,6 +1178,14 @@
     <message>
         <source>autoAnswerWithVideoLabel</source>
         <translation>自動応答(映像)</translation>
+    </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1189,35 +1228,35 @@
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation type="unfinished"/>
+        <translation>ネットワークプロトコルとポート</translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP UDPポート</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP TCPポート</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>オーディオRTP UDPポート</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>ビデオRTP UDPポート</translation>
     </message>
     <message>
         <source>portHeader</source>
-        <translation type="unfinished"/>
+        <translation>ポート</translation>
     </message>
     <message>
         <source>randomPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>ランダムポートを使用</translation>
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>有効なポート</translation>
     </message>
     <message>
         <source>enableTlsLabel</source>
@@ -1225,58 +1264,58 @@
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation type="unfinished"/>
+        <translation>DSCPフィールド</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>音声RTPストリーム</translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>ビデオRTPストリーム</translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation type="unfinished"/>
+        <translation>帯域制御</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>ダウンロード速度制限 Kbit/sec</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>アップロード速度制限 Kbit/sec</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"/>
+        <translation>適応型レート制御を有効にする</translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>プレゼンス</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation type="unfinished"/>
+        <translation>RLS URIを使う</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation type="unfinished"/>
+        <translation>自動</translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
@@ -1288,11 +1327,11 @@
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Proxyアカウント</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"/>
+        <translation>パスワード消去</translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1327,7 +1366,7 @@
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>トランスポート</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
@@ -1339,39 +1378,39 @@
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"/>
+        <translation>ルート</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Contactパラメータ</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation>プレゼンス情報を公開する</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"/>
+        <translation>AVPF 通常のRTCP間隔(秒)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>登録</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>AVPFを有効にする</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>確認</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"/>
+        <translation>無効なSIPアドレス</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
@@ -1379,22 +1418,50 @@
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"/>
+        <translation>無効なルート</translation>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation type="unfinished">ICEを有効にする</translation>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation type="unfinished">STUN/TURN server</translation>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation type="unfinished">TURNを有効にする</translation>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation type="unfinished">TURNユーザ</translation>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation type="unfinished">TURNパスワード</translation>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation type="unfinished">NAT and Firewall</translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"/>
+        <translation>スクリーンショットの保存先フォルダ</translation>
     </message>
     <message>
         <source>savedVideosLabel</source>
-        <translation type="unfinished"/>
+        <translation>ビデオの保存先フォルダ</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1406,7 +1473,7 @@
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"/>
+        <translation>システム・ロケール</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
@@ -1422,7 +1489,7 @@
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation type="unfinished"/>
+        <translation>アプリケーションを再起動する必要があります。今すぐ再起動しますか？</translation>
     </message>
     <message>
         <source>otherTitle</source>
@@ -1430,18 +1497,18 @@
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"/>
+        <translation>ウィンドウを閉じるとアプリケーションを終了する</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>ビデオ入力デバイス</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
@@ -1449,11 +1516,11 @@
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"/>
+        <translation>ビデオキャプチャー設定</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"/>
+        <translation>ビデオプリセット</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -1461,11 +1528,11 @@
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"/>
+        <translation>カスタム</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
@@ -1477,7 +1544,7 @@
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation type="unfinished"/>
+        <translation>ビデオプレビュー</translation>
     </message>
 </context>
 <context>
@@ -1491,7 +1558,7 @@
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Linphone - 設定</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
@@ -1507,7 +1574,7 @@
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"/>
+        <translation>通話及びチャット</translation>
     </message>
     <message>
         <source>networkTab</source>
@@ -1537,7 +1604,7 @@
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"/>
+        <translation>以前</translation>
     </message>
 </context>
 <context>
@@ -1552,18 +1619,18 @@
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"/>
+        <translation>電話番号ではなく、ユーザー名とパスワードを使用します。</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>アカウントは作成されましたが、まだ確認されていません。この画面を終了してもよろしいですか？</translation>
     </message>
 </context>
 <context>
     <name>UseLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"/>
+        <translation>国</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
@@ -1609,7 +1676,7 @@
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>トランスポート</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
@@ -1620,15 +1687,15 @@
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>deny</source>
@@ -1637,6 +1704,13 @@
     <message>
         <source>accept</source>
         <translation>確認</translation>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

@@ -1449,7 +1449,7 @@
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Основные настройки SIP аккаунта</translation>
     </message>
 </context>
 <context>
