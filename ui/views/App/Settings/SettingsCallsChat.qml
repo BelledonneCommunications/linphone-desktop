@@ -137,12 +137,25 @@ TabContainer {
 
       FormLine {
         FormGroup {
-          label: qsTr('chatSoundNotificationEnabledLabel')
+          label: qsTr('chatNotificationSoundEnabledLabel')
 
           Switch {
-            checked: SettingsModel.chatSoundNotificationEnabled
+            id: enableChatNotificationSound
 
-            onClicked: SettingsModel.chatSoundNotificationEnabled = !checked
+            checked: SettingsModel.chatNotificationSoundEnabled
+
+            onClicked: SettingsModel.chatNotificationSoundEnabled = !checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('chatNotificationSoundLabel')
+
+          FileChooserButton {
+            enabled: enableChatNotificationSound.checked
+            selectedFile: SettingsModel.chatNotificationSoundPath
+
+            onAccepted: SettingsModel.chatNotificationSoundPath = selectedFile
           }
         }
       }

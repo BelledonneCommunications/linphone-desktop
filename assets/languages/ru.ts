@@ -1191,7 +1191,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>chatSoundNotificationEnabledLabel</source>
+        <source>chatNotificationSoundEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chatNotificationSoundLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -170,7 +170,8 @@ void CoreHandlers::onMessageReceived (
     emit messageReceived(message);
 
     // 1. Do not notify if chat is not activated.
-    if (!CoreManager::getInstance()->getSettingsModel()->getChatEnabled())
+    SettingsModel *settingsModel = CoreManager::getInstance()->getSettingsModel();
+    if (!settingsModel->getChatEnabled())
       return;
 
     // 2. Notify with Notification popup.
@@ -179,7 +180,7 @@ void CoreHandlers::onMessageReceived (
       app->getNotifier()->notifyReceivedMessage(message);
 
     // 3. Notify with sound.
-    if (!CoreManager::getInstance()->getSettingsModel()->getChatSoundNotificationEnabled())
+    if (!settingsModel->getChatNotificationSoundEnabled())
       return;
 
     if (
@@ -188,8 +189,7 @@ void CoreHandlers::onMessageReceived (
         Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly())
       )
     )
-      // TODO: Provide a way to choose sound file.
-      core->playLocal(linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav");
+      core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));
   }
 }
 

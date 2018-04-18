@@ -1082,7 +1082,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation>Logs activés.</translation>
+        <translation>Logs activés</translation>
     </message>
     <message>
         <source>cleanLogs</source>
@@ -1191,8 +1191,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Enregistrement d&apos;appel activé</translation>
     </message>
     <message>
-        <source>chatSoundNotificationEnabledLabel</source>
+        <source>chatNotificationSoundEnabledLabel</source>
         <translation>Son des notifications activé</translation>
+    </message>
+    <message>
+        <source>chatNotificationSoundLabel</source>
+        <translation>Son des notifications</translation>
     </message>
 </context>
 <context>

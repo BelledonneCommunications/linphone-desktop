@@ -1193,8 +1193,12 @@ your friend&apos;s SIP address or username.</translation>
         <translation>Call recorder enabled</translation>
     </message>
     <message>
-        <source>chatSoundNotificationEnabledLabel</source>
-        <translation>Sound notification enabled</translation>
+        <source>chatNotificationSoundEnabledLabel</source>
+        <translation>Notification sound enabled</translation>
+    </message>
+    <message>
+        <source>chatNotificationSoundLabel</source>
+        <translation>Sound notification</translation>
     </message>
 </context>
 <context>

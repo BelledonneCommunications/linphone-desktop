@@ -73,7 +73,8 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged);
 
-  Q_PROPERTY(bool chatSoundNotificationEnabled READ getChatSoundNotificationEnabled WRITE setChatSoundNotificationEnabled NOTIFY chatSoundNotificationEnabledChanged);
+  Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged);
+  Q_PROPERTY(QString chatNotificationSoundPath READ getChatNotificationSoundPath WRITE setChatNotificationSoundPath NOTIFY chatNotificationSoundPathChanged);
 
   Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
@@ -221,8 +222,11 @@ public:
   bool getChatEnabled () const;
   void setChatEnabled (bool status);
 
-  bool getChatSoundNotificationEnabled () const;
-  void setChatSoundNotificationEnabled (bool status);
+  bool getChatNotificationSoundEnabled () const;
+  void setChatNotificationSoundEnabled (bool status);
+
+  QString getChatNotificationSoundPath () const;
+  void setChatNotificationSoundPath (const QString &path);
 
   QString getFileTransferUrl () const;
   void setFileTransferUrl (const QString &url);
@@ -378,7 +382,8 @@ signals:
 
   void chatEnabledChanged (bool status);
 
-  void chatSoundNotificationEnabledChanged (bool status);
+  void chatNotificationSoundEnabledChanged (bool status);
+  void chatNotificationSoundPathChanged (const QString &path);
 
   void fileTransferUrlChanged (const QString &url);
 

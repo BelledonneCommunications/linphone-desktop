@@ -303,13 +303,26 @@ void SettingsModel::setChatEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
-bool SettingsModel::getChatSoundNotificationEnabled () const {
+bool SettingsModel::getChatNotificationSoundEnabled () const {
   return !!mConfig->getInt(UI_SECTION, "chat_sound_notification_enabled", 1);
 }
 
-void SettingsModel::setChatSoundNotificationEnabled (bool status) {
+void SettingsModel::setChatNotificationSoundEnabled (bool status) {
   mConfig->setInt(UI_SECTION, "chat_sound_notification_enabled", status);
-  emit chatSoundNotificationEnabledChanged(status);
+  emit chatNotificationSoundEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+QString SettingsModel::getChatNotificationSoundPath () const {
+  static const string defaultFile = linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav";
+  return Utils::coreStringToAppString(mConfig->getString(UI_SECTION, "chat_sound_notification_file", defaultFile));
+}
+
+void SettingsModel::setChatNotificationSoundPath (const QString &path) {
+  QString cleanedPath = QDir::cleanPath(path);
+  mConfig->setString(UI_SECTION, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
+  emit chatNotificationSoundPathChanged(cleanedPath);
 }
 
 // -----------------------------------------------------------------------------
