@@ -1192,7 +1192,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>chatSoundNotificationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Son des notifications activé</translation>
     </message>
 </context>
 <context>

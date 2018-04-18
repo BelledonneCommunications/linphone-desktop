@@ -1194,7 +1194,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>chatSoundNotificationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Sound notification enabled</translation>
     </message>
 </context>
 <context>
