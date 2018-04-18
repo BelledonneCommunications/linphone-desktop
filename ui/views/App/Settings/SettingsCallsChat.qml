@@ -118,6 +118,7 @@ TabContainer {
 
     Form {
       title: qsTr('chatTitle')
+      visible: SettingsModel.chatEnabled || SettingsModel.developerSettingsEnabled
       width: parent.width
 
       FormLine {
