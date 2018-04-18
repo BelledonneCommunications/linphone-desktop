@@ -100,6 +100,7 @@ TextField {
     id: mouseArea
 
     anchors.fill: parent
+    enabled: !textField.readOnly
     hoverEnabled: true
 
     onClicked: fileDialog.open()

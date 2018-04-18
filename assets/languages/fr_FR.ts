@@ -1188,7 +1188,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation>Activer l'enregistrement d&apos;appel</translation>
+        <translation>Activer l&apos;enregistrement d&apos;appel</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>

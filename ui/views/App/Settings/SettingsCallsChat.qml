@@ -152,7 +152,7 @@ TabContainer {
           label: qsTr('chatNotificationSoundLabel')
 
           FileChooserButton {
-            enabled: enableChatNotificationSound.checked
+            readOnly: !enableChatNotificationSound.checked
             selectedFile: SettingsModel.chatNotificationSoundPath
 
             onAccepted: SettingsModel.chatNotificationSoundPath = selectedFile
