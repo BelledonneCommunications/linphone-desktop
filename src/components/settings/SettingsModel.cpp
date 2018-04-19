@@ -772,7 +772,6 @@ QString SettingsModel::getSavedScreenshotsFolder () const {
 
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-
   mConfig->setString(UI_SECTION, "saved_screenshots_folder", Utils::appStringToCoreString(cleanedFolder));
   emit savedScreenshotsFolderChanged(cleanedFolder);
 }
@@ -789,7 +788,6 @@ QString SettingsModel::getSavedVideosFolder () const {
 
 void SettingsModel::setSavedVideosFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-
   mConfig->setString(UI_SECTION, "saved_videos_folder", Utils::appStringToCoreString(cleanedFolder));
   emit savedVideosFolderChanged(cleanedFolder);
 }
@@ -806,7 +804,6 @@ QString SettingsModel::getDownloadFolder () const {
 
 void SettingsModel::setDownloadFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-
   mConfig->setString(UI_SECTION, "download_folder", Utils::appStringToCoreString(cleanedFolder));
   emit downloadFolderChanged(cleanedFolder);
 }

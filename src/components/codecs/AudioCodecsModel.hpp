@@ -32,7 +32,6 @@ class AudioCodecsModel : public AbstractCodecsModel {
 
 public:
   AudioCodecsModel (QObject *parent = Q_NULLPTR);
-  ~AudioCodecsModel () = default;
 
 private:
   void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) override;

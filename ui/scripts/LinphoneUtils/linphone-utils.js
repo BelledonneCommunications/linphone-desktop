@@ -104,9 +104,9 @@ function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
       window.attachVirtualWindow(buildDialogUri('OnlineInstallerDialog'), {
         downloadUrl: codecInfo.downloadUrl,
         extract: true,
-        fileName: codecInfo.mime,
-        newFileName: codecInfo.fileName,
-        installFolder: VideoCodecsModel.codecsFolder
+        installFolder: VideoCodecsModel.codecsFolder,
+        installName: codecInfo.installName,
+        mime: codecInfo.mime
       }, function (status) {
         if (status) {
           VideoCodecsModel.reload()

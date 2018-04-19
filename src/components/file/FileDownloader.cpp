@@ -20,14 +20,14 @@
  *      Author: Danmei Chen
  */
 
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "FileDownloader.hpp"
 
 // =============================================================================
-using namespace std;
+
 namespace {
   constexpr char cDefaultFileName[] = "download";
 }
@@ -103,25 +103,6 @@ void FileDownloader::download () {
 
 bool FileDownloader::remove () {
   return mDestinationFile.exists() && !mDestinationFile.isOpen() && mDestinationFile.remove();
-}
-
-void FileDownloader::writeVersion(const QString &newFileName) {
-  QFile versionFile;
-
-  versionFile.setFileName(
-    QDir::cleanPath(mDownloadFolder) + QDir::separator() + newFileName + ".txt"
-  );
-
-  Q_ASSERT(!versionFile.isOpen());
-  if (versionFile.exists()) versionFile.remove();
-  if (!versionFile.open(QIODevice::WriteOnly)) {
-    qWarning() << QStringLiteral("Unable to write version to file.");
-    return;
-  }
-
-  string version = mUrl.toString().toStdString();
-  versionFile.write(version.c_str(), qstrlen(version.c_str()));
-  versionFile.close();
 }
 
 void FileDownloader::emitOutputError () {

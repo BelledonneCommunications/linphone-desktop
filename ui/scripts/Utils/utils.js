@@ -625,3 +625,11 @@ function unscapeHtml (str) {
   .replace(/"/g, '&quot;')
   .replace(/'/g, '&#039;')
 }
+
+// -----------------------------------------------------------------------------
+
+function write (fileName, text) {
+  var request = new XMLHttpRequest();
+  request.open('PUT', 'file://' + fileName, false);
+  request.send(text);
+}

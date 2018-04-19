@@ -67,7 +67,12 @@ protected:
   ) override;
 
   void addCodec (std::shared_ptr<linphone::PayloadType> &codec);
-  void addDownloadableCodec (const QString &mime, const QString &fileName, const QString &downloadUrl, const QString &encoderDescription);
+  void addDownloadableCodec (
+    const QString &mime,
+    const QString &encoderDescription,
+    const QString &downloadUrl,
+    const QString &installName
+  );
 
   QString getCodecsFolder () const;
 

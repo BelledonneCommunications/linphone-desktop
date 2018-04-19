@@ -20,9 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "AbstractCodecsModel.hpp"
 
@@ -94,7 +94,7 @@ void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
   Q_ASSERT(id >= 0 && id < mCodecs.count());
 
   QVariantMap &map = mCodecs[id];
-  shared_ptr<linphone::PayloadType> codec = ::getCodecFromMap(map);
+  shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
   if (codec) {
     codec->setRecvFmtp(Utils::appStringToCoreString(recvFmtp));
     map["recvFmtp"] = Utils::coreStringToAppString(codec->getRecvFmtp());
@@ -179,25 +179,21 @@ void AbstractCodecsModel::addCodec (shared_ptr<linphone::PayloadType> &codec) {
 
 void AbstractCodecsModel::addDownloadableCodec (
   const QString &mime,
-  const QString &fileName,
+  const QString &encoderDescription,
   const QString &downloadUrl,
-  const QString &encoderDescription
+  const QString &installName
 ) {
   QVariantMap map;
 
-  map["mime"] = mime;
-  map["fileName"] = fileName;
   map["downloadUrl"] = downloadUrl;
   map["encoderDescription"] = encoderDescription;
+  map["installName"] = installName;
+  map["mime"] = mime;
 
   mCodecs << map;
 }
 
 QVariantMap AbstractCodecsModel::getCodecInfo (const QString &mime) const {
-  // TODO: Remove me in 4.2 release.
-  qDebug() << "Enable me in 4.2 release.";
-  return QVariantMap();
-
   for (const auto &codec : mCodecs)
     if (codec.value("mime") == mime)
       return codec;

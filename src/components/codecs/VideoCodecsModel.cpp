@@ -24,9 +24,11 @@
 #include <QDirIterator>
 #include <QLibrary>
 
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/file/FileDownloader.hpp"
+#include "components/file/FileExtractor.hpp"
+#include "utils/Utils.hpp"
 
 #include "VideoCodecsModel.hpp"
 
@@ -35,11 +37,11 @@
 using namespace std;
 
 namespace {
-  constexpr char cH264FileName[] = "openh264";
   constexpr char cH264Description[] = "Provided by CISCO SYSTEM,INC";
 
   #ifdef Q_OS_LINUX
     constexpr char cLibraryExtension[] = "so";
+    constexpr char cH264InstallName[] = "libopenh264.so";
     #ifdef Q_PROCESSOR_X86_64
       constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux64.4.so.bz2";
     #else
@@ -47,9 +49,10 @@ namespace {
     #endif // ifdef Q_PROCESSOR_X86_64
   #elif defined(Q_OS_WIN)
     constexpr char cLibraryExtension[] = "dll";
+    constexpr char cH264InstallName[] = "openh264.dll";
     #ifdef Q_OS_WIN64
       constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win64.dll.bz2";
-    #elif defined(Q_OS_WIN32)
+    #else
       constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win32.dll.bz2";
     #endif // ifdef Q_OS_WIN64
   #endif // ifdef Q_OS_LINUX
@@ -58,55 +61,73 @@ namespace {
 VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
   load();
 
-  // update codec if there is a new version
+  // Update codec if it exists a new version.
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-    QString codecsFolder = Utils::coreStringToAppString(Paths::getCodecsDirPath());
-    QString filePath = QDir::cleanPath(codecsFolder) + QDir::separator() + cH264FileName + ".txt";
-
-    if(updateCodecVersion(filePath, cPluginUrlH264)) {
-       mFileDownloader = new FileDownloader();
-       mFileDownloader->setUrl(QUrl(cPluginUrlH264));
-       mFileDownloader->setDownloadFolder(codecsFolder);
-       mFileExtractor = new FileExtractor();
-       mFileExtractor->setExtractFolder(codecsFolder);
-
-       mFileDownloader->download();
-       QObject::connect(mFileDownloader, &FileDownloader::downloadFinished, this, &VideoCodecsModel::extract);
-       QObject::connect(mFileDownloader, &FileDownloader::downloadFailed, this, &VideoCodecsModel::installFileFailed);
-       QObject::connect(mFileExtractor, &FileExtractor::extractFinished, this, &VideoCodecsModel::endInstallFile);
-       QObject::connect(mFileExtractor, &FileExtractor::extractFailed, this, &VideoCodecsModel::installFileFailed);
-    }
-   #endif
+    updateCodecVersion("H264", cPluginUrlH264, cH264InstallName);
+  #endif
 }
 
-VideoCodecsModel::~VideoCodecsModel () {
-  qInfo() << QStringLiteral("Delete VideoCodecsModel");
+bool VideoCodecsModel::updateCodecVersion (
+  const QString &mime,
+  const QString &downloadUrl,
+  const QString &installName
+) {
+  QString codecsFolder = Utils::coreStringToAppString(Paths::getCodecsDirPath());
+  QString versionFilePath = codecsFolder + mime + ".txt";
+  QFile versionFile(versionFilePath);
 
-  if (mFileDownloader) mFileDownloader = nullptr;
+  if (!versionFile.exists() && !QFileInfo::exists(codecsFolder + cH264InstallName))
+    return false; // Must be downloaded one time before.
 
-  if (mFileExtractor) mFileExtractor = nullptr;
-}
-
-bool VideoCodecsModel::updateCodecVersion(const QString &filePath, const QString &newVersion) {
-  QFile versionFile(filePath);
-  
-  if (!versionFile.exists()) return false;
-  if (!versionFile.open(QIODevice::ReadOnly)) {
-    qWarning() << QStringLiteral("Unable to read version from file.");
+  if (!versionFile.open(QIODevice::ReadOnly))
+    qWarning() << QStringLiteral("Unable to read codec version from: `%1`.").arg(versionFilePath);
+  else if (!QString::compare(QTextStream(&versionFile).readAll(), downloadUrl, Qt::CaseInsensitive))
     return false;
-  }
-  QString version;
-  QTextStream s1(&versionFile);
-  version.append(s1.readAll());
-  versionFile.close();
 
-  return QString::compare(newVersion, version, Qt::CaseInsensitive)>0;
+  qInfo() << QStringLiteral("Updating `%1` codec...").arg(mime);
+
+  FileDownloader *fileDownloader = new FileDownloader(this);
+  fileDownloader->setUrl(QUrl(cPluginUrlH264));
+  fileDownloader->setDownloadFolder(codecsFolder);
+
+  FileExtractor *fileExtractor = new FileExtractor(fileDownloader);
+  fileExtractor->setExtractFolder(codecsFolder);
+  fileExtractor->setExtractName(cH264InstallName);
+
+  QObject::connect(fileDownloader, &FileDownloader::downloadFinished, this, [fileExtractor](const QString &filePath) {
+    fileExtractor->setFile(filePath);
+    fileExtractor->extract();
+  });
+
+  QObject::connect(fileDownloader, &FileDownloader::downloadFailed, this, [fileDownloader]() {
+    fileDownloader->deleteLater();
+  });
+
+  QObject::connect(fileExtractor, &FileExtractor::extractFinished, this, [fileDownloader, fileExtractor, versionFilePath, downloadUrl]() {
+    QFile versionFile(versionFilePath);
+    if (!versionFile.open(QIODevice::WriteOnly)) {
+      qWarning() << QStringLiteral("Unable to write codec version in: `%1`.").arg(versionFilePath);
+      return;
+    }
+    if (versionFile.write(downloadUrl.toStdString().c_str(), downloadUrl.length()) == -1) {
+      fileExtractor->remove();
+      versionFile.close();
+      versionFile.remove();
+    }
+
+    fileDownloader->remove();
+    fileDownloader->deleteLater();
+  });
+
+  QObject::connect(fileExtractor, &FileExtractor::extractFailed, this, [fileDownloader]() {
+    fileDownloader->remove();
+    fileDownloader->deleteLater();
+  });
+
+  fileDownloader->download();
+
+  return true;
 }
-
-void VideoCodecsModel::installFileFailed() {
-  qWarning() << QStringLiteral("Unable to install codec `%1` .").arg(cH264FileName);
-}
-
 
 void VideoCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType>> &codecs) {
   CoreManager::getInstance()->getCore()->setVideoPayloadTypes(codecs);
@@ -134,28 +155,12 @@ void VideoCodecsModel::load () {
     addCodec(codec);
 
   // Add downloadable codecs.
-  // TODO: Remove me in 4.2 release.
-  qDebug() << "Enable downloadable codecs in 4.2 release.";
-  return;
-
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
     if (find_if(codecs.begin(), codecs.end(), [](const shared_ptr<linphone::PayloadType> &codec) {
       return codec->getMimeType() == "H264";
     }) == codecs.end())
-      addDownloadableCodec("H264", cH264FileName, cPluginUrlH264, cH264Description);
+      addDownloadableCodec("H264", cH264Description, cPluginUrlH264, cH264InstallName);
   #endif
-}
-
-void VideoCodecsModel::extract(const QString &filePath) {
-  mFileExtractor->setFile(filePath);
-  mFileExtractor->extract();
-}
-
-void VideoCodecsModel::endInstallFile() {
-  mFileDownloader->remove();
-  mFileDownloader->writeVersion(cH264FileName);
-  mFileExtractor->rename(cH264FileName);
-  reload();
 }
 
 void VideoCodecsModel::reload () {

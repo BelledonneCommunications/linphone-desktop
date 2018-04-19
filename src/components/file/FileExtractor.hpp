@@ -38,6 +38,7 @@ class FileExtractor : public QObject {
 
   Q_PROPERTY(QString file READ getFile WRITE setFile NOTIFY fileChanged);
   Q_PROPERTY(QString extractFolder READ getExtractFolder WRITE setExtractFolder NOTIFY extractFolderChanged);
+  Q_PROPERTY(QString extractName READ getExtractName WRITE setExtractName NOTIFY extractNameChanged);
   Q_PROPERTY(qint64 readBytes READ getReadBytes NOTIFY readBytesChanged);
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
   Q_PROPERTY(bool extracting READ getExtracting NOTIFY extractingChanged);
@@ -48,24 +49,30 @@ public:
 
   Q_INVOKABLE void extract ();
   Q_INVOKABLE bool remove ();
-  Q_INVOKABLE bool rename (const QString &newFileName);
-  Q_INVOKABLE void setExtractFolder (const QString &extractFolder);
-  Q_INVOKABLE void setFile (const QString &file);
+
+  QString getFile () const;
+  void setFile (const QString &file);
+
+  QString getExtractFolder () const;
+  void setExtractFolder (const QString &extractFolder);
+
+  QString getExtractName () const;
+  void setExtractName (const QString &extractName);
 
 signals:
   void fileChanged (const QString &file);
+
   void extractFolderChanged (const QString &extractFolder);
+  void extractNameChanged (const QString &extractName);
+
   void readBytesChanged (qint64 readBytes);
   void totalBytesChanged (qint64 totalBytes);
+
   void extractingChanged (bool extracting);
   void extractFinished ();
   void extractFailed ();
 
 private:
-  QString getFile () const;
-
-  QString getExtractFolder () const;
-
   qint64 getReadBytes () const;
   void setReadBytes (qint64 readBytes);
 
@@ -85,6 +92,7 @@ private:
 
   QString mFile;
   QString mExtractFolder;
+  QString mExtractName;
   QFile mDestinationFile;
 
   qint64 mReadBytes = 0;

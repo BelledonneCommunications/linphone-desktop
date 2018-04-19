@@ -19,8 +19,10 @@
  *  Created on: February 6, 2018
  *      Author: Danmei Chen
  */
-#ifndef FILE_DOWNLOADER_H_ 
+
+#ifndef FILE_DOWNLOADER_H_
 #define FILE_DOWNLOADER_H_
+
 #include <QObject>
 #include <QtNetwork>
 
@@ -40,11 +42,16 @@ class FileDownloader : public QObject {
   Q_PROPERTY(bool downloading READ getDownloading NOTIFY downloadingChanged);
 
 public:
+  FileDownloader (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+
   Q_INVOKABLE void download ();
   Q_INVOKABLE bool remove();
-  Q_INVOKABLE void setUrl (const QUrl &url);
-  Q_INVOKABLE void setDownloadFolder (const QString &downloadFolder);
-  Q_INVOKABLE void writeVersion (const QString &newFileName);
+
+  QUrl getUrl () const;
+  void setUrl (const QUrl &url);
+
+  QString getDownloadFolder () const;
+  void setDownloadFolder (const QString &downloadFolder);
 
 signals:
   void urlChanged (const QUrl &url);
@@ -56,10 +63,6 @@ signals:
   void downloadFailed();
 
 private:
-  QUrl getUrl () const;
-
-  QString getDownloadFolder () const;
-
   qint64 getReadBytes () const;
   void setReadBytes (qint64 readBytes);
 
@@ -88,4 +91,5 @@ private:
   QPointer<QNetworkReply> mNetworkReply;
   QNetworkAccessManager mManager;
 };
+
 #endif // FILE_DOWNLOADER_H_

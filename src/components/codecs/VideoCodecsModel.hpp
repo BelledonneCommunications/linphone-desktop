@@ -25,9 +25,6 @@
 
 #include "AbstractCodecsModel.hpp"
 
-#include "../file/FileDownloader.hpp"
-#include "../file/FileExtractor.hpp"
-
 // =============================================================================
 
 class VideoCodecsModel : public AbstractCodecsModel {
@@ -35,20 +32,14 @@ class VideoCodecsModel : public AbstractCodecsModel {
 
 public:
   VideoCodecsModel (QObject *parent = Q_NULLPTR);
-  ~VideoCodecsModel ();
 
 private:
   void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) override;
 
-  bool updateCodecVersion (const QString &filePath, const QString &newVersion);
+  bool updateCodecVersion (const QString &mime, const QString &downloadUrl, const QString &installName);
+
   void load ();
-  void extract(const QString &filePath);
-  void installFileFailed();
-  void endInstallFile();
   void reload () override;
-  QTimer *mTimer = nullptr;
-  FileDownloader *mFileDownloader = nullptr;
-  FileExtractor *mFileExtractor = nullptr;
 };
 
 #endif // VIDEO_CODECS_MODEL_H_
