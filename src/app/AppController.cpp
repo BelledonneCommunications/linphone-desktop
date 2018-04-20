@@ -50,35 +50,8 @@ AppController::AppController (int &argc, char *argv[]) {
   qputenv("QML_DISABLE_DISK_CACHE", "true");
 
   // ---------------------------------------------------------------------------
-  // OpenGL properties.
-  // ---------------------------------------------------------------------------
 
-  // Options to get a nice video render.
-  #ifdef Q_OS_WIN
-    QCoreApplication::setAttribute(Qt::AA_UseOpenGLES, true);
-  #else
-    QCoreApplication::setAttribute(Qt::AA_UseDesktopOpenGL, true);
-  #endif // ifdef Q_OS_WIN
-  QCoreApplication::setAttribute(Qt::AA_ShareOpenGLContexts, true);
-
-  {
-    QSurfaceFormat format;
-
-    format.setSwapBehavior(QSurfaceFormat::TripleBuffer);
-    format.setSwapInterval(1);
-
-    format.setRedBufferSize(8);
-    format.setGreenBufferSize(8);
-    format.setBlueBufferSize(8);
-    format.setAlphaBufferSize(8);
-
-    format.setDepthBufferSize(24);
-    format.setStencilBufferSize(8);
-
-    QSurfaceFormat::setDefaultFormat(format);
-  }
-
-  QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QGuiApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
 
   // ---------------------------------------------------------------------------
   // App creation.
