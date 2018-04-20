@@ -16,8 +16,8 @@ DialogPlus {
   property alias downloadUrl: fileDownloader.url
   property alias installFolder: fileDownloader.downloadFolder
   property bool extract: false
-  property string installName
-  property string mime
+  property string installName // Right install name.
+  property string mime // Human readable name.
 
   property bool _installing: false
   property int _exitStatus: -1 // Not downloaded for the moment.

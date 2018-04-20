@@ -620,15 +620,16 @@ function times (n, cb, context) {
 
 function unscapeHtml (str) {
   return str.replace(/&/g, '&amp;')
-  .replace(/</g, '\u2063&lt;')
-  .replace(/>/g, '\u2063&gt;')
-  .replace(/"/g, '&quot;')
-  .replace(/'/g, '&#039;')
+    .replace(/</g, '\u2063&lt;')
+    .replace(/>/g, '\u2063&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
 }
 
 // -----------------------------------------------------------------------------
 
 function write (fileName, text) {
+  // TODO: Deal with async.
   var request = new XMLHttpRequest();
   request.open('PUT', 'file://' + fileName, false);
   request.send(text);

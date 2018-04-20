@@ -166,6 +166,10 @@ void App::initContentApp () {
 
     initLocale(config);
   } else {
+    // Update and download codecs.
+    VideoCodecsModel::updateCodecs();
+    VideoCodecsModel::downloadUpdatableCodecs(this);
+
     // Don't quit if last window is closed!!!
     setQuitOnLastWindowClosed(false);
 

@@ -33,10 +33,11 @@ class VideoCodecsModel : public AbstractCodecsModel {
 public:
   VideoCodecsModel (QObject *parent = Q_NULLPTR);
 
+  static void updateCodecs ();
+  static void downloadUpdatableCodecs (QObject *parent);
+
 private:
   void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) override;
-
-  bool updateCodecVersion (const QString &mime, const QString &downloadUrl, const QString &installName);
 
   void load ();
   void reload () override;
