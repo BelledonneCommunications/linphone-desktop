@@ -35,6 +35,7 @@ using namespace std;
 
 namespace {
   constexpr char cDefaultRlsUri[] = "sips:rls@sip.linphone.org";
+  constexpr char cDefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 }
 
 const string SettingsModel::UI_SECTION("ui");
@@ -880,7 +881,7 @@ void SettingsModel::setLogsEnabled (bool status) {
 
 QString SettingsModel::getLogsEmail () const {
   return Utils::coreStringToAppString(
-    mConfig->getString(UI_SECTION, "logs_email", "")
+    mConfig->getString(UI_SECTION, "logs_email", cDefaultLogsEmail)
   );
 }
 
