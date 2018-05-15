@@ -20,7 +20,25 @@ Here are the general instructions to build linphone for desktop. The specific in
 4. Prepare the build by running the `prepare.py` script.
 5. Build the project using the appropriate build tool (`make`, `ninja`, `Xcode`, `Visual Studio (2013 or 2015 version)`).
 
-### Specific instructions for the GNU/Linux and Mac OS X platforms
+### Specific instructions for Mac OS X
+
+1. Install Xcode from the Apple store. Run it at least once to allow it to install its tools.
+
+2. Install homebrew by following the instructions here https://brew.sh/
+
+3. Install dependencies:
+
+        brew install cmake qt git
+
+4. Clone the gituhub repository, cd into that folder, clean the project configuration and then build the compile scripts:
+
+        ./prepare.py -c && ./prepare.py -DENABLE_PACKAGING=ON -p
+
+5. Build the project in a terminal with:
+
+        make
+        
+### Specific instructions for Linux/Unix
 
 1. Prepare the build in a terminal by running the following command in the current directory:
 
@@ -86,12 +104,17 @@ The options that enable you to configure what will be built are the ones beginni
 
 ## Updating your build
 
-Simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
+Updating from git requires an additional command to ensure any new submodules are added and updated:
+
+        git submodule update --init --recursive
+        git pull
+
+Simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient.
 However if the compilation fails, you may need to rebuild everything from scratch using:
 
         ./prepare.py -c && ./prepare.py [options]
 
-Then you re-build as usual.
+Then build as usual.
 
 ## Contributing
 
