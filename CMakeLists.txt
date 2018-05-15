@@ -468,7 +468,7 @@ source_group(
   "Qml" REGULAR_EXPRESSION ".+\.qml$"
 )
 source_group(
-  "Js" REGULAR_EXPRESSION ".+\.js)$"
+  "Js" REGULAR_EXPRESSION ".+\.js$"
 )
 source_group(
   "Svg" REGULAR_EXPRESSION ".+\.svg$"
