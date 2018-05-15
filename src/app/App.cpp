@@ -282,6 +282,11 @@ QString App::getCommandArgument () {
 // -----------------------------------------------------------------------------
 
 QQuickWindow *App::getCallsWindow () {
+  if (CoreManager::getInstance()->getCore()->getConfig()->getInt(
+    SettingsModel::UI_SECTION, "disable_calls_window", 0
+  ))
+    return nullptr;
+
   if (!mCallsWindow)
     mCallsWindow = ::createSubWindow(mEngine, cQmlViewCallsWindow);
 
