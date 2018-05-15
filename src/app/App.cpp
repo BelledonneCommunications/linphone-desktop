@@ -312,6 +312,9 @@ QQuickWindow *App::getSettingsWindow () {
 // -----------------------------------------------------------------------------
 
 void App::smartShowWindow (QQuickWindow *window) {
+  if (!window)
+    return;
+
   window->setVisible(true);
 
   if (window->visibility() == QWindow::Minimized)
