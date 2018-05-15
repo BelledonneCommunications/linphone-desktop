@@ -28,7 +28,7 @@ if ! [ -x "$( command -v "$TEST_RUNNER" )" ]; then
   exit 0
 fi
 
-git diff --name-only --cached --diff-filter=d | grep -Eq '\.qml|js|js\.spec$'
+git diff --name-only --cached --diff-filter=d | grep -Eq '\.(qml|js|js\.spec)$'
 if [[ $? != 0 ]] ; then
   exit 0
 fi
