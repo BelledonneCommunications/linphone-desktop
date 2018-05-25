@@ -148,7 +148,7 @@ if(WIN32)
 	)
 
 	file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
-	list(REMOVE_ITEM SHARE_CONTENT "share/Belr" "share/images" "share/linphone" "share/sounds")
+	list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/linphone" "share/Linphone" "share/sounds")
 	foreach(item IN LISTS SHARE_CONTENT)
 		list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${item}" EXCLUDE)
 	endforeach()
@@ -156,19 +156,20 @@ if(WIN32)
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
 		DESTINATION "."
 		COMPONENT "linphone_base"
-		PATTERN "bin/belcard*.exe" EXCLUDE
 		PATTERN "bin/*_tester.exe" EXCLUDE
+		PATTERN "bin/belcard*.exe" EXCLUDE
 		PATTERN "bin/openh264.dll" EXCLUDE
 		PATTERN "include" EXCLUDE
-		PATTERN "lib/mediastreamer/plugins/*openh264.*" EXCLUDE
-		PATTERN "lib/pkgconfig" EXCLUDE
 		PATTERN "lib/*.a" EXCLUDE
 		PATTERN "lib/*.def" EXCLUDE
 		PATTERN "lib/*.exp" EXCLUDE
 		PATTERN "lib/*.la" EXCLUDE
 		PATTERN "lib/*.lib" EXCLUDE
+		PATTERN "lib/mediastreamer/plugins/*openh264.*" EXCLUDE
+		PATTERN "lib/pkgconfig" EXCLUDE
 		PATTERN "lib/Win32" EXCLUDE
 		PATTERN "linphone.lnk" EXCLUDE
+		PATTERN "share/Belr/cmake" EXCLUDE
 		PATTERN "share/Linphone/cmake" EXCLUDE
 		${SHARE_CONTENT_EXCLUDE}
 	)
