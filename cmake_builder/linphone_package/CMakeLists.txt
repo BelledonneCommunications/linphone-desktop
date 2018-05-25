@@ -148,7 +148,7 @@ if(WIN32)
 	)
 
 	file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
-	list(REMOVE_ITEM SHARE_CONTENT "share/Belr" "share/images" "share/linphone" "share/Linphone" "share/sounds")
+	list(REMOVE_ITEM SHARE_CONTENT "share/Belr" "share/images" "share/linphone" "share/sounds")
 	foreach(item IN LISTS SHARE_CONTENT)
 		list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${item}" EXCLUDE)
 	endforeach()
