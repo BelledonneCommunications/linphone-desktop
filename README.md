@@ -1,3 +1,5 @@
+[![pipeline status](https://gitlab.linphone.org/BC/public/linphone-desktop/badges/master/pipeline.svg)](https://gitlab.linphone.org/BC/public/linphone-desktop/commits/master)
+
 # Linphone Desktop
 
 ![screenshot](readme_screen.png)
