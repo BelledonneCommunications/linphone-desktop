@@ -43,6 +43,8 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   TabContainer {
+    anchors.fill: parent
+
     Column {
       width: parent.width
 

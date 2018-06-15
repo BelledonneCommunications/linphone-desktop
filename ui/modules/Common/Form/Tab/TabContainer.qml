@@ -11,7 +11,6 @@ import Utils 1.0
 Rectangle {
   default property alias _content: content.data
 
-  anchors.fill: parent
   color: TabContainerStyle.color
 
   ColumnLayout {
