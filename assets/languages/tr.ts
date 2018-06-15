@@ -1007,23 +1007,23 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>ONAYLA</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 çıkarılıyor...</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 indiriliyor...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kuruldu!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 kurulumu başarısız!</translation>
     </message>
 </context>
 <context>
@@ -1096,11 +1096,11 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliştirici ayarları</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliştirici ayarlarını etkinleştir</translation>
     </message>
 </context>
 <context>
@@ -1186,19 +1186,19 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Konuşmayı etkinleştir</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Çağrı kaydediciyi etkinleştir</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildirim sesini etkinleştir</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildirim sesi</translation>
     </message>
 </context>
 <context>
@@ -1459,7 +1459,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ana SIP hesabı ayarları</translation>
     </message>
 </context>
 <context>
@@ -1723,7 +1723,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2) indirilmesini istiyor musunuz?</translation>
     </message>
 </context>
 </TS>

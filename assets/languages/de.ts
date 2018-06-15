@@ -35,26 +35,26 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Wir haben eine SMS mit einem Validierungs-Code an %1 gesendet. Um die Verifizierung der Telefonnummer abzuschließen, geben Sie bitten den vierstelligen Code unten ein.</translation>
+        <translation>Wir haben eine SMS mit einem Validierungs-Code an %1 gesendet. Um die Verifizierung der Telefonnummer abzuschließen, geben Sie bitten den 4-stelligen Code unten ein.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"></translation>
+        <translation>Während der Verwendung nach stdout debug informationen ausgeben</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte zu verwendende Konfigration angeben</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein freies Video-Phone</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"></translation>
+        <translation>Im Systemtray starten, Hauptmenü nicht anzeigen</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -96,7 +96,7 @@
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"></translation>
+        <translation>FERNKONFIGRATION LADEN</translation>
     </message>
     <message>
         <source>homeTitle</source>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Assistent hilft, den linephone Account zu konfigurieren und zu nutzen</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
@@ -297,7 +297,7 @@
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Relay Verbindung</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -423,7 +423,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>linphone sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
@@ -789,18 +789,18 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"></translation>
+        <translation>Es ist nicht möglich, diese Fernkonfigrations-URL zu verwenden.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Neustart der Anwendung ist notwendig. Möchten Sie die Anwendung jetzt neu starten?</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Benötigen Sie hilfe um linephone zu nutzen?</translation>
     </message>
     <message>
         <source>howToTitle</source>
@@ -936,7 +936,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Verwenden das intelligente Suchfeld um Audio-  und Videocalls zu starten, Nachrichten zu senden oder Kontakt hinzuzufügen. Geben Sie die SIP-Adresse oder Username Ihres Kontaktes ein.</translation>
     </message>
 </context>
 <context>
@@ -1002,23 +1002,23 @@ Server URL ist nicht konfiguriert.</translation>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>BESTÄTIGEN</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 wird extrahiert...</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 wird heruntergeladen...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ist jetzt installiert!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim installieren, %1!</translation>
     </message>
 </context>
 <context>
@@ -1091,11 +1091,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Entwicklereinstellungen</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Entwicklereinstellungen aktivieren</translation>
     </message>
 </context>
 <context>
@@ -1181,19 +1181,19 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Chat aktivieren</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Anrufaufzeichnung aktivieren</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungston aktivieren</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungston</translation>
     </message>
 </context>
 <context>
@@ -1382,7 +1382,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrierungsdauer (Sek.)</translation>
     </message>
     <message>
         <source>routeLabel</source>
@@ -1390,15 +1390,15 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktparameter</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Presence Informationen publizieren.</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVPF regular RTCP interval (Sekunden)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
@@ -1430,7 +1430,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished">ICE aktivieren</translation>
+        <translation>ICE aktivieren</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -1454,7 +1454,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Haupteinstellungen des SIP-Kontos</translation>
     </message>
 </context>
 <context>
@@ -1489,7 +1489,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie alle Avatare löschen möchten?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
@@ -1509,7 +1509,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>UI-Daten</translation>
     </message>
 </context>
 <context>
@@ -1540,7 +1540,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"></translation>
+        <translation>Individuell</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
@@ -1627,11 +1627,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzername und Passwort soll nicht gleich sein, wie die Telefonnummer</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished">Ihr Account wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
+        <translation>Ihr Account wurde erstellt, aber nicht validiert. Möchten Sie diese Ansicht wirklich beenden?</translation>
     </message>
 </context>
 <context>
@@ -1695,15 +1695,15 @@ Server URL ist nicht konfiguriert.</translation>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätige folgende SAS mit der Gegenstelle</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"></translation>
+        <translation>Sagen:</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihr Kontakt sollte sagen:</translation>
     </message>
     <message>
         <source>deny</source>
@@ -1718,7 +1718,7 @@ Server URL ist nicht konfiguriert.</translation>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie %1 (%2) herunterladen?</translation>
     </message>
 </context>
 </TS>

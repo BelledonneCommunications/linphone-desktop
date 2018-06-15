@@ -16,7 +16,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTYVUOTI</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTYVUOTI</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Aptikti neteisingi simboliai. (reguliarusis reiškinys: &quot;%1&quot;)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -143,11 +143,11 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Aptikti neteisingi simboliai. (reguliarusis reiškinys: &quot;%1&quot;)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Trūkstami simboliai: &quot;%1&quot;.</translation>
     </message>
     <message>
         <source>requestFailed</source>
@@ -746,31 +746,31 @@ Nesukonfigūruotas serverio url.</translation>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Gaunamasis skambutis</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Išsiunčiamasis skambutis</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Atmestas gaunamasis skambutis</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Atmestas išsiunčiamasis skambutis</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Nutrauktas skambutis</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Praleistas gaunamasis skambutis</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Praleistas išsiunčiamasis skambutis</translation>
     </message>
 </context>
 <context>
@@ -843,7 +843,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Palaukite, laukiama užklausa.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
@@ -1007,23 +1007,23 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>PATVIRTINTI</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Išskleidžiama %1...</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsiunčiama %1...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Dabar, %1 yra įdiegta!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepavyko įdiegti %1!</translation>
     </message>
 </context>
 <context>
@@ -1624,7 +1624,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>UseLinphoneSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>NAUDOTI</translation>
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
@@ -1665,7 +1665,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>NAUDOTI</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>

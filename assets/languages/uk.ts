@@ -1,7 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<!DOCTYPE TS>
-<TS version="2.1" language="uk">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -999,6 +996,29 @@
     </message>
 </context>
 <context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
@@ -1064,6 +1084,14 @@
     </message>
     <message>
         <source>cleanLogsDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1146,6 +1174,22 @@
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>chatNotificationSoundEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>chatNotificationSoundLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1379,6 +1423,34 @@
     </message>
     <message>
         <source>invalidRoute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1636,6 +1708,13 @@
     </message>
     <message>
         <source>accept</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
         <translation type="unfinished"/>
     </message>
 </context>

@@ -1,161 +1,159 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
 <context>
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>Está bien</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>Activa tu cuenta Linphone</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>Activar</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Para activar tu cuenta: sigue las instrucciones que enviaremos a %1, entonces de clic debajo.</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>Activa tu cuenta Linphone</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>Activar</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Le hemos enviado un SMS con el código de verificación a %1. Para completar la verificación de su número telefónico entre los 4 dígitos de abajo.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation>Iniciar sesión para excluir cierta información de depuración mientras se ejecuta.</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation>Especificar el fichero de configuración de linphone para ser usado</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation>Un software libre de videollamadas SIP</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>iniciar en la bandeja del sistema, no mostrar en la pantalla principal</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>archivo</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>mostrar esta ayuda</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>mostrar versión del programa</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation>mostrar el menú de ayuda para usar Linphone desde la línea de comandos</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation>enviar una orden a la aplicación hacia la línea de comandos</translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>ATRÁS</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>USAR UNA CUENTA DE LINPHONE</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>USAR UNA CUENTA SIP</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>RECOGER CONFIGURACIÓN REMOTA</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>BIENVENIDO</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>Este asistente le ayudará a configurar y usar su cuenta linphone.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>CREAR UNA CUENTA LINPHONE</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Autenticación fallida. Por favor chequee su usuario y contraseña.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Muy corta (%1 caracteres mínimo)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Muy larga (%1 caracteres máximo)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Se han detectado caracteres inválidos. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Usuario incorrecto.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Muy corta (%1 caracteres mínimo)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Muy larga (%1 caracteres máximo)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Se han detectado caracteres inválidos. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Caracteres faltantes: `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>No se puede enviar la petición.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Dirección de correo incorrecta.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
@@ -998,6 +996,29 @@
     </message>
 </context>
 <context>
+    <name>OnlineInstallerDialog</name>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerExtractingDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerDownloadingDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerFinishedDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>onlineInstallerFailedDescription</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
@@ -1063,6 +1084,14 @@
     </message>
     <message>
         <source>cleanLogsDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>developerSettingsTitle</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1145,6 +1174,22 @@
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>chatEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>callRecorderEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>chatNotificationSoundEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>chatNotificationSoundLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1378,6 +1423,34 @@
     </message>
     <message>
         <source>invalidRoute</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>enableIceLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>stunServerLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>enableTurnLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>turnUserLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>turnPasswordLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1635,6 +1708,13 @@
     </message>
     <message>
         <source>accept</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>linphone-utils</name>
+    <message>
+        <source>downloadCodecDescription</source>
         <translation type="unfinished"/>
     </message>
 </context>

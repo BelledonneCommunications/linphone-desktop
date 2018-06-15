@@ -5,68 +5,68 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTIVERA DITT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTIVERA</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>För att aktivera ditt konto: Följ anvisningarna som vi skickade till %1, och klicka sedan nedan.</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTIVERA DITT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>AKTIVERA</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>Vi har skickat ett SMS med en validerings kod till %1. För att slutföra din telefonnummerverifiering, ange 4 siffror koden nedan.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"></translation>
+        <translation>logga till stdout viss felsökningsinformation under körning</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>specificera linphone konfigurationsfilen som skall användas</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>En gratis (libre) SIP-videotelefon.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"></translation>
+        <translation>starta i systemfältet, visa inte huvudgränssnittet</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>fil</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>visa denna hjälp</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"></translation>
+        <translation>visa appversion</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
@@ -81,148 +81,148 @@
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>TILLBAKA</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>ANVÄND ETT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>ANVÄND ETT SIP-KONTO</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"></translation>
+        <translation>HÄMTA FJÄRRKONFIGURATION</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>VÄLKOMMEN</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Denna assistent hjälper dig att konfigurera och använda ditt linphone-konto.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAPA ETT LINPHONE-KONTO</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Inloggningen misslyckades. Kontrollera ditt användarnamn/lösenord.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"></translation>
+        <translation>För kort! (minst %1 tecken)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"></translation>
+        <translation>För långt! (max %1 tecken)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltiga tecken upptäckta. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt användarnamn.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"></translation>
+        <translation>För kort! (minst %1 tecken)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"></translation>
+        <translation>För långt! (max %1 tecken)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltiga tecken upptäckta. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Saknade tecken: `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Det gick inte att skicka förfrågan.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"></translation>
+        <translation>Felaktig e-postadress.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>Felaktig e-postadress eller ogiltiga tecken.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"></translation>
+        <translation>Serverfel: det går inte att skicka sms.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"></translation>
+        <translation>Detta konto finns redan.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>SMS-aktivering misslyckades!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontrollera att du har validerat ditt konto eller försök igen.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltigt telefonnummer!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"></translation>
+        <translation>För kort!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"></translation>
+        <translation>För långt!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig landskod!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Inloggningen misslyckades. Kolla ditt telefonnummer.</translation>
     </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>LOGGA IN</translation>
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Identitet</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Det går inte att autentisera. Verifiera ditt lösenord.</translation>
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Användar-ID (valfritt)</translation>
     </message>
     <message>
         <source>realmLabel</source>
@@ -253,7 +253,7 @@
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation type="unfinished"></translation>
+        <translation>IP-familj</translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
@@ -277,11 +277,11 @@
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation type="unfinished"></translation>
+        <translation>Inte aktiverad</translation>
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
@@ -301,7 +301,7 @@
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
@@ -321,89 +321,89 @@
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Mottagen bildfrekvens</translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Skickad bildfrekvens</translation>
     </message>
 </context>
 <context>
     <name>CallSipAddress</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta ett nytt samtal.</translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljud</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
 </context>
 <context>
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du överföra detta samtalet?</translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation type="unfinished"></translation>
+        <translation>ACCEPTERA LJUDSAMTAL</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation type="unfinished"></translation>
+        <translation>ACCEPTERA VIDEOSAMTAL</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"></translation>
+        <translation>LÄGG PÅ</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"></translation>
+        <translation>ÅTERUPPTA SAMTAL</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"></translation>
+        <translation>ÖVERFÖR SAMTAL</translation>
     </message>
     <message>
         <source>pauseCall</source>
-        <translation type="unfinished"></translation>
+        <translation>PAUSA SAMTAL</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtal</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill avsluta alla samtal?</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Ange ditt meddelande</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -411,22 +411,22 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 skriver...</translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Sätt att styra Linphone-programmet via kommandoraden.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>linphone-sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -457,11 +457,11 @@
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"></translation>
+        <translation>Namn</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
@@ -469,322 +469,322 @@
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"></translation>
+        <translation>Bithastighet (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"></translation>
+        <translation>Parametrar</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>KONFERENS</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"></translation>
+        <translation>KONFERENS</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Hantera deltagare till din konferens.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>BÖRJA</translation>
     </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>BEKRÄFTA</translation>
     </message>
 </context>
 <context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du verkligen ta bort denna kontakt från din adressbok?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-KONTO(N)</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"></translation>
+        <translation>ADRESS</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished"></translation>
+        <translation>E-POSTADRESS(ER)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"></translation>
+        <translation>WEBBPLATS(ER)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj din avatar</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"></translation>
+        <translation>FÖRETAG</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"></translation>
+        <translation>SPARA</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-konto</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Företag</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>E-post</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbplats</translation>
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"></translation>
+        <translation>Väg</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"></translation>
+        <translation>Postnummer</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"></translation>
+        <translation>Land</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokalitet</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill avbryta kontaktändringen?</translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök kontakt</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Alla</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansluten</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"></translation>
+        <translation>LÄGG TILL KONTAKT</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du verkligen ta bort denna kontakt från din adressbok?</translation>
     </message>
 </context>
 <context>
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation type="unfinished"></translation>
+        <translation>ALLA</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"></translation>
+        <translation>SAMTAL</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation type="unfinished"></translation>
+        <translation>MEDDELANDEN</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill rensa den här historiken?</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccount</name>
     <message>
         <source>createLinphoneSipAccountDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Hur vill du skapa ditt konto?</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAPA ETT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
-        <translation type="unfinished"></translation>
+        <translation>MED ETT TELEFONNUMMER</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation type="unfinished"></translation>
+        <translation>MED E-POSTADRESS</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAPA ETT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAPA</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>E-post</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösenordsbekräftelse</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösenorden du angav matchade inte.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Ditt konto har skapats men har ännu inte validerats. Är du säker på att du vill avsluta den här vyn?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visningsnamn (valfritt)</translation>
     </message>
 </context>
 <context>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAPA ETT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Land</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefonnummer</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visningsnamn (valfritt)</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>SKAPA</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Ditt konto har skapats men har ännu inte validerats. Om du avslutar den här vyn måste du manuellt lägga till och validera ditt konto inom 24 timmar.</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Välj en eller flera filer</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"></translation>
+        <translation>Släpp din bilaga</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Skicka en fil</translation>
     </message>
 </context>
 <context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkommande samtal</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Utgående samtal</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Avböjt inkommande samtal</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Avböjt utgående samtal</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Avslutat samtal</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Missat inkommande samtal</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Missat utgående samtal</translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>HÄMTA</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>HÄMTA FJÄRRKONFIGURATION</translation>
     </message>
     <message>
         <source>urlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>WEBBADRESS</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
@@ -792,146 +792,149 @@
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Det är nödvändigt att starta om programmet. Vill du starta om nu?</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Behöver du hjälp med hur du använder Linphone?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>HUR DU ANVÄNDER LINPHONE</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Bjud in dina vänner på Linphone.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>BJUD IN DINA VÄNNER</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Skapa eller hantera ditt Linphone-konto.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>KONTO ASSISTENT</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"></translation>
+        <translation>ASSISTENT</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa verktygstips</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"></translation>
+        <translation>BJUD IN</translation>
     </message>
 </context>
 <context>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Din kontakt vill gärna slå på video.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Vänta, en förfrågan väntar.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtalet är krypterat med: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtal inte krypterat.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta en ögonblicksbild.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja inspelning.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppa inspelning.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta en ögonblicksbild.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Börja inspelning.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Stoppa inspelning.</translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Väns e-postadress</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Meddelande</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>BEKRÄFTA</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Bjud in vänner</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 vill bjuda in dig på linphone!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation type="unfinished"></translation>
+        <translation>Linphone inbjudan</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Hämta programmet på din dator och börja ringa och chatta med Linphone-användare gratis.
+
+Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sök kontakt, starta ett samtal eller en chatt...</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"></translation>
+        <translation>HEM</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation type="unfinished"></translation>
+        <translation>KONTAKTER</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>automatiskt</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
@@ -942,37 +945,37 @@
     <name>MainWindowMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"></translation>
+        <translation>Om</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta</translation>
     </message>
 </context>
 <context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Närvaro status</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivt konto</translation>
     </message>
 </context>
 <context>
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation type="unfinished"></translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
@@ -983,71 +986,71 @@
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>En ny version (%1) av Linphone är tillgänglig!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Ny bilaga mottagen!</translation>
     </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>BEKRÄFTA</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Extraherar %1...</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Hämtar %1...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>% 1 är nu installerad!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med att installera% 1!</translation>
     </message>
 </context>
 <context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
-        <translation type="unfinished"></translation>
+        <translation>Fel</translation>
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"></translation>
+        <translation>Läs</translation>
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation type="unfinished"></translation>
+        <translation>Levererad</translation>
     </message>
 </context>
 <context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillgänglig</translation>
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>Upptagen</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation type="unfinished"></translation>
+        <translation>Stör inte</translation>
     </message>
     <message>
         <source>presenceOffline</source>
@@ -1058,7 +1061,7 @@
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggar</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
@@ -1066,7 +1069,7 @@
     </message>
     <message>
         <source>sendLogs</source>
-        <translation type="unfinished"></translation>
+        <translation>SKICKA LOGGAR</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
@@ -1078,11 +1081,11 @@
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera loggar</translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
+        <translation>RENSA LOGGAR</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1117,7 +1120,7 @@
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ring</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
@@ -1132,58 +1135,58 @@
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Filserver</translation>
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kryptera med LIME</translation>
     </message>
     <message>
         <source>limeDisabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Inaktiverad</translation>
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"></translation>
+        <translation>Obligatorisk</translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"></translation>
+        <translation>Föredraget</translation>
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Chatt</translation>
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtal</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kryptering</translation>
     </message>
     <message>
         <source>noEncryption</source>
-        <translation type="unfinished"></translation>
+        <translation>Inga</translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiskt svar</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fördröjning (i ms)</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <source>chatEnabledLabel</source>
+        <translation>Aktivera chatt</translation>
     </message>
     <message>
-        <source>chatEnabledLabel</source>
+        <source>callRecorderEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1215,7 +1218,7 @@
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -1223,7 +1226,7 @@
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
@@ -1239,11 +1242,11 @@
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP UDP-port</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP TCP-port</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -1255,19 +1258,19 @@
     </message>
     <message>
         <source>portHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>Port</translation>
     </message>
     <message>
         <source>randomPortHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd en slumpmässig port</translation>
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktiverad port</translation>
     </message>
     <message>
         <source>enableTlsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera TLS</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
@@ -1275,7 +1278,7 @@
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
@@ -1311,38 +1314,38 @@
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation type="unfinished"></translation>
+        <translation>AUTOMATISKT</translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation type="unfinished"></translation>
+        <translation>ALDRIG</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardidentitet</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-adress</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Proxy-konton</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"></translation>
+        <translation>RADERA LÖSENORD</translation>
     </message>
     <message>
         <source>addAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>LÄGG TILL KONTO</translation>
     </message>
     <message>
         <source>editHeader</source>
@@ -1350,7 +1353,7 @@
     </message>
     <message>
         <source>deleteHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
@@ -1362,30 +1365,30 @@
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visningsnamn</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
     <message>
         <source>sipAddressLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-adress</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-serveradress</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Registreringsvaraktighet (sek)</translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rutt</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
@@ -1401,43 +1404,35 @@
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Registrera</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVBRYT</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>BEKRÄFTA</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig SIP-adress.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig serveradress.</translation>
     </message>
     <message>
         <source>invalidRoute</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>natAndFirewallTitle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -1445,7 +1440,7 @@
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
@@ -1455,12 +1450,20 @@
         <source>turnPasswordLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>natAndFirewallTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mainSipAccountSettingsTitle</source>
+        <translation>Huvud SIP-kontoinställningar</translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Sökvägar</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
@@ -1472,11 +1475,11 @@
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <source>languagesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Språk</translation>
     </message>
     <message>
         <source>systemLocale</source>
@@ -1484,7 +1487,7 @@
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"></translation>
+        <translation>RADERA AVATARER</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
@@ -1519,7 +1522,7 @@
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildfrekvensen</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
@@ -1531,11 +1534,11 @@
     </message>
     <message>
         <source>presetDefault</source>
-        <translation type="unfinished"></translation>
+        <translation>Standard</translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"></translation>
+        <translation>Hög FPS</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -1558,71 +1561,71 @@
     <name>SettingsVideoPreview</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Linphone - Inställningar</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-konto</translation>
     </message>
     <message>
         <source>audioTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljud</translation>
     </message>
     <message>
         <source>videoTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtal och chatt</translation>
     </message>
     <message>
         <source>networkTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Nätverk</translation>
     </message>
     <message>
         <source>uiTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Användargränssnitt</translation>
     </message>
     <message>
         <source>validButton</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>uiAdvanced</source>
-        <translation type="unfinished"></translation>
+        <translation>Avancerat</translation>
     </message>
 </context>
 <context>
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"></translation>
+        <translation>LÄGG TILL KONTAKT</translation>
     </message>
 </context>
 <context>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Tidigare</translation>
     </message>
 </context>
 <context>
     <name>UseLinphoneSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>ANVÄND</translation>
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>ANVÄND ETT LINPHONE-KONTO</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
@@ -1637,57 +1640,57 @@
     <name>UseLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Land</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefonnummer</translation>
     </message>
 </context>
 <context>
     <name>UseLinphoneSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösenord</translation>
     </message>
 </context>
 <context>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>ANVÄND</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>ANVÄND ETT SIP-KONTO</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Användarnamn</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visningsnamn (valfritt)</translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-domän</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lösenord</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"></translation>
+        <translation>Det gick inte att lägga till det här kontot.</translation>
     </message>
 </context>
 <context>
@@ -1698,26 +1701,26 @@
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"></translation>
+        <translation>Säg:</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"></translation>
+        <translation>Din kontaktperson bör säga:</translation>
     </message>
     <message>
         <source>deny</source>
-        <translation type="unfinished"></translation>
+        <translation>FÖRNEKA</translation>
     </message>
     <message>
         <source>accept</source>
-        <translation type="unfinished"></translation>
+        <translation>BEKRÄFTA</translation>
     </message>
 </context>
 <context>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Vill du hämta %1 (%2)?</translation>
     </message>
 </context>
 </TS>
