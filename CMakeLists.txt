@@ -267,7 +267,7 @@ set(QRC_RESOURCES resources.qrc)
 
 set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
-set(LANGUAGES de en fr_FR ja lt ru sv tr)
+set(LANGUAGES de en fr_FR ja lt ru sv tr pt_BR)
 
 # ------------------------------------------------------------------------------
 

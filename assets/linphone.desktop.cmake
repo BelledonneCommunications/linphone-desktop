@@ -10,17 +10,17 @@ Categories=Network;Telephony;
 MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;
 
 # Translations
-Name[de]=Linphone
-Name[he]=Linphone
 Name[ar]=لِنْفُونْ
+Name[cs]=Linphone
+Name[de]=Linphone
+Name[fr]=Linphone
+Name[he]=Linphone
 Name[hu]=Linphone
-Name[ru]=Linphone
-Name[nb_NO]=Linphone
 Name[it]=Linphone
 Name[ja]=Linphone
-Name[cs]=Linphone
+Name[nb_NO]=Linphone
+Name[ru]=Linphone
 Name[sr]=Линфон
 Name[sv]=Linphone
 Name[zh_CN]=Linphone
-Name[fr]=Linphone
 Name[zh_TW]=Linphone
