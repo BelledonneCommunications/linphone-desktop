@@ -59,8 +59,6 @@ namespace {
   constexpr char cQmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
   constexpr char cQmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
 
-  constexpr char cQmlViewSplashScreen[] = "qrc:/ui/views/App/SplashScreen/SplashScreen.qml";
-
   constexpr int cVersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
 }
 
@@ -137,15 +135,6 @@ static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 }
 
 // -----------------------------------------------------------------------------
-
-static void activeSplashScreen (QQmlApplicationEngine *engine) {
-  qInfo() << QStringLiteral("Open splash screen...");
-  QQuickWindow *splashScreen = ::createSubWindow(engine, cQmlViewSplashScreen);
-  QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::coreStarted, splashScreen, [splashScreen] {
-    splashScreen->close();
-    splashScreen->deleteLater();
-  });
-}
 
 void App::initContentApp () {
   shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
@@ -231,14 +220,6 @@ void App::initContentApp () {
 
   // Enable notifications.
   mNotifier = new Notifier(mEngine);
-
-  // Load splashscreen.
-  #ifdef Q_OS_MACOS
-    ::activeSplashScreen(mEngine);
-  #else
-    if (!mustBeIconified)
-      ::activeSplashScreen(mEngine);
-  #endif // ifdef Q_OS_MACOS
 
   // Load main view.
   qInfo() << QStringLiteral("Loading main view...");

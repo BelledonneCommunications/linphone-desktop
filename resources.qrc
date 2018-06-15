@@ -181,7 +181,6 @@
     <file>assets/images/speaker_on_normal.svg</file>
     <file>assets/images/speaker_on_pressed.svg</file>
     <file>assets/images/speaker.svg</file>
-    <file>assets/images/splash_screen.svg</file>
     <file>assets/images/tel_keypad_hovered.svg</file>
     <file>assets/images/tel_keypad_normal.svg</file>
     <file>assets/images/tel_keypad_pressed.svg</file>
@@ -441,7 +440,6 @@
     <file>ui/views/App/Settings/SettingsVideo.js</file>
     <file>ui/views/App/Settings/SettingsVideo.qml</file>
     <file>ui/views/App/Settings/SettingsWindow.qml</file>
-    <file>ui/views/App/SplashScreen/SplashScreen.qml</file>
     <file>ui/views/App/Styles/Calls/CallStyle.qml</file>
     <file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
     <file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
@@ -471,6 +469,5 @@
     <file>ui/views/App/Styles/Settings/SettingsAdvancedStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
     <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
-    <file>ui/views/App/Styles/SplashScreen/SplashScreenStyle.qml</file>
   </qresource>
 </RCC>
