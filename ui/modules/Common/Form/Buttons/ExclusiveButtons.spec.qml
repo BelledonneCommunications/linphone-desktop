@@ -27,13 +27,6 @@ Item {
 
         texts: ['A', 'B', 'C', 'D', 'E']
       }
-
-      SignalSpy {
-        id: spy
-
-        signalName: 'clicked'
-        target: exclusiveButtons
-      }
     }
   }
 
@@ -54,24 +47,33 @@ Item {
 
     function test_signals (data) {
       var container = buildExclusiveButtons(data.defaultSelectedButton)
-      var spy = container.data[1]
       var exclusiveButtons = container.data[0]
-
       var buttonToClick = data.buttonToClick
 
       // Test default selected button.
       compare(exclusiveButtons.selectedButton, data.defaultSelectedButton)
 
+      var button = -1
+      var count = 0
+
+      exclusiveButtons.clicked.connect(function (_button) {
+        button = _button;
+        count += 1
+      })
+
       // Test a click to change the selected button.
       mouseClick(exclusiveButtons.data[buttonToClick])
-      spy.wait(100)
-      compare(spy.signalArguments[0][0], buttonToClick)
+
+      compare(button, buttonToClick)
       compare(exclusiveButtons.selectedButton, buttonToClick)
+      compare(count, 1)
 
       // No signal must be emitted.
       mouseClick(exclusiveButtons.data[buttonToClick])
-      wait(100)
-      compare(spy.count, 1)
+
+      compare(button, buttonToClick)
+      compare(exclusiveButtons.selectedButton, buttonToClick)
+      compare(count, 1)
 
       container.destroy()
     }
