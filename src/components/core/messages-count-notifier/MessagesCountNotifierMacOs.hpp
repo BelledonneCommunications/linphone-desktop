@@ -31,6 +31,6 @@ public:
   MessagesCountNotifier (QObject *parent = Q_NULLPTR) : AbstractMessagesCountNotifier(parent) {}
 
   void notifyUnreadMessagesCount (int n) override {
-    ::notifyUnreadMessagesCountMacOS(n);
+    notifyUnreadMessagesCountMacOS(n);
   }
 };

@@ -32,7 +32,6 @@ class TimelineModel : public QSortFilterProxyModel {
 
 public:
   TimelineModel (QObject *parent = Q_NULLPTR);
-  ~TimelineModel () = default;
 
   QHash<int, QByteArray> roleNames () const override;
 

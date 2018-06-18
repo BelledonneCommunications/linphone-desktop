@@ -23,12 +23,12 @@
 #ifndef CALLS_LIST_MODEL_H_
 #define CALLS_LIST_MODEL_H_
 
+#include <linphone++/linphone.hh>
 #include <QAbstractListModel>
-
-#include "../call/CallModel.hpp"
 
 // =============================================================================
 
+class CallModel;
 class CoreHandlers;
 
 class CallsListModel : public QAbstractListModel {
@@ -36,7 +36,6 @@ class CallsListModel : public QAbstractListModel {
 
 public:
   CallsListModel (QObject *parent = Q_NULLPTR);
-  ~CallsListModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 

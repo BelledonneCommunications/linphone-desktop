@@ -25,17 +25,17 @@
 #include <QThread>
 #include <QTimer>
 
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
 #include "MSFunctions.hpp"
 
 #include "CameraPreview.hpp"
 
-using namespace std;
-
 // =============================================================================
 
+using namespace std;
+
 namespace {
-  constexpr int cMaxFps = 30;
+  constexpr int MaxFps = 30;
 }
 
 struct ContextInfo {
@@ -130,7 +130,7 @@ void CameraPreviewRenderer::updateWindowId () {
 // -----------------------------------------------------------------------------
 
 QMutex CameraPreview::mCounterMutex;
-int CameraPreview::mCounter = 0;
+int CameraPreview::mCounter;
 
 // -----------------------------------------------------------------------------
 
@@ -144,7 +144,7 @@ CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(pare
   setMirrorVertically(true);
 
   mRefreshTimer = new QTimer(this);
-  mRefreshTimer->setInterval(1000 / cMaxFps);
+  mRefreshTimer->setInterval(1000 / MaxFps);
 
   QObject::connect(
     mRefreshTimer, &QTimer::timeout,

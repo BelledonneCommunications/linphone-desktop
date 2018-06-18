@@ -25,17 +25,18 @@
 #include <QThread>
 #include <QTimer>
 
-#include "../core/CoreManager.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/core/CoreManager.hpp"
 #include "MSFunctions.hpp"
 
 #include "Camera.hpp"
 
-using namespace std;
-
 // =============================================================================
 
+using namespace std;
+
 namespace {
-  constexpr int cMaxFps = 30;
+  constexpr int MaxFps = 30;
 }
 
 struct ContextInfo {
@@ -186,7 +187,7 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
   setMirrorVertically(true);
 
   mRefreshTimer = new QTimer(this);
-  mRefreshTimer->setInterval(1000 / cMaxFps);
+  mRefreshTimer->setInterval(1000 / MaxFps);
 
   QObject::connect(
     mRefreshTimer, &QTimer::timeout,

@@ -32,7 +32,6 @@ class UrlHandlers : public QObject {
 
 public:
   UrlHandlers (QObject *parent = Q_NULLPTR);
-  ~UrlHandlers () = default;
 
 public slots:
   void handleSip (const QUrl &url);

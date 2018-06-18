@@ -36,7 +36,6 @@ class TextToSpeech : public QObject {
 
 public:
   TextToSpeech (QObject *parent = Q_NULLPTR);
-  ~TextToSpeech () = default;
 
   Q_INVOKABLE void say (const QString &text);
 

@@ -20,6 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QString>
+
 #include "LinphoneUtils.hpp"
 
 // =============================================================================

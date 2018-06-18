@@ -20,13 +20,16 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/App.hpp"
+#include <QQmlApplicationEngine>
+
+#include "app/App.hpp"
 
 #include "ContactModel.hpp"
-
-using namespace std;
+#include "VcardModel.hpp"
 
 // =============================================================================
+
+using namespace std;
 
 ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphoneFriend) : QObject(parent) {
   Q_CHECK_PTR(linphoneFriend);
@@ -53,8 +56,8 @@ ContactModel::ContactModel (QObject *parent, VcardModel *vcardModel) : QObject(p
 
 void ContactModel::refreshPresence () {
   Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(
-      mLinphoneFriend->getConsolidatedPresence()
-    );
+    mLinphoneFriend->getConsolidatedPresence()
+  );
 
   emit presenceStatusChanged(status);
   emit presenceLevelChanged(Presence::getPresenceLevel(status));
@@ -160,7 +163,7 @@ void ContactModel::mergeVcardModel (VcardModel *vcardModel) {
     const QVariantMap oldAddress = vcardModel->getAddress();
     QVariantMap newAddress = vcardModel->getAddress();
 
-    static const char *attributes[4] = { "street", "locality", "postalCode", "country" };
+    constexpr const char *attributes[4] = { "street", "locality", "postalCode", "country" };
     bool needMerge = true;
 
     for (const auto &attribute : attributes)

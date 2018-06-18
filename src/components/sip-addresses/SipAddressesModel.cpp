@@ -21,16 +21,23 @@
  */
 
 #include <QDateTime>
+#include <QUrl>
 
-#include "../../utils/LinphoneUtils.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/chat/ChatModel.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contact/VcardModel.hpp"
+#include "components/contacts/ContactsListModel.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
 
 #include "SipAddressesModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
   initSipAddresses();
@@ -129,7 +136,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
 
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) const {
   const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::appStringToCoreString(sipAddress)
+      Utils::appStringToCoreString(sipAddress)
     );
 
   if (!address)
@@ -151,26 +158,26 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) const {
   shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::appStringToCoreString(sipAddress)
-    );
+    Utils::appStringToCoreString(sipAddress)
+  );
 
   if (!address)
     return QString("");
 
   address->setTransport(LinphoneUtils::stringToTransportType(transport.toUpper()));
 
-  return ::Utils::coreStringToAppString(address->asString());
+  return Utils::coreStringToAppString(address->asString());
 }
 
 // -----------------------------------------------------------------------------
 
 QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool checkUsername) {
   shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::appStringToCoreString(sipAddress)
-    );
+    Utils::appStringToCoreString(sipAddress)
+  );
 
   if (lAddress && (!checkUsername || !lAddress->getUsername().empty()))
-    return ::Utils::coreStringToAppString(lAddress->asStringUriOnly());
+    return Utils::coreStringToAppString(lAddress->asStringUriOnly());
   return QString("");
 }
 
@@ -180,14 +187,14 @@ QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
 
 bool SipAddressesModel::addressIsValid (const QString &address) {
   return !!linphone::Factory::get()->createAddress(
-    ::Utils::appStringToCoreString(address)
+    Utils::appStringToCoreString(address)
   );
 }
 
 bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
   shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      ::Utils::appStringToCoreString(sipAddress)
-    );
+    Utils::appStringToCoreString(sipAddress)
+  );
   return address && !address->getUsername().empty();
 }
 
@@ -272,7 +279,7 @@ void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QS
 }
 
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString sipAddress = ::Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
+  const QString sipAddress = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
   addOrUpdateSipAddress(sipAddress, message);
 }
 
@@ -286,7 +293,7 @@ void SipAddressesModel::handleCallStateChanged (
 
   if (state == linphone::CallStateEnd || state == linphone::CallStateError)
     addOrUpdateSipAddress(
-      ::Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()), call
+      Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()), call
     );
 }
 
@@ -347,7 +354,7 @@ void SipAddressesModel::handleAllEntriesRemoved (const QString &sipAddress) {
 
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
   addOrUpdateSipAddress(
-    ::Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly()),
+    Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly()),
     message
   );
 }
@@ -366,7 +373,7 @@ void SipAddressesModel::handleMessagesCountReset (const QString &sipAddress) {
 }
 
 void SipAddressesModel::handlerIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
-  auto it = mSipAddresses.find(::Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()));
+  auto it = mSipAddresses.find(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()));
   if (it != mSipAddresses.end()) {
     (*it)["isComposing"] = chatRoom->isRemoteComposing();
 
@@ -469,12 +476,12 @@ void SipAddressesModel::initSipAddresses () {
 
   // Get sip addresses from chatrooms.
   for (const auto &chatRoom : core->getChatRooms()) {
-    list<shared_ptr<linphone::ChatMessage> > history = chatRoom->getHistory(0);
+    list<shared_ptr<linphone::ChatMessage>> history = chatRoom->getHistory(0);
 
     if (history.size() == 0)
       continue;
 
-    QString sipAddress = ::Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
+    QString sipAddress = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
 
     QVariantMap map;
     map["sipAddress"] = sipAddress;
@@ -487,7 +494,7 @@ void SipAddressesModel::initSipAddresses () {
   // Get sip addresses from calls.
   QSet<QString> addressDone;
   for (const auto &callLog : core->getCallLogs()) {
-    const QString sipAddress = ::Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
+    const QString sipAddress = Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
 
     if (addressDone.contains(sipAddress))
       continue; // Already used.

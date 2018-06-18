@@ -25,45 +25,46 @@
 #include <QFileSelector>
 #include <QLibraryInfo>
 #include <QMenu>
+#include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
+#include <QQuickWindow>
 #include <QSystemTrayIcon>
 #include <QTimer>
 
 #include "config.h"
 
-#include "../components/Components.hpp"
-#include "../utils/LinphoneUtils.hpp"
-#include "../utils/Utils.hpp"
-
 #include "cli/Cli.hpp"
+#include "components/Components.hpp"
 #include "logger/Logger.hpp"
 #include "paths/Paths.hpp"
 #include "providers/AvatarProvider.hpp"
 #include "providers/ImageProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
+#include "utils/LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
 
 #include "App.hpp"
 
-using namespace std;
-
 // =============================================================================
 
-namespace {
-  constexpr char cDefaultLocale[] = "en";
+using namespace std;
 
-  constexpr char cLanguagePath[] = ":/languages/";
+namespace {
+  constexpr char DefaultLocale[] = "en";
+
+  constexpr char LanguagePath[] = ":/languages/";
 
   // The main windows of Linphone desktop.
-  constexpr char cQmlViewMainWindow[] = "qrc:/ui/views/App/Main/MainWindow.qml";
-  constexpr char cQmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
-  constexpr char cQmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
+  constexpr char QmlViewMainWindow[] = "qrc:/ui/views/App/Main/MainWindow.qml";
+  constexpr char QmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
+  constexpr char QmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
 
-  constexpr int cVersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
+  constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
 }
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
-  return translator.load(locale, cLanguagePath) && app.installTranslator(&translator);
+  return translator.load(locale, LanguagePath) && app.installTranslator(&translator);
 }
 
 static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
@@ -77,19 +78,19 @@ static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLine
 // -----------------------------------------------------------------------------
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
-  setWindowIcon(QIcon(WINDOW_ICON_PATH));
+  setWindowIcon(QIcon(LinphoneUtils::WindowIconPath));
 
   createParser();
   mParser->process(*this);
 
   // Initialize logger.
-  shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
+  shared_ptr<linphone::Config> config = getConfigIfExists(*mParser);
   Logger::init(config);
   if (mParser->isSet("verbose"))
     Logger::getInstance()->setVerbose(true);
 
   // List available locales.
-  for (const auto &locale : QDir(cLanguagePath).entryList())
+  for (const auto &locale : QDir(LanguagePath).entryList())
     mAvailableLocales << QLocale(locale);
 
   // Init locale.
@@ -137,7 +138,7 @@ static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
-  shared_ptr<linphone::Config> config = ::getConfigIfExists(*mParser);
+  shared_ptr<linphone::Config> config = getConfigIfExists(*mParser);
   bool mustBeIconified = false;
 
   // Destroy qml components and linphone core if necessary.
@@ -206,9 +207,9 @@ void App::initContentApp () {
   mEngine->addImportPath(":/ui/views");
 
   // Provide avatars/thumbnails providers.
-  mEngine->addImageProvider(AvatarProvider::PROVIDER_ID, new AvatarProvider());
-  mEngine->addImageProvider(ImageProvider::PROVIDER_ID, new ImageProvider());
-  mEngine->addImageProvider(ThumbnailProvider::PROVIDER_ID, new ThumbnailProvider());
+  mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
+  mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+  mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 
   mColors = new Colors(this);
   mColors->useConfig(config);
@@ -223,7 +224,7 @@ void App::initContentApp () {
 
   // Load main view.
   qInfo() << QStringLiteral("Loading main view...");
-  mEngine->load(QUrl(cQmlViewMainWindow));
+  mEngine->load(QUrl(QmlViewMainWindow));
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
@@ -264,12 +265,12 @@ QString App::getCommandArgument () {
 
 QQuickWindow *App::getCallsWindow () {
   if (CoreManager::getInstance()->getCore()->getConfig()->getInt(
-    SettingsModel::UI_SECTION, "disable_calls_window", 0
+    SettingsModel::UiSection, "disable_calls_window", 0
   ))
     return nullptr;
 
   if (!mCallsWindow)
-    mCallsWindow = ::createSubWindow(mEngine, cQmlViewCallsWindow);
+    mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
 
   return mCallsWindow;
 }
@@ -282,7 +283,7 @@ QQuickWindow *App::getMainWindow () const {
 
 QQuickWindow *App::getSettingsWindow () {
   if (!mSettingsWindow) {
-    mSettingsWindow = ::createSubWindow(mEngine, cQmlViewSettingsWindow);
+    mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
     QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
       if (visibility == QWindow::Hidden) {
         qInfo() << QStringLiteral("Update nat policy.");
@@ -382,7 +383,7 @@ void registerToolType (const char *name) {
 void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
 
-  qRegisterMetaType<std::shared_ptr<linphone::ProxyConfig> >();
+  qRegisterMetaType<shared_ptr<linphone::ProxyConfig>>();
   qRegisterMetaType<ChatModel::EntryType>();
 
   registerType<AssistantModel>("AssistantModel");
@@ -479,7 +480,7 @@ void App::setTrayIcon () {
   menu->addAction(quitAction);
 
   systemTrayIcon->setContextMenu(menu);
-  systemTrayIcon->setIcon(QIcon(WINDOW_ICON_PATH));
+  systemTrayIcon->setIcon(QIcon(LinphoneUtils::WindowIconPath));
   systemTrayIcon->setToolTip("Linphone");
   systemTrayIcon->show();
 
@@ -492,37 +493,37 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   // Try to use preferred locale.
   QString locale;
   if (config)
-    locale = ::Utils::coreStringToAppString(config->getString(SettingsModel::UI_SECTION, "locale", ""));
+    locale = Utils::coreStringToAppString(config->getString(SettingsModel::UiSection, "locale", ""));
 
-  if (!locale.isEmpty() && ::installLocale(*this, *mTranslator, QLocale(locale))) {
+  if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
     mLocale = locale;
     return;
   }
 
   // Try to use system locale.
   QLocale sysLocale = QLocale::system();
-  if (::installLocale(*this, *mTranslator, sysLocale)) {
+  if (installLocale(*this, *mTranslator, sysLocale)) {
     mLocale = sysLocale.name();
     return;
   }
 
   // Use english.
-  mLocale = cDefaultLocale;
-  if (!::installLocale(*this, *mTranslator, QLocale(mLocale)))
+  mLocale = DefaultLocale;
+  if (!installLocale(*this, *mTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
 }
 
 QString App::getConfigLocale () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getConfig()->getString(
-      SettingsModel::UI_SECTION, "locale", ""
+      SettingsModel::UiSection, "locale", ""
     )
   );
 }
 
 void App::setConfigLocale (const QString &locale) {
   CoreManager::getInstance()->getCore()->getConfig()->setString(
-    SettingsModel::UI_SECTION, "locale", ::Utils::appStringToCoreString(locale)
+    SettingsModel::UiSection, "locale", Utils::appStringToCoreString(locale)
   );
 
   emit configLocaleChanged(locale);
@@ -555,15 +556,15 @@ void App::openAppAfterInit (bool mustBeIconified) {
   // Display Assistant if it's the first time app launch.
   {
     shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
-    if (config->getInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 1)) {
+    if (config->getInt(SettingsModel::UiSection, "force_assistant_at_startup", 1)) {
       QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
-      config->setInt(SettingsModel::UI_SECTION, "force_assistant_at_startup", 0);
+      config->setInt(SettingsModel::UiSection, "force_assistant_at_startup", 0);
     }
   }
 
   #ifdef ENABLE_UPDATE_CHECK
     QTimer *timer = new QTimer(mEngine);
-    timer->setInterval(cVersionUpdateCheckInterval);
+    timer->setInterval(VersionUpdateCheckInterval);
 
     QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
     timer->start();
@@ -576,6 +577,6 @@ void App::openAppAfterInit (bool mustBeIconified) {
 
 void App::checkForUpdate () {
   CoreManager::getInstance()->getCore()->checkForUpdate(
-    ::Utils::appStringToCoreString(applicationVersion())
+    Utils::appStringToCoreString(applicationVersion())
   );
 }

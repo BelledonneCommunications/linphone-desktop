@@ -26,6 +26,7 @@
 #include <mz.h>
 #include <QDebug>
 #include <QDir>
+#include <QTimer>
 
 #include "FileExtractor.hpp"
 

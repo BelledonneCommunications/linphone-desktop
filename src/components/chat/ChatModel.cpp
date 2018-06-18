@@ -25,59 +25,59 @@
 #include <QDateTime>
 #include <QDesktopServices>
 #include <QFileInfo>
+#include <QMimeDatabase>
 #include <QTimer>
 #include <QUuid>
-#include <QMimeDatabase>
 
-#include "../../app/App.hpp"
-#include "../../app/paths/Paths.hpp"
-#include "../../app/providers/ThumbnailProvider.hpp"
-#include "../../utils/Utils.hpp"
-#include "../../utils/QExifImageHeader.h"
-#include "../core/CoreManager.hpp"
+#include "app/App.hpp"
+#include "app/paths/Paths.hpp"
+#include "app/providers/ThumbnailProvider.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/notifier/Notifier.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/QExifImageHeader.h"
+#include "utils/Utils.hpp"
 
 #include "ChatModel.hpp"
 
-#define THUMBNAIL_IMAGE_FILE_HEIGHT 100
-#define THUMBNAIL_IMAGE_FILE_WIDTH 100
-
-// Not enabled by default.
-#ifndef LIMIT_FILE_SIZE
-  #define LIMIT_FILE_SIZE 0
-#endif
-
-// In Bytes. (500)
-#define FILE_SIZE_LIMIT 524288000
+// =============================================================================
 
 using namespace std;
 
-// =============================================================================
+namespace {
+  constexpr int ThumbnailImageFileWidth = 100;
+  constexpr int ThumbnailImageFileHeight = 100;
+
+  // In Bytes.
+  constexpr qint64 FileSizeLimit = 524288000;
+}
 
 static inline QString getFileId (const shared_ptr<linphone::ChatMessage> &message) {
-  return ::Utils::coreStringToAppString(message->getAppdata()).section(':', 0, 0);
+  return Utils::coreStringToAppString(message->getAppdata()).section(':', 0, 0);
 }
 
 static inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message) {
-  return ::Utils::coreStringToAppString(message->getAppdata()).section(':', 1);
+  return Utils::coreStringToAppString(message->getAppdata()).section(':', 1);
 }
 
 static inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString path = ::getDownloadPath(message);
+  const QString path = getDownloadPath(message);
   return !path.isEmpty() && QFileInfo(path).isFile();
 }
 
 static inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  QString fileId = ::getFileId(message);
+  QString fileId = getFileId(message);
   if (!fileId.isEmpty() && !dest.contains("thumbnail"))
     dest["thumbnail"] = QStringLiteral("image://%1/%2")
-      .arg(ThumbnailProvider::PROVIDER_ID).arg(fileId);
+      .arg(ThumbnailProvider::ProviderId).arg(fileId);
 }
 
 static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
   if (!message->getAppdata().empty())
     return;
 
-  QString thumbnailPath = ::Utils::coreStringToAppString(message->getFileTransferFilepath());
+  QString thumbnailPath = Utils::coreStringToAppString(message->getFileTransferFilepath());
   QImage image(thumbnailPath);
   if (image.isNull())
     return;
@@ -88,9 +88,9 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
     rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
 
   QImage thumbnail = image.scaled(
-      THUMBNAIL_IMAGE_FILE_WIDTH, THUMBNAIL_IMAGE_FILE_HEIGHT,
-      Qt::KeepAspectRatio, Qt::SmoothTransformation
-    );
+    ThumbnailImageFileWidth, ThumbnailImageFileHeight,
+    Qt::KeepAspectRatio, Qt::SmoothTransformation
+  );
 
   if (rotation != 0) {
     QTransform transform;
@@ -109,12 +109,12 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
   QString uuid = QUuid::createUuid().toString();
   QString fileId = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
 
-  if (!thumbnail.save(::Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + fileId, "jpg", 100)) {
+  if (!thumbnail.save(Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + fileId, "jpg", 100)) {
     qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnailPath);
     return;
   }
 
-  message->setAppdata(::Utils::appStringToCoreString(fileId));
+  message->setAppdata(Utils::appStringToCoreString(fileId));
 }
 
 static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
@@ -123,7 +123,7 @@ static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMe
 
     string fileId = message->getAppdata();
     if (!fileId.empty()) {
-      QString thumbnailPath = ::Utils::coreStringToAppString(Paths::getThumbnailsDirPath() + fileId);
+      QString thumbnailPath = Utils::coreStringToAppString(Paths::getThumbnailsDirPath() + fileId);
       if (!QFile::remove(thumbnailPath))
         qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
     }
@@ -137,8 +137,6 @@ class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
 
 public:
   MessageHandlers (ChatModel *chatModel) : mChatModel(chatModel) {}
-
-  ~MessageHandlers () = default;
 
 private:
   QList<ChatEntryData>::iterator findMessageEntry (const shared_ptr<linphone::ChatMessage> &message) {
@@ -190,11 +188,11 @@ private:
 
     // File message downloaded.
     if (state == linphone::ChatMessageStateFileTransferDone && !message->isOutgoing()) {
-      ::createThumbnail(message);
-      ::fillThumbnailProperty((*it).first, message);
+      createThumbnail(message);
+      fillThumbnailProperty((*it).first, message);
 
       message->setAppdata(
-        ::Utils::appStringToCoreString(::getFileId(message)) + ':' + message->getFileTransferFilepath()
+        Utils::appStringToCoreString(getFileId(message)) + ':' + message->getFileTransferFilepath()
       );
       (*it).first["wasDownloaded"] = true;
 
@@ -284,7 +282,7 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 }
 
 QString ChatModel::getSipAddress () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     mChatRoom->getPeerAddress()->asStringUriOnly()
   );
 }
@@ -292,7 +290,7 @@ QString ChatModel::getSipAddress () const {
 void ChatModel::setSipAddress (const QString &sipAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  mChatRoom = core->getChatRoomFromUri(::Utils::appStringToCoreString(sipAddress));
+  mChatRoom = core->getChatRoomFromUri(Utils::appStringToCoreString(sipAddress));
   Q_CHECK_PTR(mChatRoom.get());
 
   handleIsComposingChanged(mChatRoom);
@@ -348,7 +346,7 @@ void ChatModel::removeAllEntries () {
 // -----------------------------------------------------------------------------
 
 void ChatModel::sendMessage (const QString &message) {
-  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(::Utils::appStringToCoreString(message));
+  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(Utils::appStringToCoreString(message));
   _message->setListener(mMessageHandlers);
 
   insertMessageAtEnd(_message);
@@ -392,13 +390,10 @@ void ChatModel::sendFileMessage (const QString &path) {
     return;
 
   qint64 fileSize = file.size();
-
-  #if LIMIT_FILE_SIZE
-    if (fileSize > FILE_SIZE_LIMIT) {
-      qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(FILE_SIZE_LIMIT);
-      return;
-    }
-  #endif
+  if (fileSize > FileSizeLimit) {
+    qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(FileSizeLimit);
+    return;
+  }
 
   shared_ptr<linphone::Content> content = CoreManager::getInstance()->getCore()->createContent();
   {
@@ -407,18 +402,18 @@ void ChatModel::sendFileMessage (const QString &path) {
       qWarning() << QStringLiteral("Unable to get supported mime type for: `%1`.").arg(path);
       return;
     }
-    content->setType(::Utils::appStringToCoreString(mimeType[0]));
-    content->setSubtype(::Utils::appStringToCoreString(mimeType[1]));
+    content->setType(Utils::appStringToCoreString(mimeType[0]));
+    content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
   }
 
   content->setSize(size_t(fileSize));
-  content->setName(::Utils::appStringToCoreString(QFileInfo(file).fileName()));
+  content->setName(Utils::appStringToCoreString(QFileInfo(file).fileName()));
 
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
-  message->setFileTransferFilepath(::Utils::appStringToCoreString(path));
+  message->setFileTransferFilepath(Utils::appStringToCoreString(path));
   message->setListener(mMessageHandlers);
 
-  ::createThumbnail(message);
+  createThumbnail(message);
 
   insertMessageAtEnd(message);
   mChatRoom->sendChatMessage(message);
@@ -448,7 +443,7 @@ void ChatModel::downloadFile (int id) {
   }
 
   bool soFarSoGood;
-  const QString safeFilePath = ::Utils::getSafeFilePath(
+  const QString safeFilePath = Utils::getSafeFilePath(
       QStringLiteral("%1%2")
       .arg(CoreManager::getInstance()->getSettingsModel()->getDownloadFolder())
       .arg(entry.first["fileName"].toString()),
@@ -460,7 +455,7 @@ void ChatModel::downloadFile (int id) {
     return;
   }
 
-  message->setFileTransferFilepath(::Utils::appStringToCoreString(safeFilePath));
+  message->setFileTransferFilepath(Utils::appStringToCoreString(safeFilePath));
   message->setListener(mMessageHandlers);
 
   if (message->downloadFile() < 0)
@@ -478,7 +473,7 @@ void ChatModel::openFile (int id, bool showDirectory) {
     return;
   }
 
-  QFileInfo info(::getDownloadPath(message));
+  QFileInfo info(getDownloadPath(message));
   QDesktopServices::openUrl(
     QUrl(QStringLiteral("file:///%1").arg(showDirectory ? info.absolutePath() : info.absoluteFilePath()))
   );
@@ -528,17 +523,17 @@ const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
 void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
   dest["type"] = EntryType::MessageEntry;
   dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
-  dest["content"] = ::Utils::coreStringToAppString(message->getText());
+  dest["content"] = Utils::coreStringToAppString(message->getText());
   dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessageStateIdle;
   dest["status"] = message->getState();
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
     dest["fileSize"] = quint64(content->getSize());
-    dest["fileName"] = ::Utils::coreStringToAppString(content->getName());
+    dest["fileName"] = Utils::coreStringToAppString(content->getName());
     dest["wasDownloaded"] = ::fileWasDownloaded(message);
 
-    ::fillThumbnailProperty(dest, message);
+    fillThumbnailProperty(dest, message);
   }
 }
 
@@ -570,7 +565,7 @@ void ChatModel::removeEntry (ChatEntryData &pair) {
   switch (type) {
     case ChatModel::MessageEntry: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(pair.second);
-      ::removeFileMessageThumbnail(message);
+      removeFileMessageThumbnail(message);
       mChatRoom->deleteMessage(message);
       break;
     }

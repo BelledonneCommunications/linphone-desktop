@@ -26,6 +26,13 @@
 #include <QTimer>
 
 #include "app/paths/Paths.hpp"
+#include "components/calls/CallsListModel.hpp"
+#include "components/chat/ChatModel.hpp"
+#include "components/contact/VcardModel.hpp"
+#include "components/contacts/ContactsListModel.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
 
 #if defined(Q_OS_LINUX)
@@ -36,6 +43,7 @@
   #include "messages-count-notifier/MessagesCountNotifierWindows.hpp"
 #endif // if defined(Q_OS_LINUX)
 
+#include "CoreHandlers.hpp"
 #include "CoreManager.hpp"
 
 // =============================================================================
@@ -43,21 +51,21 @@
 using namespace std;
 
 namespace {
-  constexpr int cCbsCallInterval = 20;
+  constexpr int CbsCallInterval = 20;
 
-  constexpr char cRcVersionName[] = "rc_version";
-  constexpr int cRcVersionCurrent = 1;
+  constexpr char RcVersionName[] = "rc_version";
+  constexpr int RcVersionCurrent = 1;
 
   // TODO: Remove hardcoded values. Use config directly.
-  constexpr char cLinphoneDomain[] = "sip.linphone.org";
-  constexpr char cDefaultContactParameters[] = "message-expires=604800";
-  constexpr int cDefaultExpires = 3600;
-  constexpr char cDownloadUrl[] = "https://www.linphone.org/technical-corner/linphone/downloads";
+  constexpr char LinphoneDomain[] = "sip.linphone.org";
+  constexpr char DefaultContactParameters[] = "message-expires=604800";
+  constexpr int DefaultExpires = 3600;
+  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone/downloads";
 }
 
 // -----------------------------------------------------------------------------
 
-CoreManager *CoreManager::mInstance = nullptr;
+CoreManager *CoreManager::mInstance;
 
 CoreManager::CoreManager (QObject *parent, const QString &configPath) :
   QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
@@ -140,7 +148,7 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
   mInstance = new CoreManager(parent, configPath);
 
   QTimer *timer = mInstance->mCbsTimer = new QTimer(mInstance);
-  timer->setInterval(cCbsCallInterval);
+  timer->setInterval(CbsCallInterval);
 
   QObject::connect(timer, &QTimer::timeout, mInstance, &CoreManager::iterate);
 }
@@ -253,27 +261,27 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
 void CoreManager::migrate () {
   shared_ptr<linphone::Config> config = mCore->getConfig();
-  int rcVersion = config->getInt(SettingsModel::UI_SECTION, cRcVersionName, 0);
-  if (rcVersion == cRcVersionCurrent)
+  int rcVersion = config->getInt(SettingsModel::UiSection, RcVersionName, 0);
+  if (rcVersion == RcVersionCurrent)
     return;
-  if (rcVersion > cRcVersionCurrent) {
+  if (rcVersion > RcVersionCurrent) {
     qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
-      .arg(rcVersion).arg(cRcVersionCurrent);
+      .arg(rcVersion).arg(RcVersionCurrent);
     return;
   }
 
   qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
-    .arg(rcVersion).arg(cRcVersionCurrent);
+    .arg(rcVersion).arg(RcVersionCurrent);
 
   // Add message_expires param on old proxy configs.
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
-    if (proxyConfig->getDomain() == cLinphoneDomain) {
-      proxyConfig->setContactParameters(cDefaultContactParameters);
-      proxyConfig->setExpires(cDefaultExpires);
+    if (proxyConfig->getDomain() == LinphoneDomain) {
+      proxyConfig->setContactParameters(DefaultContactParameters);
+      proxyConfig->setExpires(DefaultExpires);
       proxyConfig->done();
     }
   }
-  config->setInt(SettingsModel::UI_SECTION, cRcVersionName, cRcVersionCurrent);
+  config->setInt(SettingsModel::UiSection, RcVersionName, RcVersionCurrent);
 }
 
 // -----------------------------------------------------------------------------
@@ -307,5 +315,5 @@ void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploa
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getDownloadUrl () {
-  return cDownloadUrl;
+  return DownloadUrl;
 }

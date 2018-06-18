@@ -20,13 +20,13 @@
  *      Author: Ghislain MARY
  */
 
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
 
 #include "OwnPresenceModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 Presence::PresenceLevel OwnPresenceModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(getPresenceStatus());
@@ -60,10 +60,10 @@ static inline void addBuildStatus (QVariantList &list, Presence::PresenceStatus 
 QVariantList OwnPresenceModel::getStatuses () const {
   QVariantList statuses;
 
-  ::addBuildStatus(statuses, Presence::Online);
-  ::addBuildStatus(statuses, Presence::Busy);
-  ::addBuildStatus(statuses, Presence::DoNotDisturb);
-  ::addBuildStatus(statuses, Presence::Offline);
+  addBuildStatus(statuses, Presence::Online);
+  addBuildStatus(statuses, Presence::Busy);
+  addBuildStatus(statuses, Presence::DoNotDisturb);
+  addBuildStatus(statuses, Presence::Offline);
 
   return statuses;
 }

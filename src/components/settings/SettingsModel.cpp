@@ -34,11 +34,11 @@
 using namespace std;
 
 namespace {
-  constexpr char cDefaultRlsUri[] = "sips:rls@sip.linphone.org";
-  constexpr char cDefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
+  constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
+  constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 }
 
-const string SettingsModel::UI_SECTION("ui");
+const string SettingsModel::UiSection("ui");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
   mConfig = CoreManager::getInstance()->getCore()->getConfig();
@@ -65,10 +65,9 @@ QStringList SettingsModel::getPlaybackDevices () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QStringList list;
 
-  for (const auto &device : core->getSoundDevices()) {
+  for (const auto &device : core->getSoundDevices())
     if (core->soundDeviceCanPlayback(device))
       list << Utils::coreStringToAppString(device);
-  }
 
   return list;
 }
@@ -225,17 +224,17 @@ static inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const l
 QVariantList SettingsModel::getSupportedVideoDefinitions () const {
   QVariantList list;
   for (const auto &definition : linphone::Factory::get()->getSupportedVideoDefinitions())
-    list << ::createMapFromVideoDefinition(definition);
+    list << createMapFromVideoDefinition(definition);
   return list;
 }
 
 QVariantMap SettingsModel::getVideoDefinition () const {
-  return ::createMapFromVideoDefinition(CoreManager::getInstance()->getCore()->getPreferredVideoDefinition());
+  return createMapFromVideoDefinition(CoreManager::getInstance()->getCore()->getPreferredVideoDefinition());
 }
 
 void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
   CoreManager::getInstance()->getCore()->setPreferredVideoDefinition(
-    definition.value("__definition").value<shared_ptr<const linphone::VideoDefinition> >()->clone()
+    definition.value("__definition").value<shared_ptr<const linphone::VideoDefinition>>()->clone()
   );
 
   emit videoDefinitionChanged(definition);
@@ -250,66 +249,66 @@ bool SettingsModel::getVideoSupported () const {
 // =============================================================================
 
 int SettingsModel::getAutoAnswerDelay () const {
-  return mConfig->getInt(UI_SECTION, "auto_answer_delay", 0);
+  return mConfig->getInt(UiSection, "auto_answer_delay", 0);
 }
 
 void SettingsModel::setAutoAnswerDelay (int delay) {
-  mConfig->setInt(UI_SECTION, "auto_answer_delay", delay);
+  mConfig->setInt(UiSection, "auto_answer_delay", delay);
   emit autoAnswerDelayChanged(delay);
 }
 
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getAutoAnswerStatus () const {
-  return !!mConfig->getInt(UI_SECTION, "auto_answer", 0);
+  return !!mConfig->getInt(UiSection, "auto_answer", 0);
 }
 
 void SettingsModel::setAutoAnswerStatus (bool status) {
-  mConfig->setInt(UI_SECTION, "auto_answer", status);
+  mConfig->setInt(UiSection, "auto_answer", status);
   emit autoAnswerStatusChanged(status);
 }
 
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getAutoAnswerVideoStatus () const {
-  return !!mConfig->getInt(UI_SECTION, "auto_answer_with_video", 0);
+  return !!mConfig->getInt(UiSection, "auto_answer_with_video", 0);
 }
 
 void SettingsModel::setAutoAnswerVideoStatus (bool status) {
-  mConfig->setInt(UI_SECTION, "auto_answer_with_video", status);
+  mConfig->setInt(UiSection, "auto_answer_with_video", status);
   emit autoAnswerVideoStatusChanged(status);
 }
 
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getCallRecorderEnabled () const {
-  return !!mConfig->getInt(UI_SECTION, "call_recorder_enabled", 1);
+  return !!mConfig->getInt(UiSection, "call_recorder_enabled", 1);
 }
 
 void SettingsModel::setCallRecorderEnabled (bool status) {
-  mConfig->setInt(UI_SECTION, "call_recorder_enabled", status);
+  mConfig->setInt(UiSection, "call_recorder_enabled", status);
   emit callRecorderEnabledChanged(status);
 }
 
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getChatEnabled () const {
-  return !!mConfig->getInt(UI_SECTION, "chat_enabled", 1);
+  return !!mConfig->getInt(UiSection, "chat_enabled", 1);
 }
 
 void SettingsModel::setChatEnabled (bool status) {
-  mConfig->setInt(UI_SECTION, "chat_enabled", status);
+  mConfig->setInt(UiSection, "chat_enabled", status);
   emit chatEnabledChanged(status);
 }
 
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getChatNotificationSoundEnabled () const {
-  return !!mConfig->getInt(UI_SECTION, "chat_sound_notification_enabled", 1);
+  return !!mConfig->getInt(UiSection, "chat_sound_notification_enabled", 1);
 }
 
 void SettingsModel::setChatNotificationSoundEnabled (bool status) {
-  mConfig->setInt(UI_SECTION, "chat_sound_notification_enabled", status);
+  mConfig->setInt(UiSection, "chat_sound_notification_enabled", status);
   emit chatNotificationSoundEnabledChanged(status);
 }
 
@@ -317,12 +316,12 @@ void SettingsModel::setChatNotificationSoundEnabled (bool status) {
 
 QString SettingsModel::getChatNotificationSoundPath () const {
   static const string defaultFile = linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav";
-  return Utils::coreStringToAppString(mConfig->getString(UI_SECTION, "chat_sound_notification_file", defaultFile));
+  return Utils::coreStringToAppString(mConfig->getString(UiSection, "chat_sound_notification_file", defaultFile));
 }
 
 void SettingsModel::setChatNotificationSoundPath (const QString &path) {
   QString cleanedPath = QDir::cleanPath(path);
-  mConfig->setString(UI_SECTION, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
+  mConfig->setString(UiSection, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
   emit chatNotificationSoundPathChanged(cleanedPath);
 }
 
@@ -358,13 +357,13 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
   QVariantList list;
 
   if (core->mediaEncryptionSupported(linphone::MediaEncryptionDTLS))
-    list << ::buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
+    list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
 
   if (core->mediaEncryptionSupported(linphone::MediaEncryptionSRTP))
-    list << ::buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
+    list << buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
 
   if (core->mediaEncryptionSupported(linphone::MediaEncryptionZRTP))
-    list << ::buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
+    list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
 
   return list;
 }
@@ -706,12 +705,12 @@ void SettingsModel::setDscpVideo (int dscp) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getRlsUriEnabled () const {
-  return !!mConfig->getInt(UI_SECTION, "rls_uri_enabled", true);
+  return !!mConfig->getInt(UiSection, "rls_uri_enabled", true);
 }
 
 void SettingsModel::setRlsUriEnabled (bool status) {
-  mConfig->setInt(UI_SECTION, "rls_uri_enabled", status);
-  mConfig->setString("sip", "rls_uri", status ? cDefaultRlsUri : "");
+  mConfig->setInt(UiSection, "rls_uri_enabled", status);
+  mConfig->setString("sip", "rls_uri", status ? DefaultRlsUri : "");
   emit rlsUriEnabledChanged(status);
 }
 
@@ -720,7 +719,7 @@ static string getRlsUriDomain () {
   if (!domain.empty())
     return domain;
 
-  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(cDefaultRlsUri);
+  shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(DefaultRlsUri);
   Q_CHECK_PTR(linphoneAddress);
   domain = linphoneAddress->getDomain();
   return domain;
@@ -737,7 +736,7 @@ void SettingsModel::configureRlsUri () {
   const string domain = getRlsUriDomain();
   for (const auto &proxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
     if (proxyConfig->getDomain() == domain) {
-      mConfig->setString("sip", "rls_uri", cDefaultRlsUri);
+      mConfig->setString("sip", "rls_uri", DefaultRlsUri);
       return;
     }
 
@@ -752,7 +751,7 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 
   const string domain = getRlsUriDomain();
   if (proxyConfig->getDomain() == domain) {
-    mConfig->setString("sip", "rls_uri", cDefaultRlsUri);
+    mConfig->setString("sip", "rls_uri", DefaultRlsUri);
     return;
   }
 
@@ -766,14 +765,14 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 QString SettingsModel::getSavedScreenshotsFolder () const {
   return QDir::cleanPath(
     Utils::coreStringToAppString(
-      mConfig->getString(UI_SECTION, "saved_screenshots_folder", Paths::getCapturesDirPath())
+      mConfig->getString(UiSection, "saved_screenshots_folder", Paths::getCapturesDirPath())
     )
   ) + QDir::separator();
 }
 
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-  mConfig->setString(UI_SECTION, "saved_screenshots_folder", Utils::appStringToCoreString(cleanedFolder));
+  mConfig->setString(UiSection, "saved_screenshots_folder", Utils::appStringToCoreString(cleanedFolder));
   emit savedScreenshotsFolderChanged(cleanedFolder);
 }
 
@@ -782,14 +781,14 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 QString SettingsModel::getSavedVideosFolder () const {
   return QDir::cleanPath(
     Utils::coreStringToAppString(
-      mConfig->getString(UI_SECTION, "saved_videos_folder", Paths::getCapturesDirPath())
+      mConfig->getString(UiSection, "saved_videos_folder", Paths::getCapturesDirPath())
     )
   ) + QDir::separator();
 }
 
 void SettingsModel::setSavedVideosFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-  mConfig->setString(UI_SECTION, "saved_videos_folder", Utils::appStringToCoreString(cleanedFolder));
+  mConfig->setString(UiSection, "saved_videos_folder", Utils::appStringToCoreString(cleanedFolder));
   emit savedVideosFolderChanged(cleanedFolder);
 }
 
@@ -798,14 +797,14 @@ void SettingsModel::setSavedVideosFolder (const QString &folder) {
 QString SettingsModel::getDownloadFolder () const {
   return QDir::cleanPath(
     Utils::coreStringToAppString(
-      mConfig->getString(UI_SECTION, "download_folder", Paths::getDownloadDirPath())
+      mConfig->getString(UiSection, "download_folder", Paths::getDownloadDirPath())
     )
   ) + QDir::separator();
 }
 
 void SettingsModel::setDownloadFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-  mConfig->setString(UI_SECTION, "download_folder", Utils::appStringToCoreString(cleanedFolder));
+  mConfig->setString(UiSection, "download_folder", Utils::appStringToCoreString(cleanedFolder));
   emit downloadFolderChanged(cleanedFolder);
 }
 
@@ -825,11 +824,11 @@ void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getExitOnClose () const {
-  return !!mConfig->getInt(UI_SECTION, "exit_on_close", 0);
+  return !!mConfig->getInt(UiSection, "exit_on_close", 0);
 }
 
 void SettingsModel::setExitOnClose (bool value) {
-  mConfig->setInt(UI_SECTION, "exit_on_close", value);
+  mConfig->setInt(UiSection, "exit_on_close", value);
   emit exitOnCloseChanged(value);
 }
 
@@ -844,7 +843,7 @@ QString SettingsModel::getLogsFolder () const {
 void SettingsModel::setLogsFolder (const QString &folder) {
   // Do not update path in linphone core.
   // Just update the config file.
-  mConfig->setString(UI_SECTION, "logs_folder", Utils::appStringToCoreString(folder));
+  mConfig->setString(UiSection, "logs_folder", Utils::appStringToCoreString(folder));
 
   emit logsFolderChanged(folder);
 }
@@ -872,7 +871,7 @@ bool SettingsModel::getLogsEnabled () const {
 }
 
 void SettingsModel::setLogsEnabled (bool status) {
-  mConfig->setInt(UI_SECTION, "logs_enabled", status);
+  mConfig->setInt(UiSection, "logs_enabled", status);
   Logger::getInstance()->enable(status);
   emit logsEnabledChanged(status);
 }
@@ -881,12 +880,12 @@ void SettingsModel::setLogsEnabled (bool status) {
 
 QString SettingsModel::getLogsEmail () const {
   return Utils::coreStringToAppString(
-    mConfig->getString(UI_SECTION, "logs_email", cDefaultLogsEmail)
+    mConfig->getString(UiSection, "logs_email", DefaultLogsEmail)
   );
 }
 
 void SettingsModel::setLogsEmail (const QString &email) {
-  mConfig->setString(UI_SECTION, "logs_email", Utils::appStringToCoreString(email));
+  mConfig->setString(UiSection, "logs_email", Utils::appStringToCoreString(email));
   emit logsEmailChanged(email);
 }
 
@@ -894,19 +893,19 @@ void SettingsModel::setLogsEmail (const QString &email) {
 
 QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {
   return Utils::coreStringToAppString(config
-    ? config->getString(UI_SECTION, "logs_folder", Paths::getLogsDirPath())
+    ? config->getString(UiSection, "logs_folder", Paths::getLogsDirPath())
     : Paths::getLogsDirPath());
 }
 
 bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) {
-  return config ? config->getInt(UI_SECTION, "logs_enabled", false) : false;
+  return config ? config->getInt(UiSection, "logs_enabled", false) : false;
 }
 
 // ---------------------------------------------------------------------------
 
 bool SettingsModel::getDeveloperSettingsEnabled () const {
   #ifdef DEBUG
-    return !!mConfig->getInt(UI_SECTION, "developer_settings", 0);
+    return !!mConfig->getInt(UiSection, "developer_settings", 0);
   #else
     return false;
   #endif // ifdef DEBUG
@@ -914,7 +913,7 @@ bool SettingsModel::getDeveloperSettingsEnabled () const {
 
 void SettingsModel::setDeveloperSettingsEnabled (bool status) {
   #ifdef DEBUG
-    mConfig->setInt(UI_SECTION, "developer_settings", status);
+    mConfig->setInt(UiSection, "developer_settings", status);
     emit developerSettingsEnabledChanged(status);
   #else
     qWarning() << QStringLiteral("Unable to change developer settings mode in release version.");

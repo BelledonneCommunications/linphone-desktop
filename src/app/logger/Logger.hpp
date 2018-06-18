@@ -36,8 +36,6 @@ namespace linphone {
 
 class Logger {
 public:
-  ~Logger () = default;
-
   bool isVerbose () const {
     return mVerbose;
   }

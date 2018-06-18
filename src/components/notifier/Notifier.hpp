@@ -23,13 +23,19 @@
 #ifndef NOTIFIER_H_
 #define NOTIFIER_H_
 
-#include <linphone++/linphone.hh>
+#include <memory>
+
 #include <QObject>
 
 // =============================================================================
 
 class QMutex;
 class QQmlComponent;
+
+namespace linphone {
+  class Call;
+  class ChatMessage;
+}
 
 class Notifier : public QObject {
   Q_OBJECT;
@@ -77,7 +83,7 @@ private:
   QMutex *mMutex = nullptr;
   QQmlComponent **mComponents = nullptr;
 
-  static const QHash<int, Notification> mNotifications;
+  static const QHash<int, Notification> Notifications;
 };
 
 #endif // NOTIFIER_H_

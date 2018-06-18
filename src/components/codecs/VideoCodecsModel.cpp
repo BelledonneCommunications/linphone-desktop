@@ -37,23 +37,23 @@
 using namespace std;
 
 namespace {
-  constexpr char cH264Description[] = "Provided by CISCO SYSTEM,INC";
+  constexpr char H264Description[] = "Provided by CISCO SYSTEM,INC";
 
   #ifdef Q_OS_LINUX
-    constexpr char cLibraryExtension[] = "so";
-    constexpr char cH264InstallName[] = "libopenh264.so";
+    constexpr char LibraryExtension[] = "so";
+    constexpr char H264InstallName[] = "libopenh264.so";
     #ifdef Q_PROCESSOR_X86_64
-      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux64.4.so.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux64.4.so.bz2";
     #else
-      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux32.4.so.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.7.0-linux32.4.so.bz2";
     #endif // ifdef Q_PROCESSOR_X86_64
   #elif defined(Q_OS_WIN)
-    constexpr char cLibraryExtension[] = "dll";
-    constexpr char cH264InstallName[] = "openh264.dll";
+    constexpr char LibraryExtension[] = "dll";
+    constexpr char H264InstallName[] = "openh264.dll";
     #ifdef Q_OS_WIN64
-      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win64.dll.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win64.dll.bz2";
     #else
-      constexpr char cPluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win32.dll.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.7.0-win32.dll.bz2";
     #endif // ifdef Q_OS_WIN64
   #endif // ifdef Q_OS_LINUX
 }
@@ -127,7 +127,7 @@ static bool downloadUpdatableCodec (
 
 void VideoCodecsModel::updateCodecs () {
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-    static const QString codecSuffix = QStringLiteral(".%1").arg(cLibraryExtension);
+    static const QString codecSuffix = QStringLiteral(".%1").arg(LibraryExtension);
 
     QDirIterator it(Utils::coreStringToAppString(Paths::getCodecsDirPath()));
     while (it.hasNext()) {
@@ -147,7 +147,7 @@ void VideoCodecsModel::updateCodecs () {
 void VideoCodecsModel::downloadUpdatableCodecs (QObject *parent) {
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
     QString codecsFolder = Utils::coreStringToAppString(Paths::getCodecsDirPath());
-    downloadUpdatableCodec(parent, codecsFolder, "H264", cPluginUrlH264, cH264InstallName);
+    downloadUpdatableCodec(parent, codecsFolder, "H264", PluginUrlH264, H264InstallName);
   #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }
 
@@ -165,7 +165,7 @@ void VideoCodecsModel::load () {
     QDirIterator it(Utils::coreStringToAppString(Paths::getCodecsDirPath()));
     while (it.hasNext()) {
       QFileInfo info(it.next());
-      if (info.suffix() == cLibraryExtension)
+      if (info.suffix() == LibraryExtension)
         QLibrary(info.filePath()).load();
     }
     core->reloadMsPlugins("");
@@ -181,7 +181,7 @@ void VideoCodecsModel::load () {
     if (find_if(codecs.begin(), codecs.end(), [](const shared_ptr<linphone::PayloadType> &codec) {
       return codec->getMimeType() == "H264";
     }) == codecs.end())
-      addDownloadableCodec("H264", cH264Description, cPluginUrlH264, cH264InstallName);
+      addDownloadableCodec("H264", H264Description, PluginUrlH264, H264InstallName);
   #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }
 

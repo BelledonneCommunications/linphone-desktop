@@ -42,7 +42,6 @@ class ConferenceModel : public QSortFilterProxyModel {
 
 public:
   ConferenceModel (QObject *parent = Q_NULLPTR);
-  ~ConferenceModel () = default;
 
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;

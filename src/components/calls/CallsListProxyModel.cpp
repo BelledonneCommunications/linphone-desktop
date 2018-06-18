@@ -20,20 +20,22 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../core/CoreManager.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/core/CoreManager.hpp"
 
+#include "CallsListModel.hpp"
 #include "CallsListProxyModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 CallsListProxyModel::CallsListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   CallsListModel *callsListModel = CoreManager::getInstance()->getCallsListModel();
 
   QObject::connect(callsListModel, &CallsListModel::callRunning, this, [this](int index, CallModel *callModel) {
-      emit callRunning(index, callModel);
-    });
+    emit callRunning(index, callModel);
+  });
 
   setSourceModel(callsListModel);
   sort(0);

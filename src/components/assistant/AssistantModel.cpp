@@ -20,18 +20,22 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/LinphoneUtils.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
 
 #include "AssistantModel.hpp"
 
-#define DEFAULT_XMLRPC_URL "https://subscribe.linphone.org:444/wizard.php"
+// =============================================================================
 
 using namespace std;
 
-// =============================================================================
+namespace {
+  constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
+}
 
 class AssistantModel::Handlers : public linphone::AccountCreatorListener {
 public:
@@ -144,7 +148,7 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   mAccountCreator = core->createAccountCreator(
-      core->getConfig()->getString("assistant", "xmlrpc_url", DEFAULT_XMLRPC_URL)
+      core->getConfig()->getString("assistant", "xmlrpc_url", DefaultXmlrpcUri)
     );
   mAccountCreator->setListener(mHandlers);
 }
@@ -196,25 +200,25 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
   // Server address.
   {
     shared_ptr<linphone::Address> address = factory->createAddress(
-        ::Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain))
-      );
+      Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain))
+    );
     address->setTransport(LinphoneUtils::stringToTransportType(map["transport"].toString()));
 
     if (proxyConfig->setServerAddr(address->asString())) {
       qWarning() << QStringLiteral("Unable to add server address: `%1`.")
-        .arg(::Utils::coreStringToAppString(address->asString()));
+        .arg(Utils::coreStringToAppString(address->asString()));
       return false;
     }
   }
 
   // Sip Address.
-  shared_ptr<linphone::Address> address = factory->createAddress(::Utils::appStringToCoreString(sipAddress));
+  shared_ptr<linphone::Address> address = factory->createAddress(Utils::appStringToCoreString(sipAddress));
   if (!address) {
     qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(sipAddress);
     return false;
   }
 
-  address->setDisplayName(::Utils::appStringToCoreString(map["displayName"].toString()));
+  address->setDisplayName(Utils::appStringToCoreString(map["displayName"].toString()));
   proxyConfig->setIdentityAddress(address);
 
   // AuthInfo.
@@ -222,7 +226,7 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
     factory->createAuthInfo(
       address->getUsername(), // Username.
       "", // User ID.
-      ::Utils::appStringToCoreString(map["password"].toString()), // Password.
+      Utils::appStringToCoreString(map["password"].toString()), // Password.
       "", // HA1.
       "", // Realm.
       address->getDomain() // Domain.
@@ -235,14 +239,14 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getEmail () const {
-  return ::Utils::coreStringToAppString(mAccountCreator->getEmail());
+  return Utils::coreStringToAppString(mAccountCreator->getEmail());
 }
 
 void AssistantModel::setEmail (const QString &email) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (mAccountCreator->setEmail(::Utils::appStringToCoreString(email))) {
+  switch (mAccountCreator->setEmail(Utils::appStringToCoreString(email))) {
     case linphone::AccountCreatorEmailStatusOk:
       break;
     case linphone::AccountCreatorEmailStatusMalformed:
@@ -259,14 +263,14 @@ void AssistantModel::setEmail (const QString &email) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getPassword () const {
-  return ::Utils::coreStringToAppString(mAccountCreator->getPassword());
+  return Utils::coreStringToAppString(mAccountCreator->getPassword());
 }
 
 void AssistantModel::setPassword (const QString &password) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (mAccountCreator->setPassword(::Utils::appStringToCoreString(password))) {
+  switch (mAccountCreator->setPassword(Utils::appStringToCoreString(password))) {
     case linphone::AccountCreatorPasswordStatusOk:
       break;
     case linphone::AccountCreatorPasswordStatusTooShort:
@@ -277,11 +281,11 @@ void AssistantModel::setPassword (const QString &password) {
       break;
     case linphone::AccountCreatorPasswordStatusInvalidCharacters:
       error = tr("passwordStatusInvalidCharacters")
-        .arg(::Utils::coreStringToAppString(config->getString("assistant", "password_regex", "")));
+        .arg(Utils::coreStringToAppString(config->getString("assistant", "password_regex", "")));
       break;
     case linphone::AccountCreatorPasswordStatusMissingCharacters:
       error = tr("passwordStatusMissingCharacters")
-        .arg(::Utils::coreStringToAppString(config->getString("assistant", "missing_characters", "")));
+        .arg(Utils::coreStringToAppString(config->getString("assistant", "missing_characters", "")));
       break;
   }
 
@@ -302,14 +306,14 @@ void AssistantModel::setCountryCode (const QString &countryCode) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getPhoneNumber () const {
-  return ::Utils::coreStringToAppString(mAccountCreator->getPhoneNumber());
+  return Utils::coreStringToAppString(mAccountCreator->getPhoneNumber());
 }
 
 void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
   shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
   QString error;
 
-  switch (mAccountCreator->setPhoneNumber(::Utils::appStringToCoreString(phoneNumber), ::Utils::appStringToCoreString(mCountryCode))) {
+  switch (mAccountCreator->setPhoneNumber(Utils::appStringToCoreString(phoneNumber), Utils::appStringToCoreString(mCountryCode))) {
     case linphone::AccountCreatorPhoneNumberStatusOk:
       break;
     case linphone::AccountCreatorPhoneNumberStatusInvalid:
@@ -334,14 +338,14 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getUsername () const {
-  return ::Utils::coreStringToAppString(mAccountCreator->getUsername());
+  return Utils::coreStringToAppString(mAccountCreator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {
   emit usernameChanged(
     username,
     mapAccountCreatorUsernameStatusToString(
-      mAccountCreator->setUsername(::Utils::appStringToCoreString(username))
+      mAccountCreator->setUsername(Utils::appStringToCoreString(username))
     )
   );
 }
@@ -349,14 +353,14 @@ void AssistantModel::setUsername (const QString &username) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getDisplayName () const {
-  return ::Utils::coreStringToAppString(mAccountCreator->getDisplayName());
+  return Utils::coreStringToAppString(mAccountCreator->getDisplayName());
 }
 
 void AssistantModel::setDisplayName (const QString &displayName) {
   emit displayNameChanged(
     displayName,
     mapAccountCreatorUsernameStatusToString(
-      mAccountCreator->setDisplayName(::Utils::appStringToCoreString(displayName))
+      mAccountCreator->setDisplayName(Utils::appStringToCoreString(displayName))
     )
   );
 }
@@ -364,11 +368,11 @@ void AssistantModel::setDisplayName (const QString &displayName) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getActivationCode () const {
-  return ::Utils::coreStringToAppString(mAccountCreator->getActivationCode());
+  return Utils::coreStringToAppString(mAccountCreator->getActivationCode());
 }
 
 void AssistantModel::setActivationCode (const QString &activationCode) {
-  mAccountCreator->setActivationCode(::Utils::appStringToCoreString(activationCode));
+  mAccountCreator->setActivationCode(Utils::appStringToCoreString(activationCode));
   emit activationCodeChanged(activationCode);
 }
 
@@ -381,11 +385,11 @@ QString AssistantModel::getConfigFilename () const {
 void AssistantModel::setConfigFilename (const QString &configFilename) {
   mConfigFilename = configFilename;
 
-  QString configPath = ::Utils::coreStringToAppString(Paths::getAssistantConfigDirPath()) + configFilename;
+  QString configPath = Utils::coreStringToAppString(Paths::getAssistantConfigDirPath()) + configFilename;
   qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(configPath);
 
   CoreManager::getInstance()->getCore()->getConfig()->loadFromXmlFile(
-    ::Utils::appStringToCoreString(configPath)
+    Utils::appStringToCoreString(configPath)
   );
 
   emit configFilenameChanged(configFilename);
@@ -408,7 +412,7 @@ QString AssistantModel::mapAccountCreatorUsernameStatusToString (linphone::Accou
       break;
     case linphone::AccountCreatorUsernameStatusInvalidCharacters:
       error = tr("usernameStatusInvalidCharacters")
-        .arg(::Utils::coreStringToAppString(config->getString("assistant", "username_regex", "")));
+        .arg(Utils::coreStringToAppString(config->getString("assistant", "username_regex", "")));
       break;
     case linphone::AccountCreatorUsernameStatusInvalid:
       error = tr("usernameStatusInvalid");

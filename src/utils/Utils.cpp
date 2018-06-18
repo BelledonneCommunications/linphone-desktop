@@ -27,7 +27,7 @@
 // =============================================================================
 
 namespace {
-  constexpr int cSafeFilePathLimit = 100;
+  constexpr int SafeFilePathLimit = 100;
 }
 
 char *Utils::rstrstr (const char *a, const char *b) {
@@ -58,7 +58,7 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
   const QString prefix = QStringLiteral("%1/%2").arg(info.absolutePath()).arg(info.baseName());
   const QString ext = info.completeSuffix();
 
-  for (int i = 1; i < cSafeFilePathLimit; ++i) {
+  for (int i = 1; i < SafeFilePathLimit; ++i) {
     QString safePath = QStringLiteral("%1 (%3).%4").arg(prefix).arg(i).arg(ext);
     if (!QFileInfo::exists(safePath))
       return safePath;

@@ -30,11 +30,10 @@
 class ImageProvider : public QQuickImageProvider {
 public:
   ImageProvider ();
-  ~ImageProvider () = default;
 
   QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
 
-  static const QString PROVIDER_ID;
+  static const QString ProviderId;
 };
 
 #endif // IMAGE_PROVIDER_H_

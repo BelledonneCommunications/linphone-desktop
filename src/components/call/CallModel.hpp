@@ -74,7 +74,6 @@ public:
     CallStatusOutgoing,
     CallStatusPaused
   };
-
   Q_ENUM(CallStatus);
 
   enum CallEncryption {
@@ -83,7 +82,6 @@ public:
     CallEncryptionSrtp = linphone::MediaEncryptionSRTP,
     CallEncryptionZrtp = linphone::MediaEncryptionZRTP
   };
-
   Q_ENUM(CallEncryption);
 
   CallModel (std::shared_ptr<linphone::Call> call);

@@ -20,14 +20,15 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
+#include "utils/Utils.hpp"
 
 #include "ConferenceAddModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) : QAbstractListModel(parent) {
   mConferenceHelperModel = qobject_cast<ConferenceHelperModel *>(parent);
@@ -71,7 +72,7 @@ QVariant ConferenceHelperModel::ConferenceAddModel::data (const QModelIndex &ind
 // -----------------------------------------------------------------------------
 
 bool ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_ptr<const linphone::Address> &linphoneAddress) {
-  const QString sipAddress = ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
+  const QString sipAddress = Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
   if (mSipAddresses.contains(sipAddress))
     return false;
 
@@ -91,8 +92,8 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
     return false;
 
   shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(
-      ::Utils::appStringToCoreString(sipAddress)
-    );
+    Utils::appStringToCoreString(sipAddress)
+  );
   if (!address)
     return false;
 
@@ -133,9 +134,9 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 // -----------------------------------------------------------------------------
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
-  list<shared_ptr<linphone::Address> > linphoneAddresses;
+  list<shared_ptr<linphone::Address>> linphoneAddresses;
   for (const auto &map : mRefs) {
-    shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address> >();
+    shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address>>();
     Q_CHECK_PTR(linphoneAddress);
     linphoneAddresses.push_back(linphoneAddress);
   }
@@ -147,7 +148,7 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
     if (!call->getParams()->getLocalConferenceMode())
       continue;
 
-    const QString sipAddress = ::Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
+    const QString sipAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
     if (!mSipAddresses.contains(sipAddress))
       call->terminate();
   }
@@ -161,7 +162,7 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
 // -----------------------------------------------------------------------------
 
 void ConferenceHelperModel::ConferenceAddModel::addToConferencePrivate (const shared_ptr<linphone::Address> &linphoneAddress) {
-  QString sipAddress = ::Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
+  QString sipAddress = Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
   QVariantMap map = CoreManager::getInstance()->getSipAddressesModel()->find(sipAddress);
 
   map["sipAddress"] = sipAddress;

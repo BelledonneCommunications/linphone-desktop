@@ -22,11 +22,11 @@
 
 #include "TelephoneNumbersModel.hpp"
 
-using namespace std;
-
 // =============================================================================
 
-const QList<QPair<QLocale::Country, QString> > TelephoneNumbersModel::mCountryCodes = {
+using namespace std;
+
+const QList<QPair<QLocale::Country, QString>> TelephoneNumbersModel::mCountryCodes = {
   { QLocale::Afghanistan, "93" },
   { QLocale::Albania, "355" },
   { QLocale::Algeria, "213" },
@@ -289,9 +289,9 @@ QVariant TelephoneNumbersModel::data (const QModelIndex &index, int role) const 
 int TelephoneNumbersModel::getDefaultIndex () const {
   QLocale::Country country = QLocale().country();
   const auto it = find_if(
-      mCountryCodes.cbegin(), mCountryCodes.cend(), [&country](const QPair<QLocale::Country, QString> &pair) {
-        return country == pair.first;
-      }
-    );
+    mCountryCodes.cbegin(), mCountryCodes.cend(), [&country](const QPair<QLocale::Country, QString> &pair) {
+      return country == pair.first;
+    }
+  );
   return it != mCountryCodes.cend() ? int(distance(mCountryCodes.cbegin(), it)) : 0;
 }

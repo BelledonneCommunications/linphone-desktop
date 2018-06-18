@@ -20,22 +20,23 @@
  *      Author: Ronan Abhamon
  */
 
+#include <linphone++/linphone.hh>
 #include <QMetaProperty>
-
-#include "../../../utils/Utils.hpp"
-
-#include "Colors.hpp"
 
 #if LINPHONE_FRIDAY
   #include <QDate>
 #endif // if LINPHONE_FRIDAY
 
-using namespace std;
+#include "utils/Utils.hpp"
+
+#include "Colors.hpp"
 
 // =============================================================================
 
+using namespace std;
+
 namespace {
-  constexpr char cColorsSection[] = "ui_colors";
+  constexpr char ColorsSection[] = "ui_colors";
 }
 
 #if LINPHONE_FRIDAY
@@ -46,7 +47,7 @@ namespace {
 
 Colors::Colors (QObject *parent) : QObject(parent) {
   #if LINPHONE_FRIDAY
-    if (::isLinphoneFriday()) {
+    if (isLinphoneFriday()) {
       setProperty("i", QColor("#F48D8D"));
       setProperty("s", QColor("#F58585"));
       setProperty("t", QColor("#FFC5C5"));
@@ -56,7 +57,7 @@ Colors::Colors (QObject *parent) : QObject(parent) {
 
 void Colors::useConfig (const shared_ptr<linphone::Config> &config) {
   #if LINPHONE_FRIDAY
-    if (!::isLinphoneFriday())
+    if (!isLinphoneFriday())
       overrideColors(config);
   #else
     overrideColors(config);
@@ -74,10 +75,10 @@ void Colors::overrideColors (const shared_ptr<linphone::Config> &config) {
   for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {
     const QMetaProperty metaProperty = info->property(i);
     const string colorName = metaProperty.name();
-    const string colorValue = config->getString(cColorsSection, colorName, "");
+    const string colorValue = config->getString(ColorsSection, colorName, "");
 
     if (!colorValue.empty())
-      setProperty(colorName.c_str(), QColor(::Utils::coreStringToAppString(colorValue)));
+      setProperty(colorName.c_str(), QColor(Utils::coreStringToAppString(colorValue)));
   }
 }
 

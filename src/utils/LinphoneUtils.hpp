@@ -24,29 +24,27 @@
 #define LINPHONE_UTILS_H_
 
 #include <linphone++/linphone.hh>
-#include <QString>
 
 // =============================================================================
 
-#define WINDOW_ICON_PATH ":/assets/images/linphone_logo.svg"
-
-#define VU_MIN (-20.f)
-#define VU_MAX (4.f)
+class QString;
 
 namespace LinphoneUtils {
   inline float computeVu (float volume) {
-    if (volume < VU_MIN)
+    constexpr float VuMin = -20.f;
+    constexpr float VuMax = 4.f;
+
+    if (volume < VuMin)
       return 0.f;
-    if (volume > VU_MAX)
+    if (volume > VuMax)
       return 1.f;
 
-    return (volume - VU_MIN) / (VU_MAX - VU_MIN);
+    return (volume - VuMin) / (VuMax - VuMin);
   }
 
   linphone::TransportType stringToTransportType (const QString &transport);
-}
 
-#undef VU_MIN
-#undef VU_MAX
+  static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
+}
 
 #endif // ifndef LINPHONE_UTILS_H_

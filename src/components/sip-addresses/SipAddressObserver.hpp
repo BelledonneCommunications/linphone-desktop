@@ -23,9 +23,11 @@
 #ifndef SIP_ADDRESS_OBSERVER_H_
 #define SIP_ADDRESS_OBSERVER_H_
 
-#include "../contact/ContactModel.hpp"
+#include "components/presence/Presence.hpp"
 
 // =============================================================================
+
+class ContactModel;
 
 class SipAddressObserver : public QObject {
   friend class SipAddressesModel;
@@ -40,7 +42,6 @@ class SipAddressObserver : public QObject {
 
 public:
   SipAddressObserver (const QString &sipAddress);
-  ~SipAddressObserver () = default;
 
 signals:
   void contactChanged (ContactModel *contact);

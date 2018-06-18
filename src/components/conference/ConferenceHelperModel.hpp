@@ -32,12 +32,12 @@
 // Can filter the sip addresses with a pattern.
 // =============================================================================
 
-class CallModel;
-
 namespace linphone {
-class Conference;
-class Core;
+  class Conference;
+  class Core;
 }
+
+class CallModel;
 
 class ConferenceHelperModel : public QSortFilterProxyModel {
   Q_OBJECT;
@@ -48,7 +48,6 @@ public:
   class ConferenceAddModel;
 
   ConferenceHelperModel (QObject *parent = Q_NULLPTR);
-  ~ConferenceHelperModel () = default;
 
   QHash<int, QByteArray> roleNames () const override;
 

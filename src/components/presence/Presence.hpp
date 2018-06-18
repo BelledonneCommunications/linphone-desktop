@@ -41,7 +41,6 @@ public:
     DoNotDisturb = linphone::ConsolidatedPresenceDoNotDisturb,
     Offline = linphone::ConsolidatedPresenceOffline
   };
-
   Q_ENUM(PresenceStatus);
 
   enum PresenceLevel {
@@ -50,12 +49,9 @@ public:
     Red,
     White
   };
-
   Q_ENUM(PresenceLevel);
 
   Presence (QObject *parent = Q_NULLPTR) : QObject(parent) {}
-
-  ~Presence () = default;
 
   Q_INVOKABLE static PresenceLevel getPresenceLevel (const PresenceStatus &status);
 

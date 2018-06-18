@@ -148,7 +148,6 @@ public:
     MediaEncryptionSrtp = linphone::MediaEncryptionSRTP,
     MediaEncryptionZrtp = linphone::MediaEncryptionZRTP
   };
-
   Q_ENUM(MediaEncryption);
 
   enum LimeState {
@@ -156,7 +155,6 @@ public:
     LimeStateMandatory = linphone::LimeStateMandatory,
     LimeStatePreferred = linphone::LimeStatePreferred
   };
-
   Q_ENUM(LimeState);
 
   SettingsModel (QObject *parent = Q_NULLPTR);
@@ -346,7 +344,7 @@ public:
   bool getDeveloperSettingsEnabled () const;
   void setDeveloperSettingsEnabled (bool status);
 
-  static const std::string UI_SECTION;
+  static const std::string UiSection;
 
   // ===========================================================================
   // SIGNALS.
@@ -446,6 +444,6 @@ private:
   std::shared_ptr<linphone::Config> mConfig;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<const linphone::VideoDefinition> );
+Q_DECLARE_METATYPE(std::shared_ptr<const linphone::VideoDefinition>);
 
 #endif // SETTINGS_MODEL_H_

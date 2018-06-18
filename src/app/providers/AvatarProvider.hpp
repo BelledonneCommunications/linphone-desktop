@@ -30,11 +30,10 @@
 class AvatarProvider : public QQuickImageProvider {
 public:
   AvatarProvider ();
-  ~AvatarProvider () = default;
 
   QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
 
-  static const QString PROVIDER_ID;
+  static const QString ProviderId;
 
 private:
   QString mAvatarsPath;

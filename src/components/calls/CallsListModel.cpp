@@ -21,22 +21,25 @@
  */
 
 #include <QTimer>
+#include <QQmlApplicationEngine>
 
-#include "../../app/App.hpp"
-#include "../../utils/Utils.hpp"
-#include "../conference/ConferenceAddModel.hpp"
-#include "../conference/ConferenceHelperModel.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/App.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/conference/ConferenceAddModel.hpp"
+#include "components/conference/ConferenceHelperModel.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "CallsListModel.hpp"
 
-using namespace std;
-
 // =============================================================================
 
+using namespace std;
+
 namespace {
-  /* Delay before removing call in ms. */
-  constexpr int cDelayBeforeRemoveCall = 3000;
+  // Delay before removing call in ms.
+  constexpr int DelayBeforeRemoveCall = 3000;
 }
 
 static inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::Call> &call) {
@@ -96,7 +99,7 @@ void CallsListModel::askForTransfer (CallModel *callModel) {
 void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
-  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipAddress));
+  shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
   if (!address)
     return;
 
@@ -107,7 +110,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
   QHashIterator<QString, QString> iterator(headers);
   while (iterator.hasNext()) {
     iterator.next();
-    params->addCustomHeader(::Utils::appStringToCoreString(iterator.key()), ::Utils::appStringToCoreString(iterator.value()));
+    params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
   }
 
   core->inviteAddressWithParams(address, params);
@@ -121,7 +124,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
     return;
   }
 
-  shared_ptr<linphone::Address> address = core->interpretUrl(::Utils::appStringToCoreString(sipAddress));
+  shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
   if (!address)
     return;
 
@@ -156,9 +159,9 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
   }
 
   shared_ptr<linphone::Conference> conference = core->getConference();
-  const QString conferenceId = ::Utils::coreStringToAppString(call->getToHeader("conference-id"));
+  const QString conferenceId = Utils::coreStringToAppString(call->getToHeader("conference-id"));
 
-  if (conference->getId() != ::Utils::appStringToCoreString(conferenceId)) {
+  if (conference->getId() != Utils::appStringToCoreString(conferenceId)) {
     qWarning() << QStringLiteral("Trying to join conference with an invalid conference id: `%1`. Responding as a simple call...")
       .arg(conferenceId);
     return;
@@ -178,7 +181,7 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
   switch (state) {
     case linphone::CallStateIncomingReceived:
       addCall(call);
-      ::joinConference(call);
+      joinConference(call);
       break;
 
     case linphone::CallStateOutgoingInit:
@@ -191,7 +194,7 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
       break;
 
     case linphone::CallStateStreamsRunning: {
-      int index = ::findCallIndex(mList, call);
+      int index = findCallIndex(mList, call);
       emit callRunning(index, &call->getData<CallModel>("call-model"));
     } break;
 
@@ -232,9 +235,9 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 
   // This connection is (only) useful for `CallsListProxyModel`.
   QObject::connect(callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
-      int id = ::findCallIndex(mList, *callModel);
-      emit dataChanged(index(id, 0), index(id, 0));
-    });
+    int id = findCallIndex(mList, *callModel);
+    emit dataChanged(index(id, 0), index(id, 0));
+  });
 
   int row = mList.count();
 
@@ -255,7 +258,7 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
     return;
   }
 
-  QTimer::singleShot(cDelayBeforeRemoveCall, this, [this, callModel] {
+  QTimer::singleShot(DelayBeforeRemoveCall, this, [this, callModel] {
     removeCallCb(callModel);
   });
 }

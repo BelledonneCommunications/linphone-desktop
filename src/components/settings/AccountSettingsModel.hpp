@@ -49,11 +49,9 @@ public:
     RegistrationStateNotRegistered,
     RegistrationStateInProgress
   };
-
   Q_ENUM(RegistrationState);
 
   AccountSettingsModel (QObject *parent = Q_NULLPTR);
-  ~AccountSettingsModel () = default;
 
   bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
@@ -110,6 +108,6 @@ private:
   );
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig> );
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig>);
 
 #endif // ACCOUNT_SETTINGS_MODEL_H_

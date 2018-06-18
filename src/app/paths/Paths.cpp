@@ -37,22 +37,22 @@
 using namespace std;
 
 namespace {
-  constexpr char cPathAssistantConfig[] = "/linphone/assistant/";
-  constexpr char cPathAvatars[] = "/avatars/";
-  constexpr char cPathCaptures[] = "/Linphone/captures/";
-  constexpr char cPathCodecs[] =  "/codecs/";
-  constexpr char cPathLogs[] = "/logs/";
-  constexpr char cPathPlugins[] = "/plugins/";
-  constexpr char cPathThumbnails[] = "/thumbnails/";
-  constexpr char cPathUserCertificates[] = "/usr-crt/";
+  constexpr char PathAssistantConfig[] = "/linphone/assistant/";
+  constexpr char PathAvatars[] = "/avatars/";
+  constexpr char PathCaptures[] = "/Linphone/captures/";
+  constexpr char PathCodecs[] =  "/codecs/";
+  constexpr char PathLogs[] = "/logs/";
+  constexpr char PathPlugins[] = "/plugins/";
+  constexpr char PathThumbnails[] = "/thumbnails/";
+  constexpr char PathUserCertificates[] = "/usr-crt/";
 
-  constexpr char cPathCallHistoryList[] = "/call-history.db";
-  constexpr char cPathConfig[] = "/linphonerc";
-  constexpr char cPathFactoryConfig[] = "/linphone/linphonerc-factory";
-  constexpr char cPathRootCa[] = "/linphone/rootca.pem";
-  constexpr char cPathFriendsList[] = "/friends.db";
-  constexpr char cPathMessageHistoryList[] = "/message-history.db";
-  constexpr char cPathZrtpSecrets[] = "/zidcache";
+  constexpr char PathCallHistoryList[] = "/call-history.db";
+  constexpr char PathConfig[] = "/linphonerc";
+  constexpr char PathFactoryConfig[] = "/linphone/linphonerc-factory";
+  constexpr char PathRootCa[] = "/linphone/rootca.pem";
+  constexpr char PathFriendsList[] = "/friends.db";
+  constexpr char PathMessageHistoryList[] = "/message-history.db";
+  constexpr char PathZrtpSecrets[] = "/zidcache";
 }
 
 static inline bool dirPathExists (const QString &path) {
@@ -127,35 +127,35 @@ static inline QString getAppPackageMsPluginsDirPath () {
 }
 
 static inline QString getAppAssistantConfigDirPath () {
-  return getAppPackageDataDirPath() + cPathAssistantConfig;
+  return getAppPackageDataDirPath() + PathAssistantConfig;
 }
 
 static inline QString getAppConfigFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + cPathConfig;
+  return QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation) + PathConfig;
 }
 
 static inline QString getAppCallHistoryFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathCallHistoryList;
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathCallHistoryList;
 }
 
 static inline QString getAppFactoryConfigFilePath () {
-  return getAppPackageDataDirPath() + cPathFactoryConfig;
+  return getAppPackageDataDirPath() + PathFactoryConfig;
 }
 
 static inline QString getAppPluginsDirPath () {
-  return getAppPackageDataDirPath() + cPathPlugins;
+  return getAppPackageDataDirPath() + PathPlugins;
 }
 
 static inline QString getAppRootCaFilePath () {
-  return getAppPackageDataDirPath() + cPathRootCa;
+  return getAppPackageDataDirPath() + PathRootCa;
 }
 
 static inline QString getAppFriendsFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathFriendsList;
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathFriendsList;
 }
 
 static inline QString getAppMessageHistoryFilePath () {
-  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathMessageHistoryList;
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathMessageHistoryList;
 }
 
 // -----------------------------------------------------------------------------
@@ -171,7 +171,7 @@ string Paths::getAssistantConfigDirPath () {
 }
 
 string Paths::getAvatarsDirPath () {
-  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathAvatars);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathAvatars);
 }
 
 string Paths::getCallHistoryFilePath () {
@@ -179,11 +179,11 @@ string Paths::getCallHistoryFilePath () {
 }
 
 string Paths::getCapturesDirPath () {
-  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + cPathCaptures);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + PathCaptures);
 }
 
 string Paths::getCodecsDirPath () {
-  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathCodecs);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathCodecs);
 }
 
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
@@ -191,7 +191,7 @@ string Paths::getConfigFilePath (const QString &configPath, bool writable) {
     ? getAppConfigFilePath()
     : QFileInfo(configPath).absoluteFilePath();
 
-  return writable ? ::getWritableFilePath(path) : ::getReadableFilePath(path);
+  return writable ? getWritableFilePath(path) : getReadableFilePath(path);
 }
 
 string Paths::getFactoryConfigFilePath () {
@@ -207,7 +207,7 @@ string Paths::getDownloadDirPath () {
 }
 
 string Paths::getLogsDirPath () {
-  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathLogs);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathLogs);
 }
 
 string Paths::getMessageHistoryFilePath () {
@@ -227,15 +227,15 @@ string Paths::getRootCaFilePath () {
 }
 
 string Paths::getThumbnailsDirPath () {
-  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathThumbnails);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathThumbnails);
 }
 
 string Paths::getUserCertificatesDirPath () {
-  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathUserCertificates);
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathUserCertificates);
 }
 
 string Paths::getZrtpSecretsFilePath () {
-  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + cPathZrtpSecrets);
+  return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathZrtpSecrets);
 }
 
 // -----------------------------------------------------------------------------

@@ -20,17 +20,20 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/App.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
-#include "../sip-addresses/SipAddressesProxyModel.hpp"
-#include "ConferenceAddModel.hpp"
+#include <QQmlApplicationEngine>
 
+#include "app/App.hpp"
+#include "components/calls/CallsListModel.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/sip-addresses/SipAddressesProxyModel.hpp"
+#include "utils/Utils.hpp"
+
+#include "ConferenceAddModel.hpp"
 #include "ConferenceHelperModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProxyModel(parent) {
   mCore = CoreManager::getInstance()->getCore();
@@ -77,11 +80,11 @@ bool ConferenceHelperModel::filterAcceptsRow (int sourceRow, const QModelIndex &
 
 bool ConferenceHelperModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
   shared_ptr<linphone::Call> callA = mCore->findCallFromUri(
-      ::Utils::appStringToCoreString(left.data().toMap()["sipAddress"].toString())
-    );
+    Utils::appStringToCoreString(left.data().toMap()["sipAddress"].toString())
+  );
   shared_ptr<linphone::Call> callB = mCore->findCallFromUri(
-      ::Utils::appStringToCoreString(right.data().toMap()["sipAddress"].toString())
-    );
+    Utils::appStringToCoreString(right.data().toMap()["sipAddress"].toString())
+  );
 
   return callA && !callB;
 }

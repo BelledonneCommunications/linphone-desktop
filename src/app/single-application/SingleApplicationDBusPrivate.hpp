@@ -40,7 +40,6 @@ class SingleApplicationPrivate : public QDBusAbstractAdaptor {
 
 public:
   Q_DECLARE_PUBLIC(SingleApplication) SingleApplicationPrivate (SingleApplication *q_ptr);
-  ~SingleApplicationPrivate () = default;
 
   QDBusConnection getBus () const;
 

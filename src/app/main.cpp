@@ -36,6 +36,6 @@ int main (int argc, char *argv[]) {
   do {
     app->initContentApp();
     ret = app->exec();
-  } while (ret == APP_CODE_RESTART);
+  } while (ret == App::RestartCode);
   return ret;
 }

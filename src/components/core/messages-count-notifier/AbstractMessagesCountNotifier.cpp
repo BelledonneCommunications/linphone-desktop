@@ -20,13 +20,16 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../CoreManager.hpp"
+#include "components/chat/ChatModel.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 #include "AbstractMessagesCountNotifier.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 AbstractMessagesCountNotifier::AbstractMessagesCountNotifier (QObject *parent) : QObject(parent) {
   CoreManager *coreManager = CoreManager::getInstance();

@@ -38,7 +38,6 @@ class ConferenceHelperModel::ConferenceAddModel : public QAbstractListModel {
 
 public:
   ConferenceAddModel (QObject *parent = Q_NULLPTR);
-  ~ConferenceAddModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -71,6 +70,6 @@ private:
   ConferenceHelperModel *mConferenceHelperModel = nullptr;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<linphone::Address> );
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::Address>);
 
 #endif // CONFERENCE_ADD_MODEL_H_

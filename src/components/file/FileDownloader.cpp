@@ -22,6 +22,7 @@
 
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "FileDownloader.hpp"

@@ -40,7 +40,6 @@ class AbstractCodecsModel : public QAbstractListModel {
 
 public:
   AbstractCodecsModel (QObject *parent = Q_NULLPTR);
-  virtual ~AbstractCodecsModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -81,6 +80,6 @@ protected:
   QList<QVariantMap> mCodecs;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType> );
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType>);
 
 #endif // ABSTRACT_CODECS_MODEL_H_

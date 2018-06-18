@@ -23,27 +23,27 @@
 #ifndef CONTACT_MODEL_H_
 #define CONTACT_MODEL_H_
 
-#include "../presence/Presence.hpp"
-#include "VcardModel.hpp"
+#include "components/presence/Presence.hpp"
 
 // =============================================================================
 
+class VcardModel;
+
 class ContactModel : public QObject {
+  // Grant access to `mLinphoneFriend`.
+  friend class ContactsListModel;
+  friend class ContactsListProxyModel;
+  friend class SipAddressesProxyModel;
+
   Q_OBJECT;
 
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
   Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY presenceLevelChanged);
   Q_PROPERTY(VcardModel * vcard READ getVcardModel WRITE setVcardModel NOTIFY contactUpdated);
 
-  // Grant access to `mLinphoneFriend`.
-  friend class ContactsListModel;
-  friend class ContactsListProxyModel;
-  friend class SipAddressesProxyModel;
-
 public:
   ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphoneFriend);
   ContactModel (QObject *parent, VcardModel *vcardModel);
-  ~ContactModel () = default;
 
   void refreshPresence ();
 

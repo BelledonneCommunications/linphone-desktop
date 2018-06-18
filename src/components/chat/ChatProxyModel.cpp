@@ -20,13 +20,13 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
 
 #include "ChatProxyModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 // Fetch the L last filtered chat entries.
 class ChatProxyModel::ChatModelFilter : public QSortFilterProxyModel {
@@ -58,8 +58,6 @@ private:
 };
 
 // =============================================================================
-
-const int ChatProxyModel::ENTRIES_CHUNK_SIZE = 50;
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(new ChatModelFilter(this));
@@ -117,7 +115,7 @@ void ChatProxyModel::loadMoreEntries () {
     // Do not increase `mMaxDisplayedEntries` if it's not necessary...
     // Limit qml calls.
     if (count == mMaxDisplayedEntries)
-      mMaxDisplayedEntries += ENTRIES_CHUNK_SIZE;
+      mMaxDisplayedEntries += EntriesChunkSize;
 
     invalidateFilter();
 
@@ -149,7 +147,7 @@ QString ChatProxyModel::getSipAddress () const {
 }
 
 void ChatProxyModel::setSipAddress (const QString &sipAddress) {
-  mMaxDisplayedEntries = ENTRIES_CHUNK_SIZE;
+  mMaxDisplayedEntries = EntriesChunkSize;
 
   if (mChatModel) {
     ChatModel *chatModel = mChatModel.get();

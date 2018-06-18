@@ -26,6 +26,7 @@
 #include <QSvgRenderer>
 
 #include "app/App.hpp"
+#include "components/other/colors/Colors.hpp"
 
 #include "ImageProvider.hpp"
 
@@ -35,7 +36,7 @@ using namespace std;
 
 namespace {
   // Max image size in bytes. (100Kb)
-  constexpr qint64 cMaxImageSize = 102400;
+  constexpr qint64 MaxImageSize = 102400;
 }
 
 static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
@@ -234,7 +235,7 @@ static QByteArray computeContent (QFile &file) {
 
 // -----------------------------------------------------------------------------
 
-const QString ImageProvider::PROVIDER_ID = "internal";
+const QString ImageProvider::ProviderId = "internal";
 
 ImageProvider::ImageProvider () : QQuickImageProvider(
   QQmlImageProviderBase::Image,
@@ -252,7 +253,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
 
   // 1. Read and update XML content.
   QFile file(path);
-  if (Q_UNLIKELY(QFileInfo(file).size() > cMaxImageSize)) {
+  if (Q_UNLIKELY(QFileInfo(file).size() > MaxImageSize)) {
     qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
     return QImage();
   }
@@ -262,7 +263,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
     return QImage();
   }
 
-  const QByteArray content = ::computeContent(file);
+  const QByteArray content = computeContent(file);
   if (Q_UNLIKELY(!content.length())) {
     qWarning() << QStringLiteral("Unable to parse file: `%1`.").arg(path);
     return QImage();

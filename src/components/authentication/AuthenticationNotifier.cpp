@@ -20,14 +20,15 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "AuthenticationNotifier.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 AuthenticationNotifier::AuthenticationNotifier (QObject *parent) : QObject(parent) {
   QObject::connect(
@@ -39,12 +40,12 @@ AuthenticationNotifier::AuthenticationNotifier (QObject *parent) : QObject(paren
 void AuthenticationNotifier::handleAuthenticationRequested (const shared_ptr<linphone::AuthInfo> &authInfo) {
   emit authenticationRequested(
     QVariant::fromValue(authInfo),
-    ::Utils::coreStringToAppString(authInfo->getRealm()),
+    Utils::coreStringToAppString(authInfo->getRealm()),
     QStringLiteral("%1@%2").arg(
-      ::Utils::coreStringToAppString(authInfo->getUsername())
+      Utils::coreStringToAppString(authInfo->getUsername())
     ).arg(
-      ::Utils::coreStringToAppString(authInfo->getDomain())
+      Utils::coreStringToAppString(authInfo->getDomain())
     ),
-    ::Utils::coreStringToAppString(authInfo->getUserid())
+    Utils::coreStringToAppString(authInfo->getUserid())
   );
 }

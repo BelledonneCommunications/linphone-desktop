@@ -78,11 +78,11 @@ private:
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
-  int mMaxDisplayedEntries = ENTRIES_CHUNK_SIZE;
+  int mMaxDisplayedEntries = EntriesChunkSize;
 
   std::shared_ptr<ChatModel> mChatModel;
 
-  static const int ENTRIES_CHUNK_SIZE;
+  static constexpr int EntriesChunkSize = 50;
 };
 
 #endif // CHAT_PROXY_MODEL_H_

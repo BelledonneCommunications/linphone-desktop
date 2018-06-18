@@ -25,30 +25,33 @@
 #include <QSvgRenderer>
 #include <QSystemTrayIcon>
 #include <QTimer>
+#include <QWindow>
 
-#include "../../../app/App.hpp"
-#include "../../../utils/LinphoneUtils.hpp"
-#include "../../../utils/Utils.hpp"
+#include "app/App.hpp"
+#include "utils/LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
 
 #include "MessagesCountNotifierLinux.hpp"
 
-#define ICON_WIDTH 256
-#define ICON_HEIGHT 256
-
-#define ICON_COUNTER_BACKGROUND_COLOR "#FF3C31"
-#define ICON_COUNTER_BACKGROUND_RADIUS 100
-#define ICON_COUNTER_BLINK_INTERVAL 1000
-#define ICON_COUNTER_TEXT_COLOR "#FFFBFA"
-#define ICON_COUNTER_TEXT_PIXEL_SIZE 144
-
 // =============================================================================
 
+namespace {
+  constexpr int IconWidth = 256;
+  constexpr int IconHeight = 256;
+
+  constexpr char IconCounterBackgroundColor[] = "#FF3C31";
+  constexpr int IconCounterBackgroundRadius = 100;
+  constexpr int IconCounterBlinkInterval = 1000;
+  constexpr char IconCounterTextColor[] = "#FFFBFA";
+  constexpr int IconCounterTextPixelSize = 144;
+}
+
 MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessagesCountNotifier(parent) {
-  QSvgRenderer renderer(QStringLiteral(WINDOW_ICON_PATH));
+  QSvgRenderer renderer((QString(LinphoneUtils::WindowIconPath)));
   if (!renderer.isValid())
     qFatal("Invalid SVG Image.");
 
-  QPixmap buf(ICON_WIDTH, ICON_HEIGHT);
+  QPixmap buf(IconWidth, IconHeight);
   buf.fill(QColor(Qt::transparent));
 
   QPainter painter(&buf);
@@ -58,7 +61,7 @@ MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessage
   mBufWithCounter = new QPixmap();
 
   mBlinkTimer = new QTimer(this);
-  mBlinkTimer->setInterval(ICON_COUNTER_BLINK_INTERVAL);
+  mBlinkTimer->setInterval(IconCounterBlinkInterval);
   QObject::connect(mBlinkTimer, &QTimer::timeout, this, &MessagesCountNotifier::update);
 
   Utils::connectOnce(
@@ -91,17 +94,17 @@ void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
 
   // Draw background.
   {
-    p.setBrush(QColor(ICON_COUNTER_BACKGROUND_COLOR));
-    p.drawEllipse(QPointF(width / 2, height / 2), ICON_COUNTER_BACKGROUND_RADIUS, ICON_COUNTER_BACKGROUND_RADIUS);
+    p.setBrush(QColor(IconCounterBackgroundColor));
+    p.drawEllipse(QPointF(width / 2, height / 2), IconCounterBackgroundRadius, IconCounterBackgroundRadius);
   }
 
   // Draw text.
   {
     QFont font = p.font();
-    font.setPixelSize(ICON_COUNTER_TEXT_PIXEL_SIZE);
+    font.setPixelSize(IconCounterTextPixelSize);
 
     p.setFont(font);
-    p.setPen(QPen(QColor(ICON_COUNTER_TEXT_COLOR), 1));
+    p.setPen(QPen(QColor(IconCounterTextColor), 1));
     p.drawText(QRect(0, 0, width, height), Qt::AlignCenter, QString::number(n));
   }
 

@@ -20,42 +20,49 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QQmlApplicationEngine>
 #include <QQmlComponent>
+#include <QQuickWindow>
 #include <QScreen>
 #include <QTimer>
 
-#include "../../app/App.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/App.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "Notifier.hpp"
 
-#define NOTIFICATIONS_PATH "qrc:/ui/modules/Linphone/Notifications/"
-
-// -----------------------------------------------------------------------------
-// Notifications QML properties/methods.
-// -----------------------------------------------------------------------------
-
-#define NOTIFICATION_SHOW_METHOD_NAME "open"
-
-#define NOTIFICATION_PROPERTY_DATA "notificationData"
-
-#define NOTIFICATION_PROPERTY_X "popupX"
-#define NOTIFICATION_PROPERTY_Y "popupY"
-
-#define NOTIFICATION_PROPERTY_WINDOW "__internalWindow"
-
-#define NOTIFICATION_PROPERTY_TIMER "__timer"
-
-// -----------------------------------------------------------------------------
-// Arbitrary hardcoded values.
-// -----------------------------------------------------------------------------
-
-#define NOTIFICATION_SPACING 10
-#define N_MAX_NOTIFICATIONS 5
-#define MAX_TIMEOUT 30000
+// =============================================================================
 
 using namespace std;
+
+namespace {
+  constexpr char NotificationsPath[] = "qrc:/ui/modules/Linphone/Notifications/";
+
+  // ---------------------------------------------------------------------------
+  // Notifications QML properties/methods.
+  // ---------------------------------------------------------------------------
+
+  constexpr char NotificationShowMethodName[] = "open";
+
+  constexpr char NotificationPropertyData[] = "notificationData";
+
+  constexpr char NotificationPropertyX[] = "popupX";
+  constexpr char NotificationPropertyY[] = "popupY";
+
+  constexpr char NotificationPropertyWindow[] = "__internalWindow";
+
+  constexpr char NotificationPropertyTimer[] = "__timer";
+
+  // ---------------------------------------------------------------------------
+  // Arbitrary hardcoded values.
+  // ---------------------------------------------------------------------------
+
+  constexpr int NotificationSpacing = 10;
+  constexpr int MaxNotificationsNumber = 5;
+  constexpr int MaxTimeout = 30000;
+}
 
 // =============================================================================
 
@@ -71,7 +78,7 @@ void setProperty (QObject &object, const char *property, const T &value) {
 // Available notifications.
 // =============================================================================
 
-const QHash<int, Notifier::Notification> Notifier::mNotifications = {
+const QHash<int, Notifier::Notification> Notifier::Notifications = {
   { Notifier::ReceivedMessage, { "NotificationReceivedMessage.qml", 10 } },
   { Notifier::ReceivedFileMessage, { "NotificationReceivedFileMessage.qml", 10 } },
   { Notifier::ReceivedCall, { "NotificationReceivedCall.qml", 30 } },
@@ -83,12 +90,12 @@ const QHash<int, Notifier::Notification> Notifier::mNotifications = {
 // -----------------------------------------------------------------------------
 
 Notifier::Notifier (QObject *parent) : QObject(parent) {
-  const int nComponents = mNotifications.size();
+  const int nComponents = Notifications.size();
   mComponents = new QQmlComponent *[nComponents];
 
   QQmlEngine *engine = App::getInstance()->getEngine();
-  for (const auto &key : mNotifications.keys()) {
-    QQmlComponent *component = new QQmlComponent(engine, QUrl(NOTIFICATIONS_PATH + Notifier::mNotifications[key].filename));
+  for (const auto &key : Notifications.keys()) {
+    QQmlComponent *component = new QQmlComponent(engine, QUrl(NotificationsPath + Notifier::Notifications[key].filename));
     if (Q_UNLIKELY(component->isError())) {
       qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(key) << component->errors();
       abort();
@@ -102,7 +109,7 @@ Notifier::Notifier (QObject *parent) : QObject(parent) {
 Notifier::~Notifier () {
   delete mMutex;
 
-  const int nComponents = mNotifications.size();
+  const int nComponents = Notifications.size();
   for (int i = 0; i < nComponents; ++i)
     delete mComponents[i];
   delete[] mComponents;
@@ -113,10 +120,10 @@ Notifier::~Notifier () {
 QObject *Notifier::createNotification (Notifier::NotificationType type) {
   mMutex->lock();
 
-  Q_ASSERT(mInstancesNumber <= N_MAX_NOTIFICATIONS);
+  Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
 
   // Check existing instances.
-  if (mInstancesNumber == N_MAX_NOTIFICATIONS) {
+  if (mInstancesNumber == MaxNotificationsNumber) {
     qWarning() << QStringLiteral("Unable to create another notification.");
     mMutex->unlock();
     return nullptr;
@@ -129,7 +136,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
   mInstancesNumber++;
 
   {
-    QQuickWindow *window = instance->findChild<QQuickWindow *>(NOTIFICATION_PROPERTY_WINDOW);
+    QQuickWindow *window = instance->findChild<QQuickWindow *>(NotificationPropertyWindow);
     Q_CHECK_PTR(window);
 
     QScreen *screen = window->screen();
@@ -141,11 +148,11 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
     int windowHeight = window->height();
     int offset = geometry.y() + geometry.height() - windowHeight;
 
-    ::setProperty(*instance, NOTIFICATION_PROPERTY_X, geometry.x() + geometry.width() - window->width());
-    ::setProperty(*instance, NOTIFICATION_PROPERTY_Y, offset - (mOffset % offset));
+    ::setProperty(*instance, NotificationPropertyX, geometry.x() + geometry.width() - window->width());
+    ::setProperty(*instance, NotificationPropertyY, offset - (mOffset % offset));
 
     // Update offset.
-    mOffset = (windowHeight + mOffset) + NOTIFICATION_SPACING;
+    mOffset = (windowHeight + mOffset) + NotificationSpacing;
     if (mOffset - offset + geometry.y() >= 0)
       mOffset = 0;
   }
@@ -159,12 +166,12 @@ QObject *Notifier::createNotification (Notifier::NotificationType type) {
 
 void Notifier::showNotification (QObject *notification, int timeout) {
   // Display notification.
-  QMetaObject::invokeMethod(notification, NOTIFICATION_SHOW_METHOD_NAME, Qt::DirectConnection);
+  QMetaObject::invokeMethod(notification, NotificationShowMethodName, Qt::DirectConnection);
 
   QTimer *timer = new QTimer(notification);
-  timer->setInterval(timeout > MAX_TIMEOUT ? MAX_TIMEOUT : timeout);
+  timer->setInterval(timeout > MaxTimeout ? MaxTimeout : timeout);
   timer->setSingleShot(true);
-  notification->setProperty(NOTIFICATION_PROPERTY_TIMER, QVariant::fromValue(timer));
+  notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
 
   // Destroy it after timeout.
   QObject::connect(timer, &QTimer::timeout, this, [this, notification]() {
@@ -193,7 +200,7 @@ void Notifier::deleteNotification (QVariant notification) {
   qInfo() << QStringLiteral("Delete notification:") << instance;
 
   instance->setProperty("__valid", true);
-  instance->property(NOTIFICATION_PROPERTY_TIMER).value<QTimer *>()->stop();
+  instance->property(NotificationPropertyTimer).value<QTimer *>()->stop();
 
   mInstancesNumber--;
   Q_ASSERT(mInstancesNumber >= 0);
@@ -212,10 +219,10 @@ void Notifier::deleteNotification (QVariant notification) {
   QObject * notification = createNotification(TYPE); \
   if (!notification) \
     return; \
-  const int timeout = mNotifications[TYPE].timeout * 1000;
+  const int timeout = Notifications[TYPE].timeout * 1000;
 
 #define SHOW_NOTIFICATION(DATA) \
-  ::setProperty(*notification, NOTIFICATION_PROPERTY_DATA, DATA); \
+  ::setProperty(*notification, NotificationPropertyData, DATA); \
   showNotification(notification, timeout);
 
 // -----------------------------------------------------------------------------
@@ -228,9 +235,9 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
   QVariantMap map;
   map["message"] = message->getFileTransferInformation()
     ? tr("newFileMessage")
-    : ::Utils::coreStringToAppString(message->getText());
+    : Utils::coreStringToAppString(message->getText());
 
-  map["sipAddress"] = ::Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
+  map["sipAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
   map["window"].setValue(App::getInstance()->getMainWindow());
 
   SHOW_NOTIFICATION(map);
@@ -240,7 +247,7 @@ void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage
   CREATE_NOTIFICATION(Notifier::ReceivedFileMessage);
 
   QVariantMap map;
-  map["fileUri"] = ::Utils::coreStringToAppString(message->getFileTransferFilepath());
+  map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferFilepath());
   map["fileSize"] = quint64(message->getFileTransferInformation()->getSize());
 
   SHOW_NOTIFICATION(map);

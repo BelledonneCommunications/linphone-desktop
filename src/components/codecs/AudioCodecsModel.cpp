@@ -20,7 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
 
 #include "AudioCodecsModel.hpp"
 

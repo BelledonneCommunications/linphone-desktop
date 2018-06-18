@@ -22,15 +22,19 @@
 
 #include <QDateTime>
 
-#include "../../utils/LinphoneUtils.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/calls/CallsListModel.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
 
 #include "ConferenceModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(parent) {
   QObject::connect(this, &ConferenceModel::rowsRemoved, [this] {
@@ -77,7 +81,7 @@ void ConferenceModel::startRecording () {
 
   CoreManager *coreManager = CoreManager::getInstance();
   coreManager->getCore()->startConferenceRecording(
-    ::Utils::appStringToCoreString(
+    Utils::appStringToCoreString(
       QStringLiteral("%1%2.mkv")
         .arg(coreManager->getSettingsModel()->getSavedVideosFolder())
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))

@@ -34,7 +34,6 @@ class Clipboard : public QObject {
 
 public:
   Clipboard (QObject *parent = Q_NULLPTR);
-  ~Clipboard () = default;
 
 signals:
   void textChanged ();

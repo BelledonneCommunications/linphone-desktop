@@ -23,18 +23,21 @@
 #ifndef AUTHENTICATION_NOTIFIER_H_
 #define AUTHENTICATION_NOTIFIER_H_
 
-#include <linphone++/linphone.hh>
+#include <memory>
+
 #include <QObject>
 
 // =============================================================================
+
+namespace linphone {
+  class AuthInfo;
+}
 
 class AuthenticationNotifier : public QObject {
   Q_OBJECT;
 
 public:
   AuthenticationNotifier (QObject *parent = Q_NULLPTR);
-
-  ~AuthenticationNotifier () = default;
 
 signals:
   void authenticationRequested (const QVariant &authInfo, const QString &realm, const QString &sipAddress, const QString &userId);
@@ -43,6 +46,6 @@ private:
   void handleAuthenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<linphone::AuthInfo> );
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::AuthInfo>);
 
 #endif // AUTHENTICATION_NOTIFIER_H_

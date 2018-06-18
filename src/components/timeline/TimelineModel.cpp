@@ -20,7 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
 
 #include "TimelineModel.hpp"
 

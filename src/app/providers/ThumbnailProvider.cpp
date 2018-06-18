@@ -27,7 +27,7 @@
 
 // =============================================================================
 
-const QString ThumbnailProvider::PROVIDER_ID = "thumbnail";
+const QString ThumbnailProvider::ProviderId = "thumbnail";
 
 ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
   QQmlImageProviderBase::Image,

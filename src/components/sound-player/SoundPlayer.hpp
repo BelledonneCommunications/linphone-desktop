@@ -52,7 +52,6 @@ public:
     StoppedState,
     ErrorState
   };
-
   Q_ENUM(PlaybackState);
 
   SoundPlayer (QObject *parent = Q_NULLPTR);

@@ -22,7 +22,7 @@
 
 #include <QDesktopServices>
 
-#include "../sip-addresses/SipAddressesModel.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
 
 #include "UrlHandlers.hpp"
 

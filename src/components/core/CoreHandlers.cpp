@@ -25,15 +25,19 @@
 #include <QThread>
 #include <QTimer>
 
-#include "../../app/App.hpp"
-#include "../../utils/Utils.hpp"
-#include "CoreManager.hpp"
+#include "app/App.hpp"
+#include "components/call/CallModel.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/notifier/Notifier.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/Utils.hpp"
 
 #include "CoreHandlers.hpp"
-
-using namespace std;
+#include "CoreManager.hpp"
 
 // =============================================================================
+
+using namespace std;
 
 // Schedule a function in app context.
 void scheduleFunctionInApp (function<void()> func) {
@@ -199,7 +203,7 @@ void CoreHandlers::onNotifyPresenceReceivedForUriOrTel (
   const string &uriOrTel,
   const shared_ptr<const linphone::PresenceModel> &presenceModel
 ) {
-  emit presenceReceived(::Utils::coreStringToAppString(uriOrTel), presenceModel);
+  emit presenceReceived(Utils::coreStringToAppString(uriOrTel), presenceModel);
 }
 
 void CoreHandlers::onNotifyPresenceReceived (
@@ -277,7 +281,7 @@ void CoreHandlers::onVersionUpdateCheckResultReceived (
 ) {
   if (result == linphone::VersionUpdateCheckResultNewVersionAvailable)
     App::getInstance()->getNotifier()->notifyNewVersionAvailable(
-      ::Utils::coreStringToAppString(version),
-      ::Utils::coreStringToAppString(url)
+      Utils::coreStringToAppString(version),
+      Utils::coreStringToAppString(url)
     );
 }

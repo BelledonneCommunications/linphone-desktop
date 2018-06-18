@@ -32,7 +32,6 @@ class SipAddressesProxyModel : public QSortFilterProxyModel {
 
 public:
   SipAddressesProxyModel (QObject *parent = Q_NULLPTR);
-  ~SipAddressesProxyModel () = default;
 
   Q_INVOKABLE void setFilter (const QString &pattern);
 
@@ -46,7 +45,7 @@ private:
 
   QString mFilter;
 
-  static const QRegExp mSearchSeparators;
+  static const QRegExp SearchSeparators;
 };
 
 #endif // SIP_ADDRESSES_PROXY_MODEL_H_

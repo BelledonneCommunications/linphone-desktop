@@ -20,21 +20,25 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/App.hpp"
-#include "../core/CoreManager.hpp"
+#include <QQmlApplicationEngine>
+
+#include "app/App.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contact/VcardModel.hpp"
+#include "components/core/CoreManager.hpp"
 
 #include "ContactsListModel.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(parent) {
   mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
 
   // Clean friends.
   {
-    list<shared_ptr<linphone::Friend> > toRemove;
+    list<shared_ptr<linphone::Friend>> toRemove;
     for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
       if (!linphoneFriend->getVcard())
         toRemove.push_back(linphoneFriend);
@@ -111,17 +115,15 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 
 ContactModel *ContactsListModel::findContactModelFromSipAddress (const QString &sipAddress) const {
   auto it = find_if(mList.begin(), mList.end(), [&sipAddress](ContactModel *contactModel) {
-        return contactModel->getVcardModel()->getSipAddresses().contains(sipAddress);
-      });
-
+    return contactModel->getVcardModel()->getSipAddresses().contains(sipAddress);
+  });
   return it != mList.end() ? *it : nullptr;
 }
 
 ContactModel *ContactsListModel::findContactModelFromUsername (const QString &username) const {
   auto it = find_if(mList.begin(), mList.end(), [&username](ContactModel *contactModel) {
-        return contactModel->getVcardModel()->getUsername() == username;
-      });
-
+    return contactModel->getVcardModel()->getUsername() == username;
+  });
   return it != mList.end() ? *it : nullptr;
 }
 
@@ -187,14 +189,14 @@ void ContactsListModel::cleanAvatars () {
 
 void ContactsListModel::addContact (ContactModel *contact) {
   QObject::connect(contact, &ContactModel::contactUpdated, this, [this, contact]() {
-      emit contactUpdated(contact);
-    });
+    emit contactUpdated(contact);
+  });
   QObject::connect(contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sipAddress) {
-      emit sipAddressAdded(contact, sipAddress);
-    });
+    emit sipAddressAdded(contact, sipAddress);
+  });
   QObject::connect(contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sipAddress) {
-      emit sipAddressRemoved(contact, sipAddress);
-    });
+    emit sipAddressRemoved(contact, sipAddress);
+  });
 
   mList << contact;
 }

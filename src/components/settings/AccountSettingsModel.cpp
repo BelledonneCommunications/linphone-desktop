@@ -20,15 +20,17 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../../app/paths/Paths.hpp"
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "app/paths/Paths.hpp"
+#include "components/core/CoreHandlers.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "AccountSettingsModel.hpp"
-
-using namespace std;
+#include "SettingsModel.hpp"
 
 // =============================================================================
+
+using namespace std;
 
 static inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi (linphone::RegistrationState state) {
   switch (state) {
@@ -64,18 +66,18 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::Pr
   CoreManager *coreManager = CoreManager::getInstance();
   shared_ptr<linphone::Core> core = coreManager->getCore();
 
-  list<shared_ptr<linphone::ProxyConfig> > proxyConfigs = core->getProxyConfigList();
+  list<shared_ptr<linphone::ProxyConfig>> proxyConfigs = core->getProxyConfigList();
   if (find(proxyConfigs.cbegin(), proxyConfigs.cend(), proxyConfig) != proxyConfigs.cend()) {
     if (proxyConfig->done() == -1) {
       qWarning() << QStringLiteral("Unable to update proxy config: `%1`.")
-        .arg(::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
+        .arg(Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
       return false;
     }
     coreManager->getSettingsModel()->configureRlsUri();
   } else {
     if (core->addProxyConfig(proxyConfig) == -1) {
       qWarning() << QStringLiteral("Unable to add proxy config: `%1`.")
-        .arg(::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
+        .arg(Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
       return false;
     }
     coreManager->getSettingsModel()->configureRlsUri(proxyConfig);
@@ -93,29 +95,29 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   {
     const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
     map["sipAddress"] = address
-      ? ::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
+      ? Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
       : QString("");
   }
-  map["serverAddress"] = ::Utils::coreStringToAppString(proxyConfig->getServerAddr());
+  map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
   map["registrationDuration"] = proxyConfig->getPublishExpires();
-  map["transport"] = ::Utils::coreStringToAppString(proxyConfig->getTransport());
-  map["route"] = ::Utils::coreStringToAppString(proxyConfig->getRoute());
-  map["contactParams"] = ::Utils::coreStringToAppString(proxyConfig->getContactParameters());
+  map["transport"] = Utils::coreStringToAppString(proxyConfig->getTransport());
+  map["route"] = Utils::coreStringToAppString(proxyConfig->getRoute());
+  map["contactParams"] = Utils::coreStringToAppString(proxyConfig->getContactParameters());
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();
   map["publishPresence"] = proxyConfig->publishEnabled();
   map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
-  map["registrationState"] = ::mapLinphoneRegistrationStateToUi(proxyConfig->getState());
+  map["registrationState"] = mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
   if (!natPolicy)
     natPolicy = proxyConfig->getCore()->createNatPolicy();
   map["iceEnabled"] = natPolicy->iceEnabled();
   map["turnEnabled"] = natPolicy->turnEnabled();
-  map["stunServer"] = ::Utils::coreStringToAppString(natPolicy->getStunServer());
-  map["turnUser"] = ::Utils::coreStringToAppString(natPolicy->getStunServerUsername());
+  map["stunServer"] = Utils::coreStringToAppString(natPolicy->getStunServer());
+  map["turnUser"] = Utils::coreStringToAppString(natPolicy->getStunServerUsername());
   shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
-  map["turnPassword"] = authInfo ? ::Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
+  map["turnPassword"] = authInfo ? Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
 
   return map;
 }
@@ -146,8 +148,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   // Sip address.
   {
     shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-        ::Utils::appStringToCoreString(literal)
-      );
+      Utils::appStringToCoreString(literal)
+    );
     if (!address) {
       qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
       return false;
@@ -155,7 +157,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 
     if (proxyConfig->setIdentityAddress(address)) {
       qWarning() << QStringLiteral("Unable to set identity address: `%1`.")
-        .arg(::Utils::coreStringToAppString(address->asStringUriOnly()));
+        .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
       return false;
     }
   }
@@ -164,15 +166,15 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   {
     QString serverAddress = data["serverAddress"].toString();
 
-    if (proxyConfig->setServerAddr(::Utils::appStringToCoreString(serverAddress))) {
+    if (proxyConfig->setServerAddr(Utils::appStringToCoreString(serverAddress))) {
       qWarning() << QStringLiteral("Unable to add server address: `%1`.").arg(serverAddress);
       return false;
     }
   }
 
   proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
-  proxyConfig->setRoute(::Utils::appStringToCoreString(data["route"].toString()));
-  proxyConfig->setContactParameters(::Utils::appStringToCoreString(data["contactParams"].toString()));
+  proxyConfig->setRoute(Utils::appStringToCoreString(data["route"].toString()));
+  proxyConfig->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
   proxyConfig->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
   proxyConfig->enablePublish(data["publishPresence"].toBool());
@@ -187,22 +189,22 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   natPolicy->enableIce(data["iceEnabled"].toBool());
   natPolicy->enableStun(data["iceEnabled"].toBool());
   natPolicy->enableTurn(data["turnEnabled"].toBool());
-  natPolicy->setStunServer(::Utils::appStringToCoreString(data["stunServer"].toString()));
-  natPolicy->setStunServerUsername(::Utils::appStringToCoreString(data["turnUser"].toString()));
+  natPolicy->setStunServer(Utils::appStringToCoreString(data["stunServer"].toString()));
+  natPolicy->setStunServerUsername(Utils::appStringToCoreString(data["turnUser"].toString()));
 
   shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
   shared_ptr<linphone::Core> core = proxyConfig->getCore();
   if (authInfo) {
     shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
-    clonedAuthInfo->setPasswd(::Utils::appStringToCoreString(data["turnPassword"].toString()));
+    clonedAuthInfo->setPasswd(Utils::appStringToCoreString(data["turnPassword"].toString()));
 
     core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);
   } else {
     authInfo = linphone::Factory::get()->createAuthInfo(
-      ::Utils::appStringToCoreString(data["turnUser"].toString()),
-      ::Utils::appStringToCoreString(data["turnUser"].toString()),
-      ::Utils::appStringToCoreString(data["turnPassword"].toString()),
+      Utils::appStringToCoreString(data["turnUser"].toString()),
+      Utils::appStringToCoreString(data["turnUser"].toString()),
+      Utils::appStringToCoreString(data["turnPassword"].toString()),
       "",
       "",
       ""
@@ -228,8 +230,8 @@ void AccountSettingsModel::addAuthInfo (
   const QString &password,
   const QString &userId
 ) {
-  authInfo->setPasswd(::Utils::appStringToCoreString(password));
-  authInfo->setUserid(::Utils::appStringToCoreString(userId));
+  authInfo->setPasswd(Utils::appStringToCoreString(password));
+  authInfo->setUserid(Utils::appStringToCoreString(userId));
 
   CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
 }
@@ -244,7 +246,7 @@ QString AccountSettingsModel::getUsername () const {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
   const string displayName = address->getDisplayName();
 
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     displayName.empty() ? address->getUsername() : displayName
   );
 }
@@ -253,9 +255,9 @@ void AccountSettingsModel::setUsername (const QString &username) {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
   shared_ptr<linphone::Address> newAddress = address->clone();
 
-  if (newAddress->setDisplayName(::Utils::appStringToCoreString(username))) {
+  if (newAddress->setDisplayName(Utils::appStringToCoreString(username))) {
     qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
-      .arg(::Utils::coreStringToAppString(newAddress->asStringUriOnly()));
+      .arg(Utils::coreStringToAppString(newAddress->asStringUriOnly()));
   } else {
     setUsedSipAddress(newAddress);
   }
@@ -264,18 +266,18 @@ void AccountSettingsModel::setUsername (const QString &username) {
 }
 
 QString AccountSettingsModel::getSipAddress () const {
-  return ::Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
+  return Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
 }
 
 AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationState () const {
   shared_ptr<linphone::ProxyConfig> proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
-  return proxyConfig ? ::mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNotRegistered;
+  return proxyConfig ? mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNotRegistered;
 }
 
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getPrimaryUsername () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getUsername()
   );
 }
@@ -285,7 +287,7 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 
   primary->setUsername(
-    username.isEmpty() ? "linphone" : ::Utils::appStringToCoreString(username)
+    username.isEmpty() ? "linphone" : Utils::appStringToCoreString(username)
   );
   core->setPrimaryContact(primary->asString());
 
@@ -293,7 +295,7 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
 }
 
 QString AccountSettingsModel::getPrimaryDisplayName () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getDisplayName()
   );
 }
@@ -302,14 +304,14 @@ void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 
-  primary->setDisplayName(::Utils::appStringToCoreString(displayName));
+  primary->setDisplayName(Utils::appStringToCoreString(displayName));
   core->setPrimaryContact(primary->asString());
 
   emit accountSettingsUpdated();
 }
 
 QString AccountSettingsModel::getPrimarySipAddress () const {
-  return ::Utils::coreStringToAppString(
+  return Utils::coreStringToAppString(
     CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->asString()
   );
 }
@@ -322,13 +324,13 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
   {
     QVariantMap account;
-    account["sipAddress"] = ::Utils::coreStringToAppString(core->getPrimaryContactParsed()->asStringUriOnly());
+    account["sipAddress"] = Utils::coreStringToAppString(core->getPrimaryContactParsed()->asStringUriOnly());
     accounts << account;
   }
 
   for (const auto &proxyConfig : core->getProxyConfigList()) {
     QVariantMap account;
-    account["sipAddress"] = ::Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
+    account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
     account["proxyConfig"].setValue(proxyConfig);
     accounts << account;
   }

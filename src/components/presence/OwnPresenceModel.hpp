@@ -23,7 +23,7 @@
 #ifndef OWN_PRESENCE_MODEL_H_
 #define OWN_PRESENCE_MODEL_H_
 
-#include "../presence/Presence.hpp"
+#include "Presence.hpp"
 
 // =============================================================================
 // Gives the statuses list informations (icons, label, level, status).

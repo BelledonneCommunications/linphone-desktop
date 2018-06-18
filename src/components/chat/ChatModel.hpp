@@ -48,7 +48,6 @@ public:
     MessageEntry,
     CallEntry
   };
-
   Q_ENUM(EntryType);
 
   enum CallStatus {
@@ -56,7 +55,6 @@ public:
     CallStatusMissed = linphone::CallStatusMissed,
     CallStatusSuccess = linphone::CallStatusSuccess
   };
-
   Q_ENUM(CallStatus);
 
   enum MessageStatus {
@@ -69,7 +67,6 @@ public:
     MessageStatusInProgress = linphone::ChatMessageStateInProgress,
     MessageStatusNotDelivered = linphone::ChatMessageStateNotDelivered
   };
-
   Q_ENUM(MessageStatus);
 
   ChatModel (const QString &sipAddress);
@@ -119,7 +116,7 @@ signals:
   void messagesCountReset ();
 
 private:
-  typedef QPair<QVariantMap, std::shared_ptr<void> > ChatEntryData;
+  typedef QPair<QVariantMap, std::shared_ptr<void>> ChatEntryData;
 
   void setSipAddress (const QString &sipAddress);
 

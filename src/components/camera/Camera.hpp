@@ -29,12 +29,12 @@
 
 // =============================================================================
 
-class CallModel;
-struct ContextInfo;
-
 namespace linphone {
   class Call;
 }
+
+class CallModel;
+struct ContextInfo;
 
 class CameraRenderer : public QQuickFramebufferObject::Renderer {
 public:
@@ -72,7 +72,6 @@ class Camera : public QQuickFramebufferObject {
 
 public:
   Camera (QQuickItem *parent = Q_NULLPTR);
-  ~Camera () = default;
 
   QQuickFramebufferObject::Renderer *createRenderer () const override;
 

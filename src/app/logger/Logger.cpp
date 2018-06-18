@@ -30,6 +30,8 @@
 
 #include "Logger.hpp"
 
+// =============================================================================
+
 #if defined(__linux__) || defined(__APPLE__)
   #define BLUE "\x1B[1;34m"
   #define YELLOW "\x1B[1;33m"
@@ -46,19 +48,17 @@
   #define RESET ""
 #endif // if defined(__linux__) || defined(__APPLE__)
 
-// =============================================================================
-
 using namespace std;
 
 namespace {
-  constexpr char cQtDomain[] = "qt";
-  constexpr size_t cMaxLogsCollectionSize = 10485760; // 10MB.
-  constexpr char cSrcPattern[] = "/linphone-desktop/src/";
+  constexpr char QtDomain[] = "qt";
+  constexpr size_t MaxLogsCollectionSize = 10485760; // 10MB.
+  constexpr char SrcPattern[] = "/linphone-desktop/src/";
 }
 
 QMutex Logger::mMutex;
 
-Logger *Logger::mInstance = nullptr;
+Logger *Logger::mInstance;
 
 // -----------------------------------------------------------------------------
 
@@ -150,10 +150,10 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
     QByteArray contextArr;
     {
       const char *file = context.file;
-      const char *pos = file ? Utils::rstrstr(file, cSrcPattern) : file;
+      const char *pos = file ? Utils::rstrstr(file, SrcPattern) : file;
 
       contextArr = QStringLiteral("%1:%2: ")
-        .arg(pos ? pos + sizeof(cSrcPattern) - 1 : file)
+        .arg(pos ? pos + sizeof(SrcPattern) - 1 : file)
         .arg(context.line)
         .toLocal8Bit();
       contextStr = contextArr.constData();
@@ -168,7 +168,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   mMutex.lock();
 
   fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
-  bctbx_log(cQtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
+  bctbx_log(QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
 
   mMutex.unlock();
 
@@ -204,7 +204,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
   }
 
   linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));
-  linphone::Core::setLogCollectionMaxFileSize(cMaxLogsCollectionSize);
+  linphone::Core::setLogCollectionMaxFileSize(MaxLogsCollectionSize);
 
   mInstance->enable(SettingsModel::getLogsEnabled(config));
 }

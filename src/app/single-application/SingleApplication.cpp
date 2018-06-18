@@ -43,19 +43,21 @@
   #include <lmcons.h>
 #endif // ifdef Q_OS_WIN
 
-#include "../../utils/Utils.hpp"
+#include "utils/Utils.hpp"
 
 #include "SingleApplication.hpp"
 #include "SingleApplicationPrivate.hpp"
 
 // =============================================================================
 
-static const char NewInstance = 'N';
-static const char SecondaryInstance = 'S';
-static const char Reconnect = 'R';
-static const char InvalidConnection = '\0';
-
 using namespace std;
+
+namespace {
+  constexpr char NewInstance = 'N';
+  constexpr char SecondaryInstance = 'S';
+  constexpr char Reconnect = 'R';
+  constexpr char InvalidConnection = '\0';
+}
 
 // -----------------------------------------------------------------------------
 
@@ -234,20 +236,20 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
 
     // Handle any further termination signals to ensure the
     // QSharedMemory block is deleted even if the process crashes
-    signal(SIGHUP, SingleApplicationPrivate::terminate);        // 1
-    signal(SIGINT, SingleApplicationPrivate::terminate);        // 2
-    signal(SIGQUIT, SingleApplicationPrivate::terminate);       // 3
-    signal(SIGILL, SingleApplicationPrivate::terminate);        // 4
-    signal(SIGABRT, SingleApplicationPrivate::terminate);       // 6
-    signal(SIGFPE, SingleApplicationPrivate::terminate);        // 8
-    signal(SIGBUS, SingleApplicationPrivate::terminate);        // 10
-    signal(SIGSEGV, SingleApplicationPrivate::terminate);       // 11
-    signal(SIGSYS, SingleApplicationPrivate::terminate);        // 12
-    signal(SIGPIPE, SingleApplicationPrivate::terminate);       // 13
-    signal(SIGALRM, SingleApplicationPrivate::terminate);       // 14
-    signal(SIGTERM, SingleApplicationPrivate::terminate);       // 15
-    signal(SIGXCPU, SingleApplicationPrivate::terminate);       // 24
-    signal(SIGXFSZ, SingleApplicationPrivate::terminate);       // 25
+    signal(SIGHUP, SingleApplicationPrivate::terminate);  // 1
+    signal(SIGINT, SingleApplicationPrivate::terminate);  // 2
+    signal(SIGQUIT, SingleApplicationPrivate::terminate); // 3
+    signal(SIGILL, SingleApplicationPrivate::terminate);  // 4
+    signal(SIGABRT, SingleApplicationPrivate::terminate); // 6
+    signal(SIGFPE, SingleApplicationPrivate::terminate);  // 8
+    signal(SIGBUS, SingleApplicationPrivate::terminate);  // 10
+    signal(SIGSEGV, SingleApplicationPrivate::terminate); // 11
+    signal(SIGSYS, SingleApplicationPrivate::terminate);  // 12
+    signal(SIGPIPE, SingleApplicationPrivate::terminate); // 13
+    signal(SIGALRM, SingleApplicationPrivate::terminate); // 14
+    signal(SIGTERM, SingleApplicationPrivate::terminate); // 15
+    signal(SIGXCPU, SingleApplicationPrivate::terminate); // 24
+    signal(SIGXFSZ, SingleApplicationPrivate::terminate); // 25
   }
 
   void SingleApplicationPrivate::terminate (int signum) {

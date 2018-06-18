@@ -23,7 +23,8 @@
 #ifndef COLORS_H_
 #define COLORS_H_
 
-#include <linphone++/linphone.hh>
+#include <memory>
+
 #include <QColor>
 #include <QObject>
 
@@ -49,7 +50,7 @@
 // -----------------------------------------------------------------------------
 
 namespace linphone {
-class Config;
+  class Config;
 }
 
 class Colors : public QObject {
@@ -97,7 +98,6 @@ class Colors : public QObject {
 
 public:
   Colors (QObject *parent = Q_NULLPTR);
-  ~Colors () = default;
 
   void useConfig (const std::shared_ptr<linphone::Config> &config);
 

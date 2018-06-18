@@ -31,7 +31,6 @@
 class DefaultTranslator : public QTranslator {
 public:
   DefaultTranslator (QObject *parent = Q_NULLPTR);
-  ~DefaultTranslator () = default;
 
   QString translate (
     const char *context,

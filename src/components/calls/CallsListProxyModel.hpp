@@ -25,16 +25,15 @@
 
 #include <QSortFilterProxyModel>
 
-#include "../call/CallModel.hpp"
-
 // =============================================================================
+
+class CallModel;
 
 class CallsListProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
 public:
   CallsListProxyModel (QObject *parent = Q_NULLPTR);
-  ~CallsListProxyModel () = default;
 
 signals:
   void callRunning (int index, CallModel *callModel);

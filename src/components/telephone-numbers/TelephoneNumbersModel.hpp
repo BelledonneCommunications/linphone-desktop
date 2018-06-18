@@ -35,7 +35,6 @@ class TelephoneNumbersModel : public QAbstractListModel {
 
 public:
   TelephoneNumbersModel (QObject *parent = Q_NULLPTR);
-  ~TelephoneNumbersModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -45,7 +44,7 @@ public:
 private:
   int getDefaultIndex () const;
 
-  static const QList<QPair<QLocale::Country, QString> > mCountryCodes;
+  static const QList<QPair<QLocale::Country, QString>> mCountryCodes;
 };
 
 #endif // ifndef TELEPHONE_NUMBERS_MODEL_H_

@@ -24,9 +24,10 @@
 #define FILE_EXTRACTOR_H_
 
 #include <QFile>
-#include <QTimer>
 
 // =============================================================================
+
+class QTimer;
 
 // Supports only bzip file.
 class FileExtractor : public QObject {

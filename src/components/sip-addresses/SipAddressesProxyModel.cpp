@@ -20,21 +20,24 @@
  *      Author: Ronan Abhamon
  */
 
-#include "../core/CoreManager.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contact/VcardModel.hpp"
+#include "components/core/CoreManager.hpp"
 
+#include "SipAddressesModel.hpp"
 #include "SipAddressesProxyModel.hpp"
 
 // =============================================================================
 
 namespace {
-  constexpr int cWeightPos0 = 5;
-  constexpr int cWeightPos1 = 4;
-  constexpr int cWeightPos2 = 3;
-  constexpr int cWeightPos3 = 2;
-  constexpr int cWeightPosOther = 1;
+  constexpr int WeightPos0 = 5;
+  constexpr int WeightPos1 = 4;
+  constexpr int WeightPos2 = 3;
+  constexpr int WeightPos3 = 2;
+  constexpr int WeightPosOther = 1;
 }
 
-const QRegExp SipAddressesProxyModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
+const QRegExp SipAddressesProxyModel::SearchSeparators("^[^_.-;@ ][_.-;@ ]");
 
 // -----------------------------------------------------------------------------
 
@@ -111,19 +114,19 @@ int SipAddressesProxyModel::computeStringWeight (const QString &string) const {
   int offset = -1;
 
   while ((index = string.indexOf(mFilter, index + 1, Qt::CaseInsensitive)) != -1) {
-    int tmpOffset = index - string.lastIndexOf(mSearchSeparators, index) - 1;
+    int tmpOffset = index - string.lastIndexOf(SearchSeparators, index) - 1;
     if ((tmpOffset != -1 && tmpOffset < offset) || offset == -1)
       if ((offset = tmpOffset) == 0) break;
   }
 
   switch (offset) {
     case -1: return 0;
-    case 0: return cWeightPos0;
-    case 1: return cWeightPos1;
-    case 2: return cWeightPos2;
-    case 3: return cWeightPos3;
+    case 0: return WeightPos0;
+    case 1: return WeightPos1;
+    case 2: return WeightPos2;
+    case 3: return WeightPos3;
     default: break;
   }
 
-  return cWeightPosOther;
+  return WeightPosOther;
 }

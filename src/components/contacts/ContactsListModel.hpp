@@ -23,12 +23,18 @@
 #ifndef CONTACTS_LIST_MODEL_H_
 #define CONTACTS_LIST_MODEL_H_
 
-#include <linphone++/linphone.hh>
+#include <memory>
+
 #include <QAbstractListModel>
 
-#include "../contact/ContactModel.hpp"
-
 // =============================================================================
+
+namespace linphone {
+  class FriendList;
+}
+
+class ContactModel;
+class VcardModel;
 
 class ContactsListModel : public QAbstractListModel {
   friend class SipAddressesModel;
@@ -37,7 +43,6 @@ class ContactsListModel : public QAbstractListModel {
 
 public:
   ContactsListModel (QObject *parent = Q_NULLPTR);
-  ~ContactsListModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 

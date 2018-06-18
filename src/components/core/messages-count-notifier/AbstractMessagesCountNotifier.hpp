@@ -37,7 +37,6 @@ class AbstractMessagesCountNotifier : public QObject {
 
 public:
   AbstractMessagesCountNotifier (QObject *parent = Q_NULLPTR);
-  virtual ~AbstractMessagesCountNotifier () = default;
 
   void updateUnreadMessagesCount ();
 

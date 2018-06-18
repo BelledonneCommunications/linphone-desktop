@@ -28,7 +28,7 @@
 // =============================================================================
 
 Clipboard::Clipboard (QObject *parent) : QObject(parent) {
-  connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &Clipboard::textChanged);
+  QObject::connect(QGuiApplication::clipboard(), &QClipboard::dataChanged, this, &Clipboard::textChanged);
 }
 
 QString Clipboard::getText () const {

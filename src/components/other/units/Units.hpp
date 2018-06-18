@@ -34,7 +34,6 @@ class Units : public QObject {
 
 public:
   Units (QObject *parent = Q_NULLPTR);
-  ~Units () = default;
 
 private:
   float getDp () const;

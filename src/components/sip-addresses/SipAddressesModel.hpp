@@ -24,11 +24,12 @@
 #define SIP_ADDRESSES_MODEL_H_
 
 #include <QAbstractListModel>
-#include <QUrl>
 
 #include "SipAddressObserver.hpp"
 
 // =============================================================================
+
+class QUrl;
 
 class ChatModel;
 class CoreHandlers;
@@ -38,7 +39,6 @@ class SipAddressesModel : public QAbstractListModel {
 
 public:
   SipAddressesModel (QObject *parent = Q_NULLPTR);
-  ~SipAddressesModel () = default;
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 

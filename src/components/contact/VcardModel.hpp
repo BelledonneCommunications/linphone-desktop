@@ -23,10 +23,15 @@
 #ifndef VCARD_MODEL_H_
 #define VCARD_MODEL_H_
 
-#include <linphone++/linphone.hh>
+#include <memory>
+
 #include <QObject>
 
 // =============================================================================
+
+namespace linphone {
+  class Vcard;
+}
 
 class VcardModel : public QObject {
   friend class ContactModel; // Grant access to `mVcard`.

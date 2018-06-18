@@ -23,20 +23,21 @@
 #ifndef CORE_MANAGER_H_
 #define CORE_MANAGER_H_
 
+#include <linphone++/linphone.hh>
 #include <QFutureWatcher>
-
-#include "../calls/CallsListModel.hpp"
-#include "../chat/ChatModel.hpp"
-#include "../contacts/ContactsListModel.hpp"
-#include "../settings/AccountSettingsModel.hpp"
-#include "../settings/SettingsModel.hpp"
-#include "../sip-addresses/SipAddressesModel.hpp"
-
-#include "CoreHandlers.hpp"
 
 // =============================================================================
 
 class QTimer;
+
+class AccountSettingsModel;
+class CallsListModel;
+class ChatModel;
+class ContactsListModel;
+class CoreHandlers;
+class SettingsModel;
+class SipAddressesModel;
+class VcardModel;
 
 class CoreManager : public QObject {
   Q_OBJECT;
@@ -45,8 +46,6 @@ class CoreManager : public QObject {
   Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT);
 
 public:
-  ~CoreManager () = default;
-
   bool started () const {
     return mStarted;
   }
@@ -165,7 +164,7 @@ private:
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
 
-  QHash<QString, std::weak_ptr<ChatModel> > mChatModels;
+  QHash<QString, std::weak_ptr<ChatModel>> mChatModels;
 
   QTimer *mCbsTimer = nullptr;
 

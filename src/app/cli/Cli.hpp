@@ -41,11 +41,11 @@ class Cli : public QObject {
   typedef void (*Function)(QHash<QString, QString> &);
 
   enum ArgumentType {
-    STRING
+    String
   };
 
   struct Argument {
-    Argument (ArgumentType type = STRING, bool isOptional = false) {
+    Argument (ArgumentType type = String, bool isOptional = false) {
       this->type = type;
       this->isOptional = isOptional;
     }
@@ -81,8 +81,6 @@ class Cli : public QObject {
   };
 
 public:
-  ~Cli () = default;
-
   enum CommandFormat {
     UnknownFormat,
     CliFormat,

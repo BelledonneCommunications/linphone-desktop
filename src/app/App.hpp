@@ -23,21 +23,24 @@
 #ifndef APP_H_
 #define APP_H_
 
-#include <QQmlApplicationEngine>
-#include <QQuickWindow>
+#include <memory>
 
-#include "../components/notifier/Notifier.hpp"
-#include "../components/other/colors/Colors.hpp"
 #include "single-application/SingleApplication.hpp"
-
-#define APP_CODE_RESTART 1000
 
 // =============================================================================
 
 class QCommandLineParser;
+class QQmlApplicationEngine;
+class QQuickWindow;
 class QSystemTrayIcon;
 
+namespace linphone {
+  class Config;
+}
+
+class Colors;
 class DefaultTranslator;
+class Notifier;
 
 class App : public SingleApplication {
   Q_OBJECT;
@@ -59,7 +62,7 @@ public:
     bool event (QEvent *event) override;
   #endif // ifdef Q_OS_MACOS
 
-  QQmlEngine *getEngine () {
+  QQmlApplicationEngine *getEngine () {
     return mEngine;
   }
 
@@ -83,8 +86,10 @@ public:
     return static_cast<App *>(QApplication::instance());
   }
 
+  static constexpr int RestartCode = 1000;
+
   Q_INVOKABLE void restart () {
-    exit(APP_CODE_RESTART);
+    exit(RestartCode);
   }
 
   Q_INVOKABLE QQuickWindow *getCallsWindow ();

@@ -20,6 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#ifndef APP_CONTROLLER_H_
+#define APP_CONTROLLER_H_
+
 #include "App.hpp"
 
 // =============================================================================
@@ -37,3 +40,5 @@ public:
 private:
   App *mApp = nullptr;
 };
+
+#endif // APP_CONTROLLER_H_

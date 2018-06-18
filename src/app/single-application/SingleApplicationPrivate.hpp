@@ -75,8 +75,8 @@ public:
 
 public Q_SLOTS:
   void slotConnectionEstablished ();
-  void slotDataAvailable(QLocalSocket *, quint32);
-  void slotClientConnectionClosed(QLocalSocket *, quint32);
+  void slotDataAvailable (QLocalSocket *, quint32);
+  void slotClientConnectionClosed (QLocalSocket *, quint32);
 };
 
 #endif // SINGLE_APPLICATION_PRIVATE_H_

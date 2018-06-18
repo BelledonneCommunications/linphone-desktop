@@ -41,7 +41,6 @@ class ContactsListProxyModel : public QSortFilterProxyModel {
 
 public:
   ContactsListProxyModel (QObject *parent = Q_NULLPTR);
-  ~ContactsListProxyModel () = default;
 
   Q_INVOKABLE void setFilter (const QString &pattern);
 
@@ -66,7 +65,7 @@ private:
   // and reused by `lessThan`.
   mutable QHash<const ContactModel *, unsigned int> mWeights;
 
-  static const QRegExp mSearchSeparators;
+  static const QRegExp SearchSeparators;
 };
 
 #endif // CONTACTS_LIST_PROXY_MODEL_H_

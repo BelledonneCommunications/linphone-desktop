@@ -24,7 +24,11 @@
 #include <QTimer>
 
 #include "app/App.hpp"
+#include "components/calls/CallsListModel.hpp"
+#include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/notifier/Notifier.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
@@ -35,8 +39,8 @@
 using namespace std;
 
 namespace {
-  constexpr char cAutoAnswerObjectName[] = "auto-answer-timer";
-  constexpr int cDtmfSoundDelay = 200;
+  constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
+  constexpr int DtmfSoundDelay = 200;
 }
 
 CallModel::CallModel (shared_ptr<linphone::Call> call) {
@@ -56,7 +60,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call) {
       QTimer *timer = new QTimer(this);
       timer->setInterval(settings->getAutoAnswerDelay());
       timer->setSingleShot(true);
-      timer->setObjectName(cAutoAnswerObjectName);
+      timer->setObjectName(AutoAnswerObjectName);
 
       QObject::connect(timer, &QTimer::timeout, this, &CallModel::acceptWithAutoAnswerDelay);
       timer->start();
@@ -81,14 +85,14 @@ CallModel::~CallModel () {
 // -----------------------------------------------------------------------------
 
 QString CallModel::getSipAddress () const {
-  return ::Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
+  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
 }
 
 // -----------------------------------------------------------------------------
 
 void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(
-    ::Utils::appStringToCoreString(
+    Utils::appStringToCoreString(
       QStringLiteral("%1%2.mkv")
         .arg(CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder())
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
@@ -185,7 +189,7 @@ void CallModel::askForTransfer () {
 }
 
 bool CallModel::transferTo (const QString &sipAddress) {
-  bool status = !!mCall->transfer(::Utils::appStringToCoreString(sipAddress));
+  bool status = !!mCall->transfer(Utils::appStringToCoreString(sipAddress));
   if (status)
     qWarning() << QStringLiteral("Unable to transfer: `%1`.").arg(sipAddress);
   return status;
@@ -219,7 +223,7 @@ void CallModel::takeSnapshot () {
   qInfo() << QStringLiteral("Take snapshot of call:") << this;
 
   const QString filePath = CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName;
-  mCall->takeVideoSnapshot(::Utils::appStringToCoreString(filePath));
+  mCall->takeVideoSnapshot(Utils::appStringToCoreString(filePath));
   App::getInstance()->getNotifier()->notifySnapshotWasTaken(filePath);
 }
 
@@ -245,7 +249,7 @@ void CallModel::stopRecording () {
   mCall->stopRecording();
 
   App::getInstance()->getNotifier()->notifyRecordingCompleted(
-    ::Utils::coreStringToAppString(mCall->getParams()->getRecordFile())
+    Utils::coreStringToAppString(mCall->getParams()->getRecordFile())
   );
 
   emit recordingChanged(false);
@@ -253,7 +257,7 @@ void CallModel::stopRecording () {
 
 // -----------------------------------------------------------------------------
 
-void CallModel::handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call) {
+void CallModel::handleCallEncryptionChanged (const shared_ptr<linphone::Call> &call) {
   if (call == mCall)
     emit securityUpdated();
 }
@@ -330,7 +334,7 @@ void CallModel::updateIsInConference () {
 // -----------------------------------------------------------------------------
 
 void CallModel::stopAutoAnswerTimer () const {
-  QTimer *timer = findChild<QTimer *>(cAutoAnswerObjectName, Qt::FindDirectChildrenOnly);
+  QTimer *timer = findChild<QTimer *>(AutoAnswerObjectName, Qt::FindDirectChildrenOnly);
   if (timer) {
     timer->stop();
     timer->deleteLater();
@@ -552,7 +556,7 @@ void CallModel::sendDtmf (const QString &dtmf) {
   const char key = dtmf.constData()[0].toLatin1();
   qInfo() << QStringLiteral("Send dtmf: `%1`.").arg(key);
   mCall->sendDtmf(key);
-  CoreManager::getInstance()->getCore()->playDtmf(key, cDtmfSoundDelay);
+  CoreManager::getInstance()->getCore()->playDtmf(key, DtmfSoundDelay);
 }
 
 // -----------------------------------------------------------------------------
@@ -579,12 +583,12 @@ bool CallModel::isSecured () const {
 // -----------------------------------------------------------------------------
 
 QString CallModel::getLocalSas () const {
-  QString token = ::Utils::coreStringToAppString(mCall->getAuthenticationToken());
+  QString token = Utils::coreStringToAppString(mCall->getAuthenticationToken());
   return mCall->getDir() == linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
 QString CallModel::getRemoteSas () const {
-  QString token = ::Utils::coreStringToAppString(mCall->getAuthenticationToken());
+  QString token = Utils::coreStringToAppString(mCall->getAuthenticationToken());
   return mCall->getDir() != linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
@@ -654,42 +658,42 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
   statsList.clear();
 
-  statsList << ::createStat(tr("callStatsCodec"), payloadType
+  statsList << createStat(tr("callStatsCodec"), payloadType
     ? QStringLiteral("%1 / %2kHz").arg(Utils::coreStringToAppString(payloadType->getMimeType())).arg(payloadType->getClockRate() / 1000)
     : QString(""));
-  statsList << ::createStat(tr("callStatsUploadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
-  statsList << ::createStat(tr("callStatsDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
-  statsList << ::createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
-  statsList << ::createStat(tr("callStatsIpFamily"), family);
-  statsList << ::createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(callStats->getSenderLossRate()));
-  statsList << ::createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(callStats->getReceiverLossRate()));
+  statsList << createStat(tr("callStatsUploadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getUploadBandwidth())));
+  statsList << createStat(tr("callStatsDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
+  statsList << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
+  statsList << createStat(tr("callStatsIpFamily"), family);
+  statsList << createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(callStats->getSenderLossRate()));
+  statsList << createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(callStats->getReceiverLossRate()));
 
   switch (callStats->getType()) {
     case linphone::StreamTypeAudio:
-      statsList << ::createStat(tr("callStatsJitterBuffer"), QStringLiteral("%1 ms").arg(callStats->getJitterBufferSizeMs()));
+      statsList << createStat(tr("callStatsJitterBuffer"), QStringLiteral("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
     case linphone::StreamTypeVideo: {
-      statsList << ::createStat(tr("callStatsEstimatedDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getEstimatedDownloadBandwidth())));
-      const QString sentVideoDefinitionName = ::Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
+      statsList << createStat(tr("callStatsEstimatedDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getEstimatedDownloadBandwidth())));
+      const QString sentVideoDefinitionName = Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
       const QString sentVideoDefinition = QStringLiteral("%1x%2")
         .arg(params->getSentVideoDefinition()->getWidth())
         .arg(params->getSentVideoDefinition()->getHeight());
 
-      statsList << ::createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
+      statsList << createStat(tr("callStatsSentVideoDefinition"), sentVideoDefinition == sentVideoDefinitionName
         ? sentVideoDefinition
         : QStringLiteral("%1 (%2)").arg(sentVideoDefinition).arg(sentVideoDefinitionName));
 
-      const QString receivedVideoDefinitionName = ::Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
+      const QString receivedVideoDefinitionName = Utils::coreStringToAppString(params->getReceivedVideoDefinition()->getName());
       const QString receivedVideoDefinition = QString("%1x%2")
         .arg(params->getReceivedVideoDefinition()->getWidth())
         .arg(params->getReceivedVideoDefinition()->getHeight());
 
-      statsList << ::createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
+      statsList << createStat(tr("callStatsReceivedVideoDefinition"), receivedVideoDefinition == receivedVideoDefinitionName
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
 
-      statsList << ::createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(params->getReceivedFramerate()));
-      statsList << ::createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(params->getSentFramerate()));
+      statsList << createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(params->getReceivedFramerate()));
+      statsList << createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(params->getSentFramerate()));
     } break;
 
     default:

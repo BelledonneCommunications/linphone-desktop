@@ -27,7 +27,7 @@
 
 // =============================================================================
 
-const QString AvatarProvider::PROVIDER_ID = "avatar";
+const QString AvatarProvider::ProviderId = "avatar";
 
 AvatarProvider::AvatarProvider () : QQuickImageProvider(
   QQmlImageProviderBase::Image,

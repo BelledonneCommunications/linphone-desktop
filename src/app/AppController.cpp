@@ -29,21 +29,21 @@
 
 #include "AppController.hpp"
 
-using namespace std;
-
 // =============================================================================
+
+using namespace std;
 
 namespace {
   // Must be unique. Used by `SingleApplication` and `Paths`.
-  constexpr char cApplicationName[] = "linphone";
-  constexpr char cApplicationVersion[] = LINPHONE_QT_GIT_VERSION;
-  constexpr char cApplicationMinimalQtVersion[] = "5.9.0";
+  constexpr char ApplicationName[] = "linphone";
+  constexpr char ApplicationVersion[] = LINPHONE_QT_GIT_VERSION;
+  constexpr char ApplicationMinimalQtVersion[] = "5.9.0";
 
-  constexpr char cDefaultFont[] = "Noto Sans";
+  constexpr char DefaultFont[] = "Noto Sans";
 }
 
 AppController::AppController (int &argc, char *argv[]) {
-  QT_REQUIRE_VERSION(argc, argv, cApplicationMinimalQtVersion);
+  QT_REQUIRE_VERSION(argc, argv, ApplicationMinimalQtVersion);
   Q_ASSERT(!mApp);
 
   // Disable QML cache. Avoid malformed cache.
@@ -57,8 +57,8 @@ AppController::AppController (int &argc, char *argv[]) {
   // App creation.
   // ---------------------------------------------------------------------------
 
-  QCoreApplication::setApplicationName(cApplicationName);
-  QCoreApplication::setApplicationVersion(cApplicationVersion);
+  QCoreApplication::setApplicationName(ApplicationName);
+  QCoreApplication::setApplicationVersion(ApplicationVersion);
 
   mApp = new App(argc, argv);
   QQuickStyle::setStyle("Default");
@@ -88,7 +88,7 @@ AppController::AppController (int &argc, char *argv[]) {
     }
   }
 
-  mApp->setFont(QFont(cDefaultFont));
+  mApp->setFont(QFont(DefaultFont));
 }
 
 AppController::~AppController () {

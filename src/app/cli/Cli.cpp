@@ -23,6 +23,8 @@
 #include <iostream>
 
 #include "app/App.hpp"
+#include "components/calls/CallsListModel.hpp"
+#include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "utils/Utils.hpp"
 
@@ -181,7 +183,8 @@ static QString indentedWord (QString word, int &curPos, const int lineLength, co
 }
 
 static string multilineIndent (const QString &str, int indentationNumber = 0) {
-  static const int lineLength(80);
+  constexpr int lineLength(80);
+
   static const QRegExp spaceRegexp("(\\s)");
   const QString padding(indentationNumber * 2, ' ');
 
@@ -294,7 +297,7 @@ QString Cli::Command::getFunctionSyntax () const {
     functionSyntax += argName;
     functionSyntax += QStringLiteral("=<");
     switch (mArgsScheme[argName].type) {
-      case STRING :
+      case String:
         functionSyntax += QStringLiteral("str");
         break;
       default:

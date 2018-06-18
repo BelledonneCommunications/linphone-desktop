@@ -22,23 +22,28 @@
 
 #include <cmath>
 
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contact/VcardModel.hpp"
+#include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
+#include "ContactsListModel.hpp"
 #include "ContactsListProxyModel.hpp"
 
-#define USERNAME_WEIGHT 50.f
-#define SIP_ADDRESSES_WEIGHT 50.f
-
-#define FACTOR_POS_0 1.0f
-#define FACTOR_POS_1 0.9f
-#define FACTOR_POS_2 0.8f
-#define FACTOR_POS_3 0.7f
-#define FACTOR_POS_OTHER 0.6f
+// =============================================================================
 
 using namespace std;
 
-// =============================================================================
+namespace {
+  constexpr float UsernameWeight = 50.f;
+  constexpr float SipAddressWeight = 50.f;
+
+  constexpr float FactorPos0 = 1.0f;
+  constexpr float FactorPos1 = 0.9f;
+  constexpr float FactorPos2 = 0.8f;
+  constexpr float FactorPos3 = 0.7f;
+  constexpr float FactorPosOther = 0.6f;
+}
 
 // Notes:
 //
@@ -49,7 +54,7 @@ using namespace std;
 // a separator like ` word`.
 //
 // - [_.-;@ ] is the main pattern (a separator).
-const QRegExp ContactsListProxyModel::mSearchSeparators("^[^_.-;@ ][_.-;@ ]");
+const QRegExp ContactsListProxyModel::SearchSeparators("^[^_.-;@ ][_.-;@ ]");
 
 // -----------------------------------------------------------------------------
 
@@ -105,7 +110,7 @@ float ContactsListProxyModel::computeStringWeight (const QString &string, float 
   // Search pattern.
   while ((index = string.indexOf(mFilter, index + 1, Qt::CaseInsensitive)) != -1) {
     // Search n chars between one separator and index.
-    int tmpOffset = index - string.lastIndexOf(mSearchSeparators, index) - 1;
+    int tmpOffset = index - string.lastIndexOf(SearchSeparators, index) - 1;
 
     if ((tmpOffset != -1 && tmpOffset < offset) || offset == -1)
       if ((offset = tmpOffset) == 0) break;
@@ -113,28 +118,28 @@ float ContactsListProxyModel::computeStringWeight (const QString &string, float 
 
   switch (offset) {
     case -1: return 0;
-    case 0: return percentage * FACTOR_POS_0;
-    case 1: return percentage * FACTOR_POS_1;
-    case 2: return percentage * FACTOR_POS_2;
-    case 3: return percentage * FACTOR_POS_3;
+    case 0: return percentage *FactorPos0;
+    case 1: return percentage *FactorPos1;
+    case 2: return percentage *FactorPos2;
+    case 3: return percentage *FactorPos3;
     default: break;
   }
 
-  return percentage * FACTOR_POS_OTHER;
+  return percentage *FactorPosOther;
 }
 
 float ContactsListProxyModel::computeContactWeight (const ContactModel *contact) const {
-  float weight = computeStringWeight(contact->getVcardModel()->getUsername(), USERNAME_WEIGHT);
+  float weight = computeStringWeight(contact->getVcardModel()->getUsername(), UsernameWeight);
 
   // Get all contact's addresses.
-  const list<shared_ptr<linphone::Address> > addresses = contact->mLinphoneFriend->getAddresses();
+  const list<shared_ptr<linphone::Address>> addresses = contact->mLinphoneFriend->getAddresses();
 
   float size = float(addresses.size());
   for (auto it = addresses.cbegin(); it != addresses.cend(); ++it)
     weight += computeStringWeight(
-        ::Utils::coreStringToAppString((*it)->asStringUriOnly()),
-        SIP_ADDRESSES_WEIGHT / size
-      );
+      Utils::coreStringToAppString((*it)->asStringUriOnly()),
+      SipAddressWeight / size
+    );
 
   return weight;
 }

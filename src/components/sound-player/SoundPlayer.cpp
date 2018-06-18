@@ -22,17 +22,18 @@
 
 #include <QTimer>
 
-#include "../../utils/Utils.hpp"
-#include "../core/CoreManager.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "utils/Utils.hpp"
 
 #include "SoundPlayer.hpp"
 
-using namespace std;
-
 // =============================================================================
 
+using namespace std;
+
 namespace {
-  int cForceCloseTimerInterval = 20;
+  int ForceCloseTimerInterval = 20;
 }
 
 class SoundPlayer::Handlers : public linphone::PlayerListener {
@@ -60,7 +61,7 @@ private:
 
 SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
   mForceCloseTimer = new QTimer(this);
-  mForceCloseTimer->setInterval(cForceCloseTimerInterval);
+  mForceCloseTimer->setInterval(ForceCloseTimerInterval);
 
   QObject::connect(mForceCloseTimer, &QTimer::timeout, this, &SoundPlayer::handleEof);
 
@@ -98,7 +99,7 @@ void SoundPlayer::play () {
 
   if (
     (mPlaybackState == SoundPlayer::StoppedState || mPlaybackState == SoundPlayer::ErrorState) &&
-    mInternalPlayer->open(::Utils::appStringToCoreString(mSource))
+    mInternalPlayer->open(Utils::appStringToCoreString(mSource))
   ) {
     qWarning() << QStringLiteral("Unable to open: `%1`").arg(mSource);
     return;
@@ -140,8 +141,8 @@ void SoundPlayer::buildInternalPlayer () {
   SettingsModel *settingsModel = coreManager->getSettingsModel();
 
   mInternalPlayer = coreManager->getCore()->createLocalPlayer(
-      ::Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
-    );
+    Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
+  );
   mInternalPlayer->setListener(mHandlers);
 
   QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
