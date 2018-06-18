@@ -26,10 +26,7 @@ project(linphoneqt VERSION 4.1.1)
 set(APP_LIBRARY app-library)
 
 set(EXECUTABLE_NAME linphone)
-set(TESTER_EXECUTABLE_NAME "${EXECUTABLE_NAME}-tester")
-
 set(TARGET_NAME linphone-qt)
-set(TESTER_TARGET_NAME "${TARGET_NAME}-tester")
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -226,19 +223,7 @@ set(HEADERS
   src/utils/Utils.hpp
 )
 
-set(TESTS
-  src/tests/assistant-view/AssistantViewTest.cpp
-  src/tests/assistant-view/AssistantViewTest.hpp
-  src/tests/main-view/MainViewTest.cpp
-  src/tests/main-view/MainViewTest.hpp
-  src/tests/self-test/SelfTest.cpp
-  src/tests/self-test/SelfTest.hpp
-  src/tests/TestUtils.cpp
-  src/tests/TestUtils.hpp
-)
-
 set(MAIN_FILE src/app/main.cpp)
-set(TESTER_MAIN_FILE src/tests/main.cpp)
 
 if (UNIX AND NOT APPLE)
   list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierLinux.cpp)
@@ -337,7 +322,6 @@ include_directories(src/)
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
-find_package(Qt5 COMPONENTS Test REQUIRED)
 
 if (CMAKE_INSTALL_RPATH)
   get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
@@ -363,17 +347,14 @@ add_dependencies(${APP_LIBRARY} update_translations)
 
 if (WIN32)
   add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> assets/linphone.rc ${MAIN_FILE})
-  add_executable(${TESTER_TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> assets/linphone.rc ${TESTER_MAIN_FILE} ${TESTS})
 else ()
   add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
-  add_executable(${TESTER_TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${TESTER_MAIN_FILE} ${TESTS})
 endif ()
 
 if (NOT WIN32)
   add_dependencies(update_translations check_qml)
 endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-set_target_properties(${TESTER_TARGET_NAME} PROPERTIES OUTPUT_NAME "${TESTER_EXECUTABLE_NAME}")
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
 set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MINIZIP_LIBRARIES})
@@ -406,12 +387,10 @@ endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-target_include_directories(${TESTER_TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
-target_link_libraries(${TESTER_TARGET_NAME} ${LIBRARIES} Qt5::Test)
 
-foreach (target ${TARGET_NAME} ${TESTER_TARGET_NAME})
+foreach (target ${TARGET_NAME})
   install(TARGETS ${target}
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
