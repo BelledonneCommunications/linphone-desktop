@@ -238,14 +238,16 @@ void SipAddressesModel::handleChatModelCreated (const shared_ptr<ChatModel> &cha
   ChatModel *ptr = chatModel.get();
 
   QObject::connect(ptr, &ChatModel::allEntriesRemoved, this, [this, ptr] {
-    handleAllEntriesRemoved(ptr->getSipAddress());
+    handleAllEntriesRemoved(ptr);
+  });
+  QObject::connect(ptr, &ChatModel::lastEntryRemoved, this, [this, ptr] {
+    handleLastEntryRemoved(ptr);
+  });
+  QObject::connect(ptr, &ChatModel::messagesCountReset, this, [this, ptr] {
+    handleMessagesCountReset(ptr);
   });
 
   QObject::connect(ptr, &ChatModel::messageSent, this, &SipAddressesModel::handleMessageSent);
-
-  QObject::connect(ptr, &ChatModel::messagesCountReset, this, [this, ptr] {
-    handleMessagesCountReset(ptr->getSipAddress());
-  });
 }
 
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
@@ -331,12 +333,10 @@ void SipAddressesModel::handlePresenceReceived (
   updateObservers(sipAddress, status);
 }
 
-void SipAddressesModel::handleAllEntriesRemoved (const QString &sipAddress) {
-  auto it = mSipAddresses.find(sipAddress);
-  if (it == mSipAddresses.end()) {
-    qWarning() << QStringLiteral("Unable to find sip address: `%1`.").arg(sipAddress);
+void SipAddressesModel::handleAllEntriesRemoved (ChatModel *chatModel) {
+  auto it = mSipAddresses.find(chatModel->getSipAddress());
+  if (it == mSipAddresses.end())
     return;
-  }
 
   int row = mRefs.indexOf(&(*it));
   Q_ASSERT(row != -1);
@@ -347,19 +347,31 @@ void SipAddressesModel::handleAllEntriesRemoved (const QString &sipAddress) {
     return;
   }
 
-  // Signal changes.
   it->remove("timestamp");
   emit dataChanged(index(row, 0), index(row, 0));
 }
 
-void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
-  addOrUpdateSipAddress(
-    Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly()),
-    message
-  );
+void SipAddressesModel::handleLastEntryRemoved (ChatModel *chatModel) {
+  auto it = mSipAddresses.find(chatModel->getSipAddress());
+  if (it == mSipAddresses.end())
+    return;
+
+  int row = mRefs.indexOf(&(*it));
+  Q_ASSERT(row != -1);
+
+  Q_ASSERT(chatModel->rowCount() > 0);
+  const QVariantMap map = chatModel->data(
+    chatModel->index(chatModel->rowCount() - 1, 0),
+    ChatModel::ChatEntry
+  ).toMap();
+
+  // Update the timestamp with the new last chat message timestamp.
+  (*it)["timestamp"] = map["timestamp"];
+  emit dataChanged(index(row, 0), index(row, 0));
 }
 
-void SipAddressesModel::handleMessagesCountReset (const QString &sipAddress) {
+void SipAddressesModel::handleMessagesCountReset (ChatModel *chatModel) {
+  const QString &sipAddress = chatModel->getSipAddress();
   auto it = mSipAddresses.find(sipAddress);
   if (it != mSipAddresses.end()) {
     (*it)["unreadMessagesCount"] = 0;
@@ -370,6 +382,13 @@ void SipAddressesModel::handleMessagesCountReset (const QString &sipAddress) {
   }
 
   updateObservers(sipAddress, 0);
+}
+
+void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
+  addOrUpdateSipAddress(
+    Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly()),
+    message
+  );
 }
 
 void SipAddressesModel::handlerIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {

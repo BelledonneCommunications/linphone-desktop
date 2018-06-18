@@ -277,6 +277,8 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 
   if (mEntries.count() == 0)
     emit allEntriesRemoved();
+  else if (limit == mEntries.count())
+    emit lastEntryRemoved();
 
   return true;
 }

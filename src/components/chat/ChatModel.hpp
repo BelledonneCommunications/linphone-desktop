@@ -109,6 +109,7 @@ signals:
   bool isRemoteComposingChanged (bool status);
 
   void allEntriesRemoved ();
+  void lastEntryRemoved ();
 
   void messageSent (const std::shared_ptr<linphone::ChatMessage> &message);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
