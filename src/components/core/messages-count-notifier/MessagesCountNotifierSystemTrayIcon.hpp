@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierWindows.cpp
+ * MessagesCountNotifierSystemTrayIcon.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,15 +20,30 @@
  *      Author: Ronan Abhamon
  */
 
-#include "MessagesCountNotifierWindows.hpp"
+#ifndef MESSAGES_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
+#define MESSAGES_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
+
+#include "AbstractMessagesCountNotifier.hpp"
 
 // =============================================================================
 
-MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessagesCountNotifier(parent) {
-  // TODO.
-}
+class QTimer;
 
-void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
-  // TODO.
-  Q_UNUSED(n);
-}
+class MessagesCountNotifier : public AbstractMessagesCountNotifier {
+public:
+  MessagesCountNotifier (QObject *parent = Q_NULLPTR);
+  ~MessagesCountNotifier ();
+
+protected:
+  void notifyUnreadMessagesCount (int n) override;
+
+private:
+  void update ();
+
+  const QPixmap *mBuf = nullptr;
+  QPixmap *mBufWithCounter = nullptr;
+  QTimer *mBlinkTimer = nullptr;
+  bool mDisplayCounter = false;
+};
+
+#endif // MESSAGES_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_

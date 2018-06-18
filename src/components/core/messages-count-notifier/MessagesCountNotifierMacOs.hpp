@@ -20,6 +20,9 @@
  *      Author: Ghislain MARY
  */
 
+#ifndef MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
+#define MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
+
 #include "AbstractMessagesCountNotifier.hpp"
 
 extern "C" void notifyUnreadMessagesCountMacOS (int n);
@@ -34,3 +37,5 @@ public:
     notifyUnreadMessagesCountMacOS(n);
   }
 };
+
+#endif // MESSAGES_COUNT_NOTIFIER_MAC_OS_H_

@@ -225,19 +225,12 @@ set(HEADERS
 
 set(MAIN_FILE src/app/main.cpp)
 
-if (UNIX AND NOT APPLE)
-  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierLinux.cpp)
-  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierLinux.hpp)
-endif ()
-
-if (WIN32)
-  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierWindows.cpp)
-  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierWindows.hpp)
-endif ()
-
 if (APPLE)
   list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.m)
   list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.hpp)
+else ()
+  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.cpp)
+  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp)
 endif ()
 
 if (ENABLE_DBUS)

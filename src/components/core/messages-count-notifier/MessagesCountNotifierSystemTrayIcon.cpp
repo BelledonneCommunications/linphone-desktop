@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierLinux.hpp
+ * MessagesCountNotifierSystemTrayIcon.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
-#include "MessagesCountNotifierLinux.hpp"
+#include "MessagesCountNotifierSystemTrayIcon.hpp"
 
 // =============================================================================
 

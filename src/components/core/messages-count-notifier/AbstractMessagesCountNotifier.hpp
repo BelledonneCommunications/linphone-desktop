@@ -20,6 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#ifndef ABSTRACT_MESSAGES_COUNT_NOTIFIER_H_
+#define ABSTRACT_MESSAGES_COUNT_NOTIFIER_H_
+
 #include <memory>
 
 #include <QObject>
@@ -51,3 +54,5 @@ private:
 
   int mUnreadMessagesCount = 0;
 };
+
+#endif // ABSTRACT_MESSAGES_COUNT_NOTIFIER_H_
