@@ -92,8 +92,8 @@ public:
     exit(RestartCode);
   }
 
-  Q_INVOKABLE QQuickWindow *getCallsWindow ();
-  Q_INVOKABLE QQuickWindow *getSettingsWindow ();
+  Q_INVOKABLE QQuickWindow *getCallsWindow () const;
+  Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
 

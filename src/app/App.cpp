@@ -146,8 +146,6 @@ void App::initContentApp () {
     qInfo() << QStringLiteral("Restarting app...");
     delete mEngine;
 
-    mCallsWindow = nullptr;
-    mSettingsWindow = nullptr;
     mNotifier = nullptr;
     mColors = nullptr;
     mSystemTrayIcon = nullptr;
@@ -228,10 +226,24 @@ void App::initContentApp () {
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
-  QObject::connect(CoreManager::getInstance()->getHandlers().get(),
-    &CoreHandlers::coreStarted, [this, mustBeIconified]() {
+  QObject::connect(
+    CoreManager::getInstance()->getHandlers().get(),
+    &CoreHandlers::coreStarted,
+    [this, mustBeIconified]() {
       openAppAfterInit(mustBeIconified);
-    });
+
+      // Create other windows.
+      mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
+      mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
+      QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+        if (visibility == QWindow::Hidden) {
+          qInfo() << QStringLiteral("Update nat policy.");
+          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+          core->setNatPolicy(core->getNatPolicy());
+        }
+      });
+    }
+  );
 }
 
 // -----------------------------------------------------------------------------
@@ -263,14 +275,11 @@ QString App::getCommandArgument () {
 
 // -----------------------------------------------------------------------------
 
-QQuickWindow *App::getCallsWindow () {
+QQuickWindow *App::getCallsWindow () const {
   if (CoreManager::getInstance()->getCore()->getConfig()->getInt(
     SettingsModel::UiSection, "disable_calls_window", 0
   ))
     return nullptr;
-
-  if (!mCallsWindow)
-    mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
 
   return mCallsWindow;
 }
@@ -281,18 +290,7 @@ QQuickWindow *App::getMainWindow () const {
   );
 }
 
-QQuickWindow *App::getSettingsWindow () {
-  if (!mSettingsWindow) {
-    mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
-    QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
-      if (visibility == QWindow::Hidden) {
-        qInfo() << QStringLiteral("Update nat policy.");
-        shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-        core->setNatPolicy(core->getNatPolicy());
-      }
-    });
-  }
-
+QQuickWindow *App::getSettingsWindow () const {
   return mSettingsWindow;
 }
 
