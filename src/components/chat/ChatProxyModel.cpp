@@ -20,6 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
+#include <QQuickWindow>
+
+#include "app/App.hpp"
 #include "components/core/CoreManager.hpp"
 
 #include "ChatProxyModel.hpp"
@@ -61,6 +64,14 @@ private:
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(new ChatModelFilter(this));
+
+  App *app = App::getInstance();
+  QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
+    handleIsActiveChanged(App::getInstance()->getMainWindow());
+  });
+  QObject::connect(app->getCallsWindow(), &QWindow::activeChanged, this, [this]() {
+    handleIsActiveChanged(App::getInstance()->getCallsWindow());
+  });
 }
 
 // -----------------------------------------------------------------------------
@@ -176,13 +187,31 @@ bool ChatProxyModel::getIsRemoteComposing () const {
 
 // -----------------------------------------------------------------------------
 
+static inline QWindow *getParentWindow (QObject *object) {
+  App *app = App::getInstance();
+  const QWindow *mainWindow = app->getMainWindow();
+  const QWindow *callsWindow = app->getCallsWindow();
+  for (QObject *parent = object->parent(); parent; parent = parent->parent())
+    if (parent == mainWindow || parent == callsWindow)
+      return static_cast<QWindow *>(parent);
+  return nullptr;
+}
+
+void ChatProxyModel::handleIsActiveChanged (QWindow *window) {
+  if (window->isActive() && getParentWindow(this) == window)
+    mChatModel->resetMessagesCount();
+}
+
 void ChatProxyModel::handleIsRemoteComposingChanged (bool status) {
   emit isRemoteComposingChanged(status);
 }
 
 void ChatProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
   mMaxDisplayedEntries++;
-  mChatModel->resetMessagesCount();
+
+  QWindow *window = getParentWindow(this);
+  if (window && window->isActive())
+    mChatModel->resetMessagesCount();
 }
 
 void ChatProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {

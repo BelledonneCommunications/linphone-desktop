@@ -29,6 +29,8 @@
 
 // =============================================================================
 
+class QWindow;
+
 class ChatProxyModel : public QSortFilterProxyModel {
   class ChatModelFilter;
 
@@ -73,6 +75,8 @@ private:
   void setSipAddress (const QString &sipAddress);
 
   bool getIsRemoteComposing () const;
+
+  void handleIsActiveChanged (QWindow *window);
 
   void handleIsRemoteComposingChanged (bool status);
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);

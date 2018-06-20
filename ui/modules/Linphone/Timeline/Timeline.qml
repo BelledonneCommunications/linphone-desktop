@@ -99,22 +99,24 @@ Rectangle {
         width: parent ? parent.width : 0
 
         Contact {
+          readonly property bool isSelected: view.currentIndex === index
+
           anchors.fill: parent
-          color: view.currentIndex === index
+          color: isSelected
             ? TimelineStyle.contact.backgroundColor.selected
             : (
               index % 2 == 0
                 ? TimelineStyle.contact.backgroundColor.a
                 : TimelineStyle.contact.backgroundColor.b
             )
-            displayUnreadMessagesCount: SettingsModel.chatEnabled && view.currentIndex !== index
-            entry: $timelineEntry
-            sipAddressColor: view.currentIndex === index
-              ? TimelineStyle.contact.sipAddress.color.selected
-              : TimelineStyle.contact.sipAddress.color.normal
-            usernameColor: view.currentIndex === index
-              ? TimelineStyle.contact.username.color.selected
-              : TimelineStyle.contact.username.color.normal
+          displayUnreadMessagesCount: SettingsModel.chatEnabled
+          entry: $timelineEntry
+          sipAddressColor: isSelected
+            ? TimelineStyle.contact.sipAddress.color.selected
+            : TimelineStyle.contact.sipAddress.color.normal
+          usernameColor: isSelected
+            ? TimelineStyle.contact.username.color.selected
+            : TimelineStyle.contact.username.color.normal
 
           Loader {
             anchors.fill: parent
