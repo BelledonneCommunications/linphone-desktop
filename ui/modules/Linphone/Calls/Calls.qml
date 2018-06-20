@@ -93,9 +93,7 @@ ListView {
   // ---------------------------------------------------------------------------
 
   header: ConferenceControls {
-    readonly property bool isSelected: calls.currentIndex === -1 &&
-      calls._selectedCall == null &&
-      visible
+    readonly property bool isSelected: calls.currentIndex === -1 && calls._selectedCall == null
 
     height: visible ? ConferenceControlsStyle.height : 0
     width: parent.width
