@@ -147,7 +147,6 @@ set(SOURCES
   src/components/notifier/Notifier.cpp
   src/components/other/clipboard/Clipboard.cpp
   src/components/other/colors/Colors.cpp
-  src/components/other/desktop-tools/DesktopTools.cpp
   src/components/other/text-to-speech/TextToSpeech.cpp
   src/components/other/units/Units.cpp
   src/components/presence/OwnPresenceModel.cpp
@@ -228,11 +227,32 @@ set(HEADERS
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
-  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.m)
-  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.hpp)
+  list(APPEND SOURCES
+    src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.m
+    src/components/other/desktop-tools/DesktopToolsMacOs.cpp
+  )
+  list(APPEND HEADERS
+    src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.hpp
+    src/components/other/desktop-tools/DesktopToolsMacOs.hpp
+  )
+elseif (WIN32)
+  list(APPEND SOURCES
+    src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.cpp
+    src/components/other/desktop-tools/DesktopToolsWindows.cpp
+  )
+  list(APPEND HEADERS
+    src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp
+    src/components/other/desktop-tools/DesktopToolsWindows.hpp
+  )
 else ()
-  list(APPEND SOURCES src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.cpp)
-  list(APPEND HEADERS src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp)
+  list(APPEND SOURCES
+    src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.cpp
+    src/components/other/desktop-tools/DesktopToolsLinux.cpp
+  )
+  list(APPEND HEADERS
+    src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp
+    src/components/other/desktop-tools/DesktopToolsLinux.hpp
+  )
 endif ()
 
 if (ENABLE_DBUS)

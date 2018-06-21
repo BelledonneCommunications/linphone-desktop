@@ -1,5 +1,5 @@
 /*
- * DesktopTools.hpp
+ * DesktopToolsLinux.cpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,19 +20,24 @@
  *      Author: Ronan Abhamon
  */
 
-#ifndef DESKTOP_TOOLS_H_
-#define DESKTOP_TOOLS_H_
-
-#include <QtGlobal>
-
-#ifdef Q_OS_LINUX
-  #include "DesktopToolsLinux.hpp"
-#elif defined(Q_OS_WIN)
-  #include "DesktopToolsWindows.hpp"
-#else
-  #include "DesktopToolsMacOs.hpp"
-#endif // ifdef Q_OS_LINUX
+#include "DesktopToolsLinux.hpp"
 
 // =============================================================================
 
-#endif // DESKTOP_TOOLS_H_
+DesktopTools::DesktopTools (QObject *parent) : QObject(parent) {}
+
+DesktopTools::~DesktopTools () {
+  setScreenSaverStatus(true);
+}
+
+bool DesktopTools::getScreenSaverStatus () const {
+  return mScreenSaverStatus;
+}
+
+void DesktopTools::setScreenSaverStatus (bool status) {
+  if (status == mScreenSaverStatus)
+    return;
+
+  // TODO: Deal with me.
+  emit screenSaverStatusChanged(status);
+}

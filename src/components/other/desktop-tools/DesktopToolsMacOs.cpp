@@ -1,5 +1,5 @@
 /*
- * DesktopTools.cpp
+ * DesktopToolsMacOs.cpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,14 +20,7 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QDebug>
-#include <QtGlobal>
-
-#ifdef Q_OS_WIN
-  #include <Windows.h>
-#endif // ifdef Q_OS_WIN
-
-#include "DesktopTools.hpp"
+#include "DesktopToolsMacOs.hpp"
 
 // =============================================================================
 
@@ -41,27 +34,10 @@ bool DesktopTools::getScreenSaverStatus () const {
   return mScreenSaverStatus;
 }
 
-#ifdef Q_OS_WIN
-
 void DesktopTools::setScreenSaverStatus (bool status) {
   if (status == mScreenSaverStatus)
     return;
 
-  if (!status) {
-    qInfo() << "Disable screen saver.";
-    SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED);
-  } else {
-    qInfo() << "Enable screen saver.";
-    SetThreadExecutionState(ES_CONTINUOUS);
-  }
-
+  // TODO: Deal with me.
   emit screenSaverStatusChanged(status);
 }
-
-#else
-
-void DesktopTools::setScreenSaverStatus (bool) {
-  emit screenSaverStatusChanged(true);
-}
-
-#endif // ifdef Q_OS_WIN
