@@ -2,6 +2,7 @@
 // `Incall.qml` Logic.
 // =============================================================================
 
+.import DesktopTools 1.0 as DesktopTools
 .import Linphone 1.0 as Linphone
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -115,6 +116,7 @@ function showFullscreen () {
     return
   }
 
+  DesktopTools.DesktopTools.screenSaverStatus = false
   incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), window, {
     properties: {
       caller: incall

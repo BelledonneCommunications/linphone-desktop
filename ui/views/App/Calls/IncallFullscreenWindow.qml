@@ -4,6 +4,7 @@ import QtQuick.Window 2.2
 
 import Common 1.0
 import Common.Styles 1.0
+import DesktopTools 1.0
 import Linphone 1.0
 import Utils 1.0
 
@@ -25,6 +26,8 @@ Window {
   // ---------------------------------------------------------------------------
 
   function exit (cb) {
+    DesktopTools.screenSaverStatus = true
+
     // `exit` is called by `Incall.qml`.
     // The `window` id can be null if the window was closed in this view.
     if (!window) {

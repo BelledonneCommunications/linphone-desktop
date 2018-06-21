@@ -56,6 +56,7 @@
 
 #include "other/colors/Colors.hpp"
 #include "other/clipboard/Clipboard.hpp"
+#include "other/desktop-tools/DesktopTools.hpp"
 #include "other/text-to-speech/TextToSpeech.hpp"
 #include "other/units/Units.hpp"
 

@@ -147,6 +147,7 @@ set(SOURCES
   src/components/notifier/Notifier.cpp
   src/components/other/clipboard/Clipboard.cpp
   src/components/other/colors/Colors.cpp
+  src/components/other/desktop-tools/DesktopTools.cpp
   src/components/other/text-to-speech/TextToSpeech.cpp
   src/components/other/units/Units.cpp
   src/components/presence/OwnPresenceModel.cpp
@@ -205,6 +206,7 @@ set(HEADERS
   src/components/notifier/Notifier.hpp
   src/components/other/clipboard/Clipboard.hpp
   src/components/other/colors/Colors.hpp
+  src/components/other/desktop-tools/DesktopTools.hpp
   src/components/other/text-to-speech/TextToSpeech.hpp
   src/components/other/units/Units.hpp
   src/components/presence/OwnPresenceModel.hpp
