@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.2 as Controls
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -10,7 +10,7 @@ import 'ComboBox.js' as Logic
 
 // =============================================================================
 
-ComboBox {
+Controls.ComboBox {
   id: comboBox
 
   // ---------------------------------------------------------------------------
@@ -82,7 +82,7 @@ ComboBox {
 
   // ---------------------------------------------------------------------------
 
-  delegate: ItemDelegate {
+  delegate: Controls.ItemDelegate {
     id: item
 
     readonly property var flattenedModel: comboBox.textRole.length &&
