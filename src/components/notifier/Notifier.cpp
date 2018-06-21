@@ -175,8 +175,8 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 
   // Destroy it after timeout.
   QObject::connect(timer, &QTimer::timeout, this, [this, notification]() {
-      deleteNotification(QVariant::fromValue(notification));
-    });
+    deleteNotification(QVariant::fromValue(notification));
+  });
 
   // Called explicitly (by a click on notification for example)
   QObject::connect(notification, SIGNAL(deleteNotification(QVariant)), this, SLOT(deleteNotification(QVariant)));

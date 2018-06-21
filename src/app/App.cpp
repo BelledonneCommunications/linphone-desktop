@@ -122,13 +122,18 @@ App::~App () {
 // -----------------------------------------------------------------------------
 
 static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char *path) {
+  qInfo() << QStringLiteral("Creating subwindow: `%1`.").arg(path);
+
   QQmlComponent component(engine, QUrl(path));
   if (component.isError()) {
     qWarning() << component.errors();
     abort();
   }
+  qInfo() << QStringLiteral("Subwindow status: `%1`.").arg(component.status());
 
   QObject *object = component.create();
+  Q_ASSERT(object);
+
   QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
   object->setParent(engine);
 
@@ -231,17 +236,6 @@ void App::initContentApp () {
     &CoreHandlers::coreStarted,
     [this, mustBeIconified]() {
       openAppAfterInit(mustBeIconified);
-
-      // Create other windows.
-      mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
-      mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
-      QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
-        if (visibility == QWindow::Hidden) {
-          qInfo() << QStringLiteral("Update nat policy.");
-          shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-          core->setNatPolicy(core->getNatPolicy());
-        }
-      });
     }
   );
 }
@@ -535,6 +529,17 @@ QString App::getLocale () const {
 
 void App::openAppAfterInit (bool mustBeIconified) {
   qInfo() << QStringLiteral("Open linphone app.");
+
+  // Create other windows.
+  mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
+  mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
+  QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+    if (visibility == QWindow::Hidden) {
+      qInfo() << QStringLiteral("Update nat policy.");
+      shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+      core->setNatPolicy(core->getNatPolicy());
+    }
+  });
 
   QQuickWindow *mainWindow = getMainWindow();
 

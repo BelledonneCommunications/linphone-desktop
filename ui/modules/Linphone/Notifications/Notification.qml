@@ -43,6 +43,7 @@ DesktopPopup {
 
       anchors.fill: parent
     }
+
     Icon {
       id: iconSign
 
@@ -53,6 +54,5 @@ DesktopPopup {
 
       iconSize: NotificationStyle.iconSize
     }
-
   }
 }
