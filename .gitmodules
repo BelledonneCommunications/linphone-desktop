@@ -1,112 +1,112 @@
 [submodule "submodules/belle-sip"]
 	path = submodules/belle-sip
-	url = git://git.linphone.org/belle-sip
+	url = https://gitlab.linphone.org/BC/public/belle-sip.git
 [submodule "submodules/cmake-builder"]
 	path = submodules/cmake-builder
-	url = git://git.linphone.org/linphone-cmake-builder
+	url = https://gitlab.linphone.org/BC/public/linphone-cmake-builder.git
 [submodule "submodules/linphone"]
 	path = submodules/linphone
-	url = git://git.linphone.org/linphone
+	url = https://gitlab.linphone.org/BC/public/linphone.git
 [submodule "submodules/bcg729"]
 	path = submodules/bcg729
-	url = git://git.linphone.org/bcg729.git
+	url = https://gitlab.linphone.org/BC/public/bcg729.git
 [submodule "submodules/bzrtp"]
 	path = submodules/bzrtp
-	url = git://git.linphone.org/bzrtp.git
+	url = https://gitlab.linphone.org/BC/public/bzrtp.git
 [submodule "submodules/msamr"]
 	path = submodules/msamr
-	url = git://git.linphone.org/msamr.git
+	url = https://gitlab.linphone.org/BC/public/msamr.git
 [submodule "submodules/msopenh264"]
 	path = submodules/msopenh264
-	url = git://git.linphone.org/msopenh264.git
+	url = https://gitlab.linphone.org/BC/public/msopenh264.git
 [submodule "submodules/mssilk"]
 	path = submodules/mssilk
-	url = git://git.linphone.org/mssilk.git
+	url = https://gitlab.linphone.org/BC/public/mssilk.git
 [submodule "submodules/msx264"]
 	path = submodules/msx264
-	url = git://git.linphone.org/msx264.git
+	url = https://gitlab.linphone.org/BC/public/msx264.git
 [submodule "submodules/mswebrtc"]
 	path = submodules/mswebrtc
-	url = git://git.linphone.org/mswebrtc.git
+	url = https://gitlab.linphone.org/BC/public/mswebrtc.git
 [submodule "submodules/belcard"]
 	path = submodules/belcard
-	url = git://git.linphone.org/belcard.git
+	url = https://gitlab.linphone.org/BC/public/belcard.git
 [submodule "submodules/belr"]
 	path = submodules/belr
-	url = git://git.linphone.org/belr.git
+	url = https://gitlab.linphone.org/BC/public/belr.git
 [submodule "submodules/bctoolbox"]
 	path = submodules/bctoolbox
-	url = git://git.linphone.org/bctoolbox.git
+	url = https://gitlab.linphone.org/BC/public/bctoolbox.git
 [submodule "submodules/externals/mbedtls"]
 	path = submodules/externals/mbedtls
-	url = git://git.linphone.org/mbedtls.git
+	url = https://gitlab.linphone.org/BC/public/external/mbedtls.git
 [submodule "submodules/externals/bv16-floatingpoint"]
 	path = submodules/externals/bv16-floatingpoint
-	url = git://git.linphone.org/bv16-floatingpoint.git
+	url = https://gitlab.linphone.org/BC/public/external/bv16-floatingpoint.git
 [submodule "submodules/externals/speex"]
 	path = submodules/externals/speex
-	url = git://git.linphone.org/speex.git
+	url = https://gitlab.linphone.org/BC/public/external/speex.git
 [submodule "submodules/externals/ffmpeg"]
 	path = submodules/externals/ffmpeg
-	url = git://git.linphone.org/ffmpeg.git
+	url = https://gitlab.linphone.org/BC/public/external/ffmpeg.git
 	ignore = dirty
 [submodule "submodules/externals/libvpx"]
 	path = submodules/externals/libvpx
-	url = git://git.linphone.org/libvpx.git
+	url = https://gitlab.linphone.org/BC/public/external/libvpx.git
 [submodule "submodules/externals/opus"]
 	path = submodules/externals/opus
-	url = git://git.linphone.org/opus.git
+	url = https://gitlab.linphone.org/BC/public/external/opus.git
 	ignore = dirty
 [submodule "submodules/externals/gsm"]
 	path = submodules/externals/gsm
-	url = git://git.linphone.org/gsm.git
+	url = https://gitlab.linphone.org/BC/public/external/gsm.git
 [submodule "submodules/externals/srtp"]
 	path = submodules/externals/srtp
-	url = git://git.linphone.org/srtp.git
+	url = https://gitlab.linphone.org/BC/public/external/srtp.git
 [submodule "submodules/externals/v4l-utils"]
 	path = submodules/externals/v4l-utils
 	url = git://linuxtv.org/v4l-utils.git
 [submodule "submodules/externals/libxml2"]
 	path = submodules/externals/libxml2
-	url = git://git.linphone.org/libxml2
+	url = https://gitlab.linphone.org/BC/public/external/libxml2.git
 	ignore = dirty
 [submodule "submodules/externals/zlib"]
 	path = submodules/externals/zlib
-	url = git://git.linphone.org/zlib
+	url = https://gitlab.linphone.org/BC/public/external/zlib.git
 	ignore = dirty
 [submodule "submodules/externals/openh264"]
 	path = submodules/externals/openh264
-	url = https://github.com/cisco/openh264
+	url = https://gitlab.linphone.org/BC/public/external/openh264.git
 [submodule "submodules/bcunit"]
 	path = submodules/bcunit
-	url = git://git.linphone.org/bcunit.git
+	url = https://gitlab.linphone.org/BC/public/bcunit.git
 [submodule "submodules/belle-msrp"]
 	path = submodules/belle-msrp
-	url = git://git.linphone.org/belle-msrp.git
+	url = https://gitlab.linphone.org/BC/public/belle-msrp.git
 [submodule "submodules/externals/libjpeg-turbo"]
 	path = submodules/externals/libjpeg-turbo
-	url = git://git.linphone.org/libjpeg-turbo.git
+	url = https://gitlab.linphone.org/BC/public/external/libjpeg-turbo.git
 [submodule "submodules/ortp"]
 	path = submodules/ortp
-	url = git://git.linphone.org/ortp.git
+	url = https://gitlab.linphone.org/BC/public/ortp.git
 [submodule "submodules/mediastreamer2"]
 	path = submodules/mediastreamer2
-	url = git://git.linphone.org/mediastreamer2.git
+	url = https://gitlab.linphone.org/BC/public/mediastreamer2.git
 [submodule "submodules/mswasapi"]
 	path = submodules/mswasapi
-	url = git://git.linphone.org/mswasapi.git
+	url = https://gitlab.linphone.org/BC/public/mswasapi.git
 [submodule "submodules/bcmatroska2"]
 	path = submodules/bcmatroska2
-	url = git://git.linphone.org/bcmatroska2.git
+	url = https://gitlab.linphone.org/BC/public/bcmatroska2.git
 [submodule "submodules/externals/xerces-c"]
 	path = submodules/externals/xerces-c
-	url = git://git.linphone.org/xerces-c.git
+	url = https://gitlab.linphone.org/BC/public/external/xerces-c.git
 [submodule "submodules/externals/libxsd"]
 	path = submodules/externals/libxsd
-	url = git://git.linphone.org/libxsd
+	url = https://gitlab.linphone.org/BC/public/external/libxsd.git
 [submodule "submodules/externals/soci"]
 	path = submodules/externals/soci
-	url = git://git.linphone.org/soci
+	url = https://gitlab.linphone.org/BC/public/external/soci.git
 [submodule "submodules/externals/minizip"]
 	path = submodules/externals/minizip
-	url = git://git.linphone.org/minizip
+	url = https://gitlab.linphone.org/BC/public/external/minizip.git
