@@ -31,7 +31,9 @@
 
 // =============================================================================
 
-const char *SERVICE_NAME = "org.linphone.SingleApplication";
+namespace {
+  constexpr char ServiceName[] = "org.linphone.SingleApplication";
+}
 
 SingleApplicationPrivate::SingleApplicationPrivate (SingleApplication *q_ptr)
   : QDBusAbstractAdaptor(q_ptr), q_ptr(q_ptr) {}
@@ -66,7 +68,7 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
     ::exit(EXIT_FAILURE);
   }
 
-  if (d->getBus().registerService(SERVICE_NAME)) {
+  if (d->getBus().registerService(ServiceName)) {
     d->startPrimary();
     return;
   }
@@ -105,19 +107,19 @@ bool SingleApplication::sendMessage (QByteArray message, int timeout) {
 
   if (isPrimary()) return false;
 
-  QDBusInterface iface(SERVICE_NAME, "/", "", d->getBus());
+  QDBusInterface iface(ServiceName, "/", "", d->getBus());
   if (iface.isValid()) {
     iface.setTimeout(timeout);
-    QDBusMessage msg = iface.call(QDBus::Block, "messageReceived", instanceId(), message);
+    QDBusMessage msg = iface.call(QDBus::Block, "handleMessageReceived", instanceId(), message);
     return true;
   }
 
   return false;
 }
 
-void SingleApplicationPrivate::messageReceived (quint32 instanceId, QByteArray message) {
+void SingleApplicationPrivate::handleMessageReceived (quint32 instanceId, QByteArray message) {
   Q_Q(SingleApplication);
-  Q_EMIT q->receivedMessage(instanceId, message);
+  emit q->receivedMessage(instanceId, message);
 }
 
 void SingleApplication::quit () {

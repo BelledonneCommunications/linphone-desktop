@@ -39,7 +39,7 @@ class SingleApplicationPrivate;
  * @see QCoreApplication
  */
 class SingleApplication : public QApplication {
-  Q_OBJECT
+  Q_OBJECT;
 
 public:
   /**
@@ -114,7 +114,7 @@ public:
 
   virtual void quit ();
 
-Q_SIGNALS:
+signals:
   void instanceStarted ();
   void receivedMessage (quint32 instanceId, QByteArray message);
 

@@ -50,8 +50,8 @@ public:
   SingleApplication::Options options;
   quint32 instanceNumber;
 
-public Q_SLOTS:
-  void messageReceived (quint32 instanceId, QByteArray message);
+private:
+  void handleMessageReceived (quint32 instanceId, QByteArray message);
 };
 
 #endif // SINGLE_APPLICATION_DBUS_PRIVATE_H_
