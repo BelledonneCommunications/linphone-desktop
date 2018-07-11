@@ -81,7 +81,7 @@ AppController::AppController (int &argc, char *argv[]) {
   while (it.hasNext()) {
     QFileInfo info(it.next());
 
-    if (info.suffix() == "ttf") {
+    if (info.suffix() == QLatin1String("ttf")) {
       QString path = info.absoluteFilePath();
       if (path.startsWith(":/assets/fonts/"))
         QFontDatabase::addApplicationFont(path);

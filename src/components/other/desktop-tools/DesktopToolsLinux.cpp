@@ -24,8 +24,6 @@
 
 // =============================================================================
 
-DesktopTools::DesktopTools (QObject *parent) : QObject(parent) {}
-
 DesktopTools::~DesktopTools () {
   setScreenSaverStatus(true);
 }
@@ -35,9 +33,12 @@ bool DesktopTools::getScreenSaverStatus () const {
 }
 
 void DesktopTools::setScreenSaverStatus (bool status) {
-  if (status == mScreenSaverStatus)
-    return;
+  screenSaverDBus.setScreenSaverStatus(status);
+  screenSaverXdg.setScreenSaverStatus(status);
 
-  // TODO: Deal with me.
-  emit screenSaverStatusChanged(status);
+  bool newStatus = screenSaverDBus.getScreenSaverStatus() || screenSaverXdg.getScreenSaverStatus();
+  if (newStatus != mScreenSaverStatus) {
+    mScreenSaverStatus = newStatus;
+    emit screenSaverStatusChanged(mScreenSaverStatus);
+  }
 }

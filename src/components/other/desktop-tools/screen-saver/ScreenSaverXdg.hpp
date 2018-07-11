@@ -1,5 +1,5 @@
 /*
- * LinphoneUtils.cpp
+ * ScreenSaverXdg.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,23 +16,31 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 2, 2017
+ *  Created on: July 11, 2018
  *      Author: Ronan Abhamon
  */
 
-#include <QString>
+#ifndef SCREEN_SAVER_XDG_H_
+#define SCREEN_SAVER_XDG_H_
 
-#include "LinphoneUtils.hpp"
+#include <QTimer>
 
 // =============================================================================
 
-linphone::TransportType LinphoneUtils::stringToTransportType (const QString &transport) {
-  if (transport == QLatin1String("TCP"))
-    return linphone::TransportType::TransportTypeTcp;
-  if (transport == QLatin1String("UDP"))
-    return linphone::TransportType::TransportTypeUdp;
-  if (transport == QLatin1String("TLS"))
-    return linphone::TransportType::TransportTypeTls;
+class ScreenSaverXdg : public QObject {
+  Q_OBJECT;
 
-  return linphone::TransportType::TransportTypeDtls;
-}
+public:
+  ScreenSaverXdg (QObject *parent = Q_NULLPTR);
+
+  bool getScreenSaverStatus () const;
+  void setScreenSaverStatus (bool status);
+
+signals:
+  void screenSaverStatusChanged (bool status);
+
+private:
+  QTimer mTimer;
+};
+
+#endif // SCREEN_SAVER_XDG_H_

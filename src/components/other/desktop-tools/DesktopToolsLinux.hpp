@@ -23,7 +23,8 @@
 #ifndef DESKTOP_TOOLS_LINUX_H_
 #define DESKTOP_TOOLS_LINUX_H_
 
-#include <QObject>
+#include "components/other/desktop-tools/screen-saver/ScreenSaverDBus.hpp"
+#include "components/other/desktop-tools/screen-saver/ScreenSaverXdg.hpp"
 
 // =============================================================================
 
@@ -33,7 +34,7 @@ class DesktopTools : public QObject {
   Q_PROPERTY(bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged);
 
 public:
-  DesktopTools (QObject *parent = Q_NULLPTR);
+  DesktopTools (QObject *parent = Q_NULLPTR) : QObject(parent) {}
   ~DesktopTools ();
 
   bool getScreenSaverStatus () const;
@@ -44,6 +45,9 @@ signals:
 
 private:
   bool mScreenSaverStatus = true;
+
+  ScreenSaverDBus screenSaverDBus;
+  ScreenSaverXdg screenSaverXdg;
 };
 
 #endif // DESKTOP_TOOLS_LINUX_H_

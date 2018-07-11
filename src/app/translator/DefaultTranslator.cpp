@@ -32,11 +32,11 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
   while (it.hasNext()) {
     QFileInfo info(it.next());
 
-    if (info.suffix() == "qml") {
+    if (info.suffix() == QLatin1String("qml")) {
       QString dir = info.absoluteDir().absolutePath();
 
       // Ignore extra selectors.
-      // TODO: Remove 5.9 support in July 2018.
+      // TODO: Remove 5.9 support in July 2019.
       for (const auto &selector : { "+linux", "+mac", "+windows", "+5.9" })
         if (dir.contains(selector))
           goto end;

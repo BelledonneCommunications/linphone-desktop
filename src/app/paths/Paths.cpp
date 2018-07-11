@@ -106,7 +106,7 @@ static inline string getWritableFilePath (const QString &filename) {
 
 static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
-  if (dir.dirName() == "MacOS") {
+  if (dir.dirName() == QLatin1String("MacOS")) {
     dir.cdUp();
     dir.cd("Resources");
   } else
@@ -272,7 +272,7 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
 
 void Paths::migrate () {
   QString newPath = getAppConfigFilePath();
-  QString oldBaseDir = QSysInfo::productType() == "windows"
+  QString oldBaseDir = QSysInfo::productType() == QLatin1String("windows")
     ? QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   QString oldPath = oldBaseDir + "/.linphonerc";

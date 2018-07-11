@@ -40,11 +40,11 @@ void DesktopTools::setScreenSaverStatus (bool status) {
   if (status == mScreenSaverStatus)
     return;
 
-  if (!status)
-    SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED);
-  else {
+  if (status)
     SetThreadExecutionState(ES_CONTINUOUS);
-  }
+  else
+    SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED);
 
+  mScreenSaverStatus = status;
   emit screenSaverStatusChanged(status);
 }

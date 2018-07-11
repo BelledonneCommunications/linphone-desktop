@@ -1,5 +1,5 @@
 /*
- * LinphoneUtils.cpp
+ * ScreenSaverDBus.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,23 +16,37 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 2, 2017
+ *  Created on: July 11, 2018
  *      Author: Ronan Abhamon
  */
 
-#include <QString>
+#ifndef SCREEN_SAVER_DBUS_H_
+#define SCREEN_SAVER_DBUS_H_
 
-#include "LinphoneUtils.hpp"
+#include <QDBusInterface>
 
 // =============================================================================
 
-linphone::TransportType LinphoneUtils::stringToTransportType (const QString &transport) {
-  if (transport == QLatin1String("TCP"))
-    return linphone::TransportType::TransportTypeTcp;
-  if (transport == QLatin1String("UDP"))
-    return linphone::TransportType::TransportTypeUdp;
-  if (transport == QLatin1String("TLS"))
-    return linphone::TransportType::TransportTypeTls;
+class QDBusPendingCallWatcher;
 
-  return linphone::TransportType::TransportTypeDtls;
-}
+class ScreenSaverDBus : public QObject {
+  Q_OBJECT;
+
+public:
+  ScreenSaverDBus (QObject *parent = Q_NULLPTR);
+  ~ScreenSaverDBus ();
+
+  bool getScreenSaverStatus () const;
+  void setScreenSaverStatus (bool status);
+
+signals:
+  void screenSaverStatusChanged (bool status);
+
+private:
+  bool mScreenSaverStatus = true;
+
+  QDBusInterface mBus;
+  uint32_t mToken;
+};
+
+#endif // SCREEN_SAVER_DBUS_H_

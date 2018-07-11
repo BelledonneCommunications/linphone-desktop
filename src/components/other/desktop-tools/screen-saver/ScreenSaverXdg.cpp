@@ -1,5 +1,5 @@
 /*
- * LinphoneUtils.cpp
+ * ScreenSaverXdg.cpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,23 +16,42 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 2, 2017
+ *  Created on: June 21, 2018
  *      Author: Ronan Abhamon
  */
 
-#include <QString>
+#include <QProcess>
 
-#include "LinphoneUtils.hpp"
+#include "ScreenSaverXdg.hpp"
 
 // =============================================================================
 
-linphone::TransportType LinphoneUtils::stringToTransportType (const QString &transport) {
-  if (transport == QLatin1String("TCP"))
-    return linphone::TransportType::TransportTypeTcp;
-  if (transport == QLatin1String("UDP"))
-    return linphone::TransportType::TransportTypeUdp;
-  if (transport == QLatin1String("TLS"))
-    return linphone::TransportType::TransportTypeTls;
+namespace {
+  constexpr char Program[] = "xdg-screensaver";
+  const QStringList Arguments{"reset"};
 
-  return linphone::TransportType::TransportTypeDtls;
+  constexpr int Interval = 30000;
+}
+
+ScreenSaverXdg::ScreenSaverXdg (QObject *parent) : QObject(parent) {
+  mTimer.setInterval(Interval);
+  QObject::connect(&mTimer, &QTimer::timeout, []() {
+    QProcess::startDetached(Program, Arguments);
+  });
+}
+
+bool ScreenSaverXdg::getScreenSaverStatus () const {
+  return !mTimer.isActive();
+}
+
+void ScreenSaverXdg::setScreenSaverStatus (bool status) {
+  if (status == !mTimer.isActive())
+    return;
+
+  if (status)
+    mTimer.stop();
+  else
+    mTimer.start();
+
+  emit screenSaverStatusChanged(status);
 }

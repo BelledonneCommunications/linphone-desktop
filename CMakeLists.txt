@@ -219,7 +219,7 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/components/url-handlers/UrlHandlers.hpp
   src/utils/LinphoneUtils.hpp
-  src/utils/QExifImageHeader.h
+  src/utils/QExifImageHeader.hpp
   src/utils/Utils.hpp
 )
 
@@ -227,39 +227,41 @@ set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
   list(APPEND SOURCES
+    src/app/single-application/SingleApplication.cpp
     src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
   )
   list(APPEND HEADERS
+    src/app/single-application/SingleApplicationPrivate.hpp
     src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.hpp
     src/components/other/desktop-tools/DesktopToolsMacOs.hpp
   )
 elseif (WIN32)
   list(APPEND SOURCES
+    src/app/single-application/SingleApplication.cpp
     src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.cpp
     src/components/other/desktop-tools/DesktopToolsWindows.cpp
   )
   list(APPEND HEADERS
+    src/app/single-application/SingleApplicationPrivate.hpp
     src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp
     src/components/other/desktop-tools/DesktopToolsWindows.hpp
   )
 else ()
   list(APPEND SOURCES
+    src/app/single-application/SingleApplicationDBus.cpp
     src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.cpp
     src/components/other/desktop-tools/DesktopToolsLinux.cpp
+    src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.cpp
+    src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.cpp
   )
   list(APPEND HEADERS
+    src/app/single-application/SingleApplicationDBusPrivate.hpp
     src/components/core/messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp
     src/components/other/desktop-tools/DesktopToolsLinux.hpp
+    src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.hpp
+    src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.hpp
   )
-endif ()
-
-if (UNIX AND NOT APPLE)
-  list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
-  list(APPEND HEADERS src/app/single-application/SingleApplicationDBusPrivate.hpp)
-else ()
-  list(APPEND SOURCES src/app/single-application/SingleApplication.cpp)
-  list(APPEND HEADERS src/app/single-application/SingleApplicationPrivate.hpp)
 endif ()
 
 set(QRC_RESOURCES resources.qrc)

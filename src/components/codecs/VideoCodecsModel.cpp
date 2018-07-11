@@ -132,7 +132,7 @@ void VideoCodecsModel::updateCodecs () {
     QDirIterator it(Utils::coreStringToAppString(Paths::getCodecsDirPath()));
     while (it.hasNext()) {
       QFileInfo info(it.next());
-      if (info.suffix() == "in") {
+      if (info.suffix() == QLatin1String("in")) {
         QString codecName = info.completeBaseName();
         if (codecName.endsWith(codecSuffix)) {
           QString codecPath = info.dir().path() + QDir::separator() + codecName;

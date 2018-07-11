@@ -36,7 +36,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "utils/QExifImageHeader.h"
+#include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
 
 #include "ChatModel.hpp"

@@ -51,7 +51,7 @@
 
 #include "Utils.hpp"
 
-#include "QExifImageHeader.h"
+#include "QExifImageHeader.hpp"
 
 /*!
     \typedef QExifSRational
