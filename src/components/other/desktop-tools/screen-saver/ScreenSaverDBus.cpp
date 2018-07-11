@@ -58,12 +58,12 @@ void ScreenSaverDBus::setScreenSaverStatus (bool status) {
       qInfo("Uninhibit screen saver.");
 
     mToken = uint32_t(reply.arguments().first().toULongLong());
-    mScreenSaverStatus = false;
+    mScreenSaverStatus = status;
     emit screenSaverStatusChanged(mScreenSaverStatus);
     return;
   }
 
-  QDBusMessage reply(mBus.call("Inhibit", QCoreApplication::applicationName()));
+  QDBusMessage reply(mBus.call("Inhibit", QCoreApplication::applicationName(), "Inhibit asked for video stream."));
   if (reply.type() == QDBusMessage::ErrorMessage) {
     if (reply.errorName() != QLatin1String("org.freedesktop.DBus.Error.ServiceUnknown"))
       qWarning() << QStringLiteral("Inhibit screen saver failed: `%1: %2`.")
@@ -72,6 +72,6 @@ void ScreenSaverDBus::setScreenSaverStatus (bool status) {
   } else
     qInfo("Inhibit screen saver.");
 
-  mScreenSaverStatus = true;
+  mScreenSaverStatus = status;
   emit screenSaverStatusChanged(mScreenSaverStatus);
 }
