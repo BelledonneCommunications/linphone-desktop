@@ -36,6 +36,7 @@ namespace {
 ScreenSaverXdg::ScreenSaverXdg (QObject *parent) : QObject(parent) {
   mTimer.setInterval(Interval);
   QObject::connect(&mTimer, &QTimer::timeout, []() {
+    // Legacy for systems without DBus screensaver.
     QProcess::startDetached(Program, Arguments);
   });
 }

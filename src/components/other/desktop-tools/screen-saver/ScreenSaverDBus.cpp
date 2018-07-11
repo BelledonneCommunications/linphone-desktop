@@ -54,7 +54,9 @@ void ScreenSaverDBus::setScreenSaverStatus (bool status) {
       qWarning() << QStringLiteral("Uninhibit screen saver failed: `%1: %2`.")
         .arg(reply.errorName()).arg(reply.errorMessage());
       return;
-    }
+    } else
+      qInfo("Uninhibit screen saver.");
+
     mToken = uint32_t(reply.arguments().first().toULongLong());
     mScreenSaverStatus = false;
     emit screenSaverStatusChanged(mScreenSaverStatus);
@@ -67,7 +69,9 @@ void ScreenSaverDBus::setScreenSaverStatus (bool status) {
       qWarning() << QStringLiteral("Inhibit screen saver failed: `%1: %2`.")
         .arg(reply.errorName()).arg(reply.errorMessage());
     return;
-  }
+  } else
+    qInfo("Inhibit screen saver.");
+
   mScreenSaverStatus = true;
   emit screenSaverStatusChanged(mScreenSaverStatus);
 }
