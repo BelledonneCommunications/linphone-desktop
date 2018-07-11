@@ -20,11 +20,7 @@
  *      Author: Ghislain MARY
  */
 
-#include <cstdlib>
-#include <iostream>
-
-#include <QtCore/QByteArray>
-#include <QtDBus/QtDBus>
+#include <QDBusInterface>
 
 #include "SingleApplication.hpp"
 #include "SingleApplicationDBusPrivate.hpp"
@@ -59,7 +55,7 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
   : QApplication(argc, argv), d_ptr(new SingleApplicationPrivate(this)) {
   Q_D(SingleApplication);
 
-  // Store the current mode of the program
+  // Store the current mode of the program.
   d->options = options;
 
   if (!d->getBus().isConnected()) {
@@ -110,7 +106,7 @@ bool SingleApplication::sendMessage (QByteArray message, int timeout) {
   QDBusInterface iface(ServiceName, "/", "", d->getBus());
   if (iface.isValid()) {
     iface.setTimeout(timeout);
-    QDBusMessage msg = iface.call(QDBus::Block, "handleMessageReceived", instanceId(), message);
+    iface.call(QDBus::Block, "handleMessageReceived", instanceId(), message);
     return true;
   }
 

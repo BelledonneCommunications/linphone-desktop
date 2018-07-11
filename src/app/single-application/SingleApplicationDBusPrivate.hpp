@@ -23,7 +23,8 @@
 #ifndef SINGLE_APPLICATION_DBUS_PRIVATE_H_
 #define SINGLE_APPLICATION_DBUS_PRIVATE_H_
 
-#include <QtDBus/QtDBus>
+#include <QDBusAbstractAdaptor>
+#include <QDBusConnection>
 
 #include "SingleApplication.hpp"
 
