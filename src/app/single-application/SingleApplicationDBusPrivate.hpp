@@ -35,11 +35,11 @@ struct InstancesInfo {
 };
 
 class SingleApplicationPrivate : public QDBusAbstractAdaptor {
-  Q_OBJECT
-  Q_CLASSINFO("D-Bus Interface", "org.linphone.DBus.SingleApplication")
+  Q_OBJECT;
+  Q_CLASSINFO("D-Bus Interface", "org.linphone.DBus.SingleApplication");
 
 public:
-  Q_DECLARE_PUBLIC(SingleApplication) SingleApplicationPrivate (SingleApplication *q_ptr);
+  SingleApplicationPrivate (SingleApplication *q_ptr);
 
   QDBusConnection getBus () const;
 
@@ -50,8 +50,12 @@ public:
   SingleApplication::Options options;
   quint32 instanceNumber;
 
-private:
+// Explicit public slot. Cannot be private, must be exported as a method via D-Bus.
+public slots:
   void handleMessageReceived (quint32 instanceId, QByteArray message);
+
+private:
+  Q_DECLARE_PUBLIC(SingleApplication);
 };
 
 #endif // SINGLE_APPLICATION_DBUS_PRIVATE_H_

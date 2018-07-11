@@ -32,7 +32,6 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(ASSETS_DIR assets)
 
-option(ENABLE_DBUS "Enable single instance handling via DBus." NO)
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 
 include(GNUInstallDirs)
@@ -89,7 +88,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_
 # ------------------------------------------------------------------------------
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
-if (ENABLE_DBUS)
+if (UNIX AND NOT APPLE)
   list(APPEND QT5_PACKAGES DBus)
 endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
@@ -255,7 +254,7 @@ else ()
   )
 endif ()
 
-if (ENABLE_DBUS)
+if (UNIX AND NOT APPLE)
   list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
   list(APPEND HEADERS src/app/single-application/SingleApplicationDBusPrivate.hpp)
 else ()
