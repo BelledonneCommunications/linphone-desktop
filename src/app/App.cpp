@@ -61,6 +61,8 @@ namespace {
   constexpr char QmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
 
   constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
+
+  constexpr char MainQmlUri[] = "Linphone";
 }
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
@@ -331,46 +333,65 @@ void App::createParser () {
 
 // -----------------------------------------------------------------------------
 
-#define registerSharedSingletonType(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
-  "Linphone", 1, 0, NAME, \
-  [](QQmlEngine *, QJSEngine *) -> QObject *{ \
-    QObject *object = METHOD(); \
-    QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership); \
-    return object; \
-  } \
-)
-
-#define registerUncreatableType(TYPE, NAME) qmlRegisterUncreatableType<TYPE>( \
-  "Linphone", 1, 0, NAME, NAME " is uncreatable." \
-)
-
-template<class T>
-void registerSingletonType (const char *name) {
-  qmlRegisterSingletonType<T>("Linphone", 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
-      return new T(engine);
-    });
+template<typename T, T *(*function)()>
+static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
+  QObject *object = (*function)();
+  QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+  return object;
 }
 
-template<class T>
-void registerType (const char *name) {
-  qmlRegisterType<T>("Linphone", 1, 0, name);
+template<typename T, T *(*function)(void)>
+static inline void registerSharedSingletonType (const char *name) {
+  qmlRegisterSingletonType<T>(MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
 }
 
-template<class T>
-void registerToolType (const char *name) {
+template<typename T, T *(CoreManager::*function)() const>
+static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
+  QObject *object = (CoreManager::getInstance()->*function)();
+  QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+  return object;
+}
+
+template<typename T, T *(CoreManager::*function)() const>
+static inline void registerSharedSingletonType (const char *name) {
+  qmlRegisterSingletonType<T>(MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
+}
+
+template<typename T>
+static inline void registerUncreatableType (const char *name) {
+  qmlRegisterUncreatableType<T>(MainQmlUri, 1, 0, name, QLatin1String("Uncreatable"));
+}
+
+template<typename T>
+static inline void registerSingletonType (const char *name) {
+  qmlRegisterSingletonType<T>(MainQmlUri, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
+    return new T(engine);
+  });
+}
+
+template<typename T>
+static inline void registerType (const char *name) {
+  qmlRegisterType<T>(MainQmlUri, 1, 0, name);
+}
+
+template<typename T>
+static inline void registerToolType (const char *name) {
   qmlRegisterSingletonType<T>(name, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
     return new T(engine);
   });
 }
 
-#define registerSharedToolType(TYPE, NAME, METHOD) qmlRegisterSingletonType<TYPE>( \
-  NAME, 1, 0, NAME, \
-  [](QQmlEngine *, QJSEngine *) ->  QObject *{ \
-    QObject *object = const_cast<TYPE *>(METHOD()); \
-    QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership); \
-    return object; \
-  } \
-)
+template<typename T, typename Owner, T *(Owner::*function)() const>
+static QObject *makeSharedTool (QQmlEngine *, QJSEngine *) {
+  QObject *object = (Owner::getInstance()->*function)();
+  QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+  return object;
+}
+
+template<typename T, typename Owner, T *(Owner::*function)() const>
+static inline void registerSharedToolType (const char *name) {
+  qmlRegisterSingletonType<T>(name, 1, 0, name, makeSharedTool<T, Owner, function>);
+}
 
 void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
@@ -400,24 +421,24 @@ void App::registerTypes () {
   registerSingletonType<UrlHandlers>("UrlHandlers");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
-  registerUncreatableType(CallModel, "CallModel");
-  registerUncreatableType(ChatModel, "ChatModel");
-  registerUncreatableType(ConferenceHelperModel::ConferenceAddModel, "ConferenceAddModel");
-  registerUncreatableType(ContactModel, "ContactModel");
-  registerUncreatableType(SipAddressObserver, "SipAddressObserver");
-  registerUncreatableType(VcardModel, "VcardModel");
+  registerUncreatableType<CallModel>("CallModel");
+  registerUncreatableType<ChatModel>("ChatModel");
+  registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
+  registerUncreatableType<ContactModel>("ContactModel");
+  registerUncreatableType<SipAddressObserver>("SipAddressObserver");
+  registerUncreatableType<VcardModel>("VcardModel");
 }
 
 void App::registerSharedTypes () {
   qInfo() << QStringLiteral("Registering shared types...");
 
-  registerSharedSingletonType(App, "App", App::getInstance);
-  registerSharedSingletonType(CoreManager, "CoreManager", CoreManager::getInstance);
-  registerSharedSingletonType(SettingsModel, "SettingsModel", CoreManager::getInstance()->getSettingsModel);
-  registerSharedSingletonType(AccountSettingsModel, "AccountSettingsModel", CoreManager::getInstance()->getAccountSettingsModel);
-  registerSharedSingletonType(SipAddressesModel, "SipAddressesModel", CoreManager::getInstance()->getSipAddressesModel);
-  registerSharedSingletonType(CallsListModel, "CallsListModel", CoreManager::getInstance()->getCallsListModel);
-  registerSharedSingletonType(ContactsListModel, "ContactsListModel", CoreManager::getInstance()->getContactsListModel);
+  registerSharedSingletonType<App, &App::getInstance>("App");
+  registerSharedSingletonType<CoreManager, &CoreManager::getInstance>("CoreManager");
+  registerSharedSingletonType<SettingsModel, &CoreManager::getSettingsModel>("SettingsModel");
+  registerSharedSingletonType<AccountSettingsModel, &CoreManager::getAccountSettingsModel>("AccountSettingsModel");
+  registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");
+  registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");
+  registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
 }
 
 void App::registerToolTypes () {
@@ -432,12 +453,8 @@ void App::registerToolTypes () {
 void App::registerSharedToolTypes () {
   qInfo() << QStringLiteral("Registering shared tool types...");
 
-  registerSharedToolType(Colors, "Colors", App::getInstance()->getColors);
+  registerSharedToolType<Colors, App, &App::getColors>("Colors");
 }
-
-#undef registerUncreatableType
-#undef registerSharedToolType
-#undef registerSharedSingletonType
 
 // -----------------------------------------------------------------------------
 
