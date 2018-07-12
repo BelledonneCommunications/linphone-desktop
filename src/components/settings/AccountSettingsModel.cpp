@@ -20,6 +20,8 @@
  *      Author: Ronan Abhamon
  */
 
+#include "config.h"
+
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
@@ -286,9 +288,9 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
 
-  primary->setUsername(
-    username.isEmpty() ? "linphone" : Utils::appStringToCoreString(username)
-  );
+  primary->setUsername(Utils::appStringToCoreString(
+    username.isEmpty() ? APPLICATION_NAME : username
+  ));
   core->setPrimaryContact(primary->asString());
 
   emit accountSettingsUpdated();

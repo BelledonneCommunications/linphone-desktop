@@ -25,6 +25,8 @@
 #include <QtConcurrent>
 #include <QTimer>
 
+#include "config.h"
+
 #include "app/paths/Paths.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/chat/ChatModel.hpp"
@@ -227,7 +229,7 @@ void CoreManager::setResourcesPaths () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::createLinphoneCore (const QString &configPath) {
-  qInfo() << QStringLiteral("Launch async linphone core creation.");
+  qInfo() << QStringLiteral("Launch async core creation.");
 
   // Migration of configuration and database files from GTK version of Linphone.
   Paths::migrate();
@@ -242,7 +244,10 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
-  mCore->setUserAgent("Linphone Desktop", Utils::appStringToCoreString(QCoreApplication::applicationVersion()));
+  mCore->setUserAgent(
+    APPLICATION_NAME " Desktop",
+    Utils::appStringToCoreString(QCoreApplication::applicationVersion())
+  );
 
   // Force capture/display.
   // Useful if the app was built without video support.

@@ -25,6 +25,8 @@
 #include <QDateTime>
 #include <QThread>
 
+#include "config.h"
+
 #include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -109,7 +111,7 @@ private:
       stderr,
       format,
       getFormattedCurrentTime().constData(),
-      domain.empty() ? domain.c_str() : "linphone",
+      domain.empty() ? domain.c_str() : APPLICATION_NAME,
       message.c_str()
     );
 

@@ -25,6 +25,7 @@
 #include <QMessageBox>
 #include <QQuickStyle>
 
+#include "config.h"
 #include "gitversion.h"
 
 #include "AppController.hpp"
@@ -34,11 +35,7 @@
 using namespace std;
 
 namespace {
-  // Must be unique. Used by `SingleApplication` and `Paths`.
-  constexpr char ApplicationName[] = "linphone";
-  constexpr char ApplicationVersion[] = LINPHONE_QT_GIT_VERSION;
   constexpr char ApplicationMinimalQtVersion[] = "5.9.0";
-
   constexpr char DefaultFont[] = "Noto Sans";
 }
 
@@ -57,8 +54,8 @@ AppController::AppController (int &argc, char *argv[]) {
   // App creation.
   // ---------------------------------------------------------------------------
 
-  QCoreApplication::setApplicationName(ApplicationName);
-  QCoreApplication::setApplicationVersion(ApplicationVersion);
+  QCoreApplication::setApplicationName(APPLICATION_NAME);
+  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
 
   mApp = new App(argc, argv);
   QQuickStyle::setStyle("Default");

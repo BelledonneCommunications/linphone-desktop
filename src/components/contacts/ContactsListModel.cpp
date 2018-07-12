@@ -45,7 +45,7 @@ ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(pare
     }
 
     for (const auto &linphoneFriend : toRemove) {
-      qWarning() << QStringLiteral("Remove one linphone friend without vcard.");
+      qWarning() << QStringLiteral("Remove one friend without vcard.");
       mLinphoneFriends->removeFriend(linphoneFriend);
     }
   }

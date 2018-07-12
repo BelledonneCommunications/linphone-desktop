@@ -26,9 +26,9 @@
 #include <QStandardPaths>
 #include <QtDebug>
 
-#include "utils/Utils.hpp"
-
 #include "config.h"
+
+#include "utils/Utils.hpp"
 
 #include "Paths.hpp"
 
@@ -39,7 +39,7 @@ using namespace std;
 namespace {
   constexpr char PathAssistantConfig[] = "/linphone/assistant/";
   constexpr char PathAvatars[] = "/avatars/";
-  constexpr char PathCaptures[] = "/Linphone/captures/";
+  constexpr char PathCaptures[] = "/" APPLICATION_NAME "/captures/";
   constexpr char PathCodecs[] =  "/codecs/";
   constexpr char PathLogs[] = "/logs/";
   constexpr char PathPlugins[] = "/plugins/";

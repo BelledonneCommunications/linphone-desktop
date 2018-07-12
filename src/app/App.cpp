@@ -491,7 +491,7 @@ void App::setTrayIcon () {
 
   systemTrayIcon->setContextMenu(menu);
   systemTrayIcon->setIcon(QIcon(LinphoneUtils::WindowIconPath));
-  systemTrayIcon->setToolTip("Linphone");
+  systemTrayIcon->setToolTip(APPLICATION_NAME);
   systemTrayIcon->show();
 
   mSystemTrayIcon = systemTrayIcon;
@@ -546,7 +546,7 @@ QString App::getLocale () const {
 // -----------------------------------------------------------------------------
 
 void App::openAppAfterInit (bool mustBeIconified) {
-  qInfo() << QStringLiteral("Open linphone app.");
+  qInfo() << QStringLiteral("Open " APPLICATION_NAME " app.");
 
   // Create other windows.
   mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);

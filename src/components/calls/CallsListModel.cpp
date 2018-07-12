@@ -254,7 +254,7 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
   } catch (const out_of_range &) {
     // The call model not exists because the linphone call state
     // `CallStateIncomingReceived`/`CallStateOutgoingInit` was not notified.
-    qWarning() << QStringLiteral("Unable to find linphone call:") << call.get();
+    qWarning() << QStringLiteral("Unable to find call:") << call.get();
     return;
   }
 
