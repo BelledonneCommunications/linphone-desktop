@@ -20,9 +20,9 @@
 #
 ############################################################################
 
-if(NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
-	execute_process(
-		COMMAND ${CMAKE_CPACK_COMMAND} -G DragNDrop
-		RESULT_VARIABLE CPACK_COMMAND_SUCCESS
-	)
-endif()
+if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
+  execute_process(
+    COMMAND ${CMAKE_CPACK_COMMAND} -G DragNDrop
+    RESULT_VARIABLE CPACK_COMMAND_SUCCESS
+  )
+endif ()

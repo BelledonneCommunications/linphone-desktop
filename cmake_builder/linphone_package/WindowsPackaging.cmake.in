@@ -1,6 +1,6 @@
 ############################################################################
 # WindowsPackaging.cmake
-# Copyright (C) 2014  Belledonne Communications, Grenoble France
+# Copyright (C) 2014-2018  Belledonne Communications, Grenoble France
 #
 ############################################################################
 #
@@ -20,15 +20,15 @@
 #
 ############################################################################
 
-if(NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
-	execute_process(
-		COMMAND ${CMAKE_CPACK_COMMAND} -G NSIS
-		RESULT_VARIABLE CPACK_COMMAND_SUCCESS
-	)
+if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
+  execute_process(
+    COMMAND ${CMAKE_CPACK_COMMAND} -G NSIS
+    RESULT_VARIABLE CPACK_COMMAND_SUCCESS
+  )
 
-	if(@PERFORM_SIGNING@)
-		execute_process(
-			COMMAND @SIGNTOOL_COMMAND@ @CMAKE_CURRENT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.exe
-		)
-	endif()
-endif()
+  if (@PERFORM_SIGNING@)
+    execute_process(
+      COMMAND @SIGNTOOL_COMMAND@ @CMAKE_CURRENT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.exe
+    )
+  endif ()
+endif ()

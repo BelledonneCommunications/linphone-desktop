@@ -1,0 +1,11 @@
+FindWindow $0 "gdkWindowToplevel" "@APPLICATION_NAME@"
+StrCmp $0 0 notRunningInUninstall
+MessageBox MB_OK|MB_ICONEXCLAMATION "@APPLICATION_NAME@ is running. Please close it first and restart the uninstall program." /SD IDOK
+Abort
+
+notRunningInUninstall:
+
+DeleteRegKey HKCR "sip"
+DeleteRegKey HKCR "sip-linphone"
+DeleteRegKey HKCR "sips"
+DeleteRegKey HKCR "sips-linphone"

@@ -111,7 +111,7 @@ private:
       stderr,
       format,
       getFormattedCurrentTime().constData(),
-      domain.empty() ? domain.c_str() : APPLICATION_NAME,
+      domain.empty() ? domain.c_str() : EXECUTABLE_NAME,
       message.c_str()
     );
 

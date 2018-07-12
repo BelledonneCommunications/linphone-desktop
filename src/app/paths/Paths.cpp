@@ -37,9 +37,9 @@
 using namespace std;
 
 namespace {
-  constexpr char PathAssistantConfig[] = "/linphone/assistant/";
+  constexpr char PathAssistantConfig[] = "/" EXECUTABLE_NAME "/assistant/";
   constexpr char PathAvatars[] = "/avatars/";
-  constexpr char PathCaptures[] = "/" APPLICATION_NAME "/captures/";
+  constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
   constexpr char PathCodecs[] =  "/codecs/";
   constexpr char PathLogs[] = "/logs/";
   constexpr char PathPlugins[] = "/plugins/";
@@ -48,8 +48,8 @@ namespace {
 
   constexpr char PathCallHistoryList[] = "/call-history.db";
   constexpr char PathConfig[] = "/linphonerc";
-  constexpr char PathFactoryConfig[] = "/linphone/linphonerc-factory";
-  constexpr char PathRootCa[] = "/linphone/rootca.pem";
+  constexpr char PathFactoryConfig[] = "/" EXECUTABLE_NAME "/linphonerc-factory";
+  constexpr char PathRootCa[] = "/" EXECUTABLE_NAME "/rootca.pem";
   constexpr char PathFriendsList[] = "/friends.db";
   constexpr char PathMessageHistoryList[] = "/message-history.db";
   constexpr char PathZrtpSecrets[] = "/zidcache";

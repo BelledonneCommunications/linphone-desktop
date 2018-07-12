@@ -29,5 +29,5 @@ lcb_spec_file("linphoneqt.spec")
 
 lcb_cmake_options("-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
 
-# Add config step for packaging
+# Add config step for packaging.
 set(LINPHONE_BUILDER_ADDITIONAL_CONFIG_STEPS "${CMAKE_CURRENT_LIST_DIR}/additional_steps.cmake")

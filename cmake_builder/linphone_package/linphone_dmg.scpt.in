@@ -24,7 +24,7 @@ on run argv
         set statusbar visible to false
         set toolbar visible to false
         set the bounds to { 300, 100, 1000, 520 }
-        set position of item "Linphone.app" to { 200, 280 }
+        set position of item "@APPLICATION_NAME@.app" to { 200, 280 }
         set position of item "Applications" to { 500, 280 }
       end tell
       update without registering applications
@@ -40,4 +40,3 @@ on run argv
   delay 1
   end tell
 end run
-

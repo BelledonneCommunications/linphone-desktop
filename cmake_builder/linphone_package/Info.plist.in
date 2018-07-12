@@ -5,11 +5,11 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleName</key>
-	<string>Linphone</string>
+	<string>@APPLICATION_NAME@</string>
 	<key>CFBundleDisplayName</key>
-	<string>Linphone</string>
+	<string>@APPLICATION_NAME@</string>
 	<key>CFBundleExecutable</key>
-	<string>linphone</string>
+	<string>@EXECUTABLE_NAME@</string>
 	<key>CFBundleGetInfoString</key>
 	<string>@PACKAGE_VERSION@, (C) 2011-2018 The linphone team http://www.linphone.org</string>
 	<key>CFBundleIconFile</key>

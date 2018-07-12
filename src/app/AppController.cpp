@@ -54,7 +54,9 @@ AppController::AppController (int &argc, char *argv[]) {
   // App creation.
   // ---------------------------------------------------------------------------
 
-  QCoreApplication::setApplicationName(APPLICATION_NAME);
+  // Do not use APPLICATION_NAME here.
+  // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
+  QCoreApplication::setApplicationName(EXECUTABLE_NAME);
   QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
 
   mApp = new App(argc, argv);

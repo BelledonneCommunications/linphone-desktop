@@ -903,10 +903,10 @@ SectionEnd
 ; "Program Files" for AllUsers, "My Documents" for JustMe...
 
 Function .onInit
-  FindWindow $0 "gdkWindowToplevel" "Linphone"
-  FindWindow $1 "Qt5QWindowOwnDCIcon" "Linphone"
+  FindWindow $0 "gdkWindowToplevel" "@APPLICATION_NAME@"
+  FindWindow $1 "Qt5QWindowOwnDCIcon" "@APPLICATION_NAME@"
   StrCmp "$0$1" "00" notRunning
-  MessageBox MB_OK|MB_ICONEXCLAMATION "Linphone is running. Please close it first and restart the installation." /SD IDOK
+  MessageBox MB_OK|MB_ICONEXCLAMATION "@APPLICATION_NAME@ is running. Please close it first and restart the installation." /SD IDOK
   Abort
 
 notRunning:
@@ -915,7 +915,7 @@ notRunning:
   StrCmp $0 "" inst
 
   MessageBox MB_OKCANCEL|MB_ICONEXCLAMATION \
-  "Linphone is already installed. $\n$\nDo you want to continue and uninstall the old version before installing the new one?" \
+  "@APPLICATION_NAME@ is already installed. $\n$\nDo you want to continue and uninstall the old version before installing the new one?" \
   IDOK uninst
   Abort
 

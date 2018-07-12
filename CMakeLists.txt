@@ -25,7 +25,18 @@ project(linphoneqt VERSION 4.1.1)
 
 set(APP_LIBRARY app-library)
 
-set(APPLICATION_NAME linphone)
+if (NOT DEFINED EXECUTABLE_NAME)
+  set(EXECUTABLE_NAME linphone)
+endif ()
+
+if (NOT DEFINED APPLICATION_NAME)
+  set(APPLICATION_NAME Linphone)
+endif ()
+
+set(APPLICATION_DESCRIPTION "A libre SIP client")
+
+# ------------------------------------------------------------------------------
+
 set(TARGET_NAME linphone-qt)
 
 set(CMAKE_CXX_STANDARD 11)
@@ -415,29 +426,37 @@ foreach (target ${TARGET_NAME})
   )
 endforeach ()
 
-configure_file("assets/linphone.desktop.cmake" "linphone.desktop" @ONLY)
+if (UNIX AND NOT APPLE)
+  # Install desktop/icon files.
+  configure_file("assets/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
 
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/linphone.desktop"
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
-)
-install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
-  RENAME "linphone.svg"
-)
-install(DIRECTORY "${ASSETS_DIR}/icons/hicolor"
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/icons"
-)
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
+  )
+  install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
+    DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
+    RENAME "${EXECUTABLE_NAME}.svg"
+  )
+
+  set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128)
+  foreach (DIR ${ICON_DIRS})
+    install(FILES "${ASSETS_DIR}/icons/hicolor/${DIR}/apps/linphone.png"
+      DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/${DIR}/apps/"
+      RENAME "${EXECUTABLE_NAME}.png"
+    )
+  endforeach ()
+endif ()
 
 # ------------------------------------------------------------------------------
 # Install rc files.
 # ------------------------------------------------------------------------------
 
 install(FILES "${ASSETS_DIR}/linphonerc-factory"
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/linphone"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/${EXECUTABLE_NAME}"
 )
 
 set(ASSETS_ASSISTANT_DIR "${ASSETS_DIR}/assistant")
-set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/linphone/assistant")
+set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/${EXECUTABLE_NAME}/assistant")
 
 install(FILES "${ASSETS_ASSISTANT_DIR}/use-other-sip-account.rc"
   DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
