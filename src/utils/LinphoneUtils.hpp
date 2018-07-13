@@ -44,7 +44,7 @@ namespace LinphoneUtils {
 
   linphone::TransportType stringToTransportType (const QString &transport);
 
-  static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
+  static constexpr char WindowIconPath[] = ":/assets/images/app_logo.svg";
 }
 
 #endif // ifndef LINPHONE_UTILS_H_

@@ -433,14 +433,14 @@ if (UNIX AND NOT APPLE)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
   )
-  install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
+  install(FILES "${ASSETS_DIR}/images/app_logo.svg"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
     RENAME "${EXECUTABLE_NAME}.svg"
   )
 
   set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128)
   foreach (DIR ${ICON_DIRS})
-    install(FILES "${ASSETS_DIR}/icons/hicolor/${DIR}/apps/linphone.png"
+    install(FILES "${ASSETS_DIR}/icons/hicolor/${DIR}/apps/icon.png"
       DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/${DIR}/apps/"
       RENAME "${EXECUTABLE_NAME}.png"
     )
