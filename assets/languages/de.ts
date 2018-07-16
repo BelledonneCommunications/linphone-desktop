@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Um Ihren Account zu aktivieren, folgen Sie den Anweisungen, die wir an %1 gesendet haben. Anschließend klicken Sie hier:</translation>
+        <translation>Um Ihr Konto zu aktivieren, folgen Sie den Anweisungen, die wir an %1 gesendet haben. Anschließend klicken Sie hier:</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>Ein freies Video-Phone</translation>
+        <translation>Ein freies (gratis) Video-Telefon</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -70,11 +70,11 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>zeigt das Hilfe-Menü zur Kommandozeilen-Schnittstelle von Linphone</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>sende einen Befehl zur Anwendung für eine Kommandozeile</translation>
     </message>
 </context>
 <context>
@@ -104,7 +104,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Der Assistent hilft, den linephone Account zu konfigurieren und zu nutzen</translation>
+        <translation>Der Assistent hilft Ihnen das Linphone Konto zu konfigurieren und zu nutzen</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation>Bitte vergewissern Sie sich, dass Sie ihren Account veriziert haben oder versuchen Sie es erneut.</translation>
+        <translation>Bitte vergewissern Sie sich, dass Sie ihr Konto verifiziert haben oder versuchen Sie es erneut.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -419,7 +419,7 @@ Server URL ist nicht konfiguriert.</translation>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Methode um die Linphone Anwendung per Kommandozeile zu steuern.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
@@ -447,11 +447,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Tritt der Konferenz auf dem Host sip-address als display-name bei. Wenn Sie über einen Proxy verbunden sind beachten Sie join-conference-as</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Tritt der Konferenz auf dem Host sip-address als guest-sip-address bei. Wenn Sie nicht über einen Proxy verbunden sind beachten Sie join-conference</translation>
     </message>
 </context>
 <context>
@@ -525,11 +525,11 @@ Server URL ist nicht konfiguriert.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished">Möchten sie diesen Kontakt wirklich aus Ihrem Adressbuch löschen?</translation>
+        <translation>Möchten Sie wirklich diesen Kontakt aus Ihrem Adressbuch entfernen?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation>SIP-ACCOUNT(S)</translation>
+        <translation>SIP-KONTEN</translation>
     </message>
     <message>
         <source>address</source>
@@ -561,7 +561,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation>SIP Account</translation>
+        <translation>SIP Konto</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
@@ -593,7 +593,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie die Änderungen an diesem Kontakt verwerfen?</translation>
     </message>
 </context>
 <context>
@@ -642,11 +642,11 @@ Server URL ist nicht konfiguriert.</translation>
     <name>CreateLinphoneSipAccount</name>
     <message>
         <source>createLinphoneSipAccountDescription</source>
-        <translation>Wie wäre es, wenn Sie einen Account erstellen?</translation>
+        <translation>Wie würden Sie gerne Ihr Konto erstellen?</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>ERSTELLE EINEN LINPHONE ACCOUNT</translation>
+        <translation>ERSTELLE EIN LINPHONE KONTO</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -689,7 +689,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Ihr Account wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
+        <translation>Ihr Konto wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -724,7 +724,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished">Ihr Account wurde erstellt, jedoch noch nicht aktiviert. Sind Sie sicher, dass Sie diese Ansicht verlassen möchten?</translation>
+        <translation>Ihr Konto wurde erstellt aber noch nicht verifiziert. Wenn Sie diese Ansicht schließen müssen Sie Ihr Konto innerhalb der nächsten 24 Stunden manuell anlegen und verifizieren.</translation>
     </message>
 </context>
 <context>
@@ -816,7 +816,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Erstellen oder verwalten Sie ihren Linphone Account.</translation>
+        <translation>Erstellen oder verwalten Sie ihr Linphone Konto.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -913,7 +913,10 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden Sie die Anwendung auf Ihren Computer um kostenlos mit anderen Linphone Benutzern zu telefonieren und zu chatten.
+
+Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -1335,7 +1338,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation>Proxy Accounts</translation>
+        <translation>Proxy Zugänge</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
@@ -1355,7 +1358,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>Sind Sie sicher, dass sie diesen Account löschen möchten?</translation>
+        <translation>Sind Sie sicher, dass sie dieses Konto löschen möchten?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
@@ -1631,7 +1634,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Ihr Account wurde erstellt, aber nicht validiert. Möchten Sie diese Ansicht wirklich beenden?</translation>
+        <translation>Ihr Konto wurde erstellt, aber nicht validiert. Möchten Sie diese Ansicht wirklich verlassen?</translation>
     </message>
 </context>
 <context>
@@ -1688,7 +1691,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Account kann nicht hinzugefügt werden.</translation>
+        <translation>Dieses Konto kann nicht hinzugefügt werden.</translation>
     </message>
 </context>
 <context>

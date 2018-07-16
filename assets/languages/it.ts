@@ -3,48 +3,48 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>ATTIVA IL TUO ACCOUNT LINPHONE</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ATTIVA</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>per attivare il tuo account segui le istruzioni cliccando sul link: %1</translation>
     </message>
 </context>
 <context>
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>ATTIVA IL TUO ACCOUNT LINPHONE</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ATTIVA</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Abbiamo inviato un SMS con un codice di convalida a %1. Per completare la verifica del numero di telefono, inserisci il codice di 4 cifre in basso.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation>Accedi allo stdout di alcune informazioni di debug durante l&apos;esecuzione</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation>specifica il file di configurazione di linphone da utilizzare</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -56,15 +56,15 @@
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>file</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>mostra questo aiuto</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>mostra la versione dell&apos;app</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
@@ -79,7 +79,7 @@
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>INDIETRO</translation>
     </message>
 </context>
 <context>
@@ -90,7 +90,7 @@
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>USA UN ACCOUNT SIP</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
@@ -98,7 +98,7 @@
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>BENVENUTO</translation>
     </message>
     <message>
         <source>homeDescription</source>
@@ -177,7 +177,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Numero di telefono non valido</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
@@ -204,15 +204,15 @@
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>LOGIN</translation>
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished"/>
+        <translation>Identità</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Password</translation>
     </message>
     <message>
         <source>authenticationRequestDescription</source>
@@ -220,7 +220,7 @@
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation type="unfinished"/>
+        <translation>User ID (opzionale)</translation>
     </message>
     <message>
         <source>realmLabel</source>
@@ -231,7 +231,7 @@
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation type="unfinished"/>
+        <translation>Codec</translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
@@ -275,15 +275,15 @@
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation type="unfinished"/>
+        <translation>Non attivato</translation>
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"/>
+        <translation>In carimento</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
@@ -330,29 +330,29 @@
     <name>CallSipAddress</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>CANCELLA</translation>
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"/>
+        <translation>Avvia una nuova chiamata</translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Video</translation>
     </message>
 </context>
 <context>
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>CANCELLA</translation>
     </message>
     <message>
         <source>callTransferDescription</source>
@@ -467,7 +467,7 @@
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"/>
+        <translation>Bitrate (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
@@ -475,7 +475,7 @@
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
@@ -534,11 +534,11 @@
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished"/>
+        <translation>E-MAIL(S)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"/>
+        <translation>WEB SITE(S)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -566,11 +566,11 @@
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Email</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Web site</translation>
     </message>
     <message>
         <source>street</source>
@@ -674,11 +674,11 @@
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Password</translation>
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Conferma password</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
@@ -709,7 +709,7 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Username</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -782,7 +782,7 @@
     </message>
     <message>
         <source>urlLabel</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
@@ -921,7 +921,7 @@
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"/>
+        <translation>HOME</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -955,7 +955,7 @@
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
@@ -981,7 +981,7 @@
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -1049,14 +1049,14 @@
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"/>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Logs</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
@@ -1150,7 +1150,7 @@
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished"/>
+        <translation>Chat</translation>
     </message>
     <message>
         <source>callsTitle</source>
@@ -1201,7 +1201,7 @@
     </message>
     <message>
         <source>allowIpV6Label</source>
-        <translation type="unfinished"/>
+        <translation>Abilita IPv6</translation>
     </message>
     <message>
         <source>transportTitle</source>
@@ -1209,11 +1209,11 @@
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"/>
+        <translation>NAT e Firewall</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -1253,11 +1253,11 @@
     </message>
     <message>
         <source>portHeader</source>
-        <translation type="unfinished"/>
+        <translation>Porta</translation>
     </message>
     <message>
         <source>randomPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>Usa una porta random</translation>
     </message>
     <message>
         <source>enabledPortHeader</source>
@@ -1273,7 +1273,7 @@
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
@@ -1309,7 +1309,7 @@
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation type="unfinished"/>
+        <translation>AUTO</translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
@@ -1324,7 +1324,7 @@
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Username</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
@@ -1708,7 +1708,7 @@
     </message>
     <message>
         <source>accept</source>
-        <translation type="unfinished"/>
+        <translation>CONFERMA</translation>
     </message>
 </context>
 <context>

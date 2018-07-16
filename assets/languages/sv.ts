@@ -1116,7 +1116,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ringenhet</translation>
     </message>
     <message>
         <source>ringLabel</source>
@@ -1179,7 +1179,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiskt svar (med video)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
@@ -1471,7 +1471,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>savedVideosLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapp för sparade videoklipp</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1546,7 +1546,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoupplösning</translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>

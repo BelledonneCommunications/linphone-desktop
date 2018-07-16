@@ -1005,23 +1005,23 @@
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>ПОДТВЕРДИТЬ</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Извлечение %1…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузка %1…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 установлен!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось установить %1!</translation>
     </message>
 </context>
 <context>
@@ -1094,11 +1094,11 @@
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки для разработчиков</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить настройки для разработчиков</translation>
     </message>
 </context>
 <context>
@@ -1184,19 +1184,19 @@
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить чат</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить запись звонков</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить звук уведомлений</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Звук уведомлений</translation>
     </message>
 </context>
 <context>
@@ -1721,7 +1721,7 @@
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Хотите загрузить %1 (%2)?</translation>
     </message>
 </context>
 </TS>

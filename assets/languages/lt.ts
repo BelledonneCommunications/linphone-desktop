@@ -1096,11 +1096,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kūrėjo nustatymai</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti kūrėjo nustatymus</translation>
     </message>
 </context>
 <context>
@@ -1142,7 +1142,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Šifruoti naudojant LIME</translation>
     </message>
     <message>
         <source>limeDisabled</source>
@@ -1194,11 +1194,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti pranešimų garsą</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Pranešimų garsas</translation>
     </message>
 </context>
 <context>
@@ -1490,11 +1490,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"></translation>
+        <translation>IŠTRINTI AVATARUS</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar tikrai norite ištrinti visus avatarus?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
