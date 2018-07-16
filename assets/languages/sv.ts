@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Avsluta</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Inställningar</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Om</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

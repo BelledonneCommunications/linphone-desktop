@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation>envoie un ordre à l&apos;application Linphone, voir --cli-help pour plus de détails</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation>Restorer</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Quitter</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Préférences</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>À propos</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

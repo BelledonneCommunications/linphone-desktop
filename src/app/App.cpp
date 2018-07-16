@@ -63,6 +63,9 @@ namespace {
   constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
 
   constexpr char MainQmlUri[] = "Linphone";
+
+  constexpr char AttachVirtualWindowMethodName[] = "attachVirtualWindow";
+  constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
 }
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
@@ -463,13 +466,27 @@ void App::setTrayIcon () {
   QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(mEngine);
 
   // trayIcon: Right click actions.
-  QAction *quitAction = new QAction("Quit", root);
-  root->connect(quitAction, &QAction::triggered, this, &App::quit);
+  QAction *settingsAction = new QAction(tr("settings"), root);
+  root->connect(settingsAction, &QAction::triggered, root, [this] {
+    App::smartShowWindow(getSettingsWindow());
+  });
 
-  QAction *restoreAction = new QAction("Restore", root);
+  QAction *aboutAction = new QAction(tr("about"), root);
+  root->connect(aboutAction, &QAction::triggered, root, [root] {
+    App::smartShowWindow(root);
+    QMetaObject::invokeMethod(
+      root, AttachVirtualWindowMethodName, Qt::DirectConnection,
+      Q_ARG(QVariant, QUrl(AboutPath)), Q_ARG(QVariant, QVariant()), Q_ARG(QVariant, QVariant())
+    );
+  });
+
+  QAction *restoreAction = new QAction(tr("restore"), root);
   root->connect(restoreAction, &QAction::triggered, root, [root] {
     smartShowWindow(root);
   });
+
+  QAction *quitAction = new QAction(tr("quit"), root);
+  root->connect(quitAction, &QAction::triggered, this, &App::quit);
 
   // trayIcon: Left click actions.
   QMenu *menu = new QMenu();
@@ -485,6 +502,9 @@ void App::setTrayIcon () {
   });
 
   // Build trayIcon menu.
+  menu->addAction(settingsAction);
+  menu->addAction(aboutAction);
+  menu->addSeparator();
   menu->addAction(restoreAction);
   menu->addSeparator();
   menu->addAction(quitAction);

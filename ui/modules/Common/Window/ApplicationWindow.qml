@@ -19,8 +19,8 @@ ApplicationWindow {
 
   // ---------------------------------------------------------------------------
 
-  function attachVirtualWindow () {
-    Logic.attachVirtualWindow.apply(this, arguments)
+  function attachVirtualWindow (component, properties, exitStatusHandler) {
+    Logic.attachVirtualWindow.call(this, component, properties, exitStatusHandler)
   }
 
   function detachVirtualWindow () {

@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation>отправка команды приложения через командную строку</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Выйти</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>О программе</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation>enviar um pedido para o aplicativo em direção a uma linha de comando</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Sair</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Preferências</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Sobre</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

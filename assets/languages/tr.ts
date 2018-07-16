@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation>komut satırıyla uygulamaya emir gönder</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Çıkış</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Tercihler</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Hakkında</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

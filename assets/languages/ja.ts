@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>終了</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

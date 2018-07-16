@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation>send an order to the application towards a command line</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation>Restore</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Quit</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Preferences</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>About</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

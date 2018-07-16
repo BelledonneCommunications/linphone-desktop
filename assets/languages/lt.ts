@@ -76,6 +76,22 @@
         <source>commandLineDescription</source>
         <translation>siųsti programai įsakymą į komandų eilutę</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Išeiti</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Nuostatos</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Apie</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
