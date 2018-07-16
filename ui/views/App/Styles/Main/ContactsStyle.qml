@@ -29,7 +29,7 @@ QtObject {
 
     property QtObject backgroundColor: QtObject {
       property color normal: Colors.k
-      property color hovered: Colors.p
+      property color hovered: Colors.g10
     }
 
     property QtObject border: QtObject {

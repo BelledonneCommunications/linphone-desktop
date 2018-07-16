@@ -15,8 +15,8 @@ QtObject {
     property int radius: 10
 
     property QtObject color: QtObject {
-      property color hovered: Colors.n
-      property color normal: Colors.m
+      property color hovered: Colors.c
+      property color normal: Colors.f
       property color pressed: Colors.i
     }
   }

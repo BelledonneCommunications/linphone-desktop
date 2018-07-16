@@ -7,7 +7,7 @@ import Colors 1.0
 
 QtObject {
   property QtObject background: QtObject {
-    property color color: Colors.n
+    property color color: Colors.c
     property int height: 4
     property int radius: 2
     property int width: 200
@@ -25,14 +25,14 @@ QtObject {
 
     property QtObject border: QtObject {
       property QtObject color: QtObject {
-        property color normal: Colors.n
-        property color pressed: Colors.n
+        property color normal: Colors.c
+        property color pressed: Colors.c
       }
     }
 
     property QtObject color: QtObject {
       property color normal: Colors.e
-      property color pressed: Colors.q
+      property color pressed: Colors.f
     }
   }
 }

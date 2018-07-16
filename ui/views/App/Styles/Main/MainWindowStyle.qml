@@ -44,7 +44,7 @@ QtObject {
     property int spacing: 20
 
     property var background: Rectangle {
-      color: Colors.v
+      color: Colors.f
     }
   }
 }

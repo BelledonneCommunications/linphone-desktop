@@ -42,7 +42,7 @@ QtObject {
     property int leftMargin: 40
 
     property QtObject border: QtObject {
-      property color color: Colors.p
+      property color color: Colors.g10
       property int bottomWidth: 1
       property int topWidth: 0
     }

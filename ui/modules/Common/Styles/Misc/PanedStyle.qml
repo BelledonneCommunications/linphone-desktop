@@ -14,7 +14,7 @@ QtObject {
     property QtObject color: QtObject {
       property color hovered: Colors.h
       property color normal: Colors.c
-      property color pressed: Colors.b
+      property color pressed: Colors.d
     }
   }
 }

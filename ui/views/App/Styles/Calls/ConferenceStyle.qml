@@ -8,7 +8,7 @@ import Units 1.0
 
 QtObject {
   property QtObject description: QtObject {
-    property color color: Colors.x
+    property color color: Colors.j
     property int pointSize: Units.dp * 12
     property int height: 60
     property int width: 150

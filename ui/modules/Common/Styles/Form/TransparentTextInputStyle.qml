@@ -7,7 +7,7 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.q
+  property color backgroundColor: Colors.f
   property int iconSize: 12
   property int padding: 10
 
@@ -21,7 +21,7 @@ QtObject {
 
     property QtObject color: QtObject {
       property color focused: Colors.l
-      property color normal: Colors.r
+      property color normal: Colors.d
     }
   }
 }

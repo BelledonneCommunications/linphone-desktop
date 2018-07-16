@@ -14,6 +14,6 @@ QtObject {
 
   property QtObject separator: QtObject {
     property int height: 2
-    property color color: Colors.u
+    property color color: Colors.f
   }
 }

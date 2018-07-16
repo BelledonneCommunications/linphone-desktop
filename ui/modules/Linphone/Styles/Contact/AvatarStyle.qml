@@ -7,7 +7,7 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.r
+  property color backgroundColor: Colors.d
 
   property QtObject initials: QtObject {
     property color color: Colors.k

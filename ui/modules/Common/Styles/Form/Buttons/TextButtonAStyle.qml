@@ -7,9 +7,9 @@ import Colors 1.0
 
 QtObject {
   property QtObject backgroundColor: QtObject {
-    property color disabled: Colors.o
-    property color hovered: Colors.o
-    property color normal: Colors.j
+    property color disabled: Colors.y
+    property color hovered: Colors.j
+    property color normal: Colors.g
     property color pressed: Colors.i
   }
 

@@ -12,7 +12,7 @@ QtObject {
 
     property QtObject button: QtObject {
       property QtObject color: QtObject {
-        property color normal: Colors.q
+        property color normal: Colors.f
         property color pressed: Colors.c
       }
 

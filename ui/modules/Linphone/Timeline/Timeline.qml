@@ -69,7 +69,7 @@ Rectangle {
 
         Icon {
           anchors.verticalCenter: parent.verticalCenter
-          icon: 'history'
+          icon: 'timeline_history'
           iconSize: TimelineStyle.legend.iconSize
         }
 

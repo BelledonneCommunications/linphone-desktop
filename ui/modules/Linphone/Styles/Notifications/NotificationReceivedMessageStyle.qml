@@ -15,7 +15,7 @@ QtObject {
   property int spacing: 0
 
   property QtObject messageContainer: QtObject {
-    property color color: Colors.m
+    property color color: Colors.y
     property int radius: 6
     property int margins: 10
 

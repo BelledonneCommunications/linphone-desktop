@@ -21,7 +21,7 @@ QtObject {
 
     property QtObject header: QtObject {
       property color color1: Colors.k
-      property color color2: Colors.v
+      property color color2: Colors.f
       property int height: 60
       property int iconSize: 40
       property int leftMargin: 10

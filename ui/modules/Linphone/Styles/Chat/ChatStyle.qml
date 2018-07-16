@@ -14,7 +14,7 @@ QtObject {
     property int bottomMargin: 20
 
     property QtObject border: QtObject {
-      property color color: Colors.p
+      property color color: Colors.g10
       property int width: 1
     }
 
@@ -28,13 +28,13 @@ QtObject {
     property int height: 80
 
     property QtObject border: QtObject {
-      property color color: Colors.u
+      property color color: Colors.f
       property int width: 1
     }
   }
 
   property QtObject composingText: QtObject {
-    property color color: Colors.b
+    property color color: Colors.d
     property int height: 25
     property int leftPadding: 20
     property int pointSize: Units.dp * 9
@@ -51,7 +51,7 @@ QtObject {
       property int iconSize: 18
 
       property QtObject text: QtObject {
-        property color color: Colors.r
+        property color color: Colors.d
         property int pointSize: Units.dp * 10
       }
     }
@@ -115,7 +115,7 @@ QtObject {
         property int avatarSize: 20
 
         property QtObject text: QtObject {
-          property color color: Colors.r
+          property color color: Colors.d
           property int pointSize: Units.dp * 10
         }
       }
@@ -127,14 +127,14 @@ QtObject {
         property int sendIconSize: 12
 
         property QtObject text: QtObject {
-          property color color: Colors.r
+          property color color: Colors.d
           property int pointSize: Units.dp * 10
         }
       }
     }
 
     property QtObject time: QtObject {
-      property color color: Colors.x
+      property color color: Colors.d
       property int pointSize: Units.dp * 10
       property int width: 44
     }

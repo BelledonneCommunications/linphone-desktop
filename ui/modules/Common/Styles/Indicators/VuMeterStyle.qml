@@ -13,7 +13,7 @@ QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
         property color disabled: Colors.y
-        property color enabled: Colors.x
+        property color enabled: Colors.w
       }
     }
 
@@ -26,7 +26,7 @@ QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
         property color disabled: Colors.y
-        property color enabled: Colors.x
+        property color enabled: Colors.w
       }
     }
 

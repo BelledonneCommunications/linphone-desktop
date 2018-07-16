@@ -34,8 +34,8 @@ QtObject {
   }
 
   property QtObject legend: QtObject {
-    property color backgroundColor: Colors.u
-    property color color: Colors.k
+    property color backgroundColor: Colors.f
+    property color color: Colors.d
     property int pointSize: Units.dp * 11
     property int height: 30
     property int iconSize: 10
