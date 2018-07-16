@@ -35,7 +35,7 @@ DialogPlus {
       width: parent.width
 
       Icon {
-        icon: 'linphone_logo'
+        icon: 'app_logo'
         iconSize: parent.height
 
         Konami {
