@@ -8,7 +8,7 @@ import Units 1.0
 
 QtObject {
   property int spacing: 1
-  property color backgroundColor: Colors.w
+  property color backgroundColor: Colors.n
 
   property QtObject entry: QtObject {
     property int iconSize: 24

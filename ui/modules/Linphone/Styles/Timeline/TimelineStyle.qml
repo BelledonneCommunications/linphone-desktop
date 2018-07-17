@@ -20,7 +20,7 @@ QtObject {
 
     property QtObject sipAddress: QtObject {
       property QtObject color: QtObject {
-        property color normal: Colors.w
+        property color normal: Colors.n
         property color selected: Colors.k
       }
     }

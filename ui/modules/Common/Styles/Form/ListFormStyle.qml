@@ -11,7 +11,7 @@ QtObject {
 
   property QtObject value: QtObject {
     property QtObject placeholder: QtObject {
-      property color color: Colors.w
+      property color color: Colors.n
       property int pointSize: Units.dp * 10
     }
 

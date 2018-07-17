@@ -36,8 +36,8 @@ QtObject {
       property QtObject color: QtObject {
         property color checked: Colors.i
         property color disabled: Colors.c
-        property color normal: Colors.w
-        property color pressed: Colors.w
+        property color normal: Colors.n
+        property color pressed: Colors.n
       }
     }
 

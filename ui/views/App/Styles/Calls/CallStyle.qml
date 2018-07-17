@@ -35,7 +35,7 @@ QtObject {
     property int margins: 15
 
     property QtObject avatar: QtObject {
-      property color backgroundColor: Colors.w
+      property color backgroundColor: Colors.n
       property int maxSize: 300
     }
 

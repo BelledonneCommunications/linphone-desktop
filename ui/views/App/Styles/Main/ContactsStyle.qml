@@ -44,7 +44,7 @@ QtObject {
 
     property QtObject presence: QtObject {
       property int pointSize: Units.dp * 10
-      property color color: Colors.w
+      property color color: Colors.n
     }
 
     property QtObject username: QtObject {

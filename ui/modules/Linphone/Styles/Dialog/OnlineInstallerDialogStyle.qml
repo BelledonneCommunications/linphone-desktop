@@ -24,7 +24,7 @@ QtObject {
       property QtObject contentItem: QtObject {
         property QtObject color: QtObject {
           property color failed: Colors.error
-          property color normal: Colors.z
+          property color normal: Colors.p
       }
     }
   }

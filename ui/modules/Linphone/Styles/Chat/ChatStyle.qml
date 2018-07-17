@@ -100,7 +100,7 @@ QtObject {
             }
 
             property QtObject contentItem: QtObject {
-              property color color: Colors.z
+              property color color: Colors.p
             }
           }
         }
@@ -111,7 +111,7 @@ QtObject {
       }
 
       property QtObject incoming: QtObject {
-        property color backgroundColor: Colors.y
+        property color backgroundColor: Colors.o
         property int avatarSize: 20
 
         property QtObject text: QtObject {

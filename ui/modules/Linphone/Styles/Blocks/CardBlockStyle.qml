@@ -15,7 +15,7 @@ QtObject {
   }
 
   property QtObject description: QtObject {
-    property color color: Colors.w
+    property color color: Colors.n
     property int pointSize: Units.dp * 10
     property int height: 40
   }

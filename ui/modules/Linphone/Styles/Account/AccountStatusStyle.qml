@@ -15,7 +15,7 @@ QtObject {
   }
 
   property QtObject sipAddress: QtObject {
-    property color color: Colors.j75
+    property color color: Colors.g
     property int pointSize: Units.dp * 10
   }
 

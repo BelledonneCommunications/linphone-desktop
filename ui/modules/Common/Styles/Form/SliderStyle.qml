@@ -13,7 +13,7 @@ QtObject {
     property int width: 200
 
     property QtObject content: QtObject {
-      property color color: Colors.t
+      property color color: Colors.m
       property int radius: 2
     }
   }

@@ -12,7 +12,7 @@ QtObject {
   property int width: 300
 
   property QtObject border: QtObject {
-    property color color: Colors.w
+    property color color: Colors.n
     property int width: 1
   }
 }

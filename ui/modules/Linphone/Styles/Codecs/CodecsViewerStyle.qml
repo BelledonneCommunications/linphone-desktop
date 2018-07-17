@@ -15,7 +15,7 @@ QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
         property color normal: Colors.a
-        property color hovered: Colors.y
+        property color hovered: Colors.o
       }
     }
 

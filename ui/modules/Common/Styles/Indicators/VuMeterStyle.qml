@@ -12,21 +12,21 @@ QtObject {
   property QtObject high: QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color disabled: Colors.y
-        property color enabled: Colors.w
+        property color disabled: Colors.o
+        property color enabled: Colors.n
       }
     }
 
     property QtObject contentItem: QtObject {
-      property color color: Colors.s
+      property color color: Colors.b
     }
   }
 
   property QtObject low: QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color disabled: Colors.y
-        property color enabled: Colors.w
+        property color disabled: Colors.o
+        property color enabled: Colors.n
       }
     }
 

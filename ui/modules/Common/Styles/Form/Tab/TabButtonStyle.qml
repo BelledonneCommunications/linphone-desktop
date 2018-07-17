@@ -11,9 +11,9 @@ QtObject {
 
   property QtObject backgroundColor: QtObject {
     property color disabled: Colors.i30
-    property color hovered: Colors.s
+    property color hovered: Colors.b
     property color normal: Colors.i
-    property color pressed: Colors.t
+    property color pressed: Colors.m
     property color selected: Colors.k
   }
 
