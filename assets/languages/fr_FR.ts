@@ -1218,6 +1218,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>conferenceEnabledLabel</source>
         <translation>Activer la conférence</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation>Contacts</translation>
+    </message>
+    <message>
+        <source>contactsEnabledLabel</source>
+        <translation>Activer les contacts</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

@@ -1217,6 +1217,14 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>conferenceEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

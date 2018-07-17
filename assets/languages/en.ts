@@ -1220,6 +1220,14 @@ your friend&apos;s SIP address or username.</translation>
         <source>conferenceEnabledLabel</source>
         <translation>Enable conference</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation>Contacts</translation>
+    </message>
+    <message>
+        <source>contactsEnabledLabel</source>
+        <translation>Enable contacts</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

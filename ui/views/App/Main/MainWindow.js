@@ -90,8 +90,11 @@ function updateSelectedEntry (view, props) {
   var menu = item.menu
   var timeline = item.timeline
 
-  if (view === 'Home' || view === 'Contacts') {
-    menu.setSelectedEntry(view === 'Home' ? 0 : 1)
+  if (view === 'Home') {
+    item.homeEntry.select()
+    timeline.resetSelectedEntry()
+  } else if (view === 'Contacts') {
+    item.contactsEntry.select()
     timeline.resetSelectedEntry()
   } else if (view === 'Conversation') {
     menu.resetSelectedEntry()

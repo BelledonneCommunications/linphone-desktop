@@ -1220,6 +1220,14 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>conferenceEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

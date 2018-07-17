@@ -423,6 +423,17 @@ void SettingsModel::setLimeState (LimeState state) {
   emit limeStateChanged(state);
 }
 
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getContactsEnabled () const {
+  return !!mConfig->getInt(UiSection, "contacts_enabled", 1);
+}
+
+void SettingsModel::setContactsEnabled (bool status) {
+  mConfig->setInt(UiSection, "contacts_enabled", status);
+  emit contactsEnabledChanged(status);
+}
+
 // =============================================================================
 // Network.
 // =============================================================================

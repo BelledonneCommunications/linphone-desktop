@@ -68,8 +68,11 @@ ApplicationWindow {
 
     sourceComponent: ColumnLayout {
       // Workaround to get these properties in `MainWindow.js`.
+      readonly property alias contactsEntry: contactsEntry
       readonly property alias contentLoader: contentLoader
+      readonly property alias homeEntry: homeEntry
       readonly property alias menu: menu
+
       readonly property alias timeline: timeline
 
       spacing: 0
@@ -143,7 +146,9 @@ ApplicationWindow {
               sipAddress: sipAddress
             })
 
-            onEntryClicked: window.setView(entry.contact ? 'ContactEdit' : 'Conversation', {
+            onEntryClicked: window.setView(entry.contact && SettingsModel.contactsEnabled
+              ? 'ContactEdit'
+              : 'Conversation', {
               sipAddress: entry.sipAddress
             })
 
@@ -201,18 +206,29 @@ ApplicationWindow {
           ApplicationMenu {
             id: menu
 
+            defaultSelectedEntry: homeEntry
+
             entryHeight: MainWindowStyle.menu.height
             entryWidth: MainWindowStyle.menu.width
 
-            entries: [{
-              entryName: qsTr('homeEntry'),
-              icon: 'home'
-            }, {
-              entryName: qsTr('contactsEntry'),
-              icon: 'contact'
-            }]
+            ApplicationMenuEntry {
+              id: homeEntry
 
-            onEntrySelected: !entry ? setView('Home') : setView('Contacts')
+              icon: 'home'
+              name: qsTr('homeEntry')
+
+              onSelected: setView('Home')
+            }
+
+            ApplicationMenuEntry {
+              id: contactsEntry
+
+              icon: 'contact'
+              name: qsTr('contactsEntry')
+              visible: SettingsModel.contactsEnabled
+
+              onSelected: setView('Contacts')
+            }
           }
 
           // History.

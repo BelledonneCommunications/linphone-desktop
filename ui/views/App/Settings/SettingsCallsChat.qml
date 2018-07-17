@@ -219,5 +219,23 @@ TabContainer {
         }
       }
     }
+
+    Form {
+      title: qsTr('contactsTitle')
+      visible: SettingsModel.developerSettingsEnabled
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('contactsEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.contactsEnabled
+
+            onClicked: SettingsModel.contactsEnabled = !checked
+          }
+        }
+      }
+    }
   }
 }

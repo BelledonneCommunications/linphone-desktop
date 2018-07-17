@@ -248,6 +248,7 @@
     <file>ui/modules/Common/Image/Icon.qml</file>
     <file>ui/modules/Common/Image/RoundedImage.qml</file>
     <file>ui/modules/Common/Indicators/VuMeter.qml</file>
+    <file>ui/modules/Common/Menus/ApplicationMenuEntry.qml</file>
     <file>ui/modules/Common/Menus/ApplicationMenu.qml</file>
     <file>ui/modules/Common/Menus/DropDownDynamicMenu.qml</file>
     <file>ui/modules/Common/Menus/DropDownStaticMenuEntry.qml</file>

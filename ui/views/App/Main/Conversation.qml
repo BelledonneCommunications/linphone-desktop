@@ -92,6 +92,7 @@ ColumnLayout  {
           ActionButton {
             icon: Logic.getEditIcon()
             iconSize: ConversationStyle.bar.actions.edit.iconSize
+            visible: SettingsModel.contactsEnabled
 
             onClicked: window.setView('ContactEdit', {
               sipAddress: conversation.sipAddress

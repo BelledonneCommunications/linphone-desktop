@@ -86,6 +86,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(MediaEncryption mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged);
   Q_PROPERTY(LimeState limeState READ getLimeState WRITE setLimeState NOTIFY limeStateChanged);
 
+  Q_PROPERTY(bool contactsEnabled READ getContactsEnabled WRITE setContactsEnabled NOTIFY contactsEnabledChanged);
+
   // Network. ------------------------------------------------------------------
 
   Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
@@ -243,6 +245,9 @@ public:
   LimeState getLimeState () const;
   void setLimeState (LimeState state);
 
+  bool getContactsEnabled () const;
+  void setContactsEnabled (bool status);
+
   // Network. ------------------------------------------------------------------
 
   bool getUseSipInfoForDtmfs () const;
@@ -394,6 +399,8 @@ signals:
 
   void mediaEncryptionChanged (MediaEncryption encryption);
   void limeStateChanged (LimeState state);
+
+  void contactsEnabledChanged (bool status);
 
   // Network. ------------------------------------------------------------------
 
