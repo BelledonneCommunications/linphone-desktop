@@ -199,7 +199,6 @@ void App::initContentApp () {
   mEngine = new QQmlApplicationEngine();
 
   // Provide `+custom` folders for custom components and `5.9` for old components.
-  // TODO: Remove 5.9 support in 6 months. (~ July 2018).
   {
     QStringList selectors("custom");
     const QVersionNumber &version = QLibraryInfo::version();

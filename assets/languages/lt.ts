@@ -1216,6 +1216,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>chatNotificationSoundLabel</source>
         <translation>Pranešimų garsas</translation>
     </message>
+    <message>
+        <source>conferenceEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

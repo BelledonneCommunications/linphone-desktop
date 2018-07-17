@@ -303,6 +303,17 @@ void SettingsModel::setChatEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getConferenceEnabled () const {
+  return !!mConfig->getInt(UiSection, "conference_enabled", 1);
+}
+
+void SettingsModel::setConferenceEnabled (bool status) {
+  mConfig->setInt(UiSection, "conference_enabled", status);
+  emit conferenceEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getChatNotificationSoundEnabled () const {
   return !!mConfig->getInt(UiSection, "chat_sound_notification_enabled", 1);
 }

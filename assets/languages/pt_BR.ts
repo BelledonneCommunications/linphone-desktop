@@ -1216,6 +1216,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <source>chatNotificationSoundLabel</source>
         <translation>Som de notificação</translation>
     </message>
+    <message>
+        <source>conferenceEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

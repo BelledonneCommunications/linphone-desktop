@@ -117,6 +117,7 @@ Window {
 
             ActionButton {
               icon: 'new_conference'
+              visible: SettingsModel.conferenceEnabled
 
               onClicked: Logic.openConferenceManager()
             }

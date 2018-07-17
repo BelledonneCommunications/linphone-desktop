@@ -1211,6 +1211,10 @@
         <source>chatNotificationSoundLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>conferenceEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

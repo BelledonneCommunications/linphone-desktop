@@ -1216,6 +1216,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>chatNotificationSoundLabel</source>
         <translation>Bildirim sesi</translation>
     </message>
+    <message>
+        <source>conferenceEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

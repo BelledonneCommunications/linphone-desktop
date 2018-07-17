@@ -133,6 +133,16 @@ TabContainer {
             onClicked: SettingsModel.chatEnabled = !checked
           }
         }
+
+        FormGroup {
+          label: qsTr('conferenceEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.conferenceEnabled
+
+            onClicked: SettingsModel.conferenceEnabled = !checked
+          }
+        }
       }
 
       FormLine {

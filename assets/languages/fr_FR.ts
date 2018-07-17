@@ -1214,6 +1214,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>chatNotificationSoundLabel</source>
         <translation>Son des notifications</translation>
     </message>
+    <message>
+        <source>conferenceEnabledLabel</source>
+        <translation>Activer la conférence</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
