@@ -49,8 +49,8 @@ Colors::Colors (QObject *parent) : QObject(parent) {
   #if LINPHONE_FRIDAY
     if (isLinphoneFriday()) {
       setProperty("i", QColor("#F48D8D"));
-      setProperty("s", QColor("#F58585"));
-      setProperty("t", QColor("#FFC5C5"));
+      setProperty("b", QColor("#F58585"));
+      setProperty("m", QColor("#FFC5C5"));
     }
   #endif // if LINPHONE_FRIDAY
 }
