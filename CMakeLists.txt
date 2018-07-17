@@ -41,7 +41,7 @@ set(TARGET_NAME linphone-qt)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(ASSETS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
+set(ASSETS_DIR "assets")
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 
@@ -373,7 +373,7 @@ add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
 add_dependencies(${APP_LIBRARY} update_translations)
 
 if (WIN32)
-  add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> assets/linphone.rc ${MAIN_FILE})
+  add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/linphone.rc ${MAIN_FILE})
 else ()
   add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
 endif ()
@@ -428,7 +428,7 @@ endforeach ()
 
 if (UNIX AND NOT APPLE)
   # Install desktop/icon files.
-  configure_file("assets/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
+  configure_file("${ASSETS_DIR}/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
 
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
