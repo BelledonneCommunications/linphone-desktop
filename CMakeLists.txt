@@ -25,14 +25,8 @@ project(linphoneqt VERSION 4.1.1)
 
 set(APP_LIBRARY app-library)
 
-if (NOT DEFINED EXECUTABLE_NAME)
-  set(EXECUTABLE_NAME linphone)
-endif ()
-
-if (NOT DEFINED APPLICATION_NAME)
-  set(APPLICATION_NAME Linphone)
-endif ()
-
+set(EXECUTABLE_NAME linphone)
+set(APPLICATION_NAME Linphone)
 set(APPLICATION_DESCRIPTION "A libre SIP client")
 
 # ------------------------------------------------------------------------------
