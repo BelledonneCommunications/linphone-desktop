@@ -41,7 +41,7 @@ set(TARGET_NAME linphone-qt)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(ASSETS_DIR assets)
+set(ASSETS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/assets")
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 
@@ -433,7 +433,14 @@ if (UNIX AND NOT APPLE)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
   )
-  install(FILES "${ASSETS_DIR}/images/app_logo.svg"
+
+  if (EXISTS "${ASSETS_DIR}/images/custom/app_logo.svg")
+    set(APP_LOGO_PATH "${ASSETS_DIR}/images/custom/app_logo.svg")
+  else ()
+    set(APP_LOGO_PATH "${ASSETS_DIR}/images/app_logo.svg")
+  endif ()
+
+  install(FILES ${APP_LOGO_PATH}
     DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
     RENAME "${EXECUTABLE_NAME}.svg"
   )
