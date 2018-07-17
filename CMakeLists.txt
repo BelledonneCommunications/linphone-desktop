@@ -433,14 +433,7 @@ if (UNIX AND NOT APPLE)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
   )
-
-  if (EXISTS "${ASSETS_DIR}/images/custom/app_logo.svg")
-    set(APP_LOGO_PATH "${ASSETS_DIR}/images/custom/app_logo.svg")
-  else ()
-    set(APP_LOGO_PATH "${ASSETS_DIR}/images/app_logo.svg")
-  endif ()
-
-  install(FILES ${APP_LOGO_PATH}
+  install(FILES "${ASSETS_DIR}/images/app_logo.svg"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
     RENAME "${EXECUTABLE_NAME}.svg"
   )
