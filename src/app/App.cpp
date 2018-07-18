@@ -115,6 +115,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
   if (mParser->isSet("version"))
     mParser->showVersion();
 
+  qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
   qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
 }
 
