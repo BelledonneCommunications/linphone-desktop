@@ -13,7 +13,7 @@ AssistantAbstractView {
 
   backEnabled: false
 
-  title: qsTr('activateLinphoneSipAccount')
+  title: qsTr('activateLinphoneSipAccount').replace('%1', Qt.application.name.toUpperCase())
 
   mainAction: requestBlock.execute
   mainActionEnabled: activationCode.length === 4 && !requestBlock.loading

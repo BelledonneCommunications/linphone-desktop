@@ -68,9 +68,9 @@ Rectangle {
     delegate: CardBlock {
       anchors.verticalCenter: parent.verticalCenter
 
-      description: $description
+      description: $description.replace('%1', Utils.capitalizeFirstLetter(Qt.application.name))
       icon: $icon
-      title: $title
+      title: $title.replace('%1', Qt.application.name.toUpperCase())
 
       Loader {
         Component {

@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>АКТИВИРУЙТЕ ВАШ АККАУНТ LINPHONE</translation>
+        <translation>АКТИВИРУЙТЕ ВАШ АККАУНТ %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>АКТИВИРУЙТЕ ВАШ АККАУНТ LINPHONE</translation>
+        <translation>АКТИВИРУЙТЕ ВАШ АККАУНТ %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>укажите конфигурационный файл Linphone</translation>
+        <translation>укажите конфигурационный файл %1</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>показывает меню помощи в использовании Linphone из командной строки</translation>
+        <translation>показывает меню помощи в использовании %1 из командной строки</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -104,7 +104,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>ИСПОЛЬЗОВАТЬ АККАУНТ LINPHONE</translation>
+        <translation>ИСПОЛЬЗОВАТЬ АККАУНТ %1</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -120,11 +120,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Этот ассистент поможет вам настроить и использовать ваш аккаунт Linphone.</translation>
+        <translation>Этот ассистент поможет вам настроить и использовать ваш аккаунт %1.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>СОЗДАТЬ АККАУНТ LINPHONE</translation>
+        <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
 </context>
 <context>
@@ -435,15 +435,15 @@
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation>Способ управлять Linphone через командную строку.</translation>
+        <translation>Способ управлять %1 через командную строку.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>linphone sip:&lt;адрес-sip&gt;?method=&lt;метод&gt;([&amp;&lt;аргумент&gt;=&lt;base64-значение&gt;]*)</translation>
+        <translation>%1 sip:&lt;адрес-sip&gt;?method=&lt;метод&gt;([&amp;&lt;аргумент&gt;=&lt;base64-значение&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>linphone &quot;&lt;метод&gt; ([&lt;аргумент&gt;=&lt;значение&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;метод&gt; ([&lt;аргумент&gt;=&lt;значение&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -662,7 +662,7 @@
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>СОЗДАТЬ АККАУНТ LINPHONE</translation>
+        <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -677,7 +677,7 @@
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>СОЗДАТЬ АККАУНТ LINPHONE</translation>
+        <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -716,7 +716,7 @@
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>СОЗДАТЬ АККАУНТ LINPHONE</translation>
+        <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -816,15 +816,15 @@
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Нужна помощь в использовании Linphone?</translation>
+        <translation>Нужна помощь в использовании %1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>КАК ПОЛЬЗОВАТЬСЯ LINPHONE</translation>
+        <translation>КАК ПОЛЬЗОВАТЬСЯ %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Пригласите друзей использовать Linphone.</translation>
+        <translation>Пригласите друзей использовать %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -832,7 +832,7 @@
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Создание и управление аккаунтом Linphone.</translation>
+        <translation>Создание и управление аккаунтом %1.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -921,11 +921,11 @@
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 приглашает вас использовать Linphone !</translation>
+        <translation>%1 приглашает вас использовать %2 !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>Приглащение Linphone</translation>
+        <translation>Приглащение %1</translation>
     </message>
     <message>
         <source>forcedMessage</source>
@@ -1010,7 +1010,7 @@
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>Доступна новая версия Linphone (%1)!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1662,7 +1662,7 @@
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation>ИСПОЛЬЗОВАТЬ АККАУНТ LINPHONE</translation>
+        <translation>ИСПОЛЬЗОВАТЬ АККАУНТ %1</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>

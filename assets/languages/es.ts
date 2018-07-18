@@ -10,7 +10,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>Activa tu cuenta Linphone</translation>
+        <translation>Activa tu cuenta %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -25,7 +25,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>Activa tu cuenta Linphone</translation>
+        <translation>Activa tu cuenta %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>Especificar el fichero de configuración de linphone para ser usado</translation>
+        <translation>Especificar el fichero de configuración de %1 para ser usado</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -68,7 +68,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>mostrar el menú de ayuda para usar Linphone desde la línea de comandos</translation>
+        <translation>mostrar el menú de ayuda para usar %1 desde la línea de comandos</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -86,7 +86,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>USAR UNA CUENTA DE LINPHONE</translation>
+        <translation>USAR UNA CUENTA DE %1</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -102,11 +102,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Este asistente le ayudará a configurar y usar su cuenta linphone.</translation>
+        <translation>Este asistente le ayudará a configurar y usar su cuenta %1.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>CREAR UNA CUENTA LINPHONE</translation>
+        <translation>CREAR UNA CUENTA %1</translation>
     </message>
 </context>
 <context>

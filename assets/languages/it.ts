@@ -10,7 +10,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ATTIVA IL TUO ACCOUNT LINPHONE</translation>
+        <translation>ATTIVA IL TUO ACCOUNT %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -25,7 +25,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ATTIVA IL TUO ACCOUNT LINPHONE</translation>
+        <translation>ATTIVA IL TUO ACCOUNT %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>specifica il file di configurazione di linphone da utilizzare</translation>
+        <translation>specifica il file di configurazione di %1 da utilizzare</translation>
     </message>
     <message>
         <source>applicationDescription</source>

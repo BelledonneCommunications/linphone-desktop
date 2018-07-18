@@ -8,7 +8,7 @@ import App.Styles 1.0
 
 AssistantAbstractView {
   description: qsTr('createLinphoneSipAccountDescription')
-  title: qsTr('createLinphoneSipAccountTitle')
+  title: qsTr('createLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   // ---------------------------------------------------------------------------
   // Menu.

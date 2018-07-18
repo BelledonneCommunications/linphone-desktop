@@ -10,7 +10,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ΕΝΕΡΓΟΠΟΙΗΣΤΕ ΤΟΝ LINPHONE ΛΟΓΑΡΙΑΣΜΟ ΣΑΣ</translation>
+        <translation>ΕΝΕΡΓΟΠΟΙΗΣΤΕ ΤΟΝ %1 ΛΟΓΑΡΙΑΣΜΟ ΣΑΣ</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -25,7 +25,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ΕΝΕΡΓΟΠΟΙΗΣΤΕ ΤΟΝ LINPHONE ΛΟΓΑΡΙΑΣΜΟ ΣΑΣ</translation>
+        <translation>ΕΝΕΡΓΟΠΟΙΗΣΤΕ ΤΟΝ %1 ΛΟΓΑΡΙΑΣΜΟ ΣΑΣ</translation>
     </message>
     <message>
         <source>confirmAction</source>

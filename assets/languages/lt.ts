@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>nurodyti norimą naudoti linphone konfigūracijos failą</translation>
+        <translation>nurodyti norimą naudoti %1 konfigūracijos failą</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>rodo pagalbos meniu, skirtą naudoti Linphone su komandų eilute</translation>
+        <translation>rodo pagalbos meniu, skirtą naudoti %1 su komandų eilute</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -104,7 +104,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>NAUDOTI LINPHONE PASKYRĄ</translation>
+        <translation>NAUDOTI %1 PASKYRĄ</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -120,11 +120,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Šis pagelbiklis padės jums sukonfigūruoti ir naudoti savo linphone paskyrą.</translation>
+        <translation>Šis pagelbiklis padės jums sukonfigūruoti ir naudoti savo %1 paskyrą.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
+        <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
 </context>
 <context>
@@ -435,7 +435,7 @@ Nesukonfigūruotas serverio url.</translation>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation>Būdai valdyti Linphone programą per komandų eilutę.</translation>
+        <translation>Būdai valdyti %1 programą per komandų eilutę.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
@@ -443,7 +443,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -662,7 +662,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
+        <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -677,7 +677,7 @@ Nesukonfigūruotas serverio url.</translation>
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
+        <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -716,7 +716,7 @@ Nesukonfigūruotas serverio url.</translation>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>SUSIKURTI LINPHONE PASKYRĄ</translation>
+        <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -816,15 +816,15 @@ Nesukonfigūruotas serverio url.</translation>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Reikia pagalbos kaip naudotis Linphone?</translation>
+        <translation>Reikia pagalbos kaip naudotis %1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>KAIP NAUDOTIS LINPHONE</translation>
+        <translation>KAIP NAUDOTIS %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Pakvieskite savo draugus į Linphone.</translation>
+        <translation>Pakvieskite savo draugus į %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -832,7 +832,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Susikurkite ar tvarkykite savo Linphone paskyrą.</translation>
+        <translation>Susikurkite ar tvarkykite savo %1 paskyrą.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -921,11 +921,11 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 nori pakviesti jus į Linphone!</translation>
+        <translation>%1 nori pakviesti jus į %2!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>Linphone pakvietimas</translation>
+        <translation>%1 pakvietimas</translation>
     </message>
     <message>
         <source>forcedMessage</source>
@@ -1012,7 +1012,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>Yra prieinama nauja Linphone versija (%1)!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newFileMessage</source>

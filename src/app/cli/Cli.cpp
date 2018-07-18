@@ -22,6 +22,8 @@
 
 #include <iostream>
 
+#include "config.h"
+
 #include "app/App.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
@@ -383,12 +385,12 @@ success:
 }
 
 void Cli::showHelp () {
-  cout << multilineIndent(tr("linphoneCliDescription"), 0) <<
+  cout << multilineIndent(tr("linphoneCliDescription").arg(APPLICATION_NAME), 0) <<
     endl <<
     "Usage: " <<
     endl <<
-    multilineIndent(tr("uriCommandLineSyntax"), 0) <<
-    multilineIndent(tr("cliCommandLineSyntax"), 0) <<
+    multilineIndent(tr("uriCommandLineSyntax").arg(EXECUTABLE_NAME), 0) <<
+    multilineIndent(tr("cliCommandLineSyntax").arg(EXECUTABLE_NAME), 0) <<
     endl <<
     multilineIndent(tr("commandsName")) << endl;
 

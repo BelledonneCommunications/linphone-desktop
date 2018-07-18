@@ -89,7 +89,7 @@ ColumnLayout {
           margins: AssistantHomeStyle.buttons.spacing
         }
 
-        text: $text
+        text: $text.replace('%1', Qt.application.name.toUpperCase())
 
         onClicked: assistant.pushView($view)
       }

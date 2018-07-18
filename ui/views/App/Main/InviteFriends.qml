@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 
@@ -48,7 +49,9 @@ Rectangle {
               id: message
 
               height: InviteFriendsStyle.message.height
-              text: qsTr('defaultMessage').replace('%1', AccountSettingsModel.username)
+              text: qsTr('defaultMessage')
+                .replace('%1', AccountSettingsModel.username)
+                .replace('%2', Utils.capitalizeFirstLetter(Qt.application.name))
             }
           }
         }
@@ -80,8 +83,9 @@ Rectangle {
         onClicked: {
           Qt.openUrlExternally(
             'mailto:' + encodeURIComponent(email.text) +
-            '?subject=' + encodeURIComponent(qsTr('defaultSubject')) +
-            '&body=' + encodeURIComponent(
+            '?subject=' + encodeURIComponent(
+              qsTr('defaultSubject').replace('%1', Utils.capitalizeFirstLetter(Qt.application.name))
+            ) + '&body=' + encodeURIComponent(
               message.text + '\n\n' + qsTr('forcedMessage').replace(/%1/g, CoreManager.downloadUrl)
             )
           )

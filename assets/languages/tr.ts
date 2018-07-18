@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>LINPHONE HESABINIZI ETKİNLEŞTİRİN</translation>
+        <translation>%1 HESABINIZI ETKİNLEŞTİRİN</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>LINPHONE HESABINIZI ETKİNLEŞTİRİN</translation>
+        <translation>%1 HESABINIZI ETKİNLEŞTİRİN</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>kullanılacak linphone yapılandırma dosyasını belirt</translation>
+        <translation>kullanılacak %1 yapılandırma dosyasını belirt</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>Linphone&apos;u komut satırı arayüzüyle kullanmak için yardım menüsünü gösterir</translation>
+        <translation>%1&apos;u komut satırı arayüzüyle kullanmak için yardım menüsünü gösterir</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -104,7 +104,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>LINPHONE HESABI KULLAN</translation>
+        <translation>%1 HESABI KULLAN</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -120,11 +120,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Bu yardımcı, linphone hesabınızı yapıldırmanız ve kullanmanız için size yardım edecek.</translation>
+        <translation>Bu yardımcı, %1 hesabınızı yapıldırmanız ve kullanmanız için size yardım edecek.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>LINPHONE HESABI OLUŞTUR</translation>
+        <translation>%1 HESABI OLUŞTUR</translation>
     </message>
 </context>
 <context>
@@ -435,15 +435,15 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation>Linphone uygulamasını komut satırlarıyla denetleme yolu.</translation>
+        <translation>%1 uygulamasını komut satırlarıyla denetleme yolu.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>linphone sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation>%1 sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -662,7 +662,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>LINPHONE HESABI OLUŞTUR</translation>
+        <translation>%1 HESABI OLUŞTUR</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -677,7 +677,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>LINPHONE HESABI OLUŞTUR</translation>
+        <translation>%1 HESABI OLUŞTUR</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -716,7 +716,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>LINPHONE HESABI OLUŞTUR</translation>
+        <translation>%1 HESABI OLUŞTUR</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -816,15 +816,15 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Linphone&apos;un nasıl kullanılacağıyla ilgili yardıma mı gereksiniyorsunuz?</translation>
+        <translation>%1&apos;un nasıl kullanılacağıyla ilgili yardıma mı gereksiniyorsunuz?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>LINPHONE NASIL KULLANILIR</translation>
+        <translation>%1 NASIL KULLANILIR</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Linphone&apos;daki arkadaşlarınızı davet edin.</translation>
+        <translation>%1&apos;daki arkadaşlarınızı davet edin.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -832,7 +832,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Linphone hesabı oluştur veya yönet.</translation>
+        <translation>%1 hesabı oluştur veya yönet.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -921,11 +921,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 sizi Linphone&apos;da davet ediyor !</translation>
+        <translation>%1 sizi %2&apos;da davet ediyor !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>Linphone daveti</translation>
+        <translation>%1 daveti</translation>
     </message>
     <message>
         <source>forcedMessage</source>
@@ -1012,7 +1012,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>Linphone&apos;un yeni sürümü (%1) var!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1664,7 +1664,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation>LINPHONE HESABI KULLAN</translation>
+        <translation>%1 HESABI KULLAN</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>

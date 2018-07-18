@@ -329,12 +329,12 @@ void App::createParser () {
 
   mParser = new QCommandLineParser();
   mParser->setApplicationDescription(tr("applicationDescription"));
-  mParser->addPositionalArgument("command", tr("commandLineDescription"), "[command]");
+  mParser->addPositionalArgument("command", tr("commandLineDescription").replace("%1", APPLICATION_NAME), "[command]");
   mParser->addOptions({
     { { "h", "help" }, tr("commandLineOptionHelp") },
-    { "cli-help", tr("commandLineOptionCliHelp") },
+    { "cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME) },
     { { "v", "version" }, tr("commandLineOptionVersion") },
-    { "config", tr("commandLineOptionConfig"), tr("commandLineOptionConfigArg") },
+    { "config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg") },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS

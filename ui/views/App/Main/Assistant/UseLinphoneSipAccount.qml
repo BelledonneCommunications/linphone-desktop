@@ -16,9 +16,7 @@ AssistantAbstractView {
   }
   mainActionLabel: qsTr('confirmAction')
 
-  title: qsTr('useLinphoneSipAccountTitle')
-
-
+  title: qsTr('useLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   // ---------------------------------------------------------------------------
 

@@ -16,7 +16,7 @@ AssistantAbstractView {
     assistantModel.countryCode = model.data(model.index(index, 0)).countryCode
   }
 
-  title: qsTr('createLinphoneSipAccountTitle')
+  title: qsTr('createLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   mainAction: requestBlock.execute
   mainActionEnabled: phoneNumber.text.length

@@ -14,7 +14,7 @@ AssistantAbstractView {
   property alias passwordError: password.error
   property alias usernameError: username.error
 
-  title: qsTr('createLinphoneSipAccountTitle')
+  title: qsTr('createLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   mainAction: requestBlock.execute
   mainActionEnabled: email.text.length

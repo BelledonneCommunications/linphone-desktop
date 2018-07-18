@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>LINPHONEアカウントを有効にする</translation>
+        <translation>%1アカウントを有効にする</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>LINPHONEアカウントを有効にする</translation>
+        <translation>%1アカウントを有効にする</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -104,7 +104,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>LINPHONEアカウントを使用する</translation>
+        <translation>%1アカウントを使用する</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -120,11 +120,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>このアシスタントはあなたのLINPHONEアカウントの設定を助けます。</translation>
+        <translation>このアシスタントはあなたの%1アカウントの設定を助けます。</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>LINPHONEアカウントを作成する</translation>
+        <translation>%1アカウントを作成する</translation>
     </message>
 </context>
 <context>
@@ -662,7 +662,7 @@
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>LINPHONEアカウントを作成する</translation>
+        <translation>%1アカウントを作成する</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -677,7 +677,7 @@
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>LINPHONEアカウントを作成</translation>
+        <translation>%1アカウントを作成</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -716,7 +716,7 @@
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>LINPHONEアカウントを作成する</translation>
+        <translation>%1アカウントを作成する</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -816,7 +816,7 @@
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Linphoneの使い方にヘルプが必要ですか？</translation>
+        <translation>%1の使い方にヘルプが必要ですか？</translation>
     </message>
     <message>
         <source>howToTitle</source>
@@ -824,7 +824,7 @@
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>あなたの友達にLINPHONEを紹介</translation>
+        <translation>あなたの友達に%1を紹介</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -832,7 +832,7 @@
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>LINPHONEアカウントを作成/管理する</translation>
+        <translation>%1アカウントを作成/管理する</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -921,11 +921,11 @@
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 があなたをLinphoneに招待しています。</translation>
+        <translation>%1 があなたを%2に招待しています。</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>LINPHONEへの招待</translation>
+        <translation>%1への招待</translation>
     </message>
     <message>
         <source>forcedMessage</source>
@@ -1007,7 +1007,7 @@
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>新しいバージョン(%1)のLINPHONEが利用出来ます。</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1659,7 +1659,7 @@
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation>LINPHONEアカウントを使用する</translation>
+        <translation>%1アカウントを使用する</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>

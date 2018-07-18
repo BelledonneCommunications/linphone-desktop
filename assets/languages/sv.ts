@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>AKTIVERA DITT LINPHONE-KONTO</translation>
+        <translation>AKTIVERA DITT %1-KONTO</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>AKTIVERA DITT LINPHONE-KONTO</translation>
+        <translation>AKTIVERA DITT %1-KONTO</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>specificera linphone konfigurationsfilen som skall användas</translation>
+        <translation>specificera %1 konfigurationsfilen som skall användas</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -104,7 +104,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>ANVÄND ETT LINPHONE-KONTO</translation>
+        <translation>ANVÄND ETT %1-KONTO</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -120,11 +120,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Denna assistent hjälper dig att konfigurera och använda ditt linphone-konto.</translation>
+        <translation>Denna assistent hjälper dig att konfigurera och använda ditt %1-konto.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>SKAPA ETT LINPHONE-KONTO</translation>
+        <translation>SKAPA ETT %1-KONTO</translation>
     </message>
 </context>
 <context>
@@ -434,15 +434,15 @@
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation>Sätt att styra Linphone-programmet via kommandoraden.</translation>
+        <translation>Sätt att styra %1-programmet via kommandoraden.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>linphone-sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation>%1-sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -661,7 +661,7 @@
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>SKAPA ETT LINPHONE-KONTO</translation>
+        <translation>SKAPA ETT %1-KONTO</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -676,7 +676,7 @@
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>SKAPA ETT LINPHONE-KONTO</translation>
+        <translation>SKAPA ETT %1-KONTO</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -715,7 +715,7 @@
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>SKAPA ETT LINPHONE-KONTO</translation>
+        <translation>SKAPA ETT %1-KONTO</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -815,15 +815,15 @@
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Behöver du hjälp med hur du använder Linphone?</translation>
+        <translation>Behöver du hjälp med hur du använder %1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>HUR DU ANVÄNDER LINPHONE</translation>
+        <translation>HUR DU ANVÄNDER %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Bjud in dina vänner på Linphone.</translation>
+        <translation>Bjud in dina vänner på %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -831,7 +831,7 @@
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Skapa eller hantera ditt Linphone-konto.</translation>
+        <translation>Skapa eller hantera ditt %1-konto.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -920,15 +920,15 @@
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 vill bjuda in dig på linphone!</translation>
+        <translation>%1 vill bjuda in dig på %2!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>Linphone inbjudan</translation>
+        <translation>%1 inbjudan</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Hämta programmet på din dator och börja ringa och chatta med Linphone-användare gratis.
+        <translation>Hämta programmet på din dator och börja ringa och chatta med %1-användare gratis.
 
 Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 </translation>
@@ -1009,7 +1009,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>En ny version (%1) av Linphone är tillgänglig!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1661,7 +1661,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation>ANVÄND ETT LINPHONE-KONTO</translation>
+        <translation>ANVÄND ETT %1-KONTO</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>

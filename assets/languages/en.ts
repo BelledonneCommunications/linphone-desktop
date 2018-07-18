@@ -12,7 +12,7 @@
     <name>ActivateLinphoneSipAccountWithEmail</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ACTIVATE YOUR LINPHONE ACCOUNT</translation>
+        <translation>ACTIVATE YOUR %1 ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +27,7 @@
     <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>activateLinphoneSipAccount</source>
-        <translation>ACTIVATE YOUR LINPHONE ACCOUNT</translation>
+        <translation>ACTIVATE YOUR %1 ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>specify the linphone configuration file to be used</translation>
+        <translation>specify the %1 configuration file to be used</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>displays the help menu to use Linphone with the CLI</translation>
+        <translation>displays the help menu to use %1 with the CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -104,7 +104,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useLinphoneSipAccount</source>
-        <translation>USE A LINPHONE ACCOUNT</translation>
+        <translation>USE A %1 ACCOUNT</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -120,11 +120,11 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>This assistant will help you configure and use your linphone account.</translation>
+        <translation>This assistant will help you configure and use your sip account.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccount</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
+        <translation>CREATE A %1 ACCOUNT</translation>
     </message>
 </context>
 <context>
@@ -435,15 +435,15 @@ Server url not configured.</translation>
     <name>Cli</name>
     <message>
         <source>linphoneCliDescription</source>
-        <translation>Way to control the Linphone application through command lines.</translation>
+        <translation>Way to control the %1 application through command lines.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>linphone sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation>%1 sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>linphone &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -662,7 +662,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
+        <translation>CREATE A %1 ACCOUNT</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -677,7 +677,7 @@ Server url not configured.</translation>
     <name>CreateLinphoneSipAccountWithEmail</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
+        <translation>CREATE A %1 ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -716,7 +716,7 @@ Server url not configured.</translation>
     <name>CreateLinphoneSipAccountWithPhoneNumber</name>
     <message>
         <source>createLinphoneSipAccountTitle</source>
-        <translation>CREATE A LINPHONE ACCOUNT</translation>
+        <translation>CREATE A %1 ACCOUNT</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -816,15 +816,15 @@ Server url not configured.</translation>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Need help on how to use Linphone?</translation>
+        <translation>Need help on how to use %1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>HOW TO USE LINPHONE</translation>
+        <translation>HOW TO USE %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Invite your friends on Linphone.</translation>
+        <translation>Invite your friends on %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -832,7 +832,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Create or manage your Linphone account.</translation>
+        <translation>Create or manage your %1 account.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -921,11 +921,11 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 wants to invite you on Linphone !</translation>
+        <translation>%1 wants to invite you on %2!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>Linphone invitation</translation>
+        <translation>%1 invitation</translation>
     </message>
     <message>
         <source>forcedMessage</source>
@@ -1012,7 +1012,7 @@ your friend&apos;s SIP address or username.</translation>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>A new version (%1) of Linphone is available!</translation>
+        <translation>A new version (%1) is available!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1664,7 +1664,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>useLinphoneSipAccountTitle</source>
-        <translation>USE A LINPHONE ACCOUNT</translation>
+        <translation>USE A %1 ACCOUNT</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
