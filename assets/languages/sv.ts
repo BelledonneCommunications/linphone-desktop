@@ -77,20 +77,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>Avsluta</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Inställningar</translation>
     </message>
     <message>
         <source>about</source>
         <translation>Om</translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Avsluta</translation>
     </message>
 </context>
 <context>
@@ -1211,6 +1211,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -77,20 +77,20 @@
         <translation>sende einen Befehl zur Anwendung für eine Kommandozeile</translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>Schließen</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
         <source>about</source>
         <translation>Über</translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1213,10 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatNotificationSoundLabel</source>
         <translation>Benachrichtigungston</translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>

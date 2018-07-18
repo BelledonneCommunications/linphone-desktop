@@ -77,20 +77,20 @@
         <translation>siųsti programai įsakymą į komandų eilutę</translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>Išeiti</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Nuostatos</translation>
     </message>
     <message>
         <source>about</source>
         <translation>Apie</translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Išeiti</translation>
     </message>
 </context>
 <context>
@@ -1215,6 +1215,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <message>
         <source>chatNotificationSoundLabel</source>
         <translation>Pranešimų garsas</translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>

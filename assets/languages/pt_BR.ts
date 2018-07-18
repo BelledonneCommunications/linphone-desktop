@@ -77,20 +77,20 @@
         <translation>enviar um pedido para o aplicativo em direção a uma linha de comando</translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>Sair</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Preferências</translation>
     </message>
     <message>
         <source>about</source>
         <translation>Sobre</translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Sair</translation>
     </message>
 </context>
 <context>
@@ -1215,6 +1215,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <message>
         <source>chatNotificationSoundLabel</source>
         <translation>Som de notificação</translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>

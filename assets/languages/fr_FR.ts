@@ -77,20 +77,20 @@
         <translation>envoie un ordre à l&apos;application Linphone, voir --cli-help pour plus de détails</translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation>Restorer</translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>Quitter</translation>
-    </message>
-    <message>
         <source>settings</source>
-        <translation>Préférences</translation>
+        <translation type="unfinished">Préférences</translation>
     </message>
     <message>
         <source>about</source>
-        <translation>À propos</translation>
+        <translation type="unfinished">À propos</translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished">Quitter</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1213,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatNotificationSoundLabel</source>
         <translation>Son des notifications</translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation>Autoriser la désactivation du microphone</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>

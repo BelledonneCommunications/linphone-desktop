@@ -77,20 +77,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>終了</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>設定</translation>
     </message>
     <message>
         <source>about</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>終了</translation>
     </message>
 </context>
 <context>
@@ -1209,6 +1209,10 @@
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

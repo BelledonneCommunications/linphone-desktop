@@ -77,20 +77,20 @@
         <translation>отправка команды приложения через командную строку</translation>
     </message>
     <message>
-        <source>restore</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>quit</source>
-        <translation>Выйти</translation>
-    </message>
-    <message>
         <source>settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
         <source>about</source>
         <translation>О программе</translation>
+    </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Выйти</translation>
     </message>
 </context>
 <context>
@@ -1213,6 +1213,10 @@
     <message>
         <source>chatNotificationSoundLabel</source>
         <translation>Звук уведомлений</translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>

@@ -1228,6 +1228,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>contactsEnabledLabel</source>
         <translation>Enable contacts</translation>
     </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation>Enable mute microphone</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
