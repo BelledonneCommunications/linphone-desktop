@@ -282,11 +282,11 @@ void SettingsModel::setAutoAnswerVideoStatus (bool status) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getOutgoingCallsEnabled () const {
-  return !!mConfig->getInt(UiSection, "outgoing_call_enabled", 1);
+  return !!mConfig->getInt(UiSection, "outgoing_calls_enabled", 1);
 }
 
 void SettingsModel::setOutgoingCallsEnabled (bool status) {
-  mConfig->setInt(UiSection, "outgoing_call_enabled", status);
+  mConfig->setInt(UiSection, "outgoing_calls_enabled", status);
   emit outgoingCallsEnabledChanged(status);
 }
 
