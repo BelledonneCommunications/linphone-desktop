@@ -73,11 +73,17 @@ static inline bool installLocale (App &app, QTranslator &translator, const QLoca
 }
 
 static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
-  string configPath = Paths::getConfigFilePath(parser.value("config"), false);
-  if (Paths::filePathExists(configPath))
-    return linphone::Config::newWithFactory(configPath, "");
+  shared_ptr<linphone::Config> config;
 
-  return nullptr;
+  string configPath(Paths::getConfigFilePath(parser.value("config"), false));
+  if (!Paths::filePathExists(configPath))
+    configPath.clear();
+
+  string factoryPath(Paths::getFactoryConfigFilePath());
+  if (!Paths::filePathExists(factoryPath))
+    factoryPath.clear();
+
+  return linphone::Config::newWithFactory(configPath, factoryPath);
 }
 
 // -----------------------------------------------------------------------------
@@ -180,7 +186,12 @@ void App::initContentApp () {
     });
 
     mustBeIconified = mParser->isSet("iconified");
+
+    mColors = new Colors(this);
   }
+
+  // Change colors if necessary.
+  mColors->useConfig(config);
 
   // Init core.
   CoreManager::init(this, mParser->value("config"));
@@ -218,9 +229,6 @@ void App::initContentApp () {
   mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
   mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
   mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
-
-  mColors = new Colors(this);
-  mColors->useConfig(config);
 
   registerTypes();
   registerSharedTypes();
@@ -595,12 +603,10 @@ void App::openAppAfterInit (bool mustBeIconified) {
   #endif // ifndef __APPLE__
 
   // Display Assistant if it's the first time app launch.
-  {
-    shared_ptr<linphone::Config> config = CoreManager::getInstance()->getCore()->getConfig();
-    if (config->getInt(SettingsModel::UiSection, "force_assistant_at_startup", 1)) {
-      QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
-      config->setInt(SettingsModel::UiSection, "force_assistant_at_startup", 0);
-    }
+  shared_ptr<linphone::Config> config(CoreManager::getInstance()->getCore()->getConfig());
+  if (config->getInt(SettingsModel::UiSection, "force_assistant_at_startup", 1)) {
+    QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
+    config->setInt(SettingsModel::UiSection, "force_assistant_at_startup", 0);
   }
 
   #ifdef ENABLE_UPDATE_CHECK
