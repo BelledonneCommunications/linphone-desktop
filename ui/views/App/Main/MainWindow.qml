@@ -168,6 +168,7 @@ ApplicationWindow {
           ActionButton {
             icon: 'new_conference'
             iconSize: MainWindowStyle.newConferenceSize
+            visible: SettingsModel.conferenceEnabled
 
             onClicked: Logic.openConferenceManager()
           }
