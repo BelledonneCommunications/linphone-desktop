@@ -1601,7 +1601,7 @@
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation>Linphone - Настройки</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>

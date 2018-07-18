@@ -12,7 +12,6 @@ QtObject {
   property int minimumHeight: 610
   property int minimumWidth: 950
   property int width: 950
-  property string title: 'Linphone'
 
   property QtObject accountStatus: QtObject {
     property int width: 200

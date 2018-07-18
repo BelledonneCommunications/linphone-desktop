@@ -1603,7 +1603,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation>Linphone - Ayarlar</translation>
+        <translation>Ayarlar</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>

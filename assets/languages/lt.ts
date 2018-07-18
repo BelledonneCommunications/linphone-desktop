@@ -1603,7 +1603,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation>Linphone - Nustatymai</translation>
+        <translation>Nustatymai</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>

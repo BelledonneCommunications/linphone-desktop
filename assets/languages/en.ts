@@ -1603,7 +1603,7 @@ your friend&apos;s SIP address or username.</translation>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation>Linphone - Settings</translation>
+        <translation>Settings</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>

@@ -1601,7 +1601,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation>Linphone - Einstellungen</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
