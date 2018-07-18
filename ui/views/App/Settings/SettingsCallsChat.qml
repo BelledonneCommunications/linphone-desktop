@@ -113,6 +113,16 @@ TabContainer {
             onClicked: SettingsModel.callRecorderEnabled = !checked
           }
         }
+
+        FormGroup {
+          label: qsTr('muteMicrophoneEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.muteMicrophoneEnabled
+
+            onClicked: SettingsModel.muteMicrophoneEnabled = !checked
+          }
+        }
       }
     }
 

@@ -281,6 +281,7 @@ Window {
 
           Row {
             spacing: CallStyle.actionArea.vu.spacing
+            visible: SettingsModel.muteMicrophoneEnabled
 
             VuMeter {
               Timer {

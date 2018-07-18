@@ -292,6 +292,17 @@ void SettingsModel::setCallRecorderEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getMuteMicrophoneEnabled () const {
+  return !!mConfig->getInt(UiSection, "mute_microphone_enabled", 1);
+}
+
+void SettingsModel::setMuteMicrophoneEnabled (bool status) {
+  mConfig->setInt(UiSection, "mute_microphone_enabled", status);
+  emit muteMicrophoneEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getChatEnabled () const {
   return !!mConfig->getInt(UiSection, "chat_enabled", 1);
 }
