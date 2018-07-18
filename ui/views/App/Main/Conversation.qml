@@ -75,14 +75,14 @@ ColumnLayout  {
 
           ActionButton {
             icon: 'video_call'
-            visible: SettingsModel.videoSupported && SettingsModel.outgoingCallEnabled
+            visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled
 
             onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
           }
 
           ActionButton {
             icon: 'call'
-            visible: SettingsModel.outgoingCallEnabled
+            visible: SettingsModel.outgoingCallsEnabled
 
             onClicked: CallsListModel.launchAudioCall(conversation.sipAddress)
           }

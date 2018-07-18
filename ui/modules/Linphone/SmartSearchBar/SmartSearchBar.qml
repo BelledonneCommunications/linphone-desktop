@@ -43,14 +43,14 @@ SearchBox {
         searchBox.closeMenu()
         searchBox.launchVideoCall(entry.sipAddress)
       },
-      visible: SettingsModel.videoSupported && SettingsModel.outgoingCallEnabled
+      visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled
     }, {
       icon: 'call',
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchCall(entry.sipAddress)
       },
-      visible: SettingsModel.outgoingCallEnabled
+      visible: SettingsModel.outgoingCallsEnabled
     }, {
       icon: SettingsModel.chatEnabled ? 'chat' : 'history',
       handler: function (entry) {

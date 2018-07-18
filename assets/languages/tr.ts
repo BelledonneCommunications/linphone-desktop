@@ -1233,7 +1233,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outgoingCallEnabledLabel</source>
+        <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

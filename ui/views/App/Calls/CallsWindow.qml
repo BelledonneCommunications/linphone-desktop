@@ -88,7 +88,7 @@ Window {
           Layout.fillWidth: true
           Layout.preferredHeight: CallsWindowStyle.callsList.header.height
 
-          visible: SettingsModel.outgoingCallEnabled || SettingsModel.conferenceEnabled
+          visible: SettingsModel.outgoingCallsEnabled || SettingsModel.conferenceEnabled
 
           LinearGradient {
             anchors.fill: parent
@@ -113,7 +113,7 @@ Window {
 
             ActionButton {
               icon: 'new_call'
-              visible: SettingsModel.outgoingCallEnabled
+              visible: SettingsModel.outgoingCallsEnabled
 
               onClicked: Logic.openCallSipAddress()
             }

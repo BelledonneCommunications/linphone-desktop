@@ -69,7 +69,7 @@ class SettingsModel : public QObject {
   Q_PROPERTY(bool autoAnswerVideoStatus READ getAutoAnswerVideoStatus WRITE setAutoAnswerVideoStatus NOTIFY autoAnswerVideoStatusChanged);
   Q_PROPERTY(int autoAnswerDelay READ getAutoAnswerDelay WRITE setAutoAnswerDelay NOTIFY autoAnswerDelayChanged);
 
-  Q_PROPERTY(bool outgoingCallEnabled READ getOutgoingCallEnabled WRITE setOutgoingCallEnabled NOTIFY outgoingCallEnabledChanged);
+  Q_PROPERTY(bool outgoingCallsEnabled READ getOutgoingCallsEnabled WRITE setOutgoingCallsEnabled NOTIFY outgoingCallsEnabledChanged);
 
   Q_PROPERTY(bool callRecorderEnabled READ getCallRecorderEnabled WRITE setCallRecorderEnabled NOTIFY callRecorderEnabledChanged);
 
@@ -222,8 +222,8 @@ public:
   int getAutoAnswerDelay () const;
   void setAutoAnswerDelay (int delay);
 
-  bool getOutgoingCallEnabled () const;
-  void setOutgoingCallEnabled (bool status);
+  bool getOutgoingCallsEnabled () const;
+  void setOutgoingCallsEnabled (bool status);
 
   bool getCallRecorderEnabled () const;
   void setCallRecorderEnabled (bool status);
@@ -396,7 +396,7 @@ signals:
   void autoAnswerVideoStatusChanged (bool status);
   void autoAnswerDelayChanged (int delay);
 
-  void outgoingCallEnabledChanged (bool status);
+  void outgoingCallsEnabledChanged (bool status);
 
   void callRecorderEnabledChanged (bool status);
 

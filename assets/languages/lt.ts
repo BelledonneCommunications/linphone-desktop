@@ -1233,7 +1233,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outgoingCallEnabledLabel</source>
+        <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

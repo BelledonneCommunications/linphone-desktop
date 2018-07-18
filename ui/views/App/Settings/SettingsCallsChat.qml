@@ -105,12 +105,12 @@ TabContainer {
         visible: SettingsModel.developerSettingsEnabled
 
         FormGroup {
-          label: qsTr('outgoingCallEnabledLabel')
+          label: qsTr('outgoingCallsEnabledLabel')
 
           Switch {
-            checked: SettingsModel.outgoingCallEnabled
+            checked: SettingsModel.outgoingCallsEnabled
 
-            onClicked: SettingsModel.outgoingCallEnabled = !checked
+            onClicked: SettingsModel.outgoingCallsEnabled = !checked
           }
         }
       }

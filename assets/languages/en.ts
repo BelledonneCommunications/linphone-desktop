@@ -1233,8 +1233,8 @@ your friend&apos;s SIP address or username.</translation>
         <translation>Enable mute microphone</translation>
     </message>
     <message>
-        <source>outgoingCallEnabledLabel</source>
-        <translation>Enable outgoing call</translation>
+        <source>outgoingCallsEnabledLabel</source>
+        <translation>Enable outgoing calls</translation>
     </message>
 </context>
 <context>

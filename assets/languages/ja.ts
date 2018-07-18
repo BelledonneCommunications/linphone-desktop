@@ -1228,7 +1228,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outgoingCallEnabledLabel</source>
+        <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

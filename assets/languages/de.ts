@@ -1231,7 +1231,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>outgoingCallEnabledLabel</source>
+        <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
