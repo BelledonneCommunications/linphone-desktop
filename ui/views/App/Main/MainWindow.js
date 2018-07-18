@@ -96,12 +96,14 @@ function updateSelectedEntry (view, props) {
   } else if (view === 'Contacts') {
     item.contactsEntry.select()
     timeline.resetSelectedEntry()
-  } else if (view === 'Conversation') {
+  } else {
     menu.resetSelectedEntry()
-    timeline.setSelectedEntry(props.sipAddress)
-  } else if (view === 'ContactEdit') {
-    menu.resetSelectedEntry()
-    timeline.resetSelectedEntry()
+
+    if (view === 'Conversation') {
+      timeline.setSelectedEntry(props.sipAddress)
+    } else if (view === 'ContactEdit') {
+      timeline.resetSelectedEntry()
+    }
   }
 }
 
