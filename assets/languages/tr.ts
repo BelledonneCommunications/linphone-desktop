@@ -1232,6 +1232,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>contactsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>outgoingCallEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

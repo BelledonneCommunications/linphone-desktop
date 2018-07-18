@@ -1232,6 +1232,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>muteMicrophoneEnabledLabel</source>
         <translation>Enable mute microphone</translation>
     </message>
+    <message>
+        <source>outgoingCallEnabledLabel</source>
+        <translation>Enable outgoing call</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

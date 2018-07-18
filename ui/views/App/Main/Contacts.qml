@@ -132,13 +132,15 @@ ColumnLayout {
 
                 ActionButton {
                   icon: 'video_call'
-                  visible: SettingsModel.videoSupported
+                  visible: SettingsModel.videoSupported && SettingsModel.outgoingCallEnabled
 
                   onClicked: actions.itemAt(0).open()
                 }
 
                 ActionButton {
                   icon: 'call'
+                  visible: SettingsModel.outgoingCallEnabled
+
                   onClicked: actions.itemAt(1).open()
                 }
 

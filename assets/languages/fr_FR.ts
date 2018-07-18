@@ -1230,6 +1230,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>contactsEnabledLabel</source>
         <translation>Activer les contacts</translation>
     </message>
+    <message>
+        <source>outgoingCallEnabledLabel</source>
+        <translation>Activer les appels sortants</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

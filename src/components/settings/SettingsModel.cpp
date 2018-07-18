@@ -281,6 +281,17 @@ void SettingsModel::setAutoAnswerVideoStatus (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getOutgoingCallEnabled () const {
+  return !!mConfig->getInt(UiSection, "outgoing_call_enabled", 1);
+}
+
+void SettingsModel::setOutgoingCallEnabled (bool status) {
+  mConfig->setInt(UiSection, "outgoing_call_enabled", status);
+  emit outgoingCallEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getCallRecorderEnabled () const {
   return !!mConfig->getInt(UiSection, "call_recorder_enabled", 1);
 }
