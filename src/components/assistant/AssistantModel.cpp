@@ -249,7 +249,12 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
     )
   );
 
-  return coreManager->getAccountSettingsModel()->addOrUpdateProxyConfig(proxyConfig);
+  AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
+  if (accountSettingsModel->addOrUpdateProxyConfig(proxyConfig)) {
+    accountSettingsModel->setDefaultProxyConfig(proxyConfig);
+    return true;
+  }
+  return false;
 }
 
 // -----------------------------------------------------------------------------
