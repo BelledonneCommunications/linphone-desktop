@@ -9,6 +9,10 @@ import App.Styles 1.0
 // =============================================================================
 
 AssistantAbstractView {
+  id: view
+
+  readonly property bool usePhoneNumber: SettingsModel.assistantSupportsPhoneNumbers && !checkBox.checked
+
   mainAction: requestBlock.execute
   mainActionEnabled: {
     var item = loader.item
@@ -26,11 +30,7 @@ AssistantAbstractView {
     Loader {
       id: loader
 
-      source: 'UseAppSipAccountWith' + (
-        !SettingsModel.assistantSupportsPhoneNumbers || checkBox.checked
-          ? 'Username'
-          : 'PhoneNumber'
-      ) + '.qml'
+      source: 'UseAppSipAccountWith' + (view.usePhoneNumber ? 'PhoneNumber' : 'Username') + '.qml'
       width: parent.width
     }
 
@@ -68,21 +68,21 @@ AssistantAbstractView {
 
     function setCountryCode (index) {
       var model = telephoneNumbersModel
-      assistantModel.countryCode = model.data(model.index(index, 0)).countryCode
+      assistantModel.countryCode = index !== -1 ? model.data(model.index(index, 0)).countryCode : ''
     }
 
     configFilename: 'use-app-sip-account.rc'
 
-    countryCode: setCountryCode(telephoneNumbersModel.defaultIndex)
+    countryCode: setCountryCode(view.usePhoneNumber ? telephoneNumbersModel.defaultIndex : -1)
 
     onPasswordChanged: {
-      if (checkBox.checked) {
+      if (!view.usePhoneNumber) {
         loader.item.passwordError = error
       }
     }
 
     onPhoneNumberChanged: {
-      if (!checkBox.checked) {
+      if (view.usePhoneNumber) {
         loader.item.phoneNumberError = error
       }
     }
@@ -102,7 +102,7 @@ AssistantAbstractView {
     }
 
     onRecoverStatusChanged: {
-      if (checkBox.checked) {
+      if (!view.usePhoneNumber) {
         requestBlock.stop('')
         return
       }
