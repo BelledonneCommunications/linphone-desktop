@@ -1398,6 +1398,30 @@
         <source>defaultDisplayNameLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>assistantTitle</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>createAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>useAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>useOtherSipAccountEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>assistantSupportsPhoneNumbersLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
