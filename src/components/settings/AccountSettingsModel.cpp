@@ -221,7 +221,7 @@ shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
   core->getConfig()->loadFromXmlFile(
-    Paths::getAssistantConfigDirPath() + "create-linphone-sip-account.rc"
+    Paths::getAssistantConfigDirPath() + "create-app-sip-account.rc"
   );
 
   return core->createProxyConfig();

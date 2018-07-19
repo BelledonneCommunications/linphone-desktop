@@ -455,10 +455,10 @@ set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/${EXECUTABLE_NAME}/assis
 install(FILES "${ASSETS_ASSISTANT_DIR}/use-other-sip-account.rc"
   DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
 )
-install(FILES "${ASSETS_ASSISTANT_DIR}/create-linphone-sip-account.rc"
+install(FILES "${ASSETS_ASSISTANT_DIR}/create-app-sip-account.rc"
   DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
 )
-install(FILES "${ASSETS_ASSISTANT_DIR}/use-linphone-sip-account.rc"
+install(FILES "${ASSETS_ASSISTANT_DIR}/use-app-sip-account.rc"
   DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
 )
 

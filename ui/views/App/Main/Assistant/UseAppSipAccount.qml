@@ -68,7 +68,7 @@ AssistantAbstractView {
       assistantModel.countryCode = model.data(model.index(index, 0)).countryCode
     }
 
-    configFilename: 'use-linphone-sip-account.rc'
+    configFilename: 'use-app-sip-account.rc'
 
     countryCode: setCountryCode(telephoneNumbersModel.defaultIndex)
 

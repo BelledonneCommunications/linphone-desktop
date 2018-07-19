@@ -116,7 +116,7 @@ AssistantAbstractView {
         : ''
     }
 
-    configFilename: 'create-linphone-sip-account.rc'
+    configFilename: 'create-app-sip-account.rc'
 
     onEmailChanged: emailError = error
     onPasswordChanged: passwordError = error

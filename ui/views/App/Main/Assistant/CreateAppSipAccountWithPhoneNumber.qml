@@ -108,7 +108,7 @@ AssistantAbstractView {
   AssistantModel {
     id: assistantModel
 
-    configFilename: 'create-linphone-sip-account.rc'
+    configFilename: 'create-app-sip-account.rc'
 
     Component.onCompleted: view.setCountryCode(country.model.defaultIndex)
 

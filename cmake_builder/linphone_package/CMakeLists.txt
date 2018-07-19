@@ -212,8 +212,8 @@ elseif (APPLE)
   file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/linphonerc-factory" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}")
 
   file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-other-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/create-linphone-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-linphone-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
+  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/create-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
+  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
 
   file(GLOB SHARED_LIBRARIES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/lib*.dylib")
   foreach (_library ${SHARED_LIBRARIES})
