@@ -148,8 +148,8 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   mAccountCreator = core->createAccountCreator(
-      core->getConfig()->getString("assistant", "xmlrpc_url", DefaultXmlrpcUri)
-    );
+    core->getConfig()->getString("assistant", "xmlrpc_url", DefaultXmlrpcUri)
+  );
   mAccountCreator->setListener(mHandlers);
 }
 
