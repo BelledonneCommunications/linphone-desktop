@@ -213,6 +213,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation>Falha na autenticação. Por favor, verifique o seu número de telefone.</translation>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation>Não é possível adicionar esta conta.</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>

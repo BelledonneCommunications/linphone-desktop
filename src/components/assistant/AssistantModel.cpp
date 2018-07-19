@@ -167,10 +167,23 @@ void AssistantModel::create () {
 }
 
 void AssistantModel::login () {
-  if (!mCountryCode.isEmpty())
+  if (!mCountryCode.isEmpty()) {
     mAccountCreator->recoverAccount();
-  else
+    return;
+  }
+
+  shared_ptr<linphone::Config> config(CoreManager::getInstance()->getCore()->getConfig());
+  if (!config->getString("assistant", "xmlrpc_url", "").empty()) {
     mAccountCreator->isAccountExist();
+    return;
+  }
+
+  // No verification if no xmlrpc url. Use addOtherSipAccount directly.
+  QVariantMap map;
+  map["sipDomain"] = Utils::coreStringToAppString(config->getString("assistant", "domain", ""));
+  map["username"] = getUsername();
+  map["password"] = getPassword();
+  emit loginStatusChanged(addOtherSipAccount(map) ? QString("") : tr("unableToAddAccount"));
 }
 
 void AssistantModel::reset () {
@@ -202,7 +215,10 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
     shared_ptr<linphone::Address> address = factory->createAddress(
       Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain))
     );
-    address->setTransport(LinphoneUtils::stringToTransportType(map["transport"].toString()));
+
+    const QString &transport(map["transport"].toString());
+    if (!transport.isEmpty())
+      address->setTransport(LinphoneUtils::stringToTransportType(transport));
 
     if (proxyConfig->setServerAddr(address->asString())) {
       qWarning() << QStringLiteral("Unable to add server address: `%1`.")

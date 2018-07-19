@@ -213,6 +213,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation>Не удалось войти. Пожалуйста проверьте правильность ввода номера телефона.</translation>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation>Не удалось добавить этот аккаунт.</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>

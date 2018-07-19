@@ -213,6 +213,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation>Prisijungimas nepavyko. Patikrinkite savo telefono numerį.</translation>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation>Nepavyko pridėti šios paskyros.</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>

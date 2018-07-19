@@ -213,6 +213,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation>ログインに失敗しました。電話番号を確認して下さい。</translation>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation>このアカウントを追加出来ませんでした。</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>

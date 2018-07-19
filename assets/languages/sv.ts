@@ -213,6 +213,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation>Inloggningen misslyckades. Kolla ditt telefonnummer.</translation>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation>Det gick inte att lägga till det här kontot.</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>

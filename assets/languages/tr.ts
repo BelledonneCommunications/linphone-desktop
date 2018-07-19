@@ -213,6 +213,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation>Giriş başarısız. Lütfen telefon numaranızı denetleyin.</translation>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation>Bu hesap eklenemiyor.</translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
