@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -90,6 +91,7 @@ ColumnLayout {
         }
 
         text: $text.replace('%1', Qt.application.name.toUpperCase())
+        enabled: SettingsModel[$view.charAt(0).toLowerCase() + $view.slice(1) + "Enabled"];
 
         onClicked: assistant.pushView($view)
       }

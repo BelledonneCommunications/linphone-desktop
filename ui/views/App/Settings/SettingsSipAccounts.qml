@@ -122,5 +122,59 @@ TabContainer {
         onClicked: Logic.editAccount()
       }
     }
+
+    // -------------------------------------------------------------------------
+    // Assistant.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('assistantTitle')
+      visible: SettingsModel.developerSettingsEnabled
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('createAppSipAccountEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.createAppSipAccountEnabled
+
+            onClicked: SettingsModel.createAppSipAccountEnabled = !checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('useAppSipAccountEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.useAppSipAccountEnabled
+
+            onClicked: SettingsModel.useAppSipAccountEnabled = !checked
+          }
+        }
+      }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('useOtherSipAccountEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.useOtherSipAccountEnabled
+
+            onClicked: SettingsModel.useOtherSipAccountEnabled = !checked
+          }
+        }
+
+        FormGroup {
+          label: qsTr('fetchRemoteConfigurationEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.fetchRemoteConfigurationEnabled
+
+            onClicked: SettingsModel.fetchRemoteConfigurationEnabled = !checked
+          }
+        }
+      }
+    }
   }
 }

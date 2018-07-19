@@ -46,6 +46,46 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 }
 
 // =============================================================================
+// Assistant.
+// =============================================================================
+
+  bool SettingsModel::getUseAppSipAccountEnabled () const {
+    return !!mConfig->getInt(UiSection, "use_app_sip_account_enabled", 1);
+  }
+
+  void SettingsModel::setUseAppSipAccountEnabled (bool status) {
+    mConfig->setInt(UiSection, "use_app_sip_account_enabled", status);
+    emit useAppSipAccountEnabledChanged(status);
+  }
+
+  bool SettingsModel::getUseOtherSipAccountEnabled () const {
+    return !!mConfig->getInt(UiSection, "use_other_sip_account_enabled", 1);
+  }
+
+  void SettingsModel::setUseOtherSipAccountEnabled (bool status) {
+    mConfig->setInt(UiSection, "use_other_sip_account_enabled", status);
+    emit useOtherSipAccountEnabledChanged(status);
+  }
+
+  bool SettingsModel::getCreateAppSipAccountEnabled () const {
+    return !!mConfig->getInt(UiSection, "create_app_sip_account_enabled", 1);
+  }
+
+  void SettingsModel::setCreateAppSipAccountEnabled (bool status) {
+    mConfig->setInt(UiSection, "create_app_sip_account_enabled", status);
+    emit createAppSipAccountEnabledChanged(status);
+  }
+
+  bool SettingsModel::getFetchRemoteConfigurationEnabled () const {
+    return !!mConfig->getInt(UiSection, "fetch_remote_configuration_enabled", 1);
+  }
+
+  void SettingsModel::setFetchRemoteConfigurationEnabled (bool status) {
+    mConfig->setInt(UiSection, "fetch_remote_configuration_enabled", status);
+    emit fetchRemoteConfigurationEnabledChanged(status);
+  }
+
+// =============================================================================
 // Audio.
 // =============================================================================
 

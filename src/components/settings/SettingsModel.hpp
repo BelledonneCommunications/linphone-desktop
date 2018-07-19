@@ -35,6 +35,13 @@ class SettingsModel : public QObject {
   // PROPERTIES.
   // ===========================================================================
 
+  // Assistant. ----------------------------------------------------------------
+
+  Q_PROPERTY(bool createAppSipAccountEnabled READ getCreateAppSipAccountEnabled WRITE setCreateAppSipAccountEnabled NOTIFY createAppSipAccountEnabledChanged);
+  Q_PROPERTY(bool fetchRemoteConfigurationEnabled READ getFetchRemoteConfigurationEnabled WRITE setFetchRemoteConfigurationEnabled NOTIFY fetchRemoteConfigurationEnabledChanged);
+  Q_PROPERTY(bool useAppSipAccountEnabled READ getUseAppSipAccountEnabled WRITE setUseAppSipAccountEnabled NOTIFY useAppSipAccountEnabledChanged);
+  Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged);
+
   // Audio. --------------------------------------------------------------------
 
   Q_PROPERTY(QStringList captureDevices READ getCaptureDevices CONSTANT);
@@ -170,6 +177,20 @@ public:
   // ===========================================================================
   // METHODS.
   // ===========================================================================
+
+  // Assistant. ----------------------------------------------------------------
+
+  bool getCreateAppSipAccountEnabled () const;
+  void setCreateAppSipAccountEnabled (bool status);
+
+  bool getFetchRemoteConfigurationEnabled () const;
+  void setFetchRemoteConfigurationEnabled (bool status);
+
+  bool getUseAppSipAccountEnabled () const;
+  void setUseAppSipAccountEnabled (bool status);
+
+  bool getUseOtherSipAccountEnabled () const;
+  void setUseOtherSipAccountEnabled (bool status);
 
   // Audio. --------------------------------------------------------------------
 
@@ -371,6 +392,13 @@ public:
   // ===========================================================================
 
 signals:
+  // Assistant. ----------------------------------------------------------------
+
+  void createAppSipAccountEnabledChanged (bool status);
+  void fetchRemoteConfigurationEnabledChanged (bool status);
+  void useAppSipAccountEnabledChanged (bool status);
+  void useOtherSipAccountEnabledChanged (bool status);
+
   // Audio. --------------------------------------------------------------------
 
   void captureDeviceChanged (const QString &device);

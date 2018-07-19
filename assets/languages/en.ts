@@ -1406,6 +1406,26 @@ your friend&apos;s SIP address or username.</translation>
         <source>defaultDisplayNameLabel</source>
         <translation>Display name</translation>
     </message>
+    <message>
+        <source>assistantTitle</source>
+        <translation>Assistant</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountEnabledLabel</source>
+        <translation>Enable account creation</translation>
+    </message>
+    <message>
+        <source>useAppSipAccountEnabledLabel</source>
+        <translation>Enable account usage</translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountEnabledLabel</source>
+        <translation>Enable generic account usage</translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationEnabledLabel</source>
+        <translation>Enable configuration fetch</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

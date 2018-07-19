@@ -1403,6 +1403,26 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>defaultDisplayNameLabel</source>
         <translation>Rodomas vardas</translation>
     </message>
+    <message>
+        <source>assistantTitle</source>
+        <translation>Pagelbiklis</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

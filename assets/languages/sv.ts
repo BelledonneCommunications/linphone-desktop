@@ -1403,6 +1403,26 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>defaultDisplayNameLabel</source>
         <translation>Visningsnamn</translation>
     </message>
+    <message>
+        <source>assistantTitle</source>
+        <translation>Assistent</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

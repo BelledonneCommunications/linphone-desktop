@@ -1403,6 +1403,26 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>defaultDisplayNameLabel</source>
         <translation>Görünen ad</translation>
     </message>
+    <message>
+        <source>assistantTitle</source>
+        <translation>Yardimci</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useAppSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

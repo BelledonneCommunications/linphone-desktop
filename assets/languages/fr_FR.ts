@@ -1404,6 +1404,26 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>defaultDisplayNameLabel</source>
         <translation>Nom d&apos;affichage</translation>
     </message>
+    <message>
+        <source>assistantTitle</source>
+        <translation>Assistant</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountEnabledLabel</source>
+        <translation>Activer la création de compte</translation>
+    </message>
+    <message>
+        <source>useAppSipAccountEnabledLabel</source>
+        <translation>Activer l&apos;utilisation de compte</translation>
+    </message>
+    <message>
+        <source>useOtherSipAccountEnabledLabel</source>
+        <translation>Activer l&apos;utilisation générique de compte</translation>
+    </message>
+    <message>
+        <source>fetchRemoteConfigurationEnabledLabel</source>
+        <translation>Activer le téléchargement de conf.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
