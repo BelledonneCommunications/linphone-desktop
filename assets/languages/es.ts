@@ -74,6 +74,22 @@
         <source>commandLineDescription</source>
         <translation>enviar una orden a la aplicación hacia la línea de comandos</translation>
     </message>
+    <message>
+        <source>restore</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1190,6 +1206,26 @@
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>conferenceEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>contactsEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>

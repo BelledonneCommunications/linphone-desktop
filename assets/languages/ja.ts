@@ -77,20 +77,20 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>settings</source>
-        <translation>設定</translation>
-    </message>
-    <message>
-        <source>about</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
         <translation>終了</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1212,10 +1212,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>conferenceEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1225,6 +1221,10 @@
     </message>
     <message>
         <source>contactsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

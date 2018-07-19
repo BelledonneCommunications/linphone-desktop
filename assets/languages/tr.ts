@@ -77,20 +77,20 @@
         <translation>komut satırıyla uygulamaya emir gönder</translation>
     </message>
     <message>
-        <source>settings</source>
-        <translation>Tercihler</translation>
-    </message>
-    <message>
-        <source>about</source>
-        <translation>Hakkında</translation>
-    </message>
-    <message>
         <source>restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
         <translation>Çıkış</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Tercihler</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Hakkında</translation>
     </message>
 </context>
 <context>
@@ -1214,10 +1214,6 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <translation>Bildirim sesi</translation>
     </message>
     <message>
-        <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>conferenceEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1227,6 +1223,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

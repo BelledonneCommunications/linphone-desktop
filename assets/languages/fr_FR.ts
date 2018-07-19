@@ -77,20 +77,20 @@
         <translation>envoie un ordre à l&apos;application %1, voir --cli-help pour plus de détails</translation>
     </message>
     <message>
-        <source>settings</source>
-        <translation>Préférences</translation>
-    </message>
-    <message>
-        <source>about</source>
-        <translation>À propos</translation>
-    </message>
-    <message>
         <source>restore</source>
         <translation>Restaurer</translation>
     </message>
     <message>
         <source>quit</source>
         <translation>Quitter</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Préférences</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>À propos</translation>
     </message>
 </context>
 <context>
@@ -1215,10 +1215,6 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Son des notifications</translation>
     </message>
     <message>
-        <source>muteMicrophoneEnabledLabel</source>
-        <translation>Autoriser la désactivation du microphone</translation>
-    </message>
-    <message>
         <source>conferenceEnabledLabel</source>
         <translation>Activer la conférence</translation>
     </message>
@@ -1229,6 +1225,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>contactsEnabledLabel</source>
         <translation>Activer les contacts</translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
+        <translation>Autoriser la désactivation du microphone</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>

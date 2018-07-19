@@ -77,20 +77,20 @@
         <translation>sende einen Befehl zur Anwendung für eine Kommandozeile</translation>
     </message>
     <message>
-        <source>settings</source>
-        <translation>Einstellungen</translation>
-    </message>
-    <message>
-        <source>about</source>
-        <translation>Über</translation>
-    </message>
-    <message>
         <source>restore</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
         <translation>Schließen</translation>
+    </message>
+    <message>
+        <source>settings</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Über</translation>
     </message>
 </context>
 <context>
@@ -1212,10 +1212,6 @@ Server URL ist nicht konfiguriert.</translation>
         <translation>Benachrichtigungston</translation>
     </message>
     <message>
-        <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>conferenceEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1225,6 +1221,10 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>muteMicrophoneEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
