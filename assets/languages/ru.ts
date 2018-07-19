@@ -933,7 +933,10 @@
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Загрузите приложение на ваш компьютер и начните звонить и общаться  бесплатно.
+
+Ссылка для загрузки: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>

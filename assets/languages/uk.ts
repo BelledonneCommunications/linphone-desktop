@@ -211,6 +211,10 @@
         <source>loginWithPhoneNumberFailed</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>unableToAddAccount</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
