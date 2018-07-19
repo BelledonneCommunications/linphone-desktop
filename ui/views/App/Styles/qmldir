@@ -17,12 +17,12 @@ singleton MultimediaParametersStyle                      1.0 Calls/Dialogs/Multi
 
 # Main Window ------------------------------------------------------------------
 
-singleton ActivateLinphoneSipAccountWithEmailStyle       1.0 Main/Assistant/ActivateLinphoneSipAccountWithEmailStyle.qml
-singleton ActivateLinphoneSipAccountWithPhoneNumberStyle 1.0 Main/Assistant/ActivateLinphoneSipAccountWithPhoneNumberStyle.qml
+singleton ActivateAppSipAccountWithEmailStyle            1.0 Main/Assistant/ActivateAppSipAccountWithEmailStyle.qml
+singleton ActivateAppSipAccountWithPhoneNumberStyle      1.0 Main/Assistant/ActivateAppSipAccountWithPhoneNumberStyle.qml
 singleton AssistantAbstractViewStyle                     1.0 Main/Assistant/AssistantAbstractViewStyle.qml
 singleton AssistantHomeStyle                             1.0 Main/Assistant/AssistantHomeStyle.qml
-singleton CreateLinphoneSipAccountStyle                  1.0 Main/Assistant/CreateLinphoneSipAccountStyle.qml
-singleton UseLinphoneSipAccountStyle                     1.0 Main/Assistant/UseLinphoneSipAccountStyle.qml
+singleton CreateAppSipAccountStyle                       1.0 Main/Assistant/CreateAppSipAccountStyle.qml
+singleton UseAppSipAccountStyle                          1.0 Main/Assistant/UseAppSipAccountStyle.qml
 
 singleton AssistantStyle                                 1.0 Main/AssistantStyle.qml
 singleton ContactEditStyle                               1.0 Main/ContactEditStyle.qml

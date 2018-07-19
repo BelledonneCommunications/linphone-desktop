@@ -16,7 +16,7 @@ AssistantAbstractView {
   }
   mainActionLabel: qsTr('confirmAction')
 
-  title: qsTr('useLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
+  title: qsTr('useAppSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   // ---------------------------------------------------------------------------
 
@@ -26,7 +26,7 @@ AssistantAbstractView {
     Loader {
       id: loader
 
-      source: 'UseLinphoneSipAccountWith' + (
+      source: 'UseAppSipAccountWith' + (
         checkBox.checked ? 'Username' : 'PhoneNumber'
       ) + '.qml'
       width: parent.width
@@ -36,7 +36,7 @@ AssistantAbstractView {
       id: checkBox
 
       text: qsTr('useUsernameToLogin')
-      width: UseLinphoneSipAccountStyle.checkBox.width
+      width: UseAppSipAccountStyle.checkBox.width
 
       onClicked: {
         assistantModel.reset()
@@ -109,7 +109,7 @@ AssistantAbstractView {
         window.lockView({
           descriptionText: qsTr('quitWarning')
         })
-        assistant.pushView('ActivateLinphoneSipAccountWithPhoneNumber', {
+        assistant.pushView('ActivateAppSipAccountWithPhoneNumber', {
           assistantModel: assistantModel
         })
       }

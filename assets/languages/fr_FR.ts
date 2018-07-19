@@ -9,9 +9,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithEmail</name>
+    <name>ActivateAppSipAccountWithEmail</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>ACTIVER VOTRE COMPTE %1</translation>
     </message>
     <message>
@@ -24,9 +24,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
+    <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>ACTIVER VOTRE COMPTE %1</translation>
     </message>
     <message>
@@ -103,7 +103,7 @@
 <context>
     <name>AssistantHome</name>
     <message>
-        <source>useLinphoneSipAccount</source>
+        <source>useAppSipAccount</source>
         <translation>UTILISER UN COMPTE %1</translation>
     </message>
     <message>
@@ -123,7 +123,7 @@
         <translation>Cet assistant va vous aider à configurer et utiliser votre compte SIP.</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccount</source>
+        <source>createAppSipAccount</source>
         <translation>CRÉER UN COMPTE %1</translation>
     </message>
 </context>
@@ -434,7 +434,7 @@ Url du serveur non configurée.</translation>
 <context>
     <name>Cli</name>
     <message>
-        <source>linphoneCliDescription</source>
+        <source>appCliDescription</source>
         <translation>Moyen d&apos;effectuer des actions sur l&apos;application %1 en ligne de commande.</translation>
     </message>
     <message>
@@ -655,13 +655,13 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccount</name>
+    <name>CreateAppSipAccount</name>
     <message>
-        <source>createLinphoneSipAccountDescription</source>
+        <source>createAppSipAccountDescription</source>
         <translation>Comment souhaitez-vous créer votre compte ?</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>CRÉER UN COMPTE %1</translation>
     </message>
     <message>
@@ -674,9 +674,9 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithEmail</name>
+    <name>CreateAppSipAccountWithEmail</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>CRÉER UN COMPTE %1</translation>
     </message>
     <message>
@@ -713,9 +713,9 @@ Url du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>CRÉER UN COMPTE %1</translation>
     </message>
     <message>
@@ -1655,13 +1655,13 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccount</name>
+    <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
         <translation>UTILISER</translation>
     </message>
     <message>
-        <source>useLinphoneSipAccountTitle</source>
+        <source>useAppSipAccountTitle</source>
         <translation>UTILISER UN COMPTE %1</translation>
     </message>
     <message>
@@ -1674,7 +1674,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
         <translation>Pays</translation>
@@ -1685,7 +1685,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithUsername</name>
+    <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Nom d&apos;utilisateur</translation>

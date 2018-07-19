@@ -385,7 +385,7 @@ success:
 }
 
 void Cli::showHelp () {
-  cout << multilineIndent(tr("linphoneCliDescription").arg(APPLICATION_NAME), 0) <<
+  cout << multilineIndent(tr("appCliDescription").arg(APPLICATION_NAME), 0) <<
     endl <<
     "Usage: " <<
     endl <<

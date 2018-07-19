@@ -9,9 +9,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithEmail</name>
+    <name>ActivateAppSipAccountWithEmail</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>AKTIVIEREN SIE IHR %1-KONTO</translation>
     </message>
     <message>
@@ -24,9 +24,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
+    <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>AKTIVIEREN SIE IHR %1-KONTO</translation>
     </message>
     <message>
@@ -103,7 +103,7 @@
 <context>
     <name>AssistantHome</name>
     <message>
-        <source>useLinphoneSipAccount</source>
+        <source>useAppSipAccount</source>
         <translation>%1-KONTO VERWENDEN</translation>
     </message>
     <message>
@@ -123,7 +123,7 @@
         <translation>Der Assistent hilft Ihnen das %1 Konto zu konfigurieren und zu nutzen</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccount</source>
+        <source>createAppSipAccount</source>
         <translation>%1-KONTO ERSTELLEN</translation>
     </message>
 </context>
@@ -434,7 +434,7 @@ Server URL ist nicht konfiguriert.</translation>
 <context>
     <name>Cli</name>
     <message>
-        <source>linphoneCliDescription</source>
+        <source>appCliDescription</source>
         <translation>Methode um die %1 Anwendung per Kommandozeile zu steuern.</translation>
     </message>
     <message>
@@ -655,13 +655,13 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccount</name>
+    <name>CreateAppSipAccount</name>
     <message>
-        <source>createLinphoneSipAccountDescription</source>
+        <source>createAppSipAccountDescription</source>
         <translation>Wie würden Sie gerne Ihr Konto erstellen?</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>ERSTELLE EIN %1 KONTO</translation>
     </message>
     <message>
@@ -674,9 +674,9 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithEmail</name>
+    <name>CreateAppSipAccountWithEmail</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>%1-KONTO ERSTELLEN</translation>
     </message>
     <message>
@@ -713,9 +713,9 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>%1-KONTO ERSTELLEN</translation>
     </message>
     <message>
@@ -929,10 +929,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Laden Sie die Anwendung auf Ihren Computer um kostenlos mit anderen Linphone Benutzern zu telefonieren und zu chatten.
-
-Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1655,13 +1652,13 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccount</name>
+    <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
         <translation>VERWENDEN</translation>
     </message>
     <message>
-        <source>useLinphoneSipAccountTitle</source>
+        <source>useAppSipAccountTitle</source>
         <translation>%1-KONTO VERWENDEN</translation>
     </message>
     <message>
@@ -1674,7 +1671,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
         <translation>Land</translation>
@@ -1685,7 +1682,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithUsername</name>
+    <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Benutzername</translation>

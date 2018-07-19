@@ -16,7 +16,7 @@ AssistantAbstractView {
     assistantModel.countryCode = model.data(model.index(index, 0)).countryCode
   }
 
-  title: qsTr('createLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
+  title: qsTr('createAppSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   mainAction: requestBlock.execute
   mainActionEnabled: phoneNumber.text.length
@@ -124,7 +124,7 @@ AssistantAbstractView {
       window.lockView({
         descriptionText: qsTr('quitWarning')
       })
-      assistant.pushView('ActivateLinphoneSipAccountWithPhoneNumber', {
+      assistant.pushView('ActivateAppSipAccountWithPhoneNumber', {
         assistantModel: assistantModel
       })
     }

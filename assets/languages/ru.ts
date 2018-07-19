@@ -9,9 +9,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithEmail</name>
+    <name>ActivateAppSipAccountWithEmail</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>АКТИВИРУЙТЕ ВАШ АККАУНТ %1</translation>
     </message>
     <message>
@@ -24,9 +24,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
+    <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>АКТИВИРУЙТЕ ВАШ АККАУНТ %1</translation>
     </message>
     <message>
@@ -103,7 +103,7 @@
 <context>
     <name>AssistantHome</name>
     <message>
-        <source>useLinphoneSipAccount</source>
+        <source>useAppSipAccount</source>
         <translation>ИСПОЛЬЗОВАТЬ АККАУНТ %1</translation>
     </message>
     <message>
@@ -123,7 +123,7 @@
         <translation>Этот ассистент поможет вам настроить и использовать ваш аккаунт %1.</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccount</source>
+        <source>createAppSipAccount</source>
         <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
 </context>
@@ -434,7 +434,7 @@
 <context>
     <name>Cli</name>
     <message>
-        <source>linphoneCliDescription</source>
+        <source>appCliDescription</source>
         <translation>Способ управлять %1 через командную строку.</translation>
     </message>
     <message>
@@ -655,13 +655,13 @@
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccount</name>
+    <name>CreateAppSipAccount</name>
     <message>
-        <source>createLinphoneSipAccountDescription</source>
+        <source>createAppSipAccountDescription</source>
         <translation>Как бы вы хотели создать аккаунт?</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
     <message>
@@ -674,9 +674,9 @@
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithEmail</name>
+    <name>CreateAppSipAccountWithEmail</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
     <message>
@@ -713,9 +713,9 @@
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>СОЗДАТЬ АККАУНТ %1</translation>
     </message>
     <message>
@@ -929,10 +929,7 @@
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Загрузи приложение на компьютер и начни звонить и переписываться с пользователями Linphone бесплатно.
-
-Нажми здесь: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1655,13 +1652,13 @@
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccount</name>
+    <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
         <translation>ИСПОЛЬЗОВАТЬ</translation>
     </message>
     <message>
-        <source>useLinphoneSipAccountTitle</source>
+        <source>useAppSipAccountTitle</source>
         <translation>ИСПОЛЬЗОВАТЬ АККАУНТ %1</translation>
     </message>
     <message>
@@ -1674,7 +1671,7 @@
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
         <translation>Страна</translation>
@@ -1685,7 +1682,7 @@
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithUsername</name>
+    <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Имя пользователя</translation>

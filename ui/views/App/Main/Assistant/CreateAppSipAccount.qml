@@ -7,8 +7,8 @@ import App.Styles 1.0
 // =============================================================================
 
 AssistantAbstractView {
-  description: qsTr('createLinphoneSipAccountDescription')
-  title: qsTr('createLinphoneSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
+  description: qsTr('createAppSipAccountDescription')
+  title: qsTr('createAppSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
 
   // ---------------------------------------------------------------------------
   // Menu.
@@ -16,25 +16,25 @@ AssistantAbstractView {
 
   Column {
     anchors.centerIn: parent
-    spacing: CreateLinphoneSipAccountStyle.buttons.spacing
-    width: CreateLinphoneSipAccountStyle.buttons.button.width
+    spacing: CreateAppSipAccountStyle.buttons.spacing
+    width: CreateAppSipAccountStyle.buttons.button.width
 
     TextButtonA {
       text: qsTr('withPhoneNumber')
 
-      height: CreateLinphoneSipAccountStyle.buttons.button.height
+      height: CreateAppSipAccountStyle.buttons.button.height
       width: parent.width
 
-      onClicked: assistant.pushView('CreateLinphoneSipAccountWithPhoneNumber')
+      onClicked: assistant.pushView('CreateAppSipAccountWithPhoneNumber')
     }
 
     TextButtonA {
       text: qsTr('withEmailAddress')
 
-      height: CreateLinphoneSipAccountStyle.buttons.button.height
+      height: CreateAppSipAccountStyle.buttons.button.height
       width: parent.width
 
-      onClicked: assistant.pushView('CreateLinphoneSipAccountWithEmail')
+      onClicked: assistant.pushView('CreateAppSipAccountWithEmail')
     }
   }
 }

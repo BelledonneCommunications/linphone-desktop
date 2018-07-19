@@ -97,13 +97,13 @@ ColumnLayout {
 
     model: ListModel {
       ListElement {
-        $text: qsTr('createLinphoneSipAccount')
-        $view: 'CreateLinphoneSipAccount'
+        $text: qsTr('createAppSipAccount')
+        $view: 'CreateAppSipAccount'
       }
 
       ListElement {
-        $text: qsTr('useLinphoneSipAccount')
-        $view: 'UseLinphoneSipAccount'
+        $text: qsTr('useAppSipAccount')
+        $view: 'UseAppSipAccount'
       }
 
       ListElement {

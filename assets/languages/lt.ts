@@ -9,9 +9,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithEmail</name>
+    <name>ActivateAppSipAccountWithEmail</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -24,9 +24,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
+    <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -103,7 +103,7 @@
 <context>
     <name>AssistantHome</name>
     <message>
-        <source>useLinphoneSipAccount</source>
+        <source>useAppSipAccount</source>
         <translation>NAUDOTI %1 PASKYRĄ</translation>
     </message>
     <message>
@@ -123,7 +123,7 @@
         <translation>Šis pagelbiklis padės jums sukonfigūruoti ir naudoti savo %1 paskyrą.</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccount</source>
+        <source>createAppSipAccount</source>
         <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
 </context>
@@ -434,7 +434,7 @@ Nesukonfigūruotas serverio url.</translation>
 <context>
     <name>Cli</name>
     <message>
-        <source>linphoneCliDescription</source>
+        <source>appCliDescription</source>
         <translation>Būdai valdyti %1 programą per komandų eilutę.</translation>
     </message>
     <message>
@@ -655,13 +655,13 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccount</name>
+    <name>CreateAppSipAccount</name>
     <message>
-        <source>createLinphoneSipAccountDescription</source>
+        <source>createAppSipAccountDescription</source>
         <translation>Kaip norėtumėte susikurti savo paskyrą?</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
     <message>
@@ -674,9 +674,9 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithEmail</name>
+    <name>CreateAppSipAccountWithEmail</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
     <message>
@@ -713,9 +713,9 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>SUSIKURTI %1 PASKYRĄ</translation>
     </message>
     <message>
@@ -929,10 +929,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Atsisiųskite programą į savo kompiuterį ir skambinkite bei kalbėkitės su Linphone naudotojais nemokamai.
-
-Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1657,13 +1654,13 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccount</name>
+    <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
         <translation>NAUDOTI</translation>
     </message>
     <message>
-        <source>useLinphoneSipAccountTitle</source>
+        <source>useAppSipAccountTitle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1676,7 +1673,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
         <translation>Šalis</translation>
@@ -1687,7 +1684,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithUsername</name>
+    <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Naudotojo vardas</translation>

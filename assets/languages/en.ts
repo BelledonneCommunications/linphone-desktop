@@ -9,9 +9,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithEmail</name>
+    <name>ActivateAppSipAccountWithEmail</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>ACTIVATE YOUR %1 ACCOUNT</translation>
     </message>
     <message>
@@ -24,9 +24,9 @@
     </message>
 </context>
 <context>
-    <name>ActivateLinphoneSipAccountWithPhoneNumber</name>
+    <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>activateLinphoneSipAccount</source>
+        <source>activateAppSipAccount</source>
         <translation>ACTIVATE YOUR %1 ACCOUNT</translation>
     </message>
     <message>
@@ -103,7 +103,7 @@
 <context>
     <name>AssistantHome</name>
     <message>
-        <source>useLinphoneSipAccount</source>
+        <source>useAppSipAccount</source>
         <translation>USE A %1 ACCOUNT</translation>
     </message>
     <message>
@@ -123,7 +123,7 @@
         <translation>This assistant will help you configure and use your sip account.</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccount</source>
+        <source>createAppSipAccount</source>
         <translation>CREATE A %1 ACCOUNT</translation>
     </message>
 </context>
@@ -434,7 +434,7 @@ Server url not configured.</translation>
 <context>
     <name>Cli</name>
     <message>
-        <source>linphoneCliDescription</source>
+        <source>appCliDescription</source>
         <translation>Way to control the %1 application through command lines.</translation>
     </message>
     <message>
@@ -655,13 +655,13 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccount</name>
+    <name>CreateAppSipAccount</name>
     <message>
-        <source>createLinphoneSipAccountDescription</source>
+        <source>createAppSipAccountDescription</source>
         <translation>How would you like to create your account?</translation>
     </message>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>CREATE A %1 ACCOUNT</translation>
     </message>
     <message>
@@ -674,9 +674,9 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithEmail</name>
+    <name>CreateAppSipAccountWithEmail</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>CREATE A %1 ACCOUNT</translation>
     </message>
     <message>
@@ -713,9 +713,9 @@ Server url not configured.</translation>
     </message>
 </context>
 <context>
-    <name>CreateLinphoneSipAccountWithPhoneNumber</name>
+    <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
-        <source>createLinphoneSipAccountTitle</source>
+        <source>createAppSipAccountTitle</source>
         <translation>CREATE A %1 ACCOUNT</translation>
     </message>
     <message>
@@ -929,7 +929,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Download the application on your computer and start calling and chatting with Linphone users for free.
+        <translation>Download the application on your computer and start calling and chatting with users for free.
 
 Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 </translation>
@@ -1657,13 +1657,13 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccount</name>
+    <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
         <translation>USE</translation>
     </message>
     <message>
-        <source>useLinphoneSipAccountTitle</source>
+        <source>useAppSipAccountTitle</source>
         <translation>USE A %1 ACCOUNT</translation>
     </message>
     <message>
@@ -1676,7 +1676,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithPhoneNumber</name>
+    <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
         <translation>Country</translation>
@@ -1687,7 +1687,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
-    <name>UseLinphoneSipAccountWithUsername</name>
+    <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
         <translation>Username</translation>

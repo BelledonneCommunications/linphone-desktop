@@ -13,36 +13,24 @@ AssistantAbstractView {
 
   backEnabled: false
 
-  title: qsTr('activateLinphoneSipAccount').replace('%1', Qt.application.name.toUpperCase())
+  title: qsTr('activateAppSipAccount').replace('%1', Qt.application.name.toUpperCase())
 
   mainAction: requestBlock.execute
-  mainActionEnabled: activationCode.length === 4 && !requestBlock.loading
+  mainActionEnabled: !requestBlock.loading
   mainActionLabel: qsTr('confirmAction')
 
   Column {
     anchors.centerIn: parent
-    spacing: ActivateLinphoneSipAccountWithPhoneNumberStyle.spacing
+    spacing: ActivateAppSipAccountWithEmailStyle.spacing
     width: parent.width
 
     Text {
-      color: ActivateLinphoneSipAccountWithPhoneNumberStyle.activationSteps.color
-      font.pointSize: ActivateLinphoneSipAccountWithPhoneNumberStyle.activationSteps.pointSize
+      color: ActivateAppSipAccountWithEmailStyle.activationSteps.color
+      font.pointSize: ActivateAppSipAccountWithEmailStyle.activationSteps.pointSize
       horizontalAlignment: Text.AlignHCenter
-      text: qsTr('activationSteps').replace('%1', assistantModel.phoneNumber)
+      text: qsTr('activationSteps').replace('%1', assistantModel.email)
       width: parent.width
       wrapMode: Text.WordWrap
-    }
-
-    TextField {
-      id: activationCode
-
-      anchors.horizontalCenter: parent.horizontalCenter
-      validator: IntValidator {
-        bottom: 0
-        top: 9999
-      }
-
-      onTextChanged: assistantModel.activationCode = text
     }
 
     RequestBlock {
