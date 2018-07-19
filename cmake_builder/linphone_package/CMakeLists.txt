@@ -277,7 +277,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${LINPHONE_SOURCE_DIR}/COPYING")
 
 if (APPLE)
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-mac")
-  set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/linphone-background-dmg.jpg")
+  set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/background-dmg.jpg")
 
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/linphone_dmg.scpt.in" "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
   set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
@@ -296,7 +296,7 @@ if (WIN32)
   # Use template from the current source directory to force uninstallation and ensure that linphone is not running before installation.
   set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
   set(CPACK_GENERATOR "NSIS")
-  set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\linphone-banner.bmp")
+  set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\banner.bmp")
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-win32")
   set(CPACK_NSIS_MUI_ICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
   set(CPACK_NSIS_MUI_UNIICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
