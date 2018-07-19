@@ -1424,6 +1424,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>fetchRemoteConfigurationEnabledLabel</source>
         <translation>Activer le téléchargement de conf.</translation>
     </message>
+    <message>
+        <source>assistantSupportsPhoneNumbersLabel</source>
+        <translation>Supporter les numéros de tél.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

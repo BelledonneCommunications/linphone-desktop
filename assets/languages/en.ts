@@ -1426,6 +1426,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>fetchRemoteConfigurationEnabledLabel</source>
         <translation>Enable configuration fetch</translation>
     </message>
+    <message>
+        <source>assistantSupportsPhoneNumbersLabel</source>
+        <translation>Supports phone numbers</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

@@ -90,35 +90,54 @@ ColumnLayout {
           margins: AssistantHomeStyle.buttons.spacing
         }
 
+        enabled: SettingsModel[$viewType.charAt(0).toLowerCase() + $viewType.slice(1) + "Enabled"]
         text: $text.replace('%1', Qt.application.name.toUpperCase())
-        enabled: SettingsModel[$view.charAt(0).toLowerCase() + $view.slice(1) + "Enabled"];
 
         onClicked: assistant.pushView($view)
       }
     }
 
     model: ListModel {
-      ListElement {
-        $text: qsTr('createAppSipAccount')
-        $view: 'CreateAppSipAccount'
+      Component.onCompleted: {
+        insert(0, {
+          $text: qsTr('createAppSipAccount'),
+          $view: SettingsModel.assistantSupportsPhoneNumbers
+            ? 'CreateAppSipAccount'
+            : 'CreateAppSipAccountWithEmail',
+          $viewType: 'CreateAppSipAccount'
+        })
       }
 
       ListElement {
         $text: qsTr('useAppSipAccount')
         $view: 'UseAppSipAccount'
+        $viewType: 'UseAppSipAccount'
       }
 
       ListElement {
         $text: qsTr('useOtherSipAccount')
         $view: 'UseOtherSipAccount'
+        $viewType: 'UseOtherSipAccount'
       }
 
       ListElement {
         $text: qsTr('fetchRemoteConfiguration')
         $view: 'FetchRemoteConfiguration'
+        $viewType: 'FetchRemoteConfiguration'
       }
     }
 
     interactive: false
+
+    Connections {
+      target: SettingsModel
+      onAssistantSupportsPhoneNumbersChanged: buttons.model.setProperty(
+        0,
+        '$view',
+        SettingsModel.assistantSupportsPhoneNumbers ?
+          'CreateAppSipAccount' :
+          'CreateAppSipAccountWithEmail'
+      );
+    }
   }
 }

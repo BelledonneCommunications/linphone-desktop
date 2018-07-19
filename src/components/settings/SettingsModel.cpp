@@ -85,6 +85,17 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
     emit fetchRemoteConfigurationEnabledChanged(status);
   }
 
+  // ---------------------------------------------------------------------------
+
+  bool SettingsModel::getAssistantSupportsPhoneNumbers () const {
+    return !!mConfig->getInt(UiSection, "assistant_supports_phone_numbers", 1);
+  }
+
+  void SettingsModel::setAssistantSupportsPhoneNumbers (bool status) {
+    mConfig->setInt(UiSection, "assistant_supports_phone_numbers", status);
+    emit assistantSupportsPhoneNumbersChanged(status);
+  }
+
 // =============================================================================
 // Audio.
 // =============================================================================

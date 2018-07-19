@@ -27,7 +27,9 @@ AssistantAbstractView {
       id: loader
 
       source: 'UseAppSipAccountWith' + (
-        checkBox.checked ? 'Username' : 'PhoneNumber'
+        !SettingsModel.assistantSupportsPhoneNumbers || checkBox.checked
+          ? 'Username'
+          : 'PhoneNumber'
       ) + '.qml'
       width: parent.width
     }
@@ -36,6 +38,7 @@ AssistantAbstractView {
       id: checkBox
 
       text: qsTr('useUsernameToLogin')
+      visible: SettingsModel.assistantSupportsPhoneNumbers
       width: UseAppSipAccountStyle.checkBox.width
 
       onClicked: {

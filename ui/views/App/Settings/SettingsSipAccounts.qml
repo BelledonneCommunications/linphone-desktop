@@ -175,6 +175,18 @@ TabContainer {
           }
         }
       }
+
+      FormLine {
+        FormGroup {
+          label: qsTr('assistantSupportsPhoneNumbersLabel')
+
+          Switch {
+            checked: SettingsModel.assistantSupportsPhoneNumbers
+
+            onClicked: SettingsModel.assistantSupportsPhoneNumbers = !checked
+          }
+        }
+      }
     }
   }
 }

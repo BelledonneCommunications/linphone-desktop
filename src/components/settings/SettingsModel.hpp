@@ -42,6 +42,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(bool useAppSipAccountEnabled READ getUseAppSipAccountEnabled WRITE setUseAppSipAccountEnabled NOTIFY useAppSipAccountEnabledChanged);
   Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged);
 
+  Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged);
+
   // Audio. --------------------------------------------------------------------
 
   Q_PROPERTY(QStringList captureDevices READ getCaptureDevices CONSTANT);
@@ -191,6 +193,9 @@ public:
 
   bool getUseOtherSipAccountEnabled () const;
   void setUseOtherSipAccountEnabled (bool status);
+
+  bool getAssistantSupportsPhoneNumbers () const;
+  void setAssistantSupportsPhoneNumbers (bool status);
 
   // Audio. --------------------------------------------------------------------
 
@@ -398,6 +403,8 @@ signals:
   void fetchRemoteConfigurationEnabledChanged (bool status);
   void useAppSipAccountEnabledChanged (bool status);
   void useOtherSipAccountEnabledChanged (bool status);
+
+  void assistantSupportsPhoneNumbersChanged (bool status);
 
   // Audio. --------------------------------------------------------------------
 
