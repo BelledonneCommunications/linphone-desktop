@@ -1150,6 +1150,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>audioCodecsTitle</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1618,6 +1622,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>showCameraPreview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

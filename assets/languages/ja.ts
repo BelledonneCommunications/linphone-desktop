@@ -1148,6 +1148,10 @@
         <source>audioCodecsTitle</source>
         <translation>オーディオコーデック</translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1617,6 +1621,10 @@
     <message>
         <source>showCameraPreview</source>
         <translation>ビデオプレビュー</translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -195,6 +195,17 @@ void SettingsModel::setEchoCancellationEnabled (bool status) {
   emit echoCancellationEnabledChanged(status);
 }
 
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getShowAudioCodecs () const {
+  return !!mConfig->getInt(UiSection, "show_audio_codecs", 1);
+}
+
+void SettingsModel::setShowAudioCodecs (bool status) {
+  mConfig->setInt(UiSection, "show_audio_codecs", status);
+  emit showAudioCodecsChanged(status);
+}
+
 // =============================================================================
 // Video.
 // =============================================================================
@@ -293,6 +304,17 @@ void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
 
 bool SettingsModel::getVideoSupported () const {
   return CoreManager::getInstance()->getCore()->videoSupported();
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getShowVideoCodecs () const {
+  return !!mConfig->getInt(UiSection, "show_video_codecs", 1);
+}
+
+void SettingsModel::setShowVideoCodecs (bool status) {
+  mConfig->setInt(UiSection, "show_video_codecs", status);
+  emit showVideoCodecsChanged(status);
 }
 
 // =============================================================================

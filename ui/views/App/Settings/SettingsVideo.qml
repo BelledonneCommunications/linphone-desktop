@@ -137,7 +137,22 @@ TabContainer {
 
     Form {
       title: qsTr('videoCodecsTitle')
+      visible: SettingsModel.showVideoCodecs || SettingsModel.developerSettingsEnabled
       width: parent.width
+
+      FormLine {
+        visible: SettingsModel.developerSettingsEnabled
+
+        FormGroup {
+          label: qsTr('showVideoCodecsLabel')
+
+          Switch {
+            checked: SettingsModel.showVideoCodecs
+
+            onClicked: SettingsModel.showVideoCodecs = !checked
+          }
+        }
+      }
 
       CodecsViewer {
         model: VideoCodecsModel

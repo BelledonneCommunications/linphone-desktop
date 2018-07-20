@@ -1150,6 +1150,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>audioCodecsTitle</source>
         <translation>Garso kodekai</translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1619,6 +1623,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <message>
         <source>showCameraPreview</source>
         <translation>VAIZDO PERŽIŪRA</translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

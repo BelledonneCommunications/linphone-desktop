@@ -1148,6 +1148,10 @@ Server URL ist nicht konfiguriert.</translation>
         <source>audioCodecsTitle</source>
         <translation>Audiocodecs</translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1617,6 +1621,10 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>showCameraPreview</source>
         <translation>VIDEOVORSCHAU</translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

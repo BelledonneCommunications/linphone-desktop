@@ -1150,6 +1150,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>audioCodecsTitle</source>
         <translation>Ses çözücüler</translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1619,6 +1623,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <message>
         <source>showCameraPreview</source>
         <translation>GÖRÜNTÜ ÖNİZLEMESİ</translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

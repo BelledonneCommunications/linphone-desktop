@@ -1151,6 +1151,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>audioCodecsTitle</source>
         <translation>Codecs audio</translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation>Afficher les codecs audio</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1620,6 +1624,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>showCameraPreview</source>
         <translation>APERÇU DE LA VIDÉO</translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
+        <translation>Afficher les codecs vidéo</translation>
     </message>
 </context>
 <context>

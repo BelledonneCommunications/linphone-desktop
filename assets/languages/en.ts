@@ -1153,6 +1153,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>audioCodecsTitle</source>
         <translation>Audio codecs</translation>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation>Show audio codecs</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1622,6 +1626,10 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>showCameraPreview</source>
         <translation>VIDEO PREVIEW</translation>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
+        <translation>Show video codecs</translation>
     </message>
 </context>
 <context>

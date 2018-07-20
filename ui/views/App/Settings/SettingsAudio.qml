@@ -140,7 +140,22 @@ TabContainer {
 
     Form {
       title: qsTr('audioCodecsTitle')
+      visible: SettingsModel.showAudioCodecs || SettingsModel.developerSettingsEnabled
       width: parent.width
+
+      FormLine {
+        visible: SettingsModel.developerSettingsEnabled
+
+        FormGroup {
+          label: qsTr('showAudioCodecsLabel')
+
+          Switch {
+            checked: SettingsModel.showAudioCodecs
+
+            onClicked: SettingsModel.showAudioCodecs = !checked
+          }
+        }
+      }
 
       CodecsViewer {
         model: AudioCodecsModel

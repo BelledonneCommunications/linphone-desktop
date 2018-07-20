@@ -57,6 +57,8 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY echoCancellationEnabledChanged);
 
+  Q_PROPERTY(bool showAudioCodecs READ getShowAudioCodecs WRITE setShowAudioCodecs NOTIFY showAudioCodecsChanged);
+
   // Video. --------------------------------------------------------------------
 
   Q_PROPERTY(QStringList videoDevices READ getVideoDevices CONSTANT);
@@ -71,6 +73,8 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged);
 
   Q_PROPERTY(bool videoSupported READ getVideoSupported CONSTANT);
+
+  Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged);
 
   // Chat & calls. -------------------------------------------------------------
 
@@ -217,6 +221,9 @@ public:
   bool getEchoCancellationEnabled () const;
   void setEchoCancellationEnabled (bool status);
 
+  bool getShowAudioCodecs () const;
+  void setShowAudioCodecs (bool status);
+
   // Video. --------------------------------------------------------------------
 
   QStringList getVideoDevices () const;
@@ -236,6 +243,9 @@ public:
   void setVideoDefinition (const QVariantMap &definition);
 
   bool getVideoSupported () const;
+
+  bool getShowVideoCodecs () const;
+  void setShowVideoCodecs (bool status);
 
   // Chat & calls. -------------------------------------------------------------
 
@@ -416,6 +426,8 @@ signals:
 
   void echoCancellationEnabledChanged (bool status);
 
+  void showAudioCodecsChanged (bool status);
+
   // Video. --------------------------------------------------------------------
 
   void videoDeviceChanged (const QString &device);
@@ -424,6 +436,8 @@ signals:
   void videoFramerateChanged (int framerate);
 
   void videoDefinitionChanged (const QVariantMap &definition);
+
+  void showVideoCodecsChanged (bool status);
 
   // Chat & calls. -------------------------------------------------------------
 
