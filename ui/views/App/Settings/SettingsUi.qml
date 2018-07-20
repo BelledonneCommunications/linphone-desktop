@@ -105,8 +105,6 @@ TabContainer {
           }
         }
       }
-
-      FormEmptyLine {}
     }
 
     // -------------------------------------------------------------------------
@@ -115,12 +113,14 @@ TabContainer {
 
     Form {
       title: qsTr('dataTitle')
+      visible: SettingsModel.contactsEnabled
       width: parent.width
     }
 
     TextButtonB {
       anchors.right: parent.right
       text: qsTr('cleanAvatars')
+      visible: SettingsModel.contactsEnabled
 
       onClicked: Logic.cleanAvatars()
     }
