@@ -1367,6 +1367,14 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <source>rlsUriDisabled</source>
         <translation>NUNCA</translation>
     </message>
+    <message>
+        <source>showNetworkSettingsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>generalTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

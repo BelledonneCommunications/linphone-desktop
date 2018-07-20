@@ -13,6 +13,28 @@ TabContainer {
     width: parent.width
 
     // -------------------------------------------------------------------------
+    // General.
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('generalTitle')
+      visible: SettingsModel.developerSettingsEnabled
+      width: parent.width
+
+      FormLine {
+        FormGroup {
+          label: qsTr('showNetworkSettingsLabel')
+
+          Switch {
+            checked: SettingsModel.showNetworkSettings
+
+            onClicked: SettingsModel.showNetworkSettings = !checked
+          }
+        }
+      }
+    }
+
+    // -------------------------------------------------------------------------
     // Transport.
     // -------------------------------------------------------------------------
 

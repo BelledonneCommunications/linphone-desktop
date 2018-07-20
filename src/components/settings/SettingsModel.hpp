@@ -107,6 +107,8 @@ class SettingsModel : public QObject {
 
   // Network. ------------------------------------------------------------------
 
+  Q_PROPERTY(bool showNetworkSettings READ getShowNetworkSettings WRITE setShowNetworkSettings NOTIFY showNetworkSettingsChanged);
+
   Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
   Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
 
@@ -296,6 +298,9 @@ public:
 
   // Network. ------------------------------------------------------------------
 
+  bool getShowNetworkSettings () const;
+  void setShowNetworkSettings (bool status);
+
   bool getUseSipInfoForDtmfs () const;
   void setUseSipInfoForDtmfs (bool status);
 
@@ -466,6 +471,8 @@ signals:
   void contactsEnabledChanged (bool status);
 
   // Network. ------------------------------------------------------------------
+
+  void showNetworkSettingsChanged (bool status);
 
   void dtmfsProtocolChanged ();
 

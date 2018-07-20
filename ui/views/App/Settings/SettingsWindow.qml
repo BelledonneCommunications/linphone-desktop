@@ -74,6 +74,7 @@ ApplicationWindow {
         }
 
         TabButton {
+          enabled: SettingsModel.showNetworkSettings || SettingsModel.developerSettingsEnabled
           iconName: 'settings_network'
           text: qsTr('networkTab')
           width: implicitWidth

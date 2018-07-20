@@ -533,6 +533,17 @@ void SettingsModel::setContactsEnabled (bool status) {
 // Network.
 // =============================================================================
 
+bool SettingsModel::getShowNetworkSettings () const {
+  return !!mConfig->getInt(UiSection, "show_network_settings", 1);
+}
+
+void SettingsModel::setShowNetworkSettings (bool status) {
+  mConfig->setInt(UiSection, "show_network_settings", status);
+  emit showNetworkSettingsChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getUseSipInfoForDtmfs () const {
   return CoreManager::getInstance()->getCore()->getUseInfoForDtmf();
 }

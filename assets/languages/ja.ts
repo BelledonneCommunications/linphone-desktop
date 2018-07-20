@@ -1362,6 +1362,14 @@
         <source>rlsUriDisabled</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>showNetworkSettingsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>generalTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

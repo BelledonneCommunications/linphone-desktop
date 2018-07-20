@@ -1364,6 +1364,14 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>rlsUriDisabled</source>
         <translation>ALDRIG</translation>
     </message>
+    <message>
+        <source>showNetworkSettingsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>generalTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

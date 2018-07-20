@@ -1365,6 +1365,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>rlsUriDisabled</source>
         <translation>JAMAIS</translation>
     </message>
+    <message>
+        <source>showNetworkSettingsLabel</source>
+        <translation>Afficher les paramètres réseaux</translation>
+    </message>
+    <message>
+        <source>generalTitle</source>
+        <translation>Général</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

@@ -1364,6 +1364,14 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>rlsUriDisabled</source>
         <translation>ASLA</translation>
     </message>
+    <message>
+        <source>showNetworkSettingsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>generalTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
