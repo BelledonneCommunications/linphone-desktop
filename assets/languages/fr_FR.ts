@@ -1535,8 +1535,8 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Dossier des captures d&apos;écran</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Dossier des captures vidéo</translation>
+        <source>savedCallsLabel</source>
+        <translation>Dossier des captures d&apos;appels</translation>
     </message>
     <message>
         <source>languagesTitle</source>

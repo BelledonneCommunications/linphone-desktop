@@ -144,7 +144,7 @@ class SettingsModel : public QObject {
   Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged);
 
   Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
-  Q_PROPERTY(QString savedVideosFolder READ getSavedVideosFolder WRITE setSavedVideosFolder NOTIFY savedVideosFolderChanged);
+  Q_PROPERTY(QString savedCallsFolder READ getSavedCallsFolder WRITE setSavedCallsFolder NOTIFY savedCallsFolderChanged);
   Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
 
   Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged);
@@ -354,8 +354,8 @@ public:
   QString getSavedScreenshotsFolder () const;
   void setSavedScreenshotsFolder (const QString &folder);
 
-  QString getSavedVideosFolder () const;
-  void setSavedVideosFolder (const QString &folder);
+  QString getSavedCallsFolder () const;
+  void setSavedCallsFolder (const QString &folder);
 
   QString getDownloadFolder () const;
   void setDownloadFolder (const QString &folder);
@@ -486,7 +486,7 @@ signals:
   // UI. -----------------------------------------------------------------------
 
   void savedScreenshotsFolderChanged (const QString &folder);
-  void savedVideosFolderChanged (const QString &folder);
+  void savedCallsFolderChanged (const QString &folder);
   void downloadFolderChanged (const QString &folder);
 
   void remoteProvisioningChanged (const QString &remoteProvisioning);

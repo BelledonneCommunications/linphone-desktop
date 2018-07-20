@@ -1532,10 +1532,6 @@ Server URL ist nicht konfiguriert.</translation>
         <translation>Ordner für gespeicherter Screenshots</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Ordner für gespeicherte Videos</translation>
-    </message>
-    <message>
         <source>languagesTitle</source>
         <translation>Sprachen</translation>
     </message>
@@ -1574,6 +1570,10 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>dataTitle</source>
         <translation>UI-Daten</translation>
+    </message>
+    <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

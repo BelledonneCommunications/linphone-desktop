@@ -94,7 +94,7 @@ void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(
     Utils::appStringToCoreString(
       QStringLiteral("%1%2.mkv")
-        .arg(CoreManager::getInstance()->getSettingsModel()->getSavedVideosFolder())
+        .arg(CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder())
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
     )
   );

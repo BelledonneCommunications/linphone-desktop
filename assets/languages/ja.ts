@@ -1532,10 +1532,6 @@
         <translation>スクリーンショットの保存先フォルダ</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>ビデオの保存先フォルダ</translation>
-    </message>
-    <message>
         <source>languagesTitle</source>
         <translation>言語</translation>
     </message>
@@ -1573,6 +1569,10 @@
     </message>
     <message>
         <source>dataTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>savedCallsLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1534,10 +1534,6 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <translation>Įrašytų ekrano kopijų aplankas</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Įrašytų vaizdo įrašų aplankas</translation>
-    </message>
-    <message>
         <source>languagesTitle</source>
         <translation>Kalbos</translation>
     </message>
@@ -1576,6 +1572,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <message>
         <source>dataTitle</source>
         <translation>Naudotojo sąsajos duomenys</translation>
+    </message>
+    <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -873,18 +873,22 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 
 // -----------------------------------------------------------------------------
 
-QString SettingsModel::getSavedVideosFolder () const {
+static inline string getLegacySavedCallsFolder (const shared_ptr<linphone::Config> &config) {
+  return config->getString(SettingsModel::UiSection, "saved_videos_folder", Paths::getCapturesDirPath());
+}
+
+QString SettingsModel::getSavedCallsFolder () const {
   return QDir::cleanPath(
     Utils::coreStringToAppString(
-      mConfig->getString(UiSection, "saved_videos_folder", Paths::getCapturesDirPath())
+      mConfig->getString(UiSection, "saved_calls_folder", getLegacySavedCallsFolder(mConfig))
     )
   ) + QDir::separator();
 }
 
-void SettingsModel::setSavedVideosFolder (const QString &folder) {
+void SettingsModel::setSavedCallsFolder (const QString &folder) {
   QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-  mConfig->setString(UiSection, "saved_videos_folder", Utils::appStringToCoreString(cleanedFolder));
-  emit savedVideosFolderChanged(cleanedFolder);
+  mConfig->setString(UiSection, "saved_calls_folder", Utils::appStringToCoreString(cleanedFolder));
+  emit savedCallsFolderChanged(cleanedFolder);
 }
 
 // -----------------------------------------------------------------------------

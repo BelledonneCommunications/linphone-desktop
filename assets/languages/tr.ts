@@ -1534,10 +1534,6 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <translation>Kaydedilen ekran görüntüleri klasörü</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Kaydedilen videolar klasörü</translation>
-    </message>
-    <message>
         <source>languagesTitle</source>
         <translation>Diller</translation>
     </message>
@@ -1576,6 +1572,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <message>
         <source>dataTitle</source>
         <translation>Kullanıcı Arayüzü Verisi</translation>
+    </message>
+    <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

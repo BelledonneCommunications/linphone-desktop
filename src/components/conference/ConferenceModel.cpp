@@ -83,7 +83,7 @@ void ConferenceModel::startRecording () {
   coreManager->getCore()->startConferenceRecording(
     Utils::appStringToCoreString(
       QStringLiteral("%1%2.mkv")
-        .arg(coreManager->getSettingsModel()->getSavedVideosFolder())
+        .arg(coreManager->getSettingsModel()->getSavedCallsFolder())
         .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
     )
   );

@@ -1537,8 +1537,8 @@ your friend&apos;s SIP address or username.</translation>
         <translation>Saved screenshots folder</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Saved videos folder</translation>
+        <source>savedCallsLabel</source>
+        <translation>Saved calls folder</translation>
     </message>
     <message>
         <source>languagesTitle</source>

@@ -1535,10 +1535,6 @@
         <translation>Папка для сохранения снимков</translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Папка для сохранения видео</translation>
-    </message>
-    <message>
         <source>languagesTitle</source>
         <translation>Языки</translation>
     </message>
@@ -1577,6 +1573,10 @@
     <message>
         <source>dataTitle</source>
         <translation>Данные пользовательского интерфейса</translation>
+    </message>
+    <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

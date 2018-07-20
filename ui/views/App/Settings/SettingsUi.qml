@@ -80,13 +80,13 @@ TabContainer {
         visible: SettingsModel.callRecorderEnabled
 
         FormGroup {
-          label: qsTr('savedVideosLabel')
+          label: qsTr('savedCallsLabel')
 
           FileChooserButton {
-            selectedFile: SettingsModel.savedVideosFolder
+            selectedFile: SettingsModel.savedCallsFolder
             selectFolder: true
 
-            onAccepted: SettingsModel.savedVideosFolder = selectedFile
+            onAccepted: SettingsModel.savedCallsFolder = selectedFile
           }
         }
       }

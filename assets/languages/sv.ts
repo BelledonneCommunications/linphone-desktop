@@ -1534,10 +1534,6 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>savedVideosLabel</source>
-        <translation>Mapp för sparade videoklipp</translation>
-    </message>
-    <message>
         <source>languagesTitle</source>
         <translation>Språk</translation>
     </message>
@@ -1575,6 +1571,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>dataTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>savedCallsLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
