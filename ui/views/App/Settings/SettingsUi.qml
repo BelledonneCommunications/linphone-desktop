@@ -58,7 +58,10 @@ TabContainer {
 
     Form {
       title: qsTr('pathsTitle')
-      visible: SettingsModel.videoSupported || SettingsModel.callRecorderEnabled || SettingsModel.chatEnabled
+      visible: SettingsModel.videoSupported ||
+        SettingsModel.callRecorderEnabled ||
+        SettingsModel.chatEnabled ||
+        SettingsModel.developerSettingsEnabled
       width: parent.width
 
       FormLine {
@@ -77,7 +80,7 @@ TabContainer {
       }
 
       FormLine {
-        visible: SettingsModel.callRecorderEnabled
+        visible: SettingsModel.callRecorderEnabled || SettingsModel.developerSettingsEnabled
 
         FormGroup {
           label: qsTr('savedCallsLabel')
@@ -92,7 +95,7 @@ TabContainer {
       }
 
       FormLine {
-        visible: SettingsModel.chatEnabled
+        visible: SettingsModel.chatEnabled || SettingsModel.developerSettingsEnabled
 
         FormGroup {
           label: qsTr('downloadLabel')
@@ -113,14 +116,14 @@ TabContainer {
 
     Form {
       title: qsTr('dataTitle')
-      visible: SettingsModel.contactsEnabled
+      visible: SettingsModel.contactsEnabled || SettingsModel.developerSettingsEnabled
       width: parent.width
     }
 
     TextButtonB {
       anchors.right: parent.right
       text: qsTr('cleanAvatars')
-      visible: SettingsModel.contactsEnabled
+      visible: SettingsModel.contactsEnabled || SettingsModel.developerSettingsEnabled
 
       onClicked: Logic.cleanAvatars()
     }

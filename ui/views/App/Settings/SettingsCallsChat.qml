@@ -195,8 +195,6 @@ TabContainer {
       }
 
       FormLine {
-        visible: SettingsModel.chatEnabled
-
         FormGroup {
           label: qsTr('fileServerLabel')
 
