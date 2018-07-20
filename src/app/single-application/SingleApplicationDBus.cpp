@@ -22,13 +22,15 @@
 
 #include <QDBusInterface>
 
+#include "config.h"
+
 #include "SingleApplication.hpp"
 #include "SingleApplicationDBusPrivate.hpp"
 
 // =============================================================================
 
 namespace {
-  constexpr char ServiceName[] = "org.linphone.SingleApplication";
+  constexpr char ServiceName[] = "org." EXECUTABLE_NAME ".SingleApplication";
 }
 
 SingleApplicationPrivate::SingleApplicationPrivate (SingleApplication *q_ptr)
