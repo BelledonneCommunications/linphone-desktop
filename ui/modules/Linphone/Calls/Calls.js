@@ -6,11 +6,19 @@
 
 // =============================================================================
 
-var MAP_STATUS_TO_PARAMS = (function () {
-  var CallModel = Linphone.CallModel
-  var map = {}
+// -----------------------------------------------------------------------------
+// Helpers.
+// -----------------------------------------------------------------------------
 
-  map[CallModel.CallStatusConnected] = (function (call) {
+function getParams (call) {
+  if (!call) {
+    return
+  }
+
+  var CallModel = Linphone.CallModel
+  var status = call.status
+
+  if (status === CallModel.CallStatusConnected) {
     return {
       actions: [{
         handler: (function () { call.pausedByUser = true }),
@@ -25,15 +33,15 @@ var MAP_STATUS_TO_PARAMS = (function () {
       component: callActions,
       string: 'connected'
     }
-  })
+  }
 
-  map[CallModel.CallStatusEnded] = (function (call) {
+  if (status === CallModel.CallStatusEnded) {
     return {
       string: 'ended'
     }
-  })
+  }
 
-  map[CallModel.CallStatusIncoming] = (function (call) {
+  if (status === CallModel.CallStatusIncoming) {
     return {
       actions: [{
         name: qsTr('acceptAudioCall'),
@@ -48,18 +56,18 @@ var MAP_STATUS_TO_PARAMS = (function () {
       component: callActions,
       string: 'incoming'
     }
-  })
+  }
 
-  map[CallModel.CallStatusOutgoing] = (function (call) {
+  if (status === CallModel.CallStatusOutgoing) {
     return {
       component: callAction,
       handler: call.terminate,
       icon: 'hangup',
       string: 'outgoing'
     }
-  })
+  }
 
-  map[CallModel.CallStatusPaused] = (function (call) {
+  if (status === CallModel.CallStatusPaused) {
     return {
       actions: [(call.pausedByUser ? {
         handler: (function () { call.pausedByUser = false }),
@@ -77,22 +85,8 @@ var MAP_STATUS_TO_PARAMS = (function () {
       component: callActions,
       string: 'paused'
     }
-  })
-
-  return map;
-})()
-
-// -----------------------------------------------------------------------------
-
-function getParams (call) {
-  if (call) {
-    return MAP_STATUS_TO_PARAMS[call.status](call)
   }
 }
-
-// -----------------------------------------------------------------------------
-// Helpers.
-// -----------------------------------------------------------------------------
 
 function updateSelectedCall (call, index) {
   calls._selectedCall = call

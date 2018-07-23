@@ -15,10 +15,10 @@ Item {
   property alias relativeX: popup.relativeX
   property alias relativeY: popup.relativeY
 
-  property alias entryHeight: menuContent.entryHeight
-  property alias entryWidth: menuContent.entryWidth
+  property alias entryHeight: content.entryHeight
+  property alias entryWidth: content.entryWidth
 
-  default property alias _content: menuContent.data
+  default property alias _content: content.data
 
   // ---------------------------------------------------------------------------
 
@@ -47,14 +47,13 @@ Item {
     onOpened: menu.opened()
     onClosed: menu.closed()
 
-    ColumnLayout {
-      id: menuContent
+    Column {
+      id: content
 
       property int entryHeight
       property int entryWidth
 
       spacing: DropDownStaticMenuStyle.spacing
-      height: menu._content.length
       width: menu.entryWidth
     }
   }
