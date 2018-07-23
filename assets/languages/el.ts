@@ -1145,6 +1145,10 @@
         <source>audioCodecsTitle</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1355,6 +1359,14 @@
         <source>rlsUriDisabled</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>showNetworkSettingsLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>generalTitle</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
@@ -1529,7 +1541,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>savedVideosLabel</source>
+        <source>savedCallsLabel</source>
         <translation type="unfinished"/>
     </message>
     <message>
@@ -1613,6 +1625,10 @@
     </message>
     <message>
         <source>showCameraPreview</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>showVideoCodecsLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>

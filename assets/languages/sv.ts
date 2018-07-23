@@ -1241,6 +1241,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
@@ -1546,6 +1550,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>languagesTitle</source>
         <translation>Språk</translation>
     </message>
@@ -1583,10 +1591,6 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>savedCallsLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

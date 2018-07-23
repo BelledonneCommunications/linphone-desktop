@@ -1242,6 +1242,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>outgoingCallsEnabledLabel</source>
         <translation>Activer les appels sortants</translation>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation>Afficher le clavier tél. automatiquement</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

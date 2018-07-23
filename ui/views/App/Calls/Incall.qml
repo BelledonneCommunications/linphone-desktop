@@ -447,6 +447,6 @@ Rectangle {
     id: telKeypad
 
     call: incall.call
-    visible: false
+    visible: SettingsModel.showTelKeypadAutomatically
   }
 }

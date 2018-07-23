@@ -1244,6 +1244,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>outgoingCallsEnabledLabel</source>
         <translation>Enable outgoing calls</translation>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation>Show telephone keypad automatically</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

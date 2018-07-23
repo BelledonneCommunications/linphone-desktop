@@ -1239,6 +1239,10 @@ Server URL ist nicht konfiguriert.</translation>
         <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
@@ -1544,6 +1548,10 @@ Server URL ist nicht konfiguriert.</translation>
         <translation>Ordner für gespeicherter Screenshots</translation>
     </message>
     <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>languagesTitle</source>
         <translation>Sprachen</translation>
     </message>
@@ -1582,10 +1590,6 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>dataTitle</source>
         <translation>UI-Daten</translation>
-    </message>
-    <message>
-        <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

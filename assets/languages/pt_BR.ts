@@ -1244,6 +1244,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
@@ -1549,6 +1553,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <translation>Salvar captura de tela na pasta</translation>
     </message>
     <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>languagesTitle</source>
         <translation>Idiomas</translation>
     </message>
@@ -1587,10 +1595,6 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <message>
         <source>dataTitle</source>
         <translation>Dados UI</translation>
-    </message>
-    <message>
-        <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

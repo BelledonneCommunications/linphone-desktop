@@ -102,6 +102,18 @@ TabContainer {
       }
 
       FormLine {
+        FormGroup {
+          label: qsTr('showTelKeypadAutomaticallyLabel')
+
+          Switch {
+            checked: SettingsModel.showTelKeypadAutomatically
+
+            onClicked: SettingsModel.showTelKeypadAutomatically = !checked
+          }
+        }
+      }
+
+      FormLine {
         visible: SettingsModel.developerSettingsEnabled
 
         FormGroup {

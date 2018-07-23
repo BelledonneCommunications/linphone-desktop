@@ -1242,6 +1242,10 @@
         <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
@@ -1547,6 +1551,10 @@
         <translation>Папка для сохранения снимков</translation>
     </message>
     <message>
+        <source>savedCallsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>languagesTitle</source>
         <translation>Языки</translation>
     </message>
@@ -1585,10 +1593,6 @@
     <message>
         <source>dataTitle</source>
         <translation>Данные пользовательского интерфейса</translation>
-    </message>
-    <message>
-        <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

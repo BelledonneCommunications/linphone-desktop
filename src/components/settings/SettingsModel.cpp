@@ -321,17 +321,6 @@ void SettingsModel::setShowVideoCodecs (bool status) {
 // Chat & calls.
 // =============================================================================
 
-int SettingsModel::getAutoAnswerDelay () const {
-  return mConfig->getInt(UiSection, "auto_answer_delay", 0);
-}
-
-void SettingsModel::setAutoAnswerDelay (int delay) {
-  mConfig->setInt(UiSection, "auto_answer_delay", delay);
-  emit autoAnswerDelayChanged(delay);
-}
-
-// -----------------------------------------------------------------------------
-
 bool SettingsModel::getAutoAnswerStatus () const {
   return !!mConfig->getInt(UiSection, "auto_answer", 0);
 }
@@ -350,6 +339,28 @@ bool SettingsModel::getAutoAnswerVideoStatus () const {
 void SettingsModel::setAutoAnswerVideoStatus (bool status) {
   mConfig->setInt(UiSection, "auto_answer_with_video", status);
   emit autoAnswerVideoStatusChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+int SettingsModel::getAutoAnswerDelay () const {
+  return mConfig->getInt(UiSection, "auto_answer_delay", 0);
+}
+
+void SettingsModel::setAutoAnswerDelay (int delay) {
+  mConfig->setInt(UiSection, "auto_answer_delay", delay);
+  emit autoAnswerDelayChanged(delay);
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getShowTelKeypadAutomatically () const {
+  return !!mConfig->getInt(UiSection, "show_tel_keypad_automatically", 0);
+}
+
+void SettingsModel::setShowTelKeypadAutomatically (bool status) {
+  mConfig->setInt(UiSection, "show_tel_keypad_automatically", status);
+  emit showTelKeypadAutomaticallyChanged(status);
 }
 
 // -----------------------------------------------------------------------------
