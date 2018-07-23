@@ -97,7 +97,7 @@ public:
     return mIsInConference;
   }
 
-  static void setRecordFile (std::shared_ptr<linphone::CallParams> &callParams);
+  static void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams);
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats);
 
   void notifyCameraFirstFrameReceived (unsigned int width, unsigned int height);
@@ -201,6 +201,8 @@ private:
   bool mPausedByRemote = false;
   bool mPausedByUser = false;
   bool mRecording = false;
+
+  bool mWasConnected = false;
 
   bool mNotifyCameraFirstFrameReceived = true;
 

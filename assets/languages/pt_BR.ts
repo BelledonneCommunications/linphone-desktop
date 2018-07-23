@@ -1248,6 +1248,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <source>showTelKeypadAutomaticallyLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>automaticallyRecordCallsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

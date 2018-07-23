@@ -1246,6 +1246,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showTelKeypadAutomaticallyLabel</source>
         <translation>Afficher le clavier tél. automatiquement</translation>
     </message>
+    <message>
+        <source>automaticallyRecordCallsLabel</source>
+        <translation>Enregister auto. les appels</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

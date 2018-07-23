@@ -90,7 +90,7 @@ QString CallModel::getSipAddress () const {
 
 // -----------------------------------------------------------------------------
 
-void CallModel::setRecordFile (shared_ptr<linphone::CallParams> &callParams) {
+void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(
     Utils::appStringToCoreString(
       QStringLiteral("%1%2.mkv")
@@ -273,13 +273,18 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
     case linphone::CallStateEnd:
       setCallErrorFromReason(call->getReason());
       stopAutoAnswerTimer();
+      stopRecording();
       mPausedByRemote = false;
       break;
 
+    case linphone::CallStateStreamsRunning:
+      if (!mWasConnected && CoreManager::getInstance()->getSettingsModel()->getAutomaticallyRecordCalls()) {
+        startRecording();
+        mWasConnected = true;
+      } UTILS_NO_BREAK;
     case linphone::CallStateConnected:
     case linphone::CallStateRefered:
     case linphone::CallStateReleased:
-    case linphone::CallStateStreamsRunning:
       mPausedByRemote = false;
       break;
 

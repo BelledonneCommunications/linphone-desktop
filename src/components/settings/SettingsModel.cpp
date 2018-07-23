@@ -387,6 +387,17 @@ void SettingsModel::setCallRecorderEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getAutomaticallyRecordCalls () const {
+  return !!mConfig->getInt(UiSection, "automatically_record_calls", 0);
+}
+
+void SettingsModel::setAutomaticallyRecordCalls (bool status) {
+  mConfig->setInt(UiSection, "automatically_record_calls", status);
+  emit automaticallyRecordCallsChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getMuteMicrophoneEnabled () const {
   return !!mConfig->getInt(UiSection, "mute_microphone_enabled", 1);
 }

@@ -1248,6 +1248,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>showTelKeypadAutomaticallyLabel</source>
         <translation>Show telephone keypad automatically</translation>
     </message>
+    <message>
+        <source>automaticallyRecordCallsLabel</source>
+        <translation>Automatically record calls</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

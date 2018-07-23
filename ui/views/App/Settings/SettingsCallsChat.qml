@@ -150,6 +150,20 @@ TabContainer {
           }
         }
       }
+
+      FormLine {
+        visible: SettingsModel.callRecorderEnabled || SettingsModel.developerSettingsEnabled
+
+        FormGroup {
+          label: qsTr('automaticallyRecordCallsLabel')
+
+          Switch {
+            checked: SettingsModel.automaticallyRecordCalls
+
+            onClicked: SettingsModel.automaticallyRecordCalls = !checked
+          }
+        }
+      }
     }
 
     Form {
