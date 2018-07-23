@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
@@ -26,6 +27,12 @@ ColumnLayout {
     elide: Text.ElideRight
     font.pointSize: FormVGroupStyle.legend.pointSize
     verticalAlignment: Text.AlignVCenter
+
+    TooltipArea {
+      delay: 0
+      text: parent.text
+      visible: parent.truncated
+    }
   }
 
   // ---------------------------------------------------------------------------

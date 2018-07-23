@@ -20,8 +20,9 @@
  *      Author: Ronan Abhamon
  */
 
-#include <QTimer>
 #include <QQmlApplicationEngine>
+#include <QQuickWindow>
+#include <QTimer>
 
 #include "app/App.hpp"
 #include "components/call/CallModel.hpp"
@@ -29,6 +30,7 @@
 #include "components/conference/ConferenceHelperModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "CallsListModel.hpp"
@@ -226,8 +228,14 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
-  if (call->getDir() == linphone::CallDirOutgoing)
-    App::smartShowWindow(App::getInstance()->getCallsWindow());
+  if (call->getDir() == linphone::CallDirOutgoing) {
+    QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+    if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
+      if (!callsWindow->isVisible())
+        callsWindow->showMinimized();
+    } else
+      App::smartShowWindow(callsWindow);
+  }
 
   CallModel *callModel = new CallModel(call);
   qInfo() << QStringLiteral("Add call:") << callModel;

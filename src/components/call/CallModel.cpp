@@ -21,6 +21,7 @@
  */
 
 #include <QDateTime>
+#include <QQuickWindow>
 #include <QTimer>
 
 #include "app/App.hpp"
@@ -151,27 +152,11 @@ void CallModel::notifyCameraFirstFrameReceived (unsigned int width, unsigned int
 // -----------------------------------------------------------------------------
 
 void CallModel::accept () {
-  stopAutoAnswerTimer();
-
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-  params->enableVideo(false);
-  setRecordFile(params);
-
-  App::smartShowWindow(App::getInstance()->getCallsWindow());
-  mCall->acceptWithParams(params);
+  accept(false);
 }
 
 void CallModel::acceptWithVideo () {
-  stopAutoAnswerTimer();
-
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-  params->enableVideo(true);
-  setRecordFile(params);
-
-  App::smartShowWindow(App::getInstance()->getCallsWindow());
-  mCall->acceptWithParams(params);
+  accept(true);
 }
 
 void CallModel::terminate () {
@@ -307,7 +292,6 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
         mCall->deferUpdate();
         emit videoRequested();
       }
-
       break;
 
     case linphone::CallStateIdle:
@@ -325,6 +309,28 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
   }
 
   emit statusChanged(getStatus());
+}
+
+// -----------------------------------------------------------------------------
+
+void CallModel::accept (bool withVideo) {
+  stopAutoAnswerTimer();
+
+  CoreManager *coreManager = CoreManager::getInstance();
+
+  shared_ptr<linphone::Core> core = coreManager->getCore();
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
+  params->enableVideo(withVideo);
+  setRecordFile(params);
+
+  QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+  if (coreManager->getSettingsModel()->getKeepCallsWindowInBackground()) {
+    if (!callsWindow->isVisible())
+      callsWindow->showMinimized();
+  } else
+    App::smartShowWindow(callsWindow);
+
+  mCall->acceptWithParams(params);
 }
 
 // -----------------------------------------------------------------------------
@@ -496,7 +502,6 @@ void CallModel::setPausedByUser (bool status) {
   if (status) {
     if (!mPausedByUser)
       mCall->pause();
-
     return;
   }
 

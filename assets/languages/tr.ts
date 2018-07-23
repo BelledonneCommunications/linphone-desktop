@@ -1249,6 +1249,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>automaticallyRecordCallsLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

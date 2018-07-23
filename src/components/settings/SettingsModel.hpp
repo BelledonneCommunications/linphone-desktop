@@ -84,6 +84,8 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(bool showTelKeypadAutomatically READ getShowTelKeypadAutomatically WRITE setShowTelKeypadAutomatically NOTIFY showTelKeypadAutomaticallyChanged);
 
+  Q_PROPERTY(bool keepCallsWindowInBackground READ getKeepCallsWindowInBackground WRITE setKeepCallsWindowInBackground NOTIFY keepCallsWindowInBackgroundChanged);
+
   Q_PROPERTY(bool outgoingCallsEnabled READ getOutgoingCallsEnabled WRITE setOutgoingCallsEnabled NOTIFY outgoingCallsEnabledChanged);
 
   Q_PROPERTY(bool callRecorderEnabled READ getCallRecorderEnabled WRITE setCallRecorderEnabled NOTIFY callRecorderEnabledChanged);
@@ -265,6 +267,9 @@ public:
 
   bool getShowTelKeypadAutomatically () const;
   void setShowTelKeypadAutomatically (bool status);
+
+  bool getKeepCallsWindowInBackground () const;
+  void setKeepCallsWindowInBackground (bool status);
 
   bool getOutgoingCallsEnabled () const;
   void setOutgoingCallsEnabled (bool status);
@@ -460,6 +465,8 @@ signals:
   void autoAnswerDelayChanged (int delay);
 
   void showTelKeypadAutomaticallyChanged (bool status);
+
+  void keepCallsWindowInBackgroundChanged (bool status);
 
   void outgoingCallsEnabledChanged (bool status);
 

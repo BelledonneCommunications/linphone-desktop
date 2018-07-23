@@ -22,12 +22,15 @@
 
 #include <iostream>
 
+#include <QQuickWindow>
+
 #include "config.h"
 
 #include "app/App.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "Cli.hpp"
@@ -121,13 +124,20 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
   shared_ptr<linphone::Conference> conference = core->getConference();
   const QString id = args["conference-id"];
 
+  auto updateCallsWindow = []() {
+    // TODO: Set the view to the "waiting call view".
+    QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+    if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
+      if (!callsWindow->isVisible())
+        callsWindow->showMinimized();
+    } else
+      App::smartShowWindow(callsWindow);
+  };
 
-  App *app = App::getInstance();
   if (conference) {
     if (conference->getId() == Utils::appStringToCoreString(id)) {
       qInfo() << QStringLiteral("Conference `%1` already exists.").arg(id);
-      // TODO: Set the view to the "waiting call view".
-      app->smartShowWindow(app->getCallsWindow());
+      updateCallsWindow();
       return;
     }
 
@@ -144,8 +154,8 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
     qWarning() << QStringLiteral("Unable to join created conference: `%1`.").arg(id);
     return;
   }
-  // TODO: Set the view to the "waiting call view".
-  app->smartShowWindow(app->getCallsWindow());
+
+  updateCallsWindow();
 }
 
 // =============================================================================

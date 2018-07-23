@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
@@ -28,6 +29,12 @@ RowLayout {
 
     horizontalAlignment: Text.AlignRight
     verticalAlignment: Text.AlignVCenter
+
+    TooltipArea {
+      delay: 0
+      text: parent.text
+      visible: parent.truncated
+    }
   }
 
   // ---------------------------------------------------------------------------

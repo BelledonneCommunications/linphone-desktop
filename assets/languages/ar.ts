@@ -1236,6 +1236,10 @@
         <source>outgoingCallsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>showTelKeypadAutomaticallyLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

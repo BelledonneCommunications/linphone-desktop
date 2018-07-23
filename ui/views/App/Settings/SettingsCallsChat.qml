@@ -111,6 +111,16 @@ TabContainer {
             onClicked: SettingsModel.showTelKeypadAutomatically = !checked
           }
         }
+
+        FormGroup {
+          label: qsTr('keepCallsWindowInBackgroundLabel')
+
+          Switch {
+            checked: SettingsModel.keepCallsWindowInBackground
+
+            onClicked: SettingsModel.keepCallsWindowInBackground = !checked
+          }
+        }
       }
 
       FormLine {

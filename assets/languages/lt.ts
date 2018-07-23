@@ -1249,6 +1249,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>automaticallyRecordCallsLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

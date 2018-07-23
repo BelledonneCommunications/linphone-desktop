@@ -140,6 +140,8 @@ private:
   void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
 
+  void accept (bool withVideo);
+
   void stopAutoAnswerTimer () const;
 
   CallStatus getStatus () const;

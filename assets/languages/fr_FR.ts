@@ -1250,6 +1250,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>automaticallyRecordCallsLabel</source>
         <translation>Enregister auto. les appels</translation>
     </message>
+    <message>
+        <source>keepCallsWindowInBackgroundLabel</source>
+        <translation>Fenêtre d&apos;appels en tâche de fond</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

@@ -1,9 +1,14 @@
 import QtQuick 2.7
 
+import Common.Styles 1.0
+
 // =============================================================================
 
 MouseArea {
+  id: tooltipArea
+
   property alias text: tooltip.text
+  property int delay: TooltipStyle.delay
   property bool force: false
   property var tooltipParent: parent
 
@@ -23,6 +28,7 @@ MouseArea {
   Tooltip {
     id: tooltip
 
+    delay: tooltipArea.delay
     parent: tooltipParent
     visible: _visible || force
 

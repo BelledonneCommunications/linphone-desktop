@@ -365,6 +365,17 @@ void SettingsModel::setShowTelKeypadAutomatically (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getKeepCallsWindowInBackground () const {
+  return !!mConfig->getInt(UiSection, "keep_calls_window_in_background", 0);
+}
+
+void SettingsModel::setKeepCallsWindowInBackground (bool status) {
+  mConfig->setInt(UiSection, "keep_calls_window_in_background", status);
+  emit keepCallsWindowInBackgroundChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getOutgoingCallsEnabled () const {
   return !!mConfig->getInt(UiSection, "outgoing_calls_enabled", 1);
 }

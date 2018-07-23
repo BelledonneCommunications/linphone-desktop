@@ -1252,6 +1252,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>automaticallyRecordCallsLabel</source>
         <translation>Automatically record calls</translation>
     </message>
+    <message>
+        <source>keepCallsWindowInBackgroundLabel</source>
+        <translation>Keep calls window in background</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
