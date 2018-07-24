@@ -37,7 +37,7 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
 
       // Ignore extra selectors.
       // TODO: Remove 5.9 support in July 2019.
-      for (const auto &selector : { "+linux", "+mac", "+windows", "+5.9" })
+      for (const auto &selector : { "+linux", "+mac", "+windows", "+custom", "+5.9" })
         if (dir.contains(selector))
           goto end;
 
