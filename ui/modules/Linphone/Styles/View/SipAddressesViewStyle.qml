@@ -14,7 +14,7 @@ QtObject {
 
     property QtObject color: QtObject {
       property color hovered: Colors.o
-      property color normal: Colors.k
+      property color normal: Colors.q
     }
 
     property QtObject indicator: QtObject {
@@ -46,8 +46,8 @@ QtObject {
       property int pointSize: Units.dp * 9
 
       property QtObject color: QtObject {
-        property color normal: Colors.k
-        property color pressed: Colors.k
+        property color normal: Colors.q
+        property color pressed: Colors.q
       }
     }
   }

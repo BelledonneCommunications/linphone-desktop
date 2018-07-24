@@ -25,12 +25,12 @@ QtObject {
 
     property QtObject sipAddressColor: QtObject {
       property color normal: Colors.n
-      property color selected: Colors.k
+      property color selected: Colors.q
     }
 
     property QtObject usernameColor: QtObject {
       property color normal: Colors.j
-      property color selected: Colors.k
+      property color selected: Colors.q
     }
   }
 }

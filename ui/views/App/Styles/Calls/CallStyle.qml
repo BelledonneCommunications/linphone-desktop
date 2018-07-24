@@ -43,7 +43,7 @@ QtObject {
       property color color: Colors.g90
 
       property QtObject text: QtObject {
-        property color color: Colors.k
+        property color color: Colors.q
         property int pointSizeFactor: 10
       }
     }

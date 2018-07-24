@@ -8,7 +8,7 @@ import Units 1.0
 
 QtObject {
   property color backgroundColor: Colors.g
-  property color color: Colors.k
+  property color color: Colors.q
   property int arrowSize: 8
   property int delay: 1000
   property int pointSize: Units.dp * 9

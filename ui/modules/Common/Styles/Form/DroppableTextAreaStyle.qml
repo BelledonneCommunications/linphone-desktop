@@ -7,7 +7,7 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.k
+  property color backgroundColor: Colors.q
 
   property QtObject fileChooserButton: QtObject {
     property int margins: 6
@@ -15,7 +15,7 @@ QtObject {
   }
 
   property QtObject hoverContent: QtObject {
-    property color backgroundColor: Colors.k
+    property color backgroundColor: Colors.q
 
     property QtObject text: QtObject {
       property color color: Colors.i

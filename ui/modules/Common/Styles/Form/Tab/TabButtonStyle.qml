@@ -28,10 +28,10 @@ QtObject {
     property int rightPadding: 10
 
     property QtObject color: QtObject {
-      property color disabled: Colors.k
-      property color hovered: Colors.k
-      property color normal: Colors.k
-      property color pressed: Colors.k
+      property color disabled: Colors.q
+      property color hovered: Colors.q
+      property color normal: Colors.q
+      property color pressed: Colors.q
       property color selected: Colors.i
     }
   }

@@ -32,8 +32,8 @@ QtObject {
       property int pointSize: Units.dp * 11
 
       property QtObject color: QtObject {
-        property color normal: Colors.k50
-        property color selected: Colors.k
+        property color normal: Colors.q50
+        property color selected: Colors.q
       }
     }
   }

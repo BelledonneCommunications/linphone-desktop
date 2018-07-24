@@ -14,13 +14,13 @@ QtObject {
   }
 
   property QtObject callsList: QtObject {
-    property color color: Colors.k
+    property color color: Colors.q
     property int defaultWidth: 250
     property int maximumWidth: 250
     property int minimumWidth: 110
 
     property QtObject header: QtObject {
-      property color color1: Colors.k
+      property color color1: Colors.q
       property color color2: Colors.f
       property int height: 60
       property int iconSize: 40

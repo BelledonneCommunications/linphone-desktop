@@ -10,7 +10,7 @@ QtObject {
   property color backgroundColor: Colors.d
 
   property QtObject initials: QtObject {
-    property color color: Colors.k
+    property color color: Colors.q
     property int pointSize: Units.dp * 10
     property int ratio: 30
   }

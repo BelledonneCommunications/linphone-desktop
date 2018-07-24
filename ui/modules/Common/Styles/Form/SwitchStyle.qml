@@ -25,7 +25,7 @@ QtObject {
     property QtObject color: QtObject {
       property color checked: Colors.i
       property color disabled: Colors.e
-      property color normal: Colors.k
+      property color normal: Colors.q
     }
   }
 
@@ -44,7 +44,7 @@ QtObject {
     property QtObject color: QtObject {
       property color disabled: Colors.e
       property color pressed: Colors.c
-      property color normal: Colors.k
+      property color normal: Colors.q
     }
   }
 }

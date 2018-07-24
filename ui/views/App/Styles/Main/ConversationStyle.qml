@@ -37,7 +37,7 @@ QtObject {
   }
 
   property QtObject filters: QtObject {
-    property color backgroundColor: Colors.k
+    property color backgroundColor: Colors.q
     property int height: 51
     property int leftMargin: 40
 

@@ -73,7 +73,10 @@ class Colors : public QObject {
   ADD_COLOR(i, "#FE5E00");
 
   ADD_COLOR(j, "#4B5964");
+
+  // Popups, home, call, assistant and settings background.
   ADD_COLOR(k, "#FFFFFF");
+
   ADD_COLOR(l, "#000000");
 
   // Primary color for clicked items.
@@ -85,7 +88,7 @@ class Colors : public QObject {
   // Progress bar.
   ADD_COLOR(p, "#17A81A");
 
-  // Field background.
+  // Fields, backgrounds and text color on some items.
   ADD_COLOR(q, "#FFFFFF");
 
   // Field error.
@@ -95,9 +98,9 @@ class Colors : public QObject {
   ADD_COLOR_WITH_ALPHA(g, 20);
   ADD_COLOR_WITH_ALPHA(g, 90);
   ADD_COLOR_WITH_ALPHA(i, 30);
-  ADD_COLOR_WITH_ALPHA(k, 50);
   ADD_COLOR_WITH_ALPHA(l, 50);
   ADD_COLOR_WITH_ALPHA(l, 80);
+  ADD_COLOR_WITH_ALPHA(q, 50);
 
 public:
   Colors (QObject *parent = Q_NULLPTR);

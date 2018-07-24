@@ -16,7 +16,7 @@ QtObject {
   }
 
   property QtObject text: QtObject {
-    property color color: Colors.k
+    property color color: Colors.q
     property int pointSize: Units.dp * 7
   }
 }

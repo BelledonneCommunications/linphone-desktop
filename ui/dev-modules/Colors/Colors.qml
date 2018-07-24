@@ -20,7 +20,6 @@ QtObject {
   property color j: '#000000'
   property color j75: '#000000'
   property color k: '#000000'
-  property color k50: '#000000'
   property color l: '#000000'
   property color l50: '#000000'
   property color l80: '#000000'

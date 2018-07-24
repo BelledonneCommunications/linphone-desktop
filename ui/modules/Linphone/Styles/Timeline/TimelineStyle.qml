@@ -7,7 +7,7 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property color color: Colors.k
+  property color color: Colors.q
 
   property QtObject contact: QtObject {
     property int height: 60
@@ -21,14 +21,14 @@ QtObject {
     property QtObject sipAddress: QtObject {
       property QtObject color: QtObject {
         property color normal: Colors.n
-        property color selected: Colors.k
+        property color selected: Colors.q
       }
     }
 
     property QtObject username: QtObject {
       property QtObject color: QtObject {
         property color normal: Colors.j
-        property color selected: Colors.k
+        property color selected: Colors.q
       }
     }
   }

@@ -7,7 +7,7 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property color color: Colors.k
+  property color color: Colors.q
 
   property QtObject sectionHeading: QtObject {
     property int padding: 5
@@ -84,7 +84,7 @@ QtObject {
           }
 
           property QtObject text: QtObject {
-            property color color: Colors.k
+            property color color: Colors.q
           }
         }
 
