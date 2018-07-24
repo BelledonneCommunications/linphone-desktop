@@ -61,7 +61,7 @@ SearchBox {
 
     headerButtonDescription: qsTr('addContact')
     headerButtonIcon: 'contact_add'
-    headerButtonAction: (function (sipAddress) {
+    headerButtonAction: SettingsModel.contactsEnabled && (function (sipAddress) {
       searchBox.closeMenu()
       searchBox.addContact(sipAddress)
     })
