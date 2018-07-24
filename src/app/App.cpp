@@ -602,12 +602,9 @@ void App::openAppAfterInit (bool mustBeIconified) {
     smartShowWindow(mainWindow);
   #endif // ifndef __APPLE__
 
-  // Display Assistant if it's the first time app launch.
-  shared_ptr<linphone::Config> config(CoreManager::getInstance()->getCore()->getConfig());
-  if (config->getInt(SettingsModel::UiSection, "force_assistant_at_startup", 1)) {
+  // Display Assistant if it does not exist proxy config.
+  if (CoreManager::getInstance()->getCore()->getProxyConfigList().empty())
     QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
-    config->setInt(SettingsModel::UiSection, "force_assistant_at_startup", 0);
-  }
 
   #ifdef ENABLE_UPDATE_CHECK
     QTimer *timer = new QTimer(mEngine);
