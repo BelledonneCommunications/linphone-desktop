@@ -19,7 +19,7 @@ QtObject {
     }
 
     property QtObject color: QtObject {
-      property color normal: Colors.k
+      property color normal: Colors.q
       property color readOnly: Colors.e
     }
   }

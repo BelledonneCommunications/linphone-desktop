@@ -59,6 +59,8 @@ class Colors : public QObject {
   Q_PROPERTY(QStringList colorNames READ getColorNames CONSTANT);
 
   ADD_COLOR(a, "transparent");
+
+  // Primary color.
   ADD_COLOR(b, "#D64D00");
   ADD_COLOR(c, "#CBCBCB");
   ADD_COLOR(d, "#5A585B");
@@ -66,15 +68,27 @@ class Colors : public QObject {
   ADD_COLOR(f, "#E8E8E8");
   ADD_COLOR(g, "#6B7A86");
   ADD_COLOR(h, "#687680");
+
+  // Primary color for hovered items.
   ADD_COLOR(i, "#FE5E00");
+
   ADD_COLOR(j, "#4B5964");
   ADD_COLOR(k, "#FFFFFF");
   ADD_COLOR(l, "#000000");
+
+  // Primary color for clicked items.
   ADD_COLOR(m, "#FF8600");
+
   ADD_COLOR(n, "#A1A1A1");
   ADD_COLOR(o, "#D0D8DE");
+
+  // Progress bar.
   ADD_COLOR(p, "#17A81A");
 
+  // Field background.
+  ADD_COLOR(q, "#FFFFFF");
+
+  // Field error.
   ADD_COLOR(error, "#FF0000");
 
   ADD_COLOR_WITH_ALPHA(g, 10);
@@ -107,6 +121,7 @@ signals:
   void colorTnChanged (const QColor &color);
   void colorToChanged (const QColor &color);
   void colorTpChanged (const QColor &color);
+  void colorTqChanged (const QColor &color);
 
   void colorTerrorChanged (const QColor &color);
 
