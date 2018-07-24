@@ -66,6 +66,8 @@ namespace {
 
   constexpr char AttachVirtualWindowMethodName[] = "attachVirtualWindow";
   constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
+
+  constexpr char AssistantViewName[] = "Assistant";
 }
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
@@ -604,7 +606,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
 
   // Display Assistant if it does not exist proxy config.
   if (CoreManager::getInstance()->getCore()->getProxyConfigList().empty())
-    QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, "Assistant"), Q_ARG(QVariant, QString("")));
+    QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, AssistantViewName), Q_ARG(QVariant, QString("")));
 
   #ifdef ENABLE_UPDATE_CHECK
     QTimer *timer = new QTimer(mEngine);
