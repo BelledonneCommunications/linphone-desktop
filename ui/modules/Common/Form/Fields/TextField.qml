@@ -23,7 +23,11 @@ Controls.TextField {
     border {
       color: textField.error.length > 0
         ? TextFieldStyle.background.border.color.error
-        : TextFieldStyle.background.border.color.normal
+        : (
+          textField.activeFocus && !textField.readOnly
+            ? TextFieldStyle.background.border.color.selected
+            : TextFieldStyle.background.border.color.normal
+        )
       width: TextFieldStyle.background.border.width
     }
 

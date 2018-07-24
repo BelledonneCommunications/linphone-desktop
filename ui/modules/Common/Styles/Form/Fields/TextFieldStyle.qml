@@ -17,6 +17,7 @@ QtObject {
       property QtObject color: QtObject {
         property color error: Colors.error
         property color normal: Colors.c
+        property color selected: Colors.i
       }
 
       property int width: 1
