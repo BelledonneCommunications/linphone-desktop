@@ -500,8 +500,7 @@ void SipAddressesModel::initSipAddresses () {
 
 void SipAddressesModel::initSipAddressesFromChat () {
   for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms()) {
-    list<shared_ptr<linphone::ChatMessage>> history = chatRoom->getHistory(0);
-
+    list<shared_ptr<linphone::ChatMessage>> history = chatRoom->getHistory(1);
     if (history.empty())
       continue;
 
