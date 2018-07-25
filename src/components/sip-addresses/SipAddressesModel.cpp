@@ -511,7 +511,6 @@ void SipAddressesModel::initSipAddressesFromChat () {
     map["timestamp"] = QDateTime::fromMSecsSinceEpoch(history.back()->getTime() * 1000);
     map["unreadMessagesCount"] = chatRoom->getUnreadMessagesCount();
 
-    qInfo() << QStringLiteral("Add sip address: `%1`.").arg(map["sipAddress"].toString());
     mSipAddresses[sipAddress] = map;
   }
 }
