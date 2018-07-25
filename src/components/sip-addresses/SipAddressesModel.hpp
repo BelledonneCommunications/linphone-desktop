@@ -109,6 +109,12 @@ private:
 
   void initSipAddresses ();
 
+  void initSipAddressesFromChat ();
+  void initSipAddressesFromCalls ();
+  void initSipAddressesFromContacts ();
+
+  void initRefs ();
+
   void updateObservers (const QString &sipAddress, ContactModel *contact);
   void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
   void updateObservers (const QString &sipAddress, int messagesCount);

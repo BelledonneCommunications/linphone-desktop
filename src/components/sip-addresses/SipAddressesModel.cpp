@@ -122,12 +122,11 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
   }
 
   mObservers.insert(cleanedSipAddress, model);
-  QObject::connect(
-    model, &SipAddressObserver::destroyed, this, [this, model, cleanedSipAddress]() {
-      // Do not use `model` methods here. `model` is partially destroyed here!
-      if (mObservers.remove(cleanedSipAddress, model) == 0)
-        qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(cleanedSipAddress);
-    });
+  QObject::connect(model, &SipAddressObserver::destroyed, this, [this, model, cleanedSipAddress]() {
+    // Do not use `model` methods here. `model` is partially destroyed here!
+    if (mObservers.remove(cleanedSipAddress, model) == 0)
+      qWarning() << QStringLiteral("Unable to remove sip address `%1` from observers.").arg(cleanedSipAddress);
+  });
 
   return model;
 }
@@ -136,8 +135,8 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &sip
 
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) const {
   const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
-      Utils::appStringToCoreString(sipAddress)
-    );
+    Utils::appStringToCoreString(sipAddress)
+  );
 
   if (!address)
     return QString("");
@@ -490,14 +489,20 @@ void SipAddressesModel::removeContactOfSipAddress (const QString &sipAddress) {
   removeRow(row);
 }
 
-void SipAddressesModel::initSipAddresses () {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+// -----------------------------------------------------------------------------
 
-  // Get sip addresses from chatrooms.
-  for (const auto &chatRoom : core->getChatRooms()) {
+void SipAddressesModel::initSipAddresses () {
+  initSipAddressesFromChat();
+  initSipAddressesFromCalls();
+  initRefs();
+  initSipAddressesFromContacts();
+}
+
+void SipAddressesModel::initSipAddressesFromChat () {
+  for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms()) {
     list<shared_ptr<linphone::ChatMessage>> history = chatRoom->getHistory(0);
 
-    if (history.size() == 0)
+    if (history.empty())
       continue;
 
     QString sipAddress = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
@@ -507,12 +512,14 @@ void SipAddressesModel::initSipAddresses () {
     map["timestamp"] = QDateTime::fromMSecsSinceEpoch(history.back()->getTime() * 1000);
     map["unreadMessagesCount"] = chatRoom->getUnreadMessagesCount();
 
+    qInfo() << QStringLiteral("Add sip address: `%1`.").arg(map["sipAddress"].toString());
     mSipAddresses[sipAddress] = map;
   }
+}
 
-  // Get sip addresses from calls.
+void SipAddressesModel::initSipAddressesFromCalls () {
   QSet<QString> addressDone;
-  for (const auto &callLog : core->getCallLogs()) {
+  for (const auto &callLog : CoreManager::getInstance()->getCore()->getCallLogs()) {
     const QString sipAddress = Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
 
     if (addressDone.contains(sipAddress))
@@ -535,15 +542,16 @@ void SipAddressesModel::initSipAddresses () {
     if (it == mSipAddresses.end() || map["timestamp"] > (*it)["timestamp"])
       mSipAddresses[sipAddress] = map;
   }
+}
 
-  for (const auto &map : mSipAddresses) {
-    qInfo() << QStringLiteral("Add sip address: `%1`.").arg(map["sipAddress"].toString());
-    mRefs << &map;
-  }
-
-  // Get sip addresses from contacts.
+void SipAddressesModel::initSipAddressesFromContacts () {
   for (auto &contact : CoreManager::getInstance()->getContactsListModel()->mList)
     handleContactAdded(contact);
+}
+
+void SipAddressesModel::initRefs () {
+  for (const auto &map : mSipAddresses)
+    mRefs << &map;
 }
 
 // -----------------------------------------------------------------------------

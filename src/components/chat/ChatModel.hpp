@@ -127,7 +127,7 @@ private:
   void fillCallStartEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
   void fillCallEndEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
 
-  void removeEntry (ChatEntryData &pair);
+  void removeEntry (ChatEntryData &entry);
 
   void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);

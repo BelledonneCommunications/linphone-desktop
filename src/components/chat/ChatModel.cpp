@@ -140,9 +140,9 @@ public:
 
 private:
   QList<ChatEntryData>::iterator findMessageEntry (const shared_ptr<linphone::ChatMessage> &message) {
-    return find_if(mChatModel->mEntries.begin(), mChatModel->mEntries.end(), [&message](const ChatEntryData &pair) {
-        return pair.second == message;
-      });
+    return find_if(mChatModel->mEntries.begin(), mChatModel->mEntries.end(), [&message](const ChatEntryData &entry) {
+      return entry.second == message;
+    });
   }
 
   void signalDataChanged (const QList<ChatEntryData>::iterator &it) {
@@ -210,9 +210,9 @@ private:
 // -----------------------------------------------------------------------------
 
 ChatModel::ChatModel (const QString &sipAddress) {
-  CoreManager *core = CoreManager::getInstance();
+  CoreManager *coreManager = CoreManager::getInstance();
 
-  mCoreHandlers = core->getHandlers();
+  mCoreHandlers = coreManager->getHandlers();
   mMessageHandlers = make_shared<MessageHandlers>(this);
 
   setSipAddress(sipAddress);
@@ -298,6 +298,7 @@ void ChatModel::setSipAddress (const QString &sipAddress) {
   handleIsComposingChanged(mChatRoom);
 
   // Get messages.
+  mEntries.clear();
   for (auto &message : mChatRoom->getHistory(0)) {
     QVariantMap map;
 
@@ -446,11 +447,11 @@ void ChatModel::downloadFile (int id) {
 
   bool soFarSoGood;
   const QString safeFilePath = Utils::getSafeFilePath(
-      QStringLiteral("%1%2")
+    QStringLiteral("%1%2")
       .arg(CoreManager::getInstance()->getSettingsModel()->getDownloadFolder())
       .arg(entry.first["fileName"].toString()),
-      &soFarSoGood
-    );
+    &soFarSoGood
+  );
 
   if (!soFarSoGood) {
     qWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(id);
@@ -561,34 +562,34 @@ void ChatModel::fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::removeEntry (ChatEntryData &pair) {
-  int type = pair.first["type"].toInt();
+void ChatModel::removeEntry (ChatEntryData &entry) {
+  int type = entry.first["type"].toInt();
 
   switch (type) {
     case ChatModel::MessageEntry: {
-      shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(pair.second);
+      shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
       removeFileMessageThumbnail(message);
       mChatRoom->deleteMessage(message);
       break;
     }
 
     case ChatModel::CallEntry: {
-      if (pair.first["status"].toInt() == linphone::CallStatusSuccess) {
+      if (entry.first["status"].toInt() == linphone::CallStatusSuccess) {
         // WARNING: Unable to remove symmetric call here. (start/end)
         // We are between `beginRemoveRows` and `endRemoveRows`.
         // A solution is to schedule a `removeEntry` call in the Qt main loop.
-        shared_ptr<void> linphonePtr = pair.second;
+        shared_ptr<void> linphonePtr = entry.second;
         QTimer::singleShot(0, this, [this, linphonePtr]() {
-            auto it = find_if(mEntries.begin(), mEntries.end(), [linphonePtr](const ChatEntryData &pair) {
-                  return pair.second == linphonePtr;
-                });
-
-            if (it != mEntries.end())
-              removeEntry(int(distance(mEntries.begin(), it)));
+          auto it = find_if(mEntries.begin(), mEntries.end(), [linphonePtr](const ChatEntryData &entry) {
+            return entry.second == linphonePtr;
           });
+
+          if (it != mEntries.end())
+            removeEntry(int(distance(mEntries.begin(), it)));
+        });
       }
 
-      CoreManager::getInstance()->getCore()->removeCallLog(static_pointer_cast<linphone::CallLog>(pair.second));
+      CoreManager::getInstance()->getCore()->removeCallLog(static_pointer_cast<linphone::CallLog>(entry.second));
       break;
     }
 
@@ -616,17 +617,17 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   }
 
   auto insertEntry = [this](
-    const ChatEntryData &pair,
+    const ChatEntryData &entry,
     const QList<ChatEntryData>::iterator *start = NULL
   ) {
-    auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), pair, [](const ChatEntryData &a, const ChatEntryData &b) {
+    auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), entry, [](const ChatEntryData &a, const ChatEntryData &b) {
       return a.first["timestamp"] < b.first["timestamp"];
     });
 
     int row = int(distance(mEntries.begin(), it));
 
     beginInsertRows(QModelIndex(), row, row);
-    it = mEntries.insert(it, pair);
+    it = mEntries.insert(it, entry);
     endInsertRows();
 
     return it;
