@@ -62,6 +62,22 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
+shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
+
+  return proxyConfig ? proxyConfig->getIdentityAddress() : core->getPrimaryContactParsed();
+}
+
+void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
+
+  proxyConfig ? proxyConfig->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
+}
+
+// -----------------------------------------------------------------------------
+
 bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
   Q_CHECK_PTR(proxyConfig);
 
@@ -338,22 +354,6 @@ QVariantList AccountSettingsModel::getAccounts () const {
   }
 
   return accounts;
-}
-
-// -----------------------------------------------------------------------------
-
-void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
-
-  proxyConfig ? proxyConfig->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
-}
-
-shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
-
-  return proxyConfig ? proxyConfig->getIdentityAddress() : core->getPrimaryContactParsed();
 }
 
 // -----------------------------------------------------------------------------

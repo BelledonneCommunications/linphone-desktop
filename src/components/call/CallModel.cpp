@@ -22,6 +22,7 @@
 
 #include <QDateTime>
 #include <QQuickWindow>
+#include <QRegularExpression>
 #include <QTimer>
 
 #include "app/App.hpp"
@@ -29,6 +30,7 @@
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
@@ -92,14 +94,28 @@ QString CallModel::getSipAddress () const {
 // -----------------------------------------------------------------------------
 
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams) {
-  callParams->setRecordFile(
-    Utils::appStringToCoreString(
-      QStringLiteral("%1%2.mkv")
-        .arg(CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder())
-        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
+  callParams->setRecordFile(Utils::appStringToCoreString(
+    CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder()
+      .append(generateSavedFilename())
+      .append(".mkv")
+  ));
+}
+
+void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams, const QString &to) {
+  const QString from(
+    Utils::coreStringToAppString(
+      CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->getUsername()
     )
   );
+
+  callParams->setRecordFile(Utils::appStringToCoreString(
+    CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder()
+      .append(generateSavedFilename(from, to))
+      .append(".mkv")
+  ));
 }
+
+// -----------------------------------------------------------------------------
 
 void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats) {
   switch (callStats->getType()) {
@@ -196,18 +212,17 @@ void CallModel::rejectVideoRequest () {
 
 void CallModel::takeSnapshot () {
   static QString oldName;
-  QString newName = QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".jpg";
+  QString newName(generateSavedFilename().append(".jpg"));
 
   if (newName == oldName) {
     qWarning() << QStringLiteral("Unable to take snapshot. Wait one second.");
     return;
   }
-
   oldName = newName;
 
   qInfo() << QStringLiteral("Take snapshot of call:") << this;
 
-  const QString filePath = CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder() + newName;
+  const QString filePath(CoreManager::getInstance()->getSettingsModel()->getSavedScreenshotsFolder().append(newName));
   mCall->takeVideoSnapshot(Utils::appStringToCoreString(filePath));
   App::getInstance()->getNotifier()->notifySnapshotWasTaken(filePath);
 }
@@ -730,4 +745,27 @@ QString CallModel::iceStateToString (linphone::IceState state) const {
   }
 
   return tr("iceStateInvalid");
+}
+
+// -----------------------------------------------------------------------------
+
+QString CallModel::generateSavedFilename () const {
+  const shared_ptr<linphone::CallLog> callLog(mCall->getCallLog());
+  return generateSavedFilename(
+    Utils::coreStringToAppString(callLog->getFromAddress()->getUsername()),
+    Utils::coreStringToAppString(callLog->getToAddress()->getUsername())
+  );
+}
+
+QString CallModel::generateSavedFilename (const QString &from, const QString &to) {
+  auto escape = [](const QString &str) {
+    constexpr char ReservedCharacters[] = "<>:\"/\\|\\?\\*";
+    static QRegularExpression regexp(ReservedCharacters);
+    return QString(str).replace(regexp, "");
+  };
+
+  return QStringLiteral("%1_%2_%3")
+    .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
+    .arg(escape(from))
+    .arg(escape(to));
 }

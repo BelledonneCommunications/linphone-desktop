@@ -53,6 +53,9 @@ public:
 
   AccountSettingsModel (QObject *parent = Q_NULLPTR);
 
+  std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
+  void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
+
   bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
   Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
@@ -96,9 +99,6 @@ private:
   // ---------------------------------------------------------------------------
 
   QVariantList getAccounts () const;
-
-  void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
-  std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
 
   // ---------------------------------------------------------------------------
 

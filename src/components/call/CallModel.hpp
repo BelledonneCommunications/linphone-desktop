@@ -97,7 +97,9 @@ public:
     return mIsInConference;
   }
 
-  static void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams);
+  void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams);
+  static void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams, const QString &to);
+
   void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats);
 
   void notifyCameraFirstFrameReceived (unsigned int width, unsigned int height);
@@ -197,6 +199,10 @@ private:
 
   float getMicroVolumeGain () const;
   void setMicroVolumeGain (float volume);
+
+  QString generateSavedFilename () const;
+
+  static QString generateSavedFilename (const QString &from, const QString &to);
 
   bool mIsInConference = false;
 

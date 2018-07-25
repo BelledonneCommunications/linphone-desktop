@@ -107,7 +107,6 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableVideo(false);
-  CallModel::setRecordFile(params);
 
   QHashIterator<QString, QString> iterator(headers);
   while (iterator.hasNext()) {
@@ -115,6 +114,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
     params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
   }
 
+  CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
   core->inviteAddressWithParams(address, params);
 }
 
@@ -133,8 +133,8 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableEarlyMediaSending(true);
   params->enableVideo(true);
-  CallModel::setRecordFile(params);
 
+  CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
   core->inviteAddressWithParams(address, params);
 }
 
