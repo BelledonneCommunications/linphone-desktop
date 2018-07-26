@@ -2,7 +2,6 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
-import Konami 1.0
 import Linphone 1.0
 
 import App.Styles 1.0
@@ -37,16 +36,6 @@ DialogPlus {
       Icon {
         icon: 'app_logo'
         iconSize: parent.height
-
-        Konami {
-          anchors.fill: parent
-          onTriggered: console.log('TODO')
-
-          MouseArea {
-            anchors.fill: parent
-            onClicked: parent.focus = true
-          }
-        }
       }
 
       Column {
