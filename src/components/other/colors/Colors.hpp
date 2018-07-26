@@ -60,8 +60,9 @@ class Colors : public QObject {
 
   ADD_COLOR(a, "transparent");
 
-  // Primary color.
+  // Primary color for hovered items.
   ADD_COLOR(b, "#D64D00");
+
   ADD_COLOR(c, "#CBCBCB");
   ADD_COLOR(d, "#5A585B");
   ADD_COLOR(e, "#F3F3F3");
@@ -69,7 +70,7 @@ class Colors : public QObject {
   ADD_COLOR(g, "#6B7A86");
   ADD_COLOR(h, "#687680");
 
-  // Primary color for hovered items.
+  // Primary color.
   ADD_COLOR(i, "#FE5E00");
 
   ADD_COLOR(j, "#4B5964");
