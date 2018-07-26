@@ -115,10 +115,6 @@ endif ()
 if (ENABLE_FFMPEG)
   add_list_file(ffmpeg)
 endif ()
-if (ENABLE_OPENH264)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/README.openh264.txt.in" "${LINPHONE_SDK_TMP}/README.openh264.txt" @ONLY)
-  add_list_file(openh264)
-endif ()
 file(WRITE "${LINPHONE_SDK_TMP}/${EXECUTABLE_NAME}-sdk.list" "")
 foreach (_file ${LIST_FILES})
   file(READ "${_file}" _content)
@@ -175,12 +171,6 @@ if (WIN32)
   )
 
   if (ENABLE_OPENH264)
-    # Include bunzip2.exe and bzip2.dll to be able to extract the openh264 file downloaded from Cisco.
-    install(DIRECTORY "${TOOLS_DIR}/"
-      DESTINATION "bin"
-      COMPONENT "msopenh264"
-      FILES_MATCHING PATTERN "b*zip2.*"
-    )
     install(FILES "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/libmsopenh264.dll"
       DESTINATION "lib/mediastreamer/plugins"
       COMPONENT "msopenh264"
@@ -287,11 +277,6 @@ if (WIN32)
   set(CPACK_COMPONENT_LINPHONE_BASE_DISPLAY_NAME "${APPLICATION_NAME}")
   set(CPACK_COMPONENT_LINPHONE_BASE_DESCRIPTION "Minimal installation of ${APPLICATION_NAME}")
   set(CPACK_COMPONENT_LINPHONE_BASE_REQUIRED True)
-  if (ENABLE_OPENH264)
-    set(CPACK_COMPONENT_MSOPENH264_DISPLAY_NAME "Cisco's OpenH264 codec")
-    set(CPACK_COMPONENT_MSOPENH264_DESCRIPTION "Download OpenH264 Video Codec provided by Cisco Systems, Inc.")
-    set(CPACK_COMPONENT_MSOPENH264_DISABLED True)
-  endif ()
 
   # Use template from the current source directory to force uninstallation and ensure that linphone is not running before installation.
   set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -308,22 +293,12 @@ if (WIN32)
   endif ()
   set(CPACK_NSIS_URL_INFO_ABOUT "http://www.linphone.org/")
 
-  file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}" DOS_STYLE_SOURCE_DIR)
-  string(REPLACE "\\" "\\\\" ESCAPED_DOS_STYLE_SOURCE_DIR "${DOS_STYLE_SOURCE_DIR}")
   file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}" DOS_STYLE_BINARY_DIR)
   string(REPLACE "\\" "\\\\" ESCAPED_DOS_STYLE_BINARY_DIR "${DOS_STYLE_BINARY_DIR}")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/uri-handler-install.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/uri-handler-install.nsi" @ONLY)
   set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uri-handler-install.nsi\\\"")
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/uninstall.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/uninstall.nsi" COPYONLY)
   set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uninstall.nsi\\\"")
-  if (ENABLE_OPENH264)
-    # Add NSI instructions to download the openh264 codec from Cisco's servers whether msopenh264 has been installed.
-    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/openh264-install.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/openh264-install.nsi" @ONLY)
-    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\openh264-install.nsi\\\"")
-
-    # Add NSI instructions to delete the openh264 codecs while uninstalling Linphone.
-    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "${CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS}\n!include \\\"${ESCAPED_DOS_STYLE_SOURCE_DIR}\\\\openh264-uninstall.nsi\\\"")
-  endif ()
 
   # Sign the installer.
   set(TIMESTAMP_URL "http://timestamp.verisign.com/scripts/timestamp.dll")
