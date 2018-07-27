@@ -30,6 +30,10 @@ find_package(Git)
 
 set(LINPHONE_QML_DIR "${LINPHONE_DESKTOP_DIR}/ui")
 
+# ==============================================================================
+# Build package version.
+# ==============================================================================
+
 if (GIT_EXECUTABLE)
   execute_process(
     COMMAND ${GIT_EXECUTABLE} describe --always
@@ -50,17 +54,21 @@ if (SPLITTED_LINPHONE_VERSION_LENGTH GREATER 2)
 endif ()
 set(PACKAGE_VERSION "${LINPHONE_VERSION}")
 
+# ==============================================================================
 # Preparing the Linphone SDK bundle.
+# ==============================================================================
+
 set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-tmp")
 file(REMOVE_RECURSE "${LINPHONE_SDK_TMP}")
 file(COPY "${LINPHONE_OUTPUT_DIR}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
 file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/desktop" "${LINPHONE_SDK_TMP}")
 
-# Generates a zip archive containing the development files of liblinphone.
-macro (add_list_file NAME)
+# Generates a zip archive containing the development files.
+macro (add_sdk_list_file NAME)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/sdk_content/${NAME}.list.in" "${LINPHONE_SDK_TMP}/${NAME}.list" @ONLY)
   list(APPEND LIST_FILES "${LINPHONE_SDK_TMP}/${NAME}.list")
 endmacro ()
+
 if (WIN32)
   set(LIBDIR "bin")
   set(LIBPREFIX "")
@@ -72,56 +80,58 @@ elseif (APPLE)
   set(LIBEXT "dylib")
   set(PLUGINEXT "so")
 endif ()
+
 set(LIST_FILES )
-add_list_file(bctoolbox)
-add_list_file(bellesip)
-add_list_file(ortp)
-add_list_file(ms2)
-add_list_file(ms2plugins)
-add_list_file(linphone)
+add_sdk_list_file(bctoolbox)
+add_sdk_list_file(bellesip)
+add_sdk_list_file(ortp)
+add_sdk_list_file(ms2)
+add_sdk_list_file(ms2plugins)
+add_sdk_list_file(linphone)
 if (WIN32)
-  add_list_file(sqlite3)
-  add_list_file(xml2)
-  add_list_file(zlib)
+  add_sdk_list_file(sqlite3)
+  add_sdk_list_file(xml2)
+  add_sdk_list_file(zlib)
 endif ()
 if (ENABLE_UNIT_TESTS)
-  add_list_file(bcunit)
+  add_sdk_list_file(bcunit)
 endif ()
 if (ENABLE_VCARD)
-  add_list_file(vcard)
+  add_sdk_list_file(vcard)
 endif ()
 if (ENABLE_BV16)
-  add_list_file(bv16)
+  add_sdk_list_file(bv16)
 endif ()
 if (ENABLE_GSM)
-  add_list_file(gsm)
+  add_sdk_list_file(gsm)
 endif ()
 if (ENABLE_OPUS)
-  add_list_file(opus)
+  add_sdk_list_file(opus)
 endif ()
 if (ENABLE_SPEEX)
-  add_list_file(speex)
+  add_sdk_list_file(speex)
 endif ()
 if (ENABLE_MBEDTLS)
-  add_list_file(mbedtls)
+  add_sdk_list_file(mbedtls)
 endif ()
 if (ENABLE_POLARSSL)
-  add_list_file(polarssl)
+  add_sdk_list_file(polarssl)
 endif ()
 if (ENABLE_SRTP)
-  add_list_file(srtp)
+  add_sdk_list_file(srtp)
 endif ()
 if (ENABLE_ZRTP)
-  add_list_file(bzrtp)
+  add_sdk_list_file(bzrtp)
 endif ()
 if (ENABLE_FFMPEG)
-  add_list_file(ffmpeg)
+  add_sdk_list_file(ffmpeg)
 endif ()
 file(WRITE "${LINPHONE_SDK_TMP}/${EXECUTABLE_NAME}-sdk.list" "")
-foreach (_file ${LIST_FILES})
-  file(READ "${_file}" _content)
-  file(APPEND "${LINPHONE_SDK_TMP}/${EXECUTABLE_NAME}-sdk.list" "${_content}\n")
+foreach (FILE ${LIST_FILES})
+  file(READ "${FILE}" CONTENT)
+  file(APPEND "${LINPHONE_SDK_TMP}/${EXECUTABLE_NAME}-sdk.list" "${CONTENT}\n")
 endforeach ()
+
 if (WIN32)
   find_program(7Z_PROGRAM 7z PATHS "$ENV{ProgramFiles}/7-Zip")
   if (7Z_PROGRAM)
@@ -140,6 +150,10 @@ elseif (APPLE)
   )
 endif ()
 
+# ==============================================================================
+# Specific deployment.
+# ==============================================================================
+
 if (WIN32)
   execute_process(
     COMMAND windeployqt "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe" "--qmldir" "${LINPHONE_QML_DIR}"
@@ -147,11 +161,11 @@ if (WIN32)
 
   file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
   list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${EXECUTABLE_NAME}" "share/${APPLICATION_NAME}" "share/sounds")
-  foreach (item IN LISTS SHARE_CONTENT)
-    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${item}" EXCLUDE)
+  foreach (ITEM IN LISTS SHARE_CONTENT)
+    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
   endforeach ()
 
-  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
+  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}"
     DESTINATION "."
     PATTERN "bin/*_tester.exe" EXCLUDE
     PATTERN "bin/belcard*.exe" EXCLUDE
@@ -177,12 +191,12 @@ if (WIN32)
     )
   endif ()
 elseif (APPLE)
-  configure_file("macos/Info.plist.in" "${APPLICATION_NAME}.app/Contents/Info.plist" @ONLY)
-  configure_file("macos/linphone.icns" "${APPLICATION_NAME}.app/Contents/Resources/${EXECUTABLE_NAME}.icns" COPYONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${APPLICATION_NAME}.app/Contents/Info.plist" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${APPLICATION_NAME}.app/Contents/Resources/${EXECUTABLE_NAME}.icns" COPYONLY)
   file(COPY "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")
   file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/lib/lib*.dylib")
-  foreach (_library ${SHARED_LIBRARIES})
-    file(COPY "${_library}" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
+  foreach (LIBRARY ${SHARED_LIBRARIES})
+    file(COPY "${LIBRARY}" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
   endforeach ()
 
   find_program(DEPLOYQT_PROGRAM macdeployqt)
@@ -206,22 +220,22 @@ elseif (APPLE)
   file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
 
   file(GLOB SHARED_LIBRARIES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/lib*.dylib")
-  foreach (_library ${SHARED_LIBRARIES})
-    get_filename_component(_library_filename ${_library} NAME)
-    message("Changing RPATH of ${_library_filename} from '${LINPHONE_OUTPUT_DIR}/lib' to '@executable_path/../Frameworks'")
-    execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "@executable_path/../Frameworks" "${_library}")
+  foreach (LIBRARY ${SHARED_LIBRARIES})
+    get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)
+    message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/lib' to '@executable_path/../Frameworks'")
+    execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "@executable_path/../Frameworks" "${LIBRARY}")
   endforeach ()
 
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
     file(GLOB FRAMEWORKS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/*")
-    foreach (_framework ${FRAMEWORKS_NAMES})
-      execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${_framework}")
+    foreach (FRAMEWORK ${FRAMEWORKS_NAMES})
+      execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${FRAMEWORK}")
     endforeach ()
     file(GLOB PLUGINS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/PlugIns/*")
-    foreach (_plugin ${PLUGINS_NAMES})
-      file(GLOB PLUGINS_FILES "${_plugin}/*")
-      foreach (_pluginfile ${PLUGINS_FILES})
-        execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${_pluginfile}")
+    foreach (PLUGIN ${PLUGINS_NAMES})
+      file(GLOB PLUGINS_FILES "${PLUGIN}/*")
+      foreach (PLUGIN_FILE ${PLUGINS_FILES})
+        execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${PLUGIN_FILE}")
       endforeach ()
     endforeach ()
     execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app")
@@ -229,7 +243,7 @@ elseif (APPLE)
 
   install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 
-  configure_file("macos/packaging.cmake.in" "packaging.cmake" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/packaging.cmake.in" "packaging.cmake" @ONLY)
   install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
 endif ()
 
@@ -254,8 +268,12 @@ if (MSVC)
   endif ()
 endif ()
 
+# ==============================================================================
+# CPack.
+# ==============================================================================
+
 set(CPACK_PACKAGE_NAME "${APPLICATION_NAME}")
-set(CPACK_PACKAGE_VENDOR "Belledonne communications")
+set(CPACK_PACKAGE_VENDOR "${APPLICATION_VENDOR}")
 set(CPACK_PACKAGE_VERSION_MAJOR ${LINPHONE_MAJOR_VERSION})
 set(CPACK_PACKAGE_VERSION_MINOR ${LINPHONE_MINOR_VERSION})
 if (LINPHONE_MICRO_VERSION)
@@ -274,28 +292,38 @@ if (APPLE)
 endif ()
 
 if (WIN32)
-  # Use magic `NSIS.template.in` template from the current source directory to force uninstallation
-  # and ensure that linphone is not running before installation.
-  set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/windows")
   set(CPACK_GENERATOR "NSIS")
   set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\windows\\\\banner.bmp")
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-win32")
-  set(CPACK_NSIS_MUI_ICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
-  set(CPACK_NSIS_MUI_UNIICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
-  set(CPACK_NSIS_DISPLAY_NAME "${APPLICATION_NAME}")
-  if (LINPHONE_MICRO_VERSION)
-    set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}.${LINPHONE_MICRO_VERSION}")
-  else ()
-    set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}")
-  endif ()
-  set(CPACK_NSIS_URL_INFO_ABOUT "http://www.linphone.org/")
 
-  file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}" DOS_STYLE_BINARY_DIR)
-  string(REPLACE "\\" "\\\\" ESCAPED_DOS_STYLE_BINARY_DIR "${DOS_STYLE_BINARY_DIR}")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/install.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/install.nsi" @ONLY)
-  set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\install.nsi\\\"")
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/uninstall.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/uninstall.nsi" COPYONLY)
-  set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uninstall.nsi\\\"")
+  string(COMPARE EQUAL ${CPACK_GENERATOR} "NSIS" IS_NSIS)
+  if (${IS_NSIS})
+    set(PACKAGE_EXT "exe")
+
+    # Use magic `NSIS.template.in` template from the current source directory to force uninstallation
+    # and ensure that linphone is not running before installation.
+    set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/windows")
+
+    set(CPACK_NSIS_MUI_ICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
+    set(CPACK_NSIS_MUI_UNIICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
+    set(CPACK_NSIS_DISPLAY_NAME "${APPLICATION_NAME}")
+    if (LINPHONE_MICRO_VERSION)
+      set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}.${LINPHONE_MICRO_VERSION}")
+    else ()
+      set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}")
+    endif ()
+    set(CPACK_NSIS_URL_INFO_ABOUT ${APPLICATION_URL})
+
+    file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}" DOS_STYLE_BINARY_DIR)
+    string(REPLACE "\\" "\\\\" ESCAPED_DOS_STYLE_BINARY_DIR "${DOS_STYLE_BINARY_DIR}")
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/install.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/install.nsi" @ONLY)
+    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\install.nsi\\\"")
+    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/uninstall.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/uninstall.nsi" COPYONLY)
+    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uninstall.nsi\\\"")
+  else ()
+    set(PACKAGE_EXT "msi")
+    # TODO: Deal with msi packages.
+  endif ()
 
   # Sign the installer.
   set(TIMESTAMP_URL "http://timestamp.verisign.com/scripts/timestamp.dll")
