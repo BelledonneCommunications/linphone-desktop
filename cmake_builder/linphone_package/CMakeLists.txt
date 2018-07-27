@@ -23,6 +23,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(LINPHONE_PACKAGE) # Dummy project.
 
+include("${LINPHONE_DESKTOP_DIR}/application_info.cmake")
+
 find_package(Linphone REQUIRED)
 find_package(Git)
 
