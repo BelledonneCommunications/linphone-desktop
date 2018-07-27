@@ -153,7 +153,6 @@ if (WIN32)
 
   install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
     DESTINATION "."
-    COMPONENT "linphone_base"
     PATTERN "bin/*_tester.exe" EXCLUDE
     PATTERN "bin/belcard*.exe" EXCLUDE
     PATTERN "bin/openh264.dll" EXCLUDE
@@ -175,7 +174,6 @@ if (WIN32)
   if (ENABLE_OPENH264)
     install(FILES "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/libmsopenh264.dll"
       DESTINATION "lib/mediastreamer/plugins"
-      COMPONENT "msopenh264"
     )
   endif ()
 elseif (APPLE)
@@ -276,11 +274,8 @@ if (APPLE)
 endif ()
 
 if (WIN32)
-  set(CPACK_COMPONENT_LINPHONE_BASE_DISPLAY_NAME "${APPLICATION_NAME}")
-  set(CPACK_COMPONENT_LINPHONE_BASE_DESCRIPTION "Minimal installation of ${APPLICATION_NAME}")
-  set(CPACK_COMPONENT_LINPHONE_BASE_REQUIRED True)
-
-  # Use template from the current source directory to force uninstallation and ensure that linphone is not running before installation.
+  # Use magic `NSIS.template.in` template from the current source directory to force uninstallation
+  # and ensure that linphone is not running before installation.
   set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
   set(CPACK_GENERATOR "NSIS")
   set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\banner.bmp")
