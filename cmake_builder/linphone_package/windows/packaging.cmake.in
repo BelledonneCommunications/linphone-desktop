@@ -1,5 +1,5 @@
 ############################################################################
-# WindowsPackaging.cmake
+# packaging.cmake
 # Copyright (C) 2014-2018  Belledonne Communications, Grenoble France
 #
 ############################################################################
