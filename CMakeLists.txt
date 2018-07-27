@@ -364,7 +364,7 @@ add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
 add_dependencies(${APP_LIBRARY} update_translations)
 
 if (WIN32)
-  add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/linphone.rc ${MAIN_FILE})
+  add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
 else ()
   add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
 endif ()
