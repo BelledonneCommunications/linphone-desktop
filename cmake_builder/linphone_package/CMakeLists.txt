@@ -292,8 +292,7 @@ if (APPLE)
 endif ()
 
 if (WIN32)
-  set(CPACK_GENERATOR "NSIS")
-  set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\windows\\\\banner.bmp")
+  set(CPACK_GENERATOR "WIX")
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-win32")
 
   string(COMPARE EQUAL ${CPACK_GENERATOR} "NSIS" IS_NSIS)
@@ -303,6 +302,7 @@ if (WIN32)
     # Use magic `NSIS.template.in` template from the current source directory to force uninstallation
     # and ensure that linphone is not running before installation.
     set(CPACK_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/windows")
+    set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}\\\\windows\\\\nsis_banner.bmp")
 
     set(CPACK_NSIS_MUI_ICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
     set(CPACK_NSIS_MUI_UNIICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
@@ -322,7 +322,12 @@ if (WIN32)
     set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uninstall.nsi\\\"")
   else ()
     set(PACKAGE_EXT "msi")
-    # TODO: Deal with msi packages.
+
+    set(CPACK_WIX_UPGRADE_GUID "D3875BE6-C51F-4C1B-9EEA-88CC87453DE1")
+    set(CPACK_WIX_PRODUCT_ICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
+    set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "${APPLICATION_URL}")
+
+    # TODO: Deal with install/uninstall.nsi
   endif ()
 
   # Sign the installer.
