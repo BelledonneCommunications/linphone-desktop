@@ -75,7 +75,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root,-)
-%doc LICENSE CHANGELOG.md README.md
+%doc LICENSE.txt CHANGELOG.md README.md
 %{_bindir}/
 %{_datadir}/
 
