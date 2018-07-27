@@ -27,6 +27,3 @@ lcb_blacklist_dependencies("libxsd" "soci") # linphone do not need them for the 
 if (NOT WIN32 AND NOT APPLE)
   lcb_blacklist_dependencies("turbo-jpeg") # turbo-jpeg is already provided by Qt5 so do not build it.
 endif ()
-
-set(EXECUTABLE_NAME linphone)
-set(APPLICATION_NAME Linphone)

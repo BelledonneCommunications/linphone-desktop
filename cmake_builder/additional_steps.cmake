@@ -20,6 +20,8 @@
 #
 ############################################################################
 
+include("${CMAKE_CURRENT_LIST_DIR}/../application_info.cmake")
+
 if (LINPHONE_BUILDER_TARGET STREQUAL linphoneqt AND WIN32)
   # Create a shortcut to linphone.exe in install prefix.
   set(SHORTCUT_PATH "${CMAKE_INSTALL_PREFIX}/${EXECUTABLE_NAME}.lnk")

@@ -24,10 +24,7 @@ cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
 set(APP_LIBRARY app-library)
-
-set(EXECUTABLE_NAME linphone)
-set(APPLICATION_NAME Linphone)
-set(APPLICATION_DESCRIPTION "A libre SIP client")
+include(application_info.cmake)
 
 # ------------------------------------------------------------------------------
 
