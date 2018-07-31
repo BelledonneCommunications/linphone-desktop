@@ -166,7 +166,6 @@ void App::initContentApp () {
     delete mEngine;
 
     mNotifier = nullptr;
-    mColors = nullptr;
     mSystemTrayIcon = nullptr;
 
     CoreManager::uninit();
