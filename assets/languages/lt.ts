@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Atkurti</translation>
     </message>
     <message>
         <source>quit</source>
@@ -933,7 +933,10 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Atsisiųskite programą į savo kompiuterį ir skambinkite bei kalbėkitės su naudotojais nemokamai.
+
+Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -1013,7 +1016,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Yra prieinama nauja versija (%1)!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1152,7 +1155,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti garso kodekus</translation>
     </message>
 </context>
 <context>
@@ -1378,11 +1381,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti tinklo nustatymus</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Bendra</translation>
     </message>
 </context>
 <context>
@@ -1437,11 +1440,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti paskyros sukūrimą</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti paskyros naudojimą</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
@@ -1453,7 +1456,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Palaiko telefonų numerius</translation>
     </message>
 </context>
 <context>
@@ -1496,7 +1499,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -1646,7 +1649,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti vaizdo kodekus</translation>
     </message>
 </context>
 <context>
@@ -1812,7 +1815,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norite atsisiųsti %1 (%2)?</translation>
     </message>
 </context>
 </TS>

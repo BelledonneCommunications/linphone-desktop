@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Restaurar</translation>
     </message>
     <message>
         <source>quit</source>
@@ -1016,7 +1016,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Uma nova versão está disponível!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1155,7 +1155,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar codecs de áudio</translation>
     </message>
 </context>
 <context>
@@ -1226,35 +1226,35 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar conferência</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Contatos</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar contatos</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar o desligamento temporário do microfone</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar chamadas de saída</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibir automaticamente o teclado do telefone </translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Gravar automaticamente as chamadas</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Manter as janelas de chamada em segundo plano</translation>
     </message>
 </context>
 <context>
@@ -1381,11 +1381,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibir as configurações de rede</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Geral</translation>
     </message>
 </context>
 <context>
@@ -1440,23 +1440,23 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar criação de contas</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar o uso de contas</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar o uso de contas genéricas</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar a captura de configurações</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Suporte a números de telefone</translation>
     </message>
 </context>
 <context>
@@ -1562,7 +1562,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Pasta para chamadas salvas</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1649,7 +1649,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Exibir codecs de vídeo</translation>
     </message>
 </context>
 <context>
