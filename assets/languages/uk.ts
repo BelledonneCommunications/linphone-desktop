@@ -402,7 +402,7 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation type="unfinished"/>
     </message>
 </context>

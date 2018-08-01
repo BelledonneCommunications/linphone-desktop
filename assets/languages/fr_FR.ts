@@ -404,7 +404,7 @@
         <translation>TRANSFERER L&apos;APPEL</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>PAUSE</translation>
     </message>
 </context>
@@ -1253,6 +1253,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
         <translation>Fenêtre d&apos;appels en tâche de fond</translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
+        <translation>Autoriser la mise en pause</translation>
     </message>
 </context>
 <context>

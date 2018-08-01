@@ -409,6 +409,7 @@ Rectangle {
           enabled: !call.pausedByUser
           icon: 'pause'
           updating: incall.call.updating
+          visible: SettingsModel.callPauseEnabled
 
           onClicked: incall.call.pausedByUser = enabled
 

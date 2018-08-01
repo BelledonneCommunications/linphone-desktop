@@ -364,6 +364,7 @@ Window {
             enabled: !call.pausedByUser
             icon: 'pause'
             updating: call.updating
+            visible: SettingsModel.callPauseEnabled
 
             onClicked: window.exit(function () { call.pausedByUser = enabled })
           }

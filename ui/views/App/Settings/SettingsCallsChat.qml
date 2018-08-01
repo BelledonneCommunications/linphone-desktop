@@ -151,6 +151,20 @@ TabContainer {
         }
 
         FormGroup {
+          label: qsTr('callPauseEnabledLabel')
+
+          Switch {
+            checked: SettingsModel.callPauseEnabled
+
+            onClicked: SettingsModel.callPauseEnabled = !checked
+          }
+        }
+      }
+
+      FormLine {
+        visible: SettingsModel.developerSettingsEnabled
+
+        FormGroup {
           label: qsTr('muteMicrophoneEnabledLabel')
 
           Switch {

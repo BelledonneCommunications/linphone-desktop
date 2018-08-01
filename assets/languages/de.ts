@@ -404,7 +404,7 @@
         <translation>ANRUF WEITERLEITEN</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>ANRUF PAUSIEREN</translation>
     </message>
 </context>
@@ -1249,6 +1249,10 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

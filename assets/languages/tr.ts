@@ -404,7 +404,7 @@
         <translation>ÇAĞRIYI AKTAR</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>ÇAĞRIYI DURAKLAT</translation>
     </message>
 </context>
@@ -1251,6 +1251,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

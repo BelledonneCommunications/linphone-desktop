@@ -404,7 +404,7 @@
         <translation>ÖVERFÖR SAMTAL</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>PAUSA SAMTAL</translation>
     </message>
 </context>
@@ -1251,6 +1251,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

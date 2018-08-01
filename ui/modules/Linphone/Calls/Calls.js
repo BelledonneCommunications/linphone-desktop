@@ -22,7 +22,7 @@ function getParams (call) {
     return {
       actions: [{
         handler: (function () { call.pausedByUser = true }),
-        name: qsTr('pauseCall')
+        name: qsTr('callPause')
       }, {
         handler: call.askForTransfer,
         name: qsTr('transferCall')
@@ -74,7 +74,7 @@ function getParams (call) {
         name: qsTr('resumeCall')
       } : {
         handler: (function () { call.pausedByUser = true }),
-        name: qsTr('pauseCall')
+        name: qsTr('callPause')
       }), {
         handler: call.askForTransfer,
         name: qsTr('transferCall')

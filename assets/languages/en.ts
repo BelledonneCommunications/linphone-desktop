@@ -404,7 +404,7 @@
         <translation>TRANSFER CALL</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>PAUSE CALL</translation>
     </message>
 </context>
@@ -1255,6 +1255,10 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
         <translation>Keep calls window in background</translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
+        <translation>Call pause enabled</translation>
     </message>
 </context>
 <context>

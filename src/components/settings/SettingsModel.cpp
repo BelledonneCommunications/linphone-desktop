@@ -409,6 +409,15 @@ void SettingsModel::setAutomaticallyRecordCalls (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getCallPauseEnabled () const {
+  return !!mConfig->getInt(UiSection, "call_pause_enabled", 1);
+}
+
+void SettingsModel::setCallPauseEnabled (bool status) {
+  mConfig->setInt(UiSection, "call_pause_enabled", status);
+  emit callPauseEnabledChanged(status);
+}
+
 bool SettingsModel::getMuteMicrophoneEnabled () const {
   return !!mConfig->getInt(UiSection, "mute_microphone_enabled", 1);
 }

@@ -404,7 +404,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>PRISTABDYTI SKAMBUTĮ</translation>
     </message>
 </context>
@@ -1254,6 +1254,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

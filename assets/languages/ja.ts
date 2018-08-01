@@ -404,7 +404,7 @@
         <translation>電話を転送する</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>電話を保留する</translation>
     </message>
 </context>
@@ -1249,6 +1249,10 @@
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

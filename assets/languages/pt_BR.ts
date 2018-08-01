@@ -404,7 +404,7 @@
         <translation>TRANSFERIR LIGAÇÃO</translation>
     </message>
     <message>
-        <source>pauseCall</source>
+        <source>callPause</source>
         <translation>PAUSAR LIGAÇÃO</translation>
     </message>
 </context>
@@ -1255,6 +1255,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
         <translation>Manter as janelas de chamada em segundo plano</translation>
+    </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
