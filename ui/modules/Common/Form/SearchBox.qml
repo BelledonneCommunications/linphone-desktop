@@ -65,6 +65,7 @@ Item {
       id: searchField
 
       icon: 'search'
+      readOnly: !searchBox.enabled
       width: parent.width
 
       Keys.onEscapePressed: searchBox.closeMenu()
