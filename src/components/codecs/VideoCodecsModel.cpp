@@ -37,7 +37,9 @@
 using namespace std;
 
 namespace {
-  constexpr char H264Description[] = "Provided by CISCO SYSTEM,INC";
+  #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+    constexpr char H264Description[] = "Provided by CISCO SYSTEM,INC";
+  #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 
   #ifdef Q_OS_LINUX
     constexpr char LibraryExtension[] = "so";
@@ -61,6 +63,8 @@ namespace {
 VideoCodecsModel::VideoCodecsModel (QObject *parent) : AbstractCodecsModel(parent) {
   load();
 }
+
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 
 static bool downloadUpdatableCodec (
   QObject *parent,
@@ -125,6 +129,8 @@ static bool downloadUpdatableCodec (
   return true;
 }
 
+#endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+
 void VideoCodecsModel::updateCodecs () {
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
     static const QString codecSuffix = QStringLiteral(".%1").arg(LibraryExtension);
@@ -148,6 +154,8 @@ void VideoCodecsModel::downloadUpdatableCodecs (QObject *parent) {
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
     QString codecsFolder = Utils::coreStringToAppString(Paths::getCodecsDirPath());
     downloadUpdatableCodec(parent, codecsFolder, "H264", PluginUrlH264, H264InstallName);
+  #else
+    Q_UNUSED(parent);
   #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }
 

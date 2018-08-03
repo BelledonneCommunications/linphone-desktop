@@ -60,7 +60,9 @@ namespace {
   constexpr char QmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
   constexpr char QmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
 
-  constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
+  #ifdef ENABLE_UPDATE_CHECK
+    constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
+  #endif // ifdef ENABLE_UPDATE_CHECK
 
   constexpr char MainQmlUri[] = "Linphone";
 
@@ -600,6 +602,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
     if (!mustBeIconified)
       smartShowWindow(mainWindow);
   #else
+    Q_UNUSED(mustBeIconified);
     smartShowWindow(mainWindow);
   #endif // ifndef __APPLE__
 

@@ -142,10 +142,6 @@ static inline QString getAppFactoryConfigFilePath () {
   return getAppPackageDataDirPath() + PathFactoryConfig;
 }
 
-static inline QString getAppPluginsDirPath () {
-  return getAppPackageDataDirPath() + PathPlugins;
-}
-
 static inline QString getAppRootCaFilePath () {
   return getAppPackageDataDirPath() + PathRootCa;
 }
