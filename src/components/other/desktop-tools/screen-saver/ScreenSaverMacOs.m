@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierMacOs.hpp
+ * ScreenSaverMacOS.m
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,26 +16,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 30, 2017
- *      Author: Ghislain MARY
+ *  Created on: August 3, 2018
+ *      Author: Ronan Abhamon
  */
 
-#ifndef MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
-#define MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
-
-#include "AbstractMessagesCountNotifier.hpp"
+#import <IOKit/pwr_mgt/IOPMLib.h>
 
 // =============================================================================
 
-extern "C" void notifyUnreadMessagesCountMacOs (int n);
+static bool ScreenSaverEnabled = true;
+static IOPMAssertionID AssertionID;
 
-class MessagesCountNotifier : public AbstractMessagesCountNotifier {
-public:
-  MessagesCountNotifier (QObject *parent = Q_NULLPTR) : AbstractMessagesCountNotifier(parent) {}
+bool enableScreenSaverMacOs () {
+  if (ScreenSaverEnabled)
+    return true;
 
-  void notifyUnreadMessagesCount (int n) override {
-    notifyUnreadMessagesCountMacOs(n);
-  }
-};
+  ScreenSaverEnabled = IOPMAssertionRelease(AssertionID) == kIOReturnSuccess;
+  return ScreenSaverEnabled;
+}
 
-#endif // MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
+bool disableScreenSaverMacOs () {
+  if (!ScreenSaverEnabled)
+    return true;
+
+  ScreenSaverEnabled = IOPMAssertionCreateWithName(
+    kIOPMAssertionTypeNoDisplaySleep,
+    kIOPMAssertionLevelOn,
+    CFSTR("Inhibit asked for video stream"),
+    &AssertionID
+  ) != kIOReturnSuccess;
+  return !ScreenSaverEnabled;
+}

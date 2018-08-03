@@ -232,6 +232,7 @@ if (APPLE)
     src/app/single-application/SingleApplication.cpp
     src/components/core/messages-count-notifier/MessagesCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
+    src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
   )
   list(APPEND HEADERS
     src/app/single-application/SingleApplicationPrivate.hpp
@@ -400,7 +401,7 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
-  list(APPEND LIBRARIES "-framework Cocoa")
+  list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})

@@ -24,7 +24,7 @@
 
 // =============================================================================
 
-void notifyUnreadMessagesCountMacOS (int n) {
+void notifyUnreadMessagesCountMacOs (int n) {
   NSString *badgeStr = (n > 0) ? [NSString stringWithFormat:@"%d", n] : @"";
   [[NSApp dockTile] setBadgeLabel:badgeStr];
 }

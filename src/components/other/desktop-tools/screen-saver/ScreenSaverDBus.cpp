@@ -63,7 +63,7 @@ void ScreenSaverDBus::setScreenSaverStatus (bool status) {
     return;
   }
 
-  QDBusMessage reply(mBus.call("Inhibit", QCoreApplication::applicationName(), "Inhibit asked for video stream."));
+  QDBusMessage reply(mBus.call("Inhibit", QCoreApplication::applicationName(), "Inhibit asked for video stream"));
   if (reply.type() == QDBusMessage::ErrorMessage) {
     if (reply.errorName() != QLatin1String("org.freedesktop.DBus.Error.ServiceUnknown"))
       qWarning() << QStringLiteral("Inhibit screen saver failed: `%1: %2`.")

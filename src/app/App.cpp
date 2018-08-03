@@ -188,7 +188,9 @@ void App::initContentApp () {
       Cli::executeCommand(command);
     });
 
-    mustBeIconified = mParser->isSet("iconified");
+    #ifndef Q_OS_MACOS
+      mustBeIconified = mParser->isSet("iconified");
+    #endif // ifndef Q_OS_MACOS
 
     mColors = new Colors(this);
   }

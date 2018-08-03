@@ -21,8 +21,12 @@
  */
 
 #include "DesktopToolsMacOs.hpp"
+#include <QDebug>
 
 // =============================================================================
+
+extern "C" bool enableScreenSaverMacOs ();
+extern "C" bool disableScreenSaverMacOs ();
 
 DesktopTools::DesktopTools (QObject *parent) : QObject(parent) {}
 
@@ -35,9 +39,11 @@ bool DesktopTools::getScreenSaverStatus () const {
 }
 
 void DesktopTools::setScreenSaverStatus (bool status) {
-  if (status == mScreenSaverStatus)
-    return;
+  qDebug() << "SCREENSAVER " << status;
 
-  // TODO: Deal with me.
-  emit screenSaverStatusChanged(status);
+  if (status != mScreenSaverStatus && (status ? enableScreenSaverMacOs() : disableScreenSaverMacOs())) {
+    qDebug() << "SCREENSAVER INT " << status;
+    mScreenSaverStatus = status;
+    emit screenSaverStatusChanged(mScreenSaverStatus);
+  }
 }
