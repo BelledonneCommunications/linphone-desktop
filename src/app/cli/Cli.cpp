@@ -125,8 +125,11 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
   const QString id = args["conference-id"];
 
   auto updateCallsWindow = []() {
-    // TODO: Set the view to the "waiting call view".
     QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+    if (!callsWindow)
+      return;
+
+    // TODO: Set the view to the "waiting call view".
     if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
       if (!callsWindow->isVisible())
         callsWindow->showMinimized();

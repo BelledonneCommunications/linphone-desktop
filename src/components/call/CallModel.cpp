@@ -339,12 +339,13 @@ void CallModel::accept (bool withVideo) {
   setRecordFile(params);
 
   QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
-  if (coreManager->getSettingsModel()->getKeepCallsWindowInBackground()) {
-    if (!callsWindow->isVisible())
-      callsWindow->showMinimized();
-  } else
-    App::smartShowWindow(callsWindow);
-
+  if (callsWindow) {
+    if (coreManager->getSettingsModel()->getKeepCallsWindowInBackground()) {
+      if (!callsWindow->isVisible())
+        callsWindow->showMinimized();
+    } else
+      App::smartShowWindow(callsWindow);
+  }
   mCall->acceptWithParams(params);
 }
 

@@ -230,11 +230,13 @@ bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
   if (call->getDir() == linphone::CallDirOutgoing) {
     QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
-    if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
-      if (!callsWindow->isVisible())
-        callsWindow->showMinimized();
-    } else
-      App::smartShowWindow(callsWindow);
+    if (callsWindow) {
+      if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
+        if (!callsWindow->isVisible())
+          callsWindow->showMinimized();
+      } else
+        App::smartShowWindow(callsWindow);
+    }
   }
 
   CallModel *callModel = new CallModel(call);

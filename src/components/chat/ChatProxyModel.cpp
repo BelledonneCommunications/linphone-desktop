@@ -69,9 +69,12 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
   QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
     handleIsActiveChanged(App::getInstance()->getMainWindow());
   });
-  QObject::connect(app->getCallsWindow(), &QWindow::activeChanged, this, [this]() {
-    handleIsActiveChanged(App::getInstance()->getCallsWindow());
-  });
+
+  QQuickWindow *callsWindow = app->getCallsWindow();
+  if (callsWindow)
+    QObject::connect(callsWindow, &QWindow::activeChanged, this, [this, callsWindow]() {
+      handleIsActiveChanged(callsWindow);
+    });
 }
 
 // -----------------------------------------------------------------------------
