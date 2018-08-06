@@ -50,6 +50,9 @@ AppController::AppController (int &argc, char *argv[]) {
 
   QGuiApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
 
+  // Useful to share camera on Fullscreen (other context).
+  QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+
   // ---------------------------------------------------------------------------
   // App creation.
   // ---------------------------------------------------------------------------

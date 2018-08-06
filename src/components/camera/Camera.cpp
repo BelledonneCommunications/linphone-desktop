@@ -56,12 +56,13 @@ CameraRenderer::~CameraRenderer () {
   qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
 
   CoreManager *coreManager = CoreManager::getInstance();
-
   coreManager->lockVideoRender();
 
-  if (mIsPreview)
-    coreManager->getCore()->setNativePreviewWindowId(nullptr);
-  else if (mCall)
+  shared_ptr<linphone::Core> core = coreManager->getCore();
+  if (mIsPreview) {
+    if (core->getNativePreviewWindowId() == mContextInfo)
+      core->setNativePreviewWindowId(nullptr);
+  } else if (mCall && mCall->getNativeVideoWindowId() == mContextInfo)
     mCall->setNativeVideoWindowId(nullptr);
 
   coreManager->unlockVideoRender();
