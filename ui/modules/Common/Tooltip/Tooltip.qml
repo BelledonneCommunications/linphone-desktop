@@ -103,7 +103,7 @@ ToolTip {
       fillMode: Image.PreserveAspectFit
       height: TooltipStyle.arrowSize
       source: _edge
-        ? (Constants.imagesPath + 'tooltip_arrow_' + _edge + Constants.imagesFormat)
+        ? Utils.resolveImageUri('tooltip_arrow_' + _edge)
         : ''
       visible: tooltip.visible && _edge
       width: TooltipStyle.arrowSize

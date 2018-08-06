@@ -32,6 +32,7 @@ public:
   ImageProvider ();
 
   QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
+  QPixmap requestPixmap (const QString &id, QSize *size, const QSize &requestedSize) override;
 
   static const QString ProviderId;
 };

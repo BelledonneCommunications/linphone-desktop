@@ -38,9 +38,7 @@ Item {
     }
 
     fillMode: Image.PreserveAspectFit
-    source: icon
-      ? Constants.imagesPath + icon + Constants.imagesFormat
-      : ''
+    source: Utils.resolveImageUri(icon)
 
     // Warning: Perfomance cost.
     mipmap: true

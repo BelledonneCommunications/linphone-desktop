@@ -16,6 +16,8 @@
 var PORT_REGEX = PortTools.PORT_REGEX
 var PORT_RANGE_REGEX = PortTools.PORT_RANGE_REGEX
 
+var SCHEME_REGEX = new RegExp('^[^:]+:')
+
 // =============================================================================
 // QML helpers.
 // =============================================================================
@@ -112,32 +114,6 @@ function extractFirstUri (str) {
 
 // -----------------------------------------------------------------------------
 
-// Load by default a window in the ui/views folder.
-// If options.isString is equals to true, a marshalling component can
-// be used.
-//
-// Supported options: isString, exitHandler, properties.
-//
-// If exitHandler is used, window must implement exitStatus signal.
-function openWindow (window, parent, options) {
-  var object = createObject(window, parent, options)
-
-  object.closing.connect(object.destroy.bind(object))
-
-  if (options && options.exitHandler) {
-    object.exitStatus.connect(
-      // Bind to access parent properties.
-      options.exitHandler.bind(parent)
-    )
-  }
-
-  object.show()
-
-  return object
-}
-
-// -----------------------------------------------------------------------------
-
 function getSystemPathFromUri (uri) {
   var str = uri.toString()
   if (startsWith(str, 'file://')) {
@@ -183,6 +159,41 @@ function getTopParent (object, useFakeParent) {
 
 // -----------------------------------------------------------------------------
 
+// Load by default a window in the ui/views folder.
+// If options.isString is equals to true, a marshalling component can
+// be used.
+//
+// Supported options: isString, exitHandler, properties.
+//
+// If exitHandler is used, window must implement exitStatus signal.
+function openWindow (window, parent, options) {
+  var object = createObject(window, parent, options)
+
+  object.closing.connect(object.destroy.bind(object))
+
+  if (options && options.exitHandler) {
+    object.exitStatus.connect(
+      // Bind to access parent properties.
+      options.exitHandler.bind(parent)
+    )
+  }
+
+  object.show()
+
+  return object
+}
+
+// -----------------------------------------------------------------------------
+
+function resolveImageUri (name) {
+  return name
+    ? 'image://internal/' + removeScheme(Qt.resolvedUrl('/assets/images/' + name + '.svg'))
+    : ''
+}
+
+// -----------------------------------------------------------------------------
+
+
 function runOnWindows () {
   var os = Qt.platform.os
   return os === 'windows' || os === 'winrt'
@@ -221,6 +232,12 @@ function qmlTypeof (object, className) {
     str.indexOf(className + '(') == 0 ||
     str.indexOf(className + '_QML') == 0
   )
+}
+
+// -----------------------------------------------------------------------------
+
+function removeScheme (url) {
+  return url.toString().replace(SCHEME_REGEX, '')
 }
 
 // -----------------------------------------------------------------------------
