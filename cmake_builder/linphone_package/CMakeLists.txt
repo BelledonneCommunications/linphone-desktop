@@ -165,7 +165,7 @@ if (WIN32)
     list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
   endforeach ()
 
-  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}"
+  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
     DESTINATION "."
     PATTERN "bin/*_tester.exe" EXCLUDE
     PATTERN "bin/belcard*.exe" EXCLUDE
