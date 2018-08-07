@@ -19,17 +19,22 @@ function getParams (call) {
   var status = call.status
 
   if (status === CallModel.CallStatusConnected) {
-    return {
-      actions: [{
+    var optActions = []
+    if (Linphone.SettingsModel.callPauseEnabled) {
+      optActions.push({
         handler: (function () { call.pausedByUser = true }),
         name: qsTr('callPause')
-      }, {
+      })
+    }
+
+    return {
+      actions: optActions.concat([{
         handler: call.askForTransfer,
         name: qsTr('transferCall')
       }, {
         handler: call.terminate,
         name: qsTr('terminateCall')
-      }],
+      }]),
       component: callActions,
       string: 'connected'
     }
@@ -42,17 +47,22 @@ function getParams (call) {
   }
 
   if (status === CallModel.CallStatusIncoming) {
+    var optActions = []
+    if (Linphone.SettingsModel.videoSupported) {
+      optActions.push({
+        handler: call.acceptWithVideo,
+        name: qsTr('acceptVideoCall')
+      })
+    }
+
     return {
       actions: [{
-        name: qsTr('acceptAudioCall'),
-        handler: (function () { call.accept() })
-      }, {
-        name: qsTr('acceptVideoCall'),
-        handler: call.acceptWithVideo
-      }, {
-        name: qsTr('terminateCall'),
-        handler: call.terminate
-      }],
+        handler: (function () { call.accept() }),
+        name: qsTr('acceptAudioCall')
+      }].concat(optActions).concat([{
+        handler: call.terminate,
+        name: qsTr('terminateCall')
+      }]),
       component: callActions,
       string: 'incoming'
     }
@@ -68,20 +78,27 @@ function getParams (call) {
   }
 
   if (status === CallModel.CallStatusPaused) {
-    return {
-      actions: [(call.pausedByUser ? {
+    var optActions = []
+    if (call.pausedByUser) {
+      optActions.push({
         handler: (function () { call.pausedByUser = false }),
         name: qsTr('resumeCall')
-      } : {
+      })
+    } else if (Linphone.SettingsModel.callPauseEnabled) {
+      optActions.push({
         handler: (function () { call.pausedByUser = true }),
         name: qsTr('callPause')
-      }), {
+      })
+    }
+
+    return {
+      actions: optActions.concat([{
         handler: call.askForTransfer,
         name: qsTr('transferCall')
       }, {
         handler: call.terminate,
         name: qsTr('terminateCall')
-      }],
+      }]),
       component: callActions,
       string: 'paused'
     }
