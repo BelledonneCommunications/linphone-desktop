@@ -105,6 +105,8 @@ ToolTip {
       source: _edge
         ? Utils.resolveImageUri('tooltip_arrow_' + _edge)
         : ''
+      sourceSize.height: height
+      sourceSize.width: width
       visible: tooltip.visible && _edge
       width: TooltipStyle.arrowSize
       z: Constants.zMax

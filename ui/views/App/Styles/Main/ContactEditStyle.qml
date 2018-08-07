@@ -17,7 +17,7 @@ QtObject {
     property int avatarSize: 60
     property int height: 80
     property int leftMargin: 40
-    property int rightMargin: 20
+    property int rightMargin: 30
     property int spacing: 20
 
     property QtObject actions: QtObject {

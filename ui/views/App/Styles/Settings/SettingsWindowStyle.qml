@@ -22,7 +22,7 @@ QtObject {
 
   property QtObject sipAccounts: QtObject {
     property int buttonsSpacing: 8
-    property int iconSize: 20
+    property int iconSize: 22
     property int legendLineWidth: 280
   }
 }

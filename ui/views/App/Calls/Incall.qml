@@ -158,7 +158,7 @@ Rectangle {
         id: rightActions
 
         anchors.right: parent.right
-        iconSize: CallStyle.header.iconSize
+        iconSize: CallStyle.header.buttonIconSize
 
         ActionButton {
           icon: 'screenshot'

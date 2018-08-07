@@ -220,7 +220,7 @@ Window {
 
         ActionBar {
           anchors.right: parent.right
-          iconSize: CallStyle.header.iconSize
+          iconSize: CallStyle.header.buttonIconSize
           visible: !hideButtons
 
           ActionButton {

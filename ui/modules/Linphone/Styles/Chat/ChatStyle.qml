@@ -42,7 +42,7 @@ QtObject {
 
   property QtObject entry: QtObject {
     property int bottomMargin: 10
-    property int deleteIconSize: 17
+    property int deleteIconSize: 22
     property int leftMargin: 18
     property int lineHeight: 30
     property int metaWidth: 40

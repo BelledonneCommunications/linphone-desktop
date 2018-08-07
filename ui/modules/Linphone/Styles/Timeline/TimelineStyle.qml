@@ -38,7 +38,7 @@ QtObject {
     property color color: Colors.d
     property int pointSize: Units.dp * 11
     property int height: 30
-    property int iconSize: 10
+    property int iconSize: 14
     property int leftMargin: 17
     property int rightMargin: 17
     property int spacing: 8

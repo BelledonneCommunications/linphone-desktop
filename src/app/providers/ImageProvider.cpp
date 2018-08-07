@@ -23,6 +23,7 @@
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QPainter>
+#include <QScreen>
 #include <QSvgRenderer>
 
 #include "app/App.hpp"
@@ -246,12 +247,14 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 
 QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
   const QString path = QStringLiteral(":%1").arg(id);
-  qDebug() << QStringLiteral("Image `%1` requested.").arg(path);
+  qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
+    .arg(path).arg(requestedSize.width()).arg(requestedSize.height());
 
   QElapsedTimer timer;
   timer.start();
 
   // 1. Read and update XML content.
+  *size = QSize();
   QFile file(path);
   if (Q_UNLIKELY(QFileInfo(file).size() > MaxImageSize)) {
     qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
@@ -276,18 +279,15 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
     return QImage();
   }
 
-  // 3. Create en empty image.
-  const QRectF viewBox = renderer.viewBoxF();
-  const int width = requestedSize.width();
-  const int height = requestedSize.height();
-  QImage image(
-    width > 0 ? width : int(viewBox.width()),
-    height > 0 ? height : int(viewBox.height()),
-    QImage::Format_ARGB32
-  );
+  QSize askedSize = !requestedSize.isEmpty()
+    ? requestedSize
+    : renderer.defaultSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
+
+  // 3. Create image.
+  QImage image(askedSize, QImage::Format_ARGB32_Premultiplied);
   if (Q_UNLIKELY(image.isNull())) {
-    qWarning() << QStringLiteral("Unable to create image of size `(%1, %2)` from path: `%3`.")
-      .arg(viewBox.width()).arg(viewBox.height()).arg(path);
+    qWarning() << QStringLiteral("Unable to create image from path: `%1`.")
+      .arg(path);
     return QImage(); // Memory cannot be allocated.
   }
   image.fill(0x00000000);

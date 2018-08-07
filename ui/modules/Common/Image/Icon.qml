@@ -15,32 +15,20 @@ Item {
   width: iconSize
 
   Image {
-    function _checkIconSize () {
+    function getIconSize () {
       Utils.assert(
         iconSize != null && iconSize >= 0,
         '`iconSize` must be defined and must be positive. (icon=`' +
           icon + '`, iconSize=' + iconSize + ')'
       )
+
+      return iconSize
     }
 
     anchors.centerIn: parent
-    height: {
-      _checkIconSize()
-      return iconSize > sourceSize.height
-        ? sourceSize.height
-        : iconSize
-    }
-    width: {
-      _checkIconSize()
-      return iconSize > sourceSize.width
-        ? sourceSize.width
-        : iconSize
-    }
-
     fillMode: Image.PreserveAspectFit
     source: Utils.resolveImageUri(icon)
-
-    // Warning: Perfomance cost.
-    mipmap: true
+    sourceSize.width: getIconSize()
+    sourceSize.height: getIconSize()
   }
 }

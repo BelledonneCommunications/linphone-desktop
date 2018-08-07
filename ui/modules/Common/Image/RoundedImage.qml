@@ -22,6 +22,8 @@ Item {
 
       anchors.fill: parent
       fillMode: Image.PreserveAspectCrop
+      sourceSize.width: parent.width
+      sourceSize.height: parent.height
     }
   }
 

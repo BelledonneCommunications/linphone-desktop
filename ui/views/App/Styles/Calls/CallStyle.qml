@@ -50,7 +50,8 @@ QtObject {
   }
 
   property QtObject header: QtObject {
-    property int iconSize: 40
+    property int buttonIconSize: 40
+    property int iconSize: 16
     property int leftMargin: 20
     property int rightMargin: 20
     property int spacing: 10

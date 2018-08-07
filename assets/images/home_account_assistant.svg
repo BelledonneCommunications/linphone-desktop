@@ -1,28 +1,119 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="147px" height="149px" viewBox="0 0 147 149" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-    <title>home_account_assistant</title>
-    <desc>Created with Sketch.</desc>
-    <defs>
-        <path d="M0.184,27.531 C0.184,42.319 12.171,54.306 26.959,54.306 C41.748,54.306 53.733,42.319 53.733,27.531 C53.733,12.743 41.748,0.756 26.959,0.756 C12.171,0.756 0.184,12.743 0.184,27.531 Z" id="path-1"></path>
-    </defs>
-    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="home_account_assistant">
-            <g id="Page-1">
-                <g id="Group-6" transform="translate(0.000000, 0.633000)">
-                    <g id="Group-3" fill="#4C5964">
-                        <path d="M146.9385,73.8369 C146.9385,114.4129 114.0455,147.3059 73.4695,147.3059 C32.8935,147.3059 0.0005,114.4129 0.0005,73.8369 C0.0005,33.2609 32.8935,0.3669 73.4695,0.3669 C114.0455,0.3669 146.9385,33.2609 146.9385,73.8369" id="Fill-1"></path>
-                    </g>
-                    <path d="M73.6572,36.4761 C84.4452,36.4761 93.1902,45.3091 93.1902,56.2021 C93.1902,61.4161 91.1892,66.1561 87.9182,69.6821 C87.4592,70.1791 87.6382,70.0931 87.1292,70.5371 L87.9442,71.0911 C117.5522,84.1071 109.9582,105.9821 109.9582,105.9821 C90.8932,112.0871 73.6882,111.1451 73.6882,111.1451 L73.2532,111.1451 C73.2532,111.1451 56.0442,112.0871 36.9792,105.9821 C36.9792,105.9821 29.3892,84.1071 58.9952,71.0911 L59.8082,70.5371 C59.3012,70.0931 59.4822,70.1791 59.0232,69.6821 C55.7532,66.1561 53.7512,61.4161 53.7512,56.2021 C53.7512,45.3091 62.4952,36.4761 73.2832,36.4761 L73.6572,36.4761 Z" id="Fill-4" fill="#FEFEFE"></path>
-                </g>
-                <g id="Group-9" transform="translate(88.000000, 93.633000)">
-                    <mask id="mask-2" fill="white">
-                        <use xlink:href="#path-1"></use>
-                    </mask>
-                    <use id="Clip-8" class="color-i-fill" fill="#FE5E00" xlink:href="#path-1"></use>
-                </g>
-                <path d="M130.959,124.5261 L130.959,117.7991 L128.072,117.7991 C127.751,116.5611 127.258,115.3911 126.618,114.3151 L128.661,112.2831 L123.882,107.5271 L121.839,109.5601 C120.758,108.9241 119.583,108.4301 118.336,108.1131 L118.336,105.2421 L111.579,105.2421 L111.579,108.1131 C110.332,108.4301 109.157,108.9241 108.076,109.5601 L106.034,107.5271 L101.255,112.2831 L103.298,114.3151 C102.659,115.3911 102.162,116.5611 101.842,117.7991 L98.958,117.7991 L98.958,124.5261 L101.842,124.5261 C102.162,125.7661 102.659,126.9361 103.296,128.0121 L101.255,130.0451 L106.034,134.8001 L108.076,132.7681 C109.157,133.4031 110.332,133.8961 111.579,134.2151 L111.579,137.0861 L118.336,137.0861 L118.336,134.2151 C119.583,133.8961 120.758,133.4031 121.839,132.7681 L123.882,134.8001 L128.661,130.0451 L126.618,128.0121 C127.258,126.9361 127.753,125.7661 128.072,124.5261 L130.959,124.5261 Z M107.787,121.1641 C107.787,125.1051 110.998,128.2991 114.958,128.2991 C118.916,128.2991 122.128,125.1051 122.128,121.1641 C122.128,117.2251 118.916,114.0281 114.958,114.0281 C110.998,114.0281 107.787,117.2251 107.787,121.1641 Z" id="Stroke-10" stroke="#FEFEFE" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </g>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="149"
+   height="149"
+   viewBox="0 0 149 149"
+   version="1.1"
+   id="svg22"
+   sodipodi:docname="home_account_assistant.svg"
+   inkscape:version="0.92.2 2405546, 2018-03-11">
+  <metadata
+     id="metadata26">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>home_account_assistant</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="868"
+     inkscape:window-height="480"
+     id="namedview24"
+     showgrid="false"
+     inkscape:zoom="1.5838926"
+     inkscape:cx="73.5"
+     inkscape:cy="74.5"
+     inkscape:window-x="0"
+     inkscape:window-y="35"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg22" />
+  <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">home_account_assistant</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs7">
+    <path
+       d="m 0.184,27.531 c 0,14.788 11.987,26.775 26.775,26.775 14.789,0 26.774,-11.987 26.774,-26.775 C 53.733,12.743 41.748,0.756 26.959,0.756 12.171,0.756 0.184,12.743 0.184,27.531 Z"
+       id="path-1"
+       inkscape:connector-curvature="0" />
+  </defs>
+  <g
+     id="Symbols"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="translate(1)">
+    <g
+       id="home_account_assistant">
+      <g
+         id="Page-1">
+        <g
+           id="Group-6"
+           transform="translate(0,0.633)">
+          <g
+             id="Group-3"
+             style="fill:#4c5964">
+            <path
+               d="m 146.9385,73.8369 c 0,40.576 -32.893,73.469 -73.469,73.469 -40.576,0 -73.469,-32.893 -73.469,-73.469 0,-40.576 32.893,-73.47 73.469,-73.47 40.576,0 73.469,32.894 73.469,73.47"
+               id="Fill-1"
+               inkscape:connector-curvature="0" />
+          </g>
+          <path
+             d="m 73.6572,36.4761 c 10.788,0 19.533,8.833 19.533,19.726 0,5.214 -2.001,9.954 -5.272,13.48 -0.459,0.497 -0.28,0.411 -0.789,0.855 l 0.815,0.554 c 29.608,13.016 22.014,34.891 22.014,34.891 -19.065,6.105 -36.27,5.163 -36.27,5.163 h -0.435 c 0,0 -17.209,0.942 -36.274,-5.163 0,0 -7.59,-21.875 22.016,-34.891 l 0.813,-0.554 c -0.507,-0.444 -0.326,-0.358 -0.785,-0.855 -3.27,-3.526 -5.272,-8.266 -5.272,-13.48 0,-10.893 8.744,-19.726 19.532,-19.726 z"
+             id="Fill-4"
+             inkscape:connector-curvature="0"
+             style="fill:#fefefe" />
         </g>
+        <g
+           id="Group-9"
+           transform="translate(88,93.633)">
+          <mask
+             id="mask-2"
+             fill="white">
+            <use
+               xlink:href="#path-1"
+               id="use13"
+               x="0"
+               y="0"
+               width="100%"
+               height="100%" />
+          </mask>
+          <use
+             id="Clip-8"
+             class="color-i-fill"
+             xlink:href="#path-1"
+             style="fill:#fe5e00"
+             x="0"
+             y="0"
+             width="100%"
+             height="100%" />
+        </g>
+        <path
+           d="m 130.959,124.5261 v -6.727 h -2.887 c -0.321,-1.238 -0.814,-2.408 -1.454,-3.484 l 2.043,-2.032 -4.779,-4.756 -2.043,2.033 c -1.081,-0.636 -2.256,-1.13 -3.503,-1.447 v -2.871 h -6.757 v 2.871 c -1.247,0.317 -2.422,0.811 -3.503,1.447 l -2.042,-2.033 -4.779,4.756 2.043,2.032 c -0.639,1.076 -1.136,2.246 -1.456,3.484 h -2.884 v 6.727 h 2.884 c 0.32,1.24 0.817,2.41 1.454,3.486 l -2.041,2.033 4.779,4.755 2.042,-2.032 c 1.081,0.635 2.256,1.128 3.503,1.447 v 2.871 h 6.757 v -2.871 c 1.247,-0.319 2.422,-0.812 3.503,-1.447 l 2.043,2.032 4.779,-4.755 -2.043,-2.033 c 0.64,-1.076 1.135,-2.246 1.454,-3.486 z m -23.172,-3.362 c 0,3.941 3.211,7.135 7.171,7.135 3.958,0 7.17,-3.194 7.17,-7.135 0,-3.939 -3.212,-7.136 -7.17,-7.136 -3.96,0 -7.171,3.197 -7.171,7.136 z"
+           id="Stroke-10"
+           inkscape:connector-curvature="0"
+           style="stroke:#fefefe;stroke-width:2;stroke-linecap:round;stroke-linejoin:round" />
+      </g>
     </g>
+  </g>
 </svg>

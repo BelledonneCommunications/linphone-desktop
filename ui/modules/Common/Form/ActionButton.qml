@@ -15,7 +15,7 @@ Item {
   property bool enabled: true
   property bool updating: false
   property bool useStates: true
-  property int iconSize // Optionnal.
+  property int iconSize // Optional.
   readonly property alias hovered: button.hovered
 
   // If `useStates` = true, the used icons are:
@@ -69,7 +69,7 @@ Item {
 
       anchors.centerIn: parent
       icon: _getIcon()
-      iconSize: parent.iconSize || (
+      iconSize: wrappedButton.iconSize || (
         parent.width > parent.height ? parent.height : parent.width
       )
     }
