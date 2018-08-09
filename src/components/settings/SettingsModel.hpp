@@ -132,7 +132,6 @@ class SettingsModel : public QObject {
 
   Q_PROPERTY(int tcpPort READ getTcpPort WRITE setTcpPort NOTIFY tcpPortChanged);
   Q_PROPERTY(int udpPort READ getUdpPort WRITE setUdpPort NOTIFY udpPortChanged);
-  Q_PROPERTY(int tlsPort READ getTlsPort WRITE setTlsPort NOTIFY tlsPortChanged);
 
   Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
   Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
@@ -343,9 +342,6 @@ public:
   int getUdpPort () const;
   void setUdpPort (int port);
 
-  int getTlsPort () const;
-  void setTlsPort (int port);
-
   QList<int> getAudioPortRange () const;
   void setAudioPortRange (const QList<int> &range);
 
@@ -509,7 +505,6 @@ signals:
 
   void tcpPortChanged (int port);
   void udpPortChanged (int port);
-  void tlsPortChanged (int port);
 
   void audioPortRangeChanged (int a, int b);
   void videoPortRangeChanged (int a, int b);

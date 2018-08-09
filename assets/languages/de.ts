@@ -1327,10 +1327,6 @@ Server URL ist nicht konfiguriert.</translation>
         <translation>Aktivierter Port</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>TLS aktivieren</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP-Felder</translation>
     </message>

@@ -1329,10 +1329,6 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <translation>Etkin bağlantı noktası</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>TLS&apos;yi etkinleştir</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP Alanları</translation>
     </message>

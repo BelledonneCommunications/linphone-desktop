@@ -1330,10 +1330,6 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Port activé</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>Activer TLS</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>Champs DSCP</translation>
     </message>

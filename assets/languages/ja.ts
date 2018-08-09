@@ -1327,10 +1327,6 @@
         <translation>有効なポート</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>TLSを有効にする</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCPフィールド</translation>
     </message>

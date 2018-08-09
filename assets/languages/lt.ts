@@ -1332,10 +1332,6 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <translation>Įjungtas prievadas</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>Įjungti TLS</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP laukai</translation>
     </message>

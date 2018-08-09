@@ -702,22 +702,6 @@ void SettingsModel::setUdpPort (int port) {
 
 // -----------------------------------------------------------------------------
 
-int SettingsModel::getTlsPort () const {
-  return CoreManager::getInstance()->getCore()->getTransports()->getTlsPort();
-}
-
-void SettingsModel::setTlsPort (int port) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Transports> transports = core->getTransports();
-
-  transports->setTlsPort(port);
-  core->setTransports(transports);
-
-  emit tlsPortChanged(port);
-}
-
-// -----------------------------------------------------------------------------
-
 QList<int> SettingsModel::getAudioPortRange () const {
   shared_ptr<linphone::Range> range = CoreManager::getInstance()->getCore()->getAudioPortsRange();
   return QList<int>() << range->getMin() << range->getMax();

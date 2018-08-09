@@ -297,20 +297,6 @@ TabContainer {
           }
         }
       }
-
-      FormEmptyLine {}
-
-      FormLine {
-        FormGroup {
-          label: qsTr('enableTlsLabel')
-
-          Switch {
-            checked: SettingsModel.tlsPort !== 0
-
-            onClicked: SettingsModel.tlsPort = checked ? 0 : -1
-          }
-        }
-      }
     }
 
     // -------------------------------------------------------------------------

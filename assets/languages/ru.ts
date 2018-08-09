@@ -1330,10 +1330,6 @@
         <translation>Включенный порт</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>Включить TLS</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>Поля DSCP</translation>
     </message>

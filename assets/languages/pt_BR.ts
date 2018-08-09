@@ -1332,10 +1332,6 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <translation>Habilitar porta</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>Habilitar TLS</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>Campos DSCP</translation>
     </message>

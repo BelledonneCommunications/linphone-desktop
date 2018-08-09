@@ -1330,10 +1330,6 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Aktiverad port</translation>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation>Aktivera TLS</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP-fält</translation>
     </message>
