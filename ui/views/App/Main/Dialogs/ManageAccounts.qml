@@ -20,7 +20,7 @@ DialogPlus {
   centeredButtons: true
   objectName: '__manageAccounts'
 
-  height: ManageAccountsStyle.height
+  height: SettingsModel.rlsUriEnabled ? ManageAccountsStyle.height : ManageAccountsStyle.heightWithoutPresence
   width: ManageAccountsStyle.width
 
   // ---------------------------------------------------------------------------
@@ -30,6 +30,8 @@ DialogPlus {
     orientation: Qt.Vertical
 
     FormLine {
+      visible: SettingsModel.rlsUriEnabled
+
       FormGroup {
         label: qsTr('selectPresenceLabel')
 

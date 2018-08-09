@@ -32,7 +32,7 @@ Item {
 
         PresenceLevel {
           anchors.fill: parent
-          level: OwnPresenceModel.presenceLevel
+          level:  SettingsModel.rlsUriEnabled ? OwnPresenceModel.presenceLevel : Presence.Green
           visible: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateRegistered
         }
 
