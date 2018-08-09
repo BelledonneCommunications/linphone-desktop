@@ -230,7 +230,7 @@
     </message>
     <message>
         <source>identityLabel</source>
-        <translation>Личность</translation>
+        <translation>Логин</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -325,19 +325,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>Абонент отклонил вызов.</translation>
+        <translation>Удаленная сторона отклонила вызов.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>Абонент не найден.</translation>
+        <translation>Удаленная сторона не найдена.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation>Абонент занят.</translation>
+        <translation>Удаленная сторона занята.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>Абонент не может принять вызов.</translation>
+        <translation>Удаленная сторона не может принять вызов.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -1014,7 +1014,7 @@
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Доступна новая (%1) версия!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1153,7 +1153,7 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать Аудио кодаки</translation>
     </message>
 </context>
 <context>
@@ -1232,31 +1232,31 @@
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить контакты</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Выключить микрофон</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включение исходящих вызовов</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Показывать телефонную клавиатуру автоматически</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматически записывать звонки</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Поддерживать звонки в свернутом режиме</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Вызов поставлен на паузу</translation>
     </message>
 </context>
 <context>
@@ -1383,11 +1383,11 @@
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать сетевые настройки</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Основные</translation>
     </message>
 </context>
 <context>
@@ -1438,27 +1438,27 @@
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Помощник</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить создание аккаунта</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить использования аккаунта</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить использование общего аккаунта</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Включить выбор конфигурации</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Поддерживает номера телефонов</translation>
     </message>
 </context>
 <context>
@@ -1564,7 +1564,7 @@
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Папка для записи звонков</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1651,7 +1651,7 @@
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать Видео кодаки</translation>
     </message>
 </context>
 <context>

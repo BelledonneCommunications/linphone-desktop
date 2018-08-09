@@ -1248,6 +1248,10 @@
         <source>keepCallsWindowInBackgroundLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>callPauseEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

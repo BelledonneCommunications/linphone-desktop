@@ -1258,7 +1258,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitada pausa na chamada.</translation>
     </message>
 </context>
 <context>

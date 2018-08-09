@@ -70,7 +70,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>Visar hjälpmenyn för att använda %1 med kommandotolken</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Återställ</translation>
     </message>
     <message>
         <source>quit</source>
@@ -253,19 +253,19 @@
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation type="unfinished"></translation>
+        <translation>Kodek</translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>Sändningsbandbredd</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>Hämtningsbandbredd</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>Beräknad hämtningsbandbredd</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
@@ -289,11 +289,11 @@
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"></translation>
+        <translation>Skickad videodefinition</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"></translation>
+        <translation>Mottagen videodefinition</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
@@ -309,15 +309,15 @@
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Reflexiv anslutning</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Värdanslutning</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Reläanslutning</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -325,19 +325,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrparten avböjde samtalet.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrparten hittades inte.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrparten är upptagen.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"></translation>
+        <translation>Fjärrparten kan inte acceptera samtalet.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -427,7 +427,8 @@
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Det gick inte att skicka filen.
+Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -450,19 +451,19 @@
     </message>
     <message>
         <source>commandsName</source>
-        <translation type="unfinished"></translation>
+        <translation>lista över kommandon :</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa huvudfönstret av programmet.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta ett samtal till sip-adressen.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta en konferens.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -485,7 +486,7 @@
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Hastighet (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
@@ -999,7 +1000,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Spela mig!</translation>
     </message>
 </context>
 <context>
@@ -1013,7 +1014,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>En ny version (%1) är tillgänglig!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1074,7 +1075,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"></translation>
+        <translation>Frånkopplad</translation>
     </message>
 </context>
 <context>
@@ -1097,7 +1098,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Misslyckades med att sända loggar.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
@@ -1109,30 +1110,30 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill ta bort alla loggar?</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Utvecklarinställningar</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera utvecklarinställningar</translation>
     </message>
 </context>
 <context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljudparametrar</translation>
     </message>
     <message>
         <source>playbackDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppspelningsenhet</translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Inspelningsenhet</translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
@@ -1144,15 +1145,15 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera ekodämpning</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljudkodek</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa ljudkodek</translation>
     </message>
 </context>
 <context>
@@ -1211,62 +1212,62 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera samtalsinspelare</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera aviseringsljud</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aviseringsljud</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera konferens</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontakter</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera kontakter</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera tysta mikrofon</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera utgående samtal</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa telefonens knappsats automatiskt</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Spela in samtal automatiskt</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Behåll samtalsfönster i bakgrunden</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtals paus aktiverad</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>DTMFs sändningsmetod</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
-        <translation type="unfinished"></translation>
+        <translation>Tillåt IPv6</translation>
     </message>
     <message>
         <source>transportTitle</source>
@@ -1274,7 +1275,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>NAT och brandvägg</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -1282,7 +1283,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>STUN/TURN-server</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
@@ -1290,15 +1291,15 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TURN-användare</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TURN-lösenord</translation>
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Nätverksprotokoll och portar</translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
@@ -1334,7 +1335,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>DSCP-fält</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
@@ -1350,23 +1351,23 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Bandbreddskontroll</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Hämtningshastighetsgräns i Kbit/sek</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Sändningshastighetsgräns i Kbit/sek</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera adaptiv hastighetskontroll</translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Närvaro</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
@@ -1382,11 +1383,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa nätverksinställningar</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Allmänt</translation>
     </message>
 </context>
 <context>
@@ -1417,7 +1418,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>editHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera</translation>
     </message>
     <message>
         <source>deleteHeader</source>
@@ -1425,11 +1426,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Are you sure you want to ta bort this account?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill ta bort alla lösenord?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1441,23 +1442,23 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera kontoupprättning</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera kontoanvändning</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera generisk kontoanvändning</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktivera konfigurationshämtning</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Stöder telefonnummer</translation>
     </message>
 </context>
 <context>
@@ -1484,11 +1485,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt parametrar</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Publicera närvaroinformation</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
@@ -1520,7 +1521,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"></translation>
+        <translation>Ogiltig rutt.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -1528,7 +1529,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>STUN/TURN-server</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
@@ -1536,15 +1537,15 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TURN-användare</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TURN-lösenord</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>NAT och brandvägg</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
@@ -1559,11 +1560,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapp med sparade skärmdumpar</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mapp med sparade samtal</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1583,15 +1584,15 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill ta bort alla avatarer?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Hämtningsmapp</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Det är nödvändigt att starta om programmet. Vill du starta om nu?</translation>
     </message>
     <message>
         <source>otherTitle</source>
@@ -1599,18 +1600,18 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Avsluta app på stäng fönster</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Användargränssnitt data</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoinmatningsenhet</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
@@ -1618,11 +1619,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Videoinspelningsparametrar</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Video förinställning</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -1634,7 +1635,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"></translation>
+        <translation>Anpassad</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
@@ -1642,15 +1643,15 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Videokodek</translation>
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation type="unfinished"></translation>
+        <translation>VIDEOFÖRHANDSVISNING </translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa videokodek</translation>
     </message>
 </context>
 <context>
@@ -1725,11 +1726,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd användarnamn och lösenord istället för ditt telefonnummer.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Ditt konto har skapats men har ännu inte validerats. Är du säker på att du vill avsluta den här vyn?</translation>
     </message>
 </context>
 <context>
