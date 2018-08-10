@@ -29,7 +29,7 @@ SearchBox {
 
   onEnterPressed: {
     var sipAddress = view.interpretableSipAddress
-    return sipAddress.length > 0 && searchBox.launchCall(sipAddress)
+    return sipAddress.length > 0 && SettingsModel.outgoingCallsEnabled && searchBox.launchCall(sipAddress)
   }
 
   // ---------------------------------------------------------------------------
