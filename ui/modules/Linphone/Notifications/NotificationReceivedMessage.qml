@@ -14,12 +14,13 @@ Notification {
 
   // ---------------------------------------------------------------------------
 
-  readonly property string sipAddress: notificationData && notificationData.sipAddress || ''
+  readonly property string peerAddress: notificationData && notificationData.peerAddress ||  ''
+  readonly property string localAddress: notificationData && notificationData.localAddress || ''
 
   // ---------------------------------------------------------------------------
 
   Loader {
-    active: Boolean(notification.sipAddress)
+    active: Boolean(notification.peerAddress) && Boolean(notification.localAddress)
     anchors {
       fill: parent
 
@@ -34,7 +35,7 @@ Notification {
       Contact {
         Layout.fillWidth: true
 
-        entry: SipAddressesModel.getSipAddressObserver(notification.sipAddress)
+        entry: SipAddressesModel.getSipAddressObserver(notification.peerAddress, notification.localAddress)
       }
 
       Rectangle {
@@ -73,7 +74,8 @@ Notification {
 
     onClicked: notification._close(function () {
       notification.notificationData.window.setView('Conversation', {
-        sipAddress: notification.sipAddress
+        peerAddress: notification.peerAddress,
+        localAddress: notification.localAddress
       })
     })
   }

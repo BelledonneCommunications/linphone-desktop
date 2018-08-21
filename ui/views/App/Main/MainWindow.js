@@ -100,7 +100,7 @@ function updateSelectedEntry (view, props) {
     menu.resetSelectedEntry()
 
     if (view === 'Conversation') {
-      timeline.setSelectedEntry(props.sipAddress)
+      timeline.setSelectedEntry(props.peerAddress, props.localAddress)
     } else if (view === 'ContactEdit') {
       timeline.resetSelectedEntry()
     }

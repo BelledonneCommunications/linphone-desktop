@@ -21,7 +21,7 @@ singleton CodecsViewerStyle                    1.0 Codecs/CodecsViewerStyle.qml
 singleton AvatarStyle                          1.0 Contact/AvatarStyle.qml
 singleton ContactDescriptionStyle              1.0 Contact/ContactDescriptionStyle.qml
 singleton ContactStyle                         1.0 Contact/ContactStyle.qml
-singleton MessagesCounterStyle                 1.0 Contact/MessagesCounterStyle.qml
+singleton MessageCounterStyle                  1.0 Contact/MessageCounterStyle.qml
 
 singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogStyle.qml
 

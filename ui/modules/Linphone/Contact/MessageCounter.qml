@@ -7,13 +7,13 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 Item {
-  id: messagesCounter
+  id: messageCounter
 
   property int count
   property bool isComposing
 
-  implicitHeight: counterIcon.height + MessagesCounterStyle.verticalMargins * 2
-  implicitWidth: counterIcon.width + MessagesCounterStyle.horizontalMargins * 2
+  implicitHeight: counterIcon.height + MessageCounterStyle.verticalMargins * 2
+  implicitWidth: counterIcon.width + MessageCounterStyle.horizontalMargins * 2
 
   Icon {
     id: counterIcon
@@ -22,11 +22,11 @@ Item {
 
     anchors.centerIn: parent
 
-    icon: messagesCounter.isComposing
+    icon: messageCounter.isComposing
       ? ('chat_is_composing_' + counterIcon.composingIndex)
       : 'chat_count'
-    iconSize: MessagesCounterStyle.iconSize.message
-    visible: messagesCounter.count > 0 || messagesCounter.isComposing
+    iconSize: MessageCounterStyle.iconSize.message
+    visible: messageCounter.count > 0 || messageCounter.isComposing
 
     Icon {
       anchors {
@@ -35,21 +35,21 @@ Item {
       }
 
       icon: 'chat_amount'
-      iconSize: MessagesCounterStyle.iconSize.amount
-      visible: messagesCounter.count > 0
+      iconSize: MessageCounterStyle.iconSize.amount
+      visible: messageCounter.count > 0
 
       Text {
         anchors.centerIn: parent
-        color: MessagesCounterStyle.text.color
-        font.pointSize: MessagesCounterStyle.text.pointSize
-        text: messagesCounter.count
+        color: MessageCounterStyle.text.color
+        font.pointSize: MessageCounterStyle.text.pointSize
+        text: messageCounter.count
       }
     }
 
     Timer {
       interval: 500
       repeat: true
-      running: messagesCounter.isComposing
+      running: messageCounter.isComposing
 
       onRunningChanged: {
         if (running) {

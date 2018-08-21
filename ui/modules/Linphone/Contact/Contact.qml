@@ -15,9 +15,9 @@ Rectangle {
   property alias sipAddressColor: description.sipAddressColor
   property alias usernameColor: description.usernameColor
 
-  property bool displayUnreadMessagesCount: false
+  property bool displayUnreadMessageCount: false
 
-  // A entry from `SipAddressesModel`.
+  // A entry from `SipAddressesModel` or an `SipAddressObserver`.
   property var entry
 
   readonly property var _contact: entry.contact
@@ -47,7 +47,7 @@ Rectangle {
         ? Presence.getPresenceLevel(entry.presenceStatus)
         : -1
 
-      username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress)
+      username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.peerAddress || '')
     }
 
     ContactDescription {
@@ -57,17 +57,17 @@ Rectangle {
       Layout.fillWidth: true
       Layout.leftMargin: ContactStyle.spacing
 
-      sipAddress: entry.sipAddress
+      sipAddress: entry.sipAddress || entry.peerAddress || ''
       username: avatar.username
     }
 
-    MessagesCounter {
+    MessageCounter {
       Layout.alignment: Qt.AlignTop
 
-      count: Number(entry.unreadMessagesCount)
+      count: Number(entry.unreadMessageCount)
       isComposing: Boolean(entry.isComposing)
 
-      visible: item.displayUnreadMessagesCount
+      visible: item.displayUnreadMessageCount
     }
   }
 }

@@ -26,7 +26,7 @@ Rectangle {
 
   property var call
 
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.peerAddress, call.localAddress)
   property var _fullscreen: null
 
   // ---------------------------------------------------------------------------

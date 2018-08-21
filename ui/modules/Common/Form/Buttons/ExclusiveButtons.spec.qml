@@ -57,7 +57,7 @@ Item {
       var count = 0
 
       exclusiveButtons.clicked.connect(function (_button) {
-        button = _button;
+        button = _button
         count += 1
       })
 

@@ -38,9 +38,9 @@
 #include "utils/Utils.hpp"
 
 #if defined(Q_OS_MACOS)
-  #include "messages-count-notifier/MessagesCountNotifierMacOs.hpp"
+  #include "messages-count-notifier/MessageCountNotifierMacOs.hpp"
 #else
-  #include "messages-count-notifier/MessagesCountNotifierSystemTrayIcon.hpp"
+  #include "messages-count-notifier/MessageCountNotifierSystemTrayIcon.hpp"
 #endif // if defined(Q_OS_MACOS)
 
 #include "CoreHandlers.hpp"
@@ -81,15 +81,16 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
   CoreHandlers *coreHandlers = mHandlers.get();
 
   QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
+    // Do not change this order. :) (Or pray.)
     mInstance->mCallsListModel = new CallsListModel(mInstance);
     mInstance->mContactsListModel = new ContactsListModel(mInstance);
-    mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
-    mInstance->mSettingsModel = new SettingsModel(mInstance);
     mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
+    mInstance->mSettingsModel = new SettingsModel(mInstance);
+    mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
 
     {
-      MessagesCountNotifier *messagesCountNotifier = new MessagesCountNotifier(mInstance);
-      messagesCountNotifier->updateUnreadMessagesCount();
+      MessageCountNotifier *messageCountNotifier = new MessageCountNotifier(mInstance);
+      messageCountNotifier->updateUnreadMessageCount();
     }
 
     mInstance->migrate();
@@ -108,21 +109,23 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 
 // -----------------------------------------------------------------------------
 
-shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &sipAddress) {
-  if (!sipAddress.length())
+shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
+  if (peerAddress.isEmpty() || localAddress.isEmpty())
     return nullptr;
 
   // Create a new chat model.
-  if (!mChatModels.contains(sipAddress)) {
-    Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(sipAddress)) != nullptr);
+  QPair<QString, QString> chatModelId{ peerAddress, localAddress };
+  if (!mChatModels.contains(chatModelId)) {
+    Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(peerAddress)));
+    Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(localAddress)));
 
-    auto deleter = [this](ChatModel *chatModel) {
-      mChatModels.remove(chatModel->getSipAddress());
+    auto deleter = [this, chatModelId](ChatModel *chatModel) {
+      mChatModels.remove(chatModelId);
       delete chatModel;
     };
 
-    shared_ptr<ChatModel> chatModel(new ChatModel(sipAddress), deleter);
-    mChatModels[chatModel->getSipAddress()] = chatModel;
+    shared_ptr<ChatModel> chatModel(new ChatModel(peerAddress, localAddress), deleter);
+    mChatModels[chatModelId] = chatModel;
 
     emit chatModelCreated(chatModel);
 
@@ -130,13 +133,13 @@ shared_ptr<ChatModel> CoreManager::getChatModelFromSipAddress (const QString &si
   }
 
   // Returns an existing chat model.
-  shared_ptr<ChatModel> chatModel = mChatModels[sipAddress].lock();
+  shared_ptr<ChatModel> chatModel = mChatModels[chatModelId].lock();
   Q_CHECK_PTR(chatModel.get());
   return chatModel;
 }
 
-bool CoreManager::chatModelExists (const QString &sipAddress) {
-  return mChatModels.contains(sipAddress);
+bool CoreManager::chatModelExists (const QString &peerAddress, const QString &localAddress) {
+  return mChatModels.contains({ peerAddress, localAddress });
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +207,6 @@ void CoreManager::cleanLogs () const {
 void CoreManager::setDatabasesPaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
-  SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());
 }
 
 #undef SET_DATABASE_PATH
@@ -237,10 +239,11 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   setResourcesPaths();
 
   mCore = linphone::Factory::get()->createCore(
-    mHandlers,
     Paths::getConfigFilePath(configPath),
-    Paths::getFactoryConfigFilePath()
+    Paths::getFactoryConfigFilePath(),
+    nullptr
   );
+  mCore->addListener(mHandlers);
 
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
@@ -257,6 +260,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     config->setInt("video", "capture", 1);
     config->setInt("video", "display", 1);
   }
+
+  mCore->start();
 
   setDatabasesPaths();
   setOtherPaths();
@@ -303,13 +308,13 @@ void CoreManager::iterate () {
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const string &info) {
+void CoreManager::handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const string &info) {
   switch (state) {
-    case linphone::CoreLogCollectionUploadStateInProgress:
+    case linphone::Core::LogCollectionUploadState::InProgress:
       break;
 
-    case linphone::CoreLogCollectionUploadStateDelivered:
-    case linphone::CoreLogCollectionUploadStateNotDelivered:
+    case linphone::Core::LogCollectionUploadState::Delivered:
+    case linphone::Core::LogCollectionUploadState::NotDelivered:
       emit logsUploaded(Utils::coreStringToAppString(info));
       break;
   }

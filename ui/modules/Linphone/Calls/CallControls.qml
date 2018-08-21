@@ -17,7 +17,9 @@ Rectangle {
   property alias signIcon: signIcon.icon
   property alias sipAddressColor: contact.sipAddressColor
   property alias usernameColor: contact.usernameColor
-  property string sipAddress
+
+  property string peerAddress
+  property string localAddress
 
   // ---------------------------------------------------------------------------
 
@@ -60,9 +62,9 @@ Rectangle {
       Layout.fillHeight: true
       Layout.fillWidth: true
 
-      displayUnreadMessagesCount: true
+      displayUnreadMessageCount: true
 
-      entry: SipAddressesModel.getSipAddressObserver(sipAddress)
+      entry: SipAddressesModel.getSipAddressObserver(peerAddress, localAddress)
     }
 
     Item {

@@ -36,15 +36,15 @@ using namespace std;
 
 static inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationStateToUi (linphone::RegistrationState state) {
   switch (state) {
-    case linphone::RegistrationStateNone:
-    case linphone::RegistrationStateCleared:
-    case linphone::RegistrationStateFailed:
+    case linphone::RegistrationState::None:
+    case linphone::RegistrationState::Cleared:
+    case linphone::RegistrationState::Failed:
       return AccountSettingsModel::RegistrationStateNotRegistered;
 
-    case linphone::RegistrationStateProgress:
+    case linphone::RegistrationState::Progress:
       return AccountSettingsModel::RegistrationStateInProgress;
 
-    case linphone::RegistrationStateOk:
+    case linphone::RegistrationState::Ok:
       break;
   }
 
@@ -74,6 +74,10 @@ void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::A
   shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
 
   proxyConfig ? proxyConfig->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
+}
+
+QString AccountSettingsModel::getUsedSipAddressAsString () const {
+  return Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
 }
 
 // -----------------------------------------------------------------------------
@@ -124,7 +128,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();
   map["publishPresence"] = proxyConfig->publishEnabled();
-  map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::AVPFModeEnabled;
+  map["avpfEnabled"] = proxyConfig->getAvpfMode() == linphone::AVPFMode::Enabled;
   map["registrationState"] = mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
@@ -135,7 +139,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["stunServer"] = Utils::coreStringToAppString(natPolicy->getStunServer());
   map["turnUser"] = Utils::coreStringToAppString(natPolicy->getStunServerUsername());
   shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
-  map["turnPassword"] = authInfo ? Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
+  map["turnPassword"] = authInfo ? Utils::coreStringToAppString(authInfo->getPassword()) : QString("");
 
   return map;
 }
@@ -197,8 +201,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
   proxyConfig->enablePublish(data["publishPresence"].toBool());
   proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
-    ? linphone::AVPFMode::AVPFModeEnabled
-    : linphone::AVPFMode::AVPFModeDefault
+    ? linphone::AVPFMode::Enabled
+    : linphone::AVPFMode::Default
   );
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
@@ -214,7 +218,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   shared_ptr<linphone::Core> core = proxyConfig->getCore();
   if (authInfo) {
     shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
-    clonedAuthInfo->setPasswd(Utils::appStringToCoreString(data["turnPassword"].toString()));
+    clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
 
     core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);
@@ -248,7 +252,7 @@ void AccountSettingsModel::addAuthInfo (
   const QString &password,
   const QString &userId
 ) {
-  authInfo->setPasswd(Utils::appStringToCoreString(password));
+  authInfo->setPassword(Utils::appStringToCoreString(password));
   authInfo->setUserid(Utils::appStringToCoreString(userId));
 
   CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
@@ -281,10 +285,6 @@ void AccountSettingsModel::setUsername (const QString &username) {
   }
 
   emit accountSettingsUpdated();
-}
-
-QString AccountSettingsModel::getSipAddress () const {
-  return Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
 }
 
 AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationState () const {

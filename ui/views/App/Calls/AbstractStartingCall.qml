@@ -13,7 +13,7 @@ Rectangle {
   property var call
 
   default property alias _actionArea: actionArea.data
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.peerAddress, call.localAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -40,7 +40,7 @@ Rectangle {
 
         height: CallStyle.header.contactDescription.height
         horizontalTextAlignment: Text.AlignHCenter
-        sipAddress: call.sipAddress
+        sipAddress: call.peerAddress
         username: LinphoneUtils.getContactUsername(_sipAddressObserver)
         width: parent.width
       }

@@ -10,7 +10,7 @@ import App.Styles 1.0
 Avatar {
   property var call
 
-  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.sipAddress)
+  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.peerAddress, call.localAddress)
   readonly property var _username: LinphoneUtils.getContactUsername(_sipAddressObserver)
 
   backgroundColor: CallStyle.container.avatar.backgroundColor

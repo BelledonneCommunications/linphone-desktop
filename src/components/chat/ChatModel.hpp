@@ -51,25 +51,25 @@ public:
   Q_ENUM(EntryType);
 
   enum CallStatus {
-    CallStatusDeclined = linphone::CallStatusDeclined,
-    CallStatusMissed = linphone::CallStatusMissed,
-    CallStatusSuccess = linphone::CallStatusSuccess
+    CallStatusDeclined = int(linphone::Call::Status::Declined),
+    CallStatusMissed = int(linphone::Call::Status::Missed),
+    CallStatusSuccess = int(linphone::Call::Status::Success)
   };
   Q_ENUM(CallStatus);
 
   enum MessageStatus {
-    MessageStatusDelivered = linphone::ChatMessageStateDelivered,
-    MessageStatusDeliveredToUser = linphone::ChatMessageStateDeliveredToUser,
-    MessageStatusDisplayed = linphone::ChatMessageStateDisplayed,
-    MessageStatusFileTransferDone = linphone::ChatMessageStateFileTransferDone,
-    MessageStatusFileTransferError = linphone::ChatMessageStateFileTransferError,
-    MessageStatusIdle = linphone::ChatMessageStateIdle,
-    MessageStatusInProgress = linphone::ChatMessageStateInProgress,
-    MessageStatusNotDelivered = linphone::ChatMessageStateNotDelivered
+    MessageStatusDelivered = int(linphone::ChatMessage::State::Delivered),
+    MessageStatusDeliveredToUser = int(linphone::ChatMessage::State::DeliveredToUser),
+    MessageStatusDisplayed = int(linphone::ChatMessage::State::Displayed),
+    MessageStatusFileTransferDone = int(linphone::ChatMessage::State::FileTransferDone),
+    MessageStatusFileTransferError = int(linphone::ChatMessage::State::FileTransferError),
+    MessageStatusIdle = int(linphone::ChatMessage::State::Idle),
+    MessageStatusInProgress = int(linphone::ChatMessage::State::InProgress),
+    MessageStatusNotDelivered = int(linphone::ChatMessage::State::NotDelivered)
   };
   Q_ENUM(MessageStatus);
 
-  ChatModel (const QString &sipAddress);
+  ChatModel (const QString &peerAddress, const QString &localAddress);
   ~ChatModel ();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
@@ -80,7 +80,8 @@ public:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-  QString getSipAddress () const;
+  QString getPeerAddress () const;
+  QString getLocalAddress () const;
 
   bool getIsRemoteComposing () const;
 
@@ -103,7 +104,7 @@ public:
 
   void compose ();
 
-  void resetMessagesCount ();
+  void resetMessageCount ();
 
 signals:
   bool isRemoteComposingChanged (bool status);
@@ -114,12 +115,12 @@ signals:
   void messageSent (const std::shared_ptr<linphone::ChatMessage> &message);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 
-  void messagesCountReset ();
+  void messageCountReset ();
 
 private:
   typedef QPair<QVariantMap, std::shared_ptr<void>> ChatEntryData;
 
-  void setSipAddress (const QString &sipAddress);
+  void setSipAddresses (const QString &peerAddress, const QString &localAddress);
 
   const ChatEntryData getFileMessageEntry (int id);
 
@@ -132,7 +133,7 @@ private:
   void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
   void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 
-  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 

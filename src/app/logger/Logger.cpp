@@ -87,22 +87,22 @@ private:
     using LogLevel = linphone::LogLevel;
     const char *format;
     switch (level) {
-      case LogLevel::LogLevelDebug:
+      case LogLevel::Debug:
         format = GREEN "[%s][Debug]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case LogLevel::LogLevelTrace:
+      case LogLevel::Trace:
         format = BLUE "[%s][Trace]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case LogLevel::LogLevelMessage:
+      case LogLevel::Message:
         format = BLUE "[%s][Info]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case LogLevel::LogLevelWarning:
+      case LogLevel::Warning:
         format = RED "[%s][Warning]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case LogLevel::LogLevelError:
+      case LogLevel::Error:
         format = RED "[%s][Error]" YELLOW "Core:%s: " RESET "%s\n";
         break;
-      case LogLevel::LogLevelFatal:
+      case LogLevel::Fatal:
         format = RED "[%s][Fatal]" YELLOW "Core:%s: " RESET "%s\n";
         break;
     }
@@ -115,7 +115,7 @@ private:
       message.c_str()
     );
 
-    if (level == LogLevel::LogLevelFatal)
+    if (level == LogLevel::Fatal)
       terminate();
   };
 
@@ -183,8 +183,8 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 void Logger::enable (bool status) {
   linphone::Core::enableLogCollection(
     status
-      ? linphone::LogCollectionStateEnabled
-      : linphone::LogCollectionStateDisabled
+      ? linphone::LogCollectionState::Enabled
+      : linphone::LogCollectionState::Disabled
   );
 }
 
@@ -201,7 +201,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 
   {
     shared_ptr<linphone::LoggingService> loggingService = mInstance->mLoggingService = linphone::LoggingService::get();
-    loggingService->setLogLevel(linphone::LogLevel::LogLevelMessage);
+    loggingService->setLogLevel(linphone::LogLevel::Message);
     loggingService->setListener(make_shared<LinphoneLogger>(mInstance));
   }
 

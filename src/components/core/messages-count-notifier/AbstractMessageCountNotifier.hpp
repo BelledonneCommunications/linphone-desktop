@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierMacOS.m
+ * AbstractMessageCountNotifier.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,15 +16,43 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 30, 2017
- *      Author: Ghislain MARY
+ *  Created on: June 29, 2017
+ *      Author: Ronan Abhamon
  */
 
-#import <Cocoa/Cocoa.h>
+#ifndef ABSTRACT_MESSAGE_COUNT_NOTIFIER_H_
+#define ABSTRACT_MESSAGE_COUNT_NOTIFIER_H_
+
+#include <memory>
+
+#include <QObject>
 
 // =============================================================================
 
-void notifyUnreadMessagesCountMacOs (int n) {
-  NSString *badgeStr = (n > 0) ? [NSString stringWithFormat:@"%d", n] : @"";
-  [[NSApp dockTile] setBadgeLabel:badgeStr];
+namespace linphone {
+  class ChatMessage;
 }
+
+class ChatModel;
+
+class AbstractMessageCountNotifier : public QObject {
+  Q_OBJECT;
+
+public:
+  AbstractMessageCountNotifier (QObject *parent = Q_NULLPTR);
+
+  void updateUnreadMessageCount ();
+
+protected:
+  virtual void notifyUnreadMessageCount (int n) = 0;
+
+private:
+  void internalNotifyUnreadMessageCount ();
+
+  void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
+  void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+
+  int mUnreadMessageCount = 0;
+};
+
+#endif // ABSTRACT_MESSAGE_COUNT_NOTIFIER_H_

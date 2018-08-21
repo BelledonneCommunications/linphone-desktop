@@ -1,5 +1,5 @@
 /*
- * AbstractMessagesCountNotifier.cpp
+ * AbstractMessageCountNotifier.cpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -25,55 +25,55 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/SettingsModel.hpp"
 
-#include "AbstractMessagesCountNotifier.hpp"
+#include "AbstractMessageCountNotifier.hpp"
 
 // =============================================================================
 
 using namespace std;
 
-AbstractMessagesCountNotifier::AbstractMessagesCountNotifier (QObject *parent) : QObject(parent) {
+AbstractMessageCountNotifier::AbstractMessageCountNotifier (QObject *parent) : QObject(parent) {
   CoreManager *coreManager = CoreManager::getInstance();
   QObject::connect(
     coreManager, &CoreManager::chatModelCreated,
-    this, &AbstractMessagesCountNotifier::handleChatModelCreated
+    this, &AbstractMessageCountNotifier::handleChatModelCreated
   );
   QObject::connect(
     coreManager->getHandlers().get(), &CoreHandlers::messageReceived,
-    this, &AbstractMessagesCountNotifier::handleMessageReceived
+    this, &AbstractMessageCountNotifier::handleMessageReceived
   );
   QObject::connect(
     coreManager->getSettingsModel(), &SettingsModel::chatEnabledChanged,
-    this, &AbstractMessagesCountNotifier::internalNotifyUnreadMessagesCount
+    this, &AbstractMessageCountNotifier::internalNotifyUnreadMessageCount
   );
 }
 
 // -----------------------------------------------------------------------------
 
-void AbstractMessagesCountNotifier::updateUnreadMessagesCount () {
-  mUnreadMessagesCount = 0;
+void AbstractMessageCountNotifier::updateUnreadMessageCount () {
+  mUnreadMessageCount = 0;
   for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms())
-    mUnreadMessagesCount += chatRoom->getUnreadMessagesCount();
+    mUnreadMessageCount += chatRoom->getUnreadMessagesCount();
 
-  internalNotifyUnreadMessagesCount();
+  internalNotifyUnreadMessageCount();
 }
 
-void AbstractMessagesCountNotifier::internalNotifyUnreadMessagesCount () {
-  qInfo() << QStringLiteral("Notify unread messages count: %1.").arg(mUnreadMessagesCount);
-  int n = mUnreadMessagesCount > 99 ? 99 : mUnreadMessagesCount;
+void AbstractMessageCountNotifier::internalNotifyUnreadMessageCount () {
+  qInfo() << QStringLiteral("Notify unread messages count: %1.").arg(mUnreadMessageCount);
+  int n = mUnreadMessageCount > 99 ? 99 : mUnreadMessageCount;
 
-  notifyUnreadMessagesCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
+  notifyUnreadMessageCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
 }
 
 // -----------------------------------------------------------------------------
 
-void AbstractMessagesCountNotifier::handleChatModelCreated (const shared_ptr<ChatModel> &chatModel) {
+void AbstractMessageCountNotifier::handleChatModelCreated (const shared_ptr<ChatModel> &chatModel) {
   QObject::connect(
-    chatModel.get(), &ChatModel::messagesCountReset,
-    this, &AbstractMessagesCountNotifier::updateUnreadMessagesCount
+    chatModel.get(), &ChatModel::messageCountReset,
+    this, &AbstractMessageCountNotifier::updateUnreadMessageCount
   );
 }
 
-void AbstractMessagesCountNotifier::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
-  mUnreadMessagesCount++;
-  internalNotifyUnreadMessagesCount();
+void AbstractMessageCountNotifier::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
+  mUnreadMessageCount++;
+  internalNotifyUnreadMessageCount();
 }

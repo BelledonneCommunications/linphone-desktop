@@ -60,8 +60,8 @@ public:
     return mHandlers;
   }
 
-  std::shared_ptr<ChatModel> getChatModelFromSipAddress (const QString &sipAddress);
-  bool chatModelExists (const QString &sipAddress);
+  std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress);
+  bool chatModelExists (const QString &sipAddress, const QString &localAddress);
 
   // ---------------------------------------------------------------------------
   // Video render lock.
@@ -149,7 +149,7 @@ private:
 
   void iterate ();
 
-  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
+  void handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
 
   static QString getDownloadUrl ();
 
@@ -164,7 +164,7 @@ private:
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
 
-  QHash<QString, std::weak_ptr<ChatModel>> mChatModels;
+  QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
 
   QTimer *mCbsTimer = nullptr;
 

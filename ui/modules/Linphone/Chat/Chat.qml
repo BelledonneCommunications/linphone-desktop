@@ -34,7 +34,7 @@ Rectangle {
 
       property bool bindToEnd: false
       property bool tryToLoadMoreEntries: true
-      property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.sipAddress)
+      property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.peerAddress, proxyModel.localAddress)
 
       // -----------------------------------------------------------------------
 

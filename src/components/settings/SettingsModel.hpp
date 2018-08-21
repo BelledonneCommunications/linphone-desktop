@@ -171,17 +171,17 @@ class SettingsModel : public QObject {
 
 public:
   enum MediaEncryption {
-    MediaEncryptionNone = linphone::MediaEncryptionNone,
-    MediaEncryptionDtls = linphone::MediaEncryptionDTLS,
-    MediaEncryptionSrtp = linphone::MediaEncryptionSRTP,
-    MediaEncryptionZrtp = linphone::MediaEncryptionZRTP
+    MediaEncryptionNone = int(linphone::MediaEncryption::None),
+    MediaEncryptionDtls = int(linphone::MediaEncryption::DTLS),
+    MediaEncryptionSrtp = int(linphone::MediaEncryption::SRTP),
+    MediaEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
   };
   Q_ENUM(MediaEncryption);
 
   enum LimeState {
-    LimeStateDisabled = linphone::LimeStateDisabled,
-    LimeStateMandatory = linphone::LimeStateMandatory,
-    LimeStatePreferred = linphone::LimeStatePreferred
+    LimeStateDisabled = int(linphone::LimeState::Disabled),
+    LimeStateMandatory = int(linphone::LimeState::Mandatory),
+    LimeStatePreferred = int(linphone::LimeState::Preferred)
   };
   Q_ENUM(LimeState);
 

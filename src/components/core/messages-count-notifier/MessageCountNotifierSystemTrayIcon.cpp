@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierSystemTrayIcon.hpp
+ * MessageCountNotifierSystemTrayIcon.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
-#include "MessagesCountNotifierSystemTrayIcon.hpp"
+#include "MessageCountNotifierSystemTrayIcon.hpp"
 
 // =============================================================================
 
@@ -46,7 +46,7 @@ namespace {
   constexpr int IconCounterTextPixelSize = 144;
 }
 
-MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessagesCountNotifier(parent) {
+MessageCountNotifier::MessageCountNotifier (QObject *parent) : AbstractMessageCountNotifier(parent) {
   QSvgRenderer renderer((QString(LinphoneUtils::WindowIconPath)));
   if (!renderer.isValid())
     qFatal("Invalid SVG Image.");
@@ -62,20 +62,20 @@ MessagesCountNotifier::MessagesCountNotifier (QObject *parent) : AbstractMessage
 
   mBlinkTimer = new QTimer(this);
   mBlinkTimer->setInterval(IconCounterBlinkInterval);
-  QObject::connect(mBlinkTimer, &QTimer::timeout, this, &MessagesCountNotifier::update);
+  QObject::connect(mBlinkTimer, &QTimer::timeout, this, &MessageCountNotifier::update);
 
   Utils::connectOnce(
     App::getInstance(), &App::focusWindowChanged,
-    this, &MessagesCountNotifier::updateUnreadMessagesCount
+    this, &MessageCountNotifier::updateUnreadMessageCount
   );
 }
 
-MessagesCountNotifier::~MessagesCountNotifier () {
+MessageCountNotifier::~MessageCountNotifier () {
   delete mBuf;
   delete mBufWithCounter;
 }
 
-void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
+void MessageCountNotifier::notifyUnreadMessageCount (int n) {
   QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
   if (!sysTrayIcon)
     return;
@@ -115,7 +115,7 @@ void MessagesCountNotifier::notifyUnreadMessagesCount (int n) {
   update();
 }
 
-void MessagesCountNotifier::update () {
+void MessageCountNotifier::update () {
   QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
   Q_CHECK_PTR(sysTrayIcon);
   sysTrayIcon->setIcon(QIcon(mDisplayCounter ? *mBufWithCounter : *mBuf));

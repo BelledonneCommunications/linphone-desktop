@@ -85,17 +85,17 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
   mChatModel
 
 #define CREATE_PARENT_MODEL_FUNCTION(METHOD) \
-  void ChatProxyModel::METHOD() { \
+  void ChatProxyModel::METHOD () { \
     GET_CHAT_MODEL()->METHOD(); \
   }
 
 #define CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(METHOD, ARG_TYPE) \
-  void ChatProxyModel::METHOD(ARG_TYPE value) { \
+  void ChatProxyModel::METHOD (ARG_TYPE value) { \
     GET_CHAT_MODEL()->METHOD(value); \
   }
 
 #define CREATE_PARENT_MODEL_FUNCTION_WITH_ID(METHOD) \
-  void ChatProxyModel::METHOD(int id) { \
+  void ChatProxyModel::METHOD (int id) { \
     QModelIndex sourceIndex = mapToSource(index(id, 0)); \
     GET_CHAT_MODEL()->METHOD( \
       static_cast<ChatModelFilter *>(sourceModel())->mapToSource(sourceIndex).row() \
@@ -156,11 +156,31 @@ bool ChatProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const
 
 // -----------------------------------------------------------------------------
 
-QString ChatProxyModel::getSipAddress () const {
-  return mChatModel ? mChatModel->getSipAddress() : QString("");
+QString ChatProxyModel::getPeerAddress () const {
+  return mChatModel ? mChatModel->getPeerAddress() : QString("");
 }
 
-void ChatProxyModel::setSipAddress (const QString &sipAddress) {
+void ChatProxyModel::setPeerAddress (const QString &peerAddress) {
+  mPeerAddress = peerAddress;
+  reload();
+}
+
+QString ChatProxyModel::getLocalAddress () const {
+  return mChatModel ? mChatModel->getLocalAddress() : QString("");
+}
+
+void ChatProxyModel::setLocalAddress (const QString &localAddress) {
+  mLocalAddress = localAddress;
+  reload();
+}
+
+bool ChatProxyModel::getIsRemoteComposing () const {
+  return mChatModel ? mChatModel->getIsRemoteComposing() : false;
+}
+
+// -----------------------------------------------------------------------------
+
+void ChatProxyModel::reload () {
   mMaxDisplayedEntries = EntriesChunkSize;
 
   if (mChatModel) {
@@ -170,10 +190,10 @@ void ChatProxyModel::setSipAddress (const QString &sipAddress) {
     QObject::disconnect(chatModel, &ChatModel::messageSent, this, &ChatProxyModel::handleMessageSent);
   }
 
-  mChatModel = CoreManager::getInstance()->getChatModelFromSipAddress(sipAddress);
+  mChatModel = CoreManager::getInstance()->getChatModel(mPeerAddress, mLocalAddress);
 
   if (mChatModel) {
-    mChatModel->resetMessagesCount();
+    mChatModel->resetMessageCount();
 
     ChatModel *chatModel = mChatModel.get();
     QObject::connect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
@@ -182,10 +202,6 @@ void ChatProxyModel::setSipAddress (const QString &sipAddress) {
   }
 
   static_cast<ChatModelFilter *>(sourceModel())->setSourceModel(mChatModel.get());
-}
-
-bool ChatProxyModel::getIsRemoteComposing () const {
-  return mChatModel ? mChatModel->getIsRemoteComposing() : false;
 }
 
 // -----------------------------------------------------------------------------
@@ -201,8 +217,8 @@ static inline QWindow *getParentWindow (QObject *object) {
 }
 
 void ChatProxyModel::handleIsActiveChanged (QWindow *window) {
-  if (window->isActive() && getParentWindow(this) == window)
-    mChatModel->resetMessagesCount();
+  if (mChatModel && window->isActive() && getParentWindow(this) == window)
+    mChatModel->resetMessageCount();
 }
 
 void ChatProxyModel::handleIsRemoteComposingChanged (bool status) {
@@ -214,7 +230,7 @@ void ChatProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessa
 
   QWindow *window = getParentWindow(this);
   if (window && window->isActive())
-    mChatModel->resetMessagesCount();
+    mChatModel->resetMessageCount();
 }
 
 void ChatProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {

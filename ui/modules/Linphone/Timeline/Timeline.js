@@ -2,14 +2,23 @@
 // `Timeline.qml` Logic.
 // =============================================================================
 
-function setSelectedEntry (sipAddress) {
+.import Linphone 1.0 as Linphone
+
+// =============================================================================
+
+function setSelectedEntry (peerAddress, localAddress) {
+  if (localAddress !== Linphone.AccountSettingsModel.sipAddress) {
+    resetSelectedEntry()
+    return
+  }
+
   var model = timeline.model
   var n = view.count
 
-  timeline._selectedSipAddress = sipAddress
+  timeline._selectedSipAddress = peerAddress
 
   for (var i = 0; i < n; i++) {
-    if (sipAddress === model.data(model.index(i, 0)).sipAddress) {
+    if (peerAddress === model.data(model.index(i, 0)).sipAddress) {
       view.currentIndex = i
       return
     }

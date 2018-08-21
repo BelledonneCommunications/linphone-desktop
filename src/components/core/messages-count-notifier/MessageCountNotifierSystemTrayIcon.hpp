@@ -1,5 +1,5 @@
 /*
- * MessagesCountNotifierMacOs.hpp
+ * MessageCountNotifierSystemTrayIcon.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,26 +16,34 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: June 30, 2017
- *      Author: Ghislain MARY
+ *  Created on: August 7, 2017
+ *      Author: Ronan Abhamon
  */
 
-#ifndef MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
-#define MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
+#ifndef MESSAGE_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
+#define MESSAGE_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
 
-#include "AbstractMessagesCountNotifier.hpp"
+#include "AbstractMessageCountNotifier.hpp"
 
 // =============================================================================
 
-extern "C" void notifyUnreadMessagesCountMacOs (int n);
+class QTimer;
 
-class MessagesCountNotifier : public AbstractMessagesCountNotifier {
+class MessageCountNotifier : public AbstractMessageCountNotifier {
 public:
-  MessagesCountNotifier (QObject *parent = Q_NULLPTR) : AbstractMessagesCountNotifier(parent) {}
+  MessageCountNotifier (QObject *parent = Q_NULLPTR);
+  ~MessageCountNotifier ();
 
-  void notifyUnreadMessagesCount (int n) override {
-    notifyUnreadMessagesCountMacOs(n);
-  }
+protected:
+  void notifyUnreadMessageCount (int n) override;
+
+private:
+  void update ();
+
+  const QPixmap *mBuf = nullptr;
+  QPixmap *mBufWithCounter = nullptr;
+  QTimer *mBlinkTimer = nullptr;
+  bool mDisplayCounter = false;
 };
 
-#endif // MESSAGES_COUNT_NOTIFIER_MAC_OS_H_
+#endif // MESSAGE_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_

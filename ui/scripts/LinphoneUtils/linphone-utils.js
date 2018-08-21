@@ -74,8 +74,8 @@ function getContactUsername (contact) {
   }
 
   // 2. `object` is just a string.
-  object = Utils.isString(contact.sipAddress)
-    ? contact.sipAddress // String from `SipAddressObserver`.
+  object = Utils.isString(contact.peerAddress)
+    ? contact.peerAddress // String from `SipAddressObserver`.
     : contact // Just a String.
 
   // Use display name.

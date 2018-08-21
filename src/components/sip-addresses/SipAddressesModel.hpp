@@ -24,6 +24,7 @@
 #define SIP_ADDRESSES_MODEL_H_
 
 #include <QAbstractListModel>
+#include <QDateTime>
 
 #include "SipAddressObserver.hpp"
 
@@ -38,6 +39,19 @@ class SipAddressesModel : public QAbstractListModel {
   Q_OBJECT;
 
 public:
+  struct ConferenceEntry {
+    int unreadMessageCount;
+    bool isComposing;
+    QDateTime timestamp;
+  };
+
+  struct SipAddressEntry {
+    QString sipAddress;
+    ContactModel *contact;
+    Presence::PresenceStatus presenceStatus;
+    QHash<QString, ConferenceEntry> localAddressToConferenceEntry;
+  };
+
   SipAddressesModel (QObject *parent = Q_NULLPTR);
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
@@ -47,14 +61,14 @@ public:
 
   Q_INVOKABLE QVariantMap find (const QString &sipAddress) const;
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
-  Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &sipAddress);
+  Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &peerAddress, const QString &localAddress);
 
   // ---------------------------------------------------------------------------
   // Sip addresses helpers.
   // ---------------------------------------------------------------------------
 
-  Q_INVOKABLE QString getTransportFromSipAddress (const QString &sipAddress) const;
-  Q_INVOKABLE QString addTransportToSipAddress (const QString &sipAddress, const QString &transport) const;
+  Q_INVOKABLE static QString getTransportFromSipAddress (const QString &sipAddress);
+  Q_INVOKABLE static QString addTransportToSipAddress (const QString &sipAddress, const QString &transport);
 
   Q_INVOKABLE static QString interpretSipAddress (const QString &sipAddress, bool checkUsername = true);
   Q_INVOKABLE static QString interpretSipAddress (const QUrl &sipAddress);
@@ -81,12 +95,12 @@ private:
   void handleSipAddressRemoved (ContactModel *contact, const QString &sipAddress);
 
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
-  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
   void handlePresenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 
   void handleAllEntriesRemoved (ChatModel *chatModel);
   void handleLastEntryRemoved (ChatModel *chatModel);
-  void handleMessagesCountReset (ChatModel *chatModel);
+  void handleMessageCountReset (ChatModel *chatModel);
 
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
@@ -96,9 +110,9 @@ private:
 
   // A sip address exists in this list if a contact is linked to it, or a call, or a message.
 
-  void addOrUpdateSipAddress (QVariantMap &map, ContactModel *contact);
-  void addOrUpdateSipAddress (QVariantMap &map, const std::shared_ptr<linphone::Call> &call);
-  void addOrUpdateSipAddress (QVariantMap &map, const std::shared_ptr<linphone::ChatMessage> &message);
+  void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, ContactModel *contact);
+  void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::Call> &call);
+  void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::ChatMessage> &message);
 
   template<class T>
   void addOrUpdateSipAddress (const QString &sipAddress, T data);
@@ -117,14 +131,26 @@ private:
 
   void updateObservers (const QString &sipAddress, ContactModel *contact);
   void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
-  void updateObservers (const QString &sipAddress, int messagesCount);
+  void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount);
 
-  QHash<QString, QVariantMap> mSipAddresses;
-  QList<const QVariantMap *> mRefs;
+  // ---------------------------------------------------------------------------
+
+  SipAddressEntry *getSipAddressEntry (const QString &peerAddress) {
+    auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
+    if (it == mPeerAddressToSipAddressEntry.end())
+      it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
+    return &(*it);
+  }
+
+  QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;
+  QList<const SipAddressEntry *> mRefs;
 
   QMultiHash<QString, SipAddressObserver *> mObservers;
 
   std::shared_ptr<CoreHandlers> mCoreHandlers;
 };
+
+using LocalAddressToConferenceEntry = QHash<QString, SipAddressesModel::ConferenceEntry>;
+Q_DECLARE_METATYPE(const LocalAddressToConferenceEntry *);
 
 #endif // SIP_ADDRESSES_MODEL_H_

@@ -332,7 +332,7 @@
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
-    <file>ui/modules/Linphone/Contact/MessagesCounter.qml</file>
+    <file>ui/modules/Linphone/Contact/MessageCounter.qml</file>
     <file>ui/modules/Linphone/Dialog/OnlineInstallerDialog.qml</file>
     <file>ui/modules/Linphone/Menus/SipAddressesMenu.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationBasic.qml</file>
@@ -358,7 +358,7 @@
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Contact/MessagesCounterStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Contact/MessageCounterStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Dialog/OnlineInstallerDialogStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationBasicStyle.qml</file>

@@ -36,7 +36,8 @@ class ChatProxyModel : public QSortFilterProxyModel {
 
   Q_OBJECT;
 
-  Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged);
+  Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged);
+  Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
 
 public:
@@ -60,7 +61,8 @@ public:
   Q_INVOKABLE void compose ();
 
 signals:
-  void sipAddressChanged (const QString &sipAddress);
+  void peerAddressChanged (const QString &peerAddress);
+  void localAddressChanged (const QString &localAddress);
   bool isRemoteComposingChanged (bool status);
 
   void moreEntriesLoaded (int n);
@@ -71,10 +73,15 @@ protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 
 private:
-  QString getSipAddress () const;
-  void setSipAddress (const QString &sipAddress);
+  QString getPeerAddress () const;
+  void setPeerAddress (const QString &peerAddress);
+
+  QString getLocalAddress () const;
+  void setLocalAddress (const QString &localAddress);
 
   bool getIsRemoteComposing () const;
+
+  void reload ();
 
   void handleIsActiveChanged (QWindow *window);
 
@@ -83,6 +90,9 @@ private:
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
   int mMaxDisplayedEntries = EntriesChunkSize;
+
+  QString mPeerAddress;
+  QString mLocalAddress;
 
   std::shared_ptr<ChatModel> mChatModel;
 

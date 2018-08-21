@@ -27,7 +27,7 @@ Rectangle {
   Keys.onPressed: {
     var index = Logic.mapKeyToButtonIndex(event.key)
     if (index != null) {
-      event.accepted = true;
+      event.accepted = true
       Logic.sendDtmf(index)
     }
   }
