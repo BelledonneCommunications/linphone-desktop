@@ -120,7 +120,8 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
     Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(localAddress)));
 
     auto deleter = [this, chatModelId](ChatModel *chatModel) {
-      mChatModels.remove(chatModelId);
+      bool removed = mChatModels.remove(chatModelId);
+      Q_ASSERT(removed);
       delete chatModel;
     };
 
@@ -134,7 +135,7 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
 
   // Returns an existing chat model.
   shared_ptr<ChatModel> chatModel = mChatModels[chatModelId].lock();
-  Q_CHECK_PTR(chatModel.get());
+  Q_CHECK_PTR(chatModel);
   return chatModel;
 }
 
