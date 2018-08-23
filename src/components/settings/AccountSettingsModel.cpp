@@ -145,8 +145,27 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 }
 
 void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
-  CoreManager::getInstance()->getCore()->setDefaultProxyConfig(proxyConfig);
-  emit accountSettingsUpdated();
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  if (core->getDefaultProxyConfig() != proxyConfig) {
+    core->setDefaultProxyConfig(proxyConfig);
+    emit accountSettingsUpdated();
+  }
+}
+
+void AccountSettingsModel::setDefaultProxyConfigFromSipAddress (const QString &sipAddress) {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  if (Utils::coreStringToAppString(core->getPrimaryContactParsed()->asStringUriOnly()) == sipAddress) {
+    setDefaultProxyConfig(nullptr);
+    return;
+  }
+
+  for (const auto &proxyConfig : core->getProxyConfigList())
+    if (Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly()) == sipAddress) {
+      setDefaultProxyConfig(proxyConfig);
+      return;
+    }
+
+  qWarning() << "Unable to set default proxy config from:" << sipAddress;
 }
 
 void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {

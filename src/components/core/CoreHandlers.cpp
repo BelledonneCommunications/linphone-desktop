@@ -29,6 +29,7 @@
 #include "components/call/CallModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/notifier/Notifier.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -174,13 +175,14 @@ void CoreHandlers::onMessageReceived (
     emit messageReceived(message);
 
     // 1. Do not notify if chat is not activated.
-    SettingsModel *settingsModel = CoreManager::getInstance()->getSettingsModel();
+    CoreManager *coreManager = CoreManager::getInstance();
+    SettingsModel *settingsModel = coreManager->getSettingsModel();
     if (!settingsModel->getChatEnabled())
       return;
 
     // 2. Notify with Notification popup.
     const App *app = App::getInstance();
-    if (!app->hasFocus())
+    if (!app->hasFocus() || !chatRoom->getLocalAddress()->weakEqual(coreManager->getAccountSettingsModel()->getUsedSipAddress()))
       app->getNotifier()->notifyReceivedMessage(message);
 
     // 3. Notify with sound.

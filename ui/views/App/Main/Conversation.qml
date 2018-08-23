@@ -170,4 +170,13 @@ ColumnLayout  {
     target: SettingsModel
     onChatEnabledChanged: chatProxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
   }
+
+  Connections {
+    target: AccountSettingsModel
+    onAccountSettingsUpdated: {
+      if (conversation.localAddress !== AccountSettingsModel.sipAddress) {
+        window.setView('Home')
+      }
+    }
+  }
 }

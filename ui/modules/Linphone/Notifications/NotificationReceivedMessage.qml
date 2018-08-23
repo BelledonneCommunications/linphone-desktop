@@ -73,6 +73,7 @@ Notification {
     hoverEnabled: true
 
     onClicked: notification._close(function () {
+      AccountSettingsModel.setDefaultProxyConfigFromSipAddress(notification.localAddress)
       notification.notificationData.window.setView('Conversation', {
         peerAddress: notification.peerAddress,
         localAddress: notification.localAddress
