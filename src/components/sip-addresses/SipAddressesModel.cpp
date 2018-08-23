@@ -405,10 +405,8 @@ void SipAddressesModel::handleMessageCountReset (ChatModel *chatModel) {
 }
 
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
-  addOrUpdateSipAddress(
-    Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly()),
-    message
-  );
+  const QString localAddress(Utils::coreStringToAppString(message->getChatRoom()->getLocalAddress()->asStringUriOnly()));
+  addOrUpdateSipAddress(localAddress, message);
 }
 
 void SipAddressesModel::handlerIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
