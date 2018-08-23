@@ -287,8 +287,8 @@ void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QS
 }
 
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString sipAddress = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
-  addOrUpdateSipAddress(sipAddress, message);
+  const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
+  addOrUpdateSipAddress(peerAddress, message);
 }
 
 void SipAddressesModel::handleCallStateChanged (
@@ -454,9 +454,10 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const shared_ptr<linphone::ChatMessage> &message) {
-  int count = message->getChatRoom()->getUnreadMessagesCount();
+  shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+  int count = chatRoom->getUnreadMessagesCount();
 
-  QString localAddress(Utils::coreStringToAppString(message->getLocalAddress()->asStringUriOnly()));
+  QString localAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()));
   ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[localAddress];
   conferenceEntry.timestamp = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
   conferenceEntry.unreadMessageCount = count;
