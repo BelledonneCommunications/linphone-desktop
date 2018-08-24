@@ -22,7 +22,6 @@
 
 lcb_define_target("linphoneqt" "linphone" "ms2plugins")
 
-lcb_blacklist_dependencies("libxsd") # linphone do not need them for the moment.
 
 if (NOT WIN32 AND NOT APPLE)
   lcb_blacklist_dependencies("turbo-jpeg") # turbo-jpeg is already provided by Qt5 so do not build it.
