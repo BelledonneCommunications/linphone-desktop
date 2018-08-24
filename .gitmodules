@@ -65,7 +65,7 @@
 	url = https://gitlab.linphone.org/BC/public/external/srtp.git
 [submodule "submodules/externals/v4l-utils"]
 	path = submodules/externals/v4l-utils
-	url = git://linuxtv.org/v4l-utils.git
+	url = https://gitlab.linphone.org/BC/public/external/v4l-utils.git
 [submodule "submodules/externals/libxml2"]
 	path = submodules/externals/libxml2
 	url = https://gitlab.linphone.org/BC/public/external/libxml2.git
