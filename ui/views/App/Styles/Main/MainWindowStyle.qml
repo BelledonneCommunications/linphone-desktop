@@ -18,12 +18,12 @@ QtObject {
   }
 
   property QtObject autoAnswerStatus: QtObject {
-    property int iconSize: 13
-    property int width: 24
+    property int iconSize: 16
+    property int width: 28
 
     property QtObject text: QtObject {
       property int pointSize: Units.dp * 8
-      property color color: Colors.g
+      property color color: Colors.i
     }
   }
 
