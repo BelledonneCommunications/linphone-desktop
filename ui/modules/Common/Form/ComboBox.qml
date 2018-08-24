@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
-import Utils 1.0
 
 import 'ComboBox.js' as Logic
 
@@ -82,65 +81,13 @@ Controls.ComboBox {
 
   // ---------------------------------------------------------------------------
 
-  delegate: Controls.ItemDelegate {
+  delegate: CommonItemDelegate {
     id: item
 
-    readonly property var flattenedModel: comboBox.textRole.length &&
+    container: comboBox
+    flattenedModel: comboBox.textRole.length &&
       (typeof modelData !== 'undefined' ? modelData : model)
-
-    hoverEnabled: true
+    itemIcon: Logic.getEntryIcon(item)
     width: comboBox.width
-
-    background: Rectangle {
-      color: item.hovered
-        ? ComboBoxStyle.delegate.color.hovered
-        : ComboBoxStyle.delegate.color.normal
-
-      Rectangle {
-        anchors.left: parent.left
-        color: ComboBoxStyle.delegate.indicator.color
-
-        height: parent.height
-        width: ComboBoxStyle.delegate.indicator.width
-
-        visible: item.hovered
-      }
-
-      Rectangle {
-        anchors.bottom: parent.bottom
-        color: ComboBoxStyle.delegate.separator.color
-
-        height: ComboBoxStyle.delegate.separator.height
-        width: parent.width
-
-        visible: comboBox.count !== index + 1
-      }
-    }
-
-    contentItem: RowLayout {
-      spacing: ComboBoxStyle.delegate.contentItem.spacing
-      width: item.width
-
-      Icon {
-        icon: Logic.getEntryIcon(item)
-        iconSize: ComboBoxStyle.delegate.contentItem.iconSize
-
-        visible: icon.length > 0
-      }
-
-      Text {
-        Layout.fillWidth: true
-
-        color: ComboBoxStyle.delegate.contentItem.text.color
-        elide: Text.ElideRight
-
-        font {
-          bold: comboBox.currentIndex === index
-          pointSize: ComboBoxStyle.delegate.contentItem.text.pointSize
-        }
-
-        text: item.flattenedModel[textRole] || modelData
-      }
-    }
   }
 }

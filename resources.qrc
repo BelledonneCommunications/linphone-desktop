@@ -216,6 +216,7 @@
     <file>ui/modules/Common/Form/CheckBoxText.qml</file>
     <file>ui/modules/Common/Form/ComboBox.js</file>
     <file>ui/modules/Common/Form/ComboBox.qml</file>
+    <file>ui/modules/Common/Form/CommonItemDelegate.qml</file>
     <file>ui/modules/Common/Form/DroppableTextArea.qml</file>
     <file>ui/modules/Common/Form/Fields/HexField.qml</file>
     <file>ui/modules/Common/Form/Fields/NumericField.qml</file>
@@ -273,6 +274,7 @@
     <file>ui/modules/Common/Styles/Form/Buttons/TextButtonBStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/ComboBoxStyle.qml</file>
+    <file>ui/modules/Common/Styles/Form/CommonItemDelegateStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/DroppableTextAreaStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/NumericFieldStyle.qml</file>
     <file>ui/modules/Common/Styles/Form/Fields/TextAreaFieldStyle.qml</file>
