@@ -24,6 +24,7 @@
 
 #include <QDateTime>
 #include <QDesktopServices>
+#include <QElapsedTimer>
 #include <QFileInfo>
 #include <QMimeDatabase>
 #include <QTimer>
@@ -128,6 +129,46 @@ static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMe
         qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
     }
   }
+}
+
+// -----------------------------------------------------------------------------
+
+static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
+  dest["content"] = Utils::coreStringToAppString(message->getText());
+  dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessage::State::Idle;
+
+  // Old workaround.
+  // It can exist messages with a not delivered status. It's a linphone core bug.
+  linphone::ChatMessage::State state = message->getState();
+  if (state == linphone::ChatMessage::State::InProgress)
+    dest["status"] = ChatModel::MessageStatusNotDelivered;
+  else
+    dest["status"] = static_cast<ChatModel::MessageStatus>(message->getState());
+
+  shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
+  if (content) {
+    dest["fileSize"] = quint64(content->getSize());
+    dest["fileName"] = Utils::coreStringToAppString(content->getName());
+    dest["wasDownloaded"] = ::fileWasDownloaded(message);
+
+    fillThumbnailProperty(dest, message);
+  }
+}
+
+static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
+  dest["type"] = ChatModel::CallEntry;
+  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
+  dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
+  dest["status"] = static_cast<ChatModel::CallStatus>(callLog->getStatus());
+  dest["isStart"] = true;
+}
+
+static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
+  dest["type"] = ChatModel::CallEntry;
+  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
+  dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
+  dest["status"] = static_cast<ChatModel::CallStatus>(callLog->getStatus());
+  dest["isStart"] = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -247,8 +288,12 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
     return QVariant();
 
   switch (role) {
-    case Roles::ChatEntry:
-      return QVariant::fromValue(mEntries[row].first);
+    case Roles::ChatEntry: {
+      auto &data = mEntries[row].first;
+      if (!data.contains("status"))
+        fillMessageEntry(data, static_pointer_cast<linphone::ChatMessage>(mEntries[row].second));
+      return QVariant::fromValue(data);
+    }
     case Roles::SectionDate:
       return QVariant::fromValue(mEntries[row].first["timestamp"].toDate());
   }
@@ -309,24 +354,27 @@ void ChatModel::setSipAddresses (const QString &peerAddress, const QString &loca
 
   // Get messages.
   mEntries.clear();
-  for (auto &message : mChatRoom->getHistory(0)) {
-    QVariantMap map;
 
-    fillMessageEntry(map, message);
+  QElapsedTimer timer;
+  timer.start();
 
-    // Old workaround.
-    // It can exist messages with a not delivered status. It's a linphone core bug.
-    if (message->getState() == linphone::ChatMessage::State::InProgress)
-      map["status"] = MessageStatusNotDelivered;
-
-    mEntries << qMakePair(map, static_pointer_cast<void>(message));
-  }
+  for (auto &message : mChatRoom->getHistory(0))
+    mEntries << qMakePair(
+      QVariantMap{
+        { "type", EntryType::MessageEntry },
+        { "timestamp", QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000) }
+      },
+      static_pointer_cast<void>(message)
+    );
 
   // Get calls.
   // TODO: Add an API to find with local and peer addresses.
   for (auto &callLog : core->getCallHistoryForAddress(mChatRoom->getPeerAddress()))
     if (mChatRoom->getLocalAddress()->weakEqual(callLog->getLocalAddress()))
       insertCall(callLog);
+
+  qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
+    .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
 }
 
 bool ChatModel::getIsRemoteComposing () const {
@@ -474,7 +522,7 @@ void ChatModel::downloadFile (int id) {
   message->setFileTransferFilepath(Utils::appStringToCoreString(safeFilePath));
   message->setListener(mMessageHandlers);
 
-  if (message->downloadFile() < 0)
+  if (!message->downloadFile())
     qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(id);
 }
 
@@ -532,45 +580,6 @@ const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
   }
 
   return entry;
-}
-
-// -----------------------------------------------------------------------------
-
-void ChatModel::fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  dest["type"] = EntryType::MessageEntry;
-  dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
-  dest["content"] = Utils::coreStringToAppString(message->getText());
-  dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessage::State::Idle;
-  dest["status"] = static_cast<MessageStatus>(message->getState());
-
-  shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
-  if (content) {
-    dest["fileSize"] = quint64(content->getSize());
-    dest["fileName"] = Utils::coreStringToAppString(content->getName());
-    dest["wasDownloaded"] = ::fileWasDownloaded(message);
-
-    fillThumbnailProperty(dest, message);
-  }
-}
-
-void ChatModel::fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
-  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
-
-  dest["type"] = EntryType::CallEntry;
-  dest["timestamp"] = timestamp;
-  dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
-  dest["status"] = static_cast<CallStatus>(callLog->getStatus());
-  dest["isStart"] = true;
-}
-
-void ChatModel::fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
-  QDateTime timestamp = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
-
-  dest["type"] = EntryType::CallEntry;
-  dest["timestamp"] = timestamp;
-  dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
-  dest["status"] = static_cast<CallStatus>(callLog->getStatus());
-  dest["isStart"] = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -663,11 +672,13 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
   int row = mEntries.count();
 
   beginInsertRows(QModelIndex(), row, row);
-
-  QVariantMap map;
-  fillMessageEntry(map, message);
-  mEntries << qMakePair(map, static_pointer_cast<void>(message));
-
+  mEntries << qMakePair(
+    QVariantMap{
+      { "type", EntryType::MessageEntry },
+      { "timestamp", QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000) }
+    },
+    static_pointer_cast<void>(message)
+  );
   endInsertRows();
 }
 

@@ -124,10 +124,6 @@ private:
 
   const ChatEntryData getFileMessageEntry (int id);
 
-  void fillMessageEntry (QVariantMap &dest, const std::shared_ptr<linphone::ChatMessage> &message);
-  void fillCallStartEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
-  void fillCallEndEntry (QVariantMap &dest, const std::shared_ptr<linphone::CallLog> &callLog);
-
   void removeEntry (ChatEntryData &entry);
 
   void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
@@ -139,7 +135,7 @@ private:
 
   bool mIsRemoteComposing = false;
 
-  QList<ChatEntryData> mEntries;
+  mutable QList<ChatEntryData> mEntries;
   std::shared_ptr<linphone::ChatRoom> mChatRoom;
 
   std::shared_ptr<CoreHandlers> mCoreHandlers;
