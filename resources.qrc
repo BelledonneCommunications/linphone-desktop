@@ -227,6 +227,8 @@
     <file>ui/modules/Common/Form/Fields/TextField.qml</file>
     <file>ui/modules/Common/Form/ListForm.js</file>
     <file>ui/modules/Common/Form/ListForm.qml</file>
+    <file>ui/modules/Common/Form/ListItemSelector.js</file>
+    <file>ui/modules/Common/Form/ListItemSelector.qml</file>
     <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
     <file>ui/modules/Common/Form/Placements/FormGroup.qml</file>
     <file>ui/modules/Common/Form/Placements/FormHGroup.qml</file>

@@ -53,7 +53,10 @@ DialogPlus {
       FormGroup {
         label: qsTr('selectAccountLabel')
 
-        ComboBox {
+        ListItemSelector {
+          width: parent.width
+          height: ManageAccountsStyle.accountSelector.height
+
           currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
             return account.sipAddress === AccountSettingsModel.sipAddress
           })

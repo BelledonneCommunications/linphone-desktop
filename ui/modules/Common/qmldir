@@ -22,6 +22,7 @@ CheckBoxText            1.0 Form/CheckBoxText.qml
 ComboBox                1.0 Form/ComboBox.qml
 DroppableTextArea       1.0 Form/DroppableTextArea.qml
 ListForm                1.0 Form/ListForm.qml
+ListItemSelector        1.0 Form/ListItemSelector.qml
 SearchBox               1.0 Form/SearchBox.qml
 Slider                  1.0 Form/Slider.qml
 StaticListForm          1.0 Form/StaticListForm.qml
