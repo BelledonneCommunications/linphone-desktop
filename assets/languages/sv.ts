@@ -305,7 +305,7 @@
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"></translation>
+        <translation>Pågående</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
