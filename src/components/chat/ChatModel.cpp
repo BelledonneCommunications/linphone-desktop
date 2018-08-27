@@ -672,13 +672,14 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
   int row = mEntries.count();
 
   beginInsertRows(QModelIndex(), row, row);
-  mEntries << qMakePair(
-    QVariantMap{
-      { "type", EntryType::MessageEntry },
-      { "timestamp", QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000) }
-    },
-    static_pointer_cast<void>(message)
-  );
+
+  QVariantMap map{
+    { "type", EntryType::MessageEntry },
+    { "timestamp", QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000) }
+  };
+  fillMessageEntry(map, message);
+  mEntries << qMakePair(map, static_pointer_cast<void>(message));
+
   endInsertRows();
 }
 
