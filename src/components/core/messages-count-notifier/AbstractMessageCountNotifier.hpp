@@ -50,7 +50,6 @@ private:
   void internalNotifyUnreadMessageCount ();
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
-  void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 
   int mUnreadMessageCount = 0;
 };

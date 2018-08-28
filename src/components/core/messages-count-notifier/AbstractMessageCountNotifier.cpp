@@ -39,7 +39,7 @@ AbstractMessageCountNotifier::AbstractMessageCountNotifier (QObject *parent) : Q
   );
   QObject::connect(
     coreManager->getHandlers().get(), &CoreHandlers::messageReceived,
-    this, &AbstractMessageCountNotifier::handleMessageReceived
+    this, &AbstractMessageCountNotifier::updateUnreadMessageCount
   );
   QObject::connect(
     coreManager->getSettingsModel(), &SettingsModel::chatEnabledChanged,
@@ -50,10 +50,7 @@ AbstractMessageCountNotifier::AbstractMessageCountNotifier (QObject *parent) : Q
 // -----------------------------------------------------------------------------
 
 void AbstractMessageCountNotifier::updateUnreadMessageCount () {
-  mUnreadMessageCount = 0;
-  for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms())
-    mUnreadMessageCount += chatRoom->getUnreadMessagesCount();
-
+  mUnreadMessageCount = CoreManager::getInstance()->getCore()->getUnreadChatMessageCountFromActiveLocals();
   internalNotifyUnreadMessageCount();
 }
 
@@ -71,9 +68,4 @@ void AbstractMessageCountNotifier::handleChatModelCreated (const shared_ptr<Chat
     chatModel.get(), &ChatModel::messageCountReset,
     this, &AbstractMessageCountNotifier::updateUnreadMessageCount
   );
-}
-
-void AbstractMessageCountNotifier::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
-  mUnreadMessageCount++;
-  internalNotifyUnreadMessageCount();
 }

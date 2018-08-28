@@ -622,7 +622,6 @@ void ChatModel::removeEntry (ChatEntryData &entry) {
 
 void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   linphone::Call::Status status = callLog->getStatus();
-
   switch (status) {
     case linphone::Call::Status::Aborted:
     case linphone::Call::Status::EarlyAborted:
