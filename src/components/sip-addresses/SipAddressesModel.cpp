@@ -556,8 +556,20 @@ void SipAddressesModel::initSipAddressesFromCalls () {
     const QString peerAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly()));
     const QString localAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly()));
 
-    if (callLog->getStatus() == linphone::Call::Status::Aborted)
-      continue; // Ignore aborted calls.
+    switch (callLog->getStatus()) {
+      case linphone::Call::Status::Aborted:
+      case linphone::Call::Status::EarlyAborted:
+        return; // Ignore aborted calls.
+
+      case linphone::Call::Status::AcceptedElsewhere:
+      case linphone::Call::Status::DeclinedElsewhere:
+        return; // Ignore accepted calls on other device.
+
+      case linphone::Call::Status::Success:
+      case linphone::Call::Status::Missed:
+      case linphone::Call::Status::Declined:
+        break;
+    }
 
     ConferenceId conferenceId{ peerAddress, localAddress };
     if (conferenceDone.contains(conferenceId))
