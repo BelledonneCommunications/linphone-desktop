@@ -104,7 +104,7 @@ private:
 
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
-  void handlerIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
+  void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 
   // ---------------------------------------------------------------------------
 

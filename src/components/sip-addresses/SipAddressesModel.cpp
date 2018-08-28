@@ -71,7 +71,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
   QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
   QObject::connect(coreHandlers, &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
-  QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &SipAddressesModel::handlerIsComposingChanged);
+  QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &SipAddressesModel::handleIsComposingChanged);
 }
 
 // -----------------------------------------------------------------------------
@@ -409,7 +409,7 @@ void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessag
   addOrUpdateSipAddress(localAddress, message);
 }
 
-void SipAddressesModel::handlerIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
+void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
   auto it = mPeerAddressToSipAddressEntry.find(
     Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())
   );
@@ -455,7 +455,13 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
   int count = chatRoom->getUnreadMessagesCount();
 
-  QString localAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()));
+  QString localAddress(Utils::coreStringToAppString(
+    message->isOutgoing()
+      ? chatRoom->getPeerAddress()->asStringUriOnly()
+      : chatRoom->getLocalAddress()->asStringUriOnly()
+  ));
+  qInfo() << QStringLiteral("Update (`%1`, `%2`) from chat message.").arg(sipAddressEntry.sipAddress, localAddress);
+
   ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[localAddress];
   conferenceEntry.timestamp = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
   conferenceEntry.unreadMessageCount = count;
