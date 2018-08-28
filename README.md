@@ -38,6 +38,14 @@ Here are the general instructions to build linphone for desktop. The specific in
 
         make
         
+6. Optionally codesign the application to avoid warnings from OSX
+
+        sudo codesign --force --deep --sign - WORK/desktop/Build/linphone_package/Linphone.app
+
+7. Install
+
+        mv WORK/desktop/Build/linphone_package/Linphone.app /Applications/
+        
 ### Specific instructions for Linux/Unix
 
 1. Prepare the build in a terminal by running the following command in the current directory:
