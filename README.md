@@ -30,19 +30,19 @@ Here are the general instructions to build linphone for desktop. The specific in
 
         brew install cmake qt git
 
-4. Clone the gituhub repository, cd into that folder, clean the project configuration and then build the compile scripts:
+4. Clone the github repository for this project, cd into that folder, then:
 
         ./prepare.py -c && ./prepare.py -DENABLE_PACKAGING=ON -p
 
-5. Build the project in a terminal with:
+5. Build the project with:
 
         make
         
-6. Optionally codesign the application to avoid warnings from OSX
+6. Optionally codesign the application to avoid warnings from OSX:
 
         sudo codesign --force --deep --sign - WORK/desktop/Build/linphone_package/Linphone.app
 
-7. Install
+7. Install:
 
         mv WORK/desktop/Build/linphone_package/Linphone.app /Applications/
         
