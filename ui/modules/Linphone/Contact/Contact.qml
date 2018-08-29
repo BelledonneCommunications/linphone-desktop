@@ -61,7 +61,7 @@ Rectangle {
       username: avatar.username
     }
 
-    MessageCounter {
+    ContactMessageCounter {
       Layout.alignment: Qt.AlignTop
 
       count: Number(entry.unreadMessageCount)

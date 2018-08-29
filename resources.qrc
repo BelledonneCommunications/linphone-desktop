@@ -335,10 +335,11 @@
     <file>ui/modules/Linphone/Codecs/CodecsViewer.qml</file>
     <file>ui/modules/Linphone/Contact/Avatar.qml</file>
     <file>ui/modules/Linphone/Contact/ContactDescription.qml</file>
+    <file>ui/modules/Linphone/Contact/ContactMessageCounter.qml</file>
     <file>ui/modules/Linphone/Contact/Contact.qml</file>
-    <file>ui/modules/Linphone/Contact/MessageCounter.qml</file>
     <file>ui/modules/Linphone/Dialog/OnlineInstallerDialog.qml</file>
     <file>ui/modules/Linphone/Menus/SipAddressesMenu.qml</file>
+    <file>ui/modules/Linphone/Misc/MessageCounter.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationBasic.qml</file>
     <file>ui/modules/Linphone/Notifications/NotificationNewVersionAvailable.qml</file>
     <file>ui/modules/Linphone/Notifications/Notification.qml</file>
@@ -361,10 +362,11 @@
     <file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Contact/ContactMessageCounterStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
-    <file>ui/modules/Linphone/Styles/Contact/MessageCounterStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Dialog/OnlineInstallerDialogStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
+    <file>ui/modules/Linphone/Styles/Misc/MessageCounterStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationBasicStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedCallStyle.qml</file>
     <file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedFileMessageStyle.qml</file>

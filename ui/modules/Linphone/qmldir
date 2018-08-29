@@ -24,6 +24,8 @@ ContactDescription  1.0 Contact/ContactDescription.qml
 
 SipAddressesMenu    1.0 Menus/SipAddressesMenu.qml
 
+MessageCounter      1.0 Misc/MessageCounter.qml
+
 PresenceLevel       1.0 Presence/PresenceLevel.qml
 
 SmartSearchBar      1.0 SmartSearchBar/SmartSearchBar.qml

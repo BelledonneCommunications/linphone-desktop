@@ -20,12 +20,14 @@ singleton CodecsViewerStyle                    1.0 Codecs/CodecsViewerStyle.qml
 
 singleton AvatarStyle                          1.0 Contact/AvatarStyle.qml
 singleton ContactDescriptionStyle              1.0 Contact/ContactDescriptionStyle.qml
+singleton ContactMessageCounterStyle           1.0 Contact/ContactMessageCounterStyle.qml
 singleton ContactStyle                         1.0 Contact/ContactStyle.qml
-singleton MessageCounterStyle                  1.0 Contact/MessageCounterStyle.qml
 
 singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogStyle.qml
 
 singleton SipAddressesMenuStyle                1.0 Menus/SipAddressesMenuStyle.qml
+
+singleton MessageCounterStyle                  1.0 Misc/MessageCounterStyle.qml
 
 singleton NotificationBasicStyle               1.0 Notifications/NotificationBasicStyle.qml
 singleton NotificationReceivedCallStyle        1.0 Notifications/NotificationReceivedCallStyle.qml
