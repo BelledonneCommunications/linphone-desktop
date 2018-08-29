@@ -287,6 +287,7 @@ void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QS
 }
 
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
+  qInfo() << "Handle message received.";
   const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
   addOrUpdateSipAddress(peerAddress, message);
 }
@@ -405,8 +406,9 @@ void SipAddressesModel::handleMessageCountReset (ChatModel *chatModel) {
 }
 
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString localAddress(Utils::coreStringToAppString(message->getChatRoom()->getLocalAddress()->asStringUriOnly()));
-  addOrUpdateSipAddress(localAddress, message);
+  qInfo() << "Handle message sent.";
+  const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
+  addOrUpdateSipAddress(peerAddress, message);
 }
 
 void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
@@ -455,11 +457,7 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
   int count = chatRoom->getUnreadMessagesCount();
 
-  QString localAddress(Utils::coreStringToAppString(
-    message->isOutgoing()
-      ? chatRoom->getPeerAddress()->asStringUriOnly()
-      : chatRoom->getLocalAddress()->asStringUriOnly()
-  ));
+  QString localAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()));
   qInfo() << QStringLiteral("Update (`%1`, `%2`) from chat message.").arg(sipAddressEntry.sipAddress, localAddress);
 
   ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[localAddress];
