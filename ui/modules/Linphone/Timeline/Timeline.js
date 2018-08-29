@@ -7,7 +7,7 @@
 // =============================================================================
 
 function setSelectedEntry (peerAddress, localAddress) {
-  if (localAddress !== Linphone.AccountSettingsModel.sipAddress) {
+  if (localAddress != null && localAddress !== Linphone.AccountSettingsModel.sipAddress) {
     resetSelectedEntry()
     return
   }
