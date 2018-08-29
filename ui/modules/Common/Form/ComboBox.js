@@ -55,7 +55,7 @@ function getSelectedEntryText () {
   return ''
 }
 
-function getEntryIcon (item) {
+function getItemIcon (item) {
   var iconRole = comboBox.iconRole
   if (iconRole == null || iconRole.length === 0) {
     return ''

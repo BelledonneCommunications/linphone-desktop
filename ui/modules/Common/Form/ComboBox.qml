@@ -87,7 +87,7 @@ Controls.ComboBox {
     container: comboBox
     flattenedModel: comboBox.textRole.length &&
       (typeof modelData !== 'undefined' ? modelData : model)
-    itemIcon: Logic.getEntryIcon(item)
+    itemIcon: Logic.getItemIcon(item)
     width: comboBox.width
   }
 }

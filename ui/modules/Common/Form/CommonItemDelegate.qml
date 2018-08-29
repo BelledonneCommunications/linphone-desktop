@@ -14,6 +14,8 @@ Controls.ItemDelegate {
   property var flattenedModel
   property var itemIcon
 
+  default property alias _content: content.data
+
   hoverEnabled: true
 
   background: Rectangle {
@@ -64,7 +66,14 @@ Controls.ItemDelegate {
         pointSize: CommonItemDelegateStyle.contentItem.text.pointSize
       }
 
-      text: item.flattenedModel[textRole] || modelData
+      text: item.flattenedModel[container.textRole] || modelData
+    }
+
+    Item {
+      id: content
+
+      Layout.preferredWidth: CommonItemDelegateStyle.contentItem.iconSize
+      Layout.preferredHeight: CommonItemDelegateStyle.contentItem.iconSize
     }
   }
 }

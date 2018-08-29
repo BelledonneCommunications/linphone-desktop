@@ -362,6 +362,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
   {
     QVariantMap account;
     account["sipAddress"] = Utils::coreStringToAppString(core->getPrimaryContactParsed()->asStringUriOnly());
+    account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->getPrimaryContactParsed());
     accounts << account;
   }
 
@@ -369,6 +370,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
     QVariantMap account;
     account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
     account["proxyConfig"].setValue(proxyConfig);
+    account["unreadMessageCount"] = proxyConfig->getUnreadChatMessageCount();
     accounts << account;
   }
 

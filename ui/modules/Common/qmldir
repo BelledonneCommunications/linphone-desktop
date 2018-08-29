@@ -20,6 +20,7 @@ ActionButton            1.0 Form/ActionButton.qml
 ActionSwitch            1.0 Form/ActionSwitch.qml
 CheckBoxText            1.0 Form/CheckBoxText.qml
 ComboBox                1.0 Form/ComboBox.qml
+CommonItemDelegate      1.0 Form/CommonItemDelegate.qml
 DroppableTextArea       1.0 Form/DroppableTextArea.qml
 ListForm                1.0 Form/ListForm.qml
 ListItemSelector        1.0 Form/ListItemSelector.qml

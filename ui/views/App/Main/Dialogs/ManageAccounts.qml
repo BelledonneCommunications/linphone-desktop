@@ -6,6 +6,8 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'ManageAccount.js' as Logic
+
 // =============================================================================
 
 DialogPlus {
@@ -53,29 +55,39 @@ DialogPlus {
       FormGroup {
         label: qsTr('selectAccountLabel')
 
-        ListItemSelector {
+        ScrollableListViewField {
           width: parent.width
           height: ManageAccountsStyle.accountSelector.height
 
-          currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
-            return account.sipAddress === AccountSettingsModel.sipAddress
-          })
+          radius: 0
 
-          model: AccountSettingsModel.accounts
-          iconRole: (function (data) {
-            var proxyConfig = data.proxyConfig
-            if (!proxyConfig) {
-              return ''
+          ScrollableListView {
+            id: view
+
+            property string textRole: 'sipAddress' // Used by delegate.
+
+            anchors.fill: parent
+            currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
+              return account.sipAddress === AccountSettingsModel.sipAddress
+            })
+            model: AccountSettingsModel.accounts
+
+            delegate: CommonItemDelegate {
+              id: item
+
+              container: view
+              flattenedModel: modelData
+              itemIcon: Logic.getItemIcon(flattenedModel)
+              width: parent.width
+
+              onClicked: AccountSettingsModel.setDefaultProxyConfig(flattenedModel.proxyConfig)
+
+              MessageCounter {
+                anchors.fill: parent
+                count: flattenedModel.unreadMessageCount
+              }
             }
-
-            var description = AccountSettingsModel.getProxyConfigDescription(proxyConfig)
-            return description.registerEnabled && description.registrationState !== AccountSettingsModel.RegistrationStateRegistered
-              ? 'generic_error'
-              : ''
-          })
-          textRole: 'sipAddress'
-
-          onActivated: AccountSettingsModel.setDefaultProxyConfig(model[index].proxyConfig)
+          }
         }
       }
     }

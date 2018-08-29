@@ -426,6 +426,7 @@
     <file>ui/views/App/Main/Dialogs/About.qml</file>
     <file>ui/views/App/Main/Dialogs/AuthenticationRequest.js</file>
     <file>ui/views/App/Main/Dialogs/AuthenticationRequest.qml</file>
+    <file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
     <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
     <file>ui/views/App/Main/Home.qml</file>
     <file>ui/views/App/Main/InviteFriends.qml</file>

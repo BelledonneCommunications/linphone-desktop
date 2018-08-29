@@ -6,7 +6,7 @@
 
 // =============================================================================
 
-function getEntryIcon (item) {
+function getItemIcon (item) {
   var iconRole = view.iconRole
   if (iconRole == null || iconRole.length === 0) {
     return ''

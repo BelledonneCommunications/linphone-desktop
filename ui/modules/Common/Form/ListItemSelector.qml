@@ -33,7 +33,7 @@ ScrollableListViewField {
       container: view
       flattenedModel: view.textRole.length &&
         (typeof modelData !== 'undefined' ? modelData : model)
-      itemIcon: Logic.getEntryIcon(item)
+      itemIcon: Logic.getItemIcon(item)
       width: parent.width
 
       onClicked: activated(index)
