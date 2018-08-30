@@ -88,7 +88,12 @@ The options that enable you to configure what will be built are the ones beginni
 
 ## Updating your build
 
-Simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
+You need to update the project:
+
+      git pull --rebase
+      git submodule sync && git submodule update --init --recursive
+
+Then simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
 However if the compilation fails, you may need to rebuild everything from scratch using:
 
         ./prepare.py -c && ./prepare.py [options]
