@@ -59,6 +59,7 @@ void AbstractMessageCountNotifier::internalNotifyUnreadMessageCount () {
   int n = mUnreadMessageCount > 99 ? 99 : mUnreadMessageCount;
 
   notifyUnreadMessageCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
+  unreadMessageCountChanged(mUnreadMessageCount);
 }
 
 // -----------------------------------------------------------------------------

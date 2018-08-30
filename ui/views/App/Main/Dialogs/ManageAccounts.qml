@@ -67,10 +67,11 @@ DialogPlus {
             property string textRole: 'sipAddress' // Used by delegate.
 
             anchors.fill: parent
-            currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
+            model: AccountSettingsModel.accounts
+
+            onModelChanged: currentIndex = Utils.findIndex(AccountSettingsModel.accounts, function (account) {
               return account.sipAddress === AccountSettingsModel.sipAddress
             })
-            model: AccountSettingsModel.accounts
 
             delegate: CommonItemDelegate {
               id: item
@@ -80,7 +81,10 @@ DialogPlus {
               itemIcon: Logic.getItemIcon(flattenedModel)
               width: parent.width
 
-              onClicked: AccountSettingsModel.setDefaultProxyConfig(flattenedModel.proxyConfig)
+              onClicked: {
+                container.currentIndex = index
+                AccountSettingsModel.setDefaultProxyConfig(flattenedModel.proxyConfig)
+              }
 
               MessageCounter {
                 anchors.fill: parent

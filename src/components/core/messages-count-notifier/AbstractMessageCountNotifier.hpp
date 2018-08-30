@@ -43,6 +43,13 @@ public:
 
   void updateUnreadMessageCount ();
 
+  int getUnreadMessageCount () const {
+    return mUnreadMessageCount;
+  }
+
+signals:
+  void unreadMessageCountChanged (int count);
+
 protected:
   virtual void notifyUnreadMessageCount (int n) = 0;
 

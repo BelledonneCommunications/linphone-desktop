@@ -91,6 +91,11 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
     {
       MessageCountNotifier *messageCountNotifier = new MessageCountNotifier(mInstance);
       messageCountNotifier->updateUnreadMessageCount();
+      QObject::connect(
+        messageCountNotifier, &MessageCountNotifier::unreadMessageCountChanged,
+        mInstance, &CoreManager::unreadMessageCountChanged
+      );
+      mInstance->mMessageCountNotifier = messageCountNotifier;
     }
 
     mInstance->migrate();
@@ -297,6 +302,12 @@ void CoreManager::migrate () {
 
 QString CoreManager::getVersion () const {
   return Utils::coreStringToAppString(mCore->getVersion());
+}
+
+// -----------------------------------------------------------------------------
+
+int CoreManager::getUnreadMessageCount () const {
+  return mMessageCountNotifier ? mMessageCountNotifier->getUnreadMessageCount() : 0;
 }
 
 // -----------------------------------------------------------------------------

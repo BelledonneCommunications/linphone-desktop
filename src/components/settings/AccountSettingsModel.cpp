@@ -54,10 +54,12 @@ static inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationSta
 // -----------------------------------------------------------------------------
 
 AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
+  CoreManager *coreManager = CoreManager::getInstance();
   QObject::connect(
-    CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,
+    coreManager->getHandlers().get(), &CoreHandlers::registrationStateChanged,
     this, &AccountSettingsModel::handleRegistrationStateChanged
   );
+  QObject::connect(coreManager, &CoreManager::unreadMessageCountChanged, this, [this]() { emit accountSettingsUpdated(); });
 }
 
 // -----------------------------------------------------------------------------
