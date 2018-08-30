@@ -237,7 +237,9 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
     ? tr("newFileMessage")
     : Utils::coreStringToAppString(message->getText());
 
-  map["sipAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
+  shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+  map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
+  map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
   map["window"].setValue(App::getInstance()->getMainWindow());
 
   SHOW_NOTIFICATION(map);

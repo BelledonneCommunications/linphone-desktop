@@ -140,10 +140,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
   contact = new ContactModel(this, vcardModel);
   App::getInstance()->getEngine()->setObjectOwnership(contact, QQmlEngine::CppOwnership);
 
-  if (
-    mLinphoneFriends->addFriend(contact->mLinphoneFriend) !=
-    linphone::FriendListStatus::FriendListStatusOK
-  ) {
+  if (mLinphoneFriends->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
     qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcardModel;
     delete contact;
     return nullptr;

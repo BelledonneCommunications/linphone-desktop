@@ -173,7 +173,8 @@ ColumnLayout {
               CallsListModel.launchAudioCall,
               function (sipAddress) {
                 window.setView('Conversation', {
-                  sipAddress: sipAddress
+                  peerAddress: sipAddress,
+                  localAddress: AccountSettingsModel.sipAddress
                 })
               }
             ]

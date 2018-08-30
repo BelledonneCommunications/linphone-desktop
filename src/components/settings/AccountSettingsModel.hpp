@@ -33,7 +33,7 @@ class AccountSettingsModel : public QObject {
 
   // Selected proxy config.
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountSettingsUpdated);
-  Q_PROPERTY(QString sipAddress READ getSipAddress NOTIFY accountSettingsUpdated);
+  Q_PROPERTY(QString sipAddress READ getUsedSipAddressAsString NOTIFY accountSettingsUpdated);
   Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY accountSettingsUpdated);
 
   // Default info.
@@ -56,11 +56,14 @@ public:
   std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
   void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
 
+  QString getUsedSipAddressAsString () const;
+
   bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
   Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
   Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
+  Q_INVOKABLE void setDefaultProxyConfigFromSipAddress (const QString &sipAddress);
 
   Q_INVOKABLE bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, const QVariantMap &data);
   Q_INVOKABLE void removeProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
@@ -81,8 +84,6 @@ signals:
 private:
   QString getUsername () const;
   void setUsername (const QString &username);
-
-  QString getSipAddress () const;
 
   RegistrationState getRegistrationState () const;
 

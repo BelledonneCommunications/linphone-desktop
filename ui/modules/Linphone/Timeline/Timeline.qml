@@ -17,16 +17,14 @@ Rectangle {
   property alias model: view.model
   property string _selectedSipAddress
 
-  property var _newInsertedItem
+  // ---------------------------------------------------------------------------
+
+  signal entrySelected (string entry)
 
   // ---------------------------------------------------------------------------
 
-  signal entrySelected (var entry)
-
-  // ---------------------------------------------------------------------------
-
-  function setSelectedEntry (sipAddress) {
-    Logic.setSelectedEntry(sipAddress)
+  function setSelectedEntry (peerAddress, localAddress) {
+    Logic.setSelectedEntry(peerAddress, localAddress)
   }
 
   function resetSelectedEntry () {
@@ -109,7 +107,7 @@ Rectangle {
                 ? TimelineStyle.contact.backgroundColor.a
                 : TimelineStyle.contact.backgroundColor.b
             )
-          displayUnreadMessagesCount: SettingsModel.chatEnabled
+          displayUnreadMessageCount: SettingsModel.chatEnabled
           entry: $timelineEntry
           sipAddressColor: isSelected
             ? TimelineStyle.contact.sipAddress.color.selected

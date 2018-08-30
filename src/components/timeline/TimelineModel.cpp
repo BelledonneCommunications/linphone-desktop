@@ -21,6 +21,7 @@
  */
 
 #include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 
 #include "TimelineModel.hpp"
@@ -28,7 +29,15 @@
 // =============================================================================
 
 TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  setSourceModel(CoreManager::getInstance()->getSipAddressesModel());
+  CoreManager *coreManager = CoreManager::getInstance();
+  AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
+
+  QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
+    handleLocalAddressChanged(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsString());
+  });
+  mLocalAddress = accountSettingsModel->getUsedSipAddressAsString();
+
+  setSourceModel(coreManager->getSipAddressesModel());
   sort(0);
 }
 
@@ -40,11 +49,40 @@ QHash<int, QByteArray> TimelineModel::roleNames () const {
 
 // -----------------------------------------------------------------------------
 
+static inline const QHash<QString, SipAddressesModel::ConferenceEntry> *getLocalToConferenceEntry (const QVariantMap &map) {
+  return map.value("__localToConferenceEntry").value<decltype(getLocalToConferenceEntry({}))>();
+}
+
+QVariant TimelineModel::data (const QModelIndex &index, int role) const {
+  QVariantMap map(QSortFilterProxyModel::data(index, role).toMap());
+
+  auto localToConferenceEntry = getLocalToConferenceEntry(map);
+  auto it = localToConferenceEntry->find(mLocalAddress);
+  if (it != localToConferenceEntry->end()) {
+    map["timestamp"] = it->timestamp;
+    map["isComposing"] = it->isComposing;
+    map["unreadMessageCount"] = it->unreadMessageCount;
+  }
+
+  return map;
+}
+
 bool TimelineModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  return index.data().toMap().contains("timestamp");
+  return getLocalToConferenceEntry(index.data().toMap())->contains(mLocalAddress);
 }
 
 bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  return sourceModel()->data(left).toMap()["timestamp"] > sourceModel()->data(right).toMap()["timestamp"];
+  const QDateTime &a(getLocalToConferenceEntry(sourceModel()->data(left).toMap())->find(mLocalAddress)->timestamp);
+  const QDateTime &b(getLocalToConferenceEntry(sourceModel()->data(right).toMap())->find(mLocalAddress)->timestamp);
+  return a > b;
+}
+
+// -----------------------------------------------------------------------------
+
+void TimelineModel::handleLocalAddressChanged (const QString &localAddress) {
+  if (mLocalAddress != localAddress) {
+    mLocalAddress = localAddress;
+    invalidate();
+  }
 }

@@ -26,7 +26,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 1. Prepare the build in a terminal by running the following command in the current directory:
 
-        ./prepare.py
+        ./prepare.py -DENABLE_DOC=OFF
 
 2. Build the project in a terminal with:
 
@@ -43,7 +43,7 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 3. Open a Windows command line (cmd.exe) in the current directory and run:
 
-        python prepare.py -G "Visual Studio 14 2015"
+        python prepare.py -G "Visual Studio 14 2015" -DENABLE_DOC=OFF
 
 4. Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `Release` option is selected in Visual Studio. (With `Win32`!)
 

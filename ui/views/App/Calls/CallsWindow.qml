@@ -23,15 +23,14 @@ Window {
     isOutgoing: true,
     recording: false,
     localSas: '',
-    sipAddress: '',
+    peerAddress: '',
+    localAddress: '',
     type: false,
     updating: true,
     videoEnabled: false
   })
 
   readonly property bool chatIsOpened: !rightPaned.isClosed()
-
-  property string sipAddress: call ? call.sipAddress : ''
 
   // ---------------------------------------------------------------------------
 
@@ -198,7 +197,8 @@ Window {
               }
             }
 
-            sipAddress: window.sipAddress
+            peerAddress: call.peerAddress
+            localAddress: call.localAddress
           }
 
           Connections {
@@ -225,7 +225,7 @@ Window {
 
       childB: Loader {
         anchors.fill: parent
-        sourceComponent: window.sipAddress ? chat : null
+        sourceComponent: call.peerAddress && call.localAddress ? chat : null
       }
     }
   }

@@ -34,23 +34,28 @@ class SipAddressObserver : public QObject {
 
   Q_OBJECT;
 
-  Q_PROPERTY(QString sipAddress READ getSipAddress CONSTANT);
+  Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT);
+  Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
 
-  Q_PROPERTY(ContactModel * contact READ getContact NOTIFY contactChanged);
+  Q_PROPERTY(ContactModel *contact READ getContact NOTIFY contactChanged);
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
-  Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount NOTIFY unreadMessagesCountChanged);
+  Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
 
 public:
-  SipAddressObserver (const QString &sipAddress);
+  SipAddressObserver (const QString &peerAddress, const QString &localAddress);
 
 signals:
   void contactChanged (ContactModel *contact);
   void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
-  void unreadMessagesCountChanged (int unreadMessagesCount);
+  void unreadMessageCountChanged (int unreadMessageCount);
 
 private:
-  QString getSipAddress () const {
-    return mSipAddress;
+  QString getPeerAddress () const {
+    return mPeerAddress;
+  }
+
+  QString getLocalAddress () const {
+    return mLocalAddress;
   }
 
   // ---------------------------------------------------------------------------
@@ -71,17 +76,18 @@ private:
 
   // ---------------------------------------------------------------------------
 
-  int getUnreadMessagesCount () const {
-    return mUnreadMessagesCount;
+  int getUnreadMessageCount () const {
+    return mUnreadMessageCount;
   }
 
-  void setUnreadMessagesCount (int unreadMessagesCount);
+  void setUnreadMessageCount (int unreadMessageCount);
 
-  QString mSipAddress;
+  QString mPeerAddress;
+  QString mLocalAddress;
 
   ContactModel *mContact = nullptr;
   Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
-  int mUnreadMessagesCount = 0;
+  int mUnreadMessageCount = 0;
 };
 
 Q_DECLARE_METATYPE(SipAddressObserver *);

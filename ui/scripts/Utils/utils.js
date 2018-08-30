@@ -647,7 +647,7 @@ function unscapeHtml (str) {
 
 function write (fileName, text) {
   // TODO: Deal with async.
-  var request = new XMLHttpRequest();
-  request.open('PUT', getUriFromSystemPath(fileName), false);
-  request.send(text);
+  var request = new XMLHttpRequest()
+  request.open('PUT', getUriFromSystemPath(fileName), false)
+  request.send(text)
 }

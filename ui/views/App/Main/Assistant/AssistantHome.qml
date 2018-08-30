@@ -137,7 +137,7 @@ ColumnLayout {
         SettingsModel.assistantSupportsPhoneNumbers ?
           'CreateAppSipAccount' :
           'CreateAppSipAccountWithEmail'
-      );
+      )
     }
   }
 }

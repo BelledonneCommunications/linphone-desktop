@@ -26,6 +26,10 @@ Item {
     }
 
     anchors.centerIn: parent
+
+    width: iconSize
+    height: iconSize
+
     fillMode: Image.PreserveAspectFit
     source: Utils.resolveImageUri(icon)
     sourceSize.width: getIconSize()

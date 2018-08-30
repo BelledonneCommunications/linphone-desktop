@@ -24,6 +24,7 @@ lcb_external_source_paths("..")
 
 lcb_dependencies("linphone" "ms2plugins" "minizip")
 lcb_groupable(YES)
+lcb_sanitizable(YES)
 lcb_package_source(YES)
 lcb_spec_file("linphoneqt.spec")
 

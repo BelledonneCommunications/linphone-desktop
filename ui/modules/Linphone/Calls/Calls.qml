@@ -142,7 +142,9 @@ ListView {
       return params ? 'call_sign_' + params.string : ''
     }
 
-    sipAddress: $call.sipAddress
+    peerAddress: $call.peerAddress
+    localAddress: $call.localAddress
+
     width: parent.width
 
     onClicked: {

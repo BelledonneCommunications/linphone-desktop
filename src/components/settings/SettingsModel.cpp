@@ -104,7 +104,7 @@ QStringList SettingsModel::getCaptureDevices () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QStringList list;
 
-  for (const auto &device : core->getSoundDevices()) {
+  for (const auto &device : core->getSoundDevicesList()) {
     if (core->soundDeviceCanCapture(device))
       list << Utils::coreStringToAppString(device);
   }
@@ -116,7 +116,7 @@ QStringList SettingsModel::getPlaybackDevices () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QStringList list;
 
-  for (const auto &device : core->getSoundDevices())
+  for (const auto &device : core->getSoundDevicesList())
     if (core->soundDeviceCanPlayback(device))
       list << Utils::coreStringToAppString(device);
 
@@ -213,7 +213,7 @@ void SettingsModel::setShowAudioCodecs (bool status) {
 QStringList SettingsModel::getVideoDevices () const {
   QStringList list;
 
-  for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevices())
+  for (const auto &device : CoreManager::getInstance()->getCore()->getVideoDevicesList())
     list << Utils::coreStringToAppString(device);
 
   return list;
@@ -504,13 +504,13 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QVariantList list;
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryptionDTLS))
+  if (core->mediaEncryptionSupported(linphone::MediaEncryption::DTLS))
     list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryptionSRTP))
+  if (core->mediaEncryptionSupported(linphone::MediaEncryption::SRTP))
     list << buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryptionZRTP))
+  if (core->mediaEncryptionSupported(linphone::MediaEncryption::ZRTP))
     list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
 
   return list;
@@ -803,7 +803,7 @@ QString SettingsModel::getTurnPassword () const {
   shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
   shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(natPolicy->getStunServerUsername(), "", "");
 
-  return authInfo ? Utils::coreStringToAppString(authInfo->getPasswd()) : QString("");
+  return authInfo ? Utils::coreStringToAppString(authInfo->getPassword()) : QString("");
 }
 
 void SettingsModel::setTurnPassword (const QString &password) {
@@ -815,7 +815,7 @@ void SettingsModel::setTurnPassword (const QString &password) {
 
   if (authInfo) {
     shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
-    clonedAuthInfo->setPasswd(Utils::appStringToCoreString(password));
+    clonedAuthInfo->setPassword(Utils::appStringToCoreString(password));
 
     core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);

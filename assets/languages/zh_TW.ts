@@ -3,18 +3,18 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>確定</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>啟用您的 %1 帳號</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>啟用</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -25,11 +25,11 @@
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>啟用您的 %1 帳號</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>啟用</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -56,15 +56,15 @@
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>檔案</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>顯示這個說明</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>顯示應用程式版本</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
@@ -1321,10 +1321,6 @@
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
-        <source>enableTlsLabel</source>
         <translation type="unfinished"/>
     </message>
     <message>

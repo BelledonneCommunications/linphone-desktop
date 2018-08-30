@@ -127,7 +127,10 @@ ApplicationWindow {
             Text {
               clip: true
               color: MainWindowStyle.autoAnswerStatus.text.color
-              font.pointSize: MainWindowStyle.autoAnswerStatus.text.pointSize
+              font {
+                bold: true
+                pointSize: MainWindowStyle.autoAnswerStatus.text.pointSize
+              }
               text: qsTr('autoAnswerStatus')
               visible: SettingsModel.autoAnswerStatus
               width: parent.width
@@ -146,15 +149,21 @@ ApplicationWindow {
               sipAddress: sipAddress
             })
 
-            onEntryClicked: window.setView(entry.contact && SettingsModel.contactsEnabled
-              ? 'ContactEdit'
-              : 'Conversation', {
-              sipAddress: entry.sipAddress
-            })
+            onEntryClicked: {
+              if (entry.contact && SettingsModel.contactsEnabled) {
+                window.setView('ContactEdit', { sipAddress: entry.sipAddress })
+              } else {
+                window.setView('Conversation', {
+                  peerAddress: entry.sipAddress,
+                  localAddress: AccountSettingsModel.sipAddress
+                })
+              }
+            }
 
             onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
             onLaunchChat: window.setView('Conversation', {
-              sipAddress: sipAddress
+              peerAddress: sipAddress,
+              localAddress: AccountSettingsModel.sipAddress
             })
 
             onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
@@ -240,7 +249,10 @@ ApplicationWindow {
             Layout.fillWidth: true
             model: TimelineModel
 
-            onEntrySelected: setView('Conversation', { sipAddress: entry })
+            onEntrySelected: setView('Conversation', {
+              peerAddress: entry,
+              localAddress: AccountSettingsModel.sipAddress
+            })
           }
         }
 
@@ -289,7 +301,8 @@ ApplicationWindow {
     target: UrlHandlers
 
     onSip: window.setView('Conversation', {
-      sipAddress: sipAddress
+      peerAddress: sipAddress,
+      localAddress: AccountSettingsModel.sipAddress
     })
   }
 }

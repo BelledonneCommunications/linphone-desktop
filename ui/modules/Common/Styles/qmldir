@@ -16,6 +16,7 @@ singleton ListFormStyle             1.0 Form/ListFormStyle.qml
 singleton SearchBoxStyle            1.0 Form/SearchBoxStyle.qml
 singleton SliderStyle               1.0 Form/SliderStyle.qml
 singleton SwitchStyle               1.0 Form/SwitchStyle.qml
+singleton CommonItemDelegateStyle   1.0 Form/CommonItemDelegateStyle.qml
 singleton TransparentTextInputStyle 1.0 Form/TransparentTextInputStyle.qml
 
 singleton AbstractTextButtonStyle   1.0 Form/Buttons/AbstractTextButtonStyle.qml

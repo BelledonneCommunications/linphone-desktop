@@ -24,8 +24,9 @@
 
 // =============================================================================
 
-SipAddressObserver::SipAddressObserver (const QString &sipAddress) {
-  mSipAddress = sipAddress;
+SipAddressObserver::SipAddressObserver (const QString &peerAddress, const QString &localAddress) {
+  mPeerAddress = peerAddress;
+  mLocalAddress = localAddress;
 }
 
 void SipAddressObserver::setContact (ContactModel *contact) {
@@ -44,10 +45,10 @@ void SipAddressObserver::setPresenceStatus (const Presence::PresenceStatus &pres
   emit presenceStatusChanged(presenceStatus);
 }
 
-void SipAddressObserver::setUnreadMessagesCount (int unreadMessagesCount) {
-  if (unreadMessagesCount == mUnreadMessagesCount)
+void SipAddressObserver::setUnreadMessageCount (int unreadMessageCount) {
+  if (unreadMessageCount == mUnreadMessageCount)
     return;
 
-  mUnreadMessagesCount = unreadMessagesCount;
-  emit unreadMessagesCountChanged(unreadMessagesCount);
+  mUnreadMessageCount = unreadMessageCount;
+  emit unreadMessageCountChanged(unreadMessageCount);
 }

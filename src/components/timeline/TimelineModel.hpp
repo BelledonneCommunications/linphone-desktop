@@ -30,14 +30,30 @@
 class TimelineModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
+  Q_PROPERTY(QString localAddress READ getLocalAddress NOTIFY localAddressChanged);
+
 public:
   TimelineModel (QObject *parent = Q_NULLPTR);
 
   QHash<int, QByteArray> roleNames () const override;
 
+signals:
+  void localAddressChanged (const QString &localAddress);
+
 protected:
+  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+
+  QString getLocalAddress () const {
+    return mLocalAddress;
+  }
+
+  void handleLocalAddressChanged (const QString &localAddress);
+
+private:
+  QString mLocalAddress;
 };
 
 #endif // TIMELINE_MODEL_H_

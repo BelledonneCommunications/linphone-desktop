@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Kurtar</translation>
     </message>
     <message>
         <source>quit</source>
@@ -933,7 +933,10 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamayı bilgisayarınıza indirin ve kullanıcıları ücretsiz olarak aramaya ve konuşmaya başlayın.
+
+Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -1013,7 +1016,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Yeni sürüm (%1) var!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1152,7 +1155,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ses çözücüleri göster</translation>
     </message>
 </context>
 <context>
@@ -1223,39 +1226,39 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Toplantıyı etkinleştir</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişiler</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişileri etkinleştir</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mikrofonu kısmayı etkinleştir</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Giden çağrıları ektinleştir</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefon numara takımını kendiliğinden göster</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Çağrıları kendiliğinden kaydet</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Çağrı pencerelerini arka planda tut</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Çağrı duraklatma etkin</translation>
     </message>
 </context>
 <context>
@@ -1378,11 +1381,11 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ağ ayarlarını göster</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel</translation>
     </message>
 </context>
 <context>
@@ -1437,23 +1440,23 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Hesap oluşturmayı etkinleştir</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Hesap kullanımını etkinleştir</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Genel hesap kullanımını etkinleştir</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Yapılandırma almayı etkinleştir</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefon numaralarını destekler</translation>
     </message>
 </context>
 <context>
@@ -1559,7 +1562,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kaydedilen çağrılar klasörü</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1646,7 +1649,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Görüntü çözücüleri göster</translation>
     </message>
 </context>
 <context>

@@ -1324,10 +1324,6 @@
         <translation type="unfinished"/>
     </message>
     <message>
-        <source>enableTlsLabel</source>
-        <translation type="unfinished"/>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation type="unfinished"/>
     </message>

@@ -110,3 +110,6 @@
 [submodule "submodules/externals/minizip"]
 	path = submodules/externals/minizip
 	url = https://gitlab.linphone.org/BC/public/external/minizip.git
+[submodule "submodules/externals/sqlite3"]
+	path = submodules/externals/sqlite3
+	url = https://gitlab.linphone.org/BC/public/external/sqlite3.git

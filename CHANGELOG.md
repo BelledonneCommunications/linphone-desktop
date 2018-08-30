@@ -1,5 +1,13 @@
 # Changelog
 
+## 4.2.0 - Unknown
+
+### Features
+
+- Timeline uses current proxy config info.
+- Display only unread chat message count of active proxy list.
+- Display unread chat messages count in `Manage Accounts` dialog and in `Main Window`.
+
 ## 4.1.0 - 2017-07-19
 
 ### Features

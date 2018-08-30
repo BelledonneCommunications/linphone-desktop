@@ -43,12 +43,12 @@ public:
 signals:
   void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
   void callEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
-  void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::CallState state);
+  void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
   void coreStarted ();
   void isComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
-  void logsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
+  void logsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
@@ -77,7 +77,7 @@ private:
   void onCallStateChanged (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Call> &call,
-    linphone::CallState state,
+    linphone::Call::State state,
     const std::string &message
   ) override;
 
@@ -100,7 +100,7 @@ private:
 
   void onLogCollectionUploadStateChanged (
     const std::shared_ptr<linphone::Core> &core,
-    linphone::CoreLogCollectionUploadState state,
+    linphone::Core::LogCollectionUploadState state,
     const std::string &info
   ) override;
 
@@ -138,7 +138,7 @@ private:
   void onTransferStateChanged (
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Call> &call,
-    linphone::CallState state
+    linphone::Call::State state
   ) override;
 
   void onVersionUpdateCheckResultReceived (

@@ -35,6 +35,7 @@ class CallsListModel;
 class ChatModel;
 class ContactsListModel;
 class CoreHandlers;
+class MessageCountNotifier;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
@@ -44,6 +45,7 @@ class CoreManager : public QObject {
 
   Q_PROPERTY(QString version READ getVersion CONSTANT);
   Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT);
+  Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
 
 public:
   bool started () const {
@@ -60,8 +62,8 @@ public:
     return mHandlers;
   }
 
-  std::shared_ptr<ChatModel> getChatModelFromSipAddress (const QString &sipAddress);
-  bool chatModelExists (const QString &sipAddress);
+  std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress);
+  bool chatModelExists (const QString &sipAddress, const QString &localAddress);
 
   // ---------------------------------------------------------------------------
   // Video render lock.
@@ -135,6 +137,8 @@ signals:
 
   void logsUploaded (const QString &url);
 
+  void unreadMessageCountChanged (int count);
+
 private:
   CoreManager (QObject *parent, const QString &configPath);
 
@@ -147,9 +151,11 @@ private:
 
   QString getVersion () const;
 
+  int getUnreadMessageCount () const;
+
   void iterate ();
 
-  void handleLogsUploadStateChanged (linphone::CoreLogCollectionUploadState state, const std::string &info);
+  void handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
 
   static QString getDownloadUrl ();
 
@@ -164,7 +170,9 @@ private:
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
 
-  QHash<QString, std::weak_ptr<ChatModel>> mChatModels;
+  MessageCountNotifier *mMessageCountNotifier = nullptr;
+
+  QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
 
   QTimer *mCbsTimer = nullptr;
 

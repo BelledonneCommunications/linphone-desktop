@@ -87,8 +87,12 @@ CallModel::~CallModel () {
 
 // -----------------------------------------------------------------------------
 
-QString CallModel::getSipAddress () const {
+QString CallModel::getPeerAddress () const {
   return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
+}
+
+QString CallModel::getLocalAddress () const {
+  return Utils::coreStringToAppString(mCall->getCallLog()->getFromAddress()->asString());
 }
 
 // -----------------------------------------------------------------------------
@@ -119,14 +123,14 @@ void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParam
 
 void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats) {
   switch (callStats->getType()) {
-    case linphone::StreamTypeText:
-    case linphone::StreamTypeUnknown:
+    case linphone::StreamType::Text:
+    case linphone::StreamType::Unknown:
       break;
 
-    case linphone::StreamTypeAudio:
+    case linphone::StreamType::Audio:
       updateStats(callStats, mAudioStats);
       break;
-    case linphone::StreamTypeVideo:
+    case linphone::StreamType::Video:
       updateStats(callStats, mVideoStats);
       break;
   }
@@ -262,64 +266,64 @@ void CallModel::handleCallEncryptionChanged (const shared_ptr<linphone::Call> &c
     emit securityUpdated();
 }
 
-void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::CallState state) {
+void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
   if (call != mCall)
     return;
 
   updateIsInConference();
 
   switch (state) {
-    case linphone::CallStateError:
-    case linphone::CallStateEnd:
+    case linphone::Call::State::Error:
+    case linphone::Call::State::End:
       setCallErrorFromReason(call->getReason());
       stopAutoAnswerTimer();
       stopRecording();
       mPausedByRemote = false;
       break;
 
-    case linphone::CallStateStreamsRunning:
+    case linphone::Call::State::StreamsRunning:
       if (!mWasConnected && CoreManager::getInstance()->getSettingsModel()->getAutomaticallyRecordCalls()) {
         startRecording();
         mWasConnected = true;
       } UTILS_NO_BREAK;
-    case linphone::CallStateConnected:
-    case linphone::CallStateRefered:
-    case linphone::CallStateReleased:
+    case linphone::Call::State::Connected:
+    case linphone::Call::State::Referred:
+    case linphone::Call::State::Released:
       mPausedByRemote = false;
       break;
 
-    case linphone::CallStatePausedByRemote:
+    case linphone::Call::State::PausedByRemote:
       mNotifyCameraFirstFrameReceived = true;
       mPausedByRemote = true;
       break;
 
-    case linphone::CallStatePausing:
+    case linphone::Call::State::Pausing:
       mNotifyCameraFirstFrameReceived = true;
       mPausedByUser = true;
       break;
 
-    case linphone::CallStateResuming:
+    case linphone::Call::State::Resuming:
       mPausedByUser = false;
       break;
 
-    case linphone::CallStateUpdatedByRemote:
+    case linphone::Call::State::UpdatedByRemote:
       if (!mCall->getCurrentParams()->videoEnabled() && mCall->getRemoteParams()->videoEnabled()) {
         mCall->deferUpdate();
         emit videoRequested();
       }
       break;
 
-    case linphone::CallStateIdle:
-    case linphone::CallStateIncomingReceived:
-    case linphone::CallStateOutgoingInit:
-    case linphone::CallStateOutgoingProgress:
-    case linphone::CallStateOutgoingRinging:
-    case linphone::CallStateOutgoingEarlyMedia:
-    case linphone::CallStatePaused:
-    case linphone::CallStateIncomingEarlyMedia:
-    case linphone::CallStateUpdating:
-    case linphone::CallStateEarlyUpdatedByRemote:
-    case linphone::CallStateEarlyUpdating:
+    case linphone::Call::State::Idle:
+    case linphone::Call::State::IncomingReceived:
+    case linphone::Call::State::OutgoingInit:
+    case linphone::Call::State::OutgoingProgress:
+    case linphone::Call::State::OutgoingRinging:
+    case linphone::Call::State::OutgoingEarlyMedia:
+    case linphone::Call::State::Paused:
+    case linphone::Call::State::IncomingEarlyMedia:
+    case linphone::Call::State::Updating:
+    case linphone::Call::State::EarlyUpdatedByRemote:
+    case linphone::Call::State::EarlyUpdating:
       break;
   }
 
@@ -372,39 +376,39 @@ void CallModel::stopAutoAnswerTimer () const {
 
 CallModel::CallStatus CallModel::getStatus () const {
   switch (mCall->getState()) {
-    case linphone::CallStateConnected:
-    case linphone::CallStateStreamsRunning:
+    case linphone::Call::State::Connected:
+    case linphone::Call::State::StreamsRunning:
       return CallStatusConnected;
 
-    case linphone::CallStateEnd:
-    case linphone::CallStateError:
-    case linphone::CallStateRefered:
-    case linphone::CallStateReleased:
+    case linphone::Call::State::End:
+    case linphone::Call::State::Error:
+    case linphone::Call::State::Referred:
+    case linphone::Call::State::Released:
       return CallStatusEnded;
 
-    case linphone::CallStatePaused:
-    case linphone::CallStatePausedByRemote:
-    case linphone::CallStatePausing:
-    case linphone::CallStateResuming:
+    case linphone::Call::State::Paused:
+    case linphone::Call::State::PausedByRemote:
+    case linphone::Call::State::Pausing:
+    case linphone::Call::State::Resuming:
       return CallStatusPaused;
 
-    case linphone::CallStateUpdating:
-    case linphone::CallStateUpdatedByRemote:
+    case linphone::Call::State::Updating:
+    case linphone::Call::State::UpdatedByRemote:
       return mPausedByRemote ? CallStatusPaused : CallStatusConnected;
 
-    case linphone::CallStateEarlyUpdatedByRemote:
-    case linphone::CallStateEarlyUpdating:
-    case linphone::CallStateIdle:
-    case linphone::CallStateIncomingEarlyMedia:
-    case linphone::CallStateIncomingReceived:
-    case linphone::CallStateOutgoingEarlyMedia:
-    case linphone::CallStateOutgoingInit:
-    case linphone::CallStateOutgoingProgress:
-    case linphone::CallStateOutgoingRinging:
+    case linphone::Call::State::EarlyUpdatedByRemote:
+    case linphone::Call::State::EarlyUpdating:
+    case linphone::Call::State::Idle:
+    case linphone::Call::State::IncomingEarlyMedia:
+    case linphone::Call::State::IncomingReceived:
+    case linphone::Call::State::OutgoingEarlyMedia:
+    case linphone::Call::State::OutgoingInit:
+    case linphone::Call::State::OutgoingProgress:
+    case linphone::Call::State::OutgoingRinging:
       break;
   }
 
-  return mCall->getDir() == linphone::CallDirIncoming ? CallStatusIncoming : CallStatusOutgoing;
+  return mCall->getDir() == linphone::Call::Dir::Incoming ? CallStatusIncoming : CallStatusOutgoing;
 }
 
 // -----------------------------------------------------------------------------
@@ -430,16 +434,16 @@ QString CallModel::getCallError () const {
 
 void CallModel::setCallErrorFromReason (linphone::Reason reason) {
   switch (reason) {
-    case linphone::ReasonDeclined:
+    case linphone::Reason::Declined:
       mCallError = tr("callErrorDeclined");
       break;
-    case linphone::ReasonNotFound:
+    case linphone::Reason::NotFound:
       mCallError = tr("callErrorNotFound");
       break;
-    case linphone::ReasonBusy:
+    case linphone::Reason::Busy:
       mCallError = tr("callErrorBusy");
       break;
-    case linphone::ReasonNotAcceptable:
+    case linphone::Reason::NotAcceptable:
       mCallError = tr("callErrorNotAcceptable");
       break;
     default:
@@ -507,10 +511,10 @@ bool CallModel::getPausedByUser () const {
 
 void CallModel::setPausedByUser (bool status) {
   switch (mCall->getState()) {
-    case linphone::CallStateConnected:
-    case linphone::CallStateStreamsRunning:
-    case linphone::CallStatePaused:
-    case linphone::CallStatePausedByRemote:
+    case linphone::Call::State::Connected:
+    case linphone::Call::State::StreamsRunning:
+    case linphone::Call::State::Paused:
+    case linphone::Call::State::PausedByRemote:
       break;
     default: return;
   }
@@ -540,8 +544,8 @@ void CallModel::setVideoEnabled (bool status) {
   }
 
   switch (mCall->getState()) {
-    case linphone::CallStateConnected:
-    case linphone::CallStateStreamsRunning:
+    case linphone::Call::State::Connected:
+    case linphone::Call::State::StreamsRunning:
       break;
     default: return;
   }
@@ -559,10 +563,10 @@ void CallModel::setVideoEnabled (bool status) {
 
 bool CallModel::getUpdating () const {
   switch (mCall->getState()) {
-    case linphone::CallStateConnected:
-    case linphone::CallStateStreamsRunning:
-    case linphone::CallStatePaused:
-    case linphone::CallStatePausedByRemote:
+    case linphone::Call::State::Connected:
+    case linphone::Call::State::StreamsRunning:
+    case linphone::Call::State::Paused:
+    case linphone::Call::State::PausedByRemote:
       return false;
 
     default:
@@ -602,33 +606,33 @@ bool CallModel::isSecured () const {
   shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
   linphone::MediaEncryption encryption = params->getMediaEncryption();
   return (
-    encryption == linphone::MediaEncryptionZRTP && mCall->getAuthenticationTokenVerified()
-  ) || encryption == linphone::MediaEncryptionSRTP || encryption == linphone::MediaEncryptionDTLS;
+    encryption == linphone::MediaEncryption::ZRTP && mCall->getAuthenticationTokenVerified()
+  ) || encryption == linphone::MediaEncryption::SRTP || encryption == linphone::MediaEncryption::DTLS;
 }
 
 // -----------------------------------------------------------------------------
 
 QString CallModel::getLocalSas () const {
   QString token = Utils::coreStringToAppString(mCall->getAuthenticationToken());
-  return mCall->getDir() == linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
+  return mCall->getDir() == linphone::Call::Dir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
 QString CallModel::getRemoteSas () const {
   QString token = Utils::coreStringToAppString(mCall->getAuthenticationToken());
-  return mCall->getDir() != linphone::CallDirIncoming ? token.left(2).toUpper() : token.right(2).toUpper();
+  return mCall->getDir() != linphone::Call::Dir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
 }
 
 // -----------------------------------------------------------------------------
 
 QString CallModel::getSecuredString () const {
   switch (mCall->getCurrentParams()->getMediaEncryption()) {
-    case linphone::MediaEncryptionSRTP:
+    case linphone::MediaEncryption::SRTP:
       return QStringLiteral("SRTP");
-    case linphone::MediaEncryptionZRTP:
+    case linphone::MediaEncryption::ZRTP:
       return QStringLiteral("ZRTP");
-    case linphone::MediaEncryptionDTLS:
+    case linphone::MediaEncryption::DTLS:
       return QStringLiteral("DTLS");
-    case linphone::MediaEncryptionNone:
+    case linphone::MediaEncryption::None:
       break;
   }
 
@@ -659,10 +663,10 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
   shared_ptr<const linphone::PayloadType> payloadType;
 
   switch (callStats->getType()) {
-    case linphone::StreamTypeAudio:
+    case linphone::StreamType::Audio:
       payloadType = params->getUsedAudioPayloadType();
       break;
-    case linphone::StreamTypeVideo:
+    case linphone::StreamType::Video:
       payloadType = params->getUsedVideoPayloadType();
       break;
     default:
@@ -671,10 +675,10 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
   QString family;
   switch (callStats->getIpFamilyOfRemote()) {
-    case linphone::AddressFamilyInet:
+    case linphone::AddressFamily::Inet:
       family = QStringLiteral("IPv4");
       break;
-    case linphone::AddressFamilyInet6:
+    case linphone::AddressFamily::Inet6:
       family = QStringLiteral("IPv6");
       break;
     default:
@@ -695,10 +699,10 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
   statsList << createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(callStats->getReceiverLossRate()));
 
   switch (callStats->getType()) {
-    case linphone::StreamTypeAudio:
+    case linphone::StreamType::Audio:
       statsList << createStat(tr("callStatsJitterBuffer"), QStringLiteral("%1 ms").arg(callStats->getJitterBufferSizeMs()));
       break;
-    case linphone::StreamTypeVideo: {
+    case linphone::StreamType::Video: {
       statsList << createStat(tr("callStatsEstimatedDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getEstimatedDownloadBandwidth())));
       const QString sentVideoDefinitionName = Utils::coreStringToAppString(params->getSentVideoDefinition()->getName());
       const QString sentVideoDefinition = QStringLiteral("%1x%2")
@@ -731,17 +735,17 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 
 QString CallModel::iceStateToString (linphone::IceState state) const {
   switch (state) {
-    case linphone::IceStateNotActivated:
+    case linphone::IceState::NotActivated:
       return tr("iceStateNotActivated");
-    case linphone::IceStateFailed:
+    case linphone::IceState::Failed:
       return tr("iceStateFailed");
-    case linphone::IceStateInProgress:
+    case linphone::IceState::InProgress:
       return tr("iceStateInProgress");
-    case linphone::IceStateReflexiveConnection:
+    case linphone::IceState::ReflexiveConnection:
       return tr("iceStateReflexiveConnection");
-    case linphone::IceStateHostConnection:
+    case linphone::IceState::HostConnection:
       return tr("iceStateHostConnection");
-    case linphone::IceStateRelayConnection:
+    case linphone::IceState::RelayConnection:
       return tr("iceStateRelayConnection");
   }
 

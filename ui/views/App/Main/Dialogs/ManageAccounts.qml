@@ -6,6 +6,8 @@ import Utils 1.0
 
 import App.Styles 1.0
 
+import 'ManageAccount.js' as Logic
+
 // =============================================================================
 
 DialogPlus {
@@ -53,26 +55,43 @@ DialogPlus {
       FormGroup {
         label: qsTr('selectAccountLabel')
 
-        ComboBox {
-          currentIndex: Utils.findIndex(AccountSettingsModel.accounts, function (account) {
-            return account.sipAddress === AccountSettingsModel.sipAddress
-          })
+        ScrollableListViewField {
+          width: parent.width
+          height: ManageAccountsStyle.accountSelector.height
 
-          model: AccountSettingsModel.accounts
-          iconRole: (function (data) {
-            var proxyConfig = data.proxyConfig
-            if (!proxyConfig) {
-              return ''
+          radius: 0
+
+          ScrollableListView {
+            id: view
+
+            property string textRole: 'sipAddress' // Used by delegate.
+
+            anchors.fill: parent
+            model: AccountSettingsModel.accounts
+
+            onModelChanged: currentIndex = Utils.findIndex(AccountSettingsModel.accounts, function (account) {
+              return account.sipAddress === AccountSettingsModel.sipAddress
+            })
+
+            delegate: CommonItemDelegate {
+              id: item
+
+              container: view
+              flattenedModel: modelData
+              itemIcon: Logic.getItemIcon(flattenedModel)
+              width: parent.width
+
+              onClicked: {
+                container.currentIndex = index
+                AccountSettingsModel.setDefaultProxyConfig(flattenedModel.proxyConfig)
+              }
+
+              MessageCounter {
+                anchors.fill: parent
+                count: flattenedModel.unreadMessageCount
+              }
             }
-
-            var description = AccountSettingsModel.getProxyConfigDescription(proxyConfig)
-            return description.registerEnabled && description.registrationState !== AccountSettingsModel.RegistrationStateRegistered
-              ? 'generic_error'
-              : ''
-          })
-          textRole: 'sipAddress'
-
-          onActivated: AccountSettingsModel.setDefaultProxyConfig(model[index].proxyConfig)
+          }
         }
       }
     }

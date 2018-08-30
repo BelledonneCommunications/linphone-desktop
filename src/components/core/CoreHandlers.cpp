@@ -29,6 +29,7 @@
 #include "components/call/CallModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/notifier/Notifier.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -101,14 +102,14 @@ void CoreHandlers::onCallEncryptionChanged (
 void CoreHandlers::onCallStateChanged (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,
-  linphone::CallState state,
+  linphone::Call::State state,
   const string &
 ) {
   emit callStateChanged(call, state);
 
   SettingsModel *settingsModel = CoreManager::getInstance()->getSettingsModel();
   if (
-    call->getState() == linphone::CallStateIncomingReceived && (
+    call->getState() == linphone::Call::State::IncomingReceived && (
       !settingsModel->getAutoAnswerStatus() ||
       settingsModel->getAutoAnswerDelay() > 0
     )
@@ -129,7 +130,7 @@ void CoreHandlers::onGlobalStateChanged (
   linphone::GlobalState gstate,
   const string &
 ) {
-  if (gstate == linphone::GlobalStateOn) {
+  if (gstate == linphone::GlobalState::On) {
     mCoreStartedLock->lock();
 
     Q_ASSERT(mCoreStarted == false);
@@ -149,7 +150,7 @@ void CoreHandlers::onIsComposingReceived (
 
 void CoreHandlers::onLogCollectionUploadStateChanged (
   const shared_ptr<linphone::Core> &,
-  linphone::CoreLogCollectionUploadState state,
+  linphone::Core::LogCollectionUploadState state,
   const string &info
 ) {
   emit logsUploadStateChanged(state, info);
@@ -165,7 +166,7 @@ void CoreHandlers::onLogCollectionUploadProgressIndication (
 
 void CoreHandlers::onMessageReceived (
   const shared_ptr<linphone::Core> &core,
-  const shared_ptr<linphone::ChatRoom> &,
+  const shared_ptr<linphone::ChatRoom> &chatRoom,
   const shared_ptr<linphone::ChatMessage> &message
 ) {
   const string contentType = message->getContentType();
@@ -174,13 +175,14 @@ void CoreHandlers::onMessageReceived (
     emit messageReceived(message);
 
     // 1. Do not notify if chat is not activated.
-    SettingsModel *settingsModel = CoreManager::getInstance()->getSettingsModel();
+    CoreManager *coreManager = CoreManager::getInstance();
+    SettingsModel *settingsModel = coreManager->getSettingsModel();
     if (!settingsModel->getChatEnabled())
       return;
 
     // 2. Notify with Notification popup.
     const App *app = App::getInstance();
-    if (!app->hasFocus())
+    if (!app->hasFocus() || !chatRoom->getLocalAddress()->weakEqual(coreManager->getAccountSettingsModel()->getUsedSipAddress()))
       app->getNotifier()->notifyReceivedMessage(message);
 
     // 3. Notify with sound.
@@ -190,7 +192,8 @@ void CoreHandlers::onMessageReceived (
     if (
       !app->hasFocus() ||
       !CoreManager::getInstance()->chatModelExists(
-        Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly())
+        Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()),
+        Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())
       )
     )
       core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));
@@ -227,46 +230,46 @@ void CoreHandlers::onRegistrationStateChanged (
 void CoreHandlers::onTransferStateChanged (
   const shared_ptr<linphone::Core> &,
   const shared_ptr<linphone::Call> &call,
-  linphone::CallState state
+  linphone::Call::State state
 ) {
   switch (state) {
-    case linphone::CallStateEarlyUpdatedByRemote:
-    case linphone::CallStateEarlyUpdating:
-    case linphone::CallStateIdle:
-    case linphone::CallStateIncomingEarlyMedia:
-    case linphone::CallStateIncomingReceived:
-    case linphone::CallStateOutgoingEarlyMedia:
-    case linphone::CallStateOutgoingRinging:
-    case linphone::CallStatePaused:
-    case linphone::CallStatePausedByRemote:
-    case linphone::CallStatePausing:
-    case linphone::CallStateRefered:
-    case linphone::CallStateReleased:
-    case linphone::CallStateResuming:
-    case linphone::CallStateStreamsRunning:
-    case linphone::CallStateUpdatedByRemote:
-    case linphone::CallStateUpdating:
+    case linphone::Call::State::EarlyUpdatedByRemote:
+    case linphone::Call::State::EarlyUpdating:
+    case linphone::Call::State::Idle:
+    case linphone::Call::State::IncomingEarlyMedia:
+    case linphone::Call::State::IncomingReceived:
+    case linphone::Call::State::OutgoingEarlyMedia:
+    case linphone::Call::State::OutgoingRinging:
+    case linphone::Call::State::Paused:
+    case linphone::Call::State::PausedByRemote:
+    case linphone::Call::State::Pausing:
+    case linphone::Call::State::Referred:
+    case linphone::Call::State::Released:
+    case linphone::Call::State::Resuming:
+    case linphone::Call::State::StreamsRunning:
+    case linphone::Call::State::UpdatedByRemote:
+    case linphone::Call::State::Updating:
       break; // Nothing.
 
     // 1. Init.
-    case linphone::CallStateOutgoingInit:
+    case linphone::Call::State::OutgoingInit:
       qInfo() << QStringLiteral("Call transfer init.");
       break;
 
     // 2. In progress.
-    case linphone::CallStateOutgoingProgress:
+    case linphone::Call::State::OutgoingProgress:
       qInfo() << QStringLiteral("Call transfer in progress.");
       break;
 
     // 3. Done.
-    case linphone::CallStateConnected:
+    case linphone::Call::State::Connected:
       qInfo() << QStringLiteral("Call transfer succeeded.");
       emit callTransferSucceeded(call);
       break;
 
     // 4. Error.
-    case linphone::CallStateEnd:
-    case linphone::CallStateError:
+    case linphone::Call::State::End:
+    case linphone::Call::State::Error:
       qWarning() << QStringLiteral("Call transfer failed.");
       emit callTransferFailed(call);
       break;
@@ -279,7 +282,7 @@ void CoreHandlers::onVersionUpdateCheckResultReceived (
   const string &version,
   const string &url
 ) {
-  if (result == linphone::VersionUpdateCheckResultNewVersionAvailable)
+  if (result == linphone::VersionUpdateCheckResult::NewVersionAvailable)
     App::getInstance()->getNotifier()->notifyNewVersionAvailable(
       Utils::coreStringToAppString(version),
       Utils::coreStringToAppString(url)

@@ -13,9 +13,10 @@ import 'Conversation.js' as Logic
 ColumnLayout  {
   id: conversation
 
-  property string sipAddress
+  property string peerAddress
+  property string localAddress
 
-  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
+  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(peerAddress, localAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -58,7 +59,7 @@ ColumnLayout  {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        sipAddress: conversation.sipAddress
+        sipAddress: conversation.peerAddress
         sipAddressColor: ConversationStyle.bar.description.sipAddressColor
         username: avatar.username
         usernameColor: ConversationStyle.bar.description.usernameColor
@@ -77,14 +78,14 @@ ColumnLayout  {
             icon: 'video_call'
             visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled
 
-            onClicked: CallsListModel.launchVideoCall(conversation.sipAddress)
+            onClicked: CallsListModel.launchVideoCall(conversation.peerAddress)
           }
 
           ActionButton {
             icon: 'call'
             visible: SettingsModel.outgoingCallsEnabled
 
-            onClicked: CallsListModel.launchAudioCall(conversation.sipAddress)
+            onClicked: CallsListModel.launchAudioCall(conversation.peerAddress)
           }
         }
 
@@ -97,7 +98,7 @@ ColumnLayout  {
             visible: SettingsModel.contactsEnabled
 
             onClicked: window.setView('ContactEdit', {
-              sipAddress: conversation.sipAddress
+              sipAddress: conversation.peerAddress
             })
           }
 
@@ -160,12 +161,22 @@ ColumnLayout  {
         }
       }
 
-      sipAddress: conversation.sipAddress
+      peerAddress: conversation.peerAddress
+      localAddress: conversation.localAddress
     }
   }
 
   Connections {
     target: SettingsModel
     onChatEnabledChanged: chatProxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
+  }
+
+  Connections {
+    target: AccountSettingsModel
+    onAccountSettingsUpdated: {
+      if (conversation.localAddress !== AccountSettingsModel.sipAddress) {
+        window.setView('Home')
+      }
+    }
   }
 }
