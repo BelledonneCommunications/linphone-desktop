@@ -213,6 +213,7 @@ void CoreManager::cleanLogs () const {
 void CoreManager::setDatabasesPaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
+  SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());
 }
 
 #undef SET_DATABASE_PATH
