@@ -1604,6 +1604,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <source>dataTitle</source>
         <translation>Dados UI</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

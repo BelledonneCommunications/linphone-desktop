@@ -50,6 +50,8 @@ class App : public SingleApplication {
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT);
   Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT);
 
+  Q_PROPERTY(bool autoStart READ getAutoStart WRITE setAutoStart NOTIFY autoStartChanged);
+
 public:
   App (int &argc, char *argv[]);
   ~App ();
@@ -100,6 +102,8 @@ public:
 signals:
   void configLocaleChanged (const QString &locale);
 
+  void autoStartChanged (bool enabled);
+
 private:
   void createParser ();
 
@@ -122,6 +126,12 @@ private:
     return mAvailableLocales;
   }
 
+  bool getAutoStart () const {
+    return mAutoStart;
+  }
+
+  void setAutoStart (bool enabled);
+
   void openAppAfterInit (bool mustBeIconified = false);
 
   static void checkForUpdate ();
@@ -132,6 +142,8 @@ private:
 
   QVariantList mAvailableLocales;
   QString mLocale;
+
+  bool mAutoStart = false;
 
   QCommandLineParser *mParser = nullptr;
 

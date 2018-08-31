@@ -1602,6 +1602,10 @@
         <source>dataTitle</source>
         <translation>Данные пользовательского интерфейса</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

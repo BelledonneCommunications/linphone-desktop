@@ -1602,6 +1602,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>dataTitle</source>
         <translation>Données</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation>Démarrer auto. l&apos;app</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

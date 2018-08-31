@@ -1599,6 +1599,10 @@ Server URL ist nicht konfiguriert.</translation>
         <source>dataTitle</source>
         <translation>UI-Daten</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

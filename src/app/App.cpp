@@ -70,7 +70,31 @@ namespace {
   constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
 
   constexpr char AssistantViewName[] = "Assistant";
+
+  #ifdef Q_OS_LINUX
+    static QString AutoStartDirectory(
+      QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).at(0) + QLatin1String("/autostart/")
+    );
+  #endif // ifdef Q_OS_LINUX
 }
+
+// -----------------------------------------------------------------------------
+
+#ifdef Q_OS_LINUX
+  static inline bool autoStartEnabled () {
+    return QDir(AutoStartDirectory).exists() && QFile(AutoStartDirectory + EXECUTABLE_NAME ".desktop").exists();
+  }
+#elif defined(Q_OS_MACOS)
+  static inline bool autoStartEnabled () {
+    return false;
+  }
+#else
+  static inline bool autoStartEnabled () {
+    return false;
+  }
+#endif // ifdef Q_OS_LINUX
+
+// -----------------------------------------------------------------------------
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
   return translator.load(locale, LanguagePath) && app.installTranslator(&translator);
@@ -124,6 +148,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   if (mParser->isSet("version"))
     mParser->showVersion();
+
+  mAutoStart = autoStartEnabled();
 
   qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
   qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
@@ -575,6 +601,71 @@ void App::setConfigLocale (const QString &locale) {
 QString App::getLocale () const {
   return mLocale;
 }
+
+// -----------------------------------------------------------------------------
+
+#ifdef Q_OS_LINUX
+
+void App::setAutoStart (bool enabled) {
+  if (enabled == mAutoStart)
+    return;
+
+  QDir dir(AutoStartDirectory);
+  if (!dir.exists() && !dir.mkpath(AutoStartDirectory)) {
+    qWarning() << QStringLiteral("Unable to build autostart dir path: `%1`.").arg(AutoStartDirectory);
+    return;
+  }
+
+  QFile file(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
+
+  if (!enabled) {
+    if (file.exists() && !file.remove()) {
+      qWarning() << QLatin1String("Unable to remove autostart file: `" EXECUTABLE_NAME ".desktop`.");
+      return;
+    }
+
+    mAutoStart = enabled;
+    emit autoStartChanged(enabled);
+    return;
+  }
+
+  if (!file.open(QFile::WriteOnly)) {
+    qWarning() << "Unable to open autostart file: `" EXECUTABLE_NAME ".desktop`.";
+    return;
+  }
+
+  QString fileContent(
+    "[Desktop Entry]\n"
+    "Name=" APPLICATION_NAME "\n"
+    "GenericName=SIP Phone\n"
+    "Comment=" APPLICATION_DESCRIPTION "\n"
+    "Type=Application\n"
+    "Exec=" + applicationFilePath() + "\n"
+    "Icon=\n"
+    "Terminal=false\n"
+    "Categories=Network;Telephony;\n"
+    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;\n"
+  );
+  QTextStream out(&file);
+  out << fileContent;
+
+  mAutoStart = enabled;
+  emit autoStartChanged(enabled);
+}
+
+#elif defined(Q_OS_MACOS)
+
+void App::setAutoStart (bool enabled) {
+  Q_UNUSED(enabled);
+}
+
+#else
+
+void App::setAutoStart (bool enabled) {
+  Q_UNUSED(enabled);
+}
+
+#endif // ifdef Q_OS_LINUX
 
 // -----------------------------------------------------------------------------
 

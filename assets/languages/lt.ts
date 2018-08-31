@@ -1604,6 +1604,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>dataTitle</source>
         <translation>Naudotojo sąsajos duomenys</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
