@@ -31,6 +31,10 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
+#ifdef Q_OS_WIN
+  #include <QSettings>
+#endif // ifdef Q_OS_WIN
+
 #include "config.h"
 
 #include "cli/Cli.hpp"
@@ -75,6 +79,10 @@ namespace {
     static QString AutoStartDirectory(
       QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).at(0) + QLatin1String("/autostart/")
     );
+  #elif defined(Q_OS_MACOS)
+
+  #else
+    static QString AutoStartSettingsFilePath("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
   #endif // ifdef Q_OS_LINUX
 }
 
@@ -90,7 +98,7 @@ namespace {
   }
 #else
   static inline bool autoStartEnabled () {
-    return false;
+    return QSettings(AutoStartSettingsFilePath, QSettings::NativeFormat).value(EXECUTABLE_NAME).isValid();
   }
 #endif // ifdef Q_OS_LINUX
 
@@ -662,7 +670,17 @@ void App::setAutoStart (bool enabled) {
 #else
 
 void App::setAutoStart (bool enabled) {
-  Q_UNUSED(enabled);
+  if (enabled == mAutoStart)
+    return;
+
+  QSettings settings(AutoStartSettingsFilePath, QSettings::NativeFormat);
+  if (enabled)
+    settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()));
+  else
+    settings.remove(EXECUTABLE_NAME);
+
+  mAutoStart = enabled;
+  emit autoStartChanged(enabled);
 }
 
 #endif // ifdef Q_OS_LINUX
