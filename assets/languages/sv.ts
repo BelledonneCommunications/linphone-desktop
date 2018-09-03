@@ -1602,6 +1602,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>dataTitle</source>
         <translation>Användargränssnitt data</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

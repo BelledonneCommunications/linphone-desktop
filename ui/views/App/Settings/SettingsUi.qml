@@ -146,6 +146,16 @@ TabContainer {
             onClicked: SettingsModel.exitOnClose = !checked
           }
         }
+
+        FormGroup {
+          label: qsTr('autoStartLabel')
+
+          Switch {
+            checked: App.autoStart
+
+            onClicked: App.autoStart = !checked
+          }
+        }
       }
     }
   }

@@ -31,6 +31,10 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
+#ifdef Q_OS_WIN
+  #include <QSettings>
+#endif // ifdef Q_OS_WIN
+
 #include "config.h"
 
 #include "cli/Cli.hpp"
@@ -70,7 +74,85 @@ namespace {
   constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
 
   constexpr char AssistantViewName[] = "Assistant";
+
+  #ifdef Q_OS_LINUX
+    QString AutoStartDirectory(
+      QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).at(0) + QLatin1String("/autostart/")
+    );
+  #elif defined(Q_OS_MACOS)
+    QString OsascriptExecutable("osascript");
+  #else
+    QString AutoStartSettingsFilePath("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+  #endif // ifdef Q_OS_LINUX
 }
+
+// -----------------------------------------------------------------------------
+
+#ifdef Q_OS_LINUX
+  static inline bool autoStartEnabled () {
+    return QDir(AutoStartDirectory).exists() && QFile(AutoStartDirectory + EXECUTABLE_NAME ".desktop").exists();
+  }
+#elif defined(Q_OS_MACOS)
+  static inline QString getMacOsBundlePath () {
+    QDir dir(QCoreApplication::applicationDirPath());
+    if (dir.dirName() != QLatin1String("MacOS"))
+      return QString();
+
+    dir.cdUp();
+    dir.cdUp();
+
+    QString path(dir.path());
+    if (path.length() > 0 && path.right(1) == "/")
+      path.chop(1);
+    return path;
+  }
+
+  static inline QString getMacOsBundleName () {
+    return QFileInfo(getMacOsBundlePath()).baseName();
+  }
+
+  static inline bool autoStartEnabled () {
+    const QByteArray expectedWord(getMacOsBundleName().toUtf8());
+    if (expectedWord.isEmpty()) {
+      qInfo() << QStringLiteral("Application is not installed. Autostart unavailable.");
+      return false;
+    }
+
+    QProcess process;
+    process.start(OsascriptExecutable, { "-e", "tell application \"System Events\" to get the name of every login item" });
+    if (!process.waitForFinished()) {
+      qWarning() << QStringLiteral("Unable to execute properly: `%1` (%2).").arg(OsascriptExecutable).arg(process.errorString());
+      return false;
+    }
+
+    // TODO: Move in utils?
+    const QByteArray buf(process.readAll());
+    for (const char *p = buf.data(), *word = p, *end = p + buf.length(); p <= end; ++p) {
+      switch (*p) {
+        case ' ':
+        case '\r':
+        case '\n':
+        case '\t':
+        case '\0':
+          if (word != p) {
+            if (!strncmp(word, expectedWord, size_t(p - word)))
+              return true;
+            word = p + 1;
+          }
+        default:
+          break;
+      }
+    }
+
+    return false;
+  }
+#else
+  static inline bool autoStartEnabled () {
+    return QSettings(AutoStartSettingsFilePath, QSettings::NativeFormat).value(EXECUTABLE_NAME).isValid();
+  }
+#endif // ifdef Q_OS_LINUX
+
+// -----------------------------------------------------------------------------
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
   return translator.load(locale, LanguagePath) && app.installTranslator(&translator);
@@ -124,6 +206,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   if (mParser->isSet("version"))
     mParser->showVersion();
+
+  mAutoStart = autoStartEnabled();
 
   qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
   qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
@@ -575,6 +659,100 @@ void App::setConfigLocale (const QString &locale) {
 QString App::getLocale () const {
   return mLocale;
 }
+
+// -----------------------------------------------------------------------------
+
+#ifdef Q_OS_LINUX
+
+void App::setAutoStart (bool enabled) {
+  if (enabled == mAutoStart)
+    return;
+
+  QDir dir(AutoStartDirectory);
+  if (!dir.exists() && !dir.mkpath(AutoStartDirectory)) {
+    qWarning() << QStringLiteral("Unable to build autostart dir path: `%1`.").arg(AutoStartDirectory);
+    return;
+  }
+
+  QFile file(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
+
+  if (!enabled) {
+    if (file.exists() && !file.remove()) {
+      qWarning() << QLatin1String("Unable to remove autostart file: `" EXECUTABLE_NAME ".desktop`.");
+      return;
+    }
+
+    mAutoStart = enabled;
+    emit autoStartChanged(enabled);
+    return;
+  }
+
+  if (!file.open(QFile::WriteOnly)) {
+    qWarning() << "Unable to open autostart file: `" EXECUTABLE_NAME ".desktop`.";
+    return;
+  }
+
+  QString fileContent(
+    "[Desktop Entry]\n"
+    "Name=" APPLICATION_NAME "\n"
+    "GenericName=SIP Phone\n"
+    "Comment=" APPLICATION_DESCRIPTION "\n"
+    "Type=Application\n"
+    "Exec=" + applicationFilePath() + "\n"
+    "Icon=\n"
+    "Terminal=false\n"
+    "Categories=Network;Telephony;\n"
+    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;\n"
+  );
+  QTextStream out(&file);
+  out << fileContent;
+
+  mAutoStart = enabled;
+  emit autoStartChanged(enabled);
+}
+
+#elif defined(Q_OS_MACOS)
+
+void App::setAutoStart (bool enabled) {
+  if (enabled == mAutoStart)
+    return;
+
+  if (getMacOsBundlePath().isEmpty()) {
+    qWarning() << QStringLiteral("Application is not installed. Unable to change autostart state.");
+    return;
+  }
+
+  if (enabled)
+    QProcess::execute(OsascriptExecutable, {
+      "-e", "tell application \"System Events\" to make login item at end with properties"
+      "{ path: \"" + getMacOsBundlePath() + "\", hidden: false }"
+    });
+  else
+    QProcess::execute(OsascriptExecutable, {
+      "-e", "tell application \"System Events\" to delete login item \"" + getMacOsBundleName() + "\""
+    });
+
+  mAutoStart = enabled;
+  emit autoStartChanged(enabled);
+}
+
+#else
+
+void App::setAutoStart (bool enabled) {
+  if (enabled == mAutoStart)
+    return;
+
+  QSettings settings(AutoStartSettingsFilePath, QSettings::NativeFormat);
+  if (enabled)
+    settings.setValue(EXECUTABLE_NAME, QDir::toNativeSeparators(applicationFilePath()));
+  else
+    settings.remove(EXECUTABLE_NAME);
+
+  mAutoStart = enabled;
+  emit autoStartChanged(enabled);
+}
+
+#endif // ifdef Q_OS_LINUX
 
 // -----------------------------------------------------------------------------
 

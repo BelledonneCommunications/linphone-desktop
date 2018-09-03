@@ -1604,6 +1604,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>dataTitle</source>
         <translation>Kullanıcı Arayüzü Verisi</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
