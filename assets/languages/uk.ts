@@ -3,1811 +3,1815 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>Так</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>АКТИВУЙТЕ ВАШУ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>АКТИВУВАТИ</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Щоб активувати обліківку, дотримуйтесь дієвказів, котрі ми відіслали на %1, потім натисніть нижче.</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>АКТИВУЙТЕ ВАШУ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>АКТИВУВАТИ</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Ми відправили SMS з кодом підтвердження на %1. Для завершення підтвердження вашого номера телефону, будь ласка, уведіть нижче 4-значний код.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation>виводити в stdout декотру зневаджувальну інформацію під час роботи</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation>вкажіть конфігураційний файл %1</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation>Вільний(безкоштовний) застосунок для SIP відео дзвінків.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>запускати згорнутою в ділянку сповіщень, не показувати основний інфтерфейс</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>файл</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>показати цю довідку</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>показати версію застосунку</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation>показує меню допомоги у використанні %1 з командного рядка</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation>відправка команди додатку через командний рядок</translation>
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"/>
+        <translation>Відновити</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Вийти</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Про</translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>НАЗАД</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>ВИКОРИСТОВУВАТИ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>ВИКОРИСТОВУВАТИ SIP ОБЛІКІВКУ</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>ЗАВАНТАЖИТИ ВІДДАЛЕНУ КОНФІГУРАЦІЮ</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>ЛАСКАВО ПРОСИМО</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>Цей асистент допоможе вам налаштувати та використовувати вашу обліківку %1.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>СТВОРИТИ ОБЛІКІВКУ %1</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося увійти. Будь ласка, перевірте правильність уведення імени користувача та паролю.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Закоротке! (щонайм. %1 символів)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Задовге! (щонайб. %1 символів)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Виявлено неприпустимі символи. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустиме ім&apos;я користувача.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Закороткий! (щонайм. %1 символів)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Задовгий! (щонайб. %1 символів)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Виявлено неприпустимі символи. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Бракує символів: `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося відправити запит.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустима адреса пошти.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустима адреса пошти або неприпустимі символи.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>Помилка сервера: не вдалося надіслати SMS.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"/>
+        <translation>Така обліківка вже існує.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>SMS активація не вдалася!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Будь ласка, переконайтеся в тому, що ви підтвердили вашу обліківку, або спробуйте знову.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустимий номер телефону!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Закороткий!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Задовгий!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустимий код країни!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося увійти. Будь ласка перевірте правильність уведення номеру телефону.</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося додати цю обліківку.</translation>
     </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>УВІЙТИ</translation>
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished"/>
+        <translation>Логін</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося виконати розпізнання. Будь ласка, перевірте правильність уведення паролю.</translation>
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation type="unfinished"/>
+        <translation>ID користувача (не обов&apos;язково)</translation>
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"/>
+        <translation>Область</translation>
     </message>
 </context>
 <context>
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation type="unfinished"/>
+        <translation>Кодек</translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Вихідна швидкість</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Вхідна швидкість</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Передбачувана вхідна швидкість</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"/>
+        <translation>Стан ICE</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation type="unfinished"/>
+        <translation>Родина IP</translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"/>
+        <translation>Втрати вихідних пакетів</translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"/>
+        <translation>Втрати вхідних пакетів</translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation type="unfinished"/>
+        <translation>Буфер коливань затримки</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Роздільність вихідного відео</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Роздільність вхідного відео</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation type="unfinished"/>
+        <translation>Не активовано</translation>
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation type="unfinished"/>
+        <translation>Невдало</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"/>
+        <translation>В процесі</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"/>
+        <translation>Рефлексивне з&apos;єднання</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"/>
+        <translation>Під&apos;єднання хосту</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"/>
+        <translation>Релейне з&apos;єднання</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустимо</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"/>
+        <translation>Віддалена сторона відхилила виклик.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"/>
+        <translation>Віддалена сторона не знайдена.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"/>
+        <translation>Віддалена сторона зайнята.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"/>
+        <translation>Віддалена сторона не може прийняти виклик.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation type="unfinished"/>
+        <translation>Вхідна частота кадрів</translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation type="unfinished"/>
+        <translation>Вихідна частота кадрів</translation>
     </message>
 </context>
 <context>
     <name>CallSipAddress</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"/>
+        <translation>Почати новий виклик.</translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Звук</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Відео</translation>
     </message>
 </context>
 <context>
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation type="unfinished"/>
+        <translation>Волієте переспрямувати цей виклик?</translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation type="unfinished"/>
+        <translation>ПРИЙНЯТИ ЗВУКОВИЙ ВИКЛИК</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation type="unfinished"/>
+        <translation>ПРИЙНЯТИ ВІДЕО ВИКЛИК</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"/>
+        <translation>ЗАВЕРШИТИ ВИКЛИК</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"/>
+        <translation>ПРОДОВЖИТИ ВИКЛИК</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"/>
+        <translation>ПЕРЕСПРЯМУВАТИ ВИКЛИК</translation>
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"/>
+        <translation>ПРИЗУПИНИТИ ВИКЛИК</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Дзвінки</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що бажаєте завершити усі виклики?</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Уведіть повідомлення</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося відіслати файл.
+Не налаштовано адресу сервера.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 друкує...</translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation type="unfinished"/>
+        <translation>Спосіб керувати %1 через командний рядок.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>%1 sip:&lt;адреса-sip&gt;?method=&lt;метод&gt;([&amp;&lt;аргумент&gt;=&lt;base64-значення&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
-        <translation type="unfinished"/>
+        <translation>перелік команд:</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Показати головне вікно застосунку.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Почати виклик SIP адреси.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Почати конференцію.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Приєднайтеся до конференції за sip-адресою. Якщо ви під&apos;єднані до конфігурації проксі, див. join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Приєднайтеся до конференції за sip-адресою. Якщо ви не під&apos;єднані до конфігурації проксі, див. join-conference-as.</translation>
     </message>
 </context>
 <context>
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"/>
+        <translation>Назва</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"/>
+        <translation>Опис</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"/>
+        <translation>Частота (Гц)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"/>
+        <translation>Бітрейт (Кбіт/с)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"/>
+        <translation>Параметри</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"/>
+        <translation>Статус</translation>
     </message>
 </context>
 <context>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>КОНФЕРЕНЦІЯ</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"/>
+        <translation>КОНФЕРЕНЦІЯ</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"/>
+        <translation>Керуйте учасниками вашої конференції.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>ПОЧАТИ</translation>
     </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>СХВАЛИТИ</translation>
     </message>
 </context>
 <context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви справді бажаєте вилучити цей контакт з вашої адресної книги?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation type="unfinished"/>
+        <translation>SIP ОБЛІКІВКА(И)</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>АДРЕСА</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished"/>
+        <translation>E-MAIL</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"/>
+        <translation>САЙТ(И)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Оберіть вашу мармизку</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"/>
+        <translation>КОМПАНІЇ</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"/>
+        <translation>ЗБЕРЕГТИ</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>SIP обліківка</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Компанія</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Email</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Сайт</translation>
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"/>
+        <translation>Вулиця</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"/>
+        <translation>Поштовий індекс</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"/>
+        <translation>Країна</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"/>
+        <translation>Населений пункт</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що бажаєте скасувати зміну контакту?</translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Знайти контакт</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"/>
+        <translation>Усі</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"/>
+        <translation>Під&apos;єднані</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>ДОДАТИ КОНТАКТ</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви справді бажаєте вилучити цей контакт з вашої адресної книги?</translation>
     </message>
 </context>
 <context>
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation type="unfinished"/>
+        <translation>УСІ</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"/>
+        <translation>ВИКЛИКИ</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation type="unfinished"/>
+        <translation>ПОВІДОМЛЕННЯ</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що волієте вичистити цю історію?</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
     <message>
         <source>createAppSipAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Як би ви воліли створити обліківку?</translation>
     </message>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>СТВОРИТИ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
-        <translation type="unfinished"/>
+        <translation>ЗА ДОПОМОГОЮ НОМЕРУ ТЕЛЕФОНУ</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation type="unfinished"/>
+        <translation>ЗА ДОПОМОГОЮ EMAIL</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>СТВОРИТИ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>СТВОРИТИ</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation type="unfinished"/>
+        <translation>Email</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Схвалення паролю</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"/>
+        <translation>Уведені паролі не збігаються</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Ваша обліківка була створена, але ще не підтверджена. Ви впевнені, що волієте вийти?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показуване ім&apos;я (не обов&apos;язково)</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>СТВОРИТИ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"/>
+        <translation>Країна</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>Номер телефону</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показуване ім&apos;я (не обов&apos;язково)</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>СТВОРИТИ</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Вашу обліківку було створено, але ще не підтверджено. Якщо ви вийдете, вам знадобиться вручну додати та підтвердити свою обліківку впродовж 24 годин.</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Будь ласка, оберіть один або декілька файлів.</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"/>
+        <translation>Помістіть вкладення</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Відіслати файл</translation>
     </message>
 </context>
 <context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Вхідний виклик</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Вихідний виклик</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Відхилений вхідний виклик</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Відхилений вихідний виклик</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"/>
+        <translation>Закінчений виклик</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Пропущений вхідний виклик</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Пропущений вихідний виклик</translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ЗАВАНТАЖИТИ</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"/>
+        <translation>ЗАВАНТАЖИТИ ВІДДАЛЕНУ КОНФІГУРАЦІЮ</translation>
     </message>
     <message>
         <source>urlLabel</source>
-        <translation type="unfinished"/>
+        <translation>URL</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"/>
+        <translation>Неможливо встановити це віддалене налаштування uri.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"/>
+        <translation>Потрібно перезапустити застосунок. Бажаєте перезапустити зараз?</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"/>
+        <translation>Потрібна допомога у використанні %1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"/>
+        <translation>ЯК КОРИСТУВАТИСЯ %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"/>
+        <translation>Запросіть друзів використовувати %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>ЗАПРОСІТЬ ДРУЗІВ</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"/>
+        <translation>Створення і керування обліківкою %1.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>АСИСТЕНТ ОБЛІКІВКИ</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"/>
+        <translation>АСИСТЕНТ</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"/>
+        <translation>Показувати підказки</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"/>
+        <translation>ЗАПРОСИТИ</translation>
     </message>
 </context>
 <context>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ваш контакт волів би увімкнути відео.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation type="unfinished"/>
+        <translation>Будь ласка, зачекайте, запит опрацьовується.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation type="unfinished"/>
+        <translation>Виклик зшифрований з: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation type="unfinished"/>
+        <translation>Виклик не зашифрований.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation>Зробити зняток.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Почати запис.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Зупинити запис.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation>Зробити зняток.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Почати запис.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Зупинити запис.</translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"/>
+        <translation>Email друга</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished"/>
+        <translation>Повідомлення</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>СХВАЛИТИ</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Запросити друзів</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"/>
+        <translation>%1 запрошує вас використовувати %2 !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation type="unfinished"/>
+        <translation>Запрошення %1</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"/>
+        <translation>Завантажте застосунок на ваш комп&apos;ютер та почніть телефонувати і спілкуватися безкоштовно
+
+Посилання для завантаження: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Знайти контакт, почати дзвінок або чат…</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"/>
+        <translation>ДОМІВКА</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation type="unfinished"/>
+        <translation>КОНТАКТИ</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation type="unfinished"/>
+        <translation>авто</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Використовуйте розумний пошуковий рядок, щоб одразу почати звуковий або відео виклик, відіслати повідомлення чи додати новий контакт. Просто уведіть SIP адресу чи ім&apos;я користувача вашого контакту.</translation>
     </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Про</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Вийти</translation>
     </message>
 </context>
 <context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>Так</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Статус</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished"/>
+        <translation>Активна обліківка</translation>
     </message>
 </context>
 <context>
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation type="unfinished"/>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"/>
+        <translation>Грай!</translation>
     </message>
 </context>
 <context>
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>Так</translation>
     </message>
 </context>
 <context>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"/>
+        <translation>Доступна нова (%1) версія!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
-        <translation type="unfinished"/>
+        <translation>Отримано новий файл!</translation>
     </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>ПІДТВЕРДИТИ</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Витягування %1…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Завантаження %1…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"/>
+        <translation>%1 встановлено!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося встановити %1!</translation>
     </message>
 </context>
 <context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
-        <translation type="unfinished"/>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"/>
+        <translation>Прочитано</translation>
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation type="unfinished"/>
+        <translation>Доставлено</translation>
     </message>
 </context>
 <context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"/>
+        <translation>Доступний</translation>
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation type="unfinished"/>
+        <translation>Зайнятий</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation type="unfinished"/>
+        <translation>Не бентежити</translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"/>
+        <translation>Не в мережі</translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Журнали</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation type="unfinished"/>
+        <translation>Тека журналів</translation>
     </message>
     <message>
         <source>sendLogs</source>
-        <translation type="unfinished"/>
+        <translation>НАДСИЛАННЯ ЖУРНАЛІВ</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"/>
+        <translation>URL сервера для надсилання журналів</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося надіслати журнали</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Журнали включені</translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation type="unfinished"/>
+        <translation>ВИЛУЧИТИ ЖУРНАЛИ</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що волієте вилучити усі журнали?</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Налаштування для розробників</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути налаштування для розробників</translation>
     </message>
 </context>
 <context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
-        <translation type="unfinished"/>
+        <translation>Параметри звуку</translation>
     </message>
     <message>
         <source>playbackDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пристрій відтворення</translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пристрій захоплення</translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пристрій дзвінка</translation>
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"/>
+        <translation>Дзвінок</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути пригнічення луни</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Звукові кодеки</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показати звукові кодеки</translation>
     </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Файловий сервер</translation>
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Шифрувати за допомогою LIME</translation>
     </message>
     <message>
         <source>limeDisabled</source>
-        <translation type="unfinished"/>
+        <translation>Вимкнено</translation>
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"/>
+        <translation>Обов&apos;язково</translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"/>
+        <translation>Бажано</translation>
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished"/>
+        <translation>Чат</translation>
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Дзвінки</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
-        <translation type="unfinished"/>
+        <translation>Шифрування</translation>
     </message>
     <message>
         <source>noEncryption</source>
-        <translation type="unfinished"/>
+        <translation>Ні</translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Приймати виклик самочинно</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation type="unfinished"/>
+        <translation>Затримка (в мс)</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation type="unfinished"/>
+        <translation>Приймати виклик самочинно (з відео)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути чат</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути запис дзвінків</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути звук сповіщень</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"/>
+        <translation>Звук сповіщень</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути конференцію</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Контакти</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути контакти</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути звук мікрофону</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнення вихідних викликів</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показувати телефонну набірницю автоматично</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Автоматично записувати дзвінки</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"/>
+        <translation>Підтримувати дзвінки у згорнутому режимі</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Виклик призупинено</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Метод відправки DTMF</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
-        <translation type="unfinished"/>
+        <translation>Дозволити IPv6</translation>
     </message>
     <message>
         <source>transportTitle</source>
-        <translation type="unfinished"/>
+        <translation>Транспорт</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"/>
+        <translation>NAT та файрвол</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Сервер STUN/TURN</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished"/>
+        <translation>Користувач TURN</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пароль TURN</translation>
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Мережевий протокол і порти</translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>UDP порт SIP</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>TCP порт SIP</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>UDP порт RTP аудіо</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>UDP порт RTP відео</translation>
     </message>
     <message>
         <source>portHeader</source>
-        <translation type="unfinished"/>
+        <translation>Порт</translation>
     </message>
     <message>
         <source>randomPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>Використовувати випадковий порт</translation>
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнений порт</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Поля DSCP</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>Потік RTP аудіо</translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>Потік RTP відео</translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation type="unfinished"/>
+        <translation>Керування смугою пропускання</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Обмежити вхідну швидкість до Кбіт/сек</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Обмежити вихідну швидкість до Кбіт/сек</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути адаптивне керування швидкістю</translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>Статус</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation type="unfinished"/>
+        <translation>Використовувати RLS URI</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation type="unfinished"/>
+        <translation>АВТО</translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation type="unfinished"/>
+        <translation>НІКОЛИ</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показати мережеві налаштування</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"/>
+        <translation>Основні</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished"/>
+        <translation>Типове посвідчення</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>Адреса SIP</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Проксі обліківки</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"/>
+        <translation>ВИЛУЧИТИ ПАРОЛІ</translation>
     </message>
     <message>
         <source>addAccount</source>
-        <translation type="unfinished"/>
+        <translation>ДОДАТИ ОБЛІКІВКУ</translation>
     </message>
     <message>
         <source>editHeader</source>
-        <translation type="unfinished"/>
+        <translation>Змінити</translation>
     </message>
     <message>
         <source>deleteHeader</source>
-        <translation type="unfinished"/>
+        <translation>Вилучити</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що бажаєте вилучити цю обліківку?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що бажаєте вилучити усі паролі?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показуване ім&apos;я</translation>
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>Помічник</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути створення обліківки</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути використання обліківки</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути використання спільної обліківки</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути вибір конфігурації</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"/>
+        <translation>Підтримує номери телефонів</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
     <message>
         <source>sipAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>Адреса SIP</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Транспорт</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>Адреса сервера SIP</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Тривалість реєстрації (сек)</translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Маршрут</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Контактні параметри</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Оголошувати статус</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"/>
+        <translation>AVPF звичайний RTCP інтервал (сек)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Реєстрація</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>СКАСУВАТИ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>ПІДТВЕРДИТИ</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустима SIP адреса.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation type="unfinished"/>
+        <translation>Неприпустима адреса сервера.</translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"/>
+        <translation>Неправильний маршрут.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Сервер STUN/TURN</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished"/>
+        <translation>Увімкнути TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished"/>
+        <translation>Користувач TURN</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пароль TURN</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"/>
+        <translation>NAT і файрвол</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Основні налаштування SIP обліківки</translation>
     </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Шляхи</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Тека для збереження знятків</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Тека для запису дзвінків</translation>
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation type="unfinished"/>
+        <translation>Мови</translation>
     </message>
     <message>
         <source>languagesLabel</source>
-        <translation type="unfinished"/>
+        <translation>Мова</translation>
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"/>
+        <translation>Системна</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"/>
+        <translation>ВИЛУЧИТИ МАРМИЗКИ</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що волієте вилучити усі мармизки?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"/>
+        <translation>Тека завантажень</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation type="unfinished"/>
+        <translation>Необхідний перезапуск програми. Бажаєте перезапустити зараз?</translation>
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"/>
+        <translation>Инше</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"/>
+        <translation>Завершувати програму при закритті вікна</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"/>
+        <translation>Дані користувацького інтерфейсу</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пристрій-джерело відео</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished"/>
+        <translation>Частота кадрів</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"/>
+        <translation>Параметри захоплення відео</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пресет відео</translation>
     </message>
     <message>
         <source>presetDefault</source>
-        <translation type="unfinished"/>
+        <translation>Типово</translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"/>
+        <translation>Висока частота кадрів</translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"/>
+        <translation>Користувацьке</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Роздільність відео</translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Відео кодеки</translation>
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation type="unfinished"/>
+        <translation>ПОПЕРЕГЛЯД ВІДЕО</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показати Відео кодеки</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>Так</translation>
     </message>
 </context>
 <context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Налаштування</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
-        <translation type="unfinished"/>
+        <translation>SIP обліківки</translation>
     </message>
     <message>
         <source>audioTab</source>
-        <translation type="unfinished"/>
+        <translation>Звук</translation>
     </message>
     <message>
         <source>videoTab</source>
-        <translation type="unfinished"/>
+        <translation>Відео</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"/>
+        <translation>Дзвінки і чат</translation>
     </message>
     <message>
         <source>networkTab</source>
-        <translation type="unfinished"/>
+        <translation>Мережа</translation>
     </message>
     <message>
         <source>uiTab</source>
-        <translation type="unfinished"/>
+        <translation>Інтерфейс</translation>
     </message>
     <message>
         <source>validButton</source>
-        <translation type="unfinished"/>
+        <translation>Так</translation>
     </message>
     <message>
         <source>uiAdvanced</source>
-        <translation type="unfinished"/>
+        <translation>Додаткове</translation>
     </message>
 </context>
 <context>
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>ДОДАТИ КОНТАКТ</translation>
     </message>
 </context>
 <context>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"/>
+        <translation>Заздалегідь</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ВИКОРИСТОВУВАТИ</translation>
     </message>
     <message>
         <source>useAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>ВИКОРИСТОВУВАТИ ОБЛІКІВКУ %1</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"/>
+        <translation>Використовувати ім&apos;я користувача та пароль замість номеру телефону.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Вашу обліківку було створено, але ще не підтверджено. Ви впевнені, що бажаєте вийти?</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"/>
+        <translation>Країна</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>Номер телефону</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
 </context>
 <context>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ВИКОРИСТОВУВАТИ</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>ВИКОРИСТОВУВАТИ SIP ОБЛІКІВКУ</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ім&apos;я користувача</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Показуване ім&apos;я (не обов&apos;язково)</translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation type="unfinished"/>
+        <translation>Домен SIP</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Транспорт</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"/>
+        <translation>Не вдалося додати цю обліківку.</translation>
     </message>
 </context>
 <context>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"/>
+        <translation>Підтвердіть такий рядок автентифікації з контактом.</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"/>
+        <translation>Скажіть:</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"/>
+        <translation>Ваш контакт повинен сказати:</translation>
     </message>
     <message>
         <source>deny</source>
-        <translation type="unfinished"/>
+        <translation>ВІДХИЛИТИ</translation>
     </message>
     <message>
         <source>accept</source>
-        <translation type="unfinished"/>
+        <translation>СХВАЛИТИ</translation>
     </message>
 </context>
 <context>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"/>
+        <translation>Бажаєте завантажити %1 (%2)?</translation>
     </message>
 </context>
 </TS>

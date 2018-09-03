@@ -18,7 +18,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>要啟用您的帳號：請按照我們在 %1 傳送的說明操作，然後按下方。</translation>
     </message>
 </context>
 <context>
@@ -48,11 +48,11 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation>自由的 SIP 視訊電話。</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>在系統匣啟動，不顯示主介面</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -76,88 +76,88 @@
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"/>
+        <translation>還原</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>退出</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>偏好設定</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>關於</translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>返回</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>使用 %1 帳號</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>使用 SIP 帳號</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>擷取遠端組態</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>歡迎</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>這個助理將會幫助您設定病使用您的 sip 帳號。</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>建立 %1 帳號</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>登入失敗。請檢查您的使用者名稱/密碼。</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>太短！（至少要 %1 個字元）</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>太長！（最多 %1 個字元）</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>偵測到無效的字元。(regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>無效的使用者名稱。</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>太短！（至少要 %1 個字元）</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>太長！（最多 %1 個字元）</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>偵測到無效的字元。(regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -165,109 +165,109 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>無法傳送要求。</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>不正確的電子郵件地址。</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>不正確的電子郵件地址或無效的字元。</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>伺服器錯誤：無法傳送簡訊。</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"/>
+        <translation>這個帳號已經存在。</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>簡訊啟用失敗！</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>請確認您已經驗證您的帳號或再試一次。</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>無效的電話號碼！</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>太短！</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>太長！</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"/>
+        <translation>無效的國家地區代碼！</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation type="unfinished"/>
+        <translation>登入失敗。請檢查您的電話號碼。</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation type="unfinished"/>
+        <translation>無法加入這個帳號。</translation>
     </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>登入</translation>
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished"/>
+        <translation>身分</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>密碼</translation>
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation type="unfinished"/>
+        <translation>無法驗證。請確認您的密碼。</translation>
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation type="unfinished"/>
+        <translation>使用者 ID（選用）</translation>
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"/>
+        <translation>領域</translation>
     </message>
 </context>
 <context>
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation type="unfinished"/>
+        <translation>編解碼器</translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>上傳頻寬</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>下載頻寬</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>估計下載頻寬</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"/>
+        <translation>ICE 狀態</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
@@ -275,35 +275,35 @@
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"/>
+        <translation>傳送者遺失率</translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"/>
+        <translation>接收者遺失率</translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation type="unfinished"/>
+        <translation>抖動緩衝</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>傳送的視訊解析度</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>接收的視訊解析度</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation type="unfinished"/>
+        <translation>未啟動</translation>
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation type="unfinished"/>
+        <translation>失敗</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"/>
+        <translation>進行中</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
@@ -319,7 +319,7 @@
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"/>
+        <translation>無效</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
@@ -350,29 +350,29 @@
     <name>CallSipAddress</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation type="unfinished"/>
+        <translation>開始新的通話</translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>音訊</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>視訊</translation>
     </message>
 </context>
 <context>
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>callTransferDescription</source>
@@ -383,76 +383,77 @@
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation type="unfinished"/>
+        <translation>接受音訊通話</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation type="unfinished"/>
+        <translation>接受視訊通話</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"/>
+        <translation>掛斷</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"/>
+        <translation>恢復通話</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"/>
+        <translation>轉接通話</translation>
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"/>
+        <translation>暫停通話</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>通話</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"/>
+        <translation>您確定要終止所有通話嗎？</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>輸入您的訊息</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"/>
+        <translation>無法傳送檔案。
+伺服器網址未配置。</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 正在輸入...</translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation type="unfinished"/>
+        <translation>透過命令列控制 %1 應用程式的方法。</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>%1 sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
-        <translation type="unfinished"/>
+        <translation>命令清單：</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>顯示應用程式的主視窗。</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
@@ -475,11 +476,11 @@
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"/>
+        <translation>名稱</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"/>
+        <translation>描述</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
@@ -487,29 +488,29 @@
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation type="unfinished"/>
+        <translation>位元率 (Kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"/>
+        <translation>參數</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"/>
+        <translation>狀態</translation>
     </message>
 </context>
 <context>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>會議</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"/>
+        <translation>會議</translation>
     </message>
 </context>
 <context>
@@ -520,22 +521,22 @@
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>開始</translation>
     </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>確認</translation>
     </message>
 </context>
 <context>
@@ -546,7 +547,7 @@
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation type="unfinished"/>
+        <translation>SIP 帳號</translation>
     </message>
     <message>
         <source>address</source>
@@ -554,82 +555,82 @@
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished"/>
+        <translation>電子郵件</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"/>
+        <translation>網站</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>選擇您的頭像</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"/>
+        <translation>公司</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"/>
+        <translation>儲存</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>SIP 帳號</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>公司</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>電子郵件</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>網站</translation>
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"/>
+        <translation>街道</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"/>
+        <translation>郵遞區號</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"/>
+        <translation>國家</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"/>
+        <translation>位置</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"/>
+        <translation>您確定要取消聯絡人修改嗎？</translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>搜尋聯絡人</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"/>
+        <translation>全部</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"/>
+        <translation>已連線</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>加入聯絡人</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
@@ -640,30 +641,30 @@
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation type="unfinished"/>
+        <translation>全部</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"/>
+        <translation>通話</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation type="unfinished"/>
+        <translation>訊息</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"/>
+        <translation>你確定要清除這個記錄嗎？</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
     <message>
         <source>createAppSipAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>您想要如何建立您的帳號？</translation>
     </message>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>建立 %1 帳號</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
@@ -678,131 +679,131 @@
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>建立 %1 帳號</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>建立</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>使用者名稱</translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation type="unfinished"/>
+        <translation>電子郵件</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>密碼</translation>
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation type="unfinished"/>
+        <translation>密碼確認</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"/>
+        <translation>您輸入的密碼不相符</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>您的帳號已經建立，但還沒被驗證。您確定要退出這個檢視嗎？</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>顯示名稱（選用）</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>建立 %1 帳號</translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"/>
+        <translation>國家</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>電話號碼</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>使用者名稱</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>顯示名稱（選用）</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>建立</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>您的帳號已經建立，但還沒被驗證。如果您退出這個檢視，您必須在 24 小時內手動加入並驗證您的帳號。</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>請選擇一個或多個檔案</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"/>
+        <translation>放置您的附件</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"/>
+        <translation>傳送檔案</translation>
     </message>
 </context>
 <context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"/>
+        <translation>來電</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>撥出電話</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>拒絕的來電</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>拒絕的撥出電話</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"/>
+        <translation>終止通話</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>未接來電</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>未接的撥出電話</translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>擷取</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"/>
+        <translation>擷取遠端配置</translation>
     </message>
     <message>
         <source>urlLabel</source>
-        <translation type="unfinished"/>
+        <translation>網址</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
@@ -810,18 +811,18 @@
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"/>
+        <translation>必須重新啟動應用程式。你想要現在重新啟動嗎？</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"/>
+        <translation>需要如何使用 %1 的幫助嗎？</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"/>
+        <translation>如何使用 %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
@@ -829,34 +830,34 @@
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>邀請您的朋友</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"/>
+        <translation>建立或管理您的 %1 帳號。</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>帳號助理</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"/>
+        <translation>助理</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"/>
+        <translation>顯示工具提示</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"/>
+        <translation>邀請</translation>
     </message>
 </context>
 <context>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"/>
+        <translation>您的聯絡人想要開啟視訊。</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
@@ -864,15 +865,15 @@
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation type="unfinished"/>
+        <translation>通話使用以下內容加密：%1。</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation type="unfinished"/>
+        <translation>通話沒有加密。</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation>拍一張快照。</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
@@ -887,7 +888,7 @@
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation>拍一張快照。</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
@@ -902,23 +903,23 @@
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"/>
+        <translation>朋友的電子郵件地址</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished"/>
+        <translation>訊息</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>取消</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>確認</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"/>
+        <translation>邀請朋友</translation>
     </message>
     <message>
         <source>defaultMessage</source>
