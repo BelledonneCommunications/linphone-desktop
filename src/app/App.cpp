@@ -76,13 +76,13 @@ namespace {
   constexpr char AssistantViewName[] = "Assistant";
 
   #ifdef Q_OS_LINUX
-    static QString AutoStartDirectory(
+    QString AutoStartDirectory(
       QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).at(0) + QLatin1String("/autostart/")
     );
   #elif defined(Q_OS_MACOS)
-
+    QString OsascriptExecutable("osascript");
   #else
-    static QString AutoStartSettingsFilePath("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+    QString AutoStartSettingsFilePath("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
   #endif // ifdef Q_OS_LINUX
 }
 
@@ -93,7 +93,57 @@ namespace {
     return QDir(AutoStartDirectory).exists() && QFile(AutoStartDirectory + EXECUTABLE_NAME ".desktop").exists();
   }
 #elif defined(Q_OS_MACOS)
+  static inline QString getMacOsBundlePath () {
+    QDir dir(QCoreApplication::applicationDirPath());
+    if (dir.dirName() != QLatin1String("MacOS"))
+      return QString();
+
+    dir.cdUp();
+    dir.cdUp();
+
+    QString path(dir.path());
+    if (path.length() > 0 && path.right(1) == "/")
+      path.chop(1);
+    return path;
+  }
+
+  static inline QString getMacOsBundleName () {
+    return QFileInfo(getMacOsBundlePath()).baseName();
+  }
+
   static inline bool autoStartEnabled () {
+    const QByteArray expectedWord(getMacOsBundleName().toUtf8());
+    if (expectedWord.isEmpty()) {
+      qInfo() << QStringLiteral("Application is not installed. Autostart unavailable.");
+      return false;
+    }
+
+    QProcess process;
+    process.start(OsascriptExecutable, { "-e", "tell application \"System Events\" to get the name of every login item" });
+    if (!process.waitForFinished()) {
+      qWarning() << QStringLiteral("Unable to execute properly: `%1` (%2).").arg(OsascriptExecutable).arg(process.errorString());
+      return false;
+    }
+
+    // TODO: Move in utils?
+    const QByteArray buf(process.readAll());
+    for (const char *p = buf.data(), *word = p, *end = p + buf.length(); p <= end; ++p) {
+      switch (*p) {
+        case ' ':
+        case '\r':
+        case '\n':
+        case '\t':
+        case '\0':
+          if (word != p) {
+            if (!strncmp(word, expectedWord, size_t(p - word)))
+              return true;
+            word = p + 1;
+          }
+        default:
+          break;
+      }
+    }
+
     return false;
   }
 #else
@@ -664,7 +714,26 @@ void App::setAutoStart (bool enabled) {
 #elif defined(Q_OS_MACOS)
 
 void App::setAutoStart (bool enabled) {
-  Q_UNUSED(enabled);
+  if (enabled == mAutoStart)
+    return;
+
+  if (getMacOsBundlePath().isEmpty()) {
+    qWarning() << QStringLiteral("Application is not installed. Unable to change autostart state.");
+    return;
+  }
+
+  if (enabled)
+    QProcess::execute(OsascriptExecutable, {
+      "-e", "tell application \"System Events\" to make login item at end with properties"
+      "{ path: \"" + getMacOsBundlePath() + "\", hidden: false }"
+    });
+  else
+    QProcess::execute(OsascriptExecutable, {
+      "-e", "tell application \"System Events\" to delete login item \"" + getMacOsBundleName() + "\""
+    });
+
+  mAutoStart = enabled;
+  emit autoStartChanged(enabled);
 }
 
 #else
