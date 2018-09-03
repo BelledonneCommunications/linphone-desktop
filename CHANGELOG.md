@@ -20,6 +20,7 @@
 - Remove useless splashscreen.
 - Disable screensaver on fullscreen video call.
 - Add caller/callee on saved files.
+- Supports totally french, english, portuguese, russian, turkish, ukrainian.
 
 ### Fixes
 
