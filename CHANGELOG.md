@@ -4,9 +4,29 @@
 
 ### Features
 
+- Add an autostart option in GUI settings.
+- Add an option to play sound notification when an incoming chat message is received.
+- Add an option to show TelKeypad automatically.
+- Add an option to automatically record calls.
+- Add an option to keep calls window in background.
+- Add a CLI. Help is available with `linphone --cli-help`.
 - Timeline uses current proxy config info.
-- Display only unread chat message count of active proxy list.
-- Display unread chat messages count in `Manage Accounts` dialog and in `Main Window`.
+- Display unread message count in system tray icon/mac app icon.
+- Display unread chat message count in `Manage Accounts` dialog and in `Main Window`.
+- Add a media parameters dialog in the `Call View` to selected devices and set volume.
+- TelKeypad supports A, B, C and D keys.
+- TelKeypad supports keyboard.
+- OpenH264 codec can be download in the application.
+- Remove useless splashscreen.
+- Disable screensaver on fullscreen video call.
+- Add caller/callee on saved files.
+
+### Fixes
+
+- Display a busy indicator when a message is sent.
+- Play a sound when DTMF is sent.
+- Do not use `:` separator when a file is saved on Windows.
+- Avoid mark as read on selected chat room if window is not active.
 
 ## 4.1.0 - 2017-07-19
 
