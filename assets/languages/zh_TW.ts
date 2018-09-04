@@ -1597,6 +1597,10 @@
         <source>dataTitle</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

@@ -1600,6 +1600,10 @@
         <source>dataTitle</source>
         <translation>Дані користувацького інтерфейсу</translation>
     </message>
+    <message>
+        <source>autoStartLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

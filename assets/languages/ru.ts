@@ -1604,7 +1604,7 @@
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Автозапуск</translation>
     </message>
 </context>
 <context>
