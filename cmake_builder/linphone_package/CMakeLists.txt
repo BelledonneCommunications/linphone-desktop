@@ -170,10 +170,12 @@ if (WIN32)
     PATTERN "bin/*_tester.exe" EXCLUDE
     PATTERN "bin/belcard*.exe" EXCLUDE
     PATTERN "bin/openh264.dll" EXCLUDE
+    PATTERN "cmake" EXCLUDE
     PATTERN "include" EXCLUDE
     PATTERN "lib/*.a" EXCLUDE
     PATTERN "lib/*.def" EXCLUDE
     PATTERN "lib/*.exp" EXCLUDE
+    PATTERN "lib/cmake" EXCLUDE
     PATTERN "lib/*.la" EXCLUDE
     PATTERN "lib/*.lib" EXCLUDE
     PATTERN "lib/mediastreamer/plugins/*openh264.*" EXCLUDE
