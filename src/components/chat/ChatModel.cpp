@@ -147,7 +147,7 @@ static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphon
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
-    dest["fileSize"] = quint64(content->getSize());
+    dest["fileSize"] = quint64(content->getFileSize());
     dest["fileName"] = Utils::coreStringToAppString(content->getName());
     dest["wasDownloaded"] = ::fileWasDownloaded(message);
 
