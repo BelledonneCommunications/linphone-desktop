@@ -261,10 +261,13 @@ Row {
 
         onClicked: {
           if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+            console.log('toto', $chatEntry.wasDownloaded)
             proxyModel.openFile(index)
           } else if ($chatEntry.wasDownloaded) {
+            console.log('totfefeefo', $chatEntry.wasDownloaded)
             proxyModel.openFileDirectory(index)
           } else  {
+            console.log('toaaaxxxxto', $chatEntry.wasDownloaded)
             proxyModel.downloadFile(index)
           }
         }
