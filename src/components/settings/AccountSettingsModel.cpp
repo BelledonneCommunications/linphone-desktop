@@ -186,6 +186,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 ) {
   Q_CHECK_PTR(proxyConfig);
 
+  proxyConfig->edit();
+
   QString literal = data["sipAddress"].toString();
 
   // Sip address.
