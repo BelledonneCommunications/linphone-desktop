@@ -32,6 +32,27 @@ Here are the general instructions to build linphone for desktop. The specific in
 
         make
 
+#### Mac OS X Troubleshooting
+To install the required dependencies on Mac OS X, you can use [Homebrew](https://brew.sh/).
+Before you install packages with Brew, you may have to change directories permissions (if you can't change permissions with sudo on a MacOS >= High Sierra, get a look at [this StackOverflow answer](https://stackoverflow.com/questions/16432071/how-to-fix-homebrew-permissions#46844441)).
+
+1. If you have pip related dependancies, verify to begin with that you already have pip. You can get it for python 2.7 [there](https://stackoverflow.com/questions/34886101/how-to-install-pip-to-python-2-7-10-on-mac#34886254).
+
+2. Then, you can install a pip package with the following command
+
+        pip install [package]
+
+    For instance, if you don't have pystache and the dot package (contained in graphviz), enter the following commands
+
+        pip install pystache
+        pip install graphviz
+
+3. Finish the pre-build by cleaning the obsolete files and then run prepare.py and make again
+
+        ./prepare.py -c
+        ./prepare.py -DENABLE_DOC=OFF
+        make
+
 ### Specific instructions for the Windows platform
 
 1. Ensure that you have downloaded the `Qt msvc2015 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.) `MinGW` must be installed too.
