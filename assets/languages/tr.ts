@@ -1606,7 +1606,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Uygulamayı kendiliğinden başlat</translation>
     </message>
 </context>
 <context>

@@ -1606,7 +1606,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar automaticamente o app</translation>
     </message>
 </context>
 <context>

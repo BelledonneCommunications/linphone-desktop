@@ -48,11 +48,11 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation>A free (libre) SIP video-phone.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>avvia nella barra delle applicazioni, non mostrare l&apos;interfaccia principale</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -68,27 +68,27 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation>visualizza il menu guida per utilizzare %1 con la CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation>invia un comando all&apos;applicazione tramite la riga di comando</translation>
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"/>
+        <translation>Ripristina</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Esci</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Preferenze</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni</translation>
     </message>
 </context>
 <context>
@@ -102,7 +102,7 @@
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>USARE UN ACCOUNT %1</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>RECUPERA UNA CONFIGURAZIONE REMOTA</translation>
     </message>
     <message>
         <source>homeTitle</source>
@@ -118,62 +118,62 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>Questo assistente ti aiuterà a configurare e utilizzare il tuo account sip.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>CREA UN ACCOUNT %1</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Accesso fallito. Controlla l&apos;utente e la password.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Troppo corto! (min. %1 caratteri)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Troppo lungo! (max. %1 caratteri)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Rilevati caratteri non validi. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Nome utente non valido.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Troppo corto! (min. %1 caratteri)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Troppo lungo! (max. %1 caratteri)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Rilevati caratteri non validi. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Caratteri mancanti: `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile inviare la richiesta.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo email errato.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo email errato o caratteri non validi.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
@@ -197,30 +197,30 @@
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Troppo corto!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Troppo lungo!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"/>
+        <translation>Codice paese non valido!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation type="unfinished"/>
+        <translation>Accesso fallito. Per favore controlla il tuo numero di telefono.</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiungere questo account.</translation>
     </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>confirm</source>
@@ -236,7 +236,7 @@
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile autenticarsi. Verifica la password.</translation>
     </message>
     <message>
         <source>userIdLabel</source>
@@ -244,7 +244,7 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"/>
+        <translation>Realm</translation>
     </message>
 </context>
 <context>
@@ -255,43 +255,43 @@
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Banda di upload</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Banda di download</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Banda di download stimata</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"/>
+        <translation>Stato ICE</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation type="unfinished"/>
+        <translation>Famiglia IP</translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"/>
+        <translation>Tasso di perdita del mittente</translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"/>
+        <translation>Tasso di perdita del ricevente</translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation type="unfinished"/>
+        <translation>Buffer Jitter</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Definizione del video inviata</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"/>
+        <translation>Definizione del video ricevuta</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
@@ -319,23 +319,23 @@
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Non valido</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"/>
+        <translation>Il destinatario ha rifiutato la chiamata.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"/>
+        <translation>Destinatario non trovato.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"/>
+        <translation>Destinatario occupato.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"/>
+        <translation>La parte remota non può accettare la chiamata.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -350,7 +350,7 @@
     <name>CallSipAddress</name>
     <message>
         <source>cancel</source>
-        <translation>CANCELLA</translation>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>callSipAddressDescription</source>
@@ -372,95 +372,96 @@
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
-        <translation>CANCELLA</translation>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi trasferire la chiamata?</translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation type="unfinished"/>
+        <translation>ACCETTA LA CHIAMATA AUDIO</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation type="unfinished"/>
+        <translation>ACCETTA LA CHIAMATA VIDEO</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"/>
+        <translation>RIAGGANCIA</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"/>
+        <translation>RIPRENDI CHIAMATA</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"/>
+        <translation>TRASFERISCI CHIAMATA</translation>
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"/>
+        <translation>PAUSA CHIAMATA</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Chiamate</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler terminare tutte le chiamate?</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Inserisci il tuo messaggio</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile inviare il file.
+URL del server non configurato.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 sta scrivendo...</translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation type="unfinished"/>
+        <translation>Modo per controllare l&apos;applicazione %1 tramite riga di comando.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>%1 sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"/>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
-        <translation type="unfinished"/>
+        <translation>lista dei comandi:</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Mostra la finestra principale dell&apos;applicazione.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Inizia una chiamata all&apos;indirizzo sip.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Inizia una conferenza.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -475,11 +476,11 @@
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"/>
+        <translation>Nome</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"/>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
@@ -491,7 +492,7 @@
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"/>
+        <translation>Parametri</translation>
     </message>
     <message>
         <source>codecStatus</source>
@@ -502,55 +503,55 @@
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>CONFERENZA</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"/>
+        <translation>CONFERENZA</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"/>
+        <translation>Gestisci i partecipanti alla tua conferenza.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>AVVIA</translation>
     </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>CONFERMA</translation>
     </message>
 </context>
 <context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi veramente rimuovere questo contatto dalla tua rubrica?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation type="unfinished"/>
+        <translation>SIP ACCOUNT</translation>
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>INDIRIZZO</translation>
     </message>
     <message>
         <source>emails</source>
@@ -562,27 +563,27 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Scegli il tuo avatar</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"/>
+        <translation>AZIENDE</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"/>
+        <translation>SALVA</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Account SIP</translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Azienda</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
@@ -594,103 +595,103 @@
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"/>
+        <translation>Strada</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"/>
+        <translation>Codice postale</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"/>
+        <translation>Paese</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"/>
+        <translation>Località</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler annullare la modifica del contatto?</translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Cerca contatto</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"/>
+        <translation>Tutti</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"/>
+        <translation>Connesso</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>AGGIUNGI UN CONTATTO</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi veramente rimuovere questo contatto dalla tua rubrica?</translation>
     </message>
 </context>
 <context>
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation type="unfinished"/>
+        <translation>TUTTI</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"/>
+        <translation>CHIAMATE</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation type="unfinished"/>
+        <translation>MESSAGGI</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler cancellare questa cronologia?</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
     <message>
         <source>createAppSipAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Come ti piacerebbe creare il tuo account?</translation>
     </message>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>CREA UN ACCOUNT %1</translation>
     </message>
     <message>
         <source>withPhoneNumber</source>
-        <translation type="unfinished"/>
+        <translation>CON UN NUMERO DI TELEFONO</translation>
     </message>
     <message>
         <source>withEmailAddress</source>
-        <translation type="unfinished"/>
+        <translation>CON UN INDIRIZZO E-MAIL</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>CREA UN ACCOUNT %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>CREA</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation type="unfinished"/>
+        <translation>E-mail</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -702,103 +703,103 @@
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"/>
+        <translation>Le password inserite non combaciano.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Il tuo account è stato creato ma non è ancora stato convalidato. Sei sicuro di voler uscire da questa schermata?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>CREA UN ACCOUNT %1</translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"/>
+        <translation>Paese</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>Numero di telefono</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Username</translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>CREA</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Il tuo account è stato creato ma non è ancora stato convalidato. Se esci da questa schermata, dovrai aggiungere e convalidare manualmente il tuo account entro 24 ore.</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Seleziona uno o più file</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"/>
+        <translation>Rilascia il tuo allegato</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Invia un file</translation>
     </message>
 </context>
 <context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in arrivo</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in uscita</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in arrivo rifiutata</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in uscita rifiutata</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata terminata</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in arrivo persa</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in uscita persa</translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>RECUPERA</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"/>
+        <translation>RECUPERA LA CONFIGURAZIONE REMOTA</translation>
     </message>
     <message>
         <source>urlLabel</source>
@@ -806,138 +807,141 @@
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile impostare questo uri di provisioning remoto.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation type="unfinished"/>
+        <translation>È necessario riavviare l&apos;applicazione. Vuoi riavviare ora?</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation type="unfinished"/>
+        <translation>Hai bisogno di aiuto su come utilizzare %1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"/>
+        <translation>COME USARE %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"/>
+        <translation>Invita i tuoi amici su %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>INVITA I TUOI AMICI</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"/>
+        <translation>Crea o gestisci il tuo account %1.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>ASSISTENTE ACCOUNT</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"/>
+        <translation>ASSISTENTE</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished"/>
+        <translation>Mostra suggerimenti</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"/>
+        <translation>INVITA</translation>
     </message>
 </context>
 <context>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation type="unfinished"/>
+        <translation>Il tuo contatto vorrebbe passare al video.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation type="unfinished"/>
+        <translation>Attendi, la richiesta è in sospeso.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata cifrata con: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata non cifrata.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation>Fai un&apos;istantanea.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Inizia a registrare.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ferma la registrazione.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"/>
+        <translation>Fai un&apos;istantanea.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Inizia a registrare.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ferma la registrazione.</translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"/>
+        <translation>L&apos;indirizzo email dell&apos;amico</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished"/>
+        <translation>Messaggio</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>CONFERMA</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Invita gli amici</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation type="unfinished"/>
+        <translation>%1 vuole invitarti su %2!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation type="unfinished"/>
+        <translation>%1 invito</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"/>
+        <translation>Scarica l&apos;applicazione sul tuo computer e inizia a chiamare e chattare con gli utenti gratuitamente.
+
+Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Cerca un contatto, avvia una chiamata o una chat...</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -945,30 +949,30 @@
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation type="unfinished"/>
+        <translation>CONTATTI</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation type="unfinished"/>
+        <translation>auto</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"/>
+        <translation>Usa la barra di ricerca intelligente per avviare direttamente chiamate audio e video, inviare un messaggio o aggiungere un nuovo contatto. Basta inserire l&apos;indirizzo SIP o nome utente del tuo amico.</translation>
     </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Preferenze</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Informazioni</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Esci</translation>
     </message>
 </context>
 <context>
@@ -979,22 +983,22 @@
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Stato di presenza</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished"/>
+        <translation>Account attivo</translation>
     </message>
 </context>
 <context>
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation type="unfinished"/>
+        <translation>Copia</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"/>
+        <translation>Avviami!</translation>
     </message>
 </context>
 <context>
@@ -1008,64 +1012,64 @@
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"/>
+        <translation>È disponibile una nuova versione (%1)!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
-        <translation type="unfinished"/>
+        <translation>Nuovo allegato ricevuto!</translation>
     </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>CONFERMA</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Estrazione di %1...</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Download %1...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"/>
+        <translation>%1 è ora installato!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile installare %1!</translation>
     </message>
 </context>
 <context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
-        <translation type="unfinished"/>
+        <translation>Errore</translation>
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"/>
+        <translation>Leggi</translation>
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation type="unfinished"/>
+        <translation>Consegnato</translation>
     </message>
 </context>
 <context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"/>
+        <translation>Disponibile</translation>
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation type="unfinished"/>
+        <translation>Occupato</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation type="unfinished"/>
+        <translation>Non disturbare</translation>
     </message>
     <message>
         <source>presenceOffline</source>
@@ -1080,58 +1084,58 @@
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation type="unfinished"/>
+        <translation>Cartella dei log</translation>
     </message>
     <message>
         <source>sendLogs</source>
-        <translation type="unfinished"/>
+        <translation>MANDA I LOG</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"/>
+        <translation>URL del server per l&apos;upload dei log</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile caricare i log.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita i log</translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation type="unfinished"/>
+        <translation>CANCELLA I LOG</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler rimuovere tutti i log?</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni per sviluppatori</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita impostazioni per sviluppatori</translation>
     </message>
 </context>
 <context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
-        <translation type="unfinished"/>
+        <translation>Parametri Audio</translation>
     </message>
     <message>
         <source>playbackDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Dispositivo di riproduzione</translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Dispositivo di acquisizione </translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Dispositivo per la suoneria</translation>
     </message>
     <message>
         <source>ringLabel</source>
@@ -1139,38 +1143,38 @@
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita l&apos;eliminazione dell&apos;eco</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Codec Audio</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Mostra i codec audio</translation>
     </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>File server</translation>
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Cifrato con LIME</translation>
     </message>
     <message>
         <source>limeDisabled</source>
-        <translation type="unfinished"/>
+        <translation>Disabilitato</translation>
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"/>
+        <translation>Obbligatorio</translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"/>
+        <translation>Preferito</translation>
     </message>
     <message>
         <source>chatTitle</source>
@@ -1178,79 +1182,79 @@
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Chiamate</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
-        <translation type="unfinished"/>
+        <translation>Cifratura</translation>
     </message>
     <message>
         <source>noEncryption</source>
-        <translation type="unfinished"/>
+        <translation>Nessuno</translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Risposta automatica</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ritardo (in ms)</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation type="unfinished"/>
+        <translation>Risposta automatica (con video)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita chat</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita registrazione chiamata</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita il suono di notifica</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"/>
+        <translation>Suono di notifica</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita conferenza</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Contatti</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita i contatti</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita microfono muto</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita chiamate in uscita</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"/>
+        <translation>Mostra automaticamente la tastiera del telefono</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Registra automaticamente le chiamate</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"/>
+        <translation>Mantieni la finestra chiamate in background</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata in pausa abilitata</translation>
     </message>
 </context>
 <context>
@@ -1265,7 +1269,7 @@
     </message>
     <message>
         <source>transportTitle</source>
-        <translation type="unfinished"/>
+        <translation>Trasporto</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
@@ -1277,39 +1281,39 @@
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Server STUN/TURN</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished"/>
+        <translation>Utente TURN</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Password TURN</translation>
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Protocollo di rete e porte</translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Porta UDP SIP</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Porta TCP SIP</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Porta UDP audio RTP</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Porta UDP video RTP</translation>
     </message>
     <message>
         <source>portHeader</source>
@@ -1321,11 +1325,11 @@
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>Porta abilitata</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Campi DSCP</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
@@ -1333,23 +1337,23 @@
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>Stream RTP audio</translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>Stream RTP video</translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation type="unfinished"/>
+        <translation>Controllo della larghezza di banda</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Limite di velocità di download in Kbit/sec</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation type="unfinished"/>
+        <translation>Limite di velocità di upload in Kbit/sec</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
@@ -1357,11 +1361,11 @@
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>Presenza</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation type="unfinished"/>
+        <translation>Usa URI RLS</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
@@ -1369,117 +1373,117 @@
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation type="unfinished"/>
+        <translation>MAI</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Mostra le impostazioni di rete</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"/>
+        <translation>Generale</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished"/>
+        <translation>Identità predefinita</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation>Username</translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo SIP</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Account proxy</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"/>
+        <translation>CANCELLA LE PASSWORD</translation>
     </message>
     <message>
         <source>addAccount</source>
-        <translation type="unfinished"/>
+        <translation>AGGIUNGI ACCOUNT</translation>
     </message>
     <message>
         <source>editHeader</source>
-        <translation type="unfinished"/>
+        <translation>Modifica</translation>
     </message>
     <message>
         <source>deleteHeader</source>
-        <translation type="unfinished"/>
+        <translation>Cancella</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler eliminare questo account?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler cancellare tutte le password?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome da visualizzare</translation>
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>Assistente</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita la creazione dell&apos;account</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita l&apos;utilizzo dell&apos;account</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita l&apos;utilizzo dell&apos;account generico</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita il recupero della configurazione</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"/>
+        <translation>Supporta i numeri di telefono</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
     <message>
         <source>sipAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo SIP</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Trasporto</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo del server SIP</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Durata della registrazione (sec)</translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Instradamento</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Parametri di contatto</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Pubblica informazioni sulla presenza</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
@@ -1487,320 +1491,320 @@
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Registra</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>CONFERMA</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo SIP non valido</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation type="unfinished"/>
+        <translation>Indirizzo del server non valido</translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"/>
+        <translation>Instradamento non valido</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Server STUN/TURN</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished"/>
+        <translation>Utente TURN</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Password TURN</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished"/>
+        <translation>NAT e Firewall</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni dell&apos;account SIP principale</translation>
     </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Percorsi</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Cartella per gli screenshot salvati</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Cartella per le chiamate salvate</translation>
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation type="unfinished"/>
+        <translation>Lingue</translation>
     </message>
     <message>
         <source>languagesLabel</source>
-        <translation type="unfinished"/>
+        <translation>Lingua</translation>
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni locali del sistema</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"/>
+        <translation>CANCELLA AVATAR</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"/>
+        <translation>Sei sicuro di voler cancellare tutti gli avatar?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"/>
+        <translation>Cartella per i download</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation type="unfinished"/>
+        <translation>È necessario riavviare l&apos;applicazione. Vuoi riavviare ora?</translation>
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"/>
+        <translation>Altro</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"/>
+        <translation>Esci dall&apos;app alla chiusura della finestra</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"/>
+        <translation>Dati UI</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"/>
+        <translation>Autoavvio dell&apos;app</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"/>
+        <translation>Dispositivo di input video</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished"/>
+        <translation>Framerate</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"/>
+        <translation>Parametri di acquisizione video</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"/>
+        <translation>Preimpostazioni video</translation>
     </message>
     <message>
         <source>presetDefault</source>
-        <translation type="unfinished"/>
+        <translation>Predefinito</translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"/>
+        <translation>FPS elevati</translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"/>
+        <translation>Personalizzato</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Risoluzione Video</translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Codec Video</translation>
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation type="unfinished"/>
+        <translation>ANTEPRIMA VIDEO</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Mostra codec video</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
-        <translation type="unfinished"/>
+        <translation>Account SIP</translation>
     </message>
     <message>
         <source>audioTab</source>
-        <translation type="unfinished"/>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>videoTab</source>
-        <translation type="unfinished"/>
+        <translation>Video</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"/>
+        <translation>Chiamate e Chat</translation>
     </message>
     <message>
         <source>networkTab</source>
-        <translation type="unfinished"/>
+        <translation>Rete</translation>
     </message>
     <message>
         <source>uiTab</source>
-        <translation type="unfinished"/>
+        <translation>Interfaccia utente</translation>
     </message>
     <message>
         <source>validButton</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>uiAdvanced</source>
-        <translation type="unfinished"/>
+        <translation>Avanzate</translation>
     </message>
 </context>
 <context>
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>AGGIUNGI UN CONTATTO</translation>
     </message>
 </context>
 <context>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"/>
+        <translation>In precedenza</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>USA</translation>
     </message>
     <message>
         <source>useAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>USA UN ACCOUNT %1</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"/>
+        <translation>Usa nome utente e password anziché il tuo numero di telefono.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"/>
+        <translation>Your account has been created but has not been validated yet. Are you sure you want to quit this view?</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished"/>
+        <translation>Paese</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>Numero di telefono</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Password</translation>
     </message>
 </context>
 <context>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>USA</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>USA UN ACCOUNT SIP</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation type="unfinished"/>
+        <translation>Dominio SIP</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Password</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Trasporto</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"/>
+        <translation>Impossibile aggiungere questo account.</translation>
     </message>
 </context>
 <context>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"/>
+        <translation>Confermare il seguente SAS con la controparte.</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"/>
+        <translation>Di:</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"/>
+        <translation>Il tuo contatto dovrebbe dire:</translation>
     </message>
     <message>
         <source>deny</source>
-        <translation type="unfinished"/>
+        <translation>RIFIUTA</translation>
     </message>
     <message>
         <source>accept</source>
@@ -1811,7 +1815,7 @@
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"/>
+        <translation>Vuoi scaricare %1 (%2)?</translation>
     </message>
 </context>
 </TS>

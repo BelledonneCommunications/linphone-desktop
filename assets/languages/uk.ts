@@ -1602,7 +1602,7 @@
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"/>
+        <translation>Самозапуск</translation>
     </message>
 </context>
 <context>
