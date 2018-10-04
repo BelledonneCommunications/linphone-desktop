@@ -372,7 +372,12 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
     *format = UriFormat;
 
   // Execute uri command.
-  qInfo() << QStringLiteral("Execute uri command: `%1`.").arg(command);
+  qInfo() << QStringLiteral("Execute uri command: `%1`...").arg(command);
+
+  if (address->getUsername().empty()) {
+    qWarning() << QStringLiteral("Failed to execute command. No username given.");
+    return;
+  }
 
   string scheme = address->getScheme();
   for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone" })
