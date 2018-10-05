@@ -248,6 +248,7 @@ void App::initContentApp () {
 
   // Destroy qml components and linphone core if necessary.
   if (mEngine) {
+    setOpened(false);
     qInfo() << QStringLiteral("Restarting app...");
     delete mEngine;
 
@@ -799,6 +800,8 @@ void App::openAppAfterInit (bool mustBeIconified) {
 
     checkForUpdate();
   #endif // ifdef ENABLE_UPDATE_CHECK
+
+  setOpened(true);
 }
 
 // -----------------------------------------------------------------------------

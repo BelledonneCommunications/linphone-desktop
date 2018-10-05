@@ -275,13 +275,14 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
   }
 
   // Execute!
-  CoreManager *coreManager = CoreManager::getInstance();
-
-  if (coreManager->started())
+  App *app = App::getInstance();
+  if (app->isOpened()) {
+    qInfo() << QStringLiteral("Execute command:") << args;
     (*mFunction)(args);
-  else {
+  } else {
     Function f = mFunction;
-    Utils::connectOnce(coreManager->getHandlers().get(), &CoreHandlers::coreStarted, coreManager, [f, args] {
+    Utils::connectOnce(app, &App::opened, app, [f, args] {
+      qInfo() << QStringLiteral("Execute deferred command:") << args;
       QHash<QString, QString> fuckConst = args;
       (*f)(fuckConst);
     });
@@ -356,6 +357,8 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 
   // Execute cli command.
   if (!address) {
+    qInfo() << QStringLiteral("Detecting cli command: `%1`...").arg(command);
+
     const QString &functionName = parseFunctionName(command);
     if (!functionName.isEmpty()) {
       QHash<QString, QString> args = parseArgs(command);
@@ -372,7 +375,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
     *format = UriFormat;
 
   // Execute uri command.
-  qInfo() << QStringLiteral("Execute uri command: `%1`...").arg(command);
+  qInfo() << QStringLiteral("Detecting uri command: `%1`...").arg(command);
 
   if (address->getUsername().empty()) {
     qWarning() << QStringLiteral("Failed to execute command. No username given.");

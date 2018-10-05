@@ -84,6 +84,10 @@ public:
 
   bool hasFocus () const;
 
+  bool isOpened () const {
+    return mIsOpened;
+  }
+
   static App *getInstance () {
     return static_cast<App *>(QApplication::instance());
   }
@@ -103,6 +107,8 @@ signals:
   void configLocaleChanged (const QString &locale);
 
   void autoStartChanged (bool enabled);
+
+  void opened (bool status);
 
 private:
   void createParser ();
@@ -134,6 +140,13 @@ private:
 
   void openAppAfterInit (bool mustBeIconified = false);
 
+  void setOpened (bool status) {
+    if (mIsOpened != status) {
+      mIsOpened = status;
+      emit opened(mIsOpened);
+    }
+  }
+
   static void checkForUpdate ();
 
   static QString getQtVersion () {
@@ -158,6 +171,8 @@ private:
   Colors *mColors = nullptr;
 
   QSystemTrayIcon *mSystemTrayIcon = nullptr;
+
+  bool mIsOpened = false;
 };
 
 #endif // APP_H_
