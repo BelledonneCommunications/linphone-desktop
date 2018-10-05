@@ -20,6 +20,8 @@
  *      Author: Ghislain MARY
  */
 
+#include <signal.h>
+
 #include <QDBusInterface>
 
 #include "config.h"
@@ -44,13 +46,39 @@ QDBusConnection SingleApplicationPrivate::getBus () const {
 }
 
 void SingleApplicationPrivate::startPrimary () {
+  crashHandler();
   if (!getBus().registerObject("/", this, QDBusConnection::ExportAllSlots))
     qWarning() << QStringLiteral("Failed to register single application object on DBus.");
   instanceNumber = 0;
 }
 
 void SingleApplicationPrivate::startSecondary () {
+  crashHandler();
   instanceNumber = 1;
+}
+
+void SingleApplicationPrivate::crashHandler () {
+  signal(SIGHUP, SingleApplicationPrivate::terminate);  // 1
+  signal(SIGINT, SingleApplicationPrivate::terminate);  // 2
+  signal(SIGQUIT, SingleApplicationPrivate::terminate); // 3
+  signal(SIGILL, SingleApplicationPrivate::terminate);  // 4
+  signal(SIGABRT, SingleApplicationPrivate::terminate); // 6
+  signal(SIGFPE, SingleApplicationPrivate::terminate);  // 8
+  signal(SIGBUS, SingleApplicationPrivate::terminate);  // 10
+  signal(SIGSEGV, SingleApplicationPrivate::terminate); // 11
+  signal(SIGSYS, SingleApplicationPrivate::terminate);  // 12
+  signal(SIGPIPE, SingleApplicationPrivate::terminate); // 13
+  signal(SIGALRM, SingleApplicationPrivate::terminate); // 14
+  signal(SIGTERM, SingleApplicationPrivate::terminate); // 15
+  signal(SIGXCPU, SingleApplicationPrivate::terminate); // 24
+  signal(SIGXFSZ, SingleApplicationPrivate::terminate); // 25
+}
+
+void SingleApplicationPrivate::terminate (int signum) {
+  if (signum == SIGINT)
+    SingleApplication::instance()->quit();
+  else
+    ::exit(128 + signum);
 }
 
 SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSecondary, Options options, int)
