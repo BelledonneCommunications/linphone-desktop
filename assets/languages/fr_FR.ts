@@ -443,7 +443,7 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 sip:&lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;valeur-en-base64&gt;]*)</translation>
+        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;valeur-en-base64&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
