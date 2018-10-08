@@ -9,7 +9,7 @@
 - Add an option to show TelKeypad automatically.
 - Add an option to automatically record calls.
 - Add an option to keep calls window in background.
-- Add a CLI. Help is available with `linphone --cli-help`.
+- Add a CLI. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
 - Timeline uses current proxy config info.
 - Display unread message count in system tray icon/mac app icon.
 - Display unread chat message count in `Manage Accounts` dialog and in `Main Window`.
