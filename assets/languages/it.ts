@@ -177,15 +177,15 @@
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>Errore del server: impossibile inviare SMS.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"/>
+        <translation>Questo account esiste già.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Attivazione SMS fallita!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -311,11 +311,11 @@
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"/>
+        <translation>Connessione host</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"/>
+        <translation>Connessione relay</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -484,7 +484,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation type="unfinished"/>
+        <translation>Frequenza (Hz)</translation>
     </message>
     <message>
         <source>codecBitrate</source>
@@ -1139,7 +1139,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"/>
+        <translation>Squilla</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
@@ -1261,7 +1261,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Metodo di invio DTMF</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1357,7 +1357,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"/>
+        <translation>Abilita controllo adattivo della velocità</translation>
     </message>
     <message>
         <source>presenceTitle</source>
@@ -1487,7 +1487,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"/>
+        <translation>Intervallo regolare RTCP di AVPF (sec)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
