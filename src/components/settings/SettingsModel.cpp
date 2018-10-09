@@ -799,30 +799,37 @@ void SettingsModel::setTurnUser (const QString &user) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getTurnPassword () const {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
-  shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(natPolicy->getStunServerUsername(), "", "");
-
+  shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
+  shared_ptr<linphone::NatPolicy> natPolicy(core->getNatPolicy());
+  shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo(
+    "",
+    natPolicy->getStunServerUsername(),
+    natPolicy->getStunServer()
+  ));
   return authInfo ? Utils::coreStringToAppString(authInfo->getPassword()) : QString("");
 }
 
 void SettingsModel::setTurnPassword (const QString &password) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::NatPolicy> natPolicy = core->getNatPolicy();
+  shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
+  shared_ptr<linphone::NatPolicy> natPolicy(core->getNatPolicy());
 
-  const string username = natPolicy->getStunServerUsername();
-  shared_ptr<const linphone::AuthInfo> authInfo = core->findAuthInfo(username, "", "");
-
+  const string &turnUser(natPolicy->getStunServerUsername());
+  shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo("", turnUser, natPolicy->getStunServer()));
   if (authInfo) {
-    shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
+    shared_ptr<linphone::AuthInfo> clonedAuthInfo(authInfo->clone());
     clonedAuthInfo->setPassword(Utils::appStringToCoreString(password));
 
-    core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);
-  } else {
-    authInfo = linphone::Factory::get()->createAuthInfo(username, username, Utils::appStringToCoreString(password), "", "", "");
-    core->addAuthInfo(authInfo);
-  }
+    core->removeAuthInfo(authInfo);
+  } else
+    core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
+      turnUser,
+      turnUser,
+      Utils::appStringToCoreString(password),
+      "",
+      "",
+      ""
+    ));
 
   emit turnPasswordChanged(password);
 }

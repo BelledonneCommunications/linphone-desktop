@@ -138,9 +138,16 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
     natPolicy = proxyConfig->getCore()->createNatPolicy();
   map["iceEnabled"] = natPolicy->iceEnabled();
   map["turnEnabled"] = natPolicy->turnEnabled();
-  map["stunServer"] = Utils::coreStringToAppString(natPolicy->getStunServer());
-  map["turnUser"] = Utils::coreStringToAppString(natPolicy->getStunServerUsername());
-  shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
+
+  const string &turnUser(natPolicy->getStunServerUsername());
+  const string &stunServer(natPolicy->getStunServer());
+
+  map["turnUser"] = Utils::coreStringToAppString(turnUser);
+  map["stunServer"] = Utils::coreStringToAppString(stunServer);
+
+  shared_ptr<const linphone::AuthInfo> authInfo = CoreManager::getInstance()->getCore()->findAuthInfo(
+    "", turnUser, stunServer
+  );
   map["turnPassword"] = authInfo ? Utils::coreStringToAppString(authInfo->getPassword()) : QString("");
 
   return map;
@@ -233,29 +240,33 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     natPolicy = proxyConfig->getCore()->createNatPolicy();
   natPolicy->enableIce(data["iceEnabled"].toBool());
   natPolicy->enableStun(data["iceEnabled"].toBool());
-  natPolicy->enableTurn(data["turnEnabled"].toBool());
-  natPolicy->setStunServer(Utils::appStringToCoreString(data["stunServer"].toString()));
-  natPolicy->setStunServerUsername(Utils::appStringToCoreString(data["turnUser"].toString()));
 
-  shared_ptr<const linphone::AuthInfo> authInfo = proxyConfig->findAuthInfo();
-  shared_ptr<linphone::Core> core = proxyConfig->getCore();
+  const string turnUser(Utils::appStringToCoreString(data["turnUser"].toString()));
+  const string stunServer(Utils::appStringToCoreString(data["stunServer"].toString()));
+
+  natPolicy->enableTurn(data["turnEnabled"].toBool());
+  natPolicy->setStunServerUsername(turnUser);
+  natPolicy->setStunServer(stunServer);
+
+  shared_ptr<linphone::Core> core(proxyConfig->getCore());
+  shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo("", turnUser, stunServer));
   if (authInfo) {
-    shared_ptr<linphone::AuthInfo> clonedAuthInfo = authInfo->clone();
+    shared_ptr<linphone::AuthInfo> clonedAuthInfo(authInfo->clone());
+    clonedAuthInfo->setUserid(turnUser);
+    clonedAuthInfo->setUsername(turnUser);
     clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
 
-    core->removeAuthInfo(authInfo);
     core->addAuthInfo(clonedAuthInfo);
-  } else {
-    authInfo = linphone::Factory::get()->createAuthInfo(
-      Utils::appStringToCoreString(data["turnUser"].toString()),
-      Utils::appStringToCoreString(data["turnUser"].toString()),
+    core->removeAuthInfo(authInfo);
+  } else
+    core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
+      turnUser,
+      turnUser,
       Utils::appStringToCoreString(data["turnPassword"].toString()),
       "",
       "",
       ""
-    );
-    core->addAuthInfo(authInfo);
-  }
+    ));
 
   return addOrUpdateProxyConfig(proxyConfig);
 }
