@@ -210,7 +210,7 @@ void CoreManager::cleanLogs () const {
     mCore->set ## DATABASE ## DatabasePath(PATH); \
   } while (0);
 
-void CoreManager::setDatabasesPaths () {
+void CoreManager::setDatabasePaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
   SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());
@@ -229,7 +229,7 @@ void CoreManager::setOtherPaths () {
     mCore->setRootCa(Paths::getRootCaFilePath());
 }
 
-void CoreManager::setResourcesPaths () {
+void CoreManager::setResourcePaths () {
   shared_ptr<linphone::Factory> factory = linphone::Factory::get();
   factory->setMspluginsDir(Paths::getPackageMsPluginsDirPath());
   factory->setTopResourcesDir(Paths::getPackageDataDirPath());
@@ -243,7 +243,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   // Migration of configuration and database files from GTK version of Linphone.
   Paths::migrate();
 
-  setResourcesPaths();
+  setResourcePaths();
 
   mCore = linphone::Factory::get()->createCore(
     Paths::getConfigFilePath(configPath),
@@ -270,7 +270,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   mCore->start();
 
-  setDatabasesPaths();
+  setDatabasePaths();
   setOtherPaths();
 }
 

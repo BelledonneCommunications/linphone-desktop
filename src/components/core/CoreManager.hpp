@@ -142,9 +142,9 @@ signals:
 private:
   CoreManager (QObject *parent, const QString &configPath);
 
-  void setDatabasesPaths ();
+  void setDatabasePaths ();
   void setOtherPaths ();
-  void setResourcesPaths ();
+  void setResourcePaths ();
 
   void createLinphoneCore (const QString &configPath);
   void migrate ();
