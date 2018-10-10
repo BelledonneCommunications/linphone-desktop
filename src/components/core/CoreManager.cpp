@@ -121,8 +121,14 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
   // Create a new chat model.
   QPair<QString, QString> chatModelId{ peerAddress, localAddress };
   if (!mChatModels.contains(chatModelId)) {
-    Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(peerAddress)));
-    Q_ASSERT(mCore->createAddress(Utils::appStringToCoreString(localAddress)));
+    if (
+      !mCore->createAddress(Utils::appStringToCoreString(peerAddress)) ||
+      !mCore->createAddress(Utils::appStringToCoreString(localAddress))
+    ) {
+      qWarning() << QStringLiteral("Unable to get chat model from invalid chat model id: (%1, %2).")
+        .arg(peerAddress).arg(localAddress);
+      return nullptr;
+    }
 
     auto deleter = [this, chatModelId](ChatModel *chatModel) {
       bool removed = mChatModels.remove(chatModelId);
