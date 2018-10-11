@@ -598,6 +598,12 @@ void CallModel::verifyAuthenticationToken (bool verify) {
 
 // -----------------------------------------------------------------------------
 
+void CallModel::updateStreams () {
+  mCall->update(nullptr);
+}
+
+// -----------------------------------------------------------------------------
+
 CallModel::CallEncryption CallModel::getEncryption () const {
   return static_cast<CallEncryption>(mCall->getCurrentParams()->getMediaEncryption());
 }

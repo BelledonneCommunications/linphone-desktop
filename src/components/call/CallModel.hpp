@@ -126,6 +126,8 @@ public:
 
   Q_INVOKABLE void verifyAuthenticationToken (bool verify);
 
+  Q_INVOKABLE void updateStreams ();
+
 signals:
   void callErrorChanged (const QString &callError);
   void isInConferenceChanged (bool status);

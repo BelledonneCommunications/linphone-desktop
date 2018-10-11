@@ -19,7 +19,10 @@ DialogPlus {
     TextButtonB {
       text: qsTr('ok')
 
-      onClicked: exit(0)
+      onClicked: {
+        call.updateStreams()
+        exit(0)
+      }
     }
   ]
 
