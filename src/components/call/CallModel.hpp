@@ -43,11 +43,11 @@ class CallModel : public QObject {
 
   Q_PROPERTY(int duration READ getDuration CONSTANT); // Constants but called with a timer in qml.
   Q_PROPERTY(float quality READ getQuality CONSTANT);
-  Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
   Q_PROPERTY(float speakerVu READ getSpeakerVu CONSTANT);
+  Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
 
+  Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE setSpeakerMuted NOTIFY speakerMutedChanged);
   Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
-  Q_PROPERTY(bool audioMuted READ getAudioMuted WRITE setAudioMuted NOTIFY audioMutedChanged);
 
   Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
   Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged);
@@ -131,8 +131,8 @@ public:
 signals:
   void callErrorChanged (const QString &callError);
   void isInConferenceChanged (bool status);
+  void speakerMutedChanged (bool status);
   void microMutedChanged (bool status);
-  void audioMutedChanged (bool status);
   void recordingChanged (bool status);
   void statsUpdated ();
   void statusChanged (CallStatus status);
@@ -169,11 +169,11 @@ private:
   float getMicroVu () const;
   float getSpeakerVu () const;
 
+  bool getSpeakerMuted () const;
+  void setSpeakerMuted (bool status);
+
   bool getMicroMuted () const;
   void setMicroMuted (bool status);
-
-  bool getAudioMuted () const;
-  void setAudioMuted (bool status);
 
   bool getPausedByUser () const;
   void setPausedByUser (bool status);

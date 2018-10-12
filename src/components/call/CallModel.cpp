@@ -147,7 +147,7 @@ float CallModel::getSpeakerVolumeGain () const {
 void CallModel::setSpeakerVolumeGain (float volume) {
   Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
   mCall->setSpeakerVolumeGain(volume);
-  emit speakerVolumeGainChanged(mCall->getSpeakerVolumeGain());
+  emit speakerVolumeGainChanged(getSpeakerVolumeGain());
 }
 
 float CallModel::getMicroVolumeGain () const {
@@ -157,7 +157,7 @@ float CallModel::getMicroVolumeGain () const {
 void CallModel::setMicroVolumeGain (float volume) {
   Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
   mCall->setMicrophoneVolumeGain(volume);
-  emit microVolumeGainChanged(mCall->getMicrophoneVolumeGain());
+  emit microVolumeGainChanged(getMicroVolumeGain());
 }
 
 // -----------------------------------------------------------------------------
@@ -468,39 +468,40 @@ float CallModel::getQuality () const {
 
 // -----------------------------------------------------------------------------
 
+float CallModel::getSpeakerVu () const {
+  return LinphoneUtils::computeVu(mCall->getPlayVolume());
+}
+
 float CallModel::getMicroVu () const {
   return LinphoneUtils::computeVu(mCall->getRecordVolume());
 }
 
-float CallModel::getSpeakerVu () const {
-  return LinphoneUtils::computeVu(mCall->getPlayVolume());
+// -----------------------------------------------------------------------------
+
+bool CallModel::getSpeakerMuted () const {
+  return mCall->getSpeakerMuted();
+}
+
+void CallModel::setSpeakerMuted (bool status) {
+  if (status == getSpeakerMuted())
+    return;
+
+  mCall->setSpeakerMuted(status);
+  emit speakerMutedChanged(getSpeakerMuted());
 }
 
 // -----------------------------------------------------------------------------
 
 bool CallModel::getMicroMuted () const {
-  return !CoreManager::getInstance()->getCore()->micEnabled();
+  return mCall->getMicrophoneMuted();
 }
 
 void CallModel::setMicroMuted (bool status) {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  if (status == getMicroMuted())
+    return;
 
-  if (status == core->micEnabled()) {
-    core->enableMic(!status);
-    emit microMutedChanged(status);
-  }
-}
-
-// -----------------------------------------------------------------------------
-
-bool CallModel::getAudioMuted () const {
-  // TODO
-  return false;
-}
-
-void CallModel::setAudioMuted (bool status) {
-  // TODO
-  emit audioMutedChanged(status);
+  mCall->setMicrophoneMuted(status);
+  emit microMutedChanged(getMicroMuted());
 }
 
 // -----------------------------------------------------------------------------

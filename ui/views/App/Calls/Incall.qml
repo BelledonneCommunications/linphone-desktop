@@ -336,11 +336,11 @@ Rectangle {
           ActionSwitch {
             id: speaker
 
-            enabled: !call.audioMuted
+            enabled: !call.speakerMuted
             icon: 'speaker'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: incall.call.audioMuted = enabled
+            onClicked: incall.call.speakerMuted = enabled
           }
         }
 
