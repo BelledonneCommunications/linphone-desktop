@@ -73,9 +73,9 @@ protected:
     const QString &installName
   );
 
-  QString getCodecsFolder () const;
-
   virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) = 0;
+
+  static QString getCodecsFolder ();
 
   QList<QVariantMap> mCodecs;
 };

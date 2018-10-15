@@ -200,6 +200,6 @@ QVariantMap AbstractCodecsModel::getCodecInfo (const QString &mime) const {
   return QVariantMap();
 };
 
-QString AbstractCodecsModel::getCodecsFolder () const {
+QString AbstractCodecsModel::getCodecsFolder () {
   return Utils::coreStringToAppString(Paths::getCodecsDirPath());
 }
