@@ -32,8 +32,12 @@ DialogPlus {
   function _endInstall (exitStatus) {
     if (dialog.extract) {
        fileDownloader.remove()
-       Utils.write(installFolder + mime + '.txt', downloadUrl)
     }
+
+    if (exitStatus === 1) {
+      Utils.write(installFolder + mime + '.txt', downloadUrl)
+    }
+
     dialog._exitStatus = exitStatus
     dialog._installing = false
   }

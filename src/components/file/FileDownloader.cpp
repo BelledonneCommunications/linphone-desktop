@@ -81,25 +81,28 @@ void FileDownloader::download () {
 
   QNetworkReply *data = mNetworkReply.data();
 
+  QObject::connect(data, &QNetworkReply::readyRead, this, &FileDownloader::handleReadyData);
+  QObject::connect(data, &QNetworkReply::finished, this, &FileDownloader::handleDownloadFinished);
+  QObject::connect(data, QNonConstOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), this, &FileDownloader::handleError);
+  QObject::connect(data, &QNetworkReply::downloadProgress, this, &FileDownloader::handleDownloadProgress);
+
   #if QT_CONFIG(ssl)
     QObject::connect(data, &QNetworkReply::sslErrors, this, &FileDownloader::handleSslErrors);
   #endif
-
-  QObject::connect(data, &QNetworkReply::downloadProgress, this, &FileDownloader::handleDownloadProgress);
-  QObject::connect(data, &QNetworkReply::readyRead, this, &FileDownloader::handleReadyData);
-  QObject::connect(data, &QNetworkReply::finished, this, &FileDownloader::handleDownloadFinished);
 
   if (mDownloadFolder.isEmpty()) {
     mDownloadFolder = CoreManager::getInstance()->getSettingsModel()->getDownloadFolder();
     emit downloadFolderChanged(mDownloadFolder);
   }
 
-  // TODO: Deal with connection error like timeout.
-
   Q_ASSERT(!mDestinationFile.isOpen());
   mDestinationFile.setFileName(getDownloadFilePath(QDir::cleanPath(mDownloadFolder) + QDir::separator(), mUrl));
   if (!mDestinationFile.open(QIODevice::WriteOnly))
     emitOutputError();
+  else {
+    mTimeoutReadBytes = 0;
+    mTimeout.start();
+  }
 }
 
 bool FileDownloader::remove () {
@@ -112,6 +115,12 @@ void FileDownloader::emitOutputError () {
   mNetworkReply->abort();
 }
 
+void FileDownloader::cleanDownloadEnd () {
+  mTimeout.stop();
+  mNetworkReply->deleteLater();
+  setDownloading(false);
+}
+
 void FileDownloader::handleReadyData () {
   QByteArray data = mNetworkReply->readAll();
   if (mDestinationFile.write(data) == -1)
@@ -119,27 +128,32 @@ void FileDownloader::handleReadyData () {
 }
 
 void FileDownloader::handleDownloadFinished() {
-  QNetworkReply::NetworkError error = mNetworkReply->error();
-  if (error != QNetworkReply::NoError) {
-    if (error != QNetworkReply::OperationCanceledError)
-      qWarning() << QStringLiteral("Download of %1 failed: %2")
-        .arg(mUrl.toString()).arg(mNetworkReply->errorString());
+  if (mNetworkReply->error() != QNetworkReply::NoError)
+    return;
+
+  // TODO: Deal with redirection.
+  if (isHttpRedirect(mNetworkReply)) {
+    qWarning() << QStringLiteral("Request was redirected.");
     mDestinationFile.remove();
     emit downloadFailed();
   } else {
-    // TODO: Deal with redirection.
-    if (isHttpRedirect(mNetworkReply)) {
-      qWarning() << QStringLiteral("Request was redirected.");
-      mDestinationFile.remove();
-      emit downloadFailed();
-    } else {
-      mDestinationFile.close();
-      emit downloadFinished(mDestinationFile.fileName());
-    }
+    qInfo() << QStringLiteral("Download of %1 finished.").arg(mUrl.toString());
+    mDestinationFile.close();
+    emit downloadFinished(mDestinationFile.fileName());
   }
 
-  mNetworkReply->deleteLater();
-  setDownloading(false);
+  cleanDownloadEnd();
+}
+
+void FileDownloader::handleError (QNetworkReply::NetworkError code) {
+  if (code != QNetworkReply::OperationCanceledError)
+    qWarning() << QStringLiteral("Download of %1 failed: %2")
+      .arg(mUrl.toString()).arg(mNetworkReply->errorString());
+  mDestinationFile.remove();
+
+  cleanDownloadEnd();
+
+  emit downloadFailed();
 }
 
 void FileDownloader::handleSslErrors (const QList<QSslError> &sslErrors) {
@@ -149,6 +163,14 @@ void FileDownloader::handleSslErrors (const QList<QSslError> &sslErrors) {
   #else
     Q_UNUSED(sslErrors);
   #endif
+}
+
+void FileDownloader::handleTimeout () {
+  if (mReadBytes == mTimeoutReadBytes) {
+    qWarning() << QStringLiteral("Download of %1 failed: timeout.").arg(mUrl.toString());
+    mNetworkReply->abort();
+  } else
+    mTimeoutReadBytes = mReadBytes;
 }
 
 void FileDownloader::handleDownloadProgress (qint64 readBytes, qint64 totalBytes) {

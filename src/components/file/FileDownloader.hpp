@@ -42,7 +42,13 @@ class FileDownloader : public QObject {
   Q_PROPERTY(bool downloading READ getDownloading NOTIFY downloadingChanged);
 
 public:
-  FileDownloader (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+  FileDownloader (QObject *parent = Q_NULLPTR) : QObject(parent) {
+    // See: https://bugreports.qt.io/browse/QTBUG-57390
+    mTimeout.setInterval(DefaultTimeout);
+    QObject::connect(&mTimeout, &QTimer::timeout, this, &FileDownloader::handleTimeout);
+  }
+
+  ~FileDownloader () { if (mNetworkReply) mNetworkReply->abort(); }
 
   Q_INVOKABLE void download ();
   Q_INVOKABLE bool remove();
@@ -74,10 +80,14 @@ private:
 
   void emitOutputError ();
 
+  void cleanDownloadEnd ();
+
   void handleReadyData ();
   void handleDownloadFinished ();
 
+  void handleError (QNetworkReply::NetworkError code);
   void handleSslErrors (const QList<QSslError> &errors);
+  void handleTimeout ();
   void handleDownloadProgress (qint64 readBytes, qint64 totalBytes);
 
   QUrl mUrl;
@@ -90,6 +100,11 @@ private:
 
   QPointer<QNetworkReply> mNetworkReply;
   QNetworkAccessManager mManager;
+
+  qint64 mTimeoutReadBytes;
+  QTimer mTimeout;
+
+  static constexpr int DefaultTimeout = 5000;
 };
 
 #endif // FILE_DOWNLOADER_H_
