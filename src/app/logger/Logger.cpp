@@ -55,7 +55,7 @@ using namespace std;
 namespace {
   constexpr char QtDomain[] = "qt";
   constexpr size_t MaxLogsCollectionSize = 10485760; // 10MB.
-  constexpr char SrcPattern[] = "/linphone-desktop/src/";
+  constexpr char SrcPattern[] = "/src/";
 }
 
 QMutex Logger::mMutex;
