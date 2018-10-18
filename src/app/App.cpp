@@ -159,8 +159,6 @@ static inline bool installLocale (App &app, QTranslator &translator, const QLoca
 }
 
 static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
-  shared_ptr<linphone::Config> config;
-
   string configPath(Paths::getConfigFilePath(parser.value("config"), false));
   if (!Paths::filePathExists(configPath))
     configPath.clear();
