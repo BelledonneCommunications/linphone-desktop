@@ -59,7 +59,7 @@ static void cliJoinConference (QHash<QString, QString> &args) {
   const shared_ptr<linphone::Core> core = coreManager->getCore();
 
   {
-    shared_ptr<linphone::Address> address = core->getPrimaryContactParsed();
+    shared_ptr<linphone::Address> address = core->createPrimaryContactParsed();
     address->setDisplayName(Utils::appStringToCoreString(args.take("display-name")));
     core->setPrimaryContact(address->asString());
   }

@@ -68,7 +68,7 @@ shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () c
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
 
-  return proxyConfig ? proxyConfig->getIdentityAddress() : core->getPrimaryContactParsed();
+  return proxyConfig ? proxyConfig->getIdentityAddress() : core->createPrimaryContactParsed();
 }
 
 void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
@@ -163,7 +163,7 @@ void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::Pro
 
 void AccountSettingsModel::setDefaultProxyConfigFromSipAddress (const QString &sipAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  if (Utils::coreStringToAppString(core->getPrimaryContactParsed()->asStringUriOnly()) == sipAddress) {
+  if (Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly()) == sipAddress) {
     setDefaultProxyConfig(nullptr);
     return;
   }
@@ -330,13 +330,13 @@ AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationSta
 
 QString AccountSettingsModel::getPrimaryUsername () const {
   return Utils::coreStringToAppString(
-    CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getUsername()
+    CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getUsername()
   );
 }
 
 void AccountSettingsModel::setPrimaryUsername (const QString &username) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
+  shared_ptr<linphone::Address> primary = core->createPrimaryContactParsed();
 
   primary->setUsername(Utils::appStringToCoreString(
     username.isEmpty() ? APPLICATION_NAME : username
@@ -348,13 +348,13 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
 
 QString AccountSettingsModel::getPrimaryDisplayName () const {
   return Utils::coreStringToAppString(
-    CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->getDisplayName()
+    CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getDisplayName()
   );
 }
 
 void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::Address> primary = core->getPrimaryContactParsed();
+  shared_ptr<linphone::Address> primary = core->createPrimaryContactParsed();
 
   primary->setDisplayName(Utils::appStringToCoreString(displayName));
   core->setPrimaryContact(primary->asString());
@@ -364,7 +364,7 @@ void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
 
 QString AccountSettingsModel::getPrimarySipAddress () const {
   return Utils::coreStringToAppString(
-    CoreManager::getInstance()->getCore()->getPrimaryContactParsed()->asString()
+    CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->asString()
   );
 }
 
@@ -376,8 +376,8 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
   {
     QVariantMap account;
-    account["sipAddress"] = Utils::coreStringToAppString(core->getPrimaryContactParsed()->asStringUriOnly());
-    account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->getPrimaryContactParsed());
+    account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
+    account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
     accounts << account;
   }
 
