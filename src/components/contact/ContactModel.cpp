@@ -95,6 +95,7 @@ void ContactModel::setVcardModelInternal (VcardModel *vcardModel) {
   mVcardModel->mIsReadOnly = true;
 
   App::getInstance()->getEngine()->setObjectOwnership(mVcardModel, QQmlEngine::CppOwnership);
+  mVcardModel->setParent(this);
 
   if (mLinphoneFriend->getVcard() != vcardModel->mVcard)
     mLinphoneFriend->setVcard(vcardModel->mVcard);
