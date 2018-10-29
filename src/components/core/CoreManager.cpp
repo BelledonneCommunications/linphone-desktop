@@ -22,6 +22,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QSysInfo>
 #include <QtConcurrent>
 #include <QTimer>
 
@@ -261,8 +262,12 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
   mCore->setUserAgent(
-    APPLICATION_NAME " Desktop",
-    Utils::appStringToCoreString(QCoreApplication::applicationVersion())
+    Utils::appStringToCoreString(QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2, Qt %3) LinphoneCore")
+      .arg(QCoreApplication::applicationVersion())
+      .arg(QSysInfo::prettyProductName())
+      .arg(qVersion())
+    ),
+    mCore->getVersion()
   );
 
   // Force capture/display.
