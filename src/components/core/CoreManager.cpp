@@ -22,6 +22,7 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QSysInfo>
 #include <QtConcurrent>
 #include <QTimer>
 
@@ -261,7 +262,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
   mCore->setUserAgent(
-    APPLICATION_NAME " Desktop",
+    Utils::appStringToCoreString(QStringLiteral(APPLICATION_NAME " Desktop - %1").arg(QSysInfo::prettyProductName())),
     Utils::appStringToCoreString(QCoreApplication::applicationVersion())
   );
 
