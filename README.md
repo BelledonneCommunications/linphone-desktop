@@ -66,7 +66,12 @@ Before you install packages with Brew, you may have to change directories permis
 
         python prepare.py -G "Visual Studio 14 2015" -DENABLE_DOC=OFF
 
-4. Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `Release` option is selected in Visual Studio. (With `Win32`!)
+4. Either
+    Run the following command in the root directory of linphone-desktop :
+
+        cmake --build WORK\desktop\cmake --config Release
+    
+    Or Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `Release` option is selected in Visual Studio. (With `Win32`!)
 
 ## Known bugs and issues
 
