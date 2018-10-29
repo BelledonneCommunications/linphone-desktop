@@ -368,10 +368,8 @@ void ChatModel::setSipAddresses (const QString &peerAddress, const QString &loca
     );
 
   // Get calls.
-  // TODO: Add an API to find with local and peer addresses.
-  for (auto &callLog : core->getCallHistoryForAddress(mChatRoom->getPeerAddress()))
-    if (mChatRoom->getLocalAddress()->weakEqual(callLog->getLocalAddress()))
-      insertCall(callLog);
+  for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
+    insertCall(callLog);
 
   qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
     .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
