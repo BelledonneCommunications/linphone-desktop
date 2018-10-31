@@ -66,8 +66,7 @@ Before you install packages with Brew, you may have to change directories permis
 
         python prepare.py -G "Visual Studio 14 2015" -DENABLE_DOC=OFF
 
-4. Either
-    Run the following command in the root directory of linphone-desktop :
+4. Run the following command in the root directory of linphone-desktop:
 
         cmake --build WORK\desktop\cmake --config Release
     
