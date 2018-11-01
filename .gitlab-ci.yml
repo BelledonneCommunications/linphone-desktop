@@ -1,0 +1,96 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
+.linux-ccache-template: &linux-ccache-definition
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ccache/
+
+  before_script:
+    - mkdir -p ccache
+    - export CCACHE_BASEDIR=${PWD}
+    - export CCACHE_DIR=${PWD}/ccache
+
+
+.job-linux-desktop-template: &job-linux-desktop-definition
+
+  tags: [ "docker" ]
+
+  <<: *linux-ccache-definition
+
+  script:
+    - export CC=$CC
+    - export CXX=$CXX
+    - ccache -s
+    - ./prepare.py -cc -G "$CMAKE_GENERATOR"
+    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS >> build_log.txt 2>&1
+    - ccache -s
+
+  artifacts:
+    paths:
+      - build_log.txt
+    when: always
+    expire_in: 1 week
+
+
+job-debian9-ninja-gcc:
+
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  <<: *job-linux-desktop-definition
+
+
+.job-macosx-template: &job-macosx-definition
+
+  tags: [ "macosx" ]
+
+  script:
+    - ccache -s
+    - export Qt5_DIR=/usr/local/Cellar/qt/5.9.2/lib/cmake
+    - export PATH=$PATH:/usr/local/Cellar/qt/5.9.2/bin
+    - python prepare.py -cc --package -G "$CMAKE_GENERATOR"
+    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS >> build_log.txt 2>&1
+    - ccache -s
+
+  artifacts:
+    paths:
+      - build_log.txt
+    when: always
+    expire_in: 1 week
+
+
+job-macosx-makefile:
+
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    ADDITIONAL_BUILD_OPTIONS: -j2
+  <<: *job-macosx-definition
+
+
+job-macosx-ninja:
+
+  variables:
+    CMAKE_GENERATOR: Ninja
+  <<: *job-macosx-definition
+
+
+job-macosx-xcode:
+
+  variables:
+    CMAKE_GENERATOR: Xcode
+  <<: *job-macosx-definition
+
+
+job-windows-vs2015:
+
+  tags: [ "windows" ]
+
+  script:
+    - python prepare.py --package -G "Visual Studio 14 2015"
+    - cmake --build WORK/desktop/cmake --config Release
+
