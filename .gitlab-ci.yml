@@ -1,0 +1,105 @@
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+
+.linux-ccache-template: &linux-ccache-definition
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ccache/
+
+  before_script:
+    - mkdir -p ccache
+    - export CCACHE_BASEDIR=${PWD}
+    - export CCACHE_DIR=${PWD}/ccache
+
+
+.job-linux-desktop-template: &job-linux-desktop-definition
+
+  tags: [ "docker" ]
+
+  <<: *linux-ccache-definition
+
+  script:
+    - export CC=$CC
+    - export CXX=$CXX
+    - ccache -s
+    - ./prepare.py -G "$CMAKE_GENERATOR" -cc -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
+    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS >> build_log.txt 2>&1
+    - ccache -s
+
+  artifacts:
+    paths:
+      - build_log.txt
+    when: always
+    expire_in: 1 week
+
+
+job-debian9-ninja-gcc:
+
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  <<: *job-linux-desktop-definition
+
+
+job-debian9-ninja-clang:
+
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  <<: *job-linux-desktop-definition
+
+
+.job-macosx-template: &job-macosx-definition
+
+  tags: [ "macosx" ]
+
+  script:
+    - ccache -s
+    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    - export PATH=$PATH:/usr/local/opt/qt/bin
+    - python prepare.py -G "$CMAKE_GENERATOR" -cc --package -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DENABLE_UPDATE_CHECK=YES
+    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS >> build_log.txt 2>&1
+    - ccache -s
+
+  artifacts:
+    paths:
+      - build_log.txt
+      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    when: always
+    expire_in: 1 week
+
+
+job-macosx-ninja:
+
+  variables:
+    CMAKE_GENERATOR: Ninja
+  <<: *job-macosx-definition
+
+
+job-macosx-xcode:
+
+  variables:
+    CMAKE_GENERATOR: Xcode
+    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=2
+  <<: *job-macosx-definition
+
+
+job-windows-vs2015:
+
+  tags: [ "windows" ]
+
+  script:
+    - python prepare.py -G "Visual Studio 14 2015" --package -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES -DENABLE_UPDATE_CHECK=YES
+    - cmake --build WORK/desktop/cmake --config Release -- /maxcpucount
+
+  artifacts:
+    paths:
+      - WORK/desktop/Build/linphone_package/Linphone-*-win32.exe
+    expire_in: 1 week
