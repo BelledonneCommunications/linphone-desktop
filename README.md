@@ -11,6 +11,10 @@ Linphone is a free VoIP and video softphone based on the SIP protocol.
 Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
 
 1. Install some build tools: `CMake`, `Python` and `Qt5` (_5.9 or newer_). `C++11` support is required!
+   It's necessary to install the `pip` command and to execute:
+
+        pip install pystache
+
 2. It's necessary to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5. Example:
 
         Qt5_DIR="~/Qt/5.9/gcc_64/lib/cmake"
@@ -69,7 +73,7 @@ Before you install packages with Brew, you may have to change directories permis
 4. Run the following command in the root directory of linphone-desktop:
 
         cmake --build WORK\desktop\cmake --config Release
-    
+
     Or Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `Release` option is selected in Visual Studio. (With `Win32`!)
 
 ## Known bugs and issues
