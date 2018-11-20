@@ -23,12 +23,19 @@
 if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
   execute_process(
     COMMAND ${CMAKE_CPACK_COMMAND} -G @CPACK_GENERATOR@
-    RESULT_VARIABLE CPACK_COMMAND_SUCCESS
+    RESULT_VARIABLE CPACK_COMMAND_RESULT
   )
+  if(CPACK_COMMAND_RESULT)
+    message(FATAL_ERROR "Failed to generate package!")
+  endif()
 
   if (@PERFORM_SIGNING@)
     execute_process(
       COMMAND @SIGNTOOL_COMMAND@ @CMAKE_CURRENT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+      RESULT_VARIABLE SIGNING_RESULT
     )
+    if(SIGNING_RESULT)
+      message(FATAL_ERROR "Failed to sign the package!")
+    endif()
   endif ()
 endif ()

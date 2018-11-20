@@ -23,6 +23,9 @@
 if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
   execute_process(
     COMMAND ${CMAKE_CPACK_COMMAND} -G DragNDrop
-    RESULT_VARIABLE CPACK_COMMAND_SUCCESS
+    RESULT_VARIABLE CPACK_COMMAND_RESULT
   )
+  if(CPACK_COMMAND_RESULT)
+    message(FATAL_ERROR "Failed to create dmg package!")
+  endif()
 endif ()
