@@ -47,6 +47,7 @@ class DesktopTarget(prepare.Target):
         self.config_file = 'configs/config-desktop.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'linphone-sdk')
+        self.alternate_external_source_path = os.path.join(current_path, 'submodules')
         self.packaging_args = [
             "-DENABLE_RELATIVE_PREFIX=YES"
         ]
@@ -67,6 +68,7 @@ class DesktopRaspberryTarget(prepare.Target):
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'linphone-sdk')
+        self.alternate_external_source_path = os.path.join(current_path, 'submodules')
         self.packaging_args = [
             "-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib",
             "-DENABLE_RELATIVE_PREFIX=YES"
@@ -81,6 +83,7 @@ class DesktopRpmTarget(prepare.Target):
         self.config_file = 'configs/config-desktop-rpm.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'linphone-sdk')
+        self.alternate_external_source_path = os.path.join(current_path, 'submodules')
         external_builders_path = os.path.join(current_path, 'cmake_builder')
         self.additional_args = [
             "-DLINPHONE_BUILDER_EXTERNAL_BUILDERS_PATH=" + external_builders_path,
@@ -96,6 +99,7 @@ class NoUITarget(prepare.Target):
         self.config_file = 'configs/config-desktop.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'linphone-sdk')
+        self.alternate_external_source_path = os.path.join(current_path, 'submodules')
         self.packaging_args = [
             "-DCMAKE_INSTALL_RPATH=$ORIGIN/../lib",
             "-DENABLE_RELATIVE_PREFIX=YES",
@@ -113,6 +117,7 @@ class PythonTarget(prepare.Target):
         self.config_file = 'configs/config-python.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'linphone-sdk')
+        self.alternate_external_source_path = os.path.join(current_path, 'submodules')
         external_builders_path = os.path.join(current_path, 'cmake_builder')
         self.additional_args += [
             "-DLINPHONE_BUILDER_EXTERNAL_BUILDERS_PATH=" + external_builders_path,
@@ -130,6 +135,7 @@ class PythonRaspberryTarget(prepare.Target):
         self.toolchain_file = 'toolchains/toolchain-raspberry.cmake'
         self.output = 'OUTPUT/' + self.name
         self.external_source_path = os.path.join(current_path, 'linphone-sdk')
+        self.alternate_external_source_path = os.path.join(current_path, 'submodules')
 
 
 
