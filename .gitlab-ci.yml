@@ -135,6 +135,7 @@ job-windows-vs2015:
   script:
     - echo %Qt5_DIR%
     - echo %PATH%
+    - if DEFINED WINDOWS_SIGNING_DIRECTORY ( xcopy /I /Y "%WINDOWS_SIGNING_DIRECTORY%" "cmake_builder\\linphone_package\\sign" )
     - python prepare.py -G "Visual Studio 14 2015" --package %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
     - cmake --build WORK/desktop/cmake --config Release -- /maxcpucount
 
