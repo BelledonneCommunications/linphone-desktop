@@ -1,140 +1,141 @@
-variables:
-  GIT_SUBMODULE_STRATEGY: recursive
+#variables:
+  #GIT_SUBMODULE_STRATEGY: recursive
 
 
-.linux-ccache:
-  cache:
-    key: $CI_JOB_NAME
-    paths:
-      - ccache/
+#.linux-ccache:
+  #cache:
+    #key: $CI_JOB_NAME
+    #paths:
+      #- ccache/
 
-  before_script:
-    - mkdir -p ccache
-    - export CCACHE_BASEDIR=${PWD}
-    - export CCACHE_DIR=${PWD}/ccache
-
-
-.job-linux-desktop:
-
-  tags: [ "docker" ]
-
-  extends: .linux-ccache
-
-  script:
-    - export CC=$CC
-    - export CXX=$CXX
-    - ccache -s
-    - ./prepare.py -G "$CMAKE_GENERATOR" -cc -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
-    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
-    - ccache -s
+  #before_script:
+    #- mkdir -p ccache
+    #- export CCACHE_BASEDIR=${PWD}
+    #- export CCACHE_DIR=${PWD}/ccache
 
 
-.scheduled-job-linux-desktop:
+#.job-linux-desktop:
 
-  extends: .job-linux-desktop
-  only:
-    - schedules
+  #tags: [ "docker" ]
 
+  #extends: .linux-ccache
 
-job-debian9-makefile-gcc:
-
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
-  variables:
-    CMAKE_GENERATOR: Unix Makefiles
-    CC: gcc
-    CXX: g++
-  extends: .scheduled-job-linux-desktop
+  #script:
+    #- export CC=$CC
+    #- export CXX=$CXX
+    #- ccache -s
+    #- ./prepare.py -G "$CMAKE_GENERATOR" -cc -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
+    #- cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
+    #- ccache -s
 
 
-job-debian9-makefile-clang:
+#.scheduled-job-linux-desktop:
 
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
-  variables:
-    CMAKE_GENERATOR: Unix Makefiles
-    CC: clang
-    CXX: clang++
-  extends: .scheduled-job-linux-desktop
+  #extends: .job-linux-desktop
+  #only:
+    #- schedules
 
 
-job-debian9-ninja-gcc:
+#job-debian9-makefile-gcc:
 
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
-  variables:
-    CMAKE_GENERATOR: Ninja
-    CC: gcc
-    CXX: g++
-  extends: .job-linux-desktop
-
-
-job-debian9-ninja-clang:
-
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
-  variables:
-    CMAKE_GENERATOR: Ninja
-    CC: clang
-    CXX: clang++
-  extends: .job-linux-desktop
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  #variables:
+    #CMAKE_GENERATOR: Unix Makefiles
+    #CC: gcc
+    #CXX: g++
+  #extends: .scheduled-job-linux-desktop
 
 
-.job-macosx:
+#job-debian9-makefile-clang:
 
-  tags: [ "macosx" ]
-
-  script:
-    - ccache -s
-    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-    - export PATH=$PATH:/usr/local/opt/qt/bin
-    - python prepare.py -G "$CMAKE_GENERATOR" -cc --package -DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 -DENABLE_UPDATE_CHECK=YES
-    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
-    - ccache -s
-
-  artifacts:
-    paths:
-      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
-      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
-    when: always
-    expire_in: 1 week
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  #variables:
+    #CMAKE_GENERATOR: Unix Makefiles
+    #CC: clang
+    #CXX: clang++
+  #extends: .scheduled-job-linux-desktop
 
 
-.scheduled-job-macosx:
+#job-debian9-ninja-gcc:
 
-  extends: .job-macosx
-  only:
-    - schedules
-
-
-job-macosx-makefile:
-
-  variables:
-    CMAKE_GENERATOR: Unix Makefiles
-  extends: .scheduled-job-macosx
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  #variables:
+    #CMAKE_GENERATOR: Ninja
+    #CC: gcc
+    #CXX: g++
+  #extends: .job-linux-desktop
 
 
-job-macosx-ninja:
+#job-debian9-ninja-clang:
 
-  variables:
-    CMAKE_GENERATOR: Ninja
-  extends: .job-macosx
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  #variables:
+    #CMAKE_GENERATOR: Ninja
+    #CC: clang
+    #CXX: clang++
+  #extends: .job-linux-desktop
 
 
-job-macosx-xcode:
+#.job-macosx:
 
-  tags: [ "macosx" ]
+  #tags: [ "macosx" ]
 
-  only:
-    - schedules
-  script:
-    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-    - export PATH=$PATH:/usr/local/opt/qt/bin
-    - python prepare.py -G Xcode -cc --package -DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 -DENABLE_UPDATE_CHECK=YES
-    - cmake --build WORK/desktop/cmake -- -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`
+  #script:
+    #- ccache -s
+    #- export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    #- export PATH=$PATH:/usr/local/opt/qt/bin
+    #- python prepare.py -G "$CMAKE_GENERATOR" -cc --package -DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 -DENABLE_UPDATE_CHECK=YES
+    #- cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
+    #- ccache -s
 
-  artifacts:
-    paths:
-      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
-      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
-    when: always
-    expire_in: 1 week
+  #artifacts:
+    #paths:
+      #- WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      #- WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    #when: always
+    #expire_in: 1 week
+
+
+#.scheduled-job-macosx:
+
+  #extends: .job-macosx
+  #only:
+    #- schedules
+
+
+#job-macosx-makefile:
+
+  #variables:
+    #CMAKE_GENERATOR: Unix Makefiles
+  #extends: .scheduled-job-macosx
+
+
+#job-macosx-ninja:
+
+  #variables:
+    #CMAKE_GENERATOR: Ninja
+  #extends: .job-macosx
+
+
+#job-macosx-xcode:
+
+  #tags: [ "macosx" ]
+
+  #only:
+    #- schedules
+  #script:
+    #- export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    #- export PATH=$PATH:/usr/local/opt/qt/bin
+    #- python prepare.py -G Xcode -cc --package -DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 -DENABLE_UPDATE_CHECK=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY="$MACOS_SIGNING_IDENTITY"
+    #- cmake --build WORK/desktop/cmake -- -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`
+    #- if [ "$MACOS_SIGNING_IDENTITY" != "" ]; then security unlock-keychain -p $MACOS_UNLOCK_KEYCHAIN_PASSWORD login.keychain && codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg; fi
+
+  #artifacts:
+    #paths:
+      #- WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      #- WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    #when: always
+    #expire_in: 1 week
 
 
 job-windows-vs2015:
@@ -144,6 +145,7 @@ job-windows-vs2015:
   script:
     - echo %Qt5_DIR%
     - echo %PATH%
+    - if NOT "%WINDOWS_SIGNING_DIRECTORY%" == "" ( xcopy /I /Y %WINDOWS_SIGNING_DIRECTORY% cmake_builder/linphone_package/sign )
     - python prepare.py -G "Visual Studio 14 2015" --package -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES -DENABLE_UPDATE_CHECK=YES
     - cmake --build WORK/desktop/cmake --config Release -- /maxcpucount
 
