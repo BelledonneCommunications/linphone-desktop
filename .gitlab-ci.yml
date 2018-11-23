@@ -1,32 +1,17 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-
-
-.linux-ccache:
-  cache:
-    key: $CI_JOB_NAME
-    paths:
-      - ccache/
-
-  before_script:
-    - mkdir -p ccache
-    - export CCACHE_BASEDIR=${PWD}
-    - export CCACHE_DIR=${PWD}/ccache
+  MAKEFILE_JOBS: 5
 
 
 .job-linux-desktop:
 
   tags: [ "docker" ]
 
-  extends: .linux-ccache
-
   script:
     - export CC=$CC
     - export CXX=$CXX
-    - ccache -s
     - ./prepare.py -G "$CMAKE_GENERATOR" -cc -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
     - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
-    - ccache -s
 
 
 .scheduled-job-linux-desktop:
@@ -43,6 +28,7 @@ job-debian9-makefile-gcc:
     CMAKE_GENERATOR: Unix Makefiles
     CC: gcc
     CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .scheduled-job-linux-desktop
 
 
@@ -53,6 +39,7 @@ job-debian9-makefile-clang:
     CMAKE_GENERATOR: Unix Makefiles
     CC: clang
     CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .scheduled-job-linux-desktop
 
 
@@ -107,6 +94,7 @@ job-macosx-makefile:
 
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .scheduled-job-macosx
 
 
