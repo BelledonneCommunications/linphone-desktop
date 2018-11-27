@@ -48,7 +48,7 @@ A free (libre) SIP video-phone.
 %setup -n %{name}-%{version}%{?build_number_ext}
 
 %build
-%{expand:%%%cmake_name} . -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@ -DCMAKE_INSTALL_LIBDIR:PATH=%{_libdir} -DCMAKE_PREFIX_PATH:PATH=%{_prefix} @RPM_ALL_CMAKE_OPTIONS@
+%{expand:%%%cmake_name} . -DCMAKE_BUILD_TYPE=@CMAKE_BUILD_TYPE@ -DCMAKE_PREFIX_PATH:PATH=%{_prefix} @RPM_ALL_CMAKE_OPTIONS@
 make %{?_smp_mflags}
 
 %install
@@ -80,5 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/
 
 %changelog
+
+* Tue Nov 27 2018 ronan.abhamon <ronan.abhamon@belledonne-communications.com>
+- Do not set CMAKE_INSTALL_LIBDIR and never with _libdir!
+
 * Thu Mar 15 2018 ronan.abhamon <ronan.abhamon@belledonne-communications.com>
 - Initial RPM release.
