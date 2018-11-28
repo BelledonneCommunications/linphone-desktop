@@ -1,14 +1,34 @@
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
   MAKEFILE_JOBS: 5
+  CCACHE_SIZE: 2G
   DEFAULT_LINUX_CMAKE_OPTIONS: -DCMAKE_C_COMPILER_LAUNCHER= -DCMAKE_CXX_COMPILER_LAUNCHER= -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
   DEFAULT_MACOS_CMAKE_OPTIONS: -DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 -DENABLE_UPDATE_CHECK=YES
   DEFAULT_WINDOWS_CMAKE_OPTIONS: -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES -DENABLE_UPDATE_CHECK=YES
 
 
+.linux-ccache:
+
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ccache/
+
+  before_script:
+    - mkdir -p ccache
+    - echo "max_size = $CCACHE_SIZE" > ccache/ccache.conf
+    - export CCACHE_BASEDIR=${PWD}
+    - export CCACHE_DIR=${PWD}/ccache
+    - ccache -s
+
+  after_script:
+    - export CCACHE_DIR=${PWD}/ccache
+    - ccache -s
+
+
 .job-linux-desktop:
 
-  tags: [ "docker" ]
+  extends: .linux-ccache
 
   script:
     - export CC=$CC
@@ -26,6 +46,7 @@ variables:
 
 job-debian9-makefile-gcc:
 
+  tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   variables:
     CMAKE_GENERATOR: Unix Makefiles
@@ -37,6 +58,7 @@ job-debian9-makefile-gcc:
 
 job-debian9-makefile-clang:
 
+  tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   variables:
     CMAKE_GENERATOR: Unix Makefiles
@@ -48,6 +70,7 @@ job-debian9-makefile-clang:
 
 job-debian9-ninja-gcc:
 
+  tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   variables:
     CMAKE_GENERATOR: Ninja
@@ -58,6 +81,7 @@ job-debian9-ninja-gcc:
 
 job-debian9-ninja-clang:
 
+  tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   variables:
     CMAKE_GENERATOR: Ninja
