@@ -39,6 +39,7 @@ set(CPACK_SOURCE_IGNORE_FILES
   "/\\\\..+"
   "OUTPUT"
   "WORK"
+  "linphone-sdk"
   "cmake_builder"
   "submodules"
   "qt5.spec"
