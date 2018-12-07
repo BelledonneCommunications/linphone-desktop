@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 
-%define _qt5_version 5.10.1
+%define _qt5_version 5.10
 %define _qt5_dir /opt/com.belledonne-communications/linphone
 
 %define _qt5_archdatadir %{_qt5_dir}
