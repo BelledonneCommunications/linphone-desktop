@@ -52,6 +52,7 @@ Qt is a software toolkit for developing applications.
   -qt-pcre \
   -qt-xcb \
   -qt-xkbcommon \
+  -skip wayland \
   -system-zlib \
   -archdatadir %{_qt5_archdatadir} \
   -bindir %{_qt5_bindir} \
