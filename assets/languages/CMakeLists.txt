@@ -27,16 +27,12 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/${I18N_FILENAME}" "${I18N_CONTENT}")
 # Create `qm` files from `ts` files.
 qt5_create_translation(QM_FILES ${TS_FILES} ${SOURCES} ${HEADERS} ${QML_SOURCES} OPTIONS -no-obsolete)
 
-# Workaround: Create empty files for some cmake versions. Otherwise, the qm rules can't be used.
-foreach (qm ${QM_FILES})
-  if (NOT EXISTS "${qm}")
-    file(GENERATE OUTPUT "${qm}" CONTENT "")
-  endif ()
-endforeach ()
-
 # Update translations.
 add_custom_target(update_translations
   COMMAND ${CMAKE_COMMAND} "-DLANGUAGES=\"${LANGUAGES}\"" -P "${CMAKE_CURRENT_SOURCE_DIR}/clean_translations.cmake"
+  COMMAND "ls" "-l" "${CMAKE_CURRENT_BINARY_DIR}"
+  COMMAND "ls" "-l" "${CMAKE_CURRENT_BINARY_DIR}/CMakeFiles/"
+  COMMAND "cat" "${CMAKE_CURRENT_BINARY_DIR}/${I18N_FILENAME}"
   DEPENDS ${QM_FILES}
   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
 )
@@ -48,3 +44,8 @@ set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${QM_FILES}")
 add_custom_target(remove_qm_files
   COMMAND ${CMAKE_COMMAND} -E remove ${QM_FILES}
 )
+
+list(APPEND QRC_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${I18N_FILENAME}")
+
+# Add qrc. (images, qml, translations...)
+qt5_add_resources(RESOURCES ${QRC_RESOURCES})

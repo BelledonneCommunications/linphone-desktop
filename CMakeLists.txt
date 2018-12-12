@@ -351,10 +351,6 @@ endif ()
 
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
-list(APPEND QRC_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
-
-# Add qrc. (images, qml, translations...)
-qt5_add_resources(RESOURCES ${QRC_RESOURCES})
 
 # Build.
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
