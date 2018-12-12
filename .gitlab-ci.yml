@@ -90,6 +90,52 @@ job-debian9-ninja-clang:
   extends: .job-linux-desktop
 
 
+job-ubuntu-rolling-makefile-gcc:
+
+  tags: [ "docker-ubuntu-rolling" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS VERBOSE=1
+  extends: .job-linux-desktop
+
+
+job-ubuntu-rolling-makefile-clang:
+
+  tags: [ "docker-ubuntu-rolling" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: clang
+    CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS VERBOSE=1
+  extends: .job-linux-desktop
+
+
+#job-ubuntu-rolling-ninja-gcc:
+
+  #tags: [ "docker-ubuntu-rolling" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  #variables:
+    #CMAKE_GENERATOR: Ninja
+    #CC: gcc
+    #CXX: g++
+  #extends: .job-linux-desktop
+
+
+#job-ubuntu-rolling-ninja-clang:
+
+  #tags: [ "docker-ubuntu-rolling" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  #variables:
+    #CMAKE_GENERATOR: Ninja
+    #CC: clang
+    #CXX: clang++
+  #extends: .job-linux-desktop
+
+
 .job-macosx:
 
   tags: [ "macosx" ]
