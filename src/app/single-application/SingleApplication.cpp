@@ -35,7 +35,6 @@
 
 #ifdef Q_OS_UNIX
   #include <signal.h>
-  #include <unistd.h>
 #endif // ifdef Q_OS_UNIX
 
 #ifdef Q_OS_WIN
@@ -137,10 +136,9 @@ void SingleApplicationPrivate::genBlockServerName (int timeout) {
 
 void SingleApplicationPrivate::startPrimary (bool resetMemory) {
   #ifdef Q_OS_UNIX
-    // Handle any further termination signals to ensure the
-    // QSharedMemory block is deleted even if the process crashes
-    crashHandler();
+    signal(SIGINT, SingleApplicationPrivate::terminate);
   #endif // ifdef Q_OS_UNIX
+
   // Successful creation means that no main process exists
   // So we start a QLocalServer to listen for connections
   QLocalServer::removeServer(blockServerName);
@@ -180,9 +178,7 @@ void SingleApplicationPrivate::startPrimary (bool resetMemory) {
 
 void SingleApplicationPrivate::startSecondary () {
   #ifdef Q_OS_UNIX
-    // Handle any further termination signals to ensure the
-    // QSharedMemory block is deleted even if the process crashes
-    crashHandler();
+    signal(SIGINT, SingleApplicationPrivate::terminate);
   #endif // ifdef Q_OS_UNIX
 }
 
@@ -224,60 +220,10 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
 }
 
 #ifdef Q_OS_UNIX
-  void SingleApplicationPrivate::crashHandler () {
-    // This guarantees the program will work even with multiple
-    // instances of SingleApplication in different threads.
-    // Which in my opinion is idiotic, but lets handle that too.
-    {
-      sharedMemMutex.lock();
-      sharedMem.append(this);
-      sharedMemMutex.unlock();
-    }
-
-    // Handle any further termination signals to ensure the
-    // QSharedMemory block is deleted even if the process crashes
-    signal(SIGHUP, SingleApplicationPrivate::terminate);  // 1
-    signal(SIGINT, SingleApplicationPrivate::terminate);  // 2
-    signal(SIGQUIT, SingleApplicationPrivate::terminate); // 3
-    signal(SIGILL, SingleApplicationPrivate::terminate);  // 4
-    signal(SIGABRT, SingleApplicationPrivate::terminate); // 6
-    signal(SIGFPE, SingleApplicationPrivate::terminate);  // 8
-    signal(SIGBUS, SingleApplicationPrivate::terminate);  // 10
-    signal(SIGSEGV, SingleApplicationPrivate::terminate); // 11
-    signal(SIGSYS, SingleApplicationPrivate::terminate);  // 12
-    signal(SIGPIPE, SingleApplicationPrivate::terminate); // 13
-    signal(SIGALRM, SingleApplicationPrivate::terminate); // 14
-    signal(SIGTERM, SingleApplicationPrivate::terminate); // 15
-    signal(SIGXCPU, SingleApplicationPrivate::terminate); // 24
-    signal(SIGXFSZ, SingleApplicationPrivate::terminate); // 25
-  }
-
   void SingleApplicationPrivate::terminate (int signum) {
-    if (signum == SIGINT) {
-      SingleApplication::instance()->quit();
-      return;
-    }
-
-    // Dangerous signals. Exit directly after shared memory destruction.
-    // Don't touch sockets => avoid dead locks.
-    for (int crashSig : { SIGABRT, SIGBUS, SIGSEGV })
-      if (signum == crashSig) {
-        for (SingleApplicationPrivate *d : sharedMem)
-          delete d->memory;
-        goto forceExit;
-      }
-
-    while (!sharedMem.empty()) {
-      delete sharedMem.back();
-      sharedMem.pop_back();
-    }
-
-  forceExit:
-    ::exit(128 + signum);
+    Q_UNUSED(signum);
+    SingleApplication::instance()->quit();
   }
-
-  QList<SingleApplicationPrivate *> SingleApplicationPrivate::sharedMem;
-  QMutex SingleApplicationPrivate::sharedMemMutex;
 #endif // ifdef Q_OS_UNIX
 
 /**

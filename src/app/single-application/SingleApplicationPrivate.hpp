@@ -59,10 +59,7 @@ public:
   void connectToPrimary (int msecs, char connectionType);
 
   #ifdef Q_OS_UNIX
-    void crashHandler ();
     static void terminate (int signum);
-    static QList<SingleApplicationPrivate *> sharedMem;
-    static QMutex sharedMemMutex;
   #endif // ifdef Q_OS_UNIX
 
   QSharedMemory *memory;
