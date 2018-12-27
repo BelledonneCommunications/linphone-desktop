@@ -242,12 +242,6 @@ build: $(addsuffix -build, $(targets))
 
 {targets_str}
 
-pull-transifex:
-\t$(MAKE) -C linphone pull-transifex
-
-push-transifex:
-\t$(MAKE) -C linphone push-transifex
-
 help-prepare-options:
 \t@echo "prepare.py was previously executed with the following options:"
 \t@echo "   ./prepare.py {options}"
