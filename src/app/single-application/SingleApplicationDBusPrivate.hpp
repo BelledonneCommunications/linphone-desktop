@@ -47,7 +47,6 @@ public:
   void startPrimary ();
   void startSecondary ();
 
-  void crashHandler ();
   static void terminate (int signum);
 
   SingleApplication *q_ptr;
