@@ -49,3 +49,31 @@ job-centos7-makefile-clang:
 #    CC: clang
 #    CXX: clang++
 #  extends: .job-linux-desktop
+
+#################################################
+# RPM
+#################################################
+
+job-centos7-rpm:
+
+  tags: [ "docker-centos7" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  extends: .job-linux-rpm
+
+#################################################
+# Deploy
+#################################################
+
+job-centos7-rpm-deploy:
+
+  stage: deploy
+  tags: [ "deploy" ]
+
+  only:
+    - schedules
+  dependencies:
+    - job-centos7-rpm
+
+  script:
+   - cd WORK/desktop-rpm/rpmbuild/RPMS/x86_64/ && rsync -pr . $DEPLOY_SERVER:$CENTOS7_DEPLOY_DIRECTORY
+   - ssh $DEPLOY_SERVER "chmod a+r $CENTOS7_DEPLOY_DIRECTORY/*.rpm && createrepo_c --update $CENTOS7_DEPLOY_DIRECTORY/."

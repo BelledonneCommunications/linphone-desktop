@@ -1,3 +1,7 @@
+#################################################
+# Ccache
+#################################################
+
 .linux-ccache:
 
   cache:
@@ -16,6 +20,9 @@
     - export CCACHE_DIR=${PWD}/ccache
     - ccache -s
 
+#################################################
+# Job
+#################################################
 
 .job-linux-desktop:
 
@@ -29,6 +36,28 @@
     - ./prepare.py -G "$CMAKE_GENERATOR" -cc $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS
     - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
 
+#################################################
+# RPM
+#################################################
+
+.job-linux-rpm:
+
+  stage: package
+
+  script:
+    - sudo rpm -e `rpm -qa | grep "^linphone-qt-"` || true
+    - ./prepare.py desktop-rpm $DEFAULT_CMAKE_OPTIONS $CMAKE_OPTIONS
+    - make
+
+  artifacts:
+    paths:
+      - WORK/desktop-rpm/rpmbuild/RPMS/x86_64/*.rpm
+    when: always
+    expire_in: 1 week
+
+#################################################
+# Schedule
+#################################################
 
 .scheduled-job-linux-desktop:
 
