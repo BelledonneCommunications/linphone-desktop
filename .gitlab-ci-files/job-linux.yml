@@ -1,0 +1,35 @@
+.linux-ccache:
+
+  cache:
+    key: $CI_JOB_NAME
+    paths:
+      - ccache/
+
+  before_script:
+    - mkdir -p ccache
+    - echo "max_size = $CCACHE_SIZE" > ccache/ccache.conf
+    - export CCACHE_BASEDIR=${PWD}
+    - export CCACHE_DIR=${PWD}/ccache
+    - ccache -s
+
+  after_script:
+    - export CCACHE_DIR=${PWD}/ccache
+    - ccache -s
+
+
+.job-linux-desktop:
+
+  extends: .linux-ccache
+
+  script:
+    - export CC=$CC
+    - export CXX=$CXX
+    - ./prepare.py -G "$CMAKE_GENERATOR" -cc $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
+
+
+.scheduled-job-linux-desktop:
+
+  extends: .job-linux-desktop
+  only:
+    - schedules

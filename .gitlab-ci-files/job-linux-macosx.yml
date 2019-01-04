@@ -1,0 +1,71 @@
+
+.job-macosx:
+
+  tags: [ "macosx" ]
+
+  script:
+    - ccache -s
+    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    - export PATH=$PATH:/usr/local/opt/qt/bin
+    - python prepare.py -G "$CMAKE_GENERATOR" -cc --package $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
+    - ccache -s
+
+  artifacts:
+    paths:
+      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    when: always
+    expire_in: 1 week
+
+
+.scheduled-job-macosx:
+
+  extends: .job-macosx
+  only:
+    - schedules
+
+
+#################################################
+# Makefile
+#################################################
+
+job-macosx-makefile:
+
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .scheduled-job-macosx
+
+#################################################
+# Ninja
+#################################################
+
+job-macosx-ninja:
+
+  variables:
+    CMAKE_GENERATOR: Ninja
+  extends: .job-macosx
+
+#################################################
+# Xcode
+#################################################
+
+job-macosx-xcode:
+
+  tags: [ "macosx" ]
+
+  only:
+    - schedules
+  script:
+    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    - export PATH=$PATH:/usr/local/opt/qt/bin
+    - python prepare.py -G Xcode -cc --package $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build WORK/desktop/cmake -- -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`
+
+  artifacts:
+    paths:
+      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    when: always
+    expire_in: 1 week

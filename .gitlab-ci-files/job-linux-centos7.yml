@@ -1,0 +1,51 @@
+#################################################
+# Makefile
+#################################################
+
+job-centos7-makefile-gcc:
+
+  tags: [ "docker-centos7" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j1
+  extends: .job-linux-desktop
+
+
+job-centos7-makefile-clang:
+
+  tags: [ "docker-centos7" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: clang
+    CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j1
+  extends: .job-linux-desktop
+
+#################################################
+# Ninja
+#################################################
+
+#job-centos7-ninja-gcc:
+#
+#  tags: [ "docker-centos7" ]
+#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+#  variables:
+#    CMAKE_GENERATOR: Ninja
+#    CC: gcc
+#    CXX: g++
+#  extends: .job-linux-desktop
+
+
+#job-centos7-ninja-clang:
+#
+#  tags: [ "docker-centos7" ]
+#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+#  variables:
+#    CMAKE_GENERATOR: Ninja
+#    CC: clang
+#    CXX: clang++
+#  extends: .job-linux-desktop

@@ -1,0 +1,51 @@
+#################################################
+# Makefile
+#################################################
+
+job-debian9-makefile-gcc:
+
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .scheduled-job-linux-desktop
+
+
+job-debian9-makefile-clang:
+
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: clang
+    CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .scheduled-job-linux-desktop
+
+#################################################
+# Ninja
+#################################################
+
+job-debian9-ninja-gcc:
+
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-debian9-ninja-clang:
+
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
