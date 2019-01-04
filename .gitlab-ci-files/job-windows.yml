@@ -4,6 +4,8 @@
 
 job-windows-vs2015:
 
+  stage: build
+
   tags: [ "windows" ]
 
   script:

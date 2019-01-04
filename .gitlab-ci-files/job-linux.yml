@@ -19,6 +19,8 @@
 
 .job-linux-desktop:
 
+  stage: build
+
   extends: .linux-ccache
 
   script:

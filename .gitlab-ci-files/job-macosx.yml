@@ -1,6 +1,8 @@
 
 .job-macosx:
 
+  stage: build
+
   tags: [ "macosx" ]
 
   script:
@@ -52,6 +54,8 @@ job-macosx-ninja:
 #################################################
 
 job-macosx-xcode:
+
+  stage: build
 
   tags: [ "macosx" ]
 
