@@ -23,7 +23,7 @@ include:
   - '.gitlab-ci-files/job-linux-debian9.yml'
   - '.gitlab-ci-files/job-linux-ubuntu.yml'
   - '.gitlab-ci-files/job-macosx.yml'
-  - '.gitlab-ci/files/job-windows.yml'
+  - '.gitlab-ci-files/job-windows.yml'
 
 
 stages:
