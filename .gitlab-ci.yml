@@ -27,6 +27,6 @@ include:
 
 
 stages:
- - build
- - package
- - deploy
+  - build
+  - package
+  - deploy

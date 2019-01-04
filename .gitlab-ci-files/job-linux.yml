@@ -45,7 +45,7 @@
   stage: package
 
   script:
-    - sudo rpm -i --replacepkgs /linphone-qt-*
+    - sudo rpm -i /linphone-qt-*
     - ./prepare.py desktop-rpm $DEFAULT_CMAKE_OPTIONS $CMAKE_OPTIONS
     - make
 
