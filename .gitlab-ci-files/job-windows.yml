@@ -6,9 +6,6 @@ job-windows-vs2015:
 
   stage: build
 
-  variables:
-    CI_DEBUG_TRACE: "true"
-
   tags: [ "windows" ]
 
   script:
@@ -28,9 +25,6 @@ job-windows-vs2015:
 #################################################
 
 job-windows-deploy:
-
-  variables:
-    CI_DEBUG_TRACE: "true"
 
   stage: deploy
   tags: [ "deploy" ]

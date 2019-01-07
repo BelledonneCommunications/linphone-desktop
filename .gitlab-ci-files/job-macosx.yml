@@ -83,9 +83,6 @@ job-macosx-deploy:
   stage: deploy
   tags: [ "deploy" ]
 
-  variables:
-    CI_DEBUG_TRACE: "true"
-
   dependencies:
     - job-macosx-ninja
 
