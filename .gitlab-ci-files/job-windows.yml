@@ -17,7 +17,7 @@ job-windows-vs2015:
 
   artifacts:
     paths:
-      - WORK/desktop/Build/linphone_package/Linphone-*-win32.exe
+      - WORK/desktop/Build/linphone_package/%PACKAGE_NAME%-*-win32.exe
     expire_in: 1 week
 
 #################################################
@@ -29,11 +29,8 @@ job-windows-deploy:
   stage: deploy
   tags: [ "deploy" ]
 
-  only:
-    - schedules
   dependencies:
     - job-windows-vs2015
 
   script:
-    - scp Linphone-*-win32.exe $DEPLOY_SERVER:$WINDOWS_UPLOAD_DIRECTORY/
-    - ssh -l $DEPLOY_SERVER jenkins_link_latest $WINDOWS_UPLOAD_DIRECTORY 'Linphone-*-win32.exe'
+    - scp WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*-win32.exe $DEPLOY_SERVER:$WINDOWS_UPLOAD_DIRECTORY/

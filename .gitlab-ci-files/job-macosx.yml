@@ -15,7 +15,7 @@
 
   artifacts:
     paths:
-      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*.dmg
       - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
     when: always
     expire_in: 1 week
@@ -69,7 +69,7 @@ job-macosx-xcode:
 
   artifacts:
     paths:
-      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*.dmg
       - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
     when: always
     expire_in: 1 week
@@ -78,16 +78,13 @@ job-macosx-xcode:
 # Deploy
 #################################################
 
-job-macosx-xcode-deploy:
+job-macosx-deploy:
 
   stage: deploy
   tags: [ "deploy" ]
 
-  only:
-    - schedules
   dependencies:
-    - job-macosx-xcode
+    - job-macosx-ninja
 
   script:
-    - scp Linphone-*-mac.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/
-    - ssh -l $DEPLOY_SERVER jenkins_link_latest $MACOSX_UPLOAD_DIRECTORY 'Linphone-*-mac.dmg'
+    - scp WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*-mac.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/
