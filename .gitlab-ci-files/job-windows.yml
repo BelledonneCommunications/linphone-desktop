@@ -19,3 +19,21 @@ job-windows-vs2015:
     paths:
       - WORK/desktop/Build/linphone_package/Linphone-*-win32.exe
     expire_in: 1 week
+
+#################################################
+# Deploy
+#################################################
+
+job-windows-deploy:
+
+  stage: deploy
+  tags: [ "deploy" ]
+
+  only:
+    - schedules
+  dependencies:
+    - job-windows-vs2015
+
+  script:
+    - scp Linphone-*-win32.exe $DEPLOY_SERVER:$WINDOWS_UPLOAD_DIRECTORY/
+    - ssh -l $DEPLOY_SERVER jenkins_link_latest $WINDOWS_UPLOAD_DIRECTORY 'Linphone-*-win32.exe'

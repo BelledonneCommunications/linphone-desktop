@@ -73,3 +73,21 @@ job-macosx-xcode:
       - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
     when: always
     expire_in: 1 week
+
+#################################################
+# Deploy
+#################################################
+
+job-macosx-xcode-deploy:
+
+  stage: deploy
+  tags: [ "deploy" ]
+
+  only:
+    - schedules
+  dependencies:
+    - job-macosx-xcode
+
+  script:
+    - scp Linphone-*-mac.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/
+    - ssh -l $DEPLOY_SERVER jenkins_link_latest $MACOSX_UPLOAD_DIRECTORY 'Linphone-*-mac.dmg'
