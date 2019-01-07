@@ -81,7 +81,7 @@ job-macosx-xcode:
 job-macosx-deploy:
 
   stage: deploy
-  tags: [ "deploy" ]
+  tags: [ "deploy-linux" ]
 
   dependencies:
     - job-macosx-ninja

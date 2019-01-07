@@ -27,7 +27,7 @@ job-windows-vs2015:
 job-windows-deploy:
 
   stage: deploy
-  tags: [ "deploy" ]
+  tags: [ "deploy-linux" ]
 
   dependencies:
     - job-windows-vs2015
