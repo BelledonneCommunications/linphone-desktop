@@ -27,11 +27,10 @@ job-windows-vs2015:
 job-windows-deploy:
 
   stage: deploy
-  tags: [ "deploy-linux" ]
+  tags: [ "deploy" ]
 
   dependencies:
     - job-windows-vs2015
 
   script:
     - scp WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*-win32.exe $DEPLOY_SERVER:$WINDOWS_UPLOAD_DIRECTORY/
-    - ssh $DEPLOY_SERVER jenkins_link_latest $WINDOWS_UPLOAD_DIRECTORY '$PACKAGE_NAME-*-win32.exe'
