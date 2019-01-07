@@ -17,7 +17,7 @@ job-windows-vs2015:
 
   artifacts:
     paths:
-      - WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*-win32.exe
+      - WORK/desktop/Build/linphone_package/%PACKAGE_NAME%-*-win32.exe
     expire_in: 1 week
 
 #################################################
