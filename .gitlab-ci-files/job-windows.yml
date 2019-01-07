@@ -33,5 +33,5 @@ job-windows-deploy:
     - job-windows-vs2015
 
   script:
-    - scp $PACKAGE_NAME-*-win32.exe $DEPLOY_SERVER:$WINDOWS_UPLOAD_DIRECTORY/
+    - scp WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*-win32.exe $DEPLOY_SERVER:$WINDOWS_UPLOAD_DIRECTORY/
     - ssh -l $DEPLOY_SERVER jenkins_link_latest $WINDOWS_UPLOAD_DIRECTORY '$PACKAGE_NAME-*-win32.exe'

@@ -87,5 +87,5 @@ job-macosx-deploy:
     - job-macosx-ninja
 
   script:
-    - scp $PACKAGE_NAME-*-mac.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/
+    - scp WORK/desktop/Build/linphone_package/$PACKAGE_NAME-*-mac.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/
     - ssh -l $DEPLOY_SERVER jenkins_link_latest $MACOSX_UPLOAD_DIRECTORY '$PACKAGE_NAME-*-mac.dmg'
