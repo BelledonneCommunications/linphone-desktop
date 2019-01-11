@@ -1,5 +1,5 @@
 /*
- * MessageCountNotifierSystemTrayIcon.hpp
+ * EventCountNotifierSystemTrayIcon.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -31,7 +31,7 @@
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
-#include "MessageCountNotifierSystemTrayIcon.hpp"
+#include "EventCountNotifierSystemTrayIcon.hpp"
 
 // =============================================================================
 
@@ -46,7 +46,7 @@ namespace {
   constexpr int IconCounterTextPixelSize = 144;
 }
 
-MessageCountNotifier::MessageCountNotifier (QObject *parent) : AbstractMessageCountNotifier(parent) {
+EventCountNotifier::EventCountNotifier (QObject *parent) : AbstractEventCountNotifier(parent) {
   QSvgRenderer renderer((QString(LinphoneUtils::WindowIconPath)));
   if (!renderer.isValid())
     qFatal("Invalid SVG Image.");
@@ -62,20 +62,20 @@ MessageCountNotifier::MessageCountNotifier (QObject *parent) : AbstractMessageCo
 
   mBlinkTimer = new QTimer(this);
   mBlinkTimer->setInterval(IconCounterBlinkInterval);
-  QObject::connect(mBlinkTimer, &QTimer::timeout, this, &MessageCountNotifier::update);
+  QObject::connect(mBlinkTimer, &QTimer::timeout, this, &EventCountNotifier::update);
 
   Utils::connectOnce(
     App::getInstance(), &App::focusWindowChanged,
-    this, &MessageCountNotifier::updateUnreadMessageCount
+    this, &EventCountNotifier::updateUnreadMessageCount
   );
 }
 
-MessageCountNotifier::~MessageCountNotifier () {
+EventCountNotifier::~EventCountNotifier () {
   delete mBuf;
   delete mBufWithCounter;
 }
 
-void MessageCountNotifier::notifyUnreadMessageCount (int n) {
+void EventCountNotifier::notifyEventCount (int n) {
   QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
   if (!sysTrayIcon)
     return;
@@ -115,7 +115,7 @@ void MessageCountNotifier::notifyUnreadMessageCount (int n) {
   update();
 }
 
-void MessageCountNotifier::update () {
+void EventCountNotifier::update () {
   QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
   Q_CHECK_PTR(sysTrayIcon);
   sysTrayIcon->setIcon(QIcon(mDisplayCounter ? *mBufWithCounter : *mBuf));

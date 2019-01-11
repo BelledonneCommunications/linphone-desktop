@@ -192,6 +192,8 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 
     case linphone::Call::State::End:
     case linphone::Call::State::Error:
+      if (call->getCallLog()->getStatus() == linphone::Call::Status::Missed)
+        emit callMissed(&call->getData<CallModel>("call-model"));
       removeCall(call);
       break;
 

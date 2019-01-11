@@ -117,6 +117,8 @@ signals:
 
   void messageCountReset ();
 
+  void focused ();
+
 private:
   typedef QPair<QVariantMap, std::shared_ptr<void>> ChatEntryData;
 

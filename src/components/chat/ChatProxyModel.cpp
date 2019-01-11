@@ -194,6 +194,7 @@ void ChatProxyModel::reload () {
 
   if (mChatModel) {
     mChatModel->resetMessageCount();
+    mChatModel->focused();
 
     ChatModel *chatModel = mChatModel.get();
     QObject::connect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
@@ -217,8 +218,10 @@ static inline QWindow *getParentWindow (QObject *object) {
 }
 
 void ChatProxyModel::handleIsActiveChanged (QWindow *window) {
-  if (mChatModel && window->isActive() && getParentWindow(this) == window)
+  if (mChatModel && window->isActive() && getParentWindow(this) == window) {
     mChatModel->resetMessageCount();
+    mChatModel->focused();
+  }
 }
 
 void ChatProxyModel::handleIsRemoteComposingChanged (bool status) {
