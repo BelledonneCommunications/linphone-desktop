@@ -1,5 +1,5 @@
 /*
- * AbstractMessageCountNotifier.hpp
+ * AbstractEventCountNotifier.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -20,12 +20,14 @@
  *      Author: Ronan Abhamon
  */
 
-#ifndef ABSTRACT_MESSAGE_COUNT_NOTIFIER_H_
-#define ABSTRACT_MESSAGE_COUNT_NOTIFIER_H_
+#ifndef ABSTRACT_EVENT_COUNT_NOTIFIER_H_
+#define ABSTRACT_EVENT_COUNT_NOTIFIER_H_
 
 #include <memory>
 
+#include <QHash>
 #include <QObject>
+#include <QPair>
 
 // =============================================================================
 
@@ -33,32 +35,44 @@ namespace linphone {
   class ChatMessage;
 }
 
+class CallModel;
 class ChatModel;
 
-class AbstractMessageCountNotifier : public QObject {
+class AbstractEventCountNotifier : public QObject {
   Q_OBJECT;
 
 public:
-  AbstractMessageCountNotifier (QObject *parent = Q_NULLPTR);
+  AbstractEventCountNotifier (QObject *parent = Q_NULLPTR);
 
   void updateUnreadMessageCount ();
 
-  int getUnreadMessageCount () const {
-    return mUnreadMessageCount;
+  int getUnreadMessageCount () const { return mUnreadMessageCount; }
+  int getMissedCallCount () const {
+    int t = 0;
+    for (int n : mMissedCalls) t += n;
+    return t;
   }
 
+  int getEventCount () const { return mUnreadMessageCount + getMissedCallCount(); }
+
 signals:
-  void unreadMessageCountChanged (int count);
+  void eventCountChanged (int count);
 
 protected:
-  virtual void notifyUnreadMessageCount (int n) = 0;
+  virtual void notifyEventCount (int n) = 0;
 
 private:
-  void internalNotifyUnreadMessageCount ();
+  using ConferenceId = QPair<QString, QString>;
+
+  void internalnotifyEventCount ();
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
 
+  void handleChatModelFocused (ChatModel *chatModel);
+  void handleCallMissed (CallModel *callModel);
+
+  QHash<ConferenceId, int> mMissedCalls;
   int mUnreadMessageCount = 0;
 };
 
-#endif // ABSTRACT_MESSAGE_COUNT_NOTIFIER_H_
+#endif // ABSTRACT_EVENT_COUNT_NOTIFIER_H_
