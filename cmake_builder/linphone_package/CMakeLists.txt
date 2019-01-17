@@ -160,7 +160,7 @@ if (WIN32)
   )
 
   file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
-  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${EXECUTABLE_NAME}" "share/${APPLICATION_NAME}" "share/sounds")
+  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${APPLICATION_NAME}" "share/${EXECUTABLE_NAME}" "share/sounds")
   foreach (ITEM IN LISTS SHARE_CONTENT)
     list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
   endforeach ()
@@ -182,10 +182,12 @@ if (WIN32)
     PATTERN "lib/pkgconfig" EXCLUDE
     PATTERN "lib/Win32" EXCLUDE
     PATTERN "${EXECUTABLE_NAME}.lnk" EXCLUDE
-    PATTERN "share/Belr/cmake" EXCLUDE
     PATTERN "share/${APPLICATION_NAME}/cmake" EXCLUDE
+    PATTERN "share/Belr/cmake" EXCLUDE
     ${SHARE_CONTENT_EXCLUDE}
   )
+
+  install(FILES "${LINPHONE_OUTPUT_DIR}/share/Linphone/rootca.pem" DESTINATION "share/${EXECUTABLE_NAME}")
 
   if (ENABLE_OPENH264)
     install(FILES "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/libmsopenh264.dll"
