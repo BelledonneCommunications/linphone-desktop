@@ -76,13 +76,13 @@ namespace {
   constexpr char AssistantViewName[] = "Assistant";
 
   #ifdef Q_OS_LINUX
-    QString AutoStartDirectory(
-      QStandardPaths::standardLocations(QStandardPaths::ConfigLocation).at(0) + QLatin1String("/autostart/")
-    );
+    const QString AutoStartDirectory(QStringLiteral("~/.config/autostart/"));
   #elif defined(Q_OS_MACOS)
-    QString OsascriptExecutable("osascript");
+    const QString OsascriptExecutable(QStringLiteral("osascript"));
   #else
-    QString AutoStartSettingsFilePath("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+    const QString AutoStartSettingsFilePath(
+      QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run")
+    );
   #endif // ifdef Q_OS_LINUX
 }
 
@@ -691,20 +691,25 @@ void App::setAutoStart (bool enabled) {
     return;
   }
 
-  QString fileContent(
+  const QString filePath(applicationFilePath());
+  const QString exec(
+    filePath.startsWith("/app")
+      ? QStringLiteral("flatpak run " APPLICATION_ID)
+      : filePath
+  );
+
+  QTextStream(&file) << QString(
     "[Desktop Entry]\n"
     "Name=" APPLICATION_NAME "\n"
     "GenericName=SIP Phone\n"
     "Comment=" APPLICATION_DESCRIPTION "\n"
     "Type=Application\n"
-    "Exec=" + applicationFilePath() + "\n"
+    "Exec=" + exec + "\n"
     "Icon=\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
     "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;\n"
   );
-  QTextStream out(&file);
-  out << fileContent;
 
   mAutoStart = enabled;
   emit autoStartChanged(enabled);
