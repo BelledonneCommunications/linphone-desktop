@@ -131,7 +131,6 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
     return;
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-  params->enableEarlyMediaSending(true);
   params->enableVideo(true);
 
   CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
