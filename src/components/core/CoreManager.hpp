@@ -35,7 +35,7 @@ class CallsListModel;
 class ChatModel;
 class ContactsListModel;
 class CoreHandlers;
-class MessageCountNotifier;
+class EventCountNotifier;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
@@ -45,7 +45,7 @@ class CoreManager : public QObject {
 
   Q_PROPERTY(QString version READ getVersion CONSTANT);
   Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT);
-  Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
+  Q_PROPERTY(int eventCount READ getEventCount NOTIFY eventCountChanged);
 
 public:
   bool started () const {
@@ -137,7 +137,7 @@ signals:
 
   void logsUploaded (const QString &url);
 
-  void unreadMessageCountChanged (int count);
+  void eventCountChanged (int count);
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
@@ -151,7 +151,7 @@ private:
 
   QString getVersion () const;
 
-  int getUnreadMessageCount () const;
+  int getEventCount () const;
 
   void iterate ();
 
@@ -170,7 +170,7 @@ private:
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
 
-  MessageCountNotifier *mMessageCountNotifier = nullptr;
+  EventCountNotifier *mEventCountNotifier = nullptr;
 
   QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
 

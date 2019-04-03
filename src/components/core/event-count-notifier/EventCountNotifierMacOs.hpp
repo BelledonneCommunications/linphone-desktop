@@ -1,5 +1,5 @@
 /*
- * MessageCountNotifierSystemTrayIcon.hpp
+ * EventCountNotifierMacOs.hpp
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -16,34 +16,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
- *  Created on: August 7, 2017
- *      Author: Ronan Abhamon
+ *  Created on: June 30, 2017
+ *      Author: Ghislain MARY
  */
 
-#ifndef MESSAGE_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
-#define MESSAGE_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
+#ifndef EVENT_COUNT_NOTIFIER_MAC_OS_H_
+#define EVENT_COUNT_NOTIFIER_MAC_OS_H_
 
-#include "AbstractMessageCountNotifier.hpp"
+#include "AbstractEventCountNotifier.hpp"
 
 // =============================================================================
 
-class QTimer;
+extern "C" void notifyEventCountMacOs (int n);
 
-class MessageCountNotifier : public AbstractMessageCountNotifier {
+class EventCountNotifier : public AbstractEventCountNotifier {
 public:
-  MessageCountNotifier (QObject *parent = Q_NULLPTR);
-  ~MessageCountNotifier ();
+  EventCountNotifier (QObject *parent = Q_NULLPTR) : AbstractEventCountNotifier(parent) {}
 
-protected:
-  void notifyUnreadMessageCount (int n) override;
-
-private:
-  void update ();
-
-  const QPixmap *mBuf = nullptr;
-  QPixmap *mBufWithCounter = nullptr;
-  QTimer *mBlinkTimer = nullptr;
-  bool mDisplayCounter = false;
+  void notifyEventCount (int n) override {
+    notifyEventCountMacOs(n);
+  }
 };
 
-#endif // MESSAGE_COUNT_NOTIFIER_SYSTEM_TRAY_ICON_H_
+#endif // EVENT_COUNT_NOTIFIER_MAC_OS_H_

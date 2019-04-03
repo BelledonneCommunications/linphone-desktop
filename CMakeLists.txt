@@ -142,7 +142,7 @@ set(SOURCES
   src/components/contacts/ContactsListProxyModel.cpp
   src/components/core/CoreHandlers.cpp
   src/components/core/CoreManager.cpp
-  src/components/core/messages-count-notifier/AbstractMessageCountNotifier.cpp
+  src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
   src/components/file/FileDownloader.cpp
   src/components/file/FileExtractor.cpp
   src/components/notifier/Notifier.cpp
@@ -200,7 +200,7 @@ set(HEADERS
   src/components/contacts/ContactsListProxyModel.hpp
   src/components/core/CoreHandlers.hpp
   src/components/core/CoreManager.hpp
-  src/components/core/messages-count-notifier/AbstractMessageCountNotifier.hpp
+  src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
   src/components/file/FileDownloader.hpp
   src/components/file/FileExtractor.hpp
   src/components/notifier/Notifier.hpp
@@ -230,37 +230,37 @@ set(MAIN_FILE src/app/main.cpp)
 if (APPLE)
   list(APPEND SOURCES
     src/app/single-application/SingleApplication.cpp
-    src/components/core/messages-count-notifier/MessageCountNotifierMacOs.m
+    src/components/core/event-count-notifier/EventCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
     src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
   )
   list(APPEND HEADERS
     src/app/single-application/SingleApplicationPrivate.hpp
-    src/components/core/messages-count-notifier/MessageCountNotifierMacOs.hpp
+    src/components/core/event-count-notifier/EventCountNotifierMacOs.hpp
     src/components/other/desktop-tools/DesktopToolsMacOs.hpp
   )
 elseif (WIN32)
   list(APPEND SOURCES
     src/app/single-application/SingleApplication.cpp
-    src/components/core/messages-count-notifier/MessageCountNotifierSystemTrayIcon.cpp
+    src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp
     src/components/other/desktop-tools/DesktopToolsWindows.cpp
   )
   list(APPEND HEADERS
     src/app/single-application/SingleApplicationPrivate.hpp
-    src/components/core/messages-count-notifier/MessageCountNotifierSystemTrayIcon.hpp
+    src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp
     src/components/other/desktop-tools/DesktopToolsWindows.hpp
   )
 else ()
   list(APPEND SOURCES
     src/app/single-application/SingleApplicationDBus.cpp
-    src/components/core/messages-count-notifier/MessageCountNotifierSystemTrayIcon.cpp
+    src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp
     src/components/other/desktop-tools/DesktopToolsLinux.cpp
     src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.cpp
     src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.cpp
   )
   list(APPEND HEADERS
     src/app/single-application/SingleApplicationDBusPrivate.hpp
-    src/components/core/messages-count-notifier/MessageCountNotifierSystemTrayIcon.hpp
+    src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp
     src/components/other/desktop-tools/DesktopToolsLinux.hpp
     src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.hpp
     src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.hpp

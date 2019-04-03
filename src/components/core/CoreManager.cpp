@@ -39,9 +39,9 @@
 #include "utils/Utils.hpp"
 
 #if defined(Q_OS_MACOS)
-  #include "messages-count-notifier/MessageCountNotifierMacOs.hpp"
+  #include "event-count-notifier/EventCountNotifierMacOs.hpp"
 #else
-  #include "messages-count-notifier/MessageCountNotifierSystemTrayIcon.hpp"
+  #include "event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
 #endif // if defined(Q_OS_MACOS)
 
 #include "CoreHandlers.hpp"
@@ -90,13 +90,13 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
     mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
 
     {
-      MessageCountNotifier *messageCountNotifier = new MessageCountNotifier(mInstance);
-      messageCountNotifier->updateUnreadMessageCount();
+      EventCountNotifier *eventCountNotifier = new EventCountNotifier(mInstance);
+      eventCountNotifier->updateUnreadMessageCount();
       QObject::connect(
-        messageCountNotifier, &MessageCountNotifier::unreadMessageCountChanged,
-        mInstance, &CoreManager::unreadMessageCountChanged
+        eventCountNotifier, &EventCountNotifier::eventCountChanged,
+        mInstance, &CoreManager::eventCountChanged
       );
-      mInstance->mMessageCountNotifier = messageCountNotifier;
+      mInstance->mEventCountNotifier = eventCountNotifier;
     }
 
     mInstance->migrate();
@@ -319,8 +319,8 @@ QString CoreManager::getVersion () const {
 
 // -----------------------------------------------------------------------------
 
-int CoreManager::getUnreadMessageCount () const {
-  return mMessageCountNotifier ? mMessageCountNotifier->getUnreadMessageCount() : 0;
+int CoreManager::getEventCount () const {
+  return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
 }
 
 // -----------------------------------------------------------------------------

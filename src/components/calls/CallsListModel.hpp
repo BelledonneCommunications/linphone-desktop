@@ -55,6 +55,8 @@ signals:
   void callRunning (int index, CallModel *callModel);
   void callTransferAsked (CallModel *callModel);
 
+  void callMissed (CallModel *callModel);
+
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;

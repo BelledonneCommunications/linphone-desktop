@@ -88,11 +88,11 @@ CallModel::~CallModel () {
 // -----------------------------------------------------------------------------
 
 QString CallModel::getPeerAddress () const {
-  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
+  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asStringUriOnly());
 }
 
 QString CallModel::getLocalAddress () const {
-  return Utils::coreStringToAppString(mCall->getCallLog()->getFromAddress()->asString());
+  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
 }
 
 // -----------------------------------------------------------------------------

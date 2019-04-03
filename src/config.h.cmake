@@ -20,8 +20,9 @@
 *
 *******************************************************************************/
 
-#cmakedefine APPLICATION_NAME "${APPLICATION_NAME}"
 #cmakedefine APPLICATION_DESCRIPTION "${APPLICATION_DESCRIPTION}"
+#cmakedefine APPLICATION_ID "${APPLICATION_ID}"
+#cmakedefine APPLICATION_NAME "${APPLICATION_NAME}"
 #cmakedefine ENABLE_UPDATE_CHECK 1
 #cmakedefine EXECUTABLE_NAME "${EXECUTABLE_NAME}"
 #cmakedefine MSPLUGINS_DIR "${MSPLUGINS_DIR}"
