@@ -1,5 +1,5 @@
 /*
- * MessageCountNotifierMacOS.m
+ * EventCountNotifierMacOs.m
  * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
  *
  * This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 
 // =============================================================================
 
-void notifyUnreadMessageCountMacOs (int n) {
+void notifyEventCountMacOs (int n) {
   NSString *badgeStr = (n > 0) ? [NSString stringWithFormat:@"%d", n] : @"";
   [[NSApp dockTile] setBadgeLabel:badgeStr];
 }

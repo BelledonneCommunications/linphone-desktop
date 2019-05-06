@@ -83,7 +83,7 @@ Item {
         id: messageCounter
 
         anchors.fill: parent
-        count: CoreManager.unreadMessageCount
+        count: CoreManager.eventCount
       }
     }
   }

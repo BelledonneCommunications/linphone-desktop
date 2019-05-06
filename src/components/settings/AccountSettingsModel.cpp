@@ -59,7 +59,7 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
     coreManager->getHandlers().get(), &CoreHandlers::registrationStateChanged,
     this, &AccountSettingsModel::handleRegistrationStateChanged
   );
-  QObject::connect(coreManager, &CoreManager::unreadMessageCountChanged, this, [this]() { emit accountSettingsUpdated(); });
+  QObject::connect(coreManager, &CoreManager::eventCountChanged, this, [this]() { emit accountSettingsUpdated(); });
 }
 
 // -----------------------------------------------------------------------------
