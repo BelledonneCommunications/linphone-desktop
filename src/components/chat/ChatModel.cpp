@@ -409,7 +409,7 @@ void ChatModel::removeAllEntries () {
 
 void ChatModel::sendMessage (const QString &message) {
   shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(Utils::appStringToCoreString(message));
-  _message->setListener(mMessageHandlers);
+  _message->addListener(mMessageHandlers);
 
   insertMessageAtEnd(_message);
   mChatRoom->sendChatMessage(_message);
@@ -435,7 +435,7 @@ void ChatModel::resendMessage (int id) {
     case MessageStatusFileTransferError:
     case MessageStatusNotDelivered: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
-      message->setListener(mMessageHandlers);
+      message->addListener(mMessageHandlers);
       message->resend();
 
       break;
@@ -473,7 +473,7 @@ void ChatModel::sendFileMessage (const QString &path) {
 
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
   message->setFileTransferFilepath(Utils::appStringToCoreString(path));
-  message->setListener(mMessageHandlers);
+  message->addListener(mMessageHandlers);
 
   createThumbnail(message);
 
@@ -518,7 +518,7 @@ void ChatModel::downloadFile (int id) {
   }
 
   message->setFileTransferFilepath(Utils::appStringToCoreString(safeFilePath));
-  message->setListener(mMessageHandlers);
+  message->addListener(mMessageHandlers);
 
   if (!message->downloadFile())
     qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(id);

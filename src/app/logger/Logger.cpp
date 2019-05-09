@@ -202,7 +202,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
   {
     shared_ptr<linphone::LoggingService> loggingService = mInstance->mLoggingService = linphone::LoggingService::get();
     loggingService->setLogLevel(linphone::LogLevel::Message);
-    loggingService->setListener(make_shared<LinphoneLogger>(mInstance));
+    loggingService->addListener(make_shared<LinphoneLogger>(mInstance));
   }
 
   linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));

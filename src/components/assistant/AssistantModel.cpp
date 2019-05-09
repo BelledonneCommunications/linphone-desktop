@@ -150,7 +150,7 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
   mAccountCreator = core->createAccountCreator(
     core->getConfig()->getString("assistant", "xmlrpc_url", DefaultXmlrpcUri)
   );
-  mAccountCreator->setListener(mHandlers);
+  mAccountCreator->addListener(mHandlers);
 }
 
 // -----------------------------------------------------------------------------
