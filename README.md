@@ -72,9 +72,9 @@ Before you install packages with Brew, you may have to change directories permis
 
 4. Run the following command in the root directory of linphone-desktop:
 
-        cmake --build WORK\desktop\cmake --config Release
+        cmake --build WORK\desktop\cmake --config RelWithDebInfo
 
-    Or Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `Release` option is selected in Visual Studio. (With `Win32`!)
+    Or Open the generated Visual Studio solution `Project.sln.lnk` and build it. Check if the `RelWithDebInfo` option is selected in Visual Studio. (With `Win32`!)
 
 ## Known bugs and issues
 
