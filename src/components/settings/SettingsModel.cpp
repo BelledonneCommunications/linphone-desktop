@@ -504,9 +504,6 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QVariantList list;
 
-  if (core->mediaEncryptionSupported(linphone::MediaEncryption::DTLS))
-    list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
-
   if (core->mediaEncryptionSupported(linphone::MediaEncryption::SRTP))
     list << buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
 
@@ -534,8 +531,29 @@ void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
   CoreManager::getInstance()->getCore()->setMediaEncryption(
     static_cast<linphone::MediaEncryption>(encryption)
   );
+  if (mandatoryMediaEncryptionEnabled() && encryption == SettingsModel::MediaEncryptionNone) {
+	  //Disable mandatory encryption if none is selected
+	  enableMandatoryMediaEncryption(false);
+  }
 
   emit mediaEncryptionChanged(encryption);
+}
+
+bool SettingsModel::mandatoryMediaEncryptionEnabled () const {
+	return CoreManager::getInstance()->getCore()->isMediaEncryptionMandatory();
+}
+
+void SettingsModel::enableMandatoryMediaEncryption(bool mandatory) {
+	if (mandatoryMediaEncryptionEnabled() == mandatory) {
+		return;
+	}
+	CoreManager::getInstance()->getCore()->setMediaEncryptionMandatory(mandatory);
+	if (mandatory && getMediaEncryption() == SettingsModel::MediaEncryptionNone) {
+		//Force	to SRTP if mandatory but 'none' was selected
+		setMediaEncryption(SettingsModel::MediaEncryptionSrtp);
+	} else {
+		emit mediaEncryptionChanged(getMediaEncryption());
+	}
 }
 
 // -----------------------------------------------------------------------------

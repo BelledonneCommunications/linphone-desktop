@@ -55,6 +55,17 @@ TabContainer {
             }
           }
         }
+	FormGroup {
+	  label: qsTr('encryptionMandatoryLabel')
+
+	  Switch {
+	    id:	encryptionMandatory
+
+	    checked: SettingsModel.mediaEncryptionMandatory
+
+	    onClicked: SettingsModel.mediaEncryptionMandatory = !checked
+	  }
+        }
       }
 
       FormLine {
