@@ -1258,6 +1258,10 @@
         <source>callPauseEnabledLabel</source>
         <translation>Вызов поставлен на паузу</translation>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

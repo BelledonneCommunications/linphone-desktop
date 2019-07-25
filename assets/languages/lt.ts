@@ -1260,6 +1260,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>callPauseEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

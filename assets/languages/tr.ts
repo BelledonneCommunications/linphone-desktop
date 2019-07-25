@@ -1260,6 +1260,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>callPauseEnabledLabel</source>
         <translation>Çağrı duraklatma etkin</translation>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

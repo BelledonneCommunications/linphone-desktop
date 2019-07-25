@@ -1260,6 +1260,10 @@ your friend&apos;s SIP address or username.</translation>
         <source>callPauseEnabledLabel</source>
         <translation>Call pause enabled</translation>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation>Encrytion is mandatory</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

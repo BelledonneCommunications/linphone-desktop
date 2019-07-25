@@ -1258,6 +1258,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>callPauseEnabledLabel</source>
         <translation>Autoriser la mise en pause</translation>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation>Chiffrement obligatoire</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>

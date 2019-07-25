@@ -1260,6 +1260,10 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
         <source>callPauseEnabledLabel</source>
         <translation>Habilitada pausa na chamada.</translation>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
