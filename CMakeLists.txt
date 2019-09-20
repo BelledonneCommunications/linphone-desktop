@@ -97,17 +97,11 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-if (LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
-  include("${EP_linphone_CONFIG_DIR}/wrappers/cpp/LinphoneCxxConfig.cmake")
-  include("${EP_bctoolbox_CONFIG_DIR}/BcToolboxConfig.cmake")
-  include("${EP_belcard_CONFIG_DIR}/BelcardConfig.cmake")
-  include("${EP_ms2_CONFIG_DIR}/Mediastreamer2Config.cmake")
-else ()
-  find_package(LinphoneCxx REQUIRED)
-  find_package(BcToolbox REQUIRED)
-  find_package(Belcard REQUIRED)
-  find_package(Mediastreamer2 REQUIRED)
-endif ()
+find_package(LinphoneCxx CONFIG REQUIRED)
+find_package(bctoolbox CONFIG REQUIRED)
+find_package(belcard CONFIG REQUIRED)
+find_package(Mediastreamer2 CONFIG REQUIRED)
+
 find_package(Minizip REQUIRED)
 
 set(SOURCES
