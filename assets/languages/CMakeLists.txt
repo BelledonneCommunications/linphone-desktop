@@ -23,8 +23,11 @@ foreach (lang ${LANGUAGES})
 
   #Clean existing generated file
   file(REMOVE "${QM_FILES_OUTPUT_DIR}/${lang}.qm")
-  #Force re-interpretation of ts files
-  file(TOUCH "${CMAKE_CURRENT_SOURCE_DIR}/${lang}.ts")
+
+  if (${CMAKE_VERSION} VERSION_GREATER "3.12" OR ${CMAKE_VERSION} VERSION_EQUAL "3.12")
+    #Force re-interpretation of ts files. Touch command available only from 3.12 onwards
+    file(TOUCH "${CMAKE_CURRENT_SOURCE_DIR}/${lang}.ts")
+  endif()
 
   list(APPEND TS_FILES "${CMAKE_CURRENT_SOURCE_DIR}/${lang}.ts")
 endforeach()
