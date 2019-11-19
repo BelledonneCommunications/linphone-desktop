@@ -282,7 +282,6 @@ endfunction ()
 # Force absolute paths.
 PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
-PREPEND(QRC_RESOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 # ------------------------------------------------------------------------------
 # Compute QML files list.
@@ -313,7 +312,7 @@ if (NOT WIN32)
     check_qml DEPENDS ${QML_SOURCES}
     COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/check_qml_syntax"
   )
-endif ()
+endif()
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
@@ -337,6 +336,7 @@ find_package(Qt5 5.9 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 5.9 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
 if (CMAKE_INSTALL_RPATH)
+  #Retrieve lib path from a know QT executable
   get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
   get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
   get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
@@ -345,14 +345,17 @@ endif ()
 
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
-list(APPEND QRC_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
-# Add qrc. (images, qml, translations...)
-qt5_add_resources(RESOURCES ${QRC_RESOURCES})
+list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
 # Build.
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
+#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+#Turn on automatic resources compilation by cmake
+#Instead of excplicitely calling qt5_add_resources
+set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
