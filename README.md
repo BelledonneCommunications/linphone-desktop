@@ -28,6 +28,8 @@ Here are the general instructions to build linphone for desktop. The specific in
 
 ### Specific instructions for the GNU/Linux and Mac OS X platforms
 
+It is recommanded to use cmake version 3.8 to avoid configuration issue with at least cmake version 3.15
+
 1. Prepare the build in a terminal by running the following command in the current directory:
 
         ./prepare.py -DENABLE_DOC=OFF
