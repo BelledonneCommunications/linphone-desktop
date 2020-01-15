@@ -615,6 +615,10 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <source>abortEditDescriptionText</source>
         <translation>Kişi düzenlemesini iptal etmek istediğinize emin misiniz?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Bu geçmişi temizlemek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -963,6 +979,10 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 eklemek için akıllı arama çubuğunu kullanın. Yalnızca
 arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1156,6 +1176,22 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <message>
         <source>showAudioCodecsLabel</source>
         <translation>Ses çözücüleri göster</translation>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

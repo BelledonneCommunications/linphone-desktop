@@ -615,6 +615,10 @@ Server URL ist nicht konfiguriert.</translation>
         <source>abortEditDescriptionText</source>
         <translation>Möchten Sie die Änderungen an diesem Kontakt verwerfen?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Möchten Sie diese Historie wirklich löschen?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -958,6 +974,10 @@ Server URL ist nicht konfiguriert.</translation>
         <source>smartSearchBarTooltip</source>
         <translation>Verwenden das intelligente Suchfeld um Audio-  und Videocalls zu starten, Nachrichten zu senden oder Kontakt hinzuzufügen. Geben Sie die SIP-Adresse oder Username Ihres Kontaktes ein.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1150,6 +1170,22 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

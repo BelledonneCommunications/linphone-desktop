@@ -180,6 +180,10 @@ ApplicationWindow {
             visible: SettingsModel.conferenceEnabled
 
             onClicked: Logic.openConferenceManager()
+
+	    TooltipArea {
+	      text: qsTr('newConferenceButton')
+	    }
           }
 
           ActionButton {

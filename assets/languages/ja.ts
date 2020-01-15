@@ -615,6 +615,10 @@
         <source>abortEditDescriptionText</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>履歴をクリアしてよろしいですか？</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -958,6 +974,10 @@
         <source>smartSearchBarTooltip</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1150,6 +1170,22 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

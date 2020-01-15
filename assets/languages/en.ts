@@ -615,6 +615,10 @@ Server url not configured.</translation>
         <source>abortEditDescriptionText</source>
         <translation>Are you sure you want to cancel the contact modification?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation>Show conversation</translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@ Server url not configured.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Are you sure you want to clean this history?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation>Edit contact</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation>Add contact</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation>Delete history</translation>
     </message>
 </context>
 <context>
@@ -963,6 +979,10 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 calls, send a message or add a new contact. Just enter
 your friend&apos;s SIP address or username.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation>Start conference call</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1156,6 +1176,22 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>showAudioCodecsLabel</source>
         <translation>Show audio codecs</translation>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation>Playback gain</translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation>Capture gain</translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation>Capture level</translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation>Audio call in progress: some settings are not available.</translation>
     </message>
 </context>
 <context>

@@ -19,6 +19,8 @@ ApplicationWindow {
 
   title: qsTr('settingsTitle')
 
+  onClosing: SettingsModel.settingsWindowClosing()
+
   // ---------------------------------------------------------------------------
 
   Shortcut {
@@ -48,16 +50,21 @@ ApplicationWindow {
       TabBar {
         id: tabBar
 
+	onCurrentIndexChanged: SettingsModel.onSettingsTabChanged(currentIndex)
+
         TabButton {
           iconName: 'settings_sip_accounts'
           text: qsTr('sipAccountsTab')
           width: implicitWidth
-        }
+	  //onClicked: SettingsModel.settingsButtonClicked("sip")
+	}
 
         TabButton {
           iconName: 'settings_audio'
           text: qsTr('audioTab')
           width: implicitWidth
+	  //onClicked: SettingsModel.accessAudioSettings()
+	  //onClicked: SettingsModel.settingsButtonClicked("audio")
         }
 
         TabButton {
@@ -65,12 +72,15 @@ ApplicationWindow {
           iconName: 'settings_video'
           text: qsTr('videoTab')
           width: implicitWidth
+	  //onClicked: SettingsModel.accessVideoSettings()
+	  //onClicked: SettingsModel.settingsButtonClicked("video")
         }
 
         TabButton {
           iconName: 'settings_call'
           text: qsTr('callsAndChatTab')
           width: implicitWidth
+	  //onClicked: SettingsModel.settingsButtonClicked("call")
         }
 
         TabButton {
@@ -78,18 +88,21 @@ ApplicationWindow {
           iconName: 'settings_network'
           text: qsTr('networkTab')
           width: implicitWidth
+	  //onClicked: SettingsModel.settingsButtonClicked("network")
         }
 
         TabButton {
           iconName: 'settings_advanced'
           text: qsTr('uiTab')
           width: implicitWidth
+  	  //onClicked: SettingsModel.settingsButtonClicked("ui")
         }
 
         TabButton {
           iconName: 'settings_advanced'
           text: qsTr('uiAdvanced')
           width: implicitWidth
+	  //onClicked: SettingsModel.settingsButtonClicked("advanced")
         }
       }
 

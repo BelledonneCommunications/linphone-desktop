@@ -129,6 +129,10 @@ ColumnLayout  {
             icon: 'history'
 
             onClicked: sipAddressesMenu.open()
+
+	    TooltipArea {
+	      text: qsTr('tooltipShowConversation')
+	    }
           }
         }
 

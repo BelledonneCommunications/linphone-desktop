@@ -98,9 +98,11 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 find_package(LinphoneCxx CONFIG REQUIRED)
+find_package(Linphone CONFIG REQUIRED)
 find_package(bctoolbox CONFIG REQUIRED)
 find_package(belcard CONFIG REQUIRED)
 find_package(Mediastreamer2 CONFIG REQUIRED)
+find_package(ortp CONFIG REQUIRED)
 
 find_package(Minizip REQUIRED)
 
@@ -156,6 +158,7 @@ set(SOURCES
   src/components/timeline/TimelineModel.cpp
   src/components/url-handlers/UrlHandlers.cpp
   src/utils/LinphoneUtils.cpp
+  src/utils/MediastreamerUtils.cpp
   src/utils/QExifImageHeader.cpp
   src/utils/Utils.cpp
 )
@@ -215,6 +218,7 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/components/url-handlers/UrlHandlers.hpp
   src/utils/LinphoneUtils.hpp
+  src/utils/MediastreamerUtils.hpp
   src/utils/QExifImageHeader.hpp
   src/utils/Utils.hpp
 )
@@ -367,13 +371,10 @@ else ()
   add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
 endif ()
 
-if (NOT WIN32)
-  add_dependencies(update_translations check_qml)
-endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
-set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MINIZIP_LIBRARIES})
+set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${MINIZIP_LIBRARIES})
 
 foreach (package ${QT5_PACKAGES})
   list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")

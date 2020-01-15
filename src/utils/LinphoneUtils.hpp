@@ -30,17 +30,6 @@
 class QString;
 
 namespace LinphoneUtils {
-  inline float computeVu (float volume) {
-    constexpr float VuMin = -20.f;
-    constexpr float VuMax = 4.f;
-
-    if (volume < VuMin)
-      return 0.f;
-    if (volume > VuMax)
-      return 1.f;
-
-    return (volume - VuMin) / (VuMax - VuMin);
-  }
 
   linphone::TransportType stringToTransportType (const QString &transport);
 

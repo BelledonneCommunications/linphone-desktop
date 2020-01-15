@@ -24,7 +24,10 @@
 #define SETTINGS_MODEL_H_
 
 #include <linphone++/linphone.hh>
+#include <utils/MediastreamerUtils.hpp>
 #include <QObject>
+
+#include "components/core/CoreHandlers.hpp"
 
 // =============================================================================
 
@@ -46,8 +49,13 @@ class SettingsModel : public QObject {
 
 	// Audio. --------------------------------------------------------------------
 
-	Q_PROPERTY(QStringList captureDevices READ getCaptureDevices CONSTANT);
-	Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices CONSTANT);
+	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged);
+
+	Q_PROPERTY(QStringList captureDevices READ getCaptureDevices NOTIFY captureDevicesChanged);
+	Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged);
+
+	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE setPlaybackGain NOTIFY playbackGainChanged);
+	Q_PROPERTY(float captureGain READ getCaptureGain WRITE setCaptureGain NOTIFY captureGainChanged);
 
 	Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged);
 	Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged);
@@ -61,7 +69,7 @@ class SettingsModel : public QObject {
 
 	// Video. --------------------------------------------------------------------
 
-	Q_PROPERTY(QStringList videoDevices READ getVideoDevices CONSTANT);
+	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged);
 
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged);
 
@@ -171,6 +179,8 @@ class SettingsModel : public QObject {
 
 	Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged);
 
+	Q_PROPERTY(bool isInCall READ getIsInCall NOTIFY isInCallChanged);
+
 public:
 	enum MediaEncryption {
 			      MediaEncryptionNone = int(linphone::MediaEncryption::None),
@@ -193,6 +203,9 @@ public:
 	// METHODS.
 	// ===========================================================================
 
+	Q_INVOKABLE void onSettingsTabChanged(int idx);
+	Q_INVOKABLE void settingsWindowClosing(void);
+
 	// Assistant. ----------------------------------------------------------------
 
 	bool getCreateAppSipAccountEnabled () const;
@@ -211,6 +224,19 @@ public:
 	void setAssistantSupportsPhoneNumbers (bool status);
 
 	// Audio. --------------------------------------------------------------------
+
+	void createCaptureGraph();
+	bool getCaptureGraphRunning();
+	void accessAudioSettings();
+	void closeAudioSettings();
+
+	Q_INVOKABLE float getMicVolume();
+
+	float getPlaybackGain() const;
+	void setPlaybackGain(float gain);
+
+	float getCaptureGain() const;
+	void setCaptureGain(float gain);
 
 	QStringList getCaptureDevices () const;
 	QStringList getPlaybackDevices () const;
@@ -234,6 +260,9 @@ public:
 	void setShowAudioCodecs (bool status);
 
 	// Video. --------------------------------------------------------------------
+
+	//Called from qml when accessing audio settings panel
+	Q_INVOKABLE void accessVideoSettings();
 
 	QStringList getVideoDevices () const;
 
@@ -424,6 +453,11 @@ public:
 	bool getDeveloperSettingsEnabled () const;
 	void setDeveloperSettingsEnabled (bool status);
 
+	void handleCallCreated(const std::shared_ptr<linphone::Call> &call);
+	void handleCallStateChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
+
+	bool getIsInCall() const;
+
 	static const std::string UiSection;
 
 	// ===========================================================================
@@ -442,6 +476,14 @@ signals:
 
 	// Audio. --------------------------------------------------------------------
 
+	void captureGraphRunningChanged(bool running);
+
+	void playbackGainChanged(float gain);
+	void captureGainChanged(float gain);
+
+	void captureDevicesChanged (const QStringList &devices);
+	void playbackDevicesChanged (const QStringList &devices);
+
 	void captureDeviceChanged (const QString &device);
 	void playbackDeviceChanged (const QString &device);
 	void ringerDeviceChanged (const QString &device);
@@ -454,6 +496,7 @@ signals:
 
 	// Video. --------------------------------------------------------------------
 
+	void videoDevicesChanged (const QStringList &devices);
 	void videoDeviceChanged (const QString &device);
 
 	void videoPresetChanged (const QString &preset);
@@ -548,7 +591,12 @@ signals:
 
 	bool developerSettingsEnabledChanged (bool status);
 
+	bool isInCallChanged(bool);
+
 private:
+	int mCurrentSettingsTab = 0;
+	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
+
 	std::shared_ptr<linphone::Config> mConfig;
 };
 
