@@ -23,7 +23,7 @@
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
     - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
     - mkdir -p ../build-desktop/OUTPUT
-    - mv -R linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
+    - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
     - cd ../../submodules/externals/minizip
     - mkdir -p build-minizipdesktop
     - cd build-minizipdesktop
