@@ -1,0 +1,19 @@
+#################################################
+# Makefile
+#################################################
+
+
+job-ubuntu-rolling-makefile-gcc:
+
+  tags: [ "docker-ubuntu-rolling" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
