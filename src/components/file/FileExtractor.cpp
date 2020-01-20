@@ -20,8 +20,11 @@
  *      Author: Ronan Abhamon
  */
 
+#include <cstdint>
+#include <ctime>
 #include <mz_os.h>
 #include <mz_strm_bzip.h>
+#include <mz_strm_posix.h>
 #include <mz_strm.h>
 #include <mz.h>
 #include <QDebug>
