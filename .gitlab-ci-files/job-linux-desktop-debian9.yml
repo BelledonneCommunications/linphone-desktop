@@ -2,14 +2,30 @@
 # Ninja
 #################################################
 
-job-debian9-ninja-gcc:
+#job-debian9-ninja-gcc:
+
+#  tags: [ "docker-debian9" ]
+#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+#  variables:
+#    CMAKE_OPTIONS: -DENABLE_DOC=ON
+#    CMAKE_GENERATOR: Ninja
+#    CC: gcc
+#    CXX: g++
+#  extends: .job-linux-desktop
+
+
+job-debian9-ninja-gcc-smallsdk:
 
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   variables:
-    CMAKE_OPTIONS: -DENABLE_DOC=ON
+    CMAKE_OPTIONS: -DENABLE_DOC=ON -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+
+
+
+
 
