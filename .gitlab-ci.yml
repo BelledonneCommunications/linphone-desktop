@@ -31,7 +31,7 @@ include:
 #  - '.gitlab-ci-files/job-linux-centos7.yml'
 #  - '.gitlab-ci-files/job-linux-debian8.yml'
 #  - '.gitlab-ci-files/job-linux-debian9.yml'
-  - '.gitlab-ci-files/job-linux-ubuntu.yml'
+  - '.gitlab-ci-files/job-linux-desktop-ubuntu-rolling.yml'
 #  - '.gitlab-ci-files/job-macosx.yml'
 #  - '.gitlab-ci-files/job-windows.yml'
 
