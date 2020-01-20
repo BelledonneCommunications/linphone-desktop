@@ -21,6 +21,7 @@
     - mkdir linphone-sdk/build-sdkdesktop
     - cd linphone-sdk/build-sdkdesktop
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+    - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
 #-DCMAKE_INSTALL_PREFIX=../build-desktop/OUTPUT -DCMAKE_PREFIX_PATH=../build-desktop/OUTPUT
 #    - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
 #    - echo $ADDITIONAL_BUILD_OPTIONS
