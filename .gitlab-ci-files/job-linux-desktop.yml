@@ -11,23 +11,24 @@
     - export CC=$CC
     - export CXX=$CXX
 #    - mkdir -p build-sdkdesktop
-#    - mkdir -p build-desktop
+    - mkdir -p build-desktop
 #    - mkdir -p build-minizipdesktop
 #    - cd build-sdkdesktop
     - echo $CMAKE_GENERATOR
     - echo $DEFAULT_LINUX_CMAKE_OPTIONS
     - echo $CMAKE_OPTIONS
     - echo $CMAKE_SANITIZER_OPTIONS
-    - mkdir -p linphone-sdk/build-sdkdesktop
-    - cd linphone-sdk/build-sdkdesktop
-    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
-    - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
-    - mkdir -p ../../build-desktop/OUTPUT
-    - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
-    - cd ../../submodules/externals/minizip
+#    - mkdir -p linphone-sdk/build-sdkdesktop
+#    - cd linphone-sdk/build-sdkdesktop
+#    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+#    - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
+#    - mkdir -p ../../build-desktop/OUTPUT
+#    - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
+#    - cd ../../submodules/externals/minizip
+    - cd submodules/externals/minizip
     - mkdir -p build-minizipdesktop
     - cd build-minizipdesktop
-    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
+    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=build-desktop/OUTPUT
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 #-DCMAKE_INSTALL_PREFIX=../build-desktop/OUTPUT -DCMAKE_PREFIX_PATH=../build-desktop/OUTPUT
