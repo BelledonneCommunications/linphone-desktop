@@ -403,7 +403,8 @@ endforeach ()
 
 if (APPLE)
   list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/Frameworks/linphone.framework/Headers")
-  list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework linphone")
+  list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
+# -framework linphone")
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
