@@ -46,6 +46,7 @@
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
 
   script:
+    - SET Qt5_DIR=C:\Qt\5.12.6\msvc2017\lib\cmake
     - IF EXIST build-desktop RMDIR /S /Q build-desktop
     - mkdir build-desktop
     - cd build-desktop

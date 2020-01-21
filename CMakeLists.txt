@@ -108,6 +108,9 @@ find_package(Mediastreamer2 CONFIG REQUIRED)
 find_package(ortp CONFIG REQUIRED)
 
 find_package(Minizip REQUIRED)
+if( APPLE)
+    target_link_libraries(program "-framework Linphone")
+endif()
 
 set(SOURCES
   src/app/App.cpp
