@@ -20,7 +20,7 @@
  *  Author: Nicolas Michon
  */
 
-#include "linphone/linphonecore.h"
+#include <linphone/linphonecore.h>
 #include "mediastreamer2/msvolume.h"
 #include "mediastreamer2/mssndcard.h"
 #include "mediastreamer2/msticker.h"
@@ -66,7 +66,7 @@ void SimpleCaptureGraph::init() {
 
 	//Mute playback
 	float muteGain = 0.0f;
-	ms_filter_call_method(playbackVolumeFilter, MS_VOLUME_SET_GAIN, &muteGain);
+    ms_filter_call_method(playbackVolumeFilter, static_cast<unsigned int>(MS_VOLUME_SET_GAIN), &muteGain);
 
 	ticker = ms_ticker_new();
 	running = false;
