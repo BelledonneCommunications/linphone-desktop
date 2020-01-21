@@ -32,7 +32,7 @@ include:
 #  - '.gitlab-ci-files/job-linux-desktop-ubuntu-rolling.yml'
 #  - '.gitlab-ci-files/job-linux-desktop-archlinux-latest.yml'
 #  - '.gitlab-ci-files/job-linux-desktop-centos7.yml'
-#  - '.gitlab-ci-files/job-windows-desktop.yml'
+  - '.gitlab-ci-files/job-windows-desktop.yml'
   - '.gitlab-ci-files/job-macosx-desktop.yml'
 
 

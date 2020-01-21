@@ -19,7 +19,7 @@
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
     - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
     - git describe > gitdescribe.txt
-    - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
+    - mv -f linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
     - cd ../../submodules/externals/minizip    
 # Minizip submodule Building
     - if [ -d "build-minizipdesktop" ]; then rm -rf build-minizipdesktop; fi;

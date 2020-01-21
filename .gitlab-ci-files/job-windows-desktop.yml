@@ -63,7 +63,7 @@
     - cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_CMAKE_OPTIONS% %CMAKE_OPTIONS%
     - cmake --build . --target sdk --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - C:\PROGRA~1\Python37\Scripts\cl -s
-    - MOVE /Y linphone-sdk/desktop/*  ../../build-desktop/OUTPUT 
+    - ROBOCOPY linphone-sdk/desktop  ../../build-desktop/OUTPUT /MIR
     - cd ../../submodules/externals/minizip    
 # Minizip submodule Building
     - IF EXIST build-minizipdesktop RMDIR /S /Q build-minizipdesktop
