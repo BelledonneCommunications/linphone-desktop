@@ -68,7 +68,7 @@
     - IF EXIST build-minizipdesktop RMDIR /S /Q build-minizipdesktop
     - mkdir build-minizipdesktop
     - cd build-minizipdesktop
-    - cmake .. -G "Visual Studio 15 2017" -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_CMAKE_OPTIONS% %CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
+    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_CMAKE_OPTIONS% %CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
     - cmake --build . --target all --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - cmake --build . --target install --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
 # Desktop Building
@@ -81,8 +81,9 @@
   artifacts:
     paths:
       - build-desktop\OUTPUT
+      - submodules/externals/minizip/build-minizipdesktop
     when: always
-    expire_in: 60 minutes
+    expire_in: 1 day
             
 .job-windows-vs2017-scheduled:
   extends: .job-windows-vs2017

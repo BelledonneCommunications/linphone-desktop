@@ -50,7 +50,7 @@
   artifacts:
     paths:
       - build-desktop/
-      - build-desktop/OUTPUT
+      - linphone-sdk/build-sdkdesktop
     when: always
     expire_in: 1 day
 
