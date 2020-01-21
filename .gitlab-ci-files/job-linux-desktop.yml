@@ -21,11 +21,18 @@
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
     - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
     - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
+#    - cd ../../submodules/externals/minizip
+    - cd ../../build-desktop/OUTPUT
+    - ls
+    - cd lib
+    - ls
+    - cd ../lib64
+    - ls
     - cd ../../submodules/externals/minizip
 # Minizip submodule Building
     - mkdir -p build-minizipdesktop
     - cd build-minizipdesktop
-    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 # Desktop Building
