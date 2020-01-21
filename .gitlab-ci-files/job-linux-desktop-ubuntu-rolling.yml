@@ -17,3 +17,14 @@ job-ubuntu-rolling-makefile-gcc:
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .job-linux-desktop
 
+
+
+job-ubuntu-rolling-ninja-clang:
+  tags: [ "docker-ubuntu-rolling" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+

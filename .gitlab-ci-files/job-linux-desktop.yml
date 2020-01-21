@@ -41,11 +41,5 @@
       - build-desktop/OUTPUT/lib64/*
       - build-desktop/OUTPUT/include/*
       - build-desktop/OUTPUT/share/*
-      - build-sdkdesktop/WORK/desktop/Build/bctoolbox/tester/*
-      - build-sdkdesktop/WORK/desktop/Build/bzrtp/test/*
-      #Lime data folder isn't installed at  the right place !
-      #We have to find it and add it manually...
-      - lime/tester/*
-      - linphone/tester/*
     expire_in: 60 minutes
 
