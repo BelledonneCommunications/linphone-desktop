@@ -339,8 +339,8 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 
 include_directories(src/)
 
-find_package(Qt5 5.9 COMPONENTS ${QT5_PACKAGES} REQUIRED)
-find_package(Qt5 5.9 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
 if (CMAKE_INSTALL_RPATH)
   #Retrieve lib path from a know QT executable
