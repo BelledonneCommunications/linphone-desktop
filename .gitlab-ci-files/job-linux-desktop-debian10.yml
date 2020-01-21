@@ -1,0 +1,100 @@
+#################################################
+# Makefile
+#################################################
+
+
+job-debian10-makefile-gcc:
+
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
+
+job-debian10-makefile-clang:
+
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: clang
+    CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
+
+#################################################
+# Ninja
+#################################################
+
+
+job-debian10-ninja-gcc:
+
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-debian10-ninja-gcc-novideo:
+
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+  extends: job-debian10-ninja-gcc
+
+
+job-debian10-ninja-gcc-smallsdk:
+
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO
+  extends: job-debian10-ninja-gcc
+
+
+job-debian10-ninja-clang:
+
+  tags: [ "docker-debian10" ]
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  variables:
+    CMAKE_OPTIONS: -DENABLE_DOC=ON
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+
+
+job-debian10-ninja-clang-novideo:
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+  extends: job-debian10-ninja-clang
+  
+#################################################
+# TESTS
+#################################################
+
+
