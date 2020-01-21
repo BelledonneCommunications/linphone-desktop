@@ -109,7 +109,7 @@ find_package(ortp CONFIG REQUIRED)
 
 find_package(Minizip REQUIRED)
 if( APPLE)
-    target_link_libraries(program "-framework Linphone")
+    target_link_libraries(${TARGET_NAME} "-framework Linphone")
 endif()
 
 set(SOURCES
