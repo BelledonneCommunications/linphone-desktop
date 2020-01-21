@@ -21,7 +21,7 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt VERSION 4.3)
+project(linphoneqt VERSION 4.1.1)
 
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
@@ -96,8 +96,9 @@ endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-link_directories("${CMAKE_INSTALL_PATH}/lib64")
-link_directories("${CMAKE_INSTALL_PATH}/lib")
+
+link_directories("${CMAKE_INSTALL_PREFIX}/lib64")
+link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 
 find_package(LinphoneCxx CONFIG REQUIRED)
 find_package(Linphone CONFIG REQUIRED)
@@ -348,10 +349,6 @@ if (CMAKE_INSTALL_RPATH)
   get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
   list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
 endif ()
-#set(BUILD_RPATH "${CMAKE_INSTALL_PREFIX}/lib64")
-#set(BUILD_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
-#list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib64")
-#list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
 
