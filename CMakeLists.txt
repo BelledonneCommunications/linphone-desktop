@@ -346,7 +346,7 @@ if (CMAKE_INSTALL_RPATH)
   get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
   list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
 endif ()
-
+list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_LIBDIR}")
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
 
