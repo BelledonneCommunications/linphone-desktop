@@ -1,0 +1,112 @@
+
+.job-macosx:
+
+  stage: build
+
+  tags: [ "macosx" ]
+
+  script:
+    - ccache -s
+    - if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
+    - cd linphone-sdk
+#SDK Building
+    - if [ -d "build-sdkdesktop" ]; then rm -rf build-sdkdesktop; fi;
+    - mkdir -p build-sdkdesktop
+    - cd build-sdkdesktop
+    - echo $CMAKE_GENERATOR
+    - echo $DEFAULT_CMAKE_OPTIONS
+    - echo $CMAKE_OPTIONS
+    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
+    - git describe > gitdescribe.txt
+    - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
+    - cd ../../submodules/externals/minizip    
+# Minizip submodule Building
+    - if [ -d "build-minizipdesktop" ]; then rm -rf build-minizipdesktop; fi;
+    - mkdir -p build-minizipdesktop
+    - cd build-minizipdesktop
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
+    - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
+    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+# Desktop Building
+    - cd ../../../../build-desktop
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=OUTPUT
+    - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
+    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
+    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+    - ccache -s
+    - ls
+    - cd OUTPUT
+    - ls
+
+#    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+#    - export PATH=$PATH:/usr/local/opt/qt/bin
+#    - python prepare.py -G "$CMAKE_GENERATOR" -cc --package -DLINPHONE_BUILDER_SIGNING_IDENTITY="$MACOS_SIGNING_IDENTITY" $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
+#    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
+#    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
+#    - ccache -s
+
+  artifacts:
+    paths:
+      - build-desktop/gitdescribe.txt
+      - build-desktop/linphone-sdk-*.zip      
+      - build-desktop/linphone-sdk.podspec
+      - build-desktop/OUTPUT
+      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    when: always
+    expire_in: 1 week
+
+
+.scheduled-job-macosx:
+
+  extends: .job-macosx
+  only:
+    - schedules
+
+
+#################################################
+# Makefile
+#################################################
+
+job-macosx-makefile:
+
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .scheduled-job-macosx
+
+#################################################
+# Ninja
+#################################################
+
+job-macosx-ninja:
+
+  variables:
+    CMAKE_GENERATOR: Ninja
+  extends: .job-macosx
+
+#################################################
+# Xcode
+#################################################
+
+job-macosx-xcode:
+
+  stage: build
+
+  tags: [ "macosx" ]
+
+  only:
+    - schedules
+  script:
+    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    - export PATH=$PATH:/usr/local/opt/qt/bin
+    - python prepare.py -G Xcode -cc --package $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build WORK/desktop/cmake -- -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`
+
+  artifacts:
+    paths:
+      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
+      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
+    when: always
+    expire_in: 1 week
