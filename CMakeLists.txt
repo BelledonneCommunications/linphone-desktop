@@ -1,6 +1,6 @@
 ################################################################################
 # CMakeLists.txt
-# Copyright (C) 2017-2018  Belledonne Communications, Grenoble France
+# Copyright (C) 2017-2020  Belledonne Communications, Grenoble France
 #
 ################################################################################
 #
@@ -21,7 +21,7 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt VERSION 4.1.1)
+project(linphoneqt VERSION 4.3)
 
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
@@ -346,8 +346,10 @@ if (CMAKE_INSTALL_RPATH)
   get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
   list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
 endif ()
-list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
+set(BUILD_RPATH "${CMAKE_INSTALL_PREFIX}/lib64")
+set(BUILD_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib64")
+list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib")
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
 
