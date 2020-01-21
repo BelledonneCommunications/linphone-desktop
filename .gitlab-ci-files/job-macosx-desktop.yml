@@ -8,6 +8,7 @@
   script:
     - ccache -s
     - if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
+    - mkdir -p build-desktop/OUTPUT
     - cd linphone-sdk
 #SDK Building
     - if [ -d "build-sdkdesktop" ]; then rm -rf build-sdkdesktop; fi;
@@ -16,6 +17,7 @@
     - echo $CMAKE_GENERATOR
     - echo $DEFAULT_CMAKE_OPTIONS
     - echo $CMAKE_OPTIONS
+    - echo $ADDITIONAL_BUILD_OPTIONS
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
     - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
     - git describe > gitdescribe.txt
