@@ -48,9 +48,10 @@
   script:
     - IF EXIST build-desktop RMDIR /S /Q build-desktop
     - mkdir build-desktop
-    - mkdir build-desktop/OUTPUT
+    - cd build-desktop
+    - mkdir OUTPUT
 #SDK Building
-    - cd linphone-sdk
+    - cd ../linphone-sdk
     #handling the case of previous job cancellation
     - IF EXIST build-sdkdesktop RMDIR /S /Q build-sdkdesktop
     - mkdir build-sdkdesktop
@@ -66,7 +67,7 @@
     - cd ../../submodules/externals/minizip    
 # Minizip submodule Building
     - IF EXIST build-minizipdesktop RMDIR /S /Q build-minizipdesktop
-    - mkdir -p build-minizipdesktop
+    - mkdir build-minizipdesktop
     - cd build-minizipdesktop
 
     - C:\PROGRA~1\Python37\Scripts\cl -s    
