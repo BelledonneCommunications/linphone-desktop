@@ -402,6 +402,7 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
+  list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/Linphone.framework/Headers")
   list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework Linphone")
 endif ()
 
