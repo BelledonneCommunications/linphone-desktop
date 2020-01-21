@@ -26,8 +26,9 @@ variables:
 include:
   - '.gitlab-ci-files/job-linux-prepare.yml'
   - '.gitlab-ci-files/job-linux-desktop.yml'
-  - '.gitlab-ci-files/job-linux-desktop-debian9.yml'
+#  - '.gitlab-ci-files/job-linux-desktop-debian9.yml'
 #  - '.gitlab-ci-files/job-linux-desktop-ubuntu-rolling.yml'
+  - '.gitlab-ci-files/job-linux-desktop-archlinux-latest.yml'
 
 #  - '.gitlab-ci-files/job-linux.yml'
 #  - '.gitlab-ci-files/job-linux-archlinux.yml'
