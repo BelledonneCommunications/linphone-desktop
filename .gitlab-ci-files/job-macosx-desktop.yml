@@ -1,5 +1,5 @@
 
-.job-macosx:
+.job-macosx-desktop:
 
   stage: build
 
@@ -61,55 +61,60 @@
     expire_in: 1 week
 
 
-.scheduled-job-macosx:
-
-  extends: .job-macosx
-  only:
-    - schedules
-
 
 #################################################
 # Makefile
 #################################################
 
+
 job-macosx-makefile:
 
+  only:
+    variables:
+      - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
-  extends: .scheduled-job-macosx
+  extends: .job-macosx-desktop
+
 
 #################################################
 # Ninja
 #################################################
 
+
 job-macosx-ninja:
 
   variables:
     CMAKE_GENERATOR: Ninja
-  extends: .job-macosx
+    CMAKE_OPTIONS: -DENABLE_UNIT_TESTS=ON
+  extends: .job-macosx-desktop
 
-#################################################
-# Xcode
-#################################################
 
-job-macosx-xcode:
-
-  stage: build
-
-  tags: [ "macosx" ]
+job-macosx-ninja-novideo:
 
   only:
-    - schedules
-  script:
-    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-    - export PATH=$PATH:/usr/local/opt/qt/bin
-    - python prepare.py -G Xcode -cc --package $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
-    - cmake --build WORK/desktop/cmake -- -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=`sysctl -n hw.ncpu`
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+  extends: job-macosx-ninja
 
-  artifacts:
-    paths:
-      - WORK/desktop/Build/linphone_package/Linphone-*.dmg
-      - WORK/desktop/Build/linphone_package/linphone-sdk-*-mac.zip
-    when: always
-    expire_in: 1 week
+
+#################################################
+# XCode
+#################################################
+
+
+job-macosx-xcode:
+  extends: .job-macosx-desktop
+  variables:
+    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+    CMAKE_GENERATOR: Xcode
+    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
+
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_RUN_MACOSX
+
