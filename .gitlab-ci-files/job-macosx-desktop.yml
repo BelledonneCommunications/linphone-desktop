@@ -7,6 +7,8 @@
 
   script:
     - ccache -s
+    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+    - export PATH=$PATH:/usr/local/opt/qt/bin
     - if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
     - mkdir -p build-desktop/OUTPUT
     - cd linphone-sdk
@@ -42,8 +44,7 @@
     - cd OUTPUT
     - ls
 
-#    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-#    - export PATH=$PATH:/usr/local/opt/qt/bin
+
 #    - python prepare.py -G "$CMAKE_GENERATOR" -cc --package -DLINPHONE_BUILDER_SIGNING_IDENTITY="$MACOS_SIGNING_IDENTITY" $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
 #    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
 #    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
