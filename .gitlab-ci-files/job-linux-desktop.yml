@@ -11,6 +11,7 @@
     - export CC=$CC
     - export CXX=$CXX
     - mkdir -p build-desktop/OUTPUT
+    - export 
     - echo $CMAKE_GENERATOR
     - echo $DEFAULT_LINUX_CMAKE_OPTIONS
     - echo $CMAKE_OPTIONS
@@ -21,14 +22,7 @@
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
     - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
     - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
-#    - cd ../../submodules/externals/minizip
-    - cd ../../build-desktop/OUTPUT
-    - ls
-    - cd lib
-    - ls
-    - cd ../lib64
-    - ls
-    - cd ../../submodules/externals/minizip
+    - cd ../../submodules/externals/minizip    
 # Minizip submodule Building
     - mkdir -p build-minizipdesktop
     - cd build-minizipdesktop
