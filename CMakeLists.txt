@@ -108,9 +108,7 @@ find_package(Mediastreamer2 CONFIG REQUIRED)
 find_package(ortp CONFIG REQUIRED)
 
 find_package(Minizip REQUIRED)
-if( APPLE)
-    target_link_libraries(${TARGET_NAME} "-framework Linphone")
-endif()
+
 
 set(SOURCES
   src/app/App.cpp
@@ -404,13 +402,14 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
-  list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
+  list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework Linphone")
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
+
 
 foreach (target ${TARGET_NAME})
   install(TARGETS ${target}
