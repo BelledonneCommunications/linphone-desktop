@@ -13,48 +13,36 @@
     - mkdir -p build-desktop/OUTPUT
     - cd linphone-sdk
 #SDK Building
-    - if [ -d "build-sdkdesktop" ]; then rm -rf build-sdkdesktop; fi;
-    - mkdir -p build-sdkdesktop
-    - cd build-sdkdesktop
+    - if [ -d "build-sdk" ]; then rm -rf build-sdk; fi;
+    - mkdir -p build-sdk
+    - cd build-sdk
     - echo $CMAKE_GENERATOR
     - echo $DEFAULT_CMAKE_OPTIONS
     - echo $CMAKE_OPTIONS
     - echo $ADDITIONAL_BUILD_OPTIONS
-    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-    - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
-    - git describe > gitdescribe.txt
-#    - mv -f linphone-sdk/desktop/* ../../build-desktop/OUTPUT
-    - rsync -a linphone-sdk/desktop/* ../../build-desktop/OUTPUT
+    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build . -- $ADDITIONAL_BUILD_OPTIONS
     - cd ../../submodules/externals/minizip    
 # Minizip submodule Building
-    - if [ -d "build-minizipdesktop" ]; then rm -rf build-minizipdesktop; fi;
-    - mkdir -p build-minizipdesktop
-    - cd build-minizipdesktop
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
+    - if [ -d "build-minizip" ]; then rm -rf build-minizip; fi;
+    - mkdir -p build-minizip
+    - cd build-minizip
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 # Desktop Building
     - cd ../../../../build-desktop
-#PATCH to install linphone headers
-#    - mkdir -p OUTPUT/include/linphone
-#    - rsync -a OUTPUT/Frameworks/linphone.framework/Headers/* OUTPUT/include/linphone
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_FIND_FRAMEWORK=FIRST -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=OUTPUT --trace-source=CMakeLists.txt --trace-expand
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="linphone-sdk/build-sdk/linphone-sdk/desktop;submodules/externals/minizip/build-minizip/OUTPUT"
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
 #    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
 #    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
     - ccache -s
 
-
-#    - python prepare.py -G "$CMAKE_GENERATOR" -cc --package -DLINPHONE_BUILDER_SIGNING_IDENTITY="$MACOS_SIGNING_IDENTITY" $DEFAULT_MACOS_CMAKE_OPTIONS $CMAKE_OPTIONS
-#    - cmake --build WORK/desktop/cmake -- $ADDITIONAL_BUILD_OPTIONS
-#    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
-#    - ccache -s
-
   artifacts:
     paths:
-      - build-desktop/
-      - linphone-sdk/build-sdkdesktop
-    when: always
+      - build-desktop/OUTPUT
+      - linphone-sdk/build-sdk/linphone-sdk/desktop
+      - submodules/externals/minizip/build-minizip/OUTPUT
     expire_in: 1 day
 
 

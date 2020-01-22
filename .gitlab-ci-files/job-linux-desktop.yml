@@ -17,30 +17,27 @@
     - echo $CMAKE_OPTIONS
     - echo $CMAKE_SANITIZER_OPTIONS
 # SDK Building
-    - mkdir -p linphone-sdk/build-sdkdesktop
-    - cd linphone-sdk/build-sdkdesktop
+    - mkdir -p linphone-sdk/build-sdk
+    - cd linphone-sdk/build-sdk
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
     - cmake --build . --target sdk -- $ADDITIONAL_BUILD_OPTIONS
-    - mv linphone-sdk/desktop/* ../../build-desktop/OUTPUT 
     - cd ../../submodules/externals/minizip    
 # Minizip submodule Building
-    - mkdir -p build-minizipdesktop
-    - cd build-minizipdesktop
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT
+    - mkdir -p build-minizip
+    - cd build-minizip
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 # Desktop Building
     - cd ../../../../build-desktop
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=OUTPUT
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="linphone-sdk/build-sdk/linphone-sdk/desktop;submodules/externals/minizip/build-minizip/OUTPUT"
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 
   artifacts:
     paths:
-      - build-desktop/OUTPUT/bin/*
-      - build-desktop/OUTPUT/lib/*
-      - build-desktop/OUTPUT/lib64/*
-      - build-desktop/OUTPUT/include/*
-      - build-desktop/OUTPUT/share/*
-    expire_in: 60 minutes
+      - build-desktop/OUTPUT
+      - linphone-sdk/build-sdk/linphone-sdk/desktop
+      - submodules/externals/minizip/build-minizip/OUTPUT
+    expire_in: 1 week
 
