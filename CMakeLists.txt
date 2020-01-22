@@ -99,13 +99,15 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 
 if(APPLE)
-    find_package(LinphoneCxx CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
-    find_package(Linphone CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
-    find_package(bctoolbox CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
-    find_package(belcard CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
-    find_package(Mediastreamer2 CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
-    find_package(ortp CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
-    message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
+    message("Old Framework = ${CMAKE_FRAMEWORK_PATH}")
+    set(CMAKE_FRAMEWORK_PATH "${CMAKE_INSTALL_PREFIX}/Frameworks")
+    find_package(LinphoneCxx CONFIG REQUIRED)
+    find_package(Linphone CONFIG REQUIRED)
+    find_package(belcard CONFIG REQUIRED)
+    find_package(Mediastreamer2 CONFIG REQUIRED)
+    find_package(ortp CONFIG REQUIRED)
+
+    message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
     message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
     message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 
