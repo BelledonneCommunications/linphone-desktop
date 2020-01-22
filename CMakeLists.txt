@@ -97,18 +97,27 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-link_directories("${CMAKE_INSTALL_PREFIX}/lib64")
-link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 
-find_package(LinphoneCxx CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX})
-find_package(Linphone CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX})
-find_package(bctoolbox CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX})
-find_package(belcard CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX})
-find_package(Mediastreamer2 CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX})
-find_package(ortp CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX})
+if(APPLE)
+    find_package(LinphoneCxx CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
+    find_package(Linphone CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
+    find_package(bctoolbox CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
+    find_package(belcard CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
+    find_package(Mediastreamer2 CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
+    find_package(ortp CONFIG REQUIRED PATHS ${CMAKE_INSTALL_PREFIX} PATH_SUFFIXES "Frameworks")
+else()
+    find_package(LinphoneCxx CONFIG REQUIRED)
+    find_package(Linphone CONFIG REQUIRED)
+    find_package(bctoolbox CONFIG REQUIRED)
+    find_package(belcard CONFIG REQUIRED)
+    find_package(Mediastreamer2 CONFIG REQUIRED)
+    find_package(ortp CONFIG REQUIRED)
+endif()
 
 find_package(Minizip REQUIRED)
 
+link_directories("${CMAKE_INSTALL_PREFIX}/lib64")
+link_directories("${CMAKE_INSTALL_PREFIX}/lib")
 
 set(SOURCES
   src/app/App.cpp
