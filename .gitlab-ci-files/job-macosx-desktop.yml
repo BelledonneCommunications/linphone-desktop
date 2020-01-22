@@ -38,7 +38,7 @@
 #PATCH to install linphone headers
 #    - mkdir -p OUTPUT/include/linphone
 #    - rsync -a OUTPUT/Frameworks/linphone.framework/Headers/* OUTPUT/include/linphone
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_FIND_FRAMEWORK=FIRST -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=OUTPUT
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_FIND_FRAMEWORK=FIRST -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=OUTPUT --trace-source=CMakeLists.txt --trace-expand
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
 #    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
 #    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
