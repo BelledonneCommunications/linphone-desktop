@@ -12,6 +12,7 @@ job-debian8-makefile-gcc:
     CC: gcc
     CXX: g++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+    LBC_NODEBUG_OPTIONS: -- -j$MAKEFILE_JOBS
   extends: .job-linux-desktop
 
 
@@ -27,6 +28,7 @@ job-debian8-makefile-clang:
     CC: clang
     CXX: clang++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+    LBC_NODEBUG_OPTIONS: -- -j$MAKEFILE_JOBS
   extends: .job-linux-desktop
 
 #################################################
