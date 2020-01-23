@@ -1,4 +1,8 @@
 #################################################
+# BUILD
+#################################################
+
+#################################################
 # VS2015
 #################################################
 #Wedo not need vs2015 anymore
@@ -68,7 +72,7 @@
     - IF EXIST build-minizip RMDIR /S /Q build-minizip
     - mkdir build-minizip
     - cd build-minizip
-    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_CMAKE_OPTIONS% %CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=OUTPUT
+    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_CMAKE_OPTIONS% %CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="../../../linphone-sdk/build-sdk/linphone-sdk/desktop"
     - cmake --build . --target all_build --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - cmake --build . --target install --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
 # Desktop Building
@@ -111,4 +115,50 @@ job-windows-vs2017-novideo:
   extends: .job-windows-vs2017-scheduled
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_VIDEO=NO
+
+#################################################
+# PACKAGE
+#################################################
+
+
+job-windows-vs2017-package:
+  stage: package
+  tags: [ "windows" ]
+  dependencies:
+    - job-windows-vs2017-scheduled
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $PACKAGE_RUN_WINDOWS
+
+  script:
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"
+    - cd build-desktop
+    - chdir > chdir_sdk.temp
+    - set /p OUTPUT_SDK_BUILD=<chdir_sdk.temp
+    - cd ..\cmake\Windows\wrapper\
+    - chdir > chdir_wrapper.temp
+    - set /p OUTPUT_WRAPPER_BUILD=<chdir_wrapper.temp
+    - msbuild -t:restore CsWrapper.csproj
+    - msbuild CsWrapper.csproj /p:MDILCompile=true /p:Platform="x86" /t:build /p:Configuration=Release /p:OutputSdkBuild=%OUTPUT_SDK_BUILD%
+    - cd ..\nuget
+    - git describe > describe.temp
+    - set /p DESCRIBE=<describe.temp
+    - msbuild NuGetLinphoneSDK.vcxproj /p:VersionNumber=%DESCRIBE% /p:OutputSdkBuild=%OUTPUT_SDK_BUILD% /p:OutputWrapperBuild=%OUTPUT_WRAPPER_BUILD%
+    
+  after_script:
+    - mkdir "%CI_PROJECT_DIR%/results/windows-nugget"
+    - dir
+    - cd cmake/Windows/nuget/
+    - copy /B *.nupkg "%CI_PROJECT_DIR%/results/windows-nugget"
+  artifacts:
+    paths:
+      - results/*
+    when: always
+    expire_in: 1 week
+ 
+
+
+
+
     

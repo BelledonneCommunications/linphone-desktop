@@ -27,7 +27,7 @@
     - if [ -d "build-minizip" ]; then rm -rf build-minizip; fi;
     - mkdir -p build-minizip
     - cd build-minizip
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="../../../linphone-sdk/build-sdk/linphone-sdk/desktop"
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 # Desktop Building
