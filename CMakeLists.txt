@@ -1,6 +1,6 @@
 ################################################################################
 # CMakeLists.txt
-# Copyright (C) 2017-2018  Belledonne Communications, Grenoble France
+# Copyright (C) 2017-2020  Belledonne Communications, Grenoble France
 #
 ################################################################################
 #
@@ -97,18 +97,18 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-if (LINPHONE_BUILDER_GROUP_EXTERNAL_SOURCE_PATH_BUILDERS)
-  include("${EP_linphone_CONFIG_DIR}/wrappers/cpp/LinphoneCxxConfig.cmake")
-  include("${EP_bctoolbox_CONFIG_DIR}/BcToolboxConfig.cmake")
-  include("${EP_belcard_CONFIG_DIR}/BelcardConfig.cmake")
-  include("${EP_ms2_CONFIG_DIR}/Mediastreamer2Config.cmake")
-else ()
-  find_package(LinphoneCxx REQUIRED)
-  find_package(BcToolbox REQUIRED)
-  find_package(Belcard REQUIRED)
-  find_package(Mediastreamer2 REQUIRED)
-endif ()
+find_package(LinphoneCxx CONFIG REQUIRED)
+find_package(Linphone CONFIG REQUIRED)
+find_package(bctoolbox CONFIG REQUIRED)
+find_package(belcard CONFIG REQUIRED)
+find_package(Mediastreamer2 CONFIG REQUIRED)
+find_package(ortp CONFIG REQUIRED)
+
 find_package(Minizip REQUIRED)
+
+message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
+message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
+message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 
 set(SOURCES
   src/app/App.cpp
@@ -162,6 +162,7 @@ set(SOURCES
   src/components/timeline/TimelineModel.cpp
   src/components/url-handlers/UrlHandlers.cpp
   src/utils/LinphoneUtils.cpp
+  src/utils/MediastreamerUtils.cpp
   src/utils/QExifImageHeader.cpp
   src/utils/Utils.cpp
 )
@@ -221,6 +222,7 @@ set(HEADERS
   src/components/timeline/TimelineModel.hpp
   src/components/url-handlers/UrlHandlers.hpp
   src/utils/LinphoneUtils.hpp
+  src/utils/MediastreamerUtils.hpp
   src/utils/QExifImageHeader.hpp
   src/utils/Utils.hpp
 )
@@ -288,7 +290,6 @@ endfunction ()
 # Force absolute paths.
 PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
-PREPEND(QRC_RESOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 # ------------------------------------------------------------------------------
 # Compute QML files list.
@@ -319,7 +320,7 @@ if (NOT WIN32)
     check_qml DEPENDS ${QML_SOURCES}
     COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/check_qml_syntax"
   )
-endif ()
+endif()
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
@@ -343,22 +344,25 @@ find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
 if (CMAKE_INSTALL_RPATH)
+  #Retrieve lib path from a know QT executable
   get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
   get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
   get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
   list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
 endif ()
-
 # Add languages support.
 add_subdirectory(${LANGUAGES_DIRECTORY})
-list(APPEND QRC_RESOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
-# Add qrc. (images, qml, translations...)
-qt5_add_resources(RESOURCES ${QRC_RESOURCES})
+list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
 # Build.
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
+#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
+
+#Turn on automatic resources compilation by cmake
+#Instead of excplicitely calling qt5_add_resources
+set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
@@ -370,13 +374,9 @@ else ()
   add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
 endif ()
 
-if (NOT WIN32)
-  add_dependencies(update_translations check_qml)
-endif ()
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-
-set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
-set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MINIZIP_LIBRARIES})
+set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
+set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${MINIZIP_LIBRARIES} ${OPUS_LIBRARIES})
 
 foreach (package ${QT5_PACKAGES})
   list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
@@ -402,12 +402,14 @@ endforeach ()
 
 if (APPLE)
   list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
+# -framework linphone") #This doesn't work yet
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
+
 
 foreach (target ${TARGET_NAME})
   install(TARGETS ${target}

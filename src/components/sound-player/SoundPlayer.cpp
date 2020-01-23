@@ -143,7 +143,7 @@ void SoundPlayer::buildInternalPlayer () {
   mInternalPlayer = coreManager->getCore()->createLocalPlayer(
     Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
   );
-  mInternalPlayer->setListener(mHandlers);
+  mInternalPlayer->addListener(mHandlers);
 
   QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
     rebuildInternalPlayer();

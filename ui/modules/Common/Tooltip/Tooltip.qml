@@ -1,5 +1,5 @@
-import QtQuick 2.7
-import QtQuick.Controls 2.2
+import QtQuick 2.7 as Core
+import QtQuick.Controls 2.2 as Core
 
 import Common 1.0
 import Common.Styles 1.0
@@ -7,7 +7,7 @@ import Utils 1.0
 
 // =============================================================================
 
-ToolTip {
+Core.ToolTip {
   id: tooltip
 
   property var _edge: 'left'
@@ -78,7 +78,7 @@ ToolTip {
 
   // ---------------------------------------------------------------------------
 
-  background: Item {
+  background: Core.Item {
     id: container
 
     layer {
@@ -86,7 +86,7 @@ ToolTip {
       effect: PopupShadow {}
     }
 
-    Rectangle {
+    Core.Rectangle {
       anchors {
         fill: parent
         margins: TooltipStyle.margins
@@ -97,10 +97,10 @@ ToolTip {
 
     // Do not use `Icon` component to access to `implicitHeight`
     // and `implicitWidth`.
-    Image {
+    Core.Image {
       id: icon
 
-      fillMode: Image.PreserveAspectFit
+      fillMode: Core.Image.PreserveAspectFit
       height: TooltipStyle.arrowSize
       source: _edge
         ? Utils.resolveImageUri('tooltip_arrow_' + _edge)
@@ -111,11 +111,11 @@ ToolTip {
       width: TooltipStyle.arrowSize
       z: Constants.zMax
 
-      onStatusChanged: status === Image.Ready && _setArrowPosition()
+      onStatusChanged: status === Core.Image.Ready && _setArrowPosition()
     }
   }
 
-  contentItem: Text {
+  contentItem: Core.Text {
     id: text
 
     color: TooltipStyle.color

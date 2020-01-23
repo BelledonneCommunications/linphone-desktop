@@ -1,0 +1,80 @@
+
+job-archlinux-latest-makefile-gcc:
+
+  tags: [ "docker-archlinux-latest" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-archlinux-latest-makefile-clang:
+
+  tags: [ "docker-archlinux-latest" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+
+
+#################################################
+# Ninja
+#################################################
+
+
+job-archlinux-latest-ninja-gcc:
+
+  tags: [ "docker-archlinux-latest" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-archlinux-latest-ninja-gcc-novideo:
+
+  tags: [ "docker-archlinux-latest" ]
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+  extends: job-archlinux-latest-ninja-gcc
+
+
+job-archlinux-latest-ninja-clang:
+
+  tags: [ "docker-archlinux-latest" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+
+
+job-archlinux-latest-ninja-clang-novideo:
+
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+  extends: job-archlinux-latest-ninja-clang
+  
+

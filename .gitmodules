@@ -1,6 +1,6 @@
 [submodule "submodules/externals/minizip"]
 	path = submodules/externals/minizip
-	url = https://gitlab.linphone.org/BC/public/external/minizip.git
+	url = ../../public/external/minizip.git
 [submodule "linphone-sdk"]
 	path = linphone-sdk
-	url = https://gitlab.linphone.org/BC/public/linphone-sdk.git
+	url = ../../public/linphone-sdk.git

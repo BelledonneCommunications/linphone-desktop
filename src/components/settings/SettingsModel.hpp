@@ -17,534 +17,587 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  *
  *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ *  Author: Ronan Abhamon
  */
 
 #ifndef SETTINGS_MODEL_H_
 #define SETTINGS_MODEL_H_
 
 #include <linphone++/linphone.hh>
+#include <utils/MediastreamerUtils.hpp>
 #include <QObject>
+
+#include "components/core/CoreHandlers.hpp"
 
 // =============================================================================
 
 class SettingsModel : public QObject {
-  Q_OBJECT;
+	Q_OBJECT;
 
-  // ===========================================================================
-  // PROPERTIES.
-  // ===========================================================================
+	// ===========================================================================
+	// PROPERTIES.
+	// ===========================================================================
 
-  // Assistant. ----------------------------------------------------------------
+	// Assistant. ----------------------------------------------------------------
 
-  Q_PROPERTY(bool createAppSipAccountEnabled READ getCreateAppSipAccountEnabled WRITE setCreateAppSipAccountEnabled NOTIFY createAppSipAccountEnabledChanged);
-  Q_PROPERTY(bool fetchRemoteConfigurationEnabled READ getFetchRemoteConfigurationEnabled WRITE setFetchRemoteConfigurationEnabled NOTIFY fetchRemoteConfigurationEnabledChanged);
-  Q_PROPERTY(bool useAppSipAccountEnabled READ getUseAppSipAccountEnabled WRITE setUseAppSipAccountEnabled NOTIFY useAppSipAccountEnabledChanged);
-  Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged);
+	Q_PROPERTY(bool createAppSipAccountEnabled READ getCreateAppSipAccountEnabled WRITE setCreateAppSipAccountEnabled NOTIFY createAppSipAccountEnabledChanged);
+	Q_PROPERTY(bool fetchRemoteConfigurationEnabled READ getFetchRemoteConfigurationEnabled WRITE setFetchRemoteConfigurationEnabled NOTIFY fetchRemoteConfigurationEnabledChanged);
+	Q_PROPERTY(bool useAppSipAccountEnabled READ getUseAppSipAccountEnabled WRITE setUseAppSipAccountEnabled NOTIFY useAppSipAccountEnabledChanged);
+	Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged);
 
-  Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged);
+	Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged);
 
-  // Audio. --------------------------------------------------------------------
+	// Audio. --------------------------------------------------------------------
 
-  Q_PROPERTY(QStringList captureDevices READ getCaptureDevices CONSTANT);
-  Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices CONSTANT);
+	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged);
 
-  Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged);
-  Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged);
-  Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged);
+	Q_PROPERTY(QStringList captureDevices READ getCaptureDevices NOTIFY captureDevicesChanged);
+	Q_PROPERTY(QStringList playbackDevices READ getPlaybackDevices NOTIFY playbackDevicesChanged);
 
-  Q_PROPERTY(QString ringPath READ getRingPath WRITE setRingPath NOTIFY ringPathChanged);
+	Q_PROPERTY(float playbackGain READ getPlaybackGain WRITE setPlaybackGain NOTIFY playbackGainChanged);
+	Q_PROPERTY(float captureGain READ getCaptureGain WRITE setCaptureGain NOTIFY captureGainChanged);
 
-  Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY echoCancellationEnabledChanged);
+	Q_PROPERTY(QString captureDevice READ getCaptureDevice WRITE setCaptureDevice NOTIFY captureDeviceChanged);
+	Q_PROPERTY(QString playbackDevice READ getPlaybackDevice WRITE setPlaybackDevice NOTIFY playbackDeviceChanged);
+	Q_PROPERTY(QString ringerDevice READ getRingerDevice WRITE setRingerDevice NOTIFY ringerDeviceChanged);
 
-  Q_PROPERTY(bool showAudioCodecs READ getShowAudioCodecs WRITE setShowAudioCodecs NOTIFY showAudioCodecsChanged);
+	Q_PROPERTY(QString ringPath READ getRingPath WRITE setRingPath NOTIFY ringPathChanged);
 
-  // Video. --------------------------------------------------------------------
+	Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY echoCancellationEnabledChanged);
 
-  Q_PROPERTY(QStringList videoDevices READ getVideoDevices CONSTANT);
+	Q_PROPERTY(bool showAudioCodecs READ getShowAudioCodecs WRITE setShowAudioCodecs NOTIFY showAudioCodecsChanged);
 
-  Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged);
+	// Video. --------------------------------------------------------------------
 
-  Q_PROPERTY(QString videoPreset READ getVideoPreset WRITE setVideoPreset NOTIFY videoPresetChanged);
-  Q_PROPERTY(int videoFramerate READ getVideoFramerate WRITE setVideoFramerate NOTIFY videoFramerateChanged);
+	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged);
 
-  Q_PROPERTY(QVariantList supportedVideoDefinitions READ getSupportedVideoDefinitions CONSTANT);
+	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged);
 
-  Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged);
+	Q_PROPERTY(QString videoPreset READ getVideoPreset WRITE setVideoPreset NOTIFY videoPresetChanged);
+	Q_PROPERTY(int videoFramerate READ getVideoFramerate WRITE setVideoFramerate NOTIFY videoFramerateChanged);
 
-  Q_PROPERTY(bool videoSupported READ getVideoSupported CONSTANT);
+	Q_PROPERTY(QVariantList supportedVideoDefinitions READ getSupportedVideoDefinitions CONSTANT);
 
-  Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged);
+	Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged);
 
-  // Chat & calls. -------------------------------------------------------------
+	Q_PROPERTY(bool videoSupported READ getVideoSupported CONSTANT);
 
-  Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
-  Q_PROPERTY(bool autoAnswerVideoStatus READ getAutoAnswerVideoStatus WRITE setAutoAnswerVideoStatus NOTIFY autoAnswerVideoStatusChanged);
-  Q_PROPERTY(int autoAnswerDelay READ getAutoAnswerDelay WRITE setAutoAnswerDelay NOTIFY autoAnswerDelayChanged);
+	Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged);
 
-  Q_PROPERTY(bool showTelKeypadAutomatically READ getShowTelKeypadAutomatically WRITE setShowTelKeypadAutomatically NOTIFY showTelKeypadAutomaticallyChanged);
+	// Chat & calls. -------------------------------------------------------------
 
-  Q_PROPERTY(bool keepCallsWindowInBackground READ getKeepCallsWindowInBackground WRITE setKeepCallsWindowInBackground NOTIFY keepCallsWindowInBackgroundChanged);
+	Q_PROPERTY(bool autoAnswerStatus READ getAutoAnswerStatus WRITE setAutoAnswerStatus NOTIFY autoAnswerStatusChanged);
+	Q_PROPERTY(bool autoAnswerVideoStatus READ getAutoAnswerVideoStatus WRITE setAutoAnswerVideoStatus NOTIFY autoAnswerVideoStatusChanged);
+	Q_PROPERTY(int autoAnswerDelay READ getAutoAnswerDelay WRITE setAutoAnswerDelay NOTIFY autoAnswerDelayChanged);
 
-  Q_PROPERTY(bool outgoingCallsEnabled READ getOutgoingCallsEnabled WRITE setOutgoingCallsEnabled NOTIFY outgoingCallsEnabledChanged);
+	Q_PROPERTY(bool showTelKeypadAutomatically READ getShowTelKeypadAutomatically WRITE setShowTelKeypadAutomatically NOTIFY showTelKeypadAutomaticallyChanged);
 
-  Q_PROPERTY(bool callRecorderEnabled READ getCallRecorderEnabled WRITE setCallRecorderEnabled NOTIFY callRecorderEnabledChanged);
-  Q_PROPERTY(bool automaticallyRecordCalls READ getAutomaticallyRecordCalls WRITE setAutomaticallyRecordCalls NOTIFY automaticallyRecordCallsChanged);
+	Q_PROPERTY(bool keepCallsWindowInBackground READ getKeepCallsWindowInBackground WRITE setKeepCallsWindowInBackground NOTIFY keepCallsWindowInBackgroundChanged);
 
-  Q_PROPERTY(bool callPauseEnabled READ getCallPauseEnabled WRITE setCallPauseEnabled NOTIFY callPauseEnabledChanged);
-  Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged);
+	Q_PROPERTY(bool outgoingCallsEnabled READ getOutgoingCallsEnabled WRITE setOutgoingCallsEnabled NOTIFY outgoingCallsEnabledChanged);
 
-  Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged);
+	Q_PROPERTY(bool callRecorderEnabled READ getCallRecorderEnabled WRITE setCallRecorderEnabled NOTIFY callRecorderEnabledChanged);
+	Q_PROPERTY(bool automaticallyRecordCalls READ getAutomaticallyRecordCalls WRITE setAutomaticallyRecordCalls NOTIFY automaticallyRecordCallsChanged);
 
-  Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged);
+	Q_PROPERTY(bool callPauseEnabled READ getCallPauseEnabled WRITE setCallPauseEnabled NOTIFY callPauseEnabledChanged);
+	Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged);
 
-  Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged);
-  Q_PROPERTY(QString chatNotificationSoundPath READ getChatNotificationSoundPath WRITE setChatNotificationSoundPath NOTIFY chatNotificationSoundPathChanged);
+	Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged);
 
-  Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
+	Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged);
 
-  Q_PROPERTY(bool limeIsSupported READ getLimeIsSupported CONSTANT);
-  Q_PROPERTY(QVariantList supportedMediaEncryptions READ getSupportedMediaEncryptions CONSTANT);
+	Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged);
+	Q_PROPERTY(QString chatNotificationSoundPath READ getChatNotificationSoundPath WRITE setChatNotificationSoundPath NOTIFY chatNotificationSoundPathChanged);
 
-  Q_PROPERTY(MediaEncryption mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged);
-  Q_PROPERTY(LimeState limeState READ getLimeState WRITE setLimeState NOTIFY limeStateChanged);
+	Q_PROPERTY(QString fileTransferUrl READ getFileTransferUrl WRITE setFileTransferUrl NOTIFY fileTransferUrlChanged);
 
-  Q_PROPERTY(bool contactsEnabled READ getContactsEnabled WRITE setContactsEnabled NOTIFY contactsEnabledChanged);
+	Q_PROPERTY(bool limeIsSupported READ getLimeIsSupported CONSTANT);
+	Q_PROPERTY(QVariantList supportedMediaEncryptions READ getSupportedMediaEncryptions CONSTANT);
 
-  // Network. ------------------------------------------------------------------
+	Q_PROPERTY(MediaEncryption mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged);
+	Q_PROPERTY(bool mediaEncryptionMandatory READ mandatoryMediaEncryptionEnabled WRITE enableMandatoryMediaEncryption NOTIFY mediaEncryptionChanged);
 
-  Q_PROPERTY(bool showNetworkSettings READ getShowNetworkSettings WRITE setShowNetworkSettings NOTIFY showNetworkSettingsChanged);
+	Q_PROPERTY(LimeState limeState READ getLimeState WRITE setLimeState NOTIFY limeStateChanged);
 
-  Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
-  Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
+	Q_PROPERTY(bool contactsEnabled READ getContactsEnabled WRITE setContactsEnabled NOTIFY contactsEnabledChanged);
 
-  Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged);
+	// Network. ------------------------------------------------------------------
 
-  Q_PROPERTY(int downloadBandwidth READ getDownloadBandwidth WRITE setDownloadBandwidth NOTIFY downloadBandWidthChanged);
-  Q_PROPERTY(int uploadBandwidth READ getUploadBandwidth WRITE setUploadBandwidth NOTIFY uploadBandWidthChanged);
+	Q_PROPERTY(bool showNetworkSettings READ getShowNetworkSettings WRITE setShowNetworkSettings NOTIFY showNetworkSettingsChanged);
 
-  Q_PROPERTY(
-    bool adaptiveRateControlEnabled
-    READ getAdaptiveRateControlEnabled
-    WRITE setAdaptiveRateControlEnabled
-    NOTIFY adaptiveRateControlEnabledChanged
-  );
+	Q_PROPERTY(bool useSipInfoForDtmfs READ getUseSipInfoForDtmfs WRITE setUseSipInfoForDtmfs NOTIFY dtmfsProtocolChanged);
+	Q_PROPERTY(bool useRfc2833ForDtmfs READ getUseRfc2833ForDtmfs WRITE setUseRfc2833ForDtmfs NOTIFY dtmfsProtocolChanged);
 
-  Q_PROPERTY(int tcpPort READ getTcpPort WRITE setTcpPort NOTIFY tcpPortChanged);
-  Q_PROPERTY(int udpPort READ getUdpPort WRITE setUdpPort NOTIFY udpPortChanged);
+	Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged);
 
-  Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
-  Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
+	Q_PROPERTY(int downloadBandwidth READ getDownloadBandwidth WRITE setDownloadBandwidth NOTIFY downloadBandWidthChanged);
+	Q_PROPERTY(int uploadBandwidth READ getUploadBandwidth WRITE setUploadBandwidth NOTIFY uploadBandWidthChanged);
 
-  Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE setIceEnabled NOTIFY iceEnabledChanged);
-  Q_PROPERTY(bool turnEnabled READ getTurnEnabled WRITE setTurnEnabled NOTIFY turnEnabledChanged);
+	Q_PROPERTY(
+		   bool adaptiveRateControlEnabled
+		   READ getAdaptiveRateControlEnabled
+		   WRITE setAdaptiveRateControlEnabled
+		   NOTIFY adaptiveRateControlEnabledChanged
+		   );
 
-  Q_PROPERTY(QString stunServer READ getStunServer WRITE setStunServer NOTIFY stunServerChanged);
+	Q_PROPERTY(int tcpPort READ getTcpPort WRITE setTcpPort NOTIFY tcpPortChanged);
+	Q_PROPERTY(int udpPort READ getUdpPort WRITE setUdpPort NOTIFY udpPortChanged);
 
-  Q_PROPERTY(QString turnUser READ getTurnUser WRITE setTurnUser NOTIFY turnUserChanged);
-  Q_PROPERTY(QString turnPassword READ getTurnPassword WRITE setTurnPassword NOTIFY turnPasswordChanged);
+	Q_PROPERTY(QList<int> audioPortRange READ getAudioPortRange WRITE setAudioPortRange NOTIFY audioPortRangeChanged);
+	Q_PROPERTY(QList<int> videoPortRange READ getVideoPortRange WRITE setVideoPortRange NOTIFY videoPortRangeChanged);
 
-  Q_PROPERTY(int dscpSip READ getDscpSip WRITE setDscpSip NOTIFY dscpSipChanged);
-  Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
-  Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
+	Q_PROPERTY(bool iceEnabled READ getIceEnabled WRITE setIceEnabled NOTIFY iceEnabledChanged);
+	Q_PROPERTY(bool turnEnabled READ getTurnEnabled WRITE setTurnEnabled NOTIFY turnEnabledChanged);
 
-  Q_PROPERTY(bool rlsUriEnabled READ getRlsUriEnabled WRITE setRlsUriEnabled NOTIFY rlsUriEnabledChanged);
+	Q_PROPERTY(QString stunServer READ getStunServer WRITE setStunServer NOTIFY stunServerChanged);
 
-  // UI. -----------------------------------------------------------------------
+	Q_PROPERTY(QString turnUser READ getTurnUser WRITE setTurnUser NOTIFY turnUserChanged);
+	Q_PROPERTY(QString turnPassword READ getTurnPassword WRITE setTurnPassword NOTIFY turnPasswordChanged);
 
-  Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged);
+	Q_PROPERTY(int dscpSip READ getDscpSip WRITE setDscpSip NOTIFY dscpSipChanged);
+	Q_PROPERTY(int dscpAudio READ getDscpAudio WRITE setDscpAudio NOTIFY dscpAudioChanged);
+	Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged);
 
-  Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
-  Q_PROPERTY(QString savedCallsFolder READ getSavedCallsFolder WRITE setSavedCallsFolder NOTIFY savedCallsFolderChanged);
-  Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
+	Q_PROPERTY(bool rlsUriEnabled READ getRlsUriEnabled WRITE setRlsUriEnabled NOTIFY rlsUriEnabledChanged);
 
-  Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged);
+	// UI. -----------------------------------------------------------------------
 
-  // Advanced. -----------------------------------------------------------------
+	Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged);
 
-  Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged);
-  Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged);
-  Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged);
-  Q_PROPERTY(QString logsEmail READ getLogsEmail WRITE setLogsEmail NOTIFY logsEmailChanged);
+	Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged);
+	Q_PROPERTY(QString savedCallsFolder READ getSavedCallsFolder WRITE setSavedCallsFolder NOTIFY savedCallsFolderChanged);
+	Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged);
 
-  Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged);
+	Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged);
+
+	// Advanced. -----------------------------------------------------------------
+
+	Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged);
+	Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged);
+	Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged);
+	Q_PROPERTY(QString logsEmail READ getLogsEmail WRITE setLogsEmail NOTIFY logsEmailChanged);
+
+	Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged);
+
+	Q_PROPERTY(bool isInCall READ getIsInCall NOTIFY isInCallChanged);
 
 public:
-  enum MediaEncryption {
-    MediaEncryptionNone = int(linphone::MediaEncryption::None),
-    MediaEncryptionDtls = int(linphone::MediaEncryption::DTLS),
-    MediaEncryptionSrtp = int(linphone::MediaEncryption::SRTP),
-    MediaEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
-  };
-  Q_ENUM(MediaEncryption);
+	enum MediaEncryption {
+			      MediaEncryptionNone = int(linphone::MediaEncryption::None),
+			      //    MediaEncryptionDtls = int(linphone::MediaEncryption::DTLS),
+			      MediaEncryptionSrtp = int(linphone::MediaEncryption::SRTP),
+			      MediaEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
+	};
+	Q_ENUM(MediaEncryption);
 
-  enum LimeState {
-    LimeStateDisabled = int(linphone::LimeState::Disabled),
-    LimeStateMandatory = int(linphone::LimeState::Mandatory),
-    LimeStatePreferred = int(linphone::LimeState::Preferred)
-  };
-  Q_ENUM(LimeState);
+	enum LimeState {
+			LimeStateDisabled = int(linphone::LimeState::Disabled),
+			LimeStateMandatory = int(linphone::LimeState::Mandatory),
+			LimeStatePreferred = int(linphone::LimeState::Preferred)
+	};
+	Q_ENUM(LimeState);
 
-  SettingsModel (QObject *parent = Q_NULLPTR);
+	SettingsModel (QObject *parent = Q_NULLPTR);
 
-  // ===========================================================================
-  // METHODS.
-  // ===========================================================================
+	// ===========================================================================
+	// METHODS.
+	// ===========================================================================
 
-  // Assistant. ----------------------------------------------------------------
+	Q_INVOKABLE void onSettingsTabChanged(int idx);
+	Q_INVOKABLE void settingsWindowClosing(void);
 
-  bool getCreateAppSipAccountEnabled () const;
-  void setCreateAppSipAccountEnabled (bool status);
+	// Assistant. ----------------------------------------------------------------
 
-  bool getFetchRemoteConfigurationEnabled () const;
-  void setFetchRemoteConfigurationEnabled (bool status);
+	bool getCreateAppSipAccountEnabled () const;
+	void setCreateAppSipAccountEnabled (bool status);
 
-  bool getUseAppSipAccountEnabled () const;
-  void setUseAppSipAccountEnabled (bool status);
+	bool getFetchRemoteConfigurationEnabled () const;
+	void setFetchRemoteConfigurationEnabled (bool status);
 
-  bool getUseOtherSipAccountEnabled () const;
-  void setUseOtherSipAccountEnabled (bool status);
+	bool getUseAppSipAccountEnabled () const;
+	void setUseAppSipAccountEnabled (bool status);
 
-  bool getAssistantSupportsPhoneNumbers () const;
-  void setAssistantSupportsPhoneNumbers (bool status);
+	bool getUseOtherSipAccountEnabled () const;
+	void setUseOtherSipAccountEnabled (bool status);
 
-  // Audio. --------------------------------------------------------------------
+	bool getAssistantSupportsPhoneNumbers () const;
+	void setAssistantSupportsPhoneNumbers (bool status);
 
-  QStringList getCaptureDevices () const;
-  QStringList getPlaybackDevices () const;
+	// Audio. --------------------------------------------------------------------
 
-  QString getCaptureDevice () const;
-  void setCaptureDevice (const QString &device);
+	void createCaptureGraph();
+	bool getCaptureGraphRunning();
+	void accessAudioSettings();
+	void closeAudioSettings();
 
-  QString getPlaybackDevice () const;
-  void setPlaybackDevice (const QString &device);
+	Q_INVOKABLE float getMicVolume();
 
-  QString getRingerDevice () const;
-  void setRingerDevice (const QString &device);
+	float getPlaybackGain() const;
+	void setPlaybackGain(float gain);
 
-  QString getRingPath () const;
-  void setRingPath (const QString &path);
+	float getCaptureGain() const;
+	void setCaptureGain(float gain);
 
-  bool getEchoCancellationEnabled () const;
-  void setEchoCancellationEnabled (bool status);
+	QStringList getCaptureDevices () const;
+	QStringList getPlaybackDevices () const;
 
-  bool getShowAudioCodecs () const;
-  void setShowAudioCodecs (bool status);
+	QString getCaptureDevice () const;
+	void setCaptureDevice (const QString &device);
 
-  // Video. --------------------------------------------------------------------
+	QString getPlaybackDevice () const;
+	void setPlaybackDevice (const QString &device);
 
-  QStringList getVideoDevices () const;
+	QString getRingerDevice () const;
+	void setRingerDevice (const QString &device);
 
-  QString getVideoDevice () const;
-  void setVideoDevice (const QString &device);
+	QString getRingPath () const;
+	void setRingPath (const QString &path);
 
-  QString getVideoPreset () const;
-  void setVideoPreset (const QString &preset);
+	bool getEchoCancellationEnabled () const;
+	void setEchoCancellationEnabled (bool status);
 
-  int getVideoFramerate () const;
-  void setVideoFramerate (int framerate);
+	bool getShowAudioCodecs () const;
+	void setShowAudioCodecs (bool status);
 
-  QVariantList getSupportedVideoDefinitions () const;
+	// Video. --------------------------------------------------------------------
 
-  QVariantMap getVideoDefinition () const;
-  void setVideoDefinition (const QVariantMap &definition);
+	//Called from qml when accessing audio settings panel
+	Q_INVOKABLE void accessVideoSettings();
 
-  bool getVideoSupported () const;
+	QStringList getVideoDevices () const;
 
-  bool getShowVideoCodecs () const;
-  void setShowVideoCodecs (bool status);
+	QString getVideoDevice () const;
+	void setVideoDevice (const QString &device);
 
-  // Chat & calls. -------------------------------------------------------------
+	QString getVideoPreset () const;
+	void setVideoPreset (const QString &preset);
 
-  bool getAutoAnswerStatus () const;
-  void setAutoAnswerStatus (bool status);
+	int getVideoFramerate () const;
+	void setVideoFramerate (int framerate);
 
-  bool getAutoAnswerVideoStatus () const;
-  void setAutoAnswerVideoStatus (bool status);
+	QVariantList getSupportedVideoDefinitions () const;
 
-  int getAutoAnswerDelay () const;
-  void setAutoAnswerDelay (int delay);
+	QVariantMap getVideoDefinition () const;
+	void setVideoDefinition (const QVariantMap &definition);
 
-  bool getShowTelKeypadAutomatically () const;
-  void setShowTelKeypadAutomatically (bool status);
+	bool getVideoSupported () const;
 
-  bool getKeepCallsWindowInBackground () const;
-  void setKeepCallsWindowInBackground (bool status);
+	bool getShowVideoCodecs () const;
+	void setShowVideoCodecs (bool status);
 
-  bool getOutgoingCallsEnabled () const;
-  void setOutgoingCallsEnabled (bool status);
+	// Chat & calls. -------------------------------------------------------------
 
-  bool getCallRecorderEnabled () const;
-  void setCallRecorderEnabled (bool status);
+	bool getAutoAnswerStatus () const;
+	void setAutoAnswerStatus (bool status);
 
-  bool getAutomaticallyRecordCalls () const;
-  void setAutomaticallyRecordCalls (bool status);
+	bool getAutoAnswerVideoStatus () const;
+	void setAutoAnswerVideoStatus (bool status);
 
-  bool getCallPauseEnabled () const;
-  void setCallPauseEnabled (bool status);
+	int getAutoAnswerDelay () const;
+	void setAutoAnswerDelay (int delay);
 
-  bool getMuteMicrophoneEnabled () const;
-  void setMuteMicrophoneEnabled (bool status);
+	bool getShowTelKeypadAutomatically () const;
+	void setShowTelKeypadAutomatically (bool status);
 
-  bool getChatEnabled () const;
-  void setChatEnabled (bool status);
+	bool getKeepCallsWindowInBackground () const;
+	void setKeepCallsWindowInBackground (bool status);
 
-  bool getConferenceEnabled () const;
-  void setConferenceEnabled (bool status);
+	bool getOutgoingCallsEnabled () const;
+	void setOutgoingCallsEnabled (bool status);
 
-  bool getChatNotificationSoundEnabled () const;
-  void setChatNotificationSoundEnabled (bool status);
+	bool getCallRecorderEnabled () const;
+	void setCallRecorderEnabled (bool status);
 
-  QString getChatNotificationSoundPath () const;
-  void setChatNotificationSoundPath (const QString &path);
+	bool getAutomaticallyRecordCalls () const;
+	void setAutomaticallyRecordCalls (bool status);
 
-  QString getFileTransferUrl () const;
-  void setFileTransferUrl (const QString &url);
+	bool getCallPauseEnabled () const;
+	void setCallPauseEnabled (bool status);
 
-  bool getLimeIsSupported () const;
-  QVariantList getSupportedMediaEncryptions () const;
+	bool getMuteMicrophoneEnabled () const;
+	void setMuteMicrophoneEnabled (bool status);
 
-  MediaEncryption getMediaEncryption () const;
-  void setMediaEncryption (MediaEncryption encryption);
+	bool getChatEnabled () const;
+	void setChatEnabled (bool status);
 
-  LimeState getLimeState () const;
-  void setLimeState (LimeState state);
+	bool getConferenceEnabled () const;
+	void setConferenceEnabled (bool status);
 
-  bool getContactsEnabled () const;
-  void setContactsEnabled (bool status);
+	bool getChatNotificationSoundEnabled () const;
+	void setChatNotificationSoundEnabled (bool status);
 
-  // Network. ------------------------------------------------------------------
+	QString getChatNotificationSoundPath () const;
+	void setChatNotificationSoundPath (const QString &path);
 
-  bool getShowNetworkSettings () const;
-  void setShowNetworkSettings (bool status);
+	QString getFileTransferUrl () const;
+	void setFileTransferUrl (const QString &url);
 
-  bool getUseSipInfoForDtmfs () const;
-  void setUseSipInfoForDtmfs (bool status);
+	bool getLimeIsSupported () const;
+	QVariantList getSupportedMediaEncryptions () const;
 
-  bool getUseRfc2833ForDtmfs () const;
-  void setUseRfc2833ForDtmfs (bool status);
+	MediaEncryption getMediaEncryption () const;
+	void setMediaEncryption (MediaEncryption encryption);
 
-  bool getIpv6Enabled () const;
-  void setIpv6Enabled (bool status);
+	bool mandatoryMediaEncryptionEnabled () const;
+	void enableMandatoryMediaEncryption(bool mandatory);
 
-  int getDownloadBandwidth () const;
-  void setDownloadBandwidth (int bandwidth);
+	LimeState getLimeState () const;
+	void setLimeState (LimeState state);
 
-  int getUploadBandwidth () const;
-  void setUploadBandwidth (int bandwidth);
+	bool getContactsEnabled () const;
+	void setContactsEnabled (bool status);
 
-  bool getAdaptiveRateControlEnabled () const;
-  void setAdaptiveRateControlEnabled (bool status);
+	// Network. ------------------------------------------------------------------
 
-  int getTcpPort () const;
-  void setTcpPort (int port);
+	bool getShowNetworkSettings () const;
+	void setShowNetworkSettings (bool status);
 
-  int getUdpPort () const;
-  void setUdpPort (int port);
+	bool getUseSipInfoForDtmfs () const;
+	void setUseSipInfoForDtmfs (bool status);
 
-  QList<int> getAudioPortRange () const;
-  void setAudioPortRange (const QList<int> &range);
+	bool getUseRfc2833ForDtmfs () const;
+	void setUseRfc2833ForDtmfs (bool status);
 
-  QList<int> getVideoPortRange () const;
-  void setVideoPortRange (const QList<int> &range);
+	bool getIpv6Enabled () const;
+	void setIpv6Enabled (bool status);
 
-  bool getIceEnabled () const;
-  void setIceEnabled (bool status);
+	int getDownloadBandwidth () const;
+	void setDownloadBandwidth (int bandwidth);
 
-  bool getTurnEnabled () const;
-  void setTurnEnabled (bool status);
+	int getUploadBandwidth () const;
+	void setUploadBandwidth (int bandwidth);
 
-  QString getStunServer () const;
-  void setStunServer (const QString &stunServer);
+	bool getAdaptiveRateControlEnabled () const;
+	void setAdaptiveRateControlEnabled (bool status);
 
-  QString getTurnUser () const;
-  void setTurnUser (const QString &user);
+	int getTcpPort () const;
+	void setTcpPort (int port);
 
-  QString getTurnPassword () const;
-  void setTurnPassword (const QString &password);
+	int getUdpPort () const;
+	void setUdpPort (int port);
 
-  int getDscpSip () const;
-  void setDscpSip (int dscp);
+	QList<int> getAudioPortRange () const;
+	void setAudioPortRange (const QList<int> &range);
 
-  int getDscpAudio () const;
-  void setDscpAudio (int dscp);
+	QList<int> getVideoPortRange () const;
+	void setVideoPortRange (const QList<int> &range);
 
-  int getDscpVideo () const;
-  void setDscpVideo (int dscp);
+	bool getIceEnabled () const;
+	void setIceEnabled (bool status);
 
-  bool getRlsUriEnabled () const;
-  void setRlsUriEnabled (bool status);
+	bool getTurnEnabled () const;
+	void setTurnEnabled (bool status);
 
-  void configureRlsUri ();
-  void configureRlsUri (const std::shared_ptr<const linphone::ProxyConfig> &proxyConfig);
+	QString getStunServer () const;
+	void setStunServer (const QString &stunServer);
 
-  // UI. -----------------------------------------------------------------------
+	QString getTurnUser () const;
+	void setTurnUser (const QString &user);
 
-  QString getSavedScreenshotsFolder () const;
-  void setSavedScreenshotsFolder (const QString &folder);
+	QString getTurnPassword () const;
+	void setTurnPassword (const QString &password);
 
-  QString getSavedCallsFolder () const;
-  void setSavedCallsFolder (const QString &folder);
+	int getDscpSip () const;
+	void setDscpSip (int dscp);
 
-  QString getDownloadFolder () const;
-  void setDownloadFolder (const QString &folder);
+	int getDscpAudio () const;
+	void setDscpAudio (int dscp);
 
-  QString getRemoteProvisioning () const;
-  void setRemoteProvisioning (const QString &remoteProvisioning);
+	int getDscpVideo () const;
+	void setDscpVideo (int dscp);
 
-  bool getExitOnClose () const;
-  void setExitOnClose (bool value);
+	bool getRlsUriEnabled () const;
+	void setRlsUriEnabled (bool status);
 
-  // ---------------------------------------------------------------------------
+	void configureRlsUri ();
+	void configureRlsUri (const std::shared_ptr<const linphone::ProxyConfig> &proxyConfig);
 
-  QString getLogsFolder () const;
-  void setLogsFolder (const QString &folder);
+	// UI. -----------------------------------------------------------------------
 
-  QString getLogsUploadUrl () const;
-  void setLogsUploadUrl (const QString &url);
+	QString getSavedScreenshotsFolder () const;
+	void setSavedScreenshotsFolder (const QString &folder);
 
-  bool getLogsEnabled () const;
-  void setLogsEnabled (bool status);
+	QString getSavedCallsFolder () const;
+	void setSavedCallsFolder (const QString &folder);
 
-  QString getLogsEmail () const;
-  void setLogsEmail (const QString &email);
+	QString getDownloadFolder () const;
+	void setDownloadFolder (const QString &folder);
 
-  // ---------------------------------------------------------------------------
+	QString getRemoteProvisioning () const;
+	void setRemoteProvisioning (const QString &remoteProvisioning);
 
-  static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
-  static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
+	bool getExitOnClose () const;
+	void setExitOnClose (bool value);
 
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
 
-  bool getDeveloperSettingsEnabled () const;
-  void setDeveloperSettingsEnabled (bool status);
+	QString getLogsFolder () const;
+	void setLogsFolder (const QString &folder);
 
-  static const std::string UiSection;
+	QString getLogsUploadUrl () const;
+	void setLogsUploadUrl (const QString &url);
 
-  // ===========================================================================
-  // SIGNALS.
-  // ===========================================================================
+	bool getLogsEnabled () const;
+	void setLogsEnabled (bool status);
+
+	QString getLogsEmail () const;
+	void setLogsEmail (const QString &email);
+
+	// ---------------------------------------------------------------------------
+
+	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
+	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
+
+	// ---------------------------------------------------------------------------
+
+	bool getDeveloperSettingsEnabled () const;
+	void setDeveloperSettingsEnabled (bool status);
+
+	void handleCallCreated(const std::shared_ptr<linphone::Call> &call);
+	void handleCallStateChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
+
+	bool getIsInCall() const;
+
+	static const std::string UiSection;
+
+	// ===========================================================================
+	// SIGNALS.
+	// ===========================================================================
 
 signals:
-  // Assistant. ----------------------------------------------------------------
+	// Assistant. ----------------------------------------------------------------
 
-  void createAppSipAccountEnabledChanged (bool status);
-  void fetchRemoteConfigurationEnabledChanged (bool status);
-  void useAppSipAccountEnabledChanged (bool status);
-  void useOtherSipAccountEnabledChanged (bool status);
+	void createAppSipAccountEnabledChanged (bool status);
+	void fetchRemoteConfigurationEnabledChanged (bool status);
+	void useAppSipAccountEnabledChanged (bool status);
+	void useOtherSipAccountEnabledChanged (bool status);
 
-  void assistantSupportsPhoneNumbersChanged (bool status);
+	void assistantSupportsPhoneNumbersChanged (bool status);
 
-  // Audio. --------------------------------------------------------------------
+	// Audio. --------------------------------------------------------------------
 
-  void captureDeviceChanged (const QString &device);
-  void playbackDeviceChanged (const QString &device);
-  void ringerDeviceChanged (const QString &device);
+	void captureGraphRunningChanged(bool running);
 
-  void ringPathChanged (const QString &path);
+	void playbackGainChanged(float gain);
+	void captureGainChanged(float gain);
 
-  void echoCancellationEnabledChanged (bool status);
+	void captureDevicesChanged (const QStringList &devices);
+	void playbackDevicesChanged (const QStringList &devices);
 
-  void showAudioCodecsChanged (bool status);
+	void captureDeviceChanged (const QString &device);
+	void playbackDeviceChanged (const QString &device);
+	void ringerDeviceChanged (const QString &device);
 
-  // Video. --------------------------------------------------------------------
+	void ringPathChanged (const QString &path);
 
-  void videoDeviceChanged (const QString &device);
+	void echoCancellationEnabledChanged (bool status);
 
-  void videoPresetChanged (const QString &preset);
-  void videoFramerateChanged (int framerate);
+	void showAudioCodecsChanged (bool status);
 
-  void videoDefinitionChanged (const QVariantMap &definition);
+	// Video. --------------------------------------------------------------------
 
-  void showVideoCodecsChanged (bool status);
+	void videoDevicesChanged (const QStringList &devices);
+	void videoDeviceChanged (const QString &device);
 
-  // Chat & calls. -------------------------------------------------------------
+	void videoPresetChanged (const QString &preset);
+	void videoFramerateChanged (int framerate);
 
-  void autoAnswerStatusChanged (bool status);
-  void autoAnswerVideoStatusChanged (bool status);
-  void autoAnswerDelayChanged (int delay);
+	void videoDefinitionChanged (const QVariantMap &definition);
 
-  void showTelKeypadAutomaticallyChanged (bool status);
+	void showVideoCodecsChanged (bool status);
 
-  void keepCallsWindowInBackgroundChanged (bool status);
+	// Chat & calls. -------------------------------------------------------------
 
-  void outgoingCallsEnabledChanged (bool status);
+	void autoAnswerStatusChanged (bool status);
+	void autoAnswerVideoStatusChanged (bool status);
+	void autoAnswerDelayChanged (int delay);
 
-  void callRecorderEnabledChanged (bool status);
-  void automaticallyRecordCallsChanged (bool status);
+	void showTelKeypadAutomaticallyChanged (bool status);
 
-  void callPauseEnabledChanged (bool status);
-  void muteMicrophoneEnabledChanged (bool status);
+	void keepCallsWindowInBackgroundChanged (bool status);
 
-  void chatEnabledChanged (bool status);
+	void outgoingCallsEnabledChanged (bool status);
 
-  void conferenceEnabledChanged (bool status);
+	void callRecorderEnabledChanged (bool status);
+	void automaticallyRecordCallsChanged (bool status);
 
-  void chatNotificationSoundEnabledChanged (bool status);
-  void chatNotificationSoundPathChanged (const QString &path);
+	void callPauseEnabledChanged (bool status);
+	void muteMicrophoneEnabledChanged (bool status);
 
-  void fileTransferUrlChanged (const QString &url);
+	void chatEnabledChanged (bool status);
 
-  void mediaEncryptionChanged (MediaEncryption encryption);
-  void limeStateChanged (LimeState state);
+	void conferenceEnabledChanged (bool status);
 
-  void contactsEnabledChanged (bool status);
+	void chatNotificationSoundEnabledChanged (bool status);
+	void chatNotificationSoundPathChanged (const QString &path);
 
-  // Network. ------------------------------------------------------------------
+	void fileTransferUrlChanged (const QString &url);
 
-  void showNetworkSettingsChanged (bool status);
+	void mediaEncryptionChanged (MediaEncryption encryption);
+	void limeStateChanged (LimeState state);
 
-  void dtmfsProtocolChanged ();
+	void contactsEnabledChanged (bool status);
 
-  void ipv6EnabledChanged (bool status);
+	// Network. ------------------------------------------------------------------
 
-  void downloadBandWidthChanged (int bandwidth);
-  void uploadBandWidthChanged (int bandwidth);
+	void showNetworkSettingsChanged (bool status);
 
-  bool adaptiveRateControlEnabledChanged (bool status);
+	void dtmfsProtocolChanged ();
 
-  void tcpPortChanged (int port);
-  void udpPortChanged (int port);
+	void ipv6EnabledChanged (bool status);
 
-  void audioPortRangeChanged (int a, int b);
-  void videoPortRangeChanged (int a, int b);
+	void downloadBandWidthChanged (int bandwidth);
+	void uploadBandWidthChanged (int bandwidth);
 
-  void iceEnabledChanged (bool status);
-  void turnEnabledChanged (bool status);
+	bool adaptiveRateControlEnabledChanged (bool status);
 
-  void stunServerChanged (const QString &server);
+	void tcpPortChanged (int port);
+	void udpPortChanged (int port);
 
-  void turnUserChanged (const QString &user);
-  void turnPasswordChanged (const QString &password);
+	void audioPortRangeChanged (int a, int b);
+	void videoPortRangeChanged (int a, int b);
 
-  void dscpSipChanged (int dscp);
-  void dscpAudioChanged (int dscp);
-  void dscpVideoChanged (int dscp);
+	void iceEnabledChanged (bool status);
+	void turnEnabledChanged (bool status);
 
-  void rlsUriEnabledChanged (bool status);
+	void stunServerChanged (const QString &server);
 
-  // UI. -----------------------------------------------------------------------
+	void turnUserChanged (const QString &user);
+	void turnPasswordChanged (const QString &password);
 
-  void savedScreenshotsFolderChanged (const QString &folder);
-  void savedCallsFolderChanged (const QString &folder);
-  void downloadFolderChanged (const QString &folder);
+	void dscpSipChanged (int dscp);
+	void dscpAudioChanged (int dscp);
+	void dscpVideoChanged (int dscp);
 
-  void remoteProvisioningChanged (const QString &remoteProvisioning);
-  void remoteProvisioningNotChanged (const QString &remoteProvisioning);
+	void rlsUriEnabledChanged (bool status);
 
-  void exitOnCloseChanged (bool value);
+	// UI. -----------------------------------------------------------------------
 
-  // Advanced. -----------------------------------------------------------------
+	void savedScreenshotsFolderChanged (const QString &folder);
+	void savedCallsFolderChanged (const QString &folder);
+	void downloadFolderChanged (const QString &folder);
 
-  void logsFolderChanged (const QString &folder);
-  void logsUploadUrlChanged (const QString &url);
-  void logsEnabledChanged (bool status);
-  void logsEmailChanged (const QString &email);
+	void remoteProvisioningChanged (const QString &remoteProvisioning);
+	void remoteProvisioningNotChanged (const QString &remoteProvisioning);
 
-  bool developerSettingsEnabledChanged (bool status);
+	void exitOnCloseChanged (bool value);
+
+	// Advanced. -----------------------------------------------------------------
+
+	void logsFolderChanged (const QString &folder);
+	void logsUploadUrlChanged (const QString &url);
+	void logsEnabledChanged (bool status);
+	void logsEmailChanged (const QString &email);
+
+	bool developerSettingsEnabledChanged (bool status);
+
+	bool isInCallChanged(bool);
 
 private:
-  std::shared_ptr<linphone::Config> mConfig;
+	int mCurrentSettingsTab = 0;
+	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
+
+	std::shared_ptr<linphone::Config> mConfig;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<const linphone::VideoDefinition>);

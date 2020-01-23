@@ -17,6 +17,7 @@ Item {
   property bool useStates: true
   property int iconSize // Optional.
   readonly property alias hovered: button.hovered
+  property alias text: button.text
 
   // If `useStates` = true, the used icons are:
   // `icon`_pressed, `icon`_hovered and `icon`_normal.
@@ -51,7 +52,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   height: iconSize || parent.iconSize || parent.height
-  width: iconSize || parent.iconSize || parent.height
+  width: iconSize || parent.iconSize || parent.width
 
   Button {
     id: button

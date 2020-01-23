@@ -615,6 +615,10 @@ Serverwebbadressen är inte konfigurerad.</translation>
         <source>abortEditDescriptionText</source>
         <translation>Är du säker på att du vill avbryta kontaktändringen?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Är du säker på att du vill rensa den här historiken?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -961,6 +977,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>smartSearchBarTooltip</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1155,6 +1175,22 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showAudioCodecsLabel</source>
         <translation>Visa ljudkodek</translation>
     </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1257,6 +1293,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Samtals paus aktiverad</translation>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -28,6 +28,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/LinphoneUtils.hpp"
+#include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "ConferenceModel.hpp"
@@ -128,7 +129,7 @@ bool ConferenceModel::getRecording () const {
 // -----------------------------------------------------------------------------
 
 float ConferenceModel::getMicroVu () const {
-  return LinphoneUtils::computeVu(
+  return MediastreamerUtils::computeVu(
     CoreManager::getInstance()->getCore()->getConferenceLocalInputVolume()
   );
 }

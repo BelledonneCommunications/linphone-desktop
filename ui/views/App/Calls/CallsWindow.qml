@@ -17,7 +17,7 @@ Window {
 
   // ---------------------------------------------------------------------------
 
-  // `{}` is a workaround to avoid `TypeError: Cannot read property...`.
+  // `{}` is a workaround to avoid `TypeError: Cannot read property...` when calls list is empty
   readonly property var call: calls.selectedCall || ({
     callError: '',
     isOutgoing: true,

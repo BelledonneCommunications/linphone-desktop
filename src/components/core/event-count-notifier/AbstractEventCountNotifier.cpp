@@ -66,7 +66,7 @@ void AbstractEventCountNotifier::internalnotifyEventCount () {
   n = n > 99 ? 99 : n;
 
   notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
-  emit eventCountChanged(mUnreadMessageCount);
+  emit eventCountChanged(n);
 }
 
 // -----------------------------------------------------------------------------

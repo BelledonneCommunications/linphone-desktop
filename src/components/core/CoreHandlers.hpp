@@ -46,6 +46,7 @@ signals:
   void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
+  void callCreated(const std::shared_ptr<linphone::Call> & call);
   void coreStarted ();
   void isComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
   void logsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
@@ -85,6 +86,11 @@ private:
     const std::shared_ptr<linphone::Core> &core,
     const std::shared_ptr<linphone::Call> &call,
     const std::shared_ptr<const linphone::CallStats> &stats
+  ) override;
+
+  void onCallCreated(
+    const std::shared_ptr<linphone::Core> & lc,
+    const std::shared_ptr<linphone::Call> & call
   ) override;
 
   void onGlobalStateChanged (

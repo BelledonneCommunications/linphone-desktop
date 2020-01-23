@@ -81,6 +81,13 @@ DialogPlus {
               itemIcon: Logic.getItemIcon(flattenedModel)
               width: parent.width
 
+	      ActionButton {
+		icon: 'options'
+		iconSize: 30
+		anchors.fill: parent
+		//TODO handle click and jump to proxy config settings
+	      }
+
               onClicked: {
                 container.currentIndex = index
                 AccountSettingsModel.setDefaultProxyConfig(flattenedModel.proxyConfig)

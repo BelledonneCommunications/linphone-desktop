@@ -28,6 +28,10 @@ function getEditIcon () {
   return conversation._sipAddressObserver.contact ? 'contact_edit' : 'contact_add'
 }
 
+function getEditTooltipText() {
+    return conversation._sipAddressObserver.contact ? qsTr('tooltipContactEdit') : qsTr('tooltipContactAdd')
+}
+
 function getUsername () {
   return LinphoneUtils.getContactUsername(conversation._sipAddressObserver)
 }
