@@ -43,7 +43,7 @@
       - build-desktop/OUTPUT
       - linphone-sdk/build-sdk/linphone-sdk/desktop
       - submodules/externals/minizip/build-minizip/OUTPUT
-    expire_in: 1 day
+    expire_in: 1 week
 
 
 
