@@ -97,33 +97,18 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-
-if(APPLE)
-    message("Old Framework = ${CMAKE_FRAMEWORK_PATH}")
-    set(CMAKE_FRAMEWORK_PATH "${CMAKE_INSTALL_PREFIX}/Frameworks")
-    find_package(LinphoneCxx CONFIG REQUIRED)
-    find_package(Linphone CONFIG REQUIRED)
-    find_package(belcard CONFIG REQUIRED)
-    find_package(Mediastreamer2 CONFIG REQUIRED)
-    find_package(ortp CONFIG REQUIRED)
-
-    message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
-    message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
-    message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
-
-else()
-    find_package(LinphoneCxx CONFIG REQUIRED)
-    find_package(Linphone CONFIG REQUIRED)
-    find_package(bctoolbox CONFIG REQUIRED)
-    find_package(belcard CONFIG REQUIRED)
-    find_package(Mediastreamer2 CONFIG REQUIRED)
-    find_package(ortp CONFIG REQUIRED)
-endif()
+find_package(LinphoneCxx CONFIG REQUIRED)
+find_package(Linphone CONFIG REQUIRED)
+find_package(bctoolbox CONFIG REQUIRED)
+find_package(belcard CONFIG REQUIRED)
+find_package(Mediastreamer2 CONFIG REQUIRED)
+find_package(ortp CONFIG REQUIRED)
 
 find_package(Minizip REQUIRED)
 
-link_directories("${CMAKE_INSTALL_PREFIX}/lib64")
-link_directories("${CMAKE_INSTALL_PREFIX}/lib")
+message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
+message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
+message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 
 set(SOURCES
   src/app/App.cpp
@@ -390,7 +375,6 @@ else ()
 endif ()
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-message("LinphoneDirectory : ${LINPHONE_INCLUDE_DIRS} Libs:${LINPHONE_LIBRARIES}")
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
 set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${MINIZIP_LIBRARIES} ${OPUS_LIBRARIES})
 
@@ -417,9 +401,8 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
-  list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/Frameworks/linphone.framework/Headers")
   list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
-# -framework linphone")
+# -framework linphone") #This doesn't work yet
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
