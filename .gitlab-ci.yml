@@ -48,5 +48,5 @@ include:
 
 stages:
   - build
-#  - package
+  - package
 #  - deploy
