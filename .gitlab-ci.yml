@@ -8,7 +8,9 @@ variables:
   CCACHE_SIZE: 2G
 #this option is used to speedup submodule building times, when we don't need to trace debug (like SDK where it is already tested in its project)
   LBC_NODEBUG_OPTIONS : --parallel $MAKEFILE_JOBS
-  
+  DEFAULT_LINUX_CMAKE_OPTIONS : -DENABLE_TOOLS=OFF
+  DEFAULT_MACOS_CMAKE_OPTIONS : -DENABLE_TOOLS=OFF
+  DEFAULT_WINDOWS_CMAKE_OPTIONS : -DENABLE_TOOLS=OFF
   
   
 #  DEFAULT_LINUX_CMAKE_OPTIONS: -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
