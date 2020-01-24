@@ -122,8 +122,8 @@ job-windows-vs2017-novideo:
 # PACKAGE
 #################################################
 
-
-job-windows-vs2017-package:
+#Remove . when packaging process is ready to use
+.job-windows-vs2017-package:
   stage: package
   tags: [ "windows" ]
   dependencies:
