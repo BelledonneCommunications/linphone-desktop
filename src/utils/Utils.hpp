@@ -56,6 +56,9 @@ namespace Utils {
   // Otherwise returns a safe path with a unique number before the extension.
   QString getSafeFilePath (const QString &filePath, bool *soFarSoGood = nullptr);
 
+  // Test if the process exists
+  bool processExists(const quint64& p_processId);
+
   // Connect once to a member function.
   template<typename Func1, typename Func2>
   static inline QMetaObject::Connection connectOnce (

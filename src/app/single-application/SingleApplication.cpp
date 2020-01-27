@@ -32,6 +32,7 @@
 #include <QtCore/QCryptographicHash>
 #include <QtNetwork/QLocalServer>
 #include <QtNetwork/QLocalSocket>
+#include <QProcess>
 
 #ifdef Q_OS_UNIX
   #include <signal.h>
@@ -167,8 +168,10 @@ void SingleApplicationPrivate::startPrimary (bool resetMemory) {
   if (resetMemory) {
     inst->primary = true;
     inst->secondary = 0;
+	inst->primaryId = q_ptr->applicationPid();
   } else {
     inst->primary = true;
+	inst->primaryId = q_ptr->applicationPid();
   }
 
   memory->unlock();
@@ -344,10 +347,10 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
   // Attempt to attach to the memory segment
   if (d->memory->attach()) {
     d->memory->lock();
-
+	
     InstancesInfo *inst = static_cast<InstancesInfo *>(d->memory->data());
 
-    if (!inst->primary) {
+    if (!inst->primary || !Utils::processExists(inst->primaryId)) { // Check if there is not a primary instance and if there is, is it still running?
       d->startPrimary(false);
       d->memory->unlock();
       return;

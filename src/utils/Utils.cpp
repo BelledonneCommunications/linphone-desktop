@@ -69,3 +69,54 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
 
   return QString("");
 }
+// Data to retrieve WIN32 process
+#ifdef _WIN32
+#include <windows.h>
+struct EnumData {
+	DWORD dwProcessId;
+	HWND hWnd;
+};
+// Application-defined callback for EnumWindows
+BOOL CALLBACK EnumProc(HWND hWnd, LPARAM lParam) {
+// Retrieve storage location for communication data
+  EnumData& ed = *(EnumData*)lParam;
+  DWORD dwProcessId = 0x0;
+// Query process ID for hWnd
+  GetWindowThreadProcessId(hWnd, &dwProcessId);
+// Apply filter - if you want to implement additional restrictions,
+// this is the place to do so.
+  if (ed.dwProcessId == dwProcessId) {
+	// Found a window matching the process ID
+    ed.hWnd = hWnd;
+	// Report success
+    SetLastError(ERROR_SUCCESS);
+	// Stop enumeration
+    return FALSE;
+  }
+// Continue enumeration
+  return TRUE;
+}
+// Main entry
+HWND FindWindowFromProcessId(DWORD dwProcessId) {
+	EnumData ed = { dwProcessId };
+	if (!EnumWindows(EnumProc, (LPARAM)&ed) &&
+		(GetLastError() == ERROR_SUCCESS)) {
+		return ed.hWnd;
+	}
+	return NULL;
+}
+
+// Helper method for convenience
+HWND FindWindowFromProcess(HANDLE hProcess) {
+	return FindWindowFromProcessId(GetProcessId(hProcess));
+}
+#endif
+
+bool Utils::processExists(const quint64& p_processId)
+{
+#ifdef _WIN32
+	return FindWindowFromProcessId(p_processId) != NULL;
+#else
+	return false;
+#endif
+}
