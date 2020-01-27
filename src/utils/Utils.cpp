@@ -117,6 +117,6 @@ bool Utils::processExists(const quint64& p_processId)
 #ifdef _WIN32
 	return FindWindowFromProcessId(p_processId) != NULL;
 #else
-	return false;
+	return true;
 #endif
 }
