@@ -108,15 +108,23 @@ static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == QLatin1String("MacOS")) {
     dir.cdUp();
-    dir.cd("Resources");
+	if (!dir.cd("Resources"))
+	{
+      dir.mkdir("Resources");
+      dir.cd("Resources");
+	}
   } else
     dir.cdUp();
   return dir;
 }
 
-static inline QString getAppPackageDataDirPath () {
+static inline QString getAppPackageDataDirPath() {
   QDir dir = getAppPackageDir();
-  dir.cd("share");
+  if (!dir.cd("share"))
+  {
+    dir.mkdir("share");
+    dir.cd("share");
+  }
   return dir.absolutePath();
 }
 

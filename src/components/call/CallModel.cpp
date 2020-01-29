@@ -33,6 +33,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/LinphoneUtils.hpp"
+#include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "CallModel.hpp"
@@ -469,11 +470,11 @@ float CallModel::getQuality () const {
 // -----------------------------------------------------------------------------
 
 float CallModel::getSpeakerVu () const {
-  return LinphoneUtils::computeVu(mCall->getPlayVolume());
+  return MediastreamerUtils::computeVu(mCall->getPlayVolume());
 }
 
 float CallModel::getMicroVu () const {
-  return LinphoneUtils::computeVu(mCall->getRecordVolume());
+  return MediastreamerUtils::computeVu(mCall->getRecordVolume());
 }
 
 // -----------------------------------------------------------------------------

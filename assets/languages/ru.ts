@@ -615,6 +615,10 @@
         <source>abortEditDescriptionText</source>
         <translation>Вы уверены, что хотите отменить изменение контакта?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Вы уверены, что хотите очистить эту историю?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -961,6 +977,10 @@
         <source>smartSearchBarTooltip</source>
         <translation>Используйте умную поисковую строку, чтобы сразу начать аудио или видео вызов, отправить сообщение или добавить новый контакт. Просто введите SIP адрес или имя пользователя вашего контакта.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1155,6 +1175,22 @@
         <source>showAudioCodecsLabel</source>
         <translation>Показать Аудио кодаки</translation>
     </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1257,6 +1293,10 @@
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Вызов поставлен на паузу</translation>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

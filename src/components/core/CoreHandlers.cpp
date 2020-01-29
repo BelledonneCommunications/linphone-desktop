@@ -125,6 +125,11 @@ void CoreHandlers::onCallStatsUpdated (
   call->getData<CallModel>("call-model").updateStats(stats);
 }
 
+void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,
+				  const shared_ptr<linphone::Call> &call) {
+  emit callCreated(call);
+}
+
 void CoreHandlers::onGlobalStateChanged (
   const shared_ptr<linphone::Core> &,
   linphone::GlobalState gstate,

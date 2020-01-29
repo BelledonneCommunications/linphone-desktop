@@ -1,0 +1,57 @@
+#################################################
+# Makefile
+#################################################
+
+
+job-debian8-makefile-gcc:
+
+  tags: [ "docker-debian8" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+    LBC_NODEBUG_OPTIONS: -- -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
+
+job-debian8-makefile-clang:
+
+  tags: [ "docker-debian8" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: clang
+    CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+    LBC_NODEBUG_OPTIONS: -- -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
+#################################################
+# Ninja
+#################################################
+
+#job-debian8-ninja-gcc:
+#
+#  tags: [ "docker-debian8" ]
+#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+#  variables:
+#    CMAKE_GENERATOR: Ninja
+#    CC: gcc
+#    CXX: g++
+#  extends: .job-linux-desktop
+
+
+#job-debian8-ninja-clang:
+#
+#  tags: [ "docker-debian8" ]
+#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+#  variables:
+#    CMAKE_GENERATOR: Ninja
+#    CC: clang
+#    CXX: clang++
+#  extends: .job-linux-desktop

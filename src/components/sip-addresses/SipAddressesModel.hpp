@@ -114,6 +114,9 @@ private:
   void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::Call> &call);
   void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::ChatMessage> &message);
 
+
+  //NMN TODO bind to missedCall event and implement void addOrUpdateSipAddress
+
   template<class T>
   void addOrUpdateSipAddress (const QString &sipAddress, T data);
 

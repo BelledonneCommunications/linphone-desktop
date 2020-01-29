@@ -28,7 +28,10 @@ int main (int argc, char *argv[]) {
   AppController controller(argc, argv);
   App *app = controller.getApp();
   if (app->isSecondary())
-    return EXIT_SUCCESS;
+  {
+	  qInfo() << QStringLiteral("Running secondary app success. Kill it now.");
+	  return EXIT_SUCCESS;
+  }
 
   qInfo() << QStringLiteral("Running app...");
 

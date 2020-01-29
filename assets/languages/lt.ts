@@ -615,6 +615,10 @@ Nesukonfigūruotas serverio url.</translation>
         <source>abortEditDescriptionText</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@ Nesukonfigūruotas serverio url.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Ar tikrai norite išvalyti šią istoriją?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -963,6 +979,10 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 garso ir vaizdo skambučius, siųsti žinutę ar pridėti naują kontaktą.
 Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1157,6 +1177,22 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
         <source>showAudioCodecsLabel</source>
         <translation>Rodyti garso kodekus</translation>
     </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1258,6 +1294,10 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

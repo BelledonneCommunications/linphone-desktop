@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -67,10 +68,17 @@ DialogPlus {
         }
 
         Slider {
+	  id: playbackSlider
           width: parent.width
 
           Component.onCompleted: value = call.speakerVolumeGain
           onPositionChanged: call.speakerVolumeGain = position
+
+	  ToolTip {
+	    parent: playbackSlider.handle
+	    visible: playbackSlider.pressed
+	    text: (playbackSlider.value * 100).toFixed(0) + " %"
+	  }
         }
       }
     }
@@ -103,10 +111,17 @@ DialogPlus {
         }
 
         Slider {
+	  id: captureSlider
           width: parent.width
 
           Component.onCompleted: value = call.microVolumeGain
           onPositionChanged: call.microVolumeGain = position
+
+	  ToolTip {
+	    parent: captureSlider.handle
+	    visible: captureSlider.pressed
+	    text: "+ " + (captureSlider.value * 100).toFixed(0) + " %"
+	  }
         }
       }
     }

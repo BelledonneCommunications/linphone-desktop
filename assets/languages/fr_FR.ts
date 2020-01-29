@@ -615,6 +615,10 @@ Url du serveur non configurée.</translation>
         <source>abortEditDescriptionText</source>
         <translation>Êtes-vous sûr de vouloir annuler l&apos;édition du contact ?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation>Allez à la conversation</translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -656,6 +660,18 @@ Url du serveur non configurée.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Êtes-vous sûr de vouloir supprimer cet historique ?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation>Editer le contact</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation>Ajouter le contact</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation>Supprimer l&apos;historique</translation>
     </message>
 </context>
 <context>
@@ -961,6 +977,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>smartSearchBarTooltip</source>
         <translation>Utilisez la barre de recherche intelligente pour lancer des appels audio et vidéo, envoyer un message ou ajouter un contact. Entrez simplement l&apos;adresse SIP ou le nom d&apos;utilisateur de votre contact.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation>Démarrer une conférence</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1155,6 +1175,22 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showAudioCodecsLabel</source>
         <translation>Afficher les codecs audio</translation>
     </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation>Gain de lecture</translation>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation>Gain de capture</translation>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation>Niveau micro</translation>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation>Appel en cours: certains paramètres sont inaccessibles</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
@@ -1257,6 +1293,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Autoriser la mise en pause</translation>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation>Chiffrement obligatoire</translation>
     </message>
 </context>
 <context>
