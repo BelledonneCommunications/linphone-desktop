@@ -649,6 +649,9 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
 
 	if (core->mediaEncryptionSupported(linphone::MediaEncryption::ZRTP))
 		list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
+	
+	if (core->mediaEncryptionSupported(linphone::MediaEncryption::DTLS))
+		list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
 
 	return list;
 }

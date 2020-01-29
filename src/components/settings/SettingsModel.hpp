@@ -184,7 +184,7 @@ class SettingsModel : public QObject {
 public:
 	enum MediaEncryption {
 			      MediaEncryptionNone = int(linphone::MediaEncryption::None),
-			      //    MediaEncryptionDtls = int(linphone::MediaEncryption::DTLS),
+			      MediaEncryptionDtls = int(linphone::MediaEncryption::DTLS),
 			      MediaEncryptionSrtp = int(linphone::MediaEncryption::SRTP),
 			      MediaEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
 	};
