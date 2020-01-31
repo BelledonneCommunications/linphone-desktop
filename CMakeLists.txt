@@ -481,3 +481,11 @@ source_group(
 source_group(
   "Svg" REGULAR_EXPRESSION ".+\.svg$"
 )
+
+# ------------------------------
+# Installation
+# ------------------------------
+install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/install.cmake")
+#endif ()
+
+
