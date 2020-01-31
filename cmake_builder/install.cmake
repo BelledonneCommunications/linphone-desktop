@@ -1,6 +1,6 @@
 ############################################################################
 # packaging.cmake
-# Copyright (C) 2017-2020  Belledonne Communications, Grenoble France
+# Copyright (C) 2020  Belledonne Communications, Grenoble France
 #
 ############################################################################
 #
