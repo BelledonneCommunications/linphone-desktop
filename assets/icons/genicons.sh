@@ -5,4 +5,4 @@ do
   mkdir -p hicolor/${i}x${i}/apps
   inkscape -z -e hicolor/${i}x${i}/apps/icon.png -w $i -h $i ../images/linphone_logo.svg
 done
-inkscape -z -e ../icon.ico -w 255 -h 255 ../images/linphone_logo.svg
+inkscape -z -e ../icon.ico -w 256 -h 256 ../images/linphone_logo.svg
