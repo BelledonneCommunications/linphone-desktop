@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
+import Qt.labs.platform 1.0
 
 import Common 1.0
 import Linphone 1.0
@@ -192,14 +193,14 @@ ApplicationWindow {
             visible: Qt.platform.os !== 'osx'
 
             onClicked: menuBar.open()
-
             MainWindowMenuBar {
               id: menuBar
             }
+
           }
         }
       }
-
+      MainWindowTopMenuBar{}
       // -----------------------------------------------------------------------
       // Content.
       // -----------------------------------------------------------------------

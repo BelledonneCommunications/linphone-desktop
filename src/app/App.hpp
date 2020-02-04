@@ -103,6 +103,9 @@ public:
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
 
+public slots:
+  void stateChanged(Qt::ApplicationState);
+
 signals:
   void configLocaleChanged (const QString &locale);
 

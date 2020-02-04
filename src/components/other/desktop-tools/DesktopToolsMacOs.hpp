@@ -24,7 +24,6 @@
 #define DESKTOP_TOOLS_MAC_OS_H_
 
 #include <QObject>
-
 // =============================================================================
 
 class DesktopTools : public QObject {
@@ -38,6 +37,8 @@ public:
 
   bool getScreenSaverStatus () const;
   void setScreenSaverStatus (bool status);
+
+  static void applicationStateChanged(Qt::ApplicationState currentState);
 
 signals:
   void screenSaverStatusChanged (bool status);

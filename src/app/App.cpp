@@ -47,6 +47,7 @@
 #include "translator/DefaultTranslator.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
+#include "components/other/desktop-tools/DesktopTools.hpp"
 
 #include "App.hpp"
 
@@ -173,6 +174,9 @@ static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLine
 // -----------------------------------------------------------------------------
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+
+  connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
+
   setWindowIcon(QIcon(LinphoneUtils::WindowIconPath));
 
   createParser();
@@ -405,11 +409,12 @@ void App::smartShowWindow (QQuickWindow *window) {
 }
 
 // -----------------------------------------------------------------------------
-
 bool App::hasFocus () const {
   return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
 }
-
+void App::stateChanged(Qt::ApplicationState pState) {
+    DesktopTools::applicationStateChanged(pState);
+}
 // -----------------------------------------------------------------------------
 
 void App::createParser () {
