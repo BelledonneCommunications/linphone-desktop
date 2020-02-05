@@ -49,7 +49,7 @@ MenuBar {
 
   Menu {
     id: menu
-    title: qsTr('Settings')
+    title: qsTr('settings')
 
     MenuItem {
       text: qsTr('settings')
