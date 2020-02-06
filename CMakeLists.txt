@@ -23,6 +23,9 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
+list(APPEND CMAKE_PREFIX_PATH "linphone-sdk/build-sdk/linphone-sdk/desktop")
+list(APPEND CMAKE_PREFIX_PATH "submodules/externals/minizip/build-minizip/OUTPUT")
+
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
 
@@ -96,6 +99,7 @@ endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 
 find_package(LinphoneCxx CONFIG REQUIRED)
 find_package(Linphone CONFIG REQUIRED)
@@ -386,7 +390,7 @@ endif ()
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
-set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${MINIZIP_LIBRARIES} ${OPUS_LIBRARIES})
+set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
 
 foreach (package ${QT5_PACKAGES})
   list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
@@ -414,7 +418,6 @@ if (APPLE)
   list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
 # -framework linphone") #This doesn't work yet
 endif ()
-
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
@@ -475,8 +478,15 @@ install(FILES "${ASSETS_ASSISTANT_DIR}/use-app-sip-account.rc"
 # ------------------------------------------------------------------------------
 # CPack settings & RPM.
 # ------------------------------------------------------------------------------
+set(LINPHONE_DESKTOP_DIR "${CMAKE_SOURCE_DIR}")
+set(LINPHONE_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")
+set(LINPHONE_SDK_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk/build-sdk/linphone-sdk")
+set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
+set(LINPHONE_SOURCE_DIR ${EP_linphone_SOURCE_DIR})
+set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 
 add_subdirectory(build)
+add_subdirectory(cmake_builder/linphone_package)
 
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.

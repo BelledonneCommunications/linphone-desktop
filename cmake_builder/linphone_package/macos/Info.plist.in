@@ -27,7 +27,7 @@
 	<key>CFBundleVersion</key>
 	<string>@PACKAGE_VERSION@</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2011-2018 @APPLICATION_VENDOR@</string>
+	<string>Copyright 2011-2020 @APPLICATION_VENDOR@</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>@CMAKE_OSX_DEPLOYMENT_TARGET@</string>
 	<key>NSAppSleepDisabled</key>
@@ -50,5 +50,7 @@
 	<string>NSApplication</string>
 	<key>NSHighResolutionCapable</key>
 	<string>True</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Streaming Video between devices</string>
 </dict>
 </plist>

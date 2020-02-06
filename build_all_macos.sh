@@ -45,7 +45,7 @@ cd ../..
 
 #MiniZip Building
 cd submodules/externals/minizip/build-minizip
-cmake .. -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT -DCMAKE_PREFIX_PATH=../../../build-desktop/OUTPUT -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=../../../build-desktop/OUTPUT -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build . --target all --config RelWithDebInfo --parallel 5
 cmake --build . --target install
 cd ../../../..
