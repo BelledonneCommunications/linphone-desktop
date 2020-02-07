@@ -71,14 +71,18 @@ file(GLOB MINIZIP_FILES "${CMAKE_SOURCE_DIR}/submodules/externals/minizip/build-
 file(COPY ${MINIZIP_FILES} DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/desktop/")
 if(APPLE)
     execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${CMAKE_CURRENT_BINARY_DIR}/desktop/lib/libminizip.dylib")
-elseif(NOT WIN32)
+elseif(WIN32)
     
 endif()
 file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/desktop" "${LINPHONE_SDK_TMP}")
 if(APPLE)
     target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.dylib")
 elseif(NOT WIN32)
-    target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
+	if( EXISTS "${LINPHONE_SDK_TMP}/lib64/libminizip.so")	
+		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
+	elseif(EXISTS "${LINPHONE_SDK_TMP}/lib/libminizip.so")	
+		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.so")
+	endif()
 endif()
 # Generates a zip archive containing the development files.
 macro (add_sdk_list_file NAME)
@@ -166,7 +170,6 @@ elseif (APPLE)
     COMMAND zip -ry "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip" . -i "@${EXECUTABLE_NAME}-sdk.list"
     WORKING_DIRECTORY ${LINPHONE_SDK_TMP}
   )
-  install()
 endif ()
 
 # ==============================================================================
@@ -174,45 +177,17 @@ endif ()
 # ==============================================================================
 
 if (WIN32)
-  execute_process(
-    COMMAND windeployqt "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe" "--qmldir" "${LINPHONE_QML_DIR}"
-  )
+  #execute_process(
+  #  COMMAND windeployqt "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe" "--qmldir" "${LINPHONE_QML_DIR}"
+  #)
+	install( CODE "execute_process(COMMAND windeployqt ${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe --qmldir=${LINPHONE_QML_DIR})")# -verbose=2)" )
 
-  file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
-  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${APPLICATION_NAME}" "share/${APPLICATION_NAME}" "share/sounds")
-  foreach (ITEM IN LISTS SHARE_CONTENT)
-    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
-  endforeach ()
-
-  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
-    DESTINATION "."
-    PATTERN "bin/*_tester.exe" EXCLUDE
-    PATTERN "bin/belcard*.exe" EXCLUDE
-    PATTERN "bin/openh264.dll" EXCLUDE
-    PATTERN "cmake" EXCLUDE
-    PATTERN "include" EXCLUDE
-    PATTERN "lib/*.a" EXCLUDE
-    PATTERN "lib/*.def" EXCLUDE
-    PATTERN "lib/*.exp" EXCLUDE
-    PATTERN "lib/cmake" EXCLUDE
-    PATTERN "lib/*.la" EXCLUDE
-    PATTERN "lib/*.lib" EXCLUDE
-    PATTERN "lib/mediastreamer/plugins/*openh264.*" EXCLUDE
-    PATTERN "lib/pkgconfig" EXCLUDE
-    PATTERN "lib/Win32" EXCLUDE
-    PATTERN "${EXECUTABLE_NAME}.lnk" EXCLUDE
-    PATTERN "share/${APPLICATION_NAME}/cmake" EXCLUDE
-    PATTERN "share/Belr/cmake" EXCLUDE
-    ${SHARE_CONTENT_EXCLUDE}
-  )
-
-  install(FILES "${LINPHONE_OUTPUT_DIR}/share/Linphone/rootca.pem" DESTINATION "share/${APPLICATION_NAME}")
-
-  if (ENABLE_OPENH264)
-    install(FILES "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/libmsopenh264.dll"
-      DESTINATION "lib/mediastreamer/plugins"
-    )
-  endif ()
+	file(GLOB LIB_FILES "${LINPHONE_SDK_TMP}/lib/*.dll")
+	install(FILES ${LIB_FILES} DESTINATION "bin")
+#  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${APPLICATION_NAME}" "share/${APPLICATION_NAME}" "share/sounds")
+#  foreach (ITEM IN LISTS SHARE_CONTENT)
+#    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
+#  endforeach ()
 elseif (APPLE)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Info.plist" @ONLY)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Resources/${EXECUTABLE_NAME}.icns" COPYONLY)
@@ -253,7 +228,7 @@ elseif (APPLE)
     endif()
   endforeach ()
 
-  install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -verbose=2)" )
+  install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)" )
 
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
     file(GLOB FRAMEWORKS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/*")
@@ -305,26 +280,27 @@ else()# Not Windows and Apple
 
 endif ()
 
-if (MSVC)
-  string(REGEX REPLACE "Visual Studio ([0-9]+).*" "\\1" MSVC_VERSION "${CMAKE_GENERATOR}")
-  find_file(MSVCP_LIB "msvcp${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
-  find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")
-  # Starting with Visual Studio 2015 (MSVC_VERSION==14) the msvcr dll has been renamed to vcruntime.
-  find_file(VCRUNTIME_LIB "vcruntime${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
-  if (NOT VCRUNTIME_LIB)
-    find_file(VCRUNTIME_LIB "msvcr${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
-  endif ()
-  install(FILES ${MSVCP_LIB} ${UCRTBASE_LIB} ${VCRUNTIME_LIB} DESTINATION "bin")
-  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    find_file(MSVCPD_LIB "msvcp${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
-    find_file(UCRTBASED_LIB "ucrtbased.dll" PATHS "C:/Windows/System32")
-    find_file(VCRUNTIMED_LIB "vcruntime${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
-    if (NOT VCRUNTIMED_LIB)
-      find_file(VCRUNTIMED_LIB "msvcr${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
-    endif ()
-    install(FILES ${MSVCPD_LIB} ${UCRTBASED_LIB} ${VCRUNTIMED_LIB} DESTINATION "bin")
-  endif ()
-endif ()
+# Temporary deactivate
+#if (MSVC)
+#  string(REGEX REPLACE "Visual Studio ([0-9]+).*" "\\1" MSVC_VERSION "${CMAKE_GENERATOR}")
+#  find_file(MSVCP_LIB "msvcp${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
+#  find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")
+#  # Starting with Visual Studio 2015 (MSVC_VERSION==14) the msvcr dll has been renamed to vcruntime.
+#  find_file(VCRUNTIME_LIB "vcruntime${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
+#  if (NOT VCRUNTIME_LIB)
+#    find_file(VCRUNTIME_LIB "msvcr${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
+#  endif ()
+#  install(FILES ${MSVCP_LIB} ${UCRTBASE_LIB} ${VCRUNTIME_LIB} DESTINATION "bin")
+#  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+#    find_file(MSVCPD_LIB "msvcp${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
+#    find_file(UCRTBASED_LIB "ucrtbased.dll" PATHS "C:/Windows/System32")
+#    find_file(VCRUNTIMED_LIB "vcruntime${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
+#    if (NOT VCRUNTIMED_LIB)
+#      find_file(VCRUNTIMED_LIB "msvcr${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
+#    endif ()
+#    install(FILES ${MSVCPD_LIB} ${UCRTBASED_LIB} ${VCRUNTIMED_LIB} DESTINATION "bin")
+#  endif ()
+#endif ()
 
 # ==============================================================================
 # CPack.
@@ -411,6 +387,6 @@ if (WIN32)
     message(STATUS "No signtool certificate found; assuming development machine (${PFX_FILE})")
   endif ()
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/packaging.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake" @ONLY)
-  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
+ # install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
 endif ()
 include(CPack)
