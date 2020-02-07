@@ -3,7 +3,7 @@
 # See: http://wiki.qt.io/Building_Qt_5_from_Git
 # See: http://doc.qt.io/qt-5/configure-options.html
 
-REPO_URL='https://code.qt.io/cgit/qt/qt5.git'
+REPO_URL='git://code.qt.io/qt/qt5.git'
 QT_VERSION='5.14.1'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
@@ -72,6 +72,7 @@ fi
 cd ..
 
 mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-tar --transform "s/^${REPO_FOLDER}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
+tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
+#tar --transform "s/^${REPO_FOLDER}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
 rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec
