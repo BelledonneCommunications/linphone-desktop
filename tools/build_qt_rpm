@@ -3,7 +3,7 @@
 # See: http://wiki.qt.io/Building_Qt_5_from_Git
 # See: http://doc.qt.io/qt-5/configure-options.html
 
-REPO_URL='https://code.qt.io/qt/qt5.git'
+REPO_URL='https://code.qt.io/cgit/qt/qt5.git'
 QT_VERSION='5.12.6'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
@@ -22,7 +22,7 @@ cd "${SCRIPT_DIR}/.."
 # ==============================================================================
 
 if [ ! -d "${REPO_FOLDER}/.git" ]; then
-  git clone "${REPO_URL}" "${REPO_FOLDER}"
+  git clone "${REPO_URL}" "${REPO_FOLDER}" --jobs 10
 fi
 cd "${REPO_FOLDER}"
 
