@@ -20,14 +20,14 @@
 #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.11)
 project(LINPHONE_PACKAGE) # Dummy project.
 
 include("${LINPHONE_DESKTOP_DIR}/application_info.cmake")
 
 find_package(Linphone REQUIRED)
 find_package(Git)
-#Policy set to allow link from other directory
+#Policy set to allow link from other directory (cmake 3.13)
 if (POLICY CMP0079)
   cmake_policy(SET CMP0079 NEW)
 endif ()
@@ -272,7 +272,7 @@ else()# Not Windows and Apple
   if( EXISTS "${LINPHONE_SDK_TMP}/lib64/")
 	install(DIRECTORY "${LINPHONE_SDK_TMP}/lib64/" DESTINATION "lib64" USE_SOURCE_PERMISSIONS)
   endif()
-  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/" DESTINATION "." USE_SOURCE_PERMISSIONS)
+  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/" DESTINATION "share" USE_SOURCE_PERMISSIONS)
   #install(PROGRAMS "${CMAKE_INSTALL_PREFIX}/bin/${EXECUTABLE_NAME}" DESTINATION "/bin")
 
 
