@@ -631,7 +631,7 @@ void SettingsModel::setFileTransferUrl (const QString &url) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getLimeIsSupported () const {
-	return CoreManager::getInstance()->getCore()->limeAvailable();
+    return CoreManager::getInstance()->getCore()->limeX3DhAvailable();
 }
 
 // -----------------------------------------------------------------------------
@@ -669,7 +669,7 @@ void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
 		return;
 
 	if (encryption != SettingsModel::MediaEncryptionZrtp)
-		setLimeState(SettingsModel::LimeStateDisabled);
+        setLimeState(false);
 
 	CoreManager::getInstance()->getCore()->setMediaEncryption(
 								  static_cast<linphone::MediaEncryption>(encryption)
@@ -701,22 +701,18 @@ void SettingsModel::enableMandatoryMediaEncryption(bool mandatory) {
 
 // -----------------------------------------------------------------------------
 
-SettingsModel::LimeState SettingsModel::getLimeState () const {
-	return static_cast<SettingsModel::LimeState>(
-						     CoreManager::getInstance()->getCore()->limeEnabled()
-						     );
+bool SettingsModel::getLimeState () const {
+    return  CoreManager::getInstance()->getCore()->limeX3DhEnabled();
 }
 
-void SettingsModel::setLimeState (LimeState state) {
+void SettingsModel::setLimeState (const bool& state) {
 	if (state == getLimeState())
 		return;
 
-	if (state != SettingsModel::LimeStateDisabled)
+    if (state)
 		setMediaEncryption(SettingsModel::MediaEncryptionZrtp);
 
-	CoreManager::getInstance()->getCore()->enableLime(
-							  static_cast<linphone::LimeState>(state)
-							  );
+    CoreManager::getInstance()->getCore()->enableLimeX3Dh(!state);
 
 	emit limeStateChanged(state);
 }
@@ -1242,15 +1238,16 @@ void SettingsModel::setDeveloperSettingsEnabled (bool status) {
 	mConfig->setInt(UiSection, "developer_settings", status);
 	emit developerSettingsEnabledChanged(status);
 #else
+    Q_UNUSED(status)
 	qWarning() << QStringLiteral("Unable to change developer settings mode in release version.");
 #endif // ifdef DEBUG
 }
 
-void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &call) {
+void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &) {
 	emit isInCallChanged(getIsInCall());
 }
 
-void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
+void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, linphone::Call::State) {
 	emit isInCallChanged(getIsInCall());
 }
 
