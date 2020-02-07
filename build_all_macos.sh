@@ -40,12 +40,11 @@ cd linphone-sdk/build-sdk
 #LINPHONESDK_DOXYGEN_PROGRAM is set just to be sure to get the version of the Application folder
 cmake .. -DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build . --target all --config RelWithDebInfo --parallel 5
-rsync -a linphone-sdk/desktop/ ../../build-desktop/OUTPUT/
 cd ../..
 
 #MiniZip Building
 cd submodules/externals/minizip/build-minizip
-cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=../../../build-desktop/OUTPUT -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=../../../linphone-sdk/build-sdk/linphone-sdk/desktop -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build . --target all --config RelWithDebInfo --parallel 5
 cmake --build . --target install
 cd ../../../..
