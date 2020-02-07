@@ -38,22 +38,21 @@ mkdir -p submodules/externals/minizip/build-minizip
 #SDK building
 cd linphone-sdk/build-sdk
 #LINPHONESDK_DOXYGEN_PROGRAM is set just to be sure to get the version of the Application folder
-cmake .. -DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9
-cmake --build . --target all --parallel 5
-rsync -a linphone-sdk/desktop/ ../../build-desktop/OUTPUT/
+cmake .. -DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --target all --config RelWithDebInfo --parallel 5
 cd ../..
 
 #MiniZip Building
 cd submodules/externals/minizip/build-minizip
-cmake .. -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT -DCMAKE_PREFIX_PATH=../../../build-desktop/OUTPUT
-cmake --build . --target all --parallel 5
+cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=../../../linphone-sdk/build-sdk/linphone-sdk/desktop -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --target all --config RelWithDebInfo --parallel 5
 cmake --build . --target install
 cd ../../../..
 
 #Desktop Building
 cd build-desktop
-cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT
-cmake --build . --target all
+cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --target all --config RelWithDebInfo
 cmake --build . --target install
 
 

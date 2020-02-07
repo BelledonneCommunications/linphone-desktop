@@ -23,6 +23,9 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
+list(APPEND CMAKE_PREFIX_PATH "linphone-sdk/build-sdk/linphone-sdk/desktop")
+list(APPEND CMAKE_PREFIX_PATH "submodules/externals/minizip/build-minizip/OUTPUT")
+
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
 
@@ -121,6 +124,7 @@ endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
 
 find_package(LinphoneCxx CONFIG REQUIRED)
 find_package(Linphone CONFIG REQUIRED)
@@ -260,6 +264,7 @@ if (APPLE)
     src/components/core/event-count-notifier/EventCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
     src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
+    src/components/other/desktop-tools/state-process/StateProcessMacOs.mm
   )
   list(APPEND HEADERS
     src/app/single-application/SingleApplicationPrivate.hpp
@@ -351,6 +356,15 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
   "${CMAKE_CURRENT_SOURCE_DIR}/.git/hooks/pre-commit"
 )
+set(_QML_IMPORT_PATHS "")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/modules")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/dev-modules")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
+
+
+set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+
 
 set(_QML_IMPORT_PATHS "")
 list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/modules")
@@ -409,7 +423,7 @@ endif ()
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${LINPHONE_INCLUDE_DIRS}" "${BELCARD_INCLUDE_DIRS}" "${BCTOOLBOX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
-set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${MINIZIP_LIBRARIES} ${OPUS_LIBRARIES})
+set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
 
 foreach (package ${QT5_PACKAGES})
   list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
@@ -437,7 +451,6 @@ if (APPLE)
   list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
 # -framework linphone") #This doesn't work yet
 endif ()
-
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
@@ -465,7 +478,7 @@ if (UNIX AND NOT APPLE)
     RENAME "${EXECUTABLE_NAME}.svg"
   )
 
-  set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128)
+  set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128 256x256)
   foreach (DIR ${ICON_DIRS})
     install(FILES "${ASSETS_DIR}/icons/hicolor/${DIR}/apps/icon.png"
       DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/${DIR}/apps/"
@@ -498,8 +511,15 @@ install(FILES "${ASSETS_ASSISTANT_DIR}/use-app-sip-account.rc"
 # ------------------------------------------------------------------------------
 # CPack settings & RPM.
 # ------------------------------------------------------------------------------
+set(LINPHONE_DESKTOP_DIR "${CMAKE_SOURCE_DIR}")
+set(LINPHONE_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")
+set(LINPHONE_SDK_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk/build-sdk/linphone-sdk")
+set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
+set(LINPHONE_SOURCE_DIR ${EP_linphone_SOURCE_DIR})
+set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 
 add_subdirectory(build)
+add_subdirectory(cmake_builder/linphone_package)
 
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.
