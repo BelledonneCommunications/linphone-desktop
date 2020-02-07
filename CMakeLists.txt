@@ -26,6 +26,8 @@ project(linphoneqt VERSION 4.1.1)
 list(APPEND CMAKE_PREFIX_PATH "linphone-sdk/build-sdk/linphone-sdk/desktop")
 list(APPEND CMAKE_PREFIX_PATH "submodules/externals/minizip/build-minizip/OUTPUT")
 
+set(CMAKE_INSTALL_PREFIX "OUTPUT")
+
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
 
