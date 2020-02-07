@@ -22,7 +22,7 @@ cd "${SCRIPT_DIR}/.."
 # ==============================================================================
 
 if [ ! -d "${REPO_FOLDER}/.git" ]; then
-  git clone "${REPO_URL}" "${REPO_FOLDER}" --jobs 10
+  git clone "${REPO_URL}" "${REPO_FOLDER}"
 fi
 cd "${REPO_FOLDER}"
 
