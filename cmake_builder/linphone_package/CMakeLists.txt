@@ -20,7 +20,7 @@
 #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.1)
 project(LINPHONE_PACKAGE) # Dummy project.
 
 include("${LINPHONE_DESKTOP_DIR}/application_info.cmake")
@@ -63,7 +63,7 @@ set(PACKAGE_VERSION "${LINPHONE_VERSION}")
 # ==============================================================================
 
 # Create sdk-temp folder where we can find all needed files (libs, includes etc.)
-set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-tmp")
+
 file(REMOVE_RECURSE "${LINPHONE_SDK_TMP}")
 message(${LINPHONE_SDK_DIR})
 file(COPY "${LINPHONE_SDK_DIR}/" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
@@ -75,15 +75,7 @@ elseif(WIN32)
     
 endif()
 file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/desktop" "${LINPHONE_SDK_TMP}")
-if(APPLE)
-    target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.dylib")
-elseif(NOT WIN32)
-	if( EXISTS "${LINPHONE_SDK_TMP}/lib64/libminizip.so")	
-		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
-	elseif(EXISTS "${LINPHONE_SDK_TMP}/lib/libminizip.so")	
-		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.so")
-	endif()
-endif()
+
 # Generates a zip archive containing the development files.
 macro (add_sdk_list_file NAME)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/sdk_content/${NAME}.list.in" "${LINPHONE_SDK_TMP}/${NAME}.list" @ONLY)

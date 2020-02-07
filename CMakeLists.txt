@@ -528,6 +528,7 @@ set(LINPHONE_SDK_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk/build-sdk/linphone-sdk")
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_SOURCE_DIR ${EP_linphone_SOURCE_DIR})
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
+set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-tmp")
 
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
@@ -552,4 +553,12 @@ source_group(
 install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/install.cmake")
 #endif ()
 
-
+if(APPLE)
+    target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.dylib")
+elseif(NOT WIN32)
+	if( EXISTS "${LINPHONE_SDK_TMP}/lib64/libminizip.so")	
+		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
+	elseif(EXISTS "${LINPHONE_SDK_TMP}/lib/libminizip.so")	
+		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.so")
+	endif()
+endif()
