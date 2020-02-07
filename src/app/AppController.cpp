@@ -40,7 +40,7 @@ namespace {
 }
 
 AppController::AppController (int &argc, char *argv[]) {
-  QT_REQUIRE_VERSION(argc, argv, ApplicationMinimalQtVersion);
+  QT_REQUIRE_VERSION(argc, argv, ApplicationMinimalQtVersion)
   Q_ASSERT(!mApp);
 
   // Disable QML cache. Avoid malformed cache.

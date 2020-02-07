@@ -125,7 +125,10 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
   map["registrationDuration"] = proxyConfig->getPublishExpires();
   map["transport"] = Utils::coreStringToAppString(proxyConfig->getTransport());
-  map["route"] = Utils::coreStringToAppString(proxyConfig->getRoute());
+  if( proxyConfig->getRoutes().size() > 0)
+    map["route"] = Utils::coreStringToAppString(proxyConfig->getRoutes().front());
+  else
+    map["route"] = "";
   map["contactParams"] = Utils::coreStringToAppString(proxyConfig->getContactParameters());
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();

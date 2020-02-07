@@ -27,7 +27,10 @@ list(APPEND CMAKE_PREFIX_PATH "linphone-sdk/build-sdk/linphone-sdk/desktop")
 list(APPEND CMAKE_PREFIX_PATH "submodules/externals/minizip/build-minizip/OUTPUT")
 
 set(CMAKE_INSTALL_PREFIX "OUTPUT")
-
+if(UNIX AND NOT APPLE)
+    set(CMAKE_INSTALL_RPATH "lib64;../lib64")
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+endif()
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
 
@@ -51,7 +54,6 @@ option(ENABLE_G729 "Build mediastreamer2 with the G726 codec." YES)
 option(ENABLE_GSM "Build mediastreamer2 with the GSM codec." YES)
 option(ENABLE_ILBC "" YES)
 option(ENABLE_ISAC "" YES)
-option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
 option(ENABLE_SILK "" YES)
 #option(ENABLE_SPEEX "" YES)
 option(ENABLE_SPEEX_CODEC "Build mediastreamer2 with the SPEEX codec." YES)
@@ -63,6 +65,11 @@ option(ENABLE_MPEG4 "" YES)
 option(ENABLE_OPENH264 "Embedded OpenH264" YES)
 option(ENABLE_VPX "Build mediastreamer2 with VPX codec." YES)
 option(ENABLE_MKV "Enable support of MKV files reading and writing." YES)
+if(WIN32 OR APPLE)
+    option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
+else()##Opus crash on Linux. The version for 4.3 is old. We have to use a switch in configuration to select the newest version for desktop.
+    option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
+endif()
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
@@ -494,11 +501,11 @@ endif ()
 # ------------------------------------------------------------------------------
 
 install(FILES "${ASSETS_DIR}/linphonerc-factory"
-  DESTINATION "${CMAKE_INSTALL_DATADIR}/${EXECUTABLE_NAME}"
+  DESTINATION "${CMAKE_INSTALL_DATADIR}/${APPLICATION_NAME}"
 )
 
 set(ASSETS_ASSISTANT_DIR "${ASSETS_DIR}/assistant")
-set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/${EXECUTABLE_NAME}/assistant")
+set(ASSISTANT_INSTALL_DATADIR "${CMAKE_INSTALL_DATADIR}/${APPLICATION_NAME}/assistant")
 
 install(FILES "${ASSETS_ASSISTANT_DIR}/use-other-sip-account.rc"
   DESTINATION "${ASSISTANT_INSTALL_DATADIR}"

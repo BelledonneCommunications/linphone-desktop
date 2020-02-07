@@ -31,6 +31,8 @@
 #include "mediastreamer2/msticker.h"
 #include <linphone++/linphone.hh>
 
+#include <QtGlobal>
+
 // =============================================================================
 
 namespace MediastreamerUtils {
@@ -48,14 +50,14 @@ namespace MediastreamerUtils {
 	}
 
 	inline float dbToLinear(float volume) {
-		return static_cast<float>(pow(10, volume / 10));
+        return static_cast<float>(pow(10.0, volume / 10.0));
 	}
 
 	inline float linearToDb(float volume) {
-		if (volume == 0.0f) {
+        if (qFuzzyIsNull(volume)) {
 			return MS_VOLUME_DB_LOWEST;
 		}
-		return static_cast<float>(10 * log10(volume));
+        return static_cast<float>(10.0 * log10(volume));
 	}
 
 	//Simple mediastreamer audio capture graph
