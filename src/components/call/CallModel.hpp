@@ -23,8 +23,9 @@
 #ifndef CALL_MODEL_H_
 #define CALL_MODEL_H_
 
-#include <linphone++/linphone.hh>
 #include <QObject>
+#include <linphone++/linphone.hh>
+
 
 // =============================================================================
 

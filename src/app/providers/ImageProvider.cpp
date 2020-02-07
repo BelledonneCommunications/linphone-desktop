@@ -247,8 +247,8 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 
 QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
   const QString path = QStringLiteral(":%1").arg(id);
-  qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
-    .arg(path).arg(requestedSize.width()).arg(requestedSize.height());
+//  qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
+//    .arg(path).arg(requestedSize.width()).arg(requestedSize.height());
 
   QElapsedTimer timer;
   timer.start();
@@ -298,7 +298,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
   QPainter painter(&image);
   renderer.render(&painter);
 
-  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
+//  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
 
   return image;
 }

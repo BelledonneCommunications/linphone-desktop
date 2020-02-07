@@ -44,7 +44,7 @@
 struct InstancesInfo {
   bool primary;
   quint32 secondary;
-  quint64 primaryId;
+  qint64 primaryId;
 };
 
 class SingleApplicationPrivate : public QObject {
