@@ -19,6 +19,7 @@
  *  Created on: February 2, 2017
  *      Author: Ronan Abhamon
  */
+#include "CallModel.hpp"
 
 #include <QDateTime>
 #include <QQuickWindow>
@@ -36,7 +37,7 @@
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
-#include "CallModel.hpp"
+
 
 // =============================================================================
 
@@ -282,11 +283,14 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
       mPausedByRemote = false;
       break;
 
-    case linphone::Call::State::StreamsRunning:
+    case linphone::Call::State::StreamsRunning: {
       if (!mWasConnected && CoreManager::getInstance()->getSettingsModel()->getAutomaticallyRecordCalls()) {
         startRecording();
         mWasConnected = true;
-      } UTILS_NO_BREAK;
+      }
+       mPausedByRemote = false;
+       break;
+    }
     case linphone::Call::State::Connected:
     case linphone::Call::State::Referred:
     case linphone::Call::State::Released:
@@ -703,8 +707,8 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
   statsList << createStat(tr("callStatsDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
   statsList << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
   statsList << createStat(tr("callStatsIpFamily"), family);
-  statsList << createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(callStats->getSenderLossRate()));
-  statsList << createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(callStats->getReceiverLossRate()));
+  statsList << createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(static_cast<double>(callStats->getSenderLossRate())));
+  statsList << createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(static_cast<double>(callStats->getReceiverLossRate())));
 
   switch (callStats->getType()) {
     case linphone::StreamType::Audio:
@@ -730,8 +734,8 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
 
-      statsList << createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(params->getReceivedFramerate()));
-      statsList << createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(params->getSentFramerate()));
+      statsList << createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(static_cast<double>(params->getReceivedFramerate())));
+      statsList << createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(static_cast<double>(params->getSentFramerate())));
     } break;
 
     default:

@@ -19,7 +19,11 @@
  *  Created on: February 2, 2017
  *      Author: Ronan Abhamon
  */
+#include "App.hpp"
 
+#ifdef Q_OS_WIN
+  #include <QSettings>
+#endif // ifdef Q_OS_WIN
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFileSelector>
@@ -31,12 +35,7 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
-#ifdef Q_OS_WIN
-  #include <QSettings>
-#endif // ifdef Q_OS_WIN
-
 #include "config.h"
-
 #include "cli/Cli.hpp"
 #include "components/Components.hpp"
 #include "logger/Logger.hpp"
@@ -47,8 +46,6 @@
 #include "translator/DefaultTranslator.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
-
-#include "App.hpp"
 
 // =============================================================================
 

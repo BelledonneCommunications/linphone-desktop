@@ -36,6 +36,29 @@ set(ASSETS_DIR "assets")
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 
+option(ENABLE_GPL_THIRD_PARTIES "" YES)
+option(ENABLE_NON_FREE_CODECS "Allow inclusion of non-free codecs in the build." YES)
+option(ENABLE_AMRNB "" YES)
+option(ENABLE_AMRWB "" YES)
+option(ENABLE_BV16 "Build mediastreamer2 with the BV16 codec." YES)
+option(ENABLE_G729 "Build mediastreamer2 with the G726 codec." YES)
+#option(ENABLE_G729B_CNG "Build mediastreamer2 with G729 annex B cng." NO)
+option(ENABLE_GSM "Build mediastreamer2 with the GSM codec." YES)
+option(ENABLE_ILBC "" YES)
+option(ENABLE_ISAC "" YES)
+option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
+option(ENABLE_SILK "" YES)
+#option(ENABLE_SPEEX "" YES)
+option(ENABLE_SPEEX_CODEC "Build mediastreamer2 with the SPEEX codec." YES)
+option(ENABLE_SPEEX_DSP "Build mediastreamer2 with the SPEEX DSP support." YES)
+option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
+option(ENABLE_H263 "" YES)
+option(ENABLE_H263P "" YES)
+option(ENABLE_MPEG4 "" YES)
+option(ENABLE_OPENH264 "Embedded OpenH264" YES)
+option(ENABLE_VPX "Build mediastreamer2 with VPX codec." YES)
+option(ENABLE_MKV "Enable support of MKV files reading and writing." YES)
+
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
@@ -72,6 +95,8 @@ if (NOT WIN32)
   if (SUGGEST_OVERRIDE)
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override -Werror=suggest-override")
   endif ()
+elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+      set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wno-switch")
 endif ()
 
 set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -DQT_NO_EXCEPTIONS")
@@ -326,6 +351,14 @@ execute_process(COMMAND ${CMAKE_COMMAND} -E copy
   "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
   "${CMAKE_CURRENT_SOURCE_DIR}/.git/hooks/pre-commit"
 )
+
+set(_QML_IMPORT_PATHS "")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/modules")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/dev-modules")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
+
+set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 
 # ------------------------------------------------------------------------------
 # Create config.h file

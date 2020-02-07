@@ -21,11 +21,14 @@
  */
 
 #include "AppController.hpp"
-
+#include <qloggingcategory.h>
 // =============================================================================
 
 int main (int argc, char *argv[]) {
+  QApplication::setOrganizationName("Belledonne-Communications");
+  QApplication::setOrganizationDomain("linphone.org");
   AppController controller(argc, argv);
+  //QLoggingCategory::setFilterRules("*.debug=true;qml=false");
   App *app = controller.getApp();
   if (app->isSecondary())
   {

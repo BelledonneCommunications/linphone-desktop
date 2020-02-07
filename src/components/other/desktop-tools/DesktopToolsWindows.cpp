@@ -20,10 +20,11 @@
  *      Author: Ronan Abhamon
  */
 
-#include <Windows.h>
+
 
 #include "DesktopToolsWindows.hpp"
 
+#include <Windows.h>
 // =============================================================================
 
 DesktopTools::DesktopTools (QObject *parent) : QObject(parent) {}

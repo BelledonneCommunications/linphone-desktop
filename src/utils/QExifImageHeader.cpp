@@ -120,7 +120,7 @@ public:
   QExifByteValuePrivate (const QVector<quint8> &v)
     : QExifValuePrivate(QExifValue::Byte, v.size()), value(v)
   {}
-
+  ~QExifByteValuePrivate(){}
   QVector<quint8> value;
 };
 
@@ -491,13 +491,15 @@ QString QExifValue::toString () const {
           QTextCodec *codec = QTextCodec::codecForName("UTF-16");
           if (codec)
             return codec->toUnicode(string);
-        } UTILS_NO_BREAK;
+          return QString::fromLocal8Bit(string.constData(), string.length());
+        }
         case UndefinedEncoding:
           return QString::fromLocal8Bit(string.constData(), string.length());
         default:
           break;
       }
-    } UTILS_NO_BREAK;
+      return QString();
+    }
     default:
       return QString();
   }
@@ -1391,7 +1393,6 @@ QExifValue QExifImageHeader::readIfdValue (QDataStream &stream, int startPos, co
       }
       return QExifValue(value);
     }
-                                 break;
     case QExifValue::Rational: {
       QVector<QExifURational> value(int(header.count));
 

@@ -38,16 +38,16 @@
   #include <signal.h>
 #endif // ifdef Q_OS_UNIX
 
-#ifdef Q_OS_WIN
-  #include <windows.h>
-  #include <lmcons.h>
-#endif // ifdef Q_OS_WIN
 
 #include "utils/Utils.hpp"
 
 #include "SingleApplication.hpp"
 #include "SingleApplicationPrivate.hpp"
 
+#ifdef Q_OS_WIN
+  #include <lmcons.h>
+  #include <windows.h>
+#endif // ifdef Q_OS_WIN
 // =============================================================================
 
 using namespace std;
@@ -61,7 +61,7 @@ namespace {
 
 // -----------------------------------------------------------------------------
 
-SingleApplicationPrivate::SingleApplicationPrivate (SingleApplication *q_ptr) : q_ptr(q_ptr) {
+SingleApplicationPrivate::SingleApplicationPrivate (SingleApplication *p_ptr) : q_ptr(p_ptr) {
   server = nullptr;
   socket = nullptr;
 }
@@ -104,7 +104,7 @@ void SingleApplicationPrivate::genBlockServerName (int timeout) {
   // User level block requires a user specific data in the hash
   if (options & SingleApplication::Mode::User) {
     #ifdef Q_OS_WIN
-      Q_UNUSED(timeout);
+      Q_UNUSED(timeout)
       wchar_t username[UNLEN + 1];
       // Specifies size of the buffer on input
       DWORD usernameLength = UNLEN + 1;
@@ -265,7 +265,9 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
           tmp = nextConnSocket->read(checksum.length());
           if (checksum == tmp)
             break; // Otherwise set to invalid connection (next line)
-        } UTILS_NO_BREAK;
+          connectionType = InvalidConnection;
+          break;
+        }
         default:
           connectionType = InvalidConnection;
       }
