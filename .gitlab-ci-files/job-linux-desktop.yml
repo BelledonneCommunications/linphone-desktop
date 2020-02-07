@@ -30,7 +30,7 @@
     - cmake --build . --target install 
 # Desktop Building
     - cd ../../../../build-desktop
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="linphone-sdk/build-sdk/linphone-sdk/desktop;submodules/externals/minizip/build-minizip/OUTPUT"
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT
     - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
 

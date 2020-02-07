@@ -79,7 +79,7 @@
     - cmake --build . --target install --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
 # Desktop Building
     - cd ../../../../build-desktop
-    - cmake .. -G "Visual Studio 15 2017" -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="linphone-sdk/build-sdk/linphone-sdk/desktop;submodules/externals/minizip/build-minizip/OUTPUT"
+    - cmake .. -G "Visual Studio 15 2017" -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS% -DCMAKE_INSTALL_PREFIX=OUTPUT
     - cmake --build . --target all_build --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - cmake --build . --target install --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - C:\PROGRA~1\Python37\Scripts\cl -s

@@ -19,14 +19,14 @@ cd ../..
 
 :: Minizip Submodule Building
 cd submodules/externals/minizip/build-minizip
-cmake ..  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=../../../../build-desktop/OUTPUT -DCMAKE_PREFIX_PATH="../../../linphone-sdk/build-sdk/linphone-sdk/desktop" -A Win32
+cmake ..  -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="../../../linphone-sdk/build-sdk/linphone-sdk/desktop" -A Win32
 cmake --build . --target all_build --config RelWithDebInfo -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
 cmake --build . --target install --config RelWithDebInfo -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
 cd ../../../..
 
 :: Desktop Building
 cd build-desktop
-cmake ..  -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="linphone-sdk/build-sdk/linphone-sdk/desktop" -A Win32
+cmake ..  -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=OUTPUT -A Win32
 if %errorlevel% neq 0 exit /b %errorlevel%
 cmake --build . --target all_build --config RelWithDebInfo --parallel 5 -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
 cmake --build . --target install --config RelWithDebInfo -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
