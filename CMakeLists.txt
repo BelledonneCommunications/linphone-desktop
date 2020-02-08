@@ -23,14 +23,17 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
+# Prepare gobal CMAKE configuration specific to the current project
 list(APPEND CMAKE_PREFIX_PATH "linphone-sdk/build-sdk/linphone-sdk/desktop")
 list(APPEND CMAKE_PREFIX_PATH "submodules/externals/minizip/build-minizip/OUTPUT")
 
 set(CMAKE_INSTALL_PREFIX "OUTPUT")
 if(UNIX AND NOT APPLE)
-    set(CMAKE_INSTALL_RPATH "lib64;../lib64")
+    set(CMAKE_INSTALL_RPATH "$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
+#------------------------------------------------------------------------------
+
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
 
@@ -41,6 +44,10 @@ set(TARGET_NAME linphone-qt)
 set(CMAKE_CXX_STANDARD 11)
 
 set(ASSETS_DIR "assets")
+
+#-------------------------------------------------------------------------------
+#				SET OPTIONS
+#-------------------------------------------------------------------------------
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 
@@ -423,7 +430,6 @@ set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
 add_dependencies(${APP_LIBRARY} update_translations)
-
 if (WIN32)
   add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
 else ()
@@ -554,7 +560,7 @@ install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/install.cmake")
 #endif ()
 
 if(APPLE)
-    target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.dylib")
+   	target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.dylib")
 elseif(NOT WIN32)
 	if( EXISTS "${LINPHONE_SDK_TMP}/lib64/libminizip.so")	
 		target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
