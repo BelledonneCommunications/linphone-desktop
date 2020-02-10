@@ -31,8 +31,7 @@
     - cmake --build . --target install
 
   artifacts:
-    when: on_failure
     paths:
-      - build-desktop/
+      - build-desktop/OUTPUT
     expire_in: 1 week
 

@@ -254,7 +254,7 @@ else()# Not Windows and Apple
     #if(NOT ("${LIBRARY_FILENAME}" STREQUAL "libminizip.dylib"))
       message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/lib' to '$ORIGIN/../lib'")
       execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "$ORIGIN/../lib" "${LIBRARY}")
-      execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "$ORIGIN/../lib64" "${LIBRARY}")
+      execute_process(COMMAND install_name_tool -add_rpath "$ORIGIN/../lib64" "${LIBRARY}")
     #endif()
   endforeach ()  
   install(DIRECTORY "${LINPHONE_SDK_TMP}/bin/" DESTINATION "bin" USE_SOURCE_PERMISSIONS)
