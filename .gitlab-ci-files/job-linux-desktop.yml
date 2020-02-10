@@ -8,6 +8,7 @@
   extends: .linux-prepare
 
   script:
+    - cmake --version
     - export CC=$CC
     - export CXX=$CXX
     - mkdir -p build-desktop/OUTPUT
@@ -19,7 +20,7 @@
 # SDK Building
     - cd build-desktop
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
-    - cmake --build . --target all --verbose $LBC_NODEBUG_OPTIONS
+    - cmake --build . --target all $LBC_NODEBUG_OPTIONS
 # Minizip install to OUTPUT folder
     - cmake ..
     - cmake --build . --target minizip $LBC_NODEBUG_OPTIONS
