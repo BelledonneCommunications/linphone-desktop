@@ -33,7 +33,7 @@ list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/linphone-sdk/desktop;${CMAKE_
 message("${CMAKE_PREFIX_PATH}")
 set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/OUTPUT")
 if(UNIX AND NOT APPLE)
-    set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib;${CMAKE_INSTALL_PREFIX}/lib64;${CMAKE_INSTALL_PREFIX}/lib")
+    set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib;")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 #set_property(GLOBAL PROPERTY USE_FOLDERS ON)
@@ -56,7 +56,7 @@ set(ASSETS_DIR "assets")
 #-------------------------------------------------------------------------------
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
-option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO)
+option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
 option(ENABLE_TOOLS "Enable tools of SDK" NO)
 
 #option(ENABLE_GPL_THIRD_PARTIES "" YES)
@@ -109,7 +109,6 @@ if (NOT WIN32)
 -Wall \
 -Wcast-align \
 -Wconversion \
--Werror=old-style-cast \
 -Werror=return-type \
 -Wextra \
 -Wfloat-equal \
@@ -498,12 +497,12 @@ else()
 
 
         foreach (target ${TARGET_NAME})
-        install(TARGETS ${target}
-            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-            PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
-        )
+            install(TARGETS ${target}
+                RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+                LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+                PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
+            )
         endforeach ()
 
         if (UNIX AND NOT APPLE)
