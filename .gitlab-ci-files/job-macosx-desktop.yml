@@ -12,7 +12,7 @@
     - if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
     - mkdir -p build-desktop/OUTPUT
     - cd build-desktop
-#SDK and Minizip submodule Building
+#SDK Building
     - echo $CMAKE_GENERATOR
     - echo $DEFAULT_MACOS_CMAKE_OPTIONS
     - echo $CMAKE_OPTIONS
@@ -20,8 +20,8 @@
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
     - cmake --build . --target all $LBC_NODEBUG_OPTIONS
 # Minizip install to OUTPUT folder
-    - cmake --build . --target install
-    
+    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build . --target install    
 # Update CMake installation  
     - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
     - cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
