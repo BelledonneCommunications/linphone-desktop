@@ -57,6 +57,7 @@ set(ASSETS_DIR "assets")
 #-------------------------------------------------------------------------------
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
+option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO)
 
 option(ENABLE_GPL_THIRD_PARTIES "" YES)
 option(ENABLE_NON_FREE_CODECS "Allow inclusion of non-free codecs in the build." YES)
