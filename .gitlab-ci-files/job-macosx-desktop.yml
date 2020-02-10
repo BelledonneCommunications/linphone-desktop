@@ -21,6 +21,7 @@
     - cmake --build . --target all $LBC_NODEBUG_OPTIONS
 # Minizip install to OUTPUT folder
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build . --target minizip
     - cmake --build . --target install    
 # Update CMake installation  
     - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
