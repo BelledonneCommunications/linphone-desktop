@@ -22,7 +22,7 @@
     - cmake --build . --target all $LBC_NODEBUG_OPTIONS
 # Minizip install to OUTPUT folder
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
-    - cmake --build . --target minizip $LBC_NODEBUG_OPTIONS
+    - cmake --build . --target all $LBC_NODEBUG_OPTIONS
     - cmake --build . --target install $LBC_NODEBUG_OPTIONS
 # Update CMake installation    
     - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
