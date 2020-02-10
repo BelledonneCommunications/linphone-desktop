@@ -36,6 +36,7 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
+set(CMAKE_INSTALL_LIBDIR "lib")
 #set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #------------------------------------------------------------------------------
