@@ -164,7 +164,7 @@ find_package(ortp CONFIG)
 
 if( NOT (LinphoneCxx_FOUND))
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
-elseif()
+else()
 # Linphone SDK has been builded
     message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
     add_subdirectory(submodules/externals/minizip "submodules/externals/minizip/build-minizip")
