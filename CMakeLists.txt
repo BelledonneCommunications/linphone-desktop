@@ -58,6 +58,7 @@ set(ASSETS_DIR "assets")
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO)
+option(ENABLE_TOOLS "Enable tools of SDK" NO)
 
 option(ENABLE_GPL_THIRD_PARTIES "" YES)
 option(ENABLE_NON_FREE_CODECS "Allow inclusion of non-free codecs in the build." YES)
@@ -167,7 +168,7 @@ find_package(ortp CONFIG)
 find_package(Minizip)
 
 if( NOT (LinphoneCxx_FOUND AND Minizip_FOUND))
-    message("Could not find Linphone packages and Minizip")
+    message("Linphone packages and Minizip are not installed. Build and install them in order to build Desktop Application.")
 else()
     message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
     message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")

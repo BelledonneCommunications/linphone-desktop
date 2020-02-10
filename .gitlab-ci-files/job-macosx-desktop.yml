@@ -61,7 +61,6 @@ job-macosx-ninja:
 
   variables:
     CMAKE_GENERATOR: Ninja
-    CMAKE_OPTIONS: -DENABLE_UNIT_TESTS=ON
   extends: .job-macosx-desktop
 
 
