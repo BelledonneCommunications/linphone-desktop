@@ -29,10 +29,9 @@ cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
 # Prepare gobal CMAKE configuration specific to the current project
-list(APPEND CMAKE_PREFIX_PATH "build-desktop/linphone-sdk/desktop")
-list(APPEND CMAKE_PREFIX_PATH "build-desktop/OUTPUT")
-
-set(CMAKE_INSTALL_PREFIX "OUTPUT")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_BINARY_DIR}/linphone-sdk/desktop;${CMAKE_BINARY_DIR}/OUTPUT")
+message("${CMAKE_PREFIX_PATH}")
+set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/OUTPUT")
 if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH "$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
