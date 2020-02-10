@@ -20,12 +20,17 @@
 #
 ################################################################################
 
+# First building command:
+#   cmake .. -DENABLE_VPX=NO && cmake --build . --target all --parallel 10 && cmake --build . --target install && cmake ..
+# Logic : Prepare first building of the SDK and Minizip. Install binaries and prepare for application building.
+# Next, we can build the application with cmake --build . --target all --parallel 10 && cmake --build . --target install
+
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
 # Prepare gobal CMAKE configuration specific to the current project
-list(APPEND CMAKE_PREFIX_PATH "linphone-sdk/build-sdk/linphone-sdk/desktop")
-list(APPEND CMAKE_PREFIX_PATH "submodules/externals/minizip/build-minizip/OUTPUT")
+list(APPEND CMAKE_PREFIX_PATH "build-desktop/linphone-sdk/desktop")
+list(APPEND CMAKE_PREFIX_PATH "build-desktop/OUTPUT")
 
 set(CMAKE_INSTALL_PREFIX "OUTPUT")
 if(UNIX AND NOT APPLE)
@@ -83,6 +88,8 @@ endif()
 
 add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 add_subdirectory(submodules/externals/minizip "submodules/externals/minizip/build-minizip")
+
+add_dependencies(minizip sdk)
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
@@ -158,7 +165,9 @@ find_package(ortp CONFIG)
 
 find_package(Minizip)
 
-if( LinphoneCxx_FOUND AND Minizip_FOUND AND bctoolbox_FOUND)
+if( NOT (LinphoneCxx_FOUND AND Minizip_FOUND))
+    message("Could not find Linphone packages and Minizip")
+else()
     message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
     message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
     message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
@@ -437,7 +446,7 @@ if( LinphoneCxx_FOUND AND Minizip_FOUND AND bctoolbox_FOUND)
 
     bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
     add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
-    add_dependencies(${APP_LIBRARY} update_translations)
+    add_dependencies(${APP_LIBRARY} update_translations)    
     if (WIN32)
       add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
     else ()
@@ -538,7 +547,7 @@ if( LinphoneCxx_FOUND AND Minizip_FOUND AND bctoolbox_FOUND)
     # ------------------------------------------------------------------------------
     set(LINPHONE_DESKTOP_DIR "${CMAKE_SOURCE_DIR}")
     set(LINPHONE_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")
-    set(LINPHONE_SDK_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk/build-sdk/linphone-sdk")
+    set(LINPHONE_SDK_DIR "${CMAKE_BINARY_DIR}/linphone-sdk")
     set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
     set(LINPHONE_SOURCE_DIR ${EP_linphone_SOURCE_DIR})
     set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
@@ -570,12 +579,12 @@ if( LinphoneCxx_FOUND AND Minizip_FOUND AND bctoolbox_FOUND)
     #endif ()
 
     if(APPLE)
-            target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.dylib")
+            target_link_libraries(${TARGET_NAME} "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_PREFIX}/lib/libminizip.dylib")
     elseif(NOT WIN32)
-            if( EXISTS "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
-                    target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib64/libminizip.so")
-            elseif(EXISTS "${LINPHONE_SDK_TMP}/lib/libminizip.so")
-                    target_link_libraries(${TARGET_NAME} "${LINPHONE_SDK_TMP}/lib/libminizip.so")
+            if( EXISTS "${CMAKE_INSTALL_PREFIX}/lib64/libminizip.so")
+                    target_link_libraries(${TARGET_NAME} "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_PREFIX}/lib64/libminizip.so")
+            elseif(EXISTS "${CMAKE_INSTALL_PREFIX}/lib/libminizip.so")
+                    target_link_libraries(${TARGET_NAME} "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_PREFIX}/lib/libminizip.so")
             endif()
     endif()
 endif()#If (LinphoneCxx_FOUND AND Minizip_FOUND)
