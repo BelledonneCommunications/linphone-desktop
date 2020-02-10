@@ -87,7 +87,6 @@ option(ENABLE_TOOLS "Enable tools of SDK" NO)
     #option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." NO)
 #endif()
 
-add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 
 
 include(GNUInstallDirs)
@@ -153,6 +152,8 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+
+add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 
 find_package(LinphoneCxx CONFIG)
 find_package(Linphone CONFIG)
