@@ -42,7 +42,7 @@ namespace {
   constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
   constexpr char PathCodecs[] =  "/codecs/";
   constexpr char PathLogs[] = "/logs/";
-  constexpr char PathPlugins[] = "/plugins/";
+  //constexpr char PathPlugins[] = "/plugins/"; // Unused
   constexpr char PathThumbnails[] = "/thumbnails/";
   constexpr char PathUserCertificates[] = "/usr-crt/";
 
@@ -103,6 +103,17 @@ static inline string getWritableFilePath (const QString &filename) {
 }
 
 // -----------------------------------------------------------------------------
+// On Windows or Linux, the folders of the application are :
+//  bin/linphone
+//  lib/
+//  lib64/
+//  share/
+
+// But in some cases, it can be :
+//  /linphone
+//  lib/
+//  lib64/
+//  share/
 
 static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
@@ -113,8 +124,11 @@ static inline QDir getAppPackageDir () {
       dir.mkdir("Resources");
       dir.cd("Resources");
 	}
-  } else
+  } else if( !dir.exists("lib") && !dir.exists("lib64")){// Check if these folders are in the current path
     dir.cdUp();
+    if(!dir.exists("lib") && !dir.exists("lib64"))
+            qWarning() << QObject::tr("The application's location is not correct: You have to put your 'bin/' folder next to 'lib/' folder.");
+  }
   return dir;
 }
 
