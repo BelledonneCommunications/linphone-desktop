@@ -8,6 +8,7 @@
   extends: .linux-prepare
 
   script:
+    - cmake --version
     - export CC=$CC
     - export CXX=$CXX
     - mkdir -p build-desktop/OUTPUT
@@ -17,27 +18,20 @@
     - echo $CMAKE_OPTIONS
     - echo $CMAKE_SANITIZER_OPTIONS
 # SDK Building
-    - mkdir -p linphone-sdk/build-sdk
-    - cd linphone-sdk/build-sdk
-    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
-    - cmake --build . --target sdk $LBC_NODEBUG_OPTIONS
-    - cd ../../submodules/externals/minizip    
-# Minizip submodule Building
-    - mkdir -p build-minizip
-    - cd build-minizip
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="../../../linphone-sdk/build-sdk/linphone-sdk/desktop"
+    - cd build-desktop
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
     - cmake --build . --target all $LBC_NODEBUG_OPTIONS
-    - cmake --build . --target install 
-# Desktop Building
-    - cd ../../../../build-desktop
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT
-    - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
-    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+# Minizip install to OUTPUT folder
+    - cmake ..
+    - cmake --build . --target minizip $LBC_NODEBUG_OPTIONS
+    - cmake --build . --target install $LBC_NODEBUG_OPTIONS
+# Update CMake installation    
+    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+    - cmake --build . --target linphone-qt $LBC_NODEBUG_OPTIONS
+    - cmake --build . --target install
 
   artifacts:
     paths:
       - build-desktop/OUTPUT
-      - linphone-sdk/build-sdk/linphone-sdk/desktop
-      - submodules/externals/minizip/build-minizip/OUTPUT
     expire_in: 1 week
 

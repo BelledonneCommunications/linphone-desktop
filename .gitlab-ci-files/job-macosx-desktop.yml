@@ -11,38 +11,28 @@
     - export PATH=$PATH:/usr/local/opt/qt/bin
     - if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
     - mkdir -p build-desktop/OUTPUT
-    - cd linphone-sdk
+    - cd build-desktop
 #SDK Building
-    - if [ -d "build-sdk" ]; then rm -rf build-sdk; fi;
-    - mkdir -p build-sdk
-    - cd build-sdk
     - echo $CMAKE_GENERATOR
     - echo $DEFAULT_MACOS_CMAKE_OPTIONS
     - echo $CMAKE_OPTIONS
     - echo $ADDITIONAL_BUILD_OPTIONS
     - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-    - cmake --build . $LBC_NODEBUG_OPTIONS
-    - cd ../../submodules/externals/minizip    
-# Minizip submodule Building
-    - if [ -d "build-minizip" ]; then rm -rf build-minizip; fi;
-    - mkdir -p build-minizip
-    - cd build-minizip
-    - cmake .. -G "$CMAKE_GENERATOR" $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="../../../linphone-sdk/build-sdk/linphone-sdk/desktop"
     - cmake --build . --target all $LBC_NODEBUG_OPTIONS
-    - cmake --build . --target install
-# Desktop Building
-    - cd ../../../../build-desktop
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH="linphone-sdk/build-sdk/linphone-sdk/desktop;submodules/externals/minizip/build-minizip/OUTPUT"
-    - cmake --build . --target all -- $ADDITIONAL_BUILD_OPTIONS
+# Minizip install to OUTPUT folder
+    - cmake ..
+    - cmake --build . --target minizip
+    - cmake --build . --target install    
+# Update CMake installation  
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+    - cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
 #    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" WORK/desktop/Build/linphone_package/Linphone-*.dmg
-#    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
     - ccache -s
 
   artifacts:
     paths:
       - build-desktop/OUTPUT
-      - linphone-sdk/build-sdk/linphone-sdk/desktop
-      - submodules/externals/minizip/build-minizip/OUTPUT
     expire_in: 1 week
 
 
@@ -72,7 +62,6 @@ job-macosx-ninja:
 
   variables:
     CMAKE_GENERATOR: Ninja
-    CMAKE_OPTIONS: -DENABLE_UNIT_TESTS=ON
   extends: .job-macosx-desktop
 
 
