@@ -32,27 +32,21 @@ fi
 
 #Creation of folders
 mkdir -p build-desktop
-mkdir -p linphone-sdk/build-sdk
-mkdir -p submodules/externals/minizip/build-minizip
 #Opus crash on Linux. The version for 4.3 is old. We have to use a switch in configuration to select the newest version for desktop.
 #SDK building
-cd linphone-sdk/build-sdk
+cd build-desktop
 cmake .. -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_VPX=YES -DENABLE_GPL_THIRD_PARTIES=YES -DENABLE_NON_FREE_CODECS=YES -DENABLE_AMRNB=YES -DENABLE_AMRWB=YES -DENABLE_G729=YES -DENABLE_GSM=YES -DENABLE_ILBC=YES -DENABLE_ISAC=YES -DENABLE_SILK=YES -DENABLE_SPEEX=YES -DENABLE_H263=YES -DENABLE_H263P=YES -DENABLE_MPEG4=YES -DENABLE_OPENH264=YES -DENABLE_FFMPEG=YES -DENABLE_VIDEO=YES -DENABLE_GL=YES -DENABLE_OPUS=NO
 #cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo 
-cmake --build . --target all --config RelWithDebInfo --parallel 5
-cd ../..
+cmake --build . --target all --config RelWithDebInfo --parallel 10
 
 #MiniZip Building
-cd submodules/externals/minizip/build-minizip
-cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_PREFIX_PATH=../../../linphone-sdk/build-sdk/linphone-sdk/desktop -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build . --target all --config RelWithDebInfo --parallel 5
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --target minizip --config RelWithDebInfo --parallel 10
 cmake --build . --target install
-cd ../../../..
 
 #Desktop Building
-cd build-desktop
-cmake .. -DCMAKE_INSTALL_PREFIX=OUTPUT -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build . --target all --config RelWithDebInfo  --parallel 5
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
+cmake --build . --target all --config RelWithDebInfo  --parallel 10
 cmake --build . --target install
 
 
