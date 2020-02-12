@@ -183,6 +183,7 @@ if (WIN32)
 	endif ()
 	install(DIRECTORY "${LINPHONE_SDK_TMP}/share/images" DESTINATION "share" USE_SOURCE_PERMISSIONS)
 	install(DIRECTORY "${LINPHONE_SDK_TMP}/share/sounds" DESTINATION "share" USE_SOURCE_PERMISSIONS)
+	install(FILES "${LINPHONE_SDK_TMP}/share/Linphone/rootca.pem" DESTINATION "share/Linphone/")
 	
 #  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${APPLICATION_NAME}" "share/${APPLICATION_NAME}" "share/sounds")
 #  foreach (ITEM IN LISTS SHARE_CONTENT)
