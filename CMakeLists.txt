@@ -427,7 +427,7 @@ if (UNIX AND NOT APPLE)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
   )
-  install(FILES "${ASSETS_DIR}/images/app_logo.svg"
+  install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
     RENAME "${EXECUTABLE_NAME}.svg"
   )
@@ -481,3 +481,11 @@ source_group(
 source_group(
   "Svg" REGULAR_EXPRESSION ".+\.svg$"
 )
+
+# ------------------------------
+# Installation
+# ------------------------------
+install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/install.cmake")
+#endif ()
+
+

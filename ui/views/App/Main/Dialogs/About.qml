@@ -34,7 +34,7 @@ DialogPlus {
       width: parent.width
 
       Icon {
-        icon: 'app_logo'
+        icon: 'linphone_logo'
         iconSize: parent.height
       }
 

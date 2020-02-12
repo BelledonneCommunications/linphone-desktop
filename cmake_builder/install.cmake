@@ -1,6 +1,6 @@
 ############################################################################
-# CMakeLists.txt
-# Copyright (C) 2017-2020  Belledonne Communications, Grenoble France
+# packaging.cmake
+# Copyright (C) 2020  Belledonne Communications, Grenoble France
 #
 ############################################################################
 #
@@ -20,9 +20,9 @@
 #
 ############################################################################
 
-lcb_define_targets("linphoneqt" "linphone" "ms2plugins")
-
-
-#if (NOT WIN32 AND NOT APPLE)
-#  lcb_blacklist_dependencies("turbojpeg") # turbo-jpeg is already provided by Qt5 so do not build it.
-#endif ()
+if (APPLE)
+	execute_process(COMMAND install_name_tool -id "@executable_path/../lib/libminizip.dylib" "${CMAKE_INSTALL_PREFIX}/lib/libminizip.dylib")
+	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../Frameworks/" "${CMAKE_INSTALL_PREFIX}/bin/linphone")
+	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../lib/" "${CMAKE_INSTALL_PREFIX}/bin/linphone")
+else ()
+endif ()
