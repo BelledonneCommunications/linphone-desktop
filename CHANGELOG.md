@@ -17,10 +17,12 @@
 - TelKeypad supports A, B, C and D keys.
 - TelKeypad supports keyboard.
 - OpenH264 codec can be download in the application.
-- Remove useless splashscreen.
+- New icons
 - Disable screensaver on fullscreen video call.
 - Add caller/callee on saved files.
 - Supports totally french, english, portuguese, russian, turkish, ukrainian.
+- App Nap avoiding for MacOs
+
 
 ### Fixes
 
@@ -28,6 +30,11 @@
 - Play a sound when DTMF is sent.
 - Do not use `:` separator when a file is saved on Windows.
 - Avoid mark as read on selected chat room if window is not active.
+
+### Removed
+
+- Prepare.py configuration
+- Remove useless splashscreen.
 
 ## 4.1.0 - 2017-07-19
 
