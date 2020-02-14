@@ -113,15 +113,19 @@ static inline string getWritableFilePath (const QString &filename) {
 //  lib64/
 //  share/
 
+// On Mac, we have :
+//  Contents/
+//    Frameworks/
+//    MacOs/linphone
+//    Plugins/
+//    Resources/
+//      share/
+
 static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == QLatin1String("MacOS")) {
     dir.cdUp();
-	if (!dir.cd("Resources"))
-	{
-      dir.mkdir("Resources");
-      dir.cd("Resources");
-	}
+	
   } else if( !dir.exists("lib") && !dir.exists("lib64")){// Check if these folders are in the current path
     dir.cdUp();
     if(!dir.exists("lib") && !dir.exists("lib64"))
@@ -132,6 +136,11 @@ static inline QDir getAppPackageDir () {
 
 static inline QString getAppPackageDataDirPath() {
   QDir dir = getAppPackageDir();
+    if (!dir.cd("Resources"))
+    {
+      dir.mkdir("Resources");
+      dir.cd("Resources");
+    }
   if (!dir.cd("share"))
   {
     dir.mkdir("share");

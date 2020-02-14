@@ -411,8 +411,15 @@ else()
         # ------------------------------------------------------------------------------
         # Create config.h file
         # ------------------------------------------------------------------------------
-
+if(APPLE)
+    if(MS2_PLUGINS_LOCATION)
+        set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
+    else()
+        set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
+    endif()
+else()
         set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
+endif()
         configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
         # ------------------------------------------------------------------------------
