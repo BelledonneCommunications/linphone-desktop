@@ -52,54 +52,54 @@ namespace linphone {
 }
 
 class Colors : public QObject {
-  Q_OBJECT;
+  Q_OBJECT
 
-  Q_PROPERTY(QStringList colorNames READ getColorNames CONSTANT);
+  Q_PROPERTY(QStringList colorNames READ getColorNames CONSTANT)
 
-  ADD_COLOR(a, "transparent");
+  ADD_COLOR(a, "transparent")
 
   // Primary color for hovered items.
-  ADD_COLOR(b, "#D64D00");
+  ADD_COLOR(b, "#D64D00")
 
-  ADD_COLOR(c, "#CBCBCB");
-  ADD_COLOR(d, "#5A585B");
-  ADD_COLOR(e, "#F3F3F3");
-  ADD_COLOR(f, "#E8E8E8");
-  ADD_COLOR(g, "#6B7A86");
-  ADD_COLOR(h, "#687680");
+  ADD_COLOR(c, "#CBCBCB")
+  ADD_COLOR(d, "#5A585B")
+  ADD_COLOR(e, "#F3F3F3")
+  ADD_COLOR(f, "#E8E8E8")
+  ADD_COLOR(g, "#6B7A86")
+  ADD_COLOR(h, "#687680")
 
   // Primary color.
-  ADD_COLOR(i, "#FE5E00");
+  ADD_COLOR(i, "#FE5E00")
 
-  ADD_COLOR(j, "#4B5964");
+  ADD_COLOR(j, "#4B5964")
 
   // Popups, home, call, assistant and settings background.
-  ADD_COLOR(k, "#FFFFFF");
+  ADD_COLOR(k, "#FFFFFF")
 
-  ADD_COLOR(l, "#000000");
+  ADD_COLOR(l, "#000000")
 
   // Primary color for clicked items.
-  ADD_COLOR(m, "#FF8600");
+  ADD_COLOR(m, "#FF8600")
 
-  ADD_COLOR(n, "#A1A1A1");
-  ADD_COLOR(o, "#D0D8DE");
+  ADD_COLOR(n, "#A1A1A1")
+  ADD_COLOR(o, "#D0D8DE")
 
   // Progress bar.
-  ADD_COLOR(p, "#17A81A");
+  ADD_COLOR(p, "#17A81A")
 
   // Fields, backgrounds and text color on some items.
-  ADD_COLOR(q, "#FFFFFF");
+  ADD_COLOR(q, "#FFFFFF")
 
   // Field error.
-  ADD_COLOR(error, "#FF0000");
+  ADD_COLOR(error, "#FF0000")
 
-  ADD_COLOR_WITH_ALPHA(g, 10);
-  ADD_COLOR_WITH_ALPHA(g, 20);
-  ADD_COLOR_WITH_ALPHA(g, 90);
-  ADD_COLOR_WITH_ALPHA(i, 30);
-  ADD_COLOR_WITH_ALPHA(l, 50);
-  ADD_COLOR_WITH_ALPHA(l, 80);
-  ADD_COLOR_WITH_ALPHA(q, 50);
+  ADD_COLOR_WITH_ALPHA(g, 10)
+  ADD_COLOR_WITH_ALPHA(g, 20)
+  ADD_COLOR_WITH_ALPHA(g, 90)
+  ADD_COLOR_WITH_ALPHA(i, 30)
+  ADD_COLOR_WITH_ALPHA(l, 50)
+  ADD_COLOR_WITH_ALPHA(l, 80)
+  ADD_COLOR_WITH_ALPHA(q, 50)
 
 public:
   Colors (QObject *parent = Q_NULLPTR);

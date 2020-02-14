@@ -109,6 +109,7 @@ if (NOT WIN32)
 -Wall \
 -Wcast-align \
 -Wconversion \
+-Wno-error=conversion \
 -Werror=return-type \
 -Wextra \
 -Wfloat-equal \
@@ -117,14 +118,16 @@ if (NOT WIN32)
 -Woverloaded-virtual \
 -Wpointer-arith \
 -Wsign-conversion \
+-Wno-error=sign-conversion \
 -Wuninitialized \
 -Wunused \
+-Wno-error=float-equal \
 ")
   if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
   endif ()
   if (SUGGEST_OVERRIDE)
-    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override -Werror=suggest-override")
+    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override")
   endif ()
 elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
       set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wno-switch")
@@ -402,15 +405,6 @@ else()
         list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
         list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
-
-        set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
-
-
-        set(_QML_IMPORT_PATHS "")
-        list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/modules")
-        list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/dev-modules")
-        list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
-        list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
         set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 
