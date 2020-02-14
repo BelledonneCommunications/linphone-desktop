@@ -4,7 +4,7 @@
 # See: http://doc.qt.io/qt-5/configure-options.html
 
 REPO_URL='git://code.qt.io/qt/qt5.git'
-QT_VERSION='5.14.1'
+QT_VERSION='5.12.5'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
 
