@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##
 ## Copyright (c) 2010-2020 Belledonne Communications SARL.
 ##
@@ -27,8 +27,9 @@
 set -e
 
 if [[ -z ${Qt5_DIR} ]]; then
-	export Qt5_DIR=/usr/opt/qt/lib/cmake
-	export PATH=$PATH:/usr/local/opt/qt/bin
+	eval "$(qtchooser -print-env)"
+        export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
+        export PATH=${QTTOOLDIR}:$PATH
 fi
 
 #Creation of folders
@@ -37,16 +38,16 @@ mkdir -p build-desktop
 #SDK building
 cd build-desktop
 #cmake .. -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_VPX=YES -DENABLE_GPL_THIRD_PARTIES=YES -DENABLE_NON_FREE_CODECS=YES -DENABLE_AMRNB=YES -DENABLE_AMRWB=YES -DENABLE_G729=YES -DENABLE_GSM=YES -DENABLE_ILBC=YES -DENABLE_ISAC=YES -DENABLE_SILK=YES -DENABLE_SPEEX=YES -DENABLE_H263=YES -DENABLE_H263P=YES -DENABLE_MPEG4=YES -DENABLE_OPENH264=YES -DENABLE_FFMPEG=YES -DENABLE_VIDEO=YES -DENABLE_GL=YES -DENABLE_OPUS=NO
-cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WSI_WAYLAND_SUPPORT=OFF
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build . --target all --config RelWithDebInfo --parallel 10
 
 #MiniZip Building
-cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WSI_WAYLAND_SUPPORT=OFF
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build . --target minizip --config RelWithDebInfo --parallel 10
 cmake --build . --target install
 
 #Desktop Building
-cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DBUILD_WSI_WAYLAND_SUPPORT=OFF
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
 cmake --build . --target all --config RelWithDebInfo  --parallel 10
 cmake --build . --target install
 

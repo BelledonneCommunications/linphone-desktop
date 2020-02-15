@@ -14,13 +14,9 @@ Copyright © Belledonne Communications
 
 Linphone is dual licensed, and is available either :
 
- - under a [GNU/GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), for free (open source). Please make sure that you
+ - under a [GNU/GPLv3 license](https://www.gnu.org/licenses/gpl-3.0.en.html), for free (open source). Please make sure that you understand and agree with the terms of this license before using it (see LICENSE file for details).
 
-understand and agree with the terms of this license before using it (see LICENSE file for details).
-
- - under a proprietary license, for a fee, to be used in closed source applications. Contact
-
-[Belledonne Communications](https://www.linphone.org/contact) for any question about costs and services.
+ - under a proprietary license, for a fee, to be used in closed source applications. Contact [Belledonne Communications](https://www.linphone.org/contact) for any question about costs and services.
 
 ### Documentation
 
@@ -29,10 +25,6 @@ understand and agree with the terms of this license before using it (see LICENSE
 - Linphone public wiki : https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/
 
 ## Getting started
-
-Installing dependencies:
-
-apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64  libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64  libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
 
 Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
 You will need the tools defined for Linphone-SDK 4.3 :
@@ -46,24 +38,28 @@ You will need the tools defined for Linphone-SDK 4.3 :
 - six (use pip install six)
 - Perl (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to perl binaries)
 
-Set your environment:
+For Desktop : you will need `Qt5` (_5.9 or newer_). `C++11` support is required!
+
+### Set your environment
 
 
-1. Install some build tools: `CMake`, `Python` and `Qt5` (_5.9 or newer_). `C++11` support is required!
-   It's necessary to install the `pip` command and to execute:
+1. It's necessary to install the `pip` command and to execute:
 
         pip install pystache
 
-2. It's necessary to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5. Example:
+2. You have to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5, and the `PATH` to the Qt5 `bin`. Example:
 
         Qt5_DIR="~/Qt/5.9/gcc_64/lib/cmake"
+        PATH="~/Qt/5.9/gcc_64/bin/:$PATH"
 
-3. The `PATH` environment variable must point to the Qt5 directory `bin`. Example:
+Note: If you have `qtchooser` set in your `PATH`, the best use is :
 
-        PATH="~/Qt/5.9/gcc_64/bin/:$PATH"		
+        eval "$(qtchooser -print-env)"
+        export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
+        export PATH=${QTTOOLDIR}:$PATH
 
 		
-Building:
+### Building
 
 The build is done in 3 steps. First, you need to build the SDK, then the submodule Minizip and finally, the application.
 
@@ -80,8 +76,8 @@ Go to this new folder and begin the build process : `cd build-desktop`
 
 When all are over, the files will be in the OUTPUT folder in the build directory.
 
-You can find a script file for each supported platform to achieve the first building. Don't use it for a second one, they only exist for convenience.
-There are called build_all_linux.sh, build_all_macos.sh and build_all_win.bat.
+You can find a script file for each supported platform to achieve the first building. They only exist for convenience.
+There are called `build_all_linux.sh`, `build_all_macos.sh` and `build_all_win.bat`.
 
 #### General Troubleshooting
 
@@ -118,8 +114,8 @@ Before you install packages with Brew, you may have to change directories permis
 
 2. Define the `Qt5_DIR` and `PATH` environment variable to the Qt5 installation path:
 
-        Qt5_DIR="C:\Qt\5.9\msvc2015\lib\cmake"
-        PATH="C:\Qt\5.9\msvc2015\bin;%PATH%"
+        Qt5_DIR="C:\Qt\<version>\msvc2015\lib\cmake"
+        PATH="C:\Qt\<version>\msvc2015\bin;%PATH%"
 
 2. Or open a Command line with Visual Studio `Developer Comand Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: C:\Qt\5.12.6\msvc2017\bin\qtenv2.bat
 
@@ -128,6 +124,13 @@ Before you install packages with Brew, you may have to change directories permis
 4. Build as usual with adding `-A Win32` to each command (General Steps)
 
 5. The project folder will be in the build directory.
+
+### Installing Linux dependencies
+
+
+From 4.1 version of Desktop:
+
+apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64  libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64  libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
 
 
 ## Known bugs and issues
@@ -143,7 +146,7 @@ You need to update the project:
       git submodule sync && git submodule update --init --recursive
 
 Then simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
-However if the compilation fails, you may need to rebuild everything from scratch (Delete all files in your build-desktop folder).        
+However if the compilation fails, you may need to rebuild everything from scratch (Delete all files in your build-desktop folder).
 
 Then you re-build as usual.
 
@@ -154,6 +157,8 @@ Then you re-build as usual.
 Linphone is getting a full internationalization support, using Transifex platform.
 If you want you can contribute at: https://www.transifex.com/belledonne-communications/linphone-desktop/languages/
 
-## License
+### Feedback or bug reporting
 
-GPLv2 © [Linphone](https://linphone.org)
+Launch the application with `--verbose` parameter to get full logs and send it with your request.
+
+
