@@ -480,5 +480,6 @@
         <file>ui/views/App/Main/MainWindowTopMenuBar.qml</file>
         <file>ui/dev-modules/Colors/Colors.qml</file>
         <file>ui/dev-modules/Units/Units.qml</file>
+        <file>assets/icon.ico</file>
     </qresource>
 </RCC>

@@ -558,6 +558,8 @@ void App::registerSharedToolTypes () {
 // -----------------------------------------------------------------------------
 
 void App::setTrayIcon () {
+  if(!QSystemTrayIcon::isSystemTrayAvailable())
+      qInfo() << "System tray is not available";
   QQuickWindow *root = getMainWindow();
   QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(mEngine);
 
@@ -596,7 +598,7 @@ void App::setTrayIcon () {
         root->hide();
       }
   });
-
+  menu->setTitle(APPLICATION_NAME);
   // Build trayIcon menu.
   menu->addAction(settingsAction);
   menu->addAction(aboutAction);
@@ -605,11 +607,12 @@ void App::setTrayIcon () {
   menu->addSeparator();
   menu->addAction(quitAction);
 
+
+
   systemTrayIcon->setContextMenu(menu);
   systemTrayIcon->setIcon(QIcon(LinphoneUtils::WindowIconPath));
   systemTrayIcon->setToolTip(APPLICATION_NAME);
   systemTrayIcon->show();
-
   mSystemTrayIcon = systemTrayIcon;
 }
 

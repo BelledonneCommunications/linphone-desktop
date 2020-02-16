@@ -122,7 +122,11 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   }
   map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
   map["registrationDuration"] = proxyConfig->getPublishExpires();
-  map["transport"] = Utils::coreStringToAppString(proxyConfig->getTransport());
+  QString transport = QString::fromStdString(proxyConfig->getTransport());
+  if(transport == "")
+      map["transport"] = "tls";// Set to TLS by default
+  else
+      map["transport"] = transport;
   if( proxyConfig->getRoutes().size() > 0)
     map["route"] = Utils::coreStringToAppString(proxyConfig->getRoutes().front());
   else

@@ -149,7 +149,7 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
   );
 
   if (!address)
-    return QString("");
+    return QString("TLS");  // Return TLS by default
 
   switch (address->getTransport()) {
     case linphone::TransportType::Udp:
@@ -162,7 +162,7 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
       return QStringLiteral("DTLS");
   }
 
-  return QString("");
+  return QString("TLS");
 }
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) {

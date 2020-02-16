@@ -342,7 +342,7 @@ else()
         )
         endif ()
 
-        set(QRC_RESOURCES resources.qrc)
+        set(QRC_RESOURCES resources.qrc)        
 
         set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
         set(I18N_FILENAME i18n.qrc)
@@ -371,17 +371,17 @@ else()
         set(QML_SOURCES)
         file(STRINGS ${QRC_RESOURCES} QRC_RESOURCES_CONTENT)
         foreach (line ${QRC_RESOURCES_CONTENT})
-        set(result)
-        string(REGEX REPLACE
-            "^[ \t]*<[ \t]*file[ \t]*>[ \t]*(.+\\.[a-z]+)[ \t]*<[ \t]*/[ \t]*file[ \t]*>[ \t]*$"
-            "\\1"
-            result
-            "${line}"
-        )
-        string(REGEX MATCH "\\.[a-z]+$" is_ui ${result})
-        if (NOT ${is_ui} STREQUAL "")
-            list(APPEND QML_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/${result}")
-        endif ()
+            set(result)
+            string(REGEX REPLACE
+                "^[ \t]*<[ \t]*file[ \t]*>[ \t]*(.+\\.[a-z]+)[ \t]*<[ \t]*/[ \t]*file[ \t]*>[ \t]*$"
+                "\\1"
+                result
+                "${line}"
+            )
+            string(REGEX MATCH "\\.[a-z]+$" is_ui ${result})
+            if (NOT ${is_ui} STREQUAL "")
+                list(APPEND QML_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/${result}")
+            endif ()
         endforeach ()
 
         # ------------------------------------------------------------------------------
