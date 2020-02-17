@@ -161,4 +161,8 @@ If you want you can contribute at: https://www.transifex.com/belledonne-communic
 
 Launch the application with `--verbose` parameter to get full logs and send it with your request.
 
+On some OS (like Fedora 22 and later), they disable Qt debug output by default. To get full output, you need to create `~/.config/QtProject/qtlogging.ini` and add :
 
+        [Rules]
+        *.debug=true
+        qt.*.debug=false

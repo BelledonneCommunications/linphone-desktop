@@ -58,7 +58,7 @@ DialogPlus {
 
             TextField {
               id: sipAddress
-              placeholderText: 'sip:name@sip.linphone.org'
+              placeholderText: 'sip:name@sip.example.net'
 
               error: dialog._sipAddressOk ? '' : qsTr('invalidSipAddress')
 
@@ -74,8 +74,8 @@ DialogPlus {
 
             TextField {
               id: serverAddress
-              placeholderText: 'sip:sip.linphone.org'
-              error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')              
+              placeholderText: 'sip:sip.example.net'
+              error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')
               onActiveFocusChanged: if(!activeFocus && dialog._serverAddressOk) Logic.handleTransportChanged(transport.model[transport.currentIndex])
               onTextChanged: Logic.handleServerAddressChanged(text)
               Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
@@ -210,7 +210,7 @@ DialogPlus {
 
             TextField {
               id: stunServer
-              placeholderText: 'stun.linphone.org'
+              placeholderText: 'stun.example.net'
 
               readOnly: !iceEnabled.checked
               Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
