@@ -87,7 +87,6 @@ if (NOT WIN32)
   check_cxx_compiler_flag("-Wsuggest-override" SUGGEST_OVERRIDE)
   set(CUSTOM_FLAGS "\
 -Wall \
--Wconversion \
 -Wno-error=conversion \
 -Wextra \
 -Wfloat-equal \
@@ -101,7 +100,6 @@ if (NOT WIN32)
 -Wunused \
 -Wno-error=float-equal \
 -Wno-error=cast-align \
--Wno-error \
 ")
   if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
