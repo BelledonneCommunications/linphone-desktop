@@ -1,11 +1,13 @@
 /*
- * ChatModel.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <algorithm>
@@ -53,88 +51,139 @@ namespace {
   // In Bytes.
   constexpr qint64 FileSizeLimit = 524288000;
 }
-
-static inline QString getFileId (const shared_ptr<linphone::ChatMessage> &message) {
-  return Utils::coreStringToAppString(message->getAppdata()).section(':', 0, 0);
+// MessageAppData is using to parse what's it in Appdata field of a message
+class MessageAppData
+{
+public:
+    MessageAppData(){}
+    MessageAppData(const QString&);
+    QString m_id;
+    QString m_path;
+    QString toString()const;
+    void fromString(const QString& );
+    static QString toString(const QVector<MessageAppData>& );
+    static QVector<MessageAppData> fromListString(const QString& );
+};
+MessageAppData::MessageAppData(const QString& p_data)
+{
+    fromString(p_data);
+}
+QString MessageAppData::toString()const
+{
+    return m_id+':'+m_path;
+}
+void MessageAppData::fromString(const QString& p_data)
+{
+    QStringList fields = p_data.split(':');
+    m_id = fields[0];
+    m_path = fields[1];
+}
+QString MessageAppData::toString(const QVector<MessageAppData>& p_data)
+{
+    QString serialization;
+    if( p_data.size() > 0)
+    {
+        serialization = p_data[0].toString();
+        for(int i = 1 ; i < p_data.size() ; ++i)
+            serialization += ';'+p_data[i].toString();
+    }
+    return serialization;
+}
+QVector<MessageAppData> MessageAppData::fromListString(const QString& p_data)
+{
+    QVector<MessageAppData> data;
+    QStringList files = p_data.split(";");
+    for(int i = 0 ; i < files.size() ; ++i)
+        data.push_back(MessageAppData(files[i]));
+    return data;
 }
 
-static inline QString getDownloadPath (const shared_ptr<linphone::ChatMessage> &message) {
-  return Utils::coreStringToAppString(message->getAppdata()).section(':', 1);
+
+// There is only one file (thumbnail) in appdata
+static inline MessageAppData getMessageAppData (const shared_ptr<linphone::ChatMessage> &message) {
+    return MessageAppData(QString::fromStdString(message->getAppdata()));
 }
 
 static inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
-  const QString path = getDownloadPath(message);
-  return !path.isEmpty() && QFileInfo(path).isFile();
+  const MessageAppData appData = getMessageAppData(message);
+  return !appData.m_path.isEmpty() && QFileInfo(appData.m_path).isFile();
 }
-
+// Set the thumbnail as the first content
 static inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  QString fileId = getFileId(message);
-  if (!fileId.isEmpty() && !dest.contains("thumbnail"))
-    dest["thumbnail"] = QStringLiteral("image://%1/%2")
-      .arg(ThumbnailProvider::ProviderId).arg(fileId);
+    if( !dest.contains("thumbnail"))
+    {
+        MessageAppData thumbnailData = getMessageAppData(message);
+        dest["thumbnail"] = QStringLiteral("image://%1/%2")
+            .arg(ThumbnailProvider::ProviderId).arg(thumbnailData.m_id);
+    }
 }
 
+// Create a thumbnail from the first content that have a file and store it in Appdata
 static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
   if (!message->getAppdata().empty())
-    return;
+    return;// Already exist : no need to create one
+  std::list<std::shared_ptr<linphone::Content> > contents = message->getContents();
+  if( contents.size() > 0)
+  {
+    QString thumbnailPath = QString::fromStdString(contents.front()->getFilePath());
+    QImage image(thumbnailPath);
+    if (image.isNull())
+        return;
 
-  QString thumbnailPath = Utils::coreStringToAppString(message->getFileTransferFilepath());
-  QImage image(thumbnailPath);
-  if (image.isNull())
-    return;
+    int rotation = 0;
+    QExifImageHeader exifImageHeader;
+    if (exifImageHeader.loadFromJpeg(thumbnailPath))
+        rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
 
-  int rotation = 0;
-  QExifImageHeader exifImageHeader;
-  if (exifImageHeader.loadFromJpeg(thumbnailPath))
-    rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
+    QImage thumbnail = image.scaled(
+        ThumbnailImageFileWidth, ThumbnailImageFileHeight,
+        Qt::KeepAspectRatio, Qt::SmoothTransformation
+    );
 
-  QImage thumbnail = image.scaled(
-    ThumbnailImageFileWidth, ThumbnailImageFileHeight,
-    Qt::KeepAspectRatio, Qt::SmoothTransformation
-  );
+      if (rotation != 0) {
+        QTransform transform;
+        if (rotation == 3 || rotation == 4)
+          transform.rotate(180);
+        else if (rotation == 5 || rotation == 6)
+          transform.rotate(90);
+        else if (rotation == 7 || rotation == 8)
+          transform.rotate(-90);
 
-  if (rotation != 0) {
-    QTransform transform;
-    if (rotation == 3 || rotation == 4)
-      transform.rotate(180);
-    else if (rotation == 5 || rotation == 6)
-      transform.rotate(90);
-    else if (rotation == 7 || rotation == 8)
-      transform.rotate(-90);
+        thumbnail = thumbnail.transformed(transform);
+        if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
+          thumbnail = thumbnail.mirrored(true, false);
+      }
 
-    thumbnail = thumbnail.transformed(transform);
-    if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
-      thumbnail = thumbnail.mirrored(true, false);
+      QString uuid = QUuid::createUuid().toString();
+      QString fileId = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
+
+      if (!thumbnail.save(Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + fileId, "jpg", 100)) {
+        qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnailPath);
+        return;
+      }
+
+      message->setAppdata(Utils::appStringToCoreString(fileId));
   }
-
-  QString uuid = QUuid::createUuid().toString();
-  QString fileId = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
-
-  if (!thumbnail.save(Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + fileId, "jpg", 100)) {
-    qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnailPath);
-    return;
-  }
-
-  message->setAppdata(Utils::appStringToCoreString(fileId));
 }
 
 static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMessage> &message) {
-  if (message && message->getFileTransferInformation()) {
-    message->cancelFileTransfer();
-
-    string fileId = message->getAppdata();
-    if (!fileId.empty()) {
-      QString thumbnailPath = Utils::coreStringToAppString(Paths::getThumbnailsDirPath() + fileId);
-      if (!QFile::remove(thumbnailPath))
-        qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
+    if (message && message->getFileTransferInformation()) {
+        message->cancelFileTransfer();
+        MessageAppData thumbnailFile = getMessageAppData(message);
+        if(thumbnailFile.m_path.size() > 0)
+        {
+            QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) + thumbnailFile.m_path;
+            if (!QFile::remove(thumbnailPath))
+                qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
+        }
+        message->setAppdata("");// Remove completly Thumbnail from the message
     }
-  }
 }
 
 // -----------------------------------------------------------------------------
 
 static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  dest["content"] = Utils::coreStringToAppString(message->getText());
+  dest["content"] = Utils::coreStringToAppString(message->getTextContent());
   dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessage::State::Idle;
 
   // Old workaround.
@@ -232,9 +281,10 @@ private:
       createThumbnail(message);
       fillThumbnailProperty((*it).first, message);
 
-      message->setAppdata(
-        Utils::appStringToCoreString(getFileId(message)) + ':' + message->getFileTransferFilepath()
-      );
+      MessageAppData thumbnailFile = getMessageAppData(message);
+      thumbnailFile.m_path = QString::fromStdString(message->getContents().front()->getFilePath());
+
+      message->setAppdata(thumbnailFile.toString().toStdString());
       (*it).first["wasDownloaded"] = true;
 
       App::getInstance()->getNotifier()->notifyReceivedFileMessage(message);
@@ -472,7 +522,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   content->setName(Utils::appStringToCoreString(QFileInfo(file).fileName()));
 
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
-  message->setFileTransferFilepath(Utils::appStringToCoreString(path));
+  message->getContents().front()->setFilePath(path.toStdString());// Sending only one File Path?
   message->addListener(mMessageHandlers);
 
   createThumbnail(message);
@@ -515,12 +565,12 @@ void ChatModel::downloadFile (int id) {
   if (!soFarSoGood) {
     qWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(id);
     return;
-  }
-
-  message->setFileTransferFilepath(Utils::appStringToCoreString(safeFilePath));
+  }  
   message->addListener(mMessageHandlers);
 
-  if (!message->downloadFile())
+  message->getContents().front()->setFilePath(safeFilePath.toStdString());
+// <Dev note> Download only the first content. Maybe a bug.. or not.
+  if (!message->downloadContent(message->getContents().front()))
     qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(id);
 }
 
@@ -535,7 +585,7 @@ void ChatModel::openFile (int id, bool showDirectory) {
     return;
   }
 
-  QFileInfo info(getDownloadPath(message));
+  QFileInfo info(getMessageAppData(message).m_path);
   QDesktopServices::openUrl(
     QUrl(QStringLiteral("file:///%1").arg(showDirectory ? info.absolutePath() : info.absoluteFilePath()))
   );
@@ -637,7 +687,7 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
 
   auto insertEntry = [this](
     const ChatEntryData &entry,
-    const QList<ChatEntryData>::iterator *start = NULL
+    const QList<ChatEntryData>::iterator *start = nullptr
   ) {
     auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), entry, [](const ChatEntryData &a, const ChatEntryData &b) {
       return a.first["timestamp"] < b.first["timestamp"];

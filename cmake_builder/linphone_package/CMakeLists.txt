@@ -20,13 +20,17 @@
 #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.1)
 project(LINPHONE_PACKAGE) # Dummy project.
 
 include("${LINPHONE_DESKTOP_DIR}/application_info.cmake")
 
 find_package(Linphone REQUIRED)
 find_package(Git)
+#Policy set to allow link from other directory (cmake 3.13)
+if (POLICY CMP0079)
+  cmake_policy(SET CMP0079 NEW)
+endif ()
 
 set(LINPHONE_QML_DIR "${LINPHONE_DESKTOP_DIR}/ui")
 
@@ -58,9 +62,16 @@ set(PACKAGE_VERSION "${LINPHONE_VERSION}")
 # Preparing the Linphone SDK bundle.
 # ==============================================================================
 
-set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-tmp")
+# Create sdk-temp folder where we can find all needed files (libs, includes etc.)
+
 file(REMOVE_RECURSE "${LINPHONE_SDK_TMP}")
-file(COPY "${LINPHONE_OUTPUT_DIR}" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+message(" Linphone_SDK_DIR : ${LINPHONE_SDK_DIR}")
+file(COPY "${LINPHONE_SDK_DIR}/" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}")
+if(APPLE)
+    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${CMAKE_INSTALL_PREFIX}/lib/libminizip.dylib")
+elseif(WIN32)
+    
+endif()
 file(RENAME "${CMAKE_CURRENT_BINARY_DIR}/desktop" "${LINPHONE_SDK_TMP}")
 
 # Generates a zip archive containing the development files.
@@ -88,6 +99,7 @@ add_sdk_list_file(ortp)
 add_sdk_list_file(ms2)
 add_sdk_list_file(ms2plugins)
 add_sdk_list_file(linphone)
+add_sdk_list_file(linphonecxx)
 if (WIN32)
   add_sdk_list_file(sqlite3)
   add_sdk_list_file(xml2)
@@ -155,82 +167,70 @@ endif ()
 # ==============================================================================
 
 if (WIN32)
-  execute_process(
-    COMMAND windeployqt "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe" "--qmldir" "${LINPHONE_QML_DIR}"
-  )
+  #execute_process(
+  #  COMMAND windeployqt "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe" "--qmldir" "${LINPHONE_QML_DIR}"
+  #)
+	install( CODE "execute_process(COMMAND windeployqt ${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}.exe --qmldir=${LINPHONE_QML_DIR})")# -verbose=2)" )
 
-  file(GLOB SHARE_CONTENT RELATIVE "${LINPHONE_OUTPUT_DIR}" "${LINPHONE_OUTPUT_DIR}/share/*")
-  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${APPLICATION_NAME}" "share/${EXECUTABLE_NAME}" "share/sounds")
-  foreach (ITEM IN LISTS SHARE_CONTENT)
-    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
-  endforeach ()
-
-  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/"
-    DESTINATION "."
-    PATTERN "bin/*_tester.exe" EXCLUDE
-    PATTERN "bin/belcard*.exe" EXCLUDE
-    PATTERN "bin/openh264.dll" EXCLUDE
-    PATTERN "cmake" EXCLUDE
-    PATTERN "include" EXCLUDE
-    PATTERN "lib/*.a" EXCLUDE
-    PATTERN "lib/*.def" EXCLUDE
-    PATTERN "lib/*.exp" EXCLUDE
-    PATTERN "lib/cmake" EXCLUDE
-    PATTERN "lib/*.la" EXCLUDE
-    PATTERN "lib/*.lib" EXCLUDE
-    PATTERN "lib/mediastreamer/plugins/*openh264.*" EXCLUDE
-    PATTERN "lib/pkgconfig" EXCLUDE
-    PATTERN "lib/Win32" EXCLUDE
-    PATTERN "${EXECUTABLE_NAME}.lnk" EXCLUDE
-    PATTERN "share/${APPLICATION_NAME}/cmake" EXCLUDE
-    PATTERN "share/Belr/cmake" EXCLUDE
-    ${SHARE_CONTENT_EXCLUDE}
-  )
-
-  install(FILES "${LINPHONE_OUTPUT_DIR}/share/Linphone/rootca.pem" DESTINATION "share/${EXECUTABLE_NAME}")
-
-  if (ENABLE_OPENH264)
-    install(FILES "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer/plugins/libmsopenh264.dll"
-      DESTINATION "lib/mediastreamer/plugins"
-    )
-  endif ()
+	file(GLOB LIB_FILES "${LINPHONE_SDK_TMP}/lib/*.dll")
+	install(FILES ${LIB_FILES} DESTINATION "bin/")
+	file(GLOB LIB_FILES "${LINPHONE_SDK_TMP}/bin/*.dll")
+	install(FILES ${LIB_FILES} DESTINATION "bin/")
+	file(GLOB EXE_FILES "${LINPHONE_SDK_TMP}/bin/*.exe")
+	install(FILES ${EXE_FILES} DESTINATION "bin/")
+	if (EXISTS "${LINPHONE_SDK_TMP}/lib/mediastreamer")
+		install(DIRECTORY "${LINPHONE_SDK_TMP}/lib/mediastreamer" DESTINATION "lib" USE_SOURCE_PERMISSIONS)
+	endif ()
+	install(DIRECTORY "${LINPHONE_SDK_TMP}/share/images" DESTINATION "share" USE_SOURCE_PERMISSIONS)
+	install(DIRECTORY "${LINPHONE_SDK_TMP}/share/sounds" DESTINATION "share" USE_SOURCE_PERMISSIONS)
+	install(FILES "${LINPHONE_SDK_TMP}/share/Linphone/rootca.pem" DESTINATION "share/Linphone/")
+	
+#  list(REMOVE_ITEM SHARE_CONTENT "share/belr" "share/Belr" "share/images" "share/${APPLICATION_NAME}" "share/${APPLICATION_NAME}" "share/sounds")
+#  foreach (ITEM IN LISTS SHARE_CONTENT)
+#    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
+#  endforeach ()
 elseif (APPLE)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${APPLICATION_NAME}.app/Contents/Info.plist" @ONLY)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${APPLICATION_NAME}.app/Contents/Resources/${EXECUTABLE_NAME}.icns" COPYONLY)
-  file(COPY "${LINPHONE_OUTPUT_DIR}/bin/${EXECUTABLE_NAME}" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")
-  file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/lib/lib*.dylib")
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Info.plist" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Resources/${EXECUTABLE_NAME}.icns" COPYONLY)
+  install(DIRECTORY "${LINPHONE_SDK_TMP}/Frameworks/" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" USE_SOURCE_PERMISSIONS)
+  install(PROGRAMS "${CMAKE_INSTALL_PREFIX}/bin/${EXECUTABLE_NAME}" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")  
+  file(GLOB SHARED_LIBRARIES "${LINPHONE_SDK_TMP}/lib/lib*.dylib")
   foreach (LIBRARY ${SHARED_LIBRARIES})
-    file(COPY "${LIBRARY}" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
+    install(FILES "${LIBRARY}" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
   endforeach ()
 
   find_program(DEPLOYQT_PROGRAM macdeployqt)
   if (NOT DEPLOYQT_PROGRAM)
     message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
   endif ()
-  execute_process(
-    COMMAND "${DEPLOYQT_PROGRAM}" "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" "-qmldir=${LINPHONE_QML_DIR}" "-verbose=2"
-  )
+
 
   if (EXISTS "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer")
     file(COPY "${LINPHONE_OUTPUT_DIR}/lib/mediastreamer" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/lib" USE_SOURCE_PERMISSIONS)
   endif ()
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/Belr/grammars/cpim_grammar" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/belr/grammars/")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/Belr/grammars/vcard_grammar" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/belr/grammars/")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/images" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/sounds" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/rootca.pem" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/linphonerc-factory" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}")
+  install(FILES "${LINPHONE_OUTPUT_DIR}/lib/libminizip.dylib" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks/")
+  install(FILES "${LINPHONE_SDK_TMP}/share/Belr/grammars/cpim_grammar" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/belr/grammars/")
+  install(FILES "${LINPHONE_SDK_TMP}/share/Belr/grammars/vcard_grammar" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/belr/grammars/")
+  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/images" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
+  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/sounds" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
+  install(FILES "${LINPHONE_SDK_TMP}/share/${APPLICATION_NAME}/rootca.pem" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}")
+  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/linphonerc-factory" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}")
 
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-other-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/create-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
-  file(COPY "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${EXECUTABLE_NAME}/assistant")
+  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-other-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}/assistant")
+  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/create-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}/assistant")
+  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-app-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}/assistant")
 
   file(GLOB SHARED_LIBRARIES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/lib*.dylib")
+
   foreach (LIBRARY ${SHARED_LIBRARIES})
     get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)
-    message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/lib' to '@executable_path/../Frameworks'")
-    execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "@executable_path/../Frameworks" "${LIBRARY}")
+    if(NOT ("${LIBRARY_FILENAME}" STREQUAL "libminizip.dylib"))
+      message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/lib' to '@executable_path/../Frameworks'")
+      execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "@executable_path/../Frameworks" "${LIBRARY}")
+    endif()
   endforeach ()
+
+  install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)" )
 
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
     file(GLOB FRAMEWORKS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/*")
@@ -246,36 +246,71 @@ elseif (APPLE)
     endforeach ()
     execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app")
   endif ()
+#  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 
-  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
+#  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/packaging.cmake.in" "packaging.cmake" @ONLY)
+#  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
+else()# Not Windows and Apple
+    foreach (LIBRARY ${SHARED_LIBRARIES})
+    get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)
+    #if(NOT ("${LIBRARY_FILENAME}" STREQUAL "libminizip.dylib"))
+      message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/lib' to '$ORIGIN/../lib'")
+      execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/lib" "$ORIGIN/../lib" "${LIBRARY}")
+      execute_process(COMMAND install_name_tool -add_rpath "$ORIGIN/../lib64" "${LIBRARY}")
+    #endif()
+  endforeach ()  
+  install(DIRECTORY "${LINPHONE_SDK_TMP}/bin/" DESTINATION "bin" USE_SOURCE_PERMISSIONS)
+#Just in case. This is useless because we have to use CMAKE_INSTALL_LIBDIR  
+  if( EXISTS "${LINPHONE_SDK_TMP}/lib/")
+    install(DIRECTORY "${LINPHONE_SDK_TMP}/lib/" DESTINATION "lib" USE_SOURCE_PERMISSIONS)
+  endif()
+  if( EXISTS "${LINPHONE_SDK_TMP}/lib64/")
+	install(DIRECTORY "${LINPHONE_SDK_TMP}/lib64/" DESTINATION "lib64" USE_SOURCE_PERMISSIONS)
+  endif()
+  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/" DESTINATION "share" USE_SOURCE_PERMISSIONS)
+  #install(PROGRAMS "${CMAKE_INSTALL_PREFIX}/bin/${EXECUTABLE_NAME}" DESTINATION "/bin")
 
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/packaging.cmake.in" "packaging.cmake" @ONLY)
-  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
+
+  if (EXISTS "${LINPHONE_SDK_TMP}/lib/mediastreamer")
+    file(COPY "${LINPHONE_SDK_TMP}/lib/mediastreamer" DESTINATION "lib" USE_SOURCE_PERMISSIONS)
+  endif ()
+  install(FILES "${LINPHONE_SDK_TMP}/share/belr/grammars/cpim_grammar" DESTINATION "share/belr/grammars/")
+  install(FILES "${LINPHONE_SDK_TMP}/share/belr/grammars/vcard_grammar" DESTINATION "share/belr/grammars/")
+#  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/images" DESTINATION "share" USE_SOURCE_PERMISSIONS)
+#  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/sounds" DESTINATION "share" USE_SOURCE_PERMISSIONS)
+  #install(FILES "${LINPHONE_SDK_TMP}/share/${APPLICATION_NAME}/rootca.pem" DESTINATION "share/${APPLICATION_NAME}")
+  install(FILES "${LINPHONE_SDK_TMP}/share/${EXECUTABLE_NAME}/rootca.pem" DESTINATION "share/${APPLICATION_NAME}")	#We use executable_name because of name folder that is not harmonized from the SDK
+#  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/linphonerc-factory" DESTINATION "share/${APPLICATION_NAME}")
+
+#  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-other-sip-account.rc" DESTINATION "share/${APPLICATION_NAME}/assistant")
+#  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/create-app-sip-account.rc" DESTINATION "share/${APPLICATION_NAME}/assistant")
+#  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-app-sip-account.rc" DESTINATION "share/${APPLICATION_NAME}/assistant")
 endif ()
 
-if (MSVC)
-  string(REGEX REPLACE "Visual Studio ([0-9]+).*" "\\1" MSVC_VERSION "${CMAKE_GENERATOR}")
-  find_file(MSVCP_LIB "msvcp${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
-  find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")
-  # Starting with Visual Studio 2015 (MSVC_VERSION==14) the msvcr dll has been renamed to vcruntime.
-  find_file(VCRUNTIME_LIB "vcruntime${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
-  if (NOT VCRUNTIME_LIB)
-    find_file(VCRUNTIME_LIB "msvcr${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
-  endif ()
-  install(FILES ${MSVCP_LIB} ${UCRTBASE_LIB} ${VCRUNTIME_LIB} DESTINATION "bin")
-  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    find_file(MSVCPD_LIB "msvcp${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
-    find_file(UCRTBASED_LIB "ucrtbased.dll" PATHS "C:/Windows/System32")
-    find_file(VCRUNTIMED_LIB "vcruntime${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
-    if (NOT VCRUNTIMED_LIB)
-      find_file(VCRUNTIMED_LIB "msvcr${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
-    endif ()
-    install(FILES ${MSVCPD_LIB} ${UCRTBASED_LIB} ${VCRUNTIMED_LIB} DESTINATION "bin")
-  endif ()
-endif ()
+# Temporary deactivate
+#if (MSVC)
+#  string(REGEX REPLACE "Visual Studio ([0-9]+).*" "\\1" MSVC_VERSION "${CMAKE_GENERATOR}")
+#  find_file(MSVCP_LIB "msvcp${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
+#  find_file(UCRTBASE_LIB "ucrtbase.dll" PATHS "C:/Windows/System32")
+#  # Starting with Visual Studio 2015 (MSVC_VERSION==14) the msvcr dll has been renamed to vcruntime.
+#  find_file(VCRUNTIME_LIB "vcruntime${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
+#  if (NOT VCRUNTIME_LIB)
+#    find_file(VCRUNTIME_LIB "msvcr${MSVC_VERSION}0.dll" PATHS "C:/Windows/System32")
+#  endif ()
+#  install(FILES ${MSVCP_LIB} ${UCRTBASE_LIB} ${VCRUNTIME_LIB} DESTINATION "bin")
+#  if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+#    find_file(MSVCPD_LIB "msvcp${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
+#    find_file(UCRTBASED_LIB "ucrtbased.dll" PATHS "C:/Windows/System32")
+#    find_file(VCRUNTIMED_LIB "vcruntime${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
+#    if (NOT VCRUNTIMED_LIB)
+#      find_file(VCRUNTIMED_LIB "msvcr${MSVC_VERSION}0d.dll" PATHS "C:/Windows/System32")
+#    endif ()
+#    install(FILES ${MSVCPD_LIB} ${UCRTBASED_LIB} ${VCRUNTIMED_LIB} DESTINATION "bin")
+#  endif ()
+#endif ()
 
 # ==============================================================================
-# CPack.
+#                               CPack.
 # ==============================================================================
 
 set(CPACK_PACKAGE_NAME "${APPLICATION_NAME}")
@@ -359,6 +394,6 @@ if (WIN32)
     message(STATUS "No signtool certificate found; assuming development machine (${PFX_FILE})")
   endif ()
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/packaging.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake" @ONLY)
-  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
+ # install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
 endif ()
 include(CPack)

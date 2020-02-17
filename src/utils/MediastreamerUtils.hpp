@@ -1,11 +1,13 @@
 /*
- * MediastreamerUtils.hpp
- * Copyright (C) 2017-2019  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: Nov 6, 2019
- *  Author: Nicolas Michon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #ifndef MEDIASTREAMER_UTILS_H_
@@ -30,6 +28,8 @@
 #include "mediastreamer2/msfilter.h"
 #include "mediastreamer2/msticker.h"
 #include <linphone++/linphone.hh>
+
+#include <QtGlobal>
 
 // =============================================================================
 
@@ -48,14 +48,14 @@ namespace MediastreamerUtils {
 	}
 
 	inline float dbToLinear(float volume) {
-		return static_cast<float>(pow(10, volume / 10));
+        return static_cast<float>(pow(10.0, volume / 10.0));
 	}
 
 	inline float linearToDb(float volume) {
-		if (volume == 0.0f) {
+        if (qFuzzyIsNull(volume)) {
 			return MS_VOLUME_DB_LOWEST;
 		}
-		return static_cast<float>(10 * log10(volume));
+        return static_cast<float>(10.0 * log10(volume));
 	}
 
 	//Simple mediastreamer audio capture graph

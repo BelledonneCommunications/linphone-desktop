@@ -1,11 +1,13 @@
 /*
- * SettingsModel.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QDir>
@@ -631,7 +629,7 @@ void SettingsModel::setFileTransferUrl (const QString &url) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getLimeIsSupported () const {
-	return CoreManager::getInstance()->getCore()->limeAvailable();
+    return CoreManager::getInstance()->getCore()->limeX3DhAvailable();
 }
 
 // -----------------------------------------------------------------------------
@@ -669,7 +667,7 @@ void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
 		return;
 
 	if (encryption != SettingsModel::MediaEncryptionZrtp)
-		setLimeState(SettingsModel::LimeStateDisabled);
+        setLimeState(false);
 
 	CoreManager::getInstance()->getCore()->setMediaEncryption(
 								  static_cast<linphone::MediaEncryption>(encryption)
@@ -701,22 +699,18 @@ void SettingsModel::enableMandatoryMediaEncryption(bool mandatory) {
 
 // -----------------------------------------------------------------------------
 
-SettingsModel::LimeState SettingsModel::getLimeState () const {
-	return static_cast<SettingsModel::LimeState>(
-						     CoreManager::getInstance()->getCore()->limeEnabled()
-						     );
+bool SettingsModel::getLimeState () const {
+    return  CoreManager::getInstance()->getCore()->limeX3DhEnabled();
 }
 
-void SettingsModel::setLimeState (LimeState state) {
+void SettingsModel::setLimeState (const bool& state) {
 	if (state == getLimeState())
 		return;
 
-	if (state != SettingsModel::LimeStateDisabled)
+    if (state)
 		setMediaEncryption(SettingsModel::MediaEncryptionZrtp);
 
-	CoreManager::getInstance()->getCore()->enableLime(
-							  static_cast<linphone::LimeState>(state)
-							  );
+    CoreManager::getInstance()->getCore()->enableLimeX3Dh(!state);
 
 	emit limeStateChanged(state);
 }
@@ -1242,15 +1236,16 @@ void SettingsModel::setDeveloperSettingsEnabled (bool status) {
 	mConfig->setInt(UiSection, "developer_settings", status);
 	emit developerSettingsEnabledChanged(status);
 #else
+    Q_UNUSED(status)
 	qWarning() << QStringLiteral("Unable to change developer settings mode in release version.");
 #endif // ifdef DEBUG
 }
 
-void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &call) {
+void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &) {
 	emit isInCallChanged(getIsInCall());
 }
 
-void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
+void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, linphone::Call::State) {
 	emit isInCallChanged(getIsInCall());
 }
 

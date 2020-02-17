@@ -1,11 +1,13 @@
 /*
- * CallModel.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,12 +15,9 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include "CallModel.hpp"
 
 #include <QDateTime>
 #include <QQuickWindow>
@@ -36,7 +35,7 @@
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
-#include "CallModel.hpp"
+
 
 // =============================================================================
 
@@ -282,11 +281,14 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
       mPausedByRemote = false;
       break;
 
-    case linphone::Call::State::StreamsRunning:
+    case linphone::Call::State::StreamsRunning: {
       if (!mWasConnected && CoreManager::getInstance()->getSettingsModel()->getAutomaticallyRecordCalls()) {
         startRecording();
         mWasConnected = true;
-      } UTILS_NO_BREAK;
+      }
+       mPausedByRemote = false;
+       break;
+    }
     case linphone::Call::State::Connected:
     case linphone::Call::State::Referred:
     case linphone::Call::State::Released:
@@ -703,8 +705,8 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
   statsList << createStat(tr("callStatsDownloadBandwidth"), QStringLiteral("%1 kbits/s").arg(int(callStats->getDownloadBandwidth())));
   statsList << createStat(tr("callStatsIceState"), iceStateToString(callStats->getIceState()));
   statsList << createStat(tr("callStatsIpFamily"), family);
-  statsList << createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(callStats->getSenderLossRate()));
-  statsList << createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(callStats->getReceiverLossRate()));
+  statsList << createStat(tr("callStatsSenderLossRate"), QStringLiteral("%1 %").arg(static_cast<double>(callStats->getSenderLossRate())));
+  statsList << createStat(tr("callStatsReceiverLossRate"), QStringLiteral("%1 %").arg(static_cast<double>(callStats->getReceiverLossRate())));
 
   switch (callStats->getType()) {
     case linphone::StreamType::Audio:
@@ -730,8 +732,8 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
         ? receivedVideoDefinition
         : QString("%1 (%2)").arg(receivedVideoDefinition).arg(receivedVideoDefinitionName));
 
-      statsList << createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(params->getReceivedFramerate()));
-      statsList << createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(params->getSentFramerate()));
+      statsList << createStat(tr("callStatsReceivedFramerate"), QStringLiteral("%1 FPS").arg(static_cast<double>(params->getReceivedFramerate())));
+      statsList << createStat(tr("callStatsSentFramerate"), QStringLiteral("%1 FPS").arg(static_cast<double>(params->getSentFramerate())));
     } break;
 
     default:

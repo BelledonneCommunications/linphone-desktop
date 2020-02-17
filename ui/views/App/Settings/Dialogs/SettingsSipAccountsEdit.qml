@@ -58,10 +58,12 @@ DialogPlus {
 
             TextField {
               id: sipAddress
+              placeholderText: 'sip:name@sip.example.net'
 
               error: dialog._sipAddressOk ? '' : qsTr('invalidSipAddress')
 
               onTextChanged: Logic.handleSipAddressChanged(text)
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }
         }
@@ -72,10 +74,11 @@ DialogPlus {
 
             TextField {
               id: serverAddress
-
+              placeholderText: 'sip:sip.example.net'
               error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')
-
+              onActiveFocusChanged: if(!activeFocus && dialog._serverAddressOk) Logic.handleTransportChanged(transport.model[transport.currentIndex])
               onTextChanged: Logic.handleServerAddressChanged(text)
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }
         }
@@ -86,6 +89,7 @@ DialogPlus {
 
             NumericField {
               id: registrationDuration
+              Keys.onReturnPressed:  route.forceActiveFocus()
             }
           }
         }
@@ -115,6 +119,7 @@ DialogPlus {
               error: dialog._routeOk ? '' : qsTr('invalidRoute')
 
               onTextChanged: Logic.handleRouteChanged(text)
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }
         }
@@ -125,6 +130,7 @@ DialogPlus {
 
             TextField {
               id: contactParams
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }
         }
@@ -138,6 +144,7 @@ DialogPlus {
 
               maxValue: 5
               minValue: 1
+              Keys.onReturnPressed:  focus=false
             }
           }
         }
@@ -203,8 +210,10 @@ DialogPlus {
 
             TextField {
               id: stunServer
+              placeholderText: 'stun.example.net'
 
               readOnly: !iceEnabled.checked
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }
         }
@@ -229,6 +238,7 @@ DialogPlus {
               id: turnUser
 
               readOnly: !turnEnabled.checked || !turnEnabled.enabled
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }
         }

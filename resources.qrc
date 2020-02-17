@@ -404,7 +404,6 @@
         <file>ui/views/App/Calls/IncomingCall.qml</file>
         <file>ui/views/App/Calls/OutgoingCall.qml</file>
         <file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
-        <file>ui/views/App/Main/+5.9/MainWindowMenuBar.qml</file>
         <file>ui/views/App/Main/Assistant/ActivateAppSipAccountWithEmail.qml</file>
         <file>ui/views/App/Main/Assistant/ActivateAppSipAccountWithPhoneNumber.qml</file>
         <file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
@@ -430,7 +429,6 @@
         <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
         <file>ui/views/App/Main/Home.qml</file>
         <file>ui/views/App/Main/InviteFriends.qml</file>
-        <file>ui/views/App/Main/+mac/MainWindowMenuBar.qml</file>
         <file>ui/views/App/Main/MainWindow.js</file>
         <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
         <file>ui/views/App/Main/MainWindow.qml</file>
@@ -479,5 +477,9 @@
         <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
         <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
         <file>assets/images/linphone_logo.svg</file>
+        <file>ui/views/App/Main/MainWindowTopMenuBar.qml</file>
+        <file>ui/dev-modules/Colors/Colors.qml</file>
+        <file>ui/dev-modules/Units/Units.qml</file>
+        <file>assets/icon.ico</file>
     </qresource>
 </RCC>

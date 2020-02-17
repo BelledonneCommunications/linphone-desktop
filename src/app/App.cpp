@@ -1,11 +1,13 @@
 /*
- * App.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,13 +15,13 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include "App.hpp"
 
+#ifdef Q_OS_WIN
+  #include <QSettings>
+#endif // ifdef Q_OS_WIN
 #include <QCommandLineParser>
 #include <QDir>
 #include <QFileSelector>
@@ -31,12 +33,7 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
-#ifdef Q_OS_WIN
-  #include <QSettings>
-#endif // ifdef Q_OS_WIN
-
 #include "config.h"
-
 #include "cli/Cli.hpp"
 #include "components/Components.hpp"
 #include "logger/Logger.hpp"
@@ -47,8 +44,7 @@
 #include "translator/DefaultTranslator.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
-
-#include "App.hpp"
+#include "components/other/desktop-tools/DesktopTools.hpp"
 
 // =============================================================================
 
@@ -173,6 +169,9 @@ static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLine
 // -----------------------------------------------------------------------------
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+
+  connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
+
   setWindowIcon(QIcon(LinphoneUtils::WindowIconPath));
 
   createParser();
@@ -405,11 +404,12 @@ void App::smartShowWindow (QQuickWindow *window) {
 }
 
 // -----------------------------------------------------------------------------
-
 bool App::hasFocus () const {
   return getMainWindow()->isActive() || (mCallsWindow && mCallsWindow->isActive());
 }
-
+void App::stateChanged(Qt::ApplicationState pState) {
+    DesktopTools::applicationStateChanged(pState);
+}
 // -----------------------------------------------------------------------------
 
 void App::createParser () {
@@ -558,6 +558,8 @@ void App::registerSharedToolTypes () {
 // -----------------------------------------------------------------------------
 
 void App::setTrayIcon () {
+  if(!QSystemTrayIcon::isSystemTrayAvailable())
+      qInfo() << "System tray is not available";
   QQuickWindow *root = getMainWindow();
   QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(mEngine);
 
@@ -596,7 +598,7 @@ void App::setTrayIcon () {
         root->hide();
       }
   });
-
+  menu->setTitle(APPLICATION_NAME);
   // Build trayIcon menu.
   menu->addAction(settingsAction);
   menu->addAction(aboutAction);
@@ -605,11 +607,12 @@ void App::setTrayIcon () {
   menu->addSeparator();
   menu->addAction(quitAction);
 
+
+
   systemTrayIcon->setContextMenu(menu);
   systemTrayIcon->setIcon(QIcon(LinphoneUtils::WindowIconPath));
   systemTrayIcon->setToolTip(APPLICATION_NAME);
   systemTrayIcon->show();
-
   mSystemTrayIcon = systemTrayIcon;
 }
 

@@ -1,11 +1,13 @@
 /*
- * Paths.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <linphone++/linphone.hh>
@@ -42,7 +40,7 @@ namespace {
   constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
   constexpr char PathCodecs[] =  "/codecs/";
   constexpr char PathLogs[] = "/logs/";
-  constexpr char PathPlugins[] = "/plugins/";
+  //constexpr char PathPlugins[] = "/plugins/"; // Unused
   constexpr char PathThumbnails[] = "/thumbnails/";
   constexpr char PathUserCertificates[] = "/usr-crt/";
 
@@ -103,23 +101,46 @@ static inline string getWritableFilePath (const QString &filename) {
 }
 
 // -----------------------------------------------------------------------------
+// On Windows or Linux, the folders of the application are :
+//  bin/linphone
+//  lib/
+//  lib64/
+//  share/
+
+// But in some cases, it can be :
+//  /linphone
+//  lib/
+//  lib64/
+//  share/
+
+// On Mac, we have :
+//  Contents/
+//    Frameworks/
+//    MacOs/linphone
+//    Plugins/
+//    Resources/
+//      share/
 
 static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == QLatin1String("MacOS")) {
     dir.cdUp();
-	if (!dir.cd("Resources"))
-	{
-      dir.mkdir("Resources");
-      dir.cd("Resources");
-	}
-  } else
+	
+  } else if( !dir.exists("lib") && !dir.exists("lib64")){// Check if these folders are in the current path
     dir.cdUp();
+    if(!dir.exists("lib") && !dir.exists("lib64"))
+            qWarning() << QObject::tr("The application's location is not correct: You have to put your 'bin/' folder next to 'lib/' folder.");
+  }
   return dir;
 }
 
 static inline QString getAppPackageDataDirPath() {
   QDir dir = getAppPackageDir();
+    if (!dir.cd("Resources"))
+    {
+      dir.mkdir("Resources");
+      dir.cd("Resources");
+    }
   if (!dir.cd("share"))
   {
     dir.mkdir("share");
