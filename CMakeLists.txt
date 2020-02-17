@@ -110,7 +110,6 @@ if (NOT WIN32)
 -Wcast-align \
 -Wconversion \
 -Wno-error=conversion \
--Werror=return-type \
 -Wextra \
 -Wfloat-equal \
 -Winit-self \
@@ -122,6 +121,7 @@ if (NOT WIN32)
 -Wuninitialized \
 -Wunused \
 -Wno-error=float-equal \
+-Wno-error \
 ")
   if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
     set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
