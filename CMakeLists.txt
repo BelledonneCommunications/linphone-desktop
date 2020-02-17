@@ -120,7 +120,7 @@ else()
 		set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 		set(CMAKE_AUTOMOC ON)
 		
-		
+		set(ASSETS_DIR "assets")
         set(SOURCES
         src/app/App.cpp
         src/app/AppController.cpp
