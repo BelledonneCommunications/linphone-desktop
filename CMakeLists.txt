@@ -108,10 +108,13 @@ else()
         message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
         message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 		
-		
+# Build configuration
 		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
-		
+		if( WIN32)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINSOCKAPI_")#remove error from windows headers order
+		endif()
+		set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 		
 		set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
 		if (UNIX AND NOT APPLE)	
@@ -119,7 +122,7 @@ else()
 		endif ()
 		set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 		set(CMAKE_AUTOMOC ON)
-		
+#-------------------------------------------------		
 		set(ASSETS_DIR "assets")
         set(SOURCES
         src/app/App.cpp
@@ -347,9 +350,7 @@ else()
 
         set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 
-        # ------------------------------------------------------------------------------
-        # Create config.h file
-        # ------------------------------------------------------------------------------
+
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
         set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
@@ -359,8 +360,7 @@ if(APPLE)
 else()
         set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
-        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
-
+		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
         # ------------------------------------------------------------------------------
         # Build.
         # ------------------------------------------------------------------------------
