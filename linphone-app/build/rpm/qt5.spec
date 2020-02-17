@@ -35,6 +35,11 @@ Qt is a software toolkit for developing applications.
 %prep
 %setup -n %{name}-%{version}
 
+#Notes for Qt 5.12 and above
+#qt-xcb includes libxcb-* but libxcb
+#qt-xkbcommon cannot be used anymore
+#-xkbcommon enables xkb support using system libs
+
 %build
 ./configure \
   -opensource \
@@ -51,7 +56,7 @@ Qt is a software toolkit for developing applications.
   -qt-libpng \
   -qt-pcre \
   -qt-xcb \
-  -qt-xkbcommon \
+  -xkbcommon \
   -skip wayland \
   -system-zlib \
   -archdatadir %{_qt5_archdatadir} \
