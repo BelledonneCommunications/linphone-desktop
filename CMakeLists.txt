@@ -107,7 +107,6 @@ if (NOT WIN32)
   check_cxx_compiler_flag("-Wsuggest-override" SUGGEST_OVERRIDE)
   set(CUSTOM_FLAGS "\
 -Wall \
--Wcast-align \
 -Wconversion \
 -Wno-error=conversion \
 -Wextra \
