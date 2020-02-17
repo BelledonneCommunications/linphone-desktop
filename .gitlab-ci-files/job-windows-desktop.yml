@@ -75,9 +75,10 @@
     - C:\PROGRA~1\Python37\Scripts\cl -s
 
   artifacts:
+    when: always
     paths:
-      - build-desktop\OUTPUT
-    expire_in: 1 week
+      - build-desktop
+    expire_in: 2 days
             
 .job-windows-vs2017-scheduled:
   extends: .job-windows-vs2017
