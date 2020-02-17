@@ -57,8 +57,12 @@ set(ASSETS_DIR "assets")
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
+option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
+option(ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" NO  )
 option(ENABLE_TOOLS "Enable tools of SDK" NO)
+option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
 
+option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
 
 if(WIN32 OR APPLE)
     option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
@@ -111,12 +115,14 @@ elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
       set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wno-switch")
 endif ()
 
+
 set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -DQT_NO_EXCEPTIONS")
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
 # See: http://stackoverflow.com/a/1372836
 if (WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINSOCKAPI_")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWIN32_LEAN_AND_MEAN ")
+  # -D_WINSOCKAPI_")
 endif ()
 
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
@@ -475,7 +481,9 @@ endif()
         target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
         target_link_libraries(${TARGET_NAME} ${LIBRARIES})
-
+		if(WIN32)
+			target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
+		endif()
 
         foreach (target ${TARGET_NAME})
             install(TARGETS ${target}
