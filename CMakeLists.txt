@@ -36,6 +36,10 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
+# Avoid cmake warning if CMP0071 is not set.
+if (POLICY CMP0071)
+  cmake_policy(SET CMP0071 NEW)
+endif ()
 #set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #------------------------------------------------------------------------------
@@ -48,8 +52,6 @@ include(application_info.cmake)
 set(TARGET_NAME linphone-qt)
 
 set(CMAKE_CXX_STANDARD 11)
-
-set(ASSETS_DIR "assets")
 
 #-------------------------------------------------------------------------------
 #				SET OPTIONS
@@ -78,68 +80,6 @@ include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
 
-# Use automatically moc from Qt5.
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Avoid cmake warning if CMP0071 is not set.
-if (POLICY CMP0071)
-  cmake_policy(SET CMP0071 NEW)
-endif ()
-
-if (NOT WIN32)
-  check_cxx_compiler_flag("-Wsuggest-override" SUGGEST_OVERRIDE)
-  set(CUSTOM_FLAGS "\
--Wall \
--Wno-error=conversion \
--Wextra \
--Wfloat-equal \
--Winit-self \
--Wnon-virtual-dtor \
--Woverloaded-virtual \
--Wpointer-arith \
--Wsign-conversion \
--Wno-error=sign-conversion \
--Wuninitialized \
--Wunused \
--Wno-error=float-equal \
--Wno-error=cast-align \
-")
-  if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
-  endif ()
-  if (SUGGEST_OVERRIDE)
-    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override")
-  endif ()
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-      set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wno-switch")
-endif ()
-
-
-set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -DQT_NO_EXCEPTIONS")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
-# See: http://stackoverflow.com/a/1372836
-if (WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWIN32_LEAN_AND_MEAN ")
-  # -D_WINSOCKAPI_")
-endif ()
-
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
-
-# ------------------------------------------------------------------------------
-# Define packages, libs, sources, headers, resources and languages.
-# ------------------------------------------------------------------------------
-
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
-if (UNIX AND NOT APPLE)
-  list(APPEND QT5_PACKAGES DBus)
-endif ()
-set(QT5_PACKAGES_OPTIONAL TextToSpeech)
-
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
 
 add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 
@@ -149,6 +89,7 @@ find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
+
 
 if( NOT (LinphoneCxx_FOUND))
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
@@ -165,7 +106,20 @@ else()
         message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
         message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
         message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
-
+		
+		list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
+		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
+		
+		
+		set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
+		if (UNIX AND NOT APPLE)	
+			list(APPEND QT5_PACKAGES DBus)
+		endif ()
+		set(QT5_PACKAGES_OPTIONAL TextToSpeech)
+		set(CMAKE_AUTOMOC ON)
+		
+		
         set(SOURCES
         src/app/App.cpp
         src/app/AppController.cpp
