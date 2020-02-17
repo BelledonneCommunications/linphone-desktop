@@ -144,23 +144,26 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &pee
 // -----------------------------------------------------------------------------
 
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) {
-  const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
-    Utils::appStringToCoreString(sipAddress)
-  );
+    if( sipAddress.toUpper().contains("TRANSPORT="))
+    {// Transport has been specified : check for it
+      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
+        Utils::appStringToCoreString(sipAddress)
+      );
 
-  if (!address)
-    return QString("TLS");  // Return TLS by default
+      if (!address)
+        return QString("TLS");  // Return TLS by default
 
-  switch (address->getTransport()) {
-    case linphone::TransportType::Udp:
-      return QStringLiteral("UDP");
-    case linphone::TransportType::Tcp:
-      return QStringLiteral("TCP");
-    case linphone::TransportType::Tls:
-      return QStringLiteral("TLS");
-    case linphone::TransportType::Dtls:
-      return QStringLiteral("DTLS");
-  }
+      switch (address->getTransport()) {
+        case linphone::TransportType::Udp:
+          return QStringLiteral("UDP");
+        case linphone::TransportType::Tcp:
+          return QStringLiteral("TCP");
+        case linphone::TransportType::Tls:
+          return QStringLiteral("TLS");
+        case linphone::TransportType::Dtls:
+          return QStringLiteral("DTLS");
+      }
+    }
 
   return QString("TLS");
 }

@@ -117,21 +117,21 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   {
     const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
     map["sipAddress"] = address
-      ? Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
+      ? QString::fromStdString(proxyConfig->getIdentityAddress()->asString())
       : QString("");
   }
-  map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
+  map["serverAddress"] = QString::fromStdString(proxyConfig->getServerAddr());
   map["registrationDuration"] = proxyConfig->getPublishExpires();
-  QString transport = QString::fromStdString(proxyConfig->getTransport());
-  if(transport == "")
-      map["transport"] = "tls";// Set to TLS by default
-  else
-      map["transport"] = transport;
+
+  if( map["serverAddress"].toString().toUpper().contains("TRANSPORT="))// transport has been specified : let the RFC select the transport
+        map["transport"] = QString::fromStdString(proxyConfig->getTransport());
+  else// Set to TLS as default
+      map["transport"] = "tls";
   if( proxyConfig->getRoutes().size() > 0)
-    map["route"] = Utils::coreStringToAppString(proxyConfig->getRoutes().front());
+    map["route"] = QString::fromStdString(proxyConfig->getRoutes().front());
   else
     map["route"] = "";
-  map["contactParams"] = Utils::coreStringToAppString(proxyConfig->getContactParameters());
+  map["contactParams"] = QString::fromStdString(proxyConfig->getContactParameters());
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();
   map["publishPresence"] = proxyConfig->publishEnabled();
