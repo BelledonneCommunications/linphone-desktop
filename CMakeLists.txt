@@ -121,6 +121,7 @@ if (NOT WIN32)
 -Wuninitialized \
 -Wunused \
 -Wno-error=float-equal \
+-Wno-error=cast-align \
 -Wno-error \
 ")
   if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
