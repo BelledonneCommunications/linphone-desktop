@@ -83,7 +83,7 @@ There are called `build_all_linux.sh`, `build_all_macos.sh` and `build_all_win.b
 
 * The latest version of Doxygen doesn't work with the SDK. If you have a specific version of Doxygen that is not in your PATH, you can use `-DLINPHONESDK_DOXYGEN_PROGRAM`.
 
-Eg on Mac : `-DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen=/Applications/Doxygen.app/Contents/Resources/doxygen`
+Eg on Mac : `-DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen`
 
 * If the build of the SDK crash with something like "cmd.exe failed" and no more info, it can be a dependency that is not available. You have to check if all are in your PATH.
 Usually, if it is about VPX or Decaf, this could come from your Perl installation. 
@@ -114,8 +114,8 @@ Before you install packages with Brew, you may have to change directories permis
 
 2. Define the `Qt5_DIR` and `PATH` environment variable to the Qt5 installation path:
 
-        Qt5_DIR="C:\Qt\<version>\msvc2015\lib\cmake"
-        PATH="C:\Qt\<version>\msvc2015\bin;%PATH%"
+        Qt5_DIR="C:\Qt\<version>\msvc2017\lib\cmake"
+        PATH="C:\Qt\<version>\msvc2017\bin;%PATH%"
 
 2. Or open a Command line with Visual Studio `Developer Comand Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: C:\Qt\5.12.6\msvc2017\bin\qtenv2.bat
 
