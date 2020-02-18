@@ -1,11 +1,13 @@
 /*
- * ImageProvider.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: June 19, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include <QElapsedTimer>
@@ -247,8 +245,8 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 
 QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
   const QString path = QStringLiteral(":%1").arg(id);
-  qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
-    .arg(path).arg(requestedSize.width()).arg(requestedSize.height());
+//  qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
+//    .arg(path).arg(requestedSize.width()).arg(requestedSize.height());
 
   QElapsedTimer timer;
   timer.start();
@@ -298,7 +296,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
   QPainter painter(&image);
   renderer.render(&painter);
 
-  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
+//  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
 
   return image;
 }

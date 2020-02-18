@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.3
+import Qt.labs.platform 1.0
 
 import Linphone 1.0
 
@@ -48,6 +49,7 @@ Item {
 
   Menu {
     id: menu
+    title: qsTr('settings')
 
     MenuItem {
       text: qsTr('settings')

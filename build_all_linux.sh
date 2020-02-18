@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 ##
 ## Copyright (c) 2010-2020 Belledonne Communications SARL.
 ##
@@ -18,36 +18,37 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program. If not, see <http://www.gnu.org/licenses/>.
 ##
-################################################################################
 
+################################################################################
+#           Linux First building script
 #-------------------------------------------------------------------------------
-#           MAC OSX First building script
-#-------------------------------------------------------------------------------
+
 #Stop at error
 set -e
 
 if [[ -z ${Qt5_DIR} ]]; then
-	export Qt5_DIR=/usr/opt/qt/lib/cmake
-	export PATH=$PATH:/usr/local/opt/qt/bin
+	eval "$(qtchooser -print-env)"
+        export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
+        export PATH=${QTTOOLDIR}:$PATH
 fi
 
 #Creation of folders
 mkdir -p build-desktop
-cd build-desktop
-
+#Opus crash on Linux. The version for 4.3 is old. We have to use a switch in configuration to select the newest version for desktop.
 #SDK building
-#LINPHONESDK_DOXYGEN_PROGRAM is set just to be sure to get the version of the Application folder
-cmake .. -DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build . --target all --config RelWithDebInfo --parallel 10
+cd build-desktop
+#cmake .. -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_VPX=YES -DENABLE_GPL_THIRD_PARTIES=YES -DENABLE_NON_FREE_CODECS=YES -DENABLE_AMRNB=YES -DENABLE_AMRWB=YES -DENABLE_G729=YES -DENABLE_GSM=YES -DENABLE_ILBC=YES -DENABLE_ISAC=YES -DENABLE_SILK=YES -DENABLE_SPEEX=YES -DENABLE_H263=YES -DENABLE_H263P=YES -DENABLE_MPEG4=YES -DENABLE_OPENH264=YES -DENABLE_FFMPEG=YES -DENABLE_VIDEO=YES -DENABLE_GL=YES -DENABLE_OPUS=NO
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DENABLE_OPUS=NO
+cmake --build . --target sdk --config RelWithDebInfo --parallel 10
 
 #MiniZip Building
 cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build . --target all --config RelWithDebInfo --parallel 10
+cmake --build . --target minizip --config RelWithDebInfo --parallel 10
 cmake --build . --target install
 
 #Desktop Building
 cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo
-cmake --build . --target all --config RelWithDebInfo
+cmake --build . --target all --config RelWithDebInfo  --parallel 10
 cmake --build . --target install
 
 

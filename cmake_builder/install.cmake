@@ -21,7 +21,7 @@
 ############################################################################
 
 if (APPLE)
-	execute_process(COMMAND install_name_tool -id "@executable_path/../lib/libminizip.dylib" "${CMAKE_INSTALL_PREFIX}/lib/libminizip.dylib")
+	#execute_process(COMMAND install_name_tool -id "@executable_path/../lib/libminizip.dylib" "${CMAKE_INSTALL_PREFIX}/lib/libminizip.dylib")
 	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../Frameworks/" "${CMAKE_INSTALL_PREFIX}/bin/linphone")
 	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../lib/" "${CMAKE_INSTALL_PREFIX}/bin/linphone")
 else ()

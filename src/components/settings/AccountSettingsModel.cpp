@@ -1,11 +1,13 @@
 /*
- * AccountSettingsModel.cpp
- * Copyright (C) 2017-2018  Belledonne Communications, Grenoble, France
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -13,11 +15,7 @@
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
- *
- *  Created on: February 2, 2017
- *      Author: Ronan Abhamon
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "config.h"
@@ -119,14 +117,21 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   {
     const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
     map["sipAddress"] = address
-      ? Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
+      ? QString::fromStdString(proxyConfig->getIdentityAddress()->asString())
       : QString("");
   }
-  map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
+  map["serverAddress"] = QString::fromStdString(proxyConfig->getServerAddr());
   map["registrationDuration"] = proxyConfig->getPublishExpires();
-  map["transport"] = Utils::coreStringToAppString(proxyConfig->getTransport());
-  map["route"] = Utils::coreStringToAppString(proxyConfig->getRoute());
-  map["contactParams"] = Utils::coreStringToAppString(proxyConfig->getContactParameters());
+
+  if( map["serverAddress"].toString().toUpper().contains("TRANSPORT="))// transport has been specified : let the RFC select the transport
+        map["transport"] = QString::fromStdString(proxyConfig->getTransport());
+  else// Set to TLS as default
+      map["transport"] = "tls";
+  if( proxyConfig->getRoutes().size() > 0)
+    map["route"] = QString::fromStdString(proxyConfig->getRoutes().front());
+  else
+    map["route"] = "";
+  map["contactParams"] = QString::fromStdString(proxyConfig->getContactParameters());
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();
   map["publishPresence"] = proxyConfig->publishEnabled();
@@ -134,16 +139,20 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   map["registrationState"] = mapLinphoneRegistrationStateToUi(proxyConfig->getState());
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
-  if (!natPolicy)
-    natPolicy = proxyConfig->getCore()->createNatPolicy();
+  bool createdNat = !natPolicy;
+  if (createdNat)
+        natPolicy = proxyConfig->getCore()->createNatPolicy();
   map["iceEnabled"] = natPolicy->iceEnabled();
   map["turnEnabled"] = natPolicy->turnEnabled();
 
   const string &turnUser(natPolicy->getStunServerUsername());
   const string &stunServer(natPolicy->getStunServer());
 
-  map["turnUser"] = Utils::coreStringToAppString(turnUser);
-  map["stunServer"] = Utils::coreStringToAppString(stunServer);
+  map["turnUser"] = QString::fromStdString(turnUser);
+  map["stunServer"] = QString::fromStdString(stunServer);
+
+  if (createdNat)
+        proxyConfig->setNatPolicy(natPolicy);
 
   shared_ptr<const linphone::AuthInfo> authInfo = CoreManager::getInstance()->getCore()->findAuthInfo(
     "", turnUser, stunServer
@@ -236,17 +245,21 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   );
 
   shared_ptr<linphone::NatPolicy> natPolicy = proxyConfig->getNatPolicy();
-  if (!natPolicy)
+  bool createdNat = !natPolicy;
+  if (createdNat)
     natPolicy = proxyConfig->getCore()->createNatPolicy();
   natPolicy->enableIce(data["iceEnabled"].toBool());
   natPolicy->enableStun(data["iceEnabled"].toBool());
 
-  const string turnUser(Utils::appStringToCoreString(data["turnUser"].toString()));
-  const string stunServer(Utils::appStringToCoreString(data["stunServer"].toString()));
+  const string turnUser(data["turnUser"].toString().toStdString());
+  const string stunServer(data["stunServer"].toString().toStdString());
 
   natPolicy->enableTurn(data["turnEnabled"].toBool());
   natPolicy->setStunServerUsername(turnUser);
   natPolicy->setStunServer(stunServer);
+
+  if( createdNat)
+      proxyConfig->setNatPolicy(natPolicy);
 
   shared_ptr<linphone::Core> core(proxyConfig->getCore());
   shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo("", turnUser, stunServer));
@@ -254,7 +267,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     shared_ptr<linphone::AuthInfo> clonedAuthInfo(authInfo->clone());
     clonedAuthInfo->setUserid(turnUser);
     clonedAuthInfo->setUsername(turnUser);
-    clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
+    clonedAuthInfo->setPassword(data["turnPassword"].toString().toStdString());
 
     core->addAuthInfo(clonedAuthInfo);
     core->removeAuthInfo(authInfo);
@@ -262,7 +275,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
       turnUser,
       turnUser,
-      Utils::appStringToCoreString(data["turnPassword"].toString()),
+      data["turnPassword"].toString().toStdString(),
       "",
       "",
       ""
