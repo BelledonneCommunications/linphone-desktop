@@ -1,27 +1,27 @@
 ################################################################################
-# CMakeLists.txt
-# Copyright (C) 2017-2020  Belledonne Communications, Grenoble France
 #
-################################################################################
-#
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#  Copyright (c) 2010-2020 Belledonne Communications SARL.
+# 
+#  This file is part of linphone-desktop
+#  (see https://www.linphone.org).
+# 
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
 
 # First building command:
-#   cmake .. -DENABLE_VPX=NO && cmake --build . --target all --parallel 10 && cmake --build . --target install && cmake ..
+#   cmake .. && cmake --build . --target all --parallel 10 && cmake --build . --target install && cmake ..
 # Logic : Prepare first building of the SDK and Minizip. Install binaries and prepare for application building.
 # Next, we can build the application with cmake --build . --target all --parallel 10 && cmake --build . --target install
 
@@ -51,7 +51,6 @@ include(application_info.cmake)
 # ------------------------------------------------------------------------------
 
 set(TARGET_NAME linphone-qt)
-
 set(CMAKE_CXX_STANDARD 11)
 
 #-------------------------------------------------------------------------------
@@ -74,15 +73,10 @@ else()##Opus crash on Linux. The version for 4.3 is old. We have to use a switch
     option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
 endif()
 
-
 option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES)
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
-
-
-
-add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 
 find_package(LinphoneCxx CONFIG)
 find_package(Linphone CONFIG)
@@ -91,17 +85,16 @@ find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
 
-
 if( NOT (LinphoneCxx_FOUND))
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
+	add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 else()
 # Linphone SDK has been builded
-    message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
-    add_subdirectory(submodules/externals/minizip "submodules/externals/minizip/build-minizip")
-    add_dependencies(minizip sdk)    
+    message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")    
     find_package(Minizip)    
     if( NOT(Minizip_FOUND))
         message("Minizip are not installed. Build and install it in order to build Desktop Application.")
+		add_subdirectory(submodules/externals/minizip "submodules/externals/minizip/build-minizip")
     else()
         message("MINIZIP : ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
         message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
