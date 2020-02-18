@@ -75,7 +75,7 @@ make install INSTALL_ROOT=%{buildroot}
 
 %files
 %defattr(-,root,root,-)
-%license LICENSE.LGPL* LGPL_EXCEPTION.txt LICENSE.FDL
+%license LICENSE.LGPL* LICENSE.FDL
 %{_qt5_archdatadir}/phrasebooks/*.qph
 %{_qt5_archdatadir}/qml/
 %{_qt5_bindir}/
@@ -99,6 +99,8 @@ make install INSTALL_ROOT=%{buildroot}
 %{_qt5_plugindir}/renderplugins/libscene2d.so
 %{_qt5_plugindir}/sceneparsers/*.so
 %{_qt5_plugindir}/sqldrivers/*.so
+%{_qt5_plugindir}/platformthemes/*.so
+%{_qt5_plugindir}/virtualkeyboard/*.so
 %{_qt5_plugindir}/xcbglintegrations/*.so
 %{_qt5_translationdir}/
 
