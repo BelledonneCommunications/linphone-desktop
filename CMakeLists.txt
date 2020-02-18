@@ -36,6 +36,11 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+# Avoid cmake warning if CMP0071 is not set.
+if (POLICY CMP0071)
+  cmake_policy(SET CMP0071 NEW)
+endif ()
 #set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 #------------------------------------------------------------------------------
@@ -49,42 +54,24 @@ set(TARGET_NAME linphone-qt)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(ASSETS_DIR "assets")
-
 #-------------------------------------------------------------------------------
 #				SET OPTIONS
 #-------------------------------------------------------------------------------
 
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
+option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
+option(ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" NO  )
 option(ENABLE_TOOLS "Enable tools of SDK" NO)
-option(ENABLE_GPL_THIRD_PARTIES "" YES)
-option(ENABLE_NON_FREE_CODECS "Allow inclusion of non-free codecs in the build." YES)
-option(ENABLE_AMRNB "" YES)
-option(ENABLE_AMRWB "" YES)
-option(ENABLE_BV16 "Build mediastreamer2 with the BV16 codec." YES)
-option(ENABLE_G729 "Build mediastreamer2 with the G726 codec." YES)
-option(ENABLE_G729B_CNG "Build mediastreamer2 with G729 annex B cng." NO)
-option(ENABLE_GSM "Build mediastreamer2 with the GSM codec." YES)
-option(ENABLE_ILBC "" YES)
-option(ENABLE_ISAC "" YES)
-option(ENABLE_SILK "" YES)
-option(ENABLE_SPEEX "" YES)
-option(ENABLE_SPEEX_CODEC "Build mediastreamer2 with the SPEEX codec." YES)
-option(ENABLE_SPEEX_DSP "Build mediastreamer2 with the SPEEX DSP support." YES)
-option(ENABLE_H263 "" YES)
-option(ENABLE_H263P "" YES)
-option(ENABLE_LIME_X3DH "Enable lime X3DH support." YES)
-option(ENABLE_MPEG4 "" YES)
-option(ENABLE_OPENH264 "Embedded OpenH264" YES)
-option(ENABLE_VPX "Build mediastreamer2 with VPX codec." YES)
-option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
-option(ENABLE_MKV "Enable support of MKV files reading and writing." YES)
+option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
+
 option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
+
 if(WIN32 OR APPLE)
     option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
 else()##Opus crash on Linux. The version for 4.3 is old. We have to use a switch in configuration to select the newest version for desktop.
     option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." NO)
+    option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
 endif()
 
 
@@ -93,68 +80,6 @@ option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
-
-# Use automatically moc from Qt5.
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-# Avoid cmake warning if CMP0071 is not set.
-if (POLICY CMP0071)
-  cmake_policy(SET CMP0071 NEW)
-endif ()
-
-if (NOT WIN32)
-  check_cxx_compiler_flag("-Wsuggest-override" SUGGEST_OVERRIDE)
-  set(CUSTOM_FLAGS "\
--Wall \
--Wcast-align \
--Wconversion \
--Wno-error=conversion \
--Werror=return-type \
--Wextra \
--Wfloat-equal \
--Winit-self \
--Wnon-virtual-dtor \
--Woverloaded-virtual \
--Wpointer-arith \
--Wsign-conversion \
--Wno-error=sign-conversion \
--Wuninitialized \
--Wunused \
--Wno-error=float-equal \
-")
-  if (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wlogical-op")
-  endif ()
-  if (SUGGEST_OVERRIDE)
-    set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wsuggest-override")
-  endif ()
-elseif (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-      set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -Wno-switch")
-endif ()
-
-set(CUSTOM_FLAGS "${CUSTOM_FLAGS} -DQT_NO_EXCEPTIONS")
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS}")
-# See: http://stackoverflow.com/a/1372836
-if (WIN32)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINSOCKAPI_")
-endif ()
-
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
-
-# ------------------------------------------------------------------------------
-# Define packages, libs, sources, headers, resources and languages.
-# ------------------------------------------------------------------------------
-
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
-if (UNIX AND NOT APPLE)
-  list(APPEND QT5_PACKAGES DBus)
-endif ()
-set(QT5_PACKAGES_OPTIONAL TextToSpeech)
-
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 
 add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
@@ -165,6 +90,7 @@ find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
+
 
 if( NOT (LinphoneCxx_FOUND))
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
@@ -181,7 +107,23 @@ else()
         message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
         message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
         message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
-
+		
+# Build configuration
+		set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
+		set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
+		if( WIN32)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINSOCKAPI_")#remove error from windows headers order
+		endif()
+		set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
+		
+		set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network)
+		if (UNIX AND NOT APPLE)	
+			list(APPEND QT5_PACKAGES DBus)
+		endif ()
+		set(QT5_PACKAGES_OPTIONAL TextToSpeech)
+		set(CMAKE_AUTOMOC ON)
+#-------------------------------------------------		
+		set(ASSETS_DIR "assets")
         set(SOURCES
         src/app/App.cpp
         src/app/AppController.cpp
@@ -408,9 +350,7 @@ else()
 
         set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 
-        # ------------------------------------------------------------------------------
-        # Create config.h file
-        # ------------------------------------------------------------------------------
+
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
         set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
@@ -420,8 +360,7 @@ if(APPLE)
 else()
         set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
-        configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
-
+		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
         # ------------------------------------------------------------------------------
         # Build.
         # ------------------------------------------------------------------------------
@@ -497,7 +436,9 @@ endif()
         target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
         target_link_libraries(${TARGET_NAME} ${LIBRARIES})
-
+		if(WIN32)
+			target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
+		endif()
 
         foreach (target ${TARGET_NAME})
             install(TARGETS ${target}

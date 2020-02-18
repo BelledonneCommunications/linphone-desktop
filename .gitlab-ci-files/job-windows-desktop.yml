@@ -77,7 +77,7 @@
   artifacts:
     paths:
       - build-desktop\OUTPUT
-    expire_in: 1 week
+    expire_in: 2 days
             
 .job-windows-vs2017-scheduled:
   extends: .job-windows-vs2017
