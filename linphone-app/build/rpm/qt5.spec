@@ -68,7 +68,7 @@ Qt is a software toolkit for developing applications.
   -prefix %{_qt5_dir} \
   -translationdir %{_qt5_translationdir}
 
-make
+make -j12
 
 %install
 make install INSTALL_ROOT=%{buildroot}
