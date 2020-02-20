@@ -85,7 +85,7 @@ find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
 
-if( NOT (LinphoneCxx_FOUND))
+if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND))
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
 	add_subdirectory("linphone-sdk" "linphone-sdk/build-sdk")
 else()
