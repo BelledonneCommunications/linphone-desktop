@@ -213,7 +213,7 @@ elseif (APPLE)
   install(FILES "${LINPHONE_SDK_TMP}/share/Belr/grammars/vcard_grammar" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/belr/grammars/")
   install(DIRECTORY "${LINPHONE_SDK_TMP}/share/images" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
   install(DIRECTORY "${LINPHONE_SDK_TMP}/share/sounds" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share" USE_SOURCE_PERMISSIONS)
-  install(FILES "${LINPHONE_SDK_TMP}/share/${APPLICATION_NAME}/rootca.pem" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}")
+  install(FILES "${LINPHONE_SDK_TMP}/share/Linphone/rootca.pem" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}")
   install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/linphonerc-factory" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}")
 
   install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-other-sip-account.rc" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/share/${APPLICATION_NAME}/assistant")
@@ -279,7 +279,7 @@ else()# Not Windows and Apple
 #  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/images" DESTINATION "share" USE_SOURCE_PERMISSIONS)
 #  install(DIRECTORY "${LINPHONE_SDK_TMP}/share/sounds" DESTINATION "share" USE_SOURCE_PERMISSIONS)
   #install(FILES "${LINPHONE_SDK_TMP}/share/${APPLICATION_NAME}/rootca.pem" DESTINATION "share/${APPLICATION_NAME}")
-  install(FILES "${LINPHONE_SDK_TMP}/share/${EXECUTABLE_NAME}/rootca.pem" DESTINATION "share/${APPLICATION_NAME}")	#We use executable_name because of name folder that is not harmonized from the SDK
+  install(FILES "${LINPHONE_SDK_TMP}/share/linphone/rootca.pem" DESTINATION "share/${APPLICATION_NAME}")	#We use executable_name because of name folder that is not harmonized from the SDK
 #  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/linphonerc-factory" DESTINATION "share/${APPLICATION_NAME}")
 
 #  install(FILES "${LINPHONE_OUTPUT_DIR}/share/${APPLICATION_NAME}/assistant/use-other-sip-account.rc" DESTINATION "share/${APPLICATION_NAME}/assistant")
