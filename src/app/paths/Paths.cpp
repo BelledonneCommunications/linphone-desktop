@@ -136,11 +136,13 @@ static inline QDir getAppPackageDir () {
 
 static inline QString getAppPackageDataDirPath() {
   QDir dir = getAppPackageDir();
+#ifdef APPLE
     if (!dir.cd("Resources"))
     {
       dir.mkdir("Resources");
       dir.cd("Resources");
     }
+#endif
   if (!dir.cd("share"))
   {
     dir.mkdir("share");

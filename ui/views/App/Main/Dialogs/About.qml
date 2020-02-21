@@ -104,7 +104,7 @@ DialogPlus {
         elide: Text.ElideRight
         font.pointSize: AboutStyle.copyrightBlock.license.pointSize
 
-        text: 'GNU General Public License V2\n\u00A9 2010-' +
+        text: 'GNU General Public License V3\n\u00A9 2010-' +
           (new Date().toLocaleDateString(Qt.locale(), 'yyyy')) +
           ' Belledonne Communications'
 

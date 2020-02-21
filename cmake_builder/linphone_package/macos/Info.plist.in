@@ -13,9 +13,9 @@
 	<key>CFBundleGetInfoString</key>
 	<string>@PACKAGE_VERSION@, (C) 2011-2018 @APPLICATION_NAME@ @APPLICATION_URL@</string>
 	<key>CFBundleIconFile</key>
-	<string>linphone.icns</string>
+	<string>@EXECUTABLE_NAME@.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>org.linphone.linphone</string>
+	<string>@APPLICATION_ID@</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundlePackageType</key>

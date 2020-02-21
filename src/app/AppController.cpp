@@ -40,7 +40,6 @@ namespace {
 AppController::AppController (int &argc, char *argv[]) {
   QT_REQUIRE_VERSION(argc, argv, ApplicationMinimalQtVersion)
   Q_ASSERT(!mApp);
-
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
 
@@ -59,6 +58,8 @@ AppController::AppController (int &argc, char *argv[]) {
   // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
   QCoreApplication::setApplicationName(EXECUTABLE_NAME);
   QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
+  QApplication::setOrganizationName(QString(APPLICATION_VENDOR).replace(' ', '-'));
+  QApplication::setOrganizationDomain(APPLICATION_ID);
 
   mApp = new App(argc, argv);
   QQuickStyle::setStyle("Default");
