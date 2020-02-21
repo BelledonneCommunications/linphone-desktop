@@ -480,7 +480,7 @@ else()
         if(APPLE)
             set(PACKAGING_DIR "${APPLICATION_NAME}.app/Contents/Resources")
         else()
-            set(PACKAGING_DIR "")
+            set(PACKAGING_DIR "${CMAKE_INSTALL_PREFIX}")
         endif()
         install(FILES "${ASSETS_DIR}/linphonerc-factory"
             DESTINATION "${PACKAGING_DIR}/${CMAKE_INSTALL_DATADIR}/${APPLICATION_NAME}"
