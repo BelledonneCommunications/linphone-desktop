@@ -19,10 +19,10 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 ############################################################################
-
+include(../application_info.cmake)
 if (APPLE)
 	#execute_process(COMMAND install_name_tool -id "@executable_path/../lib/libminizip.dylib" "${CMAKE_INSTALL_PREFIX}/lib/libminizip.dylib")
-	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../Frameworks/" "${CMAKE_INSTALL_PREFIX}/bin/linphone")
-	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../lib/" "${CMAKE_INSTALL_PREFIX}/bin/linphone")
+	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../Frameworks/" "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}")
+	execute_process(COMMAND install_name_tool -add_rpath "@executable_path/../lib/" "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}")
 else ()
 endif ()
