@@ -144,23 +144,24 @@ foreach (FILE ${LIST_FILES})
   file(APPEND "${LINPHONE_SDK_TMP}/${EXECUTABLE_NAME}-sdk.list" "${CONTENT}\n")
 endforeach ()
 
-if (WIN32)
-  find_program(7Z_PROGRAM 7z PATHS "$ENV{ProgramFiles}/7-Zip")
-  if (7Z_PROGRAM)
-    execute_process(
-      COMMAND ${7Z_PROGRAM} a -tzip ${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-win32.zip "@${EXECUTABLE_NAME}-sdk.list"
-      WORKING_DIRECTORY ${LINPHONE_SDK_TMP}
-    )
-  else ()
-    message(WARNING "7z has not been found, cannot generate the SDK!")
-  endif ()
-elseif (APPLE)
-  execute_process(
-    COMMAND rm -rf "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip"
-    COMMAND zip -ry "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip" . -i "@${EXECUTABLE_NAME}-sdk.list"
-    WORKING_DIRECTORY ${LINPHONE_SDK_TMP}
-  )
-endif ()
+# Removed unless it is usefull to get a zip from SDK : The SDK is packaged with binaries.
+#if (WIN32)
+#  find_program(7Z_PROGRAM 7z PATHS "$ENV{ProgramFiles}/7-Zip")
+#  if (7Z_PROGRAM)
+#    execute_process(
+#      COMMAND ${7Z_PROGRAM} a -tzip ${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-win32.zip "@${EXECUTABLE_NAME}-sdk.list"
+#      WORKING_DIRECTORY ${LINPHONE_SDK_TMP}
+#    )
+#  else ()
+#    message(WARNING "7z has not been found, cannot generate the SDK!")
+#  endif ()
+#elseif (APPLE)
+#  execute_process(
+#    COMMAND rm -rf "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip"
+#    COMMAND zip -ry "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip" . -i "@${EXECUTABLE_NAME}-sdk.list"
+#    WORKING_DIRECTORY ${LINPHONE_SDK_TMP}
+#  )
+#endif ()
 
 # ==============================================================================
 # Specific deployment.
