@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.2 as Controls
 
 import Common 1.0
 import Utils 1.0
@@ -53,6 +54,7 @@ Item {
     model.setFilter(text)
   }
 
+
   // ---------------------------------------------------------------------------
 
   implicitHeight: searchField.height
@@ -73,12 +75,13 @@ Item {
         searchBox.enterPressed()
         searchBox.closeMenu()
       }
-
       onActiveFocusChanged: {
         if (activeFocus && !_isOpen) {
+
           searchBox.menuRequested()
           searchBox.openMenu()
-        }
+        }else if( !activeFocus)
+          searchBox.closeMenu()
       }
 
       onTextChanged: _filter(text)
@@ -110,6 +113,19 @@ Item {
       property: 'headerPositioning'
       value: searchBox.view.header ? ListView.OverlayHeader : ListView.InlineFooter
     }
+  }
+  MouseArea
+  {// Just take hover events and set popup to do its automatic close if mouse is not inside field/popup area
+      anchors.fill: parent
+      onContainsMouseChanged: menu.popup.closePolicy=(containsMouse?Controls.Popup.NoAutoClose:Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside)
+      hoverEnabled:true
+      preventStealing: true
+      propagateComposedEvents:true
+      onPressed: mouse.accepted=false
+      onReleased: mouse.accepted=false
+      onClicked: mouse.accepted=false
+      onDoubleClicked: mouse.accepted=false
+      onPressAndHold: mouse.accepted=false
   }
 
   // ---------------------------------------------------------------------------

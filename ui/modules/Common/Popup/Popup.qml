@@ -15,6 +15,7 @@ Item {
   property int relativeY: 0
 
   default property alias _content: popup.contentItem
+  property alias closePolicy : popup.closePolicy
 
   // ---------------------------------------------------------------------------
 
@@ -83,7 +84,7 @@ Item {
       }
     }
 
-    padding: 0
+    padding: 0    
 
     Component.onCompleted: parent = Utils.getTopParent(this)
 

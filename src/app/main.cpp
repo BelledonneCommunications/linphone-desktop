@@ -20,10 +20,16 @@
 
 #include "AppController.hpp"
 #include <qloggingcategory.h>
+#ifdef QT_QML_DEBUG
+#include <QQmlDebuggingEnabler>
+#endif
 // =============================================================================
 
 int main (int argc, char *argv[]) {
   AppController controller(argc, argv);
+#ifdef QT_QML_DEBUG
+  QQmlDebuggingEnabler enabler;
+#endif
   //QLoggingCategory::setFilterRules("*.debug=true;qml=false");
   App *app = controller.getApp();
   if (app->isSecondary())

@@ -19,6 +19,7 @@ Item {
   property int maxMenuHeight
 
   default property alias _content: menuContent.data
+  property alias popup : popup
 
   // ---------------------------------------------------------------------------
 
@@ -64,7 +65,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   Popup {
-    id: popup
+    id: popup    
 
     onOpened: menu.opened()
     onClosed: menu.closed()

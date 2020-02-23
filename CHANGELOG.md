@@ -30,6 +30,7 @@
 - Play a sound when DTMF is sent.
 - Do not use `:` separator when a file is saved on Windows.
 - Avoid mark as read on selected chat room if window is not active.
+- Search box in main page will not reset its text when clicking on it
 
 ### Removed
 
