@@ -123,8 +123,10 @@ if (WIN32)
 #    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
 #  endforeach ()
 elseif (APPLE)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Info.plist" @ONLY)
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Resources/${EXECUTABLE_NAME}.icns" COPYONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${CMAKE_BINARY_DIR}/Info.plist" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}.icns" COPYONLY)
+  install(FILES "${CMAKE_BINARY_DIR}/Info.plist" DESTINATION "${APPLICATION_NAME}.app/Contents")
+  install(FILES "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}.icns" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources")
   install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/Frameworks/" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" USE_SOURCE_PERMISSIONS COMPONENT application)
   install(PROGRAMS "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS" COMPONENT application)
   file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.dylib")
@@ -158,7 +160,10 @@ elseif (APPLE)
     endif()
   endforeach ()
 
-  install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)"  COMPONENT application)
+  install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
+  install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
+
+  install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)"  COMPONENT binary_application)
 
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
     file(GLOB FRAMEWORKS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app/Contents/Frameworks/*")
@@ -230,6 +235,8 @@ endif ()
 #                               CPack.
 # ==============================================================================
 
+set(CPACK_BINARY_STGZ OFF)
+set(CPACK_BINARY_TGZ OFF)
 set(CPACK_PACKAGE_NAME "${APPLICATION_NAME}")
 set(CPACK_PACKAGE_VENDOR "${APPLICATION_VENDOR}")
 set(CPACK_PACKAGE_VERSION_MAJOR ${LINPHONE_MAJOR_VERSION})
@@ -239,16 +246,21 @@ if (LINPHONE_MICRO_VERSION)
 endif ()
 set(CPACK_PACKAGE_EXECUTABLES "${EXECUTABLE_NAME};${APPLICATION_NAME}")
 set(CPACK_RESOURCE_FILE_LICENSE "${LINPHONE_DESKTOP_DIR}/LICENSE.txt")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "${APPLICATION_NAME}")
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/CPackBuild")
+set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}/assets/icon.ico")
+
 
 if (APPLE)
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-mac")
   set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/macos/background_dmg.jpg")
 
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
+#  set(CPACK_INSTALL_COMMANDS "install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)"  COMPONENT binary_application)")
+  
   set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
   set(CPACK_BINARY_DRAGNDROP ON)
 else()
-  set(CPACK_PACKAGE_INSTALL_DIRECTORY "${APPLICATION_NAME}")
 endif ()
 
 if (WIN32)

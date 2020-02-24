@@ -530,7 +530,6 @@ else()
         # ------------------------------
         # Installation
         # ------------------------------
-        install(SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/install.cmake")
         if(APPLE)
             target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
             execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
