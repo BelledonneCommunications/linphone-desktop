@@ -51,10 +51,10 @@ job-macosx-ninja:
 
 
 job-macosx-makefile:
-
   only:
     variables:
       - $NIGHTLY_MASTER
+      - $TEST_NIGHTLY
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -65,7 +65,6 @@ job-macosx-makefile:
     expire_in: 1 week
 
 job-macosx-ninja-novideo:
-
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -73,14 +72,12 @@ job-macosx-ninja-novideo:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
   extends: job-macosx-ninja
 
-
 job-macosx-xcode:
   extends: .job-macosx-desktop
   variables:
     XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
     CMAKE_GENERATOR: Xcode
     ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
-
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -93,15 +90,14 @@ job-macosx-xcode:
 
 
 job-macosx-makefile-package:
-
   stage: package
   tags: [ "deploy" ]
-
   dependencies:
     - job-macosx-makefile
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $TEST_NIGHTLY
   script:
     - cd build-desktop
     - cmake --build . --target package -- $ADDITIONAL_BUILD_OPTIONS
@@ -116,14 +112,13 @@ job-macosx-makefile-package:
 #################################################
 
 job-macosx-ninja-deploy:
-
   stage: deploy
   tags: [ "deploy" ]
-
   dependencies:
     - job-macosx-makefile-package
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $TEST_NIGHTLY
   script:
     - scp build-desktop/CPackBuild/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/linphone
