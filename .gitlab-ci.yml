@@ -52,4 +52,4 @@ include:
 stages:
   - build
   - package
-#  - deploy
+  - deploy
