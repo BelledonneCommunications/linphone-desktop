@@ -88,6 +88,7 @@ job-macosx-makefile-package:
      variables:
        - $NIGHTLY_MASTER
        - $TEST_NIGHTLY
+  extends: job-macosx-makefile
   script:
     - *build_all_script
     - cmake --build . --target package -- $ADDITIONAL_BUILD_OPTIONS
