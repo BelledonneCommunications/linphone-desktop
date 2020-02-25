@@ -112,4 +112,4 @@ job-macosx-makefile-deploy:
        - $NIGHTLY_MASTER
        - $TEST_NIGHTLY
   script:
-    - scp build-desktop/CPackBuild/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/app
+    - scp build-desktop/CPackBuild/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/app/
