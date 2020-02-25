@@ -72,6 +72,10 @@ make -j12
 
 %install
 make install INSTALL_ROOT=%{buildroot}
+# Some files got ambiguous python shebangs, we fix them after everything else is done
+# Because in centos8 shebangs like #!/usr/bin/python are FORBIDDEN (see https://fedoraproject.org/wiki/Changes/Make_ambiguous_python_shebangs_error)
+pathfix.py -pni "%{__python2} %{py2_shbang_opts}" %{buildroot}%{python2_sitearch}
+pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{python3_sitearch} %{buildroot}%{_bindir}/*
 
 %files
 %defattr(-,root,root,-)
