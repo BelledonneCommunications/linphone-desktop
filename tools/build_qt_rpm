@@ -3,7 +3,7 @@
 # See: http://wiki.qt.io/Building_Qt_5_from_Git
 # See: http://doc.qt.io/qt-5/configure-options.html
 
-REPO_URL='https://gitlab.linphone.org/BC/public/external/qt5.git'
+REPO_URL='https://gitlab.linphone.org/BC/public/external/qt/qt5.git'
 QT_VERSION='5.12.5'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
@@ -22,17 +22,9 @@ cd "${SCRIPT_DIR}/.."
 
 if [ ! -d "${REPO_FOLDER}/.git" ]; then
   
-  function convert_to_integer {
-   echo "$@" | awk -F "." '{ printf("%03d%03d%03d\n", $1,$2,$3); }';
-  }
-  #parsing git version command to get only version numbers
-  GIT_VERSION=$(git --version | sed 's|.*version \([0-9\.]*\).*|\1|')
-  PARALLEL_FETCH='';
-  if [ "$(convert_to_integer ${GIT_VERSION})" -gt "2.8.0" ];then
-    PARALLEL_FETCH='-j12'
-  fi
-
-  git clone "${REPO_URL}" "${REPO_FOLDER}" "${PARALLEL_FETCH}"
+  #Simplest way to use paralle fetch if available
+  #Otherwise we would have to parse the git version number
+  git clone "${REPO_URL}" "${REPO_FOLDER}" -j 12 || git clone "${REPO_URL}" "${REPO_FOLDER}"
 fi
 cd "${REPO_FOLDER}"
 while test $# -gt 0
