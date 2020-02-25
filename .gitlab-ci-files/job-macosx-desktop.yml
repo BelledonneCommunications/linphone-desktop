@@ -1,35 +1,32 @@
+.build_all_script: &build_all_script
+  ccache -s
+  export Qt5_DIR=/usr/local/opt/qt/lib/cmake
+  export PATH=$PATH:/usr/local/opt/qt/bin
+  if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
+  mkdir -p build-desktop/OUTPUT
+  cd build-desktop
+  #SDK Building
+  echo $CMAKE_GENERATOR
+  echo $DEFAULT_MACOS_CMAKE_OPTIONS
+  echo $CMAKE_OPTIONS
+  echo $ADDITIONAL_BUILD_OPTIONS
+  cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+  cmake --build . --target all $LBC_NODEBUG_OPTIONS
+  # Minizip install to OUTPUT folder
+   cmake ..
+   cmake --build . --target minizip
+   cmake --build . --target install
+  # Update CMake installation
+   cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
+   cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
+   cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+   ccache -s
 
 .job-macosx-desktop:
-
   stage: build
-
   tags: [ "macosx" ]
-
   script:
-    - ccache -s
-    - export Qt5_DIR=/usr/local/opt/qt/lib/cmake
-    - export PATH=$PATH:/usr/local/opt/qt/bin
-    - if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
-    - mkdir -p build-desktop/OUTPUT
-    - cd build-desktop
-#SDK Building
-    - echo $CMAKE_GENERATOR
-    - echo $DEFAULT_MACOS_CMAKE_OPTIONS
-    - echo $CMAKE_OPTIONS
-    - echo $ADDITIONAL_BUILD_OPTIONS
-    - cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-    - cmake --build . --target all $LBC_NODEBUG_OPTIONS
-# Minizip install to OUTPUT folder
-    - cmake ..
-    - cmake --build . --target minizip
-    - cmake --build . --target install    
-# Update CMake installation  
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-    - cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
-    - cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
-    - ccache -s
-
-
+    - *build_all_script
   artifacts:
     paths:
       - build-desktop/OUTPUT
@@ -40,7 +37,6 @@
 #################################################
 
 job-macosx-ninja:
-
   variables:
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
@@ -48,7 +44,6 @@ job-macosx-ninja:
 #################################################
 # Nightly
 #################################################
-
 
 job-macosx-makefile:
   only:
@@ -59,10 +54,6 @@ job-macosx-makefile:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .job-macosx-desktop
-  artifacts:
-    paths:
-      - build-desktop/*
-    expire_in: 1 week
 
 job-macosx-ninja-novideo:
   only:
@@ -88,7 +79,6 @@ job-macosx-xcode:
 # Package - Nightly
 #################################################
 
-
 job-macosx-makefile-package:
   stage: package
   tags: [ "deploy" ]
@@ -99,15 +89,13 @@ job-macosx-makefile-package:
        - $NIGHTLY_MASTER
        - $TEST_NIGHTLY
   script:
-    - cd build-desktop
-    - cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
+    - *build_all_script
     - cmake --build . --target package -- $ADDITIONAL_BUILD_OPTIONS
     - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" CPackBuild/Linphone*.dmg
   artifacts:
-    when: on_failure
     paths:
-      - build-desktop/*
-    expire_in: 1 day
+      - build-desktop/CPackBuild/Linphone*.dmg
+    expire_in: 1 week
 
 #################################################
 # Deploy - Nightly
