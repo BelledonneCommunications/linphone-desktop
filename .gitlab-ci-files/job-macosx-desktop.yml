@@ -100,6 +100,7 @@ job-macosx-makefile-package:
        - $TEST_NIGHTLY
   script:
     - cd build-desktop
+    - cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target package -- $ADDITIONAL_BUILD_OPTIONS
     - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" CPackBuild/Linphone-*.dmg
   artifacts:
@@ -111,7 +112,7 @@ job-macosx-makefile-package:
 # Deploy - Nightly
 #################################################
 
-job-macosx-ninja-deploy:
+job-macosx-makefile-deploy:
   stage: deploy
   tags: [ "deploy" ]
   dependencies:
