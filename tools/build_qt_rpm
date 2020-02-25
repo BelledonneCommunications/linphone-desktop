@@ -74,7 +74,7 @@ cd ..
 
 mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 #use pigz to parallelize compression
-tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -cf | pigz -p 12 ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
+tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -c ${REPO_FOLDER}/ | pigz -p 24 > ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz 
 #tar --transform "s/^${REPO_FOLDER}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
 rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec
