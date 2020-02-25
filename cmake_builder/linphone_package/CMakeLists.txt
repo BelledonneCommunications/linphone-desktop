@@ -255,7 +255,7 @@ if (APPLE)
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-mac")
   set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/macos/background_dmg.jpg")
 
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "linphone_dmg.scpt" @ONLY)
 #  set(CPACK_INSTALL_COMMANDS "install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)"  COMPONENT binary_application)")
   
   set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
