@@ -24,7 +24,7 @@ if [ ! -d "${REPO_FOLDER}/.git" ]; then
   
   #Simplest way to use paralle fetch if available
   #Otherwise we would have to parse the git version number
-  git clone "${REPO_URL}" "${REPO_FOLDER}" -j 12 || git clone "${REPO_URL}" "${REPO_FOLDER}"
+  git clone "${REPO_URL}" "${REPO_FOLDER}" --recursive -j 12 || git clone "${REPO_URL}" "${REPO_FOLDER}"
 fi
 cd "${REPO_FOLDER}"
 while test $# -gt 0
