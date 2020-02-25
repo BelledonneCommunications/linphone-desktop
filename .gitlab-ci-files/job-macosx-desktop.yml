@@ -102,11 +102,12 @@ job-macosx-makefile-package:
     - cd build-desktop
     - cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
     - cmake --build . --target package -- $ADDITIONAL_BUILD_OPTIONS
-    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" CPackBuild/Linphone-*.dmg
+    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" CPackBuild/Linphone*.dmg
   artifacts:
+    when: on_failure
     paths:
-      - build-desktop/CPackBuild/Linphone*.dmg
-    expire_in: 1 week
+      - build-desktop/*
+    expire_in: 1 day
 
 #################################################
 # Deploy - Nightly
