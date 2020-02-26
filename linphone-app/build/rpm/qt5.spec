@@ -20,7 +20,7 @@ License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url: http://qt-project.org/
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires: /usr/bin/pathfix.py
+BuildRequires: pathfix.py
 
 %description
 Qt is a software toolkit for developing applications.
