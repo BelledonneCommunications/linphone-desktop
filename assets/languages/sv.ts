@@ -998,6 +998,21 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MainWindowTopMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished">Inställningar</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished">Om</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished">Avsluta</translation>
+    </message>
+</context>
+<context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
@@ -1096,6 +1111,13 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>presenceOffline</source>
         <translation>Frånkopplad</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>The application&apos;s location is not correct: You have to put your &apos;bin/&apos; folder next to &apos;lib/&apos; folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

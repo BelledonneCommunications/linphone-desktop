@@ -998,6 +998,21 @@
     </message>
 </context>
 <context>
+    <name>MainWindowTopMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished">Настройки</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished">О программе</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished">Выйти</translation>
+    </message>
+</context>
+<context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
@@ -1096,6 +1111,13 @@
     <message>
         <source>presenceOffline</source>
         <translation>Офлайн</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>The application&apos;s location is not correct: You have to put your &apos;bin/&apos; folder next to &apos;lib/&apos; folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

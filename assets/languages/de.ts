@@ -995,6 +995,21 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
 </context>
 <context>
+    <name>MainWindowTopMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished">Einstellungen</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished">Über</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished">Schließen</translation>
+    </message>
+</context>
+<context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
@@ -1093,6 +1108,13 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>presenceOffline</source>
         <translation>Offline</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>The application&apos;s location is not correct: You have to put your &apos;bin/&apos; folder next to &apos;lib/&apos; folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

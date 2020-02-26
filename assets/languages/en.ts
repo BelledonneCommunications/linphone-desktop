@@ -1000,6 +1000,21 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
+    <name>MainWindowTopMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished">Preferences</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished">About</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished">Quit</translation>
+    </message>
+</context>
+<context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
@@ -1098,6 +1113,13 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>presenceOffline</source>
         <translation>Offline</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <source>The application&apos;s location is not correct: You have to put your &apos;bin/&apos; folder next to &apos;lib/&apos; folder.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

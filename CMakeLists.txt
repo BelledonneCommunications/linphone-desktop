@@ -96,6 +96,9 @@ if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR 
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
     set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
     add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
+elseif( FORCE_SDK_BUILD )
+    set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
+    add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
 else()
     # Linphone SDK has been builded
     message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
@@ -104,13 +107,13 @@ else()
         message("Minizip are not installed. Build and install it in order to build Desktop Application.")
         set(CMAKE_INSTALL_PREFIX "${MINIZIP_OUTPUT_DIR}")
         add_subdirectory(submodules/externals/minizip "submodules/externals/minizip/build-minizip")
-    else()
+    else()		
         set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
-        if(WIN32)
-            set(EXECUTABLE_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
-            set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${EXECUTABLE_OUTPUT_DIR}")
-            set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${EXECUTABLE_OUTPUT_DIR}")
-            set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${EXECUTABLE_OUTPUT_DIR}")
+		if(WIN32)
+			set(EXECUTABLE_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
+			set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${EXECUTABLE_OUTPUT_DIR}")
+			set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${EXECUTABLE_OUTPUT_DIR}")
+			set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${EXECUTABLE_OUTPUT_DIR}")
 		endif()
         message("MINIZIP : ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
         message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
@@ -480,31 +483,6 @@ else()
                 )
             endforeach ()
         endif ()
-
-        # ------------------------------------------------------------------------------
-        # Install rc files.
-        # ------------------------------------------------------------------------------
-        if(APPLE)
-            set(PACKAGING_DIR "${APPLICATION_NAME}.app/Contents/Resources")
-        else()
-            set(PACKAGING_DIR "${CMAKE_INSTALL_PREFIX}")
-        endif()
-        install(FILES "${ASSETS_DIR}/linphonerc-factory"
-            DESTINATION "${PACKAGING_DIR}/${CMAKE_INSTALL_DATADIR}/${APPLICATION_NAME}"
-            )
-
-        set(ASSETS_ASSISTANT_DIR "${ASSETS_DIR}/assistant")
-        set(ASSISTANT_INSTALL_DATADIR "${PACKAGING_DIR}/${CMAKE_INSTALL_DATADIR}/${APPLICATION_NAME}/assistant")
-
-        install(FILES "${ASSETS_ASSISTANT_DIR}/use-other-sip-account.rc"
-            DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
-            )
-        install(FILES "${ASSETS_ASSISTANT_DIR}/create-app-sip-account.rc"
-            DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
-            )
-        install(FILES "${ASSETS_ASSISTANT_DIR}/use-app-sip-account.rc"
-            DESTINATION "${ASSISTANT_INSTALL_DATADIR}"
-            )
 
         # ------------------------------------------------------------------------------
         # CPack settings & RPM.
