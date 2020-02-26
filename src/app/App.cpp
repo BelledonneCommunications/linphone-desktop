@@ -29,6 +29,7 @@
 #include <QMenu>
 #include <QQmlApplicationEngine>
 #include <QQmlFileSelector>
+#include <QQmlContext>
 #include <QQuickWindow>
 #include <QSystemTrayIcon>
 #include <QTimer>
@@ -316,6 +317,8 @@ void App::initContentApp () {
   mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
   mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
   mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
+
+  mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
 
   registerTypes();
   registerSharedTypes();

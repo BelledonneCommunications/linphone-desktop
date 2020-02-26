@@ -82,7 +82,7 @@ DialogPlus {
         elide: Text.ElideRight
         font.pointSize: AboutStyle.copyrightBlock.url.pointSize
         linkColor: AboutStyle.copyrightBlock.url.color
-        text: '<a href="https://www.linphone.org">https://www.linphone.org</a>'
+        text: '<a href="'+applicationUrl+'">'+applicationUrl+'</a>'
 
         width: parent.width
 
