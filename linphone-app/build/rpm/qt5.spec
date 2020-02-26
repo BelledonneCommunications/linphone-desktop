@@ -20,6 +20,7 @@ License: LGPLv2 with exceptions or GPLv3 with exceptions
 Url: http://qt-project.org/
 Source0: %{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRequires: /usr/bin/pathfix.py
 
 %description
 Qt is a software toolkit for developing applications.
@@ -33,6 +34,10 @@ Requires: %{name} = %{version}-%{release}
 Qt is a software toolkit for developing applications.
 
 %prep
+# Some files got ambiguous python shebangs, we fix them to avoid install errors
+# Because in centos8 shebangs like #!/usr/bin/python are FORBIDDEN (see https://fedoraproject.org/wiki/Changes/Make_ambiguous_python_shebangs_error)
+pathfix.py -pni "%{__python3} %{py3_shbang_opts}" . whatnot/file-with-dashes.py else/no_py_extension
+
 %setup -n %{name}-%{version}
 
 #Notes for Qt 5.12 and above
@@ -72,10 +77,6 @@ make -j12
 
 %install
 make install INSTALL_ROOT=%{buildroot}
-# Some files got ambiguous python shebangs, we fix them after everything else is done
-# Because in centos8 shebangs like #!/usr/bin/python are FORBIDDEN (see https://fedoraproject.org/wiki/Changes/Make_ambiguous_python_shebangs_error)
-pathfix.py -pni "%{__python2} %{py2_shbang_opts}" %{buildroot}%{python2_sitearch}
-pathfix.py -pni "%{__python3} %{py3_shbang_opts}" %{buildroot}%{python3_sitearch} %{buildroot}%{_bindir}/*
 
 %files
 %defattr(-,root,root,-)
