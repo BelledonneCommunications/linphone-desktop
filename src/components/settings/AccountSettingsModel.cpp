@@ -299,8 +299,8 @@ void AccountSettingsModel::addAuthInfo (
   const QString &password,
   const QString &userId
 ) {
-  authInfo->setPassword(Utils::appStringToCoreString(password));
-  authInfo->setUserid(Utils::appStringToCoreString(userId));
+  authInfo->setPassword(password.toStdString());
+  authInfo->setUserid(userId.toStdString());
 
   CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
 }
