@@ -200,7 +200,10 @@ ApplicationWindow {
           }
         }
       }
-      MainWindowTopMenuBar{}
+      Loader{
+        active:Qt.platform.os === 'osx'
+        sourceComponent:MainWindowTopMenuBar{}
+      }
       // -----------------------------------------------------------------------
       // Content.
       // -----------------------------------------------------------------------
@@ -271,7 +274,7 @@ ApplicationWindow {
           Layout.fillWidth: true
 
           source: 'Home.qml'
-        }
+        }		
       }
     }
   }
