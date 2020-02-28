@@ -57,8 +57,7 @@ AppController::AppController (int &argc, char *argv[]) {
   // Do not use APPLICATION_NAME here.
   // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
   QCoreApplication::setApplicationName(EXECUTABLE_NAME);
-  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
-  QApplication::setOrganizationName(QString(APPLICATION_VENDOR).replace(' ', '-'));
+  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);  
   QApplication::setOrganizationDomain(APPLICATION_ID);
 
   mApp = new App(argc, argv);
