@@ -22,6 +22,7 @@
 #include <linphone++/linphone.hh>
 #include <QDateTime>
 #include <QThread>
+#include <QMessageBox>
 
 #include "config.h"
 
@@ -168,6 +169,8 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   mMutex.lock();
 
   fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
+  if( level == BCTBX_LOG_FATAL)
+      QMessageBox::critical(nullptr, "Linphone will crash", msg); // Print an error message before sending msg to bctoolbox
   bctbx_log(QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
 
   mMutex.unlock();

@@ -27,6 +27,7 @@
 #include <QMimeDatabase>
 #include <QTimer>
 #include <QUuid>
+#include <QMessageBox>
 
 #include "app/App.hpp"
 #include "app/paths/Paths.hpp"
@@ -75,8 +76,11 @@ QString MessageAppData::toString()const
 void MessageAppData::fromString(const QString& p_data)
 {
     QStringList fields = p_data.split(':');
-    m_id = fields[0];
-    m_path = fields[1];
+    if( fields.size() > 1)
+    {
+        m_id = fields[0];
+        m_path = fields[1];
+    }
 }
 QString MessageAppData::toString(const QVector<MessageAppData>& p_data)
 {
@@ -113,8 +117,8 @@ static inline void fillThumbnailProperty (QVariantMap &dest, const shared_ptr<li
     if( !dest.contains("thumbnail"))
     {
         MessageAppData thumbnailData = getMessageAppData(message);
-        dest["thumbnail"] = QStringLiteral("image://%1/%2")
-            .arg(ThumbnailProvider::ProviderId).arg(thumbnailData.m_id);
+        if( thumbnailData.m_id != "")
+            dest["thumbnail"] = QStringLiteral("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(thumbnailData.m_id);
     }
 }
 
@@ -125,14 +129,15 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
   std::list<std::shared_ptr<linphone::Content> > contents = message->getContents();
   if( contents.size() > 0)
   {
-    QString thumbnailPath = QString::fromStdString(contents.front()->getFilePath());
-    QImage image(thumbnailPath);
+    MessageAppData thumbnailData;
+    thumbnailData.m_path = QString::fromStdString(contents.front()->getFilePath());
+    QImage image(thumbnailData.m_path);
     if (image.isNull())
         return;
 
     int rotation = 0;
     QExifImageHeader exifImageHeader;
-    if (exifImageHeader.loadFromJpeg(thumbnailPath))
+    if (exifImageHeader.loadFromJpeg(thumbnailData.m_path))
         rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
 
     QImage thumbnail = image.scaled(
@@ -155,14 +160,14 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
       }
 
       QString uuid = QUuid::createUuid().toString();
-      QString fileId = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
+      thumbnailData.m_id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
 
-      if (!thumbnail.save(Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + fileId, "jpg", 100)) {
-        qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnailPath);
+      if (!thumbnail.save(Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + thumbnailData.m_id , "jpg", 100)) {
+        qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(thumbnailData.m_path);
         return;
       }
 
-      message->setAppdata(Utils::appStringToCoreString(fileId));
+      message->setAppdata(thumbnailData.toString().toStdString());
   }
 }
 
@@ -170,9 +175,9 @@ static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMe
     if (message && message->getFileTransferInformation()) {
         message->cancelFileTransfer();
         MessageAppData thumbnailFile = getMessageAppData(message);
-        if(thumbnailFile.m_path.size() > 0)
+        if(thumbnailFile.m_id.size() > 0)
         {
-            QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) + thumbnailFile.m_path;
+            QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) + thumbnailFile.m_id;
             if (!QFile::remove(thumbnailPath))
                 qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
         }
@@ -281,10 +286,6 @@ private:
       createThumbnail(message);
       fillThumbnailProperty((*it).first, message);
 
-      MessageAppData thumbnailFile = getMessageAppData(message);
-      thumbnailFile.m_path = QString::fromStdString(message->getContents().front()->getFilePath());
-
-      message->setAppdata(thumbnailFile.toString().toStdString());
       (*it).first["wasDownloaded"] = true;
 
       App::getInstance()->getNotifier()->notifyReceivedFileMessage(message);
@@ -552,8 +553,7 @@ void ChatModel::downloadFile (int id) {
     default:
       qWarning() << QStringLiteral("Unable to download file of entry %1. It was not uploaded.").arg(id);
       return;
-  }
-
+  }  
   bool soFarSoGood;
   const QString safeFilePath = Utils::getSafeFilePath(
     QStringLiteral("%1%2")
@@ -569,9 +569,14 @@ void ChatModel::downloadFile (int id) {
   message->addListener(mMessageHandlers);
 
   message->getContents().front()->setFilePath(safeFilePath.toStdString());
-// <Dev note> Download only the first content. Maybe a bug.. or not.
-  if (!message->downloadContent(message->getContents().front()))
-    qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(id);
+
+  if( !message->isFileTransfer())
+      QMessageBox::warning(nullptr, "Download File", "This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it");
+  else
+  {
+    if (!message->downloadContent(message->getFileTransferInformation()))
+        qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(id);
+  }
 }
 
 void ChatModel::openFile (int id, bool showDirectory) {
