@@ -298,10 +298,10 @@ void AccountSettingsModel::addAuthInfo (
   const shared_ptr<linphone::AuthInfo> &authInfo,
   const QString &password,
   const QString &userId
-) {
-  authInfo->setPassword(Utils::appStringToCoreString(password));
-  authInfo->setUserid(Utils::appStringToCoreString(userId));
-
+) {    
+  authInfo->setPassword(password.toStdString());
+  authInfo->setUserid(userId.toStdString());
+  authInfo->setHa1("");// Need to reset Ha1 to force recomputation
   CoreManager::getInstance()->getCore()->addAuthInfo(authInfo);
 }
 
