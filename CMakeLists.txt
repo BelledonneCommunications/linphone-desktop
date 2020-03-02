@@ -96,7 +96,7 @@ if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR 
     message("Linphone packages are not installed. Build and install it in order to build Minizip and then Desktop Application.")
     set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
     add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
-elseif( APPLI_FORCE_SDK_BUILD )
+elseif( APP_FORCE_SDK_BUILD )
     set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
     add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
 else()
