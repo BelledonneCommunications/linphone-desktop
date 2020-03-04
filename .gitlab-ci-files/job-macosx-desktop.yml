@@ -16,7 +16,7 @@
   echo $CMAKE_OPTIONS
   echo $ADDITIONAL_BUILD_OPTIONS
   cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-  cmake --build . --target all $LBC_NODEBUG_OPTIONS
+  cmake --build . --target sdk $LBC_NODEBUG_OPTIONS
   # Minizip install to OUTPUT folder
   cmake ..
   cmake --build . --target minizip
