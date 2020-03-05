@@ -46,6 +46,7 @@ Qt is a software toolkit for developing applications.
   -opensource \
   -confirm-license \
   -release \
+  -force-debug-info \
   -shared \
   -c++std c++11 \
   -silent \
@@ -72,12 +73,11 @@ Qt is a software toolkit for developing applications.
 make -j12
 
 %install
+find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python3/g'
 make install INSTALL_ROOT=%{buildroot} -j12
 
 # Some files got ambiguous python shebangs, we fix them to avoid install errors
 # Because in centos8 shebangs like #!/usr/bin/python are FORBIDDEN (see https://fedoraproject.org/wiki/Changes/Make_ambiguous_python_shebangs_error)
-
-find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python3/g'
 
 %files
 %defattr(-,root,root,-)
@@ -86,28 +86,8 @@ find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/#
 %{_qt5_archdatadir}/qml/
 %{_qt5_bindir}/
 %{_qt5_docdir}/global/
-%{_qt5_libdir}/libQt5*.so.5*
-%{_qt5_plugindir}/audio/*.so
-%{_qt5_plugindir}/bearer/*.so
-%{_qt5_plugindir}/canbus/*.so
-%{_qt5_plugindir}/designer/libqquickwidget.so
-%{_qt5_plugindir}/egldeviceintegrations/*.so
-%{_qt5_plugindir}/gamepads/libevdevgamepad.so
-%{_qt5_plugindir}/generic/*.so
-%{_qt5_plugindir}/geometryloaders/*.so
-%{_qt5_plugindir}/iconengines/libqsvgicon.so
-%{_qt5_plugindir}/imageformats/*.so
-%{_qt5_plugindir}/mediaservice/libqtmedia_audioengine.so
-%{_qt5_plugindir}/platforminputcontexts/*.so
-%{_qt5_plugindir}/platforms/*.so
-%{_qt5_plugindir}/playlistformats/libqtmultimedia_m3u.so
-%{_qt5_plugindir}/qmltooling/*.so
-%{_qt5_plugindir}/renderplugins/libscene2d.so
-%{_qt5_plugindir}/sceneparsers/*.so
-%{_qt5_plugindir}/sqldrivers/*.so
-%{_qt5_plugindir}/platformthemes/*.so
-%{_qt5_plugindir}/virtualkeyboard/*.so
-%{_qt5_plugindir}/xcbglintegrations/*.so
+%{_qt5_libdir}/libQt5*.so*
+%{_qt5_plugindir}/*/*.so*
 %{_qt5_translationdir}/
 
 %files devel
