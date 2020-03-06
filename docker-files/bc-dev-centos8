@@ -16,11 +16,6 @@ RUN git clone -b fix/qt5_build_issues_new_docker_images --single-branch https://
     sudo mv ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm / && \
     rm -rf ./linphone-desktop
 
-# Configure user bc
-RUN useradd -ms /bin/bash bc && \
-    echo 'bc:cotcot' | chpasswd && \
-    echo 'bc ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
 ENV Qt5_DIR=/opt/com.belledonne-communications/linphone/lib/cmake
 ENV PATH=$PATH:/opt/com.belledonne-communications/linphone/bin
 
