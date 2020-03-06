@@ -380,11 +380,6 @@ Rectangle {
         anchors.centerIn: parent
         height: CallStyle.actionArea.userVideo.height
         width: CallStyle.actionArea.userVideo.width
-// Function to use if we want to manually Flip horizontally the preview without MSOGL
-        transform: Matrix4x4 {
-           matrix: Qt.matrix4x4(-1, 0, 0, CallStyle.actionArea.userVideo.width, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
-          }
-
         active: incall.width >= CallStyle.actionArea.lowWidth && incall.call.videoEnabled && !_fullscreen
         sourceComponent: cameraPreview
         Component {
