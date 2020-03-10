@@ -18,9 +18,9 @@
   cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS
   cmake --build . --target sdk $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
   # Minizip install to OUTPUT folder
-  cmake ..
-  cmake --build . --target minizip
-  cmake --build . --target install
+  cmake .. $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS
+  cmake --build . --target minizip -- $ADDITIONAL_BUILD_OPTIONS
+  cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
   # Update CMake installation
   cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
   cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
@@ -70,7 +70,7 @@ job-macosx-ninja-novideo:
 job-macosx-xcode:
   extends: .job-macosx-desktop
   variables:
-    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL -DCMAKE_BUILD_TYPE=Release
     CMAKE_GENERATOR: Xcode
     ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
   only:
