@@ -72,7 +72,7 @@ job-macosx-xcode:
   variables:
     XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL -DCMAKE_BUILD_TYPE=Release
     CMAKE_GENERATOR: Xcode
-    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
+    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK -configuration=Release -TARGET_BUILD_DIR="."
   only:
     variables:
       - $NIGHTLY_MASTER
