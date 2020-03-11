@@ -36,7 +36,7 @@ Item {
     if (!_isOpen) {
       return
     }
-
+    searchBox.state = ''
     _isOpen = false
   }
 
@@ -44,7 +44,7 @@ Item {
     if (_isOpen) {
       return
     }
-
+    searchBox.state = 'opened'
     _isOpen = true
   }
 
@@ -80,8 +80,7 @@ Item {
 
           searchBox.menuRequested()
           searchBox.openMenu()
-        }else if( !activeFocus)
-          searchBox.closeMenu()
+        }
       }
 
       onTextChanged: _filter(text)
@@ -132,7 +131,6 @@ Item {
 
   states: State {
     name: 'opened'
-    when: _isOpen
   }
 
   transitions: [
