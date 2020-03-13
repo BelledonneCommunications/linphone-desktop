@@ -144,9 +144,9 @@ job-windows-vs2017-package:
     - cmake --build . --target linphone-qt --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - cmake --build . --target package --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - C:\PROGRA~1\Python37\Scripts\cl -s
-    - mkdir "%CI_PROJECT_DIR%/results/windows"
+    - mkdir "%CI_PROJECT_DIR%/results"
     - cd CPackBuild
-    - copy /B *.exe "%CI_PROJECT_DIR%/results/windows"
+    - copy /B *.exe "%CI_PROJECT_DIR%/results"
     
   artifacts:
     paths:
