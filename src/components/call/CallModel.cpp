@@ -472,11 +472,15 @@ float CallModel::getQuality () const {
 // -----------------------------------------------------------------------------
 
 float CallModel::getSpeakerVu () const {
-  return MediastreamerUtils::computeVu(mCall->getPlayVolume());
+  if (mCall->getState() == linphone::Call::State::StreamsRunning)
+    return MediastreamerUtils::computeVu(mCall->getPlayVolume());
+  return 0.0;
 }
 
 float CallModel::getMicroVu () const {
-  return MediastreamerUtils::computeVu(mCall->getRecordVolume());
+  if (mCall->getState() == linphone::Call::State::StreamsRunning)
+    return MediastreamerUtils::computeVu(mCall->getRecordVolume());
+  return 0.0;
 }
 
 // -----------------------------------------------------------------------------
