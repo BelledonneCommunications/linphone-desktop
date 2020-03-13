@@ -1,15 +1,15 @@
-job-centos7-makefile-gcc:
+#job-centos7-makefile-gcc:
 
-  tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
-  only:
-    variables:
-      - $NIGHTLY_MASTER
-  variables:
-    CMAKE_GENERATOR: Unix Makefiles
-    CC: gcc
-    CXX: g++
-  extends: .job-linux-desktop
+#  tags: [ "docker" ]
+#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+#  only:
+#    variables:
+#      - $NIGHTLY_MASTER
+#  variables:
+#    CMAKE_GENERATOR: Unix Makefiles
+#    CC: gcc
+#    CXX: g++
+#  extends: .job-linux-desktop
 
 
 #job-centos7-makefile-clang:
