@@ -174,9 +174,8 @@ elseif (APPLE)
     endif()
   endforeach ()
 
-  install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
-  install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
-
+  install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
+  install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)"  COMPONENT binary_application)
 
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
@@ -278,10 +277,7 @@ set(CPACK_PACKAGE_ICON "${LINPHONE_DESKTOP_DIR}/assets/icon.ico")
 if (APPLE)
   set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-mac")
   set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/macos/background_dmg.jpg")
-
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "linphone_dmg.scpt" @ONLY)
-#  set(CPACK_INSTALL_COMMANDS "install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")# -verbose=2)"  COMPONENT binary_application)")
-  
   set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
   set(CPACK_BINARY_DRAGNDROP ON)
 else()
