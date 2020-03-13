@@ -67,17 +67,17 @@ job-macosx-ninja-novideo:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
   extends: job-macosx-ninja
 
-job-macosx-xcode:
-  extends: .job-macosx-desktop
-  variables:
-    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
-    CMAKE_GENERATOR: Xcode
-    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
-  only:
-    variables:
-      - $NIGHTLY_MASTER
-      - $DEPLOY_RUN_MACOSX
-      
+#job-macosx-xcode:
+#  extends: .job-macosx-desktop
+#  variables:
+#    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+#   CMAKE_GENERATOR: Xcode
+#    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
+# only:
+#   variables:
+#     - $NIGHTLY_MASTER
+#     - $DEPLOY_RUN_MACOSX
+#      
 
 #################################################
 # Package - Nightly
