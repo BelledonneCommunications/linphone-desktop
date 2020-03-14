@@ -33,7 +33,7 @@ You will need the tools defined for Linphone-SDK 4.3 :
 - pip
 - yasm
 - nasm
-- doxygen
+- doxygen (required for the Cxx Wrapper)
 - Pystache (use pip install pystache)
 - six (use pip install six)
 - Perl (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to perl binaries)
@@ -66,11 +66,13 @@ The build is done in 3 steps. First, you need to build the SDK, then the submodu
 1. Create your build folder at the root of the project : `mkdir build-desktop`
 Go to this new folder and begin the build process : `cd build-desktop`
 
-2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo` By default, it will try compile all dependencies. You can remove some by adding `-ENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them.
+2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo` By default, it will try compile all dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them.
 
 3. Build the SDK : `cmake --build . --target sdk --config RelWithDebInfo`. You can add `--parallel 10` if you have CMake>3.12 to speedup the process.
 
 4. Build The submodule. `cmake ..` and `cmake --build . --target install --config RelWithDebInfo`
+
+If the target install doesn't exist, it is because you had issues on the first step or the project generation could be done when calling `cmake ..`.
 
 5. Finish the process with a new `cmake ..` and `cmake --build . --target install --config RelWithDebInfo`.
 
