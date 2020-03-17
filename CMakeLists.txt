@@ -122,7 +122,12 @@ if(DO_PRE_BUILD)# We have to build SDK, Minizip and then application because of 
     add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
     add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
     add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-    add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target linphone-qt-only)
+    if(${CMAKE_VERSION} VERSION_LESS "4.15.0") 
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target install)
+    else()
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target linphone-qt-only)
+    endif()
+    
     add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} ..)   # this last one remove dummy projects and set usable targets
 #    add_custom_target(dummy_minizip ALL DEPENDS sdk)
 #    add_custom_command( TARGET dummy_minizip PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
@@ -560,8 +565,10 @@ else()  # we get SDK working, then zlib find_package is available
         elseif(NOT WIN32)
             target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
         endif()
-
-        add_custom_command( TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
-        add_custom_command( TARGET ${TARGET_NAME_ONLY} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
+        if(${CMAKE_VERSION} VERSION_LESS "3.15.0") 
+        else()
+            add_custom_command( TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
+            add_custom_command( TARGET ${TARGET_NAME_ONLY} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
+        endif()
     endif()
 endif()

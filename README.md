@@ -61,7 +61,7 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 		
 ### Building
 
-The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `minizip` and `linphone-qt`. If you want to build only the application, you can use `linphone-qt-only` as target.
+The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `minizip` and `linphone-qt`. With CMake >= 3.15, you can build only the application without dependencies with `linphone-qt-only` as target.
 
 1. Create your build folder at the root of the project : `mkdir build-desktop`
 Go to this new folder and begin the build process : `cd build-desktop`
@@ -77,7 +77,7 @@ When all are over, the files will be in the OUTPUT folder in the build directory
 
 4. When doing some modifications in the SDK, you can redo `cmake --build . --config RelWithDebInfo --target all` to build all (`--target ALL_BUILD` on Windows)
 
-5. When doing updates on the application code, you can use : `cmake --build . --config RelWithDebInfo --target linphone-qt-only` to build only the application
+5. After CMake 3.15, when doing updates on the application code, you can use : `cmake --build . --config RelWithDebInfo --target linphone-qt-only` to build only the application
 
 
 #### General Troubleshooting
