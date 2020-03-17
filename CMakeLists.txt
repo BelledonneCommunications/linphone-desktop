@@ -52,13 +52,16 @@ endif ()
 #------------------------------------------------------------------------------
 
 set(APP_LIBRARY app-library)
-set(APP_LIBRARY_ONLY app-library-only)
+
 include(application_info.cmake)
 
 # ------------------------------------------------------------------------------
 
 set(TARGET_NAME linphone-qt)
-set(TARGET_NAME_ONLY linphone-qt-only)
+if( NOT("${CMAKE_GENERATOR}" MATCHES "Ninja"))
+    set(TARGET_NAME_ONLY linphone-qt-only)
+    set(APP_LIBRARY_ONLY app-library-only)
+endif()
 set(CMAKE_CXX_STANDARD 11)
 
 #-------------------------------------------------------------------------------
@@ -120,14 +123,16 @@ endif()
 if(DO_PRE_BUILD)# We have to build SDK, Minizip and then application because of building time configurations
     add_custom_target(dummy_projects ALL DEPENDS sdk)
     add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-    add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
-    add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-    if(${CMAKE_VERSION} VERSION_LESS "4.15.0") 
+    if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0")
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
         add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target install)
-    else()
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target install)
+    else( )
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
         add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target linphone-qt-only)
-    endif()
-    
+    endif()    
     add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} ..)   # this last one remove dummy projects and set usable targets
 #    add_custom_target(dummy_minizip ALL DEPENDS sdk)
 #    add_custom_command( TARGET dummy_minizip PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
@@ -434,29 +439,41 @@ else()  # we get SDK working, then zlib find_package is available
 
         #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
         add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
-        add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+        if(TARGET_NAME_ONLY)
+            add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+        endif()
         if (WIN32)
             add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
-            add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
+            if(TARGET_NAME_ONLY)
+                add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
+            endif()
         else ()
             add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
-            add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE})
+            if(TARGET_NAME_ONLY)
+                add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE})
+            endif()
         endif ()
-        target_compile_options(${TARGET_NAME_ONLY} PRIVATE -fPIC)
+        if(TARGET_NAME_ONLY)
+            target_compile_options(${TARGET_NAME_ONLY} PRIVATE -fPIC)
+            set_source_files_properties( ${APP_LIBRARY_ONLY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
+            set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
+            set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY AUTORCC ON)
+            set_target_properties(${TARGET_NAME_ONLY} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
+        endif()
         set_source_files_properties( ${APP_LIBRARY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
-        set_source_files_properties( ${APP_LIBRARY_ONLY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
+        
         set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
-        set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
+        
 
         #Turn on automatic resources compilation by cmake
         #Instead of excplicitely calling qt5_add_resources
         set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
-        set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY AUTORCC ON)
+        
 
         bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 
         set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-        set_target_properties(${TARGET_NAME_ONLY} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
+        
         set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
         set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES} ${MINIZIP_LIBRARIES})
 
@@ -488,24 +505,28 @@ else()  # we get SDK working, then zlib find_package is available
         endif ()
 
         target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-        target_include_directories(${APP_LIBRARY_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+        
         target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-        target_include_directories(${TARGET_NAME_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-
-
+        
+        if(TARGET_NAME_ONLY)
+            target_include_directories(${APP_LIBRARY_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+            target_include_directories(${TARGET_NAME_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+            target_link_libraries(${TARGET_NAME_ONLY} ${LIBRARIES})
+            add_dependencies(${APP_LIBRARY_ONLY} update_translations ${TARGET_NAME}-git-version)
+            add_dependencies(${TARGET_NAME_ONLY} update_translations )
+        endif()
+            
         #target_link_libraries(${APP_LIBRARY} ${LIBRARIES})
         target_link_libraries(${TARGET_NAME} ${LIBRARIES})
-        target_link_libraries(${TARGET_NAME_ONLY} ${LIBRARIES})
+        
         if(WIN32)
             target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
         endif()
 
         add_dependencies(minizip sdk)
         add_dependencies(${APP_LIBRARY} sdk minizip update_translations ${TARGET_NAME}-git-version)
-        add_dependencies(${APP_LIBRARY_ONLY} update_translations ${TARGET_NAME}-git-version)
+        
         add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
-        add_dependencies(${TARGET_NAME_ONLY} update_translations )
-
 
         if (UNIX AND NOT APPLE)
             # Install desktop/icon files.
@@ -565,7 +586,8 @@ else()  # we get SDK working, then zlib find_package is available
         elseif(NOT WIN32)
             target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
         endif()
-        if(${CMAKE_VERSION} VERSION_LESS "3.15.0") 
+        
+        if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0") 
         else()
             add_custom_command( TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
             add_custom_command( TARGET ${TARGET_NAME_ONLY} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
