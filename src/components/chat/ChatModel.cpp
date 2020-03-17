@@ -247,7 +247,7 @@ private:
 
   shared_ptr<linphone::Buffer> onFileTransferSend (
     const shared_ptr<linphone::ChatMessage> &,
-    const shared_ptr<const linphone::Content> &,
+    const shared_ptr<linphone::Content> &,
     size_t,
     size_t
   ) override {
@@ -257,7 +257,7 @@ private:
 
   void onFileTransferProgressIndication (
     const shared_ptr<linphone::ChatMessage> &message,
-    const shared_ptr<const linphone::Content> &,
+    const shared_ptr<linphone::Content> &,
     size_t offset,
     size_t
   ) override {

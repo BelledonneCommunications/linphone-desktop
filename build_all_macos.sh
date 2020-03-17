@@ -32,6 +32,7 @@ if [[ -z ${Qt5_DIR} ]]; then
 fi
 
 #Creation of folders
+rm -rf build-desktop
 mkdir -p build-desktop
 cd build-desktop
 

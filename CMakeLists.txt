@@ -72,11 +72,10 @@ option(ENABLE_TOOLS "Enable tools of SDK" NO)
 option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
 
 option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
+option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
 
 if(WIN32 OR APPLE)
-    option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." YES)
-else()##Opus crash on Linux. The version for 4.3 is old. We have to use a switch in configuration to select the newest version for desktop.
-    option(ENABLE_OPUS "Build mediastreamer2 with the OPUS codec." NO)
+else()
     option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
 endif()
 
