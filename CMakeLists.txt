@@ -124,23 +124,16 @@ if(DO_PRE_BUILD)# We have to build SDK, Minizip and then application because of 
     add_custom_target(dummy_projects ALL DEPENDS sdk)
     add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
     if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0")
-        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
-        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target install)
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target minizip)
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target install)
         add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target install)
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target install)
     else( )
-        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target minizip)
         add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target linphone-qt-only)
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target linphone-qt-only)
     endif()    
     add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} ..)   # this last one remove dummy projects and set usable targets
-#    add_custom_target(dummy_minizip ALL DEPENDS sdk)
-#    add_custom_command( TARGET dummy_minizip PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-#    add_custom_command( TARGET dummy_minizip POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target minizip)
-#    add_custom_target(dummy_linphone ALL DEPENDS dummy_minizip)
-#    add_custom_command( TARGET dummy_linphone PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-#    add_custom_command( TARGET dummy_linphone POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --target linphone-qt)
-#    add_custom_command( TARGET dummy_linphone POST_BUILD COMMAND ${CMAKE_COMMAND} .. )
 else()  # we get SDK working, then zlib find_package is available
     set(CMAKE_INSTALL_PREFIX "${MINIZIP_OUTPUT_DIR}")
     add_subdirectory(submodules/externals/minizip "${MINIZIP_BUILD_DIR}")
@@ -468,7 +461,6 @@ else()  # we get SDK working, then zlib find_package is available
         #Turn on automatic resources compilation by cmake
         #Instead of excplicitely calling qt5_add_resources
         set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
-        
 
         bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 
@@ -589,8 +581,8 @@ else()  # we get SDK working, then zlib find_package is available
         
         if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0") 
         else()
-            add_custom_command( TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
-            add_custom_command( TARGET ${TARGET_NAME_ONLY} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} )
+            add_custom_command( TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} --config ${CMAKE_BUILD_TYPE})
+            add_custom_command( TARGET ${TARGET_NAME_ONLY} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} --config ${CMAKE_BUILD_TYPE})
         endif()
     endif()
 endif()
