@@ -33,6 +33,7 @@ if [[ -z ${Qt5_DIR} ]]; then
 fi
 
 #Creation of folders
+rm -rf build-desktop
 mkdir -p build-desktop
 #Opus crash on Linux. The version for 4.3 is old. We have to use a switch in configuration to select the newest version for desktop.
 #SDK building
