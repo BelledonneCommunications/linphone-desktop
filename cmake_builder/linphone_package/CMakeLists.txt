@@ -25,7 +25,6 @@ project(LINPHONE_PACKAGE) # Dummy project.
 
 include("${LINPHONE_DESKTOP_DIR}/application_info.cmake")
 
-find_package(Linphone REQUIRED)
 find_package(Git)
 #Policy set to allow link from other directory (cmake 3.13)
 if (POLICY CMP0079)
