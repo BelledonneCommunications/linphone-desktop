@@ -88,8 +88,7 @@ option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
-set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
-add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
+
 
 # SDK dependencies
 set(DO_PRE_BUILD NO)
@@ -121,25 +120,34 @@ if(NOT(ORTP_FOUND))
 endif()
 
 if(DO_PRE_BUILD)# We have to build SDK, Minizip and then application because of building time configurations
+	set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
+	add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
     add_custom_target(dummy_projects ALL DEPENDS sdk)
-    add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
-    if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0")
+    add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. -DAPP_BUILD_ONLY=YES )
+    if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0" OR WIN32)
         add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target minizip)
-        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target install)
-        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
+        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target install)
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} ..  -DAPP_BUILD_ONLY=YES)
         add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target install)
     else( )
         add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target minizip)
-        add_custom_command( TARGET dummy_projects PRE_BUILD COMMAND ${CMAKE_COMMAND} .. )
+        add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} ..  -DAPP_BUILD_ONLY=YES)
         add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} --build . --config ${CMAKE_BUILD_TYPE} --target linphone-qt-only)
     endif()    
-    add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} ..)   # this last one remove dummy projects and set usable targets
+    add_custom_command( TARGET dummy_projects POST_BUILD COMMAND ${CMAKE_COMMAND} .. -DAPP_BUILD_ONLY=NO)   # this last one remove dummy projects and set usable targets
 else()  # we get SDK working, then zlib find_package is available
-    set(CMAKE_INSTALL_PREFIX "${MINIZIP_OUTPUT_DIR}")
-    add_subdirectory(submodules/externals/minizip "${MINIZIP_BUILD_DIR}")
-    
-    find_package(Minizip)
-    if( Minizip_FOUND)#Minizip is not found : we set a generated path
+	find_package(Minizip)
+	if( NOT(Minizip_FOUND))#Minizip is not found : we set a generated path
+		set(CMAKE_INSTALL_PREFIX "${MINIZIP_OUTPUT_DIR}")
+		add_subdirectory(submodules/externals/minizip "${MINIZIP_BUILD_DIR}")		
+	else()
+		if(NOT(APP_BUILD_ONLY))
+			set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}")
+			add_subdirectory("linphone-sdk" "${SDK_BUILD_DIR}")
+			set(CMAKE_INSTALL_PREFIX "${MINIZIP_OUTPUT_DIR}")
+			add_subdirectory(submodules/externals/minizip "${MINIZIP_BUILD_DIR}")
+			add_dependencies(minizip sdk)
+		endif()
         set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
         if(WIN32)
             set(EXECUTABLE_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
@@ -514,10 +522,11 @@ else()  # we get SDK working, then zlib find_package is available
         if(WIN32)
             target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
         endif()
-
-        add_dependencies(minizip sdk)
-        add_dependencies(${APP_LIBRARY} sdk minizip update_translations ${TARGET_NAME}-git-version)
-        
+		if(NOT(APP_BUILD_ONLY))
+			add_dependencies(${APP_LIBRARY} sdk minizip)
+		endif()
+		
+        add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version)
         add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 
         if (UNIX AND NOT APPLE)
