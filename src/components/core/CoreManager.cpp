@@ -282,6 +282,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setDatabasesPaths();
   setOtherPaths();
+// Presence activation for friends, done after Core initialization
+  mCore->enableFriendListSubscription(true);
 }
 
 void CoreManager::migrate () {
