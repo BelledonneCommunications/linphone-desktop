@@ -51,11 +51,17 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 			 this, &SettingsModel::handleCallStateChanged);
 	configureRlsUri();
 }
-
+SettingsModel::~SettingsModel()
+{
+	if(mSimpleCaptureGraph )
+	{
+		delete mSimpleCaptureGraph;
+		mSimpleCaptureGraph = nullptr;
+	}
+}
 void SettingsModel::settingsWindowClosing(void) {
 	onSettingsTabChanged(-1);
 }
-
 //Provides tabbar per-tab setup/teardown mecanism for specific settings views
 void SettingsModel::onSettingsTabChanged(int idx) {
 	int prevIdx = mCurrentSettingsTab;
@@ -160,15 +166,14 @@ void SettingsModel::createCaptureGraph() {
 	}
 	if (!mSimpleCaptureGraph) {
 		mSimpleCaptureGraph =
-			new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()),
-								   Utils::appStringToCoreString(getPlaybackDevice()));
+			new MediastreamerUtils::SimpleCaptureGraph(getCaptureDevice().toStdString(), getPlaybackDevice().toStdString());
 	}
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
 
 //Force a call on the 'detect' method of all audio filters, updating new or removed devices
-void SettingsModel::accessAudioSettings() {
+void SettingsModel::accessAudioSettings() {	
 	CoreManager::getInstance()->getCore()->reloadSoundDevices();
 	emit captureDevicesChanged(getCaptureDevices());
 	emit playbackDevicesChanged(getPlaybackDevices());

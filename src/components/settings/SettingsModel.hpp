@@ -190,6 +190,7 @@ public:
 
 
 	SettingsModel (QObject *parent = Q_NULLPTR);
+    virtual ~SettingsModel ();
 
 	// ===========================================================================
 	// METHODS.

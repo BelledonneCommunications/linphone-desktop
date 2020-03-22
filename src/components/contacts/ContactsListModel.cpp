@@ -33,7 +33,6 @@ using namespace std;
 
 ContactsListModel::ContactsListModel (QObject *parent) : QAbstractListModel(parent) {
   mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
-
   // Clean friends.
   {
     list<shared_ptr<linphone::Friend>> toRemove;

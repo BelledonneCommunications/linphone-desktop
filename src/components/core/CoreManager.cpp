@@ -282,6 +282,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   setDatabasesPaths();
   setOtherPaths();
+
+  mCore->enableFriendListSubscription(true);
 }
 
 void CoreManager::migrate () {

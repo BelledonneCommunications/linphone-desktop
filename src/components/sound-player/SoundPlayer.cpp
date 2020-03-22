@@ -58,13 +58,18 @@ private:
 // -----------------------------------------------------------------------------
 
 SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
+  CoreManager *coreManager = CoreManager::getInstance();
+  SettingsModel *settingsModel = coreManager->getSettingsModel();
   mForceCloseTimer = new QTimer(this);
   mForceCloseTimer->setInterval(ForceCloseTimerInterval);
 
   QObject::connect(mForceCloseTimer, &QTimer::timeout, this, &SoundPlayer::handleEof);
 
-  mHandlers = make_shared<SoundPlayer::Handlers>(this);
+  mHandlers = make_shared<SoundPlayer::Handlers>(this);  
 
+  QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
+	rebuildInternalPlayer();
+  });
   buildInternalPlayer();
 }
 
@@ -142,10 +147,6 @@ void SoundPlayer::buildInternalPlayer () {
     Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
   );
   mInternalPlayer->addListener(mHandlers);
-
-  QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
-    rebuildInternalPlayer();
-  });
 }
 
 void SoundPlayer::rebuildInternalPlayer () {
@@ -159,8 +160,8 @@ void SoundPlayer::stop (bool force) {
 
   mForceCloseTimer->stop();
   mPlaybackState = SoundPlayer::StoppedState;
-
   mInternalPlayer->close();
+
 
   emit stopped();
   emit playbackStateChanged(mPlaybackState);
