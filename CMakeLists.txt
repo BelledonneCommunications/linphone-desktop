@@ -37,16 +37,9 @@ include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
 # Prepare gobal CMAKE configuration specific to the current project
-#set(SDK_BUILD_DIR "${CMAKE_BINARY_DIR}/WORK")       # SDK build in WORK. Keep all in it.
 set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/desktop") #This is fixed by the SDK
-#set(MINIZIP_OUTPUT_DIR "${CMAKE_BINARY_DIR}/minizip_OUTPUT")
-
-#set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
-
-
 # Prepare gobal CMAKE configuration specific to the current project
 set(SDK_BUILD_DIR "${CMAKE_BINARY_DIR}/WORK")       # SDK build in WORK. Keep all in it.
-#set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/sdk/src/sdk-build/linphone-sdk/desktop") #This is fixed by the SDK
 set(MINIZIP_BUILD_DIR "${CMAKE_BINARY_DIR}/minizip_BUILD")
 set(MINIZIP_OUTPUT_DIR "${CMAKE_BINARY_DIR}/minizip_OUTPUT")
 set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
@@ -145,6 +138,8 @@ endif ()
 ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
+    STAMP_DIR "${SDK_BUILD_DIR}/stamp"
+    BINARY_DIR "${SDK_BUILD_DIR}/build"
     STEP_TARGETS build
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
