@@ -124,7 +124,7 @@ include(ExternalProject)
 if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
     set(PROJECT_BUILD_COMMAND "")
 else()
-    list(append PROJECT_BUILD_COMMAND "--parallel" "10")
+    list(APPEND PROJECT_BUILD_COMMAND "--parallel" "10")
 endIF()
 
 
