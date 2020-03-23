@@ -16,15 +16,7 @@
   echo $CMAKE_OPTIONS
   echo $ADDITIONAL_BUILD_OPTIONS
   cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS
-  cmake --build . --target sdk $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
-  # Minizip install to OUTPUT folder
-  cmake ..
-  cmake --build . --target minizip
-  cmake --build . --target install
-  # Update CMake installation
-  cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-  cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
-  cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+  cmake --build . --target install $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
   ccache -s
 
 .job-macosx-desktop:

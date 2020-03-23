@@ -38,17 +38,6 @@ include:
   - '.gitlab-ci-files/job-windows-desktop.yml'
   - '.gitlab-ci-files/job-macosx-desktop.yml'
 
-
-#  - '.gitlab-ci-files/job-linux.yml'
-#  - '.gitlab-ci-files/job-linux-archlinux.yml'
-#  - '.gitlab-ci-files/job-linux-centos7.yml'
-#  - '.gitlab-ci-files/job-linux-debian8.yml'
-#  - '.gitlab-ci-files/job-linux-debian9.yml'
-
-#  - '.gitlab-ci-files/job-macosx.yml'
-#  - '.gitlab-ci-files/job-windows.yml'
-
-
 stages:
   - build
   - package

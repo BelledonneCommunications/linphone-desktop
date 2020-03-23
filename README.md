@@ -61,27 +61,23 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 		
 ### Building
 
-The build is done in 3 steps. First, you need to build the SDK, then the submodule Minizip and finally, the application.
+The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `miniziplib` and `linphoneqt`. 
 
 1. Create your build folder at the root of the project : `mkdir build-desktop`
 Go to this new folder and begin the build process : `cd build-desktop`
 
-2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo` By default, it will try compile all dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them.
+2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them.
 
-3. Build the SDK : `cmake --build . --target sdk --config RelWithDebInfo`. You can add `--parallel 10` if you have CMake>3.12 to speedup the process.
+3. Build and install the whole project : `cmake --build . --target install --config RelWithDebInfo`. You can add `--parallel 10` to 10 parallel builds for speeding up the process if you have CMake>3.12.
 
-4. Build The submodule. `cmake ..` and `cmake --build . --target install --config RelWithDebInfo`
-
-If the target install doesn't exist, it is because you had issues on the first step or the project generation could be done when calling `cmake ..`.
-
-5. Finish the process with a new `cmake ..` and `cmake --build . --target install --config RelWithDebInfo`.
-
-It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, you are working on an IDE (like Qt Creator), you may override the build command.
+It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command.
 
 When all are over, the files will be in the OUTPUT folder in the build directory.
 
-You can find a script file for each supported platform to achieve the first building. They only exist for convenience.
-There are called `build_all_linux.sh`, `build_all_macos.sh` and `build_all_win.bat`.
+4. When doing some modifications in the SDK, you can rebuild only the sdk with the target `sdk`
+
+5. For doing a package for specific platform, you can use `package` as target. This is only supported yet for Mac and Windows.
+
 
 #### General Troubleshooting
 

@@ -64,15 +64,7 @@
     #cache stats display
     - C:\PROGRA~1\Python37\Scripts\cl -s    
     - cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Minizip install to OUTPUT folder    
-    - cmake ..
-    - cmake --build . --target minizip
     - cmake --build . --target install --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Update CMake installation    
-    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target linphone-qt --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-    - cmake --build . --target install --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - C:\PROGRA~1\Python37\Scripts\cl -s
 
   artifacts:
@@ -135,13 +127,6 @@ job-windows-vs2017-package:
     - C:\PROGRA~1\Python37\Scripts\cl -s    
     - cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
     - cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Minizip install to OUTPUT folder    
-    - cmake ..
-    - cmake --build . --target minizip
-    - cmake --build . --target install --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Update CMake installation    
-    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target linphone-qt --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - cmake --build . --target package --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - C:\PROGRA~1\Python37\Scripts\cl -s
     - mkdir "%CI_PROJECT_DIR%/results"

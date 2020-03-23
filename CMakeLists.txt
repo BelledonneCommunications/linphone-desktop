@@ -105,7 +105,7 @@ list(APPEND ALL_OPTIONS "-DCMAKE_FIND_DEBUG_MODE=ON")
 #list(APPEND ALL_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
 
 include(ExternalProject)
-ExternalProject_Add(sdklib PREFIX "${SDK_BUILD_DIR}"
+ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
     STEP_TARGETS build
@@ -114,9 +114,7 @@ ExternalProject_Add(sdklib PREFIX "${SDK_BUILD_DIR}"
     CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> 
     #BUILD_ALWAYS NO #${DO_BUILD}
 )
-ExternalProject_Get_Property(sdklib SOURCE_DIR)
-add_subdirectory(${SOURCE_DIR})
-ExternalProject_Add_Step(sdklib force_build
+ExternalProject_Add_Step(sdk force_build
 	COMMENT "Forcing build for 'desktop'"
 	DEPENDEES configure
 	DEPENDERS build
@@ -126,7 +124,7 @@ ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
     INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
     BUILD_ALWAYS ON
-    DEPENDS sdklib
+    DEPENDS sdk
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> ${ALL_OPTIONS}
 )
@@ -432,7 +430,7 @@ include(linphone-sdk/bctoolbox/cmake/BcToolboxCMakeUtils.cmake)
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
 add_dependencies(${APP_LIBRARY} update_translations)
-add_dependencies(${APP_LIBRARY} sdklib miniziplib)
+add_dependencies(${APP_LIBRARY} sdk miniziplib)
 link_directories("${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
 link_directories("${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
 
