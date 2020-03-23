@@ -61,14 +61,14 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 		
 ### Building
 
-The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `miniziplib` and `linphoneqt`. 
+The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `miniziplib` and `linphone-qt`. 
 
 1. Create your build folder at the root of the project : `mkdir build-desktop`
 Go to this new folder and begin the build process : `cd build-desktop`
 
 2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them.
 
-3. Build and install the whole project : `cmake --build . --target install --config RelWithDebInfo`. You can add `--parallel 10` to 10 parallel builds for speeding up the process if you have CMake>3.12.
+3. Build and install the whole project : `cmake --build . --target install --config RelWithDebInfo`. You can add `--parallel 10` for 10 parallel builds to speeding up the process if you have CMake>3.12.
 
 It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command.
 
@@ -76,7 +76,9 @@ When all are over, the files will be in the OUTPUT folder in the build directory
 
 4. When doing some modifications in the SDK, you can rebuild only the sdk with the target `sdk`
 
-5. For doing a package for specific platform, you can use `package` as target. This is only supported yet for Mac and Windows.
+5. When not using `Ninja`  and when you only change the application, you can use the target `linphone-qt-only` in order to build the application without having to parse dependencies. But you will need CMake >= 3.15 for using `cmake --install .` that let install binaries without having to build.
+
+6. For doing a package for specific platform, you can use `package` as target. This is only supported yet for Mac and Windows.
 
 
 #### General Troubleshooting
@@ -105,6 +107,7 @@ Before you install packages with Brew, you may have to change directories permis
         pip install pystache
         pip install graphviz
 
+3. When installing binaries, you can have many errors from install_name_tools. It should work. But if you want to do an install without these errors, you can delete the OUTPUT folder and redo an install. These errors should go out.
 
 ### Specific instructions for the Windows platform
 

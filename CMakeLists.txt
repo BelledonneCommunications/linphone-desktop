@@ -74,6 +74,11 @@ include(application_info.cmake)
 # ------------------------------------------------------------------------------
 
 set(TARGET_NAME linphone-qt)
+
+if(NOT(${CMAKE_GENERATOR} MATCHES "Ninja"))
+	set(APP_LIBRARY_ONLY app-library-only)
+	set(TARGET_NAME_ONLY linphone-qt-only)
+endif()
 set(CMAKE_CXX_STANDARD 11)
 
 #-------------------------------------------------------------------------------
@@ -122,9 +127,9 @@ endIF()
 
 
 if (WIN32)
-	set(LIBDIR ${CMAKE_INSTALL_BINDIR})
+	set(LIBDIR ${CMAKE_INSTALL_LIBDIR})
 	set(LIBPREFIX "")
-	set(LIBEXT ".dll")
+	set(LIBEXT ".lib")
 elseif (APPLE)
 	set(LIBDIR ${CMAKE_INSTALL_LIBDIR})
 	set(LIBPREFIX "lib")
@@ -144,7 +149,7 @@ ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
+    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
     #BUILD_ALWAYS NO #${DO_BUILD}
 )
 ExternalProject_Add_Step(sdk force_build
@@ -153,6 +158,7 @@ ExternalProject_Add_Step(sdk force_build
 	DEPENDERS build
 	ALWAYS 1
 )
+
 ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
     INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
@@ -160,7 +166,7 @@ ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     DEPENDS sdk
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
+    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
     BUILD_BYPRODUCTS "${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}"
 )
 message("BY_PRODUCTS : ${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}")
@@ -448,12 +454,18 @@ add_subdirectory(${LANGUAGES_DIRECTORY})
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
 # Build.
+
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)
-
 #Turn on automatic resources compilation by cmake
 #Instead of excplicitely calling qt5_add_resources
 set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
+if(TARGET_NAME_ONLY)
+	add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+	set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY POSITION_INDEPENDENT_CODE ON)
+	set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY AUTORCC ON)
+endif()
+
 include(linphone-sdk/bctoolbox/cmake/BcToolboxCMakeUtils.cmake)
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
@@ -461,14 +473,25 @@ add_dependencies(${APP_LIBRARY} update_translations)
 add_dependencies(${APP_LIBRARY} sdk miniziplib)
 link_directories(BEFORE "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
 link_directories(BEFORE "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
-
 if (WIN32)
-    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
+	add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
 else ()
-    add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
+	add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
 endif ()
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
+if(TARGET_NAME_ONLY)
+	bc_git_version(${TARGET_NAME_ONLY} ${PROJECT_VERSION})
+	add_dependencies(${APP_LIBRARY_ONLY} ${TARGET_NAME_ONLY}-git-version)
+	add_dependencies(${APP_LIBRARY_ONLY} update_translations)
+	if (WIN32)
+		add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
+	else ()
+		add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE})
+	endif ()
+	add_dependencies(${TARGET_NAME_ONLY} ${APP_LIBRARY_ONLY})
+	set_target_properties(${TARGET_NAME_ONLY} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
+endif()
 
 set(INCLUDED_DIRECTORIES "${LINPHONE_OUTPUT_DIR}/include" "${MINIZIP_OUTPUT_DIR}/include")
 foreach (package ${QT5_PACKAGES})
@@ -479,7 +502,6 @@ foreach (package ${QT5_PACKAGES})
     list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
     endif ()
 endforeach ()
-
 foreach (package ${QT5_PACKAGES_OPTIONAL})
     if ("${Qt5${package}_FOUND}")
     message("Optional package ${package} found.")
@@ -505,15 +527,27 @@ if (APPLE)
     list(APPEND LIBRARIES "-framework ortp")
     # -framework linphone") #This doesn't work yet
     set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-Wl,-F${CMAKE_FRAMEWORK_PATH}")
+    if(TARGET_NAME_ONLY)
+	set_target_properties(${TARGET_NAME_ONLY} PROPERTIES LINK_FLAGS "-Wl,-F${CMAKE_FRAMEWORK_PATH}")
+    endif()
 else()
     list(APPEND LIBRARIES "bctoolbox;belcard;linphone;linphone++;mediastreamer;ortp")
 endif ()
+
+
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
+if(TARGET_NAME_ONLY)
+	target_include_directories(${APP_LIBRARY_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+	target_include_directories(${TARGET_NAME_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+	target_link_libraries(${TARGET_NAME_ONLY} ${LIBRARIES})
+endif()
 if(WIN32)
     target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
+    if(TARGET_NAME_ONLY)
+	target_link_libraries(${TARGET_NAME_ONLY} wsock32 ws2_32)
+    endif()
 endif()
 
 foreach (target ${TARGET_NAME})
@@ -525,17 +559,16 @@ foreach (target ${TARGET_NAME})
 #		PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE
 #		)
 endforeach ()
-
 if (UNIX AND NOT APPLE)
     # Install desktop/icon files.
     configure_file("${ASSETS_DIR}/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
 
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
+	DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
     )
     install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
-    RENAME "${EXECUTABLE_NAME}.svg"
+	 DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
+	RENAME "${EXECUTABLE_NAME}.svg"
     )
 
     set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128 256x256)
@@ -578,7 +611,10 @@ source_group(
 # Installation
 # ------------------------------
 target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}")
-
+if(TARGET_NAME_ONLY)
+	target_link_libraries(${TARGET_NAME_ONLY} "${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}")
+endif()
 if(APPLE)
+    add_custom_command(TARGET miniziplib POST_BUILD COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}")
     #execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
 endif()
