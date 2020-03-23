@@ -37,6 +37,9 @@ set(SDK_BUILD_DIR "${CMAKE_BINARY_DIR}/WORK")       # SDK build in WORK. Keep al
 set(MINIZIP_BUILD_DIR "${CMAKE_BINARY_DIR}/minizip_BUILD")
 set(MINIZIP_OUTPUT_DIR "${CMAKE_BINARY_DIR}/minizip_OUTPUT")
 set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
+if(NOT CMAKE_BUILD_TYPE)
+	set(CMAKE_BUILD_TYPE "Release")
+endif()
 message("minizip=${MINIZIP_OUTPUT_DIR} sdk=${LINPHONE_OUTPUT_DIR}")
 
 #list(APPEND CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${MINIZIP_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}")
@@ -105,10 +108,16 @@ list(APPEND ALL_OPTIONS "-DCMAKE_FIND_DEBUG_MODE=ON")
 #list(APPEND ALL_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
 
 include(ExternalProject)
+if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
+    set(PROJECT_BUILD_COMMAND "")
+else()
+    set(PROJECT_BUILD_COMMAND "--parallel 10")
+endIF()
 ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
     STEP_TARGETS build
+    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> 
@@ -125,6 +134,7 @@ ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
     BUILD_ALWAYS ON
     DEPENDS sdk
+    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> ${ALL_OPTIONS}
 )
@@ -431,8 +441,8 @@ bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 add_dependencies(${APP_LIBRARY} ${TARGET_NAME}-git-version)
 add_dependencies(${APP_LIBRARY} update_translations)
 add_dependencies(${APP_LIBRARY} sdk miniziplib)
-link_directories("${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
-link_directories("${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
+link_directories(BEFORE "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
+link_directories(BEFORE "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/")    # must be done before add_executable
 
 if (WIN32)
     add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
