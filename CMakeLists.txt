@@ -42,10 +42,10 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 message("minizip=${MINIZIP_OUTPUT_DIR} sdk=${LINPHONE_OUTPUT_DIR}")
 
-#list(APPEND CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${MINIZIP_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}")
-list(APPEND CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}")
-#set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}")
-message("Prefix paths : ${CMAKE_PREFIX_PATH}")
+list(APPEND CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${MINIZIP_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}")
+#list(APPEND CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}")
+set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}")
+message("Prefix paths : ${PREFIX_PATH}")
 
 
 
@@ -104,7 +104,7 @@ if(ENABLE_V4L)
 endif()
     
 list(APPEND ALL_OPTIONS "-DCMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
-list(APPEND ALL_OPTIONS "-DCMAKE_FIND_DEBUG_MODE=ON")
+list(APPEND ALL_OPTIONS "-DCMAKE_FIND_DEBUG_MODE=OFF")
 #list(APPEND ALL_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
 
 include(ExternalProject)
@@ -120,7 +120,7 @@ ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> 
+    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     #BUILD_ALWAYS NO #${DO_BUILD}
 )
 ExternalProject_Add_Step(sdk force_build
@@ -136,7 +136,7 @@ ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     DEPENDS sdk
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS "-DCMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}" -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> ${ALL_OPTIONS}
+    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 )
 
 include(GNUInstallDirs)
@@ -150,7 +150,7 @@ if(WIN32)
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${EXECUTABLE_OUTPUT_DIR}")
 endif()
 message("MINIZIP : ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
-message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
+message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
 message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
 message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 
@@ -476,13 +476,22 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
+    list(APPEND CMAKE_FRAMEWORK_PATH "${LINPHONE_OUTPUT_DIR}/Frameworks")
+    message("Frameworks paths : ${CMAKE_FRAMEWORK_PATH}")
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
+    list(APPEND LIBRARIES "-framework bctoolbox")
+    list(APPEND LIBRARIES "-framework belcard")
+    list(APPEND LIBRARIES "-framework linphone")
+    list(APPEND LIBRARIES "-framework linphone++")
+    list(APPEND LIBRARIES "-framework mediastreamer2")
+    list(APPEND LIBRARIES "-framework ortp")
     # -framework linphone") #This doesn't work yet
+    set_target_properties(${TARGET_NAME} PROPERTIES LINK_FLAGS "-Wl,-F${CMAKE_FRAMEWORK_PATH}")
+else()
+    list(APPEND LIBRARIES "bctoolbox;belcard;linphone;linphone++;mediastreamer;ortp")
 endif ()
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-
-list(APPEND LIBRARIES "bctoolbox;belcard;linphone;linphone++;mediastreamer;ortp;minizip")
 
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 if(WIN32)
@@ -550,9 +559,11 @@ source_group(
 # ------------------------------
 # Installation
 # ------------------------------
-#if(APPLE)
-#    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-#    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-#elseif(NOT WIN32)
-#    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
-#endif()
+if(APPLE)
+    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+elseif(NOT WIN32)
+    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
+else()
+    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/minizip.dll")
+endif()
