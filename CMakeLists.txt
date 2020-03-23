@@ -21,7 +21,20 @@
 ################################################################################
 
 cmake_minimum_required(VERSION 3.1)
+
+get_cmake_property(vars CACHE_VARIABLES)
+foreach(var ${vars})
+  get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
+    if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
+	# message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
+	list(APPEND USER_ARGS "-D${var}=${${var}}")
+    endif()
+endforeach()
+
 project(linphoneqt VERSION 4.1.1)
+
+include(GNUInstallDirs)
+include(CheckCXXCompilerFlag)
 
 # Prepare gobal CMAKE configuration specific to the current project
 #set(SDK_BUILD_DIR "${CMAKE_BINARY_DIR}/WORK")       # SDK build in WORK. Keep all in it.
@@ -129,7 +142,6 @@ else()
 	set(LIBEXT ".so")
 endif ()
 
-
 ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
@@ -137,7 +149,7 @@ ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
     #BUILD_ALWAYS NO #${DO_BUILD}
 )
 ExternalProject_Add_Step(sdk force_build
@@ -153,13 +165,10 @@ ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     DEPENDS sdk
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-    BUILD_BYPRODUCTS "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/${LIBPREFIX}minizip${LIBEXT}"
+    CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
+    BUILD_BYPRODUCTS "${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}"
 )
-
-include(GNUInstallDirs)
-include(CheckCXXCompilerFlag)
-
+message("BY_PRODUCTS : ${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}")
 set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 if(WIN32)
     set(EXECUTABLE_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
@@ -168,7 +177,6 @@ if(WIN32)
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${EXECUTABLE_OUTPUT_DIR}")
 endif()
 message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
-
 # Build configuration
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
