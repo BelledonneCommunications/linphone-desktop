@@ -139,7 +139,7 @@ ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
     STAMP_DIR "${SDK_BUILD_DIR}/stamp"
-    BINARY_DIR "${SDK_BUILD_DIR}/build"
+    BINARY_DIR "${SDK_BUILD_DIR}"
     STEP_TARGETS build
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
