@@ -247,16 +247,13 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 
   // Migration of configuration and database files from GTK version of Linphone.
   Paths::migrate();
-
   setResourcesPaths();
-
   mCore = linphone::Factory::get()->createCore(
     Paths::getConfigFilePath(configPath),
     Paths::getFactoryConfigFilePath(),
     nullptr
   );
   mCore->addListener(mHandlers);
-
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
   mCore->setUserAgent(
@@ -268,7 +265,6 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     ),
     mCore->getVersion()
   );
-
   // Force capture/display.
   // Useful if the app was built without video support.
   // (The capture/display attributes are reset by the core in this case.)
@@ -277,12 +273,9 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     config->setInt("video", "capture", 1);
     config->setInt("video", "display", 1);
   }
-
   mCore->start();
-
   setDatabasesPaths();
   setOtherPaths();
-
   mCore->enableFriendListSubscription(true);
 }
 

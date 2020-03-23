@@ -45,11 +45,9 @@ SimpleCaptureGraph::~SimpleCaptureGraph()
 }
 
 void SimpleCaptureGraph::init() {
-
 	if (!audioCapture) {
 		audioCapture = ms_snd_card_create_reader(captureCard);
 	}
-
 	if (!audioSink) {
 		audioSink = ms_snd_card_create_writer(playbackCard);
 	}
@@ -67,9 +65,7 @@ void SimpleCaptureGraph::init() {
 	//Mute playback
 	float muteGain = 0.0f;
     ms_filter_call_method(playbackVolumeFilter, static_cast<unsigned int>(MS_VOLUME_SET_GAIN), &muteGain);
-
 	ticker = ms_ticker_new();
-
 	running = false;
 }
 
@@ -92,11 +88,9 @@ void SimpleCaptureGraph::destroy() {
 		stop();
 	}
 	ms_ticker_destroy(ticker);
-
 	ms_filter_unlink(playbackVolumeFilter, 0, audioSink, 0);
 	ms_filter_unlink(captureVolumeFilter, 0, playbackVolumeFilter, 0);
 	ms_filter_unlink(audioCapture, 0, captureVolumeFilter, 0);
-
 	ms_filter_destroy(playbackVolumeFilter);
 	ms_filter_destroy(captureVolumeFilter);
 	ms_filter_destroy(audioSink);

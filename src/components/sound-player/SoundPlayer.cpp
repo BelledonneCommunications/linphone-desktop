@@ -43,7 +43,6 @@ public:
 private:
   void onEofReached (const shared_ptr<linphone::Player> &) override {
     QMutex &mutex = mSoundPlayer->mForceCloseMutex;
-
     // Workaround.
     // This callback is called in a standard thread of mediastreamer, not a QThread.
     // Signals, connect functions, timers... are unavailable.
@@ -51,7 +50,6 @@ private:
     mSoundPlayer->mForceClose = true;
     mutex.unlock();
   }
-
   SoundPlayer *mSoundPlayer;
 };
 
@@ -59,14 +57,12 @@ private:
 
 SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
   CoreManager *coreManager = CoreManager::getInstance();
-  SettingsModel *settingsModel = coreManager->getSettingsModel();
+  SettingsModel *settingsModel = coreManager->getSettingsModel();  
   mForceCloseTimer = new QTimer(this);
+  
   mForceCloseTimer->setInterval(ForceCloseTimerInterval);
-
   QObject::connect(mForceCloseTimer, &QTimer::timeout, this, &SoundPlayer::handleEof);
-
   mHandlers = make_shared<SoundPlayer::Handlers>(this);  
-
   QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
 	rebuildInternalPlayer();
   });
@@ -83,15 +79,13 @@ SoundPlayer::~SoundPlayer () {
 void SoundPlayer::pause () {
   if (mPlaybackState == SoundPlayer::PausedState)
     return;
-
   if (mInternalPlayer->pause()) {
     setError(QStringLiteral("Unable to pause: `%1`").arg(mSource));
     return;
   }
-
   mForceCloseTimer->stop();
   mPlaybackState = SoundPlayer::PausedState;
-
+  
   emit paused();
   emit playbackStateChanged(mPlaybackState);
 }
@@ -99,7 +93,6 @@ void SoundPlayer::pause () {
 void SoundPlayer::play () {
   if (mPlaybackState == SoundPlayer::PlayingState)
     return;
-
   if (
     (mPlaybackState == SoundPlayer::StoppedState || mPlaybackState == SoundPlayer::ErrorState) &&
     mInternalPlayer->open(Utils::appStringToCoreString(mSource))
@@ -107,16 +100,14 @@ void SoundPlayer::play () {
     qWarning() << QStringLiteral("Unable to open: `%1`").arg(mSource);
     return;
   }
-
   if (mInternalPlayer->start()
   ) {
     setError(QStringLiteral("Unable to play: `%1`").arg(mSource));
     return;
   }
-
   mForceCloseTimer->start();
   mPlaybackState = SoundPlayer::PlayingState;
-
+  
   emit playing();
   emit playbackStateChanged(mPlaybackState);
 }
@@ -157,12 +148,10 @@ void SoundPlayer::rebuildInternalPlayer () {
 void SoundPlayer::stop (bool force) {
   if (mPlaybackState == SoundPlayer::StoppedState && !force)
     return;
-
   mForceCloseTimer->stop();
   mPlaybackState = SoundPlayer::StoppedState;
   mInternalPlayer->close();
-
-
+  
   emit stopped();
   emit playbackStateChanged(mPlaybackState);
 }
