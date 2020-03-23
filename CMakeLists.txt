@@ -113,6 +113,23 @@ if(${CMAKE_VERSION} VERSION_LESS "3.12.0")
 else()
     set(PROJECT_BUILD_COMMAND "--parallel 10")
 endIF()
+
+
+if (WIN32)
+	set(LIBDIR ${CMAKE_INSTALL_BINDIR})
+	set(LIBPREFIX "")
+	set(LIBEXT ".dll")
+elseif (APPLE)
+	set(LIBDIR ${CMAKE_INSTALL_LIBDIR})
+	set(LIBPREFIX "lib")
+	set(LIBEXT ".dylib")
+else()
+	set(LIBDIR ${CMAKE_INSTALL_LIBDIR})
+	set(LIBPREFIX "lib")
+	set(LIBEXT ".so")
+endif ()
+
+
 ExternalProject_Add(sdk PREFIX "${SDK_BUILD_DIR}"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
@@ -137,6 +154,7 @@ ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${ALL_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>  -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+    BUILD_BYPRODUCTS "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/${LIBPREFIX}minizip${LIBEXT}"
 )
 
 include(GNUInstallDirs)
@@ -149,10 +167,7 @@ if(WIN32)
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${EXECUTABLE_OUTPUT_DIR}")
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${EXECUTABLE_OUTPUT_DIR}")
 endif()
-message("MINIZIP : ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
 message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX}")
-message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
-message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 
 # Build configuration
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
@@ -559,11 +574,8 @@ source_group(
 # ------------------------------
 # Installation
 # ------------------------------
+target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${LIBDIR}/${LIBPREFIX}minizip${LIBEXT}")
+
 if(APPLE)
-    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-elseif(NOT WIN32)
-    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
-else()
-    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/minizip.dll")
+    #execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
 endif()
