@@ -16,7 +16,7 @@ CMakeLists.txt.user
 build-*-Debug
 build-*-Default
 prepare.conf.user
-build-desktop/*
+build/*
 
 # Tags -------------------------------------------------------------------------
 
