@@ -193,8 +193,6 @@ elseif (APPLE)
   endif ()
 #  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 
-  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/packaging.cmake.in" "packaging.cmake" @ONLY)
-#  install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
 else()# Not Windows and Apple
     foreach (LIBRARY ${SHARED_LIBRARIES})
     get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)

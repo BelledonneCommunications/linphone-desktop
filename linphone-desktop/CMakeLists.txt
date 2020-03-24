@@ -1,4 +1,4 @@
-################################################################################
+	################################################################################
 #
 #  Copyright (c) 2017-2020 Belledonne Communications SARL.
 # 
@@ -502,14 +502,8 @@ source_group(
 # Installation
 # ------------------------------
 if(APPLE)
-    target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-    execute_process(COMMAND install_name_tool -id "@executable_path/Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+    target_link_libraries(${TARGET_NAME} "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+    execute_process(COMMAND install_name_tool -id "@executable_path/Frameworks/libminizip.dylib" "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
 elseif(NOT WIN32)
     #   target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
-endif()
-
-if(${CMAKE_GENERATOR} MATCHES "Ninja" OR ${CMAKE_VERSION} VERSION_LESS "3.15.0") 
-else()
-#    add_custom_command( TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} --config ${CMAKE_BUILD_TYPE})
-#    add_custom_command( TARGET ${TARGET_NAME_ONLY} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_CURRENT_BINARY_DIR} --config ${CMAKE_BUILD_TYPE})
 endif()
