@@ -22,7 +22,7 @@
 - Add caller/callee on saved files.
 - Supports totally french, english, portuguese, russian, turkish, ukrainian.
 - App Nap avoiding for MacOs
-
+- Simplify building process
 
 ### Fixes
 

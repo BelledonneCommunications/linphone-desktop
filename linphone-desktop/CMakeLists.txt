@@ -1,31 +1,29 @@
-############################################################################
-# CMakeLists.txt
-# Copyright (C) 2017-2020  Belledonne Communications, Grenoble France
+################################################################################
 #
-############################################################################
+#  Copyright (c) 2017-2020 Belledonne Communications SARL.
+# 
+#  This file is part of linphone-desktop
+#  (see https://www.linphone.org).
+# 
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-# This program is free software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-#
-############################################################################
+################################################################################
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt-sub VERSION 4.1.1)
+project(linphoneqt VERSION 4.1.1)
 
 message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
-
-
-message("Options : ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
+message("Options : ${ENABLE_PACKAGING}, ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
@@ -42,10 +40,10 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../../cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 
 set(APP_LIBRARY app-library)
-include(../application_info.cmake)
+include(application_info.cmake)
 if(WIN32)
     set(EXECUTABLE_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
     set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${EXECUTABLE_OUTPUT_DIR}")
@@ -205,7 +203,7 @@ set(HEADERS
     src/utils/Utils.hpp
     )
 
-set(MAIN_FILE ../src/app/main.cpp)
+set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
     list(APPEND SOURCES
@@ -248,7 +246,7 @@ else ()
     )
 endif ()
 
-set(QRC_RESOURCES ../resources.qrc)
+set(QRC_RESOURCES resources.qrc)
 
 set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
@@ -267,8 +265,8 @@ function (PREPEND list prefix)
 endfunction ()
 
 # Force absolute paths.
-PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/../")
-PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/../")
+PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
+PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 # ------------------------------------------------------------------------------
 # Compute QML files list.
@@ -286,7 +284,7 @@ foreach (line ${QRC_RESOURCES_CONTENT})
     )
     string(REGEX MATCH "\\.[a-z]+$" is_ui ${result})
     if (NOT ${is_ui} STREQUAL "")
-    list(APPEND QML_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/../${result}")
+    list(APPEND QML_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/${result}")
     endif ()
 endforeach ()
 
@@ -297,19 +295,19 @@ endforeach ()
 if (NOT WIN32)
     add_custom_target(
     check_qml DEPENDS ${QML_SOURCES}
-    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../tools/check_qml_syntax"
+    COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/tools/check_qml_syntax"
     )
 endif()
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tools/private/pre-commit"
+    "${CMAKE_CURRENT_SOURCE_DIR}/tools/private/pre-commit"
     "${CMAKE_CURRENT_SOURCE_DIR}/../.git/hooks/pre-commit"
     )
 set(_QML_IMPORT_PATHS "")
-list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/modules")
-list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/dev-modules")
-list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/scripts")
-list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/../ui/views")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/modules")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/dev-modules")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
+list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
 
 set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
@@ -324,12 +322,12 @@ if(APPLE)
 else()
     set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 # ------------------------------------------------------------------------------
 # Build.
 # ------------------------------------------------------------------------------
 
-include_directories(../src/)
+include_directories(src/)
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
@@ -338,11 +336,11 @@ if (CMAKE_INSTALL_RPATH)
     #Retrieve lib path from a know QT executable
     get_target_property(LUPDATE_PATH Qt5::lupdate LOCATION)
     get_filename_component(LUPDATE_PATH "${LUPDATE_PATH}" DIRECTORY)
-    get_filename_component(QT_PATH "${LUPDATE_PATH}/../lib" ABSOLUTE)
+    get_filename_component(QT_PATH "${LUPDATE_PATH}/lib" ABSOLUTE)
     list(APPEND CMAKE_INSTALL_RPATH "${QT_PATH}")
 endif ()
 # Add languages support.
-add_subdirectory("../${LANGUAGES_DIRECTORY}" "assets/languages")
+add_subdirectory("${LANGUAGES_DIRECTORY}" "assets/languages")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
 
@@ -452,19 +450,19 @@ add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 
 if (UNIX AND NOT APPLE)
     # Install desktop/icon files.
-    configure_file("../${ASSETS_DIR}/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
+    configure_file("${ASSETS_DIR}/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
 
     install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
     )
-    install(FILES "../${ASSETS_DIR}/images/linphone_logo.svg"
+    install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
     DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
     RENAME "${EXECUTABLE_NAME}.svg"
     )
 
     set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128 256x256)
     foreach (DIR ${ICON_DIRS})
-    install(FILES "../${ASSETS_DIR}/icons/hicolor/${DIR}/apps/icon.png"
+    install(FILES "${ASSETS_DIR}/icons/hicolor/${DIR}/apps/icon.png"
         DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/${DIR}/apps/"
         RENAME "${EXECUTABLE_NAME}.png"
         )
@@ -474,7 +472,7 @@ endif ()
 # ------------------------------------------------------------------------------
 # CPack settings & RPM.
 # ------------------------------------------------------------------------------
-set(LINPHONE_DESKTOP_DIR "${CMAKE_CURRENT_SOURCE_DIR}/..")
+set(LINPHONE_DESKTOP_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(LINPHONE_SDK_DIR "${CMAKE_BINARY_DIR}/linphone-sdk")
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_SOURCE_DIR ${EP_linphone_SOURCE_DIR})
@@ -482,8 +480,8 @@ set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-tmp")
 message("LINPHONE_DESKTOP_DIR = ${LINPHONE_DESKTOP_DIR}")
 
-add_subdirectory(../build build)
-add_subdirectory(linphone_package)
+add_subdirectory(build)
+add_subdirectory(cmake_builder/linphone_package)
 
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.
@@ -505,7 +503,7 @@ source_group(
 # ------------------------------
 if(APPLE)
     target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+    execute_process(COMMAND install_name_tool -id "@executable_path/Frameworks/libminizip.dylib" "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
 elseif(NOT WIN32)
     #   target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
 endif()
