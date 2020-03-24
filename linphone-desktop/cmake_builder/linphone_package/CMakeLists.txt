@@ -258,7 +258,7 @@ endif ()
 # ==============================================================================
 #                               CPack.
 # ==============================================================================
-if(${ENABLE_PACKAGING})
+if(${ENABLE_APP_PACKAGING})
 	set(CPACK_BINARY_STGZ OFF)
 	set(CPACK_BINARY_TGZ OFF)
 	set(CPACK_BINARY_TZ OFF)

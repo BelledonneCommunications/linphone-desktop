@@ -68,7 +68,7 @@ endif()
 #				SET OPTIONS
 #-------------------------------------------------------------------------------
 
-option(ENABLE_PACKAGING "Enable packaging" NO)
+option(ENABLE_APP_PACKAGING "Enable packaging" NO)
 option(ENABLE_UPDATE_CHECK "Enable update check." NO)
 option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
 option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
@@ -87,7 +87,7 @@ endif()
 option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES)
 
 set(ALL_OPTIONS "-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
-list(APPEND ALL_OPTIONS "-DENABLE_PACKAGING=${ENABLE_PACKAGING}")
+list(APPEND ALL_OPTIONS "-DENABLE_APP_PACKAGING=${ENABLE_APP_PACKAGING}")
 list(APPEND ALL_OPTIONS "-DENABLE_UNIT_TESTS=${ENABLE_UNIT_TESTS}")
 list(APPEND ALL_OPTIONS "-DENABLE_TESTS=${ENABLE_TESTS}")
 list(APPEND ALL_OPTIONS "-DENABLE_TESTS_COMPONENTS=${ENABLE_TESTS_COMPONENTS}")

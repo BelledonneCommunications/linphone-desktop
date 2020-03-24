@@ -7,24 +7,16 @@
   ccache -s
   export Qt5_DIR=/usr/local/opt/qt/lib/cmake
   export PATH=$PATH:/usr/local/opt/qt/bin
-  if [ -d "build-desktop" ]; then rm -rf build-desktop; fi;
-  mkdir -p build-desktop/OUTPUT
-  cd build-desktop
+  if [ -d "build" ]; then rm -rf build; fi;
+  mkdir -p build/OUTPUT
+  cd build
   #SDK Building
   echo $CMAKE_GENERATOR
   echo $DEFAULT_MACOS_CMAKE_OPTIONS
   echo $CMAKE_OPTIONS
   echo $ADDITIONAL_BUILD_OPTIONS
   cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS
-  cmake --build . --target sdk $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
-  # Minizip install to OUTPUT folder
-  cmake ..
-  cmake --build . --target minizip
-  cmake --build . --target install
-  # Update CMake installation
-  cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS
-  cmake --build . --target linphone-qt -- $ADDITIONAL_BUILD_OPTIONS
-  cmake --build . --target install -- $ADDITIONAL_BUILD_OPTIONS
+  cmake --build . --target all $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
   ccache -s
 
 .job-macosx-desktop:
@@ -34,7 +26,7 @@
     - *build_all_script
   artifacts:
     paths:
-      - build-desktop/OUTPUT
+      - build/OUTPUT
     expire_in: 1 week
 
 #################################################
@@ -91,14 +83,15 @@ job-macosx-makefile-package:
   only:
      variables:
        - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_PACKAGING=YES
   extends: job-macosx-makefile
   script:
     - *build_all_script
-    - cmake --build . --target package -- $ADDITIONAL_BUILD_OPTIONS
-    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" CPackBuild/Linphone*.dmg
+    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Packages/Linphone*.dmg
   artifacts:
     paths:
-      - build-desktop/CPackBuild/Linphone*.dmg
+      - build/OUTPUT/Packages/Linphone*.dmg
     expire_in: 1 week
 
 #################################################
@@ -114,4 +107,4 @@ job-macosx-makefile-deploy:
      variables:
        - $NIGHTLY_MASTER
   script:
-    - scp build-desktop/CPackBuild/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/app/
+    - scp build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/app/
