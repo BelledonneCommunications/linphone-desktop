@@ -99,13 +99,9 @@ endif()
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
 
 include(ExternalProject)
-#Get all CMAKE_* variables to pass them to external projects
-include(linphone-sdk/cmake/LinphoneSdkUtils.cmake)
-linphone_sdk_get_inherited_cmake_args()
-list(APPEND APP_OPTIONS ${_inherited_cmake_args})
 set(PROJECT_BUILD_COMMAND "")
 if(CMAKE_BUILD_PARALLEL_LEVEL)
-    list(APPEND APP_OPTIONS "-DCMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL}") #add it because it was not added by the SDK
+    list(APPEND APP_OPTIONS "-DCMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL}")
     if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0") #CMAKE_BUILD_PARALLEL_LEVEL will not always work for External projects
         list(APPEND PROJECT_BUILD_COMMAND "--parallel" "${CMAKE_BUILD_PARALLEL_LEVEL}")
     endif()
