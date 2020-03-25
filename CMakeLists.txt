@@ -107,7 +107,7 @@ list(APPEND APP_OPTIONS ${_inherited_cmake_args})
 set(PROJECT_BUILD_COMMAND "")
 if(CMAKE_BUILD_PARALLEL_LEVEL)
     list(APPEND APP_OPTIONS "-DCMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL}") #add it because it was not added by the SDK
-    if(${CMAKE_VERSION} VERSION_LESS "3.12.0") #CMAKE_BUILD_PARALLEL_LEVEL will not always work for External projects
+    if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0") #CMAKE_BUILD_PARALLEL_LEVEL will not always work for External projects
         list(APPEND PROJECT_BUILD_COMMAND "--parallel" "${CMAKE_BUILD_PARALLEL_LEVEL}")
     endif()
 endif()
