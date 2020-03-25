@@ -26,8 +26,11 @@ get_cmake_property(vars CACHE_VARIABLES)
 foreach(var ${vars})
   get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
     if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
-	# message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
+	#message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
 	list(APPEND USER_ARGS "-D${var}=${${var}}")
+	if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
+		set(PREFIX_PATH "|${${var}}")
+	endif()
     endif()
 endforeach()
 
@@ -43,7 +46,8 @@ set(MINIZIP_BUILD_DIR "${CMAKE_BINARY_DIR}/minizip_BUILD")
 set(MINIZIP_OUTPUT_DIR "${CMAKE_BINARY_DIR}/minizip_OUTPUT")
 set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
 message("minizip=${MINIZIP_OUTPUT_DIR} sdk=${LINPHONE_OUTPUT_DIR}")
-set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}")
+
+set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
 
 # Avoid cmake warning if CMP0071 is not set.
 if (POLICY CMP0071)
@@ -95,18 +99,19 @@ list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
 endif()
+list(APPEND APP_OPTIONS "-DENABLE_RELATIVE_PREFIX=${ENABLE_RELATIVE_PREFIX}")
 
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
 
 include(ExternalProject)
-set(PROJECT_BUILD_COMMAND "")
+set(PROJECT_BUILD_COMMAND "--verbose")
 if(CMAKE_BUILD_PARALLEL_LEVEL)
     list(APPEND APP_OPTIONS "-DCMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL}")
     if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0") #CMAKE_BUILD_PARALLEL_LEVEL will not always work for External projects
         list(APPEND PROJECT_BUILD_COMMAND "--parallel" "${CMAKE_BUILD_PARALLEL_LEVEL}")
     endif()
 endif()
-
+message("User Args : ${USER_ARGS}")
 
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
@@ -117,7 +122,7 @@ ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     INSTALL_COMMAND cmake -E echo "Skipping install step."
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${APP_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
+    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     #BUILD_ALWAYS NO #${DO_BUILD}
 )
 ExternalProject_Add_Step(sdk force_build
@@ -133,7 +138,7 @@ ExternalProject_Add(minizip PREFIX "${CMAKE_BINARY_DIR}/minizip"
 	DEPENDS sdk
 	BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
 	LIST_SEPARATOR | # Use the alternate list separator
-	CMAKE_ARGS ${APP_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS} 
+	CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 )
 ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-desktop"
@@ -141,7 +146,8 @@ ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     DEPENDS minizip sdk
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${APP_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
+    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+    # ${APP_OPTIONS}
     BUILD_ALWAYS ON
 )
 ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
@@ -149,6 +155,6 @@ ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${APP_OPTIONS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH} ${USER_ARGS}
+    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     EXCLUDE_FROM_ALL ON
 )

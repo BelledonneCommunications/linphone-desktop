@@ -22,8 +22,8 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
-message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
-message("Options : ${ENABLE_PACKAGING}, ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
+#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
+message("Options : ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
@@ -72,7 +72,8 @@ message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 # Build configuration
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG" )
+
 if( WIN32)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_WINSOCKAPI_")#remove error from windows headers order
 endif()
@@ -503,7 +504,7 @@ source_group(
 # ------------------------------
 if(APPLE)
     target_link_libraries(${TARGET_NAME} "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-    execute_process(COMMAND install_name_tool -id "@executable_path/Frameworks/libminizip.dylib" "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
 elseif(NOT WIN32)
     #   target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
 endif()
