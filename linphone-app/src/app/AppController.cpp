@@ -43,6 +43,7 @@ AppController::AppController (int &argc, char *argv[]) {
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
 
+  mApp = new App(argc, argv);
   // ---------------------------------------------------------------------------
 
   QGuiApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
@@ -57,10 +58,8 @@ AppController::AppController (int &argc, char *argv[]) {
   // Do not use APPLICATION_NAME here.
   // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
   QCoreApplication::setApplicationName(EXECUTABLE_NAME);
-  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);  
+  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
   QApplication::setOrganizationDomain(APPLICATION_ID);
-
-  mApp = new App(argc, argv);
   QQuickStyle::setStyle("Default");
   if (mApp->isSecondary()) {
     #ifdef Q_OS_MACOS
