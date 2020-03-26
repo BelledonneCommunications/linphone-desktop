@@ -161,7 +161,7 @@ pkg_search_module(MINIZIP minizip)
 if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) )
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
-	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-desktop"
+	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
 	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
 	    DEPENDS miniziplib sdk
 	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
@@ -177,10 +177,10 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
-	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-desktop)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 endif()
 ExternalProject_Add(linphoneqt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
-    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-desktop"
+    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
     LIST_SEPARATOR | # Use the alternate list separator
