@@ -113,6 +113,10 @@ if(CMAKE_BUILD_PARALLEL_LEVEL)
         list(APPEND PROJECT_BUILD_COMMAND "--parallel" "${CMAKE_BUILD_PARALLEL_LEVEL}")
     endif()
 endif()
+if(CMAKE_VERBOSE_MAKEFILE)
+    list(APPEND APP_OPTIONS "-DCMAKE_VERBOSE_MAKEFILE=${CMAKE_VERBOSE_MAKEFILE}")
+    list(APPEND PROJECT_BUILD_COMMAND "--verbose")
+endif()
 message("User Args : ${USER_ARGS}")
 
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
