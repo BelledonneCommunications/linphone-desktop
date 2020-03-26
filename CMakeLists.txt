@@ -29,7 +29,7 @@ foreach(var ${vars})
 	#message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
 	list(APPEND USER_ARGS "-D${var}=${${var}}")
 	if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
-		set(PREFIX_PATH "|${${var}}")
+		set(PREFIX_PATH ";${${var}}")
 	endif()
     endif()
 endforeach()
@@ -47,7 +47,9 @@ set(MINIZIP_OUTPUT_DIR "${CMAKE_BINARY_DIR}/minizip_OUTPUT")
 set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
 message("minizip=${MINIZIP_OUTPUT_DIR} sdk=${LINPHONE_OUTPUT_DIR}")
 
-set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
+set(CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${MINIZIP_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
+string(REPLACE ";" "|" PREFIX_PATH "${CMAKE_PREFIX_PATH}")
+#set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${MINIZIP_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
 
 # Avoid cmake warning if CMP0071 is not set.
 if (POLICY CMP0071)
@@ -104,7 +106,7 @@ list(APPEND APP_OPTIONS "-DENABLE_RELATIVE_PREFIX=${ENABLE_RELATIVE_PREFIX}")
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
 
 include(ExternalProject)
-set(PROJECT_BUILD_COMMAND "--verbose")
+set(PROJECT_BUILD_COMMAND "")
 if(CMAKE_BUILD_PARALLEL_LEVEL)
     list(APPEND APP_OPTIONS "-DCMAKE_BUILD_PARALLEL_LEVEL=${CMAKE_BUILD_PARALLEL_LEVEL}")
     if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0") #CMAKE_BUILD_PARALLEL_LEVEL will not always work for External projects
@@ -131,7 +133,8 @@ ExternalProject_Add_Step(sdk force_build
 	DEPENDERS build
 	ALWAYS 1
 )
-ExternalProject_Add(minizip PREFIX "${CMAKE_BINARY_DIR}/minizip"
+#Don't use minizip as target name because it can be a conflict with link libraries names
+ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
 	SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
 	INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
 	BUILD_ALWAYS ON
@@ -140,17 +143,37 @@ ExternalProject_Add(minizip PREFIX "${CMAKE_BINARY_DIR}/minizip"
 	LIST_SEPARATOR | # Use the alternate list separator
 	CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 )
-ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
-    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-desktop"
-    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-    DEPENDS minizip sdk
-    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-    LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-    # ${APP_OPTIONS}
-    BUILD_ALWAYS ON
-)
-ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+include(FindPkgConfig)
+find_package(LinphoneCxx CONFIG)
+find_package(Linphone CONFIG)
+find_package(bctoolbox CONFIG)
+find_package(belcard CONFIG)
+find_package(Mediastreamer2 CONFIG)
+find_package(ortp CONFIG)
+pkg_search_module(MINIZIP minizip)
+
+if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) )
+	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
+	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-desktop"
+	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
+	    DEPENDS miniziplib sdk
+	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+	    LIST_SEPARATOR | # Use the alternate list separator
+	    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+	    # ${APP_OPTIONS}
+	    BUILD_ALWAYS ON
+	)
+	set(AUTO_REGENERATION auto_regeneration)
+	add_custom_target(${AUTO_REGENERATION} ALL
+		COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
+		DEPENDS linphone-qt)
+else()
+	message("Adding Linphone Desktop in an IDE-friendly state")
+	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
+	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-desktop)
+endif()
+ExternalProject_Add(linphoneqt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-desktop"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
