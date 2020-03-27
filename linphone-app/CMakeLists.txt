@@ -311,8 +311,8 @@ list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
 
 set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
-
-
+set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
     set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
