@@ -25,6 +25,8 @@
 #include "components/core/CoreManager.hpp"
 #include "MediastreamerUtils.hpp"
 
+#include <qlogging.h>
+
 using namespace MediastreamerUtils;
 
 SimpleCaptureGraph::SimpleCaptureGraph(const std::string &capture, const std::string &playback)
@@ -34,9 +36,14 @@ SimpleCaptureGraph::SimpleCaptureGraph(const std::string &capture, const std::st
 	msFactory = linphone_core_get_ms_factory(ccore);
 
 	playbackCard = ms_snd_card_manager_get_card(ms_factory_get_snd_card_manager(msFactory), playbackCardId.c_str());
+	if (!playbackCard)
+				qWarning("Cannot get playback card from MSFactory with : %s", playbackCardId.c_str());
 	captureCard = ms_snd_card_manager_get_card(ms_factory_get_snd_card_manager(msFactory), captureCardId.c_str());
+	if (!captureCard)
+				qWarning("Cannot get capture card from MSFactory with : %s", captureCardId.c_str());
 
-	init();
+	if(playbackCard && captureCard)// Assure to initialize when playback and capture are available
+		init();
 }
 
 SimpleCaptureGraph::~SimpleCaptureGraph()
@@ -64,20 +71,22 @@ void SimpleCaptureGraph::init() {
 
 	//Mute playback
 	float muteGain = 0.0f;
-    ms_filter_call_method(playbackVolumeFilter, static_cast<unsigned int>(MS_VOLUME_SET_GAIN), &muteGain);
+	ms_filter_call_method(playbackVolumeFilter, static_cast<unsigned int>(MS_VOLUME_SET_GAIN), &muteGain);
 	ticker = ms_ticker_new();
 	running = false;
+
 }
 
 void SimpleCaptureGraph::start() {
-	if (!running) {
-		ms_ticker_attach(ticker, audioCapture);
+	if (!running && audioCapture) {
 		running = true;
+		ms_ticker_attach(ticker, audioCapture);
+		
 	}
 }
 
 void SimpleCaptureGraph::stop() {
-	if (running) {
+	if (running && audioCapture){
 		ms_ticker_detach(ticker, audioCapture);
 		running = false;
 	}
@@ -87,14 +96,29 @@ void SimpleCaptureGraph::destroy() {
 	if (running) {
 		stop();
 	}
-	ms_ticker_destroy(ticker);
-	ms_filter_unlink(playbackVolumeFilter, 0, audioSink, 0);
-	ms_filter_unlink(captureVolumeFilter, 0, playbackVolumeFilter, 0);
-	ms_filter_unlink(audioCapture, 0, captureVolumeFilter, 0);
-	ms_filter_destroy(playbackVolumeFilter);
-	ms_filter_destroy(captureVolumeFilter);
-	ms_filter_destroy(audioSink);
-	ms_filter_destroy(audioCapture);
+	
+	if (audioSink)
+		ms_filter_unlink(playbackVolumeFilter, 0, audioSink, 0);
+	if (captureVolumeFilter && playbackVolumeFilter)
+		ms_filter_unlink(captureVolumeFilter, 0, playbackVolumeFilter, 0);
+	if (audioCapture)
+		ms_filter_unlink(audioCapture, 0, captureVolumeFilter, 0);
+	if (playbackVolumeFilter)
+		ms_filter_destroy(playbackVolumeFilter);
+	if (captureVolumeFilter)
+		ms_filter_destroy(captureVolumeFilter);
+	if (audioSink)
+		ms_filter_destroy(audioSink);
+	if (audioCapture)
+		ms_filter_destroy(audioCapture);
+	if (ticker) {
+		ms_ticker_destroy(ticker);// Destroy ticker at the end to avoid conflicts between attached filters
+	}
+	ticker = nullptr;
+	playbackVolumeFilter = nullptr;
+	captureVolumeFilter = nullptr;
+	audioSink = nullptr;
+	audioCapture = nullptr;
 }
 
 float SimpleCaptureGraph::getCaptureGain() {
