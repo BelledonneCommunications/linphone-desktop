@@ -57,7 +57,7 @@ find_package(ortp CONFIG)
 #find_package(minizip)
 
 include(FindPkgConfig)
-pkg_search_module(MINIZIP minizip NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH)
+pkg_search_module(MINIZIP minizip)
 set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
 
 message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
