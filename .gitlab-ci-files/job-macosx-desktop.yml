@@ -84,7 +84,7 @@ job-macosx-makefile-package:
      variables:
        - $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_PACKAGING=YES
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   extends: job-macosx-makefile
   script:
     - *build_all_script
