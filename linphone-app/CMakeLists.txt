@@ -30,10 +30,7 @@ include(CheckCXXCompilerFlag)
 
 
 set(TARGET_NAME linphone-qt)
-if( NOT("${CMAKE_GENERATOR}" MATCHES "Ninja"))
-#    set(TARGET_NAME_ONLY linphone-qt-only)
-#    set(APP_LIBRARY_ONLY app-library-only)
-endif()
+
 set(CMAKE_CXX_STANDARD 11)
 
 if(UNIX AND NOT APPLE)
@@ -60,10 +57,10 @@ find_package(ortp CONFIG)
 #find_package(minizip)
 
 include(FindPkgConfig)
-pkg_search_module(MINIZIP minizip)
+pkg_search_module(MINIZIP minizip NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH)
 set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
 
-message("MINIZIP : ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
 message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
 message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
 message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
