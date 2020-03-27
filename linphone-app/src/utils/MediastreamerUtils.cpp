@@ -35,10 +35,10 @@ SimpleCaptureGraph::SimpleCaptureGraph(const std::string &capture, const std::st
 
 	playbackCard = ms_snd_card_manager_get_card(ms_factory_get_snd_card_manager(msFactory), playbackCardId.c_str());
 	if (!playbackCard)
-		qWarning("Cannot get playback card from MSFactory with : %s", QString::fromStdString(playbackCardId));
+                qWarning("Cannot get playback card from MSFactory with : " +QString::fromStdString(playbackCardId));
 	captureCard = ms_snd_card_manager_get_card(ms_factory_get_snd_card_manager(msFactory), captureCardId.c_str());
 	if (!captureCard)
-		qWarning("Cannot get capture card from MSFactory with : %s", QString::fromStdString(captureCardId));
+                qWarning("Cannot get capture card from MSFactory with : " +QString::fromStdString(captureCardId));
 
 	if(playbackCard && captureCard)// Assure to initialize when playback and capture are available
 		init();
