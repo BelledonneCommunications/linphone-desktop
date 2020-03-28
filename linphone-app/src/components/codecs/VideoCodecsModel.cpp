@@ -107,7 +107,7 @@ static bool downloadUpdatableCodec (
       qWarning() << QStringLiteral("Unable to write codec version in: `%1`.").arg(versionFilePath);
       return;
     }
-    if (versionFile.write(downloadUrl.toStdString().c_str(), downloadUrl.length()) == -1) {
+	if (versionFile.write(Utils::appStringToCoreString(downloadUrl).c_str(), downloadUrl.length()) == -1) {
       fileExtractor->remove();
       versionFile.close();
       versionFile.remove();
