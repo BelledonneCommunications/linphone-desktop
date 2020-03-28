@@ -179,7 +179,7 @@ else()
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 endif()
-ExternalProject_Add(linphoneqt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
