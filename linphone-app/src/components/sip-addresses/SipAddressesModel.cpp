@@ -454,8 +454,8 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
     : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 
   if (callLog->getStatus() == linphone::Call::Status::Missed) {
-      for (auto &observer : mObservers.values(QString::fromStdString((callLog->getRemoteAddress()->asStringUriOnly())))) {
-          if (observer->getLocalAddress() == QString::fromStdString(callLog->getLocalAddress()->asStringUriOnly())) {
+	  for (auto &observer : mObservers.values(Utils::coreStringToAppString((callLog->getRemoteAddress()->asStringUriOnly())))) {
+		  if (observer->getLocalAddress() == Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly())) {
 			  observer->setUnreadMessageCount(1);
 		  }
 	  }
