@@ -128,7 +128,7 @@ ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     BINARY_DIR "${SDK_BUILD_DIR}"
     STEP_TARGETS build
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Skipping install step."
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     #BUILD_ALWAYS NO #${DO_BUILD}
@@ -143,7 +143,6 @@ ExternalProject_Add_Step(sdk force_build
 ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
 	SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
 	INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
-	BUILD_ALWAYS ON
 	DEPENDS sdk
 	BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
 	LIST_SEPARATOR | # Use the alternate list separator
@@ -156,7 +155,9 @@ find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
-set(ENV{PKG_CONFIG_PATH} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+#set($ENV{PKG_CONFIG_PATH} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+set(${PKG_CONFIG_PATH} "/Users/julienw/projects/desktop-build3/build/minizip_OUTPUp/${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+
 pkg_search_module(MINIZIP minizip NO_CMAKE_ENVIRONMENT_PATH)
 message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
 if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) )
@@ -166,6 +167,7 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
 	    DEPENDS miniziplib sdk
 	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+#	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 	    LIST_SEPARATOR | # Use the alternate list separator
 	    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 	    # ${APP_OPTIONS}
@@ -180,10 +182,11 @@ else()
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 endif()
-ExternalProject_Add(linphoneqt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+#    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     EXCLUDE_FROM_ALL ON

@@ -70,7 +70,7 @@ static inline bool filePathExists (const QString &path) {
 static inline void ensureDirPathExists (const QString &path) {
   QDir dir(path);
   if (!dir.exists() && !dir.mkpath(path))
-    qFatal("Unable to access at directory: `%s`", path.toStdString().c_str());
+	qFatal("Unable to access at directory: `%s`", Utils::appStringToCoreString(path).c_str());
 }
 
 static inline void ensureFilePathExists (const QString &path) {
@@ -79,7 +79,7 @@ static inline void ensureFilePathExists (const QString &path) {
 
   QFile file(path);
   if (!file.exists() && !file.open(QIODevice::ReadWrite))
-    qFatal("Unable to access at path: `%s`", path.toStdString().c_str());
+	qFatal("Unable to access at path: `%s`", Utils::appStringToCoreString(path).c_str());
 }
 
 static inline string getReadableDirPath (const QString &dirname) {

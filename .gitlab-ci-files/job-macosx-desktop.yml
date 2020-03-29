@@ -77,7 +77,7 @@ job-macosx-ninja-novideo:
 
 job-macosx-makefile-package:
   stage: package
-  tags: [ "deploy" ]
+  tags: [ "macosx-xcode11" ]
   dependencies:
     - job-macosx-makefile
   only:
@@ -100,7 +100,7 @@ job-macosx-makefile-package:
 
 job-macosx-makefile-deploy:
   stage: deploy
-  tags: [ "deploy" ]
+  tags: [ "macosx-xcode11" ]
   dependencies:
     - job-macosx-makefile-package
   only:
