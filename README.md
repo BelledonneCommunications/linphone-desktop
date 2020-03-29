@@ -61,18 +61,19 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 		
 ### Building
 
-The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `minizip` and `linphone-qt`. 
+The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `miniziplib` and `linphone-qt`.
 
-1. Create your build folder at the root of the project : `mkdir build-desktop`
-Go to this new folder and begin the build process : `cd build-desktop`
+1. Create your build folder at the root of the project : `mkdir build`
+Go to this new folder and begin the build process : `cd build`
 
 2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process. If it doesn't seem to work then it will be better to use CMake >= 3.12
+Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
 
 3. Build and install the whole project : `cmake --build . --target all` or `cmake --build . --target ALL_BUILD` on Windows.
 
 It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command.
 
-When all are over, the files will be in the OUTPUT folder in the build directory.
+When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` or `cmake --install .` (if CMake>=3.15) to put the application in the correct configuration.
 
 4. When doing some modifications in the SDK, you can rebuild only the sdk with the target `sdk`
 

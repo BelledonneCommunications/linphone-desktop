@@ -22,7 +22,9 @@
 
 cmake_minimum_required(VERSION 3.1)
 project(LINPHONE_PACKAGE) # Dummy project.
-message("Linphone-packages paths : ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}")
+if(ENABLE_BUILD_VERBOSE)
+	message("Linphone-packages paths : ${CMAKE_CURRENT_SOURCE_DIR} ${CMAKE_CURRENT_BINARY_DIR}")
+endif()
 include("${CMAKE_CURRENT_SOURCE_DIR}/../../application_info.cmake")
 
 find_package(Git)
@@ -140,18 +142,20 @@ elseif (APPLE)
   foreach (LIBRARY ${SHARED_LIBRARIES})
     install(FILES "${LIBRARY}" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
   endforeach ()
-
-  find_program(DEPLOYQT_PROGRAM macdeployqt)
-  if (NOT DEPLOYQT_PROGRAM)
-    message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
-  endif ()
+set(DEPLOYQT_PROGRAM NO)
+# Uncomment to reactivate macdeployqt
+#  find_program(DEPLOYQT_PROGRAM macdeployqt)
+#  if (NOT DEPLOYQT_PROGRAM)
+#    message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
+#  endif ()
 
 
   if (EXISTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer")
     file(COPY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_LIBDIR}" USE_SOURCE_PERMISSIONS)
   endif ()
-  message("Take Minizip from ${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-
+  if(ENABLE_BUILD_VERBOSE)
+    message("Take Minizip from ${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+  endif()
   file(GLOB GRAMMAR_FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/Belr/grammars/*")
   install(FILES ${GRAMMAR_FILES} DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/")
   install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/images" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}" USE_SOURCE_PERMISSIONS OPTIONAL)
@@ -176,8 +180,8 @@ elseif (APPLE)
   install( CODE "execute_process(COMMAND install_name_tool -change libminizip.dylib \"@executable_path/../Frameworks/libminizip.dylib\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   install( CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
-  if(ENABLE_APP_PACKAGING)
- #   install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")
+  if(ENABLE_APP_PACKAGING AND DEPLOYQT_PROGRAM)
+    install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")
   endif()
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
     file(GLOB FRAMEWORKS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/../../${APPLICATION_NAME}.app/Contents/Frameworks/*")
@@ -200,8 +204,7 @@ else()# Not Windows and Apple
     get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)
       message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}' to '$ORIGIN/../${CMAKE_INSTALL_LIBDIR}'")
       execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}" "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}" "${LIBRARY}")
-    endforeach ()  
-    message(${CMAKE_INSTALL_PREFIX})
+    endforeach ()
   install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/" DESTINATION "${CMAKE_INSTALL_BINDIR}" USE_SOURCE_PERMISSIONS)
   
 #Just in case. This is useless because we have to use CMAKE_INSTALL_LIBDIR  
@@ -212,9 +215,9 @@ else()# Not Windows and Apple
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/lib64/" DESTINATION "lib64" USE_SOURCE_PERMISSIONS)
   endif()
   install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}" USE_SOURCE_PERMISSIONS)
-  
-  message("INSTALLATION : ${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/" )
-
+  if(ENABLE_BUILD_VERBOSE)
+    message("INSTALLATION : ${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/" )
+  endif()
   if (EXISTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer")
     file(COPY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer" DESTINATION "${CMAKE_INSTALL_LIBDIR}" USE_SOURCE_PERMISSIONS)
   endif ()

@@ -80,12 +80,12 @@ option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
 option(ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" NO  )
 option(ENABLE_TOOLS "Enable tools of SDK" NO)
 option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
-
 option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
+option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 
 if(WIN32 OR APPLE)
 else()
-    option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
+	option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
 endif()
 
 option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES)
@@ -98,6 +98,8 @@ list(APPEND APP_OPTIONS "-DENABLE_TESTS_COMPONENTS=${ENABLE_TESTS_COMPONENTS}")
 list(APPEND APP_OPTIONS "-DENABLE_TOOLS=${ENABLE_TOOLS}")
 list(APPEND APP_OPTIONS "-DENABLE_STRICT=${ENABLE_STRICT}")
 list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
+list(APPEND APP_OPTIONS "-DENABLE_BUILD_VERBOSE=${ENABLE_BUILD_VERBOSE}")
+
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
 endif()
@@ -119,8 +121,9 @@ if(CMAKE_VERBOSE_MAKEFILE)
 		list(APPEND PROJECT_BUILD_COMMAND "--verbose")
 	endif()
 endif()
-message("User Args : ${USER_ARGS}")
-
+if(ENABLE_BUILD_VERBOSE)
+	message("User Args : ${USER_ARGS}")
+endif()
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
@@ -155,11 +158,12 @@ find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
-#set($ENV{PKG_CONFIG_PATH} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-set(${PKG_CONFIG_PATH} "/Users/julienw/projects/desktop-build3/build/minizip_OUTPUp/${CMAKE_INSTALL_LIBDIR}/pkgconfig")
+set(ENV{PKG_CONFIG_PATH} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/pkgconfig")
 
 pkg_search_module(MINIZIP minizip NO_CMAKE_ENVIRONMENT_PATH)
-message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+if(ENABLE_BUILD_VERBOSE)
+	message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+endif()
 if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) )
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
