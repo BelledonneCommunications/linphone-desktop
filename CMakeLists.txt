@@ -24,16 +24,20 @@ cmake_minimum_required(VERSION 3.1)
 
 get_cmake_property(vars CACHE_VARIABLES)
 foreach(var ${vars})
-  get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
-    if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
-	#message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
-	list(APPEND USER_ARGS "-D${var}=${${var}}")
-	if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
-		set(PREFIX_PATH ";${${var}}")
+	get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
+	if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
+		#message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
+		list(APPEND USER_ARGS "-D${var}=${${var}}")
+		if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
+			set(PREFIX_PATH ";${${var}}")
+		endif()
+	elseif("${var}" STREQUAL "CMAKE_GENERATOR_PLATFORM")
+		message(STATUS "User-Setting Platform to ${${var}}")
 	endif()
-    endif()
 endforeach()
-
+if(ENABLE_BUILD_VERBOSE)
+	message("User Args : ${USER_ARGS}")
+endif()
 project(linphoneqt VERSION 4.1.1)
 
 include(GNUInstallDirs)
@@ -106,6 +110,10 @@ endif()
 list(APPEND APP_OPTIONS "-DENABLE_RELATIVE_PREFIX=${ENABLE_RELATIVE_PREFIX}")
 
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
+if(NOT CMAKE_GENERATOR_PLATFORM AND WIN32)
+	set(CMAKE_GENERATOR_PLATFORM "Win32")
+	message(STATUS "Setting Platform to ${${var}}")
+endif()
 
 include(ExternalProject)
 set(PROJECT_BUILD_COMMAND "")
@@ -121,9 +129,7 @@ if(CMAKE_VERBOSE_MAKEFILE)
 		list(APPEND PROJECT_BUILD_COMMAND "--verbose")
 	endif()
 endif()
-if(ENABLE_BUILD_VERBOSE)
-	message("User Args : ${USER_ARGS}")
-endif()
+
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"

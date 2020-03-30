@@ -122,8 +122,8 @@ if (WIN32)
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/assistant/use-other-sip-account.rc" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}/assistant")
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/assistant/create-app-sip-account.rc" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}/assistant")
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/assistant/use-app-sip-account.rc" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}/assistant")
-	#get_target_property(DIRR ${TARGET_NAME} RUNTIME_OUTPUT_DIRECTORY)
-	
+	#get_target_property(DIRR linphone-qt RUNTIME_OUTPUT_DIRECTORY)	#No need that, the binary should be in ${CMAKE_CURRENT_BINARY_DIR}/../..
+	#message("DIR : ${DIRR}")
 	install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.exe" DESTINATION "${CMAKE_INSTALL_BINDIR}")
 	install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}.exe\" -qmldir=${LINPHONE_QML_DIR} --compiler-runtime)")# -verbose=2)"  COMPONENT binary_application)
 
@@ -286,8 +286,10 @@ if(${ENABLE_APP_PACKAGING})
 	  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
 	  set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
 	  set(CPACK_BINARY_DRAGNDROP ON)
+	  message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
 	elseif(NOT(WIN32))
 	  set(CPACK_BINARY_TGZ ON)  
+	  message(STATUS "Set TGZ CPack generator in OUTPUT/Packages")
 	else()
 	  set(CPACK_GENERATOR "NSIS")
 	  set(DO_GENERATOR YES)
@@ -315,13 +317,14 @@ if(${ENABLE_APP_PACKAGING})
 	    set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\install.nsi\\\"")
 	    configure_file("${CMAKE_CURRENT_SOURCE_DIR}/windows/uninstall.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/uninstall.nsi" COPYONLY)
 	    set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uninstall.nsi\\\"")
+		message(STATUS "Set NSIS CPack generator in OUTPUT/Packages")
 	  else ()
 	    set(PACKAGE_EXT "msi")
 	
 	    set(CPACK_WIX_UPGRADE_GUID "C748668E-53D0-4088-A548-E33A76615A3B")
 	    set(CPACK_WIX_PRODUCT_ICON "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/icon.ico")
 	    set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "${APPLICATION_URL}")
-	
+		message(STATUS "Set MSI CPack generator in OUTPUT/Packages")
 	    # TODO: Deal with install/uninstall.nsi
 	  endif ()
 	
