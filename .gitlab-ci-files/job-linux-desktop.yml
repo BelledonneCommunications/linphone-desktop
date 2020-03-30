@@ -6,7 +6,9 @@
 
   stage: build
   extends: .linux-prepare
-
+  except:
+    variables:
+      - $NOT_LINUX
   script:
     - cmake --version
     - export CC=$CC
@@ -25,7 +27,3 @@
     paths:
       - build/OUTPUT
     expire_in: 1 week
-    except:
-      variables:
-        - $NOT_LINUX
-
