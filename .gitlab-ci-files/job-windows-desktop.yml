@@ -47,11 +47,9 @@
   extends: .job-prepare
   stage: build
   tags: [ "windows" ]
-  
   except:
     variables:
       - $NOT_WINDOWS
-  
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
 
@@ -77,8 +75,6 @@
     expire_in: 2 days
             
 .job-windows-vs2017-scheduled:
-  extends: .job-windows-vs2017
-
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -87,13 +83,14 @@
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
+  extends: .job-windows-vs2017
     
     
 job-windows-vs2017:
-  extends: .job-windows-vs2017
   except:
     refs:
       - schedules
+  extends: .job-windows-vs2017
       
 job-windows-vs2017-scheduled:
   extends: .job-windows-vs2017-scheduled
