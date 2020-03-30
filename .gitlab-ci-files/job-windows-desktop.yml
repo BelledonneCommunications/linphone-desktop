@@ -104,7 +104,7 @@ job-windows-vs2017-novideo:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_VIDEO=NO
 
 #################################################
-# PACKAGE
+#               PACKAGE
 #################################################
 
 #Remove . when packaging process is ready to use
@@ -147,6 +147,10 @@ job-windows-vs2017-package:
       - results\*
     expire_in: 1 weeks
  
+ 
+#################################################
+#               DEPLOY
+#################################################
 
 job-windows-vs2017-win32-upload:
   stage: deploy

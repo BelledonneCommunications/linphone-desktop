@@ -5,9 +5,9 @@
 .job-linux-desktop:
   stage: build
   extends: .linux-prepare
-  only:
+  except:
     variables:
-      - $BUILD_LINUX
+      - $NO_LINUX
   script:
     - cmake --version
     - export CC=$CC

@@ -2,11 +2,12 @@
 # Makefile
 #################################################
 
-
 job-debian8-makefile-gcc:
-
   tags: [ "docker-debian8" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+  except:
+    variables:
+      - $NO_LINUX
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     CC: gcc
@@ -17,7 +18,6 @@ job-debian8-makefile-gcc:
 
 
 job-debian8-makefile-clang:
-
   tags: [ "docker-debian8" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
   only:

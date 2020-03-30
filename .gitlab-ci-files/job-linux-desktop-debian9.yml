@@ -1,6 +1,32 @@
 
-job-debian9-makefile-gcc:
 
+job-debian9-ninja-gcc:
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  except:
+    variables:
+      - $NO_LINUX
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+  
+job-debian9-ninja-gcc-smallsdk:
+  except:
+    variables:
+      - $NO_LINUX
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO
+  extends: job-debian9-ninja-gcc
+
+
+#################################################
+#               Nightly
+#################################################
+
+job-debian9-makefile-gcc:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   only:
@@ -15,7 +41,6 @@ job-debian9-makefile-gcc:
 
 
 job-debian9-makefile-clang:
-
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   only:
@@ -28,25 +53,7 @@ job-debian9-makefile-clang:
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .job-linux-desktop
 
-
-#################################################
-# Ninja
-#################################################
-
-
-job-debian9-ninja-gcc:
-
-  tags: [ "docker-debian9" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
-  variables:
-    CMAKE_GENERATOR: Ninja
-    CC: gcc
-    CXX: g++
-  extends: .job-linux-desktop
-
-
 job-debian9-ninja-gcc-novideo:
-
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -55,15 +62,8 @@ job-debian9-ninja-gcc-novideo:
   extends: job-debian9-ninja-gcc
 
 
-job-debian9-ninja-gcc-smallsdk:
-
-  variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO
-  extends: job-debian9-ninja-gcc
-
 
 job-debian9-ninja-clang:
-
   tags: [ "docker-debian9" ]
   only:
     variables:

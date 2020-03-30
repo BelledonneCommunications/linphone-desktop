@@ -32,9 +32,11 @@
 
 
 job-centos7-ninja-gcc:
-
   tags: [ "docker" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  except:
+    variables:
+      - $NO_LINUX
   variables:
     CMAKE_GENERATOR: Ninja
     CC: gcc

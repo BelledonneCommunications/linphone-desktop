@@ -22,9 +22,9 @@
 .job-macosx-desktop:
   stage: build
   tags: [ "macosx" ]
-  only:
+  except:
     variables:
-      - $BUILD_MACOSX
+      - $NO_MACOSX
   script:
     - *build_all_script
   artifacts:
@@ -37,6 +37,9 @@
 #################################################
 
 job-macosx-ninja:
+  except:
+    variables:
+      - $NO_MACOSX
   variables:
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
@@ -50,6 +53,9 @@ job-macosx-makefile:
     variables:
       - $NIGHTLY_MASTER
       - $PACKAGE
+  except:
+    variables:
+      - $NO_MACOSX
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS

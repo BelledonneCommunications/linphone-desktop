@@ -1,10 +1,24 @@
-#################################################
-# Makefile
-#################################################
 
+job-ubuntu-rolling-ninja-clang:
+  tags: [ "docker-ubuntu-rolling" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  except:
+    variables:
+      - $NO_LINUX
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+  
+  
+  
+  
+#################################################
+#            Nightly
+################################################# 
 
 job-ubuntu-rolling-makefile-gcc:
-
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
   only:
@@ -19,7 +33,6 @@ job-ubuntu-rolling-makefile-gcc:
 
 
 job-ubuntu-rolling-makefile-clang:
-
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
   only:
@@ -33,13 +46,7 @@ job-ubuntu-rolling-makefile-clang:
   extends: .job-linux-desktop
 
 
-#################################################
-# Ninja
-#################################################
-
-
 job-ubuntu-rolling-ninja-gcc:
-
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
   only:
@@ -61,18 +68,7 @@ job-ubuntu-rolling-ninja-gcc-novideo:
   extends: job-ubuntu-rolling-ninja-gcc
 
 
-job-ubuntu-rolling-ninja-clang:
-  tags: [ "docker-ubuntu-rolling" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
-  variables:
-    CMAKE_GENERATOR: Ninja
-    CC: clang
-    CXX: clang++
-  extends: .job-linux-desktop
-
-
 job-ubuntu-rolling-ninja-clang-novideo:
-
   only:
     variables:
       - $NIGHTLY_MASTER
