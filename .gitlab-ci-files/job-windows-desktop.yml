@@ -49,7 +49,7 @@
   tags: [ "windows" ]
   only:
     variables:
-      - $BUILD_WINDOWS==1
+      - $BUILD_WINDOWS == "1"
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
 
@@ -79,7 +79,7 @@
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
-      - $BUILD_WINDOWS==1 && $PACKAGE
+      - $BUILD_WINDOWS == "1" && $PACKAGE == "1"
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
