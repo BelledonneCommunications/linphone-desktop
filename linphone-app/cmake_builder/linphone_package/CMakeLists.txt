@@ -221,6 +221,17 @@ else()# Not Windows and Apple
   if (EXISTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer")
     file(COPY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer" DESTINATION "${CMAKE_INSTALL_LIBDIR}" USE_SOURCE_PERMISSIONS)
   endif ()
+    # Install desktop/icon files.
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphone.desktop.cmake" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" @ONLY)
+
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
+  install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/images/linphone_logo.svg" DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/" RENAME "${EXECUTABLE_NAME}.svg")
+
+  set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128 256x256)
+  foreach (DIR ${ICON_DIRS})
+	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/icons/hicolor/${DIR}/apps/icon.png" DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/${DIR}/apps/" RENAME "${EXECUTABLE_NAME}.png")
+  endforeach ()
+
   install(FILES "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.so" DESTINATION "${CMAKE_INSTALL_LIBDIR}")
   install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/cpim_grammar" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/")
   install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/vcard_grammar" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/")
@@ -288,8 +299,8 @@ if(${ENABLE_APP_PACKAGING})
 	  set(CPACK_BINARY_DRAGNDROP ON)
 	  message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
 	elseif(NOT(WIN32))
-	  set(CPACK_BINARY_TGZ ON)  
-	  message(STATUS "Set TGZ CPack generator in OUTPUT/Packages")
+	  set(DO_APPIMAGE YES)
+	  message(STATUS "Set AppImage CPack generator in OUTPUT/Packages")
 	else()
 	  set(CPACK_GENERATOR "NSIS")
 	  set(DO_GENERATOR YES)

@@ -21,12 +21,25 @@
 
 APP_NAME="linphone"
 
-BIN_SOURCE_DIR="OUTPUT/desktop"
+BIN_SOURCE_DIR="OUTPUT/"
 
-WORK_DIR="OUTPUT/AppDir/usr"
+WORK_DIR="WORK/Packages/AppImageDir"
 
-mkdir -p "${WORK_DIR}"
+mkdir -p "${WORK_DIR}/app/"
+mkdir -p "${WORK_DIR}/usr/share"
 
-cp -rfv	"${BIN_SOURCE_DIR}"/* "${WORK_DIR}"
+cp -rfv "${BIN_SOURCE_DIR}"/* "${WORK_DIR}/app/"
+rm -rfv "${WORK_DIR}/app/Packages"
+cp -rfv "${WORK_DIR}/app/share" "${WORK_DIR}/usr/"
 
-./AppImage/linuxdeployqt-continuous-x86_64.AppImage "${WORK_DIR}/bin/${APP_NAME}" -appimage -bundle-non-qt-libs -verbose=2
+if [ -f "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage" ]; then
+	echo "linuxdeploy-x86_64.AppImage exists"
+else
+	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage"
+fi
+
+./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+
+mkdir -p "${BIN_SOURCE_DIR}/Packages"
+mv *.AppImage "${BIN_SOURCE_DIR}/Packages"

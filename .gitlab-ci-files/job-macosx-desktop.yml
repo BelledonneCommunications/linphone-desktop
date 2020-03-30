@@ -46,6 +46,7 @@ job-macosx-makefile:
   only:
     variables:
       - $NIGHTLY_MASTER
+      - $PACKAGE_RUN_MACOS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -83,6 +84,7 @@ job-macosx-makefile-package:
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $PACKAGE_RUN_MACOS
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   extends: job-macosx-makefile
@@ -106,5 +108,6 @@ job-macosx-makefile-deploy:
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $DEPLOY_RUN_MACOS
   script:
     - scp build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/app/
