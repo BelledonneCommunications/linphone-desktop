@@ -25,4 +25,7 @@
     paths:
       - build/OUTPUT
     expire_in: 1 week
+    except:
+    variables:
+      - $NOT_LINUX
 

@@ -48,6 +48,10 @@
   stage: build
   tags: [ "windows" ]
   
+  except:
+    variables:
+      - $NOT_WINDOWS
+  
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
 
@@ -79,7 +83,7 @@
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
-      - $PACKAGE_RUN_WINDOWS
+      - $PACKAGE
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
@@ -112,7 +116,10 @@ job-windows-vs2017-package:
   only:
     variables:
       - $NIGHTLY_MASTER
-      - $PACKAGE_RUN_WINDOWS
+      - $PACKAGE
+  except:
+    variables:
+      - $NOT_WINDOWS
   variables:
       CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   script:
@@ -146,8 +153,11 @@ job-windows-vs2017-win32-upload:
   tags: [ "windows"]
   only:
     variables:
-      - $DEPLOY_RUN_WINDOWS
+      - $DEPLOY
       - $NIGHTLY_MASTER
+  except:
+    variables:
+      - $NOT_WINDOWS
   dependencies:
     - job-windows-vs2017-package
   script:
