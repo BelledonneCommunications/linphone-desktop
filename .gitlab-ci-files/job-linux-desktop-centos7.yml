@@ -29,8 +29,6 @@
 #################################################
 # Ninja
 #################################################
-
-
 job-centos7-ninja-gcc:
   tags: [ "docker" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
@@ -42,11 +40,23 @@ job-centos7-ninja-gcc:
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+  
+job-centos7-makefile-gcc:
+  tags: [ "docker" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
 #################################################
 # Package - Nightly
 #################################################
 
-job-centos7-ninja-gcc-package:
+job-centos7-makefile-gcc-package:
   stage: package
   tags: [ "docker" ]
   only:
@@ -55,7 +65,7 @@ job-centos7-ninja-gcc-package:
        - $DEPLOY_LINUX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
-  extends: job-centos7-ninja-gcc
+  extends: job-centos7-makefile-gcc
   artifacts:
     paths:
       - build/OUTPUT/Packages/Linphone*.AppImage
@@ -65,11 +75,11 @@ job-centos7-ninja-gcc-package:
 # Deploy - Nightly
 #################################################
 
-job-centos7-ninja-gcc-deploy:
+job-centos7-makefile-gcc-deploy:
   stage: deploy
   tags: [ "docker" ]
   dependencies:
-    - job-centos7-ninja-gcc-package
+    - job-centos7-makefile-gcc-package
   only:
      variables:
        - $NIGHTLY_MASTER
