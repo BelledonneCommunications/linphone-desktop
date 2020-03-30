@@ -22,9 +22,9 @@
 .job-macosx-desktop:
   stage: build
   tags: [ "macosx" ]
-  except:
+  only:
     variables:
-      - $NOT_MACOSX
+      - $BUILD_MACOSX
   script:
     - *build_all_script
   artifacts:

@@ -47,9 +47,9 @@
   extends: .job-prepare
   stage: build
   tags: [ "windows" ]
-  except:
+  only:
     variables:
-      - $NOT_WINDOWS
+      - $BUILD_WINDOWS==1
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
 
@@ -79,7 +79,7 @@
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
-      - $PACKAGE
+      - $BUILD_WINDOWS==1 && $PACKAGE
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"

@@ -3,12 +3,11 @@
 #################################################
 
 .job-linux-desktop:
-
   stage: build
   extends: .linux-prepare
-  except:
+  only:
     variables:
-      - $NOT_LINUX
+      - $BUILD_LINUX
   script:
     - cmake --version
     - export CC=$CC
