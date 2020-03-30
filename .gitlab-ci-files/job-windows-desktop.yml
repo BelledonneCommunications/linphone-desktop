@@ -85,7 +85,6 @@ job-windows-vs2017:
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
-      - $DEPLOY_WINDOWS
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
@@ -107,8 +106,6 @@ job-windows-vs2017-novideo:
 job-windows-vs2017-package:
   stage: package
   tags: [ "windows" ]
-  dependencies:
-    - job-windows-vs2017-scheduled
   only:
     variables:
       - $NIGHTLY_MASTER

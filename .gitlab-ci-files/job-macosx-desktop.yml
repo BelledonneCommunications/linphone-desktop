@@ -49,7 +49,6 @@ job-macosx-makefile:
   only:
     variables:
       - $NIGHTLY_MASTER
-      - $DEPLOY_MACOSX
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -83,8 +82,6 @@ job-macosx-ninja-novideo:
 job-macosx-makefile-package:
   stage: package
   tags: [ "macosx-xcode11" ]
-  dependencies:
-    - job-macosx-makefile
   only:
      variables:
        - $NIGHTLY_MASTER

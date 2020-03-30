@@ -75,7 +75,6 @@ job-debian9-makefile-clang:
   only:
     variables:
       - $NIGHTLY_MASTER
-      - $DEPLOY_LINUX
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     CC: clang
@@ -90,8 +89,6 @@ job-debian9-makefile-clang:
 job-debian9-makefile-clang-package:
   stage: package
   tags: [ "docker-debian9" ]
-  dependencies:
-    - job-debian9-makefile-clang
   only:
      variables:
        - $NIGHTLY_MASTER
