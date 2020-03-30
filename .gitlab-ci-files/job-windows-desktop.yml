@@ -49,7 +49,6 @@
   tags: [ "windows" ]
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
-
   script:
     - SET Qt5_DIR=C:\Qt\5.12.6\msvc2017\lib\cmake
     - SET PATH=%PATH%;C:\Qt\5.12.6\msvc2017\bin
@@ -65,12 +64,22 @@
     - cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
     - cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
     - C:\PROGRA~1\Python37\Scripts\cl -s
-
   artifacts:
     paths:
       - build\OUTPUT
     expire_in: 2 days
-            
+    
+job-windows-vs2017:
+  except:
+    refs:
+      - schedules
+  extends: .job-windows-vs2017
+  
+  
+#################################################
+#               NIGHTLY
+################################################# 
+  
 .job-windows-vs2017-scheduled:
   only:
     variables:
@@ -80,13 +89,6 @@
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
-  extends: .job-windows-vs2017
-    
-    
-job-windows-vs2017:
-  except:
-    refs:
-      - schedules
   extends: .job-windows-vs2017
       
 job-windows-vs2017-scheduled:
