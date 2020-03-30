@@ -47,9 +47,9 @@
   extends: .job-prepare
   stage: build
   tags: [ "windows" ]
-  only:
+  except:
     variables:
-      - $BUILD_WINDOWS == "1"
+      - $NO_WINDOWS
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
 
@@ -79,7 +79,10 @@
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
-      - $BUILD_WINDOWS == "1" && $PACKAGE == "1"
+      - $PACKAGE
+  except:
+    variables:
+      - $NO_WINDOWS
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
@@ -150,8 +153,8 @@ job-windows-vs2017-win32-upload:
   tags: [ "windows"]
   only:
     variables:
-      - $DEPLOY
       - $NIGHTLY_MASTER
+      - $DEPLOY
   except:
     variables:
       - $NOT_WINDOWS
