@@ -5,9 +5,6 @@
 .job-linux-desktop:
   stage: build
   extends: .linux-prepare
-  except:
-    variables:
-      - $NO_LINUX
   script:
     - cmake --version
     - export CC=$CC
@@ -21,7 +18,6 @@
     - cd build
     - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
     - cmake --build . --target all $LBC_NODEBUG_OPTIONS
-
   artifacts:
     paths:
       - build/OUTPUT

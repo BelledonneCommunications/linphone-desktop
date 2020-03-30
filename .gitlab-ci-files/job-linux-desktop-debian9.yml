@@ -4,8 +4,8 @@ job-debian9-ninja-gcc:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   except:
-    variables:
-      - $NO_LINUX
+    refs:
+      - schedules
   variables:
     CMAKE_GENERATOR: Ninja
     CC: gcc
@@ -15,8 +15,8 @@ job-debian9-ninja-gcc:
   
 job-debian9-ninja-gcc-smallsdk:
   except:
-    variables:
-      - $NO_LINUX
+    refs:
+      - schedules
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO
   extends: job-debian9-ninja-gcc

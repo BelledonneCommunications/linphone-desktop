@@ -3,8 +3,8 @@ job-debian10-ninja-gcc:
   tags: [ "docker-debian10" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
   except:
-    variables:
-      - $NO_LINUX
+    refs:
+      - schedules
   variables:
     CMAKE_GENERATOR: Ninja
     CC: gcc
@@ -75,10 +75,7 @@ job-debian10-makefile-clang:
   only:
     variables:
       - $NIGHTLY_MASTER
-      - $PACKAGE
-  except:
-    variables:
-      - $NO_LINUX
+      - $DEPLOY_LINUX
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     CC: clang
@@ -98,7 +95,7 @@ job-debian10-makefile-clang-package:
   only:
      variables:
        - $NIGHTLY_MASTER
-       - $PACKAGE
+       - $DEPLOY_LINUX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   extends: job-debian10-makefile-clang
@@ -121,6 +118,6 @@ job-debian10-makefile-clang-deploy:
   only:
      variables:
        - $NIGHTLY_MASTER
-       - $DEPLOY
+       - $DEPLOY_LINUX
   script:
     - scp build/OUTPUT/Packages/Linphone*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/

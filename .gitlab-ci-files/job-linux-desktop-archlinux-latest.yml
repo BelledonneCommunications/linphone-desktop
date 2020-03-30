@@ -1,10 +1,9 @@
 job-archlinux-latest-ninja-clang:
-
   tags: [ "docker-archlinux-latest" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
   except:
-    variables:
-      - $NO_LINUX
+    refs:
+      - schedules
   variables:
     CMAKE_GENERATOR: Ninja
     CC: clang
@@ -63,11 +62,16 @@ job-archlinux-latest-ninja-gcc-novideo:
   extends: job-archlinux-latest-ninja-gcc
 
 job-archlinux-latest-ninja-clang-novideo:
+  tags: [ "docker-archlinux-latest" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
   only:
     variables:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
-  extends: job-archlinux-latest-ninja-clang
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
   
 
