@@ -11,7 +11,6 @@ job-debian10-ninja-gcc:
     CXX: g++
   extends: .job-linux-desktop
 
-
 #################################################
 #           Nightly
 #################################################
@@ -109,8 +108,6 @@ job-debian10-makefile-clang-package:
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   extends: job-debian10-makefile-clang
-  script:
-    - *build_all_script    
   artifacts:
     paths:
       - build/OUTPUT/Packages/Linphone*.AppImage
