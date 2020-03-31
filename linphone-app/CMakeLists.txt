@@ -330,7 +330,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-
+message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
