@@ -21,7 +21,7 @@
 
 .job-macosx-desktop:
   stage: build
-  tags: [ "macosx" ]
+  tags: [ "macosx-xcode11" ]
   script:
     - *build_all_script
   artifacts:

@@ -32,15 +32,15 @@ cp -rfv "${BIN_SOURCE_DIR}"/* "${WORK_DIR}/app/"
 rm -rfv "${WORK_DIR}/app/Packages"
 cp -rfv "${WORK_DIR}/app/share" "${WORK_DIR}/usr/"
 
-#if [ -f "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage" ]; then
-#	echo "linuxdeploy-x86_64.AppImage exists"
-#else
-#	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-#	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage"
-#fi
+if [ -f "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage" ]; then
+	echo "linuxdeploy-x86_64.AppImage exists"
+else
+	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage"
+fi
 
-#./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
-./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
 mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages"
