@@ -1,4 +1,4 @@
-	################################################################################
+################################################################################
 #
 #  Copyright (c) 2017-2020 Belledonne Communications SARL.
 # 
@@ -22,18 +22,16 @@
 cmake_minimum_required(VERSION 3.1)
 project(linphoneqt VERSION 4.1.1)
 
-#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
-message("Options : ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
-
+if(ENABLE_BUILD_VERBOSE)
+	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
+	message("Options : ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
+endif()
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
 
 set(TARGET_NAME linphone-qt)
-if( NOT("${CMAKE_GENERATOR}" MATCHES "Ninja"))
-#    set(TARGET_NAME_ONLY linphone-qt-only)
-#    set(APP_LIBRARY_ONLY app-library-only)
-endif()
+
 set(CMAKE_CXX_STANDARD 11)
 
 if(UNIX AND NOT APPLE)
@@ -44,11 +42,18 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
+
 if(WIN32)
-    set(EXECUTABLE_OUTPUT_DIR "${CMAKE_BINARY_DIR}")
-    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG "${EXECUTABLE_OUTPUT_DIR}")
-    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${EXECUTABLE_OUTPUT_DIR}")
-    set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${EXECUTABLE_OUTPUT_DIR}")
+    set(EXECUTABLE_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}")
+	set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_DIR} )
+	set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_DIR} )
+	set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${EXECUTABLE_OUTPUT_DIR} )
+	foreach( OUTPUTCONFIG ${CMAKE_CONFIGURATION_TYPES} )# Apply to all configurations
+		string( TOUPPER ${OUTPUTCONFIG} OUTPUTCONFIG )
+		set( CMAKE_RUNTIME_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${EXECUTABLE_OUTPUT_DIR} )
+		set( CMAKE_LIBRARY_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${EXECUTABLE_OUTPUT_DIR} )
+		set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${EXECUTABLE_OUTPUT_DIR} )
+	endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 endif()
 
 find_package(LinphoneCxx CONFIG)
@@ -57,17 +62,14 @@ find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
-#find_package(minizip)
-
-include(FindPkgConfig)
-pkg_search_module(MINIZIP minizip)
+find_package(minizip)
 set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
-
-message("MINIZIP : ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
-message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}")
-message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
-message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
-
+if(ENABLE_BUILD_VERBOSE)
+	message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+	message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}, PREFIX_PATH=${CMAKE_PREFIX_PATH}")
+	message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
+	message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
+endif()
 # Build configuration
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
@@ -311,8 +313,8 @@ list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
 
 set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
-
-
+set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
     set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
@@ -328,7 +330,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-
+message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
@@ -396,9 +398,12 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}"
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
 set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES} ${MINIZIP_LIBRARIES})
-#set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES} "minizip")
-message("LIBRARIES : ${LIBRARIES}")
-
+#if(NOT APPLE)
+#	list(APPEND LIBRARIES ${MINIZIP_LIBRARIES})
+#endif()
+if(ENABLE_BUILD_VERBOSE)
+	message("LIBRARIES : ${LIBRARIES}")
+endif()
 foreach (package ${QT5_PACKAGES})
     list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
     # `qt5_create_translation` is provided from `LinguistTools` package.
@@ -448,37 +453,12 @@ endif()
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version)
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 
-if (UNIX AND NOT APPLE)
-    # Install desktop/icon files.
-    configure_file("${ASSETS_DIR}/linphone.desktop.cmake" "${EXECUTABLE_NAME}.desktop" @ONLY)
-
-    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}.desktop"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/applications"
-    )
-    install(FILES "${ASSETS_DIR}/images/linphone_logo.svg"
-    DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/"
-    RENAME "${EXECUTABLE_NAME}.svg"
-    )
-
-    set(ICON_DIRS 16x16 22x22 24x24 32x32 64x64 128x128 256x256)
-    foreach (DIR ${ICON_DIRS})
-    install(FILES "${ASSETS_DIR}/icons/hicolor/${DIR}/apps/icon.png"
-        DESTINATION "${CMAKE_INSTALL_DATADIR}/icons/hicolor/${DIR}/apps/"
-        RENAME "${EXECUTABLE_NAME}.png"
-        )
-    endforeach ()
-endif ()
 
 # ------------------------------------------------------------------------------
 # CPack settings & RPM.
 # ------------------------------------------------------------------------------
-set(LINPHONE_DESKTOP_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
-set(LINPHONE_SDK_DIR "${CMAKE_BINARY_DIR}/linphone-sdk")
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
-set(LINPHONE_SOURCE_DIR ${EP_linphone_SOURCE_DIR})
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
-set(LINPHONE_SDK_TMP "${CMAKE_CURRENT_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-tmp")
-message("LINPHONE_DESKTOP_DIR = ${LINPHONE_DESKTOP_DIR}")
 
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
@@ -501,9 +481,11 @@ source_group(
 # ------------------------------
 # Installation
 # ------------------------------
+#if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.15.0")
+#	add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_BINARY_DIR})
+#endif()
 if(APPLE)
-    target_link_libraries(${TARGET_NAME} "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-    execute_process(COMMAND install_name_tool -id "@executable_path/../Frameworks/libminizip.dylib" "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
+    # target_link_libraries(${TARGET_NAME} "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
 elseif(NOT WIN32)
     #   target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
 endif()

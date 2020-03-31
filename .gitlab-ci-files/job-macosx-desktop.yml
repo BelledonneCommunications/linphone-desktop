@@ -21,7 +21,7 @@
 
 .job-macosx-desktop:
   stage: build
-  tags: [ "macosx" ]
+  tags: [ "macosx-xcode11" ]
   script:
     - *build_all_script
   artifacts:
@@ -34,6 +34,9 @@
 #################################################
 
 job-macosx-ninja:
+  except:
+    refs:
+      - schedules
   variables:
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
@@ -57,7 +60,8 @@ job-macosx-ninja-novideo:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
-  extends: job-macosx-ninja
+    CMAKE_GENERATOR: Ninja
+  extends: .job-macosx-desktop
 
 #job-macosx-xcode:
 #  extends: .job-macosx-desktop
@@ -77,12 +81,11 @@ job-macosx-ninja-novideo:
 
 job-macosx-makefile-package:
   stage: package
-  tags: [ "deploy" ]
-  dependencies:
-    - job-macosx-makefile
+  tags: [ "macosx-xcode11" ]
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $DEPLOY_MACOSX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   extends: job-macosx-makefile
@@ -100,11 +103,12 @@ job-macosx-makefile-package:
 
 job-macosx-makefile-deploy:
   stage: deploy
-  tags: [ "deploy" ]
+  tags: [ "macosx-xcode11" ]
   dependencies:
     - job-macosx-makefile-package
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $DEPLOY_MACOSX
   script:
     - scp build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/app/
