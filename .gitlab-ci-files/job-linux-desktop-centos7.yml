@@ -62,9 +62,10 @@ job-centos7-ninja-gcc:
 
 job-centos7-ninja-gcc-package:
   stage: package
-  tags: [ "docker" ]
+  tags: [ "linux-nuc" ]
+  #tags: [ "docker" ]
   #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7-fuse-wget
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7-fuse-wget
   only:
      variables:
        - $NIGHTLY_MASTER
@@ -86,7 +87,8 @@ job-centos7-ninja-gcc-package:
 
 job-centos7-ninja-gcc-deploy:
   stage: deploy
-  tags: [ "docker" ]
+  tags: [ "linux-nuc" ]
+  #tags: [ "docker" ]
   dependencies:
     - job-centos7-ninja-gcc-package
   only:
