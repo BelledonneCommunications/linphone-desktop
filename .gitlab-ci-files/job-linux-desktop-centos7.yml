@@ -31,7 +31,8 @@
 #################################################
 job-centos7-ninja-gcc:
   tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt
   except:
     refs:
       - schedules
@@ -63,7 +64,8 @@ job-centos7-ninja-gcc:
 job-centos7-ninja-gcc-package:
   stage: package
   tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt
   only:
      variables:
        - $NIGHTLY_MASTER
@@ -102,7 +104,8 @@ job-centos7-ninja-gcc-deploy:
 job-centos7-debug:
   stage: deploy
   tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt
   only:
     variables:
       - $DEBUG_CENTOS7
