@@ -87,7 +87,7 @@ job-macosx-makefile-package:
        - $NIGHTLY_MASTER
        - $DEPLOY_MACOSX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$MACOS_SIGNING_IDENTITY
   extends: job-macosx-makefile
   script:
     - *build_all_script
