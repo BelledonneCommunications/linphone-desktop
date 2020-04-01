@@ -94,3 +94,16 @@ job-centos7-ninja-gcc-deploy:
        - $DEPLOY_LINUX
   script:
     - scp build/OUTPUT/Packages/Linphone*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+    
+#################################################
+# Debug
+#################################################
+
+job-centos7-debug:
+  tags: [ "docker" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  only:
+    variables:
+      - $DEBUG_CENTOS7
+  script:
+    - sleep 10m
