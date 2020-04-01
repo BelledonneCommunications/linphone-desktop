@@ -59,12 +59,7 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
     endif()
   endif()
   if(DO_APPIMAGE)
-#    execute_process( COMMAND cp -rfv "@CMAKE_SOURCE_DIR@/../tools/linuxdeploy-x86_64.AppImage" "@CMAKE_INSTALL_PREFIX@/..")
-#    execute_process( COMMAND chmod +x "@CMAKE_INSTALL_PREFIX@/../linuxdeploy-x86_64.AppImage")
     set(ENV QML_SOURCES_PATHS="@QML_SOURCES_PATHS@")
-
-    # This env variable is used by the qt plugin to search the qml modules in other paths than the default
-    # Qt qml dir.
     set(ENV QML_MODULES_PATHS="@QML_MODULES_PATHS@")
     execute_process( COMMAND mkdir -p "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
     execute_process( COMMAND cp -rfv "@CMAKE_CURRENT_SOURCE_DIR@/../../ui" "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
