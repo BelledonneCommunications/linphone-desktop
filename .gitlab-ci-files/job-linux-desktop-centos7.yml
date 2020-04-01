@@ -87,7 +87,7 @@ job-centos7-ninja-gcc-package:
 
 job-centos7-ninja-gcc-deploy:
   stage: deploy
-  tags: [ "docker-test-centos7-liblinphone-nuc" ]
+  tags: [ "deploy" ]
   dependencies:
     - job-centos7-ninja-gcc-package
   only:
