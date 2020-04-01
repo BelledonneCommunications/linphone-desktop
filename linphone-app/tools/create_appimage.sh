@@ -38,9 +38,14 @@ else
 	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
 	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage"
 fi
-
-./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+if [ -f "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage" ]; then
+	echo "linuxdeploy-plugin-qt-x86_64.AppImage exists"
+else
+	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
+	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage"
+fi
+./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
 #./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
-mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages"
+mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages/$1.AppImage"

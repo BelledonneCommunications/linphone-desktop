@@ -38,7 +38,7 @@ endforeach()
 if(ENABLE_BUILD_VERBOSE)
 	message("User Args : ${USER_ARGS}")
 endif()
-project(linphoneqt VERSION 4.1.1)
+project(linphoneqt)
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
@@ -169,7 +169,7 @@ find_package(minizip QUIET)
 if(ENABLE_BUILD_VERBOSE)
 	message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
 endif()
-if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) )
+if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
 	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"

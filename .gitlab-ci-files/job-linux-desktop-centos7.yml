@@ -31,7 +31,7 @@
 #################################################
 job-centos7-ninja-gcc:
   tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
   except:
     refs:
       - schedules
@@ -62,8 +62,9 @@ job-centos7-ninja-gcc:
 
 job-centos7-ninja-gcc-package:
   stage: package
-  tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
+  tags: [ "docker-test-centos7-liblinphone-nuc" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
   only:
      variables:
        - $NIGHTLY_MASTER
@@ -76,7 +77,7 @@ job-centos7-ninja-gcc-package:
   extends: .job-linux-desktop
   artifacts:
     paths:
-      - build/OUTPUT/Packages/Linphone*.AppImage
+      - build/OUTPUT/Packages/*.AppImage
     expire_in: 1 week
 
 #################################################
@@ -85,7 +86,7 @@ job-centos7-ninja-gcc-package:
 
 job-centos7-ninja-gcc-deploy:
   stage: deploy
-  tags: [ "docker" ]
+  tags: [ "deploy" ]
   dependencies:
     - job-centos7-ninja-gcc-package
   only:
@@ -93,4 +94,19 @@ job-centos7-ninja-gcc-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   script:
-    - scp build/OUTPUT/Packages/Linphone*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+    - scp build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+    
+#################################################
+# Debug
+#################################################
+
+job-centos7-debug:
+  stage: deploy
+  tags: [ "docker-test-centos7-liblinphone-nuc" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  only:
+    variables:
+      - $DEBUG_CENTOS7
+  script:
+    - sleep 10m

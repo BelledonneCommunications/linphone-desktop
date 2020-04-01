@@ -20,6 +20,7 @@
 #
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
+
 project(linphoneqt VERSION 4.1.1)
 
 if(ENABLE_BUILD_VERBOSE)
@@ -58,11 +59,12 @@ endif()
 
 find_package(LinphoneCxx CONFIG)
 find_package(Linphone CONFIG)
-find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
 find_package(minizip)
+find_package(bctoolbox CONFIG)
+
 set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
 if(ENABLE_BUILD_VERBOSE)
 	message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
@@ -86,6 +88,12 @@ if (UNIX AND NOT APPLE)
 endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
+
+
+bc_compute_full_version(APP_PROJECT_VERSION)
+bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
+string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
+message(STATUS "Versions : ${PROJECT_VERSION}, ${APP_VERSION}, ${APP_PROJECT_VERSION}")
 #-------------------------------------------------
 set(ASSETS_DIR "assets")
 set(SOURCES
@@ -314,6 +322,8 @@ list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
 set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+set(QML_SOURCES_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/")
+set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
 message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
@@ -384,7 +394,7 @@ set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Nee
 #Instead of excplicitely calling qt5_add_resources
 set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 
-bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
+
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 
