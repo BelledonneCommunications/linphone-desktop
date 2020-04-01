@@ -77,7 +77,8 @@ job-centos7-ninja-gcc-package:
   extends: .job-linux-desktop
   artifacts:
     paths:
-      - build/OUTPUT/Packages/Linphone*.AppImage
+      - build/OUTPUT
+#      - build/OUTPUT/Packages/Linphone*.AppImage
     expire_in: 1 week
 
 #################################################

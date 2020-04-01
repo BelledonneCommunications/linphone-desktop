@@ -20,11 +20,9 @@
 #
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
-find_package(bctoolbox CONFIG)
-bc_compute_full_version(APP_PROJECT_VERSION)
-string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
-message("Versions : ${APP_VERSION}")
-project(linphoneqt VERSION ${APP_VERSION})
+
+#project(linphoneqt VERSION ${APP_VERSION})
+project(linphoneqt VERSION 4.1.1)
 
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
@@ -66,6 +64,11 @@ find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
 find_package(minizip)
+find_package(bctoolbox CONFIG)
+bc_compute_full_version(APP_PROJECT_VERSION)
+string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
+message("Versions : ${APP_VERSION}")
+
 set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
 if(ENABLE_BUILD_VERBOSE)
 	message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
