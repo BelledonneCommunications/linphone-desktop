@@ -20,7 +20,11 @@
 #
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
-project(linphoneqt VERSION 4.1.1)
+find_package(bctoolbox CONFIG)
+bc_compute_full_version(APP_PROJECT_VERSION)
+string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
+message("Versions : ${APP_VERSION}")
+project(linphoneqt VERSION ${APP_VERSION})
 
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
@@ -58,7 +62,6 @@ endif()
 
 find_package(LinphoneCxx CONFIG)
 find_package(Linphone CONFIG)
-find_package(bctoolbox CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
@@ -86,6 +89,11 @@ if (UNIX AND NOT APPLE)
 endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
+
+
+bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
+
+message(STATUS "Versions : ${PROJECT_VERSION}, ${APP_PROJECT_VERSION}")
 #-------------------------------------------------
 set(ASSETS_DIR "assets")
 set(SOURCES
@@ -384,7 +392,7 @@ set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Nee
 #Instead of excplicitely calling qt5_add_resources
 set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 
-bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
+
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 
