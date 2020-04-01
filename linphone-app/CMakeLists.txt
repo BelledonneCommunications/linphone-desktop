@@ -21,7 +21,6 @@
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
 
-#project(linphoneqt VERSION ${APP_VERSION})
 project(linphoneqt VERSION 4.1.1)
 
 if(ENABLE_BUILD_VERBOSE)
@@ -65,9 +64,6 @@ find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
 find_package(minizip)
 find_package(bctoolbox CONFIG)
-bc_compute_full_version(APP_PROJECT_VERSION)
-string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
-message("Versions : ${APP_VERSION}")
 
 set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
 if(ENABLE_BUILD_VERBOSE)
@@ -94,9 +90,10 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
 
 
+bc_compute_full_version(APP_PROJECT_VERSION)
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
-
-message(STATUS "Versions : ${PROJECT_VERSION}, ${APP_PROJECT_VERSION}")
+string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
+message(STATUS "Versions : ${PROJECT_VERSION}, ${APP_VERSION}, ${APP_PROJECT_VERSION}")
 #-------------------------------------------------
 set(ASSETS_DIR "assets")
 set(SOURCES

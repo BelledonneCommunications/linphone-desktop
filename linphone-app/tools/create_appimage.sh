@@ -48,4 +48,4 @@ fi
 #./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
-mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages/Linphone_$1.AppImage"
+mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages/$1.AppImage"
