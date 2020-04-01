@@ -66,6 +66,7 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
     # This env variable is used by the qt plugin to search the qml modules in other paths than the default
     # Qt qml dir.
     set(ENV QML_MODULES_PATHS="@QML_MODULES_PATHS@")
+    execute_process( COMMAND cp -rfv "@CMAKE_CURRENT_SOURCE_DIR@/../../ui" "@CMAKE_INSTALL_PREFIX@/../WORK/Packages/AppImageDir/")
     execute_process( COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh" @APP_PROJECT_VERSION@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
     if(CPACK_COMMAND_RESULT)
       message(FATAL_ERROR "Failed to create AppImage package with this command : '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @APP_PROJECT_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
