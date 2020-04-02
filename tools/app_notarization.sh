@@ -3,9 +3,14 @@
 #Notarization for Mac. Launch it from the build folder
 
 #rm notarize_result.plist
+FILES=OUTPUT/Packages/Linphone*.dmg
+for f in $FILES
+do
+    linphone_file=$f
+done
 
-echo "Uploading dmg file with xcrun altool"
-xcrun altool --notarize-app --primary-bundle-id $MACOSX_SIGNING_IDENTIFIER -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS" --asc-provider "$MACOSX_SIGNING_PROVIDER" --file OUTPUT/Packages/Linphone*.dmg --output-format xml > "notarize_result.plist"
+echo "Uploading $linphone_file file with xcrun altool"
+xcrun altool --notarize-app --primary-bundle-id $MACOSX_SIGNING_IDENTIFIER -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS" --asc-provider "$MACOSX_SIGNING_PROVIDER" --file $linphone_file --output-format xml > "notarize_result.plist"
 echo "dmg processed. Checking UUID"
 request_uuid="$("/usr/libexec/PlistBuddy" -c "Print notarization-upload:RequestUUID"  notarize_result.plist)"
 echo "Notarization UUID: ${request_uuid}"
@@ -46,7 +51,7 @@ fi
 echo "Stapling notarization result..."
 for (( ; ; ))
 do
-    xcrun stapler staple -q "OUTPUT/Packages/Linphone*.dmg"
+    xcrun stapler staple -q $linphone_file
     stapler_result=$?
     if [ "${stapler_result}" = "65" ]
     then
@@ -58,13 +63,15 @@ do
     fi
 done
 
-#echo "Validating image"
-#spctl --assess --type open --context context:primary-signature -v "OUTPUT/Packages/Linphone*.dmg"
+
+spctl --assess --type open --context context:primary-signature -v $linphone_file
 #validation_result=$?
 
+echo "Validating image : $?"
 #if [ "${validation_result}" != 0 ]
 #then
 #	echo "Failed to validate image: ${validation_result}"
 #	curl "${log_url}"
 #	exit 1
 #fi
+exit 0
