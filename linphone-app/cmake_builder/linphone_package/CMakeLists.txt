@@ -182,7 +182,7 @@ elseif (APPLE)
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
    install(CODE "file(GLOB FRAMEWORKS_NAMES \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Frameworks/*\")
       foreach (FRAMEWORK \${FRAMEWORKS_NAMES})
-        execute_process(COMMAND \"codesign\" \"--options\" \"runtime\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${FRAMEWORK}\")
+        execute_process(COMMAND \"codesign\" \"--options\" \"runtime\" \"--force\" \"--deep\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${FRAMEWORK}\")
       endforeach ()")
 
     install( CODE "execute_process(COMMAND \"codesign\" \"--force\" \"--deep\" \"--options\" \"runtime\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app\")")

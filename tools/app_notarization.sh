@@ -2,7 +2,7 @@
 
 #Notarization for Mac. Launch it from the build folder
 
-rm notarize_result.plist
+#rm notarize_result.plist
 
 echo "Uploading dmg file with xcrun altool"
 xcrun altool --notarize-app --primary-bundle-id $MACOSX_SIGNING_IDENTIFIER -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS" --asc-provider "$MACOSX_SIGNING_PROVIDER" --file OUTPUT/Packages/Linphone*.dmg --output-format xml > "notarize_result.plist"
@@ -22,8 +22,7 @@ do
 		exit 1
 	fi
 	notarize_status="$("/usr/libexec/PlistBuddy" -c "Print notarization-info:Status"  notarize_result2.plist)"
-	if [ "${notarize_status}" == "Notarization in progress" ]
-	then
+	if [[ "${notarize_status}" == *"in progress"* ]]; then
 		echo "Waiting for notarization to complete"
 		sleep 10
 	else
