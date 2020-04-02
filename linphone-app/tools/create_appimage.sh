@@ -25,12 +25,16 @@ BIN_SOURCE_DIR="OUTPUT/"
 
 WORK_DIR="WORK/Packages/AppImageDir"
 
-mkdir -p "${WORK_DIR}/app/"
-mkdir -p "${WORK_DIR}/usr/share"
+rm -rf ${WORK_DIR}/AppDir
+mkdir -p "${WORK_DIR}/AppDir/usr/"
 
-cp -rfv "${BIN_SOURCE_DIR}"/* "${WORK_DIR}/app/"
-rm -rfv "${WORK_DIR}/app/Packages"
-cp -rfv "${WORK_DIR}/app/share" "${WORK_DIR}/usr/"
+#Copy all files from the output project
+cp -rf "${BIN_SOURCE_DIR}"/* "${WORK_DIR}/AppDir/usr/"
+#remove Packages folder : it is not part of the project
+rm -rf "${WORK_DIR}/AppDir/usr/Packages"
+#remove libraries : there are automatically found by linuxdeploy
+rm -rf "${WORK_DIR}/AppDir/usr/lib"
+rm -rf "${WORK_DIR}/AppDir/usr/lib64"
 
 if [ -f "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage" ]; then
 	echo "linuxdeploy-x86_64.AppImage exists"
@@ -44,7 +48,8 @@ else
 	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
 	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage"
 fi
-./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
+export QML_SOURCES_PATHS=${QML_SOURCES_PATHS}:${WORK_DIR}/..
+./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
 #./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"

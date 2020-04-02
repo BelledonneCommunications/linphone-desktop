@@ -15,7 +15,7 @@
   echo $DEFAULT_MACOS_CMAKE_OPTIONS
   echo $CMAKE_OPTIONS
   echo $ADDITIONAL_BUILD_OPTIONS
-  cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS
+  cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS -DLINPHONE_BUILDER_SIGNING_IDENTITY="$MACOS_SIGNING_IDENTITY"
   cmake --build . --target all $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
   ccache -s
 
@@ -91,7 +91,8 @@ job-macosx-makefile-package:
   extends: job-macosx-makefile
   script:
     - *build_all_script
-    - codesign --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Packages/Linphone*.dmg
+    - codesign --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Packages/Linphone*.dmg
+    - ./../tools/app_notarization.sh
   artifacts:
     paths:
       - build/OUTPUT/Packages/Linphone*.dmg

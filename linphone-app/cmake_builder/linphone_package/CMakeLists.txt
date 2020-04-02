@@ -39,17 +39,17 @@ set(LINPHONE_QML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../ui")
 # Build package version.
 # ==============================================================================
 
-if (GIT_EXECUTABLE)
+if (GIT_EXECUTABLE AND NOT(APP_PROJECT_VERSION))
   execute_process(
     COMMAND ${GIT_EXECUTABLE} describe --always
-    OUTPUT_VARIABLE LINPHONE_GIT_REVISION
+    OUTPUT_VARIABLE APP_PROJECT_VERSION
     OUTPUT_STRIP_TRAILING_WHITESPACE
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../.."
   )
-else ()
-  set(LINPHONE_GIT_REVISION "0.0.0")
+elseif (NOT(APP_PROJECT_VERSION))
+  set(APP_PROJECT_VERSION "0.0.0")
 endif ()
-string(REGEX REPLACE "([0-9.]+)-?.*" "\\1" LINPHONE_VERSION "${LINPHONE_GIT_REVISION}")
+string(REGEX REPLACE "([0-9.]+)-?.*" "\\1" LINPHONE_VERSION "${APP_PROJECT_VERSION}")
 string(REPLACE "." ";" SPLITTED_LINPHONE_VERSION "${LINPHONE_VERSION}")
 list(LENGTH SPLITTED_LINPHONE_VERSION SPLITTED_LINPHONE_VERSION_LENGTH)
 list(GET SPLITTED_LINPHONE_VERSION 0 LINPHONE_MAJOR_VERSION)
@@ -80,7 +80,7 @@ endif ()
 #  find_program(7Z_PROGRAM 7z PATHS "$ENV{ProgramFiles}/7-Zip")
 #  if (7Z_PROGRAM)
 #    execute_process(
-#      COMMAND ${7Z_PROGRAM} a -tzip ${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-win32.zip "@${EXECUTABLE_NAME}-sdk.list"
+#      COMMAND ${7Z_PROGRAM} a -tzip ${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${APP_PROJECT_VERSION}-win32.zip "@${EXECUTABLE_NAME}-sdk.list"
 #      WORKING_DIRECTORY ${LINPHONE_OUTPUT_DIR}
 #    )
 #  else ()
@@ -88,8 +88,8 @@ endif ()
 #  endif ()
 #elseif (APPLE)
 #  execute_process(
-#    COMMAND rm -rf "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip"
-#    COMMAND zip -ry "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${LINPHONE_GIT_REVISION}-mac.zip" . -i "@${EXECUTABLE_NAME}-sdk.list"
+#    COMMAND rm -rf "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${APP_PROJECT_VERSION}-mac.zip"
+#    COMMAND zip -ry "${CMAKE_BINARY_DIR}/${EXECUTABLE_NAME}-sdk-${APP_PROJECT_VERSION}-mac.zip" . -i "@${EXECUTABLE_NAME}-sdk.list"
 #    WORKING_DIRECTORY ${LINPHONE_OUTPUT_DIR}
 #  )
 #endif ()
@@ -180,18 +180,12 @@ elseif (APPLE)
     install( CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")
   endif()
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
-    file(GLOB FRAMEWORKS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/../../${APPLICATION_NAME}.app/Contents/Frameworks/*")
-    foreach (FRAMEWORK ${FRAMEWORKS_NAMES})
-      execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${FRAMEWORK}")
-    endforeach ()
-    file(GLOB PLUGINS_NAMES "${CMAKE_CURRENT_BINARY_DIR}/../../${APPLICATION_NAME}.app/Contents/PlugIns/*")
-    foreach (PLUGIN ${PLUGINS_NAMES})
-      file(GLOB PLUGINS_FILES "${PLUGIN}/*")
-      foreach (PLUGIN_FILE ${PLUGINS_FILES})
-        execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${PLUGIN_FILE}")
-      endforeach ()
-    endforeach ()
-    execute_process(COMMAND "codesign" "--verbose" "-s" "${LINPHONE_BUILDER_SIGNING_IDENTITY}" "${CMAKE_CURRENT_BINARY_DIR}/../../${APPLICATION_NAME}.app")
+   install(CODE "file(GLOB FRAMEWORKS_NAMES \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Frameworks/*\")
+      foreach (FRAMEWORK \${FRAMEWORKS_NAMES})
+        execute_process(COMMAND \"codesign\" \"--options\" \"runtime,library\" \"--force\" \"--deep\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${FRAMEWORK}\")
+      endforeach ()")
+    install( CODE "execute_process(COMMAND \"codesign\" \"--force\" \"--deep\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Frameworks/mediastreamer2.framework/Versions/A/Libraries/libmswebrtc.so\")")
+    install( CODE "execute_process(COMMAND \"codesign\" \"--force\" \"--deep\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app\")")
   endif ()
 #  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 
@@ -199,7 +193,8 @@ else()# Not Windows and Apple
     foreach (LIBRARY ${SHARED_LIBRARIES})
     get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)
       message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}' to '$ORIGIN/../${CMAKE_INSTALL_LIBDIR}'")
-      execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}" "$ORIGIN/../${CMAKE_INSTALL_LIBDIR}" "${LIBRARY}")
+      execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}" "$ORIGIN/../lib" "${LIBRARY}")
+      execute_process(COMMAND install_name_tool -addrpath "$ORIGIN/../lib64" "${LIBRARY}")
     endforeach ()
   install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/" DESTINATION "${CMAKE_INSTALL_BINDIR}" USE_SOURCE_PERMISSIONS)
   
@@ -232,7 +227,7 @@ else()# Not Windows and Apple
   install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/cpim_grammar" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/")
   install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/vcard_grammar" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/belr/grammars/")
   install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/linphone/rootca.pem" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}")	#We use executable_name because of name folder that is not harmonized from the SDK
-  install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}" DESTINATION "${CMAKE_INSTALL_BINDIR}")
+  install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}" DESTINATION "${CMAKE_INSTALL_BINDIR}")  
 endif ()
 
 if (MSVC)
@@ -288,7 +283,7 @@ if(${ENABLE_APP_PACKAGING})
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/icon.ico")
 	
 	if (APPLE)
-	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-mac")
+	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${APP_PROJECT_VERSION}-mac")
 	  set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/macos/background_dmg.jpg")
 	  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
 	  set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
@@ -296,12 +291,12 @@ if(${ENABLE_APP_PACKAGING})
 	  message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
 	elseif(NOT(WIN32))
 	  set(DO_APPIMAGE YES)
-	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}")
+	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${APP_PROJECT_VERSION}")
 	  message(STATUS "Set AppImage CPack generator in OUTPUT/Packages")
 	else()
 	  set(CPACK_GENERATOR "NSIS")
 	  set(DO_GENERATOR YES)
-	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${LINPHONE_GIT_REVISION}-win32")
+	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${APP_PROJECT_VERSION}-win32")
 	  string(COMPARE EQUAL ${CPACK_GENERATOR} "NSIS" IS_NSIS)
 	  if (${IS_NSIS})
 	    set(PACKAGE_EXT "exe")
