@@ -58,13 +58,13 @@ do
     fi
 done
 
-echo "Validating image"
-spctl --assess --type open --context context:primary-signature -v "OUTPUT/Packages/Linphone*.dmg"
-validation_result=$?
+#echo "Validating image"
+#spctl --assess --type open --context context:primary-signature -v "OUTPUT/Packages/Linphone*.dmg"
+#validation_result=$?
 
-if [ "${validation_result}" != 0 ]
-then
-	echo "Failed to validate image: ${validation_result}"
-	curl "${log_url}"
-	exit 1
-fi
+#if [ "${validation_result}" != 0 ]
+#then
+#	echo "Failed to validate image: ${validation_result}"
+#	curl "${log_url}"
+#	exit 1
+#fi
