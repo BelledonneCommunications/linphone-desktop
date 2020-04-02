@@ -4,22 +4,24 @@
 
 rm notarize_result.plist
 
-xcrun altool --notarize-app --primary-bundle-id $MACOSX_SIGNING_IDENTIFIER -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS"  --file OUTPUT/Packages/Linphone*.dmg --output-format xml > "OUTPUT/notarize_result.plist"
-request_uuid="$("${PLIST_BUDDY}" -c "Print notarization-upload:RequestUUID"  "/notarize_result.plist")" 
-echo "Notarization UUID: ${request_uuid} result: $("${PLIST_BUDDY}" -c "Print success-message"  "notarize_result.plist")"
-
+echo "Uploading dmg file with xcrun altool"
+xcrun altool --notarize-app --primary-bundle-id $MACOSX_SIGNING_IDENTIFIER -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS" --asc-provider "$MACOSX_SIGNING_PROVIDER" --file OUTPUT/Packages/Linphone*.dmg --output-format xml > "notarize_result.plist"
+echo "dmg processed. Checking UUID"
+request_uuid="$("/usr/libexec/PlistBuddy" -c "Print notarization-upload:RequestUUID"  notarize_result.plist)"
+echo "Notarization UUID: ${request_uuid}"
 #Get status from upload
 for (( ; ; ))
 do
-	xcrun altool --notarization-info "${request_uuid}" -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS" --output-format xml > "notarize_result.plist"
+    echo "Getting notarization status"
+	xcrun altool --notarization-info "${request_uuid}" -u "$MACOSX_SIGNING_MAIL" -p "$MACOSX_SIGNING_PASS" --asc-provider "$MACOSX_SIGNING_PROVIDER" --output-format xml > "notarize_result2.plist"
 	xcrun_result=$?
 	if [ "${xcrun_result}" != "0" ]
 	then
 		echo "Notarization failed: ${xcrun_result}"
-		cat "notarize_result.plist"
+		cat "notarize_result2.plist"
 		exit 1
 	fi
-	notarize_status="$("${PLIST_BUDDY}" -c "Print notarization-info:Status"  "notarize_result.plist")"
+	notarize_status="$("/usr/libexec/PlistBuddy" -c "Print notarization-info:Status"  notarize_result2.plist)"
 	if [ "${notarize_status}" == "Notarization in progress" ]
 	then
 		echo "Waiting for notarization to complete"
@@ -29,7 +31,7 @@ do
 		break
 	fi
 done
-log_url="$("${PLIST_BUDDY}" -c "Print notarization-info:LogFileURL"  "notarize_result.plist")"
+log_url="$("/usr/libexec/PlistBuddy" -c "Print notarization-info:LogFileURL"  notarize_result2.plist)"
 echo "Notarization log URL: ${log_url}"
 
 if [ "${notarize_status}" != "success" ]
@@ -57,6 +59,7 @@ do
     fi
 done
 
+echo "Validating image"
 spctl --assess --type open --context context:primary-signature -v "OUTPUT/Packages/Linphone*.dmg"
 validation_result=$?
 
