@@ -23,8 +23,8 @@ do
 	fi
 	notarize_status="$("/usr/libexec/PlistBuddy" -c "Print notarization-info:Status"  notarize_result2.plist)"
 	if [[ "${notarize_status}" == *"in progress"* ]]; then
-		echo "Waiting for notarization to complete"
-		sleep 10
+		echo "Waiting for notarization to complete: ${notarize_status}"
+		sleep 20
 	else
 		echo "Notarization status: ${notarize_status}"
 		break
