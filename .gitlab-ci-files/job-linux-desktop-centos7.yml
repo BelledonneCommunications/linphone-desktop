@@ -40,7 +40,7 @@ job-centos7-ninja-gcc:
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
-  
+
 
 #job-centos7-ninja-clang:
 
@@ -63,17 +63,19 @@ job-centos7-ninja-gcc:
 job-centos7-ninja-gcc-package:
   stage: package
   tags: [ "docker-test-centos7-liblinphone-nuc" ]
-  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
-  only:
-     variables:
-       - $NIGHTLY_MASTER
-       - $DEPLOY_LINUX
+  dependencies: []
+#  only:
+#     variables:
+#       - $NIGHTLY_MASTER
+#       - $DEPLOY_LINUX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
+    CI_DEBUG_TRACE: "true"
   extends: .job-linux-desktop
   artifacts:
     paths:
@@ -95,7 +97,7 @@ job-centos7-ninja-gcc-deploy:
        - $DEPLOY_LINUX
   script:
     - scp build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
-    
+
 #################################################
 # Debug
 #################################################
