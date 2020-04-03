@@ -287,6 +287,9 @@ void SettingsModel::setPlaybackDevice (const QString &device) {
 								 Utils::appStringToCoreString(device)
 								 );
 	emit playbackDeviceChanged(device);
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		createCaptureGraph();
+	}
 }
 
 // -----------------------------------------------------------------------------

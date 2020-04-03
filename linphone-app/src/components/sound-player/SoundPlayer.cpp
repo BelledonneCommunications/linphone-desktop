@@ -63,6 +63,7 @@ SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
   mForceCloseTimer->setInterval(ForceCloseTimerInterval);
   QObject::connect(mForceCloseTimer, &QTimer::timeout, this, &SoundPlayer::handleEof);
   mHandlers = make_shared<SoundPlayer::Handlers>(this);  
+// Connection to rebuilding player when changing ringer selection. This player is only for Ringer.
   QObject::connect(settingsModel, &SettingsModel::ringerDeviceChanged, this, [this] {
 	rebuildInternalPlayer();
   });
