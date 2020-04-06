@@ -6,8 +6,9 @@
   stage: build
   extends: .linux-prepare
   script:
+    - echo $CI_PROJECT_DIR
     - echo $CI_BUILDS_DIR
-    - echo $CI_BUILDS_DIR
+    - echo $CI_RUNNER_ID
     - echo $CI_DEBUG_TRACE
     - cmake --version
     - export CC=$CC
