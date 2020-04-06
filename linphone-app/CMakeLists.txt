@@ -326,6 +326,7 @@ set(QML_SOURCES_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/")
 set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
 if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers
     message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
+    message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
 endif()
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
@@ -342,7 +343,6 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
@@ -360,6 +360,7 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 
 # Build and dependencies
 link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
+link_directories("${LINPHONE_LIB_DIRS}")
 #link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
 
 
