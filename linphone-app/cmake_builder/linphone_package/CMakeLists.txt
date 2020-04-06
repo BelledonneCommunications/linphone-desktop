@@ -136,7 +136,7 @@ elseif (APPLE)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" COPYONLY)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../Info.plist" DESTINATION "${APPLICATION_NAME}.app/Contents")
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources")
-  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/Frameworks/" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" USE_SOURCE_PERMISSIONS)
+  install( CODE "execute_process(COMMAND rsync -a \"${LINPHONE_OUTPUT_DIR}/Frameworks/\"  \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/\" )") #Use rsync to bypass symlinks override issues of frameworks
   install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")
   file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.dylib")
   foreach (LIBRARY ${SHARED_LIBRARIES})
