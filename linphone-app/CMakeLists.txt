@@ -324,7 +324,9 @@ set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake
 set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 set(QML_SOURCES_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/")
 set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
-message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
+if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers
+    message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
+endif()
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
     set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
@@ -397,6 +399,10 @@ set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
+if(MSVC)
+    set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
+    set_target_properties(${TARGET_NAME_ONLY} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
+endif()
 
 
 #ExternalProject_Get_Property(project_a install_dir)
