@@ -40,11 +40,11 @@
 
 namespace Utils {
   inline QString coreStringToAppString (const std::string &str) {
-    return QString::fromLocal8Bit(str.c_str(), int(str.size()));
+	return QString::fromLocal8Bit(str.c_str(), int(str.size()));
   }
 
   inline std::string appStringToCoreString (const QString &str) {
-    return qPrintable(str);
+	return qPrintable(str);
   }
 
   // Reverse function of strstr.

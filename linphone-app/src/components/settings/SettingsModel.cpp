@@ -166,7 +166,7 @@ void SettingsModel::createCaptureGraph() {
 	}
 	if (!mSimpleCaptureGraph) {
 		mSimpleCaptureGraph =
-			new MediastreamerUtils::SimpleCaptureGraph(getCaptureDevice().toStdString(), getPlaybackDevice().toStdString());
+			new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()), Utils::appStringToCoreString(getPlaybackDevice()));
 	}
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
@@ -287,6 +287,9 @@ void SettingsModel::setPlaybackDevice (const QString &device) {
 								 Utils::appStringToCoreString(device)
 								 );
 	emit playbackDeviceChanged(device);
+	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+		createCaptureGraph();
+	}
 }
 
 // -----------------------------------------------------------------------------

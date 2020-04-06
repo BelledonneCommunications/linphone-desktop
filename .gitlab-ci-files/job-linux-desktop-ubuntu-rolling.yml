@@ -1,10 +1,24 @@
-#################################################
-# Makefile
-#################################################
 
+job-ubuntu-rolling-ninja-clang:
+  tags: [ "docker-ubuntu-rolling" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  except:
+    refs:
+      - schedules
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+  
+  
+  
+  
+#################################################
+#            Nightly
+################################################# 
 
 job-ubuntu-rolling-makefile-gcc:
-
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
   only:
@@ -19,7 +33,6 @@ job-ubuntu-rolling-makefile-gcc:
 
 
 job-ubuntu-rolling-makefile-clang:
-
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
   only:
@@ -33,13 +46,7 @@ job-ubuntu-rolling-makefile-clang:
   extends: .job-linux-desktop
 
 
-#################################################
-# Ninja
-#################################################
-
-
 job-ubuntu-rolling-ninja-gcc:
-
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
   only:
@@ -61,18 +68,7 @@ job-ubuntu-rolling-ninja-gcc-novideo:
   extends: job-ubuntu-rolling-ninja-gcc
 
 
-job-ubuntu-rolling-ninja-clang:
-  tags: [ "docker-ubuntu-rolling" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
-  variables:
-    CMAKE_GENERATOR: Ninja
-    CC: clang
-    CXX: clang++
-  extends: .job-linux-desktop
-
-
 job-ubuntu-rolling-ninja-clang-novideo:
-
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -80,3 +76,37 @@ job-ubuntu-rolling-ninja-clang-novideo:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
   extends: job-ubuntu-rolling-ninja-clang
 
+#################################################
+# Package - Nightly
+#################################################
+
+#job-ubuntu-rolling-makefile-clang-package:
+#  stage: package
+#  tags: [ "docker-ubuntu-rolling" ]
+#  only:
+#     variables:
+#       - $NIGHTLY_MASTER
+#       - $DEPLOY_LINUX
+#  variables:
+#    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
+#  extends: job-ubuntu-rolling-makefile-clang
+#  artifacts:
+#    paths:
+#      - build/OUTPUT/Packages/Linphone*.AppImage
+#    expire_in: 1 week
+
+#################################################
+# Deploy - Nightly
+#################################################
+
+#job-ubuntu-rolling-makefile-clang-deploy:
+#  stage: deploy
+#  tags: [ "docker-ubuntu-rolling" ]
+#  dependencies:
+#    - job-ubuntu-rolling-makefile-clang-package
+#  only:
+#     variables:
+#       - $NIGHTLY_MASTER
+#       - $DEPLOY_LINUX
+#  script:
+#    - scp build/OUTPUT/Packages/Linphone*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/

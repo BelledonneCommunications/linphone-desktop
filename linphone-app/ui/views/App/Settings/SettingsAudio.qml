@@ -173,7 +173,7 @@ TabContainer {
           label: qsTr('ringerDeviceLabel')
 
           ComboBox {
-	    enabled: !SettingsModel.isInCall
+            enabled: !SettingsModel.isInCall
             currentIndex: Utils.findIndex(model, function (device) {
               return device === SettingsModel.ringerDevice
             })

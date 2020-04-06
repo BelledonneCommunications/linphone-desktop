@@ -52,5 +52,7 @@
 	<string>True</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Streaming Video between devices</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Streaming Audio between devices</string>
 </dict>
 </plist>

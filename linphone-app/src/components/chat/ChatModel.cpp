@@ -105,7 +105,7 @@ QVector<MessageAppData> MessageAppData::fromListString(const QString& p_data)
 
 // There is only one file (thumbnail) in appdata
 static inline MessageAppData getMessageAppData (const shared_ptr<linphone::ChatMessage> &message) {
-    return MessageAppData(QString::fromStdString(message->getAppdata()));
+	return MessageAppData(Utils::coreStringToAppString(message->getAppdata()));
 }
 
 static inline bool fileWasDownloaded (const shared_ptr<linphone::ChatMessage> &message) {
@@ -130,7 +130,7 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
   if( contents.size() > 0)
   {
     MessageAppData thumbnailData;
-    thumbnailData.m_path = QString::fromStdString(contents.front()->getFilePath());
+	thumbnailData.m_path = Utils::coreStringToAppString(contents.front()->getFilePath());
     QImage image(thumbnailData.m_path);
     if (image.isNull())
         return;
@@ -167,7 +167,7 @@ static inline void createThumbnail (const shared_ptr<linphone::ChatMessage> &mes
         return;
       }
 
-      message->setAppdata(thumbnailData.toString().toStdString());
+	  message->setAppdata(Utils::appStringToCoreString(thumbnailData.toString()));
   }
 }
 
@@ -177,7 +177,7 @@ static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMe
         MessageAppData thumbnailFile = getMessageAppData(message);
         if(thumbnailFile.m_id.size() > 0)
         {
-            QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) + thumbnailFile.m_id;
+			QString thumbnailPath = Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + thumbnailFile.m_id;
             if (!QFile::remove(thumbnailPath))
                 qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
         }
@@ -523,7 +523,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   content->setName(Utils::appStringToCoreString(QFileInfo(file).fileName()));
 
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
-  message->getContents().front()->setFilePath(path.toStdString());// Sending only one File Path?
+  message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));// Sending only one File Path?
   message->addListener(mMessageHandlers);
 
   createThumbnail(message);
@@ -568,7 +568,7 @@ void ChatModel::downloadFile (int id) {
   }  
   message->addListener(mMessageHandlers);
 
-  message->getContents().front()->setFilePath(safeFilePath.toStdString());
+  message->getContents().front()->setFilePath(Utils::appStringToCoreString(safeFilePath));
 
   if( !message->isFileTransfer())
       QMessageBox::warning(nullptr, "Download File", "This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it");

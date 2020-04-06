@@ -24,17 +24,21 @@ cmake_minimum_required(VERSION 3.1)
 
 get_cmake_property(vars CACHE_VARIABLES)
 foreach(var ${vars})
-  get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
-    if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
-	#message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
-	list(APPEND USER_ARGS "-D${var}=${${var}}")
-	if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
-		set(PREFIX_PATH ";${${var}}")
+	get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
+	if("${currentHelpString}" MATCHES "No help, variable specified on the command line." OR "${currentHelpString}" STREQUAL "")
+		#message("${var} = [${${var}}]  --  ${currentHelpString}") # uncomment to see the variables being processed
+		list(APPEND USER_ARGS "-D${var}=${${var}}")
+		if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
+			set(PREFIX_PATH ";${${var}}")
+		endif()
+	elseif("${var}" STREQUAL "CMAKE_GENERATOR_PLATFORM")
+		message(STATUS "User-Setting Platform to ${${var}}")
 	endif()
-    endif()
 endforeach()
-
-project(linphoneqt VERSION 4.1.1)
+if(ENABLE_BUILD_VERBOSE)
+	message("User Args : ${USER_ARGS}")
+endif()
+project(linphoneqt)
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
@@ -80,12 +84,12 @@ option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
 option(ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" NO  )
 option(ENABLE_TOOLS "Enable tools of SDK" NO)
 option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
-
 option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
+option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 
 if(WIN32 OR APPLE)
 else()
-    option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
+	option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
 endif()
 
 option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES)
@@ -98,12 +102,18 @@ list(APPEND APP_OPTIONS "-DENABLE_TESTS_COMPONENTS=${ENABLE_TESTS_COMPONENTS}")
 list(APPEND APP_OPTIONS "-DENABLE_TOOLS=${ENABLE_TOOLS}")
 list(APPEND APP_OPTIONS "-DENABLE_STRICT=${ENABLE_STRICT}")
 list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
+list(APPEND APP_OPTIONS "-DENABLE_BUILD_VERBOSE=${ENABLE_BUILD_VERBOSE}")
+
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
 endif()
 list(APPEND APP_OPTIONS "-DENABLE_RELATIVE_PREFIX=${ENABLE_RELATIVE_PREFIX}")
 
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
+if(NOT CMAKE_GENERATOR_PLATFORM AND WIN32)
+	set(CMAKE_GENERATOR_PLATFORM "Win32")
+	message(STATUS "Setting Platform to ${${var}}")
+endif()
 
 include(ExternalProject)
 set(PROJECT_BUILD_COMMAND "")
@@ -119,7 +129,6 @@ if(CMAKE_VERBOSE_MAKEFILE)
 		list(APPEND PROJECT_BUILD_COMMAND "--verbose")
 	endif()
 endif()
-message("User Args : ${USER_ARGS}")
 
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
@@ -128,7 +137,7 @@ ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     BINARY_DIR "${SDK_BUILD_DIR}"
     STEP_TARGETS build
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-    INSTALL_COMMAND cmake -E echo "Skipping install step."
+    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     #BUILD_ALWAYS NO #${DO_BUILD}
@@ -143,28 +152,31 @@ ExternalProject_Add_Step(sdk force_build
 ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
 	SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
 	INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
-	BUILD_ALWAYS ON
 	DEPENDS sdk
 	BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
 	LIST_SEPARATOR | # Use the alternate list separator
 	CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 )
 include(FindPkgConfig)
-find_package(LinphoneCxx CONFIG)
-find_package(Linphone CONFIG)
-find_package(bctoolbox CONFIG)
-find_package(belcard CONFIG)
-find_package(Mediastreamer2 CONFIG)
-find_package(ortp CONFIG)
-pkg_search_module(MINIZIP minizip)
+find_package(LinphoneCxx CONFIG QUIET)
+find_package(Linphone CONFIG QUIET)
+find_package(bctoolbox CONFIG QUIET)
+find_package(belcard CONFIG QUIET)
+find_package(Mediastreamer2 CONFIG QUIET)
+find_package(ortp CONFIG QUIET)
+find_package(minizip QUIET)
 
-if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) )
+if(ENABLE_BUILD_VERBOSE)
+	message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+endif()
+if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
 	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
 	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
 	    DEPENDS miniziplib sdk
 	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+#	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 	    LIST_SEPARATOR | # Use the alternate list separator
 	    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 	    # ${APP_OPTIONS}
@@ -179,10 +191,11 @@ else()
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 endif()
-ExternalProject_Add(linphoneqt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+#    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     EXCLUDE_FROM_ALL ON
