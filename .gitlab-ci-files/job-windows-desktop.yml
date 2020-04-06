@@ -106,6 +106,7 @@ job-windows-vs2017-novideo:
 job-windows-vs2017-package:
   stage: package
   tags: [ "windows" ]
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -131,7 +132,6 @@ job-windows-vs2017-package:
     - cd OUTPUT
     - cd Packages
     - copy /B *.exe "%CI_PROJECT_DIR%/results"
-    
   artifacts:
     paths:
       - results\*

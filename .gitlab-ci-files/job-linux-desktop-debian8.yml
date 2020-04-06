@@ -5,6 +5,7 @@
 job-debian8-makefile-gcc:
   tags: [ "docker-debian8" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+  dependencies: []
   except:
     refs:
       - schedules
@@ -20,6 +21,7 @@ job-debian8-makefile-gcc:
 job-debian8-makefile-clang:
   tags: [ "docker-debian8" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:8
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER

@@ -3,6 +3,7 @@
 job-debian9-ninja-gcc:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  dependencies: []
   except:
     refs:
       - schedules
@@ -14,6 +15,7 @@ job-debian9-ninja-gcc:
 
   
 job-debian9-ninja-gcc-smallsdk:
+  dependencies: []
   except:
     refs:
       - schedules
@@ -27,6 +29,7 @@ job-debian9-ninja-gcc-smallsdk:
 #################################################
 
 job-debian9-makefile-gcc:
+  dependencies: []
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
   only:
@@ -40,6 +43,7 @@ job-debian9-makefile-gcc:
   extends: .job-linux-desktop
 
 job-debian9-ninja-gcc-novideo:
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -50,6 +54,7 @@ job-debian9-ninja-gcc-novideo:
 
 job-debian9-ninja-clang:
   tags: [ "docker-debian9" ]
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -62,6 +67,7 @@ job-debian9-ninja-clang:
   extends: .job-linux-desktop
 
 job-debian9-ninja-clang-novideo:
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -72,6 +78,7 @@ job-debian9-ninja-clang-novideo:
 job-debian9-makefile-clang:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
