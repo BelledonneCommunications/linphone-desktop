@@ -189,7 +189,8 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
-	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
+        add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
+        add_dependencies(app-library sdk miniziplib)
 endif()
 ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
@@ -199,4 +200,5 @@ ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     EXCLUDE_FROM_ALL ON
+    BUILD_ALWAYS ON
 )
