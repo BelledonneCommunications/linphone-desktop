@@ -2,6 +2,7 @@
 job-ubuntu-rolling-ninja-clang:
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  dependencies: []
   except:
     refs:
       - schedules
@@ -21,6 +22,7 @@ job-ubuntu-rolling-ninja-clang:
 job-ubuntu-rolling-makefile-gcc:
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -35,6 +37,7 @@ job-ubuntu-rolling-makefile-gcc:
 job-ubuntu-rolling-makefile-clang:
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -49,6 +52,7 @@ job-ubuntu-rolling-makefile-clang:
 job-ubuntu-rolling-ninja-gcc:
   tags: [ "docker-ubuntu-rolling" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu:rolling
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -60,6 +64,7 @@ job-ubuntu-rolling-ninja-gcc:
 
 
 job-ubuntu-rolling-ninja-gcc-novideo:
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -69,6 +74,7 @@ job-ubuntu-rolling-ninja-gcc-novideo:
 
 
 job-ubuntu-rolling-ninja-clang-novideo:
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER

@@ -40,6 +40,7 @@ job-macosx-ninja:
   variables:
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
+  dependencies: []
 
 #################################################
 # Nightly
@@ -53,6 +54,7 @@ job-macosx-makefile:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .job-macosx-desktop
+  dependencies: []
 
 job-macosx-ninja-novideo:
   only:
@@ -62,6 +64,7 @@ job-macosx-ninja-novideo:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
+  dependencies: []
 
 #job-macosx-xcode:
 #  extends: .job-macosx-desktop
@@ -82,6 +85,7 @@ job-macosx-ninja-novideo:
 job-macosx-makefile-package:
   stage: package
   tags: [ "macosx-xcode11" ]
+  dependencies: []
   only:
      variables:
        - $NIGHTLY_MASTER

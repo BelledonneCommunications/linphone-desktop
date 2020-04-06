@@ -32,10 +32,12 @@
 job-centos7-ninja-gcc:
   tags: [ "docker" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
   except:
     refs:
       - schedules
   variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DCMAKE_INSTALL_LIBDIR=lib
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
@@ -65,12 +67,13 @@ job-centos7-ninja-gcc-package:
   tags: [ "docker-test-centos7-liblinphone-nuc" ]
   #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
   only:
      variables:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DCMAKE_INSTALL_LIBDIR=lib
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
@@ -105,6 +108,7 @@ job-centos7-debug:
   tags: [ "docker-test-centos7-liblinphone-nuc" ]
   #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
   only:
     variables:
       - $DEBUG_CENTOS7

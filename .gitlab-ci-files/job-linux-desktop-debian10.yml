@@ -2,6 +2,7 @@
 job-debian10-ninja-gcc:
   tags: [ "docker-debian10" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  dependencies: []
   except:
     refs:
       - schedules
@@ -18,6 +19,7 @@ job-debian10-ninja-gcc:
 job-debian10-makefile-gcc:
   tags: [ "docker-debian10" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -32,6 +34,7 @@ job-debian10-makefile-gcc:
 job-debian10-ninja-gcc-novideo:
   tags: [ "docker-debian10" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -46,6 +49,7 @@ job-debian10-ninja-gcc-novideo:
 job-debian10-ninja-gcc-smallsdk:
   tags: [ "docker-debian10" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -59,6 +63,7 @@ job-debian10-ninja-gcc-smallsdk:
 
 job-debian10-ninja-clang:
   tags: [ "docker-debian10" ]
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -71,6 +76,7 @@ job-debian10-ninja-clang:
 
 
 job-debian10-ninja-clang-novideo:
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -81,6 +87,7 @@ job-debian10-ninja-clang-novideo:
 job-debian10-makefile-clang:
   tags: [ "docker-debian10" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:10
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
