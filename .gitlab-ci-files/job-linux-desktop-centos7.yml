@@ -37,7 +37,6 @@ job-centos7-ninja-gcc:
     refs:
       - schedules
   variables:
-    CMAKE_OPTIONS: -DCMAKE_INSTALL_LIBDIR=lib
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
@@ -73,7 +72,7 @@ job-centos7-ninja-gcc-package:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DCMAKE_INSTALL_LIBDIR=lib
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
