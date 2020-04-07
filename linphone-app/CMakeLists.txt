@@ -218,6 +218,7 @@ if (APPLE)
     src/app/single-application/SingleApplication.cpp
     src/components/core/event-count-notifier/EventCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
+    src/components/other/desktop-tools/DesktopToolsMacOs.mm
     src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
     src/components/other/desktop-tools/state-process/StateProcessMacOs.mm
     )
@@ -435,7 +436,7 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
-    list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
+    list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
     # -framework linphone") #This doesn't work yet
 endif ()
 
