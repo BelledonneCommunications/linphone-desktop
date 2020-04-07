@@ -57,7 +57,7 @@ list(GET SPLITTED_LINPHONE_VERSION 1 LINPHONE_MINOR_VERSION)
 if (SPLITTED_LINPHONE_VERSION_LENGTH GREATER 2)
   list(GET SPLITTED_LINPHONE_VERSION 2 LINPHONE_MICRO_VERSION)
 endif ()
-set(PACKAGE_VERSION "${LINPHONE_VERSION}")
+set(PACKAGE_VERSION "${APP_PROJECT_VERSION}")
 message(STATUS "Versions : ${APP_PROJECT_VERSION}, ${LINPHONE_VERSION}")
 # ==============================================================================
 # Preparing the Linphone SDK bundle.
