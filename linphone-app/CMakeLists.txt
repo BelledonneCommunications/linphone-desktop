@@ -360,7 +360,6 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 
 # Build and dependencies
 link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
-link_directories("${LINPHONE_LIB_DIRS}")
 #link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
 
 
