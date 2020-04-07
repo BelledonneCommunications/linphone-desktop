@@ -209,7 +209,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
   qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
-  DesktopTools::initialize();
+  DesktopTools::init();
 }
 
 App::~App () {

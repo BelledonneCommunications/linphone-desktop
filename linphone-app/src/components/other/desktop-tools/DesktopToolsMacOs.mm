@@ -1,7 +1,7 @@
 #include "DesktopToolsMacOs.hpp"
 #import <AVFoundation/AVFoundation.h>
 
-void DesktopTools::initialize(){
+void DesktopTools::init(){
 // Request permissions
 	if([AVCaptureDevice authorizationStatusForMediaType:AVMediaTypeVideo] != AVAuthorizationStatusAuthorized)
 		[AVCaptureDevice requestAccessForMediaType:AVMediaTypeVideo completionHandler:^(BOOL) {}];
