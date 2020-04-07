@@ -54,5 +54,17 @@
 	<string>Streaming Video between devices</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Streaming Audio between devices</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Store attachment and allow camera record when selected</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Store attachment and allow camera record when selected</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Storing configuration files</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Can use Documents folder to put logs</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Getting files from Download folder for sending attachment</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Used for sending notifications and working with Appnap</string>
 </dict>
 </plist>

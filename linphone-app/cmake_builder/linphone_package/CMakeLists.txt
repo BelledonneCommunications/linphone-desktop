@@ -38,7 +38,7 @@ set(LINPHONE_QML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../ui")
 # ==============================================================================
 # Build package version.
 # ==============================================================================
-
+bc_compute_full_version(APP_PROJECT_VERSION)
 if (GIT_EXECUTABLE AND NOT(APP_PROJECT_VERSION))
   execute_process(
     COMMAND ${GIT_EXECUTABLE} describe --always
