@@ -76,5 +76,29 @@
 	<string>A user application wants to access location information.</string>
 	<key>NSRemindersUsageDescription</key>
 	<string>A user application wants to access the reminders.</string>
+	<key>NSFileProviderDomainUsageDescription</key>
+	<string>Privacy - Access to a File Provide Domain Usage Description</string>
+	<key>NSSystemAdministrationUsageDescription</key>
+	<string>Privacy - System Administration Usage Description</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Privacy - Media Library Usage Description</string>
+	<key>NSSystemExtensionUsageDescription</key>
+	<string>Privacy - System Extension Usage Description</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Privacy - Speech Recognition Usage Description</string>
+	<key>NSNetworkVolumesUsageDescription</key>
+	<string>Privacy - Network Volumes Usage Description</string>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Privacy - Bluetooth Always Usage Description</string>
+	<key>OSBundleUsageDescription</key>
+	<string>Privacy - Driver Extension Usage Description</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Privacy - Motion Usage Description</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Privacy - Face ID Usage Description</string>
+	<key>NSFileProviderPresenceUsageDescription</key>
+	<string>Privacy - File Provider Presence Usage Description</string>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>Privacy - Music Usage Description</string>
 </dict>
 </plist>
