@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>@EXECUTABLE_NAME@</string>
 	<key>CFBundleGetInfoString</key>
-	<string>@PACKAGE_VERSION@, (C) 2011-2018 @APPLICATION_NAME@ @APPLICATION_URL@</string>
+	<string>@PACKAGE_VERSION@, (C) 2011-2020 @APPLICATION_NAME@ @APPLICATION_URL@</string>
 	<key>CFBundleIconFile</key>
 	<string>@EXECUTABLE_NAME@.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -66,5 +66,15 @@
 	<string>Getting files from Download folder for sending attachment</string>
 	<key>NSAppleEventsUsageDescription</key>
 	<string>Used for sending notifications and working with Appnap</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>A user application wants to access bluetooth.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>A user application wants to access calendars.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>A user application wants to access contacts.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>A user application wants to access location information.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>A user application wants to access the reminders.</string>
 </dict>
 </plist>
