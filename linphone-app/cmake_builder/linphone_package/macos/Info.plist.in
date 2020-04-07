@@ -100,5 +100,13 @@
 	<string>Privacy - File Provider Presence Usage Description</string>
 	<key>kTCCServiceMediaLibrary</key>
 	<string>Privacy - Music Usage Description</string>
+	<key>com.apple.security.device.camera</key>
+	<true/>
+	<key>com.apple.security.device.microphone</key>
+	<true/>
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
+	<key>com.apple.security.personal-information.photos-library</key>
+	<true/>
 </dict>
 </plist>
