@@ -90,10 +90,8 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
 
 
-bc_compute_full_version(APP_PROJECT_VERSION)
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
-string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
-message(STATUS "Versions : ${PROJECT_VERSION}, ${APP_VERSION}, ${APP_PROJECT_VERSION}")
+
 #-------------------------------------------------
 set(ASSETS_DIR "assets")
 set(SOURCES
