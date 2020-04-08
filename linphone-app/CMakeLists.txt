@@ -21,7 +21,7 @@
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
 
-project(linphoneqt VERSION 4.1.1)
+project(linphoneqt VERSION 4.2.0)
 
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
@@ -90,10 +90,8 @@ set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
 
 
-bc_compute_full_version(APP_PROJECT_VERSION)
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
-string(REGEX MATCH "^([0-9]+)[.]([0-9]+)[.]([0-9]+)" APP_VERSION ${APP_PROJECT_VERSION})
-message(STATUS "Versions : ${PROJECT_VERSION}, ${APP_VERSION}, ${APP_PROJECT_VERSION}")
+
 #-------------------------------------------------
 set(ASSETS_DIR "assets")
 set(SOURCES
@@ -220,6 +218,7 @@ if (APPLE)
     src/app/single-application/SingleApplication.cpp
     src/components/core/event-count-notifier/EventCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
+    src/components/other/desktop-tools/DesktopToolsMacOs.mm
     src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
     src/components/other/desktop-tools/state-process/StateProcessMacOs.mm
     )
@@ -443,7 +442,7 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 endforeach ()
 
 if (APPLE)
-    list(APPEND LIBRARIES "-framework Cocoa -framework IOKit")
+    list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
     # -framework linphone") #This doesn't work yet
 endif ()
 

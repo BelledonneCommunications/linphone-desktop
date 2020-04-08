@@ -36,7 +36,9 @@ public:
   bool getScreenSaverStatus () const;
   void setScreenSaverStatus (bool status);
 
+  static void init();	// Do first initialization
   static void applicationStateChanged(Qt::ApplicationState currentState);
+
 
 signals:
   void screenSaverStatusChanged (bool status);

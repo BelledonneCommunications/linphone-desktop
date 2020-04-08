@@ -99,8 +99,7 @@ job-debian10-makefile-clang:
 job-debian10-makefile-clang-package:
   stage: package
   tags: [ "docker-debian10" ]
-  dependencies:
-    - job-debian10-makefile-clang
+  dependencies: []
   only:
      variables:
        - $NIGHTLY_MASTER

@@ -28,6 +28,7 @@
 
 #include "AppController.hpp"
 
+#include "components/other/desktop-tools/DesktopTools.hpp"
 // =============================================================================
 
 using namespace std;
@@ -38,6 +39,7 @@ namespace {
 }
 
 AppController::AppController (int &argc, char *argv[]) {
+  DesktopTools::init();
   QT_REQUIRE_VERSION(argc, argv, ApplicationMinimalQtVersion)
   Q_ASSERT(!mApp);
   // Disable QML cache. Avoid malformed cache.

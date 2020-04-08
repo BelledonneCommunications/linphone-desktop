@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>@EXECUTABLE_NAME@</string>
 	<key>CFBundleGetInfoString</key>
-	<string>@PACKAGE_VERSION@, (C) 2011-2018 @APPLICATION_NAME@ @APPLICATION_URL@</string>
+	<string>@PACKAGE_VERSION@, (C) 2011-2020 @APPLICATION_NAME@ @APPLICATION_URL@</string>
 	<key>CFBundleIconFile</key>
 	<string>@EXECUTABLE_NAME@.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -54,5 +54,29 @@
 	<string>Streaming Video between devices</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Streaming Audio between devices</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Store attachment and allow camera record when selected</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Store attachment and allow camera record when selected</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Storing configuration files</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Can use Documents folder to put logs</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Getting files from Download folder for sending attachment</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Used for sending notifications and working with Appnap</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Use for wireless headsets</string>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>Used media library as attachement or for the ringer</string>
+	<key>com.apple.security.device.camera</key>
+	<true/>
+	<key>com.apple.security.device.microphone</key>
+	<true/>
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
+	<key>com.apple.security.personal-information.photos-library</key>
+	<true/>
 </dict>
 </plist>

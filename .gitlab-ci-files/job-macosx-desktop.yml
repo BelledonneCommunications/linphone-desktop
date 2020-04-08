@@ -82,6 +82,7 @@ job-macosx-ninja-novideo:
 job-macosx-makefile-package:
   stage: package
   tags: [ "macosx-xcode11" ]
+  dependencies: []
   only:
      variables:
        - $NIGHTLY_MASTER

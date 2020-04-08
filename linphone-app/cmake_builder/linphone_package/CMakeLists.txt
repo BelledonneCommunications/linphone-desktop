@@ -38,7 +38,7 @@ set(LINPHONE_QML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../ui")
 # ==============================================================================
 # Build package version.
 # ==============================================================================
-
+bc_compute_full_version(APP_PROJECT_VERSION)
 if (GIT_EXECUTABLE AND NOT(APP_PROJECT_VERSION))
   execute_process(
     COMMAND ${GIT_EXECUTABLE} describe --always
@@ -57,8 +57,8 @@ list(GET SPLITTED_LINPHONE_VERSION 1 LINPHONE_MINOR_VERSION)
 if (SPLITTED_LINPHONE_VERSION_LENGTH GREATER 2)
   list(GET SPLITTED_LINPHONE_VERSION 2 LINPHONE_MICRO_VERSION)
 endif ()
-set(PACKAGE_VERSION "${LINPHONE_VERSION}")
-
+set(PACKAGE_VERSION "${APP_PROJECT_VERSION}")
+message(STATUS "Versions : ${APP_PROJECT_VERSION}, ${LINPHONE_VERSION}")
 # ==============================================================================
 # Preparing the Linphone SDK bundle.
 # ==============================================================================
@@ -140,10 +140,11 @@ if (WIN32)
 #  endforeach ()
 elseif (APPLE)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${CMAKE_CURRENT_BINARY_DIR}/../../Info.plist" @ONLY)
+  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/entitlements.xml.in" "${CMAKE_CURRENT_BINARY_DIR}/../../entitlements.xml" @ONLY)
   configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" COPYONLY)
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../Info.plist" DESTINATION "${APPLICATION_NAME}.app/Contents")
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources")
-  install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/Frameworks/" DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" USE_SOURCE_PERMISSIONS)
+  install( CODE "execute_process(COMMAND rsync -a \"${LINPHONE_OUTPUT_DIR}/Frameworks\"  \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/\" )") #Use rsync to bypass symlinks override issues of frameworks
   install(PROGRAMS "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")
   file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.dylib")
   foreach (LIBRARY ${SHARED_LIBRARIES})
@@ -192,7 +193,7 @@ elseif (APPLE)
         execute_process(COMMAND \"codesign\" \"--options\" \"runtime,library\" \"--force\" \"--deep\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${FRAMEWORK}\")
       endforeach ()")
     install( CODE "execute_process(COMMAND \"codesign\" \"--force\" \"--deep\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Frameworks/mediastreamer2.framework/Versions/A/Libraries/libmswebrtc.so\")")
-    install( CODE "execute_process(COMMAND \"codesign\" \"--force\" \"--deep\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app\")")
+    install( CODE "execute_process(COMMAND \"codesign\" \"--entitlements\" \"${CMAKE_CURRENT_BINARY_DIR}/../../entitlements.xml\" \"--force\" \"--deep\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app\")")
   endif ()
 #  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 
@@ -290,7 +291,7 @@ if(${ENABLE_APP_PACKAGING})
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/icon.ico")
 	
 	if (APPLE)
-	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${APP_PROJECT_VERSION}-mac")
+	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-mac")
 	  set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_CURRENT_SOURCE_DIR}/macos/background_dmg.jpg")
 	  configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
 	  set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
@@ -298,12 +299,12 @@ if(${ENABLE_APP_PACKAGING})
 	  message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
 	elseif(NOT(WIN32))
 	  set(DO_APPIMAGE YES)
-	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${APP_PROJECT_VERSION}")
+	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}")
 	  message(STATUS "Set AppImage CPack generator in OUTPUT/Packages")
 	else()
 	  set(CPACK_GENERATOR "NSIS")
 	  set(DO_GENERATOR YES)
-	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${APP_PROJECT_VERSION}-win32")
+	  set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-win32")
 	  string(COMPARE EQUAL ${CPACK_GENERATOR} "NSIS" IS_NSIS)
 	  if (${IS_NSIS})
 	    set(PACKAGE_EXT "exe")
