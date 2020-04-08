@@ -50,8 +50,8 @@
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
   script:
-    - SET Qt5_DIR=C:\Qt\5.12.6\msvc2017\lib\cmake
-    - SET PATH=%PATH%;C:\Qt\5.12.6\msvc2017\bin
+    - SET Qt5_DIR=C:\Qt\5.12.5\msvc2017\lib\cmake
+    - SET PATH=%PATH%;C:\Qt\5.12.5\msvc2017\bin
     - IF EXIST build RMDIR /S /Q build
     - mkdir build
     - cd build
@@ -114,8 +114,8 @@ job-windows-vs2017-package:
   variables:
       CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
   script:
-    - SET Qt5_DIR=C:\Qt\5.12.6\msvc2017\lib\cmake
-    - SET PATH=%PATH%;C:\Qt\5.12.6\msvc2017\bin
+    - SET Qt5_DIR=C:\Qt\5.12.5\msvc2017\lib\cmake
+    - SET PATH=%PATH%;C:\Qt\5.12.5\msvc2017\bin
     - IF EXIST build RMDIR /S /Q build
     - mkdir build
     - cd build
