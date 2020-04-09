@@ -61,7 +61,7 @@ AppController::AppController (int &argc, char *argv[]) {
   // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
   QCoreApplication::setApplicationName(EXECUTABLE_NAME);
   QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
-  QApplication::setOrganizationDomain(APPLICATION_ID);
+  QApplication::setOrganizationDomain(EXECUTABLE_NAME);
   QQuickStyle::setStyle("Default");
   if (mApp->isSecondary()) {
     #ifdef Q_OS_MACOS
