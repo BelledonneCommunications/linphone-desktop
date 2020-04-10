@@ -44,7 +44,7 @@ AppController::AppController (int &argc, char *argv[]) {
   Q_ASSERT(!mApp);
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
-  QGuiApplication::setAttribute(Qt::AA_DisableHighDpiScaling, true);
+  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   // Useful to share camera on Fullscreen (other context).
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 
