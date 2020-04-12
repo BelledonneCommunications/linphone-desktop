@@ -15,7 +15,6 @@ DialogPlus {
 
   property alias downloadUrl: fileDownloader.url
   property alias installFolder: fileDownloader.downloadFolder
-  property bool extract: false
   property string installName // Right install name.
   property string mime // Human readable name.
 
@@ -30,14 +29,9 @@ DialogPlus {
   }
 
   function _endInstall (exitStatus) {
-    if (dialog.extract) {
-       fileDownloader.remove()
-    }
-
     if (exitStatus === 1) {
       Utils.write(installFolder + mime + '.txt', downloadUrl)
     }
-
     dialog._exitStatus = exitStatus
     dialog._installing = false
   }
@@ -132,12 +126,8 @@ DialogPlus {
       onDownloadFailed: dialog._endInstall(0)
       onDownloadFinished: {
         fileExtractor.file = filePath
-        if (dialog.extract) {
-          progressBar.target = fileExtractor
-          fileExtractor.extract()
-        } else {
-          dialog._endInstall(1)
-        }
+        progressBar.target = fileExtractor
+        fileExtractor.extract()
       }
     }
 
@@ -147,8 +137,8 @@ DialogPlus {
       extractFolder: dialog.installFolder
       extractName: dialog.installName
 
-      onExtractFailed: dialog._endInstall(0)
-      onExtractFinished: dialog._endInstall(1)
+      onExtractFailed: {fileDownloader.remove(); dialog._endInstall(0)}
+      onExtractFinished: {fileDownloader.remove(); dialog._endInstall(1)}
     }
   }
 }

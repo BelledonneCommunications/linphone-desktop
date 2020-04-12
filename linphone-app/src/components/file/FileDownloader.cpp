@@ -133,14 +133,14 @@ void FileDownloader::handleDownloadFinished() {
   if (isHttpRedirect(mNetworkReply)) {
     qWarning() << QStringLiteral("Request was redirected.");
     mDestinationFile.remove();
+    cleanDownloadEnd();
     emit downloadFailed();
   } else {
     qInfo() << QStringLiteral("Download of %1 finished.").arg(mUrl.toString());
     mDestinationFile.close();
+    cleanDownloadEnd();
     emit downloadFinished(mDestinationFile.fileName());
   }
-
-  cleanDownloadEnd();
 }
 
 void FileDownloader::handleError (QNetworkReply::NetworkError code) {

@@ -1,0 +1,3 @@
+[Platforms]
+WindowsArguments = dpiawareness=1
+@APP_QT_CONF_PATH@

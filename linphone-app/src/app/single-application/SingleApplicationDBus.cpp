@@ -56,7 +56,7 @@ void SingleApplicationPrivate::startSecondary () {
 }
 
 void SingleApplicationPrivate::terminate (int signum) {
-  Q_UNUSED(signum);
+  Q_UNUSED(signum)
   SingleApplication::instance()->quit();
 }
 
