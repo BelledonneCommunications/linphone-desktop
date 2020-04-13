@@ -62,12 +62,16 @@ find_package(Linphone CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
-find_package(minizip)
 find_package(bctoolbox CONFIG)
 
-set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
+if(WIN32)
+	find_package(minizip)
+	set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
+	if(ENABLE_BUILD_VERBOSE)
+		message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+	endif()
+endif()
 if(ENABLE_BUILD_VERBOSE)
-	message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
 	message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}, PREFIX_PATH=${CMAKE_PREFIX_PATH}")
 	message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
 	message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
@@ -128,7 +132,6 @@ set(SOURCES
     src/components/core/CoreManager.cpp
     src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
     src/components/file/FileDownloader.cpp
-    src/components/file/FileExtractor.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
     src/components/other/colors/Colors.cpp
@@ -187,7 +190,6 @@ set(HEADERS
     src/components/core/CoreManager.hpp
     src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
     src/components/file/FileDownloader.hpp
-    src/components/file/FileExtractor.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
     src/components/other/colors/Colors.hpp
@@ -210,7 +212,13 @@ set(HEADERS
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
     )
-
+if(WIN32)
+	list(APPEND SOURCES  src/components/file/FileExtractor.cpp)
+	list(APPEND HEADERS  src/components/file/FileExtractor.hpp)
+else()
+	list(APPEND SOURCES  src/components/file/FileProcessExtractor.cpp)
+	list(APPEND HEADERS  src/components/file/FileProcessExtractor.hpp)
+endif()
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
@@ -356,8 +364,9 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 
 
 # Build and dependencies
-link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
-#link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
+if(WIN32)
+	link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
+endif()
 
 
 
@@ -405,11 +414,12 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}"
 #target_link_libraries(project_b_exe ${install_dir}/lib/alib.lib)
 
 
-set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MINIZIP_INCLUDE_DIRS}")
-set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES} ${MINIZIP_LIBRARIES})
-#if(NOT APPLE)
-#	list(APPEND LIBRARIES ${MINIZIP_LIBRARIES})
-#endif()
+set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
+set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
+if(WIN32)
+	list(APPEND INCLUDED_DIRECTORIES "${MINIZIP_INCLUDE_DIRS}")
+	list(APPEND LIBRARIES ${MINIZIP_LIBRARIES})
+endif()
 if(ENABLE_BUILD_VERBOSE)
 	message("LIBRARIES : ${LIBRARIES}")
 endif()
@@ -485,16 +495,3 @@ source_group(
 source_group(
     "Svg" REGULAR_EXPRESSION ".+\.svg$"
     )
-
-
-# ------------------------------
-# Installation
-# ------------------------------
-#if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.15.0")
-#	add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_COMMAND} --install ${CMAKE_BINARY_DIR})
-#endif()
-if(APPLE)
-    # target_link_libraries(${TARGET_NAME} "${MINIZIP_PREFIX}/${CMAKE_INSTALL_LIBDIR}/libminizip.dylib")
-elseif(NOT WIN32)
-    #   target_link_libraries(${TARGET_NAME} "${MINIZIP_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/libminizip.so")
-endif()

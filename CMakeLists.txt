@@ -148,38 +148,46 @@ ExternalProject_Add_Step(sdk force_build
 	DEPENDERS build
 	ALWAYS 1
 )
-#Don't use minizip as target name because it can be a conflict with link libraries names
-ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
-	SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
-	INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
-	DEPENDS sdk
-	BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-	LIST_SEPARATOR | # Use the alternate list separator
-	CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-)
 include(FindPkgConfig)
+if( WIN32)
+	#Don't use minizip as target name because it can be a conflict with link libraries names
+	ExternalProject_Add(miniziplib PREFIX "${CMAKE_BINARY_DIR}/minizip"
+		SOURCE_DIR "${CMAKE_SOURCE_DIR}/submodules/externals/minizip"
+		INSTALL_DIR "${MINIZIP_OUTPUT_DIR}"
+		DEPENDS sdk
+		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+		LIST_SEPARATOR | # Use the alternate list separator
+		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+	)
+	if(ENABLE_BUILD_VERBOSE)
+		message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
+	endif()
+	find_package(minizip QUIET)
+	set(NEED_MINIZIP NOT(MINIZIP_FOUND))
+	set(APP_DEPENDS miniziplib sdk)
+else()
+	set(NEED_MINIZIP FALSE)
+	set(APP_DEPENDS sdk)
+endif()
 find_package(LinphoneCxx CONFIG QUIET)
 find_package(Linphone CONFIG QUIET)
 find_package(bctoolbox CONFIG QUIET)
 find_package(belcard CONFIG QUIET)
 find_package(Mediastreamer2 CONFIG QUIET)
 find_package(ortp CONFIG QUIET)
-find_package(minizip QUIET)
 
-if(ENABLE_BUILD_VERBOSE)
-	message("MINIZIP from superbuild :${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
-endif()
-if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NOT(MINIZIP_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
+
+if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR NEED_MINIZIP OR FORCE_APP_EXTERNAL_PROJECTS)
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
 	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
 	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-	    DEPENDS miniziplib sdk
+	    DEPENDS ${APP_DEPENDS}
 	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
 #	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 	    LIST_SEPARATOR | # Use the alternate list separator
 	    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-	    # ${APP_OPTIONS}
+	# ${APP_OPTIONS}
 	    BUILD_ALWAYS ON
 	)
 	set(AUTO_REGENERATION auto_regeneration)
@@ -190,6 +198,7 @@ else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
+	add_dependencies(app-library ${APP_DEPENDS})
 endif()
 ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
