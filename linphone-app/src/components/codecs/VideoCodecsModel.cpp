@@ -33,6 +33,7 @@
 #include "utils/Utils.hpp"
 
 #include "VideoCodecsModel.hpp"
+#include <linphone/linphonecore.h>
 
 // =============================================================================
 
@@ -47,17 +48,17 @@ namespace {
     constexpr char LibraryExtension[] = "so";
     constexpr char H264InstallName[] = "libopenh264.so";
     #ifdef Q_PROCESSOR_X86_64
-      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.8.0-linux64.4.so.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1.0-linux64.5.so.bz2";
     #else
-      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-1.8.0-linux32.4.so.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1-0-linux32.5.so.bz2";
     #endif // ifdef Q_PROCESSOR_X86_64
   #elif defined(Q_OS_WIN)
     constexpr char LibraryExtension[] = "dll";
     constexpr char H264InstallName[] = "openh264.dll";
     #ifdef Q_OS_WIN64
-      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.8.0-win64.dll.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.1.0-win64.dll.bz2";
     #else
-      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-1.8.0-win32.dll.bz2";
+      constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.1.0-win32.dll.bz2";
     #endif // ifdef Q_OS_WIN64
   #endif // ifdef Q_OS_LINUX
 }
@@ -111,7 +112,7 @@ static bool downloadUpdatableCodec (
       qWarning() << QStringLiteral("Unable to write codec version in: `%1`.").arg(versionFilePath);
       return;
     }
-	if (versionFile.write(Utils::appStringToCoreString(downloadUrl).c_str(), downloadUrl.length()) == -1) {
+    if (versionFile.write(Utils::appStringToCoreString(downloadUrl).c_str(), downloadUrl.length()) == -1) {
       fileExtractor->remove();
       versionFile.close();
       versionFile.remove();
@@ -174,10 +175,10 @@ void VideoCodecsModel::load () {
     QDirIterator it(getCodecsFolder());
     while (it.hasNext()) {
       QFileInfo info(it.next());
-      if (info.suffix() == LibraryExtension) {
-        const QString filename(info.fileName());
+      const QString filename(info.fileName());
+      if ( QLibrary::isLibrary(filename) ) {
         qInfo() << QStringLiteral("Loading `%1` symbols...").arg(filename);
-        if (!QLibrary(info.filePath()).load())
+        if (!QLibrary(info.filePath()).load()) //lib.load())
           qWarning() << QStringLiteral("Failed to load `%1` symbols.").arg(filename);
       }
     }
