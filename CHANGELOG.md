@@ -17,12 +17,15 @@
 - TelKeypad supports A, B, C and D keys.
 - TelKeypad supports keyboard.
 - OpenH264 codec can be download in the application.
+- Use native BZip2 instead of Minizip to extract codec on Mac and Linux
 - New icons
 - Disable screensaver on fullscreen video call.
 - Add caller/callee on saved files.
 - Supports totally french, english, portuguese, russian, turkish, ukrainian.
 - App Nap avoiding for MacOs
 - Simplify building process
+- Enable High DPI Displays support
+- NSIS (Windows), DMG (MacOsX) and Appimage (Linux) deployments
 
 ### Fixes
 
@@ -31,6 +34,8 @@
 - Do not use `:` separator when a file is saved on Windows.
 - Avoid mark as read on selected chat room if window is not active.
 - Search box in main page will not reset its text when clicking on it
+- Crash on account authentifications
+- Apple permissions 
 
 ### Removed
 
