@@ -25,7 +25,11 @@
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/file/FileDownloader.hpp"
-#include "components/file/FileExtractor.hpp"
+#ifdef _WIN32
+	#include "components/file/FileExtractor.hpp"
+#else
+	#include "components/file/FileProcessExtractor.hpp"
+#endif
 #include "utils/Utils.hpp"
 
 #include "VideoCodecsModel.hpp"
