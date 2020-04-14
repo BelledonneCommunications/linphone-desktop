@@ -17,7 +17,7 @@
 - TelKeypad supports A, B, C and D keys.
 - TelKeypad supports keyboard.
 - OpenH264 codec can be download in the application.
-- Use native BZip2 instead of Minizip to extract codec on Mac and Linux
+- Use BZip2 instead of Minizip to extract codec
 - New icons
 - Disable screensaver on fullscreen video call.
 - Add caller/callee on saved files.
@@ -26,6 +26,7 @@
 - Simplify building process
 - Enable High DPI Displays support
 - NSIS (Windows), DMG (MacOsX) and Appimage (Linux) deployments
+
 
 ### Fixes
 
@@ -41,6 +42,7 @@
 
 - Prepare.py configuration
 - Remove useless splashscreen.
+- Minizip
 
 ## 4.1.0 - 2017-07-19
 

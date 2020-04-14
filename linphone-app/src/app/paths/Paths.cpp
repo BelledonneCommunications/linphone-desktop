@@ -39,6 +39,7 @@ namespace {
   constexpr char PathAvatars[] = "/avatars/";
   constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
   constexpr char PathCodecs[] =  "/codecs/";
+  constexpr char PathTools[] =  "/tools/";
   constexpr char PathLogs[] = "/logs/";
   //constexpr char PathPlugins[] = "/plugins/"; // Unused
   constexpr char PathThumbnails[] = "/thumbnails/";
@@ -256,7 +257,9 @@ string Paths::getRootCaFilePath () {
 string Paths::getThumbnailsDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathThumbnails);
 }
-
+string Paths::getToolsDirPath () {
+  return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathTools);
+}
 string Paths::getUserCertificatesDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathUserCertificates);
 }

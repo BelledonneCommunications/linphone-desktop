@@ -29,7 +29,6 @@ class QTimer;
 
 // Supports only bzip file.
 class FileExtractor : public QObject {
-  class ExtractStream;
 
   Q_OBJECT;
 
@@ -38,10 +37,9 @@ class FileExtractor : public QObject {
   Q_PROPERTY(QString file READ getFile WRITE setFile NOTIFY fileChanged);
   Q_PROPERTY(QString extractFolder READ getExtractFolder WRITE setExtractFolder NOTIFY extractFolderChanged);
   Q_PROPERTY(QString extractName READ getExtractName WRITE setExtractName NOTIFY extractNameChanged);
+  Q_PROPERTY(bool extracting READ getExtracting NOTIFY extractingChanged);
   Q_PROPERTY(qint64 readBytes READ getReadBytes NOTIFY readBytesChanged);
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
-  Q_PROPERTY(bool extracting READ getExtracting NOTIFY extractingChanged);
-
 public:
   FileExtractor (QObject *parent = nullptr);
   ~FileExtractor ();
@@ -65,7 +63,7 @@ signals:
   void extractNameChanged (const QString &extractName);
 
   void readBytesChanged (qint64 readBytes);
-  void totalBytesChanged (qint64 totalBytes);
+  void totalBytesChanged (qint64 totalBytes);  
 
   void extractingChanged (bool extracting);
   void extractFinished ();
@@ -77,13 +75,14 @@ private:
 
   qint64 getTotalBytes () const;
   void setTotalBytes (qint64 totalBytes);
-
+  
   bool getExtracting () const;
   void setExtracting (bool extracting);
 
   void clean ();
 
   void emitExtractFinished ();
+  void emitExtractorFailed ();	// Used when bzip2 cannot be used
   void emitExtractFailed (int error);
   void emitOutputError ();
 
@@ -92,13 +91,11 @@ private:
   QString mFile;
   QString mExtractFolder;
   QString mExtractName;
-  QFile mDestinationFile;
+  QString mDestinationFile;
 
+  bool mExtracting = false;
   qint64 mReadBytes = 0;
   qint64 mTotalBytes = 0;
-  bool mExtracting = false;
-
-  QScopedPointer<ExtractStream> mStream;
 
   QTimer *mTimer = nullptr;
 };

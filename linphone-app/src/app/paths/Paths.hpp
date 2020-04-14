@@ -43,6 +43,7 @@ namespace Paths {
   std::string getPackageMsPluginsDirPath ();
   std::string getRootCaFilePath ();
   std::string getThumbnailsDirPath ();
+  std::string getToolsDirPath ();
   std::string getUserCertificatesDirPath ();
   std::string getZrtpDataFilePath ();
   std::string getZrtpSecretsFilePath ();

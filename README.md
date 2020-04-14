@@ -61,7 +61,7 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 		
 ### Building
 
-The build is done by building the SDK, the submodule Minizip and the application. Their targets are `sdk`, `miniziplib` and `linphone-qt`.
+The build is done by building the SDK and the application. Their targets are `sdk` and `linphone-qt`.
 
 1. Create your build folder at the root of the project : `mkdir build`
 Go to this new folder and begin the build process : `cd build`

@@ -18,70 +18,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <mz_os.h>
-#include <mz_strm_bzip.h>
-#include <mz_strm.h>
-#include <mz.h>
 #include <QDebug>
 #include <QDir>
 #include <QTimer>
+#include <QProcess>
 
 #include "FileExtractor.hpp"
+#include "FileDownloader.hpp"
+#include "app/paths/Paths.hpp"
+#include "utils/Utils.hpp"
 
 // =============================================================================
 
 using namespace std;
 
-class FileExtractor::ExtractStream {
-public:
-  ExtractStream () : mFileStream(nullptr), mBzipStream(nullptr) {}
-
-  ~ExtractStream () {
-    if (mBzipStream) {
-      mz_stream_bzip_close(mBzipStream);
-      mz_stream_bzip_delete(&mBzipStream);
-    }
-
-    if (mFileStream) {
-      mz_stream_os_close(mFileStream);
-      mz_stream_os_delete(&mFileStream);
-    }
-  }
-
-  void *getInternalStream () const {
-    return mBzipStream;
-  }
-
-  int load (const char *filePath) {
-    Q_ASSERT(!mFileStream);
-    Q_ASSERT(!mBzipStream);
-
-    // 1. Open file stream.
-    if (!mz_stream_os_create(&mFileStream))
-      return MZ_MEM_ERROR;
-    Q_CHECK_PTR(mFileStream);
-
-    int error;
-    if ((error = mz_stream_os_open(mFileStream, filePath, MZ_OPEN_MODE_READ)) != MZ_OK)
-      return error;
-
-    // 2. Open bzip stream.
-    if (!mz_stream_bzip_create(&mBzipStream))
-      return MZ_MEM_ERROR;
-    Q_CHECK_PTR(mBzipStream);
-    if ((error = mz_stream_bzip_open(mBzipStream, NULL, MZ_OPEN_MODE_READ)) != MZ_OK)
-      return error;
-
-    // 3. Link file stream to bzip stream.
-    return mz_stream_set_base(mBzipStream, mFileStream);
-  }
-
-private:
-  void *mFileStream;
-  void *mBzipStream;
-};
-
-// -----------------------------------------------------------------------------
+constexpr char LinphoneBZip2_exe[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
+constexpr char LinphoneBZip2_dll[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 
 FileExtractor::FileExtractor (QObject *parent) : QObject(parent) {}
 
@@ -93,44 +45,58 @@ void FileExtractor::extract () {
     return;
   }
   setExtracting(true);
-
   QFileInfo fileInfo(mFile);
-
-  setReadBytes(0);
-  setTotalBytes(fileInfo.size());
-
-  // 1. Open archive stream.
-  // TODO: Test extension.
-  Q_ASSERT(!mStream);
-  mStream.reset(new ExtractStream());
-  int error = mStream->load(mFile.toLatin1().constData());
-  if (error != MZ_OK) {
-    emitExtractFailed(error);
-    return;
+  if(!fileInfo.isReadable()){
+	emitExtractFailed(-1);
+	return;
   }
 
-  // 2. Open output file.
-  // TODO: Deal with existing files.
-  Q_ASSERT(!mDestinationFile.isOpen());
-  mDestinationFile.setFileName(
-    QDir::cleanPath(mExtractFolder) + QDir::separator() + (
-      mExtractName.isEmpty() ? fileInfo.completeBaseName() : mExtractName
-    )
-  );
-
-  if (!mDestinationFile.open(QIODevice::WriteOnly)) {
+  mDestinationFile = QDir::cleanPath(mExtractFolder) + QDir::separator() + (mExtractName.isEmpty() ? fileInfo.completeBaseName() : mExtractName);
+  if(QFile::exists(mDestinationFile) && !QFile::remove(mDestinationFile)){
     emitOutputError();
     return;
   }
+  if( mTimer == nullptr){
+	  mTimer = new QTimer(this);
+	  QObject::connect(mTimer, &QTimer::timeout, this, &FileExtractor::handleExtraction);
+  }
+#ifdef WIN32
+// Test the presence of bzip2 in the system
+	int result = QProcess::execute("bzip2.exe", QStringList());
+	if( result != -2 || QProcess::execute(Utils::coreStringToAppString(Paths::getToolsDirPath())+"\\bzip2.exe", QStringList())!=-2){
+		mTimer->start();
+	}else{// Download bzip2
+		QTimer * timer = mTimer;
+		FileDownloader * fileDownloader = new FileDownloader();
+		int downloadStep = 0;
+		fileDownloader->setUrl(QUrl(LinphoneBZip2_exe));
+		fileDownloader->setDownloadFolder(Utils::coreStringToAppString(Paths::getToolsDirPath()));
+		QObject::connect(fileDownloader, &FileDownloader::totalBytesChanged, this, &FileExtractor::setTotalBytes);
+		QObject::connect(fileDownloader, &FileDownloader::readBytesChanged, this, &FileExtractor::setReadBytes);
 
-  // 3. Connect!
-  mTimer = new QTimer(this);
-  QObject::connect(mTimer, &QTimer::timeout, this, &FileExtractor::handleExtraction);
-  mTimer->start();
+		QObject::connect(fileDownloader, &FileDownloader::downloadFinished, [fileDownloader, timer, downloadStep ]()mutable {
+			if( downloadStep++ == 0){
+				fileDownloader->setUrl(QUrl(LinphoneBZip2_dll));
+				fileDownloader->download();
+			}else {
+				fileDownloader->deleteLater();
+				timer->start();
+			}
+		});
+
+		QObject::connect(fileDownloader, &FileDownloader::downloadFailed, [fileDownloader, this]() {
+			fileDownloader->deleteLater();
+			emitExtractorFailed();
+		});
+		fileDownloader->download();
+	}
+#else
+	mTimer->start();
+#endif
 }
 
 bool FileExtractor::remove () {
-  return mDestinationFile.exists() && !mDestinationFile.isOpen() && mDestinationFile.remove();
+  return QFile::exists(mDestinationFile) && QFile::remove(mDestinationFile);
 }
 
 QString FileExtractor::getFile () const {
@@ -142,7 +108,6 @@ void FileExtractor::setFile (const QString &file) {
     qWarning() << QStringLiteral("Unable to set file, a file is extracting.");
     return;
   }
-
   if (mFile != file) {
     mFile = file;
     emit fileChanged(mFile);
@@ -158,7 +123,6 @@ void FileExtractor::setExtractFolder (const QString &extractFolder) {
     qWarning() << QStringLiteral("Unable to set extract folder, a file is extracting.");
     return;
   }
-
   if (mExtractFolder != extractFolder) {
     mExtractFolder = extractFolder;
     emit extractFolderChanged(mExtractFolder);
@@ -174,32 +138,9 @@ void FileExtractor::setExtractName (const QString &extractName) {
     qWarning() << QStringLiteral("Unable to set extract name, a file is extracting.");
     return;
   }
-
   if (mExtractName != extractName) {
     mExtractName = extractName;
     emit extractNameChanged(mExtractName);
-  }
-}
-
-qint64 FileExtractor::getReadBytes () const {
-  return mReadBytes;
-}
-
-void FileExtractor::setReadBytes (qint64 readBytes) {
-  if (mReadBytes != readBytes) {
-    mReadBytes = readBytes;
-    emit readBytesChanged(readBytes);
-  }
-}
-
-qint64 FileExtractor::getTotalBytes () const {
-  return mTotalBytes;
-}
-
-void FileExtractor::setTotalBytes (qint64 totalBytes) {
-  if (mTotalBytes != totalBytes) {
-    mTotalBytes = totalBytes;
-    emit totalBytesChanged(totalBytes);
   }
 }
 
@@ -214,23 +155,45 @@ void FileExtractor::setExtracting (bool extracting) {
   }
 }
 
-void FileExtractor::clean () {
-  mStream.reset(nullptr);
-  mDestinationFile.close();
+qint64 FileExtractor::getReadBytes () const {
+  return mReadBytes;
+}
 
+void FileExtractor::setReadBytes (qint64 readBytes) {
+  if (mReadBytes != readBytes) {
+	mReadBytes = readBytes;
+	emit readBytesChanged(readBytes);
+  }
+}
+
+qint64 FileExtractor::getTotalBytes () const {
+  return mTotalBytes;
+}
+
+void FileExtractor::setTotalBytes (qint64 totalBytes) {
+  if (mTotalBytes != totalBytes) {
+	mTotalBytes = totalBytes;
+	emit totalBytesChanged(totalBytes);
+  }
+}
+void FileExtractor::clean () {
   if (mTimer) {
     mTimer->stop();
     mTimer->deleteLater();
     mTimer = nullptr;
   }
-
   setExtracting(false);
 }
 
+void FileExtractor::emitExtractorFailed () {
+  qWarning() << QStringLiteral("Unable to extract file `%1`. bzip2 is unavailable, please install it.")
+	.arg(mFile);
+  clean();
+  emit extractFailed();
+}
 void FileExtractor::emitExtractFailed (int error) {
-  qWarning() << QStringLiteral("Unable to extract file: `%1` (code: %2).")
+  qWarning() << QStringLiteral("Unable to extract file with bzip2: `%1` (code: %2).")
     .arg(mFile).arg(error);
-  mDestinationFile.remove();
   clean();
   emit extractFailed();
 }
@@ -241,28 +204,33 @@ void FileExtractor::emitExtractFinished () {
 }
 
 void FileExtractor::emitOutputError () {
-  qWarning() << QStringLiteral("Could not write into `%1` (%2).")
-    .arg(mDestinationFile.fileName()).arg(mDestinationFile.errorString());
-  mDestinationFile.remove();
+  qWarning() << QStringLiteral("Could not write into `%1`.")
+    .arg(mDestinationFile);
   clean();
   emit extractFailed();
 }
 
 void FileExtractor::handleExtraction () {
-  char buffer[4096];
-
-  void *stream = mStream.data()->getInternalStream();
-
-  int32_t readBytes = mz_stream_bzip_read(stream, buffer, sizeof buffer);
-  if (readBytes == 0)
+  QString tempDestination = mDestinationFile+"."+QFileInfo(mFile).suffix();
+  QStringList args;
+  args.push_back("-dq");
+  args.push_back(tempDestination);
+  QFile::copy(mFile, tempDestination);
+#ifdef WIN32
+  int result = QProcess::execute("bzip2.exe", args);
+  if( result == -2)
+	  result = QProcess::execute(Utils::coreStringToAppString(Paths::getToolsDirPath())+"\\bzip2.exe", args);
+#else
+  int result = QProcess::execute("bzip2", args);
+#endif
+  if(QFile::exists(tempDestination))
+       QFile::remove(tempDestination);
+  if (result == 0)
     emitExtractFinished();
-  else if (readBytes < 0)
-    emitExtractFailed(readBytes);
-  else {
-    int64_t inputReadBytes;
-    mz_stream_bzip_get_prop_int64(stream, MZ_STREAM_PROP_TOTAL_IN, &inputReadBytes);
-    setReadBytes(inputReadBytes);
-    if (mDestinationFile.write(buffer, readBytes) == -1)
-      emitOutputError();
-  }
+  else if (result > 0)
+    emitExtractFailed(result);
+  else if(result == -2)
+	  emitExtractorFailed();
+  else
+    emitOutputError();
 }

@@ -64,13 +64,6 @@ find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
 find_package(bctoolbox CONFIG)
 
-if(WIN32)
-	find_package(minizip)
-	set(MINIZIP_INCLUDE_DIRS "${MINIZIP_PREFIX}/${MINIZIP_INCLUDE_DIRS}")
-	if(ENABLE_BUILD_VERBOSE)
-		message("MINIZIP : ${MINIZIP_PREFIX}, ${MINIZIP_INCLUDE_DIRS} => ${MINIZIP_LIBRARIES}")
-	endif()
-endif()
 if(ENABLE_BUILD_VERBOSE)
 	message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}, PREFIX_PATH=${CMAKE_PREFIX_PATH}")
 	message("LINPHONE : ${LINPHONE_INCLUDE_DIRS} => ${LINPHONE_LIBRARIES}")
@@ -132,6 +125,7 @@ set(SOURCES
     src/components/core/CoreManager.cpp
     src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
     src/components/file/FileDownloader.cpp
+    src/components/file/FileExtractor.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
     src/components/other/colors/Colors.cpp
@@ -190,6 +184,7 @@ set(HEADERS
     src/components/core/CoreManager.hpp
     src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
     src/components/file/FileDownloader.hpp
+    src/components/file/FileExtractor.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
     src/components/other/colors/Colors.hpp
@@ -212,13 +207,7 @@ set(HEADERS
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
     )
-if(WIN32)
-	list(APPEND SOURCES  src/components/file/FileExtractor.cpp)
-	list(APPEND HEADERS  src/components/file/FileExtractor.hpp)
-else()
-	list(APPEND SOURCES  src/components/file/FileProcessExtractor.cpp)
-	list(APPEND HEADERS  src/components/file/FileProcessExtractor.hpp)
-endif()
+
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
@@ -362,14 +351,6 @@ endif ()
 add_subdirectory("${LANGUAGES_DIRECTORY}" "assets/languages")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
 
-
-# Build and dependencies
-if(WIN32)
-	link_directories("${MINIZIP_PREFIX}/${MINIZIP_LIBRARY_DIRS}")
-endif()
-
-
-
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 if(TARGET_NAME_ONLY)
@@ -416,10 +397,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}"
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
 set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
-if(WIN32)
-	list(APPEND INCLUDED_DIRECTORIES "${MINIZIP_INCLUDE_DIRS}")
-	list(APPEND LIBRARIES ${MINIZIP_LIBRARIES})
-endif()
+
 if(ENABLE_BUILD_VERBOSE)
 	message("LIBRARIES : ${LIBRARIES}")
 endif()
