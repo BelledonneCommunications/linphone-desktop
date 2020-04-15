@@ -1111,13 +1111,6 @@
     </message>
 </context>
 <context>
-    <name>QObject</name>
-    <message>
-        <source>The application&apos;s location is not correct: You have to put your &apos;bin/&apos; folder next to &apos;lib/&apos; folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
@@ -1161,6 +1154,10 @@
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

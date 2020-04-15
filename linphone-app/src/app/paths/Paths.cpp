@@ -130,7 +130,7 @@ static inline QDir getAppPackageDir () {
   } else if( !dir.exists("lib") && !dir.exists("lib64")){// Check if these folders are in the current path
     dir.cdUp();
     if(!dir.exists("lib") && !dir.exists("lib64"))
-            qWarning() << QObject::tr("The application's location is not correct: You have to put your 'bin/' folder next to 'lib/' folder.");
+            qWarning() <<"The application's location is not correct: You have to put your 'bin/' folder next to 'lib/' folder.";
   }
   return dir;
 }

@@ -1003,15 +1003,15 @@ your friend&apos;s SIP address or username.</translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Preferences</translation>
+        <translation>Preferences</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">About</translation>
+        <translation>About</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Quit</translation>
+        <translation>Quit</translation>
     </message>
 </context>
 <context>
@@ -1116,13 +1116,6 @@ your friend&apos;s SIP address or username.</translation>
     </message>
 </context>
 <context>
-    <name>QObject</name>
-    <message>
-        <source>The application&apos;s location is not correct: You have to put your &apos;bin/&apos; folder next to &apos;lib/&apos; folder.</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
@@ -1167,7 +1160,11 @@ your friend&apos;s SIP address or username.</translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation>Mailer cannot be found but logs were upload at %1</translation>
+        <translation>Mailer cannot be found but logs were uploaded to %1</translation>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation>Logs were uploaded to %1</translation>
     </message>
 </context>
 <context>

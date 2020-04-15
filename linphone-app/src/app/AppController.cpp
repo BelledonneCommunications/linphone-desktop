@@ -45,23 +45,20 @@ AppController::AppController (int &argc, char *argv[]) {
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-  // Useful to share camera on Fullscreen (other context).
+  // Useful to share camera on Fullscreen (other context)
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+    // Do not use APPLICATION_NAME here.
+  // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
+  QCoreApplication::setApplicationName(EXECUTABLE_NAME);
+  QApplication::setOrganizationDomain(EXECUTABLE_NAME);
+  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
 
   mApp = new App(argc, argv);
-  // ---------------------------------------------------------------------------
-
-
-
+  
   // ---------------------------------------------------------------------------
   // App creation.
   // ---------------------------------------------------------------------------
 
-  // Do not use APPLICATION_NAME here.
-  // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
-  QCoreApplication::setApplicationName(EXECUTABLE_NAME);
-  QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
-  QApplication::setOrganizationDomain(EXECUTABLE_NAME);
   QQuickStyle::setStyle("Default");
   if (mApp->isSecondary()) {
     #ifdef Q_OS_MACOS

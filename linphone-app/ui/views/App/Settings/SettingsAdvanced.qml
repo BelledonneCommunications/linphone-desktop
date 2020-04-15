@@ -87,13 +87,14 @@ TabContainer {
       action: CoreManager.sendLogs
       width: parent.width
 
+      
       Connections {
         target: CoreManager
 
         onLogsUploaded: Logic.handleLogsUploaded(url)
       }
     }
-
+    onVisibleChanged: sendLogsBlock.setText('')
     // -------------------------------------------------------------------------
     // Developer settings.
     // -------------------------------------------------------------------------

@@ -194,8 +194,9 @@ void CoreManager::forceRefreshRegisters () {
 void CoreManager::sendLogs () const {
   Q_CHECK_PTR(mCore);
 
-  qInfo() << QStringLiteral("Send logs to: `%1`.")
-    .arg(Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()));
+  qInfo() << QStringLiteral("Send logs to: `%1` from `%2`.")
+    .arg(Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()))
+    .arg(Utils::coreStringToAppString(mCore->getLogCollectionPath()));
   mCore->uploadLogCollection();
 }
 

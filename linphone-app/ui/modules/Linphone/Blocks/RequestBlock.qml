@@ -19,6 +19,10 @@ Item {
     block._loading = true
     action()
   }
+  function setText(txt){
+    errorBlock.text = txt
+  }
+  
 
   function stop (error) {
     errorBlock.text = error
@@ -29,11 +33,12 @@ Item {
 
   height: RequestBlockStyle.height
 
-  Text {
+  TextEdit {
     id: errorBlock
+    readOnly: true
+    selectByMouse: true
 
     color: RequestBlockStyle.error.color
-    elide: Text.ElideRight
 
     font {
       italic: true
