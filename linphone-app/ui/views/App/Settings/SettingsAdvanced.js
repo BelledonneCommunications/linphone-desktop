@@ -39,12 +39,16 @@ function cleanLogs () {
 
 function handleLogsUploaded (url) {
   if (url.length && Utils.startsWith(url, 'http')) {
-    sendLogsBlock.stop('')
-    Qt.openUrlExternally(
-      'mailto:' + encodeURIComponent(Linphone.SettingsModel.logsEmail) +
-      '?subject=' + encodeURIComponent('Desktop Linphone Log') +
-      '&body=' + encodeURIComponent(url)
-    )
+
+    if(Qt.openUrlExternally(
+          'mailto:' + encodeURIComponent(Linphone.SettingsModel.logsEmail) +
+          '?subject=' + encodeURIComponent('Desktop Linphone Log') +
+          '&body=' + encodeURIComponent(url)
+        ))
+        sendLogsBlock.stop('')
+    else
+        sendLogsBlock.stop(qsTr('logsMailerFailed').replace('%1', encodeURIComponent(url)))
+
   } else {
     sendLogsBlock.stop(qsTr('logsUploadFailed'))
   }

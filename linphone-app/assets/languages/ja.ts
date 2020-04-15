@@ -1159,6 +1159,10 @@
         <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

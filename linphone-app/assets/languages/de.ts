@@ -1159,6 +1159,10 @@ Server URL ist nicht konfiguriert.</translation>
         <source>developerSettingsEnabledLabel</source>
         <translation>Entwicklereinstellungen aktivieren</translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

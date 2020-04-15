@@ -1164,6 +1164,10 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
         <source>developerSettingsEnabledLabel</source>
         <translation>Geliştirici ayarlarını etkinleştir</translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

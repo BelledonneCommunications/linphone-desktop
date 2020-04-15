@@ -1162,6 +1162,10 @@
         <source>developerSettingsEnabledLabel</source>
         <translation>Включить настройки для разработчиков</translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

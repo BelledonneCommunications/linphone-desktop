@@ -1162,6 +1162,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>developerSettingsEnabledLabel</source>
         <translation>Aktivera utvecklarinställningar</translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
