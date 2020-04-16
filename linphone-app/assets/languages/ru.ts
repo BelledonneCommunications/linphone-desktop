@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Мы отправили SMS с кодом подтверждения на %1. Для завершения подтверждения вашего номера телефона, пожалуйста, введите ниже 4-значный код.</translation>
+        <translation type="unfinished">Чтобы активировать аккаунт, следуйте инструкциям, которые мы отправили на %1, затем нажмите ниже.</translation>
     </message>
 </context>
 <context>
@@ -325,19 +325,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>Удаленная сторона отклонила вызов.</translation>
+        <translation>Удалённая сторона отклонила вызов.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>Удаленная сторона не найдена.</translation>
+        <translation>Удалённая сторона не найдена.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation>Удаленная сторона занята.</translation>
+        <translation>Удалённая сторона занята.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>Удаленная сторона не может принять вызов.</translation>
+        <translation>Удалённая сторона не может принять вызов.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -482,7 +482,7 @@
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation>ОПисание</translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
@@ -825,7 +825,7 @@
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation>Невозможно установить эту удаленную настройку uri.</translation>
+        <translation>Невозможно установить эту удалённую настройку uri.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
@@ -1157,6 +1157,7 @@
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

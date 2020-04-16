@@ -613,6 +613,10 @@
         <source>abortEditDescriptionText</source>
         <translation>Ви впевнені, що бажаєте скасувати зміну контакту?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -653,7 +657,19 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Ви впевнені, що волієте вичистити цю історію?</translation>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -865,7 +881,7 @@
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation>Виклик зшифрований з: %1.</translation>
+        <translation>Виклик зашифрований з: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
@@ -959,6 +975,10 @@
         <source>smartSearchBarTooltip</source>
         <translation>Використовуйте розумний пошуковий рядок, щоб одразу почати звуковий або відео виклик, відіслати повідомлення чи додати новий контакт. Просто уведіть SIP адресу чи ім&apos;я користувача вашого контакту.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -973,6 +993,21 @@
     <message>
         <source>quit</source>
         <translation>Вийти</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindowTopMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1118,6 +1153,15 @@
         <source>developerSettingsEnabledLabel</source>
         <translation>Увімкнути налаштування для розробників</translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -1152,6 +1196,22 @@
     <message>
         <source>showAudioCodecsLabel</source>
         <translation>Показати звукові кодеки</translation>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1255,6 +1315,9 @@
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Виклик призупинено</translation>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>

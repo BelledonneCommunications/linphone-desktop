@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>%1 numarasına doğrulama kodu içeren SMS gönderdik. Telefon numarası doğrulamanızı tamamlamak için lütfen 4 haneli kodu aşağıya girin.</translation>
+        <translation type="unfinished">Hesabınızı etkinleştirmek için: %1 adresine gönderdiğimiz yönergeleri takip edin ardından aşağıdakine tıklayın.</translation>
     </message>
 </context>
 <context>
@@ -1159,6 +1159,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

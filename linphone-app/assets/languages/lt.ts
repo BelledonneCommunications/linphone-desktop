@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>SMS žinutę su patvirtinimo kodu išsiuntėme į %1. Norėdami užbaigti savo telefono numerio patvirtinimą, žemiau įveskite 4 skaitmenų kodą.</translation>
+        <translation type="unfinished">Norėdami aktyvuoti savo paskyrą: sekite jums į %1 išsiųstas instrukcijas, o tuomet spustelėkite žemiau.</translation>
     </message>
 </context>
 <context>
@@ -1159,6 +1159,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

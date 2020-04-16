@@ -350,6 +350,8 @@ endif ()
 # Add languages support.
 add_subdirectory("${LANGUAGES_DIRECTORY}" "assets/languages")
 list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_FILENAME}")
+get_directory_property(TS_FILES DIRECTORY "${LANGUAGES_DIRECTORY}"  DEFINITION TS_FILES)
+list(APPEND SOURCES ${TS_FILES})
 
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
@@ -472,4 +474,7 @@ source_group(
     )
 source_group(
     "Svg" REGULAR_EXPRESSION ".+\.svg$"
+    )
+source_group(
+    "Lang" REGULAR_EXPRESSION ".+\.ts$"
     )

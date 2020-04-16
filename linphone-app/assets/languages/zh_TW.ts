@@ -613,6 +613,10 @@
         <source>abortEditDescriptionText</source>
         <translation>您確定要取消聯絡人修改嗎？</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -654,6 +658,17 @@
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>你確定要清除這個記錄嗎？</translation>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -956,9 +971,28 @@
         <source>smartSearchBarTooltip</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished"/>
+    </message>
+</context>
+<context>
+    <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
         <translation type="unfinished"/>
@@ -1115,6 +1149,15 @@
         <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -1148,6 +1191,22 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1251,6 +1310,10 @@
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>

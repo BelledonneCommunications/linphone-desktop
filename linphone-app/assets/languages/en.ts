@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>We have sent a SMS with a validation code to %1. To complete your phone number verification, please enter the 4-digits code below.</translation>
+        <translation>An SMS containing a validation code was sent to %1. To complete the phone number verification, please enter the 4-digit code below.</translation>
     </message>
 </context>
 <context>
@@ -393,7 +393,7 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation>HANGUP</translation>
+        <translation>END CALL</translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -405,7 +405,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation>PAUSE CALL</translation>
+        <translation>HOLD CALL</translation>
     </message>
 </context>
 <context>
@@ -428,7 +428,7 @@
     <message>
         <source>noFileTransferUrl</source>
         <translation>Unable to send file.
-Server url not configured.</translation>
+Server URL not configured.</translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -561,7 +561,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation>WEB SITE(S)</translation>
+        <translation>WEBSITE(S)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -593,7 +593,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation>Web site</translation>
+        <translation>Website</translation>
     </message>
     <message>
         <source>street</source>
@@ -659,7 +659,7 @@ Server url not configured.</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Are you sure you want to clean this history?</translation>
+        <translation>Are you sure you want to clear this history?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
@@ -1131,7 +1131,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation>Logs upload server url</translation>
+        <translation>Logs upload server URL</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
@@ -1314,11 +1314,11 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation>Keep calls window in background</translation>
+        <translation>Keep calls windows in background</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation>Call pause enabled</translation>
+        <translation>Hold call enabled</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
@@ -1472,7 +1472,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation>ERASE PASSWORDS</translation>
+        <translation>REMOVE ALL PASSWORDS</translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1492,7 +1492,7 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>Are you sure you want to erase all passwords?</translation>
+        <translation>Are you sure you want to remove all passwords?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>

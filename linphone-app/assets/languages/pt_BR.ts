@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Enviamos um SMS com um código de validação para %1. Para concluir a confirmação do seu número de telefone, insira o código de 4 dígitos abaixo.</translation>
+        <translation type="unfinished">Para ativar sua conta: siga as instruções que enviamos em %1 e clique abaixo.</translation>
     </message>
 </context>
 <context>
@@ -1159,6 +1159,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

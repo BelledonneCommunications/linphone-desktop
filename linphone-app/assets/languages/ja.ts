@@ -1154,6 +1154,7 @@
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

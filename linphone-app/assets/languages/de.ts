@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Wir haben eine SMS mit einem Validierungs-Code an %1 gesendet. Um die Verifizierung der Telefonnummer abzuschließen, geben Sie bitten den 4-stelligen Code unten ein.</translation>
+        <translation type="unfinished">Um Ihr Konto zu aktivieren, folgen Sie den Anweisungen, die wir an %1 gesendet haben. Anschließend klicken Sie hier:</translation>
     </message>
 </context>
 <context>
@@ -78,7 +78,7 @@
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederherstellen</translation>
     </message>
     <message>
         <source>quit</source>
@@ -949,7 +949,10 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Laden Sie die Anwendung auf Ihren Computer um kostenlos mit anderen Linphone Benutzern zu telefonieren und zu chatten.
+
+Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -1154,6 +1157,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1498,23 +1502,23 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellung eines Benutzerkontos aktivieren</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nutzung eines Benutzerkontos aktivieren</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nutzung sonstiger Benutzerkonten aktivieren</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abrufen von Konfigurationsdaten aktivieren</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefonnummern werden unterstützt</translation>
     </message>
 </context>
 <context>
@@ -1616,11 +1620,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation>Ordner für gespeicherter Screenshots</translation>
+        <translation>Ordner für gespeicherte Screenshots</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ordner für gespeicherte Anrufe</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1664,7 +1668,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Anwendung automatisch starten</translation>
     </message>
 </context>
 <context>
@@ -1711,7 +1715,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeige Videocodecs</translation>
     </message>
 </context>
 <context>

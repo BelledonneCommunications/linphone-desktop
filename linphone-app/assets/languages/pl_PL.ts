@@ -10,26 +10,26 @@
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>AKTYWUJ SWOJE KONTO: %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>AKTYWUJ</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Aby aktywować konto: postępuj zgodnie z instrukcjami wysłanymi na %1, następnie kliknij poniżej.</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>AKTYWUJ SWOJE KONTO: %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>AKTYWUJ</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -44,7 +44,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation>wskaż plik konfiguracyjny %1</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -52,124 +52,124 @@
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>Wystartuj na pasku zadań, nie pokazuj głównego interfejsu</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>plik</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>pokaż tą pomoc</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>pokaż wersję aplikacji</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation>wyświetla menu pomocy odnośnie uzywania %1 przez linię komend</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation>wyślij rozkaz dla aplikacji przez linię komend</translation>
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"/>
+        <translation>Przywróć</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Wyjdź</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Preferencje</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>O programie</translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>WRÓĆ</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>UŻYJ KONTA %1</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>UŻYJ KONTA SIP</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>POBIERZ ZDALNĄ KONFIGURACJĘ</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>WITAJ</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ten asystant pomoże Ci skonfigurować i używać Twojego konta sip</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>STWÓRZ KONTO %1</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Nieudane logowanie. Sprawdź login/hasło.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Za krótkie (min. %1 znaków)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Za dłógie (max. %1 znaków)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Wykryty błędny znak. (regex: %1)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Błędna nazwa użytkownika.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Za krótkie (min. %1 znaków)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Za dłógie (max. %1 znaków)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Wykryty błędny znak. (regex: %1)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Brakujących znaków: `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>Nie mogę wysłać żądania.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Błędny adres email.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
@@ -479,7 +479,7 @@
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"/>
+        <translation>Opis</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
@@ -491,58 +491,58 @@
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"/>
+        <translation>Parametry</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>KONFERENCJA</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"/>
+        <translation>KONFERENCJA</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"/>
+        <translation>Zarządzaj uczestnikami swojej konferencji.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANULUJ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>START</translation>
     </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANULUJ</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>POTWIERDŹ</translation>
     </message>
 </context>
 <context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz usunąć kontakt z książki kontaktów?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
@@ -550,11 +550,11 @@
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>ADRES</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation type="unfinished"/>
+        <translation>E-MAIL(E)</translation>
     </message>
     <message>
         <source>webSites</source>
@@ -562,19 +562,19 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Wybierz swój avatar</translation>
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"/>
+        <translation>FIRMY</translation>
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"/>
+        <translation>ZAPISZ</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANULUJ</translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
@@ -586,7 +586,7 @@
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Email</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
@@ -594,15 +594,15 @@
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"/>
+        <translation>Ulica</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"/>
+        <translation>Kod pocztowy</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"/>
+        <translation>Kraj</translation>
     </message>
     <message>
         <source>locality</source>
@@ -610,6 +610,10 @@
     </message>
     <message>
         <source>abortEditDescriptionText</source>
+        <translation>Czy na pewno chcesz anulować edycję kontaktu?</translation>
+    </message>
+    <message>
+        <source>tooltipShowConversation</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -617,41 +621,53 @@
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Znajdź kontakt</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"/>
+        <translation>Wszystko</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"/>
+        <translation>Połączony</translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>DODAJ KONTAKT</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation type="unfinished"/>
+        <translation>Czy na pewno chcesz usunąć kontakt z książki kontaktów?</translation>
     </message>
 </context>
 <context>
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation type="unfinished"/>
+        <translation>WSZYSTKIE</translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"/>
+        <translation>POŁĄCZENIA</translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation type="unfinished"/>
+        <translation>WIADOMOŚCI</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>cleanHistory</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -825,23 +841,23 @@
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation type="unfinished"/>
+        <translation>Zaproś przyjaciół na %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation type="unfinished"/>
+        <translation>ZAPROŚ PRZYJACIÓŁ</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation type="unfinished"/>
+        <translation>Utwórz lub zarządzaj swoim kontem %1.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>KONFIGURATOR KONTA</translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"/>
+        <translation>KONFIGURATOR</translation>
     </message>
     <message>
         <source>showTooltips</source>
@@ -849,7 +865,7 @@
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"/>
+        <translation>ZAPROŚ</translation>
     </message>
 </context>
 <context>
@@ -918,7 +934,7 @@
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Zaproś Przyjaciół</translation>
     </message>
     <message>
         <source>defaultMessage</source>
@@ -937,15 +953,15 @@
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Znajdź kontakt, rozpocznij rozmowę lub czat</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"/>
+        <translation>START</translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation type="unfinished"/>
+        <translation>KONTAKTY</translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
@@ -955,9 +971,28 @@
         <source>smartSearchBarTooltip</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation>Preferencje</translation>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>O programie</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Wyjdź</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
         <translation type="unfinished"/>
@@ -1069,7 +1104,7 @@
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation type="unfinished"/>
+        <translation>Rozłączony</translation>
     </message>
 </context>
 <context>
@@ -1114,6 +1149,15 @@
         <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -1147,6 +1191,22 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1222,11 +1282,11 @@
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Kontakty</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Włącz kontakty</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
@@ -1250,6 +1310,10 @@
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1428,7 +1492,7 @@
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>Konfigurator</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
@@ -1698,14 +1762,14 @@
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation type="unfinished"/>
+        <translation>DODAJ KONTAKT</translation>
     </message>
 </context>
 <context>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"/>
+        <translation>Ostatnie</translation>
     </message>
 </context>
 <context>
@@ -1742,11 +1806,11 @@
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Nazwa użytkownika</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Hasło</translation>
     </message>
 </context>
 <context>
@@ -1773,7 +1837,7 @@
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Hasło</translation>
     </message>
     <message>
         <source>transportLabel</source>
@@ -1781,7 +1845,7 @@
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"/>
+        <translation>Dodanie konta niemożliwe.</translation>
     </message>
 </context>
 <context>
@@ -1811,7 +1875,7 @@
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"/>
+        <translation>Czy chcesz pobrać %1 (%2)?</translation>
     </message>
 </context>
 </TS>

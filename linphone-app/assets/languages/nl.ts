@@ -3,33 +3,33 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>ACTIVEER JE %1 ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ACTIVEER</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"/>
+        <translation>Omje account te activeren: volg de instructies die we stuurden naar %1, en klik dan hieronder.</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>ACTIVEER JE %1 ACCOUNT</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"/>
+        <translation>ACTIVEER</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -40,96 +40,96 @@
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"/>
+        <translation>log naar stdout bepaalde debug informatie tijdens de uitvoering</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"/>
+        <translation>kies het %1 configuratiebestand dat gebruikt moet worden</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"/>
+        <translation>Een vrije (libre) SIP videofoon.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"/>
+        <translation>opstarten in het systeemmenu, toon geen gebruikersinterface</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"/>
+        <translation>bestand</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"/>
+        <translation>toon deze help</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>toon de app versie</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"/>
+        <translation>toon het help scherm te gebruiken %1 met de CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"/>
+        <translation>stuur een instructie naar de applicatie richting de commando lijn</translation>
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"/>
+        <translation>Herstel</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Verlaten</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Voorkeuren</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Over</translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>TERUG</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>GEBRUIK EEN %1 ACCOUNT</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>GEBRUIK EEN SIP ACCOUNT</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"/>
+        <translation>HAAL EXTERNE CONFIGURATIE OP</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"/>
+        <translation>WELKOM</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"/>
+        <translation>Deze assistent zal u helpen om uw sip account in te stellen en te gebruiken.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>MAAK EEN %1 ACCOUNT AAN</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"/>
+        <translation>Inloggen gefaald. Controleer aub. uw gebruikersnaam en paswoord.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
@@ -137,27 +137,27 @@
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Te lang! (maximaal %1 tekens)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige tekens herkend. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige gebruikersnaam.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Te kort! (minimaal %1 tekens)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Te lang! (maximaal %1 tekens)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige tekens herkend. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -169,23 +169,23 @@
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Verkeerd email adres.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"/>
+        <translation>Verkeerd email adres of ongeldige tekens.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>Server fout: kon de SMS niet verzenden.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"/>
+        <translation>Deze account bestaat reeds.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>SMS activatie is gefaald.</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -193,19 +193,19 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldig telefoonnummer!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Te kort!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Te lang!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldige landcode!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
@@ -213,7 +213,7 @@
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation type="unfinished"/>
+        <translation>Kon deze account niet toevoegen.</translation>
     </message>
 </context>
 <context>
@@ -251,23 +251,23 @@
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation type="unfinished"/>
+        <translation>Codec</translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Upload bandbreedte</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Download bandbreedte</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"/>
+        <translation>Geschatte download bandbreedte</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"/>
+        <translation>ICE status</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
@@ -319,23 +319,23 @@
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Ongeldig</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"/>
+        <translation>Tegenpartij weigerde de oproep.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"/>
+        <translation>Tegenpartij werd niet gevonden.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"/>
+        <translation>Tegenpartij is bezet.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"/>
+        <translation>Tegenpartij kan de oproep niet aannemen.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -410,18 +410,18 @@
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Oproepen</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Bent u zeker dat u alle oproepen wil afbreken?</translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Voer uw boodschap in</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -429,7 +429,7 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 is aan het typen...</translation>
     </message>
 </context>
 <context>
@@ -452,7 +452,7 @@
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Toon het hoofdvenster van de applicatie.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
@@ -495,21 +495,21 @@
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation type="unfinished"/>
+        <translation>CONFERENTIE</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation type="unfinished"/>
+        <translation>CONFERENTIE</translation>
     </message>
 </context>
 <context>
@@ -520,7 +520,7 @@
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULEREN</translation>
     </message>
     <message>
         <source>confirm</source>
@@ -531,11 +531,11 @@
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"/>
+        <translation>ANNULEREN</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>BEVESTIGEN</translation>
     </message>
 </context>
 <context>
@@ -612,6 +612,10 @@
         <source>abortEditDescriptionText</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -652,6 +656,18 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>cleanHistory</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -717,7 +733,7 @@
     <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation type="unfinished"/>
+        <translation>MAAK EEN %1 ACCOUNT AAN</translation>
     </message>
     <message>
         <source>countryLabel</source>
@@ -725,11 +741,11 @@
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>Telefoonnummer</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Gebruikersnaam</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -763,11 +779,11 @@
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation type="unfinished"/>
+        <translation>Binnenkomende oproep</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation type="unfinished"/>
+        <translation>Uitgaande oproep</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
@@ -955,9 +971,28 @@
         <source>smartSearchBarTooltip</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>about</source>
+        <translation>Over</translation>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Verlaten</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
         <translation type="unfinished"/>
@@ -975,7 +1010,7 @@
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
@@ -983,7 +1018,7 @@
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished"/>
+        <translation>Actieve account</translation>
     </message>
 </context>
 <context>
@@ -1019,7 +1054,7 @@
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>BEVESTIGEN</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
@@ -1114,6 +1149,15 @@
         <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -1147,6 +1191,22 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1250,6 +1310,10 @@
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
         <translation type="unfinished"/>
     </message>
 </context>

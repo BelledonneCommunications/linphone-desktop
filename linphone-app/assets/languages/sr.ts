@@ -3,7 +3,7 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -64,7 +64,7 @@
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"/>
+        <translation>prikaži verziju aplikacije</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
@@ -95,7 +95,7 @@
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"/>
+        <translation>NAZAD</translation>
     </message>
 </context>
 <context>
@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"/>
+        <translation>KORISTI SIP NALOG</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
@@ -165,11 +165,11 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"/>
+        <translation>Nije moguće poslati zahtev.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"/>
+        <translation>Neispravna email adresa.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
@@ -177,11 +177,11 @@
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"/>
+        <translation>Greška na serveru: Nije moguće poslati sms.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"/>
+        <translation>Ovaj nalog već postoji.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Molimo proverite da ste validirali Vaš nalog ili pokušajte ponovo.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -197,11 +197,11 @@
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation type="unfinished"/>
+        <translation>Prekratko!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation type="unfinished"/>
+        <translation>Predugačko!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
@@ -224,7 +224,7 @@
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"/>
+        <translation>PRIJAVA</translation>
     </message>
     <message>
         <source>identityLabel</source>
@@ -232,7 +232,7 @@
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Lozinka</translation>
     </message>
     <message>
         <source>authenticationRequestDescription</source>
@@ -303,7 +303,7 @@
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation type="unfinished"/>
+        <translation>U toku</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
@@ -319,7 +319,7 @@
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation type="unfinished"/>
+        <translation>Neispravno</translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
@@ -361,11 +361,11 @@
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Audio</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Video</translation>
     </message>
 </context>
 <context>
@@ -395,7 +395,7 @@
     </message>
     <message>
         <source>resumeCall</source>
-        <translation type="unfinished"/>
+        <translation>NASTAVI POZIV</translation>
     </message>
     <message>
         <source>transferCall</source>
@@ -410,7 +410,7 @@
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Pozivi</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
@@ -421,7 +421,7 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Unesite poruku</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -429,7 +429,7 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation type="unfinished"/>
+        <translation>%1 kuca...</translation>
     </message>
 </context>
 <context>
@@ -448,7 +448,7 @@
     </message>
     <message>
         <source>commandsName</source>
-        <translation type="unfinished"/>
+        <translation>lista komandi:</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
@@ -475,11 +475,11 @@
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation type="unfinished"/>
+        <translation>Ime</translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation type="unfinished"/>
+        <translation>Opis</translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
@@ -491,11 +491,11 @@
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation type="unfinished"/>
+        <translation>Parametri</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation type="unfinished"/>
+        <translation>Status</translation>
     </message>
 </context>
 <context>
@@ -550,7 +550,7 @@
     </message>
     <message>
         <source>address</source>
-        <translation type="unfinished"/>
+        <translation>ADRESA</translation>
     </message>
     <message>
         <source>emails</source>
@@ -562,7 +562,7 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation type="unfinished"/>
+        <translation>Odaberite Vaš avatar</translation>
     </message>
     <message>
         <source>companies</source>
@@ -570,7 +570,7 @@
     </message>
     <message>
         <source>save</source>
-        <translation type="unfinished"/>
+        <translation>SAČUVAJ</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -582,7 +582,7 @@
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation type="unfinished"/>
+        <translation>Kompanija</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
@@ -594,15 +594,15 @@
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"/>
+        <translation>Ulica</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation type="unfinished"/>
+        <translation>Poštanski kod</translation>
     </message>
     <message>
         <source>country</source>
-        <translation type="unfinished"/>
+        <translation>Država</translation>
     </message>
     <message>
         <source>locality</source>
@@ -610,6 +610,10 @@
     </message>
     <message>
         <source>abortEditDescriptionText</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipShowConversation</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -621,11 +625,11 @@
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation type="unfinished"/>
+        <translation>Svi</translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation type="unfinished"/>
+        <translation>Povezan</translation>
     </message>
     <message>
         <source>addContact</source>
@@ -640,7 +644,7 @@
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation type="unfinished"/>
+        <translation>SVI</translation>
     </message>
     <message>
         <source>displayCalls</source>
@@ -648,10 +652,22 @@
     </message>
     <message>
         <source>displayMessages</source>
-        <translation type="unfinished"/>
+        <translation>PORUKE</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>cleanHistory</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -686,7 +702,7 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Korisničko ime</translation>
     </message>
     <message>
         <source>emailLabel</source>
@@ -694,15 +710,15 @@
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"/>
+        <translation>Lozinka</translation>
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Potvrda lozinke</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation type="unfinished"/>
+        <translation>Unesene lozinke se ne poklapaju</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -725,11 +741,11 @@
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"/>
+        <translation>Telefonski broj</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Korisničko ime</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -841,7 +857,7 @@
     </message>
     <message>
         <source>assistantButton</source>
-        <translation type="unfinished"/>
+        <translation>ASISTENT</translation>
     </message>
     <message>
         <source>showTooltips</source>
@@ -876,11 +892,11 @@
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Pokreni snimanje.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Stopiraj snimanje.</translation>
     </message>
 </context>
 <context>
@@ -891,22 +907,22 @@
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Pokreni snimanje.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"/>
+        <translation>Stopiraj snimanje.</translation>
     </message>
 </context>
 <context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation type="unfinished"/>
+        <translation>Prijateljeva email adresa</translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation type="unfinished"/>
+        <translation>Poruka</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -955,9 +971,28 @@
         <source>smartSearchBarTooltip</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation>Izlaz</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
         <translation type="unfinished"/>
@@ -983,14 +1018,14 @@
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation type="unfinished"/>
+        <translation>Aktivni nalog</translation>
     </message>
 </context>
 <context>
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation type="unfinished"/>
+        <translation>Kopiraj</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
@@ -1001,7 +1036,7 @@
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"/>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
@@ -1027,30 +1062,30 @@
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"/>
+        <translation>Preuzimanje %1...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"/>
+        <translation>%1 je instaliran!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"/>
+        <translation>Greška pri instalaciji %1!</translation>
     </message>
 </context>
 <context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
-        <translation type="unfinished"/>
+        <translation>Greška</translation>
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"/>
+        <translation>Pročitano</translation>
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation type="unfinished"/>
+        <translation>Dostavljeno</translation>
     </message>
 </context>
 <context>
@@ -1061,7 +1096,7 @@
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation type="unfinished"/>
+        <translation>Zauzet</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
@@ -1114,12 +1149,21 @@
         <source>developerSettingsEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
-        <translation type="unfinished"/>
+        <translation>Audio parametri</translation>
     </message>
     <message>
         <source>playbackDeviceLabel</source>
@@ -1135,7 +1179,7 @@
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"/>
+        <translation>Zvono</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
@@ -1147,6 +1191,22 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
         <translation type="unfinished"/>
     </message>
 </context>
@@ -1166,7 +1226,7 @@
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"/>
+        <translation>Obavezno</translation>
     </message>
     <message>
         <source>limePreferred</source>
@@ -1178,7 +1238,7 @@
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Pozivi</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
@@ -1190,11 +1250,11 @@
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation type="unfinished"/>
+        <translation>Automatski odgovor</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation type="unfinished"/>
+        <translation>Kašnjenje (u ms)</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
@@ -1222,7 +1282,7 @@
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Kontakti</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
@@ -1252,6 +1312,10 @@
         <source>callPauseEnabledLabel</source>
         <translation type="unfinished"/>
     </message>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
@@ -1261,11 +1325,11 @@
     </message>
     <message>
         <source>allowIpV6Label</source>
-        <translation type="unfinished"/>
+        <translation>Omogući IPv6</translation>
     </message>
     <message>
         <source>transportTitle</source>
-        <translation type="unfinished"/>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
@@ -1297,27 +1361,27 @@
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP UDP port</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP TCP port</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Audio RTP UDP port</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation type="unfinished"/>
+        <translation>Video RTP UDP port</translation>
     </message>
     <message>
         <source>portHeader</source>
-        <translation type="unfinished"/>
+        <translation>Port</translation>
     </message>
     <message>
         <source>randomPortHeader</source>
-        <translation type="unfinished"/>
+        <translation>Koristi nasumični port</translation>
     </message>
     <message>
         <source>enabledPortHeader</source>
@@ -1329,7 +1393,7 @@
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
@@ -1369,11 +1433,11 @@
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation type="unfinished"/>
+        <translation>NIKAD</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Prikaži postavke mreže</translation>
     </message>
     <message>
         <source>generalTitle</source>
@@ -1388,11 +1452,11 @@
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Korisničko ime</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP adresa</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
@@ -1404,15 +1468,15 @@
     </message>
     <message>
         <source>addAccount</source>
-        <translation type="unfinished"/>
+        <translation>DODAJ NALOG</translation>
     </message>
     <message>
         <source>editHeader</source>
-        <translation type="unfinished"/>
+        <translation>Izmena</translation>
     </message>
     <message>
         <source>deleteHeader</source>
-        <translation type="unfinished"/>
+        <translation>Brisanje</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
@@ -1424,19 +1488,19 @@
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"/>
+        <translation>Prikazano ime</translation>
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"/>
+        <translation>Asistent</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Omogući kreiranje naloga</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Omogući upotrebu naloga</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
@@ -1455,27 +1519,27 @@
     <name>SettingsSipAccountsEdit</name>
     <message>
         <source>sipAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP adresa</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"/>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation type="unfinished"/>
+        <translation>SIP Server adresa</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"/>
+        <translation>Trajanje registracije (sec)</translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"/>
+        <translation>Ruta</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"/>
+        <translation>Kontakt parametri</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
@@ -1487,11 +1551,11 @@
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Registracija</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"/>
+        <translation>Omogući AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -1546,7 +1610,7 @@
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"/>
+        <translation>Putanje</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
@@ -1558,7 +1622,7 @@
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation type="unfinished"/>
+        <translation>Jezici</translation>
     </message>
     <message>
         <source>languagesLabel</source>
@@ -1586,7 +1650,7 @@
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"/>
+        <translation>Ostalo</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>

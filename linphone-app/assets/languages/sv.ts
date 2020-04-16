@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Vi har skickat ett SMS med en validerings kod till %1. För att slutföra din telefonnummerverifiering, ange 4 siffror koden nedan.</translation>
+        <translation type="unfinished">För att aktivera ditt konto: Följ anvisningarna som vi skickade till %1, och klicka sedan nedan.</translation>
     </message>
 </context>
 <context>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>skicka en order till programmet via en kommandrad</translation>
     </message>
     <message>
         <source>restore</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Domän</translation>
     </message>
 </context>
 <context>
@@ -269,7 +269,7 @@
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation type="unfinished"></translation>
+        <translation>ICE-tillstånd</translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
@@ -277,15 +277,15 @@
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Förlusthastighet för avsändare</translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Förlusthastighet för mottagare</translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation type="unfinished"></translation>
+        <translation>Skakbuffert</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
@@ -393,7 +393,7 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation>LÄGG PÅ</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -405,7 +405,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation>PAUSA SAMTAL</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -427,8 +427,7 @@
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation>Det gick inte att skicka filen.
-Serverwebbadressen är inte konfigurerad.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -467,11 +466,11 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå med i konferensen som sip-adressen är värd för, som visningsnamn. Om du är ansluten till en proxy-konfiguration, se gå-med-i-konferens-som.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Gå med i konferensen som sip-adressen står som värd för med gäst-sip-adress. Om du inte är ansluten till en proxy-konfiguration, see gå-med-i-konferens.</translation>
     </message>
 </context>
 <context>
@@ -561,7 +560,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation>WEBBPLATS(ER)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -593,7 +592,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation>Webbplats</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>street</source>
@@ -659,7 +658,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Är du säker på att du vill rensa den här historiken?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
@@ -825,7 +824,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"></translation>
+        <translation>Kan inte sätta denna fjärravsättnings-uri.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
@@ -975,7 +974,9 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd det intelligenta sökfältet för att omedelbart starta ljud- och
+videosamtal, skicka ett meddelande, eller lägga till en ny kontakt.
+Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -1020,7 +1021,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation>Närvaro status</translation>
+        <translation>Närvarostatus</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
@@ -1121,7 +1122,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggmapp</translation>
     </message>
     <message>
         <source>sendLogs</source>
@@ -1157,6 +1158,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1311,11 +1313,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation>Behåll samtalsfönster i bakgrunden</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation>Samtals paus aktiverad</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
@@ -1326,7 +1328,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMFs sändningsmetod</translation>
+        <translation>DTMF:s sändningsmetod</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1334,7 +1336,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>transportTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Transport</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
@@ -1374,11 +1376,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljud-RTP UDP-port</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Video-RTP UDP-port</translation>
     </message>
     <message>
         <source>portHeader</source>
@@ -1402,11 +1404,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Audio RTP-ström</translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Video RTP-ström</translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
@@ -1430,7 +1432,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Använd RLS-URI</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
@@ -1469,7 +1471,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation>RADERA LÖSENORD</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1485,11 +1487,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>Are you sure you want to ta bort this account?</translation>
+        <translation>Är du säker på att du vill radera detta konto?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>Är du säker på att du vill ta bort alla lösenord?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1544,7 +1546,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation>Kontakt parametrar</translation>
+        <translation>Kontaktparametrar</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
@@ -1552,7 +1554,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVPF normalt RTCP-intervall (sek)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
@@ -1635,7 +1637,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"></translation>
+        <translation>Systemlokal</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
@@ -1643,7 +1645,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>Är du säker på att du vill ta bort alla avatarer?</translation>
+        <translation>Är du säker på att du vill radera alla avatarer?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
@@ -1655,7 +1657,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Annat</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
@@ -1663,11 +1665,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>dataTitle</source>
-        <translation>Användargränssnitt data</translation>
+        <translation>Användargränssnittsdata</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Autostarta appen</translation>
     </message>
 </context>
 <context>
@@ -1678,7 +1680,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation>Bildfrekvensen</translation>
+        <translation>Bildfrekvens</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
@@ -1686,7 +1688,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation>Video förinställning</translation>
+        <translation>Videoförinställning</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -1706,7 +1708,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation>Videokodek</translation>
+        <translation>Videokodekar</translation>
     </message>
     <message>
         <source>showCameraPreview</source>
@@ -1714,7 +1716,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation>Visa videokodek</translation>
+        <translation>Visa videokodekar</translation>
     </message>
 </context>
 <context>
@@ -1857,7 +1859,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"></translation>
+        <translation>Bekräfta följande SAS med partner</translation>
     </message>
     <message>
         <source>codeA</source>

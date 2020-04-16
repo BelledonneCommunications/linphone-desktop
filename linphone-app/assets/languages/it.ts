@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"/>
+        <translation>Verifica di aver convalidato il tuo account o riprova.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -307,7 +307,7 @@
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"/>
+        <translation>Connessione riflessiva</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
@@ -339,11 +339,11 @@
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation type="unfinished"/>
+        <translation>Framerate di ricezione</translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation type="unfinished"/>
+        <translation>Framerate di invio</translation>
     </message>
 </context>
 <context>
@@ -465,11 +465,11 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Partecipa alla conferenza dell&apos;indirizzo SIP con il tuo nome. Se sei connesso a un proxy, vedi &apos;Partecipa a conferenza come...&apos;</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"/>
+        <translation>Partecipa alla conferenza dell&apos;indirizzo SIP con il tuo nome. Se non sei connesso a un proxy, vedi &apos;Partecipa a conferenza&apos;</translation>
     </message>
 </context>
 <context>
@@ -613,6 +613,10 @@ URL del server non configurato.</translation>
         <source>abortEditDescriptionText</source>
         <translation>Sei sicuro di voler annullare la modifica del contatto?</translation>
     </message>
+    <message>
+        <source>tooltipShowConversation</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>Contacts</name>
@@ -654,6 +658,18 @@ URL del server non configurato.</translation>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Sei sicuro di voler cancellare questa cronologia?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -959,6 +975,10 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>smartSearchBarTooltip</source>
         <translation>Usa la barra di ricerca intelligente per avviare direttamente chiamate audio e video, inviare un messaggio o aggiungere un nuovo contatto. Basta inserire l&apos;indirizzo SIP o nome utente del tuo amico.</translation>
     </message>
+    <message>
+        <source>newConferenceButton</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -973,6 +993,21 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>quit</source>
         <translation>Esci</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindowTopMenuBar</name>
+    <message>
+        <source>settings</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>about</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>quit</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1118,6 +1153,15 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>developerSettingsEnabledLabel</source>
         <translation>Abilita impostazioni per sviluppatori</translation>
     </message>
+    <message>
+        <source>logsMailerFailed</source>
+        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>logsMailerSuccess</source>
+        <translation type="unfinished"/>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -1152,6 +1196,22 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>showAudioCodecsLabel</source>
         <translation>Mostra i codec audio</translation>
+    </message>
+    <message>
+        <source>playbackGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>captureGainLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioTestLabel</source>
+        <translation type="unfinished"/>
+    </message>
+    <message>
+        <source>audioSettingsInCallWarning</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -1255,6 +1315,9 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Chiamata in pausa abilitata</translation>
+    <message>
+        <source>encryptionMandatoryLabel</source>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
