@@ -16,15 +16,16 @@
 - Add a media parameters dialog in the `Call View` to selected devices and set volume.
 - TelKeypad supports A, B, C and D keys.
 - TelKeypad supports keyboard.
+- Enable High DPI Displays support
 - OpenH264 codec can be download in the application.
 - Use BZip2 instead of Minizip to extract codec
 - New icons
 - Disable screensaver on fullscreen video call.
 - Add caller/callee on saved files.
-- Supports totally french, english, portuguese, russian, turkish, ukrainian.
+- Supports chinese(70%), danish, french, english, german, hungarian, italian, japanese(72%), lithuanian(80%), portuguese, russian, spanish(90%), swedish, turkish, ukrainian 
 - App Nap avoiding for MacOs
 - Simplify building process
-- Enable High DPI Displays support
+- Move logs folder without restart
 - NSIS (Windows), DMG (MacOsX) and Appimage (Linux) deployments
 
 
@@ -43,6 +44,7 @@
 - Prepare.py configuration
 - Remove useless splashscreen.
 - Minizip
+- Flatpack support
 
 ## 4.1.0 - 2017-07-19
 
