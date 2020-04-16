@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="da" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="da">
 <context>
     <name>About</name>
     <message>
@@ -615,7 +617,7 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -661,15 +663,15 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -979,7 +981,7 @@ din vens SIP-adresse eller brugernavn. </translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1001,15 +1003,15 @@ din vens SIP-adresse eller brugernavn. </translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Indstillinger</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Om</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished">Luk</translation>
     </message>
 </context>
 <context>
@@ -1129,7 +1131,7 @@ din vens SIP-adresse eller brugernavn. </translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
@@ -1158,11 +1160,11 @@ din vens SIP-adresse eller brugernavn. </translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1201,19 +1203,19 @@ din vens SIP-adresse eller brugernavn. </translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1320,7 +1322,7 @@ din vens SIP-adresse eller brugernavn. </translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

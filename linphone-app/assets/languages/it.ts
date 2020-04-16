@@ -1315,9 +1315,10 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Chiamata in pausa abilitata</translation>
+    </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

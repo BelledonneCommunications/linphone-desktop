@@ -1315,9 +1315,10 @@
     <message>
         <source>callPauseEnabledLabel</source>
         <translation>Виклик призупинено</translation>
+    </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"/>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
