@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="lt">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="lt" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -12,7 +10,7 @@
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktyvuokite savo %1 SĄSKAITĄ</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +25,7 @@
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktyvuokite savo %1 SĄSKAITĄ</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">Norėdami aktyvuoti savo paskyrą: sekite jums į %1 išsiųstas instrukcijas, o tuomet spustelėkite žemiau.</translation>
+        <translation>SMS žinutę su patvirtinimo kodu išsiuntėme į %1. Norėdami užbaigti savo telefono numerio patvirtinimą, žemiau įveskite 4 skaitmenų kodą.</translation>
     </message>
 </context>
 <context>
@@ -246,7 +244,7 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Karalystė</translation>
     </message>
 </context>
 <context>
@@ -277,11 +275,11 @@
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Siuntėjo nuostolių procentas</translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation type="unfinished"></translation>
+        <translation>Imtuvo nuostolių lygis</translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
@@ -309,15 +307,15 @@
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Refleksinis ryšys</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Pagrindinio kompiuterio ryšys</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Relės jungtis</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -325,27 +323,27 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuotolinė šalis atsisakė skambučio.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuotolinis vakarėlis nerastas.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuotolinis vakarėlis užimtas.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuotolinė šalis negali priimti skambučio.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Gautas kadrų dažnis</translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation type="unfinished"></translation>
+        <translation>Išsiųstas kadrų dažnis</translation>
     </message>
 </context>
 <context>
@@ -378,22 +376,22 @@
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar norite perduoti šį skambutį?</translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Priimti garso skambutį</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Priimti vaizdo skambutį</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Baigti skambutį</translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -401,7 +399,7 @@
     </message>
     <message>
         <source>transferCall</source>
-        <translation type="unfinished"></translation>
+        <translation>SIUNTIMAS</translation>
     </message>
     <message>
         <source>callPause</source>
@@ -443,7 +441,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 &lt;sip-address&gt;?metodas=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
@@ -467,11 +465,11 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijunkite prie konferencijos, kuriai nurodytas sip adresas, rodomu vardu. Jei esate prisijungę prie tarpinio serverio konfigūracijos, žr.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Prisijunkite prie konferencijos, kuriai skirtas sip adresas, kaip su svečio sip adresu. Jei nesate prisijungę prie tarpinio serverio konfigūracijos, skaitykite prisijungimo konferenciją.</translation>
     </message>
 </context>
 <context>
@@ -613,11 +611,11 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"></translation>
+        <translation>Ar tikrai norite atšaukti kontaktų pakeitimą?</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti pokalbį</translation>
     </message>
 </context>
 <context>
@@ -663,15 +661,15 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redaguoti kontaktą</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Pridėti kontaktą</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Ištrinti istoriją</translation>
     </message>
 </context>
 <context>
@@ -760,7 +758,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished">Jūsų paskyra buvo sukurta, tačiau dar nebuvo patvirtinta. Ar tikrai norite išeiti iš šio rodinio?</translation>
+        <translation>Jūsų paskyra buvo sukurta, bet dar nepatvirtinta. Jei atsisakysite šio rodinio, turėtumėte rankiniu būdu pridėti ir patvirtinti savo sąskaitą per 24 valandas.</translation>
     </message>
 </context>
 <context>
@@ -825,7 +823,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation type="unfinished"></translation>
+        <translation>Neįmanoma nustatyti šio nuotolinio aprūpinimo uri.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
@@ -891,30 +889,30 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Padarykite momentinę nuotrauką.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradėkite įrašymą.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustokite įrašinėti.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Padarykite momentinę nuotrauką.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradėkite įrašymą.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nustokite įrašinėti.</translation>
     </message>
 </context>
 <context>
@@ -971,7 +969,7 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation type="unfinished"></translation>
+        <translation>automatinis</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
@@ -981,7 +979,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Pradėti konferencinį pokalbį</translation>
     </message>
 </context>
 <context>
@@ -1003,15 +1001,15 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Nuostatos</translation>
+        <translation>Nuostatos</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">Apie</translation>
+        <translation>Apie</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Išeiti</translation>
+        <translation>Mesti</translation>
     </message>
 </context>
 <context>
@@ -1022,7 +1020,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Dalyvavimo būsena</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
@@ -1037,7 +1035,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"></translation>
+        <translation>Žaisk su manim!</translation>
     </message>
 </context>
 <context>
@@ -1160,11 +1158,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mailerio nerandama, bet žurnalai buvo įkelti į %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Žurnalai buvo įkelti į %1</translation>
     </message>
 </context>
 <context>
@@ -1179,15 +1177,15 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiksavimo įrenginys</translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Skambėjimo įtaisas</translation>
     </message>
     <message>
         <source>ringLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Žiedas</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
@@ -1203,19 +1201,19 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Atkūrimo prieaugis</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Užfiksuokite pelną</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiksavimo lygis</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyksta garso skambutis: kai kurie nustatymai negalimi.</translation>
     </message>
 </context>
 <context>
@@ -1234,11 +1232,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>limeRequired</source>
-        <translation type="unfinished"></translation>
+        <translation>Privaloma</translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"></translation>
+        <translation>Pageidautina</translation>
     </message>
     <message>
         <source>chatTitle</source>
@@ -1266,15 +1264,15 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatinis atsakymas (su vaizdo įrašu)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti pokalbį</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti skambučių įrašymo įrenginį</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
@@ -1286,50 +1284,50 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti konferenciją</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kontaktai</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti kontaktus</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įjungti mikrofono nutildymą</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti išeinančius skambučius</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodyti telefono klaviatūrą automatiškai</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatiškai įrašyti skambučius</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Laikykite skambučių langus fone</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktyvuoti pokalbį</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Šifravimas yra privalomas</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>DTMF siuntimo būdas</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1425,11 +1423,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti adaptyviosios normos valdymą</translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Buvimas</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
@@ -1437,7 +1435,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation type="unfinished"></translation>
+        <translation>AUTOMATINIS</translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
@@ -1512,11 +1510,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti bendrosios paskyros naudojimą</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Įgalinti konfigūracijos gavimą</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
@@ -1543,7 +1541,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Maršrutas</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
@@ -1551,15 +1549,15 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Paskelbkite informaciją apie buvimą</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVPF įprastas RTCP intervalas (sek.)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Registruotis</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
@@ -1583,7 +1581,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"></translation>
+        <translation>Netinkamas maršrutas.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -1626,7 +1624,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Išsaugotų skambučių aplankas</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1670,7 +1668,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatinio paleidimo programa</translation>
     </message>
 </context>
 <context>
@@ -1788,7 +1786,7 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>useAppSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>NAUDOTI %1 SĄSKAITĄ</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
@@ -1860,11 +1858,11 @@ Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"></translation>
+        <translation>Patvirtinkite šią SAS su kolega.</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"></translation>
+        <translation>Sakyk:</translation>
     </message>
     <message>
         <source>codeB</source>
