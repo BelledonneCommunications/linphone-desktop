@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="sv">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="sv" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">För att aktivera ditt konto: Följ anvisningarna som vi skickade till %1, och klicka sedan nedan.</translation>
+        <translation>Vi har skickat ett SMS med en valideringskod till %1. För att slutföra din telefonnummerverifiering, ange den 4-siffriga koden nedan.</translation>
     </message>
 </context>
 <context>
@@ -393,7 +391,7 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"></translation>
+        <translation>LÄGG PÅ</translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -405,7 +403,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"></translation>
+        <translation>PAUSA SAMTAL</translation>
     </message>
 </context>
 <context>
@@ -427,7 +425,8 @@
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Det gick inte att skicka filen.
+Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -560,7 +559,7 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"></translation>
+        <translation>WEBBPLATS(ER)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -592,7 +591,7 @@
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Webbplats</translation>
     </message>
     <message>
         <source>street</source>
@@ -616,7 +615,7 @@
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Visa konversation</translation>
     </message>
 </context>
 <context>
@@ -658,19 +657,19 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill rensa den här historiken?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Redigera kontakt</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Lägg till kontakt</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Radera historik</translation>
     </message>
 </context>
 <context>
@@ -980,7 +979,7 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Starta konferenssamtal</translation>
     </message>
 </context>
 <context>
@@ -1002,15 +1001,15 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Inställningar</translation>
+        <translation>Inställningar</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">Om</translation>
+        <translation>Ungefär</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Avsluta</translation>
+        <translation>Sluta</translation>
     </message>
 </context>
 <context>
@@ -1130,7 +1129,7 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Server-URL för loggar</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
@@ -1159,11 +1158,11 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Mailer kan inte hittas, men loggarna laddades upp till %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Loggar laddades upp till %1</translation>
     </message>
 </context>
 <context>
@@ -1202,19 +1201,19 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Uppspelning</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fånga vinst</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Fånga nivå</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Ljudsamtal pågår: vissa inställningar är inte tillgängliga.</translation>
     </message>
 </context>
 <context>
@@ -1313,15 +1312,15 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Behåll samtalsfönster i bakgrunden</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Håll samtal aktiverat</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kryptering är obligatorisk</translation>
     </message>
 </context>
 <context>
@@ -1471,7 +1470,7 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"></translation>
+        <translation>RADERA LÖSENORD</translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1491,7 +1490,7 @@ Ange helt enkelt din väns SIP-adress eller användarnamn.</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Är du säker på att du vill radera alla lösenord?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>

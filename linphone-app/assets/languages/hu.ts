@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="hu">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">Fiókja aktiválásához: kövesse az utasításokat, amelyeket a(z) %1 küldtünk, majd kattintson az alábbiakra.</translation>
+        <translation>Az ellenőrzési kódot tartalmazó SMS-t elküldtük a(z) %1-nek. A telefonszám ellenőrzésének befejezéséhez kérjük, írja be az alábbi négyjegyű kódot.</translation>
     </message>
 </context>
 <context>
@@ -163,7 +161,7 @@
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation>Hiányzó karakterek: „% 1”.</translation>
+        <translation>Hiányzó karakterek: „%1”.</translation>
     </message>
     <message>
         <source>requestFailed</source>
@@ -393,7 +391,7 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Hívás befejezése</translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -405,7 +403,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"></translation>
+        <translation>Hívástartás</translation>
     </message>
 </context>
 <context>
@@ -427,7 +425,8 @@
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem sikerült elküldeni a fájlt.
+A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -458,7 +457,7 @@
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Hívást kezdeményez a SIP címre.</translation>
+        <translation>Hívást kezdeményez a sip-address.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
@@ -560,7 +559,7 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"></translation>
+        <translation>Honlap(ok)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -592,7 +591,7 @@
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Honlap</translation>
     </message>
     <message>
         <source>street</source>
@@ -616,7 +615,7 @@
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Beszélgetés megjelenítése</translation>
     </message>
 </context>
 <context>
@@ -658,19 +657,19 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztosan törli az előzményeket?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapcsolat szerkesztése</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Kapcsolat hozzáadása</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Előzmények törlése</translation>
     </message>
 </context>
 <context>
@@ -977,7 +976,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Konferencia-beszélgetés indítása</translation>
     </message>
 </context>
 <context>
@@ -999,15 +998,15 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Beállítások</translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">A Linphone névjegye</translation>
+        <translation>Ról ről</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Kilépés</translation>
+        <translation>Kilépés</translation>
     </message>
 </context>
 <context>
@@ -1127,7 +1126,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Naplók feltöltési kiszolgáló URL-je</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
@@ -1156,11 +1155,11 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>A Mailer nem található, de a naplók feltöltődtek a %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>A naplókat feltöltötték a %1</translation>
     </message>
 </context>
 <context>
@@ -1199,19 +1198,19 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Lejátszás nyeresége</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Rögzítés nyereség</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Felvételi szint</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Hanghívás folyamatban: egyes beállítások nem érhetők el.</translation>
     </message>
 </context>
 <context>
@@ -1310,15 +1309,15 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Tartsa a hívások ablakot a háttérben</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>A hívástartás engedélyezve</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>A titkosítás kötelező</translation>
     </message>
 </context>
 <context>
@@ -1468,7 +1467,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszavak törlése</translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1488,7 +1487,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Biztos, hogy eltávolítja az összes jelszavát?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>

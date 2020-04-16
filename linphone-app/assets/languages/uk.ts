@@ -615,7 +615,7 @@
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"/>
+        <translation>Показати розмову</translation>
     </message>
 </context>
 <context>
@@ -657,19 +657,19 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"/>
+        <translation>Ви впевнені, що волієте вичистити цю історію?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"/>
+        <translation>Редагувати контакт</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"/>
+        <translation>Додати контакт</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"/>
+        <translation>Вилучити історію</translation>
     </message>
 </context>
 <context>
@@ -977,7 +977,7 @@
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"/>
+        <translation>Почати конференц-дзвінок</translation>
     </message>
 </context>
 <context>
@@ -999,15 +999,15 @@
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Уподобання</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Про це</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Кинути</translation>
     </message>
 </context>
 <context>
@@ -1156,11 +1156,11 @@
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"/>
+        <translation>Не вдалося знайти поштову програму, але журнали було вивантажено до %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"/>
+        <translation>Журнали було вивантажено до %1</translation>
     </message>
 </context>
 <context>
@@ -1199,19 +1199,19 @@
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"/>
+        <translation>Посилення відтворення</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"/>
+        <translation>Посилення захоплення</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"/>
+        <translation>Рівень захоплення</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"/>
+        <translation>Прогрес аудіодзвінку: деякі настройки недоступні.</translation>
     </message>
 </context>
 <context>
@@ -1318,7 +1318,7 @@
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Обов&apos;язковий заселення</translation>
     </message>
 </context>
 <context>

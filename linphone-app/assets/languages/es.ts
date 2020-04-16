@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="es">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -317,7 +315,7 @@
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>Conexión de relé</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -325,19 +323,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation type="unfinished"></translation>
+        <translation>La parte remota rechazó la llamada.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation type="unfinished"></translation>
+        <translation>No se encontró la parte remota.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation type="unfinished"></translation>
+        <translation>La fiesta remota está ocupada.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation type="unfinished"></translation>
+        <translation>La parte remota no puede aceptar la llamada.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -393,7 +391,7 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"></translation>
+        <translation>COLGAR</translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -405,7 +403,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"></translation>
+        <translation>PAUSAR LLAMADA</translation>
     </message>
 </context>
 <context>
@@ -427,7 +425,8 @@
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Imposible enviar fichero.
+URL del servidor no configurada.</translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -438,15 +437,15 @@
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Manera de controlar la aplicación %1 a través de líneas de comando.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 &lt;sip-address&gt;? method= &lt;method&gt; ([&amp; &lt;argument&gt; = &lt;base64-value&gt;] *)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt; = &lt;value&gt;] *)»</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -466,11 +465,11 @@
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Únase a la conferencia organizada por la dirección sip-name como display-name. Si está conectado a una configuración de proxy, consulte join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Únase a la conferencia organizada por la dirección de sip-como con la dirección de sip-guest. Si no está conectado a un proxy-config, consulte join-conference.</translation>
     </message>
 </context>
 <context>
@@ -560,7 +559,7 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"></translation>
+        <translation>SITIO(S) WEB</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -592,7 +591,7 @@
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Sitio web</translation>
     </message>
     <message>
         <source>street</source>
@@ -616,7 +615,7 @@
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar conversación</translation>
     </message>
 </context>
 <context>
@@ -658,19 +657,19 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Estás seguro de que quieres limpiar este historial?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar contacto</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Añadir contacto</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar historial</translation>
     </message>
 </context>
 <context>
@@ -759,7 +758,7 @@
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished">Su cuenta ha sido creada pero no ha sido validada aún. ¿Estás seguro de que deseas cerrar esta pantalla?</translation>
+        <translation>Tu cuenta se ha creado pero aún no se ha validado. Si sales de esta vista, tendrás que agregar y validar manualmente tu cuenta en un plazo de 24 horas.</translation>
     </message>
 </context>
 <context>
@@ -948,7 +947,10 @@
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>Descargue la aplicación en su computadora y comience a llamar y chatear con los usuarios de forma gratuita.
+
+Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -971,11 +973,13 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilice la barra de búsqueda inteligente para iniciar directamente audio y vídeo
+, enviar un mensaje o agregar un nuevo contacto. Sólo tienes que entrar
+la dirección SIP o el nombre de usuario de su amigo.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar llamada de conferencia</translation>
     </message>
 </context>
 <context>
@@ -997,15 +1001,15 @@
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Preferencias</translation>
+        <translation>Preferencias</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"></translation>
+        <translation>Sobre</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Renunciar</translation>
     </message>
 </context>
 <context>
@@ -1125,7 +1129,7 @@
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>URL del servidor de carga de registros</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
@@ -1154,11 +1158,11 @@
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>No se puede encontrar el correo, pero los registros se cargaron a %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Los registros se cargaron a %1</translation>
     </message>
 </context>
 <context>
@@ -1197,19 +1201,19 @@
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganancia de reproducción</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Captura de ganancia</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nivel de captura</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada de audio en curso: algunos ajustes no están disponibles.</translation>
     </message>
 </context>
 <context>
@@ -1308,15 +1312,15 @@
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantener pantalla de llamadas en segundo plano</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamada en espera activada</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>El cifrado es obligatorio</translation>
     </message>
 </context>
 <context>
@@ -1466,7 +1470,7 @@
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"></translation>
+        <translation>BORRAR CONTRASEÑAS</translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1486,7 +1490,7 @@
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>¿Estás seguro de que deseas eliminar todas las contraseñas?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1549,7 +1553,7 @@
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Intervalo RTCP regular de AVPF (seg.)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
@@ -1632,7 +1636,7 @@
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuración regional del sistema</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
@@ -1683,7 +1687,7 @@
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Preajuste de vídeo</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -1691,7 +1695,7 @@
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"></translation>
+        <translation>FPS alto</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -1786,11 +1790,11 @@
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"></translation>
+        <translation>Utilice nombre de usuario y contraseña en lugar de su número de teléfono.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished">Su cuenta ha sido creada pero no ha sido validada aún. ¿Estás seguro de que deseas cerrar esta pantalla?</translation>
+        <translation>Tu cuenta se ha creado pero aún no se ha validado. ¿Está seguro de que desea salir de esta vista?</translation>
     </message>
 </context>
 <context>

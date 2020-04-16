@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">Para ativar sua conta: siga as instruções que enviamos em %1 e clique abaixo.</translation>
+        <translation>Enviamos um SMS com um código de validação para %1. Para concluir a confirmação do seu número de telefone, insira o código de 4 dígitos abaixo.</translation>
     </message>
 </context>
 <context>
@@ -617,7 +615,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostrar conversa</translation>
     </message>
 </context>
 <context>
@@ -663,15 +661,15 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Editar contato</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar contato</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Excluir histórico</translation>
     </message>
 </context>
 <context>
@@ -981,7 +979,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar chamada em conferência</translation>
     </message>
 </context>
 <context>
@@ -1003,15 +1001,15 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Preferências</translation>
+        <translation>Preferências</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">Sobre</translation>
+        <translation>Sobre</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Sair</translation>
+        <translation>Desistir</translation>
     </message>
 </context>
 <context>
@@ -1160,11 +1158,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>O mailer não pode ser encontrado, mas os logs foram enviados para %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Os registos foram enviados para %1</translation>
     </message>
 </context>
 <context>
@@ -1203,19 +1201,19 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganho de reprodução</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ganho de captura</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Nível de captura</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Chamada de áudio em andamento: algumas configurações não estão disponíveis.</translation>
     </message>
 </context>
 <context>
@@ -1322,7 +1320,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>A criptografia é obrigatória</translation>
     </message>
 </context>
 <context>

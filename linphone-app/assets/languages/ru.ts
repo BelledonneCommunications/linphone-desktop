@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ru">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ru" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">Чтобы активировать аккаунт, следуйте инструкциям, которые мы отправили на %1, затем нажмите ниже.</translation>
+        <translation>Мы отправили SMS с кодом подтверждения на %1. Для завершения подтверждения вашего номера телефона, пожалуйста, введите ниже 4-значный код.</translation>
     </message>
 </context>
 <context>
@@ -617,7 +615,7 @@
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Показать разговор</translation>
     </message>
 </context>
 <context>
@@ -663,15 +661,15 @@
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Изменить контакт</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавить контакт</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Удалить историю</translation>
     </message>
 </context>
 <context>
@@ -979,7 +977,7 @@
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Начать конференц звонок</translation>
     </message>
 </context>
 <context>
@@ -1001,15 +999,15 @@
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation>Предпочтения</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">О программе</translation>
+        <translation>О</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Выйти</translation>
+        <translation>Уйти</translation>
     </message>
 </context>
 <context>
@@ -1158,11 +1156,11 @@
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Не удалось найти почтовый ящик, но журналы были загружены в %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Журналы были загружены в %1</translation>
     </message>
 </context>
 <context>
@@ -1201,19 +1199,19 @@
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Усил воспроизведения</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Прирост захвата</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Уровень захвата</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Звуковой вызов в процессе: некоторые настройки недоступны.</translation>
     </message>
 </context>
 <context>
@@ -1320,7 +1318,7 @@
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Регистрация обязательна</translation>
     </message>
 </context>
 <context>

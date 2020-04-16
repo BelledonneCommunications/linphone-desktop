@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="fr_FR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="fr_FR" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">Pour activer votre compte : suivez les instructions que vous avez reçues à %1, puis cliquez sur le bouton ci-dessous.</translation>
+        <translation>Un SMS de validation a été envoyé au %1. Afin de compléter la vérification du numéro de téléphone, veuillez entrer le code à 4 chiffres ci-dessous.</translation>
     </message>
 </context>
 <context>
@@ -1001,15 +999,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Préférences</translation>
+        <translation>Options</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">À propos</translation>
+        <translation>A propos</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Quitter</translation>
+        <translation>Quitter</translation>
     </message>
 </context>
 <context>
@@ -1158,11 +1156,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible de trouver un logiciel de mail. Les logs ont été uploadés sur %1 </translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Les logs ont été uploadé sur %1</translation>
     </message>
 </context>
 <context>

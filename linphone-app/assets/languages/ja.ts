@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="ja">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -16,11 +14,11 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>アクティブにします</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>アカウントを有効化するには:%1 に送信された指示に従い、下をクリックしてください。</translation>
     </message>
 </context>
 <context>
@@ -31,11 +29,11 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>アクティブにします</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>検証コードを含む SMS が %1 に送信されました。 電話番号の確認を完了するには、以下の 4 桁のコードを入力してください。</translation>
     </message>
 </context>
 <context>
@@ -46,11 +44,11 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>使用する %1 構成ファイルを指定</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>無料（自由な）SIPビデオ電話。</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -70,15 +68,15 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>CLI で %1 を使用するためのヘルプメニューを表示します。</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドラインに向かってアプリケーションに注文を送る</translation>
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>[復元]</translation>
     </message>
     <message>
         <source>quit</source>
@@ -90,7 +88,7 @@
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン情報</translation>
     </message>
 </context>
 <context>
@@ -230,7 +228,7 @@
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>アイデンティティ</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -246,7 +244,7 @@
     </message>
     <message>
         <source>realmLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>レルム</translation>
     </message>
 </context>
 <context>
@@ -265,7 +263,7 @@
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation type="unfinished"></translation>
+        <translation>推定ダウンロード帯域幅</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
@@ -273,7 +271,7 @@
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation type="unfinished"></translation>
+        <translation>知的財産</translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
@@ -289,11 +287,11 @@
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation type="unfinished"></translation>
+        <translation>送信済みビデオの定義</translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation type="unfinished"></translation>
+        <translation>受信したビデオの定義</translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
@@ -309,15 +307,15 @@
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>リフレクシブ結合</translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>ホスト接続</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation type="unfinished"></translation>
+        <translation>リレー接続</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -412,7 +410,7 @@
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>通話</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
@@ -439,15 +437,15 @@
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>コマンドラインから %1 アプリケーションを制御する方法。</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 &lt;sip-address&gt;?方法=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -467,11 +465,11 @@
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>表示名として、sip-address が主催する会議に参加します。 プロキシ設定に接続している場合は、「参加会議」を参照してください。</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>ゲスト-sip-address と同様に、sip-address が主催する会議に参加します。 プロキシ設定に接続していない場合は、「参加会議」を参照してください。</translation>
     </message>
 </context>
 <context>
@@ -519,7 +517,7 @@
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>会議の参加者を管理します。</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -569,7 +567,7 @@
     </message>
     <message>
         <source>companies</source>
-        <translation type="unfinished"></translation>
+        <translation>企業</translation>
     </message>
     <message>
         <source>save</source>
@@ -597,7 +595,7 @@
     </message>
     <message>
         <source>street</source>
-        <translation type="unfinished"></translation>
+        <translation>通り</translation>
     </message>
     <message>
         <source>postalCode</source>
@@ -609,15 +607,15 @@
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished"></translation>
+        <translation>局所性</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先の変更をキャンセルしてもよろしいですか?</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>会話を表示</translation>
     </message>
 </context>
 <context>
@@ -651,7 +649,7 @@
     </message>
     <message>
         <source>displayCalls</source>
-        <translation type="unfinished"></translation>
+        <translation>を呼び出します</translation>
     </message>
     <message>
         <source>displayMessages</source>
@@ -663,15 +661,15 @@
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先の編集</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先の追加</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>履歴の削除</translation>
     </message>
 </context>
 <context>
@@ -767,11 +765,11 @@
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>1 つまたは複数のファイルを選択してください</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation type="unfinished"></translation>
+        <translation>添付ファイルをドロップする</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
@@ -790,11 +788,11 @@
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>拒否された着信通話</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>拒否された発信通話</translation>
     </message>
     <message>
         <source>endedCall</source>
@@ -806,18 +804,18 @@
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation type="unfinished"></translation>
+        <translation>不在の発信</translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>フェッチ</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>リモート設定の取得</translation>
     </message>
     <message>
         <source>urlLabel</source>
@@ -840,7 +838,7 @@
     </message>
     <message>
         <source>howToTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 の使用方法</translation>
     </message>
     <message>
         <source>inviteDescription</source>
@@ -868,7 +866,7 @@
     </message>
     <message>
         <source>inviteButton</source>
-        <translation type="unfinished"></translation>
+        <translation>招待</translation>
     </message>
 </context>
 <context>
@@ -949,7 +947,10 @@
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished"></translation>
+        <translation>お使いのコンピュータにアプリケーションをダウンロードして、通話を開始し、無料でユーザーとチャットします。
+
+ここをクリック:&lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -960,7 +961,7 @@
     </message>
     <message>
         <source>homeEntry</source>
-        <translation type="unfinished"></translation>
+        <translation>ホーム</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -972,11 +973,13 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>インテリジェントな検索バーを使用してオーディオとビデオを直接開始
+を呼び出したり、メッセージを送信したり、新しい連絡先を追加したりできます。 入力するだけです
+あなたの友人のSIPアドレスまたはユーザー名。</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>電話会議の開始</translation>
     </message>
 </context>
 <context>
@@ -987,7 +990,7 @@
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン情報</translation>
     </message>
     <message>
         <source>quit</source>
@@ -998,15 +1001,15 @@
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">設定</translation>
+        <translation>環境設定</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"></translation>
+        <translation>バージョン情報</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">終了</translation>
+        <translation>やめろ</translation>
     </message>
 </context>
 <context>
@@ -1028,11 +1031,11 @@
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation type="unfinished"></translation>
+        <translation>-了解</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished"></translation>
+        <translation>俺をプレイしろ！</translation>
     </message>
 </context>
 <context>
@@ -1046,7 +1049,7 @@
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>新しいバージョン (%1) が利用可能です!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1057,23 +1060,23 @@
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>確認する</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 を抽出しています...</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 をダウンロードしています...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 がインストールされました!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 のインストールに失敗しました!</translation>
     </message>
 </context>
 <context>
@@ -1084,7 +1087,7 @@
     </message>
     <message>
         <source>messageRead</source>
-        <translation type="unfinished"></translation>
+        <translation>読む</translation>
     </message>
     <message>
         <source>messageDelivered</source>
@@ -1095,7 +1098,7 @@
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation type="unfinished"></translation>
+        <translation>利用可能</translation>
     </message>
     <message>
         <source>presenceBusy</source>
@@ -1146,20 +1149,20 @@
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>開発者設定</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>開発者設定を有効にする</translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>メーラは見つかりませんが、ログが %1 にアップロードされました</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>ログが %1 にアップロードされました</translation>
     </message>
 </context>
 <context>
@@ -1178,7 +1181,7 @@
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>着信音デバイス</translation>
     </message>
     <message>
         <source>ringLabel</source>
@@ -1194,23 +1197,23 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>オーディオコーデックを表示する</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>再生ゲイン</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャプチャーゲイン</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>キャプチャ・レベル</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>音声通話中:一部の設定が使用できません。</translation>
     </message>
 </context>
 <context>
@@ -1221,7 +1224,7 @@
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>LIME で暗号化</translation>
     </message>
     <message>
         <source>limeDisabled</source>
@@ -1233,15 +1236,15 @@
     </message>
     <message>
         <source>limePreferred</source>
-        <translation type="unfinished"></translation>
+        <translation>優先</translation>
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>チャット</translation>
     </message>
     <message>
         <source>callsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>通話</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
@@ -1249,7 +1252,7 @@
     </message>
     <message>
         <source>noEncryption</source>
-        <translation type="unfinished"></translation>
+        <translation>無し</translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
@@ -1265,59 +1268,59 @@
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>チャットを有効にする</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>コールレコーダを有効にする</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>通知音を有効にする</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>通知音</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>会議を有効にする</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先の有効化</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>マイクのミュートを有効にする</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>発信コールを有効にする</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>電話のキーパッドを自動的に表示する</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>通話を自動的に録音する</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>通話ウィンドウをバックグラウンドに保持</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>保留コールの有効化</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>凍結は必須です</translation>
     </message>
 </context>
 <context>
@@ -1436,22 +1439,22 @@
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation type="unfinished"></translation>
+        <translation>決して</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>ネットワーク設定を表示する</translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>将軍</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>デフォルトのアイデンティティ</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
@@ -1495,27 +1498,27 @@
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>アシスタント</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>アカウント作成を有効にする</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>アカウントの使用を有効にする</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>一般的なアカウントの使用を有効にする</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>構成フェッチの有効化</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>電話番号をサポート</translation>
     </message>
 </context>
 <context>
@@ -1582,38 +1585,38 @@
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished">ICEを有効にする</translation>
+        <translation>ICE を有効にする</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished">STUN/TURN server</translation>
+        <translation>STUN/URNサーバ</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished">TURNを有効にする</translation>
+        <translation> TURNを有効にする</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished">TURNユーザ</translation>
+        <translation> TURNユーザー</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished">TURNパスワード</translation>
+        <translation>TURNパスワード</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished">NAT and Firewall</translation>
+        <translation>NAT とファイアウォール</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>メイン SIP アカウント設定</translation>
     </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>パス</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
@@ -1621,7 +1624,7 @@
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>保存済み通話フォルダ</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -1661,11 +1664,11 @@
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>UI データ</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリの自動起動</translation>
     </message>
 </context>
 <context>
@@ -1692,7 +1695,7 @@
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"></translation>
+        <translation>高FPS</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -1712,7 +1715,7 @@
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>ビデオコーデックを表示する</translation>
     </message>
 </context>
 <context>
@@ -1855,15 +1858,15 @@
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"></translation>
+        <translation>ピアと次のSASを確認します。</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"></translation>
+        <translation>次のように入力します。</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先の内容は次のとおりです。</translation>
     </message>
     <message>
         <source>deny</source>
@@ -1878,7 +1881,7 @@
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 (%2) をダウンロードしますか?</translation>
     </message>
 </context>
 </TS>

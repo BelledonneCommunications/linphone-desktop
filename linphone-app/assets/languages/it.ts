@@ -615,7 +615,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"/>
+        <translation>Mostra conversazione</translation>
     </message>
 </context>
 <context>
@@ -661,15 +661,15 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"/>
+        <translation>Modifica contatto</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"/>
+        <translation>Aggiungi contatto</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"/>
+        <translation>Cancella cronologia</translation>
     </message>
 </context>
 <context>
@@ -977,7 +977,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"/>
+        <translation>Avvia una conferenza telefonica</translation>
     </message>
 </context>
 <context>
@@ -999,15 +999,15 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished"/>
+        <translation>Preferenze</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"/>
+        <translation>Circa</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"/>
+        <translation>Provando</translation>
     </message>
 </context>
 <context>
@@ -1156,11 +1156,11 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"/>
+        <translation>Impossibile trovare il mailer ma i log sono stati caricati su %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"/>
+        <translation>I log sono stati caricati a %1</translation>
     </message>
 </context>
 <context>
@@ -1199,19 +1199,19 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"/>
+        <translation>Guadagno di riproduzione</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"/>
+        <translation>Acquisizione guadagno</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"/>
+        <translation>Livello di acquisizione</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"/>
+        <translation>Chiamata audio in corso: alcune impostazioni non sono disponibili.</translation>
     </message>
 </context>
 <context>
@@ -1318,7 +1318,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>La crittografia è obbligatoria</translation>
     </message>
 </context>
 <context>

@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="tr">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="tr" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">Hesabınızı etkinleştirmek için: %1 adresine gönderdiğimiz yönergeleri takip edin ardından aşağıdakine tıklayın.</translation>
+        <translation>%1 numarasına doğrulama kodu içeren SMS gönderdik. Telefon numarası doğrulamanızı tamamlamak için lütfen 4 haneli kodu aşağıya girin.</translation>
     </message>
 </context>
 <context>
@@ -617,7 +615,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>Sohbeti göster</translation>
     </message>
 </context>
 <context>
@@ -663,15 +661,15 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişi düzenle</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>Kişi ekle</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>Geçmişi sil</translation>
     </message>
 </context>
 <context>
@@ -981,7 +979,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>Konferans aramasını başlat</translation>
     </message>
 </context>
 <context>
@@ -1003,15 +1001,15 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">Tercihler</translation>
+        <translation>Tercihler</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">Hakkında</translation>
+        <translation>Hakkında</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">Çıkış</translation>
+        <translation>Bırakın</translation>
     </message>
 </context>
 <context>
@@ -1160,11 +1158,11 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>Posta bulunamadı, ancak %1 konumuna günlükler yüklendi</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>Günlükler %1 dosyasına yüklendi</translation>
     </message>
 </context>
 <context>
@@ -1203,19 +1201,19 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Oynatma kazancı</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Kazancı yakalayın</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Yakalama seviyesi</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>Sesli çağrı devam ediyor: bazı ayarlar kullanılamıyor.</translation>
     </message>
 </context>
 <context>
@@ -1322,7 +1320,7 @@ arkadaşınızın SIP adresini veya kullanıcı adını girin.</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Şifreleme zorunludur</translation>
     </message>
 </context>
 <context>

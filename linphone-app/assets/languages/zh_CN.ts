@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished">按照我们发往 %1 的指示来激活账户，然后点击下面</translation>
+        <translation>我们发送了一条短信至 %1 ，要完成手机号码验证，请输入短信中的 4 位验证码</translation>
     </message>
 </context>
 <context>
@@ -393,7 +391,7 @@
     </message>
     <message>
         <source>terminateCall</source>
-        <translation type="unfinished"></translation>
+        <translation>挂断</translation>
     </message>
     <message>
         <source>resumeCall</source>
@@ -405,7 +403,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation type="unfinished"></translation>
+        <translation>暂挂通话</translation>
     </message>
 </context>
 <context>
@@ -427,7 +425,8 @@
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"></translation>
+        <translation>无法发送文件。
+未配置服务器地址。</translation>
     </message>
     <message>
         <source>isComposing</source>
@@ -560,7 +559,7 @@
     </message>
     <message>
         <source>webSites</source>
-        <translation type="unfinished"></translation>
+        <translation>网站（可有多个）</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
@@ -592,7 +591,7 @@
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>网站</translation>
     </message>
     <message>
         <source>street</source>
@@ -616,7 +615,7 @@
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation type="unfinished"></translation>
+        <translation>显示对话</translation>
     </message>
 </context>
 <context>
@@ -658,19 +657,19 @@
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>你确定要清除该历史吗？</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑联系人</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished"></translation>
+        <translation>添加联系人</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished"></translation>
+        <translation>删除历史记录</translation>
     </message>
 </context>
 <context>
@@ -980,7 +979,7 @@
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation type="unfinished"></translation>
+        <translation>开始电话会议</translation>
     </message>
 </context>
 <context>
@@ -1002,15 +1001,15 @@
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation type="unfinished">偏好设置</translation>
+        <translation>偏好</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished">关于</translation>
+        <translation>关于</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished">退出</translation>
+        <translation>退出</translation>
     </message>
 </context>
 <context>
@@ -1130,7 +1129,7 @@
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>日志上传服务器地址</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
@@ -1159,11 +1158,11 @@
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation>找不到邮件程序，但日志已上传到 %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation type="unfinished"></translation>
+        <translation>日志已上传到 %1</translation>
     </message>
 </context>
 <context>
@@ -1202,19 +1201,19 @@
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>播放增益</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>捕获增益</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>捕获级别</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>音频通话正在进行中：某些设置不可用。</translation>
     </message>
 </context>
 <context>
@@ -1313,15 +1312,15 @@
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>在后台保留通话窗口</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>暂挂通话已启用</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>硬化是强制性的</translation>
     </message>
 </context>
 <context>
@@ -1448,441 +1447,441 @@
     </message>
     <message>
         <source>generalTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>将军</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>默认身份</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 地址</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>代理账户</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation type="unfinished"></translation>
+        <translation>删除所有密码</translation>
     </message>
     <message>
         <source>addAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>添加帐户</translation>
     </message>
     <message>
         <source>editHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <source>deleteHeader</source>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>您确定要删除此帐户吗？</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>是否确定要删除所有密码？</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>显示名称</translation>
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>助理</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>启用账户创建</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>启用账户使用情况</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>启用通用账户使用</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>启用配置提取</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>支持电话号码</translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
     <message>
         <source>sipAddressLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 地址</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>交通工具</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 服务器地址</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>登记期限 (秒)</translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>路线</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>联系参数</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>发布状况信息</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>AVPF常规RTCP间隔（秒）</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>注册</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>启用 AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>确认</translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 地址无效。</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的服务器地址。</translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"></translation>
+        <translation>无效的路线。</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation type="unfinished">启用 ICE</translation>
+        <translation>启用 ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished">STUN/TURN 服务器</translation>
+        <translation> STUN/TURN服务器</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation type="unfinished">启用 TURN</translation>
+        <translation>启用TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation type="unfinished">TURN 用户名</translation>
+        <translation>TURN用户</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation type="unfinished">TURN 密码</translation>
+        <translation>TURN密码</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation type="unfinished">NAT 和防火墙</translation>
+        <translation>NAT 和防火墙</translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>主 SIP 帐户设置</translation>
     </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>路径</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>已保存的截图文件夹</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>已保存的呼叫文件夹</translation>
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <source>languagesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>语言</translation>
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished"></translation>
+        <translation>系统区域设置</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"></translation>
+        <translation>擦除头像</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>你确定要擦掉所有的化身？</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>下载文件夹</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>有必要重新启动应用程序。 你想立即重新启动吗？</translation>
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>其他</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>在关闭窗口中退出应用程序</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>用户界面数据</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>自动启动应用程序</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>视频输入设备</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>帧率</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>视频捕捉参数</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>视频预设</translation>
     </message>
     <message>
         <source>presetDefault</source>
-        <translation type="unfinished"></translation>
+        <translation>默认值</translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"></translation>
+        <translation>高 FPS</translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation type="unfinished"></translation>
+        <translation>定制</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>视频分辨率</translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>视频编解码器</translation>
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation type="unfinished"></translation>
+        <translation>视频预览</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>显示视频编解码器</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>好</translation>
     </message>
 </context>
 <context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 账户</translation>
     </message>
     <message>
         <source>audioTab</source>
-        <translation type="unfinished"></translation>
+        <translation>音频</translation>
     </message>
     <message>
         <source>videoTab</source>
-        <translation type="unfinished"></translation>
+        <translation>视频</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation type="unfinished"></translation>
+        <translation>通话和聊天</translation>
     </message>
     <message>
         <source>networkTab</source>
-        <translation type="unfinished"></translation>
+        <translation>网络</translation>
     </message>
     <message>
         <source>uiTab</source>
-        <translation type="unfinished"></translation>
+        <translation>用户界面</translation>
     </message>
     <message>
         <source>validButton</source>
-        <translation type="unfinished"></translation>
+        <translation>好</translation>
     </message>
     <message>
         <source>uiAdvanced</source>
-        <translation type="unfinished"></translation>
+        <translation>先进</translation>
     </message>
 </context>
 <context>
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation type="unfinished">添加联系人</translation>
+        <translation>添加联系人</translation>
     </message>
 </context>
 <context>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>以前</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>使用</translation>
     </message>
     <message>
         <source>useAppSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 %1 账户</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation type="unfinished"></translation>
+        <translation>使用用户名和密码，而不是您的电话号码。</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation type="unfinished"></translation>
+        <translation>您的账户已创建，但尚未验证。 是否确定要退出此视图？</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation type="unfinished">国家</translation>
+        <translation>国家</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished">手机号码</translation>
+        <translation>电话号码</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished">用户名</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">密码</translation>
+        <translation>密码</translation>
     </message>
 </context>
 <context>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>使用</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>使用 SIP 帐户</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished">用户名</translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">显示名字（可选）</translation>
+        <translation>显示名称（可选）</translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 域</translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">密码</translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>交通工具</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"></translation>
+        <translation>无法添加此账户。</translation>
     </message>
 </context>
 <context>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation type="unfinished"></translation>
+        <translation>与同行确认以下 SAS。</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation type="unfinished"></translation>
+        <translation>说：</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation type="unfinished"></translation>
+        <translation>您的联系人应该说：</translation>
     </message>
     <message>
         <source>deny</source>
-        <translation type="unfinished"></translation>
+        <translation>否认</translation>
     </message>
     <message>
         <source>accept</source>
-        <translation type="unfinished"></translation>
+        <translation>确认</translation>
     </message>
 </context>
 <context>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>是否要下载 %1 (%2)？</translation>
     </message>
 </context>
 </TS>
