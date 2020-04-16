@@ -20,28 +20,28 @@ Linphone is dual licensed, and is available either :
 
 ### Documentation
 
-- Supported features and RFCs : https://www.linphone.org/technical-corner/linphone/features
+- [Supported features and RFCs](https://www.linphone.org/technical-corner/linphone/features)
 
-- Linphone public wiki : https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/
+- [Linphone public wiki](https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/)
 
 ## Getting started
 
 Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
-You will need the tools defined for Linphone-SDK 4.3 :
-- cmake >= 3.6
-- python = 2.7 (python 3.7 if C# wrapper generation is disabled)
-- pip
-- yasm
-- nasm
-- doxygen (required for the Cxx Wrapper)
-- Pystache (use pip install pystache)
-- six (use pip install six)
-- Perl (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to perl binaries)
+You will need the tools :
+- `cmake` >= 3.6 : download it in https://cmake.org/download/
+- `python` : https://www.python.org/downloads/release/python-381/
+- `pip` : it is already embedded inside Python, so there should be nothing to do about it
+- `yasm` : https://yasm.tortall.net/Download.html
+- `nasm` : https://www.nasm.us/pub/nasm/releasebuilds/
+- `doxygen` (required for the Cxx Wrapper)
+- `Perl` : (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to perl binaries)
+- `Pystache` : use 'pip install pystache --user'
+- `six` : use 'pip install six --user'
+- `git`
 
-For Desktop : you will need `Qt5` (_5.9 or newer_). `C++11` support is required!
+For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.9 or newer_). `C++11` support is required!
 
 ### Set your environment
-
 
 1. It's necessary to install the `pip` command and to execute:
 
@@ -57,21 +57,50 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
         eval "$(qtchooser -print-env)"
         export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
         export PATH=${QTTOOLDIR}:$PATH
+3. For specific requirments, see platform instructions sections below.
+
+### Get sources
+
+1. Clone repository:
+
+        git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive
+Or
+        git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+
+2. Update submodules
+
+        git submodule update --init --recursive
 
 		
-### Building
+### Building : General Steps
 
 The build is done by building the SDK and the application. Their targets are `sdk` and `linphone-qt`.
 
 1. Create your build folder at the root of the project : `mkdir build`
 Go to this new folder and begin the build process : `cd build`
 
+2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process. If it doesn't seem to work then it will be better to use CMake >= 3.12
+Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
+
+3. Build and install the whole project : `cmake --build . --target <target>` (replace `<target>` with the target name. You can use the switch `--parallel 10` to do 10 parallel builds with CMake >= 3.12. 
+
+You may add `--config RelWithDebInfo` in addition of `CMAKE_BUILD_TYPE`. It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command and use the Custom build option.
+
+When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .` if CMake>=3.15) to put the application in the correct configuration.
+
+4. When doing some modifications in the SDK, you can rebuild only the sdk with the target `sdk` and the same for the application with `linphone-qt-only`
+
+5. In order to get packages, you can use `cmake .. -DENABLE_APP_PACKAGING=YES`. The files will be in `OUTPUT/packages` folder.
+
+
+
+
 2. Prepare your options : `cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process. If it doesn't seem to work then it will be better to use CMake >= 3.12
 Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
 
-3. Build and install the whole project : `cmake --build . --target all` or `cmake --build . --target ALL_BUILD` on Windows.
+3. Build and install the whole project : `cmake --build . --target all` or `cmake --build . --target ALL_BUILD` on Windows. You can use the switch `--parallel 10` to do 10 parallel builds with CMake >= 3.12. 
 
-It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command.
+You may add `--config RelWithDebInfo` in addition of `CMAKE_BUILD_TYPE`. It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command.
 
 When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` or `cmake --install .` (if CMake>=3.15) to put the application in the correct configuration.
 
@@ -79,72 +108,133 @@ When all are over, the files will be in the OUTPUT folder in the build directory
 
 5. In order to get packages, you can use `cmake .. -DENABLE_APP_PACKAGING=YES`. The files will be in `OUTPUT/packages` folder.
 
+### Update your project
+
+1. Update your project with :
+        git fetch
+        git pull --rebase
+2. Update submodules from your current branch
+        git submodule update --init --recursive
+
+Then simply re-build using cmake.
+
 
 #### General Troubleshooting
 
-* The latest version of Doxygen doesn't work with the SDK. If you have a specific version of Doxygen that is not in your PATH, you can use `-DLINPHONESDK_DOXYGEN_PROGRAM`.
+* The latest version of Doxygen may not work with the SDK. If you some build issues and have a specific version of Doxygen that is not in your PATH, you can use `-DLINPHONESDK_DOXYGEN_PROGRAM`.
 
 Eg on Mac : `-DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Resources/doxygen`
 
 * If the build of the SDK crash with something like "cmd.exe failed" and no more info, it can be a dependency that is not available. You have to check if all are in your PATH.
-Usually, if it is about VPX or Decaf, this could come from your Perl installation. 
+Usually, if it is about VPX or Decaf, this could come from your Perl installation.
 
 
 
-#### Mac OS X Troubleshooting
+## Specific instructions for the Mac Os X platform
+
 To install the required dependencies on Mac OS X, you can use [Homebrew](https://brew.sh/).
 Before you install packages with Brew, you may have to change directories permissions (if you can't change permissions with sudo on a MacOS >= High Sierra, get a look at [this StackOverflow answer](https://stackoverflow.com/questions/16432071/how-to-fix-homebrew-permissions#46844441)).
 
-1. First ensure you have installed pip. You can get it for python 2.7 [there](https://stackoverflow.com/questions/34886101/how-to-install-pip-to-python-2-7-10-on-mac#34886254).
+1. Install Xcode from the Apple store. Run it at least once to allow it to install its tools.
 
-2. Then, you can install a pip package with the following command:
+2. Install homebrew by following the instructions here https://brew.sh/
+
+3. Install dependencies:
+
+        brew install cmake qt git
+
+4. First ensure you have installed pip. You can get it for python 2.7 [there](https://stackoverflow.com/questions/34886101/how-to-install-pip-to-python-2-7-10-on-mac#34886254).
+
+5. Then, you can install a pip package with the following command:
 
         pip install [package]
 
-    For instance, if you don't have pystache and the dot package (contained in graphviz), enter the following commands:
+ For instance, if you don't have pystache and the dot package (contained in graphviz), enter the following commands:
 
         pip install pystache
         pip install graphviz
+6. Build as usual (General Steps) :
+  - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
+  - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
 
+7. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
 
-### Specific instructions for the Windows platform
+8. When updating the project, the next build steps are a bit different:
+    - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
+    - `cmake --install .` (CMake >= 3.15)
+OR
+    - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
-1. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.) `MinGW` must be installed too.
+## Specific instructions for the Windows platform
 
-2. Define the `Qt5_DIR` and `PATH` environment variable to the Qt5 installation path:
+1. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.)
+  - `MinGW` : [download](https://osdn.net/projects/mingw/downloads/68260/mingw-get-setup.exe/)
+    - Select all installer options except Ada and Fortran
+    - Install it in the default location (C:/Mingw), this is important as there are hardlinks on it.
+  - `Yasm`
+    - download yasm-1.3.0-win32.exe
+    - copy it to a bin directory of your user directory
+    - rename yasm-1.3.0-win32.exe as yasm.exe
+  - `nasm` : [download](https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/)
+  - `git` : [download](https://git-scm.com/download/win)
 
-        Qt5_DIR="C:\Qt\<version>\msvc2017\lib\cmake"
-        PATH="C:\Qt\<version>\msvc2017\bin;%PATH%"
+Visual Studio must also be properly configured with addons. Under "Tools"->"Obtain tools and features", make sure that the following components are installed:
+  - Tasks: Select Windows Universal Platform development, Desktop C++ Development, .NET Development
+  - Under "Installation details". Go to "Desktop C++ Development" and add "SDK Windows 8.1 and SDK UCRT"
+  - Individual component: Windows 8.1 SDK
 
-2. Or open a Command line with Visual Studio `Developer Comand Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: C:\Qt\5.12.6\msvc2017\bin\qtenv2.bat
+2. Or open a Command line with Visual Studio `Developer Comand Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvc2017\bin\qtenv2.bat`
 
 3. Install msys-coreutils : `mingw-get install msys-coreutils`
 
-4. Build as usual with adding `-A Win32` to each command (General Steps)
+4. Build as usual with adding `-A Win32` to `cmake ..` (General Steps) :
+  - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -A Win32`
+  - `cmake --build . --target ALL_BUILD --parallel 10 --config RelWithDebInfo`
 
-5. The project folder will be in the build directory.
+5. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
 
-### Installing Linux dependencies
+6. When updating the project, the next build steps are a bit different:
+    - `cmake --build . --target ALL_BUILD --parallel 10 --config RelWithDebInfo`
+    - `cmake --install .` (CMake >= 3.15)
+OR
+    - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
+
+## Specific instructions for the Mac Os X platform
+
+1. Build as usual (General Steps) :
+  - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
+  - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
+
+2. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
+
+3. When updating the project, the next build steps are a bit different:
+    - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
+    - `cmake --install .` (CMake >= 3.15)
+OR
+    - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
 
-Dependencies from 4.1 version of Desktop:
+## Installing Linux dependencies
+
+
+Dependencies from 4.1 version of Desktop (refer it only if you have issues):
 
 apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64  libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64  libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
 
 
-## Updating your build
-
-You need to update the project:
-
-      git pull --rebase
-      git submodule sync && git submodule update --init --recursive
-
-Then simply re-building using the appropriate tool corresponding to your platform (make, Visual Studio...) should be sufficient to update the build (after having updated the source code via git).
-However if the compilation fails, you may need to rebuild everything from scratch (Delete all files in your build-desktop folder).
-
-Then you re-build as usual.
-
 ## Contributing
+
+### Code
+
+In order to submit a patch for inclusion in linphone's source code:
+
+1. First make sure that your patch applies to the latest Git sources before submitting : patches made to old versions can't and won't be merged.
+
+2. Fill out and send the contributor agreement for your patch to be included in the Git tree by following links [there](https://www.linphone.org/contact). The goal of this agreement is to grant us the peaceful exercise of our rights to the Linphone source code, without losing your rights over your contribution.
+
+3. Then go to the [github repository](https://github.com/BelledonneCommunications/linphone-desktop/pulls) and make a Pull Requests based on your code.
+
+Please note that we don't offer free support and these contributions will be addressed on our free-time.
 
 ### Languages
 
@@ -153,7 +243,9 @@ If you want you can contribute at: https://www.transifex.com/belledonne-communic
 
 ### Feedback or bug reporting
 
-Launch the application with `--verbose` parameter to get full logs and send it with your request.
+Launch the application with `--verbose` parameter to get full logs and send it with your request. You can use the "Send logs" button in settings to upload log files and share it by email or with a post in the corresponding github project :
+- [Desktop Application](https://github.com/BelledonneCommunications/linphone-desktop/issues)
+- [Linphone SDK](https://github.com/BelledonneCommunications/linphone-sdk/issues)
 
 On some OS (like Fedora 22 and later), they disable Qt debug output by default. To get full output, you need to create `~/.config/QtProject/qtlogging.ini` and add :
 
