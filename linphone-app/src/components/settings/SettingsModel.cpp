@@ -1169,10 +1169,20 @@ QString SettingsModel::getLogsFolder () const {
 }
 
 void SettingsModel::setLogsFolder (const QString &folder) {
-	// Do not update path in linphone core.
-	// Just update the config file.
-	mConfig->setString(UiSection, "logs_folder", Utils::appStringToCoreString(folder));
-
+// Copy all logs files in the new folder path to keep trace of old logs
+	std::string logPath = Utils::appStringToCoreString(folder);
+	QDir oldDirectory(Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getLogCollectionPath()));
+	QFileInfoList logsFiles = oldDirectory.entryInfoList(QStringList("*.log"));// Get all log files
+	for(int i = 0 ; i < logsFiles.size() ; ++i){
+		int count = 0;
+		QString fileName = logsFiles[i].fileName();
+		while( QFile::exists(folder+QDir::separator()+fileName))// assure unicity of backup files
+			fileName = logsFiles[i].baseName()+"_"+QString::number(++count)+logsFiles[i].completeSuffix();
+		if(QFile::copy(logsFiles[i].filePath(), folder+QDir::separator()+fileName))
+			QFile::remove(logsFiles[i].filePath());
+	}
+	mConfig->setString(UiSection, "logs_folder", logPath);			// Update configuration file
+	CoreManager::getInstance()->getCore()->setLogCollectionPath(logPath);	// Update Core to the new path. Liblinphone should update it.
 	emit logsFolderChanged(folder);
 }
 

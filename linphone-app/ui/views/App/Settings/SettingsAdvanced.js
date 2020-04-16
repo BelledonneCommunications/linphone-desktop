@@ -45,9 +45,9 @@ function handleLogsUploaded (url) {
           '?subject=' + encodeURIComponent('Desktop Linphone Log') +
           '&body=' + encodeURIComponent(url)
         ))
-        sendLogsBlock.stop(qsTr('logsMailerSuccess').replace('%1', encodeURIComponent(url)))
+        sendLogsBlock.stop(qsTr('logsMailerSuccess').replace('%1', url))
     else
-        sendLogsBlock.stop(qsTr('logsMailerFailed').replace('%1', encodeURIComponent(url)))
+        sendLogsBlock.stop(qsTr('logsMailerFailed').replace('%1', url))
   } else {
     sendLogsBlock.stop(qsTr('logsUploadFailed'))
   }
