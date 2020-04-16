@@ -22,7 +22,7 @@
 - New icons
 - Disable screensaver on fullscreen video call.
 - Add caller/callee on saved files.
-- Supports chinese(70%), danish, french, english, german, hungarian, italian, japanese(72%), lithuanian(80%), portuguese, russian, spanish(90%), swedish, turkish, ukrainian 
+- Supports chinese, danish, french, english, german, hungarian, italian, japanese, lithuanian(80%), portuguese, russian, spanish, swedish, turkish, ukrainian 
 - App Nap avoiding for MacOs
 - Simplify building process
 - Move logs folder without restart
