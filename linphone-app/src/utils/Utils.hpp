@@ -23,6 +23,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QLocale>
 
 // =============================================================================
 
@@ -96,6 +97,7 @@ namespace Utils {
 
     return connection;
   }
+  QString getCountryName(const QLocale::Country& contry);
 }
 
 #endif // UTILS_H_

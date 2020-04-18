@@ -19,6 +19,7 @@
  */
 
 #include "TelephoneNumbersModel.hpp"
+#include "utils/Utils.hpp"
 
 // =============================================================================
 
@@ -267,7 +268,7 @@ QHash<int, QByteArray> TelephoneNumbersModel::roleNames () const {
 QVariant TelephoneNumbersModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
-  if (!index.isValid() || row < 0 || row >= mCountryCodes.count())
+  if (!index.isValid() || row < 0 || row >= mCountryCodes.count())	
     return QVariant();
 
   if (role == Qt::DisplayRole) {
@@ -276,7 +277,7 @@ QVariant TelephoneNumbersModel::data (const QModelIndex &index, int role) const 
     QVariantMap map;
     map["countryCode"] = countryCode.second;
     map["countryName"] = QStringLiteral("%1 (+%2)")
-      .arg(QLocale::countryToString(countryCode.first))
+      .arg(Utils::getCountryName(countryCode.first))
       .arg(countryCode.second);
     return map;
   }
