@@ -28,6 +28,7 @@ DialogPlus {
     spacing: AboutStyle.spacing
 
     RowLayout {
+    id:versionsLayout
       spacing: AboutStyle.versionsBlock.spacing
 
       height: AboutStyle.versionsBlock.iconSize
@@ -37,43 +38,31 @@ DialogPlus {
         icon: 'linphone_logo'
         iconSize: parent.height
       }
-
+      
       Column {
+        id:versionsArea
         Layout.fillWidth: true
         Layout.preferredHeight: parent.height
 
         spacing: 0
 
         TextEdit {
+          id: appVersion
           color: AboutStyle.versionsBlock.appVersion.color
           selectByMouse: true
           font.pointSize: AboutStyle.versionsBlock.appVersion.pointSize
-          text: 'Desktop ' + Qt.application.version + ' - Qt' + App.qtVersion
+          text: 'Desktop ' + Qt.application.version + ' - Qt' + App.qtVersion +'\nCore ' + CoreManager.version
 
-          height: parent.height / 2
-          width: parent.width
-
-          verticalAlignment: Text.AlignVCenter
-
-          onActiveFocusChanged: deselect()
-        }
-
-        TextEdit {
-          color: AboutStyle.versionsBlock.coreVersion.color
-          selectByMouse: true
-          font.pointSize: AboutStyle.versionsBlock.coreVersion.pointSize
-          text: 'Core ' + CoreManager.version
-
-          height: parent.heigth / 2
-          width: parent.width
+          height: parent.height
+          width: parent.width   
 
           verticalAlignment: Text.AlignVCenter
 
-          onActiveFocusChanged: deselect()
+          onActiveFocusChanged: deselect();
         }
       }
     }
-
+   
     Column {
       spacing: AboutStyle.copyrightBlock.spacing
       width: parent.width
@@ -114,4 +103,5 @@ DialogPlus {
       }
     }
   }
+  
 }
