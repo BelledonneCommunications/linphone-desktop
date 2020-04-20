@@ -48,9 +48,25 @@ else
 	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
 	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage"
 fi
+
+
+
 export QML_SOURCES_PATHS=${QML_SOURCES_PATHS}:${WORK_DIR}/..
-./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
-#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+echo "-- Generating AppDir for AppImage"
+if [ -z "$2" ]; then
+	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
+else
+	if [ -f "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage" ]; then
+		echo "appimagetool-x86_64.AppImage exists"
+	else
+		wget -P "${WORK_DIR}/AppBin" https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+		chmod +x "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage"
+	fi
+	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
+	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+	echo "-- Code Signing of AppImage"
+	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2
+fi
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
 mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages/$1.AppImage"
