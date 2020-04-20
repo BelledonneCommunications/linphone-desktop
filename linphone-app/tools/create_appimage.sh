@@ -19,6 +19,11 @@
 ## along with this program. If not, see <http://www.gnu.org/licenses/>.
 ##
 
+# Arguments : 
+#	$1 = Output Filename
+#	$2 = Key of the code sign (optional but mendatory if code signing)
+#	$3 = Passphrase of the code sign (Optional)
+
 APP_NAME="linphone"
 
 BIN_SOURCE_DIR="OUTPUT/"
@@ -65,7 +70,11 @@ else
 	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
 	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
 	echo "-- Code Signing of AppImage"
-	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2
+	if [ -z "$3" ]; then
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2
+	else
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2 --sign-args "--pinentry-mode loopback --passphrase $3"
+	fi
 fi
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
