@@ -35,10 +35,6 @@ using namespace std;
 
 ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProxyModel(parent) {
   mCore = CoreManager::getInstance()->getCore();
-  mConference = mCore->getConference();
-  if (!mConference)
-    mConference = mCore->createConferenceWithParams(mCore->createConferenceParams());
-
   mConferenceAddModel = new ConferenceAddModel(this);
   App::getInstance()->getEngine()->setObjectOwnership(mConferenceAddModel, QQmlEngine::CppOwnership);
 

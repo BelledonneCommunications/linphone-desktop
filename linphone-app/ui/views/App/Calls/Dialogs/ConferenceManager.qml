@@ -11,7 +11,7 @@ import App.Styles 1.0
 DialogPlus {
   id: conferenceManager
 
-  readonly property int maxParticipants: 10
+  readonly property int maxParticipants: 20
   readonly property int minParticipants: 1
 
   buttons: [

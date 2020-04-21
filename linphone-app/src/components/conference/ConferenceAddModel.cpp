@@ -139,8 +139,10 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
     linphoneAddresses.push_back(linphoneAddress);
   }
 
-  shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mConference;
-
+  shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
+  if(!conference)
+    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
+  
   // Remove sip addresses if necessary.
   for (const auto &call : CoreManager::getInstance()->getCore()->getCalls()) {
     if (!call->getParams()->getLocalConferenceMode())

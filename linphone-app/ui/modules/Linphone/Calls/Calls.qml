@@ -170,7 +170,7 @@ ListView {
 
     SequentialAnimation on color {
       loops: CallsStyle.entry.endCallAnimation.loops
-      running: $call && $call.status === CallModel.CallStatusEnded
+      running: !$call || $call.status === CallModel.CallStatusEnded
 
       ColorAnimation {
         duration: CallsStyle.entry.endCallAnimation.duration
