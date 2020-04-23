@@ -18,6 +18,7 @@ Item {
   Rectangle {
     anchors.fill: parent
     color: button.color
+    radius:TelKeypadStyle.radius+2.0
 
     ColumnLayout {
       anchors.fill: parent

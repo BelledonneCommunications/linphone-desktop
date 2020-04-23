@@ -14,8 +14,9 @@ Rectangle {
   property var container: parent
   property var call
 
-  color: TelKeypadStyle.color
-
+  color: TelKeypadStyle.color   // useless as it is overriden by buttons color, but keep it if buttons are transparent
+  onActiveFocusChanged: {if(activeFocus) selectedArea.border.width=TelKeypadStyle.selectedBorderWidth; else selectedArea.border.width=0}
+  
   layer {
     effect: PopupShadow {}
     enabled: true
@@ -23,6 +24,7 @@ Rectangle {
 
   height: TelKeypadStyle.height
   width: TelKeypadStyle.width
+  radius:TelKeypadStyle.radius+1.0 // +1 for avoid mixing color with border slection (some pixels can be print after the line)
 
   Keys.onPressed: {
     var index = Logic.mapKeyToButtonIndex(event.key)
@@ -61,7 +63,7 @@ Rectangle {
 
         text: modelData
 
-        onClicked: telKeypad.call.sendDtmf(modelData)
+        onClicked: telKeypad.call.sendDtmf(modelData)        
       }
     }
   }
@@ -97,5 +99,28 @@ Rectangle {
 
     onReleased: Math.abs(_mouseX - mouse.x) <= delta && Math.abs(_mouseY - mouse.y) <= delta &&
       Logic.sendDtmf(_id)
+  }
+  Rectangle{
+    id: selectedArea
+    anchors.fill:parent
+    color:"transparent"
+    border.color:TelKeypadStyle.selectedColor
+    border.width:0 
+    focus:false
+    enabled:false
+    radius:TelKeypadStyle.radius
+  }
+  MouseArea
+  {// Just take hover events and set popup to do its automatic close if mouse is not inside field/popup area
+      anchors.fill: parent
+      onContainsMouseChanged: (containsMouse?telKeypad.forceActiveFocus():telKeypad.focus=false)
+      hoverEnabled:true
+      preventStealing: true
+      propagateComposedEvents:true
+      onPressed: mouse.accepted=false
+      onReleased: mouse.accepted=false
+      onClicked: mouse.accepted=false
+      onDoubleClicked: mouse.accepted=false
+      onPressAndHold: mouse.accepted=false
   }
 }
