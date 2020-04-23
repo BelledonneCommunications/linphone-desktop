@@ -74,7 +74,7 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
       RESULT_VARIABLE SIGNING_RESULT
     )
     if(SIGNING_RESULT)
-      message(FATAL_ERROR "Failed to sign the package!")
+      message(FATAL_ERROR "Failed to sign the package! ${SIGNING_RESULT} ${RESULT_VARIABLE}")
     endif()
   endif ()
 
