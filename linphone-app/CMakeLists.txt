@@ -323,7 +323,7 @@ set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
 if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers
     message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
     message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
-
+endif()
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
     set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
