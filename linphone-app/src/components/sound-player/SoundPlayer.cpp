@@ -19,6 +19,7 @@
  */
 
 #include <QTimer>
+#include <QtDebug>
 
 #include "components/core/CoreManager.hpp"
 #include "components/settings/SettingsModel.hpp"

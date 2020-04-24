@@ -18,7 +18,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   // `{}` is a workaround to avoid `TypeError: Cannot read property...` when calls list is empty
-  readonly property var call: calls.selectedCall || ({
+  readonly property var call: (calls.selectedCall?calls.selectedCall:{
     callError: '',
     isOutgoing: true,
     recording: false,
@@ -197,8 +197,8 @@ Window {
               }
             }
 
-            peerAddress: call.peerAddress
-            localAddress: call.localAddress
+            peerAddress: (call?call.peerAddress:'')
+            localAddress: (call?call.localAddress:'')
           }
 
           Connections {
@@ -225,7 +225,7 @@ Window {
 
       childB: Loader {
         anchors.fill: parent
-        sourceComponent: call.peerAddress && call.localAddress ? chat : null
+        sourceComponent: window.call && window.call.peerAddress && window.call.localAddress ? chat : null
       }
     }
   }

@@ -116,8 +116,7 @@ Rectangle {
           width: grid.cellWidth
 
           Column {
-            readonly property string sipAddress: $call.sipAddress
-            readonly property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(sipAddress)
+            readonly property string sipAddress: $call.peerAddress
 
             anchors {
               fill: parent
@@ -133,19 +132,19 @@ Rectangle {
               width: parent.width
 
               horizontalTextAlignment: Text.AlignHCenter
-              sipAddress: parent.sipAddressObserver.sipAddress
-              username: LinphoneUtils.getContactUsername(parent.sipAddressObserver)
-            }
-
+              sipAddress: parent.sipAddress
+              username: LinphoneUtils.getContactUsername(parent.sipAddress)
+            }            
             IncallAvatar {
+            
               readonly property int size: Math.min(
                 parent.width,
                 parent.height - contactDescription.height - parent.spacing
               )
 
               anchors.horizontalCenter: parent.horizontalCenter
-
               call: $call
+              onCallChanged: if(!call) conference.conferenceModel.invalidate()
 
               height: size
               width: size

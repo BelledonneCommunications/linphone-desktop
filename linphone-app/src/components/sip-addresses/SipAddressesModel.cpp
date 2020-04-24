@@ -21,6 +21,7 @@
 #include <QDateTime>
 #include <QElapsedTimer>
 #include <QUrl>
+#include <QtDebug>
 
 #include "components/call/CallModel.hpp"
 #include "components/chat/ChatModel.hpp"

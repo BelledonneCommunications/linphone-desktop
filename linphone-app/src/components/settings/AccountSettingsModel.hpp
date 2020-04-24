@@ -23,6 +23,9 @@
 
 #include <linphone++/linphone.hh>
 #include <QObject>
+#include <QString>
+#include <QVariantMap>
+#include <QVariantList>
 
 // =============================================================================
 

@@ -24,6 +24,7 @@
 #include <linphone++/linphone.hh>
 #include <utils/MediastreamerUtils.hpp>
 #include <QObject>
+#include <QVariantMap>
 
 #include "components/core/CoreHandlers.hpp"
 
