@@ -20,6 +20,7 @@
 
 #include <QDir>
 #include <QtDebug>
+#include <QVariantMap>
 
 #include <cstdlib>
 #include <cmath>

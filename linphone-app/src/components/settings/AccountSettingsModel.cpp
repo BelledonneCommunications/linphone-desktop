@@ -19,6 +19,7 @@
  */
 
 #include <QtDebug>
+#include <QVariantMap>
 
 #include "config.h"
 
