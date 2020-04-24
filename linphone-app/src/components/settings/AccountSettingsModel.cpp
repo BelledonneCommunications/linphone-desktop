@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtDebug>
+
 #include "config.h"
 
 #include "app/paths/Paths.hpp"
@@ -27,6 +29,7 @@
 
 #include "AccountSettingsModel.hpp"
 #include "SettingsModel.hpp"
+
 
 // =============================================================================
 

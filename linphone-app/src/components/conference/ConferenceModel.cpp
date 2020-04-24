@@ -19,6 +19,7 @@
  */
 
 #include <QDateTime>
+#include <QtDebug>
 
 #include "components/call/CallModel.hpp"
 #include "components/calls/CallsListModel.hpp"

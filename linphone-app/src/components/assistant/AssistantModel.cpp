@@ -27,6 +27,8 @@
 
 #include "AssistantModel.hpp"
 
+#include <QtDebug>
+
 // =============================================================================
 
 using namespace std;

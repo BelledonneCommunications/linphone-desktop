@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtDebug>
+
 #include "components/core/CoreManager.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
