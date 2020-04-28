@@ -200,7 +200,7 @@ Row {
 
             to: $chatEntry.fileSize
             value: $chatEntry.fileOffset || 0
-            visible: $chatEntry.status === ChatModel.MessageStatusInProgress
+            visible: $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
 
             background: Rectangle {
               color: ChatStyle.entry.message.file.status.bar.background.color
@@ -322,7 +322,7 @@ Row {
 
         sourceComponent: $chatEntry.isOutgoing
           ? (
-            $chatEntry.status === ChatModel.MessageStatusInProgress
+            $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
               ? indicator
               : icon
           ) : undefined

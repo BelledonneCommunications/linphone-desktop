@@ -228,7 +228,7 @@ void Notifier::deleteNotification (QVariant notification) {
 // -----------------------------------------------------------------------------
 
 void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &message) {
-  CREATE_NOTIFICATION(Notifier::ReceivedMessage);
+  CREATE_NOTIFICATION(Notifier::ReceivedMessage)
 
   QVariantMap map;
   map["message"] = message->getFileTransferInformation()
@@ -240,21 +240,21 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
   map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
   map["window"].setValue(App::getInstance()->getMainWindow());
 
-  SHOW_NOTIFICATION(map);
+  SHOW_NOTIFICATION(map)
 }
 
 void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
-  CREATE_NOTIFICATION(Notifier::ReceivedFileMessage);
+  CREATE_NOTIFICATION(Notifier::ReceivedFileMessage)
 
   QVariantMap map;
-  map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferFilepath());
-  map["fileSize"] = quint64(message->getFileTransferInformation()->getSize());
+  map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferInformation()->getFilePath());
+  map["fileSize"] = quint64(message->getFileTransferInformation()->getSize() +message->getFileTransferInformation()->getFileSize());
 
-  SHOW_NOTIFICATION(map);
+  SHOW_NOTIFICATION(map)
 }
 
 void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
-  CREATE_NOTIFICATION(Notifier::ReceivedCall);
+  CREATE_NOTIFICATION(Notifier::ReceivedCall)
 
   CallModel *callModel = &call->getData<CallModel>("call-model");
 
@@ -266,35 +266,35 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
   QVariantMap map;
   map["call"].setValue(callModel);
 
-  SHOW_NOTIFICATION(map);
+  SHOW_NOTIFICATION(map)
 }
 
 void Notifier::notifyNewVersionAvailable (const QString &version, const QString &url) {
-  CREATE_NOTIFICATION(Notifier::NewVersionAvailable);
+  CREATE_NOTIFICATION(Notifier::NewVersionAvailable)
 
   QVariantMap map;
   map["message"] = tr("newVersionAvailable").arg(version);
   map["url"] = url;
 
-  SHOW_NOTIFICATION(map);
+  SHOW_NOTIFICATION(map)
 }
 
 void Notifier::notifySnapshotWasTaken (const QString &filePath) {
-  CREATE_NOTIFICATION(Notifier::SnapshotWasTaken);
+  CREATE_NOTIFICATION(Notifier::SnapshotWasTaken)
 
   QVariantMap map;
   map["filePath"] = filePath;
 
-  SHOW_NOTIFICATION(map);
+  SHOW_NOTIFICATION(map)
 }
 
 void Notifier::notifyRecordingCompleted (const QString &filePath) {
-  CREATE_NOTIFICATION(Notifier::RecordingCompleted);
+  CREATE_NOTIFICATION(Notifier::RecordingCompleted)
 
   QVariantMap map;
   map["filePath"] = filePath;
 
-  SHOW_NOTIFICATION(map);
+  SHOW_NOTIFICATION(map)
 }
 
 #undef SHOW_NOTIFICATION
