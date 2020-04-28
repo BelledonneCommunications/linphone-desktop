@@ -41,6 +41,7 @@
 #include "paths/Paths.hpp"
 #include "providers/AvatarProvider.hpp"
 #include "providers/ImageProvider.hpp"
+#include "providers/ExternalImageProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
 #include "utils/LinphoneUtils.hpp"
@@ -316,6 +317,7 @@ void App::initContentApp () {
   // Provide avatars/thumbnails providers.
   mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
   mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+  mEngine->addImageProvider(ExternalImageProvider::ProviderId, new ExternalImageProvider());
   mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 
   mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
