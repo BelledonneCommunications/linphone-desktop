@@ -39,6 +39,15 @@ Notification {
         elide: Text.ElideRight
         font.pointSize: NotificationReceivedFileMessageStyle.fileName.pointSize
         text: Utils.basename(notification.fileUri)
+        visible:!image.visible
+      }
+      Image{
+        id:image
+        Layout.fillHeight: true
+        Layout.fillWidth: true
+        fillMode: Image.PreserveAspectFit
+        source: "image://external/"+notification.fileUri
+        visible: image.status == Image.Ready
       }
 
       Text {

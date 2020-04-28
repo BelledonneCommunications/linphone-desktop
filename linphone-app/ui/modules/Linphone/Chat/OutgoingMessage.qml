@@ -80,7 +80,7 @@ Item {
         height: ChatStyle.entry.lineHeight
         width: ChatStyle.entry.message.outgoing.areaSize
 
-        sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress
+        sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
           ? indicator
           : icon
       }
