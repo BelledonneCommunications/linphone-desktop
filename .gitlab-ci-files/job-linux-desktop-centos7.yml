@@ -90,8 +90,8 @@ job-centos7-ninja-gcc-package:
     CXX: g++
   extends: .job-linux-desktop
   script:
-    - gpg2 --pinentry-mode loopback --passphrase $GPG_SIGNING_PASS --import "$GPG_SIGNING_KEY"
-#    - *build_all_linux_script
+#    - gpg2 --pinentry-mode loopback --passphrase $GPG_SIGNING_PASS --import "$GPG_SIGNING_KEY"
+    - *build_all_linux_script
   artifacts:
     paths:
       - build/OUTPUT/Packages/*.AppImage
