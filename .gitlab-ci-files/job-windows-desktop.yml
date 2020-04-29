@@ -9,10 +9,6 @@
   mkdir build
   cd build
   mkdir OUTPUT
-#SDK  Building
-    #we launch the msvc-cl wrapper located in python scripts folder
-    #this wrapper relays only needed calls to the real compiler    
-    #cache stats display
   C:\PROGRA~1\Python37\Scripts\cl -s    
   cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
   cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
