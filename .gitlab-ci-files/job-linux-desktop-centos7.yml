@@ -1,15 +1,3 @@
-.build_all_linux_script: &build_all_linux_script |
-  cmake --version
-  export CC=$CC
-  export CXX=$CXX
-  mkdir -p build/OUTPUT
-  echo $CMAKE_GENERATOR
-  echo $DEFAULT_LINUX_CMAKE_OPTIONS
-  echo $CMAKE_OPTIONS
-  echo $CMAKE_SANITIZER_OPTIONS
-  cd build
-  cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
-  cmake --build . --target all $LBC_NODEBUG_OPTIONS
 
 #job-centos7-makefile-gcc:
 
@@ -84,13 +72,13 @@ job-centos7-ninja-gcc-package:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DLINPHONE_BUILDER_SIGNING_PASSPHRASE=$GPG_SIGNING_PASS
+#    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DLINPHONE_BUILDER_SIGNING_PASSPHRASE=$GPG_SIGNING_PASS
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
   script:
-#    - gpg2 --pinentry-mode loopback --passphrase $GPG_SIGNING_PASS --import "$GPG_SIGNING_KEY"
+    - gpg2 --pinentry-mode loopback --passphrase $GPG_SIGNING_PASS --import "$GPG_SIGNING_KEY"
     - *build_all_linux_script
   artifacts:
     paths:
