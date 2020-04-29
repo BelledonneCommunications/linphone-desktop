@@ -1,3 +1,6 @@
+include:
+  - 'job-linux-desktop.yml'
+
 #job-centos7-makefile-gcc:
 
 #  tags: [ "docker" ]
