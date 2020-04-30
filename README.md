@@ -116,7 +116,7 @@ Before you install packages with Brew, you may have to change directories permis
         Qt5_DIR="C:\Qt\<version>\msvc2017\lib\cmake"
         PATH="C:\Qt\<version>\msvc2017\bin;%PATH%"
 
-2. Or open a Command line with Visual Studio `Developer Comand Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: C:\Qt\5.12.6\msvc2017\bin\qtenv2.bat
+2. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: C:\Qt\5.12.6\msvc2017\bin\qtenv2.bat
 
 3. Install msys-coreutils : `mingw-get install msys-coreutils`
 
