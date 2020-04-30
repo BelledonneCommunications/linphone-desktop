@@ -114,9 +114,21 @@ job-centos7-ninja-gcc-deploy:
 # Debug
 #################################################
 
-job-centos7-debug:
+job-centos7-debug-nuc:
   stage: deploy
   tags: [ "docker-test-centos7-liblinphone-nuc" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
+  only:
+    variables:
+      - $DEBUG_CENTOS7_NUC
+  script:
+    - sleep 10m
+
+job-centos7-debug:
+  stage: deploy
+  tags: [ "docker" ]
   #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
   dependencies: []
