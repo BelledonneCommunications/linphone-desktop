@@ -95,7 +95,7 @@ job-centos7-ninja-gcc-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   script:
-    - scp build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
     
 #################################################
 # Debug
