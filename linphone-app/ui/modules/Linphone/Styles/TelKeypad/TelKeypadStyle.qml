@@ -12,6 +12,9 @@ QtObject {
   property int rowSpacing: 0
   property int width: 180
   property color color: Colors.k
+  property color selectedColor : Colors.m
+  property int selectedBorderWidth: 2
+  property real radius : 5.0
 
   property QtObject button: QtObject {
     property QtObject color: QtObject {

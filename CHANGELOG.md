@@ -4,46 +4,55 @@
 
 ### Features
 
-- Add an autostart option in GUI settings.
+- Add an option to show Dialpad automatically.
+- Dialpad supports A, B, C and D keys.
+- Dialpad supports keyboard when having a focus by hovering mouse.
+- Play a sound when DTMF is sent.
+
+- Improved general video/audio quality.
+- Echo cancellation more efficient.
+- `OpenH264` codec can be downloaded and used in the application from Cisco website.
+- Improve High DPI Displays support for 4K screens.
+- Detect audio/video hardware changes while using settings.
+- Updatable audio/video devices while in call.
+
+- Add an option to keep windows in background when a call is received.
+- Add an option to allow Linphone to be lauched with the system (autostart).
 - Add an option to play sound notification when an incoming chat message is received.
-- Add an option to show TelKeypad automatically.
-- Add an option to automatically record calls.
-- Add an option to keep calls window in background.
-- Add a CLI. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
-- Timeline uses current proxy config info.
+- Capture and playback gains can be changed in settings with sliders.
+- Add the possibility to record calls automatically.
+- Move logs folder without restart.
+- Add caller/callee on saved files.
+
+- Add a `CLI` function in order to support `URI handlers`. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
+- Timeline uses current proxy config info and show data only on selected profile.
 - Display unread message count in system tray icon/mac app icon.
 - Display unread chat message count in `Manage Accounts` dialog and in `Main Window`.
 - Add a media parameters dialog in the `Call View` to selected devices and set volume.
-- TelKeypad supports A, B, C and D keys.
-- TelKeypad supports keyboard.
-- Enable High DPI Displays support
-- OpenH264 codec can be download in the application.
-- Use BZip2 instead of Minizip to extract codec
-- New icons
+- Display a spinner when a message is sending.
 - Disable screensaver on fullscreen video call.
-- Add caller/callee on saved files.
-- Supports chinese, danish, french, english, german, hungarian, italian, japanese, lithuanian, portuguese, russian, spanish, swedish, turkish, ukrainian
-- App Nap avoiding for MacOs
-- Simplify building process
-- Move logs folder without restart
-- NSIS (Windows), DMG (MacOsX) and Appimage (Linux) deployments
+- New logo, icons and installer assets.
 
+- NSIS (Windows), DMG (MacOsX) and Appimage (Linux) packaging.
+- Supports chinese, danish, french, english, german, hungarian, italian, japanese, lithuanian, portuguese, russian, spanish, swedish, turkish, ukrainian from community contributions.
+
+- Use Native BZip2 instead of Embedded Minizip to extract codec.
+- App Nap avoiding for MacOs.
+- Simplify building process.
 
 ### Fixes
 
-- Display a busy indicator when a message is sent.
-- Play a sound when DTMF is sent.
-- Do not use `:` separator when a file is saved on Windows.
-- Avoid mark as read on selected chat room if window is not active.
+- Remove the use of `:` separator when a file is saved on Windows.
+- Avoid mark `as read` on selected chat room if window is not active.
 - Search box in main page will not reset its text when clicking on it
 - Crash on account authentifications
-- Apple permissions 
+- Apple permissions that could lead to mute microphone	
 
 ### Removed
 
 - Prepare.py configuration
 - Remove useless splashscreen.
-- Minizip
+- Minizip dependencies
 - Flatpack support
 
 ## 4.1.0 - 2017-07-19

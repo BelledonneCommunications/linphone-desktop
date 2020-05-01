@@ -85,6 +85,7 @@ DialogPlus {
 		icon: 'options'
 		iconSize: 30
 		anchors.fill: parent
+		visible:false
 		//TODO handle click and jump to proxy config settings
 	      }
 
