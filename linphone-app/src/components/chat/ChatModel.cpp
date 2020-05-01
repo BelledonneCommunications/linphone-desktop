@@ -181,7 +181,7 @@ static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMe
             if (!QFile::remove(thumbnailPath))
                 qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
         }
-        message->setAppdata("");// Remove completly Thumbnail from the message
+        message->setAppdata("");// Remove completely Thumbnail from the message
     }
 }
 
