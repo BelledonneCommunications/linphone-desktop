@@ -81,11 +81,18 @@ void CoreHandlers::notifyCoreStarted () {
 // -----------------------------------------------------------------------------
 
 void CoreHandlers::onAuthenticationRequested (
-  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Core> & core,
   const shared_ptr<linphone::AuthInfo> &authInfo,
   linphone::AuthMethod
 ) {
-  emit authenticationRequested(authInfo);
+  auto configList = core->getProxyConfigList();
+  auto config = configList.begin() ;
+  std::string username = authInfo->getUsername();
+  std::string domain = authInfo->getDomain();
+  while(config != configList.end() && ((*config)->getContact()->getUsername() != username || (*config)->getContact()->getDomain() != domain))
+	++config;
+  if( config != configList.end() )
+	emit authenticationRequested(authInfo);// Send authentification request only if a proxy still exists
 }
 
 void CoreHandlers::onCallEncryptionChanged (
