@@ -176,6 +176,7 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 	# ${APP_OPTIONS}
 	    BUILD_ALWAYS ON
 	)
+	install(CODE "message(STATUS Running install)")
 	set(AUTO_REGENERATION auto_regeneration)
 	add_custom_target(${AUTO_REGENERATION} ALL
 		COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
