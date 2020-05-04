@@ -59,13 +59,25 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
         export PATH=${QTTOOLDIR}:$PATH
 3. For specific requirments, see platform instructions sections below.
 
+### Resume of Building steps
+
+        `git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive` or `git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
+        `cd linphone-desktop`
+        `mkdir build`
+        `cd build`
+        `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
+        `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
+        `./OUTPUT/bin/linphone --verbose` or `./OUTPUT/Linphone.app/Contents/MacOS/linphone --verbose`
+
 ### Get sources
 
 1. Clone repository:
 
         git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive
+        
 Or
-        git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive
+
+        git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive        
 
 2. Update submodules
 
@@ -74,7 +86,7 @@ Or
 		
 ### Building : General Steps
 
-The build is done by building the SDK and the application. Their targets are `sdk` and `linphone-qt`.
+The build is done by building the SDK and the application. Their targets are `sdk` and `linphone-qt`.		
 
 1. Create your build folder at the root of the project : `mkdir build`
 Go to this new folder and begin the build process : `cd build`
@@ -84,7 +96,7 @@ Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generat
 
 3. Build and install the whole project : `cmake --build . --target <target>` (replace `<target>` with the target name. You can use the switch `--parallel 10` to do 10 parallel builds with CMake >= 3.12. 
 
-You may add `--config RelWithDebInfo` in addition of `CMAKE_BUILD_TYPE`. It is important to set the config in the process or you can have a bad configuration for your binary that could lead to some corruption : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like Qt Creator), you may override the build command and use the Custom build option.
+You may add `--config RelWithDebInfo` in addition of `CMAKE_BUILD_TYPE`. It is important to keep the same configuration in the process or you could have a bad configuration for your binary that could lead to some corruptions : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like `Qt Creator`), you may override the build command and use the Custom build option.
 
 When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .` if CMake>=3.15) to put the application in the correct configuration.
 
@@ -96,9 +108,12 @@ When all are over, the files will be in the OUTPUT folder in the build directory
 ### Update your project
 
 1. Update your project with :
+
         git fetch
         git pull --rebase
+        
 2. Update submodules from your current branch
+
         git submodule update --init --recursive
 
 Then simply re-build using cmake.
