@@ -40,12 +40,13 @@ Rectangle {
       Layout.leftMargin: CallStyle.header.leftMargin
       Layout.rightMargin: CallStyle.header.rightMargin
       Layout.preferredHeight: ConferenceStyle.description.height
+      Row{
+            ActionBar {
+            id: leftActions
 
-      ActionBar {
-        id: leftActions
-
-        anchors.left: parent.left
-        iconSize: CallStyle.header.iconSize
+            anchors.left: parent.left
+            iconSize: CallStyle.header.iconSize
+        }
       }
 
       Text {
@@ -225,7 +226,21 @@ Rectangle {
             iconSize: CallStyle.actionArea.iconSize
 
             onClicked: conference.conferenceModel.microMuted = !conference.conferenceModel.microMuted
-          }
+          }/*
+          Loader {
+                id: cameraLoader
+                anchors.centerIn: parent
+                active: conference.conferenceModel.videoEnabled
+                sourceComponent: camera
+                Component {
+                  id: camera
+                  Camera {
+                    call: conference.conferenceModel.call
+                    height: 20
+                    width: 20
+                  }
+                }
+              }*/
         }
       }
 

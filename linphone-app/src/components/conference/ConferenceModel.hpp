@@ -58,6 +58,7 @@ signals:
   void microMutedChanged (bool status);
   void recordingChanged (bool status);
   void conferenceChanged ();
+  void callRunning (int index, CallModel *callModel);
 
 private:
   int getCount () const {

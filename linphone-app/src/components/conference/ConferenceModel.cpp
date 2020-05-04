@@ -37,13 +37,17 @@
 using namespace std;
 
 ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(parent) {
+  CallsListModel *callListModel = CoreManager::getInstance()->getCallsListModel();
   QObject::connect(this, &ConferenceModel::rowsRemoved, [this] { // Warning : called before model remove its items
     emit countChanged(rowCount());
   });
   QObject::connect(this, &ConferenceModel::rowsInserted, [this] {
     emit countChanged(rowCount());
   });
-  setSourceModel(CoreManager::getInstance()->getCallsListModel());
+   QObject::connect(callListModel, &CallsListModel::callRunning, this, [this](int index, CallModel *callModel) {
+    emit callRunning(index, callModel);
+  });
+  setSourceModel(callListModel);
   emit conferenceChanged();
 
   QObject::connect(
@@ -52,9 +56,12 @@ ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(paren
 }
 
 bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  Q_UNUSED(sourceRow)
-  Q_UNUSED(sourceParent)
-  return true;
+  //Q_UNUSED(sourceRow)
+  //Q_UNUSED(sourceParent)
+  //return true;
+  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const CallModel *callModel = index.data().value<CallModel *>();
+  return callModel->getCall()->getParams()->getLocalConferenceMode();
 }
 // -----------------------------------------------------------------------------
 

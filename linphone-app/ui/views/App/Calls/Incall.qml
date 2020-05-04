@@ -25,6 +25,7 @@ Rectangle {
     cameraPreviewLoader.status !== Loader.Null
 
   property var call
+  onCallChanged: console.log('Change')
 
   property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.peerAddress, call.localAddress)
   property var _fullscreen: null
@@ -236,14 +237,20 @@ Rectangle {
 
         active: incall.call.videoEnabled && !_fullscreen
         sourceComponent: camera
-
+        onActiveChanged: {console.log("Active");}
+        property alias call : incall.call
+        
+        Component.onCompleted: {console.log('Complete');call.acceptVideoRequest()}
+        
         Component {
           id: camera
 
           Camera {
-            call: incall.call
+            id:cameraSource
+            call: cameraLoader.call
             height: container.height
             width: container.width
+            onCallChanged:console.log("Changing call")
           }
         }
       }
@@ -381,6 +388,10 @@ Rectangle {
         width: CallStyle.actionArea.userVideo.width
         active: incall.width >= CallStyle.actionArea.lowWidth && incall.call.videoEnabled && !_fullscreen
         sourceComponent: cameraPreview
+        property alias call : incall.call
+        
+        Component.onCompleted: {console.log('Complete');call.acceptVideoRequest()}
+        
         Component {
           id: cameraPreview
 
@@ -388,6 +399,7 @@ Rectangle {
             anchors.fill: parent
             call: incall.call
             isPreview: true
+            onCallChanged:console.log("Changing call")
           }
         }
       }

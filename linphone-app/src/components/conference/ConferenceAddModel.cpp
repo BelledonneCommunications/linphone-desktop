@@ -142,8 +142,11 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
   }
 
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
-  if(!conference)
-    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
+  if(!conference){
+	std::shared_ptr<linphone::ConferenceParams> params = mConferenceHelperModel->mCore->createConferenceParams();
+	params->enableVideo(false);// Set to false to avoid creating windows
+	conference = mConferenceHelperModel->mCore->createConferenceWithParams(params);
+  }
   
   // Remove sip addresses if necessary.
   for (const auto &call : CoreManager::getInstance()->getCore()->getCalls()) {
@@ -155,9 +158,12 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
       call->terminate();
   }
 
+  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(nullptr);
+  params->enableVideo(true);// Doesn't seem to send the video request on invitation
+  
   conference->inviteParticipants(
     linphoneAddresses,
-    CoreManager::getInstance()->getCore()->createCallParams(nullptr)
+    params
   );
 }
 

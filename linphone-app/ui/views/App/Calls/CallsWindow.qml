@@ -18,17 +18,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   // `{}` is a workaround to avoid `TypeError: Cannot read property...` when calls list is empty
-  readonly property var call: (calls.selectedCall?calls.selectedCall:{
-    callError: '',
-    isOutgoing: true,
-    recording: false,
-    localSas: '',
-    peerAddress: '',
-    localAddress: '',
-    type: false,
-    updating: true,
-    videoEnabled: false
-  })
+  readonly property alias call: calls.selectedCall
 
   readonly property bool chatIsOpened: !rightPaned.isClosed()
 
@@ -133,7 +123,9 @@ Window {
           Layout.fillWidth: true
 
           conferenceModel: ConferenceModel {}
-          model: CallsListProxyModel {}
+          simpleCallModel: CallsListProxyModel {}
+          
+          onSelectedCallChanged:console.log('change')
         }
       }
     }

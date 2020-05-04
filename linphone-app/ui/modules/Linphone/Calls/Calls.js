@@ -124,52 +124,49 @@ function getParams (call) {
   }
 }
 
-function updateSelectedCall (call, index) {
-  calls._selectedCall = call
+function updateSelectedCall (callList, call, index) {
+console.log('updatecall : '+index);
+  callList._selectedCall = call
   if (index != null) {
-    calls.currentIndex = index
+    callList.currentIndex = index
   }
 }
 
-function resetSelectedCall () {
-  updateSelectedCall(null, -1)
+function resetSelectedCall (callList) {
+  updateSelectedCall(callList, null, -1)
 }
 
-function setIndexWithCall (call) {
-  var count = calls.count
-  var model = calls.model
+function setIndexWithCall (callList, call) {
+  var count = callList.count
+  var model = callList.model
 
   for (var i = 0; i < count; i++) {
     if (call === model.data(model.index(i, 0))) {
-      updateSelectedCall(call, i)
+      updateSelectedCall(callList, call, i)
       return
     }
   }
 
-  updateSelectedCall(call, -1)
+  updateSelectedCall(callList, call, -1)
 }
 
 // -----------------------------------------------------------------------------
 // View handlers.
 // -----------------------------------------------------------------------------
 
-function handleCountChanged (count) {
+function handleCountChanged (callList, count) {
   if (count === 0) {
     return
   }
 
-  var call = calls._selectedCall
+  var call = callList._selectedCall
 
   if (call == null) {
-    if (calls.conferenceModel.count > 0) {
-      return
-    }
-
-    var model = calls.model
+    var model = callList.model
     var index = count - 1
-    updateSelectedCall(model.data(model.index(index, 0)), index)
+    updateSelectedCall(callList, model.data(model.index(index, 0)), index)
   } else {
-    setIndexWithCall(call)
+    setIndexWithCall(callList, call)
   }
 }
 
@@ -177,28 +174,28 @@ function handleCountChanged (count) {
 // Model handlers.
 // -----------------------------------------------------------------------------
 
-function handleCallRunning (call) {
+function handleCallRunning (callList, call) {
   if (!call.isInConference) {
-    setIndexWithCall(call)
+    setIndexWithCall(callList, call)
   }
 }
 
-function handleRowsAboutToBeRemoved (_, first, last) {
-  var index = calls.currentIndex
+function handleRowsAboutToBeRemoved (callList, first, last) {
+  var index = callList.currentIndex
 
   if (index >= first && index <= last) {
-    resetSelectedCall()
+    resetSelectedCall(callList)
   }
 }
 
-function handleRowsInserted (_, first, last) {
+function handleRowsInserted (callList, first, last) {
   // The last inserted outgoing element become the selected call.
-  var model = calls.model
+  var model = callList.model
   for (var index = last; index >= first; index--) {
     var call = model.data(model.index(index, 0))
 
     if (call.isOutgoing && !call.isInConference) {
-      updateSelectedCall(call)
+      updateSelectedCall(callList, call)
       return
     }
   }
@@ -207,7 +204,7 @@ function handleRowsInserted (_, first, last) {
   if (first === 0 && model.rowCount() === 1) {
     var call = model.data(model.index(0, 0))
     if (!call.isInConference) {
-      updateSelectedCall(model.data(model.index(0, 0)))
+      updateSelectedCall(callList, model.data(model.index(0, 0)))
     }
   }
 }

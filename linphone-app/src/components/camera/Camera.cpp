@@ -146,7 +146,7 @@ void CameraRenderer::updateWindowId () {
   mUpdateContextInfo = false;
 
   qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3):")
-    .arg(mContextInfo->width).arg(mContextInfo->height).arg(mIsPreview) << mContextInfo;
+    .arg(mContextInfo->width).arg(mContextInfo->height).arg(mIsPreview) << mContextInfo << mWindow->renderTargetId();
 
   if (mIsPreview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);

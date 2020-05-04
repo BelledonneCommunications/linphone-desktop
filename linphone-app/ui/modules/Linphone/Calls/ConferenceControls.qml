@@ -21,7 +21,7 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   color: ConferenceControlsStyle.color
-  height: ConferenceControlsStyle.height
+  height: visible?ConferenceControlsStyle.height:0
 
   MouseArea {
     anchors.fill: parent

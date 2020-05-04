@@ -17,9 +17,13 @@ Rectangle {
   property alias signIcon: signIcon.icon
   property alias sipAddressColor: contact.sipAddressColor
   property alias usernameColor: contact.usernameColor
+  property var call
+  property var showSpeakerMeter : false
 
   property string peerAddress
   property string localAddress
+  
+  property var conferenceModel
 
   // ---------------------------------------------------------------------------
 
@@ -66,12 +70,26 @@ Rectangle {
 
       entry: SipAddressesModel.getSipAddressObserver(peerAddress, localAddress)
     }
+    
+    VuMeter {
+        Layout.fillWidth: false
+        Layout.rightMargin: 4
+            Timer {
+              interval: 50
+              repeat: true
+              running: parent.visible
 
+              onTriggered: parent.value = callControls.call.speakerVu
+            }
+            visible:showSpeakerMeter
+            
+    }
     Item {
       id: content
 
       Layout.fillHeight: true
       Layout.preferredWidth: callControls._content[0].width
     }
+    
   }
 }
