@@ -48,7 +48,8 @@ public:
   enum RegistrationState {
     RegistrationStateRegistered,
     RegistrationStateNotRegistered,
-    RegistrationStateInProgress
+    RegistrationStateInProgress,
+    RegistrationStateNoProxy,
   };
   Q_ENUM(RegistrationState);
 
@@ -63,7 +64,7 @@ public:
 
   Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
-  Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
+  Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig = nullptr);
   Q_INVOKABLE void setDefaultProxyConfigFromSipAddress (const QString &sipAddress);
 
   Q_INVOKABLE bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, const QVariantMap &data);
