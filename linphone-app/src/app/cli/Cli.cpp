@@ -295,7 +295,7 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
     args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
   }
   address->clean();
-  args["sip-address"] = Utils::coreStringToAppString(address->asStringUriOnly());
+  args["sip-address"] = Utils::coreStringToAppString(address->asString());
   execute(args);
 }
 
