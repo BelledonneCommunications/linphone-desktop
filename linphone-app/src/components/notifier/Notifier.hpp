@@ -24,6 +24,7 @@
 #include <memory>
 
 #include <QObject>
+#include <QHash>
 
 // =============================================================================
 
@@ -72,10 +73,10 @@ private:
     int timeout;
   };
 
-  QObject *createNotification (NotificationType type);
+  QObject *createNotification (NotificationType type, QVariantMap data);
   void showNotification (QObject *notification, int timeout);
 
-  int mOffset = 0;
+  QHash<QString,int> mScreenHeightOffset;
   int mInstancesNumber = 0;
 
   QMutex *mMutex = nullptr;
