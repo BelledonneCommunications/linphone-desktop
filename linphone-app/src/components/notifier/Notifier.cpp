@@ -136,7 +136,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 			QScreen *screen = allScreens[i];
 
 			view->setScreen(screen);	// Bind the visual root object to the screen
-			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint));	// Set the visual ghost window
+			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
 			view->setSource(QString(NotificationsPath)+Notifier::Notifications[type].filename);
 			QQuickWindow *subWindow = view->findChild<QQuickWindow *>("__internalWindow");
 			QObject::connect(subWindow, &QObject::destroyed, view, &QObject::deleteLater);	// When destroying window, detroy visual root object too
