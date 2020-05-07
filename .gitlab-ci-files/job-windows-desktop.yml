@@ -152,7 +152,8 @@ job-windows-vs2017-win32-upload:
   dependencies:
     - job-windows-vs2017-package
   script:
-    - c:\MinGW\msys\1.0\bin\rsync -rlv --ignore-existing "results/*.exe" "%DEPLOY_SERVER%:%DEPLOY_SNAPSHOTS_ROOT_DIRECTORY%/windows/app"
+    - scp "results/*.exe" "%DEPLOY_SERVER%:%DEPLOY_SNAPSHOTS_ROOT_DIRECTORY%/windows/app"
+
 
 
 
