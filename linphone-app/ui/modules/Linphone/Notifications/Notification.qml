@@ -23,11 +23,6 @@ DesktopPopup {
     deleteNotification(notification)
   }
 
-  flags: {
-    return (Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint) |
-      (Qt.platform.os === 'osx' ? Qt.Window : Qt.Popup)
-  }
-
   Rectangle {
     color: NotificationStyle.color
     height: overrodeHeight || NotificationStyle.height

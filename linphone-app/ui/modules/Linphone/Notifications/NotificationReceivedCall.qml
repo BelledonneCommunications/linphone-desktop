@@ -29,7 +29,7 @@ Notification {
     }
 
     sourceComponent: ColumnLayout {
-      spacing: NotificationReceivedCallStyle.spacing
+      spacing: NotificationReceivedCallStyle.spacing     
 
       Contact {
         Layout.fillWidth: true
@@ -77,7 +77,6 @@ Notification {
 
           ActionButton {
             icon: 'hangup'
-
             onClicked: notification._close(notification.call.terminate)
           }
         }
