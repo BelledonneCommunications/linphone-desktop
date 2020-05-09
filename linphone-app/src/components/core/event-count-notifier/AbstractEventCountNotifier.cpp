@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtDebug>
+
 #include "components/call/CallModel.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/chat/ChatModel.hpp"

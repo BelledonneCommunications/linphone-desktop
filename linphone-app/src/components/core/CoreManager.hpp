@@ -22,7 +22,10 @@
 #define CORE_MANAGER_H_
 
 #include <linphone++/linphone.hh>
-#include <QFutureWatcher>
+#include <QObject>
+#include <QString>
+#include <QHash>
+#include <QMutex>
 
 // =============================================================================
 
@@ -173,9 +176,6 @@ private:
   QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
 
   QTimer *mCbsTimer = nullptr;
-
-  QFuture<void> mPromiseBuild;
-  QFutureWatcher<void> mPromiseWatcher;
 
   QMutex mMutexVideoRender;
 

@@ -64,7 +64,6 @@ private:
   ConferenceAddModel *mConferenceAddModel = nullptr;
 
   std::shared_ptr<linphone::Core> mCore;
-  std::shared_ptr<linphone::Conference> mConference;
 };
 
 #endif // CONFERENCE_HELPER_MODEL_H_

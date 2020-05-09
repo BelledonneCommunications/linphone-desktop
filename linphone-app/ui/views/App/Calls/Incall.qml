@@ -224,7 +224,6 @@ Rectangle {
 
         IncallAvatar {
           call: incall.call
-
           height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
           width: height
         }

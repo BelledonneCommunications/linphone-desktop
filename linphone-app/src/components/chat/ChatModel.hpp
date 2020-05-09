@@ -61,9 +61,11 @@ public:
     MessageStatusDisplayed = int(linphone::ChatMessage::State::Displayed),
     MessageStatusFileTransferDone = int(linphone::ChatMessage::State::FileTransferDone),
     MessageStatusFileTransferError = int(linphone::ChatMessage::State::FileTransferError),
+    MessageStatusFileTransferInProgress = int(linphone::ChatMessage::State::FileTransferInProgress),
     MessageStatusIdle = int(linphone::ChatMessage::State::Idle),
     MessageStatusInProgress = int(linphone::ChatMessage::State::InProgress),
     MessageStatusNotDelivered = int(linphone::ChatMessage::State::NotDelivered)
+    
   };
   Q_ENUM(MessageStatus);
 

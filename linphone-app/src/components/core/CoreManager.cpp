@@ -67,48 +67,39 @@ namespace {
 CoreManager *CoreManager::mInstance;
 
 CoreManager::CoreManager (QObject *parent, const QString &configPath) :
-  QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
-  mPromiseBuild = QtConcurrent::run(this, &CoreManager::createLinphoneCore, configPath);
+	QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
+	QTimer * delayedCreationTimer = new QTimer();
+	delayedCreationTimer->setSingleShot(true);
+	QObject::connect(delayedCreationTimer, &QTimer::timeout, this , [configPath, this, delayedCreationTimer]{
+		delayedCreationTimer->deleteLater();
+		createLinphoneCore(configPath);
+		qInfo() << QStringLiteral("Core created. Enable iterate.");
+		mInstance->mCbsTimer->start();
+		emit mInstance->coreCreated();
+	});
 
-  QObject::connect(&mPromiseWatcher, &QFutureWatcher<void>::finished, this, [] {
-    qInfo() << QStringLiteral("Core created. Enable iterate.");
-    mInstance->mCbsTimer->start();
+	CoreHandlers *coreHandlers = mHandlers.get();
 
-    emit mInstance->coreCreated();
-  });
-
-  CoreHandlers *coreHandlers = mHandlers.get();
-
-  QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
+	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
     // Do not change this order. :) (Or pray.)
-    mInstance->mCallsListModel = new CallsListModel(mInstance);
-    mInstance->mContactsListModel = new ContactsListModel(mInstance);
-    mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
-    mInstance->mSettingsModel = new SettingsModel(mInstance);
-    mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
+		mInstance->mCallsListModel = new CallsListModel(mInstance);
+		mInstance->mContactsListModel = new ContactsListModel(mInstance);
+		mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
+		mInstance->mSettingsModel = new SettingsModel(mInstance);
+		mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
+		EventCountNotifier *eventCountNotifier = new EventCountNotifier(mInstance);
+		eventCountNotifier->updateUnreadMessageCount();
+		QObject::connect(eventCountNotifier, &EventCountNotifier::eventCountChanged,
+			mInstance, &CoreManager::eventCountChanged
+		);
+		mInstance->mEventCountNotifier = eventCountNotifier;
+		mInstance->migrate();
+		mInstance->mStarted = true;
+		emit mInstance->coreStarted();
+	});
 
-    {
-      EventCountNotifier *eventCountNotifier = new EventCountNotifier(mInstance);
-      eventCountNotifier->updateUnreadMessageCount();
-      QObject::connect(
-        eventCountNotifier, &EventCountNotifier::eventCountChanged,
-        mInstance, &CoreManager::eventCountChanged
-      );
-      mInstance->mEventCountNotifier = eventCountNotifier;
-    }
-
-    mInstance->migrate();
-
-    mInstance->mStarted = true;
-    emit mInstance->coreStarted();
-  });
-
-  QObject::connect(
-    coreHandlers, &CoreHandlers::logsUploadStateChanged,
-    this, &CoreManager::handleLogsUploadStateChanged
-  );
-
-  mPromiseWatcher.setFuture(mPromiseBuild);
+	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
+	delayedCreationTimer->start(CbsCallInterval);
 }
 
 // -----------------------------------------------------------------------------

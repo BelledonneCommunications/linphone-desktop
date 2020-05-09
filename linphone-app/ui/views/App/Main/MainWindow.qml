@@ -112,7 +112,10 @@ ApplicationWindow {
               text: AccountSettingsModel.sipAddress
             }
 
-            onClicked: Logic.manageAccounts()
+            onClicked:  {if(AccountSettingsModel.registrationState !== AccountSettingsModel.RegistrationStateRegistered && AccountSettingsModel.registrationState !== AccountSettingsModel.RegistrationStateNoProxy)
+                            CoreManager.forceRefreshRegisters()
+                        Logic.manageAccounts()
+                        }
           }
 
           Column {
@@ -277,28 +280,6 @@ ApplicationWindow {
         }		
       }
     }
-  }
-
-  // ---------------------------------------------------------------------------
-  // Hiden button to force registration.
-  // ---------------------------------------------------------------------------
-
-  Button {
-    anchors {
-      top: parent.top
-      left: parent.left
-    }
-
-    background: Rectangle {
-      color: 'transparent' // Not a style.
-    }
-
-    flat: true
-
-    height: MainWindowStyle.toolBar.height
-    width: MainWindowStyle.toolBar.leftMargin
-
-    onClicked: CoreManager.forceRefreshRegisters()
   }
 
   // ---------------------------------------------------------------------------

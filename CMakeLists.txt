@@ -31,7 +31,7 @@ foreach(var ${vars})
 		if( "${var}" STREQUAL "CMAKE_PREFIX_PATH")
 			set(PREFIX_PATH ";${${var}}")
 		endif()
-	elseif("${var}" STREQUAL "CMAKE_GENERATOR_PLATFORM")
+	elseif("${var}" STREQUAL "CMAKE_GENERATOR_PLATFORM" AND NOT("${${var}}" STREQUAL ""))
 		message(STATUS "User-Setting Platform to ${${var}}")
 	endif()
 endforeach()
@@ -194,4 +194,5 @@ ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     EXCLUDE_FROM_ALL ON
+    BUILD_ALWAYS ON
 )

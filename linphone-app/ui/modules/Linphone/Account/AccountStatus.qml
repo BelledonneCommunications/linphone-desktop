@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -48,7 +49,10 @@ Item {
           Icon {
             iconSize: parent.width
             icon: 'generic_error'
-            visible: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateNotRegistered
+            visible: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateNotRegistered || AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateNoProxy
+            TooltipArea{
+                text : 'Not Registered'
+            }
           }
         }
 

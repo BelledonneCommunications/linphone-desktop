@@ -19,6 +19,7 @@
  */
 
 #include <QDir>
+#include <QtDebug>
 
 #include <cstdlib>
 #include <cmath>

@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QtDebug>
+
 #include "config.h"
 
 #include "app/paths/Paths.hpp"
@@ -27,6 +29,7 @@
 
 #include "AccountSettingsModel.hpp"
 #include "SettingsModel.hpp"
+
 
 // =============================================================================
 
@@ -77,7 +80,7 @@ void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::A
 }
 
 QString AccountSettingsModel::getUsedSipAddressAsString () const {
-  return Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
+	return Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
 }
 
 // -----------------------------------------------------------------------------
@@ -185,12 +188,17 @@ void AccountSettingsModel::setDefaultProxyConfigFromSipAddress (const QString &s
 
   qWarning() << "Unable to set default proxy config from:" << sipAddress;
 }
-
 void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
   Q_CHECK_PTR(proxyConfig);
-
+  
   CoreManager *coreManager = CoreManager::getInstance();
-  coreManager->getCore()->removeProxyConfig(proxyConfig);
+  std::list<std::shared_ptr<linphone::ProxyConfig>> allProxies = coreManager->getCore()->getProxyConfigList();
+  std::shared_ptr<const linphone::Address> proxyAddress = proxyConfig->getIdentityAddress();
+
+  coreManager->getCore()->removeProxyConfig(proxyConfig);// Remove first to avoid requesting password when deleting it
+  if(proxyConfig->findAuthInfo())
+	coreManager->getCore()->removeAuthInfo(proxyConfig->findAuthInfo());// Remove passwords
+
   coreManager->getSettingsModel()->configureRlsUri();
 
   emit accountSettingsUpdated();
@@ -336,7 +344,7 @@ void AccountSettingsModel::setUsername (const QString &username) {
 
 AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationState () const {
   shared_ptr<linphone::ProxyConfig> proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
-  return proxyConfig ? mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNotRegistered;
+  return proxyConfig ? mapLinphoneRegistrationStateToUi(proxyConfig->getState()) : RegistrationStateNoProxy;
 }
 
 // -----------------------------------------------------------------------------
@@ -389,14 +397,15 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
   {
     QVariantMap account;
-    account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
+    account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
     account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
+    account["proxyConfig"].setValue(nullptr);
     accounts << account;
   }
 
   for (const auto &proxyConfig : core->getProxyConfigList()) {
     QVariantMap account;
-    account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
+    account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString());
     account["proxyConfig"].setValue(proxyConfig);
     account["unreadMessageCount"] = proxyConfig->getUnreadChatMessageCount();
     accounts << account;

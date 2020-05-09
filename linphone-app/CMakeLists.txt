@@ -99,6 +99,7 @@ set(SOURCES
     src/app/paths/Paths.cpp
     src/app/providers/AvatarProvider.cpp
     src/app/providers/ImageProvider.cpp
+    src/app/providers/ExternalImageProvider.cpp
     src/app/providers/ThumbnailProvider.cpp
     src/app/translator/DefaultTranslator.cpp
     src/components/assistant/AssistantModel.cpp
@@ -156,6 +157,7 @@ set(HEADERS
     src/app/paths/Paths.hpp
     src/app/providers/AvatarProvider.hpp
     src/app/providers/ImageProvider.hpp
+    src/app/providers/ExternalImageProvider.hpp
     src/app/providers/ThumbnailProvider.hpp
     src/app/single-application/SingleApplication.hpp
     src/app/translator/DefaultTranslator.hpp
@@ -320,7 +322,10 @@ set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake
 set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 set(QML_SOURCES_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/")
 set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
-message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
+if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers
+    message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
+    message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
+endif()
 if(APPLE)
     if(MS2_PLUGINS_LOCATION)
     set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
@@ -336,7 +341,6 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
@@ -389,6 +393,10 @@ set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
 
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
 
+if(MSVC)
+    set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
+    set_target_properties(${TARGET_NAME_ONLY} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
+endif()
 
 #ExternalProject_Get_Property(project_a install_dir)
 #include_directories(${install_dir}/include)
