@@ -18,7 +18,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   // `{}` is a workaround to avoid `TypeError: Cannot read property...` when calls list is empty
-  readonly property var call: (calls.selectedCall?calls.selectedCall:{
+  readonly property var call: ( calls.selectedCall?calls.selectedCall:{
     callError: '',
     isOutgoing: true,
     recording: false,
@@ -28,7 +28,7 @@ Window {
     type: false,
     updating: true,
     videoEnabled: false
-  })
+  });
 
   readonly property bool chatIsOpened: !rightPaned.isClosed()
 
