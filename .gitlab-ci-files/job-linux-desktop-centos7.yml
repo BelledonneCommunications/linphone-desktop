@@ -78,7 +78,10 @@ job-centos7-ninja-gcc-package:
     CXX: g++
   extends: .job-linux-desktop
   script:
-    - gpg2 --pinentry-mode loopback --passphrase $GPG_SIGNING_PASS --import "$GPG_SIGNING_KEY"
+    - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - gpg --import file.key
+    - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - gpg --import file.key
     - cmake --version
     - export CC=$CC
     - export CXX=$CXX
