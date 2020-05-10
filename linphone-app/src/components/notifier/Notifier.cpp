@@ -128,15 +128,22 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 	}
 	QList<QScreen *> allScreens = QGuiApplication::screens();
 	if(allScreens.size() > 0){	// Ensure to have a screen to avoid errors
-
 		QQuickItem * previousWrapper = nullptr;
 		++mInstancesNumber;
-		QScreen * primaryScreen = QGuiApplication::primaryScreen();
-		qInfo() << "Primary screen : " << primaryScreen->geometry() << primaryScreen->availableGeometry() <<  primaryScreen->virtualGeometry() <<  primaryScreen->availableVirtualGeometry();
 		for(int i = 0 ; i < allScreens.size() ; ++i){
 			QQuickView *view = new QQuickView(App::getInstance()->getEngine(), nullptr);	// Use QQuickView to create a visual root object that is independant from current application Window
-			QScreen *screen = allScreens[i];			
-
+			QScreen *screen = allScreens[i];
+			QObject::connect(view, &QQuickView::statusChanged, [allScreens](QQuickView::Status status){	// Debug handler : show screens descriptions on Error
+				if( status == QQuickView::Error){
+					QScreen * primaryScreen = QGuiApplication::primaryScreen();
+					qInfo() << "Primary screen : " << primaryScreen->geometry() << primaryScreen->availableGeometry() <<  primaryScreen->virtualGeometry() <<  primaryScreen->availableVirtualGeometry();
+					for(int i = 0 ; i < allScreens.size() ; ++i){
+						QScreen *screen = allScreens[i];
+						qInfo() << QString("Screen [")+QString::number(i)+"] (hdpi, Geometry, Available, Virtual, AvailableGeometry) :" 
+							<< screen->devicePixelRatio() << screen->geometry() << screen->availableGeometry() << screen->virtualGeometry() << screen->availableVirtualGeometry();
+					}
+				}
+			});
 			view->setScreen(screen);	// Bind the visual root object to the screen
 			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
 			view->setSource(QString(NotificationsPath)+Notifier::Notifications[type].filename);
@@ -145,9 +152,9 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 
 			int * screenHeightOffset = &mScreenHeightOffset[screen->name()];	// Access optimization
 			QRect availableGeometry = screen->availableGeometry();
-			int heightOffset = availableGeometry.y() + screen->devicePixelRatio()*(availableGeometry.height() - subWindow->height());
+			int heightOffset = availableGeometry.y() + (availableGeometry.height() - subWindow->height());//*screen->devicePixelRatio(); when using manual scaler
 
-			subWindow->setX(availableGeometry.x()+availableGeometry.width()*screen->devicePixelRatio()-subWindow->property("width").toInt()*screen->devicePixelRatio());
+			subWindow->setX(availableGeometry.x()+ (availableGeometry.width()-subWindow->property("width").toInt()));//*screen->devicePixelRatio()); when using manual scaler
 			subWindow->setY(heightOffset-(*screenHeightOffset % heightOffset));
 
 			*screenHeightOffset = (subWindow->height() + *screenHeightOffset) + NotificationSpacing;
@@ -168,13 +175,11 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
 			}
 			previousWrapper = wrapperItem;	// The last one is used as a point of start when deleting and openning
-			qInfo() << QString("Screen [")+QString::number(i)+"] (hdpi, Geometry, Available, Virtual, AvailableGeometry) :" 
-					<< screen->devicePixelRatio() << screen->geometry() << screen->availableGeometry() << screen->virtualGeometry() << screen->availableVirtualGeometry() 
-					<< "Choose:" << subWindow->geometry();
 			view->show();
 		}
 		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
 	}
+	
 	mMutex->unlock();
 	return wrapperItem;
 }
