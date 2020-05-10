@@ -21,6 +21,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlComponent>
 #include <QQuickWindow>
+#include <QQuickItem>
+#include <QQuickView>
 #include <QScreen>
 #include <QTimer>
 
@@ -115,49 +117,61 @@ Notifier::~Notifier () {
 
 // -----------------------------------------------------------------------------
 
-QObject *Notifier::createNotification (Notifier::NotificationType type) {
-  mMutex->lock();
+QObject *Notifier::createNotification (Notifier::NotificationType type, QVariantMap data) {
+	QQuickItem *wrapperItem = nullptr;
+	mMutex->lock();
+	Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
+	if (mInstancesNumber == MaxNotificationsNumber) {	// Check existing instances.
+		qWarning() << QStringLiteral("Unable to create another notification.");
+		mMutex->unlock();
+		return nullptr;
+	}
+	QList<QScreen *> allScreens = QGuiApplication::screens();
+	if(allScreens.size() > 0){	// Ensure to have a screen to avoid errors
 
-  Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
+		QQuickItem * previousWrapper = nullptr;
+		++mInstancesNumber;
+		for(int i = 0 ; i < allScreens.size() ; ++i){
+			QQuickView *view = new QQuickView(App::getInstance()->getEngine(), nullptr);	// Use QQuickView to create a visual root object that is independant from current application Window
+			QScreen *screen = allScreens[i];
 
-  // Check existing instances.
-  if (mInstancesNumber == MaxNotificationsNumber) {
-    qWarning() << QStringLiteral("Unable to create another notification.");
-    mMutex->unlock();
-    return nullptr;
-  }
+			view->setScreen(screen);	// Bind the visual root object to the screen
+			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
+			view->setSource(QString(NotificationsPath)+Notifier::Notifications[type].filename);
+			QQuickWindow *subWindow = view->findChild<QQuickWindow *>("__internalWindow");
+			QObject::connect(subWindow, &QObject::destroyed, view, &QObject::deleteLater);	// When destroying window, detroy visual root object too
 
-  // Create instance and set attributes.
-  QObject *instance = mComponents[type]->create();
-  qInfo() << QStringLiteral("Create notification:") << instance;
+			int * screenHeightOffset = &mScreenHeightOffset[screen->name()];	// Access optimization
+			QRect availableGeometry = screen->availableGeometry();
+			int heightOffset = availableGeometry.y() + screen->devicePixelRatio()*(availableGeometry.height() - subWindow->height());
 
-  mInstancesNumber++;
+			subWindow->setX(availableGeometry.x()+availableGeometry.width()*screen->devicePixelRatio()-subWindow->property("width").toInt()*screen->devicePixelRatio());
+			subWindow->setY(heightOffset-(*screenHeightOffset % heightOffset));
 
-  {
-    QQuickWindow *window = instance->findChild<QQuickWindow *>(NotificationPropertyWindow);
-    Q_CHECK_PTR(window);
+			*screenHeightOffset = (subWindow->height() + *screenHeightOffset) + NotificationSpacing;
+			if (*screenHeightOffset - heightOffset + availableGeometry.y() >= 0)
+				*screenHeightOffset = 0;
 
-    QScreen *screen = window->screen();
-    Q_CHECK_PTR(screen);
+//			if(primaryScreen != screen){	//Useful when doing manual scaling jobs. Need to implement scaler in GUI objects
+//				//subwindow->setProperty("xScale", (double)screen->availableVirtualGeometry().width()/availableGeometry.width() );
+//				//subwindow->setProperty("yScale", (double)screen->availableVirtualGeometry().height()/availableGeometry.height());
+//			}
+			wrapperItem = view->findChild<QQuickItem *>("__internalWrapper");
+			::setProperty(*wrapperItem, NotificationPropertyData,data);
+			view->setGeometry(subWindow->geometry());	// Ensure to have sufficient space to both let painter do job without error, and stay behind popup
 
-    QRect geometry = screen->availableGeometry();
-
-    // Set X/Y. (Not Pokémon games.)
-    int windowHeight = window->height();
-    int offset = geometry.y() + geometry.height() - windowHeight;
-
-    ::setProperty(*instance, NotificationPropertyX, geometry.x() + geometry.width() - window->width());
-    ::setProperty(*instance, NotificationPropertyY, offset - (mOffset % offset));
-
-    // Update offset.
-    mOffset = (windowHeight + mOffset) + NotificationSpacing;
-    if (mOffset - offset + geometry.y() >= 0)
-      mOffset = 0;
-  }
-
-  mMutex->unlock();
-
-  return instance;
+			if(previousWrapper!=nullptr){	// Link objects in order to propagate events without having to store them
+				QObject::connect(wrapperItem, SIGNAL(isOpened()), previousWrapper,SLOT(open()));
+				QObject::connect(wrapperItem, SIGNAL(isClosed()), previousWrapper,SLOT(close()));
+				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
+			}
+			previousWrapper = wrapperItem;	// The last one is used as a point of start when deleting and openning
+			view->show();
+		}
+		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
+	}
+	mMutex->unlock();
+	return wrapperItem;
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +218,7 @@ void Notifier::deleteNotification (QVariant notification) {
   Q_ASSERT(mInstancesNumber >= 0);
 
   if (mInstancesNumber == 0)
-    mOffset = 0;
+	mScreenHeightOffset.clear();
 
   mMutex->unlock();
 
@@ -213,14 +227,11 @@ void Notifier::deleteNotification (QVariant notification) {
 
 // =============================================================================
 
-#define CREATE_NOTIFICATION(TYPE) \
-  QObject * notification = createNotification(TYPE); \
+#define CREATE_NOTIFICATION(TYPE, DATA) \
+  QObject * notification = createNotification(TYPE, DATA); \
   if (!notification) \
     return; \
-  const int timeout = Notifications[TYPE].timeout * 1000;
-
-#define SHOW_NOTIFICATION(DATA) \
-  ::setProperty(*notification, NotificationPropertyData, DATA); \
+  const int timeout = Notifications[TYPE].timeout * 1000; \
   showNotification(notification, timeout);
 
 // -----------------------------------------------------------------------------
@@ -228,73 +239,55 @@ void Notifier::deleteNotification (QVariant notification) {
 // -----------------------------------------------------------------------------
 
 void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &message) {
-  CREATE_NOTIFICATION(Notifier::ReceivedMessage)
-
   QVariantMap map;
   map["message"] = message->getFileTransferInformation()
     ? tr("newFileMessage")
     : Utils::coreStringToAppString(message->getText());
 
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
-  map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
-  map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
+  map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asString());
+  map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asString());
   map["window"].setValue(App::getInstance()->getMainWindow());
-
-  SHOW_NOTIFICATION(map)
+  CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 }
 
 void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
-  CREATE_NOTIFICATION(Notifier::ReceivedFileMessage)
-
   QVariantMap map;
   map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferInformation()->getFilePath());
   map["fileSize"] = quint64(message->getFileTransferInformation()->getSize() +message->getFileTransferInformation()->getFileSize());
-
-  SHOW_NOTIFICATION(map)
+  CREATE_NOTIFICATION(Notifier::ReceivedFileMessage, map)
 }
 
 void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
-  CREATE_NOTIFICATION(Notifier::ReceivedCall)
-
   CallModel *callModel = &call->getData<CallModel>("call-model");
+  QVariantMap map;
+  map["call"].setValue(callModel);
+  CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
 
   QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
       if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
         deleteNotification(QVariant::fromValue(notification));
     });
 
-  QVariantMap map;
-  map["call"].setValue(callModel);
-
-  SHOW_NOTIFICATION(map)
 }
 
 void Notifier::notifyNewVersionAvailable (const QString &version, const QString &url) {
-  CREATE_NOTIFICATION(Notifier::NewVersionAvailable)
-
   QVariantMap map;
   map["message"] = tr("newVersionAvailable").arg(version);
   map["url"] = url;
-
-  SHOW_NOTIFICATION(map)
+  CREATE_NOTIFICATION(Notifier::NewVersionAvailable, map)
 }
 
 void Notifier::notifySnapshotWasTaken (const QString &filePath) {
-  CREATE_NOTIFICATION(Notifier::SnapshotWasTaken)
-
   QVariantMap map;
   map["filePath"] = filePath;
-
-  SHOW_NOTIFICATION(map)
+  CREATE_NOTIFICATION(Notifier::SnapshotWasTaken, map)
 }
 
 void Notifier::notifyRecordingCompleted (const QString &filePath) {
-  CREATE_NOTIFICATION(Notifier::RecordingCompleted)
-
   QVariantMap map;
   map["filePath"] = filePath;
-
-  SHOW_NOTIFICATION(map)
+  CREATE_NOTIFICATION(Notifier::RecordingCompleted, map)
 }
 
 #undef SHOW_NOTIFICATION

@@ -88,13 +88,12 @@ CallModel::~CallModel () {
 // -----------------------------------------------------------------------------
 
 QString CallModel::getPeerAddress () const {
-  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asStringUriOnly());
+  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
 }
 
 QString CallModel::getLocalAddress () const {
-  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
+  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asString());
 }
-
 // -----------------------------------------------------------------------------
 
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams) {

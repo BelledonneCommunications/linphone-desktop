@@ -383,13 +383,13 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 
 QString ChatModel::getPeerAddress () const {
   return Utils::coreStringToAppString(
-    mChatRoom->getPeerAddress()->asStringUriOnly()
+    mChatRoom->getPeerAddress()->asString()
   );
 }
 
 QString ChatModel::getLocalAddress () const {
   return Utils::coreStringToAppString(
-    mChatRoom->getLocalAddress()->asStringUriOnly()
+    mChatRoom->getLocalAddress()->asString()
   );
 }
 
