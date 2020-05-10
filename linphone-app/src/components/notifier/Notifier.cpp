@@ -168,7 +168,9 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
 			}
 			previousWrapper = wrapperItem;	// The last one is used as a point of start when deleting and openning
-			qInfo() << "Screen ["<<i<<"]" << screen->geometry() << screen->availableGeometry() <<  screen->virtualGeometry() <<  screen->availableVirtualGeometry() << "Choose:"<<subWindow->geometry();
+			qInfo() << QString("Screen [")+QString::number(i)+"] (hdpi, Geometry, Available, Virtual, AvailableGeometry) :" 
+					<< screen->devicePixelRatio() << screen->geometry() << screen->availableGeometry() << screen->virtualGeometry() << screen->availableVirtualGeometry() 
+					<< "Choose:" << subWindow->geometry();
 			view->show();
 		}
 		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
