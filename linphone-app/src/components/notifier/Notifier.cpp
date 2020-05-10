@@ -131,9 +131,11 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 
 		QQuickItem * previousWrapper = nullptr;
 		++mInstancesNumber;
+		QScreen * primaryScreen = QGuiApplication::primaryScreen();
+		qInfo() << "Primary screen : " << primaryScreen->geometry() << primaryScreen->availableGeometry() <<  primaryScreen->virtualGeometry() <<  primaryScreen->availableVirtualGeometry();
 		for(int i = 0 ; i < allScreens.size() ; ++i){
 			QQuickView *view = new QQuickView(App::getInstance()->getEngine(), nullptr);	// Use QQuickView to create a visual root object that is independant from current application Window
-			QScreen *screen = allScreens[i];
+			QScreen *screen = allScreens[i];			
 
 			view->setScreen(screen);	// Bind the visual root object to the screen
 			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
@@ -166,6 +168,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
 			}
 			previousWrapper = wrapperItem;	// The last one is used as a point of start when deleting and openning
+			qInfo() << "Screen ["<<i<<"]" << screen->geometry() << screen->availableGeometry() <<  screen->virtualGeometry() <<  screen->availableVirtualGeometry() << "Choose:"<<subWindow->geometry();
 			view->show();
 		}
 		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
