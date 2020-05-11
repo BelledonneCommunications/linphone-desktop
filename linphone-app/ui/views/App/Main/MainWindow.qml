@@ -266,7 +266,9 @@ ApplicationWindow {
 
             onEntrySelected: setView('Conversation', {
               peerAddress: entry,
-              localAddress: AccountSettingsModel.sipAddress
+              localAddress: AccountSettingsModel.sipAddress,
+              fullPeerAddress: entry,
+              fullLocalAddress: AccountSettingsModel.fullSipAddress
             })
           }
         }
@@ -295,7 +297,9 @@ ApplicationWindow {
 
     onSip: window.setView('Conversation', {
       peerAddress: sipAddress,
-      localAddress: AccountSettingsModel.sipAddress
+      localAddress: AccountSettingsModel.sipAddress,
+      fullPeerAddress: sipAddress,
+      fullLocalAddress: AccountSettingsModel.fullSipAddress
     })
   }
 }
