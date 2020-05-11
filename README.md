@@ -94,9 +94,11 @@ Go to this new folder and begin the build process : `cd build`
 2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process. If it doesn't seem to work then it will be better to use CMake >= 3.12
 Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
 
+Note : For Makefile or Ninja, you have to add `-DCMAKE_BUILD_TYPE=<your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
+
 3. Build and install the whole project : `cmake --build . --target <target>` (replace `<target>` with the target name. You can use the switch `--parallel 10` to do 10 parallel builds with CMake >= 3.12. 
 
-You may add `--config RelWithDebInfo` in addition of `CMAKE_BUILD_TYPE`. It is important to keep the same configuration in the process or you could have a bad configuration for your binary that could lead to some corruptions : on Windows, this issue is spotted when trying to start the application and an empty file with a random name is created. So, if you are working on an IDE (like `Qt Creator`), you may override the build command and use the Custom build option.
+Note : For XCode or Visual Studio, you have to add `--config <your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
 When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .` if CMake>=3.15) to put the application in the correct configuration.
 
@@ -128,6 +130,7 @@ Eg on Mac : `-DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Re
 * If the build of the SDK crash with something like "cmd.exe failed" and no more info, it can be a dependency that is not available. You have to check if all are in your PATH.
 Usually, if it is about VPX or Decaf, this could come from your Perl installation.
 
+* If the application doesn't start and create an empty file with a random name, it could be come from a bad configuration between your application and others submodules. Check your configurations and force them with `-DCMAKE_BUILD_TYPE=<your_config>` or `--config <your_config>`.
 
 
 ## Specific instructions for the Mac Os X platform
