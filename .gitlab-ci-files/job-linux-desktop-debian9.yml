@@ -106,7 +106,7 @@ job-debian9-makefile-clang-package:
     - gpg --import file.key
     - rm -f file.key
     - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
-    - cat file.key | base64 --decode | gpg --import --no-tty --batch --yes
+    - base64 -w 0 file.key | base64 -d | gpg --import --no-tty --batch --yes
     - rm -f file.key
     - cmake --version
     - export CC=$CC
