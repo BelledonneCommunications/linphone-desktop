@@ -178,6 +178,7 @@ QString ChatProxyModel::getFullPeerAddress () const {
 
 void ChatProxyModel::setFullPeerAddress (const QString &peerAddress) {
   mFullPeerAddress = peerAddress;
+  reload();
 }
 
 QString ChatProxyModel::getFullLocalAddress () const {
@@ -186,6 +187,7 @@ QString ChatProxyModel::getFullLocalAddress () const {
 
 void ChatProxyModel::setFullLocalAddress (const QString &localAddress) {
   mFullLocalAddress = localAddress;
+  reload();
 }
 
 bool ChatProxyModel::getIsRemoteComposing () const {
@@ -204,7 +206,7 @@ void ChatProxyModel::reload () {
     QObject::disconnect(chatModel, &ChatModel::messageSent, this, &ChatProxyModel::handleMessageSent);
   }
 
-  mChatModel = CoreManager::getInstance()->getChatModel(mPeerAddress, mLocalAddress);
+  mChatModel = CoreManager::getInstance()->getChatModel(mFullPeerAddress, mFullLocalAddress);
 
   if (mChatModel) {
     mChatModel->resetMessageCount();

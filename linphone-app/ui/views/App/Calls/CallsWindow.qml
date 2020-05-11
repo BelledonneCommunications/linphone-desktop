@@ -199,6 +199,8 @@ Window {
 
             peerAddress: (call?call.peerAddress:'')
             localAddress: (call?call.localAddress:'')
+            fullPeerAddress: (call?call.fullPeerAddress:'')
+            fullLocalAddress: (call?call.fullLocalAddress:'')
           }
 
           Connections {
