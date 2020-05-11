@@ -16,7 +16,7 @@ Rectangle {
 
   property var call
 
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call ? call.peerAddress : '', call ? call.localAddress : '')
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call ? call.fullPeerAddress : '', call ? call.fullLocalAddress : '')
 
   // ---------------------------------------------------------------------------
 

@@ -159,7 +159,9 @@ ApplicationWindow {
               } else {
                 window.setView('Conversation', {
                   peerAddress: entry.sipAddress,
-                  localAddress: AccountSettingsModel.sipAddress
+                  localAddress: AccountSettingsModel.sipAddress,
+                  fullPeerAddress: entry.fullSipAddress,
+                  fullLocalAddress: AccountSettingsModel.fullSipAddress
                 })
               }
             }
@@ -167,7 +169,9 @@ ApplicationWindow {
             onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
             onLaunchChat: window.setView('Conversation', {
               peerAddress: sipAddress,
-              localAddress: AccountSettingsModel.sipAddress
+              localAddress: AccountSettingsModel.sipAddress,
+              fullPeerAddress: sipAddress,
+              fullLocalAddress: AccountSettingsModel.fullSipAddress
             })
 
             onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)

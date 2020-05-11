@@ -383,16 +383,26 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
 
 QString ChatModel::getPeerAddress () const {
   return Utils::coreStringToAppString(
-    mChatRoom->getPeerAddress()->asString()
+    mChatRoom->getPeerAddress()->asStringUriOnly()
   );
 }
 
 QString ChatModel::getLocalAddress () const {
   return Utils::coreStringToAppString(
-    mChatRoom->getLocalAddress()->asString()
+    mChatRoom->getLocalAddress()->asStringUriOnly()
+  );
+}
+QString ChatModel::getFullPeerAddress () const {
+  return Utils::coreStringToAppString(
+    mChatRoom->getPeerAddress()->asString()
   );
 }
 
+QString ChatModel::getFullLocalAddress () const {
+  return Utils::coreStringToAppString(
+    mChatRoom->getLocalAddress()->asString()
+  );
+}
 void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());

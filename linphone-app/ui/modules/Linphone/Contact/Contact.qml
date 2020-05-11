@@ -47,7 +47,7 @@ Rectangle {
         ? Presence.getPresenceLevel(entry.presenceStatus)
         : -1
 
-      username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.peerAddress || '')
+      username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
     }
 
     ContactDescription {
@@ -57,7 +57,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.leftMargin: ContactStyle.spacing
 
-      sipAddress: entry.sipAddress || entry.peerAddress || ''
+      sipAddress: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
       username: avatar.username
     }
 

@@ -36,7 +36,7 @@ Notification {
 
         entry: {
           var call = notification.call
-          return SipAddressesModel.getSipAddressObserver(call ? call.peerAddress : '', call ? call.localAddress : '')
+          return SipAddressesModel.getSipAddressObserver(call ? call.fullPeerAddress : '', call ? call.fullLocalAddress : '')
         }
       }
 

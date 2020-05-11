@@ -15,8 +15,10 @@ ColumnLayout  {
 
   property string peerAddress
   property string localAddress
+  property string fullPeerAddress
+  property string fullLocalAddress
 
-  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(peerAddress, localAddress)
+  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 
   // ---------------------------------------------------------------------------
 
@@ -170,6 +172,8 @@ ColumnLayout  {
 
       peerAddress: conversation.peerAddress
       localAddress: conversation.localAddress
+      fullPeerAddress: conversation.fullPeerAddress
+      fullLocalAddress: conversation.fullLocalAddress
     }
   }
 

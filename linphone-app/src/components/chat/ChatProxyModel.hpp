@@ -36,6 +36,8 @@ class ChatProxyModel : public QSortFilterProxyModel {
 
   Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged);
   Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged);
+  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged);
+  Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
 
 public:
@@ -61,6 +63,8 @@ public:
 signals:
   void peerAddressChanged (const QString &peerAddress);
   void localAddressChanged (const QString &localAddress);
+  void fullPeerAddressChanged (const QString &fullPeerAddress);
+  void fullLocalAddressChanged (const QString &fullLocalAddress);
   bool isRemoteComposingChanged (bool status);
 
   void moreEntriesLoaded (int n);
@@ -76,6 +80,12 @@ private:
 
   QString getLocalAddress () const;
   void setLocalAddress (const QString &localAddress);
+  
+  QString getFullPeerAddress () const;
+  void setFullPeerAddress (const QString &peerAddress);
+
+  QString getFullLocalAddress () const;
+  void setFullLocalAddress (const QString &localAddress);
 
   bool getIsRemoteComposing () const;
 
@@ -91,6 +101,8 @@ private:
 
   QString mPeerAddress;
   QString mLocalAddress;
+  QString mFullPeerAddress;
+  QString mFullLocalAddress;
 
   std::shared_ptr<ChatModel> mChatModel;
 

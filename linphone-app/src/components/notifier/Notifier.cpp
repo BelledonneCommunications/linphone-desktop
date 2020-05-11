@@ -255,8 +255,10 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
     : Utils::coreStringToAppString(message->getText());
 
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
-  map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asString());
-  map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asString());
+  map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
+  map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
+  map["fullPeerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asString());
+  map["fullLocalAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asString());
   map["window"].setValue(App::getInstance()->getMainWindow());
   CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 }

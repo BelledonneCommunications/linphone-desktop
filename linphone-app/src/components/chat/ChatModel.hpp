@@ -82,6 +82,8 @@ public:
 
   QString getPeerAddress () const;
   QString getLocalAddress () const;
+  QString getFullPeerAddress () const;
+  QString getFullLocalAddress () const;
 
   bool getIsRemoteComposing () const;
 

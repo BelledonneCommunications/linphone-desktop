@@ -46,7 +46,7 @@ DialogPlus {
     Contact {
       Layout.fillWidth: true
 
-      entry: SipAddressesModel.getSipAddressObserver(call ? call.peerAddress : '', call ? call.localAddress : '')
+      entry: SipAddressesModel.getSipAddressObserver(call ? call.fullPeerAddress : '', call ? call.fullLocalAddress : '')
     }
 
     // -------------------------------------------------------------------------

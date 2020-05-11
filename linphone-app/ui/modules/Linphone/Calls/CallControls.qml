@@ -20,6 +20,8 @@ Rectangle {
 
   property string peerAddress
   property string localAddress
+  property string fullPeerAddress
+  property string fullLocalAddress
 
   // ---------------------------------------------------------------------------
 
@@ -64,7 +66,7 @@ Rectangle {
 
       displayUnreadMessageCount: true
 
-      entry: SipAddressesModel.getSipAddressObserver(peerAddress, localAddress)
+      entry: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
     }
 
     Item {

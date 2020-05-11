@@ -32,6 +32,8 @@ class CallModel : public QObject {
 
   Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT);
   Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
+  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress CONSTANT);
+  Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT);
 
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
   Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged);
@@ -94,6 +96,8 @@ public:
 
   QString getPeerAddress () const;
   QString getLocalAddress () const;
+  QString getFullPeerAddress () const;
+  QString getFullLocalAddress () const;
 
   bool isInConference () const {
     return mIsInConference;

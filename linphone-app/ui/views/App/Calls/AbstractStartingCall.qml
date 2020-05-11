@@ -13,7 +13,7 @@ Rectangle {
   property var call
 
   default property alias _actionArea: actionArea.data
-  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.peerAddress, call.localAddress)
+  property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
 
   // ---------------------------------------------------------------------------
 
