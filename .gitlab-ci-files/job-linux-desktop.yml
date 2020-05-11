@@ -2,22 +2,23 @@
 # BUILD
 #################################################
 
+.build_all_linux_script: &build_all_linux_script |
+  cmake --version
+  export CC=$CC
+  export CXX=$CXX
+  mkdir -p build/OUTPUT
+  echo $CMAKE_GENERATOR
+  echo $DEFAULT_LINUX_CMAKE_OPTIONS
+  echo $CMAKE_SANITIZER_OPTIONS
+  cd build
+  cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+  cmake --build . --target all $LBC_NODEBUG_OPTIONS
+  
 .job-linux-desktop:
   stage: build
   extends: .linux-prepare
   script:
-    - cmake --version
-    - export CC=$CC
-    - export CXX=$CXX
-    - mkdir -p build/OUTPUT
-    - echo $CMAKE_GENERATOR
-    - echo $DEFAULT_LINUX_CMAKE_OPTIONS
-    - echo $CMAKE_OPTIONS
-    - echo $CMAKE_SANITIZER_OPTIONS
-# SDK Building
-    - cd build
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
-    - cmake --build . --target all $LBC_NODEBUG_OPTIONS
+    - *build_all_linux_script
   artifacts:
     paths:
       - build/OUTPUT
