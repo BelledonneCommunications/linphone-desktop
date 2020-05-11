@@ -63,18 +63,18 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
     set(ENV QML_MODULES_PATHS="@QML_MODULES_PATHS@")
     execute_process( COMMAND mkdir -p "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
     execute_process( COMMAND cp -rf "@CMAKE_CURRENT_SOURCE_DIR@/../../ui" "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
-    execute_process( COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh" @CPACK_PACKAGE_FILE_NAME@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
+    execute_process( COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh" @CPACK_PACKAGE_FILE_NAME@ @LINPHONE_BUILDER_SIGNING_IDENTITY@ @LINPHONE_BUILDER_SIGNING_PASSPHRASE@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
     if(CPACK_COMMAND_RESULT)
       message(FATAL_ERROR "Failed to create AppImage package with this command : '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @APP_PROJECT_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
     endif()
   endif()
   if (@PERFORM_SIGNING@)
     execute_process(
-      COMMAND @SIGNTOOL_COMMAND@ @CMAKE_CURRENT_BINARY_DIR@/@CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
-      RESULT_VARIABLE SIGNING_RESULT
+      COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/sign_package.bat" "@PASSPHRASE_FILE@" "@SIGNTOOL_COMMAND@" "@PFX_FILE@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+      RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
     )
     if(SIGNING_RESULT)
-      message(FATAL_ERROR "Failed to sign the package!")
+      message(FATAL_ERROR "Failed to sign the package! ${SIGNING_RESULT} ${RESULT_VARIABLE}")
     endif()
   endif ()
 

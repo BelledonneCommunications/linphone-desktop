@@ -19,6 +19,11 @@
 ## along with this program. If not, see <http://www.gnu.org/licenses/>.
 ##
 
+# Arguments : 
+#	$1 = Output Filename
+#	$2 = Key of the code sign (optional but mendatory if code signing)
+#	$3 = Passphrase of the code sign (Optional)
+
 APP_NAME="linphone"
 
 BIN_SOURCE_DIR="OUTPUT/"
@@ -48,9 +53,29 @@ else
 	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
 	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage"
 fi
+
+
+
 export QML_SOURCES_PATHS=${QML_SOURCES_PATHS}:${WORK_DIR}/..
-./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
-#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+echo "-- Generating AppDir for AppImage"
+if [ -z "$2" ]; then
+	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
+else
+	if [ -f "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage" ]; then
+		echo "appimagetool-x86_64.AppImage exists"
+	else
+		wget -P "${WORK_DIR}/AppBin" https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
+		chmod +x "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage"
+	fi
+	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/linphone --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/linphone.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/linphone.svg --plugin qt
+	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
+	echo "-- Code Signing of AppImage"
+	if [ -z "$3" ]; then
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2
+	else
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2 --sign-args "--pinentry-mode loopback --passphrase $3"
+	fi
+fi
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
 mv Linphone*.AppImage "${BIN_SOURCE_DIR}/Packages/$1.AppImage"
