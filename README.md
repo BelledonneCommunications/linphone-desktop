@@ -156,6 +156,7 @@ Before you install packages with Brew, you may have to change directories permis
 
         pip install pystache
         pip install graphviz
+
 6. Build as usual (General Steps) :
   - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
   - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
@@ -171,9 +172,10 @@ OR
 ## Specific instructions for the Windows platform
 
 1. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.)
-  - `MinGW` : [download](https://osdn.net/projects/mingw/downloads/68260/mingw-get-setup.exe/)
+  - `MinGW` : [download](https://sourceforge.net/projects/mingw/)
     - Select all installer options except Ada and Fortran
     - Install it in the default location (C:/Mingw), this is important as there are hardlinks on it.
+    - The gcc version should be 6.3.0. It wasn't tested for other versions. It seems that MinGW from osdn.net try to install gcc 9 that breaks the build.
   - `Yasm`
     - download yasm-1.3.0-win32.exe
     - copy it to a bin directory of your user directory
