@@ -16,6 +16,8 @@ Notification {
 
   readonly property string peerAddress: notificationData && notificationData.peerAddress ||  ''
   readonly property string localAddress: notificationData && notificationData.localAddress || ''
+  readonly property string fullPeerAddress: notificationData && notificationData.fullPeerAddress ||  ''
+  readonly property string fullLocalAddress: notificationData && notificationData.fullLocalAddress || ''
 
   // ---------------------------------------------------------------------------
 
@@ -35,7 +37,7 @@ Notification {
       Contact {
         Layout.fillWidth: true
 
-        entry: SipAddressesModel.getSipAddressObserver(notification.peerAddress, notification.localAddress)
+        entry: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)
       }
 
       Rectangle {
@@ -76,7 +78,9 @@ Notification {
       AccountSettingsModel.setDefaultProxyConfigFromSipAddress(notification.localAddress)
       notification.notificationData.window.setView('Conversation', {
         peerAddress: notification.peerAddress,
-        localAddress: notification.localAddress
+        localAddress: notification.localAddress,
+        fullPeerAddress: notification.fullPeerAddress,
+        fullLocalAddress: notification.fullLocalAddress
       })
     })
   }

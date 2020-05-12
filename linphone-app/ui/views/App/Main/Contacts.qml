@@ -174,7 +174,9 @@ ColumnLayout {
               function (sipAddress) {
                 window.setView('Conversation', {
                   peerAddress: sipAddress,
-                  localAddress: AccountSettingsModel.sipAddress
+                  localAddress: AccountSettingsModel.sipAddress,
+                  fullPeerAddress: sipAddress,
+                  fullLocalAddress: AccountSettingsModel.fullSipAddress
                 })
               }
             ]

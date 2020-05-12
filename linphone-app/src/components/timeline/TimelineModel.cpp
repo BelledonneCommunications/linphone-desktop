@@ -31,9 +31,9 @@ TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
   AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
 
   QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
-    handleLocalAddressChanged(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsString());
+    handleLocalAddressChanged(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsStringUriOnly());
   });
-  mLocalAddress = accountSettingsModel->getUsedSipAddressAsString();
+  mLocalAddress = accountSettingsModel->getUsedSipAddressAsStringUriOnly();
 
   setSourceModel(coreManager->getSipAddressesModel());
   sort(0);

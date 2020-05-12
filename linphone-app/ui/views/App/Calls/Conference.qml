@@ -117,6 +117,7 @@ Rectangle {
 
           Column {
             readonly property string sipAddress: $call.peerAddress
+            readonly property string fullSipAddress: $call.fullPeerAddress
 
             anchors {
               fill: parent
@@ -133,7 +134,7 @@ Rectangle {
 
               horizontalTextAlignment: Text.AlignHCenter
               sipAddress: parent.sipAddress
-              username: LinphoneUtils.getContactUsername(parent.sipAddress)
+              username: LinphoneUtils.getContactUsername(parent.fullSipAddress)
             }            
             IncallAvatar {
             

@@ -79,10 +79,13 @@ void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::A
   proxyConfig ? proxyConfig->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
 }
 
-QString AccountSettingsModel::getUsedSipAddressAsString () const {
+QString AccountSettingsModel::getUsedSipAddressAsStringUriOnly () const {
 	return Utils::coreStringToAppString(getUsedSipAddress()->asStringUriOnly());
 }
 
+QString AccountSettingsModel::getUsedSipAddressAsString () const {
+	return Utils::coreStringToAppString(getUsedSipAddress()->asString());
+}
 // -----------------------------------------------------------------------------
 
 bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
@@ -397,7 +400,8 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
   {
     QVariantMap account;
-    account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
+    account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
+    account["fullSipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
     account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
     account["proxyConfig"].setValue(nullptr);
     accounts << account;
@@ -405,7 +409,8 @@ QVariantList AccountSettingsModel::getAccounts () const {
 
   for (const auto &proxyConfig : core->getProxyConfigList()) {
     QVariantMap account;
-    account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString());
+    account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
+    account["fullSipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString());
     account["proxyConfig"].setValue(proxyConfig);
     account["unreadMessageCount"] = proxyConfig->getUnreadChatMessageCount();
     accounts << account;

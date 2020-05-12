@@ -144,6 +144,8 @@ ListView {
 
     peerAddress: $call.peerAddress
     localAddress: $call.localAddress
+    fullPeerAddress: $call.fullPeerAddress
+    fullLocalAddress: $call.fullLocalAddress
 
     width: parent.width
 

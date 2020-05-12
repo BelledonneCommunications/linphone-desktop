@@ -463,7 +463,7 @@ function findIndex (array, cb, context) {
   cb = _computeOptimizedCb(cb, context)
 
   var key = _indexFinder(array, cb, context)
-  return key != null && key !== -1 ? key : null
+  return key != null ? key : -1
 }
 
 // -----------------------------------------------------------------------------

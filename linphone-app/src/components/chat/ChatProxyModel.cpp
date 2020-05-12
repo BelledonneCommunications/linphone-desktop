@@ -172,6 +172,24 @@ void ChatProxyModel::setLocalAddress (const QString &localAddress) {
   reload();
 }
 
+QString ChatProxyModel::getFullPeerAddress () const {
+  return mChatModel ? mChatModel->getFullPeerAddress() : QString("");
+}
+
+void ChatProxyModel::setFullPeerAddress (const QString &peerAddress) {
+  mFullPeerAddress = peerAddress;
+  //reload();
+}
+
+QString ChatProxyModel::getFullLocalAddress () const {
+  return mChatModel ? mChatModel->getFullLocalAddress() : QString("");
+}
+
+void ChatProxyModel::setFullLocalAddress (const QString &localAddress) {
+  mFullLocalAddress = localAddress;
+  //reload();
+}
+
 bool ChatProxyModel::getIsRemoteComposing () const {
   return mChatModel ? mChatModel->getIsRemoteComposing() : false;
 }
