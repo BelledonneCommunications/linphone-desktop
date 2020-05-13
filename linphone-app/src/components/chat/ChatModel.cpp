@@ -350,7 +350,7 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   switch (role) {
     case Roles::ChatEntry: {
       auto &data = mEntries[row].first;
-      if (!data.contains("content"))
+      if (data.contains("type") && data["type"]==EntryType::MessageEntry && !data.contains("content"))
         fillMessageEntry(data, static_pointer_cast<linphone::ChatMessage>(mEntries[row].second));
       return QVariant::fromValue(data);
     }
