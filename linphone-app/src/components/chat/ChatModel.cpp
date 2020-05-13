@@ -200,7 +200,7 @@ static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphon
   if (state == linphone::ChatMessage::State::InProgress)
     dest["status"] = ChatModel::MessageStatusNotDelivered;
   else
-    dest["status"] = static_cast<ChatModel::MessageStatus>(message->getState());
+    dest["status"] = static_cast<ChatModel::MessageStatus>(message->getState());	
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
@@ -310,20 +310,20 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress) {
   mMessageHandlers = make_shared<MessageHandlers>(this);
 
   setSipAddresses(peerAddress, localAddress);
-
-  {
-    CoreHandlers *coreHandlers = mCoreHandlers.get();
-    QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
-    QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
-    QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
-  }
-  // Rebind lost handlers
+// Rebind lost handlers
   for(auto i = mEntries.begin() ; i != mEntries.end() ; ++i){
     if(i->first["type"] == EntryType::MessageEntry){
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(i->second);
       message->addListener(mMessageHandlers);
     }
   }
+  {
+    CoreHandlers *coreHandlers = mCoreHandlers.get();
+    QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
+    QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
+    QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
+  }
+  
 }
 
 ChatModel::~ChatModel () {
@@ -350,7 +350,7 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   switch (role) {
     case Roles::ChatEntry: {
       auto &data = mEntries[row].first;
-      if (!data.contains("status"))
+      if (!data.contains("content"))
         fillMessageEntry(data, static_pointer_cast<linphone::ChatMessage>(mEntries[row].second));
       return QVariant::fromValue(data);
     }
