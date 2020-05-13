@@ -98,7 +98,6 @@ Window {
         }
       }
     }
-
     // -------------------------------------------------------------------------
     // Handle mouse move / Hide buttons.
     // -------------------------------------------------------------------------
@@ -170,12 +169,12 @@ Window {
               running: true
               triggeredOnStart: true
 
-              onTriggered: Logic.updateCallQualityIcon()
+              onTriggered: Logic.updateCallQualityIcon(callQuality, window.call)
             }
 
             CallStatistics {
               id: callStatistics
-
+              enabled: window.call
               call: window.call
               width: container.width
 
@@ -185,11 +184,25 @@ Window {
               onClosed: Logic.handleCallStatisticsClosed()
             }
           }
+         
           ActionButton {
             icon: 'tel_keypad'
 
             onClicked: telKeypad.visible = !telKeypad.visible
           }
+          
+          ActionButton {
+            id: callSecure
+
+            icon: window.call && window.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
+
+            onClicked: zrtp.visible = (window.call.encryption === CallModel.CallEncryptionZrtp)
+
+            TooltipArea {
+              text: window.call?Logic.makeReadableSecuredString(window.call.securedString):''
+            }
+          }
+      
         }
 
         // ---------------------------------------------------------------------
@@ -270,12 +283,27 @@ Window {
             onClicked: window.exit()
           }
         }
+        
       }
 
       // -----------------------------------------------------------------------
       // Action Buttons.
       // -----------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
+    // Zrtp.
+    // -------------------------------------------------------------------------
+
+      ZrtpTokenAuthentication {
+        id: zrtp
+        
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        Layout.margins: CallStyle.container.margins
+        call: window.call
+        visible: call && !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
+        z: Constants.zPopup
+        color: CallStyle.backgroundColor
+      }
       Item {
         Layout.alignment: Qt.AlignBottom
         Layout.fillWidth: true

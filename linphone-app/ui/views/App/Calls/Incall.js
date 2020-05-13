@@ -143,7 +143,7 @@ function showFullscreen () {
   })
 }
 
-function updateCallQualityIcon () {
+function updateCallQualityIcon (callQuality,call) {
   var quality = call.quality
   callQuality.icon = 'call_quality_' + (
     // Note: `quality` is in the [0, 5] interval.
