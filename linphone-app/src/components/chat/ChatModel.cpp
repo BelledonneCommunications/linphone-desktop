@@ -317,6 +317,13 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress) {
     QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
     QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
   }
+  // Rebind lost handlers
+  for(auto i = mEntries.begin() ; i != mEntries.end() ; ++i){
+    if(i->first["type"] == EntryType::MessageEntry){
+      shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(i->second);
+      message->addListener(mMessageHandlers);
+    }
+  }
 }
 
 ChatModel::~ChatModel () {
@@ -406,7 +413,7 @@ QString ChatModel::getFullLocalAddress () const {
 void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());
-
+  
   mChatRoom = core->getChatRoom(
     factory->createAddress(Utils::appStringToCoreString(peerAddress)),
     factory->createAddress(Utils::appStringToCoreString(localAddress))
@@ -436,6 +443,7 @@ void ChatModel::setSipAddresses (const QString &peerAddress, const QString &loca
 
   qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
     .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
+
 }
 
 bool ChatModel::getIsRemoteComposing () const {
