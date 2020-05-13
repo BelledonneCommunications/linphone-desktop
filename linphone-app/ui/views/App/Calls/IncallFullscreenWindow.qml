@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 
@@ -6,6 +7,7 @@ import Common 1.0
 import Common.Styles 1.0
 import DesktopTools 1.0
 import Linphone 1.0
+import LinphoneUtils 1.0
 import Utils 1.0
 
 import App.Styles 1.0
@@ -71,6 +73,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   Rectangle {
+    id:container
     anchors.fill: parent
     color: '#000000' // Not a style.
     focus: true
@@ -150,31 +153,38 @@ Window {
           anchors.left: parent.left
           iconSize: CallStyle.header.iconSize
           visible: !hideButtons
-
-          Icon {
+          
+          ActionButton {
             id: callQuality
 
             icon: 'call_quality_0'
             iconSize: parent.iconSize
+            useStates: false
 
-            // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
+            onClicked: Logic.openCallStatistics()
+
+          // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
             Timer {
               interval: 5000
               repeat: true
               running: true
               triggeredOnStart: true
 
-              onTriggered: {
-                var quality = call.quality
-                callQuality.icon = 'call_quality_' + (
-                  // Note: `quality` is in the [0, 5] interval.
-                  // It's necessary to map in the `call_quality_` interval. ([0, 3])
-                  quality >= 0 ? Math.round(quality / (5 / 3)) : 0
-                )
-              }
+              onTriggered: Logic.updateCallQualityIcon()
+            }
+
+            CallStatistics {
+              id: callStatistics
+
+              call: window.call
+              width: container.width
+
+              relativeTo: callQuality
+              relativeY: CallStyle.header.stats.relativeY
+
+              onClosed: Logic.handleCallStatisticsClosed()
             }
           }
-
           ActionButton {
             icon: 'tel_keypad'
 
