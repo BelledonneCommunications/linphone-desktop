@@ -84,6 +84,7 @@ public:
 
 signals:
   void accountSettingsUpdated ();
+  void publishPresenceChanged();
 
 private:
   QString getUsername () const;

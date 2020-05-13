@@ -212,6 +212,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   const QVariantMap &data
 ) {
   Q_CHECK_PTR(proxyConfig);
+  bool newPublishPresence = false;
 
   proxyConfig->edit();
 
@@ -249,6 +250,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   proxyConfig->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
   proxyConfig->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
   proxyConfig->enableRegister(data["registerEnabled"].toBool());
+  newPublishPresence = proxyConfig->publishEnabled() != data["publishPresence"].toBool();
   proxyConfig->enablePublish(data["publishPresence"].toBool());
   proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
     ? linphone::AVPFMode::Enabled
@@ -291,7 +293,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
       "",
       ""
     ));
-
+  if( newPublishPresence)
+    emit publishPresenceChanged();
   return addOrUpdateProxyConfig(proxyConfig);
 }
 

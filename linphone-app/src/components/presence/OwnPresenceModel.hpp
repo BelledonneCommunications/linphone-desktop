@@ -37,7 +37,7 @@ class OwnPresenceModel : public QObject {
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus WRITE setPresenceStatus NOTIFY presenceStatusChanged);
 
 public:
-  OwnPresenceModel (QObject *parent = Q_NULLPTR) : QObject(parent) {}
+  OwnPresenceModel (QObject *parent = Q_NULLPTR);
 
 signals:
   void presenceLevelChanged (Presence::PresenceLevel level);
