@@ -60,7 +60,7 @@ Window {
   }
 
   visible: false
-
+  onCallChanged: if(!call) window.exit()
   // ---------------------------------------------------------------------------
 
   Shortcut {
@@ -205,9 +205,11 @@ Window {
 
           Component.onCompleted: {
             var updateDuration = function () {
-              var call = window.caller.call
-              text = Utils.formatElapsedTime(call.duration)
-              Utils.setTimeout(elapsedTime, 1000, updateDuration)
+            if(window.caller){
+                var call = window.caller.call
+                  text = Utils.formatElapsedTime(call.duration)
+                Utils.setTimeout(elapsedTime, 1000, updateDuration)
+              }
             }
 
             updateDuration()
@@ -236,7 +238,7 @@ Window {
           ActionSwitch {
             id: recordingSwitch
 
-            enabled: call.recording
+            enabled: call && call.recording
             icon: 'record'
             useStates: false
             visible: SettingsModel.callRecorderEnabled
@@ -298,7 +300,7 @@ Window {
             ActionSwitch {
               id: micro
 
-              enabled: !call.microMuted
+              enabled: call && !call.microMuted
               icon: 'micro'
               iconSize: CallStyle.actionArea.iconSize
 
@@ -336,7 +338,7 @@ Window {
             enabled: true
             icon: 'camera'
             iconSize: CallStyle.actionArea.iconSize
-            updating: call.updating
+            updating: call && call.updating
 
             onClicked: window.exit(function () { call.videoEnabled = false })
           }
@@ -348,7 +350,7 @@ Window {
             icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: Logic.openMediaParameters()
+            onClicked: Logic.openMediaParameters(window)
           }
         }
 
@@ -361,9 +363,9 @@ Window {
           iconSize: CallStyle.actionArea.iconSize
 
           ActionSwitch {
-            enabled: !call.pausedByUser
+            enabled: call && !call.pausedByUser
             icon: 'pause'
-            updating: call.updating
+            updating: call && call.updating
             visible: SettingsModel.callPauseEnabled
 
             onClicked: window.exit(function () { call.pausedByUser = enabled })
