@@ -41,6 +41,7 @@ do
 done
 
 git checkout "${QT_VERSION}"
+git submodule foreach --recursive 'if [ -n "$(git branch -a | grep 5.12.5)" ]; then git checkout 5.12.5; fi'
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
   exit 1
