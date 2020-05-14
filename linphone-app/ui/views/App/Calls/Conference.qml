@@ -172,14 +172,18 @@ Rectangle {
               leftMargin: ConferenceStyle.grid.spacing
               bottomMargin: ConferenceStyle.grid.spacing
             }
+            enabled:!$call.speakerMuted
 
             Timer {
               interval: 50
               repeat: true
               running: true
-
               onTriggered: parent.value = $call.speakerVu
             }
+          }
+          MouseArea{
+            anchors.fill:parent
+            onClicked:$call.toggleSpeakerMute()
           }
         }
       }

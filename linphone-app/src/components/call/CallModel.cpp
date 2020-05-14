@@ -615,7 +615,9 @@ void CallModel::verifyAuthenticationToken (bool verify) {
 void CallModel::updateStreams () {
   mCall->update(nullptr);
 }
-
+void CallModel::toggleSpeakerMute(){
+  setSpeakerMuted(!getSpeakerMuted());
+}
 // -----------------------------------------------------------------------------
 
 CallModel::CallEncryption CallModel::getEncryption () const {
