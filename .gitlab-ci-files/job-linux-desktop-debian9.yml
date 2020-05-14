@@ -130,7 +130,7 @@ job-debian9-makefile-clang-package:
 
 job-debian9-makefile-clang-deploy:
   stage: deploy
-  tags: [ "docker-test-debian9-liblinphone-nuc" ]
+  tags: [ "deploy" ]
   dependencies:
     - job-debian9-makefile-clang-package
   only:
