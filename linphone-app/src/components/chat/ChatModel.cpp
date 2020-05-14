@@ -314,6 +314,7 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress) {
   for(auto i = mEntries.begin() ; i != mEntries.end() ; ++i){
     if(i->first["type"] == EntryType::MessageEntry){
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(i->second);
+      message->removeListener(mMessageHandlers);// Remove old listener if already exists
       message->addListener(mMessageHandlers);
     }
   }
@@ -480,6 +481,7 @@ void ChatModel::removeAllEntries () {
 
 void ChatModel::sendMessage (const QString &message) {
   shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(Utils::appStringToCoreString(message));
+  _message->removeListener(mMessageHandlers);// Remove old listener if already exists
   _message->addListener(mMessageHandlers);
 
   insertMessageAtEnd(_message);
@@ -506,6 +508,7 @@ void ChatModel::resendMessage (int id) {
     case MessageStatusFileTransferError:
     case MessageStatusNotDelivered: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
+      message->removeListener(mMessageHandlers);// Remove old listener if already exists
       message->addListener(mMessageHandlers);
       message->resend();
 
@@ -542,6 +545,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   content->setName(Utils::appStringToCoreString( QFileInfo(file).fileName()));
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
   message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));
+  message->removeListener(mMessageHandlers);// Remove old listener if already exists
   message->addListener(mMessageHandlers);
 
   createThumbnail(message);
@@ -583,7 +587,8 @@ void ChatModel::downloadFile (int id) {
   if (!soFarSoGood) {
     qWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(id);
     return;
-  }  
+  }
+  message->removeListener(mMessageHandlers);// Remove old listener if already exists
   message->addListener(mMessageHandlers);
 
   message->getContents().front()->setFilePath(Utils::appStringToCoreString(safeFilePath));
