@@ -142,7 +142,7 @@ function showFullscreen () {
       x:window.x,
       y:window.y
     }
-  })
+  }, true)
 }
 
 function updateCallQualityIcon (callQuality,call) {

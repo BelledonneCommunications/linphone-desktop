@@ -46,7 +46,6 @@ Window {
   }
 
   // ---------------------------------------------------------------------------
-  onVisibilityChanged: if(visibility === Window.Windowed) windowId.showFullScreen()
   visible: false
   onCallChanged: if(!call) windowId.exit()
   Component.onCompleted: {
