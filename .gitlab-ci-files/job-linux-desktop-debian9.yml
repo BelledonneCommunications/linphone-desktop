@@ -88,7 +88,7 @@ job-debian9-makefile-clang:
 
 job-debian9-makefile-clang-package:
   stage: package
-  tags: [ "docker-debian9" ]
+  tags: [ "docker-test-debian9-liblinphone-nuc" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt:5.12.5
   dependencies: []
   only:
@@ -130,7 +130,7 @@ job-debian9-makefile-clang-package:
 
 job-debian9-makefile-clang-deploy:
   stage: deploy
-  tags: [ "docker-debian9" ]
+  tags: [ "docker-test-debian9-liblinphone-nuc" ]
   dependencies:
     - job-debian9-makefile-clang-package
   only:
@@ -147,7 +147,7 @@ job-debian9-makefile-clang-deploy:
 
 job-debian9-debug:
   stage: deploy
-  tags: [ "docker-debian9" ]
+  tags: [ "docker-test-debian9-liblinphone-nuc" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt:5.12.5
   dependencies: []
   only:
