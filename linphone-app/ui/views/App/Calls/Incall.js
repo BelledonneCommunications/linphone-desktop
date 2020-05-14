@@ -138,7 +138,9 @@ function showFullscreen () {
   DesktopTools.DesktopTools.screenSaverStatus = false
   incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), window, {
     properties: {
-      caller: incall
+      caller: incall,
+      x:window.x,
+      y:window.y
     }
   })
 }
