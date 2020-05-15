@@ -365,7 +365,8 @@ void CallModel::accept (bool withVideo) {
 // -----------------------------------------------------------------------------
 
 void CallModel::updateIsInConference () {
-  if (mIsInConference != mCall->getParams()->getLocalConferenceMode()) {
+  if (mIsInConference != mCall->getCurrentParams()->getLocalConferenceMode()) {
+    qWarning() << "[TOTO] Update call status in conference " << QString::fromStdString(mCall->getRemoteAddress()->asString()) << !mIsInConference;
     mIsInConference = !mIsInConference;
     emit isInConferenceChanged(mIsInConference);
   }

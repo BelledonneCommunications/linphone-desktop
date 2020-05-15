@@ -63,7 +63,7 @@ void ConferenceModel::terminate () {
   core->terminateConference();
 
   for (const auto &call : core->getCalls()) {
-    if (call->getParams()->getLocalConferenceMode())
+    if (call->getCurrentParams()->getLocalConferenceMode())
       call->terminate();
   }
 }
