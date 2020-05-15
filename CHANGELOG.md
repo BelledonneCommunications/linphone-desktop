@@ -20,7 +20,7 @@
 - Add an option to keep windows in background when a call is received.
 - Add an option to allow Linphone to be lauched with the system (autostart).
 - Add an option to play sound notification when an incoming chat message is received.
-- Add Call utilities in Fullscreen mode (medias settings and security)
+- Add Call utilities in Fullscreen mode (medias settings, security, mutable speaker)
 - Capture and playback gains can be changed in settings with sliders.
 - Conference participants are mutable by clicking on them
 - Add the possibility to record calls automatically.
