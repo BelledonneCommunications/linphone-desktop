@@ -9,12 +9,12 @@ RUN sudo yum install -y libxkbcommon* libxcb pigz
 # Build qt5.12.5
 RUN git clone -b fix/qt5_build_issues_new_docker_images --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
-    rpm -i ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm && \
-    mv ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm / && \
-    rm -rf ./linphone-desktop
+    sudo rpm -i ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm && \
+    sudo mv ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm / && \
+    sudo rm -rf ./linphone-desktop
 
 # Configure user bc
-RUN useradd -ms /bin/bash bc && \
+RUN sudo  useradd -ms /bin/bash bc && \
     echo 'bc:cotcot' | chpasswd && \
     echo 'bc ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
