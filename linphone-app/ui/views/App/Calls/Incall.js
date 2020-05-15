@@ -130,19 +130,18 @@ function openMediaParameters (incall) {
   })
 }
 
-function showFullscreen () {
+function showFullscreen (position) {
   if (incall._fullscreen) {
     return
   }
-
   DesktopTools.DesktopTools.screenSaverStatus = false
   incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), window, {
     properties: {
       caller: incall,
-      x:window.x,
-      y:window.y
+      x:position.x,
+      y:position.y
     }
-  })
+  }, true)
 }
 
 function updateCallQualityIcon (callQuality,call) {

@@ -203,7 +203,7 @@ Rectangle {
           icon: 'fullscreen'
           visible: incall.call.videoEnabled
 
-          onClicked: Logic.showFullscreen()
+          onClicked: Logic.showFullscreen(contactDescription.mapToGlobal(0,0))
         }
       }
     }

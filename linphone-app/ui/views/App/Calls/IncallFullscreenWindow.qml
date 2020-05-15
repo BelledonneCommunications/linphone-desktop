@@ -17,7 +17,7 @@ import 'Incall.js' as Logic
 // =============================================================================
 
 Window {
-  id: window
+  id: windowId
 
   // ---------------------------------------------------------------------------
 
@@ -31,16 +31,14 @@ Window {
     DesktopTools.screenSaverStatus = true
 
     // `exit` is called by `Incall.qml`.
-    // The `window` id can be null if the window was closed in this view.
-    if (!window) {
+    // The `windowId` id can be null if the windowId was closed in this view.
+    if (!windowId) {
       return
     }
 
-    // It's necessary to call `showNormal` before close on MacOs
-    // because the dock will be hidden forever!
-    window.visible = false
-    window.showNormal()
-    window.close()
+    if(!windowId.close() && parent)
+      parent.close()
+    
 
     if (cb) {
       cb()
@@ -48,26 +46,16 @@ Window {
   }
 
   // ---------------------------------------------------------------------------
-
-  Component.onCompleted: {
-    window.call = caller.call
-    var show = function (visibility) {
-      if (visibility === Window.Windowed) {
-        window.visibilityChanged.disconnect(show)
-        window.showFullScreen()
-      }
-    }
-
-    window.visibilityChanged.connect(show)
-  }
-
   visible: false
-  onCallChanged: if(!call) window.exit()
+  onCallChanged: if(!call) windowId.exit()
+  Component.onCompleted: {
+    windowId.call = caller.call
+  }
   // ---------------------------------------------------------------------------
 
   Shortcut {
     sequence: StandardKey.Close
-    onActivated: window.exit()
+    onActivated: windowId.exit()
   }
 
   // ---------------------------------------------------------------------------
@@ -78,13 +66,13 @@ Window {
     color: '#000000' // Not a style.
     focus: true
 
-    Keys.onEscapePressed: window.exit()
+    Keys.onEscapePressed: windowId.exit()
 
     Loader {
       anchors.fill: parent
 
       active: {
-        var caller = window.caller
+        var caller = windowId.caller
         return caller && !caller.cameraActivated
       }
 
@@ -94,7 +82,7 @@ Window {
         id: camera
 
         Camera {
-          call: window.call
+          call: windowId.call
         }
       }
     }
@@ -169,13 +157,13 @@ Window {
               running: true
               triggeredOnStart: true
 
-              onTriggered: Logic.updateCallQualityIcon(callQuality, window.call)
+              onTriggered: Logic.updateCallQualityIcon(callQuality, windowId.call)
             }
 
             CallStatistics {
               id: callStatistics
-              enabled: window.call
-              call: window.call
+              enabled: windowId.call
+              call: windowId.call
               width: container.width
 
               relativeTo: callQuality
@@ -194,12 +182,12 @@ Window {
           ActionButton {
             id: callSecure
 
-            icon: window.call && window.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
+            icon: windowId.call && windowId.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
 
-            onClicked: zrtp.visible = (window.call.encryption === CallModel.CallEncryptionZrtp)
+            onClicked: zrtp.visible = (windowId.call.encryption === CallModel.CallEncryptionZrtp)
 
             TooltipArea {
-              text: window.call?Logic.makeReadableSecuredString(window.call.securedString):''
+              text: windowId.call?Logic.makeReadableSecuredString(windowId.call.securedString):''
             }
           }
       
@@ -219,7 +207,7 @@ Window {
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
 
-          visible: !window.hideButtons
+          visible: !windowId.hideButtons
 
           // Not a customizable style.
           color: 'white'
@@ -228,8 +216,8 @@ Window {
 
           Component.onCompleted: {
             var updateDuration = function () {
-            if(window.caller){
-                var call = window.caller.call
+            if(windowId.caller){
+                var call = windowId.caller.call
                   text = Utils.formatElapsedTime(call.duration)
                 Utils.setTimeout(elapsedTime, 1000, updateDuration)
               }
@@ -280,7 +268,7 @@ Window {
           ActionButton {
             icon: 'fullscreen'
 
-            onClicked: window.exit()
+            onClicked: windowId.exit()
           }
         }
         
@@ -299,7 +287,7 @@ Window {
         
         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         Layout.margins: CallStyle.container.margins
-        call: window.call
+        call: windowId.call
         visible: call && !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
         z: Constants.zPopup
         color: CallStyle.backgroundColor
@@ -364,11 +352,11 @@ Window {
             ActionSwitch {
               id: speaker
 
-              enabled: true
+              enabled: call && !call.speakerMuted
               icon: 'speaker'
               iconSize: CallStyle.actionArea.iconSize
 
-              onClicked: console.log('TODO')
+              onClicked: call.speakerMuted = enabled
             }
           }
 
@@ -378,7 +366,7 @@ Window {
             iconSize: CallStyle.actionArea.iconSize
             updating: call && call.updating
 
-            onClicked: window.exit(function () { call.videoEnabled = false })
+            onClicked: windowId.exit(function () { call.videoEnabled = false })
           }
 
           ActionButton {
@@ -388,7 +376,7 @@ Window {
             icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: Logic.openMediaParameters(window)
+            onClicked: Logic.openMediaParameters(windowId)
           }
         }
 
@@ -406,13 +394,13 @@ Window {
             updating: call && call.updating
             visible: SettingsModel.callPauseEnabled
 
-            onClicked: window.exit(function () { call.pausedByUser = enabled })
+            onClicked: windowId.exit(function () { call.pausedByUser = enabled })
           }
 
           ActionButton {
             icon: 'hangup'
 
-            onClicked: window.exit(call.terminate)
+            onClicked: windowId.exit(call.terminate)
           }
         }
       }
@@ -425,7 +413,7 @@ Window {
 
   Loader {
     active: {
-      var caller = window.caller
+      var caller = windowId.caller
       return caller && !caller.cameraActivated
     }
 
@@ -438,21 +426,21 @@ Window {
         property bool scale: false
 
         function xPosition () {
-          return window.width / 2 - width / 2
+          return windowId.width / 2 - width / 2
         }
 
         function yPosition () {
-          return window.height - height
+          return windowId.height - height
         }
 
-        call: window.call
+        call: windowId.call
         isPreview: true
 
         height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
         width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
 
         DragBox {
-          container: window
+          container: windowId
           draggable: parent
 
           xPosition: parent.xPosition
@@ -471,7 +459,7 @@ Window {
   TelKeypad {
     id: telKeypad
 
-    call: window.call
+    call: windowId.call
     visible: false
   }
 }
