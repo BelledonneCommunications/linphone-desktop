@@ -130,6 +130,8 @@ public:
   Q_INVOKABLE void verifyAuthenticationToken (bool verify);
 
   Q_INVOKABLE void updateStreams ();
+  
+  Q_INVOKABLE void toggleSpeakerMute();
 
 signals:
   void callErrorChanged (const QString &callError);

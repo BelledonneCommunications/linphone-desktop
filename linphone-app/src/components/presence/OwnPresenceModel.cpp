@@ -21,6 +21,7 @@
 #include <QVariantMap>
 
 #include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 
 #include "OwnPresenceModel.hpp"
 
@@ -28,6 +29,16 @@
 // =============================================================================
 
 using namespace std;
+
+OwnPresenceModel::OwnPresenceModel (QObject *parent) : QObject(parent) {
+  AccountSettingsModel *accountSettingsModel = CoreManager::getInstance()->getAccountSettingsModel();
+// Update status when changing the publish presence from settings
+  QObject::connect(accountSettingsModel, &AccountSettingsModel::publishPresenceChanged, this, [this]() {
+    Presence::PresenceStatus status = static_cast<Presence::PresenceStatus>(CoreManager::getInstance()->getCore()->getConsolidatedPresence());
+    emit presenceStatusChanged(status);
+    emit presenceLevelChanged(Presence::getPresenceLevel(status));
+  });
+}
 
 Presence::PresenceLevel OwnPresenceModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(getPresenceStatus());

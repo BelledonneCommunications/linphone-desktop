@@ -59,7 +59,7 @@ namespace {
   constexpr char LinphoneDomain[] = "sip.linphone.org";
   constexpr char DefaultContactParameters[] = "message-expires=604800";
   constexpr int DefaultExpires = 3600;
-  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone/downloads";
+  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
 }
 
 // -----------------------------------------------------------------------------
