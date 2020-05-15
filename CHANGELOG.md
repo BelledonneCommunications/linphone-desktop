@@ -30,6 +30,7 @@
 - Add a `CLI` function in order to support `URI handlers`. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
 - Timeline uses current proxy config info and show data only on selected profile.
 - Display the name of the caller in incoming notifications
+- Notifications are shown in all available screens
 - Display unread message count in system tray icon/mac app icon.
 - Display unread chat message count in `Manage Accounts` dialog and in `Main Window`.
 - Add a media parameters dialog in the `Call View` to selected devices and set volume.
