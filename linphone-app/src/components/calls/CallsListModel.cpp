@@ -239,7 +239,7 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
   }
 
   CallModel *callModel = new CallModel(call);
-  qInfo() << QStringLiteral("Add call:") << callModel;
+  qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
   App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
 
   // This connection is (only) useful for `CallsListProxyModel`.

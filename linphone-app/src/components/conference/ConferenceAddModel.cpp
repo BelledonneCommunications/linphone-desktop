@@ -42,7 +42,8 @@ ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) 
   );
 
   for (const auto &call : coreManager->getCore()->getCalls()) {
-    if (call->getParams()->getLocalConferenceMode())
+    if (call->getCurrentParams()->getLocalConferenceMode())
+    qWarning() << "Add To conference :" << Utils::coreStringToAppString(call->getRemoteAddress()->asString());
       addToConference(call->getRemoteAddress());
   }
 }
@@ -134,32 +135,56 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 // -----------------------------------------------------------------------------
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
-  list<shared_ptr<linphone::Address>> linphoneAddresses;
+  shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
+  if(!conference){
+    qWarning() << "Create a new conference";
+    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
+  }
+  // Normalement, tout ça est fait par le SDK à priori...
+  auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
+  list<shared_ptr<linphone::Address>> addressesToInvite, allLinphoneAddresses;	
   for (const auto &map : mRefs) {
     shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address>>();
     Q_CHECK_PTR(linphoneAddress);
-    linphoneAddresses.push_back(linphoneAddress);
+    const std::string sipAddress = linphoneAddress->asStringUriOnly();
+    // Test if the current address is in call
+    auto currentCall = currentCalls.begin();
+    while( currentCall != currentCalls.end() && (*currentCall)->getRemoteAddress()->asStringUriOnly() != sipAddress)
+      ++currentCall;
+    if( currentCall != currentCalls.end()){// In call
+      if(!(*currentCall)->getCurrentParams()->getLocalConferenceMode()){// Not in conference : add it
+        qWarning() << "[TOTO] Add call to conference " << QString::fromStdString(sipAddress);
+        CoreManager::getInstance()->getCore()->addToConference(*currentCall);// Else already in conference : do nothing
+      }
+    }else// Not in call : invite
+      addressesToInvite.push_back(linphoneAddress);
+    allLinphoneAddresses.push_back(linphoneAddress);
   }
-
-  shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
-  if(!conference)
-    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
-  
-  // Remove sip addresses if necessary.
-  for (const auto &call : CoreManager::getInstance()->getCore()->getCalls()) {
-    if (!call->getParams()->getLocalConferenceMode())
-      continue;
-
-    const QString sipAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
-    if (!mSipAddresses.contains(sipAddress))
-      call->terminate();
+  // Put in pause all call that is not in the conference list
+  for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
+//    if(call->getState() != linphone::Call::State::Paused && call->getState() != linphone::Call::State::Pausing){// Need to check? what's the behaviour of calling pause twice.
+      const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
+      auto address = allLinphoneAddresses.begin();
+      while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
+        ++address;
+      if(address == allLinphoneAddresses.end()){// Not in conference list : remove it from conference if it's the case and put in pause
+        if( call->getCurrentParams()->getLocalConferenceMode()){
+          qWarning() << "[TOTO] Remove call from conference " << QString::fromStdString(callAddress);
+          CoreManager::getInstance()->getCore()->removeFromConference(call);
+        }
+        qWarning() << "[TOTO] Pause call : " << QString::fromStdString(callAddress);
+        call->pause();
+//      }
+    }
   }
-
-  conference->inviteParticipants(
-    linphoneAddresses,
-    CoreManager::getInstance()->getCore()->createCallParams(nullptr)
-  );
+  qWarning() << "[TOTO] invitation : " << addressesToInvite.size() << "nouvelles addresses";
+  if( addressesToInvite.size() > 0)
+    conference->inviteParticipants(
+      addressesToInvite,
+      CoreManager::getInstance()->getCore()->createCallParams(nullptr)
+    );
 }
+
 
 // -----------------------------------------------------------------------------
 
