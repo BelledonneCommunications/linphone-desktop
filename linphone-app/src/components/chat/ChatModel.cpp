@@ -200,7 +200,7 @@ static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphon
   if (state == linphone::ChatMessage::State::InProgress)
     dest["status"] = ChatModel::MessageStatusNotDelivered;
   else
-    dest["status"] = static_cast<ChatModel::MessageStatus>(message->getState());
+    dest["status"] = static_cast<ChatModel::MessageStatus>(message->getState());	
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
@@ -310,13 +310,21 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress) {
   mMessageHandlers = make_shared<MessageHandlers>(this);
 
   setSipAddresses(peerAddress, localAddress);
-
+// Rebind lost handlers
+  for(auto i = mEntries.begin() ; i != mEntries.end() ; ++i){
+    if(i->first["type"] == EntryType::MessageEntry){
+      shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(i->second);
+      message->removeListener(mMessageHandlers);// Remove old listener if already exists
+      message->addListener(mMessageHandlers);
+    }
+  }
   {
     CoreHandlers *coreHandlers = mCoreHandlers.get();
     QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
     QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
     QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
   }
+  
 }
 
 ChatModel::~ChatModel () {
@@ -343,7 +351,7 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   switch (role) {
     case Roles::ChatEntry: {
       auto &data = mEntries[row].first;
-      if (!data.contains("status"))
+      if (data.contains("type") && data["type"]==EntryType::MessageEntry && !data.contains("content"))
         fillMessageEntry(data, static_pointer_cast<linphone::ChatMessage>(mEntries[row].second));
       return QVariant::fromValue(data);
     }
@@ -406,7 +414,7 @@ QString ChatModel::getFullLocalAddress () const {
 void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());
-
+  
   mChatRoom = core->getChatRoom(
     factory->createAddress(Utils::appStringToCoreString(peerAddress)),
     factory->createAddress(Utils::appStringToCoreString(localAddress))
@@ -436,6 +444,7 @@ void ChatModel::setSipAddresses (const QString &peerAddress, const QString &loca
 
   qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
     .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
+
 }
 
 bool ChatModel::getIsRemoteComposing () const {
@@ -472,6 +481,7 @@ void ChatModel::removeAllEntries () {
 
 void ChatModel::sendMessage (const QString &message) {
   shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(Utils::appStringToCoreString(message));
+  _message->removeListener(mMessageHandlers);// Remove old listener if already exists
   _message->addListener(mMessageHandlers);
 
   insertMessageAtEnd(_message);
@@ -498,6 +508,7 @@ void ChatModel::resendMessage (int id) {
     case MessageStatusFileTransferError:
     case MessageStatusNotDelivered: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
+      message->removeListener(mMessageHandlers);// Remove old listener if already exists
       message->addListener(mMessageHandlers);
       message->resend();
 
@@ -534,6 +545,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   content->setName(Utils::appStringToCoreString( QFileInfo(file).fileName()));
   shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
   message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));
+  message->removeListener(mMessageHandlers);// Remove old listener if already exists
   message->addListener(mMessageHandlers);
 
   createThumbnail(message);
@@ -575,7 +587,8 @@ void ChatModel::downloadFile (int id) {
   if (!soFarSoGood) {
     qWarning() << QStringLiteral("Unable to create safe file path for: %1.").arg(id);
     return;
-  }  
+  }
+  message->removeListener(mMessageHandlers);// Remove old listener if already exists
   message->addListener(mMessageHandlers);
 
   message->getContents().front()->setFilePath(Utils::appStringToCoreString(safeFilePath));

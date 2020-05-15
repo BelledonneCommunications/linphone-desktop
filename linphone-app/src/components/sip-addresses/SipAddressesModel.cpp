@@ -438,9 +438,8 @@ void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::Cha
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, ContactModel *contact) {
   const QString &sipAddress = sipAddressEntry.sipAddress;
 
-  if (contact)
-    sipAddressEntry.contact = contact;
-  else if (!sipAddressEntry.contact)
+  sipAddressEntry.contact = contact;
+  if (!sipAddressEntry.contact)
     qWarning() << QStringLiteral("`contact` field is empty on sip address: `%1`.").arg(sipAddress);
 
   updateObservers(sipAddress, contact);

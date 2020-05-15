@@ -33,28 +33,32 @@ Item {
         id: icon
 
         Icon {
-          readonly property bool isNotDelivered: Utils.includes([
-            ChatModel.MessageStatusFileTransferError,
-            ChatModel.MessageStatusIdle,
-            ChatModel.MessageStatusInProgress,
-            ChatModel.MessageStatusNotDelivered
-          ], $chatEntry.status)
 
+          readonly property bool isError: Utils.includes([
+                ChatModel.MessageStatusFileTransferError,
+                ChatModel.MessageStatusNotDelivered,
+                ], $chatEntry.status)
+          readonly property bool isUploaded: $chatEntry.status === ChatModel.MessageStatusDelivered
+          readonly property bool isDelivered: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
           readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
-          readonly property bool isDeliveredToUser: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
 
-          icon: isNotDelivered
+          icon: isError
             ? 'chat_error'
-            : (isRead ? 'chat_read' : (isDeliveredToUser ? 'chat_delivered' : ''))
+            : (isRead ? 'chat_read' : (isDelivered ? 'chat_delivered' : ''))
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
             anchors.fill: parent
-            onClicked: isNotDelivered && proxyModel.resendMessage(index)
+            cursorShape: containsMouse
+                            ? Qt.PointingHandCursor
+                            : Qt.ArrowCursor
+            hoverEnabled: true
+            visible: icon.isError || $chatEntry.status === ChatModel.MessageStatusIdle
+            onClicked: proxyModel.resendMessage(index)
           }
 
           TooltipArea {
-            text: isNotDelivered
+            text: isError
               ? qsTr('messageError')
               : (isRead ? qsTr('messageRead') : qsTr('messageDelivered'))
           }

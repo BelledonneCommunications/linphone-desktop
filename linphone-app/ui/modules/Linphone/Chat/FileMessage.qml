@@ -47,13 +47,12 @@ Row {
     Rectangle {
       id: rectangle
 
-      readonly property bool isNotDelivered: Utils.includes([
+      readonly property bool isError: Utils.includes([
         ChatModel.MessageStatusFileTransferError,
-        ChatModel.MessageStatusIdle,
-        ChatModel.MessageStatusInProgress,
-        ChatModel.MessageStatusNotDelivered
-      ], $chatEntry.status)
-
+        ChatModel.MessageStatusNotDelivered,
+       ], $chatEntry.status)
+      readonly property bool isUploaded: $chatEntry.status === ChatModel.MessageStatusDelivered
+      readonly property bool isDelivered: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
       readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
 
       color: $chatEntry.isOutgoing
@@ -257,7 +256,7 @@ Row {
           ? Qt.PointingHandCursor
           : Qt.ArrowCursor
         hoverEnabled: true
-        visible: !rectangle.isNotDelivered && !$chatEntry.isOutgoing
+        visible: (rectangle.isUploaded || rectangle.isRead) && !$chatEntry.isOutgoing
 
         onClicked: {
           if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
@@ -288,15 +287,20 @@ Row {
         Icon {
           anchors.centerIn: parent
 
-          icon: rectangle.isNotDelivered
-            ? 'chat_error'
-            : (rectangle.isRead ? 'chat_read' : 'chat_delivered')
+          icon: rectangle.isError ? 'chat_error' :
+                    (rectangle.isRead ? 'chat_read' : 
+                        (rectangle.isDelivered ? 'chat_delivered' : ''))
 
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
             anchors.fill: parent
-            onClicked: isNotDelivered && proxyModel.resendMessage(index)
+            cursorShape: containsMouse
+                            ? Qt.PointingHandCursor
+                            : Qt.ArrowCursor
+            hoverEnabled: true
+            visible: (rectangle.isError || $chatEntry.status === ChatModel.MessageStatusIdle) && $chatEntry.isOutgoing
+            onClicked: proxyModel.resendMessage(index)
           }
         }
       }
