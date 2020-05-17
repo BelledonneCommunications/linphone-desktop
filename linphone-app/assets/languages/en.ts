@@ -1488,11 +1488,11 @@ your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>Are you sure you want to delete this account?</translation>
+        <translation>Are you sure you wish to delete this account?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>Are you sure you want to remove all passwords?</translation>
+        <translation>Are you sure you wish to remove all passwords?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
