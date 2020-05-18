@@ -148,6 +148,7 @@ ApplicationWindow {
 
             maxMenuHeight: MainWindowStyle.searchBox.maxHeight
             placeholderText: qsTr('mainSearchBarPlaceholder')
+            tooltipText: qsTr('smartSearchBarTooltip')
 
             onAddContact: window.setView('ContactEdit', {
               sipAddress: sipAddress
@@ -175,11 +176,6 @@ ApplicationWindow {
             })
 
             onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
-
-            TooltipArea {
-              text: qsTr('smartSearchBarTooltip')
-              visible: !smartSearchBar.isOpen
-            }
           }
 
           ActionButton {
@@ -189,9 +185,9 @@ ApplicationWindow {
 
             onClicked: Logic.openConferenceManager()
 
-	    TooltipArea {
-	      text: qsTr('newConferenceButton')
-	    }
+            TooltipArea {
+              text: qsTr('newConferenceButton')
+            }
           }
 
           ActionButton {

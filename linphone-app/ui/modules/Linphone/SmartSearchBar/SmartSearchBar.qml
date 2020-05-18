@@ -1,3 +1,5 @@
+import QtQuick 2.7
+
 import Common 1.0
 import Linphone 1.0
 
@@ -11,6 +13,7 @@ SearchBox {
   // ---------------------------------------------------------------------------
 
   readonly property alias isOpen: searchBox._isOpen
+  property alias header : view.headerItem
 
   // ---------------------------------------------------------------------------
 
