@@ -54,8 +54,8 @@ ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(paren
 bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
   const CallModel *callModel = index.data().value<CallModel *>();
-
-  return callModel->getCall()->getParams()->getLocalConferenceMode();
+ qWarning() << callModel->getFullPeerAddress() << callModel->getCall()->getParams()->getLocalConferenceMode() << callModel->getCall()->getCurrentParams()->getLocalConferenceMode();
+  return callModel->getCall()->getParams()->getLocalConferenceMode() || callModel->getCall()->getCurrentParams()->getLocalConferenceMode();
 }
 // -----------------------------------------------------------------------------
 

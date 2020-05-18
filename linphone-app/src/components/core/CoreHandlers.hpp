@@ -90,12 +90,6 @@ private:
     const std::shared_ptr<linphone::Core> & lc,
     const std::shared_ptr<linphone::Call> & call
   ) override;
-  
-  void onChatRoomStateChanged(
-    const std::shared_ptr<linphone::Core> & lc,
-    const std::shared_ptr<linphone::ChatRoom> & cr,
-    linphone::ChatRoom::State state
-  )override;
 
   void onGlobalStateChanged (
     const std::shared_ptr<linphone::Core> &core,
