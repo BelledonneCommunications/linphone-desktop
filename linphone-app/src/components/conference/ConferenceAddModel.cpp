@@ -43,7 +43,6 @@ ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) 
 
   for (const auto &call : coreManager->getCore()->getCalls()) {
     if (call->getCurrentParams()->getLocalConferenceMode())
-    qWarning() << "Add To conference :" << Utils::coreStringToAppString(call->getRemoteAddress()->asString());
       addToConference(call->getRemoteAddress());
   }
 }
