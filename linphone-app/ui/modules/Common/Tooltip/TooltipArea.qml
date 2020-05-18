@@ -1,5 +1,6 @@
 import QtQuick 2.7
 
+import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
@@ -14,7 +15,8 @@ MouseArea {
 
   property bool _visible: false
 
-  anchors.fill: parent
+  anchors.fill:parent
+
   hoverEnabled: true
   scrollGestureEnabled: true
 
@@ -31,6 +33,7 @@ MouseArea {
     delay: tooltipArea.delay
     parent: tooltipParent
     visible: _visible || force
+    width: tooltipParent.width
 
     timeout: -1
 
