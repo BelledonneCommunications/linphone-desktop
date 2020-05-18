@@ -975,9 +975,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Use the intelligent search bar to directly start audio and video
-calls, send a message or add a new contact. Just enter
-your friend&apos;s SIP address or username.</translation>
+        <translation>Use the intelligent search bar to directly start audio and video calls, send a message or add a new contact. Just enter your friend&apos;s SIP address or username.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
