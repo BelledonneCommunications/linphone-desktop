@@ -137,7 +137,6 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 void ConferenceHelperModel::ConferenceAddModel::update () {
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
   if(!conference){
-    qWarning() << "Create a new conference";
     conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
   }
   auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
