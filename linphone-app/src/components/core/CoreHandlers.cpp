@@ -134,17 +134,7 @@ void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,
 				  const shared_ptr<linphone::Call> &call) {
   emit callCreated(call);
 }
-void CoreHandlers::onChatRoomStateChanged(
-    const std::shared_ptr<linphone::Core> & lc,
-    const std::shared_ptr<linphone::ChatRoom> & cr,
-    linphone::ChatRoom::State state
-  ) {
-  auto confAddress = cr->getConferenceAddress();
-  if(confAddress)
-    qWarning() << "Conf : " << Utils::coreStringToAppString(confAddress->asString()) << (int)state;
-  else
-    qWarning() << "ChatRoom : " << Utils::coreStringToAppString(cr->getPeerAddress()->asString()) << (int)state;
-}
+
 void CoreHandlers::onGlobalStateChanged (
   const shared_ptr<linphone::Core> &,
   linphone::GlobalState gstate,
