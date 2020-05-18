@@ -4,6 +4,7 @@
 
 ### Features
 
+- Add a `CLI` function in order to support `URI handlers` from browser. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
 - Improved general video/audio quality.
 - Echo cancellation more efficient.
 - `OpenH264` codec can be downloaded and used in the application from Cisco website.
@@ -27,7 +28,6 @@
 - Move logs folder without restart.
 - Add caller/callee on saved files.
 
-- Add a `CLI` function in order to support `URI handlers`. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
 - Timeline uses current proxy config info and show data only on selected profile.
 - Tooltips can be show in multiple lines
 - Display the name of the caller in incoming notifications
