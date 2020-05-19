@@ -972,9 +972,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Use a barra de pesquisa inteligente para iniciar diretamente o áudio e o vídeo
-, enviar uma mensagem ou adicionar um novo contato. Basta digitar
-endereço SIP ou nome de usuário do seu amigo.</translation>
+        <translation>Use a barra de pesquisa inteligente para iniciar diretamente o áudio e o vídeo, enviar uma mensagem ou adicionar um novo contato. Basta digitar endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -2020,7 +2018,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>CapeVerde</source>
-        <translation>Capeverde</translation>
+        <translation>Cabo Verde</translation>
     </message>
     <message>
         <source>CaymanIslands</source>
@@ -2052,11 +2050,11 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>PeoplesRepublicOfCongo</source>
-        <translation>PovosRepública do Congo</translation>
+        <translation>República do Congo</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfCongo</source>
-        <translation>DemocratiCREPúblico-Congo</translation>
+        <translation>República Democrática do Congo</translation>
     </message>
     <message>
         <source>CookIslands</source>
@@ -2064,7 +2062,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>CostaRica</source>
-        <translation>Costarica</translation>
+        <translation>Costa Rica</translation>
     </message>
     <message>
         <source>IvoryCoast</source>
@@ -2112,7 +2110,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>ElSalvador</source>
-        <translation>ElSalvador</translation>
+        <translation>El Salvador</translation>
     </message>
     <message>
         <source>EquatorialGuinea</source>
@@ -2440,7 +2438,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>NauruCountry</source>
-        <translation>Naurucountry</translation>
+        <translation>Nauru</translation>
     </message>
     <message>
         <source>Nepal</source>
@@ -2508,7 +2506,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>PapuaNewGuinea</source>
-        <translation>Papuanewguineense</translation>
+        <translation>Papua Nova Guiné</translation>
     </message>
     <message>
         <source>Paraguay</source>
@@ -2532,7 +2530,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>PuertoRico</source>
-        <translation>Puertorico</translation>
+        <translation>Porto Rico</translation>
     </message>
     <message>
         <source>Qatar</source>
@@ -2560,7 +2558,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>SaintKittsAndNevis</source>
-        <translation>São KittSandnevis</translation>
+        <translation>São Cristóvão e Nevis</translation>
     </message>
     <message>
         <source>SaintLucia</source>
@@ -2572,7 +2570,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation>SaintVincente as Granadinas</translation>
+        <translation>São Vicente e Granadinas</translation>
     </message>
     <message>
         <source>Samoa</source>
@@ -2580,11 +2578,11 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>SanMarino</source>
-        <translation>SanMarino</translation>
+        <translation>São Marino</translation>
     </message>
     <message>
         <source>SaoTomeAndPrincipe</source>
-        <translation>Saotomeu e Príncipe</translation>
+        <translation>São Tomé e Príncipe</translation>
     </message>
     <message>
         <source>SaudiArabia</source>
@@ -2604,7 +2602,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>SierraLeone</source>
-        <translation>Sierraleone</translation>
+        <translation>Serra Leoa</translation>
     </message>
     <message>
         <source>Singapore</source>
@@ -2636,7 +2634,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>SriLanka</source>
-        <translation>Srilanka</translation>
+        <translation>Sri Lanka</translation>
     </message>
     <message>
         <source>Sudan</source>
@@ -2708,7 +2706,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>TurksAndCaicosIslands</source>
-        <translation>Ilhas TurksandCaicos</translation>
+        <translation>Ilhas Turcas e Caicos</translation>
     </message>
     <message>
         <source>Tuvalu</source>
@@ -2756,7 +2754,7 @@ endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation>Wallis e FutunaIslands</translation>
+        <translation>Ilhas Wallis e Futuna</translation>
     </message>
     <message>
         <source>Yemen</source>

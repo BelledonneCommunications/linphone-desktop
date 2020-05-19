@@ -1891,7 +1891,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>AmericanSamoa</source>
-        <translation>AmerikanischSamoa</translation>
+        <translation>Amerikanisch-Samoa</translation>
     </message>
     <message>
         <source>Andorra</source>
@@ -1907,7 +1907,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>AntiguaAndBarbuda</source>
-        <translation>AntiguaundBarbuda</translation>
+        <translation>Antigua und Barbuda</translation>
     </message>
     <message>
         <source>Argentina</source>
@@ -1999,7 +1999,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>BurkinaFaso</source>
-        <translation>BurkinaFaso</translation>
+        <translation>Burkina Faso</translation>
     </message>
     <message>
         <source>Burundi</source>
@@ -2019,7 +2019,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>CapeVerde</source>
-        <translation>Capeverde</translation>
+        <translation>Kap Verde</translation>
     </message>
     <message>
         <source>CaymanIslands</source>
@@ -2051,7 +2051,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>PeoplesRepublicOfCongo</source>
-        <translation>Volksrepublik Kongo</translation>
+        <translation>Republik Kongo</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfCongo</source>
@@ -2059,11 +2059,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>CookIslands</source>
-        <translation>Cookinseln</translation>
+        <translation>Cook-Inseln</translation>
     </message>
     <message>
         <source>CostaRica</source>
-        <translation>Costarica</translation>
+        <translation>Costa Rica</translation>
     </message>
     <message>
         <source>IvoryCoast</source>
@@ -2083,7 +2083,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>CzechRepublic</source>
-        <translation>Tschechien</translation>
+        <translation>Tschechische Republik</translation>
     </message>
     <message>
         <source>Denmark</source>
@@ -2111,7 +2111,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>ElSalvador</source>
-        <translation>ElSalvador</translation>
+        <translation>El Salvador</translation>
     </message>
     <message>
         <source>EquatorialGuinea</source>
@@ -2131,11 +2131,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>FalklandIslands</source>
-        <translation>FalklandI nseln</translation>
+        <translation>Falklandinseln</translation>
     </message>
     <message>
         <source>FaroeIslands</source>
-        <translation>Färöer</translation>
+        <translation>Färöer Inseln</translation>
     </message>
     <message>
         <source>Fiji</source>
@@ -2151,7 +2151,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>FrenchGuiana</source>
-        <translation>Französisch-Guiana</translation>
+        <translation>Französisch-Guayana</translation>
     </message>
     <message>
         <source>FrenchPolynesia</source>
@@ -2227,7 +2227,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>HongKong</source>
-        <translation>HongKong</translation>
+        <translation>Hong Kong</translation>
     </message>
     <message>
         <source>Hungary</source>
@@ -2291,11 +2291,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>DemocraticRepublicOfKorea</source>
-        <translation>Nordkorea</translation>
+        <translation>Demokratische Republik Korea</translation>
     </message>
     <message>
         <source>RepublicOfKorea</source>
-        <translation>Südkorea</translation>
+        <translation>Republik Korea</translation>
     </message>
     <message>
         <source>Kuwait</source>
@@ -2375,7 +2375,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>MarshallIslands</source>
-        <translation>MarshallIslands</translation>
+        <translation>Marshallinseln</translation>
     </message>
     <message>
         <source>Martinique</source>
@@ -2451,7 +2451,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>NewCaledonia</source>
-        <translation>NeuKaledonien</translation>
+        <translation>Neukaledonien</translation>
     </message>
     <message>
         <source>NewZealand</source>
@@ -2555,23 +2555,23 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>SaintHelena</source>
-        <translation>SainthElena</translation>
+        <translation>St. Helena</translation>
     </message>
     <message>
         <source>SaintKittsAndNevis</source>
-        <translation>Sankt Kitts und Nevis</translation>
+        <translation>St. Kitts und Nevis</translation>
     </message>
     <message>
         <source>SaintLucia</source>
-        <translation>Sankt Lucia</translation>
+        <translation>St. Lucia</translation>
     </message>
     <message>
         <source>SaintPierreAndMiquelon</source>
-        <translation>Sankt Pierre und Miquelon</translation>
+        <translation>St. Pierre und Miquelon</translation>
     </message>
     <message>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation>Sankt Vincent und die Grenadinen</translation>
+        <translation>St. Vincent und die Grenadinen</translation>
     </message>
     <message>
         <source>Samoa</source>
@@ -2583,7 +2583,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>SaoTomeAndPrincipe</source>
-        <translation>São Tomé und Príncipe</translation>
+        <translation>São Tomé und Principe</translation>
     </message>
     <message>
         <source>SaudiArabia</source>

@@ -973,9 +973,7 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Naudokite išmaniąją paieškos juostą, norėdami tiesiogiai pradėti
-garso ir vaizdo skambučius, siųsti žinutę ar pridėti naują kontaktą.
-Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
+        <translation>Naudokite išmaniąją paieškos juostą, norėdami tiesiogiai pradėti garso ir vaizdo skambučius, siųsti žinutę ar pridėti naują kontaktą. Tiesiog, įveskite savo draugo SIP adresą ar naudotojo vardą.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
