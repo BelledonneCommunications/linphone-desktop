@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="uk">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -975,7 +973,7 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Використовуйте розумний пошуковий рядок, щоб одразу почати звуковий або відео виклик, відіслати повідомлення чи додати новий контакт. Просто уведіть SIP адресу чи ім&apos;я користувача вашого контакту.</translation>
+        <translation>Використовуйте розумний пошуковий рядок, щоб одразу почати звуковий або відео виклик відіслати повідомлення чи додати новий контакт. Просто уведіть SIP адресу чи ім&apos;я користувача вашого контакту.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -1881,895 +1879,895 @@
     <name>country</name>
     <message>
         <source>Afghanistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Афганістан</translation>
     </message>
     <message>
         <source>Albania</source>
-        <translation type="unfinished"></translation>
+        <translation>Албанія</translation>
     </message>
     <message>
         <source>Algeria</source>
-        <translation type="unfinished"></translation>
+        <translation>Алжір</translation>
     </message>
     <message>
         <source>AmericanSamoa</source>
-        <translation type="unfinished"></translation>
+        <translation>Американське Самоа</translation>
     </message>
     <message>
         <source>Andorra</source>
-        <translation type="unfinished"></translation>
+        <translation>Андорра</translation>
     </message>
     <message>
         <source>Angola</source>
-        <translation type="unfinished"></translation>
+        <translation>Анґола</translation>
     </message>
     <message>
         <source>Anguilla</source>
-        <translation type="unfinished"></translation>
+        <translation>Анґілья</translation>
     </message>
     <message>
         <source>AntiguaAndBarbuda</source>
-        <translation type="unfinished"></translation>
+        <translation>Антиґуа і Барбуда</translation>
     </message>
     <message>
         <source>Argentina</source>
-        <translation type="unfinished"></translation>
+        <translation>Арґентина</translation>
     </message>
     <message>
         <source>Armenia</source>
-        <translation type="unfinished"></translation>
+        <translation>Вірменія</translation>
     </message>
     <message>
         <source>Aruba</source>
-        <translation type="unfinished"></translation>
+        <translation>Аруба</translation>
     </message>
     <message>
         <source>Australia</source>
-        <translation type="unfinished"></translation>
+        <translation>Австралія</translation>
     </message>
     <message>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>Австрія</translation>
     </message>
     <message>
         <source>Azerbaijan</source>
-        <translation type="unfinished"></translation>
+        <translation>Азербайджан</translation>
     </message>
     <message>
         <source>Bahamas</source>
-        <translation type="unfinished"></translation>
+        <translation>Багами</translation>
     </message>
     <message>
         <source>Bahrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Бахрейн</translation>
     </message>
     <message>
         <source>Bangladesh</source>
-        <translation type="unfinished"></translation>
+        <translation>Банґладеш</translation>
     </message>
     <message>
         <source>Barbados</source>
-        <translation type="unfinished"></translation>
+        <translation>Барбадос</translation>
     </message>
     <message>
         <source>Belarus</source>
-        <translation type="unfinished"></translation>
+        <translation>Білорусь</translation>
     </message>
     <message>
         <source>Belgium</source>
-        <translation type="unfinished"></translation>
+        <translation>Бельґія</translation>
     </message>
     <message>
         <source>Belize</source>
-        <translation type="unfinished"></translation>
+        <translation>Беліз</translation>
     </message>
     <message>
         <source>Benin</source>
-        <translation type="unfinished"></translation>
+        <translation>Бенін</translation>
     </message>
     <message>
         <source>Bermuda</source>
-        <translation type="unfinished"></translation>
+        <translation>Бермудські Острови</translation>
     </message>
     <message>
         <source>Bhutan</source>
-        <translation type="unfinished"></translation>
+        <translation>Бутан</translation>
     </message>
     <message>
         <source>Bolivia</source>
-        <translation type="unfinished"></translation>
+        <translation>Болівія</translation>
     </message>
     <message>
         <source>BosniaAndHerzegowina</source>
-        <translation type="unfinished"></translation>
+        <translation>Боснія і Герцеґовина</translation>
     </message>
     <message>
         <source>Botswana</source>
-        <translation type="unfinished"></translation>
+        <translation>Ботсвана</translation>
     </message>
     <message>
         <source>Brazil</source>
-        <translation type="unfinished"></translation>
+        <translation>Бразилія</translation>
     </message>
     <message>
         <source>Brunei</source>
-        <translation type="unfinished"></translation>
+        <translation>Бруней</translation>
     </message>
     <message>
         <source>Bulgaria</source>
-        <translation type="unfinished"></translation>
+        <translation>Болґарія</translation>
     </message>
     <message>
         <source>BurkinaFaso</source>
-        <translation type="unfinished"></translation>
+        <translation>Буркіна-Фасо</translation>
     </message>
     <message>
         <source>Burundi</source>
-        <translation type="unfinished"></translation>
+        <translation>Бурунді</translation>
     </message>
     <message>
         <source>Cambodia</source>
-        <translation type="unfinished"></translation>
+        <translation>Камбоджа</translation>
     </message>
     <message>
         <source>Cameroon</source>
-        <translation type="unfinished"></translation>
+        <translation>Камерун</translation>
     </message>
     <message>
         <source>Canada</source>
-        <translation type="unfinished"></translation>
+        <translation>Канада</translation>
     </message>
     <message>
         <source>CapeVerde</source>
-        <translation type="unfinished"></translation>
+        <translation>Кабо-Верде</translation>
     </message>
     <message>
         <source>CaymanIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Кайманові острови</translation>
     </message>
     <message>
         <source>CentralAfricanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>Центральноафриканська Республіка</translation>
     </message>
     <message>
         <source>Chad</source>
-        <translation type="unfinished"></translation>
+        <translation>Чад</translation>
     </message>
     <message>
         <source>Chile</source>
-        <translation type="unfinished"></translation>
+        <translation>Чилі</translation>
     </message>
     <message>
         <source>China</source>
-        <translation type="unfinished"></translation>
+        <translation>Китай</translation>
     </message>
     <message>
         <source>Colombia</source>
-        <translation type="unfinished"></translation>
+        <translation>Колумбія</translation>
     </message>
     <message>
         <source>Comoros</source>
-        <translation type="unfinished"></translation>
+        <translation>Коморські острови</translation>
     </message>
     <message>
         <source>PeoplesRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>Народна Республіка Конґо</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>Демократична Республіка Конґо</translation>
     </message>
     <message>
         <source>CookIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Острови Кука</translation>
     </message>
     <message>
         <source>CostaRica</source>
-        <translation type="unfinished"></translation>
+        <translation>Коста-Ріка</translation>
     </message>
     <message>
         <source>IvoryCoast</source>
-        <translation type="unfinished"></translation>
+        <translation>Кот-д&apos;Івуар</translation>
     </message>
     <message>
         <source>Croatia</source>
-        <translation type="unfinished"></translation>
+        <translation>Хорватія</translation>
     </message>
     <message>
         <source>Cuba</source>
-        <translation type="unfinished"></translation>
+        <translation>Куба</translation>
     </message>
     <message>
         <source>Cyprus</source>
-        <translation type="unfinished"></translation>
+        <translation>Кіпр</translation>
     </message>
     <message>
         <source>CzechRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>Чеська Республіка</translation>
     </message>
     <message>
         <source>Denmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Данія</translation>
     </message>
     <message>
         <source>Djibouti</source>
-        <translation type="unfinished"></translation>
+        <translation>Джибуті</translation>
     </message>
     <message>
         <source>Dominica</source>
-        <translation type="unfinished"></translation>
+        <translation>Домініка</translation>
     </message>
     <message>
         <source>DominicanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>Домініканська республіка</translation>
     </message>
     <message>
         <source>Ecuador</source>
-        <translation type="unfinished"></translation>
+        <translation>Еквадор</translation>
     </message>
     <message>
         <source>Egypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Єгипет</translation>
     </message>
     <message>
         <source>ElSalvador</source>
-        <translation type="unfinished"></translation>
+        <translation>Сальвадор</translation>
     </message>
     <message>
         <source>EquatorialGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Екваторіальна Ґвінея</translation>
     </message>
     <message>
         <source>Eritrea</source>
-        <translation type="unfinished"></translation>
+        <translation>Еритрея</translation>
     </message>
     <message>
         <source>Estonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Естонія</translation>
     </message>
     <message>
         <source>Ethiopia</source>
-        <translation type="unfinished"></translation>
+        <translation>Ефіопія</translation>
     </message>
     <message>
         <source>FalklandIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Фолклендські (Мальвінські) острови</translation>
     </message>
     <message>
         <source>FaroeIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Фарерські острови</translation>
     </message>
     <message>
         <source>Fiji</source>
-        <translation type="unfinished"></translation>
+        <translation>Фіджі</translation>
     </message>
     <message>
         <source>Finland</source>
-        <translation type="unfinished"></translation>
+        <translation>Фінляндія</translation>
     </message>
     <message>
         <source>France</source>
-        <translation type="unfinished"></translation>
+        <translation>Франція</translation>
     </message>
     <message>
         <source>FrenchGuiana</source>
-        <translation type="unfinished"></translation>
+        <translation>Французька Ґвіана</translation>
     </message>
     <message>
         <source>FrenchPolynesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Французька Полінезія</translation>
     </message>
     <message>
         <source>Gabon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґабон</translation>
     </message>
     <message>
         <source>Gambia</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґамбія</translation>
     </message>
     <message>
         <source>Georgia</source>
-        <translation type="unfinished"></translation>
+        <translation>Грузія</translation>
     </message>
     <message>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
+        <translation>Німеччина</translation>
     </message>
     <message>
         <source>Ghana</source>
-        <translation type="unfinished"></translation>
+        <translation>Гана</translation>
     </message>
     <message>
         <source>Gibraltar</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґібралтар</translation>
     </message>
     <message>
         <source>Greece</source>
-        <translation type="unfinished"></translation>
+        <translation>Греція</translation>
     </message>
     <message>
         <source>Greenland</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґренландія</translation>
     </message>
     <message>
         <source>Grenada</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґренада</translation>
     </message>
     <message>
         <source>Guadeloupe</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґваделупа</translation>
     </message>
     <message>
         <source>Guam</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґуам</translation>
     </message>
     <message>
         <source>Guatemala</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґватемала</translation>
     </message>
     <message>
         <source>Guinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґвінея</translation>
     </message>
     <message>
         <source>GuineaBissau</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґвінея-Бісау</translation>
     </message>
     <message>
         <source>Guyana</source>
-        <translation type="unfinished"></translation>
+        <translation>Ґайана</translation>
     </message>
     <message>
         <source>Haiti</source>
-        <translation type="unfinished"></translation>
+        <translation>Гаїті</translation>
     </message>
     <message>
         <source>Honduras</source>
-        <translation type="unfinished"></translation>
+        <translation>Гондурас</translation>
     </message>
     <message>
         <source>HongKong</source>
-        <translation type="unfinished"></translation>
+        <translation>Гонконґ</translation>
     </message>
     <message>
         <source>Hungary</source>
-        <translation type="unfinished"></translation>
+        <translation>Угорщина</translation>
     </message>
     <message>
         <source>Iceland</source>
-        <translation type="unfinished"></translation>
+        <translation>Ісландія</translation>
     </message>
     <message>
         <source>India</source>
-        <translation type="unfinished"></translation>
+        <translation>Індія</translation>
     </message>
     <message>
         <source>Indonesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Індонезія</translation>
     </message>
     <message>
         <source>Iran</source>
-        <translation type="unfinished"></translation>
+        <translation>Іран</translation>
     </message>
     <message>
         <source>Iraq</source>
-        <translation type="unfinished"></translation>
+        <translation>Ірак</translation>
     </message>
     <message>
         <source>Ireland</source>
-        <translation type="unfinished"></translation>
+        <translation>Ірландія</translation>
     </message>
     <message>
         <source>Israel</source>
-        <translation type="unfinished"></translation>
+        <translation>Ізраїль</translation>
     </message>
     <message>
         <source>Italy</source>
-        <translation type="unfinished"></translation>
+        <translation>Італія</translation>
     </message>
     <message>
         <source>Jamaica</source>
-        <translation type="unfinished"></translation>
+        <translation>Ямайка</translation>
     </message>
     <message>
         <source>Japan</source>
-        <translation type="unfinished"></translation>
+        <translation>Японія</translation>
     </message>
     <message>
         <source>Jordan</source>
-        <translation type="unfinished"></translation>
+        <translation>Йорданія</translation>
     </message>
     <message>
         <source>Kazakhstan</source>
-        <translation type="unfinished"></translation>
+        <translation>Казахстан</translation>
     </message>
     <message>
         <source>Kenya</source>
-        <translation type="unfinished"></translation>
+        <translation>Кенія</translation>
     </message>
     <message>
         <source>Kiribati</source>
-        <translation type="unfinished"></translation>
+        <translation>Кірібаті</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>Демократична Республіка Корея</translation>
     </message>
     <message>
         <source>RepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>Республіка Корея</translation>
     </message>
     <message>
         <source>Kuwait</source>
-        <translation type="unfinished"></translation>
+        <translation>Кувейт</translation>
     </message>
     <message>
         <source>Kyrgyzstan</source>
-        <translation type="unfinished"></translation>
+        <translation>Кирґизстан</translation>
     </message>
     <message>
         <source>Laos</source>
-        <translation type="unfinished"></translation>
+        <translation>Лаос</translation>
     </message>
     <message>
         <source>Latvia</source>
-        <translation type="unfinished"></translation>
+        <translation>Латвія</translation>
     </message>
     <message>
         <source>Lebanon</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліван</translation>
     </message>
     <message>
         <source>Lesotho</source>
-        <translation type="unfinished"></translation>
+        <translation>Лесото</translation>
     </message>
     <message>
         <source>Liberia</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліберія</translation>
     </message>
     <message>
         <source>Libya</source>
-        <translation type="unfinished"></translation>
+        <translation>Лівія</translation>
     </message>
     <message>
         <source>Liechtenstein</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліхтенштейн</translation>
     </message>
     <message>
         <source>Lithuania</source>
-        <translation type="unfinished"></translation>
+        <translation>Литва</translation>
     </message>
     <message>
         <source>Luxembourg</source>
-        <translation type="unfinished"></translation>
+        <translation>Люксембурґ</translation>
     </message>
     <message>
         <source>Macau</source>
-        <translation type="unfinished"></translation>
+        <translation>Макао</translation>
     </message>
     <message>
         <source>Macedonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Македонія</translation>
     </message>
     <message>
         <source>Madagascar</source>
-        <translation type="unfinished"></translation>
+        <translation>Мадаґаскар</translation>
     </message>
     <message>
         <source>Malawi</source>
-        <translation type="unfinished"></translation>
+        <translation>Малаві</translation>
     </message>
     <message>
         <source>Malaysia</source>
-        <translation type="unfinished"></translation>
+        <translation>Малайзія</translation>
     </message>
     <message>
         <source>Maldives</source>
-        <translation type="unfinished"></translation>
+        <translation>Мальдіви</translation>
     </message>
     <message>
         <source>Mali</source>
-        <translation type="unfinished"></translation>
+        <translation>Малі</translation>
     </message>
     <message>
         <source>Malta</source>
-        <translation type="unfinished"></translation>
+        <translation>Мальта</translation>
     </message>
     <message>
         <source>MarshallIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Маршаллові острови</translation>
     </message>
     <message>
         <source>Martinique</source>
-        <translation type="unfinished"></translation>
+        <translation>Мартініка</translation>
     </message>
     <message>
         <source>Mauritania</source>
-        <translation type="unfinished"></translation>
+        <translation>Мавританія</translation>
     </message>
     <message>
         <source>Mauritius</source>
-        <translation type="unfinished"></translation>
+        <translation>Маврикій</translation>
     </message>
     <message>
         <source>Mayotte</source>
-        <translation type="unfinished"></translation>
+        <translation>Майотта</translation>
     </message>
     <message>
         <source>Mexico</source>
-        <translation type="unfinished"></translation>
+        <translation>Мексика</translation>
     </message>
     <message>
         <source>Micronesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Мікронезія</translation>
     </message>
     <message>
         <source>Moldova</source>
-        <translation type="unfinished"></translation>
+        <translation>Молдова</translation>
     </message>
     <message>
         <source>Monaco</source>
-        <translation type="unfinished"></translation>
+        <translation>Монако</translation>
     </message>
     <message>
         <source>Mongolia</source>
-        <translation type="unfinished"></translation>
+        <translation>Монґолія</translation>
     </message>
     <message>
         <source>Montenegro</source>
-        <translation type="unfinished"></translation>
+        <translation>Монтенеґро</translation>
     </message>
     <message>
         <source>Montserrat</source>
-        <translation type="unfinished"></translation>
+        <translation>Монтсеррат</translation>
     </message>
     <message>
         <source>Morocco</source>
-        <translation type="unfinished"></translation>
+        <translation>Марокко</translation>
     </message>
     <message>
         <source>Mozambique</source>
-        <translation type="unfinished"></translation>
+        <translation>Мозамбік</translation>
     </message>
     <message>
         <source>Myanmar</source>
-        <translation type="unfinished"></translation>
+        <translation>М&apos;янма</translation>
     </message>
     <message>
         <source>Namibia</source>
-        <translation type="unfinished"></translation>
+        <translation>Намібія</translation>
     </message>
     <message>
         <source>NauruCountry</source>
-        <translation type="unfinished"></translation>
+        <translation>Науру</translation>
     </message>
     <message>
         <source>Nepal</source>
-        <translation type="unfinished"></translation>
+        <translation>Непал</translation>
     </message>
     <message>
         <source>Netherlands</source>
-        <translation type="unfinished"></translation>
+        <translation>Нідерланди</translation>
     </message>
     <message>
         <source>NewCaledonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова Каледонія</translation>
     </message>
     <message>
         <source>NewZealand</source>
-        <translation type="unfinished"></translation>
+        <translation>Нова Зеландія</translation>
     </message>
     <message>
         <source>Nicaragua</source>
-        <translation type="unfinished"></translation>
+        <translation>Нікараґуа</translation>
     </message>
     <message>
         <source>Niger</source>
-        <translation type="unfinished"></translation>
+        <translation>Ніґер</translation>
     </message>
     <message>
         <source>Nigeria</source>
-        <translation type="unfinished"></translation>
+        <translation>Нігерія</translation>
     </message>
     <message>
         <source>Niue</source>
-        <translation type="unfinished"></translation>
+        <translation>Ніуе</translation>
     </message>
     <message>
         <source>NorfolkIsland</source>
-        <translation type="unfinished"></translation>
+        <translation>Острів Норфолк</translation>
     </message>
     <message>
         <source>NorthernMarianaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Північні Маріанські острови</translation>
     </message>
     <message>
         <source>Norway</source>
-        <translation type="unfinished"></translation>
+        <translation>Норвегія</translation>
     </message>
     <message>
         <source>Oman</source>
-        <translation type="unfinished"></translation>
+        <translation>Оман</translation>
     </message>
     <message>
         <source>Pakistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Пакістан</translation>
     </message>
     <message>
         <source>Palau</source>
-        <translation type="unfinished"></translation>
+        <translation>Палау</translation>
     </message>
     <message>
         <source>PalestinianTerritories</source>
-        <translation type="unfinished"></translation>
+        <translation>Палестинські території</translation>
     </message>
     <message>
         <source>Panama</source>
-        <translation type="unfinished"></translation>
+        <translation>Панама</translation>
     </message>
     <message>
         <source>PapuaNewGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Папуа Нова Ґвінея</translation>
     </message>
     <message>
         <source>Paraguay</source>
-        <translation type="unfinished"></translation>
+        <translation>Параґвай</translation>
     </message>
     <message>
         <source>Peru</source>
-        <translation type="unfinished"></translation>
+        <translation>Перу</translation>
     </message>
     <message>
         <source>Philippines</source>
-        <translation type="unfinished"></translation>
+        <translation>Філіппіни</translation>
     </message>
     <message>
         <source>Poland</source>
-        <translation type="unfinished"></translation>
+        <translation>Польща</translation>
     </message>
     <message>
         <source>Portugal</source>
-        <translation type="unfinished"></translation>
+        <translation>Портуґалія</translation>
     </message>
     <message>
         <source>PuertoRico</source>
-        <translation type="unfinished"></translation>
+        <translation>Пуерто-Ріко</translation>
     </message>
     <message>
         <source>Qatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Катар</translation>
     </message>
     <message>
         <source>Reunion</source>
-        <translation type="unfinished"></translation>
+        <translation>Реюньйон</translation>
     </message>
     <message>
         <source>Romania</source>
-        <translation type="unfinished"></translation>
+        <translation>Румунія</translation>
     </message>
     <message>
         <source>RussianFederation</source>
-        <translation type="unfinished"></translation>
+        <translation>Російська Федерація</translation>
     </message>
     <message>
         <source>Rwanda</source>
-        <translation type="unfinished"></translation>
+        <translation>Руанда</translation>
     </message>
     <message>
         <source>SaintHelena</source>
-        <translation type="unfinished"></translation>
+        <translation>Острів Св. Олени</translation>
     </message>
     <message>
         <source>SaintKittsAndNevis</source>
-        <translation type="unfinished"></translation>
+        <translation>Сент-Кітс і Невіс</translation>
     </message>
     <message>
         <source>SaintLucia</source>
-        <translation type="unfinished"></translation>
+        <translation>Сент-Люсія</translation>
     </message>
     <message>
         <source>SaintPierreAndMiquelon</source>
-        <translation type="unfinished"></translation>
+        <translation>Сен-П&apos;єр і Мікелон</translation>
     </message>
     <message>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation type="unfinished"></translation>
+        <translation>Сент-Вінсент і Ґренадіни</translation>
     </message>
     <message>
         <source>Samoa</source>
-        <translation type="unfinished"></translation>
+        <translation>Самоа</translation>
     </message>
     <message>
         <source>SanMarino</source>
-        <translation type="unfinished"></translation>
+        <translation>Сан-Маріно</translation>
     </message>
     <message>
         <source>SaoTomeAndPrincipe</source>
-        <translation type="unfinished"></translation>
+        <translation>Сан-Томе і Прінсіпі</translation>
     </message>
     <message>
         <source>SaudiArabia</source>
-        <translation type="unfinished"></translation>
+        <translation>Саудівська Аравія</translation>
     </message>
     <message>
         <source>Senegal</source>
-        <translation type="unfinished"></translation>
+        <translation>Сенеґал</translation>
     </message>
     <message>
         <source>Serbia</source>
-        <translation type="unfinished"></translation>
+        <translation>Сербія</translation>
     </message>
     <message>
         <source>Seychelles</source>
-        <translation type="unfinished"></translation>
+        <translation>Сейшельські острови</translation>
     </message>
     <message>
         <source>SierraLeone</source>
-        <translation type="unfinished"></translation>
+        <translation>Сьєрра-Леоне</translation>
     </message>
     <message>
         <source>Singapore</source>
-        <translation type="unfinished"></translation>
+        <translation>Сінґапур</translation>
     </message>
     <message>
         <source>Slovakia</source>
-        <translation type="unfinished"></translation>
+        <translation>Словаччина</translation>
     </message>
     <message>
         <source>Slovenia</source>
-        <translation type="unfinished"></translation>
+        <translation>Словенія</translation>
     </message>
     <message>
         <source>SolomonIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Соломонові острови</translation>
     </message>
     <message>
         <source>Somalia</source>
-        <translation type="unfinished"></translation>
+        <translation>Сомалі</translation>
     </message>
     <message>
         <source>SouthAfrica</source>
-        <translation type="unfinished"></translation>
+        <translation>Південна Африка</translation>
     </message>
     <message>
         <source>Spain</source>
-        <translation type="unfinished"></translation>
+        <translation>Еспанія</translation>
     </message>
     <message>
         <source>SriLanka</source>
-        <translation type="unfinished"></translation>
+        <translation>Шрі-Ланка</translation>
     </message>
     <message>
         <source>Sudan</source>
-        <translation type="unfinished"></translation>
+        <translation>Судан</translation>
     </message>
     <message>
         <source>Suriname</source>
-        <translation type="unfinished"></translation>
+        <translation>Сурінам</translation>
     </message>
     <message>
         <source>Swaziland</source>
-        <translation type="unfinished"></translation>
+        <translation>Свазіленд</translation>
     </message>
     <message>
         <source>Sweden</source>
-        <translation type="unfinished"></translation>
+        <translation>Швеція</translation>
     </message>
     <message>
         <source>Switzerland</source>
-        <translation type="unfinished"></translation>
+        <translation>Швейцарія</translation>
     </message>
     <message>
         <source>Syria</source>
-        <translation type="unfinished"></translation>
+        <translation>Сирія</translation>
     </message>
     <message>
         <source>Taiwan</source>
-        <translation type="unfinished"></translation>
+        <translation>Тайвань</translation>
     </message>
     <message>
         <source>Tajikistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Таджикистан</translation>
     </message>
     <message>
         <source>Tanzania</source>
-        <translation type="unfinished"></translation>
+        <translation>Танзанія</translation>
     </message>
     <message>
         <source>Thailand</source>
-        <translation type="unfinished"></translation>
+        <translation>Таїланд</translation>
     </message>
     <message>
         <source>Togo</source>
-        <translation type="unfinished"></translation>
+        <translation>Тоґо</translation>
     </message>
     <message>
         <source>Tokelau</source>
-        <translation type="unfinished"></translation>
+        <translation>Токелау</translation>
     </message>
     <message>
         <source>Tonga</source>
-        <translation type="unfinished"></translation>
+        <translation>Тонґа</translation>
     </message>
     <message>
         <source>TrinidadAndTobago</source>
-        <translation type="unfinished"></translation>
+        <translation>Тринідад і Тобаґо</translation>
     </message>
     <message>
         <source>Tunisia</source>
-        <translation type="unfinished"></translation>
+        <translation>Туніс</translation>
     </message>
     <message>
         <source>Turkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Турція</translation>
     </message>
     <message>
         <source>Turkmenistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Туркменістан</translation>
     </message>
     <message>
         <source>TurksAndCaicosIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Острови Теркс і Кайкос</translation>
     </message>
     <message>
         <source>Tuvalu</source>
-        <translation type="unfinished"></translation>
+        <translation>Тувалу</translation>
     </message>
     <message>
         <source>Uganda</source>
-        <translation type="unfinished"></translation>
+        <translation>Уґанда</translation>
     </message>
     <message>
         <source>Ukraine</source>
-        <translation type="unfinished"></translation>
+        <translation>Україна</translation>
     </message>
     <message>
         <source>UnitedArabEmirates</source>
-        <translation type="unfinished"></translation>
+        <translation>Об&apos;єднані Арабські Емірати</translation>
     </message>
     <message>
         <source>UnitedKingdom</source>
-        <translation type="unfinished"></translation>
+        <translation>Сполучене Королівство</translation>
     </message>
     <message>
         <source>UnitedStates</source>
-        <translation type="unfinished"></translation>
+        <translation>Сполучені Штати</translation>
     </message>
     <message>
         <source>Uruguay</source>
-        <translation type="unfinished"></translation>
+        <translation>Уруґвай</translation>
     </message>
     <message>
         <source>Uzbekistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Узбекистан</translation>
     </message>
     <message>
         <source>Vanuatu</source>
-        <translation type="unfinished"></translation>
+        <translation>Вануату</translation>
     </message>
     <message>
         <source>Venezuela</source>
-        <translation type="unfinished"></translation>
+        <translation>Венесуела</translation>
     </message>
     <message>
         <source>Vietnam</source>
-        <translation type="unfinished"></translation>
+        <translation>В&apos;єтнам</translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Уолліс і Футуна</translation>
     </message>
     <message>
         <source>Yemen</source>
-        <translation type="unfinished"></translation>
+        <translation>Ємен</translation>
     </message>
     <message>
         <source>Zambia</source>
-        <translation type="unfinished"></translation>
+        <translation>Замбія</translation>
     </message>
     <message>
         <source>Zimbabwe</source>
-        <translation type="unfinished"></translation>
+        <translation>Зімбабве</translation>
     </message>
 </context>
 <context>
