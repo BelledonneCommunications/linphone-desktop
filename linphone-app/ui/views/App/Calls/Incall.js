@@ -124,7 +124,7 @@ function openCallStatistics () {
   callStatistics.open()
 }
 
-function openMediaParameters (incall) {
+function openMediaParameters (window, incall) {
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'), {
     call: incall.call
   })

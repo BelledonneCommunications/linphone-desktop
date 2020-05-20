@@ -364,7 +364,7 @@ Rectangle {
           icon: 'options'
           iconSize: CallStyle.actionArea.iconSize
 
-          onClicked: Logic.openMediaParameters(incall)
+          onClicked: Logic.openMediaParameters(window, incall)
         }
       }
 
