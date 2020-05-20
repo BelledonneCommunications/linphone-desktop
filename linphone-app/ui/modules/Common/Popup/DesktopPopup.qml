@@ -95,7 +95,7 @@ Item {
       from: '*'
       to: ''
       ScriptAction {
-        script: windowId.hide()
+        script: windowId.close()
       }
     }
   ]
