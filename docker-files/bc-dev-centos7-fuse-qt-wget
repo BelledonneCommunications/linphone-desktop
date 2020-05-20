@@ -14,14 +14,8 @@ RUN git clone -b fix/qt5_build_issues_new_docker_images --single-branch https://
     sudo rm -rf ./linphone-desktop
 
 # Configure AppImages dependencies
-RUN sudo yum install -y fuse wget
+RUN sudo yum install -y fuse fuse-libs wget
 
-# Configure user bc
-RUN sudo  useradd -ms /bin/bash bc && \
-    echo 'bc:cotcot' | chpasswd && \
-    echo 'bc ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
-
-# Load devtoolset-8 environment on starting
 RUN echo 'source /opt/rh/devtoolset-8/enable' >> /home/bc/.bashrc
 RUN echo 'source /opt/rh/devtoolset-8/enable' >> /home/bc/.shrc
 
