@@ -375,7 +375,7 @@ Window {
             icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: Logic.openMediaParameters(windowId)
+            onClicked: Logic.openMediaParameters(Window.window, windowId)
           }
         }
 
