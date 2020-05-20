@@ -46,7 +46,6 @@ Window {
   }
 
   // ---------------------------------------------------------------------------
-  visible: false
   onCallChanged: if(!call) windowId.exit()
   Component.onCompleted: {
     windowId.call = caller.call
