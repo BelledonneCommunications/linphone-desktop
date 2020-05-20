@@ -139,7 +139,9 @@ function showFullscreen (position) {
     properties: {
       caller: incall,
       x:position.x,
-      y:position.y
+      y:position.y,
+      width:window.width,
+      height:window.height
     }
   }, true)
 }
