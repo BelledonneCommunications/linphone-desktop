@@ -53,8 +53,9 @@ Item {
     id: windowId
     objectName: '__internalWindow'
     property bool isFrameLess : false;
+    property bool showAsTool : false
     // Don't use Popup for flags : it could lead to error in geometry
-    flags: Qt.BypassWindowManagerHint | Qt.WindowStaysOnTopHint | Qt.Window | Qt.FramelessWindowHint;
+    flags: Qt.BypassWindowManagerHint | (showAsTool?Qt.Tool:Qt.WindowStaysOnTopHint) | Qt.Window | Qt.FramelessWindowHint;
     opacity: 1.0
     height: _content[0] != null ? _content[0].height : 0
     width: _content[0] != null ? _content[0].width : 0
