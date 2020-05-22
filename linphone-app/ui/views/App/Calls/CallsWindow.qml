@@ -1,7 +1,6 @@
 import QtGraphicalEffects 1.0
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 
 import Common 1.0
 import Linphone 1.0
@@ -47,8 +46,8 @@ Window {
   }
 
   function setHeight (height) {
-    window.height = height > Screen.desktopAvailableHeight
-      ? Screen.desktopAvailableHeight
+    window.height = height > screen.desktopAvailableHeight
+      ? screen.desktopAvailableHeight
       : height
   }
 

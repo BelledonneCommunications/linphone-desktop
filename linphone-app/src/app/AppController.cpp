@@ -50,11 +50,11 @@ AppController::AppController (int &argc, char *argv[]) {
 
 
   //Test
-  QApplication::setAttribute(Qt::AA_NativeWindows);
+  //QApplication::setAttribute(Qt::AA_NativeWindows);
   //QApplication::setAttribute(Qt::AA_DontUseNativeDialogs);
 
   //QApplication::setAttribute(Qt::AA_UseOpenGLES);
-  QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
+  //QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
   //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
 
 

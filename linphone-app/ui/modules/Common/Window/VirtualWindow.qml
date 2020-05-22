@@ -1,41 +1,76 @@
 import QtQuick 2.7
 
 import Common.Styles 1.0
+import 'Window.js' as Logic
 
 // =============================================================================
 
-Item {
-  function setContent (object) {
-    object.parent = content
-    object.anchors.centerIn = content
+Loader {
+    id:mainLoader
+    active:false
+    property var sourceUrl
+    property var sourceProperties
+    property var  exitStatusHandler
+    property bool setData : false
+    anchors.fill: parent
 
-    visible = true
+  function setContent (url, properties, exitStatusHandler) {
+
+    mainLoader.sourceUrl=url;
+    mainLoader.sourceProperties=properties;
+    mainLoader.exitStatusHandler=exitStatusHandler;
+    setData=true;
+    active=true;
   }
 
   function unsetContent () {
-    visible = false
-
-    var object = content.data[0]
-    content.data = []
-
-    return object
+    active=false
+    setData=false;
   }
 
   // ---------------------------------------------------------------------------
+  sourceComponent:Component{
+    id:mainComponent
+    //property alias contentLoader:rootContent.contentLoader
+ // visible: false onIsLoadedChanged: console.log("Loaded:"+isLoaded)
 
-  anchors.fill: parent
-  visible: false
+    Item{
+        id:rootContent
+        property alias contentLoader:content.contentLoader
+        anchors.fill: parent
+        MouseArea {
+          anchors.fill: parent
+          hoverEnabled: true
+          onWheel: wheel.accepted = true
+          onClicked:console.log("clicked")
+        }
 
-  MouseArea {
-    anchors.fill: parent
-    hoverEnabled: true
-    onWheel: wheel.accepted = true
-  }
+        Rectangle {
+          id: content
+          property alias contentLoader:contentLoader
 
-  Rectangle {
-    id: content
+         anchors.fill: parent
+         color: WindowStyle.transientWindow.color
+         Loader{
+            id:contentLoader
+            anchors.centerIn: parent
+            property var setSourceData : setData
+            onSetSourceDataChanged: if( setData) {console.log(sourceUrl+" "+sourceProperties);
+            if(sourceProperties)
+                setSource(sourceUrl, sourceProperties);
+                else
+                setSource(sourceUrl);
 
-    anchors.fill: parent
-    color: WindowStyle.transientWindow.color
+                 }else{source=undefined}
+            active:mainLoader.active
+            onLoaded:{
+                        item.exitStatus.connect(Logic.detachVirtualWindow)
+                        if (exitStatusHandler) {
+                                item.exitStatus.connect(exitStatusHandler)
+                        }
+            }
+         }
+        }
+     }
   }
 }
