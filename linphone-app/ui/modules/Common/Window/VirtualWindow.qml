@@ -15,7 +15,7 @@ Loader {
     anchors.fill: parent
 
   function setContent (url, properties, exitStatusHandler) {
-
+    console.log('SetContent : '+url+" "+properties)
     mainLoader.sourceUrl=url;
     mainLoader.sourceProperties=properties;
     mainLoader.exitStatusHandler=exitStatusHandler;
@@ -24,6 +24,7 @@ Loader {
   }
 
   function unsetContent () {
+    console.log('Unset content : '+sourceUrl+" "+sourceProperties)
     active=false
     setData=false;
   }
@@ -55,7 +56,7 @@ Loader {
             id:contentLoader
             anchors.centerIn: parent
             property var setSourceData : setData
-            onSetSourceDataChanged: if( setData) {console.log(sourceUrl+" "+sourceProperties);
+            onSetSourceDataChanged: if( setData) {console.log("SetSourceChanged: "+sourceUrl+" "+sourceProperties);
             if(sourceProperties)
                 setSource(sourceUrl, sourceProperties);
                 else
@@ -64,6 +65,7 @@ Loader {
                  }else{source=undefined}
             active:mainLoader.active
             onLoaded:{
+                        console.log('Content Loaded : '+sourceUrl+" "+sourceProperties+ " "+setSourceData)
                         item.exitStatus.connect(Logic.detachVirtualWindow)
                         if (exitStatusHandler) {
                                 item.exitStatus.connect(exitStatusHandler)

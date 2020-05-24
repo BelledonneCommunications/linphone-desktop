@@ -32,6 +32,8 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   color: CallStyle.backgroundColor
+  anchors.fill:parent
+  Component.onCompleted: console.log("IncallRectangle completed :"+width+"/"+height)
 
   // ---------------------------------------------------------------------------
 
@@ -78,7 +80,7 @@ Rectangle {
           running: true
           triggeredOnStart: true
 
-          onTriggered: elapsedTime.text = Utils.formatElapsedTime(call.duration)
+          onTriggered: {elapsedTime.text = Utils.formatElapsedTime(call.duration);console.log("Timer Triggered "+elapsedTime.text+" "+info.width+"/"+info.height+" "+info.visible);}
         }
       }
 

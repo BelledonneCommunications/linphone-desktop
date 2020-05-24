@@ -63,27 +63,33 @@ function openConferenceManager () {
 function getContent () {
   var call = window.call
   if (call == null) {
+  console.log("GetContent : conference")
     return conference
   }
 
   var status = call.status
   if (status == null) {
+  console.log("GetContent : conference, no Status:"+calls.conferenceModel.count )
     return calls.conferenceModel.count > 0 ? conference : null
   }
 
   var CallModel = Linphone.CallModel
   if (status === CallModel.CallStatusIncoming) {
+  console.log("GetContent : IncomingCall "+incomingCall )
     return incomingCall
   }
 
   if (status === CallModel.CallStatusOutgoing) {
+  console.log("GetContent : OutgoingCall "+outgoingCall )
     return outgoingCall
   }
 
   if (status === CallModel.CallStatusEnded) {
+  console.log("GetContent : EndedCall "+endedCall )
     return endedCall
   }
 
+  console.log("GetContent : InCall "+incall )
   return incall
 }
 

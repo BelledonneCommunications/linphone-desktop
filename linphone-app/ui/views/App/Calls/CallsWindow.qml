@@ -46,8 +46,8 @@ Window {
   }
 
   function setHeight (height) {
-    window.height = height > screen.desktopAvailableHeight
-      ? screen.desktopAvailableHeight
+    window.height = (Window.screen && height > Window.screen.desktopAvailableHeight)
+      ? Winodw.screen.desktopAvailableHeight
       : height
   }
 
@@ -223,6 +223,7 @@ Window {
       childA: Loader {
         anchors.fill: parent
         sourceComponent: Logic.getContent()
+        onSourceComponentChanged: console.log("SourceComponent Changed : "+sourceComponent)
       }
 
       childB: Loader {
