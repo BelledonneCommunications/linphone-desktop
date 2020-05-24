@@ -80,7 +80,15 @@ Rectangle {
           running: true
           triggeredOnStart: true
 
-          onTriggered: {elapsedTime.text = Utils.formatElapsedTime(call.duration);console.log("Timer Triggered "+elapsedTime.text+" "+info.width+"/"+info.height+" "+info.visible);}
+          onTriggered: {elapsedTime.text = Utils.formatElapsedTime(call.duration);}
+        }
+        Timer {
+          interval: 3000
+          repeat: true
+          running: true
+          triggeredOnStart: true
+
+          onTriggered: {console.log("Timer Triggered with update"+elapsedTime.text+" "+info.width+"/"+info.height+" "+info.visible);incall.update()}
         }
       }
 

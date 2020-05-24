@@ -26,7 +26,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property alias childA: contentA.data
+  property alias childA: contentA.dataTest
+  property alias childAItem: contentA
   property alias childB: contentB.data
   property bool defaultClosed: false
   property bool resizeAInPriority: false
@@ -253,9 +254,16 @@ Item {
 
   Item {
     id: contentA
+    property var dataTest
+    onDataTestChanged: {data = dataTest;console.log("ContentA data changed : "+data);
+
+    }
+
 
     height: parent.height
     visible: _isVisible(Qt.LeftEdge)
+    onWidthChanged: console.log("PanedA Width:"+width)
+    onChildrenChanged: {console.log("ContentA Childrenchanged : "+data);update()}
   }
 
   MouseArea {

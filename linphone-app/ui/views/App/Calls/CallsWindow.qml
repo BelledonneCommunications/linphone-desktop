@@ -223,7 +223,7 @@ Window {
       childA: Loader {
         anchors.fill: parent
         sourceComponent: Logic.getContent()
-        onSourceComponentChanged: console.log("SourceComponent Changed : "+sourceComponent)
+        onSourceComponentChanged: {console.log("SourceComponent Changed : "+sourceComponent+" tryUpdate:"+rightPaned.childAItem);rightPaned.childAItem.update()}
       }
 
       childB: Loader {
