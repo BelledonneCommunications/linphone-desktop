@@ -396,13 +396,16 @@ QQuickWindow *App::getSettingsWindow () const {
 // -----------------------------------------------------------------------------
 
 void App::smartShowWindow (QQuickWindow *window) {
-  if (!window)
+qWarning() << "smartShowWindow " << window->title() << " Flags : " << window->flags();
+  if (!window){
+    qWarning() << "is null";
     return;
+    }
 
   window->setVisible(true);
 
-  if (window->visibility() == QWindow::Minimized)
-    window->show();
+//  if (window->visibility() == QWindow::Minimized)
+    window->show();// Force show, maybe redundant with setVisible
 
   window->raise();
   window->requestActivate();
