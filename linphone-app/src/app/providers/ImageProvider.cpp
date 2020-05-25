@@ -288,7 +288,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
       .arg(path);
     return QImage(); // Memory cannot be allocated.
   }
-  image.fill(0x00000000);
+  image.fill(Qt::transparent);// Fill with transparent to set alpha channel
 
   *size = image.size();
 
