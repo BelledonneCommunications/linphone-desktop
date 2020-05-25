@@ -26,7 +26,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property alias childA: contentA.dataTest
+  property alias childA: contentA.data
   property alias childAItem: contentA
   property alias childB: contentB.data
   property bool defaultClosed: false
@@ -254,8 +254,6 @@ Item {
 
   Item {
     id: contentA
-    property var dataTest
-    onDataTestChanged: {data = dataTest;}
 
     height: parent.height
     visible: _isVisible(Qt.LeftEdge)
