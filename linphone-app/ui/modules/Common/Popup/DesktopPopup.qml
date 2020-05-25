@@ -15,13 +15,13 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property alias popupX: windowId.x
-  property alias popupY: windowId.y
+  property alias popupX: window.x
+  property alias popupY: window.y
   property bool requestActivate: false
   property int flags: Qt.SplashScreen
 
-  readonly property alias popupWidth: windowId.width
-  readonly property alias popupHeight: windowId.height
+  readonly property alias popupWidth: window.width
+  readonly property alias popupHeight: window.height
 
   default property alias _content: content.data
   property bool _isOpen: false
@@ -50,7 +50,7 @@ Item {
   visible:true
 
   Window {
-    id: windowId
+    id: window
     objectName: '__internalWindow'
     property bool isFrameLess : false;
     property bool showAsTool : false
@@ -78,7 +78,7 @@ Item {
 
     PropertyChanges {
       opacity: 1.0
-      target: windowId
+      target: window
     }
   }
 
@@ -89,7 +89,7 @@ Item {
       ScriptAction {
         script: {
           if (wrapper.requestActivate) {
-            windowId.requestActivate()
+            window.requestActivate()
           }
         }
       }
@@ -98,7 +98,7 @@ Item {
       from: '*'
       to: ''
       ScriptAction {
-        script: windowId.close()
+        script: window.close()
       }
     }
   ]

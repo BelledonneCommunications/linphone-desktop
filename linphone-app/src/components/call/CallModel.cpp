@@ -343,22 +343,22 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 
 void CallModel::accept (bool withVideo) {
   stopAutoAnswerTimer();
-
   CoreManager *coreManager = CoreManager::getInstance();
+
+  QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+  if (callsWindow) {
+    if (coreManager->getSettingsModel()->getKeepCallsWindowInBackground()) {
+      if (!callsWindow->isVisible())
+	callsWindow->showMinimized();
+    } else
+      App::smartShowWindow(callsWindow);
+  }
 
   shared_ptr<linphone::Core> core = coreManager->getCore();
   shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
   params->enableVideo(withVideo);
   setRecordFile(params);
 
-  QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
-  if (callsWindow) {
-    if (coreManager->getSettingsModel()->getKeepCallsWindowInBackground()) {
-      if (!callsWindow->isVisible())
-        callsWindow->showMinimized();
-    } else
-      App::smartShowWindow(callsWindow);
-  }
   mCall->acceptWithParams(params);
 }
 
