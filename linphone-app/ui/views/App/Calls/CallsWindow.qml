@@ -1,7 +1,6 @@
 import QtGraphicalEffects 1.0
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
-import QtQuick.Window 2.2
 
 import Common 1.0
 import Linphone 1.0
@@ -47,8 +46,8 @@ Window {
   }
 
   function setHeight (height) {
-    window.height = height > Screen.desktopAvailableHeight
-      ? Screen.desktopAvailableHeight
+    window.height = (Window.screen && height > Window.screen.desktopAvailableHeight)
+      ? Winodw.screen.desktopAvailableHeight
       : height
   }
 
@@ -224,6 +223,7 @@ Window {
       childA: Loader {
         anchors.fill: parent
         sourceComponent: Logic.getContent()
+        onSourceComponentChanged: {rightPaned.childAItem.update()}// Force update when loading a new Content. It's just to be sure
       }
 
       childB: Loader {
