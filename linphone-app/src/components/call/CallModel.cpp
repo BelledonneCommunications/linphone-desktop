@@ -187,8 +187,6 @@ void CallModel::acceptWithVideo () {
 
 void CallModel::terminate () {
   CoreManager *core = CoreManager::getInstance();
-
-qWarning() << mCall->getRemoteAddress()->asString().c_str() <<  mCall->getParams()->getLocalConferenceMode() << mCall->getCurrentParams()->getLocalConferenceMode();
   core->lockVideoRender();
   mCall->terminate();
   core->unlockVideoRender();
@@ -366,7 +364,6 @@ void CallModel::accept (bool withVideo) {
 // -----------------------------------------------------------------------------
 
 void CallModel::updateIsInConference () {
-qWarning() << mCall->getRemoteAddress()->asString().c_str() <<  mCall->getParams()->getLocalConferenceMode() << mCall->getCurrentParams()->getLocalConferenceMode();
   if (mIsInConference != mCall->getCurrentParams()->getLocalConferenceMode()) {
     mIsInConference = !mIsInConference;
   }
