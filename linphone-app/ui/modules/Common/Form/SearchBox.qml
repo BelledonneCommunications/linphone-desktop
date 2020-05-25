@@ -18,6 +18,7 @@ Item {
   property alias entryHeight: menu.entryHeight
   property alias maxMenuHeight: menu.maxMenuHeight
   property alias placeholderText: searchField.placeholderText
+  property alias tooltipText : tooltip.text
 
   default property alias _content: menu._content
 
@@ -125,6 +126,10 @@ Item {
       onClicked: mouse.accepted=false
       onDoubleClicked: mouse.accepted=false
       onPressAndHold: mouse.accepted=false
+      TooltipArea {
+              id:tooltip
+              visible: !isOpen && text !== ''
+      }
   }
 
   // ---------------------------------------------------------------------------
