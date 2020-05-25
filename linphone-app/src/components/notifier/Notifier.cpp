@@ -154,7 +154,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				}
 			});
 			view->setScreen(screen);	// Bind the visual root object to the screen
-			//view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
+			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
 			view->setSource(QString(NotificationsPath)+Notifier::Notifications[type].filename);
 
 			QQuickWindow *subWindow = view->findChild<QQuickWindow *>("__internalWindow");

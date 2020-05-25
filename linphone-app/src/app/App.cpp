@@ -396,18 +396,11 @@ QQuickWindow *App::getSettingsWindow () const {
 // -----------------------------------------------------------------------------
 
 void App::smartShowWindow (QQuickWindow *window) {
-qWarning() << "smartShowWindow " << window->title() << " Flags : " << window->flags();
-  if (!window){
-    qWarning() << "is null";
+  if (!window)
     return;
-    }
-
   window->setVisible(true);
-
-//  if (window->visibility() == QWindow::Minimized)
-    window->show();// Force show, maybe redundant with setVisible
-
-  window->raise();
+  window->show();// Force show, maybe redundant with setVisible
+  window->raise();// Raise ensure to get focus on Mac
   window->requestActivate();
 }
 

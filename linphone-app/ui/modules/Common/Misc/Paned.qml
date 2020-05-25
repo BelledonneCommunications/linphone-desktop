@@ -255,15 +255,10 @@ Item {
   Item {
     id: contentA
     property var dataTest
-    onDataTestChanged: {data = dataTest;console.log("ContentA data changed : "+data);
-
-    }
-
+    onDataTestChanged: {data = dataTest;}
 
     height: parent.height
     visible: _isVisible(Qt.LeftEdge)
-    onWidthChanged: console.log("PanedA Width:"+width)
-    onChildrenChanged: {console.log("ContentA Childrenchanged : "+data);update()}
   }
 
   MouseArea {

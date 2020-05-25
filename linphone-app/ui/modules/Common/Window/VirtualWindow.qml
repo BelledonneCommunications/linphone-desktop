@@ -11,68 +11,61 @@ Loader {
     property var sourceUrl
     property var sourceProperties
     property var  exitStatusHandler
-    property bool setData : false
+    property bool setData : false       // USe this flag to update source data
     anchors.fill: parent
 
-  function setContent (url, properties, exitStatusHandler) {
-    console.log('SetContent : '+url+" "+properties)
-    mainLoader.sourceUrl=url;
-    mainLoader.sourceProperties=properties;
-    mainLoader.exitStatusHandler=exitStatusHandler;
-    setData=true;
-    active=true;
-  }
+    function setContent (url, properties, exitStatusHandler) {
+        mainLoader.sourceUrl=url;
+        mainLoader.sourceProperties=properties;
+        mainLoader.exitStatusHandler=exitStatusHandler;
+        setData=true;
+        active=true;
+    }
 
-  function unsetContent () {
-    console.log('Unset content : '+sourceUrl+" "+sourceProperties)
-    active=false
-    setData=false;
-  }
+    function unsetContent () {
+        active=false
+        setData=false;
+    }
 
-  // ---------------------------------------------------------------------------
-  sourceComponent:Component{
-    id:mainComponent
-    //property alias contentLoader:rootContent.contentLoader
- // visible: false onIsLoadedChanged: console.log("Loaded:"+isLoaded)
+    // ---------------------------------------------------------------------------
+    sourceComponent:Component{
+        id:mainComponent
 
-    Item{
-        id:rootContent
-        property alias contentLoader:content.contentLoader
-        anchors.fill: parent
-        MouseArea {
-          anchors.fill: parent
-          hoverEnabled: true
-          onWheel: wheel.accepted = true
-          onClicked:console.log("clicked")
-        }
+        Item{
+            id:rootContent
+            property alias contentLoader:content.contentLoader
+            anchors.fill: parent
+            MouseArea {
+                anchors.fill: parent
+                hoverEnabled: true
+                onWheel: wheel.accepted = true
+            }
 
-        Rectangle {
-          id: content
-          property alias contentLoader:contentLoader
+            Rectangle {
+                id: content
+                property alias contentLoader:contentLoader
 
-         anchors.fill: parent
-         color: WindowStyle.transientWindow.color
-         Loader{
-            id:contentLoader
-            anchors.centerIn: parent
-            property var setSourceData : setData
-            onSetSourceDataChanged: if( setData) {console.log("SetSourceChanged: "+sourceUrl+" "+sourceProperties);
-            if(sourceProperties)
-                setSource(sourceUrl, sourceProperties);
-                else
-                setSource(sourceUrl);
-
-                 }else{source=undefined}
-            active:mainLoader.active
-            onLoaded:{
-                        console.log('Content Loaded : '+sourceUrl+" "+sourceProperties+ " "+setSourceData)
+                anchors.fill: parent
+                color: WindowStyle.transientWindow.color
+                Loader{
+                    id:contentLoader
+                    anchors.centerIn: parent
+                    property var setSourceData : setData
+                    onSetSourceDataChanged: if( setData) {// SetData is true : assign source with properties using QML functions
+                                                if(sourceProperties)
+                                                    setSource(sourceUrl, sourceProperties);
+                                                else
+                                                    setSource(sourceUrl);
+                                            }else{source=undefined}// SetData is false : clean memory
+                    active:mainLoader.active
+                    onLoaded:{// When loaded, attache handlers to content
                         item.exitStatus.connect(Logic.detachVirtualWindow)
                         if (exitStatusHandler) {
-                                item.exitStatus.connect(exitStatusHandler)
+                            item.exitStatus.connect(exitStatusHandler)
                         }
+                    }
+                }
             }
-         }
         }
-     }
-  }
+    }
 }

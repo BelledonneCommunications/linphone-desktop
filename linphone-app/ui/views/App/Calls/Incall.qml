@@ -33,7 +33,6 @@ Rectangle {
 
   color: CallStyle.backgroundColor
   anchors.fill:parent
-  Component.onCompleted: console.log("IncallRectangle completed :"+width+"/"+height)
 
   // ---------------------------------------------------------------------------
 
@@ -81,14 +80,6 @@ Rectangle {
           triggeredOnStart: true
 
           onTriggered: {elapsedTime.text = Utils.formatElapsedTime(call.duration);}
-        }
-        Timer {
-          interval: 3000
-          repeat: true
-          running: true
-          triggeredOnStart: true
-
-          onTriggered: {console.log("Timer Triggered with update"+elapsedTime.text+" "+info.width+"/"+info.height+" "+info.visible);incall.update()}
         }
       }
 

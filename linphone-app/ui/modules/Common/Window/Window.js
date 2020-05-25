@@ -31,22 +31,10 @@
 //
 // The exit status handler is optional.
 function attachVirtualWindow (component, properties, exitStatusHandler) {
-  if (virtualWindow.active){//visible) {
-  console.log("Already loaded")
+  if (virtualWindow.active){//already loaded
     return
   }
-
- // var object = Utils.createObject(component, null, {
- //   properties: properties
- // })
-
-//  object.exitStatus.connect(detachVirtualWindow)
-//  if (exitStatusHandler) {
-//    object.exitStatus.connect(exitStatusHandler)
-//  }
-
   virtualWindow.setContent(component, properties, exitStatusHandler)
-
   window.attachedVirtualWindow()
 }
 

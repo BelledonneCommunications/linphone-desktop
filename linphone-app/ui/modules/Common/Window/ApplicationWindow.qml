@@ -10,7 +10,7 @@ ApplicationWindow {
 
   default property alias _content: content.data
 
-  readonly property bool virtualWindowVisible: virtualWindow.active//visible
+  readonly property bool virtualWindowVisible: virtualWindow.active
 
   // ---------------------------------------------------------------------------
 
