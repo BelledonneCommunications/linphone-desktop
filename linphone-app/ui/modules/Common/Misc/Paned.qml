@@ -27,6 +27,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   property alias childA: contentA.data
+  property alias childAItem: contentA
   property alias childB: contentB.data
   property bool defaultClosed: false
   property bool resizeAInPriority: false

@@ -17,7 +17,7 @@ import 'Incall.js' as Logic
 // =============================================================================
 
 Window {
-  id: windowId
+  id: window
 
   // ---------------------------------------------------------------------------
 
@@ -31,12 +31,12 @@ Window {
     DesktopTools.screenSaverStatus = true
 
     // `exit` is called by `Incall.qml`.
-    // The `windowId` id can be null if the windowId was closed in this view.
-    if (!windowId) {
+    // The `window` id can be null if the window was closed in this view.
+    if (!window) {
       return
     }
 
-    if(!windowId.close() && parent)
+    if(!window.close() && parent)
       parent.close()
     
 
@@ -46,15 +46,15 @@ Window {
   }
 
   // ---------------------------------------------------------------------------
-  onCallChanged: if(!call) windowId.exit()
+  onCallChanged: if(!call) window.exit()
   Component.onCompleted: {
-    windowId.call = caller.call
+    window.call = caller.call
   }
   // ---------------------------------------------------------------------------
 
   Shortcut {
     sequence: StandardKey.Close
-    onActivated: windowId.exit()
+    onActivated: window.exit()
   }
 
   // ---------------------------------------------------------------------------
@@ -65,13 +65,13 @@ Window {
     color: '#000000' // Not a style.
     focus: true
 
-    Keys.onEscapePressed: windowId.exit()
+    Keys.onEscapePressed: window.exit()
 
     Loader {
       anchors.fill: parent
 
       active: {
-        var caller = windowId.caller
+        var caller = window.caller
         return caller && !caller.cameraActivated
       }
 
@@ -81,7 +81,7 @@ Window {
         id: camera
 
         Camera {
-          call: windowId.call
+          call: window.call
         }
       }
     }
@@ -156,13 +156,13 @@ Window {
               running: true
               triggeredOnStart: true
 
-              onTriggered: Logic.updateCallQualityIcon(callQuality, windowId.call)
+              onTriggered: Logic.updateCallQualityIcon(callQuality, window.call)
             }
 
             CallStatistics {
               id: callStatistics
-              enabled: windowId.call
-              call: windowId.call
+              enabled: window.call
+              call: window.call
               width: container.width
 
               relativeTo: callQuality
@@ -181,12 +181,12 @@ Window {
           ActionButton {
             id: callSecure
 
-            icon: windowId.call && windowId.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
+            icon: window.call && window.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
 
-            onClicked: zrtp.visible = (windowId.call.encryption === CallModel.CallEncryptionZrtp)
+            onClicked: zrtp.visible = (window.call.encryption === CallModel.CallEncryptionZrtp)
 
             TooltipArea {
-              text: windowId.call?Logic.makeReadableSecuredString(windowId.call.securedString):''
+              text: window.call?Logic.makeReadableSecuredString(window.call.securedString):''
             }
           }
       
@@ -206,7 +206,7 @@ Window {
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
 
-          visible: !windowId.hideButtons
+          visible: !window.hideButtons
 
           // Not a customizable style.
           color: 'white'
@@ -215,8 +215,8 @@ Window {
 
           Component.onCompleted: {
             var updateDuration = function () {
-            if(windowId.caller){
-                var call = windowId.caller.call
+            if(window.caller){
+                var call = window.caller.call
                   text = Utils.formatElapsedTime(call.duration)
                 Utils.setTimeout(elapsedTime, 1000, updateDuration)
               }
@@ -267,7 +267,7 @@ Window {
           ActionButton {
             icon: 'fullscreen'
 
-            onClicked: windowId.exit()
+            onClicked: window.exit()
           }
         }
         
@@ -286,7 +286,7 @@ Window {
         
         Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
         Layout.margins: CallStyle.container.margins
-        call: windowId.call
+        call: window.call
         visible: call && !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
         z: Constants.zPopup
         color: CallStyle.backgroundColor
@@ -365,7 +365,7 @@ Window {
             iconSize: CallStyle.actionArea.iconSize
             updating: call && call.updating
 
-            onClicked: windowId.exit(function () { call.videoEnabled = false })
+            onClicked: window.exit(function () { call.videoEnabled = false })
           }
 
           ActionButton {
@@ -375,7 +375,7 @@ Window {
             icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: Logic.openMediaParameters(windowId)
+            onClicked: Logic.openMediaParameters(Window.window, window)
           }
         }
 
@@ -393,13 +393,13 @@ Window {
             updating: call && call.updating
             visible: SettingsModel.callPauseEnabled
 
-            onClicked: windowId.exit(function () { call.pausedByUser = enabled })
+            onClicked: window.exit(function () { call.pausedByUser = enabled })
           }
 
           ActionButton {
             icon: 'hangup'
 
-            onClicked: windowId.exit(call.terminate)
+            onClicked: window.exit(call.terminate)
           }
         }
       }
@@ -412,7 +412,7 @@ Window {
 
   Loader {
     active: {
-      var caller = windowId.caller
+      var caller = window.caller
       return caller && !caller.cameraActivated
     }
 
@@ -425,21 +425,21 @@ Window {
         property bool scale: false
 
         function xPosition () {
-          return windowId.width / 2 - width / 2
+          return window.width / 2 - width / 2
         }
 
         function yPosition () {
-          return windowId.height - height
+          return window.height - height
         }
 
-        call: windowId.call
+        call: window.call
         isPreview: true
 
         height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
         width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
 
         DragBox {
-          container: windowId
+          container: window
           draggable: parent
 
           xPosition: parent.xPosition
@@ -458,7 +458,7 @@ Window {
   TelKeypad {
     id: telKeypad
 
-    call: windowId.call
+    call: window.call
     visible: false
   }
 }

@@ -130,6 +130,15 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 	if(allScreens.size() > 0){	// Ensure to have a screen to avoid errors
 		QQuickItem * previousWrapper = nullptr;
 		++mInstancesNumber;
+		bool showAsTool = false;
+#ifdef Q_OS_MACOS
+		for(auto w : QGuiApplication::topLevelWindows()){
+			if( (w->windowState()&Qt::WindowFullScreen)==Qt::WindowFullScreen){
+				showAsTool = true;
+				w->raise();// Used to get focus on Mac (On Mac, A Tool is hidden if the app has not focus and the only way to rid it is to use Widget Attributes(Qt::WA_MacAlwaysShowToolWindow) that is not available)
+			}
+		}
+#endif
 		for(int i = 0 ; i < allScreens.size() ; ++i){
 			QQuickView *view = new QQuickView(App::getInstance()->getEngine(), nullptr);	// Use QQuickView to create a visual root object that is independant from current application Window
 			QScreen *screen = allScreens[i];
@@ -147,13 +156,15 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 			view->setScreen(screen);	// Bind the visual root object to the screen
 			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
 			view->setSource(QString(NotificationsPath)+Notifier::Notifications[type].filename);
+
 			QQuickWindow *subWindow = view->findChild<QQuickWindow *>("__internalWindow");
 			QObject::connect(subWindow, &QObject::destroyed, view, &QObject::deleteLater);	// When destroying window, detroy visual root object too
 
 			int * screenHeightOffset = &mScreenHeightOffset[screen->name()];	// Access optimization
 			QRect availableGeometry = screen->availableGeometry();
 			int heightOffset = availableGeometry.y() + (availableGeometry.height() - subWindow->height());//*screen->devicePixelRatio(); when using manual scaler
-
+			if(showAsTool)
+				subWindow->setProperty("showAsTool",true);
 			subWindow->setX(availableGeometry.x()+ (availableGeometry.width()-subWindow->property("width").toInt()));//*screen->devicePixelRatio()); when using manual scaler
 			subWindow->setY(heightOffset-(*screenHeightOffset % heightOffset));
 
@@ -175,6 +186,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
 			}
 			previousWrapper = wrapperItem;	// The last one is used as a point of start when deleting and openning
+
 			view->show();
 		}
 		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
