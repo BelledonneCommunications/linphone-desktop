@@ -48,18 +48,7 @@ AppController::AppController (int &argc, char *argv[]) {
   // Useful to share camera on Fullscreen (other context)
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
 
-
-  //Test
-  QApplication::setAttribute(Qt::AA_NativeWindows);
-  //QApplication::setAttribute(Qt::AA_DontUseNativeDialogs);
-
-  //QApplication::setAttribute(Qt::AA_UseOpenGLES);
-  QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
-  //QApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
-
-
-
-    // Do not use APPLICATION_NAME here.
+  // Do not use APPLICATION_NAME here.
   // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
   QCoreApplication::setApplicationName(EXECUTABLE_NAME);
   QApplication::setOrganizationDomain(EXECUTABLE_NAME);
