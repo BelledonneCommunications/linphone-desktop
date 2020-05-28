@@ -75,19 +75,23 @@ DialogPlus {
 
             delegate: CommonItemDelegate {
               id: item
-
               container: view
               flattenedModel: modelData
-              itemIcon: Logic.getItemIcon(flattenedModel)
+              itemIcon: ''//Start with no error and let some time before getting status with the below timer
               width: parent.width
 
-                 ActionButton {
+              Timer{// This timer is used to synchronize registration state by proxy, without having to deal with change signals
+                interval: 1000; running: item.visible; repeat: true
+                onTriggered:itemIcon= Logic.getItemIcon(flattenedModel)
+              }
+
+              ActionButton {
                 icon: 'options'
                 iconSize: 30
                 anchors.fill: parent
                 visible:false
 		//TODO handle click and jump to proxy config settings
-                }
+              }
 
               onClicked: {
                 container.currentIndex = index

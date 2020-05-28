@@ -130,6 +130,8 @@ public:
   Q_INVOKABLE void sendLogs () const;
   Q_INVOKABLE void cleanLogs () const;
 
+  int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
+
 signals:
   void coreCreated ();
   void coreStarted ();

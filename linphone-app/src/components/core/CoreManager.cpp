@@ -307,7 +307,9 @@ QString CoreManager::getVersion () const {
 int CoreManager::getEventCount () const {
   return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
 }
-
+int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &localAddress)const{
+	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCount(peerAddress, localAddress) : 0;
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::iterate () {
