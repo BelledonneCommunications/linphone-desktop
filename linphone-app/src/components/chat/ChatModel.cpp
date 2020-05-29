@@ -628,7 +628,7 @@ void ChatModel::compose () {
 }
 
 void ChatModel::resetMessageCount () {
-  if (mChatRoom->getUnreadMessagesCount() > 0) {
+  if (mChatRoom->getUnreadMessagesCount() > 0 || CoreManager::getInstance()->getMissedCallCount(getPeerAddress(), getLocalAddress())>0) {
     mChatRoom->markAsRead();
     emit messageCountReset();
   }

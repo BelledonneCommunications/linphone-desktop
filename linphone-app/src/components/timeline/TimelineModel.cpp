@@ -60,6 +60,7 @@ QVariant TimelineModel::data (const QModelIndex &index, int role) const {
     map["timestamp"] = it->timestamp;
     map["isComposing"] = it->isComposing;
     map["unreadMessageCount"] = it->unreadMessageCount;
+    map["missedCallCount"] = it->missedCallCount;
   }
 
   return map;

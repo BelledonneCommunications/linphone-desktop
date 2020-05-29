@@ -52,6 +52,7 @@ public:
   }
 
   int getEventCount () const { return mUnreadMessageCount + getMissedCallCount(); }
+  int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 
 signals:
   void eventCountChanged (int count);
