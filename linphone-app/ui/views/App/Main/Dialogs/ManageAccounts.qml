@@ -103,7 +103,7 @@ DialogPlus {
 
               MessageCounter {
                 anchors.fill: parent
-                count: flattenedModel.unreadMessageCount
+                count: flattenedModel.unreadMessageCount+flattenedModel.missedCallCount
               }
             }
           }
