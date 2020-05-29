@@ -64,7 +64,7 @@ Rectangle {
     ContactMessageCounter {
       Layout.alignment: Qt.AlignTop
 
-      count: Number(entry.unreadMessageCount)
+      count: Number(entry.unreadMessageCount) + Number(entry.missedCallCount)
       isComposing: Boolean(entry.isComposing)
 
       visible: item.displayUnreadMessageCount

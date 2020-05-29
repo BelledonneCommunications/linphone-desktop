@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="zh_CN">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
 <context>
     <name>About</name>
     <message>
@@ -975,9 +973,7 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>使用智能搜索栏直接开始语音或视频通话
-、发送消息或添加新联系人。只需键入
-您朋友的 SIP 地址或用户名即可。</translation>
+        <translation>使用智能搜索栏直接开始语音或视频通话 、发送消息或添加新联系人。只需键入 您朋友的 SIP 地址或用户名即可。</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -1883,895 +1879,895 @@
     <name>country</name>
     <message>
         <source>Afghanistan</source>
-        <translation type="unfinished"></translation>
+        <translation>阿富汗</translation>
     </message>
     <message>
         <source>Albania</source>
-        <translation type="unfinished"></translation>
+        <translation>阿尔巴尼亚</translation>
     </message>
     <message>
         <source>Algeria</source>
-        <translation type="unfinished"></translation>
+        <translation>阿尔及利亚</translation>
     </message>
     <message>
         <source>AmericanSamoa</source>
-        <translation type="unfinished"></translation>
+        <translation>美属萨摩亚</translation>
     </message>
     <message>
         <source>Andorra</source>
-        <translation type="unfinished"></translation>
+        <translation>安道尔</translation>
     </message>
     <message>
         <source>Angola</source>
-        <translation type="unfinished"></translation>
+        <translation>安哥拉</translation>
     </message>
     <message>
         <source>Anguilla</source>
-        <translation type="unfinished"></translation>
+        <translation>安圭拉</translation>
     </message>
     <message>
         <source>AntiguaAndBarbuda</source>
-        <translation type="unfinished"></translation>
+        <translation>安提瓜和巴布达</translation>
     </message>
     <message>
         <source>Argentina</source>
-        <translation type="unfinished"></translation>
+        <translation>阿根廷</translation>
     </message>
     <message>
         <source>Armenia</source>
-        <translation type="unfinished"></translation>
+        <translation>亚美尼亚</translation>
     </message>
     <message>
         <source>Aruba</source>
-        <translation type="unfinished"></translation>
+        <translation>阿魯巴</translation>
     </message>
     <message>
         <source>Australia</source>
-        <translation type="unfinished"></translation>
+        <translation>澳大利亚</translation>
     </message>
     <message>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>奥地利</translation>
     </message>
     <message>
         <source>Azerbaijan</source>
-        <translation type="unfinished"></translation>
+        <translation>阿塞拜疆</translation>
     </message>
     <message>
         <source>Bahamas</source>
-        <translation type="unfinished"></translation>
+        <translation>巴哈马</translation>
     </message>
     <message>
         <source>Bahrain</source>
-        <translation type="unfinished"></translation>
+        <translation>巴林</translation>
     </message>
     <message>
         <source>Bangladesh</source>
-        <translation type="unfinished"></translation>
+        <translation>孟加拉国</translation>
     </message>
     <message>
         <source>Barbados</source>
-        <translation type="unfinished"></translation>
+        <translation>巴巴多斯</translation>
     </message>
     <message>
         <source>Belarus</source>
-        <translation type="unfinished"></translation>
+        <translation>白俄罗斯</translation>
     </message>
     <message>
         <source>Belgium</source>
-        <translation type="unfinished"></translation>
+        <translation>比利时</translation>
     </message>
     <message>
         <source>Belize</source>
-        <translation type="unfinished"></translation>
+        <translation>伯利兹</translation>
     </message>
     <message>
         <source>Benin</source>
-        <translation type="unfinished"></translation>
+        <translation>贝宁</translation>
     </message>
     <message>
         <source>Bermuda</source>
-        <translation type="unfinished"></translation>
+        <translation>百慕大</translation>
     </message>
     <message>
         <source>Bhutan</source>
-        <translation type="unfinished"></translation>
+        <translation>不丹</translation>
     </message>
     <message>
         <source>Bolivia</source>
-        <translation type="unfinished"></translation>
+        <translation>玻利维亚</translation>
     </message>
     <message>
         <source>BosniaAndHerzegowina</source>
-        <translation type="unfinished"></translation>
+        <translation>波斯尼亚和黑塞哥维那</translation>
     </message>
     <message>
         <source>Botswana</source>
-        <translation type="unfinished"></translation>
+        <translation>博茨瓦纳</translation>
     </message>
     <message>
         <source>Brazil</source>
-        <translation type="unfinished"></translation>
+        <translation>巴西</translation>
     </message>
     <message>
         <source>Brunei</source>
-        <translation type="unfinished"></translation>
+        <translation>文莱</translation>
     </message>
     <message>
         <source>Bulgaria</source>
-        <translation type="unfinished"></translation>
+        <translation>保加利亚</translation>
     </message>
     <message>
         <source>BurkinaFaso</source>
-        <translation type="unfinished"></translation>
+        <translation>布基纳法索</translation>
     </message>
     <message>
         <source>Burundi</source>
-        <translation type="unfinished"></translation>
+        <translation>布隆迪</translation>
     </message>
     <message>
         <source>Cambodia</source>
-        <translation type="unfinished"></translation>
+        <translation>柬埔寨</translation>
     </message>
     <message>
         <source>Cameroon</source>
-        <translation type="unfinished"></translation>
+        <translation>喀麦隆</translation>
     </message>
     <message>
         <source>Canada</source>
-        <translation type="unfinished"></translation>
+        <translation>加拿大</translation>
     </message>
     <message>
         <source>CapeVerde</source>
-        <translation type="unfinished"></translation>
+        <translation>佛得角</translation>
     </message>
     <message>
         <source>CaymanIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>开曼群岛</translation>
     </message>
     <message>
         <source>CentralAfricanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>中非共和国</translation>
     </message>
     <message>
         <source>Chad</source>
-        <translation type="unfinished"></translation>
+        <translation>乍得</translation>
     </message>
     <message>
         <source>Chile</source>
-        <translation type="unfinished"></translation>
+        <translation>智利</translation>
     </message>
     <message>
         <source>China</source>
-        <translation type="unfinished"></translation>
+        <translation>中国</translation>
     </message>
     <message>
         <source>Colombia</source>
-        <translation type="unfinished"></translation>
+        <translation>哥伦比亚</translation>
     </message>
     <message>
         <source>Comoros</source>
-        <translation type="unfinished"></translation>
+        <translation>科摩罗</translation>
     </message>
     <message>
         <source>PeoplesRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>刚果共和国</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>刚果民主共和国</translation>
     </message>
     <message>
         <source>CookIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>库克群岛</translation>
     </message>
     <message>
         <source>CostaRica</source>
-        <translation type="unfinished"></translation>
+        <translation>哥斯达黎加</translation>
     </message>
     <message>
         <source>IvoryCoast</source>
-        <translation type="unfinished"></translation>
+        <translation>象牙海岸</translation>
     </message>
     <message>
         <source>Croatia</source>
-        <translation type="unfinished"></translation>
+        <translation>克罗地亚</translation>
     </message>
     <message>
         <source>Cuba</source>
-        <translation type="unfinished"></translation>
+        <translation>古巴</translation>
     </message>
     <message>
         <source>Cyprus</source>
-        <translation type="unfinished"></translation>
+        <translation>塞浦路斯</translation>
     </message>
     <message>
         <source>CzechRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>捷克共和国</translation>
     </message>
     <message>
         <source>Denmark</source>
-        <translation type="unfinished"></translation>
+        <translation>丹麦</translation>
     </message>
     <message>
         <source>Djibouti</source>
-        <translation type="unfinished"></translation>
+        <translation>吉布提</translation>
     </message>
     <message>
         <source>Dominica</source>
-        <translation type="unfinished"></translation>
+        <translation>多米尼克</translation>
     </message>
     <message>
         <source>DominicanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>多米尼加共和国</translation>
     </message>
     <message>
         <source>Ecuador</source>
-        <translation type="unfinished"></translation>
+        <translation>厄瓜多尔</translation>
     </message>
     <message>
         <source>Egypt</source>
-        <translation type="unfinished"></translation>
+        <translation>埃及</translation>
     </message>
     <message>
         <source>ElSalvador</source>
-        <translation type="unfinished"></translation>
+        <translation>萨尔瓦多</translation>
     </message>
     <message>
         <source>EquatorialGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>赤道几内亚</translation>
     </message>
     <message>
         <source>Eritrea</source>
-        <translation type="unfinished"></translation>
+        <translation>厄立特里亚</translation>
     </message>
     <message>
         <source>Estonia</source>
-        <translation type="unfinished"></translation>
+        <translation>爱沙尼亚</translation>
     </message>
     <message>
         <source>Ethiopia</source>
-        <translation type="unfinished"></translation>
+        <translation>埃塞俄比亚</translation>
     </message>
     <message>
         <source>FalklandIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>福克兰群岛</translation>
     </message>
     <message>
         <source>FaroeIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>法罗群岛</translation>
     </message>
     <message>
         <source>Fiji</source>
-        <translation type="unfinished"></translation>
+        <translation>斐济</translation>
     </message>
     <message>
         <source>Finland</source>
-        <translation type="unfinished"></translation>
+        <translation>芬兰</translation>
     </message>
     <message>
         <source>France</source>
-        <translation type="unfinished"></translation>
+        <translation>法国</translation>
     </message>
     <message>
         <source>FrenchGuiana</source>
-        <translation type="unfinished"></translation>
+        <translation>法属圭亚那</translation>
     </message>
     <message>
         <source>FrenchPolynesia</source>
-        <translation type="unfinished"></translation>
+        <translation>法属波利尼西亚</translation>
     </message>
     <message>
         <source>Gabon</source>
-        <translation type="unfinished"></translation>
+        <translation>加蓬</translation>
     </message>
     <message>
         <source>Gambia</source>
-        <translation type="unfinished"></translation>
+        <translation>冈比亚</translation>
     </message>
     <message>
         <source>Georgia</source>
-        <translation type="unfinished"></translation>
+        <translation>格鲁吉亚</translation>
     </message>
     <message>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
+        <translation>德国</translation>
     </message>
     <message>
         <source>Ghana</source>
-        <translation type="unfinished"></translation>
+        <translation>加纳</translation>
     </message>
     <message>
         <source>Gibraltar</source>
-        <translation type="unfinished"></translation>
+        <translation>直布罗陀</translation>
     </message>
     <message>
         <source>Greece</source>
-        <translation type="unfinished"></translation>
+        <translation>希腊</translation>
     </message>
     <message>
         <source>Greenland</source>
-        <translation type="unfinished"></translation>
+        <translation>格陵兰</translation>
     </message>
     <message>
         <source>Grenada</source>
-        <translation type="unfinished"></translation>
+        <translation>格林纳达</translation>
     </message>
     <message>
         <source>Guadeloupe</source>
-        <translation type="unfinished"></translation>
+        <translation>瓜德罗普岛</translation>
     </message>
     <message>
         <source>Guam</source>
-        <translation type="unfinished"></translation>
+        <translation>关岛</translation>
     </message>
     <message>
         <source>Guatemala</source>
-        <translation type="unfinished"></translation>
+        <translation>危地马拉</translation>
     </message>
     <message>
         <source>Guinea</source>
-        <translation type="unfinished"></translation>
+        <translation>几内亚</translation>
     </message>
     <message>
         <source>GuineaBissau</source>
-        <translation type="unfinished"></translation>
+        <translation>几内亚比绍</translation>
     </message>
     <message>
         <source>Guyana</source>
-        <translation type="unfinished"></translation>
+        <translation>圭亚那</translation>
     </message>
     <message>
         <source>Haiti</source>
-        <translation type="unfinished"></translation>
+        <translation>海地</translation>
     </message>
     <message>
         <source>Honduras</source>
-        <translation type="unfinished"></translation>
+        <translation>洪都拉斯</translation>
     </message>
     <message>
         <source>HongKong</source>
-        <translation type="unfinished"></translation>
+        <translation>香港</translation>
     </message>
     <message>
         <source>Hungary</source>
-        <translation type="unfinished"></translation>
+        <translation>匈牙利</translation>
     </message>
     <message>
         <source>Iceland</source>
-        <translation type="unfinished"></translation>
+        <translation>冰岛</translation>
     </message>
     <message>
         <source>India</source>
-        <translation type="unfinished"></translation>
+        <translation>印度</translation>
     </message>
     <message>
         <source>Indonesia</source>
-        <translation type="unfinished"></translation>
+        <translation>印度尼西亚</translation>
     </message>
     <message>
         <source>Iran</source>
-        <translation type="unfinished"></translation>
+        <translation>伊朗</translation>
     </message>
     <message>
         <source>Iraq</source>
-        <translation type="unfinished"></translation>
+        <translation>伊拉克</translation>
     </message>
     <message>
         <source>Ireland</source>
-        <translation type="unfinished"></translation>
+        <translation>爱尔兰</translation>
     </message>
     <message>
         <source>Israel</source>
-        <translation type="unfinished"></translation>
+        <translation>以色列</translation>
     </message>
     <message>
         <source>Italy</source>
-        <translation type="unfinished"></translation>
+        <translation>意大利</translation>
     </message>
     <message>
         <source>Jamaica</source>
-        <translation type="unfinished"></translation>
+        <translation>牙买加</translation>
     </message>
     <message>
         <source>Japan</source>
-        <translation type="unfinished"></translation>
+        <translation>日本</translation>
     </message>
     <message>
         <source>Jordan</source>
-        <translation type="unfinished"></translation>
+        <translation>约旦</translation>
     </message>
     <message>
         <source>Kazakhstan</source>
-        <translation type="unfinished"></translation>
+        <translation>哈萨克斯坦</translation>
     </message>
     <message>
         <source>Kenya</source>
-        <translation type="unfinished"></translation>
+        <translation>肯尼亚</translation>
     </message>
     <message>
         <source>Kiribati</source>
-        <translation type="unfinished"></translation>
+        <translation>基里巴斯</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>朝鲜民主主义人民共和国</translation>
     </message>
     <message>
         <source>RepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>大韩民国</translation>
     </message>
     <message>
         <source>Kuwait</source>
-        <translation type="unfinished"></translation>
+        <translation>科威特</translation>
     </message>
     <message>
         <source>Kyrgyzstan</source>
-        <translation type="unfinished"></translation>
+        <translation>吉尔吉斯斯坦</translation>
     </message>
     <message>
         <source>Laos</source>
-        <translation type="unfinished"></translation>
+        <translation>老挝</translation>
     </message>
     <message>
         <source>Latvia</source>
-        <translation type="unfinished"></translation>
+        <translation>拉脱维亚</translation>
     </message>
     <message>
         <source>Lebanon</source>
-        <translation type="unfinished"></translation>
+        <translation>黎巴嫩</translation>
     </message>
     <message>
         <source>Lesotho</source>
-        <translation type="unfinished"></translation>
+        <translation>莱索托</translation>
     </message>
     <message>
         <source>Liberia</source>
-        <translation type="unfinished"></translation>
+        <translation>利比里亚</translation>
     </message>
     <message>
         <source>Libya</source>
-        <translation type="unfinished"></translation>
+        <translation>利比亚</translation>
     </message>
     <message>
         <source>Liechtenstein</source>
-        <translation type="unfinished"></translation>
+        <translation>列支敦士登</translation>
     </message>
     <message>
         <source>Lithuania</source>
-        <translation type="unfinished"></translation>
+        <translation>立陶宛</translation>
     </message>
     <message>
         <source>Luxembourg</source>
-        <translation type="unfinished"></translation>
+        <translation>卢森堡</translation>
     </message>
     <message>
         <source>Macau</source>
-        <translation type="unfinished"></translation>
+        <translation>澳门</translation>
     </message>
     <message>
         <source>Macedonia</source>
-        <translation type="unfinished"></translation>
+        <translation>马其顿</translation>
     </message>
     <message>
         <source>Madagascar</source>
-        <translation type="unfinished"></translation>
+        <translation>马达加斯加</translation>
     </message>
     <message>
         <source>Malawi</source>
-        <translation type="unfinished"></translation>
+        <translation>马拉维</translation>
     </message>
     <message>
         <source>Malaysia</source>
-        <translation type="unfinished"></translation>
+        <translation>马来西亚</translation>
     </message>
     <message>
         <source>Maldives</source>
-        <translation type="unfinished"></translation>
+        <translation>马尔代夫</translation>
     </message>
     <message>
         <source>Mali</source>
-        <translation type="unfinished"></translation>
+        <translation>马里</translation>
     </message>
     <message>
         <source>Malta</source>
-        <translation type="unfinished"></translation>
+        <translation>马耳他</translation>
     </message>
     <message>
         <source>MarshallIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>马绍尔群岛</translation>
     </message>
     <message>
         <source>Martinique</source>
-        <translation type="unfinished"></translation>
+        <translation>马提尼克</translation>
     </message>
     <message>
         <source>Mauritania</source>
-        <translation type="unfinished"></translation>
+        <translation>毛里塔尼亚</translation>
     </message>
     <message>
         <source>Mauritius</source>
-        <translation type="unfinished"></translation>
+        <translation>毛里求斯</translation>
     </message>
     <message>
         <source>Mayotte</source>
-        <translation type="unfinished"></translation>
+        <translation>马约特</translation>
     </message>
     <message>
         <source>Mexico</source>
-        <translation type="unfinished"></translation>
+        <translation>墨西哥</translation>
     </message>
     <message>
         <source>Micronesia</source>
-        <translation type="unfinished"></translation>
+        <translation>密克罗尼西亚</translation>
     </message>
     <message>
         <source>Moldova</source>
-        <translation type="unfinished"></translation>
+        <translation>摩尔多瓦</translation>
     </message>
     <message>
         <source>Monaco</source>
-        <translation type="unfinished"></translation>
+        <translation>摩纳哥</translation>
     </message>
     <message>
         <source>Mongolia</source>
-        <translation type="unfinished"></translation>
+        <translation>蒙古</translation>
     </message>
     <message>
         <source>Montenegro</source>
-        <translation type="unfinished"></translation>
+        <translation>黑山</translation>
     </message>
     <message>
         <source>Montserrat</source>
-        <translation type="unfinished"></translation>
+        <translation>蒙特塞拉特</translation>
     </message>
     <message>
         <source>Morocco</source>
-        <translation type="unfinished"></translation>
+        <translation>摩洛哥</translation>
     </message>
     <message>
         <source>Mozambique</source>
-        <translation type="unfinished"></translation>
+        <translation>莫桑比克</translation>
     </message>
     <message>
         <source>Myanmar</source>
-        <translation type="unfinished"></translation>
+        <translation>缅甸</translation>
     </message>
     <message>
         <source>Namibia</source>
-        <translation type="unfinished"></translation>
+        <translation>纳米比亚</translation>
     </message>
     <message>
         <source>NauruCountry</source>
-        <translation type="unfinished"></translation>
+        <translation>瑙鲁</translation>
     </message>
     <message>
         <source>Nepal</source>
-        <translation type="unfinished"></translation>
+        <translation>尼泊尔</translation>
     </message>
     <message>
         <source>Netherlands</source>
-        <translation type="unfinished"></translation>
+        <translation>荷兰</translation>
     </message>
     <message>
         <source>NewCaledonia</source>
-        <translation type="unfinished"></translation>
+        <translation>新喀里多尼亚</translation>
     </message>
     <message>
         <source>NewZealand</source>
-        <translation type="unfinished"></translation>
+        <translation>新西兰</translation>
     </message>
     <message>
         <source>Nicaragua</source>
-        <translation type="unfinished"></translation>
+        <translation>尼加拉瓜</translation>
     </message>
     <message>
         <source>Niger</source>
-        <translation type="unfinished"></translation>
+        <translation>尼日尔</translation>
     </message>
     <message>
         <source>Nigeria</source>
-        <translation type="unfinished"></translation>
+        <translation>尼日利亚</translation>
     </message>
     <message>
         <source>Niue</source>
-        <translation type="unfinished"></translation>
+        <translation>纽埃</translation>
     </message>
     <message>
         <source>NorfolkIsland</source>
-        <translation type="unfinished"></translation>
+        <translation>諾福克島</translation>
     </message>
     <message>
         <source>NorthernMarianaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>北马里亚纳群岛</translation>
     </message>
     <message>
         <source>Norway</source>
-        <translation type="unfinished"></translation>
+        <translation>挪威</translation>
     </message>
     <message>
         <source>Oman</source>
-        <translation type="unfinished"></translation>
+        <translation>阿曼</translation>
     </message>
     <message>
         <source>Pakistan</source>
-        <translation type="unfinished"></translation>
+        <translation>巴基斯坦</translation>
     </message>
     <message>
         <source>Palau</source>
-        <translation type="unfinished"></translation>
+        <translation>帕劳</translation>
     </message>
     <message>
         <source>PalestinianTerritories</source>
-        <translation type="unfinished"></translation>
+        <translation>巴勒斯坦领土</translation>
     </message>
     <message>
         <source>Panama</source>
-        <translation type="unfinished"></translation>
+        <translation>巴拿马</translation>
     </message>
     <message>
         <source>PapuaNewGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>巴布亚新几内亚</translation>
     </message>
     <message>
         <source>Paraguay</source>
-        <translation type="unfinished"></translation>
+        <translation>巴拉圭</translation>
     </message>
     <message>
         <source>Peru</source>
-        <translation type="unfinished"></translation>
+        <translation>秘鲁</translation>
     </message>
     <message>
         <source>Philippines</source>
-        <translation type="unfinished"></translation>
+        <translation>菲律宾</translation>
     </message>
     <message>
         <source>Poland</source>
-        <translation type="unfinished"></translation>
+        <translation>波兰</translation>
     </message>
     <message>
         <source>Portugal</source>
-        <translation type="unfinished"></translation>
+        <translation>葡萄牙</translation>
     </message>
     <message>
         <source>PuertoRico</source>
-        <translation type="unfinished"></translation>
+        <translation>波多黎各</translation>
     </message>
     <message>
         <source>Qatar</source>
-        <translation type="unfinished"></translation>
+        <translation>卡塔尔</translation>
     </message>
     <message>
         <source>Reunion</source>
-        <translation type="unfinished"></translation>
+        <translation>团聚</translation>
     </message>
     <message>
         <source>Romania</source>
-        <translation type="unfinished"></translation>
+        <translation>罗马尼亚</translation>
     </message>
     <message>
         <source>RussianFederation</source>
-        <translation type="unfinished"></translation>
+        <translation>俄罗斯联邦</translation>
     </message>
     <message>
         <source>Rwanda</source>
-        <translation type="unfinished"></translation>
+        <translation>卢旺达</translation>
     </message>
     <message>
         <source>SaintHelena</source>
-        <translation type="unfinished"></translation>
+        <translation>圣赫勒拿岛</translation>
     </message>
     <message>
         <source>SaintKittsAndNevis</source>
-        <translation type="unfinished"></translation>
+        <translation>圣基茨和尼维斯</translation>
     </message>
     <message>
         <source>SaintLucia</source>
-        <translation type="unfinished"></translation>
+        <translation>圣卢西亚</translation>
     </message>
     <message>
         <source>SaintPierreAndMiquelon</source>
-        <translation type="unfinished"></translation>
+        <translation>圣皮埃尔和密克隆岛</translation>
     </message>
     <message>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation type="unfinished"></translation>
+        <translation>圣文森特和格林纳丁斯</translation>
     </message>
     <message>
         <source>Samoa</source>
-        <translation type="unfinished"></translation>
+        <translation>萨摩亚</translation>
     </message>
     <message>
         <source>SanMarino</source>
-        <translation type="unfinished"></translation>
+        <translation>圣马力诺</translation>
     </message>
     <message>
         <source>SaoTomeAndPrincipe</source>
-        <translation type="unfinished"></translation>
+        <translation>圣多美和普林西比</translation>
     </message>
     <message>
         <source>SaudiArabia</source>
-        <translation type="unfinished"></translation>
+        <translation>沙特阿拉伯</translation>
     </message>
     <message>
         <source>Senegal</source>
-        <translation type="unfinished"></translation>
+        <translation>塞内加尔</translation>
     </message>
     <message>
         <source>Serbia</source>
-        <translation type="unfinished"></translation>
+        <translation>塞尔维亚</translation>
     </message>
     <message>
         <source>Seychelles</source>
-        <translation type="unfinished"></translation>
+        <translation>塞舌尔</translation>
     </message>
     <message>
         <source>SierraLeone</source>
-        <translation type="unfinished"></translation>
+        <translation>塞拉利昂</translation>
     </message>
     <message>
         <source>Singapore</source>
-        <translation type="unfinished"></translation>
+        <translation>新加坡</translation>
     </message>
     <message>
         <source>Slovakia</source>
-        <translation type="unfinished"></translation>
+        <translation>斯洛伐克</translation>
     </message>
     <message>
         <source>Slovenia</source>
-        <translation type="unfinished"></translation>
+        <translation>斯洛文尼亚</translation>
     </message>
     <message>
         <source>SolomonIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>所罗门群岛</translation>
     </message>
     <message>
         <source>Somalia</source>
-        <translation type="unfinished"></translation>
+        <translation>索马里</translation>
     </message>
     <message>
         <source>SouthAfrica</source>
-        <translation type="unfinished"></translation>
+        <translation>南非</translation>
     </message>
     <message>
         <source>Spain</source>
-        <translation type="unfinished"></translation>
+        <translation>西班牙</translation>
     </message>
     <message>
         <source>SriLanka</source>
-        <translation type="unfinished"></translation>
+        <translation>斯里兰卡</translation>
     </message>
     <message>
         <source>Sudan</source>
-        <translation type="unfinished"></translation>
+        <translation>苏丹</translation>
     </message>
     <message>
         <source>Suriname</source>
-        <translation type="unfinished"></translation>
+        <translation>苏里南</translation>
     </message>
     <message>
         <source>Swaziland</source>
-        <translation type="unfinished"></translation>
+        <translation>斯威士兰</translation>
     </message>
     <message>
         <source>Sweden</source>
-        <translation type="unfinished"></translation>
+        <translation>瑞典</translation>
     </message>
     <message>
         <source>Switzerland</source>
-        <translation type="unfinished"></translation>
+        <translation>瑞士</translation>
     </message>
     <message>
         <source>Syria</source>
-        <translation type="unfinished"></translation>
+        <translation>叙利亚</translation>
     </message>
     <message>
         <source>Taiwan</source>
-        <translation type="unfinished"></translation>
+        <translation>台湾</translation>
     </message>
     <message>
         <source>Tajikistan</source>
-        <translation type="unfinished"></translation>
+        <translation>塔吉克斯坦</translation>
     </message>
     <message>
         <source>Tanzania</source>
-        <translation type="unfinished"></translation>
+        <translation>坦桑尼亚</translation>
     </message>
     <message>
         <source>Thailand</source>
-        <translation type="unfinished"></translation>
+        <translation>泰国</translation>
     </message>
     <message>
         <source>Togo</source>
-        <translation type="unfinished"></translation>
+        <translation>多哥</translation>
     </message>
     <message>
         <source>Tokelau</source>
-        <translation type="unfinished"></translation>
+        <translation>托克劳</translation>
     </message>
     <message>
         <source>Tonga</source>
-        <translation type="unfinished"></translation>
+        <translation>汤加</translation>
     </message>
     <message>
         <source>TrinidadAndTobago</source>
-        <translation type="unfinished"></translation>
+        <translation>特立尼达和多巴哥</translation>
     </message>
     <message>
         <source>Tunisia</source>
-        <translation type="unfinished"></translation>
+        <translation>突尼斯</translation>
     </message>
     <message>
         <source>Turkey</source>
-        <translation type="unfinished"></translation>
+        <translation>土耳其</translation>
     </message>
     <message>
         <source>Turkmenistan</source>
-        <translation type="unfinished"></translation>
+        <translation>土库曼斯坦</translation>
     </message>
     <message>
         <source>TurksAndCaicosIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>特克斯和凯科斯群岛</translation>
     </message>
     <message>
         <source>Tuvalu</source>
-        <translation type="unfinished"></translation>
+        <translation>图瓦卢</translation>
     </message>
     <message>
         <source>Uganda</source>
-        <translation type="unfinished"></translation>
+        <translation>乌干达</translation>
     </message>
     <message>
         <source>Ukraine</source>
-        <translation type="unfinished"></translation>
+        <translation>乌克兰</translation>
     </message>
     <message>
         <source>UnitedArabEmirates</source>
-        <translation type="unfinished"></translation>
+        <translation>阿拉伯联合酋长国</translation>
     </message>
     <message>
         <source>UnitedKingdom</source>
-        <translation type="unfinished"></translation>
+        <translation>大不列颠及北爱尔兰联合王国</translation>
     </message>
     <message>
         <source>UnitedStates</source>
-        <translation type="unfinished"></translation>
+        <translation>美国</translation>
     </message>
     <message>
         <source>Uruguay</source>
-        <translation type="unfinished"></translation>
+        <translation>乌拉圭</translation>
     </message>
     <message>
         <source>Uzbekistan</source>
-        <translation type="unfinished"></translation>
+        <translation>乌兹别克斯坦</translation>
     </message>
     <message>
         <source>Vanuatu</source>
-        <translation type="unfinished"></translation>
+        <translation>瓦努阿图</translation>
     </message>
     <message>
         <source>Venezuela</source>
-        <translation type="unfinished"></translation>
+        <translation>委内瑞拉</translation>
     </message>
     <message>
         <source>Vietnam</source>
-        <translation type="unfinished"></translation>
+        <translation>越南</translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>瓦利斯和富图纳群岛</translation>
     </message>
     <message>
         <source>Yemen</source>
-        <translation type="unfinished"></translation>
+        <translation>也门</translation>
     </message>
     <message>
         <source>Zambia</source>
-        <translation type="unfinished"></translation>
+        <translation>赞比亚</translation>
     </message>
     <message>
         <source>Zimbabwe</source>
-        <translation type="unfinished"></translation>
+        <translation>津巴布韦</translation>
     </message>
 </context>
 <context>

@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import QtQuick.Window 2.2
 
@@ -6,6 +7,7 @@ import Common 1.0
 import Common.Styles 1.0
 import DesktopTools 1.0
 import Linphone 1.0
+import LinphoneUtils 1.0
 import Utils 1.0
 
 import App.Styles 1.0
@@ -15,7 +17,7 @@ import 'Incall.js' as Logic
 // =============================================================================
 
 Window {
-  id: window
+  id: windowId
 
   // ---------------------------------------------------------------------------
 
@@ -29,16 +31,14 @@ Window {
     DesktopTools.screenSaverStatus = true
 
     // `exit` is called by `Incall.qml`.
-    // The `window` id can be null if the window was closed in this view.
-    if (!window) {
+    // The `windowId` id can be null if the windowId was closed in this view.
+    if (!windowId) {
       return
     }
 
-    // It's necessary to call `showNormal` before close on MacOs
-    // because the dock will be hidden forever!
-    window.visible = false
-    window.showNormal()
-    window.close()
+    if(!windowId.close() && parent)
+      parent.close()
+    
 
     if (cb) {
       cb()
@@ -46,42 +46,33 @@ Window {
   }
 
   // ---------------------------------------------------------------------------
-
-  Component.onCompleted: {
-    window.call = caller.call
-    var show = function (visibility) {
-      if (visibility === Window.Windowed) {
-        window.visibilityChanged.disconnect(show)
-        window.showFullScreen()
-      }
-    }
-
-    window.visibilityChanged.connect(show)
-  }
-
   visible: false
-
+  onCallChanged: if(!call) windowId.exit()
+  Component.onCompleted: {
+    windowId.call = caller.call
+  }
   // ---------------------------------------------------------------------------
 
   Shortcut {
     sequence: StandardKey.Close
-    onActivated: window.exit()
+    onActivated: windowId.exit()
   }
 
   // ---------------------------------------------------------------------------
 
   Rectangle {
+    id:container
     anchors.fill: parent
     color: '#000000' // Not a style.
     focus: true
 
-    Keys.onEscapePressed: window.exit()
+    Keys.onEscapePressed: windowId.exit()
 
     Loader {
       anchors.fill: parent
 
       active: {
-        var caller = window.caller
+        var caller = windowId.caller
         return caller && !caller.cameraActivated
       }
 
@@ -91,11 +82,10 @@ Window {
         id: camera
 
         Camera {
-          call: window.call
+          call: windowId.call
         }
       }
     }
-
     // -------------------------------------------------------------------------
     // Handle mouse move / Hide buttons.
     // -------------------------------------------------------------------------
@@ -150,36 +140,57 @@ Window {
           anchors.left: parent.left
           iconSize: CallStyle.header.iconSize
           visible: !hideButtons
-
-          Icon {
+          
+          ActionButton {
             id: callQuality
 
             icon: 'call_quality_0'
             iconSize: parent.iconSize
+            useStates: false
 
-            // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
+            onClicked: Logic.openCallStatistics()
+
+          // See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
             Timer {
               interval: 5000
               repeat: true
               running: true
               triggeredOnStart: true
 
-              onTriggered: {
-                var quality = call.quality
-                callQuality.icon = 'call_quality_' + (
-                  // Note: `quality` is in the [0, 5] interval.
-                  // It's necessary to map in the `call_quality_` interval. ([0, 3])
-                  quality >= 0 ? Math.round(quality / (5 / 3)) : 0
-                )
-              }
+              onTriggered: Logic.updateCallQualityIcon(callQuality, windowId.call)
+            }
+
+            CallStatistics {
+              id: callStatistics
+              enabled: windowId.call
+              call: windowId.call
+              width: container.width
+
+              relativeTo: callQuality
+              relativeY: CallStyle.header.stats.relativeY
+
+              onClosed: Logic.handleCallStatisticsClosed()
             }
           }
-
+         
           ActionButton {
             icon: 'tel_keypad'
 
             onClicked: telKeypad.visible = !telKeypad.visible
           }
+          
+          ActionButton {
+            id: callSecure
+
+            icon: windowId.call && windowId.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
+
+            onClicked: zrtp.visible = (windowId.call.encryption === CallModel.CallEncryptionZrtp)
+
+            TooltipArea {
+              text: windowId.call?Logic.makeReadableSecuredString(windowId.call.securedString):''
+            }
+          }
+      
         }
 
         // ---------------------------------------------------------------------
@@ -196,7 +207,7 @@ Window {
           horizontalAlignment: Text.AlignHCenter
           verticalAlignment: Text.AlignVCenter
 
-          visible: !window.hideButtons
+          visible: !windowId.hideButtons
 
           // Not a customizable style.
           color: 'white'
@@ -205,9 +216,11 @@ Window {
 
           Component.onCompleted: {
             var updateDuration = function () {
-              var call = window.caller.call
-              text = Utils.formatElapsedTime(call.duration)
-              Utils.setTimeout(elapsedTime, 1000, updateDuration)
+            if(windowId.caller){
+                var call = windowId.caller.call
+                  text = Utils.formatElapsedTime(call.duration)
+                Utils.setTimeout(elapsedTime, 1000, updateDuration)
+              }
             }
 
             updateDuration()
@@ -236,7 +249,7 @@ Window {
           ActionSwitch {
             id: recordingSwitch
 
-            enabled: call.recording
+            enabled: call && call.recording
             icon: 'record'
             useStates: false
             visible: SettingsModel.callRecorderEnabled
@@ -255,15 +268,30 @@ Window {
           ActionButton {
             icon: 'fullscreen'
 
-            onClicked: window.exit()
+            onClicked: windowId.exit()
           }
         }
+        
       }
 
       // -----------------------------------------------------------------------
       // Action Buttons.
       // -----------------------------------------------------------------------
 
+    // -------------------------------------------------------------------------
+    // Zrtp.
+    // -------------------------------------------------------------------------
+
+      ZrtpTokenAuthentication {
+        id: zrtp
+        
+        Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
+        Layout.margins: CallStyle.container.margins
+        call: windowId.call
+        visible: call && !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
+        z: Constants.zPopup
+        color: CallStyle.backgroundColor
+      }
       Item {
         Layout.alignment: Qt.AlignBottom
         Layout.fillWidth: true
@@ -298,7 +326,7 @@ Window {
             ActionSwitch {
               id: micro
 
-              enabled: !call.microMuted
+              enabled: call && !call.microMuted
               icon: 'micro'
               iconSize: CallStyle.actionArea.iconSize
 
@@ -324,11 +352,11 @@ Window {
             ActionSwitch {
               id: speaker
 
-              enabled: true
+              enabled: call && !call.speakerMuted
               icon: 'speaker'
               iconSize: CallStyle.actionArea.iconSize
 
-              onClicked: console.log('TODO')
+              onClicked: call.speakerMuted = enabled
             }
           }
 
@@ -336,9 +364,9 @@ Window {
             enabled: true
             icon: 'camera'
             iconSize: CallStyle.actionArea.iconSize
-            updating: call.updating
+            updating: call && call.updating
 
-            onClicked: window.exit(function () { call.videoEnabled = false })
+            onClicked: windowId.exit(function () { call.videoEnabled = false })
           }
 
           ActionButton {
@@ -348,7 +376,7 @@ Window {
             icon: 'options'
             iconSize: CallStyle.actionArea.iconSize
 
-            onClicked: Logic.openMediaParameters()
+            onClicked: Logic.openMediaParameters(windowId)
           }
         }
 
@@ -361,18 +389,18 @@ Window {
           iconSize: CallStyle.actionArea.iconSize
 
           ActionSwitch {
-            enabled: !call.pausedByUser
+            enabled: call && !call.pausedByUser
             icon: 'pause'
-            updating: call.updating
+            updating: call && call.updating
             visible: SettingsModel.callPauseEnabled
 
-            onClicked: window.exit(function () { call.pausedByUser = enabled })
+            onClicked: windowId.exit(function () { call.pausedByUser = enabled })
           }
 
           ActionButton {
             icon: 'hangup'
 
-            onClicked: window.exit(call.terminate)
+            onClicked: windowId.exit(call.terminate)
           }
         }
       }
@@ -385,7 +413,7 @@ Window {
 
   Loader {
     active: {
-      var caller = window.caller
+      var caller = windowId.caller
       return caller && !caller.cameraActivated
     }
 
@@ -398,21 +426,21 @@ Window {
         property bool scale: false
 
         function xPosition () {
-          return window.width / 2 - width / 2
+          return windowId.width / 2 - width / 2
         }
 
         function yPosition () {
-          return window.height - height
+          return windowId.height - height
         }
 
-        call: window.call
+        call: windowId.call
         isPreview: true
 
         height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
         width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
 
         DragBox {
-          container: window
+          container: windowId
           draggable: parent
 
           xPosition: parent.xPosition
@@ -431,7 +459,7 @@ Window {
   TelKeypad {
     id: telKeypad
 
-    call: window.call
+    call: windowId.call
     visible: false
   }
 }

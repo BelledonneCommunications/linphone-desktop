@@ -185,7 +185,7 @@ function getTopParent (object, useFakeParent) {
 // Supported options: isString, exitHandler, properties.
 //
 // If exitHandler is used, window must implement exitStatus signal.
-function openWindow (window, parent, options) {
+function openWindow (window, parent, options, fullscreen) {
   var object = createObject(window, parent, options)
 
   object.closing.connect(object.destroy.bind(object))
@@ -196,8 +196,10 @@ function openWindow (window, parent, options) {
       options.exitHandler.bind(parent)
     )
   }
-
-  object.show()
+  if(fullscreen)
+    object.showFullScreen()
+  else
+    object.show()
 
   return object
 }

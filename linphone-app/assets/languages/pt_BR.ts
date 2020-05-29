@@ -1,18 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="pt_BR">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
 <context>
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation>OK</translation>
+        <translation>ESTÁ BEM</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation>ATIVE SUA CONTA %1</translation>
+        <translation>ATIVAR A SUA CONTA %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -27,7 +25,7 @@
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation>ATIVAR SUA CONTA %1</translation>
+        <translation>ATIVAR A SUA CONTA %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
@@ -35,7 +33,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Enviamos um SMS com um código de validação para %1. Para concluir a confirmação do seu número de telefone, insira o código de 4 dígitos abaixo.</translation>
+        <translation>Um SMS contendo um código de validação foi enviado para %1. Para concluir a verificação do número de telefone, insira o código de 4 dígitos abaixo.</translation>
     </message>
 </context>
 <context>
@@ -46,15 +44,15 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>especifique o arquivo de configuração do %1 a ser usado</translation>
+        <translation>especificar o arquivo de configuração %1 a ser usado</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>Um videofone SIP gratuito (gratuito).</translation>
+        <translation>Um telefone de vídeo SIP grátis.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation>iniciar na barra de menu, não mostre a interface principal</translation>
+        <translation>iniciar na bandeja do sistema, não mostrar a interface principal</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -70,11 +68,11 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>exibe o menu de ajuda para usar o %1 com o CLI</translation>
+        <translation>exibe o menu de ajuda para usar %1 com a CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>enviar um pedido para o aplicativo em direção a uma linha de comando</translation>
+        <translation>enviar uma ordem para o aplicativo em direção a uma linha de comando</translation>
     </message>
     <message>
         <source>restore</source>
@@ -82,7 +80,7 @@
     </message>
     <message>
         <source>quit</source>
-        <translation>Sair</translation>
+        <translation>Desistir</translation>
     </message>
     <message>
         <source>settings</source>
@@ -97,18 +95,18 @@
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation>VOLTAR</translation>
+        <translation>COSTAS</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation>USE UMA CONTA %1</translation>
+        <translation>USAR UMA CONTA %1</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation>USE UMA CONTA SIP</translation>
+        <translation>USAR UMA CONTA SIP</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
@@ -116,11 +114,11 @@
     </message>
     <message>
         <source>homeTitle</source>
-        <translation>BEM VINDO</translation>
+        <translation>BEM-VINDOS</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Este assistente ajudará você a configurar e usar sua conta do %1.</translation>
+        <translation>Este assistente irá ajudá-lo a configurar e usar sua conta sip.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
@@ -131,15 +129,15 @@
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation>Falha na autenticação. Por favor, verifique seu nome de usuário / senha.</translation>
+        <translation>Falha no login. Verifique seu nome de usuário/senha.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation>Curto demais! (%1 caracteres no mínimo)</translation>
+        <translation>Muito curto! (%1 caracteres mín.)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation>Longo demais! (%1 caracteres no máximo)</translation>
+        <translation>Demasiado tempo! (máx.%1 caracteres)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
@@ -147,15 +145,15 @@
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Usuário Inválido</translation>
+        <translation>Nome de usuário inválido.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation>Curto demais! (%1 caracteres no mínimo)</translation>
+        <translation>Muito curto! (%1 caracteres mín.)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation>Longo demais! (%1 caracteres no máximo)</translation>
+        <translation>Demasiado tempo! (máx.%1 caracteres)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
@@ -167,7 +165,7 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>Não é possível enviar o pedido.</translation>
+        <translation>Não foi possível enviar a solicitação.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
@@ -187,11 +185,11 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation>A ativação do SMS falhou!</translation>
+        <translation>Falha na ativação do SMS!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation>Confirme se validou sua conta ou tente novamente.</translation>
+        <translation>Verifique se você validou sua conta ou tente novamente.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -199,23 +197,23 @@
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation>Curto demais!</translation>
+        <translation>Muito curto!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation>Muito longo!</translation>
+        <translation>Demasiado tempo!</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation>Código do país inválido!</translation>
+        <translation>Código de país inválido!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation>Falha na autenticação. Por favor, verifique o seu número de telefone.</translation>
+        <translation>Falha no login. Por favor, verifique seu número de telefone.</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation>Não é possível adicionar esta conta.</translation>
+        <translation>Não foi possível adicionar esta conta.</translation>
     </message>
 </context>
 <context>
@@ -238,15 +236,15 @@
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation>Não foi possível autenticar. Por favor, verifique sua senha.</translation>
+        <translation>Não foi possível autenticar. Verifique sua senha.</translation>
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation>ID de Usuário (opcional)</translation>
+        <translation>ID do usuário (opcional)</translation>
     </message>
     <message>
         <source>realmLabel</source>
-        <translation>Realm</translation>
+        <translation>Reino</translation>
     </message>
 </context>
 <context>
@@ -257,15 +255,15 @@
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation>Tráfego de Upload</translation>
+        <translation>Largura de banda de upload</translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation>Tráfego de Download</translation>
+        <translation>Largura de banda de download</translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation>Tráfego estimado de download</translation>
+        <translation>Largura de banda estimada de download</translation>
     </message>
     <message>
         <source>callStatsIceState</source>
@@ -273,7 +271,7 @@
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation>Família de IP</translation>
+        <translation>Família IP</translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
@@ -301,11 +299,11 @@
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation>Falhou</translation>
+        <translation>Fracassou</translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation>Em progresso</translation>
+        <translation>Em curso</translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
@@ -313,11 +311,11 @@
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation>Conexão com host</translation>
+        <translation>Conexão do host</translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation>Conexão com relay</translation>
+        <translation>Conexão de relé</translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
@@ -325,19 +323,19 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>A parte remota recusou a chamada.</translation>
+        <translation>O grupo remoto recusou a chamada.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>A parte remota não foi encontrada.</translation>
+        <translation>Grupo remoto não foi encontrado.</translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation>A parte remota esta ocupada.</translation>
+        <translation>A festa remota está ocupada.</translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>A parte remota não pode aceitar a conexão</translation>
+        <translation>A parte remota não pode aceitar a chamada.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -356,18 +354,18 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Iniciar uma nova chamada.</translation>
+        <translation>Comece uma nova chamada.</translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation>Audio</translation>
+        <translation>Áudio</translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation>Video</translation>
+        <translation>Vídeo</translation>
     </message>
 </context>
 <context>
@@ -378,41 +376,41 @@
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation>Você deseja transferir esta ligação?</translation>
+        <translation>Deseja transferir esta chamada?</translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation>ACEITAR LIGAÇÃO</translation>
+        <translation>ACEITAR CHAMADA DE ÁUDIO</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation>ACEITAR CHAMADA DE VIDEO</translation>
+        <translation>ACEITAR CHAMADA DE VÍDEO</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation>DESLIGAR</translation>
+        <translation>FINALIZAR CHAMADA</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation>RETOMAR A LIGAÇÃO</translation>
+        <translation>RETOMAR CHAMADA</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation>TRANSFERIR LIGAÇÃO</translation>
+        <translation>CHAMADA DE TRANSFERÊNCIA</translation>
     </message>
     <message>
         <source>callPause</source>
-        <translation>PAUSAR LIGAÇÃO</translation>
+        <translation>CHAMADA DE ESPERA</translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation>Chamadas</translation>
+        <translation>Ligações</translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
@@ -423,31 +421,31 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>Digite sua mensagem</translation>
+        <translation>Introduza a sua mensagem</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation>Não é possível enviar o arquivo.
+        <translation>Não foi possível enviar o arquivo.
 URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 está digitando...</translation>
+        <translation>%1 está a escrever...</translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation>Maneira de controlar o aplicativo %1 através de linhas de comando.</translation>
+        <translation>Maneira de controlar o aplicativo %1 através das linhas de comando.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?metodo=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt; = &lt;value&gt;] *)”</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -455,23 +453,23 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>Mostrar a janela principal do aplicativo.</translation>
+        <translation>Mostra a janela principal do aplicativo.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Inicie uma chamada para o endereço SIP.</translation>
+        <translation>Inicie uma chamada para o endereço do SIP.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Iniciar uma conferencia</translation>
+        <translation>Iniciar uma conferência.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation>Participe da conferência hospedada pelo endereço SIP como nome de exibição. Se você estiver conectado a uma configuração de proxy, consulte join-conference-as.</translation>
+        <translation>Participe da conferência hospedada pelo sip-address como display-name. Se você estiver conectado a uma configuração de proxy, consulte join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>Participe da conferência hospedada pelo endereço SIP como com o endereço do convidado-sip. Se você não estiver conectado a uma configuracao-proxy, consulte join-conference.</translation>
+        <translation>Junte-se à conferência organizada pelo sip-address como com o guest-sip-address. Se você não estiver conectado a um proxy-config, consulte join-conference.</translation>
     </message>
 </context>
 <context>
@@ -490,15 +488,15 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation>Bitrate (Kbit/s)</translation>
+        <translation>Taxa de bits (kbit/s)</translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation>Parametros</translation>
+        <translation>Parâmetros</translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation>Status</translation>
+        <translation>Situação</translation>
     </message>
 </context>
 <context>
@@ -519,7 +517,7 @@ URL do servidor não configurado.</translation>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Gerencie os participantes para sua conferência.</translation>
+        <translation>Gerencie os participantes da sua conferência.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -545,11 +543,11 @@ URL do servidor não configurado.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation>Você realmente deseja remover esse contato do seu catálogo de endereços?</translation>
+        <translation>Deseja realmente remover este contato do seu catálogo de endereços?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation>CONTA(S) SIP</translation>
+        <translation>CONTA (S) SIP</translation>
     </message>
     <message>
         <source>address</source>
@@ -557,15 +555,15 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>emails</source>
-        <translation>E-MAIL(S)</translation>
+        <translation>E-MAIL (S)</translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation>WEB SITE(S)</translation>
+        <translation>SITE (S)</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation>Escolha seu avatar</translation>
+        <translation>Escolha o seu avatar</translation>
     </message>
     <message>
         <source>companies</source>
@@ -589,11 +587,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation>Email</translation>
+        <translation>E-mail</translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation>Web site</translation>
+        <translation>Site</translation>
     </message>
     <message>
         <source>street</source>
@@ -601,7 +599,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation>Código Postal</translation>
+        <translation>Código postal</translation>
     </message>
     <message>
         <source>country</source>
@@ -613,7 +611,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation>Tem certeza de que deseja cancelar a modificação do contato?</translation>
+        <translation>Tem certeza de que deseja cancelar a modificação de contato?</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
@@ -624,7 +622,7 @@ URL do servidor não configurado.</translation>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation>Procurar contato</translation>
+        <translation>Pesquisar contato</translation>
     </message>
     <message>
         <source>selectAllContacts</source>
@@ -640,7 +638,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation>Você realmente deseja remover esse contato do seu catálogo de endereços?</translation>
+        <translation>Deseja realmente remover este contato do seu catálogo de endereços?</translation>
     </message>
 </context>
 <context>
@@ -659,7 +657,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Tem certeza de que deseja limpar este histórico?</translation>
+        <translation>Tem certeza de que deseja limpar esse histórico?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
@@ -705,11 +703,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Usuario</translation>
+        <translation>Nome de usuário</translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation>Email</translation>
+        <translation>E-mail</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -721,11 +719,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>As senhas inseridas não são iguais.</translation>
+        <translation>As senhas inseridas não correspondem.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Sua conta foi criada, mas ainda não foi validada. Tem certeza de que deseja sair dessa tela?</translation>
+        <translation>Sua conta foi criada, mas ainda não foi validada. Tem certeza de que deseja sair dessa exibição?</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -744,11 +742,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation>Numero de Telefone</translation>
+        <translation>Número de telefone</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Usuário</translation>
+        <translation>Nome de usuário</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -756,18 +754,18 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>Criar</translation>
+        <translation>CRIAR</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Sua conta foi criada, mas ainda não foi validada. Se você sair dessa tela, precisará adicionar e validar manualmente sua conta no período de 24 horas.</translation>
+        <translation>Sua conta foi criada, mas ainda não foi validada. Se sair desta vista, terá de adicionar e validar manualmente a sua conta dentro de 24 horas.</translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation>Por favor escolha um ou mais arquivos</translation>
+        <translation>Escolha um ou mais arquivos</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
@@ -775,7 +773,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation>Envie um arquivo</translation>
+        <translation>Enviar um arquivo</translation>
     </message>
 </context>
 <context>
@@ -786,7 +784,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation>Chamada realizada</translation>
+        <translation>Chamada de saída</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
@@ -794,11 +792,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation>Chamada realizada recusada</translation>
+        <translation>Chamada de saída recusada</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation>Chamada terminada</translation>
+        <translation>Chamada encerrada</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
@@ -806,7 +804,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation>Chamada realizada perdida</translation>
+        <translation>Chamada de saída perdida</translation>
     </message>
 </context>
 <context>
@@ -825,26 +823,26 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation>Não é possível definir este provisionamento remoto uri.</translation>
+        <translation>Não é possível definir este uri de provisionamento remoto.</translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation>É necessário reiniciar o aplicativo. Você quer reiniciar agora?</translation>
+        <translation>É necessário reiniciar o aplicativo. Deseja reiniciar agora?</translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Precisa de ajuda sobre como usar o %1?</translation>
+        <translation>Precisa de ajuda para usar o% 1?</translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>COMO USAR O %1</translation>
+        <translation>COMO USAR %1</translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Convide seus amigos para usar %1.</translation>
+        <translation>Convide seus amigos em %1.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -852,7 +850,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Crie ou gerencie sua conta do %1.</translation>
+        <translation>Crie ou gerencie sua conta %1.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -868,7 +866,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation>CONVITE</translation>
+        <translation>CONVIDAR</translation>
     </message>
 </context>
 <context>
@@ -879,11 +877,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation>Por favor, aguarde, uma solicitação está pendente.</translation>
+        <translation>Aguarde, uma solicitação está pendente.</translation>
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation>A chamada é criptografada com: %1.</translation>
+        <translation>A chamada está encriptada com: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
@@ -891,7 +889,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>Tire uma foto instantânea.</translation>
+        <translation>Tire uma foto.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
@@ -906,7 +904,7 @@ URL do servidor não configurado.</translation>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>Tire uma foto instantânea.</translation>
+        <translation>Tire uma foto.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
@@ -933,37 +931,36 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>CONFIRME</translation>
+        <translation>CONFIRMAR</translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation>Convide amigos</translation>
+        <translation>Convidar amigos</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 quer convidar você no %2!</translation>
+        <translation>%1 quer convidá-lo em %2!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>Convite %1</translation>
+        <translation>Convite de %1</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Baixe o aplicativo em seu computador e comece a ligar e conversar com os usuários do %1 gratuitamente.
+        <translation>Baixe o aplicativo no seu computador e comece a ligar e conversar com os usuários gratuitamente.
 
-Click aqui: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
-</translation>
+Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Pesquise contato, inicie uma chamada ou um bate-papo...</translation>
+        <translation>Pesquisar contato, iniciar uma chamada ou um bate-papo...</translation>
     </message>
     <message>
         <source>homeEntry</source>
-        <translation>INICIO</translation>
+        <translation>CASA</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -971,13 +968,11 @@ Click aqui: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation>auto</translation>
+        <translation>Automático</translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Use a barra de pesquisa inteligente para iniciar diretamente a chamada de áudio e vídeo,
-enviar uma mensagem ou adicionar um novo contato. Basta entrar
-o endereço SIP ou nome de usuário do seu amigo.</translation>
+        <translation>Use a barra de pesquisa inteligente para iniciar diretamente o áudio e o vídeo, enviar uma mensagem ou adicionar um novo contato. Basta digitar endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -996,7 +991,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation>Sair</translation>
+        <translation>Desistir</translation>
     </message>
 </context>
 <context>
@@ -1018,11 +1013,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
-        <translation>OK</translation>
+        <translation>ESTÁ BEM</translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation>Exibir status</translation>
+        <translation>Status de presença</translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
@@ -1033,25 +1028,25 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>Message</name>
     <message>
         <source>menuCopy</source>
-        <translation>Copiar</translation>
+        <translation>Cópia</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>Tocar!</translation>
+        <translation>Brinca comigo!</translation>
     </message>
 </context>
 <context>
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
-        <translation>OK</translation>
+        <translation>ESTÁ BEM</translation>
     </message>
 </context>
 <context>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>Uma nova versão está disponível!</translation>
+        <translation>Está disponível uma nova versão (%1)!</translation>
     </message>
     <message>
         <source>newFileMessage</source>
@@ -1062,7 +1057,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation>CONFIRME</translation>
+        <translation>CONFIRMAR</translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
@@ -1070,15 +1065,15 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>Baixando %1...</translation>
+        <translation>Transferindo %1...</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation>%1 instalando</translation>
+        <translation>%1 já está instalado!</translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation>Falha ao instalarl %1!</translation>
+        <translation>Falha ao instalar %1!</translation>
     </message>
 </context>
 <context>
@@ -1089,7 +1084,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>messageRead</source>
-        <translation>Leitura</translation>
+        <translation>Leia</translation>
     </message>
     <message>
         <source>messageDelivered</source>
@@ -1108,42 +1103,42 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation>Não pertube</translation>
+        <translation>Não perturbe</translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation>Indisponível</translation>
+        <translation>Offline</translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation>Registros</translation>
+        <translation>Toros</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation>Pasta de registros</translation>
+        <translation>Pasta Logs</translation>
     </message>
     <message>
         <source>sendLogs</source>
-        <translation>ENVIAR REGISTROS</translation>
+        <translation>ENVIAR LOGS</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation>URL do log no servidor</translation>
+        <translation>URL do servidor de upload de logs</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation>Falha ao enviar logs para o servidor</translation>
+        <translation>Falha ao carregar logs.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation>Habilitar log</translation>
+        <translation>Ativar logs</translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation>APAGAR LOGS</translation>
+        <translation>LIMPAR LOGS</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1151,11 +1146,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation>Configurações de desenvolvedor</translation>
+        <translation>Configurações do desenvolvedor</translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation>Habilitar configurações de desenvolvedor</translation>
+        <translation>Ativar configurações do desenvolvedor</translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
@@ -1179,19 +1174,19 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation>Dispositivo de captura</translation>
+        <translation>Capturar dispositivo</translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation>Dispositivo para toque</translation>
+        <translation>Dispositivo de toque</translation>
     </message>
     <message>
         <source>ringLabel</source>
-        <translation>Toque</translation>
+        <translation>Anel</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation>Habilitar cancelamento de eco</translation>
+        <translation>Ativar cancelamento de eco</translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
@@ -1230,7 +1225,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>limeDisabled</source>
-        <translation>Desativado</translation>
+        <translation>Incapacitado</translation>
     </message>
     <message>
         <source>limeRequired</source>
@@ -1238,7 +1233,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation>Preferido</translation>
+        <translation>Preferia</translation>
     </message>
     <message>
         <source>chatTitle</source>
@@ -1250,35 +1245,35 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>encryptionLabel</source>
-        <translation>Encriptação</translation>
+        <translation>Criptografia</translation>
     </message>
     <message>
         <source>noEncryption</source>
-        <translation>Nenhuma</translation>
+        <translation>Nenhum</translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation>Atender automaticamente</translation>
+        <translation>Resposta automática</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation>Tempo (em ms)</translation>
+        <translation>Atraso (em ms)</translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation>Atender automaticamente (chamada em vídeo)</translation>
+        <translation>Resposta automática (com vídeo)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation>Habilitar chat</translation>
+        <translation>Ativar bate-papo</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation>Habilitar gravação de chamadas</translation>
+        <translation>Ativar gravador de chamadas</translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation>Habilitar notificação sonora</translation>
+        <translation>Ativar som de notificação</translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
@@ -1286,7 +1281,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation>Habilitar conferência</translation>
+        <translation>Ativar conferência</translation>
     </message>
     <message>
         <source>contactsTitle</source>
@@ -1294,31 +1289,31 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation>Habilitar contatos</translation>
+        <translation>Ativar contatos</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation>Habilitar o desligamento temporário do microfone</translation>
+        <translation>Ativar microfone silencioso</translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation>Habilitar chamadas de saída</translation>
+        <translation>Ativar chamadas de saída</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation>Exibir automaticamente o teclado do telefone </translation>
+        <translation>Mostrar o teclado do telefone automaticamente</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation>Gravar automaticamente as chamadas</translation>
+        <translation>Gravar chamadas automaticamente</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation>Manter as janelas de chamada em segundo plano</translation>
+        <translation>Manter janelas de chamadas em segundo plano</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation>Habilitada pausa na chamada.</translation>
+        <translation>Retenção de chamada ativada</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
@@ -1329,7 +1324,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>Método de envio DTMFs</translation>
+        <translation>método de envio de DTMFS</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -1345,27 +1340,27 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation>Habilitar ICE</translation>
+        <translation>Ativar ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation>Servidor STUN/TURN </translation>
+        <translation>Servidor STUN/TUNR</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation>Habilitar TURN</translation>
+        <translation>Ativar Turn</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation>Usuário TURN</translation>
+        <translation>Usuário de Turn</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation>Senha TURN</translation>
+        <translation>Palavra-passe de Turn</translation>
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation>Protocolo de rede  e portas</translation>
+        <translation>Protocolo de rede e portas</translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
@@ -1377,23 +1372,23 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation>Porta RTP UDP de áudio</translation>
+        <translation>Porta UDP de áudio RTP</translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation>Porta RTP UDP de vídeo</translation>
+        <translation>Porta UDP RTP de vídeo</translation>
     </message>
     <message>
         <source>portHeader</source>
-        <translation>Porta</translation>
+        <translation>Portão</translation>
     </message>
     <message>
         <source>randomPortHeader</source>
-        <translation>Usar portas aleatórias</translation>
+        <translation>Usar uma porta aleatória</translation>
     </message>
     <message>
         <source>enabledPortHeader</source>
-        <translation>Habilitar porta</translation>
+        <translation>Porta habilitada</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
@@ -1401,7 +1396,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation>SIP</translation>
+        <translation>SABOREIE</translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
@@ -1409,35 +1404,35 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation>Stream RTP de vídeo</translation>
+        <translation>Stream de vídeo RTP</translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation>Controle de Banda</translation>
+        <translation>Controle de largura de banda</translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation>Limite de download em Kbit/sec </translation>
+        <translation>Limite de velocidade de download em kbit/s</translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation>Limite de upload em Kbit/sec </translation>
+        <translation>Limite de velocidade de carregamento em kbit/s</translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation>Habilitar controle automático de banda</translation>
+        <translation>Ativar controle de taxa adaptável</translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation>Status</translation>
+        <translation>Presença</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation>Usar RLS URI</translation>
+        <translation>Usar URI do RLS</translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation>AUTO</translation>
+        <translation>AUTOMÁTICO</translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
@@ -1445,7 +1440,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation>Exibir as configurações de rede</translation>
+        <translation>Mostrar configurações de rede</translation>
     </message>
     <message>
         <source>generalTitle</source>
@@ -1456,11 +1451,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation>Conta Padrão</translation>
+        <translation>Identidade padrão</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation>Usuário</translation>
+        <translation>Nome de usuário</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
@@ -1468,11 +1463,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation>Proxy</translation>
+        <translation>Contas proxy</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation>APAGAR SENHAS</translation>
+        <translation>REMOVER TODAS AS SENHAS</translation>
     </message>
     <message>
         <source>addAccount</source>
@@ -1492,11 +1487,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>Tem certeza de que deseja apagar todas as senhas?</translation>
+        <translation>Tem certeza de que deseja remover todas as senhas?</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation>Exibir nome</translation>
+        <translation>Nome de exibição</translation>
     </message>
     <message>
         <source>assistantTitle</source>
@@ -1504,23 +1499,23 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation>Habilitar criação de contas</translation>
+        <translation>Ativar a criação de conta</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation>Habilitar o uso de contas</translation>
+        <translation>Ativar o uso da conta</translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation>Habilitar o uso de contas genéricas</translation>
+        <translation>Ativar o uso genérico da conta</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation>Habilitar a captura de configurações</translation>
+        <translation>Ativar busca de configuração</translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation>Suporte a números de telefone</translation>
+        <translation>Suporta números de telefone</translation>
     </message>
 </context>
 <context>
@@ -1535,11 +1530,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation>Servidor SIP</translation>
+        <translation>Endereço do servidor SIP</translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation>Tempo de conexão (sec)</translation>
+        <translation>Duração do registo (seg)</translation>
     </message>
     <message>
         <source>routeLabel</source>
@@ -1547,23 +1542,23 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation>Parâmetros dos Contato</translation>
+        <translation>Parâmetros de contato</translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation>Exibir status online</translation>
+        <translation>Publicar informações de presença</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation>AVPF regular RTCP intervalo (sec)</translation>
+        <translation>Intervalo RTCP regular AVPF (seg)</translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation>Registrar</translation>
+        <translation>Registe-se</translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation>Habilitar AVPF</translation>
+        <translation>Ativar AVPF</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -1579,31 +1574,31 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation>Endereço do servidor inválido.</translation>
+        <translation>Endereço de servidor inválido.</translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation>Rota inválida</translation>
+        <translation>Rota inválida.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation>Habilitar ICE</translation>
+        <translation>Ativar ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation>Servidor STUN/TURN</translation>
+        <translation>Servidor STUN/TUNR</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation>Habilitar TURN</translation>
+        <translation>Ativar Turn</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation>Usuário TURN</translation>
+        <translation>Usuário de Turn</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation>Senha TURN</translation>
+        <translation>Palavra-passe de Turn</translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
@@ -1622,15 +1617,15 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation>Salvar captura de tela na pasta</translation>
+        <translation>Pasta de capturas de tela salvas</translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation>Pasta para chamadas salvas</translation>
+        <translation>Pasta de chamadas salvas</translation>
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation>Idiomas</translation>
+        <translation>Línguas</translation>
     </message>
     <message>
         <source>languagesLabel</source>
@@ -1638,39 +1633,39 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>systemLocale</source>
-        <translation>Padrão do sistema</translation>
+        <translation>Localidade do sistema</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation>APAGAR AVATARS</translation>
+        <translation>APAGAR AVATARES</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>Tem certeza que deseja pagar todos os avatars?</translation>
+        <translation>Tem certeza de que deseja apagar todos os avatares?</translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation>Salvar downloads na pasta</translation>
+        <translation>Fazer download da pasta</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation>É necessário reiniciar o programa. Deseja reiniciar agora?</translation>
+        <translation>É necessário reiniciar o aplicativo. Deseja reiniciar agora?</translation>
     </message>
     <message>
         <source>otherTitle</source>
-        <translation>Outro</translation>
+        <translation>Outros</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation>Encerrar programa ao fechar a janela.</translation>
+        <translation>Sair da aplicação ao fechar a janela</translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation>Dados UI</translation>
+        <translation>Dados da interface do usuário</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation>Iniciar automaticamente o app</translation>
+        <translation>Aplicação Autostart</translation>
     </message>
 </context>
 <context>
@@ -1689,15 +1684,15 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation>Preset do vídeo</translation>
+        <translation>Predefinição de vídeo</translation>
     </message>
     <message>
         <source>presetDefault</source>
-        <translation>Padrão</translation>
+        <translation>Default</translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation>High FPS</translation>
+        <translation>Alto FPS</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -1705,26 +1700,26 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation>Resolução do vídeo</translation>
+        <translation>Resolução de vídeo</translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation>Codec de vídeo</translation>
+        <translation>Codecs de vídeo</translation>
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation>PREVIEW DO VÍDEO</translation>
+        <translation>VISUALIZAÇÃO DE VÍDEO</translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation>Exibir codecs de vídeo</translation>
+        <translation>Mostrar codecs de vídeo</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
     <message>
         <source>confirm</source>
-        <translation>OK</translation>
+        <translation>ESTÁ BEM</translation>
     </message>
 </context>
 <context>
@@ -1747,7 +1742,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation>Chamadas e Chat</translation>
+        <translation>Chamadas e bate-papo</translation>
     </message>
     <message>
         <source>networkTab</source>
@@ -1755,11 +1750,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>uiTab</source>
-        <translation>Interface do Usuário</translation>
+        <translation>Interface do usuário</translation>
     </message>
     <message>
         <source>validButton</source>
-        <translation>OK</translation>
+        <translation>ESTÁ BEM</translation>
     </message>
     <message>
         <source>uiAdvanced</source>
@@ -1777,14 +1772,14 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>Timeline</name>
     <message>
         <source>timelineTitle</source>
-        <translation>Pré-Visualização</translation>
+        <translation>Anteriormente..</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation>USAR</translation>
+        <translation>USO</translation>
     </message>
     <message>
         <source>useAppSipAccountTitle</source>
@@ -1792,11 +1787,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation>Use nome de usuário e senha em vez do seu número de telefone.</translation>
+        <translation>Use nome de usuário e senha em vez de seu número de telefone.</translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Sua conta foi criada, mas ainda não foi validada. Tem certeza de que deseja sair?</translation>
+        <translation>Sua conta foi criada, mas ainda não foi validada. Tem certeza de que deseja sair dessa exibição?</translation>
     </message>
 </context>
 <context>
@@ -1807,14 +1802,14 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation>Número do telefone</translation>
+        <translation>Número de telefone</translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation>Usuário</translation>
+        <translation>Nome de usuário</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1825,7 +1820,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation>USAR</translation>
+        <translation>USO</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
@@ -1833,11 +1828,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Usuário</translation>
+        <translation>Nome de usuário</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation>Nome para exibição (opcional)</translation>
+        <translation>Nome de exibição (opcional)</translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
@@ -1853,7 +1848,7 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Não é possível adicionar esta conta.</translation>
+        <translation>Não foi possível adicionar esta conta.</translation>
     </message>
 </context>
 <context>
@@ -1864,11 +1859,11 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation>Informar:</translation>
+        <translation>Diga:</translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation>Seu contato deve informar:</translation>
+        <translation>Seu contato deve dizer:</translation>
     </message>
     <message>
         <source>deny</source>
@@ -1883,902 +1878,902 @@ o endereço SIP ou nome de usuário do seu amigo.</translation>
     <name>country</name>
     <message>
         <source>Afghanistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Afeganistão</translation>
     </message>
     <message>
         <source>Albania</source>
-        <translation type="unfinished"></translation>
+        <translation>Albânia</translation>
     </message>
     <message>
         <source>Algeria</source>
-        <translation type="unfinished"></translation>
+        <translation>Argélia</translation>
     </message>
     <message>
         <source>AmericanSamoa</source>
-        <translation type="unfinished"></translation>
+        <translation>Americanos Amoa</translation>
     </message>
     <message>
         <source>Andorra</source>
-        <translation type="unfinished"></translation>
+        <translation>Andorra</translation>
     </message>
     <message>
         <source>Angola</source>
-        <translation type="unfinished"></translation>
+        <translation>Angola</translation>
     </message>
     <message>
         <source>Anguilla</source>
-        <translation type="unfinished"></translation>
+        <translation>Anguila</translation>
     </message>
     <message>
         <source>AntiguaAndBarbuda</source>
-        <translation type="unfinished"></translation>
+        <translation>Antiguae Barbuda</translation>
     </message>
     <message>
         <source>Argentina</source>
-        <translation type="unfinished"></translation>
+        <translation>Argentina</translation>
     </message>
     <message>
         <source>Armenia</source>
-        <translation type="unfinished"></translation>
+        <translation>Arménia</translation>
     </message>
     <message>
         <source>Aruba</source>
-        <translation type="unfinished"></translation>
+        <translation>Aruba</translation>
     </message>
     <message>
         <source>Australia</source>
-        <translation type="unfinished"></translation>
+        <translation>Austrália</translation>
     </message>
     <message>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>Áustria</translation>
     </message>
     <message>
         <source>Azerbaijan</source>
-        <translation type="unfinished"></translation>
+        <translation>Azerbaijão</translation>
     </message>
     <message>
         <source>Bahamas</source>
-        <translation type="unfinished"></translation>
+        <translation>Bahamas</translation>
     </message>
     <message>
         <source>Bahrain</source>
-        <translation type="unfinished"></translation>
+        <translation>Barém</translation>
     </message>
     <message>
         <source>Bangladesh</source>
-        <translation type="unfinished"></translation>
+        <translation>Bangladesh</translation>
     </message>
     <message>
         <source>Barbados</source>
-        <translation type="unfinished"></translation>
+        <translation>Barbados</translation>
     </message>
     <message>
         <source>Belarus</source>
-        <translation type="unfinished"></translation>
+        <translation>Bielorrússia</translation>
     </message>
     <message>
         <source>Belgium</source>
-        <translation type="unfinished"></translation>
+        <translation>Bélgica</translation>
     </message>
     <message>
         <source>Belize</source>
-        <translation type="unfinished"></translation>
+        <translation>Belize</translation>
     </message>
     <message>
         <source>Benin</source>
-        <translation type="unfinished"></translation>
+        <translation>Benim</translation>
     </message>
     <message>
         <source>Bermuda</source>
-        <translation type="unfinished"></translation>
+        <translation>Bermudas</translation>
     </message>
     <message>
         <source>Bhutan</source>
-        <translation type="unfinished"></translation>
+        <translation>Butão</translation>
     </message>
     <message>
         <source>Bolivia</source>
-        <translation type="unfinished"></translation>
+        <translation>Bolívia</translation>
     </message>
     <message>
         <source>BosniaAndHerzegowina</source>
-        <translation type="unfinished"></translation>
+        <translation>Bósnia e Herzegowina</translation>
     </message>
     <message>
         <source>Botswana</source>
-        <translation type="unfinished"></translation>
+        <translation>Botsuana</translation>
     </message>
     <message>
         <source>Brazil</source>
-        <translation type="unfinished"></translation>
+        <translation>Brasil</translation>
     </message>
     <message>
         <source>Brunei</source>
-        <translation type="unfinished"></translation>
+        <translation>Brunei</translation>
     </message>
     <message>
         <source>Bulgaria</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulgária</translation>
     </message>
     <message>
         <source>BurkinaFaso</source>
-        <translation type="unfinished"></translation>
+        <translation>Burkinafaso</translation>
     </message>
     <message>
         <source>Burundi</source>
-        <translation type="unfinished"></translation>
+        <translation>Burúndi</translation>
     </message>
     <message>
         <source>Cambodia</source>
-        <translation type="unfinished"></translation>
+        <translation>Camboja</translation>
     </message>
     <message>
         <source>Cameroon</source>
-        <translation type="unfinished"></translation>
+        <translation>Camarões</translation>
     </message>
     <message>
         <source>Canada</source>
-        <translation type="unfinished"></translation>
+        <translation>Canadá</translation>
     </message>
     <message>
         <source>CapeVerde</source>
-        <translation type="unfinished"></translation>
+        <translation>Cabo Verde</translation>
     </message>
     <message>
         <source>CaymanIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Caymanas</translation>
     </message>
     <message>
         <source>CentralAfricanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>República Centro-Africana</translation>
     </message>
     <message>
         <source>Chad</source>
-        <translation type="unfinished"></translation>
+        <translation>Chade</translation>
     </message>
     <message>
         <source>Chile</source>
-        <translation type="unfinished"></translation>
+        <translation>Chile</translation>
     </message>
     <message>
         <source>China</source>
-        <translation type="unfinished"></translation>
+        <translation>China</translation>
     </message>
     <message>
         <source>Colombia</source>
-        <translation type="unfinished"></translation>
+        <translation>Colômbia</translation>
     </message>
     <message>
         <source>Comoros</source>
-        <translation type="unfinished"></translation>
+        <translation>Comores</translation>
     </message>
     <message>
         <source>PeoplesRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>República do Congo</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfCongo</source>
-        <translation type="unfinished"></translation>
+        <translation>República Democrática do Congo</translation>
     </message>
     <message>
         <source>CookIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Cookies</translation>
     </message>
     <message>
         <source>CostaRica</source>
-        <translation type="unfinished"></translation>
+        <translation>Costa Rica</translation>
     </message>
     <message>
         <source>IvoryCoast</source>
-        <translation type="unfinished"></translation>
+        <translation>Costa do Marfim</translation>
     </message>
     <message>
         <source>Croatia</source>
-        <translation type="unfinished"></translation>
+        <translation>Croácia</translation>
     </message>
     <message>
         <source>Cuba</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuba</translation>
     </message>
     <message>
         <source>Cyprus</source>
-        <translation type="unfinished"></translation>
+        <translation>Chipre</translation>
     </message>
     <message>
         <source>CzechRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>República Tcheca</translation>
     </message>
     <message>
         <source>Denmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Dinamarca</translation>
     </message>
     <message>
         <source>Djibouti</source>
-        <translation type="unfinished"></translation>
+        <translation>Djibuti</translation>
     </message>
     <message>
         <source>Dominica</source>
-        <translation type="unfinished"></translation>
+        <translation>Dominica</translation>
     </message>
     <message>
         <source>DominicanRepublic</source>
-        <translation type="unfinished"></translation>
+        <translation>República Dominicana</translation>
     </message>
     <message>
         <source>Ecuador</source>
-        <translation type="unfinished"></translation>
+        <translation>Equador</translation>
     </message>
     <message>
         <source>Egypt</source>
-        <translation type="unfinished"></translation>
+        <translation>Egito</translation>
     </message>
     <message>
         <source>ElSalvador</source>
-        <translation type="unfinished"></translation>
+        <translation>El Salvador</translation>
     </message>
     <message>
         <source>EquatorialGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Guiné Equatorial</translation>
     </message>
     <message>
         <source>Eritrea</source>
-        <translation type="unfinished"></translation>
+        <translation>Eritreia</translation>
     </message>
     <message>
         <source>Estonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Estónia</translation>
     </message>
     <message>
         <source>Ethiopia</source>
-        <translation type="unfinished"></translation>
+        <translation>Etiópia</translation>
     </message>
     <message>
         <source>FalklandIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Malvinas</translation>
     </message>
     <message>
         <source>FaroeIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Faroé</translation>
     </message>
     <message>
         <source>Fiji</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiji</translation>
     </message>
     <message>
         <source>Finland</source>
-        <translation type="unfinished"></translation>
+        <translation>Finlândia</translation>
     </message>
     <message>
         <source>France</source>
-        <translation type="unfinished"></translation>
+        <translation>França</translation>
     </message>
     <message>
         <source>FrenchGuiana</source>
-        <translation type="unfinished"></translation>
+        <translation>Francesa Guiana</translation>
     </message>
     <message>
         <source>FrenchPolynesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Polinésia Francesa</translation>
     </message>
     <message>
         <source>Gabon</source>
-        <translation type="unfinished"></translation>
+        <translation>Gabão</translation>
     </message>
     <message>
         <source>Gambia</source>
-        <translation type="unfinished"></translation>
+        <translation>Gâmbia</translation>
     </message>
     <message>
         <source>Georgia</source>
-        <translation type="unfinished"></translation>
+        <translation>Geórgia</translation>
     </message>
     <message>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
+        <translation>Alemanha</translation>
     </message>
     <message>
         <source>Ghana</source>
-        <translation type="unfinished"></translation>
+        <translation>Gana</translation>
     </message>
     <message>
         <source>Gibraltar</source>
-        <translation type="unfinished"></translation>
+        <translation>Gibraltar</translation>
     </message>
     <message>
         <source>Greece</source>
-        <translation type="unfinished"></translation>
+        <translation>Grécia</translation>
     </message>
     <message>
         <source>Greenland</source>
-        <translation type="unfinished"></translation>
+        <translation>Gronelândia</translation>
     </message>
     <message>
         <source>Grenada</source>
-        <translation type="unfinished"></translation>
+        <translation>Granada</translation>
     </message>
     <message>
         <source>Guadeloupe</source>
-        <translation type="unfinished"></translation>
+        <translation>Guadalupe</translation>
     </message>
     <message>
         <source>Guam</source>
-        <translation type="unfinished"></translation>
+        <translation>Guam</translation>
     </message>
     <message>
         <source>Guatemala</source>
-        <translation type="unfinished"></translation>
+        <translation>Guatemala</translation>
     </message>
     <message>
         <source>Guinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Guiné</translation>
     </message>
     <message>
         <source>GuineaBissau</source>
-        <translation type="unfinished"></translation>
+        <translation>Guiné-Bissau</translation>
     </message>
     <message>
         <source>Guyana</source>
-        <translation type="unfinished"></translation>
+        <translation>Guiana</translation>
     </message>
     <message>
         <source>Haiti</source>
-        <translation type="unfinished"></translation>
+        <translation>Haiti</translation>
     </message>
     <message>
         <source>Honduras</source>
-        <translation type="unfinished"></translation>
+        <translation>Honduras</translation>
     </message>
     <message>
         <source>HongKong</source>
-        <translation type="unfinished"></translation>
+        <translation>Hong Kong</translation>
     </message>
     <message>
         <source>Hungary</source>
-        <translation type="unfinished"></translation>
+        <translation>Hungria</translation>
     </message>
     <message>
         <source>Iceland</source>
-        <translation type="unfinished"></translation>
+        <translation>Islândia</translation>
     </message>
     <message>
         <source>India</source>
-        <translation type="unfinished"></translation>
+        <translation>Índia</translation>
     </message>
     <message>
         <source>Indonesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Indonésia</translation>
     </message>
     <message>
         <source>Iran</source>
-        <translation type="unfinished"></translation>
+        <translation>Irã</translation>
     </message>
     <message>
         <source>Iraq</source>
-        <translation type="unfinished"></translation>
+        <translation>Iraque</translation>
     </message>
     <message>
         <source>Ireland</source>
-        <translation type="unfinished"></translation>
+        <translation>Irlanda</translation>
     </message>
     <message>
         <source>Israel</source>
-        <translation type="unfinished"></translation>
+        <translation>Israel</translation>
     </message>
     <message>
         <source>Italy</source>
-        <translation type="unfinished"></translation>
+        <translation>Itália</translation>
     </message>
     <message>
         <source>Jamaica</source>
-        <translation type="unfinished"></translation>
+        <translation>Jamaica</translation>
     </message>
     <message>
         <source>Japan</source>
-        <translation type="unfinished"></translation>
+        <translation>Japão</translation>
     </message>
     <message>
         <source>Jordan</source>
-        <translation type="unfinished"></translation>
+        <translation>Jordânia</translation>
     </message>
     <message>
         <source>Kazakhstan</source>
-        <translation type="unfinished"></translation>
+        <translation>Cazaquistão</translation>
     </message>
     <message>
         <source>Kenya</source>
-        <translation type="unfinished"></translation>
+        <translation>Quênia</translation>
     </message>
     <message>
         <source>Kiribati</source>
-        <translation type="unfinished"></translation>
+        <translation>Kiribati</translation>
     </message>
     <message>
         <source>DemocraticRepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>Democratica República da Coreia</translation>
     </message>
     <message>
         <source>RepublicOfKorea</source>
-        <translation type="unfinished"></translation>
+        <translation>República da Coreia</translation>
     </message>
     <message>
         <source>Kuwait</source>
-        <translation type="unfinished"></translation>
+        <translation>Kuwait</translation>
     </message>
     <message>
         <source>Kyrgyzstan</source>
-        <translation type="unfinished"></translation>
+        <translation>Quirguizistão</translation>
     </message>
     <message>
         <source>Laos</source>
-        <translation type="unfinished"></translation>
+        <translation>Laos</translation>
     </message>
     <message>
         <source>Latvia</source>
-        <translation type="unfinished"></translation>
+        <translation>Letónia</translation>
     </message>
     <message>
         <source>Lebanon</source>
-        <translation type="unfinished"></translation>
+        <translation>Líbano</translation>
     </message>
     <message>
         <source>Lesotho</source>
-        <translation type="unfinished"></translation>
+        <translation>Lesoto</translation>
     </message>
     <message>
         <source>Liberia</source>
-        <translation type="unfinished"></translation>
+        <translation>Libéria</translation>
     </message>
     <message>
         <source>Libya</source>
-        <translation type="unfinished"></translation>
+        <translation>Líbia</translation>
     </message>
     <message>
         <source>Liechtenstein</source>
-        <translation type="unfinished"></translation>
+        <translation>Liechtenstein</translation>
     </message>
     <message>
         <source>Lithuania</source>
-        <translation type="unfinished"></translation>
+        <translation>Lituânia</translation>
     </message>
     <message>
         <source>Luxembourg</source>
-        <translation type="unfinished"></translation>
+        <translation>Luxemburgo</translation>
     </message>
     <message>
         <source>Macau</source>
-        <translation type="unfinished"></translation>
+        <translation>Macau</translation>
     </message>
     <message>
         <source>Macedonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Macedónia</translation>
     </message>
     <message>
         <source>Madagascar</source>
-        <translation type="unfinished"></translation>
+        <translation>Madagascar</translation>
     </message>
     <message>
         <source>Malawi</source>
-        <translation type="unfinished"></translation>
+        <translation>Malawi</translation>
     </message>
     <message>
         <source>Malaysia</source>
-        <translation type="unfinished"></translation>
+        <translation>Malásia</translation>
     </message>
     <message>
         <source>Maldives</source>
-        <translation type="unfinished"></translation>
+        <translation>Maldivas</translation>
     </message>
     <message>
         <source>Mali</source>
-        <translation type="unfinished"></translation>
+        <translation>Mali</translation>
     </message>
     <message>
         <source>Malta</source>
-        <translation type="unfinished"></translation>
+        <translation>Malta</translation>
     </message>
     <message>
         <source>MarshallIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Marshallis</translation>
     </message>
     <message>
         <source>Martinique</source>
-        <translation type="unfinished"></translation>
+        <translation>Martinica</translation>
     </message>
     <message>
         <source>Mauritania</source>
-        <translation type="unfinished"></translation>
+        <translation>Mauritânia</translation>
     </message>
     <message>
         <source>Mauritius</source>
-        <translation type="unfinished"></translation>
+        <translation>Maurícia</translation>
     </message>
     <message>
         <source>Mayotte</source>
-        <translation type="unfinished"></translation>
+        <translation>Mayotte</translation>
     </message>
     <message>
         <source>Mexico</source>
-        <translation type="unfinished"></translation>
+        <translation>México</translation>
     </message>
     <message>
         <source>Micronesia</source>
-        <translation type="unfinished"></translation>
+        <translation>Micronésia</translation>
     </message>
     <message>
         <source>Moldova</source>
-        <translation type="unfinished"></translation>
+        <translation>Moldávia</translation>
     </message>
     <message>
         <source>Monaco</source>
-        <translation type="unfinished"></translation>
+        <translation>Mónaco</translation>
     </message>
     <message>
         <source>Mongolia</source>
-        <translation type="unfinished"></translation>
+        <translation>Mongólia</translation>
     </message>
     <message>
         <source>Montenegro</source>
-        <translation type="unfinished"></translation>
+        <translation>Montenegro</translation>
     </message>
     <message>
         <source>Montserrat</source>
-        <translation type="unfinished"></translation>
+        <translation>Monserrate</translation>
     </message>
     <message>
         <source>Morocco</source>
-        <translation type="unfinished"></translation>
+        <translation>Marrocos</translation>
     </message>
     <message>
         <source>Mozambique</source>
-        <translation type="unfinished"></translation>
+        <translation>Moçambique</translation>
     </message>
     <message>
         <source>Myanmar</source>
-        <translation type="unfinished"></translation>
+        <translation>Mianmar</translation>
     </message>
     <message>
         <source>Namibia</source>
-        <translation type="unfinished"></translation>
+        <translation>Namíbia</translation>
     </message>
     <message>
         <source>NauruCountry</source>
-        <translation type="unfinished"></translation>
+        <translation>Nauru</translation>
     </message>
     <message>
         <source>Nepal</source>
-        <translation type="unfinished"></translation>
+        <translation>Nepal</translation>
     </message>
     <message>
         <source>Netherlands</source>
-        <translation type="unfinished"></translation>
+        <translation>Holanda</translation>
     </message>
     <message>
         <source>NewCaledonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova Caledônia</translation>
     </message>
     <message>
         <source>NewZealand</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova Zelândia</translation>
     </message>
     <message>
         <source>Nicaragua</source>
-        <translation type="unfinished"></translation>
+        <translation>Nicarágua</translation>
     </message>
     <message>
         <source>Niger</source>
-        <translation type="unfinished"></translation>
+        <translation>Níger</translation>
     </message>
     <message>
         <source>Nigeria</source>
-        <translation type="unfinished"></translation>
+        <translation>Nigéria</translation>
     </message>
     <message>
         <source>Niue</source>
-        <translation type="unfinished"></translation>
+        <translation>Niue</translation>
     </message>
     <message>
         <source>NorfolkIsland</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilha Norfolk</translation>
     </message>
     <message>
         <source>NorthernMarianaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas do Norte da Mariana</translation>
     </message>
     <message>
         <source>Norway</source>
-        <translation type="unfinished"></translation>
+        <translation>Noruega</translation>
     </message>
     <message>
         <source>Oman</source>
-        <translation type="unfinished"></translation>
+        <translation>Omã</translation>
     </message>
     <message>
         <source>Pakistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Paquistão</translation>
     </message>
     <message>
         <source>Palau</source>
-        <translation type="unfinished"></translation>
+        <translation>Palau</translation>
     </message>
     <message>
         <source>PalestinianTerritories</source>
-        <translation type="unfinished"></translation>
+        <translation>Palestinianos anteriores</translation>
     </message>
     <message>
         <source>Panama</source>
-        <translation type="unfinished"></translation>
+        <translation>Panamá</translation>
     </message>
     <message>
         <source>PapuaNewGuinea</source>
-        <translation type="unfinished"></translation>
+        <translation>Papua Nova Guiné</translation>
     </message>
     <message>
         <source>Paraguay</source>
-        <translation type="unfinished"></translation>
+        <translation>Paraguai</translation>
     </message>
     <message>
         <source>Peru</source>
-        <translation type="unfinished"></translation>
+        <translation>Peru</translation>
     </message>
     <message>
         <source>Philippines</source>
-        <translation type="unfinished"></translation>
+        <translation>Filipinas</translation>
     </message>
     <message>
         <source>Poland</source>
-        <translation type="unfinished"></translation>
+        <translation>Polónia</translation>
     </message>
     <message>
         <source>Portugal</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugal</translation>
     </message>
     <message>
         <source>PuertoRico</source>
-        <translation type="unfinished"></translation>
+        <translation>Porto Rico</translation>
     </message>
     <message>
         <source>Qatar</source>
-        <translation type="unfinished"></translation>
+        <translation>Catar</translation>
     </message>
     <message>
         <source>Reunion</source>
-        <translation type="unfinished"></translation>
+        <translation>Reunião</translation>
     </message>
     <message>
         <source>Romania</source>
-        <translation type="unfinished"></translation>
+        <translation>Roménia</translation>
     </message>
     <message>
         <source>RussianFederation</source>
-        <translation type="unfinished"></translation>
+        <translation>Federação Russa</translation>
     </message>
     <message>
         <source>Rwanda</source>
-        <translation type="unfinished"></translation>
+        <translation>Ruanda</translation>
     </message>
     <message>
         <source>SaintHelena</source>
-        <translation type="unfinished"></translation>
+        <translation>Santa Lena</translation>
     </message>
     <message>
         <source>SaintKittsAndNevis</source>
-        <translation type="unfinished"></translation>
+        <translation>São Cristóvão e Nevis</translation>
     </message>
     <message>
         <source>SaintLucia</source>
-        <translation type="unfinished"></translation>
+        <translation>Santa Lucia</translation>
     </message>
     <message>
         <source>SaintPierreAndMiquelon</source>
-        <translation type="unfinished"></translation>
+        <translation>São Pedro e Miquelon</translation>
     </message>
     <message>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation type="unfinished"></translation>
+        <translation>São Vicente e Granadinas</translation>
     </message>
     <message>
         <source>Samoa</source>
-        <translation type="unfinished"></translation>
+        <translation>Samoa</translation>
     </message>
     <message>
         <source>SanMarino</source>
-        <translation type="unfinished"></translation>
+        <translation>São Marino</translation>
     </message>
     <message>
         <source>SaoTomeAndPrincipe</source>
-        <translation type="unfinished"></translation>
+        <translation>São Tomé e Príncipe</translation>
     </message>
     <message>
         <source>SaudiArabia</source>
-        <translation type="unfinished"></translation>
+        <translation>Arábia Saudita</translation>
     </message>
     <message>
         <source>Senegal</source>
-        <translation type="unfinished"></translation>
+        <translation>Senegal</translation>
     </message>
     <message>
         <source>Serbia</source>
-        <translation type="unfinished"></translation>
+        <translation>Sérvia</translation>
     </message>
     <message>
         <source>Seychelles</source>
-        <translation type="unfinished"></translation>
+        <translation>Seicheles</translation>
     </message>
     <message>
         <source>SierraLeone</source>
-        <translation type="unfinished"></translation>
+        <translation>Serra Leoa</translation>
     </message>
     <message>
         <source>Singapore</source>
-        <translation type="unfinished"></translation>
+        <translation>Singapura</translation>
     </message>
     <message>
         <source>Slovakia</source>
-        <translation type="unfinished"></translation>
+        <translation>Eslováquia</translation>
     </message>
     <message>
         <source>Slovenia</source>
-        <translation type="unfinished"></translation>
+        <translation>Eslovénia</translation>
     </message>
     <message>
         <source>SolomonIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Salomão</translation>
     </message>
     <message>
         <source>Somalia</source>
-        <translation type="unfinished"></translation>
+        <translation>Somália</translation>
     </message>
     <message>
         <source>SouthAfrica</source>
-        <translation type="unfinished"></translation>
+        <translation>África do Sul</translation>
     </message>
     <message>
         <source>Spain</source>
-        <translation type="unfinished"></translation>
+        <translation>Espanha</translation>
     </message>
     <message>
         <source>SriLanka</source>
-        <translation type="unfinished"></translation>
+        <translation>Sri Lanka</translation>
     </message>
     <message>
         <source>Sudan</source>
-        <translation type="unfinished"></translation>
+        <translation>Sudão</translation>
     </message>
     <message>
         <source>Suriname</source>
-        <translation type="unfinished"></translation>
+        <translation>Suriname</translation>
     </message>
     <message>
         <source>Swaziland</source>
-        <translation type="unfinished"></translation>
+        <translation>Suazilândia</translation>
     </message>
     <message>
         <source>Sweden</source>
-        <translation type="unfinished"></translation>
+        <translation>Suécia</translation>
     </message>
     <message>
         <source>Switzerland</source>
-        <translation type="unfinished"></translation>
+        <translation>Suíça</translation>
     </message>
     <message>
         <source>Syria</source>
-        <translation type="unfinished"></translation>
+        <translation>Síria</translation>
     </message>
     <message>
         <source>Taiwan</source>
-        <translation type="unfinished"></translation>
+        <translation>Taiwan</translation>
     </message>
     <message>
         <source>Tajikistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Tajiquistão</translation>
     </message>
     <message>
         <source>Tanzania</source>
-        <translation type="unfinished"></translation>
+        <translation>Tanzânia</translation>
     </message>
     <message>
         <source>Thailand</source>
-        <translation type="unfinished"></translation>
+        <translation>Tailândia</translation>
     </message>
     <message>
         <source>Togo</source>
-        <translation type="unfinished"></translation>
+        <translation>Togo</translation>
     </message>
     <message>
         <source>Tokelau</source>
-        <translation type="unfinished"></translation>
+        <translation>Tokelau</translation>
     </message>
     <message>
         <source>Tonga</source>
-        <translation type="unfinished"></translation>
+        <translation>Tonga</translation>
     </message>
     <message>
         <source>TrinidadAndTobago</source>
-        <translation type="unfinished"></translation>
+        <translation>Trinidad e Tobago</translation>
     </message>
     <message>
         <source>Tunisia</source>
-        <translation type="unfinished"></translation>
+        <translation>Tunísia</translation>
     </message>
     <message>
         <source>Turkey</source>
-        <translation type="unfinished"></translation>
+        <translation>Turquia</translation>
     </message>
     <message>
         <source>Turkmenistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Turquemenistão</translation>
     </message>
     <message>
         <source>TurksAndCaicosIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Turcas e Caicos</translation>
     </message>
     <message>
         <source>Tuvalu</source>
-        <translation type="unfinished"></translation>
+        <translation>Tuvalu</translation>
     </message>
     <message>
         <source>Uganda</source>
-        <translation type="unfinished"></translation>
+        <translation>Uganda</translation>
     </message>
     <message>
         <source>Ukraine</source>
-        <translation type="unfinished"></translation>
+        <translation>Ucrânia</translation>
     </message>
     <message>
         <source>UnitedArabEmirates</source>
-        <translation type="unfinished"></translation>
+        <translation>Emirados Árabes Unidos</translation>
     </message>
     <message>
         <source>UnitedKingdom</source>
-        <translation type="unfinished"></translation>
+        <translation>Reino Unido</translation>
     </message>
     <message>
         <source>UnitedStates</source>
-        <translation type="unfinished"></translation>
+        <translation>Estados Unidos</translation>
     </message>
     <message>
         <source>Uruguay</source>
-        <translation type="unfinished"></translation>
+        <translation>Uruguai</translation>
     </message>
     <message>
         <source>Uzbekistan</source>
-        <translation type="unfinished"></translation>
+        <translation>Uzbequistão</translation>
     </message>
     <message>
         <source>Vanuatu</source>
-        <translation type="unfinished"></translation>
+        <translation>Vanuatu</translation>
     </message>
     <message>
         <source>Venezuela</source>
-        <translation type="unfinished"></translation>
+        <translation>Venezuela</translation>
     </message>
     <message>
         <source>Vietnam</source>
-        <translation type="unfinished"></translation>
+        <translation>Vietname</translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation type="unfinished"></translation>
+        <translation>Ilhas Wallis e Futuna</translation>
     </message>
     <message>
         <source>Yemen</source>
-        <translation type="unfinished"></translation>
+        <translation>Iémen</translation>
     </message>
     <message>
         <source>Zambia</source>
-        <translation type="unfinished"></translation>
+        <translation>Zâmbia</translation>
     </message>
     <message>
         <source>Zimbabwe</source>
-        <translation type="unfinished"></translation>
+        <translation>Zimbabué</translation>
     </message>
 </context>
 <context>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation>Você quer baixar %1 (%2)?</translation>
+        <translation>Deseja transferir %1 (%2)?</translation>
     </message>
 </context>
 </TS>

@@ -39,6 +39,7 @@ class SipAddressesModel : public QAbstractListModel {
 public:
   struct ConferenceEntry {
     int unreadMessageCount;
+    int missedCallCount;
     bool isComposing;
     QDateTime timestamp;
   };
@@ -132,7 +133,7 @@ private:
 
   void updateObservers (const QString &sipAddress, ContactModel *contact);
   void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
-  void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount);
+  void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount);
 
   // ---------------------------------------------------------------------------
 
