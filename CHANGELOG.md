@@ -33,7 +33,7 @@
 - Display the name of the caller in incoming notifications
 - Notifications are shown in all available screens
 - Display unread message count in system tray icon/mac app icon.
-- Display unread chat message count in `Manage Accounts` dialog and in `Main Window`.
+- Display unread chat message count and missed calls in `Manage Accounts` dialog and in `Main Window`.
 - Add a media parameters dialog in the `Call View` to selected devices and set volume.
 - Display a spinner when a message is sending.
 - Disable screensaver on fullscreen video call.
