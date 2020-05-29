@@ -310,6 +310,9 @@ int CoreManager::getEventCount () const {
 int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &localAddress)const{
 	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCount(peerAddress, localAddress) : 0;
 }
+int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
+	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCountFromLocal(localAddress) : 0;
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::iterate () {
