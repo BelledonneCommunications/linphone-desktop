@@ -124,7 +124,7 @@ function openCallStatistics () {
   callStatistics.open()
 }
 
-function openMediaParameters (incall) {
+function openMediaParameters (window, incall) {
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'), {
     call: incall.call
   })
@@ -139,7 +139,9 @@ function showFullscreen (position) {
     properties: {
       caller: incall,
       x:position.x,
-      y:position.y
+      y:position.y,
+      width:window.width,
+      height:window.height
     }
   }, true)
 }

@@ -33,7 +33,7 @@ MouseArea {
     delay: tooltipArea.delay
     parent: tooltipParent
     visible: _visible || force
-    width: tooltipParent.width
+    width: tooltipParent.width>TooltipStyle.minWidth?tooltipParent.width:TooltipStyle.minWidth
 
     timeout: -1
 

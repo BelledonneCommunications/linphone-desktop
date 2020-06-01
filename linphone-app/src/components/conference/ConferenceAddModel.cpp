@@ -42,7 +42,7 @@ ConferenceHelperModel::ConferenceAddModel::ConferenceAddModel (QObject *parent) 
   );
 
   for (const auto &call : coreManager->getCore()->getCalls()) {
-    if (call->getParams()->getLocalConferenceMode())
+    if (call->getCurrentParams()->getLocalConferenceMode())
       addToConference(call->getRemoteAddress());
   }
 }
@@ -134,32 +134,40 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 // -----------------------------------------------------------------------------
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
-  list<shared_ptr<linphone::Address>> linphoneAddresses;
+  shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
+  if(!conference){
+    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
+  }
+  auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
+  list<shared_ptr<linphone::Address>> allLinphoneAddresses;
+
+//1) Invite participants first to avoid removing conference if empty
   for (const auto &map : mRefs) {
     shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address>>();
     Q_CHECK_PTR(linphoneAddress);
-    linphoneAddresses.push_back(linphoneAddress);
+    allLinphoneAddresses.push_back(linphoneAddress);
   }
+  if( allLinphoneAddresses.size() > 0)
+    conference->inviteParticipants(
+      allLinphoneAddresses,
+      CoreManager::getInstance()->getCore()->createCallParams(nullptr)
+    );
 
-  shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
-  if(!conference)
-    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
-  
-  // Remove sip addresses if necessary.
-  for (const auto &call : CoreManager::getInstance()->getCore()->getCalls()) {
-    if (!call->getParams()->getLocalConferenceMode())
-      continue;
-
-    const QString sipAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
-    if (!mSipAddresses.contains(sipAddress))
-      call->terminate();
-  }
-
-  conference->inviteParticipants(
-    linphoneAddresses,
-    CoreManager::getInstance()->getCore()->createCallParams(nullptr)
-  );
+// 2) Put in pause and remove all calls that are not in the conference list
+  for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
+      const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
+      auto address = allLinphoneAddresses.begin();
+      while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
+        ++address;
+      if(address == allLinphoneAddresses.end()){// Not in conference list :  put in pause and remove it from conference if it's the case
+        call->pause();
+        if( call->getParams()->getLocalConferenceMode() ){// Remove conference if it is not yet requested
+          CoreManager::getInstance()->getCore()->removeFromConference(call);
+        }
+      }
+    }
 }
+
 
 // -----------------------------------------------------------------------------
 
