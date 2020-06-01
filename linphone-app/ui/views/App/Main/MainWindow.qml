@@ -112,8 +112,8 @@ ApplicationWindow {
               text: AccountSettingsModel.sipAddress
             }
 
-            onClicked:  {if(AccountSettingsModel.registrationState !== AccountSettingsModel.RegistrationStateRegistered && AccountSettingsModel.registrationState !== AccountSettingsModel.RegistrationStateNoProxy)
-                            CoreManager.forceRefreshRegisters()
+            onClicked:  {
+                        CoreManager.forceRefreshRegisters()
                         Logic.manageAccounts()
                         }
           }

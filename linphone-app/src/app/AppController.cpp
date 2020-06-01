@@ -47,7 +47,8 @@ AppController::AppController (int &argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
   // Useful to share camera on Fullscreen (other context)
   QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
-    // Do not use APPLICATION_NAME here.
+
+  // Do not use APPLICATION_NAME here.
   // The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
   QCoreApplication::setApplicationName(EXECUTABLE_NAME);
   QApplication::setOrganizationDomain(EXECUTABLE_NAME);

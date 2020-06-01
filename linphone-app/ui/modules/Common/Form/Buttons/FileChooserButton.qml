@@ -27,7 +27,7 @@ TextField {
 
   text: {
     var path = textField.selectedFile
-    return path.length ? Utils.basename(path) : ''
+    return path.length ? path : ''
   }
 
   tools: Item {

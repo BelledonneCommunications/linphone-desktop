@@ -32,6 +32,7 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   color: CallStyle.backgroundColor
+  anchors.fill:parent
 
   // ---------------------------------------------------------------------------
 
@@ -78,7 +79,7 @@ Rectangle {
           running: true
           triggeredOnStart: true
 
-          onTriggered: elapsedTime.text = Utils.formatElapsedTime(call.duration)
+          onTriggered: {elapsedTime.text = Utils.formatElapsedTime(call.duration);}
         }
       }
 
@@ -364,7 +365,7 @@ Rectangle {
           icon: 'options'
           iconSize: CallStyle.actionArea.iconSize
 
-          onClicked: Logic.openMediaParameters(incall)
+          onClicked: Logic.openMediaParameters(window, incall)
         }
       }
 

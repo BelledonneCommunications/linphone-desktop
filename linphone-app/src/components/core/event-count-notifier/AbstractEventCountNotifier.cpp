@@ -69,6 +69,23 @@ void AbstractEventCountNotifier::internalnotifyEventCount () {
   emit eventCountChanged(n);
 }
 
+// Get missed call from a chat (useful for showing bubbles on Timelines)
+int AbstractEventCountNotifier::getMissedCallCount(const QString &peerAddress, const QString &localAddress) const{
+	auto it = mMissedCalls.find({ peerAddress, localAddress });
+	if (it != mMissedCalls.cend()) 
+		return *it;
+	else
+		return 0;
+}
+// Get missed call from a chat (useful for showing bubbles on Timelines)
+int AbstractEventCountNotifier::getMissedCallCountFromLocal(const QString &localAddress) const{
+	int count = 0;
+	for(auto it = mMissedCalls.cbegin() ; it != mMissedCalls.cend() ; ++it){
+		if(it.key().second == localAddress)
+			count += *it;
+	}
+	return count;
+}
 // -----------------------------------------------------------------------------
 
 void AbstractEventCountNotifier::handleChatModelCreated (const shared_ptr<ChatModel> &chatModel) {

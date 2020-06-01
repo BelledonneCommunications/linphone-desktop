@@ -139,7 +139,8 @@ void SoundPlayer::buildInternalPlayer () {
   mInternalPlayer = coreManager->getCore()->createLocalPlayer(
     Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
   );
-  mInternalPlayer->addListener(mHandlers);
+  if(mInternalPlayer)
+	mInternalPlayer->addListener(mHandlers);
 }
 
 void SoundPlayer::rebuildInternalPlayer () {
@@ -152,7 +153,8 @@ void SoundPlayer::stop (bool force) {
     return;
   mForceCloseTimer->stop();
   mPlaybackState = SoundPlayer::StoppedState;
-  mInternalPlayer->close();
+  if(mInternalPlayer)
+	mInternalPlayer->close();
   
   emit stopped();
   emit playbackStateChanged(mPlaybackState);

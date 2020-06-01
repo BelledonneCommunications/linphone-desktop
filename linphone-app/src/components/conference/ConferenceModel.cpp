@@ -50,11 +50,11 @@ ConferenceModel::ConferenceModel (QObject *parent) : QSortFilterProxyModel(paren
     CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::callStateChanged,
     this, [this] { emit conferenceChanged(); });
 }
-
+// Show all paraticpants thar should be, will be or are still in conference
 bool ConferenceModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  Q_UNUSED(sourceRow)
-  Q_UNUSED(sourceParent)
-  return true;
+  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+  const CallModel *callModel = index.data().value<CallModel *>();
+  return callModel->getCall()->getParams()->getLocalConferenceMode() || callModel->getCall()->getCurrentParams()->getLocalConferenceMode();
 }
 // -----------------------------------------------------------------------------
 
@@ -63,7 +63,7 @@ void ConferenceModel::terminate () {
   core->terminateConference();
 
   for (const auto &call : core->getCalls()) {
-    if (call->getParams()->getLocalConferenceMode())
+    if (call->getParams()->getLocalConferenceMode())// Terminate all call where participants are or will be in conference
       call->terminate();
   }
 }
