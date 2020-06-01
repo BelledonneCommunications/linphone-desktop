@@ -59,7 +59,7 @@ function openConferenceManager () {
 }
 
 // -----------------------------------------------------------------------------
-
+// Used to get Component based from Call Status
 function getContent () {
   var call = window.call
   if (call == null) {

@@ -196,11 +196,14 @@ function openWindow (window, parent, options, fullscreen) {
       options.exitHandler.bind(parent)
     )
   }
-  if(fullscreen)
-    object.showFullScreen()
+  if( runOnWindows()){
+    object.show() // Needed for Windows : Show the window in all case. Allow to graphically locate the window before going to fullscreen.
+    if(fullscreen)
+      object.showFullScreen()// Should be equivalent to changing visibility
+  }else if(fullscreen)
+      object.showFullScreen()// Should be equivalent to changing visibility
   else
     object.show()
-
   return object
 }
 
