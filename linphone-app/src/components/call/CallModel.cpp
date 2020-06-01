@@ -187,7 +187,6 @@ void CallModel::acceptWithVideo () {
 
 void CallModel::terminate () {
   CoreManager *core = CoreManager::getInstance();
-
   core->lockVideoRender();
   mCall->terminate();
   core->unlockVideoRender();
@@ -365,10 +364,10 @@ void CallModel::accept (bool withVideo) {
 // -----------------------------------------------------------------------------
 
 void CallModel::updateIsInConference () {
-  if (mIsInConference != mCall->getParams()->getLocalConferenceMode()) {
+  if (mIsInConference != mCall->getCurrentParams()->getLocalConferenceMode()) {
     mIsInConference = !mIsInConference;
-    emit isInConferenceChanged(mIsInConference);
   }
+  emit isInConferenceChanged(mIsInConference);
 }
 
 // -----------------------------------------------------------------------------
