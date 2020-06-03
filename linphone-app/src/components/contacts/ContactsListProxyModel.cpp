@@ -93,7 +93,7 @@ bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelInde
   unsigned int weightB = mWeights[contactB];
 
   // Sort by name and weight.
-  return contactA->mLinphoneFriend->getName() <= contactB->mLinphoneFriend->getName()
+  return contactA->mLinphoneFriend->getName() < contactB->mLinphoneFriend->getName()
 	|| (contactA->mLinphoneFriend->getName() == contactB->mLinphoneFriend->getName() && weightA > weightB
   );
 }
