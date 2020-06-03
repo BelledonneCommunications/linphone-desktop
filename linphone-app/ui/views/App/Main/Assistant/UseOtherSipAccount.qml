@@ -70,8 +70,8 @@ AssistantAbstractView {
 
           ComboBox {
             id: transport
-
             model: [ 'UDP', 'TCP', 'TLS', 'DTLS' ]
+            currentIndex:2
           }
         }
       }
@@ -101,5 +101,6 @@ AssistantAbstractView {
 
   AssistantModel {
     id: assistantModel
+    configFilename: 'use-other-sip-account.rc'
   }
 }
