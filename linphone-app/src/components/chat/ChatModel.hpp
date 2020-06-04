@@ -51,7 +51,11 @@ public:
   enum CallStatus {
     CallStatusDeclined = int(linphone::Call::Status::Declined),
     CallStatusMissed = int(linphone::Call::Status::Missed),
-    CallStatusSuccess = int(linphone::Call::Status::Success)
+    CallStatusSuccess = int(linphone::Call::Status::Success),
+    CallStatusAborted = int(linphone::Call::Status::Aborted),
+    CallStatusEarlyAborted = int(linphone::Call::Status::EarlyAborted),
+    CallStatusAcceptedElsewhere = int(linphone::Call::Status::AcceptedElsewhere),
+    CallStatusDeclinedElsewhere = int(linphone::Call::Status::DeclinedElsewhere)
   };
   Q_ENUM(CallStatus);
 
