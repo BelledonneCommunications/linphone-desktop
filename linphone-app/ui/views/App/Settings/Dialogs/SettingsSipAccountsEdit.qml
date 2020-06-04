@@ -102,7 +102,7 @@ DialogPlus {
               id: transport
 
               enabled: dialog._serverAddressOk
-              model: [ 'UDP', 'TCP', 'TLS', 'DTLS' ]
+              model: [ 'UDP', 'TCP', 'TLS' ]
 
               onActivated: Logic.handleTransportChanged(model[index])
             }

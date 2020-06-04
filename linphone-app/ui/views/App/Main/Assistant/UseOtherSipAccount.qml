@@ -70,8 +70,7 @@ AssistantAbstractView {
 
           ComboBox {
             id: transport
-            model: [ 'UDP', 'TCP', 'TLS', 'DTLS' ]
-            currentIndex:2
+            model: [ 'UDP', 'TCP', 'TLS']
           }
         }
       }
