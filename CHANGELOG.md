@@ -1,15 +1,19 @@
 # Changelog
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## 4.2.0 - Unknown
 
-### Features
+### Added
 
-- Add a `CLI` function in order to support `URI handlers` from browser. Help is available with `linphone --cli-help`. (See: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
-- Improved general video/audio quality.
+- Add a `CLI` function in order to support `URI handlers` from browsers. Help is available with `linphone --cli-help`. (See also: https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/URI%20Handlers%20%28Desktop%20only%29/)
+- Improved general video/audio quality, thanks to improved rate control algorithms in liblinphone and mediastreamer2
 - Echo cancellation more efficient.
 - `OpenH264` codec can be downloaded and used in the application from Cisco website.
 - Improve High DPI Displays support for 4K screens.
-- The fullscreen mode is show on the current call screen
+- When going to fullscreen, the choosen screen is the current call screen
 - Detect audio/video hardware changes while using settings.
 - Updatable audio/video devices while in call.
 
@@ -22,49 +26,56 @@
 - Add an option to allow Linphone to be lauched with the system (autostart).
 - Add an option to play sound notification when an incoming chat message is received.
 - Add Call utilities in Fullscreen mode (medias settings, security, mutable speaker)
-- Capture and playback gains can be changed in settings with sliders.
+- Audio settings display the current microphone and let you adjust capture and playback gains.
 - Conference participants are mutable by clicking on them
 - Add the possibility to record calls automatically.
 - Move logs folder without restart.
-- Add caller/callee on saved files.
+- Add caller and callee information into file names of recordings.
 
+- Enhanced usage when having multiple SIP accounts: the timeline now shows activity for the currently selected SIP account only.
 - Timeline uses current proxy config info and show data only on selected profile.
 - Tooltips can be show in multiple lines
 - Display the name of the caller in incoming notifications
 - Notifications are shown in all available screens
 - Display unread message count in system tray icon/mac app icon.
 - Display unread chat message count and missed calls in `Manage Accounts` dialog and in `Main Window`.
-- Add a media parameters dialog in the `Call View` to selected devices and set volume.
-- Display a spinner when a message is sending.
+- Add a media parameters dialog in the `Call View` to select devices and set volume.
+- Display a spinner when a message is being sent.
 - Disable screensaver on fullscreen video call.
 - New logo, icons and installer assets.
 
 - NSIS (Windows), DMG (MacOsX) and Appimage (Linux) packaging.
 - Supports chinese, danish, french, english, german, hungarian, italian, japanese, lithuanian, portuguese, russian, spanish, swedish, turkish, ukrainian from community contributions.
 
-- Use Native BZip2 instead of Embedded Minizip to extract codec.
+- Use Native BZip2 instead of Embedded Minizip to extract OpenH264 codec.
 - App Nap avoiding for MacOs.
 - Simplify building process.
 
-### Fixes
+### Changed
 
-- Remove the use of `:` separator when a file is saved on Windows.
+- Upgraded to use QT 5.12
+- Depends on linphone-sdk project (numerous direct submodules removed)
+
+### Fixed
+
+- Remove `:` separator from file names of recordings because it is not allowed on Windows.
 - Avoid mark `as read` on selected chat room if window is not active.
 - Search box in main page will not reset its text when clicking on it
 - More stable account authentifications
 - Message status behaviour : Resuming status when changing logs, cursor shapes updates, bind the resend message action to error icon
-- Apple permissions that could lead to mute microphone
+- Apple permissions that could lead to muted microphone
+- Incoming call notification window sometimes not showing
 
 ### Removed
 
 - Prepare.py configuration
 - Remove useless splashscreen.
 - Minizip dependencies
-- Flatpack support
+- Flatpak support
 
 ## 4.1.0 - 2017-07-19
 
-### Features
+### Added
 
 - Add tooltips on `recording` and `screenshot` buttons in `Calls Window`.
 - Show notifications on `recording` and `screenshot`.
@@ -77,7 +88,7 @@
 - Echo canceller supports 48kHz.
 - Better GUI when a proxy config is modified in `Settings Window`.
 
-### Fixes
+### Fixed
 
 - Handle correctly ringer device changes in `Settings Window`.
 - In `Video Settings`, display FPS field only in `custom preset` mode.
