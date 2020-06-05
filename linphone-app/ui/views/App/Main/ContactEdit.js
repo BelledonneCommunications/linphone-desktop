@@ -24,6 +24,7 @@
 .import Linphone 1.0 as Linphone
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 
 // =============================================================================
 
@@ -59,6 +60,9 @@ function handleCreation () {
 
     if (sipAddress && sipAddress.length > 0) {
       vcard.addSipAddress(sipAddress)
+      vcard.username = LinphoneUtils.getContactUsername(Linphone.SipAddressesModel.getSipAddressObserver(sipAddress, sipAddress))
+    }else{
+      vcard.username = ' '// Username initialization to avoid Belr parsing issue when setting new name
     }
 
     contactEdit._vcard = vcard
