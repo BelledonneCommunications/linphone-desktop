@@ -75,7 +75,7 @@ elseif (APPLE)
   set(PLUGINEXT "so")
 endif ()
 
-# Removed unless it is usefull to get a zip from SDK : The SDK is packaged with binaries.
+# Removed unless it is useful to get a zip from SDK : The SDK is packaged with binaries.
 #if (WIN32)
 #  find_program(7Z_PROGRAM 7z PATHS "$ENV{ProgramFiles}/7-Zip")
 #  if (7Z_PROGRAM)

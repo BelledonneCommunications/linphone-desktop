@@ -14,7 +14,7 @@ Rectangle {
   property var container: parent
   property var call
 
-  color: TelKeypadStyle.color   // useless as it is overriden by buttons color, but keep it if buttons are transparent
+  color: TelKeypadStyle.color   // useless as it is overridden by buttons color, but keep it if buttons are transparent
   onActiveFocusChanged: {if(activeFocus) selectedArea.border.width=TelKeypadStyle.selectedBorderWidth; else selectedArea.border.width=0}
   
   layer {
