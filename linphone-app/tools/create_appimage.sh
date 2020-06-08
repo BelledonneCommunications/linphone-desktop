@@ -41,6 +41,16 @@ rm -rf "${WORK_DIR}/AppDir/usr/Packages"
 rm -rf "${WORK_DIR}/AppDir/usr/lib"
 rm -rf "${WORK_DIR}/AppDir/usr/lib64"
 
+if [ -d "${BIN_SOURCE_DIR}/lib64/mediastreamer" ]; then
+	mkdir -p "${WORK_DIR}/AppDir/usr/plugins/"
+	cp -rf "${BIN_SOURCE_DIR}"/lib64/mediastreamer "${WORK_DIR}/AppDir/usr/plugins/"
+fi
+
+if [ -d "${BIN_SOURCE_DIR}/lib/mediastreamer" ]; then
+	mkdir -p "${WORK_DIR}/AppDir/usr/plugins/"
+	cp -rf "${BIN_SOURCE_DIR}"/lib/mediastreamer "${WORK_DIR}/AppDir/usr/plugins/"
+fi
+
 if [ -f "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage" ]; then
 	echo "linuxdeploy-x86_64.AppImage exists"
 else
@@ -71,7 +81,7 @@ else
 	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/linphone --output appimage --desktop-file=${WORK_DIR}/app/share/applications/linphone.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/linphone.svg
 	echo "-- Code Signing of AppImage"
 	if [ -z "$3" ]; then
-		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2 
 	else
 		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $2 --sign-args "--pinentry-mode loopback --passphrase $3"
 	fi
