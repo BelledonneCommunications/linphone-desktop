@@ -136,7 +136,7 @@ void FileDownloader::handleDownloadFinished() {
     cleanDownloadEnd();
     emit downloadFailed();
   } else {
-    qInfo() << QStringLiteral("Download of %1 finished.").arg(mUrl.toString());
+    qInfo() << QStringLiteral("Download of %1 finished to %2").arg(mUrl.toString(), mDestinationFile.fileName());
     mDestinationFile.close();
     cleanDownloadEnd();
     emit downloadFinished(mDestinationFile.fileName());
