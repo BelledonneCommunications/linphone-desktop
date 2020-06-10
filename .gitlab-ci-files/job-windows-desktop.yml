@@ -2,102 +2,51 @@
 # BUILD
 #################################################
 
-
-
-#################################################
-# VS2015
-#################################################
-#Wedo not need vs2015 anymore
-
-#job-windows-vs2015:
-#
-#  extends: .job-prepare
-#  stage: build
-#  tags: [ "windows" ]
-#  except:
-#    refs:
-#      - feature/peioMergeCi
-#
-#  except:
-#    variables:
-#      - $DEPLOY_RUN_ANDROID
-#      - $DEPLOY_RUN_IOS
-#  variables:
-#    CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO
-#
-#  script:
-#    - mkdir build-desktop
-#    - cd build-desktop
-#    - cmake .. -G "Visual Studio 14 2015" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=Release %DEFAULT_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-#   - cmake --build . --target sdk --config Release -- /maxcpucount
-
-#job-windows-vs2015-novideo:
-#
-#  only:
-#    - schedules
-#  except:
-#    variables:
-#      - $DEPLOY_RUN_ANDROID
-#      - $FAST_LINUX_TESTS
-#  variables:
-#    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
-#  extends: job-windows-vs2015
+.build_all_windows_script: &build_all_windows_script |
+  SET Qt5_DIR=C:\Qt\5.12.5\msvc2017\lib\cmake
+  SET PATH=%PATH%;C:\Qt\5.12.5\msvc2017\bin
+  IF EXIST build RMDIR /S /Q build
+  mkdir build
+  cd build
+  mkdir OUTPUT
+  C:\PROGRA~1\Python37\Scripts\cl -s    
+  cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
+  cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
+  C:\PROGRA~1\Python37\Scripts\cl -s
 
 .job-windows-vs2017:
   extends: .job-prepare
   stage: build
   tags: [ "windows" ]
-  
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
-
   script:
-    - SET Qt5_DIR=C:\Qt\5.12.6\msvc2017\lib\cmake
-    - SET PATH=%PATH%;C:\Qt\5.12.6\msvc2017\bin
-    - IF EXIST build-desktop RMDIR /S /Q build-desktop
-    - mkdir build-desktop
-    - cd build-desktop
-    - mkdir OUTPUT
-#SDK  Building
-    #we launch the msvc-cl wrapper located in python scripts folder
-    #this wrapper relays only needed calls to the real compiler    
-    #cache stats display
-    - C:\PROGRA~1\Python37\Scripts\cl -s    
-    - cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Minizip install to OUTPUT folder    
-    - cmake ..
-    - cmake --build . --target minizip
-    - cmake --build . --target install --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Update CMake installation    
-    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target linphone-qt --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-    - cmake --build . --target install --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-    - C:\PROGRA~1\Python37\Scripts\cl -s
-
+   - *build_all_windows_script
   artifacts:
     paths:
-      - build-desktop\OUTPUT
+      - build\OUTPUT
     expire_in: 2 days
-            
-.job-windows-vs2017-scheduled:
+    
+job-windows-vs2017:
+  except:
+    refs:
+      - schedules
   extends: .job-windows-vs2017
-
+  
+  
+#################################################
+#               NIGHTLY
+################################################# 
+  
+.job-windows-vs2017-scheduled:
   only:
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
-      - $PACKAGE_RUN_WINDOWS
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
-    
-    
-job-windows-vs2017:
   extends: .job-windows-vs2017
-  except:
-    refs:
-      - schedules
       
 job-windows-vs2017-scheduled:
   extends: .job-windows-vs2017-scheduled
@@ -108,63 +57,49 @@ job-windows-vs2017-novideo:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_VIDEO=NO
 
 #################################################
-# PACKAGE
+#               PACKAGE
 #################################################
 
 #Remove . when packaging process is ready to use
 job-windows-vs2017-package:
   stage: package
   tags: [ "windows" ]
-  dependencies:
-    - job-windows-vs2017-scheduled
+  dependencies: []
   only:
     variables:
       - $NIGHTLY_MASTER
-      - $PACKAGE_RUN_WINDOWS
+      - $DEPLOY_WINDOWS
+  variables:
+      CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGNING_DIR=$WINDOWS_SIGNING_DIRECTORY
   script:
-    - SET Qt5_DIR=C:\Qt\5.12.6\msvc2017\lib\cmake
-    - SET PATH=%PATH%;C:\Qt\5.12.6\msvc2017\bin
-    - IF EXIST build-desktop RMDIR /S /Q build-desktop
-    - mkdir build-desktop
-    - cd build-desktop
-    - mkdir OUTPUT
-#SDK  Building
-    #we launch the msvc-cl wrapper located in python scripts folder
-    #this wrapper relays only needed calls to the real compiler    
-    #cache stats display
-    - C:\PROGRA~1\Python37\Scripts\cl -s    
-    - cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Minizip install to OUTPUT folder    
-    - cmake ..
-    - cmake --build . --target minizip
-    - cmake --build . --target install --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-# Update CMake installation    
-    - cmake .. -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-    - cmake --build . --target linphone-qt --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
-    - cmake --build . --target package --config Release -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
+    - *build_all_windows_script
     - C:\PROGRA~1\Python37\Scripts\cl -s
     - mkdir "%CI_PROJECT_DIR%/results"
-    - cd CPackBuild
+    - cd OUTPUT
+    - cd Packages
     - copy /B *.exe "%CI_PROJECT_DIR%/results"
-    
   artifacts:
     paths:
       - results\*
     expire_in: 1 weeks
  
+ 
+#################################################
+#               DEPLOY
+#################################################
 
 job-windows-vs2017-win32-upload:
   stage: deploy
   tags: [ "windows"]
   only:
     variables:
-      - $DEPLOY_RUN_WINDOWS
       - $NIGHTLY_MASTER
+      - $DEPLOY_WINDOWS
   dependencies:
     - job-windows-vs2017-package
   script:
     - scp "results/*.exe" "%DEPLOY_SERVER%:%DEPLOY_SNAPSHOTS_ROOT_DIRECTORY%/windows/app"
+
 
 
 

@@ -1,3 +1,4 @@
+
 #job-centos7-makefile-gcc:
 
 #  tags: [ "docker" ]
@@ -29,18 +30,21 @@
 #################################################
 # Ninja
 #################################################
-
-
 job-centos7-ninja-gcc:
-
   tags: [ "docker" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  except:
+    refs:
+      - schedules
   variables:
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+  before_script:
+    - source /opt/rh/devtoolset-8/enable
 
+  
 
 #job-centos7-ninja-clang:
 
@@ -56,3 +60,88 @@ job-centos7-ninja-gcc:
 #    CMAKE_OPTIONS: -DENABLE_LIME=ON
 #  extends: .job-linux-desktop
 
+#################################################
+# Package - Nightly
+#################################################
+
+job-centos7-ninja-gcc-package:
+  stage: package
+  tags: [ "docker-test-centos7-liblinphone-nuc" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7  
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_LINUX
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DLINPHONE_BUILDER_SIGNING_PASSPHRASE=$GPG_SIGNING_PASS
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+  before_script:
+    - source /opt/rh/devtoolset-8/enable
+  script:
+    - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - gpg --import file.key
+    - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - gpg --import file.key
+    - cmake --version
+    - export CC=$CC
+    - export CXX=$CXX
+    - mkdir -p build/OUTPUT
+    - echo $CMAKE_GENERATOR
+    - echo $DEFAULT_LINUX_CMAKE_OPTIONS
+    - echo $CMAKE_SANITIZER_OPTIONS
+    - cd build
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+    - cmake --build . --target all $LBC_NODEBUG_OPTIONS
+  artifacts:
+    paths:
+      - build/OUTPUT/Packages/*.AppImage
+    expire_in: 1 week
+
+#################################################
+# Deploy - Nightly
+#################################################
+
+job-centos7-ninja-gcc-deploy:
+  stage: deploy
+  tags: [ "deploy" ]
+  dependencies:
+    - job-centos7-ninja-gcc-package
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_LINUX
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+    
+#################################################
+# Debug
+#################################################
+
+job-centos7-debug-nuc:
+  stage: deploy
+  tags: [ "docker-test-centos7-liblinphone-nuc" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
+  only:
+    variables:
+      - $DEBUG_CENTOS7_NUC
+  script:
+    - sleep 10m
+
+job-centos7-debug:
+  stage: deploy
+  tags: [ "docker" ]
+  #image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt-fuse-wget:5.12.5
+  dependencies: []
+  only:
+    variables:
+      - $DEBUG_CENTOS7
+  script:
+    - sleep 10m
