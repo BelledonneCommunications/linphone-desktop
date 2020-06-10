@@ -240,7 +240,7 @@ string Paths::getLogsDirPath () {
 }
 
 string Paths::getMessageHistoryFilePath () {
-  return getWritableFilePath(getAppMessageHistoryFilePath());
+  return getReadableFilePath(getAppMessageHistoryFilePath());// No need to ensure that the file exists as this DB is deprecated
 }
 
 string Paths::getPackageDataDirPath () {
@@ -300,10 +300,19 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
     qWarning() << "Failed migration of" << oldPath << "to" << newPath;
   }
 }
-
-void Paths::migrate () {
+void migrateFlatpakVersionFiles(){
+#ifdef Q_OS_LINUX
+// Copy all files
+  QString flatpakPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.var/app/com.belledonnecommunications.linphone/data/linphone";
+  if( QDir().exists(flatpakPath)){
+    qInfo() << "Migrating data from Flatpak.";
+    Utils::copyDir(flatpakPath, QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+  }
+#endif
+}
+void migrateGTKVersionFiles(){
   QString newPath = getAppConfigFilePath();
-  QString oldBaseDir = QSysInfo::productType() == QLatin1String("windows")
+   QString oldBaseDir = QSysInfo::productType() == QLatin1String("windows")
     ? QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   QString oldPath = oldBaseDir + "/.linphonerc";
@@ -328,4 +337,8 @@ void Paths::migrate () {
 
   if (!filePathExists(newPath) && filePathExists(oldPath))
     migrateFile(oldPath, newPath);
+}
+void Paths::migrate () {
+  migrateFlatpakVersionFiles(); // First, check Flatpak version as it is the earlier version
+  migrateGTKVersionFiles();// Then check old version for migration
 }

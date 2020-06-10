@@ -22,6 +22,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
@@ -55,9 +56,9 @@ private:
     linphone::AccountCreator::Status status,
     const string &
   ) override {
-    if (status == linphone::AccountCreator::Status::AccountCreated)
+    if (status == linphone::AccountCreator::Status::AccountCreated){
       emit mAssistant->createStatusChanged(QString(""));
-    else {
+    }else {
       if (status == linphone::AccountCreator::Status::RequestFailed)
         emit mAssistant->createStatusChanged(tr("requestFailed"));
       else if (status == linphone::AccountCreator::Status::ServerError)
@@ -74,6 +75,7 @@ private:
   ) override {
     if (status == linphone::AccountCreator::Status::AccountExist || status == linphone::AccountCreator::Status::AccountExistWithAlias) {
       createProxyConfig(creator);
+      CoreManager::getInstance()->getSipAddressesModel()->reset();
       emit mAssistant->loginStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreator::Status::RequestFailed)
@@ -94,7 +96,7 @@ private:
     ) {
       if (creator->getEmail().empty())
         createProxyConfig(creator);
-
+        CoreManager::getInstance()->getSipAddressesModel()->reset();
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreator::Status::RequestFailed)
@@ -111,6 +113,7 @@ private:
   ) override {
     if (status == linphone::AccountCreator::Status::AccountActivated) {
       createProxyConfig(creator);
+      CoreManager::getInstance()->getSipAddressesModel()->reset();
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreator::Status::RequestFailed)
@@ -126,6 +129,7 @@ private:
     const string &
   ) override {
     if (status == linphone::AccountCreator::Status::RequestOk) {
+      CoreManager::getInstance()->getSipAddressesModel()->reset();
       emit mAssistant->recoverStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreator::Status::RequestFailed)

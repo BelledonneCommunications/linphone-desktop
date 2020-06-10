@@ -52,6 +52,8 @@ public:
   };
 
   SipAddressesModel (QObject *parent = Q_NULLPTR);
+  
+  void reset();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -78,6 +80,8 @@ public:
   Q_INVOKABLE static QString cleanSipAddress (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
+signals:
+  void sipAddressReset();// The model has been reset
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
@@ -104,6 +108,8 @@ private:
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
+  
+  void handleRegistrationStateChanged( const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
 
   // ---------------------------------------------------------------------------
 
@@ -125,8 +131,8 @@ private:
 
   void initSipAddresses ();
 
-  void initSipAddressesFromChat ();
-  void initSipAddressesFromCalls ();
+  void initSipAddressesFromChat (const QStringList &pRegistredProxies);// Read chat logs and keep only for registred proxies
+  void initSipAddressesFromCalls (const QStringList &pRegistredProxies);// Read call logs and keep only for registred proxies
   void initSipAddressesFromContacts ();
 
   void initRefs ();
@@ -143,7 +149,7 @@ private:
       it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
     return &(*it);
   }
-
+  QStringList mRegistredProxies;// Storing registred proxies is used to avoid loosing logs when disconnected
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;
   QList<const SipAddressEntry *> mRefs;
 

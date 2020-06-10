@@ -71,10 +71,17 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
   QObject::connect(coreHandlers, &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
   QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &SipAddressesModel::handleIsComposingChanged);
+  QObject::connect(coreHandlers, &CoreHandlers::registrationStateChanged, this, &SipAddressesModel::handleRegistrationStateChanged);
 }
 
 // -----------------------------------------------------------------------------
-
+void SipAddressesModel::reset(){
+  mPeerAddressToSipAddressEntry.clear();
+  mRefs.clear();
+  resetInternalData();
+  initSipAddresses();
+  emit sipAddressReset();
+}
 int SipAddressesModel::rowCount (const QModelIndex &) const {
   return mRefs.count();
 }
@@ -433,7 +440,15 @@ void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::Cha
   Q_ASSERT(row != -1);
   emit dataChanged(index(row, 0), index(row, 0));
 }
-
+void SipAddressesModel::handleRegistrationStateChanged( const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state){
+  QString address = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
+  if(!mRegistredProxies.contains(address) && state == linphone::RegistrationState::Ok)// This is a new state.
+    reset();
+  else if( state == linphone::RegistrationState::Cleared){
+    mRegistredProxies.removeAll(address);
+    reset();
+  }
+}
 // -----------------------------------------------------------------------------
 
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, ContactModel *contact) {
@@ -538,16 +553,25 @@ void SipAddressesModel::removeContactOfSipAddress (const QString &sipAddress) {
 void SipAddressesModel::initSipAddresses () {
   QElapsedTimer timer;
   timer.start();
+  
+  auto proxies = CoreManager::getInstance()->getCore()->getProxyConfigList();
+  foreach( auto proxy, proxies){
+    QString address = Utils::coreStringToAppString(proxy->getIdentityAddress()->asStringUriOnly());
+    if(proxy->getState() == linphone::RegistrationState::Ok && !mRegistredProxies.contains(address)){
+      mRegistredProxies.push_back(address);
+    }
+  }
 
-  initSipAddressesFromChat();
-  initSipAddressesFromCalls();
+  initSipAddressesFromChat(mRegistredProxies);
+  initSipAddressesFromCalls(mRegistredProxies);
   initRefs();
   initSipAddressesFromContacts();
 
   qInfo() << "Sip addresses model initialized in:" << timer.elapsed() << "ms.";
 }
 
-void SipAddressesModel::initSipAddressesFromChat () {
+void SipAddressesModel::initSipAddressesFromChat (const QStringList &pRegistredProxies) {
+  
   for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms()) {
     list<shared_ptr<linphone::ChatMessage>> history(chatRoom->getHistory(1));
     if (history.empty())
@@ -556,52 +580,55 @@ void SipAddressesModel::initSipAddressesFromChat () {
     QString peerAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()));
     QString localAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()));
 
-    getSipAddressEntry(peerAddress)->localAddressToConferenceEntry[localAddress] = {
-      chatRoom->getUnreadMessagesCount(),
-      CoreManager::getInstance()->getMissedCallCount(peerAddress, localAddress),
-      false,
-      QDateTime::fromMSecsSinceEpoch(history.back()->getTime() * 1000)
-    };
+    if(pRegistredProxies.contains(localAddress)){
+      getSipAddressEntry(peerAddress)->localAddressToConferenceEntry[localAddress] = {
+        chatRoom->getUnreadMessagesCount(),
+        CoreManager::getInstance()->getMissedCallCount(peerAddress, localAddress),
+        false,
+        QDateTime::fromMSecsSinceEpoch(history.back()->getTime() * 1000)
+      };
+    }
   }
 }
 
-void SipAddressesModel::initSipAddressesFromCalls () {
+void SipAddressesModel::initSipAddressesFromCalls (const QStringList &pRegistredProxies) {
   using ConferenceId = QPair<QString, QString>;
   QSet<ConferenceId> conferenceDone;
   for (const auto &callLog : CoreManager::getInstance()->getCore()->getCallLogs()) {
     const QString peerAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly()));
     const QString localAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly()));
-
-    switch (callLog->getStatus()) {
-    case linphone::Call::Status::Aborted:
-    case linphone::Call::Status::EarlyAborted:
+    if(pRegistredProxies.contains(localAddress)){
+      switch (callLog->getStatus()) {
+      case linphone::Call::Status::Aborted:
+      case linphone::Call::Status::EarlyAborted:
 	    return; // Ignore aborted calls.
-    case linphone::Call::Status::AcceptedElsewhere:
-    case linphone::Call::Status::DeclinedElsewhere:
+      case linphone::Call::Status::AcceptedElsewhere:
+      case linphone::Call::Status::DeclinedElsewhere:
 	    return; // Ignore accepted calls on other device.
-    case linphone::Call::Status::Success:
-    case linphone::Call::Status::Declined:
+      case linphone::Call::Status::Success:
+      case linphone::Call::Status::Declined:
 
-    case linphone::Call::Status::Missed:
+      case linphone::Call::Status::Missed:
 	    break;
-    }
+      }
 
-    ConferenceId conferenceId{ peerAddress, localAddress };
-    if (conferenceDone.contains(conferenceId))
-      continue; // Already used.
-    conferenceDone << conferenceId;
+      ConferenceId conferenceId{ peerAddress, localAddress };
+      if (conferenceDone.contains(conferenceId))
+        continue; // Already used.
+      conferenceDone << conferenceId;
 
     // The duration can be wrong if status is not success.
-    QDateTime timestamp(callLog->getStatus() == linphone::Call::Status::Success
-      ? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
-      : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000));
+      QDateTime timestamp(callLog->getStatus() == linphone::Call::Status::Success
+        ? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
+        : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000));
 
-    auto &localToConferenceEntry = getSipAddressEntry(peerAddress)->localAddressToConferenceEntry;
-    auto it = localToConferenceEntry.find(localAddress);
-    if (it == localToConferenceEntry.end())
-      localToConferenceEntry[localAddress] = { 0,0, false, move(timestamp) };
-    else if (it->timestamp.isNull() || timestamp > it->timestamp)
-      it->timestamp = move(timestamp);
+      auto &localToConferenceEntry = getSipAddressEntry(peerAddress)->localAddressToConferenceEntry;
+      auto it = localToConferenceEntry.find(localAddress);
+      if (it == localToConferenceEntry.end())
+        localToConferenceEntry[localAddress] = { 0,0, false, move(timestamp) };
+      else if (it->timestamp.isNull() || timestamp > it->timestamp)
+        it->timestamp = move(timestamp);
+    }
   }
 }
 
