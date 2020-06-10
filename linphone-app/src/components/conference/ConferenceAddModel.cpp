@@ -160,10 +160,10 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
       while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
         ++address;
       if(address == allLinphoneAddresses.end()){// Not in conference list :  put in pause and remove it from conference if it's the case
-        call->pause();
         if( call->getParams()->getLocalConferenceMode() ){// Remove conference if it is not yet requested
           CoreManager::getInstance()->getCore()->removeFromConference(call);
-        }
+        }else
+          call->pause();
       }
     }
 }
