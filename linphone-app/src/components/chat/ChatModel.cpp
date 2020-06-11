@@ -697,18 +697,6 @@ void ChatModel::removeEntry (ChatEntryData &entry) {
 
 void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   linphone::Call::Status status = callLog->getStatus();
-  switch (status) {
-    case linphone::Call::Status::Aborted:
-    case linphone::Call::Status::EarlyAborted:
-
-    case linphone::Call::Status::AcceptedElsewhere:
-    case linphone::Call::Status::DeclinedElsewhere:
-
-    case linphone::Call::Status::Success:
-    case linphone::Call::Status::Missed:
-    case linphone::Call::Status::Declined:
-      break;
-  }
 
   auto insertEntry = [this](
     const ChatEntryData &entry,
