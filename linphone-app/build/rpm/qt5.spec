@@ -46,7 +46,6 @@ Qt is a software toolkit for developing applications.
   -opensource \
   -confirm-license \
   -release \
-  -force-debug-info \
   -shared \
   -c++std c++11 \
   -silent \
