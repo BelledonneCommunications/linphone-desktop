@@ -6,111 +6,118 @@ import Common 1.0
 import App.Styles 1.0
 
 // =============================================================================
-
-ColumnLayout {
+Rectangle{
   id: zrtp
-
-  // ---------------------------------------------------------------------------
-
   property var call
-
+  visible: false
+  color:"transparent"
+  
+  implicitWidth: columnLayout.implicitWidth
+  implicitHeight: columnLayout.implicitHeight+CallStyle.container.margins
+  
+  radius: 10
+    
+  ColumnLayout {
+    id:columnLayout
   // ---------------------------------------------------------------------------
 
-  visible: false
+    Layout.fillWidth: true
+    anchors.bottom: parent.bottom
 
   // ---------------------------------------------------------------------------
   // Main text.
   // ---------------------------------------------------------------------------
 
-  Text {
-    Layout.fillWidth: true
+    Text {
+      Layout.fillWidth: true
 
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
+      horizontalAlignment: Text.AlignHCenter
+      verticalAlignment: Text.AlignVCenter
 
-    text: qsTr('confirmSas')
+      text: qsTr('confirmSas')
 
-    color: CallStyle.zrtpArea.text.colorA
-    elide: Text.ElideRight
+      color: CallStyle.zrtpArea.text.colorA
+      elide: Text.ElideRight
 
-    font {
-      bold: true
-      pointSize: CallStyle.zrtpArea.text.pointSize
+      font {
+        bold: true
+        pointSize: CallStyle.zrtpArea.text.pointSize
+      }
     }
-  }
 
   // ---------------------------------------------------------------------------
   // Rules.
   // ---------------------------------------------------------------------------
 
-  Row {
-    Layout.alignment: Qt.AlignHCenter
+    Row {
+      Layout.alignment: Qt.AlignHCenter
 
-    spacing: CallStyle.zrtpArea.text.wordsSpacing
+      spacing: CallStyle.zrtpArea.text.wordsSpacing
 
-    Text {
-      color: CallStyle.zrtpArea.text.colorA
-      font.pointSize: CallStyle.zrtpArea.text.pointSize
-      text: qsTr('codeA')
-    }
-
-    Text {
-      color: CallStyle.zrtpArea.text.colorB
-
-      font {
-        bold: true
-        pointSize: CallStyle.zrtpArea.text.pointSize
+      Text {
+        color: CallStyle.zrtpArea.text.colorA
+        font.pointSize: CallStyle.zrtpArea.text.pointSize
+        text: qsTr('codeA')
       }
 
-      text: zrtp.call.localSas
-    }
+      Text {
+        color: CallStyle.zrtpArea.text.colorB
 
-    Text {
-      color: CallStyle.zrtpArea.text.colorA
-      font.pointSize: CallStyle.zrtpArea.text.pointSize
-      text: '-'
-    }
+        font {
+          bold: true
+          pointSize: CallStyle.zrtpArea.text.pointSize
+        }
 
-    Text {
-      color: CallStyle.zrtpArea.text.colorA
-      font.pointSize: CallStyle.zrtpArea.text.pointSize
-      text: qsTr('codeB')
-    }
-
-    Text {
-      color: CallStyle.zrtpArea.text.colorB
-
-      font {
-        bold: true
-        pointSize: CallStyle.zrtpArea.text.pointSize
+        text: zrtp.call?zrtp.call.localSas:''
       }
 
-      text: zrtp.call.remoteSas
+      Text {
+        color: CallStyle.zrtpArea.text.colorA
+        font.pointSize: CallStyle.zrtpArea.text.pointSize
+        text: '-'
+      }
+
+      Text {
+        color: CallStyle.zrtpArea.text.colorA
+        font.pointSize: CallStyle.zrtpArea.text.pointSize
+        text: qsTr('codeB')
+      }
+
+      Text {
+        color: CallStyle.zrtpArea.text.colorB
+
+        font {
+          bold: true
+          pointSize: CallStyle.zrtpArea.text.pointSize
+        }
+
+        text: zrtp.call?zrtp.call.remoteSas:''
+      }
     }
-  }
 
   // ---------------------------------------------------------------------------
   // Buttons.
   // ---------------------------------------------------------------------------
 
-  Row {
-    Layout.alignment: Qt.AlignHCenter
+    Row {
+      Layout.alignment: Qt.AlignHCenter
 
-    spacing: CallStyle.zrtpArea.buttons.spacing
+      spacing: CallStyle.zrtpArea.buttons.spacing
 
-    TextButtonA {
-      text: qsTr('deny')
-      onClicked: {
-        zrtp.visible = false
-        zrtp.call.verifyAuthenticationToken(false)
+      TextButtonA {
+        text: qsTr('deny')
+        onClicked: {
+          zrtp.visible = false
+          zrtp.call.verifyAuthenticationToken(false)
+        }
       }
-    }
 
-    TextButtonB {
-      text: qsTr('accept')
-      onClicked: {
-        zrtp.visible = false
-        zrtp.call.verifyAuthenticationToken(true)
+      TextButtonB {
+        text: qsTr('accept')
+        onClicked: {
+          zrtp.visible = false
+          zrtp.call.verifyAuthenticationToken(true)
+        }
       }
     }
   }

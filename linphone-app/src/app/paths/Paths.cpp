@@ -106,7 +106,9 @@ static inline string getWritableFilePath (const QString &filename) {
 //  bin/linphone
 //  lib/
 //  lib64/
+//  plugins/
 //  share/
+
 
 // But in some cases, it can be :
 //  /linphone
@@ -125,12 +127,11 @@ static inline string getWritableFilePath (const QString &filename) {
 static inline QDir getAppPackageDir () {
   QDir dir(QCoreApplication::applicationDirPath());
   if (dir.dirName() == QLatin1String("MacOS")) {
-    dir.cdUp();
-	
+	dir.cdUp();
   } else if( !dir.exists("lib") && !dir.exists("lib64")){// Check if these folders are in the current path
     dir.cdUp();
-    if(!dir.exists("lib") && !dir.exists("lib64"))
-            qWarning() <<"The application's location is not correct: You have to put your 'bin/' folder next to 'lib/' folder.";
+	if(!dir.exists("lib") && !dir.exists("lib64") && !dir.exists("plugins"))
+			qWarning() <<"The application's location is not correct: You have to put your 'bin/' folder next to 'lib/' or 'plugins/' folder.";
   }
   return dir;
 }
@@ -239,7 +240,7 @@ string Paths::getLogsDirPath () {
 }
 
 string Paths::getMessageHistoryFilePath () {
-  return getWritableFilePath(getAppMessageHistoryFilePath());
+  return getReadableFilePath(getAppMessageHistoryFilePath());// No need to ensure that the file exists as this DB is deprecated
 }
 
 string Paths::getPackageDataDirPath () {
@@ -299,10 +300,19 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
     qWarning() << "Failed migration of" << oldPath << "to" << newPath;
   }
 }
-
-void Paths::migrate () {
+void migrateFlatpakVersionFiles(){
+#ifdef Q_OS_LINUX
+// Copy all files
+  QString flatpakPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.var/app/com.belledonnecommunications.linphone/data/linphone";
+  if( QDir().exists(flatpakPath)){
+    qInfo() << "Migrating data from Flatpak.";
+    Utils::copyDir(flatpakPath, QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+  }
+#endif
+}
+void migrateGTKVersionFiles(){
   QString newPath = getAppConfigFilePath();
-  QString oldBaseDir = QSysInfo::productType() == QLatin1String("windows")
+   QString oldBaseDir = QSysInfo::productType() == QLatin1String("windows")
     ? QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   QString oldPath = oldBaseDir + "/.linphonerc";
@@ -327,4 +337,8 @@ void Paths::migrate () {
 
   if (!filePathExists(newPath) && filePathExists(oldPath))
     migrateFile(oldPath, newPath);
+}
+void Paths::migrate () {
+  migrateFlatpakVersionFiles(); // First, check Flatpak version as it is the earlier version
+  migrateGTKVersionFiles();// Then check old version for migration
 }

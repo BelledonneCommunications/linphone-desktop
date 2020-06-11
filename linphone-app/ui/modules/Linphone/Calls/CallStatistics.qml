@@ -29,7 +29,7 @@ Popup {
 
       Loader {
         property string $label: qsTr('audioStatsLabel')
-        property var $data: callStatistics.call.audioStats
+        property var $data: callStatistics.call?callStatistics.call.audioStats:null
 
         sourceComponent: media
         width: parent.width / 2
@@ -37,7 +37,7 @@ Popup {
 
       Loader {
         property string $label: qsTr('videoStatsLabel')
-        property var $data: callStatistics.call.videoStats
+        property var $data: callStatistics.call?callStatistics.call.videoStats:null
 
         sourceComponent: media
         width: parent.width / 2

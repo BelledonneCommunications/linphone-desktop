@@ -185,7 +185,7 @@ function getTopParent (object, useFakeParent) {
 // Supported options: isString, exitHandler, properties.
 //
 // If exitHandler is used, window must implement exitStatus signal.
-function openWindow (window, parent, options) {
+function openWindow (window, parent, options, fullscreen) {
   var object = createObject(window, parent, options)
 
   object.closing.connect(object.destroy.bind(object))
@@ -196,9 +196,14 @@ function openWindow (window, parent, options) {
       options.exitHandler.bind(parent)
     )
   }
-
-  object.show()
-
+  if( runOnWindows()){
+    object.show() // Needed for Windows : Show the window in all case. Allow to graphically locate the window before going to fullscreen.
+    if(fullscreen)
+      object.showFullScreen()// Should be equivalent to changing visibility
+  }else if(fullscreen)
+      object.showFullScreen()// Should be equivalent to changing visibility
+  else
+    object.show()
   return object
 }
 

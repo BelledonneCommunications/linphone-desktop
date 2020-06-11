@@ -124,26 +124,29 @@ function openCallStatistics () {
   callStatistics.open()
 }
 
-function openMediaParameters () {
+function openMediaParameters (window, incall) {
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'), {
     call: incall.call
   })
 }
 
-function showFullscreen () {
+function showFullscreen (position) {
   if (incall._fullscreen) {
     return
   }
-
   DesktopTools.DesktopTools.screenSaverStatus = false
   incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), window, {
     properties: {
-      caller: incall
+      caller: incall,
+      x:position.x,
+      y:position.y,
+      width:window.width,
+      height:window.height
     }
-  })
+  }, true)
 }
 
-function updateCallQualityIcon () {
+function updateCallQualityIcon (callQuality,call) {
   var quality = call.quality
   callQuality.icon = 'call_quality_' + (
     // Note: `quality` is in the [0, 5] interval.

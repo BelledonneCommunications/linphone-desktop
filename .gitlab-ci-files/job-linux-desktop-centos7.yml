@@ -41,6 +41,9 @@ job-centos7-ninja-gcc:
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+  before_script:
+    - source /opt/rh/devtoolset-8/enable
+
   
 
 #job-centos7-ninja-clang:
@@ -76,6 +79,8 @@ job-centos7-ninja-gcc-package:
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+  before_script:
+    - source /opt/rh/devtoolset-8/enable
   script:
     - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
     - gpg --import file.key

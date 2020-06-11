@@ -33,6 +33,9 @@ TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
   QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
     handleLocalAddressChanged(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsStringUriOnly());
   });
+  QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
+    invalidate();// Invalidate and reload GUI if the model has been reset
+  });
   mLocalAddress = accountSettingsModel->getUsedSipAddressAsStringUriOnly();
 
   setSourceModel(coreManager->getSipAddressesModel());
@@ -60,6 +63,7 @@ QVariant TimelineModel::data (const QModelIndex &index, int role) const {
     map["timestamp"] = it->timestamp;
     map["isComposing"] = it->isComposing;
     map["unreadMessageCount"] = it->unreadMessageCount;
+    map["missedCallCount"] = it->missedCallCount;
   }
 
   return map;

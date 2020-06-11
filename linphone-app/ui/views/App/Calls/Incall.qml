@@ -32,6 +32,7 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   color: CallStyle.backgroundColor
+  anchors.fill:parent
 
   // ---------------------------------------------------------------------------
 
@@ -78,7 +79,7 @@ Rectangle {
           running: true
           triggeredOnStart: true
 
-          onTriggered: elapsedTime.text = Utils.formatElapsedTime(call.duration)
+          onTriggered: {elapsedTime.text = Utils.formatElapsedTime(call.duration);}
         }
       }
 
@@ -103,7 +104,7 @@ Rectangle {
             running: true
             triggeredOnStart: true
 
-            onTriggered: Logic.updateCallQualityIcon()
+            onTriggered: Logic.updateCallQualityIcon(callQuality, call)
           }
 
           CallStatistics {
@@ -203,7 +204,7 @@ Rectangle {
           icon: 'fullscreen'
           visible: incall.call.videoEnabled
 
-          onClicked: Logic.showFullscreen()
+          onClicked: Logic.showFullscreen(contactDescription.mapToGlobal(0,0))
         }
       }
     }
@@ -263,9 +264,8 @@ Rectangle {
     ZrtpTokenAuthentication {
       id: zrtp
 
-      Layout.fillWidth: true
+      Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
       Layout.margins: CallStyle.container.margins
-      Layout.preferredHeight: CallStyle.zrtpArea.height
 
       call: incall.call
       visible: !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
@@ -365,7 +365,7 @@ Rectangle {
           icon: 'options'
           iconSize: CallStyle.actionArea.iconSize
 
-          onClicked: Logic.openMediaParameters()
+          onClicked: Logic.openMediaParameters(window, incall)
         }
       }
 

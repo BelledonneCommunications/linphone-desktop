@@ -98,6 +98,7 @@ namespace Utils {
     return connection;
   }
   QString getCountryName(const QLocale::Country& country);
+  void copyDir(QString from, QString to);// Copy a folder recursively without erasing old file
 }
 
 #endif // UTILS_H_

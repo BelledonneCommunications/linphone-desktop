@@ -15,4 +15,5 @@ QtObject {
   property int margins: 8
   property int padding: 4
   property int radius: 4
+  property int minWidth: 130
 }

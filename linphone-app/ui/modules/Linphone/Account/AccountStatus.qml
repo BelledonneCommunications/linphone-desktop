@@ -36,8 +36,9 @@ Item {
           Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
 
           PresenceLevel {
+            
             anchors.fill: parent
-            level:  SettingsModel.rlsUriEnabled ? OwnPresenceModel.presenceLevel : Presence.Green
+            level: OwnPresenceModel.presenceStatus===Presence.Offline?Presence.White:( SettingsModel.rlsUriEnabled ? OwnPresenceModel.presenceLevel : Presence.Green)
             visible: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateRegistered
           }
 

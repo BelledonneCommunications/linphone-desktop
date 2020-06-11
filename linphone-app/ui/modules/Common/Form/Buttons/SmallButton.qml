@@ -32,4 +32,14 @@ Button {
     rightPadding: SmallButtonStyle.rightPadding
   }
   hoverEnabled: true
+  MouseArea
+  {
+    id: mouseArea
+    anchors.fill: parent
+    onPressed:  mouse.accepted = false
+    hoverEnabled: true
+    cursorShape: containsMouse
+                        ? Qt.PointingHandCursor
+                        : Qt.ArrowCursor
+  }
 }

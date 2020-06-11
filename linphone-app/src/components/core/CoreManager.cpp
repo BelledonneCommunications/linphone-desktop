@@ -23,6 +23,7 @@
 #include <QSysInfo>
 #include <QtConcurrent>
 #include <QTimer>
+#include <QFile>
 
 #include "config.h"
 
@@ -59,7 +60,7 @@ namespace {
   constexpr char LinphoneDomain[] = "sip.linphone.org";
   constexpr char DefaultContactParameters[] = "message-expires=604800";
   constexpr int DefaultExpires = 3600;
-  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone/downloads";
+  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
 }
 
 // -----------------------------------------------------------------------------
@@ -210,7 +211,10 @@ void CoreManager::cleanLogs () const {
 void CoreManager::setDatabasesPaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
-  SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());
+  if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
+	SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());// Setting the message database let SDK to migrate data
+	QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
+  }
 }
 
 #undef SET_DATABASE_PATH
@@ -307,7 +311,12 @@ QString CoreManager::getVersion () const {
 int CoreManager::getEventCount () const {
   return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
 }
-
+int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &localAddress)const{
+	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCount(peerAddress, localAddress) : 0;
+}
+int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
+	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCountFromLocal(localAddress) : 0;
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::iterate () {

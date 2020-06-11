@@ -117,7 +117,7 @@ Rectangle {
 
           Column {
             readonly property string sipAddress: $call.peerAddress
-            readonly property string fullSipAddress: $call.fullPeerAddress
+            property var _sipAddressObserver : SipAddressesModel.getSipAddressObserver($call.peerAddress, $call.localAddress)
 
             anchors {
               fill: parent
@@ -134,8 +134,8 @@ Rectangle {
 
               horizontalTextAlignment: Text.AlignHCenter
               sipAddress: parent.sipAddress
-              username: LinphoneUtils.getContactUsername(parent.fullSipAddress)
-            }            
+              username: LinphoneUtils.getContactUsername(parent._sipAddressObserver)
+            }
             IncallAvatar {
             
               readonly property int size: Math.min(
@@ -172,14 +172,18 @@ Rectangle {
               leftMargin: ConferenceStyle.grid.spacing
               bottomMargin: ConferenceStyle.grid.spacing
             }
+            enabled:!$call.speakerMuted
 
             Timer {
               interval: 50
               repeat: true
               running: true
-
               onTriggered: parent.value = $call.speakerVu
             }
+          }
+          MouseArea{
+            anchors.fill:parent
+            onClicked:$call.toggleSpeakerMute()
           }
         }
       }

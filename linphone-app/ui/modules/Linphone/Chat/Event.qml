@@ -23,6 +23,18 @@ Row {
     if (status === ChatModel.CallStatusMissed) {
       return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
     }
+    if (status === ChatModel.CallStatusAborted) {
+      return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
+    }
+    if (status === ChatModel.CallStatusEarlyAborted) {
+      return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
+    }
+    if (status === ChatModel.CallStatusAcceptedElsewhere) {
+      return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
+    }
+    if (status === ChatModel.CallStatusDeclinedElsewhere) {
+      return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
+    }
 
     return 'unknown_call_event'
   }

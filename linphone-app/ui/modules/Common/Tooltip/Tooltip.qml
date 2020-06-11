@@ -117,11 +117,13 @@ Core.ToolTip {
 
   contentItem: Core.Text {
     id: text
-
     color: TooltipStyle.color
     font.pointSize: TooltipStyle.pointSize
     padding: TooltipStyle.padding + TooltipStyle.margins
     text: tooltip.text
+    wrapMode: Core.Text.WordWrap
+    width:parent.width
+    elide:Core.Text.ElideRight
   }
 
   delay: TooltipStyle.delay

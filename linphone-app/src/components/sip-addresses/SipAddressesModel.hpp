@@ -39,6 +39,7 @@ class SipAddressesModel : public QAbstractListModel {
 public:
   struct ConferenceEntry {
     int unreadMessageCount;
+    int missedCallCount;
     bool isComposing;
     QDateTime timestamp;
   };
@@ -51,6 +52,8 @@ public:
   };
 
   SipAddressesModel (QObject *parent = Q_NULLPTR);
+  
+  void reset();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -77,6 +80,8 @@ public:
   Q_INVOKABLE static QString cleanSipAddress (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
+signals:
+  void sipAddressReset();// The model has been reset
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
@@ -132,7 +137,7 @@ private:
 
   void updateObservers (const QString &sipAddress, ContactModel *contact);
   void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
-  void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount);
+  void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount);
 
   // ---------------------------------------------------------------------------
 
@@ -142,7 +147,6 @@ private:
       it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
     return &(*it);
   }
-
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;
   QList<const SipAddressEntry *> mRefs;
 

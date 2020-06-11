@@ -187,7 +187,6 @@ void CallModel::acceptWithVideo () {
 
 void CallModel::terminate () {
   CoreManager *core = CoreManager::getInstance();
-
   core->lockVideoRender();
   mCall->terminate();
   core->unlockVideoRender();
@@ -343,32 +342,32 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 
 void CallModel::accept (bool withVideo) {
   stopAutoAnswerTimer();
-
   CoreManager *coreManager = CoreManager::getInstance();
-
-  shared_ptr<linphone::Core> core = coreManager->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-  params->enableVideo(withVideo);
-  setRecordFile(params);
 
   QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
   if (callsWindow) {
     if (coreManager->getSettingsModel()->getKeepCallsWindowInBackground()) {
       if (!callsWindow->isVisible())
-        callsWindow->showMinimized();
+	callsWindow->showMinimized();
     } else
       App::smartShowWindow(callsWindow);
   }
+  qApp->processEvents();  // Process GUI events before accepting in order to be synchronized with Call objects and be ready to get SDK events
+  shared_ptr<linphone::Core> core = coreManager->getCore();
+  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
+  params->enableVideo(withVideo);
+  setRecordFile(params);
+
   mCall->acceptWithParams(params);
 }
 
 // -----------------------------------------------------------------------------
 
 void CallModel::updateIsInConference () {
-  if (mIsInConference != mCall->getParams()->getLocalConferenceMode()) {
+  if (mIsInConference != mCall->getCurrentParams()->getLocalConferenceMode()) {
     mIsInConference = !mIsInConference;
-    emit isInConferenceChanged(mIsInConference);
   }
+  emit isInConferenceChanged(mIsInConference);
 }
 
 // -----------------------------------------------------------------------------
@@ -615,7 +614,9 @@ void CallModel::verifyAuthenticationToken (bool verify) {
 void CallModel::updateStreams () {
   mCall->update(nullptr);
 }
-
+void CallModel::toggleSpeakerMute(){
+  setSpeakerMuted(!getSpeakerMuted());
+}
 // -----------------------------------------------------------------------------
 
 CallModel::CallEncryption CallModel::getEncryption () const {
