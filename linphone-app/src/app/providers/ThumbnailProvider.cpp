@@ -37,5 +37,6 @@ ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
 QImage ThumbnailProvider::requestImage (const QString &id, QSize *size, const QSize &) {
   QImage image(mThumbnailsPath + id);
   *size = image.size();
-  return image;
+  return QImage();/*
+  return image;*/
 }

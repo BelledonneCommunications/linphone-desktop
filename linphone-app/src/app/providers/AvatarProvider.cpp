@@ -37,5 +37,6 @@ AvatarProvider::AvatarProvider () : QQuickImageProvider(
 QImage AvatarProvider::requestImage (const QString &id, QSize *size, const QSize &) {
   QImage image(mAvatarsPath + id);
   *size = image.size();
-  return image;
+  return QImage();/*
+  return image;*/
 }

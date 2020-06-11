@@ -6,7 +6,7 @@ Item {
   id: item
 
   property alias source: image.source
-  property color backgroundColor: '#00000000'
+  property color backgroundColor: '#AA555555'
   property color foregroundColor: '#00000000'
   readonly property alias status: image.status
 

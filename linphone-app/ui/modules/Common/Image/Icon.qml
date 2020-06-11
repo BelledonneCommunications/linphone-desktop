@@ -13,6 +13,10 @@ Item {
 
   height: iconSize
   width: iconSize
+  Rectangle{
+    anchors.fill:parent
+    color:'#AA555555'
+  }
 
   Image {
     function getIconSize () {

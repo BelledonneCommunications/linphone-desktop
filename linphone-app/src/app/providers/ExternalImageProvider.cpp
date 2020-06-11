@@ -44,6 +44,7 @@ QImage ExternalImageProvider::requestImage (const QString &id, QSize *size, cons
 	if(!format.isEmpty())
 		image = QImage(id, format);
   }
+  return QImage();/*
   *size = image.size();
-  return image;
+  return image;*/
 }

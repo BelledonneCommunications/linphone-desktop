@@ -288,6 +288,8 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
       .arg(path);
     return QImage(); // Memory cannot be allocated.
   }
+  return QImage();
+  /*
   image.fill(Qt::transparent);// Fill with transparent to set alpha channel
 
   *size = image.size();
@@ -298,9 +300,5 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
 
 //  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
 
-  return image;
-}
-
-QPixmap ImageProvider::requestPixmap (const QString &id, QSize *size, const QSize &requestedSize) {
-  return QPixmap::fromImage(requestImage(id, size, requestedSize));
+  return image;*/
 }
