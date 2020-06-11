@@ -302,11 +302,13 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
 }
 void migrateFlatpakVersionFiles(){
 #ifdef Q_OS_LINUX
-// Copy all files
-  QString flatpakPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.var/app/com.belledonnecommunications.linphone/data/linphone";
-  if( QDir().exists(flatpakPath)){
-    qInfo() << "Migrating data from Flatpak.";
-    Utils::copyDir(flatpakPath, QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+  if(!filePathExists(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/linphone.db")){
+// Copy all files if linphone.db doesn't exist
+    QString flatpakPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.var/app/com.belledonnecommunications.linphone/data/linphone";
+    if( QDir().exists(flatpakPath)){
+      qInfo() << "Migrating data from Flatpak.";
+      Utils::copyDir(flatpakPath, QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation));
+    }
   }
 #endif
 }
