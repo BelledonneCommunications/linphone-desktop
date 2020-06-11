@@ -23,6 +23,7 @@
 #include <QSysInfo>
 #include <QtConcurrent>
 #include <QTimer>
+#include <QFile>
 
 #include "config.h"
 
@@ -210,7 +211,10 @@ void CoreManager::cleanLogs () const {
 void CoreManager::setDatabasesPaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
-  SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());
+  if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
+	SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());// Setting the message database let SDK to migrate data
+	QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
+  }
 }
 
 #undef SET_DATABASE_PATH

@@ -20,6 +20,8 @@
 
 #include <QFileInfo>
 #include <QCoreApplication>
+#include <QDir>
+#include <QFile>
 
 #include "Utils.hpp"
 
@@ -354,4 +356,21 @@ QString Utils::getCountryName(const QLocale::Country& p_country)
 	if( countryName == "")
 		countryName = QLocale::countryToString(p_country);
 	return countryName;
+}
+// Copy a folder recursively without erasing old file
+void Utils::copyDir(QString from, QString to) {
+	QDir dir;
+	dir.setPath(from);
+	from += QDir::separator();
+	to += QDir::separator();
+	foreach (QString copyFile, dir.entryList(QDir::Files)) {// Copy each files
+		QString toFile = to + copyFile;
+		if (!QFile::exists(toFile))
+			QFile::copy(from+copyFile, toFile);
+	}
+	foreach (QString nextDir, dir.entryList(QDir::Dirs | QDir::NoDotAndDotDot)) {// Copy folder
+		QString toDir = to + nextDir;
+		QDir().mkpath(toDir);// no need to check if dir exists
+		copyDir(from + nextDir, toDir);//Go up
+	}
 }
