@@ -74,7 +74,13 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
 }
 
 // -----------------------------------------------------------------------------
-
+void SipAddressesModel::reset(){
+  mPeerAddressToSipAddressEntry.clear();
+  mRefs.clear();
+  resetInternalData();
+  initSipAddresses();
+  emit sipAddressReset();
+}
 int SipAddressesModel::rowCount (const QModelIndex &) const {
   return mRefs.count();
 }
@@ -433,7 +439,6 @@ void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::Cha
   Q_ASSERT(row != -1);
   emit dataChanged(index(row, 0), index(row, 0));
 }
-
 // -----------------------------------------------------------------------------
 
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, ContactModel *contact) {
@@ -548,6 +553,7 @@ void SipAddressesModel::initSipAddresses () {
 }
 
 void SipAddressesModel::initSipAddressesFromChat () {
+  
   for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms()) {
     list<shared_ptr<linphone::ChatMessage>> history(chatRoom->getHistory(1));
     if (history.empty())
@@ -571,19 +577,18 @@ void SipAddressesModel::initSipAddressesFromCalls () {
   for (const auto &callLog : CoreManager::getInstance()->getCore()->getCallLogs()) {
     const QString peerAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly()));
     const QString localAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly()));
-
     switch (callLog->getStatus()) {
-    case linphone::Call::Status::Aborted:
-    case linphone::Call::Status::EarlyAborted:
-	    return; // Ignore aborted calls.
-    case linphone::Call::Status::AcceptedElsewhere:
-    case linphone::Call::Status::DeclinedElsewhere:
-	    return; // Ignore accepted calls on other device.
-    case linphone::Call::Status::Success:
-    case linphone::Call::Status::Declined:
+      case linphone::Call::Status::Aborted:
+      case linphone::Call::Status::EarlyAborted:
+           return; // Ignore aborted calls.
+      case linphone::Call::Status::AcceptedElsewhere:
+      case linphone::Call::Status::DeclinedElsewhere:
+           return; // Ignore accepted calls on other device.
+      case linphone::Call::Status::Success:
+      case linphone::Call::Status::Declined:
 
-    case linphone::Call::Status::Missed:
-	    break;
+      case linphone::Call::Status::Missed:
+           break;
     }
 
     ConferenceId conferenceId{ peerAddress, localAddress };
@@ -593,8 +598,8 @@ void SipAddressesModel::initSipAddressesFromCalls () {
 
     // The duration can be wrong if status is not success.
     QDateTime timestamp(callLog->getStatus() == linphone::Call::Status::Success
-      ? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
-      : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000));
+        ? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
+        : QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000));
 
     auto &localToConferenceEntry = getSipAddressEntry(peerAddress)->localAddressToConferenceEntry;
     auto it = localToConferenceEntry.find(localAddress);

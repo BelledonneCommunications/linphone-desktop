@@ -52,6 +52,8 @@ public:
   };
 
   SipAddressesModel (QObject *parent = Q_NULLPTR);
+  
+  void reset();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
@@ -78,6 +80,8 @@ public:
   Q_INVOKABLE static QString cleanSipAddress (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
+signals:
+  void sipAddressReset();// The model has been reset
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
@@ -143,7 +147,6 @@ private:
       it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
     return &(*it);
   }
-
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;
   QList<const SipAddressEntry *> mRefs;
 
