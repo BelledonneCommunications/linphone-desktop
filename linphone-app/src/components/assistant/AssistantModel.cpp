@@ -96,7 +96,7 @@ private:
     ) {
       if (creator->getEmail().empty())
         createProxyConfig(creator);
-        CoreManager::getInstance()->getSipAddressesModel()->reset();
+      CoreManager::getInstance()->getSipAddressesModel()->reset();
       emit mAssistant->activateStatusChanged(QString(""));
     } else {
       if (status == linphone::AccountCreator::Status::RequestFailed)

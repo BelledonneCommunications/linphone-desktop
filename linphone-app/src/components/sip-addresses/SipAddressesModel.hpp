@@ -108,8 +108,6 @@ private:
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
-  
-  void handleRegistrationStateChanged( const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
 
   // ---------------------------------------------------------------------------
 
@@ -131,8 +129,8 @@ private:
 
   void initSipAddresses ();
 
-  void initSipAddressesFromChat (const QStringList &pRegistredProxies);// Read chat logs and keep only for registred proxies
-  void initSipAddressesFromCalls (const QStringList &pRegistredProxies);// Read call logs and keep only for registred proxies
+  void initSipAddressesFromChat ();
+  void initSipAddressesFromCalls ();
   void initSipAddressesFromContacts ();
 
   void initRefs ();
@@ -149,7 +147,6 @@ private:
       it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
     return &(*it);
   }
-  QStringList mRegistredProxies;// Storing registred proxies is used to avoid loosing logs when disconnected
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;
   QList<const SipAddressEntry *> mRefs;
 
