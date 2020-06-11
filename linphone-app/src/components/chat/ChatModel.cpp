@@ -628,10 +628,11 @@ void ChatModel::compose () {
 }
 
 void ChatModel::resetMessageCount () {
-  if (mChatRoom->getUnreadMessagesCount() > 0 || CoreManager::getInstance()->getMissedCallCount(getPeerAddress(), getLocalAddress())>0) {
-    mChatRoom->markAsRead();
+  if (mChatRoom->getUnreadMessagesCount() > 0){
+    mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
     emit messageCountReset();
-  }
+  }else if (CoreManager::getInstance()->getMissedCallCount(getPeerAddress(), getLocalAddress())>0)
+    emit messageCountReset();
 }
 
 // -----------------------------------------------------------------------------
