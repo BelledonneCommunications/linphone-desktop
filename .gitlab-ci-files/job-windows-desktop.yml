@@ -10,8 +10,8 @@
   cd build
   mkdir OUTPUT
   C:\PROGRA~1\Python37\Scripts\cl -s    
-  cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=Release %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
-  cmake --build . --target ALL_BUILD --config Release %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
+  cmake .. -G "Visual Studio 15 2017" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=%CI_BUILD_TYPE% %DEFAULT_WINDOWS_CMAKE_OPTIONS% %CMAKE_OPTIONS%
+  cmake --build . --target ALL_BUILD --config %CI_BUILD_TYPE% %LBC_NODEBUG_OPTIONS% -- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false
   C:\PROGRA~1\Python37\Scripts\cl -s
 
 .job-windows-vs2017:
