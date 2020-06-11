@@ -73,7 +73,8 @@ SoundPlayer::SoundPlayer (QObject *parent) : QObject(parent) {
 
 SoundPlayer::~SoundPlayer () {
   mForceCloseTimer->stop();
-  mInternalPlayer->close();
+  if( mInternalPlayer)
+	mInternalPlayer->close();
 }
 
 // -----------------------------------------------------------------------------
