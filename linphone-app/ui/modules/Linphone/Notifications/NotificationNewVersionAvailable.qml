@@ -1,6 +1,6 @@
 NotificationBasic {
   icon: 'update_sign'
-  message: notificationData.url
+  message: notificationData.message?notificationData.message:''
   handler: (function () {
     Qt.openUrlExternally(notificationData.url)
   })

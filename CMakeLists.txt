@@ -81,7 +81,7 @@ endif()
 #-------------------------------------------------------------------------------
 
 option(ENABLE_APP_PACKAGING "Enable packaging" NO)
-option(ENABLE_UPDATE_CHECK "Enable update check." NO)
+option(ENABLE_UPDATE_CHECK "Enable update check." YES)
 option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
 option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
 option(ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" NO  )
