@@ -24,6 +24,8 @@
 #include <QObject>
 #include <QString>
 #include <QLocale>
+#include <QImage>
+
 
 // =============================================================================
 
@@ -50,7 +52,8 @@ namespace Utils {
 
   // Reverse function of strstr.
   char *rstrstr (const char *a, const char *b);
-
+  // Return the path if it is an image else an empty path.
+  QImage getImage(const QString &pUri);
   // Returns the same path given in parameter if `filePath` exists.
   // Otherwise returns a safe path with a unique number before the extension.
   QString getSafeFilePath (const QString &filePath, bool *soFarSoGood = nullptr);

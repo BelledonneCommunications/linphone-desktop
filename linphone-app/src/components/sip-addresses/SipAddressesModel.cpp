@@ -304,10 +304,6 @@ void SipAddressesModel::handleCallStateChanged (
   const shared_ptr<linphone::Call> &call,
   linphone::Call::State state
 ) {
-  // Ignore aborted calls.
-  if (call->getCallLog()->getStatus() == linphone::Call::Status::Aborted)
-    return;
-
   if (state == linphone::Call::State::End || state == linphone::Call::State::Error)
     addOrUpdateSipAddress(
       Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly()), call

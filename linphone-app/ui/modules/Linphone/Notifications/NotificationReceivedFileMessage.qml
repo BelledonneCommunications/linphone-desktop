@@ -16,6 +16,7 @@ Notification {
   // ---------------------------------------------------------------------------
 
   readonly property string fileUri: notificationData && notificationData.fileUri || ''
+  readonly property string imageUri: notificationData && notificationData.imageUri || ''
 
   // ---------------------------------------------------------------------------
 
@@ -46,7 +47,7 @@ Notification {
         Layout.fillHeight: true
         Layout.fillWidth: true
         fillMode: Image.PreserveAspectFit
-        source: "image://external/"+notification.fileUri
+        source: (imageUri ?"image://external/"+notification.imageUri : '')
         visible: image.status == Image.Ready
       }
 

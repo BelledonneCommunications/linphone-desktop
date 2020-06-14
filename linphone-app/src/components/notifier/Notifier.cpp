@@ -278,6 +278,10 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
 void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
   QVariantMap map;
   map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferInformation()->getFilePath());
+  if( Utils::getImage(map["fileUri"].toString()).isNull())
+    map["imageUri"] = "";
+  else
+    map["imageUri"] = map["fileUri"];
   map["fileSize"] = quint64(message->getFileTransferInformation()->getSize() +message->getFileTransferInformation()->getFileSize());
   CREATE_NOTIFICATION(Notifier::ReceivedFileMessage, map)
 }

@@ -36,14 +36,7 @@ ExternalImageProvider::ExternalImageProvider () : QQuickImageProvider(
 }
 
 QImage ExternalImageProvider::requestImage (const QString &id, QSize *size, const QSize &) {
-  QImage image(id);
-  if(image.isNull()){// Try to determine format from headers instead of using suffix
-	QImageReader reader(id);
-	reader.setDecideFormatFromContent(true);
-	QByteArray format = reader.format();
-	if(!format.isEmpty())
-		image = QImage(id, format);
-  }
+  QImage image(Utils::getImage(id));
   *size = image.size();
   return image;
 }

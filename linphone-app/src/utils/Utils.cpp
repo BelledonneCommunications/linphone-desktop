@@ -22,6 +22,7 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
+#include <QImageReader>
 
 #include "Utils.hpp"
 
@@ -47,7 +48,17 @@ char *Utils::rstrstr (const char *a, const char *b) {
 }
 
 // -----------------------------------------------------------------------------
-
+QImage Utils::getImage(const QString &pUri) {
+	QImage image(pUri);
+	if(image.isNull()){// Try to determine format from headers instead of using suffix
+		QImageReader reader(pUri);
+		reader.setDecideFormatFromContent(true);
+		QByteArray format = reader.format();
+		if(!format.isEmpty())
+			image = QImage(pUri, format);
+	}
+	return image;
+}
 QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
   if (soFarSoGood)
     *soFarSoGood = true;

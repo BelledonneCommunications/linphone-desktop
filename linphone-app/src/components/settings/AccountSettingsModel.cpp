@@ -69,7 +69,12 @@ shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () c
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
 
-  return proxyConfig ? proxyConfig->getIdentityAddress() : core->createPrimaryContactParsed();
+  if( !proxyConfig){
+    shared_ptr<linphone::Address> addr = core->createPrimaryContactParsed();
+    addr->setPort(0);
+    return std::move(addr);
+  }else
+    return proxyConfig->getIdentityAddress();
 }
 
 void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
