@@ -99,13 +99,17 @@ std::shared_ptr<linphone::Address> Utils::getMatchingLocalAddress(std::shared_pt
 QString Utils::cleanSipAddress (const QString &sipAddress) {
   std::shared_ptr<linphone::Address> addr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
   if( addr) {
-    std::string sipText = addr->getScheme();
-    if( !sipText.empty())
+    QString sipText = Utils::coreStringToAppString(addr->getScheme());
+    if( !sipText.isEmpty())
       sipText += ":";
     if( !addr->getUsername().empty())
-      sipText += addr->getUsername()+"@";
-    sipText += addr->getDomain();
-    return Utils::coreStringToAppString(sipText);
+      sipText += Utils::coreStringToAppString(addr->getUsername())+"@";
+    QString domain = Utils::coreStringToAppString(addr->getDomain());
+    if( domain.count(':')>1)
+      sipText+= '['+domain+']';
+    else 
+      sipText +=domain;
+    return sipText;
   }else
     return sipAddress;
 }
