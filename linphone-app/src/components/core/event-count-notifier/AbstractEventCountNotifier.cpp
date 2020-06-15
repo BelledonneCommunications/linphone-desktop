@@ -26,6 +26,7 @@
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "utils/Utils.hpp"
 
 #include "AbstractEventCountNotifier.hpp"
 
@@ -71,7 +72,7 @@ void AbstractEventCountNotifier::internalnotifyEventCount () {
 
 // Get missed call from a chat (useful for showing bubbles on Timelines)
 int AbstractEventCountNotifier::getMissedCallCount(const QString &peerAddress, const QString &localAddress) const{
-	auto it = mMissedCalls.find({ peerAddress, localAddress });
+	auto it = mMissedCalls.find({ Utils::cleanSipAddress(peerAddress), Utils::cleanSipAddress(localAddress) });
 	if (it != mMissedCalls.cend()) 
 		return *it;
 	else
@@ -79,9 +80,10 @@ int AbstractEventCountNotifier::getMissedCallCount(const QString &peerAddress, c
 }
 // Get missed call from a chat (useful for showing bubbles on Timelines)
 int AbstractEventCountNotifier::getMissedCallCountFromLocal(const QString &localAddress) const{
+	QString cleanAddress = Utils::cleanSipAddress(localAddress);
 	int count = 0;
 	for(auto it = mMissedCalls.cbegin() ; it != mMissedCalls.cend() ; ++it){
-		if(it.key().second == localAddress)
+		if(it.key().second == cleanAddress)
 			count += *it;
 	}
 	return count;
@@ -101,7 +103,7 @@ void AbstractEventCountNotifier::handleChatModelCreated (const shared_ptr<ChatMo
 }
 
 void AbstractEventCountNotifier::handleChatModelFocused (ChatModel *chatModel) {
-  auto it = mMissedCalls.find({ chatModel->getPeerAddress(), chatModel->getLocalAddress() });
+  auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatModel->getPeerAddress()), Utils::cleanSipAddress(chatModel->getLocalAddress()) });
   if (it != mMissedCalls.cend()) {
     mMissedCalls.erase(it);
     internalnotifyEventCount();
@@ -109,7 +111,6 @@ void AbstractEventCountNotifier::handleChatModelFocused (ChatModel *chatModel) {
 }
 
 void AbstractEventCountNotifier::handleCallMissed (CallModel *callModel) {
-  Q_UNUSED(callModel);
-  ++mMissedCalls[{ callModel->getPeerAddress(), callModel->getLocalAddress() }];
+  ++mMissedCalls[{ Utils::cleanSipAddress(callModel->getPeerAddress()), Utils::cleanSipAddress(callModel->getLocalAddress()) }];
   internalnotifyEventCount();
 }

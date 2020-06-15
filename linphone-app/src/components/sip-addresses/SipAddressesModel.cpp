@@ -124,8 +124,8 @@ ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sipAddre
 
 SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &peerAddress, const QString &localAddress) {
   SipAddressObserver *model = new SipAddressObserver(peerAddress, localAddress);
-  const QString cleanedPeerAddress = cleanSipAddress(peerAddress);
-  const QString cleanedLocalAddress = cleanSipAddress(localAddress);
+  const QString cleanedPeerAddress = Utils::cleanSipAddress(peerAddress);
+  const QString cleanedLocalAddress = Utils::cleanSipAddress(localAddress);
 
   auto it = mPeerAddressToSipAddressEntry.find(cleanedPeerAddress);
   if (it != mPeerAddressToSipAddressEntry.end()) {
@@ -216,12 +216,9 @@ bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
   );
   return address && !address->getUsername().empty();
 }
-
+// Return at most : sip:username@domain
 QString SipAddressesModel::cleanSipAddress (const QString &sipAddress) {
-  const int index = sipAddress.lastIndexOf('<');
-  if (index == -1)
-    return sipAddress;
-  return sipAddress.mid(index + 1, sipAddress.lastIndexOf('>') - index - 1);
+  return Utils::cleanSipAddress(sipAddress);
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +346,7 @@ void SipAddressesModel::handleAllEntriesRemoved (ChatModel *chatModel) {
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
-  auto it2 = it->localAddressToConferenceEntry.find(chatModel->getLocalAddress());
+  auto it2 = it->localAddressToConferenceEntry.find(Utils::cleanSipAddress(chatModel->getLocalAddress()));
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
   it->localAddressToConferenceEntry.erase(it2);
@@ -371,7 +368,7 @@ void SipAddressesModel::handleLastEntryRemoved (ChatModel *chatModel) {
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
-  auto it2 = it->localAddressToConferenceEntry.find(chatModel->getLocalAddress());
+  auto it2 = it->localAddressToConferenceEntry.find(Utils::cleanSipAddress(chatModel->getLocalAddress()));
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
 
@@ -390,12 +387,12 @@ void SipAddressesModel::handleLastEntryRemoved (ChatModel *chatModel) {
 }
 
 void SipAddressesModel::handleMessageCountReset (ChatModel *chatModel) {
-  const QString &peerAddress = chatModel->getPeerAddress();
+  const QString &peerAddress = Utils::cleanSipAddress(chatModel->getPeerAddress());
   auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
-  const QString &localAddress = chatModel->getLocalAddress();
+  const QString &localAddress = Utils::cleanSipAddress(chatModel->getLocalAddress());
   auto it2 = it->localAddressToConferenceEntry.find(localAddress);
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
@@ -417,14 +414,12 @@ void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessag
 }
 
 void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
-  auto it = mPeerAddressToSipAddressEntry.find(
-    Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())
-  );
+  auto it = mPeerAddressToSipAddressEntry.find(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())));
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
   auto it2 = it->localAddressToConferenceEntry.find(
-    Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())
+    Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()))
   );
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
@@ -449,8 +444,9 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
 
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const shared_ptr<linphone::Call> &call) {
   const shared_ptr<linphone::CallLog> callLog = call->getCallLog();
-  QString localAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly()));
-  QString peerAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly()));
+  
+  QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly())));
+  QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly())));
   ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[
     localAddress
   ];
@@ -468,8 +464,8 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
   int count = chatRoom->getUnreadMessagesCount();
 
-  QString localAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()));
-  QString peerAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()));
+  QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())));
+  QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())));
   qInfo() << QStringLiteral("Update (`%1`, `%2`) from chat message.").arg(sipAddressEntry.sipAddress, localAddress);
 
   ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[localAddress];
@@ -555,8 +551,8 @@ void SipAddressesModel::initSipAddressesFromChat () {
     if (history.empty())
       continue;
 
-    QString peerAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()));
-    QString localAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()));
+    QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())));
+    QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())));
 
     getSipAddressEntry(peerAddress)->localAddressToConferenceEntry[localAddress] = {
       chatRoom->getUnreadMessagesCount(),
@@ -571,8 +567,9 @@ void SipAddressesModel::initSipAddressesFromCalls () {
   using ConferenceId = QPair<QString, QString>;
   QSet<ConferenceId> conferenceDone;
   for (const auto &callLog : CoreManager::getInstance()->getCore()->getCallLogs()) {
-    const QString peerAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly()));
-    const QString localAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly()));
+    const QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly())));
+    const QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly())));
+    
 
     ConferenceId conferenceId{ peerAddress, localAddress };
     if (conferenceDone.contains(conferenceId))

@@ -25,6 +25,7 @@
 #include <QImageReader>
 
 #include "Utils.hpp"
+#include "components/core/CoreManager.hpp"
 
 // =============================================================================
 
@@ -80,6 +81,33 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
     *soFarSoGood = false;
 
   return QString("");
+}
+std::shared_ptr<linphone::Address> Utils::getMatchingLocalAddress(std::shared_ptr<linphone::Address> p_localAddress){
+  QVector<std::shared_ptr<linphone::Address> > addresses;
+  // Get default proxy
+  addresses.push_back(CoreManager::getInstance()->getCore()->createPrimaryContactParsed());
+  auto proxyList = CoreManager::getInstance()->getCore()->getProxyConfigList();
+  foreach(auto proxy, proxyList)
+    addresses.push_back(proxy->getIdentityAddress()->clone());
+  foreach(auto address, addresses){
+    if( address->getUsername() == p_localAddress->getUsername() && address->getDomain() == p_localAddress->getDomain())
+      return address;
+  }
+  return p_localAddress;
+}
+// Return at most : sip:username@domain
+QString Utils::cleanSipAddress (const QString &sipAddress) {
+  std::shared_ptr<linphone::Address> addr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
+  if( addr) {
+    std::string sipText = addr->getScheme();
+    if( !sipText.empty())
+      sipText += ":";
+    if( !addr->getUsername().empty())
+      sipText += addr->getUsername()+"@";
+    sipText += addr->getDomain();
+    return Utils::coreStringToAppString(sipText);
+  }else
+    return sipAddress;
 }
 // Data to retrieve WIN32 process
 #ifdef _WIN32

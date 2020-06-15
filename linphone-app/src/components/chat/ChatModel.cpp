@@ -385,7 +385,7 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
     emit allEntriesRemoved();
   else if (limit == mEntries.count())
     emit lastEntryRemoved();
-
+  emit focused();// Removing rows is like having focus. Don't wait asynchronous events.
   return true;
 }
 
@@ -475,6 +475,7 @@ void ChatModel::removeAllEntries () {
   endResetModel();
 
   emit allEntriesRemoved();
+  emit focused();// Removing all entries is like having focus. Don't wait asynchronous events.
 }
 
 // -----------------------------------------------------------------------------
