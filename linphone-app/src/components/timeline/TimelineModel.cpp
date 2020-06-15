@@ -21,8 +21,10 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "utils/Utils.hpp"
 
 #include "TimelineModel.hpp"
+
 
 // =============================================================================
 
@@ -58,7 +60,7 @@ QVariant TimelineModel::data (const QModelIndex &index, int role) const {
   QVariantMap map(QSortFilterProxyModel::data(index, role).toMap());
 
   auto localToConferenceEntry = getLocalToConferenceEntry(map);
-  auto it = localToConferenceEntry->find(mLocalAddress);
+  auto it = localToConferenceEntry->find(getCleanedLocalAddress());
   if (it != localToConferenceEntry->end()) {
     map["timestamp"] = it->timestamp;
     map["isComposing"] = it->isComposing;
@@ -71,17 +73,25 @@ QVariant TimelineModel::data (const QModelIndex &index, int role) const {
 
 bool TimelineModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  return getLocalToConferenceEntry(index.data().toMap())->contains(mLocalAddress);
+  return getLocalToConferenceEntry(index.data().toMap())->contains(getCleanedLocalAddress());
 }
 
 bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const QDateTime &a(getLocalToConferenceEntry(sourceModel()->data(left).toMap())->find(mLocalAddress)->timestamp);
-  const QDateTime &b(getLocalToConferenceEntry(sourceModel()->data(right).toMap())->find(mLocalAddress)->timestamp);
+QString localAddress = getCleanedLocalAddress();
+  const QDateTime &a(getLocalToConferenceEntry(sourceModel()->data(left).toMap())->find(localAddress)->timestamp);
+  const QDateTime &b(getLocalToConferenceEntry(sourceModel()->data(right).toMap())->find(localAddress)->timestamp);
   return a > b;
 }
 
 // -----------------------------------------------------------------------------
-
+QString TimelineModel::getLocalAddress () const
+{
+    return mLocalAddress;
+}
+QString TimelineModel::getCleanedLocalAddress () const
+{
+    return Utils::cleanSipAddress(mLocalAddress);
+}
 void TimelineModel::handleLocalAddressChanged (const QString &localAddress) {
   if (mLocalAddress != localAddress) {
     mLocalAddress = localAddress;

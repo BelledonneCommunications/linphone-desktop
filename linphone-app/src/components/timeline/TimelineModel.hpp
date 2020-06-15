@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -22,7 +22,6 @@
 #define TIMELINE_MODEL_H_
 
 #include <QSortFilterProxyModel>
-
 // =============================================================================
 
 class TimelineModel : public QSortFilterProxyModel {
@@ -44,10 +43,8 @@ protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
-  QString getLocalAddress () const {
-    return mLocalAddress;
-  }
-
+  QString getLocalAddress () const;
+  QString getCleanedLocalAddress () const;
   void handleLocalAddressChanged (const QString &localAddress);
 
 private:

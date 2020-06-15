@@ -26,6 +26,8 @@
 #include <QLocale>
 #include <QImage>
 
+#include <linphone++/address.hh>
+
 
 // =============================================================================
 
@@ -57,7 +59,8 @@ namespace Utils {
   // Returns the same path given in parameter if `filePath` exists.
   // Otherwise returns a safe path with a unique number before the extension.
   QString getSafeFilePath (const QString &filePath, bool *soFarSoGood = nullptr);
-
+  std::shared_ptr<linphone::Address> getMatchingLocalAddress(std::shared_ptr<linphone::Address> p_localAddress);
+  QString cleanSipAddress (const QString &sipAddress);// Return at most : sip:username@domain
   // Test if the process exists
   bool processExists(const quint64& p_processId);
 
