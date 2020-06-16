@@ -69,14 +69,13 @@ fi
 -qtwinextras,\
 -qtx11extras,\
 -qtxmlpatterns \
--fontconfig -feature-freetype \
 -f
 
 cd ..
 
-mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
+#mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 #use pigz to parallelize compression
-tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -c ${REPO_FOLDER}/ | pigz -p 24 > ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz 
+#tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -c ${REPO_FOLDER}/ | pigz -p 24 > ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz 
 #tar --transform "s/^${REPO_FOLDER}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
-rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec
+#rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec
