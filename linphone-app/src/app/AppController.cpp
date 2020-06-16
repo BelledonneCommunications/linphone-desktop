@@ -87,6 +87,7 @@ AppController::AppController (int &argc, char *argv[]) {
     }
   }
 
+  qInfo() << "Available fonts : " << QFontDatabase().families();
   mApp->setFont(QFont(DefaultFont));
 }
 
