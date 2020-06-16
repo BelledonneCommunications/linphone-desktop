@@ -1717,6 +1717,10 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showVideoCodecsLabel</source>
         <translation>Show video codecs</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Video call in progress: some settings are not available.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

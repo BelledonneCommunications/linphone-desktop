@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
@@ -22,6 +23,27 @@ TabContainer {
     Form {
       title: qsTr('videoCaptureTitle')
       width: parent.width
+      
+      //Warning if in call
+      FormLine {
+        visible: SettingsModel.isInCall
+        FormGroup {
+            RowLayout {
+            spacing: SettingsWindowStyle.video.warningMessage.iconSize
+            Icon {
+              icon: 'warning'
+              iconSize: SettingsWindowStyle.video.warningMessage.iconSize
+              anchors {
+                rightMargin: SettingsWindowStyle.video.warningMessage.iconSize
+                leftMargin: SettingsWindowStyle.video.warningMessage.iconSize
+              }
+            }
+            Text {
+              text: qsTr('videoSettingsInCallWarning')
+            }
+          }
+        }
+      }
 
       FormLine {
         FormGroup {
