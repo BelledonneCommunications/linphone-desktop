@@ -80,12 +80,14 @@ AppController::AppController (int &argc, char *argv[]) {
   while (it.hasNext()) {
     QFileInfo info(it.next());
 
-    if (info.suffix() == QLatin1String("ttf")) {
+    if (info.suffix() == QLatin1String("ttf") || info.suffix() == QLatin1String("otf")) {
       QString path = info.absoluteFilePath();
       if (path.startsWith(":/assets/fonts/"))
-        QFontDatabase::addApplicationFont(path);
+        if(QFontDatabase::addApplicationFont(path)<0)
+          qWarning() << "Font cannot load : " << path;
     }
   }
+  qInfo() << "Available fonts : " << QFontDatabase().families();
 
   mApp->setFont(QFont(DefaultFont));
 }

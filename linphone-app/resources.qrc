@@ -481,5 +481,7 @@
         <file>ui/dev-modules/Colors/Colors.qml</file>
         <file>ui/dev-modules/Units/Units.qml</file>
         <file>assets/icon.ico</file>
+        <file>assets/fonts/NotoSans-hinted/NotoSansCJKjp-Regular.otf</file>
+        <file>assets/fonts/NotoSans-hinted/NotoSansCJKjp-Bold.otf</file>
     </qresource>
 </RCC>

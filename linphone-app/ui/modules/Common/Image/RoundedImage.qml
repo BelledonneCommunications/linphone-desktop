@@ -19,7 +19,7 @@ Item {
 
     Image {
       id: image
-
+      mipmap:(Qt.platform.os === 'osx'? true:false)
       anchors.fill: parent
       fillMode: Image.PreserveAspectCrop
       sourceSize.width: parent.width
