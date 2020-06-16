@@ -83,7 +83,9 @@ set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurr
 if (UNIX AND NOT APPLE)
     list(APPEND QT5_PACKAGES DBus)
 endif ()
-set(QT5_PACKAGES_OPTIONAL TextToSpeech)
+if(ENABLE_TEXT_TO_SPEECH)
+	#set(QT5_PACKAGES_OPTIONAL TextToSpeech)
+endif()
 set(CMAKE_AUTOMOC ON)
 
 
@@ -342,7 +344,9 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 
 include_directories(src/)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
-find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
+if(QT5_PACKAGES_OPTIONAL)
+	find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
+endif()
 
 if (CMAKE_INSTALL_RPATH)
     #Retrieve lib path from a know QT executable

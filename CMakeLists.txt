@@ -91,6 +91,7 @@ option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
 option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 option(ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
+option(ENABLE_TEXT_TO_SPEECH "Enable the use of text to speech plugin" YES)
 
 if(WIN32 OR APPLE)
 else()
@@ -110,6 +111,8 @@ list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
 list(APPEND APP_OPTIONS "-DENABLE_BUILD_VERBOSE=${ENABLE_BUILD_VERBOSE}")
 list(APPEND APP_OPTIONS "-DENABLE_OPENH264=${ENABLE_OPENH264}")
 list(APPEND APP_OPTIONS "-DENABLE_NON_FREE_CODECS=${ENABLE_NON_FREE_CODECS}")
+list(APPEND APP_OPTIONS "-DENABLE_TEXT_TO_SPEECH=${ENABLE_TEXT_TO_SPEECH}")
+
 	
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
