@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.12
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.platform 1.0
@@ -129,6 +129,9 @@ ApplicationWindow {
             }
 
             Text {
+				
+              onFontInfoChanged: console.log(fontInfo.family)
+              onFontChanged: console.log(font.family+' '+fontInfo.family)
               clip: true
               color: MainWindowStyle.autoAnswerStatus.text.color
               font {
