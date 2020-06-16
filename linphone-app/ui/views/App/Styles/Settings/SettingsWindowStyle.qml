@@ -25,4 +25,9 @@ QtObject {
     property int iconSize: 22
     property int legendLineWidth: 280
   }
+  property QtObject video: QtObject {
+    property QtObject warningMessage: QtObject {
+      property int iconSize: 20
+    }
+  }
 }
