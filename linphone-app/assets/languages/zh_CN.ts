@@ -1715,6 +1715,10 @@
         <source>showVideoCodecsLabel</source>
         <translation>显示视频编解码器</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>视频呼叫正在进行中：某些设置不可用。</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

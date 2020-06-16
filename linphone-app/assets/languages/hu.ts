@@ -1714,6 +1714,10 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
         <source>showVideoCodecsLabel</source>
         <translation>Videó kodekek megjelenítése</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Videohívás folyamatban: egyes beállítások nem állnak rendelkezésre.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

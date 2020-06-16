@@ -1715,6 +1715,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showVideoCodecsLabel</source>
         <translation>Visa videokodekar</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Videosamtal pågår: vissa inställningar är inte tillgängliga.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
