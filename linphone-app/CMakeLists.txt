@@ -84,7 +84,7 @@ if (UNIX AND NOT APPLE)
     list(APPEND QT5_PACKAGES DBus)
 endif ()
 if(ENABLE_TEXT_TO_SPEECH)
-	#set(QT5_PACKAGES_OPTIONAL TextToSpeech)
+	set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 endif()
 set(CMAKE_AUTOMOC ON)
 
