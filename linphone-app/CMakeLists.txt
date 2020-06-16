@@ -255,7 +255,7 @@ else ()
 endif ()
 
 set(QRC_RESOURCES resources.qrc)
-
+qt5_add_big_resources(QRC_BIG_RESOURCES resources.qrc)
 set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES da de en es fr_FR hu it ja lt pt_BR ru sv tr uk zh_CN)
@@ -358,9 +358,9 @@ get_directory_property(TS_FILES DIRECTORY "${LANGUAGES_DIRECTORY}"  DEFINITION T
 list(APPEND SOURCES ${TS_FILES})
 
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_BIG_RESOURCES})
 if(TARGET_NAME_ONLY)
-    add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+    add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_BIG_RESOURCES})
 endif()
 if (WIN32)
     add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
