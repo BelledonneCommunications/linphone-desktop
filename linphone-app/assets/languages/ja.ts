@@ -1715,6 +1715,10 @@
         <source>showVideoCodecsLabel</source>
         <translation>ビデオコーデックを表示する</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>ビデオ通話中:一部の設定が使用できません。</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

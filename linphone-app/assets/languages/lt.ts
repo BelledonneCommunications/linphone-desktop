@@ -1715,6 +1715,10 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showVideoCodecsLabel</source>
         <translation>Rodyti vaizdo kodekus</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Vyksta vaizdo skambutis: kai kurie nustatymai negalimi.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
