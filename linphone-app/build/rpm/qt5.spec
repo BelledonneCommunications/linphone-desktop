@@ -58,6 +58,7 @@ Qt is a software toolkit for developing applications.
   -qt-pcre \
   -qt-xcb \
   -xkbcommon \
+  -system-freetype \
   -feature-freetype -fontconfig \
   -skip wayland \
   -system-zlib \
