@@ -7,7 +7,7 @@ RUN sudo apt-get update && sudo apt-get install -y python3 pigz
 
 
 #QT Dependencies
-RUN sudo apt-get update && sudo apt-get install -y libxkbcommon*
+RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher
 
 # Build qt5.12.5
 RUN git clone -b fix/qt5_build_issues_new_docker_images --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \

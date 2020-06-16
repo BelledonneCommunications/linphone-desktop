@@ -69,7 +69,6 @@ fi
 -qtwinextras,\
 -qtx11extras,\
 -qtxmlpatterns \
--fontconfig -feature-freetype \
 -f
 
 cd ..
