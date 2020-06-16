@@ -1715,6 +1715,10 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showVideoCodecsLabel</source>
         <translation>Zeige Videocodecs</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Videoanruf wird ausgeführt: Einige Einstellungen sind nicht verfügbar.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

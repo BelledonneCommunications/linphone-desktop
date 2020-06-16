@@ -1715,6 +1715,10 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showVideoCodecsLabel</source>
         <translation>Vis video codecs</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Videoopkald i gang: Nogle indstillinger er ikke tilgængelige.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

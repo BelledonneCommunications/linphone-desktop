@@ -1714,6 +1714,10 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
         <source>showVideoCodecsLabel</source>
         <translation>Mostrar codecs de vídeo</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Chamada de vídeo em andamento: algumas configurações não estão disponíveis.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
