@@ -1715,6 +1715,10 @@
         <source>showVideoCodecsLabel</source>
         <translation>Показать Видео кодаки</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Видеозвонок выполняется: некоторые настройки недоступны.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>

@@ -1715,6 +1715,10 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>showVideoCodecsLabel</source>
         <translation>Görüntü çözücüleri göster</translation>
     </message>
+    <message>
+        <source>videoSettingsInCallWarning</source>
+        <translation>Görüntülü arama devam ediyor: bazı ayarlar mevcut değil.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
