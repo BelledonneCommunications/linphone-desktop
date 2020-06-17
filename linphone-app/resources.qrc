@@ -483,5 +483,9 @@
         <file>assets/icon.ico</file>
         <file>assets/fonts/NotoSans-hinted/NotoSansCJKjp-Regular.otf</file>
         <file>assets/fonts/NotoSans-hinted/NotoSansCJKjp-Bold.otf</file>
+        <file>assets/fonts/NotoSans-hinted/NotoColorEmoji.ttf</file>
+        <file>assets/fonts/NotoSans-hinted/NotoEmoji-Regular.ttf</file>
+        <file>assets/fonts/NotoSans-hinted/NotoSansSC-Bold.otf</file>
+        <file>assets/fonts/NotoSans-hinted/NotoSansSC-Regular.otf</file>
     </qresource>
 </RCC>

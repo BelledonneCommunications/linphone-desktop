@@ -3,8 +3,8 @@
 #################################################
 
 .build_all_windows_script: &build_all_windows_script |
-  SET Qt5_DIR=C:\Qt\5.12.5\msvc2017\lib\cmake
-  SET PATH=%PATH%;C:\Qt\5.12.5\msvc2017\bin
+  SET Qt5_DIR=C:\Qt\5.14.2\msvc2017\lib\cmake
+  SET PATH=%PATH%;C:\Qt\5.14.2\msvc2017\bin
   IF EXIST build RMDIR /S /Q build
   mkdir build
   cd build
