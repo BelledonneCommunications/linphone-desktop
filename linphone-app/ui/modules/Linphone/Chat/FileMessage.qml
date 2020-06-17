@@ -80,7 +80,7 @@ Row {
           id: thumbnail
 
           Image {
-            mipmap:(Qt.platform.os === 'osx'? true:false)
+            mipmap: Qt.platform.os === 'osx'
             source: $chatEntry.thumbnail
           }
         }
