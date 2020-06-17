@@ -262,10 +262,15 @@ void Notifier::deleteNotification (QVariant notification) {
 
 void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &message) {
   QVariantMap map;
-  map["message"] = message->getFileTransferInformation()
-    ? tr("newFileMessage")
-    : Utils::coreStringToAppString(message->getText());
-
+  QString txt;
+  if(! message->getFileTransferInformation() ){
+	  foreach(auto content, message->getContents()){
+		  if(content->isText())
+			  txt += content->getStringBuffer().c_str();
+	  }
+  }else
+	  txt = tr("newFileMessage");
+  map["message"] = txt;
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
   map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
   map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());

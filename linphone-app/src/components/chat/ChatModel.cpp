@@ -191,7 +191,13 @@ static inline void removeFileMessageThumbnail (const shared_ptr<linphone::ChatMe
 // -----------------------------------------------------------------------------
 
 static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphone::ChatMessage> &message) {
-  dest["content"] = Utils::coreStringToAppString(message->getTextContent());
+  std::list<std::shared_ptr<linphone::Content>> contents = message->getContents();
+  QString txt;
+  foreach(auto content, contents){
+	  if(content->isText())
+		  txt += content->getStringBuffer().c_str();
+  }
+  dest["content"] = txt;
   dest["isOutgoing"] = message->isOutgoing() || message->getState() == linphone::ChatMessage::State::Idle;
 
   // Old workaround.
@@ -481,7 +487,8 @@ void ChatModel::removeAllEntries () {
 // -----------------------------------------------------------------------------
 
 void ChatModel::sendMessage (const QString &message) {
-  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage(Utils::appStringToCoreString(message));
+  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage("");
+  _message->getContents().begin()->get()->setStringBuffer(message.toUtf8().toStdString());
   _message->removeListener(mMessageHandlers);// Remove old listener if already exists
   _message->addListener(mMessageHandlers);
 
