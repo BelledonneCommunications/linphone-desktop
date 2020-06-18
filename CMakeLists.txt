@@ -23,6 +23,12 @@
 cmake_minimum_required(VERSION 3.9)
 #3.9 for qt5_add_big_resources
 
+find_package(Qt5Core 5.12 REQUIRED)
+
+if ( NOT Qt5Core_FOUND)
+	message(FATAL_ERROR "Minimum supported Qt5 version is 5.12!")
+endif()
+
 get_cmake_property(vars CACHE_VARIABLES)
 foreach(var ${vars})
 	get_property(currentHelpString CACHE "${var}" PROPERTY HELPSTRING)
