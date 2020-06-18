@@ -23,11 +23,6 @@
 cmake_minimum_required(VERSION 3.9)
 #3.9 for qt5_add_big_resources
 
-find_package(Qt5 5.12 COMPONENTS Core REQUIRED)
-
-if ( NOT Qt5_FOUND )
-	message(FATAL_ERROR "Minimum supported Qt5 version is 5.12!")
-endif()
 
 get_cmake_property(vars CACHE_VARIABLES)
 foreach(var ${vars})
@@ -161,6 +156,13 @@ ExternalProject_Add_Step(sdk force_build
 include(FindPkgConfig)
 
 set(APP_DEPENDS sdk)
+
+
+find_package(Qt5 5.12 COMPONENTS Core REQUIRED)
+
+if ( NOT Qt5_FOUND )
+	message(FATAL_ERROR "Minimum supported Qt5 version is 5.12!")
+endif()
 
 find_package(LinphoneCxx CONFIG QUIET)
 find_package(Linphone CONFIG QUIET)
