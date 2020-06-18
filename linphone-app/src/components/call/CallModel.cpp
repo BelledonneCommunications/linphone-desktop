@@ -208,15 +208,17 @@ bool CallModel::transferTo (const QString &sipAddress) {
 // -----------------------------------------------------------------------------
 
 void CallModel::acceptVideoRequest () {
-  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-  shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
+  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
   params->enableVideo(true);
 
   mCall->acceptUpdate(params);
 }
 
 void CallModel::rejectVideoRequest () {
-  mCall->acceptUpdate(mCall->getCurrentParams());
+  shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
+  params->enableVideo(false);
+
+  mCall->acceptUpdate(params);
 }
 
 void CallModel::takeSnapshot () {
