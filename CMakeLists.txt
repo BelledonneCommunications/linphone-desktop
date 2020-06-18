@@ -23,9 +23,9 @@
 cmake_minimum_required(VERSION 3.9)
 #3.9 for qt5_add_big_resources
 
-find_package(Qt5Core 5.12 REQUIRED)
+find_package(Qt5 5.12 COMPONENTS Core REQUIRED)
 
-if ( NOT Qt5Core_FOUND)
+if ( NOT Qt5_FOUND )
 	message(FATAL_ERROR "Minimum supported Qt5 version is 5.12!")
 endif()
 
