@@ -51,6 +51,9 @@ Qt is a software toolkit for developing applications.
   -silent \
   -nomake examples \
   -nomake tests \
+  -dbus \
+  -feature-dbus \
+  -feature-accessibility \
   -qt-freetype \
   -qt-harfbuzz \
   -qt-libjpeg \
