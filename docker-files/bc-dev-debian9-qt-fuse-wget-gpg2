@@ -7,8 +7,14 @@ RUN sudo apt-get update && sudo apt-get install -y python3 pigz
 
 
 #QT Dependencies
-RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev
+#atspi and dbus may be used to enable qt accessibility for screan reader
+#xkbcommon is needed for special keyboard features
+#flite1-dev, libspeechd-dev speech-dispatcher are needed for text to speech
+#libfontconfig1-dev is needed to load correct fonts (support of ideograms, etc..)
+RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev
 
+#needed fot qt to find dbus
+ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
 # Build qt5.12.5
 RUN git clone -b fix/qt5_build_issues_new_docker_images --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
