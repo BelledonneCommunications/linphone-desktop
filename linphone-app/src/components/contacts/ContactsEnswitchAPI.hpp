@@ -13,15 +13,16 @@ public:
 	ContactsEnswitchAPI();
 	virtual ~ContactsEnswitchAPI(){}
 
-	static void requestList(const ContactsEnswitchAPI &pData);	// Call it for importing. pData will be freed automatically
+	static ContactsImportAPI * requestList(const ContactsEnswitchAPI &pData, bool *pIsNew =nullptr);	// Call it for importing. pData will be freed automatically
 
 	static ContactsEnswitchAPI from(const QVariantMap &pData);
 	virtual QVariantMap to() const;
 
 // These functions are called by ContactsImportAPI	
-	virtual bool isValid(const bool& pPrintError = true)const;
+	virtual bool isEqual(ContactsImportDataAPI *pData)const;
+	virtual bool isValid(const bool& pPrintError = true);
 	virtual QString prepareRequest()const;
-	virtual void parse(const QByteArray& p_data);
+	virtual QString parse(const QByteArray& p_data);
 // Data
 	QString mDomain;
 	QString mUrl;

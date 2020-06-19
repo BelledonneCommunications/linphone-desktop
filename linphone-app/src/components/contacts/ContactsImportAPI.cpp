@@ -6,6 +6,14 @@ ContactsImportAPI::ContactsImportAPI(ContactsImportDataAPI * pData) : mData(pDat
 ContactsImportAPI::~ContactsImportAPI(){
 	delete mData;
 }
+void ContactsImportAPI::updateData(ContactsImportDataAPI * pData){
+	if(pData->isEqual(mData))
+		delete pData;
+	else{
+		delete mData;
+		mData = pData;
+	}
+}
 QString ContactsImportAPI::prepareRequest()const{
 	return mData->prepareRequest();
 }
@@ -31,8 +39,9 @@ void ContactsImportAPI::handleReadyData(){
 void ContactsImportAPI::handleFinished() {
 	if (mNetworkReply->error() == QNetworkReply::NoError){
 		mBuffer.append(mNetworkReply->readAll());
-		mData->parse(mBuffer);
-	}
+		emit status(mData->parse(mBuffer));
+	}else
+		emit status(mNetworkReply->errorString());
 	mBuffer.clear();
 }
 

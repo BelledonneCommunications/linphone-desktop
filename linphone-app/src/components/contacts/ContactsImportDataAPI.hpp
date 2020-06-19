@@ -13,9 +13,10 @@ public:
 	virtual QVariantMap to() const=0;
 	
 // These functions are called by ContactsImportAPI
-	virtual bool isValid(const bool& pPrintError = true)const = 0;
+	virtual bool isEqual(ContactsImportDataAPI * pData)const = 0;
+	virtual bool isValid(const bool& pPrintError = true) = 0;
 	virtual QString prepareRequest()const = 0;
-	virtual void parse(const QByteArray& p_data) = 0;
+	virtual QString parse(const QByteArray& pData) = 0;// Return an error message
 };
 
 #endif // CONTACTSIMPORTDATAAPI_H

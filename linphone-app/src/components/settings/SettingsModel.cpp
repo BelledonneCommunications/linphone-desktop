@@ -1256,7 +1256,6 @@ QVariantMap SettingsModel::getContactImportEnswitch() const {
 	account["domain"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_domain", domain));
 	account["url"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_url", "https://demo.enswitch.com/api/json/people/list/"));
 	account["username"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_username", "guest"));
-	account["password"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_password", "guest"));
 	account["enabled"] = mConfig->getInt(ContactsSection, "enswitch_enabled", 0);
 	return account;
 }
@@ -1266,14 +1265,17 @@ void SettingsModel::setContactImportEnswitch(const QVariantMap &pAccount) {
 	mConfig->setString(ContactsSection, "enswitch_domain", Utils::appStringToCoreString(pAccount["domain"].toString()));
 	mConfig->setString(ContactsSection, "enswitch_url", Utils::appStringToCoreString(pAccount["url"].toString()));
 	mConfig->setString(ContactsSection, "enswitch_username", Utils::appStringToCoreString(pAccount["username"].toString()));
-	mConfig->setString(ContactsSection, "enswitch_password", Utils::appStringToCoreString(pAccount["password"].toString()));
 	mConfig->setInt(ContactsSection, "enswitch_enabled", enabled);
 	emit contactImportEnswitchChanged(pAccount);
 }
 void SettingsModel::importContacts(){
 	QVariantMap enswitch = getContactImportEnswitch();
 	if(enswitch["enabled"].toInt()>0){
-		ContactsEnswitchAPI::requestList(ContactsEnswitchAPI::from(enswitch));
+		bool isNew = false;
+		ContactsImportAPI * api = ContactsEnswitchAPI::requestList(ContactsEnswitchAPI::from(enswitch), &isNew);
+		if(isNew){
+			connect(api, SIGNAL(status(const QString&)), this, SIGNAL(contactImportEnswitchStatus(const QString&))); 
+		}
 	}
 }
 // ---------------------------------------------------------------------------

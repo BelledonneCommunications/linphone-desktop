@@ -4,6 +4,7 @@ import Common 1.0
 import Linphone 1.0
 
 import App.Styles 1.0
+import Linphone.Styles 1.0
 
 import 'SettingsAdvanced.js' as Logic
 
@@ -105,7 +106,6 @@ TabContainer {
           qsTr('contactsDomain'),
           qsTr('contactsURL'),
           qsTr('contactsUsername'),
-          qsTr('contactsPassword'),
           qsTr('contactsActivate')
         ]
         legendLineWidth:80
@@ -145,20 +145,6 @@ TabContainer {
             }
           }
           FormTableEntry {
-            TextField {
-              readOnly: false
-              width:parent.width
-              echoMode: TextInput.Password
-              text: enswitchLine.enswitchAccount.password
-              onEditingFinished: {  enswitchLine.enswitchAccount.password = text
-                                    SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
-                                }
-              TooltipArea {
-                text: qsTr("contactsEnswitchPasswordWarning")
-              }
-            }
-          }
-          FormTableEntry {
             Switch {
               id: enswitch
               checked: enswitchLine.enswitchAccount.enabled>0
@@ -167,9 +153,35 @@ TabContainer {
                             SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
                             if(checked)
                                 SettingsModel.importContacts()
+                            else
+                                enswitchStatus.text = ''
                         }
             }
           }
+        }
+        FormTableLine {
+            width:parent.width-parent.legendLineWidth
+            FormTableEntry {
+                width:parent.width
+                TextEdit{
+                    id:enswitchStatus
+                    visible:text!==''
+                    selectByMouse: true
+                    readOnly:true
+                    color: RequestBlockStyle.error.color
+                    width:parent.width
+                    horizontalAlignment:Text.AlignRight
+                    font {
+                      italic: true
+                      pointSize: RequestBlockStyle.error.pointSize
+                    }
+
+                    Connections{
+                        target:SettingsModel
+                        onContactImportEnswitchStatus:enswitchStatus.text=status
+                    }
+                }
+            }
         }
       }
     }

@@ -12,11 +12,14 @@ public:
 	ContactsImportAPI(ContactsImportDataAPI * pData);
 	virtual ~ContactsImportAPI();
 	QString prepareRequest()const;
+	void updateData(ContactsImportDataAPI * pData);
 
 	void request();
 
 	QPointer<QNetworkReply> mNetworkReply;
 	QNetworkAccessManager mManager;
+signals:
+	void status(const QString& status);
 	
 private:
 	void handleReadyData();

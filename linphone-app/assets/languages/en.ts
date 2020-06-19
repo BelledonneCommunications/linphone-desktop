@@ -1181,16 +1181,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Username</translation>
     </message>
     <message>
-        <source>contactsPassword</source>
-        <translation>Password</translation>
-    </message>
-    <message>
         <source>contactsActivate</source>
         <translation>Activate</translation>
-    </message>
-    <message>
-        <source>contactsEnswitchPasswordWarning</source>
-        <translation>Warning : Passwords are stored and used without encryptions.</translation>
     </message>
 </context>
 <context>

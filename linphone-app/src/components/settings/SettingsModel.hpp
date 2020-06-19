@@ -538,7 +538,7 @@ signals:
 	void fileTransferUrlChanged (const QString &url);
 
 	void mediaEncryptionChanged (MediaEncryption encryption);
-    void limeStateChanged (bool state);
+	void limeStateChanged (bool state);
 
 	void contactsEnabledChanged (bool status);
 
@@ -592,9 +592,9 @@ signals:
 	void logsUploadUrlChanged (const QString &url);
 	void logsEnabledChanged (bool status);
 	void logsEmailChanged (const QString &email);
-	
-	
+
 	void contactImportEnswitchChanged(const QVariantMap &account);
+	void contactImportEnswitchStatus(const QString &status);
 
 	bool developerSettingsEnabledChanged (bool status);
 
