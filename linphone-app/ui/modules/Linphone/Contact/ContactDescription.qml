@@ -22,21 +22,20 @@ Column {
     elide: Text.ElideRight
     font.bold: true
     font.pointSize: ContactDescriptionStyle.username.pointSize
-    height: parent.height / 2
     horizontalAlignment: horizontalTextAlignment
     verticalAlignment: Text.AlignBottom
     width: parent.width
+    height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
   }
 
   Text {
     text: SipAddressesModel.cleanSipAddress(sipAddress)
-
     color: sipAddressColor
     elide: Text.ElideRight
     font.pointSize: ContactDescriptionStyle.sipAddress.pointSize
-    height: parent.height / 2
     horizontalAlignment: horizontalTextAlignment
     verticalAlignment: Text.AlignTop
     width: parent.width
+    height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
   }
 }

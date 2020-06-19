@@ -19,7 +19,7 @@
 #  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.9)
 
 project(linphoneqt VERSION 4.2.0)
 
@@ -86,6 +86,8 @@ endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
 
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 
@@ -255,7 +257,7 @@ else ()
 endif ()
 
 set(QRC_RESOURCES resources.qrc)
-
+qt5_add_big_resources(QRC_BIG_RESOURCES resources.qrc)
 set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES da de en es fr_FR hu it ja lt pt_BR ru sv tr uk zh_CN)
@@ -341,8 +343,8 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
-find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
+
+
 
 if (CMAKE_INSTALL_RPATH)
     #Retrieve lib path from a know QT executable
@@ -357,20 +359,20 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 get_directory_property(TS_FILES DIRECTORY "${LANGUAGES_DIRECTORY}"  DEFINITION TS_FILES)
 list(APPEND SOURCES ${TS_FILES})
 
-#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${RESOURCES} ${QML_SOURCES})
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
 if(TARGET_NAME_ONLY)
-    add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+    add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES}})
 endif()
 if (WIN32)
-    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
+    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE} ${QRC_BIG_RESOURCES})
     if(TARGET_NAME_ONLY)
-        add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE})
+        add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE} ${QRC_BIG_RESOURCES})
     endif()
 else ()
-    add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE})
+    add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
     if(TARGET_NAME_ONLY)
-        add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE})
+        add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
     endif()
 endif ()
 if(TARGET_NAME_ONLY)

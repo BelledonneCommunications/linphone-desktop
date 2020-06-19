@@ -44,6 +44,7 @@ Notification {
       }
       Image{
         id:image
+        mipmap: Qt.platform.os === 'osx'
         Layout.fillHeight: true
         Layout.fillWidth: true
         fillMode: Image.PreserveAspectFit
