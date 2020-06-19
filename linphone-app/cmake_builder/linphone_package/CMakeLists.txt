@@ -97,8 +97,8 @@ endif ()
 # ==============================================================================
 # Specific deployment.
 # ==============================================================================
-
-if (WIN32)
+set(APP_QT_CONF_DPI "1")
+if (WIN32)	
 	find_program(DEPLOYQT_PROGRAM windeployqt)
 	if (NOT DEPLOYQT_PROGRAM)
 		message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
@@ -132,6 +132,7 @@ if (WIN32)
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/sounds" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}" USE_SOURCE_PERMISSIONS)
 	install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/Linphone/rootca.pem" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}/")
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphonerc-factory" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}")
+	set(APP_QT_CONF_DPI "0")
 	set(APP_QT_CONF_PATH "")
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/qt.conf.in" "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" @ONLY)	
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" DESTINATION "${CMAKE_INSTALL_BINDIR}")
@@ -243,7 +244,8 @@ else()# Not Windows and Apple
 # Install desktop/icon files.
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphone.desktop.cmake" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" @ONLY)	
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
-	set(APP_QT_CONF_PATH "")
+	set(APP_QT_CONF_PATH "")	
+
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/qt.conf.in" "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" @ONLY)
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" DESTINATION "${CMAKE_INSTALL_BINDIR}")
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/images/linphone_logo.svg" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/scalable/apps/" RENAME "${EXECUTABLE_NAME}.svg")

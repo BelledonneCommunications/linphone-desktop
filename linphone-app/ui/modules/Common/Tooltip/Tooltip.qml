@@ -99,7 +99,7 @@ Core.ToolTip {
     // and `implicitWidth`.
     Core.Image {
       id: icon
-
+      mipmap: Qt.platform.os === 'osx'
       fillMode: Core.Image.PreserveAspectFit
       height: TooltipStyle.arrowSize
       source: _edge

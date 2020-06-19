@@ -47,7 +47,7 @@ Window {
 
   function setHeight (height) {
     window.height = (Window.screen && height > Window.screen.desktopAvailableHeight)
-      ? Winodw.screen.desktopAvailableHeight
+      ? Window.screen.desktopAvailableHeight
       : height
   }
 
