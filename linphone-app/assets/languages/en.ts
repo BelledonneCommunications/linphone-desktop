@@ -1164,6 +1164,34 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>Logs were uploaded to %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation>Import Address Book</translation>
+    </message>
+    <message>
+        <source>contactsDomain</source>
+        <translation>Domain</translation>
+    </message>
+    <message>
+        <source>contactsURL</source>
+        <translation>URL</translation>
+    </message>
+    <message>
+        <source>contactsUsername</source>
+        <translation>Username</translation>
+    </message>
+    <message>
+        <source>contactsPassword</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>contactsActivate</source>
+        <translation>Activate</translation>
+    </message>
+    <message>
+        <source>contactsEnswitchPasswordWarning</source>
+        <translation>Warning : Passwords are stored and used without encryptions.</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

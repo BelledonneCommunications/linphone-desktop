@@ -27,6 +27,7 @@
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/contacts/ContactsEnswitchAPI.hpp"
 #include "utils/Utils.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "SettingsModel.hpp"
@@ -41,6 +42,7 @@ namespace {
 }
 
 const string SettingsModel::UiSection("ui");
+const string SettingsModel::ContactsSection("contacts_import");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	CoreManager *coreManager = CoreManager::getInstance();
@@ -1243,6 +1245,38 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 
 // ---------------------------------------------------------------------------
 
+QVariantMap SettingsModel::getContactImportEnswitch() const {
+	auto proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
+	QVariantMap account;
+	std::string domain;
+	if(proxyConfig)
+		domain = proxyConfig->getDomain();
+	else
+		domain = "sip:sip.linphone.org";
+	account["domain"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_domain", domain));
+	account["url"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_url", "https://demo.enswitch.com/api/json/people/list/"));
+	account["username"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_username", "guest"));
+	account["password"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_password", "guest"));
+	account["enabled"] = mConfig->getInt(ContactsSection, "enswitch_enabled", 0);
+	return account;
+}
+
+void SettingsModel::setContactImportEnswitch(const QVariantMap &pAccount) {
+	int enabled = pAccount["enabled"].toInt();
+	mConfig->setString(ContactsSection, "enswitch_domain", Utils::appStringToCoreString(pAccount["domain"].toString()));
+	mConfig->setString(ContactsSection, "enswitch_url", Utils::appStringToCoreString(pAccount["url"].toString()));
+	mConfig->setString(ContactsSection, "enswitch_username", Utils::appStringToCoreString(pAccount["username"].toString()));
+	mConfig->setString(ContactsSection, "enswitch_password", Utils::appStringToCoreString(pAccount["password"].toString()));
+	mConfig->setInt(ContactsSection, "enswitch_enabled", enabled);
+	emit contactImportEnswitchChanged(pAccount);
+}
+void SettingsModel::importContacts(){
+	QVariantMap enswitch = getContactImportEnswitch();
+	if(enswitch["enabled"].toInt()>0){
+		ContactsEnswitchAPI::requestList(ContactsEnswitchAPI::from(enswitch));
+	}
+}
+// ---------------------------------------------------------------------------
 bool SettingsModel::getDeveloperSettingsEnabled () const {
 #ifdef DEBUG
 	return !!mConfig->getInt(UiSection, "developer_settings", 0);

@@ -6,24 +6,26 @@ import Common.Styles 1.0
 
 Column {
   id: formTable
+  
+   width: parent.width
 
   property alias titles: header.model
   property bool disableLineTitle: false
 
   property int legendLineWidth: FormTableStyle.entry.width
+  
+  property var maxWidthStyle : FormTableStyle.entry.maxWidth
 
   readonly property double maxItemWidth: {
     var n = titles.length
-    var curWidth = (width - FormTableStyle.entry.width) / n - (n - 1) * FormTableLineStyle.spacing
-    var maxWidth = FormTableStyle.entry.maxWidth
-
+    var curWidth = (width - (disableLineTitle?0:legendLineWidth) ) /n  - FormTableLineStyle.spacing
+    var maxWidth = maxWidthStyle
     return curWidth < maxWidth ? curWidth : maxWidth
   }
 
   // ---------------------------------------------------------------------------
 
   spacing: FormTableStyle.spacing
-  width: parent.width
 
   // ---------------------------------------------------------------------------
 

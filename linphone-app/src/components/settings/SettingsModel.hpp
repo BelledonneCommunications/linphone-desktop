@@ -175,6 +175,9 @@ class SettingsModel : public QObject {
     Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged)
     Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
     Q_PROPERTY(QString logsEmail READ getLogsEmail WRITE setLogsEmail NOTIFY logsEmailChanged)
+// TODO : Generic
+    Q_PROPERTY(QVariantMap contactImportEnswitch READ getContactImportEnswitch WRITE setContactImportEnswitch NOTIFY contactImportEnswitchChanged)
+    
 
     Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged)
 
@@ -443,6 +446,12 @@ public:
 	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
 
 	// ---------------------------------------------------------------------------
+	//			CONTACTS
+	QVariantMap getContactImportEnswitch() const;
+	void setContactImportEnswitch(const QVariantMap &pData);
+	Q_INVOKABLE void importContacts();
+	
+	// ---------------------------------------------------------------------------
 
 	bool getDeveloperSettingsEnabled () const;
 	void setDeveloperSettingsEnabled (bool status);
@@ -453,6 +462,7 @@ public:
 	bool getIsInCall() const;
 
 	static const std::string UiSection;
+	static const std::string ContactsSection;
 
 	// ===========================================================================
 	// SIGNALS.
@@ -582,6 +592,9 @@ signals:
 	void logsUploadUrlChanged (const QString &url);
 	void logsEnabledChanged (bool status);
 	void logsEmailChanged (const QString &email);
+	
+	
+	void contactImportEnswitchChanged(const QVariantMap &account);
 
 	bool developerSettingsEnabledChanged (bool status);
 

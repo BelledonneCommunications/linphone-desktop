@@ -59,10 +59,7 @@ TabContainer {
           }
         }
       }
-
-      FormEmptyLine {}
     }
-
     Row {
       anchors.right: parent.right
       spacing: SettingsAdvancedStyle.buttons.spacing
@@ -80,7 +77,6 @@ TabContainer {
         onClicked: sendLogsBlock.execute()
       }
     }
-
     RequestBlock {
       id: sendLogsBlock
 
@@ -95,6 +91,90 @@ TabContainer {
       }
     }
     onVisibleChanged: sendLogsBlock.setText('')
+
+    // -------------------------------------------------------------------------
+    // ADDRESS BOOK
+    // -------------------------------------------------------------------------
+
+    Form {
+      title: qsTr('contactsTitle')
+      width: parent.width
+      FormTable {
+        width :parent.width
+        titles: [
+          qsTr('contactsDomain'),
+          qsTr('contactsURL'),
+          qsTr('contactsUsername'),
+          qsTr('contactsPassword'),
+          qsTr('contactsActivate')
+        ]
+        legendLineWidth:80
+        FormTableLine {
+          id:enswitchLine
+          title: 'Enswitch'
+          property var enswitchAccount : SettingsModel.contactImportEnswitch
+          
+          FormTableEntry {
+            TextField {
+              readOnly: false
+              width:parent.width
+              text: enswitchLine.enswitchAccount.domain 
+              onEditingFinished: {  enswitchLine.enswitchAccount.domain = text
+                                    SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
+                                }
+            }
+          }
+          FormTableEntry {
+            TextField {
+              readOnly: false
+              width:parent.width
+              text: enswitchLine.enswitchAccount.url 
+              onEditingFinished: {  enswitchLine.enswitchAccount.url = text
+                                    SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
+                                }
+            }
+          }
+          FormTableEntry {
+            TextField {
+              readOnly: false
+              width:parent.width
+              text: enswitchLine.enswitchAccount.username
+              onEditingFinished:{   enswitchLine.enswitchAccount.username = text
+                                    SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
+                                }
+            }
+          }
+          FormTableEntry {
+            TextField {
+              readOnly: false
+              width:parent.width
+              echoMode: TextInput.Password
+              text: enswitchLine.enswitchAccount.password
+              onEditingFinished: {  enswitchLine.enswitchAccount.password = text
+                                    SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
+                                }
+              TooltipArea {
+                text: qsTr("contactsEnswitchPasswordWarning")
+              }
+            }
+          }
+          FormTableEntry {
+            Switch {
+              id: enswitch
+              checked: enswitchLine.enswitchAccount.enabled>0
+              onClicked: {  checked = !checked
+                            enswitchLine.enswitchAccount.enabled = checked
+                            SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
+                            if(checked)
+                                SettingsModel.importContacts()
+                        }
+            }
+          }
+        }
+      }
+    }
+
+    
     // -------------------------------------------------------------------------
     // Developer settings.
     // -------------------------------------------------------------------------
