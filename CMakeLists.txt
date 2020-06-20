@@ -20,9 +20,7 @@
 #
 ################################################################################
 
-cmake_minimum_required(VERSION 3.9)
-#3.9 for qt5_add_big_resources
-
+cmake_minimum_required(VERSION 3.1)
 
 get_cmake_property(vars CACHE_VARIABLES)
 foreach(var ${vars})

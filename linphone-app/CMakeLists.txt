@@ -19,7 +19,7 @@
 #  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.1)
 
 project(linphoneqt VERSION 4.2.0)
 
@@ -257,7 +257,9 @@ else ()
 endif ()
 
 set(QRC_RESOURCES resources.qrc)
-qt5_add_big_resources(QRC_BIG_RESOURCES resources.qrc)
+
+#qt5_add_big_resources(QRC_BIG_RESOURCES resources.qrc)	#Use this macro if resources size is too high
+
 set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
 set(LANGUAGES da de en es fr_FR hu it ja lt pt_BR ru sv tr uk zh_CN)
@@ -359,8 +361,8 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 get_directory_property(TS_FILES DIRECTORY "${LANGUAGES_DIRECTORY}"  DEFINITION TS_FILES)
 list(APPEND SOURCES ${TS_FILES})
 
-#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
 if(TARGET_NAME_ONLY)
     add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES}})
 endif()
