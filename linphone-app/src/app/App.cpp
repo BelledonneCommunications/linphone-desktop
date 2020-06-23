@@ -811,6 +811,9 @@ void App::openAppAfterInit (bool mustBeIconified) {
   #endif // ifdef ENABLE_UPDATE_CHECK
 
   setOpened(true);
+  
+  qApp->processEvents();
+  CoreManager::getInstance()->getSettingsModel()->importContacts();
 }
 
 // -----------------------------------------------------------------------------

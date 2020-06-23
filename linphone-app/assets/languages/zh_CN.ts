@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="zh_CN">
 <context>
     <name>About</name>
     <message>
@@ -1122,10 +1124,6 @@
         <translation>日志文件夹</translation>
     </message>
     <message>
-        <source>sendLogs</source>
-        <translation>发送日志</translation>
-    </message>
-    <message>
         <source>logsUploadUrlLabel</source>
         <translation>日志上传服务器地址</translation>
     </message>
@@ -1136,10 +1134,6 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>启用日志</translation>
-    </message>
-    <message>
-        <source>cleanLogs</source>
-        <translation>清理日志</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1161,6 +1155,42 @@
     <message>
         <source>logsMailerSuccess</source>
         <translation>日志已上传到 %1</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sendLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">联系人</translation>
+    </message>
+    <message>
+        <source>contactsDomain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsURL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsUsername</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsActivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnswitchPasswordWarning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

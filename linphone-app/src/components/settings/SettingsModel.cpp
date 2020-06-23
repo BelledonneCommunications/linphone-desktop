@@ -1256,26 +1256,27 @@ QVariantMap SettingsModel::getContactImportEnswitch() const {
 	account["domain"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_domain", domain));
 	account["url"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_url", "https://demo.enswitch.com/api/json/people/list/"));
 	account["username"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_username", "guest"));
+	account["password"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_password", ""));
 	account["enabled"] = mConfig->getInt(ContactsSection, "enswitch_enabled", 0);
 	return account;
 }
 
 void SettingsModel::setContactImportEnswitch(const QVariantMap &pAccount) {
-	int enabled = pAccount["enabled"].toInt();
 	mConfig->setString(ContactsSection, "enswitch_domain", Utils::appStringToCoreString(pAccount["domain"].toString()));
 	mConfig->setString(ContactsSection, "enswitch_url", Utils::appStringToCoreString(pAccount["url"].toString()));
 	mConfig->setString(ContactsSection, "enswitch_username", Utils::appStringToCoreString(pAccount["username"].toString()));
-	mConfig->setInt(ContactsSection, "enswitch_enabled", enabled);
+	mConfig->setString(ContactsSection, "enswitch_password", Utils::appStringToCoreString(pAccount["password"].toString()));
+	mConfig->setInt(ContactsSection, "enswitch_enabled", pAccount["enabled"].toInt());
 	emit contactImportEnswitchChanged(pAccount);
 }
-void SettingsModel::importContacts(){
+void SettingsModel::importContacts() {
 	QVariantMap enswitch = getContactImportEnswitch();
 	if(enswitch["enabled"].toInt()>0){
-		bool isNew = false;
-		ContactsImportAPI * api = ContactsEnswitchAPI::requestList(ContactsEnswitchAPI::from(enswitch), &isNew);
-		if(isNew){
-			connect(api, SIGNAL(status(const QString&)), this, SIGNAL(contactImportEnswitchStatus(const QString&))); 
-		}
+		ContactsImportDataAPI * data = ContactsEnswitchAPI::from(enswitch);
+		ContactsEnswitchAPI::requestList(data, this, SIGNAL(contactImportEnswitchStatus(const QString &)));
+// Update Data if a new password has been provided while validating
+		setContactImportEnswitch(data->toVariant());
+		delete data;
 	}
 }
 // ---------------------------------------------------------------------------

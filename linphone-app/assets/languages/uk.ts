@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="uk">
 <context>
     <name>About</name>
     <message>
@@ -1122,10 +1124,6 @@
         <translation>Тека журналів</translation>
     </message>
     <message>
-        <source>sendLogs</source>
-        <translation>НАДСИЛАННЯ ЖУРНАЛІВ</translation>
-    </message>
-    <message>
         <source>logsUploadUrlLabel</source>
         <translation>URL сервера для надсилання журналів</translation>
     </message>
@@ -1136,10 +1134,6 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>Журнали включені</translation>
-    </message>
-    <message>
-        <source>cleanLogs</source>
-        <translation>ВИЛУЧИТИ ЖУРНАЛИ</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1161,6 +1155,42 @@
     <message>
         <source>logsMailerSuccess</source>
         <translation>Журнали було вивантажено до %1</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sendLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Контакти</translation>
+    </message>
+    <message>
+        <source>contactsDomain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsURL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsUsername</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsActivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnswitchPasswordWarning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

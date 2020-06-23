@@ -106,6 +106,7 @@ TabContainer {
           qsTr('contactsDomain'),
           qsTr('contactsURL'),
           qsTr('contactsUsername'),
+          qsTr('contactsPassword'),
           qsTr('contactsActivate')
         ]
         legendLineWidth:80
@@ -145,10 +146,26 @@ TabContainer {
             }
           }
           FormTableEntry {
+            TextField {
+              readOnly: false
+              width:parent.width
+              text: enswitchLine.enswitchAccount.password
+              echoMode: TextInput.Password
+              onEditingFinished:{
+                                    enswitchLine.enswitchAccount.password = text
+                                    SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
+                                }
+              TooltipArea{
+                text : qsTr("contactsEnswitchPasswordWarning")
+              }
+            }
+          }
+          FormTableEntry {
             Switch {
               id: enswitch
               checked: enswitchLine.enswitchAccount.enabled>0
-              onClicked: {  checked = !checked
+              onClicked: {
+                            checked = !checked
                             enswitchLine.enswitchAccount.enabled = checked
                             SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
                             if(checked)

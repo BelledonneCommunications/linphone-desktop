@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="hu" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="hu">
 <context>
     <name>About</name>
     <message>
@@ -1121,10 +1123,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
         <translation>Naplómappa</translation>
     </message>
     <message>
-        <source>sendLogs</source>
-        <translation>Naplók küldése</translation>
-    </message>
-    <message>
         <source>logsUploadUrlLabel</source>
         <translation>Naplók feltöltési kiszolgáló URL-je</translation>
     </message>
@@ -1135,10 +1133,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>logsEnabledLabel</source>
         <translation>Naplók engedélyezése</translation>
-    </message>
-    <message>
-        <source>cleanLogs</source>
-        <translation>Napló kitakarítása</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1160,6 +1154,42 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>logsMailerSuccess</source>
         <translation>A naplókat feltöltötték a %1</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sendLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Névjegyek</translation>
+    </message>
+    <message>
+        <source>contactsDomain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsURL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsUsername</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsActivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnswitchPasswordWarning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

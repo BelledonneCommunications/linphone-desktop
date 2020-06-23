@@ -3,20 +3,18 @@
 
 
 #include <QVariantMap>
-
+// This class regroup Data interface for importing contacts
 class ContactsImportDataAPI
 {
 public:
 	ContactsImportDataAPI();
 	virtual ~ContactsImportDataAPI();
 
-	virtual QVariantMap to() const=0;
-	
-// These functions are called by ContactsImportAPI
-	virtual bool isEqual(ContactsImportDataAPI * pData)const = 0;
-	virtual bool isValid(const bool& pPrintError = true) = 0;
-	virtual QString prepareRequest()const = 0;
-	virtual QString parse(const QByteArray& pData) = 0;// Return an error message
+	virtual QVariantMap toVariant() const=0;
+
+	virtual bool isEqual(ContactsImportDataAPI * pData)const = 0;	// Test if data is the same of the current data
+	virtual bool isValid(ContactsImportDataAPI *pData, const bool &pShowError = true) = 0;	// Test if the passed data is valid
+	virtual void parse(const QByteArray& pData) = 0;	// Parse pData and build a set of data
 };
 
 #endif // CONTACTSIMPORTDATAAPI_H

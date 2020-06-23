@@ -32,7 +32,6 @@
 #include "components/chat/ChatModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
-#include "components/contacts/ContactsEnswitchAPI.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
@@ -97,7 +96,6 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 		);
 		mInstance->mEventCountNotifier = eventCountNotifier;
 		mInstance->migrate();
-		mInstance->mSettingsModel->importContacts();
 		mInstance->mStarted = true;
 		emit mInstance->coreStarted();
 	});

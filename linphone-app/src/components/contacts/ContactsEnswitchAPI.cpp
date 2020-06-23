@@ -8,62 +8,86 @@
 
 #include <QInputDialog> 
 
-ContactsImportAPI * ContactsEnswitchAPI::gContactsAPI=nullptr;
+ContactsEnswitchAPI * ContactsEnswitchAPI::gContactsAPI=nullptr;
 
-ContactsEnswitchAPI::ContactsEnswitchAPI(){}
+ContactsEnswitchAPI::ContactsEnswitchAPI(){
+	connect(this, SIGNAL(requestFinished(const QByteArray&)), this, SLOT(parse(const QByteArray&)));
+}
+
+void ContactsEnswitchAPI::updateData(ContactsImportDataAPI * pData){
+	//if(!isEqual(pData))
+		copy(pData);
+}
+void ContactsEnswitchAPI::copy(ContactsImportDataAPI *pData){
+	ContactsEnswitchAPI * data = dynamic_cast<ContactsEnswitchAPI*>(pData);
+	mUrl = data->mUrl;
+	mDomain = data->mDomain;
+	mPassword = data->mPassword;
+	mUsername = data->mUsername;
+	mEnabled = data->mEnabled;
+}
 bool ContactsEnswitchAPI::isEqual(ContactsImportDataAPI *pData)const{
 	ContactsEnswitchAPI * data = dynamic_cast<ContactsEnswitchAPI*>(pData);
 	if( data)
-		return data->mUrl == mUrl && data->mDomain == mDomain && data->mUsername==mUsername;
+		return data->mUrl == mUrl && data->mDomain == mDomain && data->mUsername==mUsername && data->mEnabled==mEnabled;
 	else
 		return false;
 }
-ContactsImportAPI * ContactsEnswitchAPI::requestList(const ContactsEnswitchAPI &pData, bool *pIsNEw){
-	if( gContactsAPI ){// Ensure to have only one instance for this kind of importer
-		gContactsAPI->updateData(new ContactsEnswitchAPI(pData));
-		if( pIsNEw)
-			*pIsNEw=false;
-	}else{
-		gContactsAPI = new ContactsImportAPI(new ContactsEnswitchAPI(pData));
-		if( pIsNEw)
-			*pIsNEw=true;
+void ContactsEnswitchAPI::requestList(ContactsImportDataAPI *pData, QObject *parent, const char *pErrorSlot){
+	if(!gContactsAPI){
+		gContactsAPI = new ContactsEnswitchAPI();
+		if(parent)
+			connect(gContactsAPI, SIGNAL(requestError(const QString&)), parent, pErrorSlot);
 	}
-	gContactsAPI->request();
-	return gContactsAPI;
+	if(pData != nullptr && gContactsAPI->isValid(pData)){
+		gContactsAPI->updateData(pData);
+		if(gContactsAPI->mEnabled>0)
+			gContactsAPI->request();
+	}
 }
 
-ContactsEnswitchAPI ContactsEnswitchAPI::from(const QVariantMap &pData){
-	ContactsEnswitchAPI data;
-	data.mDomain = pData["domain"].toString();
-	data.mUrl = pData["url"].toString();
-	data.mUsername = pData["username"].toString();
-	data.mPassword = pData["password"].toString();
+ContactsImportDataAPI * ContactsEnswitchAPI::from(const QVariantMap &pData){
+	ContactsEnswitchAPI *data = new ContactsEnswitchAPI();
+	data->mDomain = pData["domain"].toString();
+	data->mUrl = pData["url"].toString();
+	data->mUsername = pData["username"].toString();
+	data->mPassword = pData["password"].toString();
+	data->mEnabled = pData["enabled"].toInt();
 	return data;
 }
-QVariantMap ContactsEnswitchAPI::to() const{
+QVariantMap ContactsEnswitchAPI::toVariant() const{
 	QVariantMap data;
 	data["domain"] = mDomain;
 	data["url"] = mUrl;
 	data["username"] = mUsername;
 	data["password"] = mPassword;
+	data["enabled"] = mEnabled;
 	return data;
 }
-bool ContactsEnswitchAPI::isValid(const bool& pPrintError){
+bool ContactsEnswitchAPI::isValid(ContactsImportDataAPI * pData, const bool &pShowError){
+	ContactsEnswitchAPI * data = dynamic_cast<ContactsEnswitchAPI*>(pData);
 	QStringList errors;
-	if( mDomain.isEmpty())
-		errors << "Domain is empty.";
-	if( mUrl.isEmpty())
-		errors << "Url is empty.";
-	if( mUsername.isEmpty())
-		errors << "Username is empty.";
-	if( mPassword.isEmpty()){
-		mPassword = QInputDialog::getText(nullptr, "Enswitch Address Book","Password",QLineEdit::EchoMode::Password);
-		if( mPassword.isEmpty())
-			errors << "Password is empty.";
+	if( !data)
+		errors << "These data are not Enswitch data";
+	else {
+		if( data->mDomain.isEmpty())
+			errors << "Domain is empty.";
+		if( data->mUrl.isEmpty())
+			errors << "Url is empty.";
+		if( data->mUsername.isEmpty())
+			errors << "Username is empty.";
+		if( data->mPassword.isEmpty()){
+			data->mPassword = QInputDialog::getText(nullptr, "Enswitch Address Book","Password",QLineEdit::EchoMode::Password);
+			if( data->mPassword.isEmpty())
+				errors << "Password is empty.";
+		}
 	}
 	if( errors.size() > 0){
-		if(pPrintError)
-			qWarning() << "Enswitch Data is invalid : " << errors.join(" ");
+		if(pShowError){
+			QString message = "Enswitch Data is invalid : " + errors.join(" ");
+			qWarning() << message;
+			emit requestError(message);
+		}
 		return false;
 	}else
 		return true;
@@ -74,13 +98,14 @@ QString ContactsEnswitchAPI::prepareRequest()const{
 	return mUrl+"?auth_username="+mUsername+";auth_password="+mPassword;
 }
 
-QString ContactsEnswitchAPI::parse(const QByteArray& p_data){
-	QString status;
+void ContactsEnswitchAPI::parse(const QByteArray& p_data){
+	QString statusText;
 	QJsonDocument doc = QJsonDocument::fromJson(p_data);
 	QJsonArray responses = doc["responses"].toArray();
 	if( responses.size() > 0 ){
-		if( responses[0].toObject()["code"].toInt() != 200) {
-			status = responses[0].toObject()["message"].toString();
+		QVariant code = responses[0].toObject()["code"].toVariant();		
+		if( code.toInt() != 200) {
+			statusText = responses[0].toObject()["message"].toString()+", Code="+code.toString();
 		}else{
 			QJsonArray contacts = doc["data"].toArray();
 			
@@ -92,8 +117,8 @@ QString ContactsEnswitchAPI::parse(const QByteArray& p_data){
 				QString mobile = contact["mobile"].toString();
 				QString telephone = contact["telephone"].toString();
 				QString username = contact["username"].toString();
-				QString company =  contact["company"].toString();
-				QString email = contact["email"].toString();
+				//QString company =  contact["company"].toString();	// TODO : Add company and email if selected from an option.
+				//QString email = contact["email"].toString();
 				if(!mobile.isEmpty())
 					card->addSipAddress(sipConvertion->interpretSipAddress(mobile, false));
 				if(!telephone.isEmpty())
@@ -103,17 +128,19 @@ QString ContactsEnswitchAPI::parse(const QByteArray& p_data){
 					card->addSipAddress(sipConvertion->interpretSipAddress(username, false));
 					if( username.contains('@'))
 						card->addEmail(username);
-					if(!email.isEmpty() && email != username)
-						card->addEmail(email);
+				//	if(!email.isEmpty() && email != username)
+				//		card->addEmail(email);
 				}
-				if(!company.isEmpty())
-					card->addCompany(company);
-				CoreManager::getInstance()->getContactsListModel()->addContact(card);
+				//if(!company.isEmpty())
+				//	card->addCompany(company);
+				if( card->getSipAddresses().size()>0)
+					CoreManager::getInstance()->getContactsListModel()->addContact(card);
 			}
 			qInfo() << contacts.size() << "contacts on Enswitch have been synchronized.";
 		}
 	}
-	return status;
+	if( !statusText.isEmpty())
+		emit requestError(statusText);
 }
 
 

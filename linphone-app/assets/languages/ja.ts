@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja">
 <context>
     <name>About</name>
     <message>
@@ -1122,10 +1124,6 @@
         <translation>ログフォルダー</translation>
     </message>
     <message>
-        <source>sendLogs</source>
-        <translation>ログを送信</translation>
-    </message>
-    <message>
         <source>logsUploadUrlLabel</source>
         <translation>ログのアップロード先URL</translation>
     </message>
@@ -1136,10 +1134,6 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>ログ 有効</translation>
-    </message>
-    <message>
-        <source>cleanLogs</source>
-        <translation>ログを削除する</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1161,6 +1155,42 @@
     <message>
         <source>logsMailerSuccess</source>
         <translation>ログが %1 にアップロードされました</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sendLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">連絡先</translation>
+    </message>
+    <message>
+        <source>contactsDomain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsURL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsUsername</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsActivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnswitchPasswordWarning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

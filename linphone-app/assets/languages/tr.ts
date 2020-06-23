@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="tr" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="tr">
 <context>
     <name>About</name>
     <message>
@@ -1122,10 +1124,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Günlük klasörü</translation>
     </message>
     <message>
-        <source>sendLogs</source>
-        <translation>GÜNLÜKLERİ GÖNDER</translation>
-    </message>
-    <message>
         <source>logsUploadUrlLabel</source>
         <translation>Günlüklerin yükleneceği sunucu url&apos;si</translation>
     </message>
@@ -1136,10 +1134,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsEnabledLabel</source>
         <translation>Günlükler etkin</translation>
-    </message>
-    <message>
-        <source>cleanLogs</source>
-        <translation>GÜNLÜKLERİ TEMİZLE</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1161,6 +1155,42 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsMailerSuccess</source>
         <translation>Günlükler %1 dosyasına yüklendi</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sendLogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Kişiler</translation>
+    </message>
+    <message>
+        <source>contactsDomain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsURL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsUsername</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsActivate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsPassword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEnswitchPasswordWarning</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
