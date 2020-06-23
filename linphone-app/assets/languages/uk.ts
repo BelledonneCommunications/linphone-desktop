@@ -1124,6 +1124,10 @@
         <translation>Тека журналів</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>НАДСИЛАННЯ ЖУРНАЛІВ</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>URL сервера для надсилання журналів</translation>
     </message>
@@ -1134,6 +1138,10 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>Журнали включені</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>ВИЛУЧИТИ ЖУРНАЛИ</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@
         <translation>Журнали було вивантажено до %1</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Контакти</translation>
     </message>
@@ -1181,11 +1181,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

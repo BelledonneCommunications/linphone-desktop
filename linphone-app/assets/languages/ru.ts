@@ -1124,6 +1124,10 @@
         <translation>Папка журналов</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>ОТПРАВКА ЖУРНАЛОВ</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>URL севрера для отправки журналов</translation>
     </message>
@@ -1134,6 +1138,10 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>Журналы включены</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>УДАЛИТЬ ЖУРНАЛЫ</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@
         <translation>Журналы были загружены в %1</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Контакты</translation>
     </message>
@@ -1181,11 +1181,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

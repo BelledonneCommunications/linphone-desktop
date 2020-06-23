@@ -1124,6 +1124,10 @@
         <translation>ログフォルダー</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>ログを送信</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>ログのアップロード先URL</translation>
     </message>
@@ -1134,6 +1138,10 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>ログ 有効</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>ログを削除する</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@
         <translation>ログが %1 にアップロードされました</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">連絡先</translation>
     </message>
@@ -1181,11 +1181,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

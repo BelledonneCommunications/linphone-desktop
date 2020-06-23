@@ -1123,6 +1123,10 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
         <translation>Pasta Logs</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>ENVIAR LOGS</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>URL do servidor de upload de logs</translation>
     </message>
@@ -1133,6 +1137,10 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
     <message>
         <source>logsEnabledLabel</source>
         <translation>Ativar logs</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>LIMPAR LOGS</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1156,14 +1164,6 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
         <translation>Os registos foram enviados para %1</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Contatos</translation>
     </message>
@@ -1180,11 +1180,11 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -1124,6 +1124,10 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Logs folder</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>SEND LOGS</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>Server URL for uploading af logs</translation>
     </message>
@@ -1134,6 +1138,10 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsEnabledLabel</source>
         <translation>Aktiver logs</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>NUSTIL LOGS</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Logfiler blev uploadet til %1</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Kontakter</translation>
     </message>
@@ -1181,11 +1181,11 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

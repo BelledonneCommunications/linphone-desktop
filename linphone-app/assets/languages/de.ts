@@ -1124,6 +1124,10 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Protokolleordner</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>PROTOKOLLE SENDEN</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>Server URL für Log-Upload</translation>
     </message>
@@ -1134,6 +1138,10 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsEnabledLabel</source>
         <translation>Protokolle aktiviert</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>PROTOKOLLE BEREINIGEN</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Protokolle wurden auf %1 hochgeladen</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Kontakte</translation>
     </message>
@@ -1181,11 +1181,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

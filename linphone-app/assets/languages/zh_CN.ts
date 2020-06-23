@@ -1124,6 +1124,10 @@
         <translation>日志文件夹</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>发送日志</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>日志上传服务器地址</translation>
     </message>
@@ -1134,6 +1138,10 @@
     <message>
         <source>logsEnabledLabel</source>
         <translation>启用日志</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>清理日志</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@
         <translation>日志已上传到 %1</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">联系人</translation>
     </message>
@@ -1181,11 +1181,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

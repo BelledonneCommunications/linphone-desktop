@@ -1124,6 +1124,10 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Günlük klasörü</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>GÜNLÜKLERİ GÖNDER</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>Günlüklerin yükleneceği sunucu url&apos;si</translation>
     </message>
@@ -1134,6 +1138,10 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsEnabledLabel</source>
         <translation>Günlükler etkin</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>GÜNLÜKLERİ TEMİZLE</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Günlükler %1 dosyasına yüklendi</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Kişiler</translation>
     </message>
@@ -1181,11 +1181,11 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

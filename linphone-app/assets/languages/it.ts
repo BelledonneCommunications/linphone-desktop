@@ -1124,6 +1124,10 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Cartella dei log</translation>
     </message>
     <message>
+        <source>sendLogs</source>
+        <translation>MANDA I LOG</translation>
+    </message>
+    <message>
         <source>logsUploadUrlLabel</source>
         <translation>URL del server per l&apos;upload dei log</translation>
     </message>
@@ -1134,6 +1138,10 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsEnabledLabel</source>
         <translation>Abilita i log</translation>
+    </message>
+    <message>
+        <source>cleanLogs</source>
+        <translation>CANCELLA I LOG</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
@@ -1157,14 +1165,6 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>I log sono stati caricati a %1</translation>
     </message>
     <message>
-        <source>cleanLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>sendLogs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>contactsTitle</source>
         <translation type="unfinished">Contatti</translation>
     </message>
@@ -1181,11 +1181,11 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsActivate</source>
+        <source>contactsPassword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>contactsPassword</source>
+        <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
