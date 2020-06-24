@@ -1272,7 +1272,7 @@ void SettingsModel::setContactImportEnswitch(const QVariantMap &pAccount) {
 void SettingsModel::importContacts() {
 	QVariantMap enswitch = getContactImportEnswitch();
 	if(enswitch["enabled"].toInt()>0){
-		ContactsImportDataAPI * data = ContactsEnswitchAPI::from(enswitch);
+		ContactsImportDataAPI * data = ContactsEnswitchDataAPI::from(enswitch);
 		ContactsEnswitchAPI::requestList(data, this, SIGNAL(contactImportEnswitchStatus(const QString &)));
 // Update Data if a new password has been provided while validating
 		setContactImportEnswitch(data->toVariant());

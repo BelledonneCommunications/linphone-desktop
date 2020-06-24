@@ -124,10 +124,10 @@ set(SOURCES
     src/components/contact/VcardModel.cpp
     src/components/contacts/ContactsImportNetworkAPI.cpp
     src/components/contacts/ContactsImportDataAPI.cpp
-    src/components/contacts/ContactsImportParserAPI.cpp
+    src/components/contacts/ContactsEnswitchAPI.cpp
+    src/components/contacts/ContactsEnswitchDataAPI.cpp
     src/components/contacts/ContactsListModel.cpp
     src/components/contacts/ContactsListProxyModel.cpp
-    src/components/contacts/ContactsEnswitchAPI.cpp
     src/components/core/CoreHandlers.cpp
     src/components/core/CoreManager.cpp
     src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
@@ -188,10 +188,9 @@ set(HEADERS
     src/components/contact/VcardModel.hpp
     src/components/contacts/ContactsImportNetworkAPI.hpp
     src/components/contacts/ContactsImportDataAPI.hpp
-    src/components/contacts/ContactsImportParserAPI.hpp
+    src/components/contacts/ContactsEnswitchDataAPI.hpp
     src/components/contacts/ContactsListModel.hpp
     src/components/contacts/ContactsListProxyModel.hpp
-    src/components/contacts/ContactsEnswitchAPI.hpp
     src/components/core/CoreHandlers.hpp
     src/components/core/CoreManager.hpp
     src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp

@@ -13,7 +13,7 @@ public:
 	virtual QVariantMap toVariant() const=0;
 
 	virtual bool isEqual(ContactsImportDataAPI * pData)const = 0;	// Test if data is the same of the current data
-	virtual bool isValid(ContactsImportDataAPI *pData, const bool &pShowError = true) = 0;	// Test if the passed data is valid
+	virtual bool isValid(QString * pError= nullptr) = 0;	// Test if the passed data is valid
 	virtual void parse(const QByteArray& pData) = 0;	// Parse pData and build a set of data
 };
 
