@@ -1166,11 +1166,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation>Import Address Book</translation>
+        <translation>Address Book Connector</translation>
     </message>
     <message>
         <source>contactsDomain</source>
-        <translation>Domain</translation>
+        <translation>SIP Domain</translation>
     </message>
     <message>
         <source>contactsURL</source>
@@ -1187,10 +1187,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>contactsPassword</source>
         <translation>Password</translation>
-    </message>
-    <message>
-        <source>contactsEnswitchPasswordWarning</source>
-        <translation>Warning : Passwords are stored and used without encryptions.</translation>
     </message>
 </context>
 <context>

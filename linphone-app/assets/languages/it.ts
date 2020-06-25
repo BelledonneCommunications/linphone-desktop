@@ -1188,10 +1188,6 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>contactsEnswitchPasswordWarning</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

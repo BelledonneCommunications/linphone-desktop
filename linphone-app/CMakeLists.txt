@@ -188,6 +188,7 @@ set(HEADERS
     src/components/contact/VcardModel.hpp
     src/components/contacts/ContactsImportNetworkAPI.hpp
     src/components/contacts/ContactsImportDataAPI.hpp
+    src/components/contacts/ContactsEnswitchAPI.hpp
     src/components/contacts/ContactsEnswitchDataAPI.hpp
     src/components/contacts/ContactsListModel.hpp
     src/components/contacts/ContactsListProxyModel.hpp
@@ -329,8 +330,8 @@ list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
 list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
 
-set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
-set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+set(QML_IMPORT_PATH "${_QML_IMPORT_PATHS}" CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+set(QML2_IMPORT_PATH "${_QML_IMPORT_PATHS}" CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 set(QML_SOURCES_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/")
 set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
 if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers

@@ -1188,10 +1188,6 @@
         <source>contactsActivate</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>contactsEnswitchPasswordWarning</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

@@ -103,6 +103,7 @@ TabContainer {
       FormTable {
         width :parent.width
         titles: [
+          '',
           qsTr('contactsDomain'),
           qsTr('contactsURL'),
           qsTr('contactsUsername'),
@@ -110,10 +111,17 @@ TabContainer {
           qsTr('contactsActivate')
         ]
         legendLineWidth:80
+        disableLineTitle:true
         FormTableLine {
           id:enswitchLine
-          title: 'Enswitch'
           property var enswitchAccount : SettingsModel.contactImportEnswitch
+          
+          FormTableEntry {
+            ComboBox{
+                width:parent.width
+                model:['Enswitch']
+            }
+          }
           
           FormTableEntry {
             TextField {
@@ -155,9 +163,6 @@ TabContainer {
                                     enswitchLine.enswitchAccount.password = text
                                     SettingsModel.contactImportEnswitch = enswitchLine.enswitchAccount
                                 }
-              TooltipArea{
-                text : qsTr("contactsEnswitchPasswordWarning")
-              }
             }
           }
           FormTableEntry {
