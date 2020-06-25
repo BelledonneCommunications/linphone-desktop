@@ -164,6 +164,7 @@ private:
   QQmlApplicationEngine *mEngine = nullptr;
 
   DefaultTranslator *mTranslator = nullptr;
+  DefaultTranslator *mDefaultTranslator = nullptr;
   Notifier *mNotifier = nullptr;
 
   QQuickWindow *mCallsWindow = nullptr;
