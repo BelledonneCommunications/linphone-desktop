@@ -101,6 +101,7 @@ void SettingsModel::onSettingsTabChanged(int idx) {
 	case 4://ui
 		break;
 	case 5://advanced
+		accessAdvancedSettings();
 		break;
 	default:
 		break;
@@ -1168,6 +1169,12 @@ void SettingsModel::setExitOnClose (bool value) {
 // Advanced.
 // =============================================================================
 
+void SettingsModel::accessAdvancedSettings() {
+	emit contactImportEnswitchChanged(getContactImportEnswitch());
+}
+
+//------------------------------------------------------------------------------
+
 QString SettingsModel::getLogsFolder () const {
 	return getLogsFolder(mConfig);
 }
@@ -1251,8 +1258,13 @@ QVariantMap SettingsModel::getContactImportEnswitch() const {
 	std::string domain;
 	if(proxyConfig)
 		domain = proxyConfig->getDomain();
-	else
-		domain = "sip:sip.linphone.org";
+	else{
+		proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
+		if(proxyConfig)
+			domain = proxyConfig->getDomain();
+		if(domain == "")
+			domain = "sip.linphone.org";
+	}
 	account["domain"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_domain", domain));
 	account["url"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_url", "https://demo.enswitch.com/api/json/people/list/"));
 	account["username"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_username", "guest"));

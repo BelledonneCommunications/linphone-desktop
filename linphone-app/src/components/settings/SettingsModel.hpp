@@ -426,7 +426,10 @@ public:
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
 
-	// ---------------------------------------------------------------------------
+	// Advanced. ---------------------------------------------------------------------------
+	
+	
+	void accessAdvancedSettings();
 
 	QString getLogsFolder () const;
 	void setLogsFolder (const QString &folder);
