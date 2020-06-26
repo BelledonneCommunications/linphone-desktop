@@ -44,9 +44,7 @@ DefaultTranslator::DefaultTranslator (QObject *parent) : QTranslator(parent) {
         continue;
 
       QString basename = info.baseName();
-      if (mContexts.contains(basename))
-        qWarning() << QStringLiteral("QML context `%1` already exists in contexts list.").arg(basename);
-      else
+      if (!mContexts.contains(basename))
         mContexts << basename;
     }
     end:;
@@ -65,8 +63,8 @@ QString DefaultTranslator::translate (
   QString translation = QTranslator::translate(context, sourceText, disambiguation, n);
 
   if (translation.length() == 0 && mContexts.contains(context))
-    qWarning() << QStringLiteral("Unable to find a translation. (context=%1, label=%2)")
-      .arg(context).arg(sourceText);
+    qWarning() << QStringLiteral("Unable to find a translation. (context=%1, label=%2, disambiguation=%3)")
+      .arg(context).arg(sourceText).arg(disambiguation);
 
   return translation;
 }

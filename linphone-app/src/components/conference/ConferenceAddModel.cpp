@@ -136,7 +136,9 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 void ConferenceHelperModel::ConferenceAddModel::update () {
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
   if(!conference){
-    conference = mConferenceHelperModel->mCore->createConferenceWithParams(mConferenceHelperModel->mCore->createConferenceParams());
+    auto parameters = mConferenceHelperModel->mCore->createConferenceParams();
+    parameters->enableVideo(false);// Video is not yet fully supported by the application in conference
+    conference = mConferenceHelperModel->mCore->createConferenceWithParams(parameters);
   }
   auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
   list<shared_ptr<linphone::Address>> allLinphoneAddresses;
@@ -147,12 +149,14 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
     Q_CHECK_PTR(linphoneAddress);
     allLinphoneAddresses.push_back(linphoneAddress);
   }
-  if( allLinphoneAddresses.size() > 0)
+  if( allLinphoneAddresses.size() > 0){
+    auto parameters = CoreManager::getInstance()->getCore()->createCallParams(nullptr);
+    parameters->enableVideo(false);
     conference->inviteParticipants(
       allLinphoneAddresses,
-      CoreManager::getInstance()->getCore()->createCallParams(nullptr)
+      parameters
     );
-
+  }
 // 2) Put in pause and remove all calls that are not in the conference list
   for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
       const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
@@ -160,10 +164,10 @@ void ConferenceHelperModel::ConferenceAddModel::update () {
       while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
         ++address;
       if(address == allLinphoneAddresses.end()){// Not in conference list :  put in pause and remove it from conference if it's the case
-        call->pause();
         if( call->getParams()->getLocalConferenceMode() ){// Remove conference if it is not yet requested
           CoreManager::getInstance()->getCore()->removeFromConference(call);
-        }
+        }else
+          call->pause();
       }
     }
 }
