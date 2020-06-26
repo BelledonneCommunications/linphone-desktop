@@ -90,11 +90,11 @@ void ContactsEnswitchDataAPI::parse(const QByteArray& p_data){
 			statusText = responses[0].toObject()["message"].toString()+", Code="+code.toString();
 		}else{
 			QJsonArray contacts = doc["data"].toArray();
+			int contactCount = 0;
 			
 			for(int i = 0 ; i < contacts.size() ; ++i){
 				VcardModel  * card = CoreManager::getInstance()->createDetachedVcardModel();
 				SipAddressesModel * sipConvertion = CoreManager::getInstance()->getSipAddressesModel();
-				QString t = sipConvertion->interpretSipAddress("sip:json @"+mDomain, false);
 				QJsonObject contact = contacts[i].toObject();
 				QString mobile = contact["mobile"].toString();
 				QString telephone = contact["telephone"].toString();
@@ -102,12 +102,16 @@ void ContactsEnswitchDataAPI::parse(const QByteArray& p_data){
 				//QString company =  contact["company"].toString();	// TODO : Add company and email if selected from an option.
 				//QString email = contact["email"].toString();
 				if(!mobile.isEmpty())
-					card->addSipAddress(sipConvertion->interpretSipAddress(mobile, false));
+					card->addSipAddress(sipConvertion->interpretSipAddress(mobile+"@"+mDomain, false));
 				if(!telephone.isEmpty())
-					card->addSipAddress(sipConvertion->interpretSipAddress(telephone, false));
+					card->addSipAddress(sipConvertion->interpretSipAddress(telephone+"@"+mDomain, false));
 				if(!username.isEmpty()){
 					card->setUsername(username);
-					card->addSipAddress(sipConvertion->interpretSipAddress(username, false));
+					QString convertedUsername = sipConvertion->interpretSipAddress(username, mDomain);
+					if(!convertedUsername.contains(mDomain)){
+						convertedUsername = convertedUsername.replace('@',"%40")+"@"+mDomain;
+					}
+					card->addSipAddress(convertedUsername);
 					if( username.contains('@'))
 						card->addEmail(username);
 				//	if(!email.isEmpty() && email != username)
@@ -115,10 +119,14 @@ void ContactsEnswitchDataAPI::parse(const QByteArray& p_data){
 				}
 				//if(!company.isEmpty())
 				//	card->addCompany(company);
-				if( card->getSipAddresses().size()>0)
+				if( card->getSipAddresses().size()>0){
 					CoreManager::getInstance()->getContactsListModel()->addContact(card);
+					++contactCount;
+				}
 			}
-			qInfo() << contacts.size() << "contacts on Enswitch have been synchronized.";
+			QString messageStatus = QString::number(contactCount) +" contact"+(contactCount>1?"s":"")+" on Enswitch have been synchronized at "+QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss");
+			emit statusMessage(messageStatus);
+			qInfo() << messageStatus;
 		}
 	}
 	if( !statusText.isEmpty())

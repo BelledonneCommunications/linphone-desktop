@@ -199,6 +199,18 @@ QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool 
     return Utils::coreStringToAppString(lAddress->asStringUriOnly());
   return QString("");
 }
+QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, const QString &domain) {
+  auto proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
+  shared_ptr<linphone::Address> lAddressTemp = proxyConfig->normalizeSipUri("Dummy");
+  lAddressTemp->setDomain(Utils::appStringToCoreString(domain));
+  proxyConfig->setIdentityAddress(lAddressTemp);
+  shared_ptr<linphone::Address> lAddress = proxyConfig->normalizeSipUri(Utils::appStringToCoreString(sipAddress));
+
+  if (lAddress)
+    return Utils::coreStringToAppString(lAddress->asStringUriOnly());
+  else
+    return QString("");
+}
 
 QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
   return sipAddress.toString();

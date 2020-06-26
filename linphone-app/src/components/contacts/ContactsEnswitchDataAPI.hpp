@@ -32,6 +32,7 @@ public slots:
 	virtual void parse(const QByteArray& p_data);
 signals:
 	void errorMessage(const QString &error);
+	void statusMessage(const QString &message);
 private:
 // Data
 	QString mDomain;

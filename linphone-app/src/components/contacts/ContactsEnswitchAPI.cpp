@@ -13,17 +13,20 @@ ContactsEnswitchAPI * ContactsEnswitchAPI::gContactsAPI=nullptr;
 ContactsEnswitchAPI::ContactsEnswitchAPI(){
 	connect(this, SIGNAL(requestFinished(const QByteArray&)), &mData, SLOT(parse(const QByteArray&)));
 	connect(&mData, SIGNAL(errorMessage(const QString &)), this, SIGNAL(requestError(const QString &)));
+	connect(&mData, SIGNAL(statusMessage(const QString &)), this, SIGNAL(requestMessage(const QString &)));
 }
 void ContactsEnswitchAPI::copy(ContactsImportDataAPI *pData){
 	ContactsEnswitchDataAPI * data = dynamic_cast<ContactsEnswitchDataAPI*>(pData);
 	if(data)
 		mData.copy(data);
 }
-void ContactsEnswitchAPI::requestList(ContactsImportDataAPI *pData, QObject *parent, const char *pErrorSlot){
+void ContactsEnswitchAPI::requestList(ContactsImportDataAPI *pData, QObject *parent, const char *pErrorSlot, const char *pMessageSlot){
 	if(!gContactsAPI){
 		gContactsAPI = new ContactsEnswitchAPI();
-		if(parent)
+		if(parent){
 			connect(gContactsAPI, SIGNAL(requestError(const QString&)), parent, pErrorSlot);
+			connect(gContactsAPI, SIGNAL(requestMessage(const QString&)), parent, pMessageSlot);
+		}
 	}
 	if(pData != nullptr && gContactsAPI->isValid(pData)){
 		gContactsAPI->copy(pData);

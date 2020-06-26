@@ -598,6 +598,7 @@ signals:
 
 	void contactImportEnswitchChanged(const QVariantMap &account);
 	void contactImportEnswitchStatus(const QString &status);
+	void contactImportEnswitchError(const QString &status);
 
 	bool developerSettingsEnabledChanged (bool status);
 

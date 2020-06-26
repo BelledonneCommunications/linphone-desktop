@@ -188,19 +188,21 @@ TabContainer {
                 TextEdit{
                     id:enswitchStatus
                     visible:text!==''
+                    property bool isError:false
                     selectByMouse: true
                     readOnly:true
-                    color: RequestBlockStyle.error.color
+                    color: (isError?SettingsAdvancedStyle.error.color:SettingsAdvancedStyle.info.color)
                     width:parent.width
                     horizontalAlignment:Text.AlignRight
                     font {
                       italic: true
-                      pointSize: RequestBlockStyle.error.pointSize
+                      pointSize: SettingsAdvancedStyle.info.pointSize
                     }
 
                     Connections{
                         target:SettingsModel
-                        onContactImportEnswitchStatus:enswitchStatus.text=status
+                        onContactImportEnswitchStatus:{enswitchStatus.isError=false;enswitchStatus.text=status;}
+                        onContactImportEnswitchError:{enswitchStatus.isError=true;enswitchStatus.text=status;}
                     }
                 }
             }

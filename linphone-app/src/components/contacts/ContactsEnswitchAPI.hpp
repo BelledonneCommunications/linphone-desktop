@@ -18,7 +18,7 @@ public:
 	virtual ~ContactsEnswitchAPI(){}
 	void copy(ContactsImportDataAPI *pData);	// Copy a ContactsEnswitchDataAPI to the current Data. Ensure to get a ContactsEnswitchDataAPI. It doesn't replace data instance to keep signal/slot connections
 
-	static void requestList(ContactsImportDataAPI *pData, QObject *parent, const char *pErrorSlot);	// Call it for importing. Do connection with requestError(const QString&) .
+	static void requestList(ContactsImportDataAPI *pData, QObject *parent, const char *pErrorSlot, const char *pMessageSlot);	// Call it for importing. Do connection with requestError(const QString&) .
 
 	bool isEnabled()const;	// Interface to test if data is enabled
 	bool isValid(ContactsImportDataAPI * pData, const bool &pShowError = true);// Test if data is valid

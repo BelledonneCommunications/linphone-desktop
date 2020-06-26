@@ -21,6 +21,7 @@ public:
 signals:
 	void requestFinished(const QByteArray &data);	// The request is over and have data
 	void requestError(const QString &status);	// There are errors while requesting. Send a message status.
+	void requestMessage(const QString &message);	// Send a message.
 	
 private:
 	void handleReadyData();
