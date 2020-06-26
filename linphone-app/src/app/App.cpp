@@ -191,6 +191,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   // Init locale.
   mTranslator = new DefaultTranslator(this);
+  mDefaultTranslator = new DefaultTranslator(this);
   initLocale(config);
 
   if (mParser->isSet("help")) {
@@ -255,7 +256,12 @@ void App::initContentApp () {
     mSystemTrayIcon = nullptr;
 
     CoreManager::uninit();
-
+    removeTranslator(mTranslator);
+    removeTranslator(mDefaultTranslator);
+    delete mTranslator;
+    delete mDefaultTranslator;
+    mTranslator = new DefaultTranslator(this);
+    mDefaultTranslator = new DefaultTranslator(this);
     initLocale(config);
   } else {
     // Update and download codecs.
@@ -622,6 +628,12 @@ void App::setTrayIcon () {
 void App::initLocale (const shared_ptr<linphone::Config> &config) {
   // Try to use preferred locale.
   QString locale;
+  
+  // Use english. This default translator is used if there are no found translations in others loads
+  mLocale = DefaultLocale;
+  if (!installLocale(*this, *mDefaultTranslator, QLocale(mLocale)))
+    qFatal("Unable to install default translator.");
+
   if (config)
     locale = Utils::coreStringToAppString(config->getString(SettingsModel::UiSection, "locale", ""));
 
@@ -637,10 +649,6 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
     return;
   }
 
-  // Use english.
-  mLocale = DefaultLocale;
-  if (!installLocale(*this, *mTranslator, QLocale(mLocale)))
-    qFatal("Unable to install default translator.");
 }
 
 QString App::getConfigLocale () const {

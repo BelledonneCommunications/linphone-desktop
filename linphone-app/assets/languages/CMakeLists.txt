@@ -50,7 +50,7 @@ set(LRELEASE_OPTIONS "")
 #Clean existing generated file to force re-creation
 file(REMOVE ${QM_FILES})
 file(REMOVE ${TARGET_TS_FILES})
-file(REMOVE ${QRC_BIG_RESOURCES})
+#file(REMOVE ${QRC_BIG_RESOURCES})	#Remove .o of resources before build. It is need to update resources from changes
 
 add_custom_command(OUTPUT ${TARGET_TS_FILES}
   COMMAND ${Qt5_LUPDATE_EXECUTABLE}
