@@ -30,5 +30,4 @@ RUN sudo apt-get install -y wget fuse libfuse2 gnupg2
 
 USER bc
 WORKDIR /home/bc
-COPY --chown=bc rpmmacros /home/bc/.rpmmacros
 CMD bash
