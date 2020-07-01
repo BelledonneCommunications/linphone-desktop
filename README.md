@@ -28,7 +28,7 @@ Linphone is dual licensed, and is available either :
 
 Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
 You will need the tools :
-- `cmake` >= 3.6 : download it in https://cmake.org/download/
+- `cmake` >= 3.15 : download it in https://cmake.org/download/
 - `python` : https://www.python.org/downloads/release/python-381/
 - `pip` : it is already embedded inside Python, so there should be nothing to do about it
 - `yasm` : https://yasm.tortall.net/Download.html
@@ -39,7 +39,7 @@ You will need the tools :
 - `six` : use 'pip install six --user'
 - `git`
 
-For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.9 or newer_). `C++11` support is required!
+For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 or newer_). `C++11` support is required!
 
 ### Set your environment
 
@@ -59,9 +59,9 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
         export PATH=${QTTOOLDIR}:$PATH
 3. For specific requirments, see platform instructions sections below.
 
-### Resume of Building steps
+### Summary of Building steps
 
-        `git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive` or `git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
+        `git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
         `cd linphone-desktop`
         `mkdir build`
         `cd build`
@@ -72,10 +72,6 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 ### Get sources
 
 1. Clone repository:
-
-        git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive
-        
-Or
 
         git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive        
 
@@ -91,16 +87,16 @@ The build is done by building the SDK and the application. Their targets are `sd
 1. Create your build folder at the root of the project : `mkdir build`
 Go to this new folder and begin the build process : `cd build`
 
-2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process. If it doesn't seem to work then it will be better to use CMake >= 3.12
+2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process.
 Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
 
 Note : For Makefile or Ninja, you have to add `-DCMAKE_BUILD_TYPE=<your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
-3. Build and install the whole project : `cmake --build . --target <target>` (replace `<target>` with the target name. You can use the switch `--parallel 10` to do 10 parallel builds with CMake >= 3.12. 
+3. Build and install the whole project : `cmake --build . --target <target>` (replace `<target>` with the target name. You can use the switch `--parallel 10` to do 10 parallel builds.
 
 Note : For XCode or Visual Studio, you have to add `--config <your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
-When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .` if CMake>=3.15) to put the application in the correct configuration.
+When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .`) to put the application in the correct configuration.
 
 4. When doing some modifications in the SDK, you can rebuild only the sdk with the target `sdk` and the same for the application with `linphone-qt-only`
 
@@ -165,7 +161,7 @@ Before you install packages with Brew, you may have to change directories permis
 
 8. When updating the project, the next build steps are a bit different:
     - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .` (CMake >= 3.15)
+    - `cmake --install .`
 OR
     - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
@@ -200,7 +196,7 @@ Visual Studio must also be properly configured with addons. Under "Tools"->"Obta
 
 6. When updating the project, the next build steps are a bit different:
     - `cmake --build . --target ALL_BUILD --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .` (CMake >= 3.15)
+    - `cmake --install .`
 OR
     - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
@@ -214,7 +210,7 @@ OR
 
 3. When updating the project, the next build steps are a bit different:
     - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .` (CMake >= 3.15)
+    - `cmake --install .`
 OR
     - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
