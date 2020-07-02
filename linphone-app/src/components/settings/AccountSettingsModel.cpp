@@ -290,7 +290,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
       turnUser,
 	  Utils::appStringToCoreString(data["turnPassword"].toString()),
       "",
-      "",
+      stunServer,
       ""
     ));
   if( newPublishPresence)
@@ -427,8 +427,10 @@ QVariantList AccountSettingsModel::getAccounts () const {
 // -----------------------------------------------------------------------------
 
 void AccountSettingsModel::handleRegistrationStateChanged (
-  const shared_ptr<linphone::ProxyConfig> &,
-  linphone::RegistrationState
+  const shared_ptr<linphone::ProxyConfig> & proxy,
+  linphone::RegistrationState core
 ) {
+  Q_UNUSED(proxy)
+  Q_UNUSED(core)
   emit accountSettingsUpdated();
 }
