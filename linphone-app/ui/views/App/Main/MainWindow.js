@@ -133,6 +133,7 @@ function handleAuthenticationRequested (authInfo, realm, sipAddress, userId) {
     authInfo: authInfo,
     realm: realm,
     sipAddress: sipAddress,
-    userId: userId
+    userId: userId,
+    virtualWindowHash:Qt.md5('Dialogs/AuthenticationRequest.qml'+realm+sipAddress+userId)
   })
 }
