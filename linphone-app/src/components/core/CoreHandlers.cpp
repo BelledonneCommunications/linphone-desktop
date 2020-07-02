@@ -88,7 +88,7 @@ void CoreHandlers::onAuthenticationRequested (
   Q_UNUSED(core)
   Q_UNUSED(method)
   if( authInfo ) {
-      emit authenticationRequested(authInfo);// Send authentification request only if a proxy still exists
+      emit authenticationRequested(authInfo);
   }
 }
 
