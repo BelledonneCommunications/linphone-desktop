@@ -139,7 +139,7 @@ job-debian9-makefile-clang-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_DEPLOY_SNAPSHOTS_PATH/    
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:APPIMAGE_UPLOAD_DIRECTORY/    
     
 #################################################
 # Debug
