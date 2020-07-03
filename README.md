@@ -6,7 +6,7 @@ Linphone is an open source softphone for voice and video over IP calling and ins
 
 It is fully SIP-based, for all calling, presence and IM features.
 
-General description is available from [linphone web site](https://www.linphone.org/technical-corner/linphone)
+General description is available from [Linphone web site](https://www.linphone.org/technical-corner/linphone)
 
 ### License
 
@@ -26,20 +26,20 @@ Linphone is dual licensed, and is available either :
 
 ## Getting started
 
-Here are the general instructions to build linphone for desktop. The specific instructions for each build platform is described just below.
+Here are the general instructions to build Linphone for desktop. The specific instructions for each build platform is described just below.
 You will need the tools :
-- `cmake` >= 3.6 : download it in https://cmake.org/download/
+- `cmake` >= 3.15 : download it in https://cmake.org/download/
 - `python` : https://www.python.org/downloads/release/python-381/
 - `pip` : it is already embedded inside Python, so there should be nothing to do about it
 - `yasm` : https://yasm.tortall.net/Download.html
 - `nasm` : https://www.nasm.us/pub/nasm/releasebuilds/
 - `doxygen` (required for the Cxx Wrapper)
-- `Perl` : (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to perl binaries)
+- `Perl` : (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to Perl binaries)
 - `Pystache` : use 'pip install pystache --user'
 - `six` : use 'pip install six --user'
 - `git`
 
-For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.9 or newer_). `C++11` support is required!
+For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 or newer_). `C++11` support is required!
 
 ### Set your environment
 
@@ -57,11 +57,11 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
         eval "$(qtchooser -print-env)"
         export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
         export PATH=${QTTOOLDIR}:$PATH
-3. For specific requirments, see platform instructions sections below.
+3. For specific requirements, see platform instructions sections below.
 
-### Resume of Building steps
+### Summary of Building steps
 
-        `git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive` or `git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
+        `git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive`
         `cd linphone-desktop`
         `mkdir build`
         `cd build`
@@ -73,13 +73,9 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 
 1. Clone repository:
 
-        git clone git@gitlab.linphone.org:BC/public/linphone-desktop.git --recursive
-        
-Or
-
         git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive        
 
-2. Update submodules
+2. Update sub-modules
 
         git submodule update --init --recursive
 
@@ -91,18 +87,18 @@ The build is done by building the SDK and the application. Their targets are `sd
 1. Create your build folder at the root of the project : `mkdir build`
 Go to this new folder and begin the build process : `cd build`
 
-2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=10` to do 10 parallel builds for speeding up the process. If it doesn't seem to work then it will be better to use CMake >= 3.12
+2. Prepare your options : `cmake ..`. By default, it will try compile all needed dependencies. You can remove some by adding `-DENABLE_<COMPONENT>=NO` to the command. You can use `cmake-gui ..` if you want to have a better access to them. You can add `-DCMAKE_BUILD_PARALLEL_LEVEL=<count>` to do `<count>` parallel builds for speeding up the process.
 Also, you can add `-DENABLE_BUILD_VERBOSE=ON` to get more feedback while generating the project.
 
 Note : For Makefile or Ninja, you have to add `-DCMAKE_BUILD_TYPE=<your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
-3. Build and install the whole project : `cmake --build . --target <target>` (replace `<target>` with the target name. You can use the switch `--parallel 10` to do 10 parallel builds with CMake >= 3.12. 
+3. Build and install the whole project : `cmake --build . --target <target> --parallel <count>` (replace `<target>` with the target name and `<count>` by the number of parallel builds).
 
 Note : For XCode or Visual Studio, you have to add `--config <your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
-When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .` if CMake>=3.15) to put the application in the correct configuration.
+When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .`) to put the application in the correct configuration.
 
-4. When doing some modifications in the SDK, you can rebuild only the sdk with the target `sdk` and the same for the application with `linphone-qt-only`
+4. When doing some modifications in the SDK, you can rebuild only the SDK with the target `sdk` and the same for the application with `linphone-qt-only`
 
 5. In order to get packages, you can use `cmake .. -DENABLE_APP_PACKAGING=YES`. The files will be in `OUTPUT/packages` folder.
 
@@ -114,7 +110,7 @@ When all are over, the files will be in the OUTPUT folder in the build directory
         git fetch
         git pull --rebase
         
-2. Update submodules from your current branch
+2. Update sub-modules from your current branch
 
         git submodule update --init --recursive
 
@@ -130,7 +126,7 @@ Eg on Mac : `-DLINPHONESDK_DOXYGEN_PROGRAM=/Applications/Doxygen.app/Contents/Re
 * If the build of the SDK crash with something like "cmd.exe failed" and no more info, it can be a dependency that is not available. You have to check if all are in your PATH.
 Usually, if it is about VPX or Decaf, this could come from your Perl installation.
 
-* If the application doesn't start and create an empty file with a random name, it could be come from a bad configuration between your application and others submodules. Check your configurations and force them with `-DCMAKE_BUILD_TYPE=<your_config>` or `--config <your_config>`.
+* If the application doesn't start and create an empty file with a random name, it could be come from a bad configuration between your application and others sub-modules. Check your configurations and force them with `-DCMAKE_BUILD_TYPE=<your_config>` or `--config <your_config>`.
 
 
 ## Specific instructions for the Mac Os X platform
@@ -138,9 +134,9 @@ Usually, if it is about VPX or Decaf, this could come from your Perl installatio
 To install the required dependencies on Mac OS X, you can use [Homebrew](https://brew.sh/).
 Before you install packages with Brew, you may have to change directories permissions (if you can't change permissions with sudo on a MacOS >= High Sierra, get a look at [this StackOverflow answer](https://stackoverflow.com/questions/16432071/how-to-fix-homebrew-permissions#46844441)).
 
-1. Install Xcode from the Apple store. Run it at least once to allow it to install its tools.
+1. Install XCode from the Apple store. Run it at least once to allow it to install its tools.
 
-2. Install homebrew by following the instructions here https://brew.sh/
+2. Install Homebrew by following the instructions here https://brew.sh/
 
 3. Install dependencies:
 
@@ -165,7 +161,7 @@ Before you install packages with Brew, you may have to change directories permis
 
 8. When updating the project, the next build steps are a bit different:
     - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .` (CMake >= 3.15)
+    - `cmake --install .`
 OR
     - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
@@ -174,7 +170,7 @@ OR
 1. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.)
   - `MinGW` : [download](https://sourceforge.net/projects/mingw/)
     - Select all installer options except Ada and Fortran
-    - Install it in the default location (C:/Mingw), this is important as there are hardlinks on it.
+    - Install it in the default location (C:/Mingw), this is important as there are hard-links on it.
     - The gcc version should be 6.3.0. It wasn't tested for other versions. It seems that MinGW from osdn.net try to install gcc 9 that breaks the build.
   - `Yasm`
     - download yasm-1.3.0-win32.exe
@@ -200,7 +196,7 @@ Visual Studio must also be properly configured with addons. Under "Tools"->"Obta
 
 6. When updating the project, the next build steps are a bit different:
     - `cmake --build . --target ALL_BUILD --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .` (CMake >= 3.15)
+    - `cmake --install .`
 OR
     - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
@@ -214,7 +210,7 @@ OR
 
 3. When updating the project, the next build steps are a bit different:
     - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .` (CMake >= 3.15)
+    - `cmake --install .`
 OR
     - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
@@ -231,7 +227,7 @@ apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 l
 
 ### Code
 
-In order to submit a patch for inclusion in linphone's source code:
+In order to submit a patch for inclusion in Linphone's source code:
 
 1. First make sure that your patch applies to the latest Git sources before submitting : patches made to old versions can't and won't be merged.
 
@@ -248,7 +244,7 @@ If you want you can contribute at: https://www.transifex.com/belledonne-communic
 
 ### Feedback or bug reporting
 
-Launch the application with `--verbose` parameter to get full logs and send it with your request. You can use the "Send logs" button in settings to upload log files and share it by email or with a post in the corresponding github project :
+Launch the application with `--verbose` parameter to get full logs and send it with your request. You can use the "Send logs" button in settings to upload log files and share it by email or with a post in the corresponding Github project :
 - [Desktop Application](https://github.com/BelledonneCommunications/linphone-desktop/issues)
 - [Linphone SDK](https://github.com/BelledonneCommunications/linphone-sdk/issues)
 
