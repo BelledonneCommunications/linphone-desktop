@@ -405,7 +405,11 @@ void App::smartShowWindow (QQuickWindow *window) {
   if (!window)
     return;
   window->setVisible(true);
-  window->show();// Force show, maybe redundant with setVisible
+// Force show, maybe redundant with setVisible
+  if(window->visibility() == QWindow::Maximized)// Avoid to change visibility mode
+    window->showMaximized();
+  else
+    window->show();
   window->raise();// Raise ensure to get focus on Mac
   window->requestActivate();
 }
