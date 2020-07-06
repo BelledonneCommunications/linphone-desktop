@@ -30,11 +30,11 @@ Item {
       spacing: ChatStyle.entry.message.extraContent.spacing
 
       Component {
-        id: icon
+        id: iconComponent
 
         Icon {
-
-          readonly property bool isError: Utils.includes([
+          id: iconId
+          readonly property var isError: Utils.includes([
                 ChatModel.MessageStatusFileTransferError,
                 ChatModel.MessageStatusNotDelivered,
                 ], $chatEntry.status)
@@ -48,19 +48,18 @@ Item {
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
+            id:retryAction
             anchors.fill: parent
-            cursorShape: containsMouse
-                            ? Qt.PointingHandCursor
-                            : Qt.ArrowCursor
-            hoverEnabled: true
-            visible: icon.isError || $chatEntry.status === ChatModel.MessageStatusIdle
+            visible: iconId.isError || $chatEntry.status === ChatModel.MessageStatusIdle
             onClicked: proxyModel.resendMessage(index)
           }
 
           TooltipArea {
-            text: isError
+            id:tooltip
+            text: iconId.isError
               ? qsTr('messageError')
               : (isRead ? qsTr('messageRead') : qsTr('messageDelivered'))
+              hoveringCursor : retryAction.visible?Qt.PointingHandCursor:Qt.ArrowCursor
           }
         }
       }
@@ -86,7 +85,7 @@ Item {
 
         sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
           ? indicator
-          : icon
+          : iconComponent
       }
 
       ActionButton {
