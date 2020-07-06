@@ -14,13 +14,17 @@ DesktopPopup {
   default property alias _content: content.data
 
   signal deleteNotification (var notification)
+  
+// Use as an intermediate between signal/slot without propagate the notification var : last signal parameter will be the last notification instance
+  function deleteNotificationSlot(){
+    deleteNotification(notification)
+  }
 
   function _close (cb) {
     if (cb) {
       cb()
     }
-
-    deleteNotification(notification)
+    deleteNotificationSlot();
   }
 
   Rectangle {
