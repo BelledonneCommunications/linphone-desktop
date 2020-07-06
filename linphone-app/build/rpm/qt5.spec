@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 
-%define _qt5_version 5.10
+%define _qt5_version 5.12.5
 %define _qt5_dir /opt/com.belledonne-communications/linphone
 
 %define _qt5_archdatadir %{_qt5_dir}
@@ -33,7 +33,13 @@ Requires: %{name} = %{version}-%{release}
 Qt is a software toolkit for developing applications.
 
 %prep
+
 %setup -n %{name}-%{version}
+
+#Notes for Qt 5.12 and above
+#qt-xcb includes libxcb-* but libxcb
+#qt-xkbcommon cannot be used anymore
+#-xkbcommon enables xkb support using system libs
 
 %build
 ./configure \
@@ -45,13 +51,18 @@ Qt is a software toolkit for developing applications.
   -silent \
   -nomake examples \
   -nomake tests \
+  -dbus \
+  -feature-dbus \
+  -feature-accessibility \
   -qt-freetype \
   -qt-harfbuzz \
   -qt-libjpeg \
   -qt-libpng \
   -qt-pcre \
   -qt-xcb \
-  -qt-xkbcommon \
+  -xkbcommon \
+  -system-freetype \
+  -feature-freetype -fontconfig \
   -skip wayland \
   -system-zlib \
   -archdatadir %{_qt5_archdatadir} \
@@ -63,38 +74,24 @@ Qt is a software toolkit for developing applications.
   -prefix %{_qt5_dir} \
   -translationdir %{_qt5_translationdir}
 
-make
+make -j12
 
 %install
-make install INSTALL_ROOT=%{buildroot}
+find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python3/g'
+make install INSTALL_ROOT=%{buildroot} -j12
+
+# Some files got ambiguous python shebangs, we fix them to avoid install errors
+# Because in centos8 shebangs like #!/usr/bin/python are FORBIDDEN (see https://fedoraproject.org/wiki/Changes/Make_ambiguous_python_shebangs_error)
 
 %files
 %defattr(-,root,root,-)
-%license LICENSE.LGPL* LGPL_EXCEPTION.txt LICENSE.FDL
+%license LICENSE.LGPL* LICENSE.FDL
 %{_qt5_archdatadir}/phrasebooks/*.qph
 %{_qt5_archdatadir}/qml/
 %{_qt5_bindir}/
 %{_qt5_docdir}/global/
-%{_qt5_libdir}/libQt5*.so.5*
-%{_qt5_plugindir}/audio/*.so
-%{_qt5_plugindir}/bearer/*.so
-%{_qt5_plugindir}/canbus/*.so
-%{_qt5_plugindir}/designer/libqquickwidget.so
-%{_qt5_plugindir}/egldeviceintegrations/*.so
-%{_qt5_plugindir}/gamepads/libevdevgamepad.so
-%{_qt5_plugindir}/generic/*.so
-%{_qt5_plugindir}/geometryloaders/*.so
-%{_qt5_plugindir}/iconengines/libqsvgicon.so
-%{_qt5_plugindir}/imageformats/*.so
-%{_qt5_plugindir}/mediaservice/libqtmedia_audioengine.so
-%{_qt5_plugindir}/platforminputcontexts/*.so
-%{_qt5_plugindir}/platforms/*.so
-%{_qt5_plugindir}/playlistformats/libqtmultimedia_m3u.so
-%{_qt5_plugindir}/qmltooling/*.so
-%{_qt5_plugindir}/renderplugins/libscene2d.so
-%{_qt5_plugindir}/sceneparsers/*.so
-%{_qt5_plugindir}/sqldrivers/*.so
-%{_qt5_plugindir}/xcbglintegrations/*.so
+%{_qt5_libdir}/libQt5*.so*
+%{_qt5_plugindir}/*/*.so*
 %{_qt5_translationdir}/
 
 %files devel
