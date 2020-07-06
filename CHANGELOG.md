@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.3.0 - [Undefined]
 
+### Added
+- Let Pulseaudio to do its job when calling (eg. mute musics, switching between A2DP and HFP profiles for bluetooth headsets, etc.)
+
+### Fixed
+- If the applciation is maximized, it will stay at maximized when clicking on the left panel
 
 ## 4.2.1 - 2020-07-03
 
