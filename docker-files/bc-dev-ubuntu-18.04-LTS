@@ -16,7 +16,7 @@ RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libs
 #needed fot qt to find dbus
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
 # Build qt5.12.5
-RUN git clone -b fix/qt5_build_issues_new_docker_images --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
+RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
     find "./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
     find "." -maxdepth 1 -iname "*.deb" -exec sudo dpkg -i --force-overwrite {} + && \
