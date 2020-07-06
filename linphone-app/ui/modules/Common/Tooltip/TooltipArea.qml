@@ -14,6 +14,7 @@ MouseArea {
   property var tooltipParent: parent
 
   property bool _visible: false
+  property int hoveringCursor : Qt.ArrowCursor
 
   anchors.fill:parent
 
@@ -21,6 +22,8 @@ MouseArea {
   scrollGestureEnabled: true
 
   onContainsMouseChanged: _visible = containsMouse
+  cursorShape: containsMouse ? hoveringCursor : Qt.ArrowCursor
+
   onPressed: mouse.accepted = false
   onWheel: {
     _visible = false
