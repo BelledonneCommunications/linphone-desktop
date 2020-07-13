@@ -156,10 +156,10 @@ include(FindPkgConfig)
 set(APP_DEPENDS sdk)
 
 
-find_package(Qt5 5.12 COMPONENTS Core REQUIRED)
+find_package(Qt5 5.9 COMPONENTS Core REQUIRED)
 
 if ( NOT Qt5_FOUND )
-	message(FATAL_ERROR "Minimum supported Qt5 version is 5.12!")
+	message(FATAL_ERROR "Minimum supported Qt5 version is 5.9!")
 endif()
 
 find_package(LinphoneCxx CONFIG QUIET)
