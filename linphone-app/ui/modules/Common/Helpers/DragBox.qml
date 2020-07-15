@@ -19,6 +19,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
+  signal clicked (var mouse)
   signal pressed (var mouse)
   signal released (var mouse)
   signal wheel (var wheel)
@@ -81,11 +82,13 @@ Item {
 
       anchors.fill: parent
 
+      acceptedButtons: Qt.LeftButton | Qt.RightButton
+
       drag {
         axis: Drag.XandYAxis
         target: parent
       }
-
+      onClicked:dragBox.clicked(mouse)
       onPressed: {
         dragBox.pressed(mouse)
         held = true

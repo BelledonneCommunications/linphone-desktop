@@ -422,7 +422,8 @@ Window {
       id: cameraPreview
 
       Camera {
-        property bool scale: false
+        id:cameraPreviewItem
+        property double scale: 1.0
 
         function xPosition () {
           return window.width / 2 - width / 2
@@ -431,12 +432,17 @@ Window {
         function yPosition () {
           return window.height - height
         }
+        
+        function resetPosition(){
+            x = xPosition ();
+            y = yPosition ();
+          }
 
         call: window.call
         isPreview: true
 
-        height: CallStyle.actionArea.userVideo.height * (scale ? 2 : 1)
-        width: CallStyle.actionArea.userVideo.width * (scale ? 2 : 1)
+        height: CallStyle.actionArea.userVideo.height * scale
+        width: CallStyle.actionArea.userVideo.width * scale 
 
         DragBox {
           container: window
@@ -445,7 +451,11 @@ Window {
           xPosition: parent.xPosition
           yPosition: parent.yPosition
 
-          onWheel: parent.scale = wheel.angleDelta.y > 0
+          onWheel: parent.scale = Math.max(0.5 , parent.scale+(wheel.angleDelta.y > 0 ? 0.1 : -0.1) )
+          onClicked: if(mouse.button == Qt.RightButton) {
+                         parent.scale = 1;
+                         resetPosition();
+                    }
         }
       }
     }
