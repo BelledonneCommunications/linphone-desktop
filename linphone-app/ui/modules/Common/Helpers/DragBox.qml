@@ -58,7 +58,20 @@ Item {
       _mouseArea = null
     }
   }
+  function updateBoundaries(){
+        var container = dragBox.container
 
+        if (parent.x < 0) {
+          parent.x = 0
+        } else if (parent.x + parent.width >= container.width) {
+          parent.x = container.width - parent.width
+        }
+        if (parent.y < 0) {
+          parent.y = 0
+        } else if (parent.y + parent.height >= container.height) {
+          parent.y = container.height - parent.height
+        }
+  }
   // ---------------------------------------------------------------------------
 
   Component.onCompleted: enabled && _create()
@@ -97,20 +110,7 @@ Item {
       onReleased: {
         dragBox.released(mouse)
         held = false
-
-        var container = dragBox.container
-
-        if (parent.x < 0) {
-          parent.x = 0
-        } else if (parent.x + parent.width >= container.width) {
-          parent.x = container.width - parent.width
-        }
-
-        if (parent.y < 0) {
-          parent.y = 0
-        } else if (parent.y + parent.height >= container.height) {
-          parent.y = container.height - parent.height
-        }
+        updateBoundaries()
       }
 
       onWheel: dragBox.wheel(wheel)

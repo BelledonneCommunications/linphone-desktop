@@ -441,8 +441,8 @@ Window {
         call: window.call
         isPreview: true
 
-        height: CallStyle.actionArea.userVideo.height * scale
-        width: CallStyle.actionArea.userVideo.width * scale 
+        height: (CallStyle.actionArea.userVideo.height * window.height/CallStyle.actionArea.userVideo.heightReference) * scale
+        width: (CallStyle.actionArea.userVideo.width * window.width/CallStyle.actionArea.userVideo.widthReference) * scale 
 
         DragBox {
           container: window
@@ -450,8 +450,19 @@ Window {
 
           xPosition: parent.xPosition
           yPosition: parent.yPosition
+          
+          property double startTime: 0
 
-          onWheel: parent.scale = Math.max(0.5 , parent.scale+(wheel.angleDelta.y > 0 ? 0.1 : -0.1) )
+          onWheel: {
+                var acceleration = 0.1;
+                if(startTime == 0){
+                    startTime = new Date().getTime();
+                }else
+                    acceleration = Math.max(0.005,10/(new Date().getTime() - startTime));
+                parent.scale = Math.max(0.5 , parent.scale+acceleration*(wheel.angleDelta.y >0 ? 1 : -1) );
+                updateBoundaries();
+                startTime = new Date().getTime();
+          }
           onClicked: if(mouse.button == Qt.RightButton) {
                          parent.scale = 1;
                          resetPosition();
