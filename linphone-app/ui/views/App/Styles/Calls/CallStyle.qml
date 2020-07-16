@@ -19,8 +19,8 @@ QtObject {
     property QtObject userVideo: QtObject {
       property int height: 200
       property int width: 130
-      property double heightReference: 1200
-      property double widthReference: 780
+      property int heightReference: 1200 // height and width are fixed from these references
+      property int widthReference: 780
     }
 
     property QtObject vu: QtObject {
