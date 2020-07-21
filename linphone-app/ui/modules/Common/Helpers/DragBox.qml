@@ -19,6 +19,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
+  signal clicked (var mouse)
   signal pressed (var mouse)
   signal released (var mouse)
   signal wheel (var wheel)
@@ -57,7 +58,20 @@ Item {
       _mouseArea = null
     }
   }
+  function updateBoundaries(){
+        var container = dragBox.container
 
+        if (parent.x < 0) {
+          parent.x = 0
+        } else if (parent.x + parent.width >= container.width) {
+          parent.x = container.width - parent.width
+        }
+        if (parent.y < 0) {
+          parent.y = 0
+        } else if (parent.y + parent.height >= container.height) {
+          parent.y = container.height - parent.height
+        }
+  }
   // ---------------------------------------------------------------------------
 
   Component.onCompleted: enabled && _create()
@@ -81,11 +95,13 @@ Item {
 
       anchors.fill: parent
 
+      acceptedButtons: Qt.LeftButton | Qt.RightButton
+
       drag {
         axis: Drag.XandYAxis
         target: parent
       }
-
+      onClicked:dragBox.clicked(mouse)
       onPressed: {
         dragBox.pressed(mouse)
         held = true
@@ -94,20 +110,7 @@ Item {
       onReleased: {
         dragBox.released(mouse)
         held = false
-
-        var container = dragBox.container
-
-        if (parent.x < 0) {
-          parent.x = 0
-        } else if (parent.x + parent.width >= container.width) {
-          parent.x = container.width - parent.width
-        }
-
-        if (parent.y < 0) {
-          parent.y = 0
-        } else if (parent.y + parent.height >= container.height) {
-          parent.y = container.height - parent.height
-        }
+        updateBoundaries()
       }
 
       onWheel: dragBox.wheel(wheel)
