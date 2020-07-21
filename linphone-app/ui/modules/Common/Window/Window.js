@@ -31,16 +31,10 @@
 //
 // The exit status handler is optional.
 function attachVirtualWindow (component, properties, exitStatusHandler) {
-  if (virtualWindow.active){//already loaded
-    return
-  }
-  virtualWindow.setContent(component, properties, exitStatusHandler)
-  window.attachedVirtualWindow()
+    virtualWindow.setContent(component, properties, exitStatusHandler);
 }
 
 function detachVirtualWindow () {
-  if( virtualWindow.active){
-    virtualWindow.unsetContent()
-    window.detachedVirtualWindow()
-  }
+  if( virtualWindow.active)
+    virtualWindow.unsetContent();
 }

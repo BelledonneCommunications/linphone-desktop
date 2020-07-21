@@ -147,7 +147,7 @@ private:
       emit opened(mIsOpened);
     }
   }
-
+  static QString getStrippedApplicationVersion();// x.y.z but if 'z-*' then x.y.z-1
   static void checkForUpdate ();
 
   static QString getQtVersion () {

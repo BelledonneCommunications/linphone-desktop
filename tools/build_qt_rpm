@@ -3,8 +3,8 @@
 # See: http://wiki.qt.io/Building_Qt_5_from_Git
 # See: http://doc.qt.io/qt-5/configure-options.html
 
-REPO_URL='git://code.qt.io/qt/qt5.git'
-QT_VERSION='5.10'
+REPO_URL='https://gitlab.linphone.org/BC/public/external/qt/qt5.git'
+QT_VERSION='5.12.5'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
 
@@ -12,7 +12,6 @@ REPO_FOLDER=linphone-qt
 RPM_FOLDER=rpm-${RPM_NAME}
 
 # ==============================================================================
-
 RED='\e[1;31m'
 NC='\e[0m'
 
@@ -22,10 +21,12 @@ cd "${SCRIPT_DIR}/.."
 # ==============================================================================
 
 if [ ! -d "${REPO_FOLDER}/.git" ]; then
-  git clone "${REPO_URL}" "${REPO_FOLDER}"
+  
+  #Simplest way to use paralle fetch if available
+  #Otherwise we would have to parse the git version number
+  git clone "${REPO_URL}" "${REPO_FOLDER}" --recursive -j 12 || git clone "${REPO_URL}" "${REPO_FOLDER}"
 fi
 cd "${REPO_FOLDER}"
-
 while test $# -gt 0
 do
   case "$1" in
@@ -40,6 +41,7 @@ do
 done
 
 git checkout "${QT_VERSION}"
+git submodule foreach --recursive 'if [ -n "$(git branch -a | grep 5.12.5)" ]; then git checkout 5.12.5; fi'
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
   exit 1
@@ -72,6 +74,8 @@ fi
 cd ..
 
 mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
-tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
+#use pigz to parallelize compression
+tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -c ${REPO_FOLDER}/ | pigz -p 24 > ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz 
+#tar --transform "s/^${REPO_FOLDER}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
 rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec

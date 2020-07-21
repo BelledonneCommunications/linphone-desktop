@@ -95,7 +95,7 @@ bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelInde
   // Sort by weight and name.
   return weightA > weightB || (
     weightA == weightB &&
-    contactA->mLinphoneFriend->getName() <= contactB->mLinphoneFriend->getName()
+    QString::localeAwareCompare(Utils::coreStringToAppString(contactA->mLinphoneFriend->getName()), Utils::coreStringToAppString(contactB->mLinphoneFriend->getName())) <= 0
   );
 }
 

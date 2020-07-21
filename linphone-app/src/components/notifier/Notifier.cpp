@@ -181,6 +181,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 			view->setGeometry(subWindow->geometry());	// Ensure to have sufficient space to both let painter do job without error, and stay behind popup
 
 			if(previousWrapper!=nullptr){	// Link objects in order to propagate events without having to store them
+				QObject::connect(previousWrapper, SIGNAL(deleteNotification(QVariant)), wrapperItem,SLOT(deleteNotificationSlot()));
 				QObject::connect(wrapperItem, SIGNAL(isOpened()), previousWrapper,SLOT(open()));
 				QObject::connect(wrapperItem, SIGNAL(isClosed()), previousWrapper,SLOT(close()));
 				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
