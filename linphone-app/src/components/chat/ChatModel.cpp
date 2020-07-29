@@ -493,7 +493,7 @@ void ChatModel::sendMessage (const QString &message) {
   _message->addListener(mMessageHandlers);
 
   insertMessageAtEnd(_message);
-  mChatRoom->sendChatMessage(_message);
+  _message->send();
 
   emit messageSent(_message);
 }
@@ -518,7 +518,7 @@ void ChatModel::resendMessage (int id) {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
       message->removeListener(mMessageHandlers);// Remove old listener if already exists
       message->addListener(mMessageHandlers);
-      message->resend();
+      message->send();
 
       break;
     }
@@ -559,7 +559,7 @@ void ChatModel::sendFileMessage (const QString &path) {
   createThumbnail(message);
 
   insertMessageAtEnd(message);
-  mChatRoom->sendChatMessage(message);
+  message->send();
 
   emit messageSent(message);
 }

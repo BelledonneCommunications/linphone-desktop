@@ -46,6 +46,8 @@
 #include "CoreHandlers.hpp"
 #include "CoreManager.hpp"
 
+#include <linphone/core.h>
+
 // =============================================================================
 
 using namespace std;
@@ -212,7 +214,8 @@ void CoreManager::setDatabasesPaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
   if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
-	SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());// Setting the message database let SDK to migrate data
+	linphone_core_set_chat_database_path(mCore->cPtr(), Paths::getMessageHistoryFilePath().c_str());
+	//SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());// Setting the message database let SDK to migrate data
 	QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
   }
 }
