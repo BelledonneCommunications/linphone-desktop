@@ -444,7 +444,10 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     message("Optional package ${package} not found.")
     endif ()
 endforeach ()
-list(APPEND LIBRARIES -L${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR} contactsPlugin)
+
+link_directories(${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+list(APPEND LIBRARIES  contactsPlugin)
+
 if (APPLE)
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
     # -framework linphone") #This doesn't work yet

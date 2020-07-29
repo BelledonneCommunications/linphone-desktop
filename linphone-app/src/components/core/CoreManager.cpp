@@ -86,7 +86,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 
 	CoreHandlers *coreHandlers = mHandlers.get();
 
-	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
+	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [this] {
     // Do not change this order. :) (Or pray.)
 		mInstance->mCallsListModel = new CallsListModel(mInstance);
 		mInstance->mContactsListModel = new ContactsListModel(mInstance);

@@ -172,7 +172,7 @@ void ContactsImporterListModel::removeContactsImporter (ContactsImporterModel *c
 			if( id == mMaxContactsImporterId)// Decrease mMaxContactsImporterId in a safe way
 				--mMaxContactsImporterId;
 		}
-		!removeRow(index);
+		removeRow(index);
 	}
 }
 void ContactsImporterListModel::importContacts(const int &pId){
