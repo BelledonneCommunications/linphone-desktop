@@ -114,4 +114,4 @@ job-macosx-makefile-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_MACOSX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:MACOSX_UPLOAD_DIRECTORY
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY

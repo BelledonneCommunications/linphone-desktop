@@ -52,6 +52,9 @@ target_include_directories(contactsPlugin PRIVATE ${LINPHONECXX_INCLUDE_DIRS})
 configure_file("src/ContactsImporterPlugin.hpp" "${CMAKE_INSTALL_PREFIX}/include/linphoneapp/contacts/ContactsImporterPlugin.hpp" COPYONLY)
 configure_file("src/ContactsImporterNetworkAPI.hpp" "${CMAKE_INSTALL_PREFIX}/include/linphoneapp/contacts/ContactsImporterNetworkAPI.hpp" COPYONLY)
 configure_file("src/ContactsImporterDataAPI.hpp" "${CMAKE_INSTALL_PREFIX}/include/linphoneapp/contacts/ContactsImporterDataAPI.hpp" COPYONLY)
-install(TARGETS contactsPlugin LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS contactsPlugin 
+	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARICHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	)
 
 
