@@ -54,7 +54,7 @@ configure_file("src/ContactsImporterNetworkAPI.hpp" "${CMAKE_INSTALL_PREFIX}/inc
 configure_file("src/ContactsImporterDataAPI.hpp" "${CMAKE_INSTALL_PREFIX}/include/linphoneapp/contacts/ContactsImporterDataAPI.hpp" COPYONLY)
 install(TARGETS contactsPlugin 
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	ARICHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	)
 
 
