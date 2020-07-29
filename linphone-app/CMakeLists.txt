@@ -445,8 +445,8 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     endif ()
 endforeach ()
 
-link_directories(${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
-list(APPEND LIBRARIES  contactsPlugin)
+find_library(CONTACTS_PLUGIN_LIBRARY contactsPlugin HINTS "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+list(APPEND LIBRARIES ${CONTACTS_PLUGIN_LIBRARY})
 
 if (APPLE)
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
