@@ -3,18 +3,17 @@
 
 #include <QObject>
 #include <QtNetwork>
-#include "ContactsImportDataAPI.hpp"
 // This class is used to define network operation to retrieve Addresses from Network
-class ContactsImportNetworkAPI : public QObject
+class ContactsImporterNetworkAPI : public QObject
 {
 Q_OBJECT
 public:
-	ContactsImportNetworkAPI();
-	virtual ~ContactsImportNetworkAPI();
+	ContactsImporterNetworkAPI();
+	virtual ~ContactsImporterNetworkAPI();
 	virtual QString prepareRequest()const=0;	// Called when requesting an Url.
 	
 
-	void request();	// Create QNetworkReply and make network requests
+	void request();
 
 	QPointer<QNetworkReply> mNetworkReply;
 	QNetworkAccessManager mManager;
@@ -27,9 +26,9 @@ private:
 	void handleReadyData();
 	void handleFinished ();
 	void handleError (QNetworkReply::NetworkError code);
-	void handleSslErrors (const QList<QSslError> &errors);
+	void handleSslErrors (const QList<QSslError> &sslErrors);
 
 	QByteArray mBuffer;
 };
 
-#endif // CONTACTSIMPORTNETWORKAPI_H
+#endif // CONTACTSIMPORTERNETWORKAPI_H

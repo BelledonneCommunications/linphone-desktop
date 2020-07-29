@@ -41,6 +41,9 @@ namespace Paths {
   std::string getMessageHistoryFilePath ();
   std::string getPackageDataDirPath ();
   std::string getPackageMsPluginsDirPath ();
+  std::string getPackagePluginsContactsDirPath ();
+  std::string getPluginsContactsDirPath ();
+  QStringList getPluginsContactsFolders();
   std::string getRootCaFilePath ();
   std::string getThumbnailsDirPath ();
   std::string getToolsDirPath ();

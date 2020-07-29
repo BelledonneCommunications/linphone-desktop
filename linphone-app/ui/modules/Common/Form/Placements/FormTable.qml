@@ -16,15 +16,26 @@ Column {
   
   property var maxWidthStyle : FormTableStyle.entry.maxWidth
 
-  readonly property double maxItemWidth: {
-    var n = titles.length
-    var curWidth = (width - (disableLineTitle?0:legendLineWidth) ) /n  - FormTableLineStyle.spacing
-    var maxWidth = maxWidthStyle
-    return curWidth < maxWidth ? curWidth : maxWidth
-  }
+  readonly property double maxItemWidth: computeMaxItemWidth()
 
   // ---------------------------------------------------------------------------
-
+  function updateMaxItemWidth(){
+    maxItemWidth = computeMaxItemWidth();
+  }
+  function computeMaxItemWidth(){
+      var n = 1;
+//        if( titles)
+//            n = titles.length
+//        else{
+           for(var line = 0 ; line < formTable.visibleChildren.length ; ++line){
+                var column = formTable.visibleChildren[line].visibleChildren.length;
+                n = Math.max(n, column-1);
+            }
+//        }
+        var curWidth = (width - (disableLineTitle?0:legendLineWidth) ) /n  - FormTableLineStyle.spacing
+        var maxWidth = maxWidthStyle
+        return curWidth < maxWidth ? curWidth : maxWidth
+  }
   spacing: FormTableStyle.spacing
 
   // ---------------------------------------------------------------------------

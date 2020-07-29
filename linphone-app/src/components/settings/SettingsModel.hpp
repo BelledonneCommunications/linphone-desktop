@@ -27,6 +27,7 @@
 #include <QVariantMap>
 
 #include "components/core/CoreHandlers.hpp"
+#include "components/contacts/ContactsImporterModel.hpp"
 
 // =============================================================================
 
@@ -175,9 +176,6 @@ class SettingsModel : public QObject {
     Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged)
     Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
     Q_PROPERTY(QString logsEmail READ getLogsEmail WRITE setLogsEmail NOTIFY logsEmailChanged)
-// TODO : Generic
-    Q_PROPERTY(QVariantMap contactImportEnswitch READ getContactImportEnswitch WRITE setContactImportEnswitch NOTIFY contactImportEnswitchChanged)
-    
 
     Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged)
 
@@ -338,8 +336,8 @@ public:
 	bool mandatoryMediaEncryptionEnabled () const;
 	void enableMandatoryMediaEncryption(bool mandatory);
 
-    bool getLimeState () const;
-    void setLimeState (const bool& state);
+	bool getLimeState () const;
+	void setLimeState (const bool& state);
 
 	bool getContactsEnabled () const;
 	void setContactsEnabled (bool status);
@@ -448,12 +446,6 @@ public:
 	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
 	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
 
-	// ---------------------------------------------------------------------------
-	//			CONTACTS
-	QVariantMap getContactImportEnswitch() const;
-	void setContactImportEnswitch(const QVariantMap &pData);
-	Q_INVOKABLE void importContacts();
-	
 	// ---------------------------------------------------------------------------
 
 	bool getDeveloperSettingsEnabled () const;
@@ -595,10 +587,8 @@ signals:
 	void logsUploadUrlChanged (const QString &url);
 	void logsEnabledChanged (bool status);
 	void logsEmailChanged (const QString &email);
-
-	void contactImportEnswitchChanged(const QVariantMap &account);
-	void contactImportEnswitchStatus(const QString &status);
-	void contactImportEnswitchError(const QString &status);
+	
+	void contactImporterChanged();
 
 	bool developerSettingsEnabledChanged (bool status);
 

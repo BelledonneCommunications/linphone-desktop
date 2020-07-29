@@ -1167,26 +1167,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
         <source>contactsTitle</source>
         <translation type="unfinished">Névjegyek</translation>
     </message>
-    <message>
-        <source>contactsDomain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsURL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsUsername</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsPassword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsActivate</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

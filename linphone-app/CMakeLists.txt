@@ -122,10 +122,10 @@ set(SOURCES
     src/components/conference/ConferenceModel.cpp
     src/components/contact/ContactModel.cpp
     src/components/contact/VcardModel.cpp
-    src/components/contacts/ContactsImportNetworkAPI.cpp
-    src/components/contacts/ContactsImportDataAPI.cpp
-    src/components/contacts/ContactsEnswitchAPI.cpp
-    src/components/contacts/ContactsEnswitchDataAPI.cpp
+    src/components/contacts/ContactsImporterModel.cpp
+    src/components/contacts/ContactsImporterPluginsManager.cpp
+    src/components/contacts/ContactsImporterListModel.cpp
+    src/components/contacts/ContactsImporterListProxyModel.cpp
     src/components/contacts/ContactsListModel.cpp
     src/components/contacts/ContactsListProxyModel.cpp
     src/components/core/CoreHandlers.cpp
@@ -186,10 +186,10 @@ set(HEADERS
     src/components/conference/ConferenceModel.hpp
     src/components/contact/ContactModel.hpp
     src/components/contact/VcardModel.hpp
-    src/components/contacts/ContactsImportNetworkAPI.hpp
-    src/components/contacts/ContactsImportDataAPI.hpp
-    src/components/contacts/ContactsEnswitchAPI.hpp
-    src/components/contacts/ContactsEnswitchDataAPI.hpp
+    src/components/contacts/ContactsImporterModel.hpp
+    src/components/contacts/ContactsImporterPluginsManager.hpp
+    src/components/contacts/ContactsImporterListModel.hpp
+    src/components/contacts/ContactsImporterListProxyModel.hpp
     src/components/contacts/ContactsListModel.hpp
     src/components/contacts/ContactsListProxyModel.hpp
     src/components/core/CoreHandlers.hpp
@@ -416,8 +416,8 @@ endif()
 #add_dependencies(project_b_exe project_a)
 #target_link_libraries(project_b_exe ${install_dir}/lib/alib.lib)
 
-
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
+list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
 set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
 
 if(ENABLE_BUILD_VERBOSE)
@@ -444,7 +444,7 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     message("Optional package ${package} not found.")
     endif ()
 endforeach ()
-
+list(APPEND LIBRARIES -L${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR} contactsPlugin)
 if (APPLE)
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
     # -framework linphone") #This doesn't work yet

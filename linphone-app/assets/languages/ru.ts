@@ -1168,26 +1168,6 @@
         <source>contactsTitle</source>
         <translation type="unfinished">Контакты</translation>
     </message>
-    <message>
-        <source>contactsDomain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsURL</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsUsername</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsPassword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>contactsActivate</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

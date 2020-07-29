@@ -32,6 +32,7 @@
 #include "components/chat/ChatModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
+#include "components/contacts/ContactsImporterListModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
@@ -46,6 +47,7 @@
 
 #include "CoreHandlers.hpp"
 #include "CoreManager.hpp"
+#include <linphone/core.h>
 
 // =============================================================================
 
@@ -86,6 +88,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
     // Do not change this order. :) (Or pray.)
 		mInstance->mCallsListModel = new CallsListModel(mInstance);
 		mInstance->mContactsListModel = new ContactsListModel(mInstance);
+		mInstance->mContactsImporterListModel = new ContactsImporterListModel(mInstance);
 		mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 		mInstance->mSettingsModel = new SettingsModel(mInstance);
 		mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
@@ -213,7 +216,7 @@ void CoreManager::setDatabasesPaths () {
   SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
   SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
   if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
-	SET_DATABASE_PATH(Chat, Paths::getMessageHistoryFilePath());// Setting the message database let SDK to migrate data
+	linphone_core_set_chat_database_path(mCore->cPtr(), Paths::getMessageHistoryFilePath().c_str());// Setting the message database let SDK to migrate data	
 	QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
   }
 }

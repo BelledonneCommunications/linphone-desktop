@@ -41,7 +41,12 @@ namespace {
   constexpr char PathCodecs[] =  "/codecs/";
   constexpr char PathTools[] =  "/tools/";
   constexpr char PathLogs[] = "/logs/";
-  //constexpr char PathPlugins[] = "/plugins/"; // Unused
+#ifdef APPLE
+  constexpr char PathPlugins[] = "/Plugins/";
+#else
+  constexpr char PathPlugins[] = "/plugins/";
+#endif
+  constexpr char PathPluginsContacts[] = "contacts/";
   constexpr char PathThumbnails[] = "/thumbnails/";
   constexpr char PathUserCertificates[] = "/usr-crt/";
 
@@ -159,6 +164,10 @@ static inline QString getAppPackageMsPluginsDirPath () {
   return dir.absolutePath();
 }
 
+static inline QString getAppPackagePluginsDirPath () {
+  return getAppPackageDir().absolutePath() + PathPlugins;
+}
+
 static inline QString getAppAssistantConfigDirPath () {
   return getAppPackageDataDirPath() + PathAssistantConfig;
 }
@@ -187,6 +196,9 @@ static inline QString getAppMessageHistoryFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathMessageHistoryList;
 }
 
+static inline QString getAppPluginsDirPath () {
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)+ PathPlugins;
+}
 // -----------------------------------------------------------------------------
 
 bool Paths::filePathExists (const string &path) {
@@ -249,6 +261,21 @@ string Paths::getPackageDataDirPath () {
 
 string Paths::getPackageMsPluginsDirPath () {
   return getReadableDirPath(getAppPackageMsPluginsDirPath());
+}
+
+string Paths::getPackagePluginsContactsDirPath () {
+  return getReadableDirPath(getAppPackagePluginsDirPath()+PathPluginsContacts);
+}
+
+string Paths::getPluginsContactsDirPath () {
+  return getWritableDirPath(getAppPluginsDirPath()+PathPluginsContacts);
+}
+
+QStringList Paths::getPluginsContactsFolders() {
+	QStringList pluginPaths;
+	pluginPaths << Utils::coreStringToAppString(Paths::getPackagePluginsContactsDirPath());
+	pluginPaths << Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
+	return pluginPaths;
 }
 
 string Paths::getRootCaFilePath () {

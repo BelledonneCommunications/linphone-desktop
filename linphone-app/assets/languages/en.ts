@@ -1168,26 +1168,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>contactsTitle</source>
         <translation>Address Book Connector</translation>
     </message>
-    <message>
-        <source>contactsDomain</source>
-        <translation>SIP Domain</translation>
-    </message>
-    <message>
-        <source>contactsURL</source>
-        <translation>URL</translation>
-    </message>
-    <message>
-        <source>contactsUsername</source>
-        <translation>Username</translation>
-    </message>
-    <message>
-        <source>contactsActivate</source>
-        <translation>Activate</translation>
-    </message>
-    <message>
-        <source>contactsPassword</source>
-        <translation>Password</translation>
-    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

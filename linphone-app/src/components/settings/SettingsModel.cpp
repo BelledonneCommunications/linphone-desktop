@@ -20,6 +20,8 @@
 
 #include <QDir>
 #include <QtDebug>
+#include <QPluginLoader>
+#include <QJsonDocument>
 
 #include <cstdlib>
 #include <cmath>
@@ -27,7 +29,9 @@
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
-#include "components/contacts/ContactsEnswitchAPI.hpp"
+#include <linphoneapp/contacts/ContactsImporterDataAPI.hpp>
+#include <linphoneapp/contacts/ContactsImporterPlugin.hpp>
+#include <linphoneapp/contacts/ContactsImporterNetworkAPI.hpp>
 #include "utils/Utils.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "SettingsModel.hpp"
@@ -1170,7 +1174,7 @@ void SettingsModel::setExitOnClose (bool value) {
 // =============================================================================
 
 void SettingsModel::accessAdvancedSettings() {
-	emit contactImportEnswitchChanged(getContactImportEnswitch());
+	emit contactImporterChanged();
 }
 
 //------------------------------------------------------------------------------
@@ -1250,47 +1254,6 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 	return config ? config->getInt(UiSection, "logs_enabled", false) : true;
 }
 
-// ---------------------------------------------------------------------------
-
-QVariantMap SettingsModel::getContactImportEnswitch() const {
-	auto proxyConfig = CoreManager::getInstance()->getCore()->getDefaultProxyConfig();
-	QVariantMap account;
-	std::string domain;
-	if(proxyConfig)
-		domain = proxyConfig->getDomain();
-	else{
-		proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
-		if(proxyConfig)
-			domain = proxyConfig->getDomain();
-		if(domain == "")
-			domain = "sip.linphone.org";
-	}
-	account["domain"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_domain", domain));
-	account["url"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_url", "https://demo.enswitch.com/api/json/people/list/"));
-	account["username"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_username", "guest"));
-	account["password"] = Utils::coreStringToAppString(mConfig->getString(ContactsSection, "enswitch_password", ""));
-	account["enabled"] = mConfig->getInt(ContactsSection, "enswitch_enabled", 0);
-	return account;
-}
-
-void SettingsModel::setContactImportEnswitch(const QVariantMap &pAccount) {
-	mConfig->setString(ContactsSection, "enswitch_domain", Utils::appStringToCoreString(pAccount["domain"].toString()));
-	mConfig->setString(ContactsSection, "enswitch_url", Utils::appStringToCoreString(pAccount["url"].toString()));
-	mConfig->setString(ContactsSection, "enswitch_username", Utils::appStringToCoreString(pAccount["username"].toString()));
-	mConfig->setString(ContactsSection, "enswitch_password", Utils::appStringToCoreString(pAccount["password"].toString()));
-	mConfig->setInt(ContactsSection, "enswitch_enabled", pAccount["enabled"].toInt());
-	emit contactImportEnswitchChanged(pAccount);
-}
-void SettingsModel::importContacts() {
-	QVariantMap enswitch = getContactImportEnswitch();
-	if(enswitch["enabled"].toInt()>0){
-		ContactsImportDataAPI * data = ContactsEnswitchDataAPI::from(enswitch);
-		ContactsEnswitchAPI::requestList(data, this, SIGNAL(contactImportEnswitchMessage(const QString &)), SIGNAL(contactImportEnswitchStatus(const QString &)));
-// Update Data if a new password has been provided while validating
-		setContactImportEnswitch(data->toVariant());
-		delete data;
-	}
-}
 // ---------------------------------------------------------------------------
 bool SettingsModel::getDeveloperSettingsEnabled () const {
 #ifdef DEBUG
