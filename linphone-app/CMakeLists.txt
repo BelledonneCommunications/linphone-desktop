@@ -21,7 +21,7 @@
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
 
-project(linphoneqt VERSION 4.2.1)
+project(linphoneqt VERSION 4.2.2)
 
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
