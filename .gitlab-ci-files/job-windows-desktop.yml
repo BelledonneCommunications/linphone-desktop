@@ -98,7 +98,7 @@ job-windows-vs2017-win32-upload:
   dependencies:
     - job-windows-vs2017-package
   script:
-    - scp "results/*.exe" "%DEPLOY_SERVER%:%WINDOWS_DEPLOY_SNAPSHOTS_PATH%"
+    - scp "results/*.exe" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%"
 
 
 
