@@ -59,11 +59,17 @@ ContactsImporterPlugin * ContactsImporterPluginsManager::getPlugin(const QString
 	return plugin;
 }
 void ContactsImporterPluginsManager::openNewPlugin(){
-	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Plugin");
+	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Connector");
+	auto doCopy = QMessageBox::Yes;
 	if(fileName != ""){
 		QFileInfo fileInfo(fileName);
 		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath())+fileInfo.fileName();
-		if(!QFile::copy(fileName, path))
+		if( QFile::exists(path)){
+			doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?", QMessageBox::Yes, QMessageBox::No);
+			if( doCopy == QMessageBox::Yes)
+				QFile::remove(path);
+		}
+		if(doCopy != QMessageBox::Yes || !QFile::copy(fileName, path))
 			qWarning() << "Cannot copy plugin";
 	}
 }
