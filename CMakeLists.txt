@@ -173,8 +173,8 @@ find_package(ortp CONFIG QUIET)
 if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
 	
-	ExternalProject_Add(linphone-plugins PREFIX "${CMAKE_BINARY_DIR}/linphoneqt_plugins"
-	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app-plugins"
+	ExternalProject_Add(app-plugins PREFIX "${CMAKE_BINARY_DIR}/app_plugins"
+	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/plugins"
 	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
 	    DEPENDS ${APP_DEPENDS}
 	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
@@ -185,10 +185,10 @@ if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR 
 	    BUILD_ALWAYS ON
 	)
 	
-	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+	ExternalProject_Add(linphoneqt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
 	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
 	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-	    DEPENDS ${APP_DEPENDS} linphone-plugins
+	    DEPENDS ${APP_DEPENDS} app-plugins
 	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
 #	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 	    LIST_SEPARATOR | # Use the alternate list separator
@@ -202,14 +202,14 @@ if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR 
 	set(AUTO_REGENERATION auto_regeneration)
 	add_custom_target(${AUTO_REGENERATION} ALL
 		COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
-		DEPENDS linphone-plugins)
+		DEPENDS linphoneqt)
 else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 	add_dependencies(app-library ${APP_DEPENDS})
 	
-	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app-plugins)
+	add_subdirectory(${CMAKE_SOURCE_DIR}/plugins)
 	
 endif()
 ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
