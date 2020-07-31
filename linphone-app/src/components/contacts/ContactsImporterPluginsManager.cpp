@@ -61,7 +61,7 @@ ContactsImporterPlugin * ContactsImporterPluginsManager::getPlugin(const QString
 }
 void ContactsImporterPluginsManager::openNewPlugin(){
 	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Connector");
-	auto doCopy = QMessageBox::Yes;
+	int doCopy = QMessageBox::Yes;
 	if(fileName != ""){
 		QFileInfo fileInfo(fileName);
 		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath())+fileInfo.fileName();
