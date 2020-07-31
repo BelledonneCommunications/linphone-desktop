@@ -36,6 +36,7 @@
 #include <QDebug>
 #include <QJsonDocument>
 #include <QFileDialog>
+#include <QMessageBox>
 
 
 // =============================================================================
