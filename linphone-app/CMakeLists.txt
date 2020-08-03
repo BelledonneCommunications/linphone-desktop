@@ -423,10 +423,10 @@ set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_
 set(LIBRARIES)
 foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
 	find_library(FIND_LIBRARY_ITEM_${LIBRARY} NAMES ${LIBRARY} lib${LIBRARY} REQUIRED)#find_library need a specific variable name each time
-	if(FIND_LIBRARY_ITEM)
+	if(FIND_LIBRARY_ITEM_${LIBRARY})
 		list(APPEND LIBRARIES ${FIND_LIBRARY_ITEM_${LIBRARY}})
 	else()
-		message(SEND_ERROR "${LIBRARY} not found! ${FIND_LIBRARY_ITEM_${LIBRARY}}")
+		message(SEND_ERROR "${LIBRARY} not found!")
 	endif()
 endforeach()
 
