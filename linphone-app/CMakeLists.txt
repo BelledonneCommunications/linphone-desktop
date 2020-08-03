@@ -420,15 +420,19 @@ endif()
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
 set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
-set(LIBRARIES)
-foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
-	find_library(FIND_LIBRARY_ITEM_${LIBRARY} NAMES ${LIBRARY} lib${LIBRARY} REQUIRED)#find_library need a specific variable name each time
-	if(FIND_LIBRARY_ITEM_${LIBRARY})
-		list(APPEND LIBRARIES ${FIND_LIBRARY_ITEM_${LIBRARY}})
-	else()
-		message(SEND_ERROR "${LIBRARY} not found!")
-	endif()
-endforeach()
+if(WIN32)
+	set(LIBRARIES)
+	foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
+		find_library(FIND_LIBRARY_ITEM_${LIBRARY} NAMES ${LIBRARY} lib${LIBRARY} REQUIRED)#find_library need a specific variable name each time
+		if(FIND_LIBRARY_ITEM_${LIBRARY})
+			list(APPEND LIBRARIES ${FIND_LIBRARY_ITEM_${LIBRARY}})
+		else()
+			message(SEND_ERROR "${LIBRARY} not found!")
+		endif()
+	endforeach()
+else()
+	set(LIBRARIES ${LIBRARIES_LIST})
+endif()
 
 
 if(ENABLE_BUILD_VERBOSE)
