@@ -197,6 +197,7 @@ TabContainer {
                                                 onEditingFinished:{
                                                     importerLine.fields[modelData['fieldId']] = text
                                                 }
+                                                Component.onCompleted: importerLine.fields[modelData['fieldId']] = text
                                             }
                                         }
                                     }
