@@ -52,9 +52,9 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 			auto keyName = std::find(keys.begin(), keys.end(), "pluginTitle");
 			if( keyName != keys.end()){
 				QString pluginTitle =  ContactsImporterPluginsManager::gPluginsMap[Utils::coreStringToAppString(config->getString(section, *keyName, ""))];
-				ContactsImporterPlugin * plugin = ContactsImporterPluginsManager::getPlugin(pluginTitle);
-				if(plugin) {
-					ContactsImporterModel * model = new ContactsImporterModel(plugin->createInstance(CoreManager::getInstance()->getCore()), this);
+				ContactsImporterDataAPI* data = ContactsImporterPluginsManager::createInstance(pluginTitle);
+				if(data) {
+					ContactsImporterModel * model = new ContactsImporterModel(data, this);
 // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
 // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
 					engine->setObjectOwnership(model, QQmlEngine::CppOwnership);
@@ -126,10 +126,10 @@ ContactsImporterModel *ContactsImporterListModel::findContactsImporterModelFromI
 ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVariantMap data){
 	ContactsImporterModel *contactsImporter = nullptr;
 	if( data.contains("pluginTitle")){
-		ContactsImporterPlugin * plugin = ContactsImporterPluginsManager::getPlugin(data["pluginTitle"].toString());
-		if(plugin) {
+		ContactsImporterDataAPI * dataInstance = ContactsImporterPluginsManager::createInstance(data["pluginTitle"].toString());
+		if(dataInstance) {
 // get default values
-			contactsImporter = new ContactsImporterModel(plugin->createInstance(CoreManager::getInstance()->getCore()), this);
+			contactsImporter = new ContactsImporterModel(dataInstance, this);
 			App::getInstance()->getEngine()->setObjectOwnership(contactsImporter, QQmlEngine::CppOwnership);
 			QVariantMap newData = ContactsImporterPluginsManager::getDefaultValues(data["pluginTitle"].toString());// Start with defaults from plugin
 			QVariantMap InstanceFields = contactsImporter->getFields();

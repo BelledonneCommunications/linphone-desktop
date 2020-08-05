@@ -28,13 +28,18 @@
 
 class ContactsImporterModel;
 class ContactsImporterPlugin;
+class ContactsImporterDataAPI;
+
+class QPluginLoader;
 
 class ContactsImporterPluginsManager : public QObject{
 Q_OBJECT
 public:
 	ContactsImporterPluginsManager (QObject *parent = Q_NULLPTR);
 	
-	static ContactsImporterPlugin * getPlugin(const QString &pluginTitle);
+	static QPluginLoader * getPlugin(const QString &pluginTitle);
+	static ContactsImporterDataAPI * createInstance(const QString &pluginTitle);
+	static QJsonDocument getJson(const QString &pluginTitle);
 	Q_INVOKABLE static void openNewPlugin();
 	Q_INVOKABLE static QVariantList getContactsImporterPlugins();
 	Q_INVOKABLE static QVariantMap getContactsImporterPluginDescription(const QString& pluginTitle);

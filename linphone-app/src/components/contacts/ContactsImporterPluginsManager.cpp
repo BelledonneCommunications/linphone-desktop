@@ -46,7 +46,19 @@ QMap<QString, QString> ContactsImporterPluginsManager::gPluginsMap;
 
 ContactsImporterPluginsManager::ContactsImporterPluginsManager(QObject * parent) : QObject(parent){
 }
-ContactsImporterPlugin * ContactsImporterPluginsManager::getPlugin(const QString &pluginTitle){
+QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginTitle){
+	QStringList pluginPaths = Paths::getPluginsContactsFolders();
+	for(int i = 0 ; i < pluginPaths.size() ; ++i) {
+		QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
+		QPluginLoader * loader = new QPluginLoader(pluginPath);
+		if( auto instance = loader->instance()) {
+			return loader;
+		}
+	}
+	return nullptr;
+}
+ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const QString &pluginTitle){
+	ContactsImporterDataAPI * dataInstance = nullptr;
 	ContactsImporterPlugin * plugin = nullptr;
 	QStringList pluginPaths = Paths::getPluginsContactsFolders();
 	for(int i = 0 ; i < pluginPaths.size() ; ++i) {
@@ -54,28 +66,56 @@ ContactsImporterPlugin * ContactsImporterPluginsManager::getPlugin(const QString
 		QPluginLoader loader(pluginPath);
 		if( auto instance = loader.instance()) {
 			plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-			return plugin;
+			if (plugin)
+				 dataInstance = plugin->createInstance(CoreManager::getInstance()->getCore());
+			loader.unload();
+			return dataInstance;
 		}
 	}
-	return plugin;
+	return dataInstance;
+}
+QJsonDocument ContactsImporterPluginsManager::getJson(const QString &pluginTitle){
+	QJsonDocument doc;
+	QPluginLoader * pluginLoader = getPlugin(pluginTitle);
+	auto instance = pluginLoader->instance();
+	if( instance ){
+		ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
+		if( plugin ){
+			doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
+			pluginLoader->unload();
+		}
+	}
+	return doc;
 }
 void ContactsImporterPluginsManager::openNewPlugin(){
 	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Connector");
 	int doCopy = QMessageBox::Yes;
+	bool cannotRemovePlugin = false;
 	if(fileName != ""){
 		QFileInfo fileInfo(fileName);
-		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath())+fileInfo.fileName();
-		if( QFile::exists(path)){
-			doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?", QMessageBox::Yes, QMessageBox::No);
+		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
+		QDir pathDir(path);
+		QStringList filters;
+		filters << fileInfo.fileName().split("-")[0]+"*";
+		pathDir.setNameFilters(filters);
+		QStringList existingFiles = pathDir.entryList(QDir::Files);
+		if( existingFiles.size() > 0 ){
+			doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?\nPlugins:\n"+existingFiles.join("\n"), QMessageBox::Yes, QMessageBox::No);
 			if( doCopy == QMessageBox::Yes){
-				if(!QFile::remove(path)){
-					if(QPluginLoader(path).unload())// Try to unload plugin
-						QFile::remove(path);
+				for(int i = 0 ; i < existingFiles.size() ; ++i){
+					QString existingFilePath = path+existingFiles[i];
+					QPluginLoader(existingFilePath).unload();
+					if(!QFile::remove(existingFilePath))
+						cannotRemovePlugin = true;
 				}
 			}
 		}
-		if(doCopy != QMessageBox::Yes || !QFile::copy(fileName, path))
-			qWarning() << "Cannot copy plugin";
+		if(doCopy == QMessageBox::Yes ){
+			if( cannotRemovePlugin)
+				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be replaced. You have to exit the application and delete manually the plugin file in\n"+path);
+			else if( !QFile::copy(fileName, path+fileInfo.fileName()))
+				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be copied. You have to copy manually the plugin file to\n"+path);
+		}
 	}
 }
 QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
@@ -101,6 +141,7 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 				} else {
 					qWarning()<< "qobject_cast<> returned nullptr";
 				}
+				loader.unload();
 			} else {
 				qWarning()<< loader.errorString();
 			}
@@ -111,12 +152,9 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 }
 
 QVariantMap ContactsImporterPluginsManager::getContactsImporterPluginDescription(const QString& pluginTitle) {
-	ContactsImporterPlugin * plugin = getPlugin(pluginTitle);
 	QVariantMap description;
-	if( plugin ){
-		QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
-		description = doc.toVariant().toMap();
-	}
+	QJsonDocument doc = getJson(pluginTitle);
+	description = doc.toVariant().toMap();
 	return description;
 }
 void ContactsImporterPluginsManager::importContacts(ContactsImporterModel * model) {
