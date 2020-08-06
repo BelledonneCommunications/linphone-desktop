@@ -27,6 +27,7 @@
 #include "app/paths/Paths.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
+#include "components/contacts/ContactsImporterListModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 
@@ -48,11 +49,17 @@ ContactsImporterPluginsManager::ContactsImporterPluginsManager(QObject * parent)
 }
 QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginTitle){
 	QStringList pluginPaths = Paths::getPluginsContactsFolders();
-	for(int i = 0 ; i < pluginPaths.size() ; ++i) {
-		QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
-		QPluginLoader * loader = new QPluginLoader(pluginPath);
-		if( auto instance = loader->instance()) {
-			return loader;
+	if( gPluginsMap.contains(pluginTitle)){
+		for(int i = 0 ; i < pluginPaths.size() ; ++i) {
+			QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
+			QPluginLoader * loader = new QPluginLoader(pluginPath);
+			loader->setLoadHints(0);
+			if( auto instance = loader->instance()) {
+				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
+				if (plugin)
+					return loader;
+			}
+			loader->unload();
 		}
 	}
 	return nullptr;
@@ -60,16 +67,18 @@ QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginT
 ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const QString &pluginTitle){
 	ContactsImporterDataAPI * dataInstance = nullptr;
 	ContactsImporterPlugin * plugin = nullptr;
-	QStringList pluginPaths = Paths::getPluginsContactsFolders();
-	for(int i = 0 ; i < pluginPaths.size() ; ++i) {
-		QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
-		QPluginLoader loader(pluginPath);
-		if( auto instance = loader.instance()) {
-			plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-			if (plugin)
-				 dataInstance = plugin->createInstance(CoreManager::getInstance()->getCore());
-			loader.unload();
-			return dataInstance;
+	if( gPluginsMap.contains(pluginTitle)){
+		QStringList pluginPaths = Paths::getPluginsContactsFolders();
+		for(int i = 0 ; i < pluginPaths.size() ; ++i) {
+			QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
+			QPluginLoader * loader = new QPluginLoader(pluginPath);
+			loader->setLoadHints(0);
+			if( auto instance = loader->instance()) {
+				plugin = qobject_cast< ContactsImporterPlugin* >(instance);
+				if (plugin)
+					 dataInstance = plugin->createInstance(CoreManager::getInstance()->getCore(), loader);
+				return dataInstance;
+			}
 		}
 	}
 	return dataInstance;
@@ -77,44 +86,75 @@ ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const Q
 QJsonDocument ContactsImporterPluginsManager::getJson(const QString &pluginTitle){
 	QJsonDocument doc;
 	QPluginLoader * pluginLoader = getPlugin(pluginTitle);
-	auto instance = pluginLoader->instance();
-	if( instance ){
-		ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-		if( plugin ){
-			doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
-			pluginLoader->unload();
+	if( pluginLoader ){
+		auto instance = pluginLoader->instance();
+		if( instance ){
+			ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
+			if( plugin ){
+				doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
+			}
 		}
+		pluginLoader->unload();
+		delete pluginLoader;
 	}
 	return doc;
 }
 void ContactsImporterPluginsManager::openNewPlugin(){
 	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Connector");
+	QString pluginTitle;
+	QList<ContactsImporterModel*> importersToReset;
 	int doCopy = QMessageBox::Yes;
 	bool cannotRemovePlugin = false;
 	if(fileName != ""){
 		QFileInfo fileInfo(fileName);
 		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
-		QDir pathDir(path);
-		QStringList filters;
-		filters << fileInfo.fileName().split("-")[0]+"*";
-		pathDir.setNameFilters(filters);
-		QStringList existingFiles = pathDir.entryList(QDir::Files);
-		if( existingFiles.size() > 0 ){
-			doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?\nPlugins:\n"+existingFiles.join("\n"), QMessageBox::Yes, QMessageBox::No);
-			if( doCopy == QMessageBox::Yes){
-				for(int i = 0 ; i < existingFiles.size() ; ++i){
-					QString existingFilePath = path+existingFiles[i];
-					QPluginLoader(existingFilePath).unload();
-					if(!QFile::remove(existingFilePath))
-						cannotRemovePlugin = true;
+		QPluginLoader loader(fileName);
+		loader.setLoadHints(0);
+		auto instance = loader.instance();
+		if( instance ){
+			ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
+			if(plugin){// This plugin is good. Get the title
+				QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
+				QVariantMap desc;
+				pluginTitle = doc["pluginTitle"].toString();
+			}
+		}
+		loader.unload();
+		if(!pluginTitle.isEmpty()){// Check all plugins that have this title
+			if( gPluginsMap.contains(pluginTitle)){
+				doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?\nPlugin:\n"+gPluginsMap[pluginTitle], QMessageBox::Yes, QMessageBox::No);
+				if( doCopy == QMessageBox::Yes){
+					auto importers = CoreManager::getInstance()->getContactsImporterListModel()->getList();
+					for(auto importer : importers){
+						QVariantMap fields = importer->getFields();
+						if(fields["pluginTitle"] == pluginTitle){
+							importer->setDataAPI(nullptr);
+							importersToReset.append(importer);
+						}
+					}
+					QStringList pluginPaths = Paths::getPluginsContactsFolders();
+					for(int i = 1 ; !cannotRemovePlugin && i < pluginPaths.size() ; ++i) {// Ignore the first path as it is the app folder
+						QString pluginPath = pluginPaths[i];
+						if(QFile::exists(pluginPath+gPluginsMap[pluginTitle])){
+							if(!QFile::remove(pluginPath+gPluginsMap[pluginTitle]))
+								cannotRemovePlugin = true;
+						}
+					}
+					if(!cannotRemovePlugin)
+						gPluginsMap[pluginTitle] = "";
 				}
 			}
 		}
 		if(doCopy == QMessageBox::Yes ){
-			if( cannotRemovePlugin)
+			if( cannotRemovePlugin)// Qt will not unload library from memory so files cannot be removed. See https://bugreports.qt.io/browse/QTBUG-68880
 				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be replaced. You have to exit the application and delete manually the plugin file in\n"+path);
 			else if( !QFile::copy(fileName, path+fileInfo.fileName()))
 				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be copied. You have to copy manually the plugin file to\n"+path);
+			else {
+				gPluginsMap[pluginTitle] = fileInfo.fileName();
+				for(auto importer : importersToReset)
+					importer->setDataAPI(createInstance(pluginTitle));
+			}
 		}
 	}
 }
@@ -128,13 +168,14 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 		QStringList pluginFiles = dir.entryList(QDir::Files);
 		for(int i = 0 ; i < pluginFiles.size() ; ++i) {
 			QPluginLoader loader(pluginPath+pluginFiles[i]);
+			loader.setLoadHints(0);
 			if (auto instance = loader.instance()) {
 				if (auto plugin = qobject_cast< ContactsImporterPlugin* >(instance)){
 					QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
 					QVariantMap desc;
-					desc["title"] = doc["title"];
-					if(!doc["title"].toString().isEmpty()){
-						gPluginsMap[doc["title"].toString()] = pluginFiles[i];
+					desc["pluginTitle"] = doc["pluginTitle"];
+					if(!doc["pluginTitle"].toString().isEmpty()){
+						gPluginsMap[doc["pluginTitle"].toString()] = pluginFiles[i];
 						plugins.push_back(desc);
 					}
 					

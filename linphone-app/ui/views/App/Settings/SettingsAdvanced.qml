@@ -147,7 +147,7 @@ TabContainer {
                                     Text{
                                         height:parent.height
                                         width:parent.width-removeImporter.width
-                                        text:importerLine.pluginDescription['title']
+                                        text:importerLine.pluginDescription['pluginTitle']
                                         horizontalAlignment:Text.AlignHCenter
                                         verticalAlignment: Text.AlignVCenter
                                         elide: Text.ElideRight
@@ -157,7 +157,7 @@ TabContainer {
                                                 pointSize: FormTableStyle.entry.text.pointSize
                                         }
                                         TooltipArea{
-                                            text:importerLine.pluginDescription['description']
+                                            text:importerLine.pluginDescription['pluginDescription']
                                         }
                                     }
                                 }
@@ -263,7 +263,7 @@ TabContainer {
                 ComboBox{
                     id: pluginChoice
                     model:ContactsImporterPluginsManager.getContactsImporterPlugins()
-                    textRole: "title"
+                    textRole: "pluginTitle"
                     displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
                     Text{// Hack, combobox show empty text when empty
                         anchors.fill:parent
@@ -285,9 +285,10 @@ TabContainer {
                 ActionButton {
                     icon: 'add'
                     iconSize:CallsStyle.entry.iconActionSize
+                    visible:pluginChoice.currentIndex>=0
                     onClicked:{
                         if( pluginChoice.currentIndex >= 0)
-                            ContactsImporterListModel.createContactsImporter({"pluginTitle":pluginChoice.model[pluginChoice.currentIndex]["title"]})
+                            ContactsImporterListModel.createContactsImporter({"pluginTitle":pluginChoice.model[pluginChoice.currentIndex]["pluginTitle"]})
                     }
                 }
             }

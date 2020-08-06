@@ -39,7 +39,8 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 	mMaxContactsImporterId = -1;
 	QQmlEngine *engine = App::getInstance()->getEngine();
 	auto config = CoreManager::getInstance()->getCore()->getConfig();
-	
+	ContactsImporterPluginsManager::getContactsImporterPlugins();// Initialize list
+
 	std::list<std::string> sections = config->getSectionsNamesList();
 	for(auto section : sections){
 		QString qtSection = Utils::coreStringToAppString(section);
@@ -121,7 +122,9 @@ ContactsImporterModel *ContactsImporterListModel::findContactsImporterModelFromI
 	});
 	return it != mList.end() ? *it : nullptr;
 }
-
+QList<ContactsImporterModel*> ContactsImporterListModel::getList(){
+	return mList;
+}
 // -----------------------------------------------------------------------------
 ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVariantMap data){
 	ContactsImporterModel *contactsImporter = nullptr;

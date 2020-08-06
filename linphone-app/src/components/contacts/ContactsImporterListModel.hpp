@@ -45,6 +45,7 @@ public:
 	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 	ContactsImporterModel *findContactsImporterModelFromId (const int &id) const;
+	QList<ContactsImporterModel*> getList();
 
 	Q_INVOKABLE ContactsImporterModel *createContactsImporter(QVariantMap data);
 	Q_INVOKABLE ContactsImporterModel *addContactsImporter (QVariantMap data, int id=-1);

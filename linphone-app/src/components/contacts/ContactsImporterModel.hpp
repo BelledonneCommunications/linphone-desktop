@@ -37,6 +37,8 @@ class ContactsImporterModel : public QObject {
 public:
 	ContactsImporterModel (ContactsImporterDataAPI * data, QObject *parent = nullptr);
 
+	void setDataAPI(ContactsImporterDataAPI *data);
+
 	QVariantMap getFields()const;
 	void setFields(const QVariantMap &pFields);
 	

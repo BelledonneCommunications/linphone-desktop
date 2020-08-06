@@ -24,27 +24,45 @@
 
 #include <linphoneapp/contacts/ContactsImporterDataAPI.hpp>
 
+#include <QPluginLoader>
+
 // =============================================================================
 
 using namespace std;
 
 
 ContactsImporterModel::ContactsImporterModel (ContactsImporterDataAPI * data, QObject *parent) : QObject(parent) {
-	mData = data;
 	mIdentity = -1;
-	connect(mData, SIGNAL(inputFieldsChanged(const QVariantMap &)), this, SIGNAL(fieldsChanged (QVariantMap)));
-	connect(mData, SIGNAL(errorMessage(const QString &)), this, SIGNAL(errorMessage(const QString &)));
-	connect(mData, SIGNAL(statusMessage(const QString &)), this, SIGNAL(statusMessage(const QString &)));
-	connect(mData, SIGNAL(contactsReceived(QVector<QMultiMap<QString,QString> > )), this, SLOT(parsedContacts(QVector<QMultiMap<QString, QString> > )));
+	mData = nullptr;
+	setDataAPI(data);
 }
 
 // -----------------------------------------------------------------------------
 
+void ContactsImporterModel::setDataAPI(ContactsImporterDataAPI *data){
+	if(mData){
+		QPluginLoader * loader = mData->getPluginLoader();
+		delete mData;
+		if(loader){
+			loader->unload();
+			delete loader;
+		}
+		mData = data;
+	}else
+		mData = data;
+	if( mData){
+		connect(mData, SIGNAL(inputFieldsChanged(const QVariantMap &)), this, SIGNAL(fieldsChanged (QVariantMap)));
+		connect(mData, SIGNAL(errorMessage(const QString &)), this, SIGNAL(errorMessage(const QString &)));
+		connect(mData, SIGNAL(statusMessage(const QString &)), this, SIGNAL(statusMessage(const QString &)));
+		connect(mData, SIGNAL(contactsReceived(QVector<QMultiMap<QString,QString> > )), this, SLOT(parsedContacts(QVector<QMultiMap<QString, QString> > )));
+	}
+}
 QVariantMap ContactsImporterModel::getFields()const{
-	return mData->getInputFields();
+	return (mData?mData->getInputFields():QVariantMap());
 }
 void ContactsImporterModel::setFields(const QVariantMap &pFields){
-	mData->setInputFields(pFields);
+	if(mData)
+		mData->setInputFields(pFields);
 }
 
 int ContactsImporterModel::getIdentity()const{
@@ -54,15 +72,19 @@ int ContactsImporterModel::getIdentity()const{
 void ContactsImporterModel::setIdentity(const int &pIdentity){
 	if( mIdentity != pIdentity){
 		mIdentity = pIdentity;
-		mData->setSectionConfiguration(Utils::appStringToCoreString(ContactsImporterPluginsManager::ContactsSection+"_"+QString::number(mIdentity)));
+		if(mData)
+			mData->setSectionConfiguration(Utils::appStringToCoreString(ContactsImporterPluginsManager::ContactsSection+"_"+QString::number(mIdentity)));
 		emit identityChanged(mIdentity);
 	}
 }
+
 void ContactsImporterModel::loadConfiguration(){
-	mData->loadConfiguration();
+	if(mData)
+		mData->loadConfiguration();
 }
 void ContactsImporterModel::importContacts(){
-	mData->importContacts();
+	if(mData)
+		mData->importContacts();
 }
 void ContactsImporterModel::parsedContacts(QVector<QMultiMap<QString, QString> > contacts){
 	ContactsImporterPluginsManager::importContacts(contacts);
