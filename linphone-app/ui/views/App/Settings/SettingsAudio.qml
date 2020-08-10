@@ -1,6 +1,6 @@
-import QtQuick 2.7 as Core
-import QtQuick.Controls 2.7 as Core
-import QtQuick.Layouts 1.10 as Core
+import QtQuick 2.7
+import QtQuick.Controls 2.7
+import QtQuick.Layouts 1.10
 
 import Common 1.0
 import Linphone 1.0
@@ -11,7 +11,7 @@ import App.Styles 1.0
 // =============================================================================
 
 TabContainer {
-  Core.Column {
+  Column {
     spacing: SettingsWindowStyle.forms.spacing
     width: parent.width
 
@@ -28,7 +28,7 @@ TabContainer {
         visible: SettingsModel.isInCall
 
 	FormGroup {
-	  Core.RowLayout {
+      RowLayout {
 	    spacing: SettingsAudioStyle.warningMessage.iconSize
 	    Icon {
 	      icon: 'warning'
@@ -38,7 +38,7 @@ TabContainer {
 	        leftMargin: SettingsAudioStyle.warningMessage.iconSize
 	      }
 	    }
-	    Core.Text {
+        Text {
 	      text: qsTr('audioSettingsInCallWarning')
 	    }
 	  }
@@ -70,10 +70,10 @@ TabContainer {
 	    width: parent.width
 	    enabled: !SettingsModel.isInCall
 
-	    Core.Component.onCompleted: value = SettingsModel.playbackGain
+        Component.onCompleted: value = SettingsModel.playbackGain
 	    onPositionChanged: SettingsModel.playbackGain = position
 
-	    Core.ToolTip {
+        ToolTip {
 	      parent: playbackSlider.handle
 	      visible: playbackSlider.pressed
 	      text: (playbackSlider.value * 100).toFixed(0) + " %"
@@ -106,10 +106,10 @@ TabContainer {
 	    width: parent.width
 	    enabled: !SettingsModel.isInCall
 
-	    Core.Component.onCompleted: value = SettingsModel.captureGain
+        Component.onCompleted: value = SettingsModel.captureGain
 	    onPositionChanged: SettingsModel.captureGain = position
 
-	    Core.ToolTip {
+        ToolTip {
 	      parent: captureSlider.handle
 	      visible: captureSlider.pressed
 	      text: (captureSlider.value * 100).toFixed(0) + " %"
@@ -124,7 +124,7 @@ TabContainer {
 	  label: qsTr('audioTestLabel')
 	  visible: !SettingsModel.isInCall
 
-	  Core.Slider {
+      Slider {
 	    id: audioTestSlider
 
 	    enabled: false
@@ -133,7 +133,7 @@ TabContainer {
 	      leftMargin: SettingsAudioStyle.ringPlayer.leftMargin
 	    }
 
-	    background: Core.Rectangle {
+        background: Rectangle {
 	      x: audioTestSlider.leftPadding
 	      y: audioTestSlider.topPadding + audioTestSlider.availableHeight / 2 - height / 2
 	      implicitWidth: 200
@@ -143,7 +143,7 @@ TabContainer {
 	      radius: 2
 	      color: "#bdbebf"
 
-	      Core.Rectangle {
+          Rectangle {
 	        width: audioTestSlider.visualPosition * parent.width
   	        height: parent.height
 		color: audioTestSlider.value > 0.8 ? "#ff0000" : "#21be2b"
@@ -152,12 +152,12 @@ TabContainer {
 	    }
 
 	    //Empty slider handle
-	    handle: Core.Text {
+        handle: Text {
 	      text: ''
 	      visible: false
 	    }
 
-	    Core.Timer {
+        Timer {
 	      interval: 50
 	      repeat: true
 	      running: SettingsModel.captureGraphRunning
@@ -226,7 +226,7 @@ TabContainer {
                 }
               }
 
-              Core.Loader {
+              Loader {
                 id: ringPlayer
 
                 active: window.visible
@@ -243,10 +243,50 @@ TabContainer {
         FormGroup {
           label: qsTr('echoCancellationLabel')
 
-          Switch {
-            checked: SettingsModel.echoCancellationEnabled
+          Row{
+            spacing: SettingsAudioStyle.warningMessage.iconSize
+            Switch {
+                checked: SettingsModel.echoCancellationEnabled
 
-            onClicked: SettingsModel.echoCancellationEnabled = !checked
+                onClicked: {
+                                SettingsModel.echoCancellationEnabled = !checked
+                                echoCalibrationStatus.text = ''
+                           }
+            }
+            Text{
+                id:echoCalibrationStatus
+                text: ''
+                Layout.fillWidth:true
+                height:parent.height
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+            }
+            TextButtonB {
+              id: echoCalibration
+              enabled: SettingsModel.echoCancellationEnabled
+
+              text: qsTr('echoCancellationCalibrationLabel')
+
+              onClicked: {  echoCalibrationStatus.text = qsTr("calibratingEchoCancellationInProgress");//"...calibrating echo cancellation..."
+                            SettingsModel.startEchoCancellerCalibration();
+                         }
+
+              Connections {
+                target: SettingsModel
+
+                onEchoCancellationStatus:{
+                    switch(status){
+                    case 0 : echoCalibrationStatus.text = qsTr("calibratingEchoCancellationInProgress"); break;
+                    case 1 : echoCalibrationStatus.text = qsTr("calibratingEchoCancellationDone").replace('%1', msDelay); break;//"Calibrated in -"+msDelay+"ms"
+                    case 2 : echoCalibrationStatus.text = qsTr("calibratingEchoCancellationFailed"); break;//"Calibration failed"
+                    case 3 : echoCalibrationStatus.text = qsTr("calibratingEchoCancellationNone");//"No echo detected"
+                                SettingsModel.echoCancellationEnabled = false;// Calibration turn off the echo cancellation
+                             break;
+                    default:{}
+                    }
+                }
+              }
+            }
           }
         }
       }

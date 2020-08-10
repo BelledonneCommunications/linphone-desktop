@@ -295,3 +295,10 @@ void CoreHandlers::onVersionUpdateCheckResultReceived (
       Utils::coreStringToAppString(url)
     );
 }
+void CoreHandlers::onEcCalibrationResult(
+    const std::shared_ptr<linphone::Core> &,
+    linphone::EcCalibratorStatus status,
+    int delayMs
+  ) {
+  emit ecCalibrationResult(status, delayMs);
+}
