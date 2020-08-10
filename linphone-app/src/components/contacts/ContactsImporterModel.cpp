@@ -25,6 +25,7 @@
 #include <linphoneapp/contacts/ContactsImporterDataAPI.hpp>
 
 #include <QPluginLoader>
+#include <QDebug>
 
 // =============================================================================
 
@@ -83,8 +84,10 @@ void ContactsImporterModel::loadConfiguration(){
 		mData->loadConfiguration();
 }
 void ContactsImporterModel::importContacts(){
-	if(mData)
+	if(mData){
+		qInfo() << "Importing contacts with " << mData->getInputFields()["pluginTitle"];
 		mData->importContacts();
+	}
 }
 void ContactsImporterModel::parsedContacts(QVector<QMultiMap<QString, QString> > contacts){
 	ContactsImporterPluginsManager::importContacts(contacts);

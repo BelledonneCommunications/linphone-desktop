@@ -178,9 +178,8 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 						gPluginsMap[doc["pluginTitle"].toString()] = pluginFiles[i];
 						plugins.push_back(desc);
 					}
-					
 				} else {
-					qWarning()<< "qobject_cast<> returned nullptr";
+					qWarning()<< "This plugin is not updated and cannot be used : " << pluginFiles[i] ;
 				}
 				loader.unload();
 			} else {
@@ -199,7 +198,11 @@ QVariantMap ContactsImporterPluginsManager::getContactsImporterPluginDescription
 	return description;
 }
 void ContactsImporterPluginsManager::importContacts(ContactsImporterModel * model) {
-	model->importContacts();
+	QString pluginTitle = model->getFields()["pluginTitle"].toString();
+	if(!pluginTitle.isEmpty()){
+		qInfo() << "Importing contacts from " << gPluginsMap[pluginTitle] << " for " << pluginTitle;
+		model->importContacts();
+	}
 }
 
 void ContactsImporterPluginsManager::importContacts(const QVector<QMultiMap<QString, QString> >& pContacts ){
