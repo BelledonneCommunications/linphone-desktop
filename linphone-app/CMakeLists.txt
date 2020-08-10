@@ -21,7 +21,17 @@
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
 
-project(linphoneqt VERSION 4.3.0)
+find_package(bctoolbox CONFIG)
+set(FULL_VERSION )
+bc_compute_full_version(FULL_VERSION)
+set(version_major )
+set(version_minor )
+set(version_patch )
+set(identifiers )
+set(metadata )
+bc_parse_full_version("${FULL_VERSION}" version_major version_minor version_patch identifiers metadata)
+
+project(linphoneqt VERSION "${version_major}.${version_minor}.${version_patch}")
 
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
@@ -62,7 +72,6 @@ find_package(Linphone CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
-find_package(bctoolbox CONFIG)
 
 if(ENABLE_BUILD_VERBOSE)
 	message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}, PREFIX_PATH=${CMAKE_PREFIX_PATH}")
@@ -418,7 +427,20 @@ endif()
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
-set(LIBRARIES ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
+set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
+if(WIN32)
+	set(LIBRARIES)
+	foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
+		find_library(FIND_LIBRARY_ITEM_${LIBRARY} NAMES ${LIBRARY} lib${LIBRARY} REQUIRED)#find_library need a specific variable name each time
+		if(FIND_LIBRARY_ITEM_${LIBRARY})
+			list(APPEND LIBRARIES ${FIND_LIBRARY_ITEM_${LIBRARY}})
+		else()
+			message(SEND_ERROR "${LIBRARY} not found!")
+		endif()
+	endforeach()
+else()
+	set(LIBRARIES ${LIBRARIES_LIST})
+endif()
 
 if(ENABLE_BUILD_VERBOSE)
 	message("LIBRARIES : ${LIBRARIES}")
