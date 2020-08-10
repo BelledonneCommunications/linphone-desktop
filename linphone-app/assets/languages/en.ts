@@ -1215,6 +1215,31 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>audioSettingsInCallWarning</source>
         <translation>Audio call in progress: some settings are not available.</translation>
     </message>
+    <message>
+        <source>echoCancellationCalibrationLabel</source>
+        <translatorcomment>Button title for the calibration of echo canceller</translatorcomment>
+        <translation>Calibration</translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationInProgress</source>
+        <translatorcomment>Message while calibrating</translatorcomment>
+        <translation>...calibrating...</translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationDone</source>
+        <translatorcomment>%1 is the number of ms obtained byt the calibration. ms = milliseconds</translatorcomment>
+        <translation>Calibrated in -%1ms</translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationFailed</source>
+        <translatorcomment>Message  when the calibration cannot be done</translatorcomment>
+        <translation>Calibration failed</translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationNone</source>
+        <translatorcomment>Message when the calibration did not find any echo</translatorcomment>
+        <translation>No echo detected</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
