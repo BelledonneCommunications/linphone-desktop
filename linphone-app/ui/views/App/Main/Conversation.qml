@@ -168,6 +168,7 @@ ColumnLayout  {
         if (!SettingsModel.chatEnabled) {
           setEntryTypeFilter(ChatModel.CallEntry)
         }
+        resetMessageCount()
       }
 
       peerAddress: conversation.peerAddress

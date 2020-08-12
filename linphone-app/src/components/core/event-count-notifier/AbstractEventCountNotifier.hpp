@@ -68,7 +68,7 @@ private:
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
 
-  void handleChatModelFocused (ChatModel *chatModel);
+  void handleResetMissedCalls (ChatModel *chatModel);
   void handleCallMissed (CallModel *callModel);
 
   QHash<ConferenceId, int> mMissedCalls;

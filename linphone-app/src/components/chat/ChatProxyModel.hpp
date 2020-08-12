@@ -60,6 +60,8 @@ public:
 
   Q_INVOKABLE void compose ();
 
+  Q_INVOKABLE void resetMessageCount();
+
 signals:
   void peerAddressChanged (const QString &peerAddress);
   void localAddressChanged (const QString &localAddress);
