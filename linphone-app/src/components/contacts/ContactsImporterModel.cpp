@@ -42,10 +42,14 @@ ContactsImporterModel::ContactsImporterModel (ContactsImporterDataAPI * data, QO
 
 void ContactsImporterModel::setDataAPI(ContactsImporterDataAPI *data){
 	if(mData){
+		qWarning() << "Setting new Data API";
 		QPluginLoader * loader = mData->getPluginLoader();
+		qWarning() << "Deleting old Data";
 		delete mData;
 		if(loader){
+			qWarning() << "Unloading old plugin";
 			loader->unload();
+			qWarning() << "Deleting old plugin";
 			delete loader;
 		}
 		mData = data;
@@ -85,11 +89,19 @@ void ContactsImporterModel::loadConfiguration(){
 }
 void ContactsImporterModel::importContacts(){
 	if(mData){
-		qInfo() << "Importing contacts with " << mData->getInputFields()["pluginTitle"];
+		qWarning() << "Importing contacts with " << mData->getInputFields()["pluginTitle"];
+		QPluginLoader * loader = mData->getPluginLoader();
+		if( !loader)
+			qWarning() << "Loader is NULL";
+		else{
+			qWarning() << "Plugin loaded Status : " << loader->isLoaded();
+		}
 		mData->importContacts();
-	}
+	}else
+		qWarning() << "Cannot import contacts, mData is NULL";
 }
 void ContactsImporterModel::parsedContacts(QVector<QMultiMap<QString, QString> > contacts){
+	qWarning() << "Receive contacts";
 	ContactsImporterPluginsManager::importContacts(contacts);
 }
 void ContactsImporterModel::updateInputs(const QVariantMap &inputs){

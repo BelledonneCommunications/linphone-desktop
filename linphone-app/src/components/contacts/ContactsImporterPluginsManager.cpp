@@ -58,8 +58,10 @@ QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginT
 				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
 				if (plugin)
 					return loader;
+				else
+					loader->unload();
 			}
-			loader->unload();
+			delete loader;
 		}
 	}
 	return nullptr;
@@ -79,6 +81,7 @@ ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const Q
 					 dataInstance = plugin->createInstance(CoreManager::getInstance()->getCore(), loader);
 				return dataInstance;
 			}
+			delete loader;
 		}
 	}
 	return dataInstance;
@@ -118,8 +121,8 @@ void ContactsImporterPluginsManager::openNewPlugin(){
 				QVariantMap desc;
 				pluginTitle = doc["pluginTitle"].toString();
 			}
+			loader.unload();
 		}
-		loader.unload();
 		if(!pluginTitle.isEmpty()){// Check all plugins that have this title
 			if( gPluginsMap.contains(pluginTitle)){
 				doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?\nPlugin:\n"+gPluginsMap[pluginTitle], QMessageBox::Yes, QMessageBox::No);
@@ -133,7 +136,7 @@ void ContactsImporterPluginsManager::openNewPlugin(){
 						}
 					}
 					QStringList pluginPaths = Paths::getPluginsContactsFolders();
-					for(int i = 1 ; !cannotRemovePlugin && i < pluginPaths.size() ; ++i) {// Ignore the first path as it is the app folder
+					for(int i = 0 ; !cannotRemovePlugin && i < pluginPaths.size()-1 ; ++i) {// Ignore the last path as it is the app folder
 						QString pluginPath = pluginPaths[i];
 						if(QFile::exists(pluginPath+gPluginsMap[pluginTitle])){
 							if(!QFile::remove(pluginPath+gPluginsMap[pluginTitle]))
@@ -166,7 +169,7 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 		QString pluginPath = pluginPaths[i];
 		QDir dir(pluginPath);
 		QStringList pluginFiles = dir.entryList(QDir::Files);
-		for(int i = 0 ; i < pluginFiles.size() ; ++i) {
+		for(int i = pluginFiles.size() ; i >=0 ; --i) {// Start from app package. This sort ensure the priority on user plugins
 			QPluginLoader loader(pluginPath+pluginFiles[i]);
 			loader.setLoadHints(0);
 			if (auto instance = loader.instance()) {
@@ -198,23 +201,35 @@ QVariantMap ContactsImporterPluginsManager::getContactsImporterPluginDescription
 	return description;
 }
 void ContactsImporterPluginsManager::importContacts(ContactsImporterModel * model) {
-	QString pluginTitle = model->getFields()["pluginTitle"].toString();
-	if(!pluginTitle.isEmpty()){
-		qInfo() << "Importing contacts from " << gPluginsMap[pluginTitle] << " for " << pluginTitle;
-		model->importContacts();
+	qWarning() << "Importing contacts";
+	if(model){
+		QString pluginTitle = model->getFields()["pluginTitle"].toString();
+		if(!pluginTitle.isEmpty()){
+			if( !gPluginsMap.contains(pluginTitle))
+				qWarning() << "Unknown " << pluginTitle;
+			qWarning() << "Importing contacts from " << gPluginsMap[pluginTitle] << " for " << pluginTitle;
+			model->importContacts();
+		}else
+			qWarning() << "pluginTitle is empty";
 	}
 }
 
 void ContactsImporterPluginsManager::importContacts(const QVector<QMultiMap<QString, QString> >& pContacts ){
+	qWarning() << "Change contacts into VCard : "<< pContacts.size() ;
 	for(int i = 0 ; i < pContacts.size() ; ++i){
+		qWarning() << "Create VCard";
 		VcardModel  * card = CoreManager::getInstance()->createDetachedVcardModel();
+		qWarning() << "Getting SipAddressModel";
 		SipAddressesModel * sipConvertion = CoreManager::getInstance()->getSipAddressesModel();
+		qWarning() << "Get Domain";
 		QString domain = pContacts[i].values("sipDomain").at(0);
 
 		//if(pContacts[i].contains("phoneNumber"))
 		//	card->addSipAddress(sipConvertion->interpretSipAddress(pContacts[i].values("phoneNumber").at(0)+"@"+domain, false));
+		qWarning() << "Check for displayName";
 		if(pContacts[i].contains("displayName"))
 			card->setUsername(pContacts[i].values("displayName").at(0));
+		qWarning() << "Check for sipUsername";
 		if(pContacts[i].contains("sipUsername")){
 			QString sipUsername = pContacts[i].values("sipUsername").at(0);
 			QString convertedUsername = sipConvertion->interpretSipAddress(sipUsername, domain);
@@ -225,13 +240,16 @@ void ContactsImporterPluginsManager::importContacts(const QVector<QMultiMap<QStr
 			if( sipUsername.contains('@'))
 				card->addEmail(sipUsername);
 		}
+		qWarning() << "Check for email";
 		if(pContacts[i].contains("email"))
 			for(auto email : pContacts[i].values("email"))
 				card->addEmail(email);
+		qWarning() << "Check for organization";
 		if(pContacts[i].contains("organization"))
 			for(auto company : pContacts[i].values("organization"))
 				card->addCompany(company);
 		if( card->getSipAddresses().size()>0){
+			qWarning() << "Add Contact";
 			CoreManager::getInstance()->getContactsListModel()->addContact(card);
 		}else
 			delete card;

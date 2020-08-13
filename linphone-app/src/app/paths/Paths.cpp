@@ -273,8 +273,8 @@ string Paths::getPluginsContactsDirPath () {
 
 QStringList Paths::getPluginsContactsFolders() {
 	QStringList pluginPaths;
-	pluginPaths << Utils::coreStringToAppString(Paths::getPackagePluginsContactsDirPath());
 	pluginPaths << Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
+	pluginPaths << Utils::coreStringToAppString(Paths::getPackagePluginsContactsDirPath());
 	return pluginPaths;
 }
 
