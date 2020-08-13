@@ -98,18 +98,21 @@ void AbstractEventCountNotifier::handleChatModelCreated (const shared_ptr<ChatMo
   );
   QObject::connect(
     chatModelPtr, &ChatModel::focused,
-    this, [this, chatModelPtr]() { handleChatModelFocused(chatModelPtr); }
+    this, [this, chatModelPtr]() { handleResetMissedCalls(chatModelPtr); }
+  );
+  QObject::connect(
+    chatModelPtr, &ChatModel::messageCountReset,
+    this, [this, chatModelPtr]() { handleResetMissedCalls(chatModelPtr); }
   );
 }
 
-void AbstractEventCountNotifier::handleChatModelFocused (ChatModel *chatModel) {
+void AbstractEventCountNotifier::handleResetMissedCalls (ChatModel *chatModel) {
   auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatModel->getPeerAddress()), Utils::cleanSipAddress(chatModel->getLocalAddress()) });
   if (it != mMissedCalls.cend()) {
     mMissedCalls.erase(it);
     internalnotifyEventCount();
   }
 }
-
 void AbstractEventCountNotifier::handleCallMissed (CallModel *callModel) {
   ++mMissedCalls[{ Utils::cleanSipAddress(callModel->getPeerAddress()), Utils::cleanSipAddress(callModel->getLocalAddress()) }];
   internalnotifyEventCount();
