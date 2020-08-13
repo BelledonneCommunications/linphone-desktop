@@ -165,11 +165,11 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 	QVariantList plugins;
 	QStringList pluginPaths = Paths::getPluginsContactsFolders();
 	gPluginsMap.clear();
-	for(int i = 0 ; i < pluginPaths.size() ; ++i) {
-		QString pluginPath = pluginPaths[i];
+	for(int pathIndex = pluginPaths.size()-1 ; pathIndex >= 0 ; --pathIndex) {// Start from app package. This sort ensure the priority on user plugins
+		QString pluginPath = pluginPaths[pathIndex];
 		QDir dir(pluginPath);
 		QStringList pluginFiles = dir.entryList(QDir::Files);
-		for(int i = pluginFiles.size() ; i >=0 ; --i) {// Start from app package. This sort ensure the priority on user plugins
+		for(int i = 0 ; i < pluginFiles.size() ; ++i) {
 			QPluginLoader loader(pluginPath+pluginFiles[i]);
 			loader.setLoadHints(0);
 			if (auto instance = loader.instance()) {
