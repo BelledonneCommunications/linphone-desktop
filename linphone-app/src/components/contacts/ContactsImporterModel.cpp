@@ -94,7 +94,7 @@ void ContactsImporterModel::importContacts(){
 		if( !loader)
 			qWarning() << "Loader is NULL";
 		else{
-			qWarning() << "Plugin loaded Status : " << loader->isLoaded();
+			qWarning() << "Plugin loaded Status : " << loader->isLoaded() << " for " << loader->fileName();
 		}
 		mData->importContacts();
 	}else
