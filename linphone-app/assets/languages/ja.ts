@@ -1,4 +1,6 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="ja" version="2.1">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja">
 <context>
     <name>About</name>
     <message>
@@ -1212,6 +1214,26 @@
     <message>
         <source>audioSettingsInCallWarning</source>
         <translation>音声通話中:一部の設定が使用できません。</translation>
+    </message>
+    <message>
+        <source>echoCancellationCalibrationLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationInProgress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationDone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationNone</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

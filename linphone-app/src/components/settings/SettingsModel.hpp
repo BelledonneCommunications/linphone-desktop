@@ -250,6 +250,8 @@ public:
 	bool getEchoCancellationEnabled () const;
 	void setEchoCancellationEnabled (bool status);
 
+	Q_INVOKABLE void startEchoCancellerCalibration();
+
 	bool getShowAudioCodecs () const;
 	void setShowAudioCodecs (bool status);
 
@@ -335,8 +337,8 @@ public:
 	bool mandatoryMediaEncryptionEnabled () const;
 	void enableMandatoryMediaEncryption(bool mandatory);
 
-    bool getLimeState () const;
-    void setLimeState (const bool& state);
+	bool getLimeState () const;
+	void setLimeState (const bool& state);
 
 	bool getContactsEnabled () const;
 	void setContactsEnabled (bool status);
@@ -449,6 +451,7 @@ public:
 
 	void handleCallCreated(const std::shared_ptr<linphone::Call> &call);
 	void handleCallStateChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
+	void handleEcCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
 
 	bool getIsInCall() const;
 
@@ -485,6 +488,7 @@ signals:
 	void ringPathChanged (const QString &path);
 
 	void echoCancellationEnabledChanged (bool status);
+	void echoCancellationStatus(int status, int msDelay);
 
 	void showAudioCodecsChanged (bool status);
 
