@@ -177,7 +177,7 @@ TabContainer {
                                                 color: FormTableStyle.entry.text.color
                                                 elide: Text.ElideRight
                                                 horizontalAlignment: Text.AlignHCenter
-                                                text: importerLine.fields[modelData['fieldId']] ?importerLine.fields[modelData['fieldId']]:(modelData['defaultData']?modelData['defaultData']:'')
+                                                text: importerLine.fields[modelData['fieldId']]?importerLine.fields[modelData['fieldId']]:''
                                                 height: FormTableStyle.entry.height
                                                 width: parent.width
                                                 font {
@@ -192,7 +192,7 @@ TabContainer {
                                                 readOnly: false
                                                 width:parent.width
                                                 placeholderText : modelData['placeholder']
-                                                text: importerLine.fields[modelData['fieldId']] ?importerLine.fields[modelData['fieldId']]:(modelData['defaultData']?modelData['defaultData']:'')
+                                                text: importerLine.fields[modelData['fieldId']]?importerLine.fields[modelData['fieldId']]:''
                                                 echoMode: (modelData['hiddenText']?TextInput.Password:TextInput.Normal)
                                                 onEditingFinished:{
                                                     importerLine.fields[modelData['fieldId']] = text

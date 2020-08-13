@@ -56,17 +56,25 @@ void ContactsImporterModel::setDataAPI(ContactsImporterDataAPI *data){
 	}else
 		mData = data;
 	if( mData){
-		connect(mData, SIGNAL(inputFieldsChanged(const QVariantMap &)), this, SIGNAL(fieldsChanged (QVariantMap)));
+		connect(mData, &ContactsImporterDataAPI::inputFieldsChanged, this, &ContactsImporterModel::fieldsChanged);
 		connect(mData, SIGNAL(errorMessage(const QString &)), this, SIGNAL(errorMessage(const QString &)));
 		connect(mData, SIGNAL(statusMessage(const QString &)), this, SIGNAL(statusMessage(const QString &)));
 		connect(mData, SIGNAL(contactsReceived(QVector<QMultiMap<QString,QString> > )), this, SLOT(parsedContacts(QVector<QMultiMap<QString, QString> > )));
 	}
 }
-QVariantMap ContactsImporterModel::getFields()const{
-	return (mData?mData->getInputFields():QVariantMap());
+bool ContactsImporterModel::isUsable(){
+	if( mData){
+		if( !mData->getPluginLoader()->isLoaded())
+			mData->getPluginLoader()->load();
+		return mData->getPluginLoader()->isLoaded();
+	}else
+		return false;
+}
+QVariantMap ContactsImporterModel::getFields(){
+	return (isUsable()?mData->getInputFields() :QVariantMap());
 }
 void ContactsImporterModel::setFields(const QVariantMap &pFields){
-	if(mData)
+	if( isUsable())
 		mData->setInputFields(pFields);
 }
 
@@ -77,18 +85,18 @@ int ContactsImporterModel::getIdentity()const{
 void ContactsImporterModel::setIdentity(const int &pIdentity){
 	if( mIdentity != pIdentity){
 		mIdentity = pIdentity;
-		if(mData)
+		if(mData && mData->getPluginLoader()->isLoaded())
 			mData->setSectionConfiguration(Utils::appStringToCoreString(ContactsImporterPluginsManager::ContactsSection+"_"+QString::number(mIdentity)));
 		emit identityChanged(mIdentity);
 	}
 }
 
 void ContactsImporterModel::loadConfiguration(){
-	if(mData)
+	if(isUsable())
 		mData->loadConfiguration();
 }
 void ContactsImporterModel::importContacts(){
-	if(mData){
+	if(isUsable()){
 		qWarning() << "Importing contacts with " << mData->getInputFields()["pluginTitle"];
 		QPluginLoader * loader = mData->getPluginLoader();
 		if( !loader)
@@ -98,7 +106,7 @@ void ContactsImporterModel::importContacts(){
 		}
 		mData->importContacts();
 	}else
-		qWarning() << "Cannot import contacts, mData is NULL";
+		qWarning() << "Cannot import contacts, mData is NULL or plugin is cannot be loaded ";
 }
 void ContactsImporterModel::parsedContacts(QVector<QMultiMap<QString, QString> > contacts){
 	qWarning() << "Receive contacts";

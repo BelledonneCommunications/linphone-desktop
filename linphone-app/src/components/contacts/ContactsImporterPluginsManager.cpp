@@ -77,9 +77,11 @@ ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const Q
 			loader->setLoadHints(0);
 			if( auto instance = loader->instance()) {
 				plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-				if (plugin)
+				if (plugin) {
 					 dataInstance = plugin->createInstance(CoreManager::getInstance()->getCore(), loader);
-				return dataInstance;
+					 return dataInstance;
+				}else
+					loader->unload();
 			}
 			delete loader;
 		}

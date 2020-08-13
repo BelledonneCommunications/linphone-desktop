@@ -38,9 +38,11 @@ public:
 	ContactsImporterModel (ContactsImporterDataAPI * data, QObject *parent = nullptr);
 
 	void setDataAPI(ContactsImporterDataAPI *data);
+	bool isUsable();
 
-	QVariantMap getFields()const;
+	QVariantMap getFields();
 	void setFields(const QVariantMap &pFields);
+
 	
 	int getIdentity()const;
 	void setIdentity(const int &pIdentity);
