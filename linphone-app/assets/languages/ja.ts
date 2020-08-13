@@ -1219,6 +1219,26 @@
         <source>audioSettingsInCallWarning</source>
         <translation>音声通話中:一部の設定が使用できません。</translation>
     </message>
+    <message>
+        <source>echoCancellationCalibrationLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationInProgress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationDone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationNone</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>

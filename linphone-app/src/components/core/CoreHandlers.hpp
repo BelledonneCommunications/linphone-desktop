@@ -51,6 +51,7 @@ signals:
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
+  void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
 
 private:
   void handleCoreCreated ();
@@ -146,10 +147,16 @@ private:
   ) override;
 
   void onVersionUpdateCheckResultReceived (
-    const std::shared_ptr<linphone::Core> &,
+    const std::shared_ptr<linphone::Core> & core,
     linphone::VersionUpdateCheckResult result,
     const std::string &version,
     const std::string &url
+  ) override;
+
+  void onEcCalibrationResult(
+    const std::shared_ptr<linphone::Core> & core,
+    linphone::EcCalibratorStatus status,
+    int delayMs
   ) override;
 
   // ---------------------------------------------------------------------------

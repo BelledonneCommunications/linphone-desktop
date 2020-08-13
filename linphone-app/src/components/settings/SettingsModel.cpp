@@ -56,6 +56,9 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 			 this, &SettingsModel::handleCallCreated);
 	QObject::connect(coreManager->getHandlers().get(), &CoreHandlers::callStateChanged,
 			 this, &SettingsModel::handleCallStateChanged);
+	QObject::connect(coreManager->getHandlers().get(), &CoreHandlers::ecCalibrationResult,
+			 this, &SettingsModel::handleEcCalibrationResult);
+
 	configureRlsUri();
 }
 SettingsModel::~SettingsModel()
@@ -342,6 +345,10 @@ void SettingsModel::setEchoCancellationEnabled (bool status) {
 	emit echoCancellationEnabledChanged(status);
 }
 
+void SettingsModel::startEchoCancellerCalibration(){
+	CoreManager::getInstance()->getCore()->startEchoCancellerCalibration();
+
+}
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getShowAudioCodecs () const {
@@ -1280,7 +1287,9 @@ void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &) {
 void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, linphone::Call::State) {
 	emit isInCallChanged(getIsInCall());
 }
-
+void SettingsModel::handleEcCalibrationResult(linphone::EcCalibratorStatus status, int delayMs){
+	emit echoCancellationStatus((int)status, delayMs);
+}
 bool SettingsModel::getIsInCall() const {
 	return CoreManager::getInstance()->getCore()->getCallsNb() != 0;
 }

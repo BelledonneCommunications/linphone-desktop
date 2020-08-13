@@ -1218,6 +1218,26 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
         <source>audioSettingsInCallWarning</source>
         <translation>Hanghívás folyamatban: egyes beállítások nem érhetők el.</translation>
     </message>
+    <message>
+        <source>echoCancellationCalibrationLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationInProgress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationDone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationNone</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>

@@ -1219,6 +1219,26 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>audioSettingsInCallWarning</source>
         <translation>Vyksta garso skambutis: kai kurie nustatymai negalimi.</translation>
     </message>
+    <message>
+        <source>echoCancellationCalibrationLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationInProgress</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationDone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>calibratingEchoCancellationNone</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
