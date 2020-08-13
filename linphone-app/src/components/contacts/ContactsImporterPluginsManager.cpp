@@ -221,24 +221,32 @@ void ContactsImporterPluginsManager::importContacts(const QVector<QMultiMap<QStr
 		VcardModel  * card = CoreManager::getInstance()->createDetachedVcardModel();
 		qWarning() << "Getting SipAddressModel";
 		SipAddressesModel * sipConvertion = CoreManager::getInstance()->getSipAddressesModel();
+		if( sipConvertion == NULL)
+			qWarning() << "SipAddressModel is NULL";
 		qWarning() << "Get Domain";
 		QString domain = pContacts[i].values("sipDomain").at(0);
 
 		//if(pContacts[i].contains("phoneNumber"))
 		//	card->addSipAddress(sipConvertion->interpretSipAddress(pContacts[i].values("phoneNumber").at(0)+"@"+domain, false));
 		qWarning() << "Check for displayName";
-		if(pContacts[i].contains("displayName"))
+		if(pContacts[i].contains("displayName")  && pContacts[i].values("displayName").size() > 0)
 			card->setUsername(pContacts[i].values("displayName").at(0));
 		qWarning() << "Check for sipUsername";
-		if(pContacts[i].contains("sipUsername")){
+		if(pContacts[i].contains("sipUsername") && pContacts[i].values("sipUsername").size() > 0){
 			QString sipUsername = pContacts[i].values("sipUsername").at(0);
+			qWarning() << "Interpret SipAddress with : " << sipUsername << " and " << domain;
 			QString convertedUsername = sipConvertion->interpretSipAddress(sipUsername, domain);
 			if(!convertedUsername.contains(domain)){
+				qWarning() << "convertedUsername doesn't have domain, replace @ : " << convertedUsername;
 				convertedUsername = convertedUsername.replace('@',"%40")+"@"+domain;
-			}
+			}else
+				qWarning() << "convertedUsername have domain : " << convertedUsername;
+			qWarning() << "Adding sip address";
 			card->addSipAddress(convertedUsername);
-			if( sipUsername.contains('@'))
+			if( sipUsername.contains('@')){
+				qWarning() << "sipUsername have @, add Email";
 				card->addEmail(sipUsername);
+			}
 		}
 		qWarning() << "Check for email";
 		if(pContacts[i].contains("email"))
