@@ -90,10 +90,10 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
     // Do not change this order. :) (Or pray.)
 		mInstance->mCallsListModel = new CallsListModel(mInstance);
 		mInstance->mContactsListModel = new ContactsListModel(mInstance);
-		mInstance->mContactsImporterListModel = new ContactsImporterListModel(mInstance);
 		mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
 		mInstance->mSettingsModel = new SettingsModel(mInstance);
 		mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
+		mInstance->mContactsImporterListModel = new ContactsImporterListModel(mInstance);
 		EventCountNotifier *eventCountNotifier = new EventCountNotifier(mInstance);
 		eventCountNotifier->updateUnreadMessageCount();
 		QObject::connect(eventCountNotifier, &EventCountNotifier::eventCountChanged,

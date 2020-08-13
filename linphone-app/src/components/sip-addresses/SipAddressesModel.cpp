@@ -200,16 +200,38 @@ QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool 
   return QString("");
 }
 QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, const QString &domain) {
-  auto proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
-  shared_ptr<linphone::Address> lAddressTemp = proxyConfig->normalizeSipUri("Dummy");
-  lAddressTemp->setDomain(Utils::appStringToCoreString(domain));
-  proxyConfig->setIdentityAddress(lAddressTemp);
-  shared_ptr<linphone::Address> lAddress = proxyConfig->normalizeSipUri(Utils::appStringToCoreString(sipAddress));
-
-  if (lAddress)
-    return Utils::coreStringToAppString(lAddress->asStringUriOnly());
-  else
-    return QString("");
+    qWarning() << "Creating Proxy Config";
+    auto core = CoreManager::getInstance()->getCore();
+    if(!core){
+        qWarning() << "There is no core";
+    }else{
+      auto proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
+      if( !proxyConfig) {
+        qWarning() << "Creating Proxy Config";
+      }else{
+          qWarning() << "Normalize from dummy";
+          shared_ptr<linphone::Address> lAddressTemp = proxyConfig->normalizeSipUri("Dummy");
+          if( lAddressTemp ){
+              qWarning() << "Setting Domain";
+              lAddressTemp->setDomain(Utils::appStringToCoreString(domain));
+              qWarning() << "Setting Identity Address";
+              qWarning() << "Trying with " << Utils::coreStringToAppString(lAddressTemp->asStringUriOnly());
+              proxyConfig->setIdentityAddress(lAddressTemp);
+              qWarning() << "Normalize Sip Uri";
+              shared_ptr<linphone::Address> lAddress = proxyConfig->normalizeSipUri(Utils::appStringToCoreString(sipAddress));
+              if (lAddress) {
+                  qWarning() << "Get String only";
+                return Utils::coreStringToAppString(lAddress->asStringUriOnly());
+              } else {
+                  qWarning() << "Cannot normalize";
+                return QString("");
+              }
+          }else{
+              qWarning() << "Cannot normalize Sip Uri";
+          }
+       }
+    }
+  return QString("");
 }
 
 QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {

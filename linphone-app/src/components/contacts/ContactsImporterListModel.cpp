@@ -52,7 +52,7 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 			std::list<std::string> keys = config->getKeysNamesList(section);
 			auto keyName = std::find(keys.begin(), keys.end(), "pluginTitle");
 			if( keyName != keys.end()){
-				QString pluginTitle =  ContactsImporterPluginsManager::gPluginsMap[Utils::coreStringToAppString(config->getString(section, *keyName, ""))];
+				QString pluginTitle =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
 				ContactsImporterDataAPI* data = ContactsImporterPluginsManager::createInstance(pluginTitle);
 				if(data) {
 					ContactsImporterModel * model = new ContactsImporterModel(data, this);
