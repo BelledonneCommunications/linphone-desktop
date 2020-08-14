@@ -200,34 +200,26 @@ QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool 
   return QString("");
 }
 QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, const QString &domain) {
-    qWarning() << "Creating Proxy Config";
     auto core = CoreManager::getInstance()->getCore();
     if(!core){
-        qWarning() << "There is no core";
+        qWarning() << "No core to interpret address";
     }else{
       auto proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
       if( !proxyConfig) {
-        qWarning() << "Creating Proxy Config";
       }else{
-          qWarning() << "Get address from primary contact";
-          shared_ptr<linphone::Address> lAddressTemp = core->createPrimaryContactParsed();
-          //shared_ptr<linphone::Address> lAddressTemp = proxyConfig->normalizeSipUri("Dummy");
+          shared_ptr<linphone::Address> lAddressTemp = core->createPrimaryContactParsed();// Create an address
           if( lAddressTemp ){
-              qWarning() << "Setting Domain";
-              lAddressTemp->setDomain(Utils::appStringToCoreString(domain));
-              qWarning() << "Setting Identity Address with " << Utils::coreStringToAppString(lAddressTemp->asStringUriOnly());
+              lAddressTemp->setDomain(Utils::appStringToCoreString(domain));    // Set the domain and use the address into proxy
               proxyConfig->setIdentityAddress(lAddressTemp);
-              qWarning() << "Normalize Sip Uri";
               shared_ptr<linphone::Address> lAddress = proxyConfig->normalizeSipUri(Utils::appStringToCoreString(sipAddress));
               if (lAddress) {
-                  qWarning() << "Get String only";
                 return Utils::coreStringToAppString(lAddress->asStringUriOnly());
               } else {
-                  qWarning() << "Cannot normalize";
+                  qWarning() << "Cannot normalize Sip Uri : " << sipAddress << " / " << domain;
                 return QString("");
               }
           }else{
-              qWarning() << "Cannot normalize Sip Uri";
+              qWarning() << "Cannot create a Primary Contact Parsed";
           }
        }
     }
