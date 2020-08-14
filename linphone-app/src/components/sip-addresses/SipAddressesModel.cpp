@@ -209,13 +209,13 @@ QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, const
       if( !proxyConfig) {
         qWarning() << "Creating Proxy Config";
       }else{
-          qWarning() << "Normalize from dummy";
-          shared_ptr<linphone::Address> lAddressTemp = proxyConfig->normalizeSipUri("Dummy");
+          qWarning() << "Get address from primary contact";
+          shared_ptr<linphone::Address> lAddressTemp = core->createPrimaryContactParsed();
+          //shared_ptr<linphone::Address> lAddressTemp = proxyConfig->normalizeSipUri("Dummy");
           if( lAddressTemp ){
               qWarning() << "Setting Domain";
               lAddressTemp->setDomain(Utils::appStringToCoreString(domain));
-              qWarning() << "Setting Identity Address";
-              qWarning() << "Trying with " << Utils::coreStringToAppString(lAddressTemp->asStringUriOnly());
+              qWarning() << "Setting Identity Address with " << Utils::coreStringToAppString(lAddressTemp->asStringUriOnly());
               proxyConfig->setIdentityAddress(lAddressTemp);
               qWarning() << "Normalize Sip Uri";
               shared_ptr<linphone::Address> lAddress = proxyConfig->normalizeSipUri(Utils::appStringToCoreString(sipAddress));
