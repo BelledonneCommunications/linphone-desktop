@@ -133,6 +133,8 @@ public:
   
   Q_INVOKABLE void toggleSpeakerMute();
 
+  static constexpr int DtmfSoundDelay = 200;
+
 signals:
   void callErrorChanged (const QString &callError);
   void isInConferenceChanged (bool status);

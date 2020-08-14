@@ -92,6 +92,11 @@ private:
     const std::shared_ptr<linphone::Call> & call
   ) override;
 
+  void onDtmfReceived(
+    const std::shared_ptr<linphone::Core> & lc,
+    const std::shared_ptr<linphone::Call> & call,
+    int dtmf)override;
+
   void onGlobalStateChanged (
     const std::shared_ptr<linphone::Core> &core,
     linphone::GlobalState gstate,
