@@ -47,6 +47,7 @@ QMap<QString, QString> ContactsImporterPluginsManager::gPluginsMap;
 
 ContactsImporterPluginsManager::ContactsImporterPluginsManager(QObject * parent) : QObject(parent){
 }
+
 QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginTitle){
 	QStringList pluginPaths = Paths::getPluginsContactsFolders();
 	if( gPluginsMap.contains(pluginTitle)){
@@ -56,7 +57,7 @@ QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginT
 			loader->setLoadHints(0);
 			if( auto instance = loader->instance()) {
 				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-				if (plugin)
+				if (plugin && versionMatched(plugin) )
 					return loader;
 				else
 					loader->unload();
@@ -66,6 +67,7 @@ QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginT
 	}
 	return nullptr;
 }
+
 ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const QString &pluginTitle){
 	ContactsImporterDataAPI * dataInstance = nullptr;
 	ContactsImporterPlugin * plugin = nullptr;
@@ -88,6 +90,7 @@ ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const Q
 	}
 	return dataInstance;
 }
+
 QJsonDocument ContactsImporterPluginsManager::getJson(const QString &pluginTitle){
 	QJsonDocument doc;
 	QPluginLoader * pluginLoader = getPlugin(pluginTitle);
@@ -104,12 +107,23 @@ QJsonDocument ContactsImporterPluginsManager::getJson(const QString &pluginTitle
 	}
 	return doc;
 }
+
+bool ContactsImporterPluginsManager::versionMatched(ContactsImporterPlugin *plugin){
+	bool ok = false;
+	QVersionNumber pluginVersion, apiVersion = ContactsImporterPlugin::gPluginVersion;
+	pluginVersion = plugin->getVersion();
+	if( pluginVersion == apiVersion)
+		ok = true;
+	return ok;
+}
+
 void ContactsImporterPluginsManager::openNewPlugin(){
 	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Connector");
 	QString pluginTitle;
 	QList<ContactsImporterModel*> importersToReset;
 	int doCopy = QMessageBox::Yes;
 	bool cannotRemovePlugin = false;
+	QVersionNumber pluginVersion, apiVersion = ContactsImporterPlugin::gPluginVersion;
 	if(fileName != ""){
 		QFileInfo fileInfo(fileName);
 		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
@@ -118,10 +132,16 @@ void ContactsImporterPluginsManager::openNewPlugin(){
 		auto instance = loader.instance();
 		if( instance ){
 			ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-			if(plugin){// This plugin is good. Get the title
-				QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
-				QVariantMap desc;
-				pluginTitle = doc["pluginTitle"].toString();
+			if(plugin){// This plugin can be load. Check the version.
+				if( !versionMatched(plugin)){
+					QVersionNumber pluginVersion = plugin->getVersion();
+					QMessageBox::warning(nullptr, "Importing Address Book Connector", "Linphone cannot open the plugin because versions don't match. You need to update your plugin.\nMain Plugin :"+apiVersion.toString()+"\n"+fileInfo.fileName()+" :"+pluginVersion.toString());
+				}else{// plugin is good. Get the title
+					QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
+					QVariantMap desc;
+					pluginTitle = doc["pluginTitle"].toString();
+					plugin->getVersion();
+				}
 			}
 			loader.unload();
 		}
@@ -149,7 +169,8 @@ void ContactsImporterPluginsManager::openNewPlugin(){
 						gPluginsMap[pluginTitle] = "";
 				}
 			}
-		}
+		}else
+			doCopy = QMessageBox::No;
 		if(doCopy == QMessageBox::Yes ){
 			if( cannotRemovePlugin)// Qt will not unload library from memory so files cannot be removed. See https://bugreports.qt.io/browse/QTBUG-68880
 				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be replaced. You have to exit the application and delete manually the plugin file in\n"+path);
@@ -163,6 +184,7 @@ void ContactsImporterPluginsManager::openNewPlugin(){
 		}
 	}
 }
+
 QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 	QVariantList plugins;
 	QStringList pluginPaths = Paths::getPluginsContactsFolders();
@@ -175,7 +197,8 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 			QPluginLoader loader(pluginPath+pluginFiles[i]);
 			loader.setLoadHints(0);
 			if (auto instance = loader.instance()) {
-				if (auto plugin = qobject_cast< ContactsImporterPlugin* >(instance)){
+				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
+				if ( plugin && versionMatched(plugin) ){
 					QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
 					QVariantMap desc;
 					desc["pluginTitle"] = doc["pluginTitle"];
@@ -202,6 +225,7 @@ QVariantMap ContactsImporterPluginsManager::getContactsImporterPluginDescription
 	description = doc.toVariant().toMap();
 	return description;
 }
+
 void ContactsImporterPluginsManager::importContacts(ContactsImporterModel * model) {
 	if(model){
 		QString pluginTitle = model->getFields()["pluginTitle"].toString();

@@ -40,6 +40,9 @@ public:
 	static QPluginLoader * getPlugin(const QString &pluginTitle);
 	static ContactsImporterDataAPI * createInstance(const QString &pluginTitle);
 	static QJsonDocument getJson(const QString &pluginTitle);
+
+	static bool versionMatched(ContactsImporterPlugin *plugin);	// Test if the plugin version can be used with the main plugin interface.
+
 	Q_INVOKABLE static void openNewPlugin();
 	Q_INVOKABLE static QVariantList getContactsImporterPlugins();
 	Q_INVOKABLE static QVariantMap getContactsImporterPluginDescription(const QString& pluginTitle);
