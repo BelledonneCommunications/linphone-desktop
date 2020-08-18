@@ -38,12 +38,11 @@ public:
 	ContactsImporterModel (ContactsImporterDataAPI * data, QObject *parent = nullptr);
 
 	void setDataAPI(ContactsImporterDataAPI *data);
-	bool isUsable();
+	bool isUsable();	// Return true if the plugin can be load and has been loaded.
 
 	QVariantMap getFields();
 	void setFields(const QVariantMap &pFields);
 
-	
 	int getIdentity()const;
 	void setIdentity(const int &pIdentity);
 	
@@ -61,8 +60,8 @@ signals:
 	void statusMessage(const QString& message);
 	
 private:
-	int mIdentity;
-	ContactsImporterDataAPI *mData;
+	int mIdentity;	// The identity of the model in configuration. It must be unique between all contact plugins.
+	ContactsImporterDataAPI *mData;	// The instance of the plugin with its plugin Loader.
 };
 
 Q_DECLARE_METATYPE(ContactsImporterModel *);

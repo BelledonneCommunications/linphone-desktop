@@ -40,7 +40,7 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 	QQmlEngine *engine = App::getInstance()->getEngine();
 	auto config = CoreManager::getInstance()->getCore()->getConfig();
 	ContactsImporterPluginsManager::getContactsImporterPlugins();// Initialize list
-
+// Read configuration file
 	std::list<std::string> sections = config->getSectionsNamesList();
 	for(auto section : sections){
 		QString qtSection = Utils::coreStringToAppString(section);
@@ -60,7 +60,7 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 // The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
 					engine->setObjectOwnership(model, QQmlEngine::CppOwnership);
 					model->setIdentity(id);
-					model->loadConfiguration();
+					model->loadConfiguration();// Read the configuration inside the plugin
 					addContactsImporter(model);
 				}
 			}
@@ -68,6 +68,8 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 		
 	}
 }
+
+// GUI methods
 
 int ContactsImporterListModel::rowCount (const QModelIndex &) const {
 	return mList.count();
@@ -122,10 +124,13 @@ ContactsImporterModel *ContactsImporterListModel::findContactsImporterModelFromI
 	});
 	return it != mList.end() ? *it : nullptr;
 }
+
 QList<ContactsImporterModel*> ContactsImporterListModel::getList(){
 	return mList;
 }
+
 // -----------------------------------------------------------------------------
+
 ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVariantMap data){
 	ContactsImporterModel *contactsImporter = nullptr;
 	if( data.contains("pluginTitle")){
@@ -178,18 +183,21 @@ void ContactsImporterListModel::removeContactsImporter (ContactsImporterModel *c
 		removeRow(index);
 	}
 }
+
 void ContactsImporterListModel::importContacts(const int &pId){
 	if( pId >=0) {
 		ContactsImporterModel *contactsImporter = findContactsImporterModelFromId(pId);
 		if( contactsImporter)
 			contactsImporter->importContacts();
-	}else
+	}else	// Import from all current connectors
 		for(auto importer : mList)
 			importer->importContacts();
 }
+
 // -----------------------------------------------------------------------------
 
 void ContactsImporterListModel::addContactsImporter (ContactsImporterModel *contactsImporter) {
+	// Connect all update signals
 	QObject::connect(contactsImporter, &ContactsImporterModel::fieldsChanged, this, [this, contactsImporter]() {
 		emit contactsImporterUpdated(contactsImporter);
 	});

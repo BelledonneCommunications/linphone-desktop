@@ -29,6 +29,8 @@
 
 class ContactsImporterModel;
 
+// Store all connectors
+
 class ContactsImporterListModel : public QAbstractListModel {
 
 	Q_OBJECT;
@@ -64,7 +66,7 @@ private:
 	void addContactsImporter (ContactsImporterModel *contactsImporter);
 	
 	QList<ContactsImporterModel *> mList;
-	int mMaxContactsImporterId;
+	int mMaxContactsImporterId;	// Used to ensure unicity on ID when creating a connector
 };
 
 #endif // CONTACTS_IMPORTER_LIST_MODEL_H_

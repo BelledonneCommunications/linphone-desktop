@@ -41,7 +41,7 @@ ContactsImporterModel::ContactsImporterModel (ContactsImporterDataAPI * data, QO
 // -----------------------------------------------------------------------------
 
 void ContactsImporterModel::setDataAPI(ContactsImporterDataAPI *data){
-	if(mData){
+	if(mData){// Unload the current plugin loader and delete it from memory
 		QPluginLoader * loader = mData->getPluginLoader();
 		delete mData;
 		if(loader){
@@ -58,6 +58,7 @@ void ContactsImporterModel::setDataAPI(ContactsImporterDataAPI *data){
 		connect(mData, SIGNAL(contactsReceived(QVector<QMultiMap<QString,QString> > )), this, SLOT(parsedContacts(QVector<QMultiMap<QString, QString> > )));
 	}
 }
+
 bool ContactsImporterModel::isUsable(){
 	if( mData){
 		if( !mData->getPluginLoader()->isLoaded())
@@ -66,9 +67,11 @@ bool ContactsImporterModel::isUsable(){
 	}else
 		return false;
 }
+
 QVariantMap ContactsImporterModel::getFields(){
 	return (isUsable()?mData->getInputFields() :QVariantMap());
 }
+
 void ContactsImporterModel::setFields(const QVariantMap &pFields){
 	if( isUsable())
 		mData->setInputFields(pFields);

@@ -49,12 +49,12 @@ ContactsImporterPluginsManager::ContactsImporterPluginsManager(QObject * parent)
 }
 
 QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginTitle){
-	QStringList pluginPaths = Paths::getPluginsContactsFolders();
+	QStringList pluginPaths = Paths::getPluginsContactsFolders();// Get all paths
 	if( gPluginsMap.contains(pluginTitle)){
 		for(int i = 0 ; i < pluginPaths.size() ; ++i) {
 			QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
 			QPluginLoader * loader = new QPluginLoader(pluginPath);
-			loader->setLoadHints(0);
+			loader->setLoadHints(0);	// this force Qt to unload the plugin from memory when we request it. Be carefull by not having a plugin instance or data created inside the plugin after the unload.
 			if( auto instance = loader->instance()) {
 				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
 				if (plugin && versionMatched(plugin) )
@@ -76,7 +76,7 @@ ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const Q
 		for(int i = 0 ; i < pluginPaths.size() ; ++i) {
 			QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
 			QPluginLoader * loader = new QPluginLoader(pluginPath);
-			loader->setLoadHints(0);
+			loader->setLoadHints(0);	// this force Qt to unload the plugin from memory when we request it. Be carefull by not having a plugin instance or data created inside the plugin after the unload.
 			if( auto instance = loader->instance()) {
 				plugin = qobject_cast< ContactsImporterPlugin* >(instance);
 				if (plugin) {
@@ -195,7 +195,7 @@ QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
 		QStringList pluginFiles = dir.entryList(QDir::Files);
 		for(int i = 0 ; i < pluginFiles.size() ; ++i) {
 			QPluginLoader loader(pluginPath+pluginFiles[i]);
-			loader.setLoadHints(0);
+			loader.setLoadHints(0);	// this force Qt to unload the plugin from memory when we request it. Be carefull by not having a plugin instance or data created inside the plugin after the unload.
 			if (auto instance = loader.instance()) {
 				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
 				if ( plugin && versionMatched(plugin) ){

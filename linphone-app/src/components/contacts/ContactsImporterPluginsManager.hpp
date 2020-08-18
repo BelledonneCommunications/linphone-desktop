@@ -37,22 +37,22 @@ Q_OBJECT
 public:
 	ContactsImporterPluginsManager (QObject *parent = Q_NULLPTR);
 	
-	static QPluginLoader * getPlugin(const QString &pluginTitle);
-	static ContactsImporterDataAPI * createInstance(const QString &pluginTitle);
-	static QJsonDocument getJson(const QString &pluginTitle);
+	static QPluginLoader * getPlugin(const QString &pluginTitle);	// Return a plugin loader with Hints to 0 (unload will force Qt to remove the plugin from memory).
+	static ContactsImporterDataAPI * createInstance(const QString &pluginTitle);	//Return a data instance from a plugin name.
+	static QJsonDocument getJson(const QString &pluginTitle);	// Get the description of the plugin int the Json format.
 
 	static bool versionMatched(ContactsImporterPlugin *plugin);	// Test if the plugin version can be used with the main plugin interface.
 
-	Q_INVOKABLE static void openNewPlugin();
-	Q_INVOKABLE static QVariantList getContactsImporterPlugins();
-	Q_INVOKABLE static QVariantMap getContactsImporterPluginDescription(const QString& pluginTitle);
-	Q_INVOKABLE static void importContacts(ContactsImporterModel * model);
-	static void importContacts(const QVector<QMultiMap<QString, QString> >& contacts );
+	Q_INVOKABLE static void openNewPlugin();	// Open a File Dialog. Test if the file can be load and have a matched version. Replace old plugins from custom paths and with the same plugin title.
+	Q_INVOKABLE static QVariantList getContactsImporterPlugins();	// Get a list of all available contact plugins
+	Q_INVOKABLE static QVariantMap getContactsImporterPluginDescription(const QString& pluginTitle);	// Get the description of the plugin. It is used for GUI to create dynamically items
+	Q_INVOKABLE static void importContacts(ContactsImporterModel * model);	// Request the import of the model
+	static void importContacts(const QVector<QMultiMap<QString, QString> >& contacts );	// Merge these data into contacts
 	
-	static QVariantMap getDefaultValues(const QString& pluginTitle);
+	static QVariantMap getDefaultValues(const QString& pluginTitle);	// Get the default values of each fields for th eplugin
 	
-	static const QString ContactsSection;
-	static QMap<QString, QString> gPluginsMap;
+	static const QString ContactsSection;	// Section name of the configuration file
+	static QMap<QString, QString> gPluginsMap;	// Map between <plugin title, plugin path>
 };
 
 

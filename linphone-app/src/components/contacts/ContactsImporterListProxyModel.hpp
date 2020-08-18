@@ -28,6 +28,8 @@
 class ContactsImporterModel;
 class ContactsImporterListModel;
 
+// Manage the list of connectors
+
 class ContactsImporterListProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
 

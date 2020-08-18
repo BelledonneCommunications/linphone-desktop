@@ -37,7 +37,7 @@ using namespace std;
 
 ContactsImporterListProxyModel::ContactsImporterListProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
 	setSourceModel(CoreManager::getInstance()->getContactsImporterListModel());
-	sort(0);
+	sort(0);// Sort by identity
 }
 
 // -----------------------------------------------------------------------------
