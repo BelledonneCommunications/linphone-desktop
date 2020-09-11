@@ -215,6 +215,10 @@ string Paths::getCodecsDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathCodecs);
 }
 
+string Paths::getConfigDirPath (bool writable) {
+  return writable ? getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)) : getReadableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+}
+
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
   const QString path = configPath.isEmpty()
     ? getAppConfigFilePath()

@@ -59,7 +59,8 @@ class Cli : public QObject {
       const QString &functionName,
       const char *functionDescription,
       Function function,
-      const QHash<QString, Argument> &argsScheme
+      const QHash<QString, Argument> &argsScheme,
+      const bool &genericArguments=false
     );
 
     void execute (QHash<QString, QString> &args) const;
@@ -76,6 +77,7 @@ class Cli : public QObject {
     const char *mFunctionDescription;
     Function mFunction = nullptr;
     QHash<QString, Argument> mArgsScheme;
+    bool mGenericArguments=false;// Used to avoid check on arguments
   };
 
 public:
@@ -96,7 +98,8 @@ private:
     const QString &functionName,
     const char *functionDescription,
     Function function,
-    const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>()
+    const QHash<QString, Argument> &argsScheme = QHash<QString, Argument>(),
+    const bool &genericArguments=false
   );
 
   static QString parseFunctionName (const QString &command);

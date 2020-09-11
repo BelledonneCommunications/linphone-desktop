@@ -24,7 +24,7 @@
 #include <QtConcurrent>
 #include <QTimer>
 #include <QFile>
-
+#include <QTest>
 #include "config.h"
 
 #include "app/paths/Paths.hpp"
@@ -78,6 +78,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 		createLinphoneCore(configPath);
 		qInfo() << QStringLiteral("Core created. Enable iterate.");
 		mInstance->mCbsTimer->start();
+		std::shared_ptr<CoreHandlers> h = mInstance->getHandlers();// Protect handler as we will enter its function where it can be deleted (like while restarting)
 		emit mInstance->coreCreated();
 	});
 
@@ -163,8 +164,9 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 
 void CoreManager::uninit () {
   if (mInstance) {
-    delete mInstance;
-    mInstance = nullptr;
+    connect(mInstance, &QObject::destroyed, []()mutable{mInstance = nullptr;});
+    mInstance->deleteLater();// Ensure to take time to delete the instance
+    QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
   }
 }
 

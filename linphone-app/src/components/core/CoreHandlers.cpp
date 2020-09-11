@@ -56,6 +56,7 @@ CoreHandlers::CoreHandlers (CoreManager *coreManager) {
 
 CoreHandlers::~CoreHandlers () {
   delete mCoreStartedLock;
+  mCoreStartedLock = nullptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +67,6 @@ void CoreHandlers::handleCoreCreated () {
   Q_ASSERT(mCoreCreated == false);
   mCoreCreated = true;
   notifyCoreStarted();
-
   mCoreStartedLock->unlock();
 }
 
