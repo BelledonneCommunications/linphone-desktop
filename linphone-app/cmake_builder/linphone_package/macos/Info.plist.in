@@ -46,7 +46,6 @@
 				<string>tel</string>
 				<string>callto</string>
 				<string>linphone-config</string>
-				<string>linphones-config</string>
 			</array>
 		</dict>
 	</array>
