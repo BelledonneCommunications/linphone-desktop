@@ -373,7 +373,8 @@ list(APPEND SOURCES ${TS_FILES})
 
 # set application details
 if(WIN32)
-	set(COPYRIGTH_RANGE_DATE "2010-2020")
+	string(TIMESTAMP CURRENT_YEAR "%Y")
+	set(COPYRIGTH_RANGE_DATE "2010-${CURRENT_YEAR}")
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/linphone_package/windows/appDetailsWindows.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc")
 	set(RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc)
 endif()
