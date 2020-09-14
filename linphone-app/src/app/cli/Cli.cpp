@@ -424,18 +424,24 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
   }else{
     string scheme = address->getScheme();
     bool ok = false;
-    for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone", "tel", "callto", "linphone-config" })
+    for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone", "tel", "callto", "linphone-config", "linphones-config" })
       if (scheme == validScheme)
         ok = true;
     if( !ok){
       qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.").arg(command).arg(Utils::coreStringToAppString(scheme));  
         return;
     }else{
-      if( scheme == "linphone-config"){
+      if( scheme == "linphone-config" || scheme == "linphones-config"){
         if (format)
-          *format = UrlFormat;
-        QString parameters = QUrl(command).toString(QUrl::RemoveScheme);
-        mCommands["show"].executeUrl("config="+parameters);
+          *format = CliFormat;
+        QHash<QString, QString> args;
+        QUrl url(command);
+        if( scheme == "linphones-config" )
+          url.setScheme("http");
+        else
+          url.setScheme("https");
+        args["config"] = url.toString();
+        mCommands["show"].execute(args);
       }else{
         if (format)
           *format = UriFormat;
