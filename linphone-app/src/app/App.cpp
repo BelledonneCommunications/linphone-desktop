@@ -382,7 +382,7 @@ void App::initContentApp () {
   if (!commandArgument.isEmpty()) {
     Cli::CommandFormat format;
     Cli::executeCommand(commandArgument, &format);
-    if (format == Cli::UriFormat)
+    if (format == Cli::UriFormat || format == Cli::UrlFormat )
       mustBeIconified = true;
   }
 }

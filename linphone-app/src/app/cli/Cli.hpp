@@ -65,6 +65,7 @@ class Cli : public QObject {
 
     void execute (QHash<QString, QString> &args) const;
     void executeUri (const std::shared_ptr<linphone::Address> &address) const;
+    void executeUrl (const QString &url) const;
 
     const char *getFunctionDescription () const {
       return mFunctionDescription;
@@ -84,7 +85,8 @@ public:
   enum CommandFormat {
     UnknownFormat,
     CliFormat,
-    UriFormat
+    UriFormat,    // Parameters are in base64
+    UrlFormat
   };
 
   static void executeCommand (const QString &command, CommandFormat *format = nullptr);
