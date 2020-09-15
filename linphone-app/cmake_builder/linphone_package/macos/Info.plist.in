@@ -43,6 +43,8 @@
 				<string>sip-linphone</string>
 				<string>sips</string>
 				<string>sips-linphone</string>
+				<string>tel</string>
+				<string>callto</string>
 			</array>
 		</dict>
 	</array>
