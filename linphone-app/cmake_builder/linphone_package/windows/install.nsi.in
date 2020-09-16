@@ -1,27 +1,77 @@
+
+# Application details
+
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@" "" ""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@" "" ""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities" "ApplicationDescription" "@APPLICATION_DESCRIPTION@"
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities" "ApplicationName" "@APPLICATION_NAME@"
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities" "FriendlyAppName" "@APPLICATION_NAME@"
+WriteRegStr HKLM "SOFTWARE\RegisteredApplications" "@APPLICATION_NAME@" "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities"
+WriteRegStr HKLM "SOFTWARE\IM Providers\@APPLICATION_NAME@" "ProcessName" "@EXECUTABLE_NAME@.exe"
+WriteRegStr HKLM "SOFTWARE\IM Providers\@APPLICATION_NAME@" "FriendlyName" "@APPLICATION_NAME@"
+
+
+# PROTOCOL declaration
+
 WriteRegStr HKCR "sip" "" "URL:sip Protocol"
 WriteRegStr HKCR "sip" "URL Protocol" ""
-WriteRegStr HKCR "sip\DefaultIcon" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe"
-WriteRegStr HKCR "sip\shell" "" "open"
-WriteRegStr HKCR "sip\shell\open" "" "command"
-WriteRegStr HKCR "sip\shell\open\command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
 
 WriteRegStr HKCR "sip-linphone" "" "URL:sip-linphone Protocol"
 WriteRegStr HKCR "sip-linphone" "URL Protocol" ""
-WriteRegStr HKCR "sip-linphone\DefaultIcon" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe"
-WriteRegStr HKCR "sip-linphone\shell" "" "open"
-WriteRegStr HKCR "sip-linphone\shell\open" "" "command"
-WriteRegStr HKCR "sip-linphone\shell\open\command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
 
 WriteRegStr HKCR "sips" "" "URL:sips Protocol"
 WriteRegStr HKCR "sips" "URL Protocol" ""
-WriteRegStr HKCR "sips\DefaultIcon" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe"
-WriteRegStr HKCR "sips\shell" "" "open"
-WriteRegStr HKCR "sips\shell\open" "" "command"
-WriteRegStr HKCR "sips\shell\open\command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
 
 WriteRegStr HKCR "sips-linphone" "" "URL:sips-linphone Protocol"
 WriteRegStr HKCR "sips-linphone" "URL Protocol" ""
-WriteRegStr HKCR "sips-linphone\DefaultIcon" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe"
-WriteRegStr HKCR "sips-linphone\shell" "" "open"
-WriteRegStr HKCR "sips-linphone\shell\open" "" "command"
-WriteRegStr HKCR "sips-linphone\shell\open\command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+
+WriteRegStr HKCR "tel" "" "URL:tel Protocol"
+WriteRegStr HKCR "tel" "URL Protocol" ""
+
+WriteRegStr HKCR "callto" "" "URL:callto Protocol"
+WriteRegStr HKCR "callto" "URL Protocol" ""
+
+
+# Application protocol handlers
+
+## SIP
+WriteRegStr HKCR "@APPLICATION_NAME@.sip" "" "@APPLICATION_NAME@ sip Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.sip\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sip\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sip\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sip" "@APPLICATION_NAME@.sip"
+
+## SIP-LINPHONE
+WriteRegStr HKCR "@APPLICATION_NAME@.sip-linphone" "" "@APPLICATION_NAME@ sip-linphone Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.sip-linphone\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sip-linphone\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sip-linphone\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sip-linphone" "@APPLICATION_NAME@.sip-linphone"
+
+## SIPS
+WriteRegStr HKCR "@APPLICATION_NAME@.sips" "" "@APPLICATION_NAME@ sips Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.sips\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sips\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sips\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sips" "@APPLICATION_NAME@.sips"
+
+## SIPS-LINPHONE
+WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone" "" "@APPLICATION_NAME@ sips-linphone Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sips-linphone" "@APPLICATION_NAME@.sips-linphone"
+
+## TEL
+WriteRegStr HKCR "@APPLICATION_NAME@.tel" "" "@APPLICATION_NAME@ tel Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.tel\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.tel\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.tel\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "tel" "@APPLICATION_NAME@.tel"
+
+## CALLTO
+WriteRegStr HKCR "@APPLICATION_NAME@.callto" "" "@APPLICATION_NAME@ callto Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.callto\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.callto\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.callto\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "callto" "@APPLICATION_NAME@.callto"

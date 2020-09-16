@@ -383,7 +383,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
   }
 
   string scheme = address->getScheme();
-  for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone" })
+  for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone", "tel", "callto" })
     if (scheme == validScheme)
       goto success;
   qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.")
