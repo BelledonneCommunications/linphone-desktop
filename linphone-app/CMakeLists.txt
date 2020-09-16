@@ -23,6 +23,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(linphoneqt VERSION 4.2.3)
 
+
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
 	message("Options : ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
@@ -361,15 +362,23 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 get_directory_property(TS_FILES DIRECTORY "${LANGUAGES_DIRECTORY}"  DEFINITION TS_FILES)
 list(APPEND SOURCES ${TS_FILES})
 
+# set application details
+if(WIN32)
+	string(TIMESTAMP CURRENT_YEAR "%Y")
+	set(COPYRIGTH_RANGE_DATE "2010-${CURRENT_YEAR}")
+	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/linphone_package/windows/appDetailsWindows.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc")
+	set(RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc)
+endif()
+
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
 if(TARGET_NAME_ONLY)
     add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES}})
 endif()
 if (WIN32)
-    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
     if(TARGET_NAME_ONLY)
-        add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+	add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
     endif()
 else ()
     add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
@@ -489,4 +498,7 @@ source_group(
     )
 source_group(
     "Lang" REGULAR_EXPRESSION ".+\.ts$"
+    )
+source_group(
+    "Rc" REGULAR_EXPRESSION ".+\.rc$"
     )

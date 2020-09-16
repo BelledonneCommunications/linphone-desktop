@@ -726,7 +726,7 @@ void App::setAutoStart (bool enabled) {
     "Icon=\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
-    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;\n"
+    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
   );
 
   mAutoStart = enabled;

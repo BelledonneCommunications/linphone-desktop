@@ -7,5 +7,5 @@ Exec=@EXECUTABLE_NAME@ %u
 Icon=@EXECUTABLE_NAME@
 Terminal=false
 Categories=Network;Telephony;
-MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;
+MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;
 X-PulseAudio-Properties=media.role=phone
