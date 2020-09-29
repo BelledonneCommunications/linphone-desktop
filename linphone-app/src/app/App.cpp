@@ -161,7 +161,7 @@ static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
   string configPath;
   if(!QUrl(filePath).isRelative())
     configPath = Utils::appStringToCoreString(FileDownloader::synchronousDownload(filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
-  if( configPath == "" && QFile::exists(filePath))
+  if( configPath == "")
     configPath = Paths::getConfigFilePath(filePath, false);
   if( configPath == "" )
     configPath = Paths::getConfigFilePath("", false);
@@ -763,7 +763,7 @@ void App::setAutoStart (bool enabled) {
     "Icon=\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
-    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;\n"
+    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
   );
 
   mAutoStart = enabled;
@@ -863,9 +863,9 @@ void App::openAppAfterInit (bool mustBeIconified) {
   if( mParser->isSet("call")){
     QString sipAddress = mParser->value("call");
     mParser->parse(cleanParserKeys(QStringList("call")));
-    if(coreManager->started())
+    if(coreManager->started()){
       coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-    else{
+    }else{
       QObject * context = new QObject();
       QObject::connect(CoreManager::getInstance(), &CoreManager::coreStarted,context,
       [sipAddress,coreManager, context]() mutable {

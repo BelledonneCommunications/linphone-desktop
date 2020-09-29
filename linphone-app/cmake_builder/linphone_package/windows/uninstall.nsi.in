@@ -5,7 +5,19 @@ Abort
 
 notRunningInUninstall:
 
-DeleteRegKey HKCR "sip"
-DeleteRegKey HKCR "sip-linphone"
-DeleteRegKey HKCR "sips"
-DeleteRegKey HKCR "sips-linphone"
+## Application
+
+DeleteRegKey HKLM "SOFTWARE\IM Providers\@APPLICATION_NAME@"
+DeleteRegKey HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@"
+DeleteRegValue HKLM "SOFTWARE\RegisteredApplications" "@APPLICATION_NAME@"
+
+## Handlers
+
+DeleteRegKey HKCR "@APPLICATION_NAME@.sip"
+DeleteRegKey HKCR "@APPLICATION_NAME@.sip-linphone"
+DeleteRegKey HKCR "@APPLICATION_NAME@.sips"
+DeleteRegKey HKCR "@APPLICATION_NAME@.sips-linphone"
+DeleteRegKey HKCR "@APPLICATION_NAME@.linphone-config"
+DeleteRegKey HKCR "@APPLICATION_NAME@.tel"
+DeleteRegKey HKCR "@APPLICATION_NAME@.callto"
+

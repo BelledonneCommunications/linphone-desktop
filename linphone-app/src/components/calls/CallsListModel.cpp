@@ -113,7 +113,24 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
   }
 
   CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
-  core->inviteAddressWithParams(address, params);
+  shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
+  if(currentProxyConfig){
+    if(currentProxyConfig->getState() == linphone::RegistrationState::Ok)
+      core->inviteAddressWithParams(address, params);
+    else{
+            QObject * context = new QObject();
+            QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,context,
+            [address,core,params,currentProxyConfig, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
+              if(context && proxyConfig==currentProxyConfig && state==linphone::RegistrationState::Ok){
+                delete context;
+                context = nullptr;
+                core->inviteAddressWithParams(address, params);
+              }
+            });
+            //registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
+    }
+  }else
+    core->inviteAddressWithParams(address, params);
 }
 
 void CallsListModel::launchVideoCall (const QString &sipAddress) const {

@@ -464,8 +464,6 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
       }
     }
   }
-
-  
 }
 
 void Cli::showHelp () {
