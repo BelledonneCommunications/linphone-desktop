@@ -159,8 +159,9 @@ static inline bool installLocale (App &app, QTranslator &translator, const QLoca
 static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
   QString filePath = parser.value("config");
   string configPath;
-  if(!QUrl(filePath).isRelative())
-    configPath = Utils::appStringToCoreString(FileDownloader::synchronousDownload(filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
+  if(!QUrl(filePath).isRelative()){
+        configPath = Utils::appStringToCoreString(FileDownloader::synchronousDownload(filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
+  }
   if( configPath == "")
     configPath = Paths::getConfigFilePath(filePath, false);
   if( configPath == "" )
@@ -175,7 +176,30 @@ static inline shared_ptr<linphone::Config> getConfigIfExists (const string &conf
 
   return linphone::Config::newWithFactory(configPath, factoryPath);
 }
-
+bool App::setFetchConfig (QCommandLineParser *parser) {
+  bool fetched = false;
+  QString filePath = parser->value("fetch-config");
+  if( !filePath.isEmpty()){
+    if(QUrl(filePath).isRelative()){// this is a file path
+        filePath = Utils::coreStringToAppString(Paths::getConfigFilePath(filePath, false));
+        if(!filePath.isEmpty())
+            filePath = "file://"+filePath;
+    }
+    if(!filePath.isEmpty()){
+      auto instance = CoreManager::getInstance();
+      if(instance){
+        auto core = instance->getCore();
+        if(core){
+            filePath.replace('\\','/');
+            core->setProvisioningUri(Utils::appStringToCoreString(filePath));
+            parser->process(cleanParserKeys(parser, QStringList("fetch-config")));// Remove this parameter from the parser
+            fetched = true;
+        }
+      }
+    }
+  }
+  return fetched;
+}
 // -----------------------------------------------------------------------------
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -228,8 +252,8 @@ App::~App () {
 
 // -----------------------------------------------------------------------------
 
-QStringList App::cleanParserKeys(QStringList keys){
-  QStringList oldArguments = mParser->optionNames();
+QStringList App::cleanParserKeys(QCommandLineParser * parser, QStringList keys){
+  QStringList oldArguments = parser->optionNames();
   QStringList parameters;
   parameters << "dummy";
   for(int i = 0 ; i < oldArguments.size() ; ++i){
@@ -237,7 +261,7 @@ QStringList App::cleanParserKeys(QStringList keys){
       if( mParser->value(oldArguments[i]).isEmpty())
         parameters << "--"+oldArguments[i];
       else
-        parameters << "--"+oldArguments[i]+"="+mParser->value(oldArguments[i]);
+        parameters << "--"+oldArguments[i]+"="+parser->value(oldArguments[i]);
     }
   }
   return parameters;
@@ -245,7 +269,7 @@ QStringList App::cleanParserKeys(QStringList keys){
 
 void App::processArguments(QHash<QString,QString> args){
   QList<QString> keys = args.keys();
-  QStringList parameters = cleanParserKeys(keys);
+  QStringList parameters = cleanParserKeys(mParser, keys);
   for(auto i = keys.begin() ; i != keys.end() ; ++i){
     parameters << "--"+(*i)+"="+args.value(*i);
   }
@@ -277,9 +301,12 @@ void App::initContentApp () {
   std::string configPath;
   shared_ptr<linphone::Config> config;
   bool mustBeIconified = false;
+  bool needRestart = true;
 
   // Destroy qml components and linphone core if necessary.
   if (mEngine) {
+    needRestart = false;
+    setFetchConfig(mParser);
     setOpened(false);
     qInfo() << QStringLiteral("Restarting app...");
     delete mEngine;
@@ -376,7 +403,7 @@ void App::initContentApp () {
         openAppAfterInit(mustBeIconified);
     }
   );
-  
+
   // Execute command argument if needed.
   const QString commandArgument = getCommandArgument();
   if (!commandArgument.isEmpty()) {
@@ -470,6 +497,7 @@ void App::createParser () {
     { "cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME) },
     { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg") },
+    { "fetch-config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg") },
     { { "c", "call" }, "make a call","sip address" },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
@@ -837,12 +865,6 @@ void App::openAppAfterInit (bool mustBeIconified) {
       qWarning("System tray not found on this system.");
     else
       setTrayIcon();
-
-    if (!mustBeIconified)
-      smartShowWindow(mainWindow);
-  #else
-    Q_UNUSED(mustBeIconified);
-    smartShowWindow(mainWindow);
   #endif // ifndef __APPLE__
 
   // Display Assistant if it does not exist proxy config.
@@ -859,25 +881,36 @@ void App::openAppAfterInit (bool mustBeIconified) {
     checkForUpdate();
   #endif // ifdef ENABLE_UPDATE_CHECK
 
+  if(setFetchConfig(mParser))
+        restart();
+  else{
 // Launch call if wanted and clean parser
-  if( mParser->isSet("call")){
-    QString sipAddress = mParser->value("call");
-    mParser->parse(cleanParserKeys(QStringList("call")));
-    if(coreManager->started()){
-      coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-    }else{
-      QObject * context = new QObject();
-      QObject::connect(CoreManager::getInstance(), &CoreManager::coreStarted,context,
-      [sipAddress,coreManager, context]() mutable {
-        if(context){
-          delete context;
-          context = nullptr;
+      if( mParser->isSet("call")){
+        QString sipAddress = mParser->value("call");
+        mParser->parse(cleanParserKeys(mParser, QStringList("call")));// Clean call from parser
+        if(coreManager->started()){
           coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+        }else{
+          QObject * context = new QObject();
+          QObject::connect(CoreManager::getInstance(), &CoreManager::coreStarted,context,
+          [sipAddress,coreManager, context]() mutable {
+            if(context){
+              delete context;
+              context = nullptr;
+              coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+            }
+          });
         }
-      });
-    }
+      }
+#ifndef __APPLE__
+      if (!mustBeIconified)
+        smartShowWindow(mainWindow);
+#else
+      Q_UNUSED(mustBeIconified);
+      smartShowWindow(mainWindow);
+#endif
+      setOpened(true);
   }
-  setOpened(true);
 }
 
 // -----------------------------------------------------------------------------

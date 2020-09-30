@@ -229,8 +229,7 @@ string Paths::getConfigFilePath (const QString &configPath, bool writable) {
             if(!QFile::exists(path))
                 path = "";
         }
-    }
-    if(path.isEmpty())
+    }else
         path = getAppConfigFilePath();
   return writable ? getWritableFilePath(path) : getReadableFilePath(path);
 }

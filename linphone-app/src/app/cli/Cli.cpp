@@ -433,12 +433,12 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
     }else{
       if( scheme == "linphone-config" ){
         QHash<QString, QString> args = parseArgs(command);
-        if(args.contains("config"))
-          args["config"] = QByteArray::fromBase64(args["config"].toUtf8() );
+        if(args.contains("fetch-config"))
+          args["fetch-config"] = QByteArray::fromBase64(args["fetch-config"].toUtf8() );
         else {
           QUrl url(command);
           url.setScheme("https");
-          args["config"] = url.toString();
+          args["fetch-config"] = url.toString();
         }
         if (format)
           *format = CliFormat;

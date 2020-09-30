@@ -54,7 +54,6 @@ public:
   }
 
   std::shared_ptr<linphone::Core> getCore () {
-    Q_CHECK_PTR(mCore);
     return mCore;
   }
 
