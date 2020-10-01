@@ -222,13 +222,16 @@ string Paths::getConfigDirPath (bool writable) {
 string Paths::getConfigFilePath (const QString &configPath, bool writable) {
     QString path;
     if( !configPath.isEmpty()){
-        path = QFileInfo(configPath).absoluteFilePath();
-        if(!QFile::exists(path)){// This file cannot be found in the current folder. Check if it exists in standard folder
+        QFileInfo file(configPath);
+        if( !file.exists() || !file.isFile()){// This file cannot be found in the current folder. Check if it exists in standard folder
             QString defaultConfigPath = Utils::coreStringToAppString(getConfigDirPath(writable));
-            path = QFileInfo(defaultConfigPath+QDir::separator()+configPath).absoluteFilePath();
-            if(!QFile::exists(path))
+            file = QFileInfo(defaultConfigPath+QDir::separator()+configPath);
+            if( !file.exists() || !file.isFile())
                 path = "";
-        }
+            else
+                path =file.absoluteFilePath();
+        }else
+            path =file.absoluteFilePath();
     }else
         path = getAppConfigFilePath();
   return writable ? getWritableFilePath(path) : getReadableFilePath(path);
