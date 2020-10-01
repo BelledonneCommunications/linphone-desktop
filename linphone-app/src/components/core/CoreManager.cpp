@@ -165,6 +165,7 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 void CoreManager::uninit () {
   if (mInstance) {
     connect(mInstance, &QObject::destroyed, []()mutable{mInstance = nullptr;});
+    mInstance->mCbsTimer->stop();
     mInstance->deleteLater();// Ensure to take time to delete the instance
     QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
   }
