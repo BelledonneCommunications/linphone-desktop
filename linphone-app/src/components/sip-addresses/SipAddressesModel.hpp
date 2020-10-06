@@ -32,6 +32,7 @@ class QUrl;
 
 class ChatModel;
 class CoreHandlers;
+class HistoryModel;
 
 class SipAddressesModel : public QAbstractListModel {
   Q_OBJECT;
@@ -82,6 +83,9 @@ public:
   // ---------------------------------------------------------------------------
 signals:
   void sipAddressReset();// The model has been reset
+ 
+public slots:
+  void handleAllCallCountReset ();
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
@@ -90,6 +94,7 @@ private:
   // ---------------------------------------------------------------------------
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
+  void handleHistoryModelCreated (HistoryModel *historyModel) ;
 
   void handleContactAdded (ContactModel *contact);
   void handleContactRemoved (const ContactModel *contact);
@@ -103,6 +108,7 @@ private:
 
   void handleAllEntriesRemoved (ChatModel *chatModel);
   void handleLastEntryRemoved (ChatModel *chatModel);
+  
   void handleMessageCountReset (ChatModel *chatModel);
 
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);

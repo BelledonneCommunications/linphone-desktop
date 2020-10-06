@@ -110,6 +110,7 @@ ApplicationWindow {
 
             TooltipArea {
               text: AccountSettingsModel.sipAddress
+              hoveringCursor: Qt.PointingHandCursor
             }
 
             onClicked:  {
@@ -260,12 +261,14 @@ ApplicationWindow {
             Layout.fillWidth: true
             model: TimelineModel
 
-            onEntrySelected: setView('Conversation', {
-              peerAddress: entry,
-              localAddress: AccountSettingsModel.sipAddress,
-              fullPeerAddress: entry,
-              fullLocalAddress: AccountSettingsModel.fullSipAddress
-            })
+            onEntrySelected: (entry?setView('Conversation', {
+                 peerAddress: entry,
+                 localAddress: AccountSettingsModel.sipAddress,
+                 fullPeerAddress: entry,
+                 fullLocalAddress: AccountSettingsModel.fullSipAddress
+                }):
+                 setView('HistoryView', {})
+            )
           }
         }
 
@@ -279,7 +282,7 @@ ApplicationWindow {
           Layout.fillWidth: true
 
           source: 'Home.qml'
-        }		
+        }
       }
     }
   }
@@ -287,7 +290,7 @@ ApplicationWindow {
   // ---------------------------------------------------------------------------
   // Url handlers.
   // ---------------------------------------------------------------------------
-
+    
   Connections {
     target: UrlHandlers
 

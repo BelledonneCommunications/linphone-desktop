@@ -6,35 +6,31 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
-import 'Chat.js' as Logic
+import 'History.js' as Logic
 
 // =============================================================================
 
 Rectangle {
   id: container
 
-  property alias proxyModel: chat.model
+  property alias proxyModel: history.model
+  signal entryClicked(string sipAddress)
 
   // ---------------------------------------------------------------------------
 
-  signal messageToSend (string text)
-
-  // ---------------------------------------------------------------------------
-
-  color: ChatStyle.color
+  color: HistoryStyle.color
 
   ColumnLayout {
     anchors.fill: parent
     spacing: 0
 
     ScrollableListView {
-      id: chat
+      id: history
 
       // -----------------------------------------------------------------------
 
       property bool bindToEnd: false
       property bool tryToLoadMoreEntries: true
-      property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
 
       // -----------------------------------------------------------------------
 
@@ -77,28 +73,28 @@ Rectangle {
         id: sectionHeading
 
         Item {
-          implicitHeight: container.height + ChatStyle.sectionHeading.bottomMargin
+          implicitHeight: container.height + HistoryStyle.sectionHeading.bottomMargin
           width: parent.width
 
           Borders {
             id: container
 
-            borderColor: ChatStyle.sectionHeading.border.color
-            bottomWidth: ChatStyle.sectionHeading.border.width
+            borderColor: HistoryStyle.sectionHeading.border.color
+            bottomWidth: HistoryStyle.sectionHeading.border.width
             implicitHeight: text.contentHeight +
-              ChatStyle.sectionHeading.padding * 2 +
-              ChatStyle.sectionHeading.border.width * 2
-            topWidth: ChatStyle.sectionHeading.border.width
+              HistoryStyle.sectionHeading.padding * 2 +
+              HistoryStyle.sectionHeading.border.width * 2
+            topWidth: HistoryStyle.sectionHeading.border.width
             width: parent.width
 
             Text {
               id: text
 
               anchors.fill: parent
-              color: ChatStyle.sectionHeading.text.color
+              color: HistoryStyle.sectionHeading.text.color
               font {
                 bold: true
-                pointSize: ChatStyle.sectionHeading.text.pointSize
+                pointSize: HistoryStyle.sectionHeading.text.pointSize
               }
               horizontalAlignment: Text.AlignHCenter
               verticalAlignment: Text.AlignVCenter
@@ -130,18 +126,17 @@ Rectangle {
 
         anchors {
           left: parent ? parent.left : undefined
-          leftMargin: ChatStyle.entry.leftMargin
+          leftMargin: HistoryStyle.entry.leftMargin
           right: parent ? parent.right : undefined
 
-          rightMargin: ChatStyle.entry.deleteIconSize +
-            ChatStyle.entry.message.extraContent.spacing +
-            ChatStyle.entry.message.extraContent.rightMargin +
-            ChatStyle.entry.message.extraContent.leftMargin +
-            ChatStyle.entry.message.outgoing.areaSize
+          rightMargin: HistoryStyle.entry.deleteIconSize +
+            HistoryStyle.entry.message.extraContent.spacing +
+            HistoryStyle.entry.message.extraContent.rightMargin +
+            HistoryStyle.entry.message.extraContent.leftMargin
         }
 
-        color: ChatStyle.color
-        implicitHeight: layout.height + ChatStyle.entry.bottomMargin
+        color: HistoryStyle.color
+        implicitHeight: layout.height + HistoryStyle.entry.bottomMargin
 
         // ---------------------------------------------------------------------
 
@@ -162,13 +157,13 @@ Rectangle {
             // Display time.
             Text {
               Layout.alignment: Qt.AlignTop
-              Layout.preferredHeight: ChatStyle.entry.lineHeight
-              Layout.preferredWidth: ChatStyle.entry.time.width
+              Layout.preferredHeight: HistoryStyle.entry.lineHeight
+              Layout.preferredWidth: HistoryStyle.entry.time.width
 
-              color: ChatStyle.entry.time.color
-              font.pointSize: ChatStyle.entry.time.pointSize
+              color: HistoryStyle.entry.time.color
+              font.pointSize: HistoryStyle.entry.time.pointSize
 
-              text: $chatEntry.timestamp.toLocaleString(
+              text: $historyEntry.timestamp.toLocaleString(
                 Qt.locale(App.locale),
                 'hh:mm'
               )
@@ -176,54 +171,22 @@ Rectangle {
               verticalAlignment: Text.AlignVCenter
 
               TooltipArea {
-                text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
+                text: $historyEntry.timestamp.toLocaleString(Qt.locale(App.locale))
               }
             }
 
             // Display content.
             Loader {
+              id:entryLoader
               Layout.fillWidth: true
-              source: Logic.getComponentFromEntry($chatEntry)
+              source: Logic.getComponentFromEntry($historyEntry)
             }
+             Connections{
+                target:entryLoader.item
+                onEntryClicked:{entryClicked(sipAddress)}
+              }
           }
         }
-      }
-
-      footer: Text {
-        color: ChatStyle.composingText.color
-        font.pointSize: ChatStyle.composingText.pointSize
-        height: visible ? ChatStyle.composingText.height : 0
-        leftPadding: ChatStyle.composingText.leftPadding
-        visible: text.length > 0
-
-        text: Logic.getIsComposingMessage()
-      }
-    }
-
-    // -------------------------------------------------------------------------
-    // Send area.
-    // -------------------------------------------------------------------------
-
-    Borders {
-      Layout.fillWidth: true
-      Layout.preferredHeight: ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
-
-      borderColor: ChatStyle.sendArea.border.color
-      topWidth: ChatStyle.sendArea.border.width
-      visible: SettingsModel.chatEnabled
-
-      DroppableTextArea {
-        id: textArea
-
-        anchors.fill: parent
-
-        dropEnabled: SettingsModel.fileTransferUrl.length > 0
-        dropDisabledReason: qsTr('noFileTransferUrl')
-        placeholderText: qsTr('newMessagePlaceholder')
-
-        onDropped: Logic.handleFilesDropped(files)
-        onTextChanged: Logic.handleTextChanged(text)
-        onValidText: Logic.sendMessage(text)
       }
     }
   }
@@ -237,6 +200,6 @@ Rectangle {
     repeat: true
     running: true
 
-    onTriggered: chat.bindToEnd && chat.positionViewAtEnd()
+    onTriggered: history.bindToEnd && history.positionViewAtEnd()
   }
 }

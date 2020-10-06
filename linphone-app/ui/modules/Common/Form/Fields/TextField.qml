@@ -43,7 +43,7 @@ Controls.TextField {
     MouseArea {
       anchors.right: parent.right
       height: parent.height
-      hoverEnabled: true
+      cursorShape: Qt.ArrowCursor
       implicitWidth: tools ? tools.width : 0
 
       Rectangle {
