@@ -134,6 +134,7 @@ ColumnLayout  {
     onEntryClicked:{
         historyView.fullPeerAddress=sipAddress
         historyView.peerAddress=sipAddress
+        historyProxyModel.resetMessageCount()
     }
 
     proxyModel: HistoryProxyModel {

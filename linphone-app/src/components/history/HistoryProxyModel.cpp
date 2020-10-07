@@ -156,5 +156,6 @@ void HistoryProxyModel::handleIsActiveChanged (QWindow *window) {
 	auto model = CoreManager::getInstance()->getHistoryModel();
 	if (model && window->isActive() && getParentWindow(this) == window) {
 		model->focused();
+		model->resetMessageCount();
 	}
 }
