@@ -127,7 +127,6 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
                 core->inviteAddressWithParams(address, params);
               }
             });
-            //registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
     }
   }else
     core->inviteAddressWithParams(address, params);

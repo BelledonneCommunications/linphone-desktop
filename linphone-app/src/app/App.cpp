@@ -497,8 +497,8 @@ void App::createParser () {
     { "cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME) },
     { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg") },
-    { "fetch-config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg") },
-    { { "c", "call" }, "make a call","sip address" },
+    { "fetch-config", tr("commandLineOptionFetchConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionFetchConfigArg") },
+    { { "c", "call" }, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME),tr("commandLineOptionCallArg") },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS
