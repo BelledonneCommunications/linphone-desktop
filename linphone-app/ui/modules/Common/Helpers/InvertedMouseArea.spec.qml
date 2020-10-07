@@ -2,7 +2,7 @@ import QtQuick 2.7
 import QtTest 1.1
 
 import Utils 1.0
-
+import Common 1.0
 // =============================================================================
 
 Rectangle {

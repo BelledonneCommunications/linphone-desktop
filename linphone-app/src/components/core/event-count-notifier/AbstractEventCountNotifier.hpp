@@ -35,6 +35,7 @@ namespace linphone {
 
 class CallModel;
 class ChatModel;
+class HistoryModel;
 
 class AbstractEventCountNotifier : public QObject {
   Q_OBJECT;
@@ -67,7 +68,10 @@ private:
   void internalnotifyEventCount ();
 
   void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
-
+  void handleHistoryModelCreated (HistoryModel *historyModel);
+  
+  
+  void handleResetAllMissedCalls ();
   void handleResetMissedCalls (ChatModel *chatModel);
   void handleCallMissed (CallModel *callModel);
 

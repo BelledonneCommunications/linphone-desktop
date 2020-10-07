@@ -42,7 +42,7 @@ Rectangle {
 
   MouseArea {
     anchors.fill: parent
-    hoverEnabled: true
+    cursorShape: Qt.ArrowCursor
     visible: field.readOnly
 
     onWheel: wheel.accepted = true

@@ -833,6 +833,25 @@ URL del server non configurato.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Sei sicuro di voler cancellare questa cronologia?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Modifica contatto</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Aggiungi contatto</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Cancella cronologia</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>

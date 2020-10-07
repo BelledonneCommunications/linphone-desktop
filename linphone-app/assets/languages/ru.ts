@@ -833,6 +833,25 @@
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Вы уверены, что хотите очистить эту историю?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Изменить контакт</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Добавить контакт</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Удалить историю</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>

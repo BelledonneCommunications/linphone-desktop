@@ -833,6 +833,25 @@
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">你确定要清除该历史吗？</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">编辑联系人</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">添加联系人</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">删除历史记录</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>

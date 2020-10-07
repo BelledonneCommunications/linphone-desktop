@@ -833,6 +833,25 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Are you sure you want to clear this history?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Edit contact</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Add contact</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Delete history</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
