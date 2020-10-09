@@ -187,7 +187,7 @@ bool VcardModel::setAvatar (const QString &path) {
 // -----------------------------------------------------------------------------
 
 QString VcardModel::getUsername () const {
-  return QString::fromStdString(mVcard->getFullName());// Is in UTF8
+  return decode(QString::fromStdString(mVcard->getFullName()));// Is in UTF8
 }
 
 void VcardModel::setUsername (const QString &username) {
@@ -196,7 +196,7 @@ void VcardModel::setUsername (const QString &username) {
   if (username.length() == 0 || username == getUsername())
     return;
 
-  mVcard->setFullName(Utils::appStringToCoreString(username));
+  mVcard->setFullName(encode(username).toStdString());
   emit vcardUpdated();
 }
 
@@ -504,4 +504,24 @@ void VcardModel::removeUrl (const QString &url) {
 bool VcardModel::updateUrl (const QString &oldUrl, const QString &url) {
   removeUrl(oldUrl);
   return addUrl(url);
+}
+
+QString VcardModel::encode(const QString& data)const{// Convert '\n', ',', '\' to  "\n", "\,", "\\"
+    QString encoded;
+    for(int i = 0 ; i < data.length() ; ++i){
+        if(data[i] == ',')
+            encoded += "\\,";
+        else if(data[i] == '\\')
+            encoded += "\\\\";
+        else if(data[i] == '\n')
+            encoded += "\\n";
+        else
+            encoded += data[i];
+    }
+    return encoded;
+}
+QString VcardModel::decode(const QString& data)const{// Convert "\n", "\,", "\\" to '\n', ',', '\'
+    QString decoded = data;
+    decoded.replace("\\,", ",").replace("\\\\", "\\").replace("\\n", "\n");
+    return decoded;
 }
