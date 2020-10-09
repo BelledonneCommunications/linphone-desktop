@@ -187,7 +187,7 @@ bool VcardModel::setAvatar (const QString &path) {
 // -----------------------------------------------------------------------------
 
 QString VcardModel::getUsername () const {
-  return Utils::coreStringToAppString(mVcard->getFullName());
+  return QString::fromStdString(mVcard->getFullName());// Is in UTF8
 }
 
 void VcardModel::setUsername (const QString &username) {
