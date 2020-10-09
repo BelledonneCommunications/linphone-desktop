@@ -826,9 +826,21 @@ void App::openAppAfterInit (bool mustBeIconified) {
 }
 
 // -----------------------------------------------------------------------------
-
+QString App::getStrippedApplicationVersion(){// x.y.z but if 'z-*' then x.y.z-1
+	QString currentVersion = applicationVersion();
+	QStringList versions = currentVersion.split('.');
+	if(versions.size() >=3){
+		currentVersion = versions[0]+"."+versions[1]+".";
+		QStringList patchVersions = versions[2].split('-');
+		if( patchVersions.size() > 1)
+			currentVersion += QString::number(patchVersions[0].toInt()-1);
+		else
+			currentVersion += patchVersions[0];
+	}
+	return currentVersion;
+}
 void App::checkForUpdate () {
   CoreManager::getInstance()->getCore()->checkForUpdate(
-    Utils::appStringToCoreString(applicationVersion())
+    Utils::appStringToCoreString(getStrippedApplicationVersion())
   );
 }
