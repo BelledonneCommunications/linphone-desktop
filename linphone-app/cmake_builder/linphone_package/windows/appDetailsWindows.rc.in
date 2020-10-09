@@ -8,7 +8,7 @@ A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "assets/icon.ico"
 
 VS_VERSION_INFO VERSIONINFO
     PRODUCTVERSION ${version_major},${version_minor},${version_patch},0
-    FILEVERSION ${version_major},${version_minor},${version_patch},${identifiers}
+    FILEVERSION ${version_major},${version_minor},${version_patch},0
     FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
     FILEFLAGS VS_FF_DEBUG
