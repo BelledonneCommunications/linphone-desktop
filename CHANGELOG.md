@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## 4.2.3 - 2020-10-09
+
+### Added
+
+- Add support to tel and callto protocols
+- Allow Pulseaudio to switch devices automatically. For example, it will mute all applications that have music when receive a call from Linphone.
+
+### Fixed
+
+- Contact name can contain special characters
+- Avoid to reduce window if it is currently maximized when clicking on contacts
+- Cleaner use of Windows registries
+
+## 4.2.2 - 2020-07-30
+
+### Fixed
+
+- Crash on Opus
+
+## 4.2.1 - 2020-07-03
+
+### Fixed
+
+- Crash on registration
+- Multiple popup were hidden : show them as a stack view
+
 ## 4.2.0 - 2020-06-26
 
 ### Added
