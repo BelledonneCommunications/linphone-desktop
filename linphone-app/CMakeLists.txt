@@ -393,8 +393,8 @@ if (WIN32)
         install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
     endif()
 elseif (APPLE)
-    add_executable(${TARGET_NAME} MACOSX_BUNDLE $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-    install(TARGETS linphone-qt BUNDLE DESTINATION "${CMAKE_INSTALL_PREFIX}") # using ${TARGET_NAME} lead to cmake error on target name. Use directly linphone-qt.
+    add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${APPLICATION_NAME}.app/Contents/MacOs") # using ${TARGET_NAME} lead to cmake error on target name. Use directly linphone-qt.
 else ()
     add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
     install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
