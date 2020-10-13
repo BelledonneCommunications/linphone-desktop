@@ -388,8 +388,16 @@ add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RES
 
 if (WIN32)
     add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}") 
+    if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+        install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+elseif (APPLE)
+    add_executable(${TARGET_NAME} MACOSX_BUNDLE $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+    install(TARGETS linphone-qt BUNDLE DESTINATION "${CMAKE_INSTALL_PREFIX}") # using ${TARGET_NAME} lead to cmake error on target name. Use directly linphone-qt.
 else ()
     add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 endif ()
 set_source_files_properties( ${APP_LIBRARY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
 
@@ -482,17 +490,6 @@ add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 # ------------------------------------------------------------------------------
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
-
-if(WIN32)
-    install(PROGRAMS "$<TARGET_FILE:${TARGET_NAME}⁣>" DESTINATION "${CMAKE_INSTALL_BINDIR}")
-    if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
-        install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
-    endif()
-elseif(APPLE)
-    install(PROGRAMS "$<TARGET_FILE:${TARGET_NAME}⁣>" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")
-else()
-    install(PROGRAMS "$<TARGET_FILE:${TARGET_NAME}>" DESTINATION "${CMAKE_INSTALL_BINDIR}")
-endif()
 
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
