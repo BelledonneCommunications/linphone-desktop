@@ -385,27 +385,12 @@ endif()
 
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
-if(TARGET_NAME_ONLY)
-    add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES}})
-endif()
+
 if (WIN32)
     add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
-    if(TARGET_NAME_ONLY)
-	add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
-    endif()
 else ()
     add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-    if(TARGET_NAME_ONLY)
-        add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-    endif()
 endif ()
-if(TARGET_NAME_ONLY)
-    target_compile_options(${TARGET_NAME_ONLY} PRIVATE -fPIC)
-    set_source_files_properties( ${APP_LIBRARY_ONLY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
-    set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
-    set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY AUTORCC ON)
-    set_target_properties(${TARGET_NAME_ONLY} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-endif()
 set_source_files_properties( ${APP_LIBRARY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
 
 set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
@@ -421,7 +406,6 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}"
 
 if(MSVC)
     set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
-    set_target_properties(${TARGET_NAME_ONLY} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
 endif()
 
 #ExternalProject_Get_Property(project_a install_dir)
@@ -481,14 +465,6 @@ endif ()
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-
-if(TARGET_NAME_ONLY)
-    target_include_directories(${APP_LIBRARY_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-    target_include_directories(${TARGET_NAME_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-    target_link_libraries(${TARGET_NAME_ONLY} ${LIBRARIES})
-    add_dependencies(${APP_LIBRARY_ONLY} update_translations ${TARGET_NAME}-git-version)
-    add_dependencies(${TARGET_NAME_ONLY} update_translations )
-endif()
     
 #target_link_libraries(${APP_LIBRARY} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
@@ -507,8 +483,20 @@ add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 
+if(WIN32)
+    install(PROGRAMS "$<TARGET_FILE:${TARGET_NAME}⁣>" DESTINATION "${CMAKE_INSTALL_BINDIR}")
+    if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+        install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
+    endif()
+elseif(APPLE)
+    install(PROGRAMS "$<TARGET_FILE:${TARGET_NAME}⁣>" DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS")
+else()
+    install(PROGRAMS "$<TARGET_FILE:${TARGET_NAME}>" DESTINATION "${CMAKE_INSTALL_BINDIR}")
+endif()
+
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
+
 
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.
