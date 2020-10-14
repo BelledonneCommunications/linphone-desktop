@@ -50,6 +50,7 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
+list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/cmake")
 
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
@@ -470,10 +471,8 @@ if (APPLE)
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-    
-#target_link_libraries(${APP_LIBRARY} ${LIBRARIES})
+
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 
 if(WIN32)
