@@ -1476,18 +1476,6 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <source>generalTitle</source>
         <translation>General</translation>
     </message>
-    <message>
-        <source>RandomPort</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DeactivatedTransport</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>NotBoundPort</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>

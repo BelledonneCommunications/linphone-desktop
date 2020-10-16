@@ -1411,11 +1411,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation>Listening SIP UDP port</translation>
+        <translation>Set SIP/UDP listening port</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation>Listening SIP TCP port</translation>
+        <translation>Set SIP/TCP listening port</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -1480,18 +1480,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>generalTitle</source>
         <translation>General</translation>
-    </message>
-    <message>
-        <source>RandomPort</source>
-        <translation>Random</translation>
-    </message>
-    <message>
-        <source>DeactivatedTransport</source>
-        <translation>Deactivated</translation>
-    </message>
-    <message>
-        <source>NotBoundPort</source>
-        <translation>Not Bound</translation>
     </message>
 </context>
 <context>
