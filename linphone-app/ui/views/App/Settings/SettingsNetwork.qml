@@ -152,47 +152,41 @@ TabContainer {
       width: parent.width
 
       FormTable {
-        titles: [
-          qsTr('portHeader'),
-          qsTr('randomPortHeader'),
-          qsTr('enabledPortHeader')
-        ]
+        titles: []
+
 
         FormTableLine {
           title: qsTr('sipUdpPortLabel')
+          
 
           FormTableEntry {
             NumericField {
               minValue: 1
               maxValue: 65535
-              readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+              readOnly: !fixSipUdpPort.checked
 
               text: SettingsModel.udpPort
 
               onEditingFinished: SettingsModel.udpPort = text
+              
+              TextField{
+                readOnly: true
+                horizontalAlignment: TextInput.AlignHCenter
+                visible:SettingsModel.udpPort<=0
+                text:(SettingsModel.udpPort===-1?qsTr('RandomPort'):SettingsModel.udpPort===-2?qsTr('NotBoundPort'):SettingsModel.udpPort===0?qsTr('DeactivatedTransport'):"")
+              }
             }
           }
 
           FormTableEntry {
             Switch {
-              id: randomSipUdpPort
+              id: fixSipUdpPort
 
               readonly property int defaultPort: 5060
 
-              checked: SettingsModel.udpPort === -1
-              enabled: enableSipUdpPort.checked
+              checked: SettingsModel.udpPort > 0
 
-              onClicked: SettingsModel.udpPort = checked ? defaultPort : -1
-            }
-          }
-
-          FormTableEntry {
-            Switch {
-              id: enableSipUdpPort
-
-              checked: SettingsModel.udpPort !== 0
-
-              onClicked: SettingsModel.udpPort = checked ? 0 : -1
+              onClicked: SettingsModel.udpPort = (checked ? -2 : defaultPort)
             }
           }
         }
@@ -204,34 +198,30 @@ TabContainer {
             NumericField {
               minValue: 1
               maxValue: 65535
-              readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
+              readOnly: !fixSipTcpPort.checked
 
               text: SettingsModel.tcpPort
 
               onEditingFinished: SettingsModel.tcpPort = text
+              
+              TextField{
+                readOnly: true
+                horizontalAlignment: TextInput.AlignHCenter
+                visible: SettingsModel.tcpPort<=0
+                text:(SettingsModel.tcpPort===-1?qsTr('RandomPort'):SettingsModel.tcpPort===-2?qsTr('NotBoundPort'):SettingsModel.tcpPort===0?qsTr('DeactivatedTransport'):"")
+             }
             }
           }
 
           FormTableEntry {
             Switch {
-              id: randomSipTcpPort
+              id: fixSipTcpPort
 
               readonly property int defaultPort: 5060
 
-              checked: SettingsModel.tcpPort === -1
-              enabled: enableSipTcpPort.checked
+              checked: SettingsModel.tcpPort > 0 
 
-              onClicked: SettingsModel.tcpPort = checked ? defaultPort : -1
-            }
-          }
-
-          FormTableEntry {
-            Switch {
-              id: enableSipTcpPort
-
-              checked: SettingsModel.tcpPort !== 0
-
-              onClicked: SettingsModel.tcpPort = checked ? 0 : -1
+              onClicked: SettingsModel.tcpPort = (checked ? -2 : defaultPort)
             }
           }
         }

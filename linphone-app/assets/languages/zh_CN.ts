@@ -1421,18 +1421,6 @@
         <translation>视频 RTP UDP 端口</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>端口</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>使用随机端口</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>一起用端口</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP 域</translation>
     </message>
@@ -1487,6 +1475,18 @@
     <message>
         <source>generalTitle</source>
         <translation>将军</translation>
+    </message>
+    <message>
+        <source>RandomPort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeactivatedTransport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NotBoundPort</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

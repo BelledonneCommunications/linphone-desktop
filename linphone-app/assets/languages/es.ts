@@ -1421,18 +1421,6 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <translation>Puerto vídeo RTP UDP</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Puerto</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Usar puerto aleatorio</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Puerto activado</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>Campos DSCP</translation>
     </message>
@@ -1487,6 +1475,18 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>generalTitle</source>
         <translation>General</translation>
+    </message>
+    <message>
+        <source>RandomPort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeactivatedTransport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NotBoundPort</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

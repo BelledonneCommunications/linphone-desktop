@@ -1421,18 +1421,6 @@
         <translation>ビデオRTP UDPポート</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>ポート</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>ランダムポートを使用</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>有効なポート</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCPフィールド</translation>
     </message>
@@ -1487,6 +1475,18 @@
     <message>
         <source>generalTitle</source>
         <translation>将軍</translation>
+    </message>
+    <message>
+        <source>RandomPort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeactivatedTransport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NotBoundPort</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

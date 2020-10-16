@@ -1421,18 +1421,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Görüntü RTP UDP bağlantı noktası</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Bağlantı noktası</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Rastgele bir bağlantı noktası kullan</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Etkin bağlantı noktası</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP Alanları</translation>
     </message>
@@ -1487,6 +1475,18 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>generalTitle</source>
         <translation>Genel</translation>
+    </message>
+    <message>
+        <source>RandomPort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeactivatedTransport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NotBoundPort</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

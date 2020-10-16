@@ -1406,11 +1406,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation>Port SIP UDP</translation>
+        <translation>Port d&apos;écoute SIP UDP</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation>Port SIP TCP</translation>
+        <translation>Port d&apos;écoute SIP TCP</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -1419,18 +1419,6 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Port Vidéo RTP UDP</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Port</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Utiliser un port aléatoire</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Port activé</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
@@ -1487,6 +1475,18 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>generalTitle</source>
         <translation>Général</translation>
+    </message>
+    <message>
+        <source>RandomPort</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DeactivatedTransport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>NotBoundPort</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
