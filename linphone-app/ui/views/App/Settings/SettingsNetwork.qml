@@ -160,6 +160,7 @@ TabContainer {
 
 
           FormTableEntry {
+            width:fixSipUdpPort.width
             Switch {
               id: fixSipUdpPort
 
@@ -189,6 +190,7 @@ TabContainer {
           title: qsTr('sipTcpPortLabel')
 
           FormTableEntry {
+            width:fixSipTcpPort.width
             Switch {
               id: fixSipTcpPort
 
@@ -211,8 +213,6 @@ TabContainer {
               onEditingFinished: SettingsModel.tcpPort = text
             }
           }
-
-          
         }
 
         FormTableLine {
@@ -223,6 +223,8 @@ TabContainer {
           title: qsTr('audioRtpUdpPortLabel')
 
           FormTableEntry {
+          
+            width:randomAudioRtpUdpPort.width
             Switch {
               id: randomAudioRtpUdpPort
 
@@ -237,6 +239,7 @@ TabContainer {
           FormTableEntry {
             PortField {
               readOnly: !randomAudioRtpUdpPort.checked
+              visible: randomAudioRtpUdpPort.checked
               supportsRange: true
               text: SettingsModel.audioPortRange.join(':')
 
@@ -254,6 +257,7 @@ TabContainer {
           visible: SettingsModel.videoSupported
 
           FormTableEntry {
+            width:randomVideoRtpUdpPort.width
             Switch {
               id: randomVideoRtpUdpPort
 
