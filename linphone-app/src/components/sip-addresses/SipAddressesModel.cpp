@@ -30,6 +30,7 @@
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
@@ -59,6 +60,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
   mCoreHandlers = coreManager->getHandlers();
 
   QObject::connect(coreManager, &CoreManager::chatModelCreated, this, &SipAddressesModel::handleChatModelCreated);
+  QObject::connect(coreManager, &CoreManager::historyModelCreated, this, &SipAddressesModel::handleHistoryModelCreated);
 
   ContactsListModel *contacts = CoreManager::getInstance()->getContactsListModel();
   QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::handleContactAdded);
@@ -287,6 +289,11 @@ void SipAddressesModel::handleChatModelCreated (const shared_ptr<ChatModel> &cha
   QObject::connect(ptr, &ChatModel::messageSent, this, &SipAddressesModel::handleMessageSent);
 }
 
+void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
+  QObject::connect(historyModel, &HistoryModel::callCountReset, this, [this] {
+    handleAllCallCountReset();
+  });
+}
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
   for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses())
     addOrUpdateSipAddress(sipAddress.toString(), contact);
@@ -411,7 +418,16 @@ void SipAddressesModel::handleLastEntryRemoved (ChatModel *chatModel) {
   it2->timestamp = map["timestamp"].toDateTime();
   emit dataChanged(index(row, 0), index(row, 0));
 }
-
+void SipAddressesModel::handleAllCallCountReset () {
+  for( auto peer = mPeerAddressToSipAddressEntry.begin() ; peer != mPeerAddressToSipAddressEntry.end() ; ++peer){
+    for( auto local = peer->localAddressToConferenceEntry.begin() ; local != peer->localAddressToConferenceEntry.end() ; ++local){
+      local->missedCallCount = 0;
+      updateObservers(peer.key(), local.key(), local->unreadMessageCount, local->missedCallCount);
+    }
+    int row = mRefs.indexOf(&(*peer));
+    emit dataChanged(index(row, 0), index(row, 0));
+  }
+}
 void SipAddressesModel::handleMessageCountReset (ChatModel *chatModel) {
   const QString &peerAddress = Utils::cleanSipAddress(chatModel->getPeerAddress());
   auto it = mPeerAddressToSipAddressEntry.find(peerAddress);

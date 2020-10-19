@@ -148,6 +148,7 @@ Rectangle {
         MouseArea {
           id: mouseArea
 
+          cursorShape: Qt.ArrowCursor
           hoverEnabled: true
           implicitHeight: layout.height
           width: parent.width + parent.anchors.rightMargin

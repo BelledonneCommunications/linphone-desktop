@@ -833,6 +833,25 @@ URL del server non configurato.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Sei sicuro di voler cancellare questa cronologia?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Modifica contatto</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Aggiungi contatto</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Cancella cronologia</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1404,18 +1423,6 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Porta UDP video RTP</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Porta</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Usa una porta random</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Porta abilitata</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

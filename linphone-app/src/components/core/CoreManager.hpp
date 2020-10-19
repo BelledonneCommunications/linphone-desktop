@@ -38,6 +38,7 @@ class ContactsListModel;
 class ContactsImporterListModel;
 class CoreHandlers;
 class EventCountNotifier;
+class HistoryModel;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
@@ -45,9 +46,9 @@ class VcardModel;
 class CoreManager : public QObject {
   Q_OBJECT;
 
-  Q_PROPERTY(QString version READ getVersion CONSTANT);
-  Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT);
-  Q_PROPERTY(int eventCount READ getEventCount NOTIFY eventCountChanged);
+  Q_PROPERTY(QString version READ getVersion CONSTANT)
+  Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT)
+  Q_PROPERTY(int eventCount READ getEventCount NOTIFY eventCountChanged)
 
 public:
   bool started () const {
@@ -66,6 +67,8 @@ public:
 
   std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress);
   bool chatModelExists (const QString &sipAddress, const QString &localAddress);
+  
+  HistoryModel* getHistoryModel();
 
   // ---------------------------------------------------------------------------
   // Video render lock.
@@ -146,6 +149,7 @@ signals:
   void coreStarted ();
 
   void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
+  void historyModelCreated (HistoryModel *historyModel);
 
   void logsUploaded (const QString &url);
 
@@ -187,6 +191,7 @@ private:
   EventCountNotifier *mEventCountNotifier = nullptr;
 
   QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
+  HistoryModel * mHistoryModel = nullptr;
 
   QTimer *mCbsTimer = nullptr;
 

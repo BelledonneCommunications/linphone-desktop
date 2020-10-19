@@ -71,8 +71,6 @@ Notification {
 
   MouseArea {
     anchors.fill: parent
-    cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-    hoverEnabled: true
 
     onClicked: notification._close(function () {
       AccountSettingsModel.setDefaultProxyConfigFromSipAddress(notification.localAddress)

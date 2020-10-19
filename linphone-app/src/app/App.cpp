@@ -521,6 +521,7 @@ void App::registerTypes () {
   registerType<ContactsImporterListProxyModel>("ContactsImporterListProxyModel");
   registerType<FileDownloader>("FileDownloader");
   registerType<FileExtractor>("FileExtractor");
+  registerType<HistoryProxyModel>("HistoryProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
@@ -537,6 +538,7 @@ void App::registerTypes () {
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
   registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
+  registerUncreatableType<HistoryModel>("HistoryModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
 }
@@ -730,7 +732,7 @@ void App::setAutoStart (bool enabled) {
     "Icon=\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
-    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;\n"
+    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
   );
 
   mAutoStart = enabled;

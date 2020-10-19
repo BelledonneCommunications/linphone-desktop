@@ -833,6 +833,25 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Are you sure you want to clear this history?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Edit contact</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Add contact</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Delete history</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1396,11 +1415,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation>SIP UDP port</translation>
+        <translation>Set SIP/UDP listening port</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation>SIP TCP port</translation>
+        <translation>Set SIP/TCP listening port</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -1409,18 +1428,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Video RTP UDP port</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Port</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Use a random port</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Enabled port</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

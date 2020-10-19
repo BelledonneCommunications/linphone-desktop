@@ -253,10 +253,6 @@ Row {
         }
 
         anchors.fill: parent
-        cursorShape: containsMouse
-          ? Qt.PointingHandCursor
-          : Qt.ArrowCursor
-        hoverEnabled: true
         visible: (rectangle.isUploaded || rectangle.isRead) && !$chatEntry.isOutgoing
 
         onClicked: {
@@ -296,10 +292,6 @@ Row {
 
           MouseArea {
             anchors.fill: parent
-            cursorShape: containsMouse
-                            ? Qt.PointingHandCursor
-                            : Qt.ArrowCursor
-            hoverEnabled: true
             visible: (rectangle.isError || $chatEntry.status === ChatModel.MessageStatusIdle) && $chatEntry.isOutgoing
             onClicked: proxyModel.resendMessage(index)
           }

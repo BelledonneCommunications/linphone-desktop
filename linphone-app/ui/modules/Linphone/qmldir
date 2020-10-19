@@ -16,6 +16,8 @@ CallStatistics      1.0 Calls/CallStatistics.qml
 
 Chat                1.0 Chat/Chat.qml
 
+History             1.0 History/History.qml
+
 CodecsViewer        1.0 Codecs/CodecsViewer.qml
 
 Avatar              1.0 Contact/Avatar.qml

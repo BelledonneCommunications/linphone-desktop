@@ -25,6 +25,8 @@
 
 #include "TimelineModel.hpp"
 
+#include <QDebug>
+
 
 // =============================================================================
 
@@ -72,8 +74,8 @@ QVariant TimelineModel::data (const QModelIndex &index, int role) const {
 }
 
 bool TimelineModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  return getLocalToConferenceEntry(index.data().toMap())->contains(getCleanedLocalAddress());
+	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	return getLocalToConferenceEntry(index.data().toMap())->contains(getCleanedLocalAddress());
 }
 
 bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {

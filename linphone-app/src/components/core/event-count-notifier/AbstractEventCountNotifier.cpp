@@ -25,6 +25,7 @@
 #include "components/chat/ChatModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/history/HistoryModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -39,6 +40,10 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
   QObject::connect(
     coreManager, &CoreManager::chatModelCreated,
     this, &AbstractEventCountNotifier::handleChatModelCreated
+  );
+  QObject::connect(
+    coreManager, &CoreManager::historyModelCreated,
+    this, &AbstractEventCountNotifier::handleHistoryModelCreated
   );
   QObject::connect(
     coreManager->getHandlers().get(), &CoreHandlers::messageReceived,
@@ -105,6 +110,17 @@ void AbstractEventCountNotifier::handleChatModelCreated (const shared_ptr<ChatMo
     this, [this, chatModelPtr]() { handleResetMissedCalls(chatModelPtr); }
   );
 }
+
+void AbstractEventCountNotifier::handleHistoryModelCreated (HistoryModel *historyModel) {
+  QObject::connect(historyModel, &HistoryModel::callCountReset
+    , this, &AbstractEventCountNotifier::handleResetAllMissedCalls);
+}
+
+void AbstractEventCountNotifier::handleResetAllMissedCalls () {
+  mMissedCalls.clear();
+  internalnotifyEventCount();
+}
+
 
 void AbstractEventCountNotifier::handleResetMissedCalls (ChatModel *chatModel) {
   auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatModel->getPeerAddress()), Utils::cleanSipAddress(chatModel->getLocalAddress()) });

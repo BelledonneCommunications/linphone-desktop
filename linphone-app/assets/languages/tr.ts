@@ -833,6 +833,25 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Bu geçmişi temizlemek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Kişi düzenle</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Kişi ekle</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Geçmişi sil</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1404,18 +1423,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Görüntü RTP UDP bağlantı noktası</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Bağlantı noktası</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Rastgele bir bağlantı noktası kullan</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Etkin bağlantı noktası</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

@@ -38,9 +38,12 @@ endforeach()
 if(ENABLE_BUILD_VERBOSE)
 	message("User Args : ${USER_ARGS}")
 endif()
+
 if(NOT CMAKE_GENERATOR_PLATFORM AND WIN32)
-	set(CMAKE_GENERATOR_PLATFORM "Win32")
-	message(STATUS "Setting Platform to ${CMAKE_GENERATOR_PLATFORM}")
+	if(NOT ${CMAKE_GENERATOR} MATCHES "Ninja")
+		set(CMAKE_GENERATOR_PLATFORM "Win32")
+		message(STATUS "Setting Platform to ${CMAKE_GENERATOR_PLATFORM}")
+	endif()
 endif()
 
 project(linphoneqt)
@@ -132,7 +135,10 @@ if(CMAKE_VERBOSE_MAKEFILE)
 		list(APPEND PROJECT_BUILD_COMMAND "--verbose")
 	endif()
 endif()
-
+if(UNIX AND NOT APPLE)
+	set(CMAKE_INSTALL_RPATH "$ORIGIN:$ORIGIN/lib64:$ORIGIN/../lib64:$ORIGIN/lib:$ORIGIN/../lib:${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
+	list(APPEND APP_OPTIONS "-DCMAKE_INSTALL_RPATH=${CMAKE_INSTALL_RPATH}")
+endif()
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
@@ -170,34 +176,29 @@ find_package(Mediastreamer2 CONFIG QUIET)
 find_package(ortp CONFIG QUIET)
 
 
-if( NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
-	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target all")
-	
+if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
+	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target install")
+	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
+		SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
+		INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
+		BINARY_DIR "${CMAKE_BINARY_DIR}/linphone-app"
+		DEPENDS ${APP_DEPENDS}
+		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+		INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step will not be done by external project"
+		LIST_SEPARATOR | # Use the alternate list separator
+		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+	# ${APP_OPTIONS}
+		BUILD_ALWAYS ON
+	)
 	ExternalProject_Add(app-plugins PREFIX "${CMAKE_BINARY_DIR}/app_plugins"
-	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/plugins"
-	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-	    DEPENDS ${APP_DEPENDS}
-	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-#	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-	    LIST_SEPARATOR | # Use the alternate list separator
-	    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-	# ${APP_OPTIONS}
-	    BUILD_ALWAYS ON
+		SOURCE_DIR "${CMAKE_SOURCE_DIR}/plugins"
+		INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
+		DEPENDS ${APP_DEPENDS}
+		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+	#	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
+		LIST_SEPARATOR | # Use the alternate list separator
+		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 	)
-	
-	ExternalProject_Add(linphoneqt PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
-	    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
-	    INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-	    DEPENDS ${APP_DEPENDS} app-plugins
-	    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-#	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-	    LIST_SEPARATOR | # Use the alternate list separator
-	    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-	# ${APP_OPTIONS}
-	    BUILD_ALWAYS ON
-	)
-	
-	
 	install(CODE "message(STATUS Running install)")
 	set(AUTO_REGENERATION auto_regeneration)
 	add_custom_target(${AUTO_REGENERATION} ALL
@@ -208,13 +209,13 @@ else()
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 	add_dependencies(app-library ${APP_DEPENDS})
-	
 	add_subdirectory(${CMAKE_SOURCE_DIR}/plugins)
 	
 endif()
-ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphoneqt"
+ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
+    BINARY_DIR "${CMAKE_BINARY_DIR}/linphone-app"
     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
 #    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
     LIST_SEPARATOR | # Use the alternate list separator

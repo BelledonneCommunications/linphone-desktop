@@ -33,6 +33,7 @@ bc_parse_full_version("${FULL_VERSION}" version_major version_minor version_patc
 
 project(linphoneqt VERSION "${version_major}.${version_minor}.${version_patch}")
 
+
 if(ENABLE_BUILD_VERBOSE)
 	#message("CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH}")
 	message("Options : ${ENABLE_UPDATE_CHECK}, ${ENABLE_UNIT_TESTS}, ${ENABLE_TESTS}, ${ENABLE_TESTS_COMPONENTS}, ${ENABLE_TOOLS}, ${ENABLE_STRICT}, ${ENABLE_FFMPEG}, ${ENABLE_OPUS}")
@@ -46,10 +47,10 @@ set(TARGET_NAME linphone-qt)
 set(CMAKE_CXX_STANDARD 11)
 
 if(UNIX AND NOT APPLE)
-    set(CMAKE_INSTALL_RPATH "$ORIGIN;$ORIGIN/lib64;$ORIGIN/../lib64;$ORIGIN/lib;$ORIGIN/../lib")
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
+list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/cmake")
 
 set(APP_LIBRARY app-library)
 include(application_info.cmake)
@@ -142,6 +143,8 @@ set(SOURCES
     src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
     src/components/file/FileDownloader.cpp
     src/components/file/FileExtractor.cpp
+    src/components/history/HistoryModel.cpp
+    src/components/history/HistoryProxyModel.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
     src/components/other/colors/Colors.cpp
@@ -206,6 +209,8 @@ set(HEADERS
     src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
     src/components/file/FileDownloader.hpp
     src/components/file/FileExtractor.hpp
+    src/components/history/HistoryModel.hpp
+    src/components/history/HistoryProxyModel.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
     src/components/other/colors/Colors.hpp
@@ -378,29 +383,30 @@ list(APPEND SOURCES "${CMAKE_CURRENT_BINARY_DIR}/${LANGUAGES_DIRECTORY}/${I18N_F
 get_directory_property(TS_FILES DIRECTORY "${LANGUAGES_DIRECTORY}"  DEFINITION TS_FILES)
 list(APPEND SOURCES ${TS_FILES})
 
+# set application details
+if(WIN32)
+	string(TIMESTAMP CURRENT_YEAR "%Y")
+	set(COPYRIGTH_RANGE_DATE "2010-${CURRENT_YEAR}")
+	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake_builder/linphone_package/windows/appDetailsWindows.rc.in" "${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc")
+	set(RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc)
+endif()
+
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
-if(TARGET_NAME_ONLY)
-    add_library(${APP_LIBRARY_ONLY} OBJECT EXCLUDE_FROM_ALL ${SOURCES} ${HEADERS} ${QML_SOURCES}})
-endif()
+
 if (WIN32)
-    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-    if(TARGET_NAME_ONLY)
-        add_executable(${TARGET_NAME_ONLY} WIN32 EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${ASSETS_DIR}/app-icon.rc ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}") 
+    if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
+        install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
     endif()
+elseif (APPLE)
+    add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS") # using ${TARGET_NAME} lead to cmake error on target name. Use directly linphone-qt.
 else ()
     add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-    if(TARGET_NAME_ONLY)
-        add_executable(${TARGET_NAME_ONLY} EXCLUDE_FROM_ALL $<TARGET_OBJECTS:${APP_LIBRARY_ONLY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-    endif()
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 endif ()
-if(TARGET_NAME_ONLY)
-    target_compile_options(${TARGET_NAME_ONLY} PRIVATE -fPIC)
-    set_source_files_properties( ${APP_LIBRARY_ONLY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
-    set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
-    set_property(TARGET ${APP_LIBRARY_ONLY} PROPERTY AUTORCC ON)
-    set_target_properties(${TARGET_NAME_ONLY} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}")
-endif()
 set_source_files_properties( ${APP_LIBRARY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
 
 set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
@@ -416,7 +422,6 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${EXECUTABLE_NAME}"
 
 if(MSVC)
     set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
-    set_target_properties(${TARGET_NAME_ONLY} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
 endif()
 
 #ExternalProject_Get_Property(project_a install_dir)
@@ -476,18 +481,8 @@ if (APPLE)
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
-if(TARGET_NAME_ONLY)
-    target_include_directories(${APP_LIBRARY_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-    target_include_directories(${TARGET_NAME_ONLY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-    target_link_libraries(${TARGET_NAME_ONLY} ${LIBRARIES})
-    add_dependencies(${APP_LIBRARY_ONLY} update_translations ${TARGET_NAME}-git-version)
-    add_dependencies(${TARGET_NAME_ONLY} update_translations )
-endif()
-    
-#target_link_libraries(${APP_LIBRARY} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 
 if(WIN32)
@@ -507,6 +502,7 @@ set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
 
+
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.
 # ------------------------------------------------------------------------------
@@ -522,4 +518,7 @@ source_group(
     )
 source_group(
     "Lang" REGULAR_EXPRESSION ".+\.ts$"
+    )
+source_group(
+    "Rc" REGULAR_EXPRESSION ".+\.rc$"
     )

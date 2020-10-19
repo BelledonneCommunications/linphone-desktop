@@ -50,6 +50,7 @@ ScrollableListView {
     // Workaround to handle mouse.
     // Without it, the mouse can be given to items list when mouse is hover header.
     hoverEnabled: true
+    cursorShape: Qt.ArrowCursor
 
     Column {
       anchors.fill: parent
@@ -194,7 +195,7 @@ ScrollableListView {
       id: mouseArea
 
       anchors.fill: parent
-      hoverEnabled: true
+      cursorShape: Qt.ArrowCursor
 
       RowLayout {
         anchors {
@@ -215,12 +216,6 @@ ScrollableListView {
 
           MouseArea {
             anchors.fill: parent
-
-            cursorShape: containsMouse
-              ? Qt.PointingHandCursor
-              : Qt.ArrowCursor
-            hoverEnabled: true
-
             onClicked: sipAddressesView.entryClicked($sipAddress)
           }
         }

@@ -45,6 +45,7 @@
 #include "core/CoreManager.hpp"
 #include "file/FileDownloader.hpp"
 #include "file/FileExtractor.hpp"
+#include "history/HistoryProxyModel.hpp"
 #include "notifier/Notifier.hpp"
 #include "presence/OwnPresenceModel.hpp"
 #include "settings/AccountSettingsModel.hpp"

@@ -208,14 +208,10 @@ ColumnLayout {
             id: mouseArea
 
             anchors.fill: parent
-            hoverEnabled: true
+            cursorShape: Qt.ArrowCursor
 
             MouseArea {
               anchors.fill: parent
-              cursorShape: containsMouse
-                ? Qt.PointingHandCursor
-                : Qt.ArrowCursor
-              hoverEnabled: true
 
               onClicked: window.setView('ContactEdit', {
                 sipAddress: $contact.vcard.sipAddresses[0]
