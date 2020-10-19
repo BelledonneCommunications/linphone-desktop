@@ -99,19 +99,18 @@ std::shared_ptr<linphone::Address> Utils::getMatchingLocalAddress(std::shared_pt
 QString Utils::cleanSipAddress (const QString &sipAddress) {
   std::shared_ptr<linphone::Address> addr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
   if( addr) {
-    QString sipText = Utils::coreStringToAppString(addr->getScheme());
-    if( !sipText.isEmpty())
-      sipText += ":";
-    if( !addr->getUsername().empty())
-      sipText += Utils::coreStringToAppString(addr->getUsername())+"@";
-    QString domain = Utils::coreStringToAppString(addr->getDomain());
-    if( domain.count(':')>1)
-      sipText+= '['+domain+']';
-    else 
-      sipText +=domain;
-    return sipText;
-  }else
-    return sipAddress;
+    QStringList fields = Utils::coreStringToAppString(addr->asStringUriOnly()).split('@');
+    if(fields.size() > 0){// maybe useless but it's just to be sure to have a domain
+      fields.removeLast();
+      QString domain = Utils::coreStringToAppString(addr->getDomain());
+      if( domain.count(':')>1)
+        fields.append('['+domain+']');
+      else
+        fields.append(domain);
+      return fields.join('@');
+    }
+  }
+  return sipAddress;
 }
 // Data to retrieve WIN32 process
 #ifdef _WIN32
