@@ -1421,18 +1421,6 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Video-RTP UDP-port</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Port</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Använd en slumpmässig port</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Aktiverad port</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP-fält</translation>
     </message>

@@ -1421,18 +1421,6 @@
         <translation>UDP порт RTP видео</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Порт</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Использовать случайный порт</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Включенный порт</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>Поля DSCP</translation>
     </message>

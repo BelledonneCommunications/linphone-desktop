@@ -1420,18 +1420,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
         <translation>Videó RTP UDP kikötő</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Kikötő</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Véletlenszerű kikötő használata</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Engedélyezett kikötő</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP mezők</translation>
     </message>
