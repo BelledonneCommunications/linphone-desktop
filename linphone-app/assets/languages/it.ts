@@ -1380,18 +1380,6 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Porta UDP video RTP</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Porta</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Usa una porta random</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Porta abilitata</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>Campi DSCP</translation>
     </message>

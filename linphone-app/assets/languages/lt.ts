@@ -1380,18 +1380,6 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Vaizdo RTP UDP prievadas</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>Prievadas</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Naudoti atsitiktinį prievadą</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Įjungtas prievadas</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCP laukai</translation>
     </message>

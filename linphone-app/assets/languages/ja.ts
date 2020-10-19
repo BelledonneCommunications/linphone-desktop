@@ -1380,18 +1380,6 @@
         <translation>ビデオRTP UDPポート</translation>
     </message>
     <message>
-        <source>portHeader</source>
-        <translation>ポート</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>ランダムポートを使用</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>有効なポート</translation>
-    </message>
-    <message>
         <source>dscpFieldsTitle</source>
         <translation>DSCPフィールド</translation>
     </message>
