@@ -29,9 +29,7 @@
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
-#include <linphoneapp/contacts/ContactsImporterDataAPI.hpp>
-#include <linphoneapp/contacts/ContactsImporterPlugin.hpp>
-#include <linphoneapp/contacts/ContactsImporterNetworkAPI.hpp>
+#include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Utils.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "SettingsModel.hpp"

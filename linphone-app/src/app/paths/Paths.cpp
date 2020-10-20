@@ -46,7 +46,7 @@ namespace {
 #else
   constexpr char PathPlugins[] = "/plugins/";
 #endif
-  constexpr char PathPluginsContacts[] = "contacts/";
+  constexpr char PathPluginsApp[] = "app/";
   constexpr char PathThumbnails[] = "/thumbnails/";
   constexpr char PathUserCertificates[] = "/usr-crt/";
 
@@ -263,18 +263,18 @@ string Paths::getPackageMsPluginsDirPath () {
   return getReadableDirPath(getAppPackageMsPluginsDirPath());
 }
 
-string Paths::getPackagePluginsContactsDirPath () {
-  return getReadableDirPath(getAppPackagePluginsDirPath()+PathPluginsContacts);
+string Paths::getPackagePluginsAppDirPath () {
+  return getReadableDirPath(getAppPackagePluginsDirPath()+PathPluginsApp);
 }
 
-string Paths::getPluginsContactsDirPath () {
-  return getWritableDirPath(getAppPluginsDirPath()+PathPluginsContacts);
+string Paths::getPluginsAppDirPath () {
+  return getWritableDirPath(getAppPluginsDirPath()+PathPluginsApp);
 }
 
-QStringList Paths::getPluginsContactsFolders() {
+QStringList Paths::getPluginsAppFolders() {
 	QStringList pluginPaths;
-	pluginPaths << Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
-	pluginPaths << Utils::coreStringToAppString(Paths::getPackagePluginsContactsDirPath());
+	pluginPaths << Utils::coreStringToAppString(Paths::getPluginsAppDirPath());
+	pluginPaths << Utils::coreStringToAppString(Paths::getPackagePluginsAppDirPath());
 	return pluginPaths;
 }
 

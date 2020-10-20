@@ -133,7 +133,7 @@ TabContainer {
                             id:importerLine
                             property var fields : modelData.fields
                             property int identity : modelData.identity
-                            property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginTitle"]) // Plugin definition
+			    property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginID"]) // Plugin definition
                             
                             FormTableEntry {
                                 Row{
@@ -257,14 +257,14 @@ TabContainer {
                     iconSize:CallsStyle.entry.iconActionSize
                     onClicked:{
                         ContactsImporterPluginsManager.openNewPlugin();
-                        pluginChoice.model = ContactsImporterPluginsManager.getContactsImporterPlugins();
+			pluginChoice.model = ContactsImporterPluginsManager.getPlugins();
                     }
                 }
                 ComboBox{
                     id: pluginChoice
-                    model:ContactsImporterPluginsManager.getContactsImporterPlugins()
+		    model:ContactsImporterPluginsManager.getPlugins()
                     textRole: "pluginTitle"
-                    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
+		    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
                     Text{// Hack, combobox show empty text when empty
                         anchors.fill:parent
                         visible:pluginChoice.currentIndex===-1
@@ -279,7 +279,7 @@ TabContainer {
                     }
                     Connections{
                         target:SettingsModel
-                        onContactImporterChanged:pluginChoice.model=ContactsImporterPluginsManager.getContactsImporterPlugins()
+			onContactImporterChanged:pluginChoice.model=ContactsImporterPluginsManager.getPlugins()
                     }
                 }
                 ActionButton {
@@ -288,7 +288,7 @@ TabContainer {
                     visible:pluginChoice.currentIndex>=0
                     onClicked:{
                         if( pluginChoice.currentIndex >= 0)
-                            ContactsImporterListModel.createContactsImporter({"pluginTitle":pluginChoice.model[pluginChoice.currentIndex]["pluginTitle"]})
+			    ContactsImporterListModel.createContactsImporter({"pluginID":pluginChoice.model[pluginChoice.currentIndex]["pluginID"]})
                     }
                 }
             }

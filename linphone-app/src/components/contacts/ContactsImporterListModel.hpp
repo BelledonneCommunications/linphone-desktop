@@ -28,6 +28,7 @@
 // =============================================================================
 
 class ContactsImporterModel;
+class PluginsModel;
 
 // Store all connectors
 
@@ -47,15 +48,13 @@ public:
 	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 	ContactsImporterModel *findContactsImporterModelFromId (const int &id) const;
-	QList<ContactsImporterModel*> getList();
+	QList<PluginsModel*> getList();
 
 	Q_INVOKABLE ContactsImporterModel *createContactsImporter(QVariantMap data);
 	Q_INVOKABLE ContactsImporterModel *addContactsImporter (QVariantMap data, int id=-1);
 	Q_INVOKABLE void removeContactsImporter (ContactsImporterModel *importer);
 	Q_INVOKABLE void importContacts(const int &id = -1);						// Import contacts for all enabled importer if -1
 //-----------------------------------------------------------------------------------
-	
-	QVariantList getContactsImporterPlugins() const;
 
 signals:
 	void contactsImporterAdded (ContactsImporterModel *contact);
@@ -65,7 +64,7 @@ signals:
 private:
 	void addContactsImporter (ContactsImporterModel *contactsImporter);
 	
-	QList<ContactsImporterModel *> mList;
+	QList<PluginsModel *> mList;
 	int mMaxContactsImporterId;	// Used to ensure unicity on ID when creating a connector
 };
 

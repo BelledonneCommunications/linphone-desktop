@@ -20,9 +20,8 @@
 
 #include "ContactsImporterPluginsManager.hpp"
 #include "ContactsImporterModel.hpp"
-#include <linphoneapp/contacts/ContactsImporterPlugin.hpp>
-#include <linphoneapp/contacts/ContactsImporterNetworkAPI.hpp>
-#include <linphoneapp/contacts/ContactsImporterDataAPI.hpp>
+#include "include/LinphoneApp/PluginNetworkHelper.hpp"
+
 #include "utils/Utils.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/contact/VcardModel.hpp"
@@ -42,199 +41,45 @@
 
 // =============================================================================
 
-const QString ContactsImporterPluginsManager::ContactsSection("contacts_importer");
-QMap<QString, QString> ContactsImporterPluginsManager::gPluginsMap;
-
-ContactsImporterPluginsManager::ContactsImporterPluginsManager(QObject * parent) : QObject(parent){
+ContactsImporterPluginsManager::ContactsImporterPluginsManager(QObject * parent) : PluginsManager(parent){
 }
 
-QPluginLoader * ContactsImporterPluginsManager::getPlugin(const QString &pluginTitle){
-	QStringList pluginPaths = Paths::getPluginsContactsFolders();// Get all paths
-	if( gPluginsMap.contains(pluginTitle)){
-		for(int i = 0 ; i < pluginPaths.size() ; ++i) {
-			QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
-			QPluginLoader * loader = new QPluginLoader(pluginPath);
-			loader->setLoadHints(0);	// this force Qt to unload the plugin from memory when we request it. Be carefull by not having a plugin instance or data created inside the plugin after the unload.
-			if( auto instance = loader->instance()) {
-				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-				if (plugin && versionMatched(plugin) )
-					return loader;
-				else
-					loader->unload();
-			}
-			delete loader;
-		}
+QVariantMap ContactsImporterPluginsManager::getContactsImporterPluginDescription(const QString& pluginID) {
+	QVariantMap description;
+	QJsonDocument doc = getJson(pluginID);
+
+	description = doc.toVariant().toMap();
+
+	if(description.contains("fields")){
+		auto fields = description["fields"].toList();
+		auto removedFields = std::remove_if(fields.begin(), fields.end(),
+										  [](const QVariant& f){
+							auto field = f.toMap();
+							return field.contains("capability") && ((field["capability"].toInt() & PluginDataAPI::CONTACTS) != PluginDataAPI::CONTACTS);
+		});
+		fields.erase(removedFields, fields.end());
+		description["fields"] = fields;
 	}
-	return nullptr;
-}
-
-ContactsImporterDataAPI * ContactsImporterPluginsManager::createInstance(const QString &pluginTitle){
-	ContactsImporterDataAPI * dataInstance = nullptr;
-	ContactsImporterPlugin * plugin = nullptr;
-	if( gPluginsMap.contains(pluginTitle)){
-		QStringList pluginPaths = Paths::getPluginsContactsFolders();
-		for(int i = 0 ; i < pluginPaths.size() ; ++i) {
-			QString pluginPath = pluginPaths[i] +gPluginsMap[pluginTitle];
-			QPluginLoader * loader = new QPluginLoader(pluginPath);
-			loader->setLoadHints(0);	// this force Qt to unload the plugin from memory when we request it. Be carefull by not having a plugin instance or data created inside the plugin after the unload.
-			if( auto instance = loader->instance()) {
-				plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-				if (plugin) {
-					 dataInstance = plugin->createInstance(CoreManager::getInstance()->getCore(), loader);
-					 return dataInstance;
-				}else
-					loader->unload();
-			}
-			delete loader;
-		}
-	}
-	return dataInstance;
-}
-
-QJsonDocument ContactsImporterPluginsManager::getJson(const QString &pluginTitle){
-	QJsonDocument doc;
-	QPluginLoader * pluginLoader = getPlugin(pluginTitle);
-	if( pluginLoader ){
-		auto instance = pluginLoader->instance();
-		if( instance ){
-			ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-			if( plugin ){
-				doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
-			}
-		}
-		pluginLoader->unload();
-		delete pluginLoader;
-	}
-	return doc;
-}
-
-bool ContactsImporterPluginsManager::versionMatched(ContactsImporterPlugin *plugin){
-	bool ok = false;
-	QVersionNumber pluginVersion, apiVersion = ContactsImporterPlugin::gPluginVersion;
-	pluginVersion = plugin->getVersion();
-	if( pluginVersion == apiVersion)
-		ok = true;
-	return ok;
+	return description;
 }
 
 void ContactsImporterPluginsManager::openNewPlugin(){
-	QString fileName = QFileDialog::getOpenFileName(nullptr, "Import Address Book Connector");
-	QString pluginTitle;
-	QList<ContactsImporterModel*> importersToReset;
-	int doCopy = QMessageBox::Yes;
-	bool cannotRemovePlugin = false;
-	QVersionNumber pluginVersion, apiVersion = ContactsImporterPlugin::gPluginVersion;
-	if(fileName != ""){
-		QFileInfo fileInfo(fileName);
-		QString path = Utils::coreStringToAppString(Paths::getPluginsContactsDirPath());
-		QPluginLoader loader(fileName);
-		loader.setLoadHints(0);
-		auto instance = loader.instance();
-		if( instance ){
-			ContactsImporterPlugin * plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-			if(plugin){// This plugin can be load. Check the version.
-				if( !versionMatched(plugin)){
-					QVersionNumber pluginVersion = plugin->getVersion();
-					QMessageBox::warning(nullptr, "Importing Address Book Connector", "Linphone cannot open the plugin because versions don't match. You need to update your plugin.\nMain Plugin :"+apiVersion.toString()+"\n"+fileInfo.fileName()+" :"+pluginVersion.toString());
-				}else{// plugin is good. Get the title
-					QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
-					QVariantMap desc;
-					pluginTitle = doc["pluginTitle"].toString();
-					plugin->getVersion();
-				}
-			}
-			loader.unload();
-		}
-		if(!pluginTitle.isEmpty()){// Check all plugins that have this title
-			if( gPluginsMap.contains(pluginTitle)){
-				doCopy = QMessageBox::question(nullptr, "Importing Address Book Connector", "The plugin already exists. Do you want to overwrite it?\nPlugin:\n"+gPluginsMap[pluginTitle], QMessageBox::Yes, QMessageBox::No);
-				if( doCopy == QMessageBox::Yes){
-					auto importers = CoreManager::getInstance()->getContactsImporterListModel()->getList();
-					for(auto importer : importers){
-						QVariantMap fields = importer->getFields();
-						if(fields["pluginTitle"] == pluginTitle){
-							importer->setDataAPI(nullptr);
-							importersToReset.append(importer);
-						}
-					}
-					QStringList pluginPaths = Paths::getPluginsContactsFolders();
-					for(int i = 0 ; !cannotRemovePlugin && i < pluginPaths.size()-1 ; ++i) {// Ignore the last path as it is the app folder
-						QString pluginPath = pluginPaths[i];
-						if(QFile::exists(pluginPath+gPluginsMap[pluginTitle])){
-							if(!QFile::remove(pluginPath+gPluginsMap[pluginTitle]))
-								cannotRemovePlugin = true;
-						}
-					}
-					if(!cannotRemovePlugin)
-						gPluginsMap[pluginTitle] = "";
-				}
-			}
-		}else
-			doCopy = QMessageBox::No;
-		if(doCopy == QMessageBox::Yes ){
-			if( cannotRemovePlugin)// Qt will not unload library from memory so files cannot be removed. See https://bugreports.qt.io/browse/QTBUG-68880
-				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be replaced. You have to exit the application and delete manually the plugin file in\n"+path);
-			else if( !QFile::copy(fileName, path+fileInfo.fileName()))
-				QMessageBox::information(nullptr, "Importing Address Book Connector", "The plugin cannot be copied. You have to copy manually the plugin file to\n"+path);
-			else {
-				gPluginsMap[pluginTitle] = fileInfo.fileName();
-				for(auto importer : importersToReset)
-					importer->setDataAPI(createInstance(pluginTitle));
-			}
-		}
-	}
+	PluginsManager::openNewPlugin("Import Address Book Connector");
 }
 
-QVariantList ContactsImporterPluginsManager::getContactsImporterPlugins() {
-	QVariantList plugins;
-	QStringList pluginPaths = Paths::getPluginsContactsFolders();
-	gPluginsMap.clear();
-	for(int pathIndex = pluginPaths.size()-1 ; pathIndex >= 0 ; --pathIndex) {// Start from app package. This sort ensure the priority on user plugins
-		QString pluginPath = pluginPaths[pathIndex];
-		QDir dir(pluginPath);
-		QStringList pluginFiles = dir.entryList(QDir::Files);
-		for(int i = 0 ; i < pluginFiles.size() ; ++i) {
-			QPluginLoader loader(pluginPath+pluginFiles[i]);
-			loader.setLoadHints(0);	// this force Qt to unload the plugin from memory when we request it. Be carefull by not having a plugin instance or data created inside the plugin after the unload.
-			if (auto instance = loader.instance()) {
-				auto plugin = qobject_cast< ContactsImporterPlugin* >(instance);
-				if ( plugin && versionMatched(plugin) ){
-					QJsonDocument doc = QJsonDocument::fromJson(plugin->descriptionToJson().toUtf8());
-					QVariantMap desc;
-					desc["pluginTitle"] = doc["pluginTitle"];
-					if(!doc["pluginTitle"].toString().isEmpty()){
-						gPluginsMap[doc["pluginTitle"].toString()] = pluginFiles[i];
-						plugins.push_back(desc);
-					}
-				} else {
-					qWarning()<< "This plugin is not updated and cannot be used : " << pluginFiles[i] ;
-				}
-				loader.unload();
-			} else {
-				qWarning()<< loader.errorString();
-			}
-		}
-		std::sort(plugins.begin(), plugins.end());
-	}
-	return plugins;
-}
-
-QVariantMap ContactsImporterPluginsManager::getContactsImporterPluginDescription(const QString& pluginTitle) {
-	QVariantMap description;
-	QJsonDocument doc = getJson(pluginTitle);
-	description = doc.toVariant().toMap();
-	return description;
+QVariantList ContactsImporterPluginsManager::getPlugins(){
+	return PluginsManager::getPlugins(PluginDataAPI::CONTACTS);
 }
 
 void ContactsImporterPluginsManager::importContacts(ContactsImporterModel * model) {
 	if(model){
-		QString pluginTitle = model->getFields()["pluginTitle"].toString();
-		if(!pluginTitle.isEmpty()){
-			if( !gPluginsMap.contains(pluginTitle))
-				qInfo() << "Unknown " << pluginTitle;
+		QString pluginID = model->getFields()["pluginID"].toString();
+		if(!pluginID.isEmpty()){
+			if( !PluginsManager::gPluginsMap.contains(pluginID))
+				qInfo() << "Unknown " << pluginID;
 			model->importContacts();
 		}else
-			qWarning() << "Error : Cannot import contacts : pluginTitle is empty";
+			qWarning() << "Error : Cannot import contacts : pluginID is empty";
 	}
 }
 
@@ -269,16 +114,4 @@ void ContactsImporterPluginsManager::importContacts(const QVector<QMultiMap<QStr
 		}else
 			delete card;
 	}
-}
-
-QVariantMap ContactsImporterPluginsManager::getDefaultValues(const QString& pluginTitle){
-	QVariantMap defaultValues;
-	QVariantMap description = getContactsImporterPluginDescription(pluginTitle);
-	for(auto field : description["fields"].toList()){
-		auto details = field.toMap();
-		if( details.contains("fieldId") && details.contains("defaultData")){
-			defaultValues[details["fieldId"].toString()] = details["defaultData"].toString();
-		}
-	}
-	return defaultValues;
 }

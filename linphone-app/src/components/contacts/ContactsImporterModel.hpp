@@ -24,20 +24,22 @@
 #include <QObject>
 #include <QVariantMap>
 
+#include "utils/plugins/PluginsManager.hpp"
+#include "include/LinphoneApp/PluginDataAPI.hpp"
+
 // =============================================================================
 
-class ContactsImporterDataAPI;
+class ContactsImporterModel : public PluginsModel {
+	Q_OBJECT
 
-class ContactsImporterModel : public QObject {
-	Q_OBJECT;
-
-	Q_PROPERTY(QVariantMap fields READ getFields WRITE setFields NOTIFY fieldsChanged);
-	Q_PROPERTY(int identity READ getIdentity WRITE setIdentity NOTIFY identityChanged);
+	Q_PROPERTY(QVariantMap fields READ getFields WRITE setFields NOTIFY fieldsChanged)
+	Q_PROPERTY(int identity READ getIdentity WRITE setIdentity NOTIFY identityChanged)
 
 public:
-	ContactsImporterModel (ContactsImporterDataAPI * data, QObject *parent = nullptr);
+	ContactsImporterModel (PluginDataAPI * data, QObject *parent = nullptr);
 
-	void setDataAPI(ContactsImporterDataAPI *data);
+	void setDataAPI(PluginDataAPI *data);
+	PluginDataAPI *getDataAPI();
 	bool isUsable();	// Return true if the plugin can be load and has been loaded.
 
 	QVariantMap getFields();
@@ -50,8 +52,9 @@ public:
 	Q_INVOKABLE void importContacts();
 
 public slots:
-	void parsedContacts(QVector<QMultiMap<QString, QString> > contacts);
+	void parsedContacts(const PluginDataAPI::PluginCapability& actionType, QVector<QMultiMap<QString, QString> > contacts);
 	void updateInputs(const QVariantMap &inputs);
+	void messageReceived(const QtMsgType& type, const QString &message);
 
 signals:
 	void fieldsChanged (QVariantMap fields);
@@ -61,7 +64,7 @@ signals:
 	
 private:
 	int mIdentity;	// The identity of the model in configuration. It must be unique between all contact plugins.
-	ContactsImporterDataAPI *mData;	// The instance of the plugin with its plugin Loader.
+	PluginDataAPI *mData;	// The instance of the plugin with its plugin Loader.
 };
 
 Q_DECLARE_METATYPE(ContactsImporterModel *);

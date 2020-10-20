@@ -27,9 +27,6 @@
 #include "components/core/CoreManager.hpp"
 #include "utils/Utils.hpp"
 
-
-#include <linphoneapp/contacts/ContactsImporterPlugin.hpp>
-
 // =============================================================================
 
 using namespace std;
@@ -39,21 +36,21 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 	mMaxContactsImporterId = -1;
 	QQmlEngine *engine = App::getInstance()->getEngine();
 	auto config = CoreManager::getInstance()->getCore()->getConfig();
-	ContactsImporterPluginsManager::getContactsImporterPlugins();// Initialize list
+	PluginsManager::getPlugins();// Initialize list
 // Read configuration file
 	std::list<std::string> sections = config->getSectionsNamesList();
 	for(auto section : sections){
 		QString qtSection = Utils::coreStringToAppString(section);
-		QStringList parse = qtSection.split(ContactsImporterPluginsManager::ContactsSection+"_");
+		QStringList parse = qtSection.split(PluginsManager::gPluginsConfigSection+"_");
 		if( parse.size() > 1){
 			QVariantMap importData;
 			int id = parse[1].toInt();
 			mMaxContactsImporterId = qMax(id, mMaxContactsImporterId);
 			std::list<std::string> keys = config->getKeysNamesList(section);
-			auto keyName = std::find(keys.begin(), keys.end(), "pluginTitle");
+			auto keyName = std::find(keys.begin(), keys.end(), "pluginID");
 			if( keyName != keys.end()){
-				QString pluginTitle =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
-				ContactsImporterDataAPI* data = ContactsImporterPluginsManager::createInstance(pluginTitle);
+				QString pluginID =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
+				PluginDataAPI* data = static_cast<PluginDataAPI*>(PluginsManager::createInstance(pluginID));
 				if(data) {
 					ContactsImporterModel * model = new ContactsImporterModel(data, this);
 // See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
@@ -106,7 +103,7 @@ bool ContactsImporterListModel::removeRows (int row, int count, const QModelInde
 	beginRemoveRows(parent, row, limit);
 
 	for (int i = 0; i < count; ++i) {
-		ContactsImporterModel *contactsImporter = mList.takeAt(row);
+		ContactsImporterModel *contactsImporter = dynamic_cast<ContactsImporterModel*>(mList.takeAt(row));
 		emit contactsImporterRemoved(contactsImporter);
 		contactsImporter->deleteLater();
 	}
@@ -119,13 +116,13 @@ bool ContactsImporterListModel::removeRows (int row, int count, const QModelInde
 // -----------------------------------------------------------------------------
 
 ContactsImporterModel *ContactsImporterListModel::findContactsImporterModelFromId (const int &id) const {
-	auto it = find_if(mList.begin(), mList.end(), [id](ContactsImporterModel *contactsImporterModel) {
+	auto it = find_if(mList.begin(), mList.end(), [id](PluginsModel *contactsImporterModel) {
 		return contactsImporterModel->getIdentity() == id;
 	});
-	return it != mList.end() ? *it : nullptr;
+	return it != mList.end() ? dynamic_cast<ContactsImporterModel*>(*it) : nullptr;
 }
 
-QList<ContactsImporterModel*> ContactsImporterListModel::getList(){
+QList<PluginsModel*> ContactsImporterListModel::getList(){
 	return mList;
 }
 
@@ -133,13 +130,13 @@ QList<ContactsImporterModel*> ContactsImporterListModel::getList(){
 
 ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVariantMap data){
 	ContactsImporterModel *contactsImporter = nullptr;
-	if( data.contains("pluginTitle")){
-		ContactsImporterDataAPI * dataInstance = ContactsImporterPluginsManager::createInstance(data["pluginTitle"].toString());
+	if( data.contains("pluginID")){
+		PluginDataAPI * dataInstance = static_cast<PluginDataAPI*>(PluginsManager::createInstance(data["pluginID"].toString()));
 		if(dataInstance) {
 // get default values
 			contactsImporter = new ContactsImporterModel(dataInstance, this);
 			App::getInstance()->getEngine()->setObjectOwnership(contactsImporter, QQmlEngine::CppOwnership);
-			QVariantMap newData = ContactsImporterPluginsManager::getDefaultValues(data["pluginTitle"].toString());// Start with defaults from plugin
+			QVariantMap newData = ContactsImporterPluginsManager::getDefaultValues(data["pluginID"].toString());// Start with defaults from plugin
 			QVariantMap InstanceFields = contactsImporter->getFields();
 			for(auto field = InstanceFields.begin() ; field != InstanceFields.end() ; ++field)// Insert or Update with the defaults of an instance
 				newData[field.key()] = field.value();
@@ -175,7 +172,7 @@ void ContactsImporterListModel::removeContactsImporter (ContactsImporterModel *c
 	if (index >=0){
 		if( contactsImporter->getIdentity() >=0 ){// Remove from configuration
 			int id = contactsImporter->getIdentity();
-			string section = Utils::appStringToCoreString(ContactsImporterPluginsManager::ContactsSection+"_"+QString::number(id));
+			string section = Utils::appStringToCoreString(PluginsManager::gPluginsConfigSection+"_"+QString::number(id));
 			CoreManager::getInstance()->getCore()->getConfig()->cleanSection(section);
 			if( id == mMaxContactsImporterId)// Decrease mMaxContactsImporterId in a safe way
 				--mMaxContactsImporterId;
@@ -191,7 +188,7 @@ void ContactsImporterListModel::importContacts(const int &pId){
 			contactsImporter->importContacts();
 	}else	// Import from all current connectors
 		for(auto importer : mList)
-			importer->importContacts();
+			dynamic_cast<ContactsImporterModel*>(importer)->importContacts();
 }
 
 // -----------------------------------------------------------------------------

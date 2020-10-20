@@ -165,6 +165,11 @@ set(SOURCES
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
+    src/utils/plugins/PluginDataAPI.cpp
+    src/utils/plugins/PluginNetworkHelper.cpp
+    src/utils/plugins/LinphonePlugin.cpp
+    src/utils/plugins/PluginsManager.cpp
+    
     )
 
 set(HEADERS
@@ -232,8 +237,12 @@ set(HEADERS
     src/utils/MediastreamerUtils.hpp
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
+    src/utils/plugins/PluginsManager.hpp
+    include/LinphoneApp/PluginDataAPI.hpp
+    include/LinphoneApp/PluginNetworkHelper.hpp
+    include/LinphoneApp/LinphonePlugin.hpp
     )
-
+list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
@@ -429,6 +438,9 @@ endif()
 
 #add_dependencies(project_b_exe project_a)
 #target_link_libraries(project_b_exe ${install_dir}/lib/alib.lib)
+if(ENABLE_APP_EXPORT_PLUGIN)
+	add_definitions(-DENABLE_APP_EXPORT_PLUGIN)
+endif()
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
@@ -472,8 +484,8 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     endif ()
 endforeach ()
 
-find_library(CONTACTS_PLUGIN_LIBRARY linphoneAppContacts HINTS "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-list(APPEND LIBRARIES ${CONTACTS_PLUGIN_LIBRARY})
+#find_library(CONTACTS_PLUGIN_LIBRARY linphoneAppContacts HINTS "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+#list(APPEND LIBRARIES ${CONTACTS_PLUGIN_LIBRARY})
 
 if (APPLE)
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
@@ -488,6 +500,7 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 if(WIN32)
     target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
 endif()
+target_compile_definitions(${APP_LIBRARY} PUBLIC ENABLE_APP_EXPORT_PLUGIN)
 
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version)
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
@@ -499,6 +512,10 @@ add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 
+add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
+#configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ${CMAKE_INSTALL_PREFIX})
+
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
 
@@ -506,7 +523,9 @@ add_subdirectory(cmake_builder/linphone_package)
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.
 # ------------------------------------------------------------------------------
-
+source_group(
+    "Json"  REGULAR_EXPRESSION ".+\.json$"
+)
 source_group(
     "Qml" REGULAR_EXPRESSION ".+\.qml$"
     )

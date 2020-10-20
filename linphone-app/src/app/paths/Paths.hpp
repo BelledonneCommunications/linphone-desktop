@@ -28,6 +28,7 @@
 namespace Paths {
   bool filePathExists (const std::string &path);
 
+
   std::string getAssistantConfigDirPath ();
   std::string getAvatarsDirPath ();
   std::string getCallHistoryFilePath ();
@@ -41,9 +42,9 @@ namespace Paths {
   std::string getMessageHistoryFilePath ();
   std::string getPackageDataDirPath ();
   std::string getPackageMsPluginsDirPath ();
-  std::string getPackagePluginsContactsDirPath ();
-  std::string getPluginsContactsDirPath ();
-  QStringList getPluginsContactsFolders();
+  std::string getPackagePluginsAppDirPath ();
+  std::string getPluginsAppDirPath ();
+  QStringList getPluginsAppFolders();
   std::string getRootCaFilePath ();
   std::string getThumbnailsDirPath ();
   std::string getToolsDirPath ();
