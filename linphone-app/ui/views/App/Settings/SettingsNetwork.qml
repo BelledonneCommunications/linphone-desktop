@@ -152,47 +152,36 @@ TabContainer {
       width: parent.width
 
       FormTable {
-        titles: [
-          qsTr('portHeader'),
-          qsTr('randomPortHeader'),
-          qsTr('enabledPortHeader')
-        ]
+        titles: []
+
 
         FormTableLine {
           title: qsTr('sipUdpPortLabel')
 
+
+          FormTableEntry {
+            width:fixSipUdpPort.width
+            Switch {
+              id: fixSipUdpPort
+
+              readonly property int defaultPort: 5060
+
+              checked: SettingsModel.udpPort > 0
+
+              onClicked: SettingsModel.udpPort = (checked ? -2 : defaultPort)
+            }
+          }
+          
           FormTableEntry {
             NumericField {
               minValue: 1
               maxValue: 65535
-              readOnly: randomSipUdpPort.checked || !enableSipUdpPort.checked
+              readOnly: !fixSipUdpPort.checked
+              visible:fixSipUdpPort.checked
 
               text: SettingsModel.udpPort
 
               onEditingFinished: SettingsModel.udpPort = text
-            }
-          }
-
-          FormTableEntry {
-            Switch {
-              id: randomSipUdpPort
-
-              readonly property int defaultPort: 5060
-
-              checked: SettingsModel.udpPort === -1
-              enabled: enableSipUdpPort.checked
-
-              onClicked: SettingsModel.udpPort = checked ? defaultPort : -1
-            }
-          }
-
-          FormTableEntry {
-            Switch {
-              id: enableSipUdpPort
-
-              checked: SettingsModel.udpPort !== 0
-
-              onClicked: SettingsModel.udpPort = checked ? 0 : -1
             }
           }
         }
@@ -201,37 +190,27 @@ TabContainer {
           title: qsTr('sipTcpPortLabel')
 
           FormTableEntry {
+            width:fixSipTcpPort.width
+            Switch {
+              id: fixSipTcpPort
+
+              readonly property int defaultPort: 5060
+
+              checked: SettingsModel.tcpPort > 0 
+
+              onClicked: SettingsModel.tcpPort = (checked ? -2 : defaultPort)
+            }
+          }
+          FormTableEntry {
             NumericField {
               minValue: 1
               maxValue: 65535
-              readOnly: randomSipTcpPort.checked || !enableSipTcpPort.checked
+              readOnly: !fixSipTcpPort.checked
+              visible:fixSipTcpPort.checked
 
               text: SettingsModel.tcpPort
 
               onEditingFinished: SettingsModel.tcpPort = text
-            }
-          }
-
-          FormTableEntry {
-            Switch {
-              id: randomSipTcpPort
-
-              readonly property int defaultPort: 5060
-
-              checked: SettingsModel.tcpPort === -1
-              enabled: enableSipTcpPort.checked
-
-              onClicked: SettingsModel.tcpPort = checked ? defaultPort : -1
-            }
-          }
-
-          FormTableEntry {
-            Switch {
-              id: enableSipTcpPort
-
-              checked: SettingsModel.tcpPort !== 0
-
-              onClicked: SettingsModel.tcpPort = checked ? 0 : -1
             }
           }
         }
@@ -244,24 +223,27 @@ TabContainer {
           title: qsTr('audioRtpUdpPortLabel')
 
           FormTableEntry {
-            PortField {
-              readOnly: randomAudioRtpUdpPort.checked
-              supportsRange: true
-              text: SettingsModel.audioPortRange.join(':')
+          
+            width:randomAudioRtpUdpPort.width
+            Switch {
+              id: randomAudioRtpUdpPort
 
-              onEditingFinished: SettingsModel.audioPortRange = [ portA, portB ]
+              checked: SettingsModel.audioPortRange[0] !== -1
+
+              onClicked: SettingsModel.audioPortRange = checked
+                ? [ -1, -1 ]
+                : [ audioRtpUdpPort.defaultPort, -1 ]
             }
           }
 
           FormTableEntry {
-            Switch {
-              id: randomAudioRtpUdpPort
+            PortField {
+              readOnly: !randomAudioRtpUdpPort.checked
+              visible: randomAudioRtpUdpPort.checked
+              supportsRange: true
+              text: SettingsModel.audioPortRange.join(':')
 
-              checked: SettingsModel.audioPortRange[0] === -1
-
-              onClicked: SettingsModel.audioPortRange = checked
-                ? [ audioRtpUdpPort.defaultPort, -1 ]
-                : [ -1, -1 ]
+              onEditingFinished: SettingsModel.audioPortRange = [ portA, portB ]
             }
           }
         }
@@ -275,24 +257,26 @@ TabContainer {
           visible: SettingsModel.videoSupported
 
           FormTableEntry {
-            PortField {
-              readOnly: randomVideoRtpUdpPort.checked
-              supportsRange: true
-              text: SettingsModel.videoPortRange.join(':')
+            width:randomVideoRtpUdpPort.width
+            Switch {
+              id: randomVideoRtpUdpPort
 
-              onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
+              checked: SettingsModel.videoPortRange[0] !== -1
+
+              onClicked: SettingsModel.videoPortRange = checked
+                ? [ -1, -1 ]
+                : [ videoRtpUdpPort.defaultPort, -1 ]
             }
           }
 
           FormTableEntry {
-            Switch {
-              id: randomVideoRtpUdpPort
+            PortField {
+              readOnly: !randomVideoRtpUdpPort.checked
+              visible: randomVideoRtpUdpPort.checked
+              supportsRange: true
+              text: SettingsModel.videoPortRange.join(':')
 
-              checked: SettingsModel.videoPortRange[0] === -1
-
-              onClicked: SettingsModel.videoPortRange = checked
-                ? [ videoRtpUdpPort.defaultPort, -1 ]
-                : [ -1, -1 ]
+              onEditingFinished: SettingsModel.videoPortRange = [ portA, portB ]
             }
           }
         }

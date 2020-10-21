@@ -55,7 +55,16 @@ Rectangle {
     Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: TimelineStyle.legend.height
-      color: TimelineStyle.legend.backgroundColor
+      color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
+      
+      MouseArea{
+        id:showHistory
+        anchors.fill:parent
+        onClicked: {
+          view.currentIndex = -1
+          timeline.entrySelected('')
+          }
+      }
 
       Row {
         anchors {

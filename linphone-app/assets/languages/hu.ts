@@ -833,6 +833,25 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Biztosan törölni kívánja ezt az előzményt?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Kapcsolat szerkesztése</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Kapcsolat hozzáadása</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Előzmények törlése</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1399,18 +1418,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Videó RTP UDP kikötő</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Kikötő</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Véletlenszerű kikötő használata</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Engedélyezett kikötő</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

@@ -833,6 +833,25 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Ar tikrai norite išvalyti šią istoriją?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Redaguoti kontaktą</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Pridėti kontaktą</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Ištrinti istoriją</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1400,18 +1419,6 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Vaizdo RTP UDP prievadas</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Prievadas</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Naudoti atsitiktinį prievadą</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Įjungtas prievadas</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

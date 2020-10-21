@@ -14,6 +14,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   signal clicked
+  property alias cursorShape:mouseArea.cursorShape
 
   // ---------------------------------------------------------------------------
 
@@ -94,11 +95,8 @@ Item {
   }
 
   MouseArea {
+    id:mouseArea
     anchors.fill: parent
-    cursorShape: containsMouse
-      ? Qt.PointingHandCursor
-      : Qt.ArrowCursor
-    hoverEnabled: true
 
     onClicked: accountStatus.clicked()
   }

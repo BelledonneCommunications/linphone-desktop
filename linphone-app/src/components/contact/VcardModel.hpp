@@ -98,6 +98,9 @@ public:
 
   // ---------------------------------------------------------------------------
 
+  QString encode(const QString& data)const;// Convert '\n', ',', '\' to  "\n", "\,", "\\"
+  QString decode(const QString& data)const;// Convert "\n", "\,", "\\" to '\n', ',', '\'
+
 signals:
   void vcardUpdated ();
 

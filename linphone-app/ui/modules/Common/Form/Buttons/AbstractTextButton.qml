@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 
+import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
@@ -76,15 +77,10 @@ Item {
 
     hoverEnabled: true
 
-    MouseArea
-    {
+    MouseArea {
         id: mouseArea
         anchors.fill: parent
         onPressed:  mouse.accepted = false
-        hoverEnabled: true
-        cursorShape: containsMouse
-                            ? Qt.PointingHandCursor
-                            : Qt.ArrowCursor
     }
 
     height: parent.height

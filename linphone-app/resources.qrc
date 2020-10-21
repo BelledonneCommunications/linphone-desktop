@@ -229,6 +229,7 @@
         <file>ui/modules/Common/Form/ListForm.qml</file>
         <file>ui/modules/Common/Form/ListItemSelector.js</file>
         <file>ui/modules/Common/Form/ListItemSelector.qml</file>
+        <file>ui/modules/Common/Form/MouseArea.qml</file>
         <file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
         <file>ui/modules/Common/Form/Placements/FormGroup.qml</file>
         <file>ui/modules/Common/Form/Placements/FormHGroup.qml</file>
@@ -338,6 +339,9 @@
         <file>ui/modules/Linphone/Contact/ContactMessageCounter.qml</file>
         <file>ui/modules/Linphone/Contact/Contact.qml</file>
         <file>ui/modules/Linphone/Dialog/OnlineInstallerDialog.qml</file>
+        <file>ui/modules/Linphone/History/History.qml</file>
+        <file>ui/modules/Linphone/History/History.js</file>
+        <file>ui/modules/Linphone/History/Event.qml</file>
         <file>ui/modules/Linphone/Menus/SipAddressesMenu.qml</file>
         <file>ui/modules/Linphone/Misc/MessageCounter.qml</file>
         <file>ui/modules/Linphone/Notifications/NotificationBasic.qml</file>
@@ -365,6 +369,7 @@
         <file>ui/modules/Linphone/Styles/Contact/ContactMessageCounterStyle.qml</file>
         <file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
         <file>ui/modules/Linphone/Styles/Dialog/OnlineInstallerDialogStyle.qml</file>
+        <file>ui/modules/Linphone/Styles/History/HistoryStyle.qml</file>
         <file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
         <file>ui/modules/Linphone/Styles/Misc/MessageCounterStyle.qml</file>
         <file>ui/modules/Linphone/Styles/Notifications/NotificationBasicStyle.qml</file>
@@ -428,10 +433,13 @@
         <file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
         <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
         <file>ui/views/App/Main/Home.qml</file>
+        <file>ui/views/App/Main/HistoryView.qml</file>
+        <file>ui/views/App/Main/HistoryView.js</file>
         <file>ui/views/App/Main/InviteFriends.qml</file>
         <file>ui/views/App/Main/MainWindow.js</file>
         <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
         <file>ui/views/App/Main/MainWindow.qml</file>
+        <file>ui/views/App/Main/MainWindowTopMenuBar.qml</file>
         <file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.js</file>
         <file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.qml</file>
         <file>ui/views/App/Settings/Dialogs/SettingsVideoPreview.qml</file>
@@ -469,6 +477,7 @@
         <file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>
         <file>ui/views/App/Styles/Main/HomeStyle.qml</file>
         <file>ui/views/App/Styles/Main/InviteFriendsStyle.qml</file>
+        <file>ui/views/App/Styles/Main/HistoryViewStyle.qml</file>
         <file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
         <file>ui/views/App/Styles/qmldir</file>
         <file>ui/views/App/Styles/Settings/Dialogs/SettingsSipAccountsEditStyle.qml</file>
@@ -477,7 +486,6 @@
         <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
         <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
         <file>assets/images/linphone_logo.svg</file>
-        <file>ui/views/App/Main/MainWindowTopMenuBar.qml</file>
         <file>ui/dev-modules/Colors/Colors.qml</file>
         <file>ui/dev-modules/Units/Units.qml</file>
         <file>assets/icon.ico</file>

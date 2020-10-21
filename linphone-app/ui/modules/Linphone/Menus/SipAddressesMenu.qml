@@ -101,7 +101,6 @@ Item {
           id: mouseArea
 
           anchors.fill: parent
-          hoverEnabled: true
 
           onClicked: {
             menu.close()

@@ -833,6 +833,25 @@ URL do servidor não configurado.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Tem certeza de que deseja limpar esse histórico?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Editar contato</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Adicionar contato</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Excluir histórico</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1399,18 +1418,6 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Porta UDP RTP de vídeo</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Portão</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Usar uma porta aleatória</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Porta habilitada</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

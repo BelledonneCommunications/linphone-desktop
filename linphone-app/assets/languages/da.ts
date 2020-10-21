@@ -833,6 +833,25 @@ Server url ikke konfigureret.</translation>
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Er du sikker på at du vil rydde op historikken?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Rediger kontakt</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Tilføj kontakt</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Slet historik</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1400,18 +1419,6 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>Video RTP UDP port</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Port</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Brug en tilfældig port</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Aktiveret port</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

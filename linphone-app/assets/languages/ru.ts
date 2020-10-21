@@ -833,6 +833,25 @@
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">Вы уверены, что хотите очистить эту историю?</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">Изменить контакт</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">Добавить контакт</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">Удалить историю</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
@@ -1400,18 +1419,6 @@
     <message>
         <source>videoRtpUdpPortLabel</source>
         <translation>UDP порт RTP видео</translation>
-    </message>
-    <message>
-        <source>portHeader</source>
-        <translation>Порт</translation>
-    </message>
-    <message>
-        <source>randomPortHeader</source>
-        <translation>Использовать случайный порт</translation>
-    </message>
-    <message>
-        <source>enabledPortHeader</source>
-        <translation>Включенный порт</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>

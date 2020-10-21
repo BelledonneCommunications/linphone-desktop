@@ -32,6 +32,7 @@
 #include "components/chat/ChatModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
+#include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
@@ -148,6 +149,13 @@ bool CoreManager::chatModelExists (const QString &peerAddress, const QString &lo
   return mChatModels.contains({ peerAddress, localAddress });
 }
 
+HistoryModel* CoreManager::getHistoryModel(){
+  if(!mHistoryModel){
+    mHistoryModel = new HistoryModel(this);
+    emit historyModelCreated(mHistoryModel);
+  }
+  return mHistoryModel;
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::init (QObject *parent, const QString &configPath) {

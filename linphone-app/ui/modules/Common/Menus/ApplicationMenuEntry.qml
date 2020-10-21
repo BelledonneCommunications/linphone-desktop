@@ -94,7 +94,6 @@ Rectangle {
     id: mouseArea
 
     anchors.fill: parent
-    hoverEnabled: true
 
     onClicked: entry.select()
   }
