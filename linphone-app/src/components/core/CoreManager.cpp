@@ -172,10 +172,17 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 
 void CoreManager::uninit () {
   if (mInstance) {
-    connect(mInstance, &QObject::destroyed, []()mutable{mInstance = nullptr;});
+    connect(mInstance, &QObject::destroyed, []()mutable{
+        mInstance = nullptr;
+        qInfo() << "Linphone Core is destroyed";
+    });
     mInstance->mCbsTimer->stop();
     mInstance->deleteLater();// Ensure to take time to delete the instance
     QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
+    if( mInstance){
+        qWarning() << "Linphone Core couldn't destroy in time. It may lead to have multiple session of Linphone Core";
+        mInstance = nullptr;
+    }
   }
 }
 
