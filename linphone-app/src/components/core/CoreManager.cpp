@@ -116,8 +116,8 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
   QPair<QString, QString> chatModelId{ peerAddress, localAddress };
   if (!mChatModels.contains(chatModelId)) {
     if (
-      !mCore->createAddress(Utils::appStringToCoreString(peerAddress)) ||
-      !mCore->createAddress(Utils::appStringToCoreString(localAddress))
+      !mCore->createAddress(peerAddress.toStdString()) ||
+      !mCore->createAddress(localAddress.toStdString())
     ) {
       qWarning() << QStringLiteral("Unable to get chat model from invalid chat model id: (%1, %2).")
         .arg(peerAddress).arg(localAddress);
