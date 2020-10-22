@@ -407,23 +407,19 @@ QString ChatModel::getLocalAddress () const {
   );
 }
 QString ChatModel::getFullPeerAddress () const {
-  return Utils::coreStringToAppString(
-    mChatRoom->getPeerAddress()->asString()
-  );
+  return QString::fromStdString(mChatRoom->getPeerAddress()->asString());
 }
 
 QString ChatModel::getFullLocalAddress () const {
-  return Utils::coreStringToAppString(
-    mChatRoom->getLocalAddress()->asString()
-  );
+  return QString::fromStdString(mChatRoom->getLocalAddress()->asString());
 }
 void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());
   
   mChatRoom = core->getChatRoom(
-    factory->createAddress(Utils::appStringToCoreString(peerAddress)),
-    factory->createAddress(Utils::appStringToCoreString(localAddress))
+    factory->createAddress(peerAddress.toStdString()),
+    factory->createAddress(localAddress.toStdString())
   );
   Q_ASSERT(mChatRoom);
 
