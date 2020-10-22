@@ -94,11 +94,11 @@ QString CallModel::getLocalAddress () const {
   return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
 }
 QString CallModel::getFullPeerAddress () const {
-  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
+  return QString::fromStdString(mCall->getRemoteAddress()->asString());
 }
 
 QString CallModel::getFullLocalAddress () const {
-  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asString());
+  return QString::fromStdString(mCall->getCallLog()->getLocalAddress()->asString());
 }
 // -----------------------------------------------------------------------------
 
