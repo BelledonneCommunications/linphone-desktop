@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - In fullscreen mode, the preview size can be changed by using mouse wheel
 - Transport protocol deactivation has been replaced by not listening ports
 - Echo calibration in settings view
+- In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
 
 ### Fixed
 
