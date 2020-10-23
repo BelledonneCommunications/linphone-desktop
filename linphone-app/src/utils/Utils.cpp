@@ -97,7 +97,7 @@ std::shared_ptr<linphone::Address> Utils::getMatchingLocalAddress(std::shared_pt
 }
 // Return at most : sip:username@domain
 QString Utils::cleanSipAddress (const QString &sipAddress) {
-  std::shared_ptr<linphone::Address> addr = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
+  std::shared_ptr<linphone::Address> addr = linphone::Factory::get()->createAddress(sipAddress.toStdString());
   if( addr) {
     QStringList fields = Utils::coreStringToAppString(addr->asStringUriOnly()).split('@');
     if(fields.size() > 0){// maybe useless but it's just to be sure to have a domain
