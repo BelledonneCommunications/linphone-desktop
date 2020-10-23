@@ -77,13 +77,24 @@ Item {
 
       Component.onCompleted: forceActiveFocus()
 
+      property var isAutoRepeating : false // shutdown repeating key feature to let optional menu appears and do normal stuff (like accents menu)
+      Keys.onReleased: {
+          if(isAutoRepeating){// In a repeat session, we don't print the key
+              isAutoRepeating = false
+              if(event.text !== '')// Remove the previous character
+                  textArea.remove(textArea.text.length-1, textArea.text.length)
+          }
+      }
       Keys.onPressed: {
-        if (event.matches(StandardKey.InsertLineSeparator)) {
-          insert(cursorPosition, '')
-        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-          handleValidation()
-          event.accepted = true
-        }
+          if(event.isAutoRepeat){
+              isAutoRepeating = true
+              event.accepted = true
+          }else if (event.matches(StandardKey.InsertLineSeparator)) {
+             insert(cursorPosition, '')
+          } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            handleValidation()
+            event.accepted = true
+          }
       }
     }
   }
