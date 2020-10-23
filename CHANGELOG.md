@@ -16,6 +16,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Transport protocol deactivation has been replaced by not listening ports
 - Echo calibration in settings view
 - In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
+- Add URI handler configuration : `linphone-config` to fetch a configuration file
+- Fetch a configuration file from a CLI command/URI Handlers : 
+    sip:user@domain?method=call&fetch-config=base64(scheme://url)
+    linphone-config://url
+    linphone-config:fetch-config=base64(scheme://url)
+    linphone --fetch-config=scheme://url
+    linphone "<method> fetch-config=scheme://url"
+- Options to audio codec can be used and stored
+- Opus can now use `packetlosspercentage` and `useinbandfec` configuration
+- A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music)
+
 
 ### Fixed
 
