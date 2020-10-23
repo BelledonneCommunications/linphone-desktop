@@ -168,7 +168,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 
   mMutex.lock();
 
-  fprintf(stderr, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
+  fprintf(stdout, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
   if( level == BCTBX_LOG_FATAL)
       QMessageBox::critical(nullptr, "Linphone will crash", msg); // Print an error message before sending msg to bctoolbox
   bctbx_log(QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
@@ -202,6 +202,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 
   {
     shared_ptr<linphone::LoggingService> loggingService = mInstance->mLoggingService = linphone::LoggingService::get();
+    loggingService->setDomain(QtDomain);
     loggingService->setLogLevel(linphone::LogLevel::Message);
     loggingService->addListener(make_shared<LinphoneLogger>(mInstance));
   }
