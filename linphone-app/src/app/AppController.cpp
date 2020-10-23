@@ -67,7 +67,17 @@ AppController::AppController (int &argc, char *argv[]) {
     #endif // ifdef Q_OS_MACOS
 
     QString command = mApp->getCommandArgument();
-    mApp->sendMessage(command.isEmpty() ? "show" : command.toLocal8Bit(), -1);
+    if( command.isEmpty()){
+      command = "show";
+      QStringList parametersList;
+      for(int i = 1 ; i < argc ; ++i){
+        QString a = argv[i];
+        if(a.startsWith("--"))// show is a command : remove <-->-style parameters
+          a.remove(0,2);
+        command += " "+a;
+      }
+    }
+    mApp->sendMessage(command.toLocal8Bit(), -1);
 
     return;
   }

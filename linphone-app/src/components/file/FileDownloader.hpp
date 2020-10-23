@@ -23,12 +23,13 @@
 
 #include <QObject>
 #include <QtNetwork>
+#include <QThread>
 
 // =============================================================================
 
 class QSslError;
 
-class FileDownloader : public QObject {
+class FileDownloader : public QObject{
   Q_OBJECT;
 
   // TODO: Add an error property to use in UI.
@@ -56,6 +57,11 @@ public:
 
   QString getDownloadFolder () const;
   void setDownloadFolder (const QString &downloadFolder);
+
+  QString getDestinationFileName () const;
+
+  void setOverwriteFile(const bool &overwrite);
+  static QString synchronousDownload(const QUrl &url, const QString &destinationFolder, const bool &overwriteFile);// Return the filpath. Empty if nof file could be downloaded
 
 signals:
   void urlChanged (const QUrl &url);
@@ -95,6 +101,7 @@ private:
   qint64 mReadBytes = 0;
   qint64 mTotalBytes = 0;
   bool mDownloading = false;
+  bool mOverwriteFile = false;
 
   QPointer<QNetworkReply> mNetworkReply;
   QNetworkAccessManager mManager;

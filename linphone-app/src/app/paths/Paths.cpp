@@ -215,11 +215,25 @@ string Paths::getCodecsDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathCodecs);
 }
 
-string Paths::getConfigFilePath (const QString &configPath, bool writable) {
-  const QString path = configPath.isEmpty()
-    ? getAppConfigFilePath()
-    : QFileInfo(configPath).absoluteFilePath();
+string Paths::getConfigDirPath (bool writable) {
+  return writable ? getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)+QDir::separator()) : getReadableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)+QDir::separator());
+}
 
+string Paths::getConfigFilePath (const QString &configPath, bool writable) {
+    QString path;
+    if( !configPath.isEmpty()){
+        QFileInfo file(configPath);
+        if( !writable && (!file.exists() || !file.isFile())){// This file cannot be found. Check if it exists in standard folder
+            QString defaultConfigPath = Utils::coreStringToAppString(getConfigDirPath(false));
+            file = QFileInfo(defaultConfigPath+QDir::separator()+configPath);
+            if( !file.exists() || !file.isFile())
+                path = "";
+            else
+                path = file.absoluteFilePath();
+        }else
+            path = file.absoluteFilePath();
+    }else
+        path = getAppConfigFilePath();
   return writable ? getWritableFilePath(path) : getReadableFilePath(path);
 }
 

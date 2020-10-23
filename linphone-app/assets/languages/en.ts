@@ -92,6 +92,22 @@
         <source>about</source>
         <translation>About</translation>
     </message>
+    <message>
+        <source>commandLineOptionFetchConfig</source>
+        <translation>specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
+    </message>
+    <message>
+        <source>commandLineOptionFetchConfigArg</source>
+        <translation>url, path or file</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCall</source>
+        <translation>make a call</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCallArg</source>
+        <translation>sip address</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>

@@ -19,6 +19,9 @@ WriteRegStr HKCR "sip" "URL Protocol" ""
 WriteRegStr HKCR "sip-linphone" "" "URL:sip-linphone Protocol"
 WriteRegStr HKCR "sip-linphone" "URL Protocol" ""
 
+WriteRegStr HKCR "linphone-config" "" "URL:linphone-config Protocol"
+WriteRegStr HKCR "linphone-config" "URL Protocol" ""
+
 WriteRegStr HKCR "sips" "" "URL:sips Protocol"
 WriteRegStr HKCR "sips" "URL Protocol" ""
 
@@ -61,6 +64,13 @@ WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone\Shell" "" ""
 WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone\Shell\Open" "" ""
 WriteRegStr HKCR "@APPLICATION_NAME@.sips-linphone\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
 WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "sips-linphone" "@APPLICATION_NAME@.sips-linphone"
+
+## LINPHONE-CONFIG
+WriteRegStr HKCR "@APPLICATION_NAME@.linphone-config" "" "@APPLICATION_NAME@ linphone-config Protocol"
+WriteRegStr HKCR "@APPLICATION_NAME@.linphone-config\Shell" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.linphone-config\Shell\Open" "" ""
+WriteRegStr HKCR "@APPLICATION_NAME@.linphone-config\Shell\Open\Command" "" "$INSTDIR\bin\@EXECUTABLE_NAME@.exe $\"%1$\""
+WriteRegStr HKLM "SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" "linphone-config" "@APPLICATION_NAME@.linphone-config"
 
 ## TEL
 WriteRegStr HKCR "@APPLICATION_NAME@.tel" "" "@APPLICATION_NAME@ tel Protocol"
