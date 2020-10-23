@@ -55,8 +55,12 @@ public:
   ~App ();
 
   void initContentApp ();
+  QStringList cleanParserKeys(QCommandLineParser * parser, QStringList keys);// Get all options from parser and remove the selected keys. Return the result that can be passed to parser process.
+  void processArguments(QHash<QString,QString> args);
 
   QString getCommandArgument ();
+
+  bool setFetchConfig (QCommandLineParser *parser);
 
   #ifdef Q_OS_MACOS
     bool event (QEvent *event) override;

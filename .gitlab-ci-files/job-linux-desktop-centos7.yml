@@ -100,6 +100,7 @@ job-centos7-ninja-gcc-package:
   artifacts:
     paths:
       - build/OUTPUT/Packages/*.AppImage
+    when: always
     expire_in: 1 week
 
 #################################################

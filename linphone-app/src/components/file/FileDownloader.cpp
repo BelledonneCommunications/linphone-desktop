@@ -18,6 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QTest>
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/settings/SettingsModel.hpp"
@@ -31,13 +32,15 @@ namespace {
   constexpr char cDefaultFileName[] = "download";
 }
 
-static QString getDownloadFilePath (const QString &folder, const QUrl &url) {
+static QString getDownloadFilePath (const QString &folder, const QUrl &url, const bool& overwrite) {
   QFileInfo fileInfo(url.path());
   QString fileName = fileInfo.fileName();
   if (fileName.isEmpty())
     fileName = cDefaultFileName;
 
   fileName.prepend(folder);
+  if( overwrite && QFile::exists(fileName))
+      QFile::remove(fileName);
   if (!QFile::exists(fileName))
     return fileName;
 
@@ -89,12 +92,15 @@ void FileDownloader::download () {
   #endif
 
   if (mDownloadFolder.isEmpty()) {
-    mDownloadFolder = CoreManager::getInstance()->getSettingsModel()->getDownloadFolder();
+    if(CoreManager::isInstanciated())
+      mDownloadFolder = CoreManager::getInstance()->getSettingsModel()->getDownloadFolder();
+    else
+      mDownloadFolder =  QDir::cleanPath(Utils::coreStringToAppString(Paths::getDownloadDirPath ()) + QDir::separator());
     emit downloadFolderChanged(mDownloadFolder);
   }
 
   Q_ASSERT(!mDestinationFile.isOpen());
-  mDestinationFile.setFileName(getDownloadFilePath(QDir::cleanPath(mDownloadFolder) + QDir::separator(), mUrl));
+  mDestinationFile.setFileName(getDownloadFilePath(QDir::cleanPath(mDownloadFolder) + QDir::separator(), mUrl, mOverwriteFile));
   if (!mDestinationFile.open(QIODevice::WriteOnly))
     emitOutputError();
   else {
@@ -208,6 +214,43 @@ void FileDownloader::setDownloadFolder (const QString &downloadFolder) {
     mDownloadFolder = downloadFolder;
     emit downloadFolderChanged(mDownloadFolder);
   }
+}
+
+QString FileDownloader::getDestinationFileName () const{
+  return mDestinationFile.fileName();
+}
+
+void FileDownloader::setOverwriteFile(const bool &overwrite){
+  mOverwriteFile = overwrite;
+}
+
+QString FileDownloader::synchronousDownload(const QUrl &url, const QString &destinationFolder, const bool &overwriteFile){
+  QString filePath;
+  FileDownloader downloader;
+  if(url.isRelative())
+    qWarning() << "FileDownloader: The specified URL is not valid";
+  else{
+    bool isOver = false;
+    bool * pIsOver = &isOver;
+    downloader.setUrl(url);
+    downloader.setOverwriteFile(overwriteFile);
+    downloader.setDownloadFolder(destinationFolder);
+    connect(&downloader, &FileDownloader::downloadFinished, [pIsOver]()mutable{
+      *pIsOver=true;
+      });
+    connect(&downloader, &FileDownloader::downloadFailed, [pIsOver]()mutable{
+      *pIsOver=true;
+      });
+    downloader.download();
+    if(QTest::qWaitFor([&]() {return isOver;}, DefaultTimeout)){
+      filePath = downloader.getDestinationFileName();
+      if(!QFile::exists(filePath)) {
+        filePath = "";
+        qWarning() << "FileDownloader: Cannot download the specified file";
+      }
+    }
+  }
+  return filePath;
 }
 
 qint64 FileDownloader::getReadBytes () const {
