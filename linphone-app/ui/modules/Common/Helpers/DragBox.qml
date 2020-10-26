@@ -21,6 +21,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   signal clicked (var mouse)
+  signal doubleClicked (var mouse)
   signal pressed (var mouse)
   signal released (var mouse)
   signal wheel (var wheel)
@@ -102,6 +103,7 @@ Item {
         axis: Drag.XandYAxis
         target: parent
       }
+      onDoubleClicked: dragBox.doubleClicked(mouse)
       onClicked:dragBox.clicked(mouse)
       onPressed: {
         dragBox.pressed(mouse)
