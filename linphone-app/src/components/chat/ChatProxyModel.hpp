@@ -39,6 +39,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
+  Q_PROPERTY(QString cachedText READ getCachedText);
 
 public:
   ChatProxyModel (QObject *parent = Q_NULLPTR);
@@ -58,7 +59,7 @@ public:
   Q_INVOKABLE void openFile (int id);
   Q_INVOKABLE void openFileDirectory (int id);
 
-  Q_INVOKABLE void compose ();
+  Q_INVOKABLE void compose (const QString& text);
 
   Q_INVOKABLE void resetMessageCount();
 
@@ -90,6 +91,8 @@ private:
   void setFullLocalAddress (const QString &localAddress);
 
   bool getIsRemoteComposing () const;
+  
+  QString getCachedText() const;
 
   void reload ();
 
@@ -105,6 +108,7 @@ private:
   QString mLocalAddress;
   QString mFullPeerAddress;
   QString mFullLocalAddress;
+  static QString gCachedText;
 
   std::shared_ptr<ChatModel> mChatModel;
 
