@@ -13,6 +13,7 @@ Item {
 
   property alias placeholderText: textArea.placeholderText
   property alias text: textArea.text
+  property alias cursorPosition: textArea.cursorPosition
 
   property bool dropEnabled: true
   property string dropDisabledReason
