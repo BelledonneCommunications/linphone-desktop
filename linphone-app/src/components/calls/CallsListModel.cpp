@@ -112,7 +112,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
     params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
   }
   params->setProxyConfig(core->getDefaultProxyConfig());
-  CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
+  CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
   shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
   if(currentProxyConfig){
     if(currentProxyConfig->getState() == linphone::RegistrationState::Ok)
@@ -147,7 +147,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableVideo(true);
   params->setProxyConfig(core->getDefaultProxyConfig());
-  CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
+  CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
   core->inviteAddressWithParams(address, params);
 }
 

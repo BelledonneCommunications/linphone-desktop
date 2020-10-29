@@ -112,7 +112,7 @@ void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParam
 
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams, const QString &to) {
   const QString from(
-    Utils::coreStringToAppString(
+    QString::fromStdString(
       CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->getUsername()
     )
   );
@@ -779,8 +779,8 @@ QString CallModel::iceStateToString (linphone::IceState state) const {
 QString CallModel::generateSavedFilename () const {
   const shared_ptr<linphone::CallLog> callLog(mCall->getCallLog());
   return generateSavedFilename(
-    Utils::coreStringToAppString(callLog->getFromAddress()->getUsername()),
-    Utils::coreStringToAppString(callLog->getToAddress()->getUsername())
+    QString::fromStdString(callLog->getFromAddress()->getUsername()),
+    QString::fromStdString(callLog->getToAddress()->getUsername())
   );
 }
 

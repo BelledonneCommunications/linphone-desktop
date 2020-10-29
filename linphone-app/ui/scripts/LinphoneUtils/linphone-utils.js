@@ -74,10 +74,10 @@ function _getUsername (str) {
 
   var end = str.indexOf('@', start + 1)
   if (end === -1) {
-    return str.substring(start)
+    return Utils.decode(str.substring(start))
   }
 
-  return str.substring(start, end)
+  return Utils.decode(str.substring(start, end))
 }
 
 // -----------------------------------------------------------------------------
