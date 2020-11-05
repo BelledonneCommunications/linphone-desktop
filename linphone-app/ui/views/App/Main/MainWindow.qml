@@ -51,7 +51,7 @@ ApplicationWindow {
 
   Connections {
     target: CoreManager
-    onManagerInitialized: mainLoader.active = true
+    onCoreManagerInitialized: mainLoader.active = true
   }
 
   Shortcut {

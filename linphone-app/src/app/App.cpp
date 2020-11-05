@@ -397,7 +397,7 @@ void App::initContentApp () {
 
   QObject::connect(
     CoreManager::getInstance(),
-    &CoreManager::managerInitialized, CoreManager::getInstance(),
+    &CoreManager::coreManagerInitialized, CoreManager::getInstance(),
     [this, mustBeIconified]() mutable {
       if(CoreManager::getInstance()->started())
         openAppAfterInit(mustBeIconified);
@@ -894,7 +894,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
           coreManager->getCallsListModel()->launchAudioCall(sipAddress);
         }else{
           QObject * context = new QObject();
-          QObject::connect(CoreManager::getInstance(), &CoreManager::managerInitialized,context,
+          QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized,context,
           [sipAddress,coreManager, context]() mutable {
             if(context){
               delete context;

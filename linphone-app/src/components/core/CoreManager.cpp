@@ -75,7 +75,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	mCore = nullptr;
 	CoreHandlers *coreHandlers = mHandlers.get();
 	QObject::connect(coreHandlers, &CoreHandlers::coreStarting, this, &CoreManager::startIterate, Qt::QueuedConnection);
-	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, &CoreManager::initManager, Qt::QueuedConnection);
+	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, &CoreManager::initCoreManager, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::coreStopped, this, &CoreManager::stopIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
 
@@ -90,7 +90,7 @@ CoreManager::~CoreManager(){
 
 // -----------------------------------------------------------------------------
 
-void CoreManager::initManager(){
+void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
@@ -102,7 +102,7 @@ void CoreManager::initManager(){
 	migrate();
 	mStarted = true;
 	qInfo() << QStringLiteral("CoreManager initialized");
-	emit managerInitialized();
+	emit coreManagerInitialized();
 }
 
 shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {

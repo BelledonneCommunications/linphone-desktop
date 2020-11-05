@@ -138,12 +138,12 @@ public:
   static bool isInstanciated(){return mInstance!=nullptr;}
 
 public slots:
-    void initManager();
+    void initCoreManager();
     void startIterate();
     void stopIterate();
 
 signals:
-  void managerInitialized ();
+  void coreManagerInitialized ();
 
   void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
   void historyModelCreated (HistoryModel *historyModel);
