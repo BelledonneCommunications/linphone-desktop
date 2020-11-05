@@ -45,7 +45,9 @@ signals:
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
   void callCreated(const std::shared_ptr<linphone::Call> & call);
+  void coreStarting();
   void coreStarted ();
+  void coreStopped ();
   void isComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
   void logsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
@@ -54,8 +56,6 @@ signals:
   void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
 
 private:
-  void handleCoreCreated ();
-  void notifyCoreStarted ();
 
   // ---------------------------------------------------------------------------
   // Linphone callbacks.
@@ -165,11 +165,6 @@ private:
   ) override;
 
   // ---------------------------------------------------------------------------
-
-  bool mCoreCreated = false;
-  bool mCoreStarted = false;
-
-  QMutex *mCoreStartedLock = nullptr;
 };
 
 #endif // CORE_HANDLERS_H_

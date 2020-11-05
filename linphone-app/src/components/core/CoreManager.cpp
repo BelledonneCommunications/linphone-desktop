@@ -72,42 +72,38 @@ CoreManager *CoreManager::mInstance;
 
 CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
-	QTimer * delayedCreationTimer = new QTimer();
-	delayedCreationTimer->setSingleShot(true);
-	QObject::connect(delayedCreationTimer, &QTimer::timeout, this , [configPath, this, delayedCreationTimer]{
-		delayedCreationTimer->deleteLater();
-		createLinphoneCore(configPath);
-		qInfo() << QStringLiteral("Core created. Enable iterate.");
-		mInstance->mCbsTimer->start();
-		std::shared_ptr<CoreHandlers> h = mInstance->getHandlers();// Protect handler as we will enter its function where it can be deleted (like while restarting)
-		emit mInstance->coreCreated();
-	});
-
+	mCore = nullptr;
 	CoreHandlers *coreHandlers = mHandlers.get();
-
-	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, [] {
-    // Do not change this order. :) (Or pray.)
-		mInstance->mCallsListModel = new CallsListModel(mInstance);
-		mInstance->mContactsListModel = new ContactsListModel(mInstance);
-		mInstance->mAccountSettingsModel = new AccountSettingsModel(mInstance);
-		mInstance->mSettingsModel = new SettingsModel(mInstance);
-		mInstance->mSipAddressesModel = new SipAddressesModel(mInstance);
-		EventCountNotifier *eventCountNotifier = new EventCountNotifier(mInstance);
-		eventCountNotifier->updateUnreadMessageCount();
-		QObject::connect(eventCountNotifier, &EventCountNotifier::eventCountChanged,
-			mInstance, &CoreManager::eventCountChanged
-		);
-		mInstance->mEventCountNotifier = eventCountNotifier;
-		mInstance->migrate();
-		mInstance->mStarted = true;
-		emit mInstance->coreStarted();
-	});
-
+	QObject::connect(coreHandlers, &CoreHandlers::coreStarting, this, &CoreManager::startIterate, Qt::QueuedConnection);
+	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, &CoreManager::initManager, Qt::QueuedConnection);
+	QObject::connect(coreHandlers, &CoreHandlers::coreStopped, this, &CoreManager::stopIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
-	delayedCreationTimer->start(CbsCallInterval);
+
+	createLinphoneCore(configPath);
+}
+
+CoreManager::~CoreManager(){
+	mCore->removeListener(mHandlers);
+	mHandlers = nullptr;// Call destructor
+	mCore = nullptr;// Call destructor
 }
 
 // -----------------------------------------------------------------------------
+
+void CoreManager::initManager(){
+	mCallsListModel = new CallsListModel(this);
+	mContactsListModel = new ContactsListModel(this);
+	mAccountSettingsModel = new AccountSettingsModel(this);
+	mSettingsModel = new SettingsModel(this);
+	mSipAddressesModel = new SipAddressesModel(this);
+	mEventCountNotifier = new EventCountNotifier(this);
+	mEventCountNotifier->updateUnreadMessageCount();
+	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
+	migrate();
+	mStarted = true;
+	qInfo() << QStringLiteral("Core created. Enable iterate.");
+	emit managerInitialized();
+}
 
 shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
   if (peerAddress.isEmpty() || localAddress.isEmpty())
@@ -161,13 +157,7 @@ HistoryModel* CoreManager::getHistoryModel(){
 void CoreManager::init (QObject *parent, const QString &configPath) {
   if (mInstance)
     return;
-
   mInstance = new CoreManager(parent, configPath);
-
-  QTimer *timer = mInstance->mCbsTimer = new QTimer(mInstance);
-  timer->setInterval(CbsCallInterval);
-
-  QObject::connect(timer, &QTimer::timeout, mInstance, &CoreManager::iterate);
 }
 
 void CoreManager::uninit () {
@@ -176,8 +166,11 @@ void CoreManager::uninit () {
         mInstance = nullptr;
         qInfo() << "Linphone Core is destroyed";
     });
-    mInstance->mCbsTimer->stop();
-    mInstance->deleteLater();// Ensure to take time to delete the instance
+    QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater);
+
+    mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
+    mInstance->mCore->stop();
+    mInstance->unlockVideoRender();
     QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
     if( mInstance){
         qWarning() << "Linphone Core couldn't destroy in time. It may lead to have multiple session of Linphone Core";
@@ -338,12 +331,27 @@ int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &l
 int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
 	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCountFromLocal(localAddress) : 0;
 }
+
 // -----------------------------------------------------------------------------
 
+void CoreManager::startIterate(){
+    mCbsTimer = new QTimer(this);
+    mCbsTimer->setInterval(CbsCallInterval);
+    QObject::connect(mCbsTimer, &QTimer::timeout, this, &CoreManager::iterate);
+    mCbsTimer->start();
+}
+
+void CoreManager::stopIterate(){
+    mCbsTimer->stop();
+    mCbsTimer->deleteLater();// allow the timer to continue its stuff
+    mCbsTimer = nullptr;
+}
+
 void CoreManager::iterate () {
-  mInstance->lockVideoRender();
-  mCore->iterate();
-  mInstance->unlockVideoRender();
+    lockVideoRender();
+    if(mCore)
+        mCore->iterate();
+    unlockVideoRender();
 }
 
 // -----------------------------------------------------------------------------

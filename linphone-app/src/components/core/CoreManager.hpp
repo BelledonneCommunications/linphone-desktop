@@ -137,9 +137,13 @@ public:
 
   static bool isInstanciated(){return mInstance!=nullptr;}
 
+public slots:
+    void initManager();
+    void startIterate();
+    void stopIterate();
+
 signals:
-  void coreCreated ();
-  void coreStarted ();
+  void managerInitialized ();
 
   void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
   void historyModelCreated (HistoryModel *historyModel);
@@ -150,6 +154,7 @@ signals:
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
+  ~CoreManager ();
 
   void setDatabasesPaths ();
   void setOtherPaths ();
