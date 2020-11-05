@@ -84,8 +84,8 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 
 CoreManager::~CoreManager(){
 	mCore->removeListener(mHandlers);
-	mHandlers = nullptr;// Call destructor
-	mCore = nullptr;// Call destructor
+	mHandlers = nullptr;// Ordering Call destructor just to be sure (removeListener should be enough)
+	mCore = nullptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +101,7 @@ void CoreManager::initManager(){
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
 	mStarted = true;
-	qInfo() << QStringLiteral("Core created. Enable iterate.");
+	qInfo() << QStringLiteral("CoreManager initialized");
 	emit managerInitialized();
 }
 
@@ -164,16 +164,16 @@ void CoreManager::uninit () {
   if (mInstance) {
     connect(mInstance, &QObject::destroyed, []()mutable{
         mInstance = nullptr;
-        qInfo() << "Linphone Core is destroyed";
+        qInfo() << "Core is correctly destroyed";
     });
-    QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater);
+    QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater); // Delete data only when the core is Off
 
     mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
     mInstance->mCore->stop();
     mInstance->unlockVideoRender();
     QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
     if( mInstance){
-        qWarning() << "Linphone Core couldn't destroy in time. It may lead to have multiple session of Linphone Core";
+        qWarning() << "Core couldn't destroy in time. It may lead to have multiple session of Core";
         mInstance = nullptr;
     }
   }
@@ -338,10 +338,12 @@ void CoreManager::startIterate(){
     mCbsTimer = new QTimer(this);
     mCbsTimer->setInterval(CbsCallInterval);
     QObject::connect(mCbsTimer, &QTimer::timeout, this, &CoreManager::iterate);
+    qInfo() << QStringLiteral("Start iterate");
     mCbsTimer->start();
 }
 
 void CoreManager::stopIterate(){
+    qInfo() << QStringLiteral("Stop iterate");
     mCbsTimer->stop();
     mCbsTimer->deleteLater();// allow the timer to continue its stuff
     mCbsTimer = nullptr;

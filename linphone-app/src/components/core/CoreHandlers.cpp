@@ -38,15 +38,6 @@
 
 using namespace std;
 
-// Schedule a function in app context.
-void scheduleFunctionInApp (function<void()> func) {
-  App *app = App::getInstance();
-  if (QThread::currentThread() != app->thread())
-    QTimer::singleShot(0, app, func);
-  else
-    func();
-}
-
 // -----------------------------------------------------------------------------
 
 CoreHandlers::CoreHandlers (CoreManager *coreManager) {
@@ -124,12 +115,21 @@ void CoreHandlers::onGlobalStateChanged (
 ) {
     Q_UNUSED(core)
     Q_UNUSED(message)
-    if( gstate == linphone::GlobalState::On)
-          emit coreStarted();
-    else if( gstate == linphone::GlobalState::Off)
-          emit coreStopped();
-    else if( gstate == linphone::GlobalState::Startup)
-          emit coreStarting();
+    switch(gstate){
+        case linphone::GlobalState::On :
+            qInfo() << "Core is running " << QString::fromStdString(message);
+            emit coreStarted();
+            break;
+        case linphone::GlobalState::Off :
+            qInfo() << "Core is stopped " << QString::fromStdString(message);
+            emit coreStopped();
+            break;
+        case linphone::GlobalState::Startup : // Usefull to start core iterations
+            qInfo() << "Core is starting " << QString::fromStdString(message);
+            emit coreStarting();
+            break;
+        default:{}
+    }
 }
 
 void CoreHandlers::onIsComposingReceived (
