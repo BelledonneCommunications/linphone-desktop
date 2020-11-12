@@ -266,6 +266,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->addListener(mHandlers);
   mCore->setVideoDisplayFilter("MSOGL");
   mCore->usePreviewWindow(true);
+  mCore->enableVideoPreview(false);
   mCore->setUserAgent(
     Utils::appStringToCoreString(
       QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2, Qt %3) LinphoneCore")
