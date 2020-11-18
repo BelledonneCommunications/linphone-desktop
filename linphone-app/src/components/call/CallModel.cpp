@@ -43,7 +43,6 @@ using namespace std;
 
 namespace {
   constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
-  constexpr int DtmfSoundDelay = 200;
 }
 
 CallModel::CallModel (shared_ptr<linphone::Call> call) {

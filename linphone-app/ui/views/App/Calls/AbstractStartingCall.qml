@@ -14,6 +14,7 @@ Rectangle {
 
   default property alias _actionArea: actionArea.data
   property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
+  property alias showKeypad :telKeypadButton.visible
 
   // ---------------------------------------------------------------------------
 
@@ -99,5 +100,28 @@ Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: CallStyle.actionArea.height
     }
+  }
+  
+    ActionButton {
+      id:telKeypadButton
+      icon: 'tel_keypad'
+      visible:false
+      onClicked: telKeypad.visible = !telKeypad.visible
+      anchors.left:parent.left
+      anchors.top:parent.top
+      iconSize: CallStyle.header.iconSize
+      anchors.leftMargin: CallStyle.header.leftMargin
+      anchors.topMargin: CallStyle.header.topMargin
+    }
+    
+  // ---------------------------------------------------------------------------
+  // TelKeypad.
+  // ---------------------------------------------------------------------------
+
+  TelKeypad {
+    id: telKeypad
+
+    call: parent.call
+    visible: SettingsModel.showTelKeypadAutomatically
   }
 }

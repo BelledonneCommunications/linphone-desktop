@@ -9,6 +9,7 @@ import App.Styles 1.0
 // =============================================================================
 
 AbstractStartingCall {
+  showKeypad:true
   GridLayout {
     columns: parent.width < CallStyle.actionArea.lowWidth && call.videoEnabled ? 1 : 2
     rowSpacing: ActionBarStyle.spacing

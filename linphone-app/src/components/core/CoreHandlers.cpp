@@ -132,6 +132,12 @@ void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,
   emit callCreated(call);
 }
 
+void CoreHandlers::onDtmfReceived(
+    const std::shared_ptr<linphone::Core> & lc,
+    const std::shared_ptr<linphone::Call> & call,
+    int dtmf) {
+    CoreManager::getInstance()->getCore()->playDtmf((char)dtmf, CallModel::DtmfSoundDelay);
+}
 void CoreHandlers::onGlobalStateChanged (
   const shared_ptr<linphone::Core> &,
   linphone::GlobalState gstate,
