@@ -102,9 +102,9 @@ ColumnLayout  {
             onClicked: window.setView('ContactEdit', {
               sipAddress: conversation.peerAddress
             })
-	    TooltipArea {
-	      text: Logic.getEditTooltipText()
-	    }
+            TooltipArea {
+              text: Logic.getEditTooltipText()
+            }
           }
 
           ActionButton {

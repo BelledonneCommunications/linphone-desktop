@@ -68,6 +68,7 @@ Item {
     id: builder
 
     MouseArea {
+      cursorShape: Qt.ArrowCursor
       property var _timeout
 
       function _checkPosition (positionEvent) {

@@ -138,6 +138,8 @@ set(SOURCES
     src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
     src/components/file/FileDownloader.cpp
     src/components/file/FileExtractor.cpp
+    src/components/history/HistoryModel.cpp
+    src/components/history/HistoryProxyModel.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
     src/components/other/colors/Colors.cpp
@@ -198,6 +200,8 @@ set(HEADERS
     src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
     src/components/file/FileDownloader.hpp
     src/components/file/FileExtractor.hpp
+    src/components/history/HistoryModel.hpp
+    src/components/history/HistoryProxyModel.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
     src/components/other/colors/Colors.hpp

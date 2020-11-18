@@ -116,6 +116,7 @@ ApplicationWindow {
           anchors.fill: parent
 
           onClicked: konami.forceActiveFocus()
+          cursorShape: Qt.ArrowCursor
 
           Konami {
             id: konami

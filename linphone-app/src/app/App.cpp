@@ -520,6 +520,7 @@ void App::registerTypes () {
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
   registerType<FileDownloader>("FileDownloader");
   registerType<FileExtractor>("FileExtractor");
+  registerType<HistoryProxyModel>("HistoryProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
@@ -535,6 +536,7 @@ void App::registerTypes () {
   registerUncreatableType<ChatModel>("ChatModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
+  registerUncreatableType<HistoryModel>("HistoryModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
 }

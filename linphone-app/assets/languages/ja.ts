@@ -831,6 +831,25 @@
     </message>
 </context>
 <context>
+    <name>HistoryView</name>
+    <message>
+        <source>removeAllEntriesDescription</source>
+        <translation type="unfinished">履歴をクリアしてよろしいですか？</translation>
+    </message>
+    <message>
+        <source>tooltipContactEdit</source>
+        <translation type="unfinished">連絡先の編集</translation>
+    </message>
+    <message>
+        <source>tooltipContactAdd</source>
+        <translation type="unfinished">連絡先の追加</translation>
+    </message>
+    <message>
+        <source>cleanHistory</source>
+        <translation type="unfinished">履歴の削除</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>

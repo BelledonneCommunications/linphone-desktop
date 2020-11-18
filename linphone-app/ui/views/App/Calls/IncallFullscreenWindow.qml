@@ -101,8 +101,8 @@ Window {
 
       anchors.fill: parent
       acceptedButtons: Qt.NoButton
-      hoverEnabled: true
       propagateComposedEvents: true
+      cursorShape: Qt.ArrowCursor
 
       onEntered: hideButtonsTimer.start()
       onExited: hideButtonsTimer.stop()

@@ -34,7 +34,10 @@ QtObject {
   }
 
   property QtObject legend: QtObject {
-    property color backgroundColor: Colors.f
+    property QtObject backgroundColor: QtObject {
+      property color normal: Colors.f
+      property color hovered: Colors.c
+    }
     property color color: Colors.d
     property int pointSize: Units.dp * 11
     property int height: 30

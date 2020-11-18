@@ -89,6 +89,7 @@ Column {
 
     delegate: MouseArea {
       id: dragArea
+      cursorShape: Qt.ArrowCursor
 
       property bool held: false
 
@@ -189,7 +190,7 @@ Column {
         id: mouseArea
 
         anchors.fill: parent
-        hoverEnabled: true
+        cursorShape: Qt.ArrowCursor
 
         onPressed: mouse.accepted = false
       }
