@@ -121,7 +121,6 @@ void AbstractEventCountNotifier::handleResetAllMissedCalls () {
   internalnotifyEventCount();
 }
 
-
 void AbstractEventCountNotifier::handleResetMissedCalls (ChatModel *chatModel) {
   auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatModel->getPeerAddress()), Utils::cleanSipAddress(chatModel->getLocalAddress()) });
   if (it != mMissedCalls.cend()) {
@@ -129,7 +128,6 @@ void AbstractEventCountNotifier::handleResetMissedCalls (ChatModel *chatModel) {
     internalnotifyEventCount();
   }
 }
-
 void AbstractEventCountNotifier::handleCallMissed (CallModel *callModel) {
   ++mMissedCalls[{ Utils::cleanSipAddress(callModel->getPeerAddress()), Utils::cleanSipAddress(callModel->getLocalAddress()) }];
   internalnotifyEventCount();

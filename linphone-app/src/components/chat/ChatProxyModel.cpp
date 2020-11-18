@@ -209,8 +209,6 @@ void ChatProxyModel::reload () {
   mChatModel = CoreManager::getInstance()->getChatModel(mPeerAddress, mLocalAddress);
 
   if (mChatModel) {
-    mChatModel->resetMessageCount();
-    mChatModel->focused();
 
     ChatModel *chatModel = mChatModel.get();
     QObject::connect(chatModel, &ChatModel::isRemoteComposingChanged, this, &ChatProxyModel::handleIsRemoteComposingChanged);
@@ -220,7 +218,11 @@ void ChatProxyModel::reload () {
 
   static_cast<ChatModelFilter *>(sourceModel())->setSourceModel(mChatModel.get());
 }
-
+void ChatProxyModel::resetMessageCount(){
+	if( mChatModel){
+		mChatModel->resetMessageCount();
+	}
+}
 // -----------------------------------------------------------------------------
 
 static inline QWindow *getParentWindow (QObject *object) {
