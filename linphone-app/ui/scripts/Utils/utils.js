@@ -449,6 +449,11 @@ function escapeQuotes (str) {
     : ''
 }
 
+function decode(str){
+  return decodeURIComponent(escape(str.replace(/%([0-9A-Fa-f]{2})/g, function() {
+    return String.fromCharCode(parseInt(arguments[1], 16));
+  })));
+}
 // -----------------------------------------------------------------------------
 
 // Get the first matching value in a array or object.

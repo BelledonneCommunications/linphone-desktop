@@ -365,7 +365,7 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getUsername () const {
-  return Utils::coreStringToAppString(mAccountCreator->getUsername());
+  return QString::fromStdString(mAccountCreator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {

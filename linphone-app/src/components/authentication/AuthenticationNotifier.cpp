@@ -40,7 +40,7 @@ void AuthenticationNotifier::handleAuthenticationRequested (const shared_ptr<lin
     QVariant::fromValue(authInfo),
     Utils::coreStringToAppString(authInfo->getRealm()),
     QStringLiteral("%1@%2").arg(
-      Utils::coreStringToAppString(authInfo->getUsername())
+      QString::fromStdString(authInfo->getUsername())
     ).arg(
       Utils::coreStringToAppString(authInfo->getDomain())
     ),

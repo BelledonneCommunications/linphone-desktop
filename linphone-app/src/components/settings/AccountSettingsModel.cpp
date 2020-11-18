@@ -356,7 +356,7 @@ AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationSta
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getPrimaryUsername () const {
-  return Utils::coreStringToAppString(
+  return QString::fromStdString(
     CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getUsername()
   );
 }
