@@ -64,7 +64,7 @@ DialogPlus {
           ScrollableListView {
             id: view
 
-            property string textRole: 'sipAddress' // Used by delegate.
+            property string textRole: 'fullSipAddress' // Used by delegate.
 
             anchors.fill: parent
             model: AccountSettingsModel.accounts
