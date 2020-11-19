@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## 4.2.4 - 2020-11-??
+
+### Added
+
+- Play DTMF when receiving it and show the Dialpad on outgoing call to allow sending DTMF
+- Update settings view to not deactivate transport but allow not binding port
+- Show all call logs by clicking on `previously` bar
+
+### Fixed
+
+- Displaying names in UTF8
+- Keep unsend typed message in memory when changing of chat room
+- Log files have Qt logs
+- Add `SOCI Sqlite3` library in Appimage
+- Use the more generic `linphone` folder and not `Linphone` for installation
+- Simplify build process to use install keyword
+
 ## 4.2.3 - 2020-10-09
 
 ### Added
