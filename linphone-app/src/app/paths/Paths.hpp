@@ -34,6 +34,7 @@ namespace Paths {
   std::string getCallHistoryFilePath ();
   std::string getCapturesDirPath ();
   std::string getCodecsDirPath ();
+  std::string getConfigDirPath (bool writable = true);
   std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
   std::string getDownloadDirPath ();
   std::string getFactoryConfigFilePath ();

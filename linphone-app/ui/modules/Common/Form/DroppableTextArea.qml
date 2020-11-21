@@ -13,6 +13,7 @@ Item {
 
   property alias placeholderText: textArea.placeholderText
   property alias text: textArea.text
+  property alias cursorPosition: textArea.cursorPosition
 
   property bool dropEnabled: true
   property string dropDisabledReason
@@ -77,13 +78,28 @@ Item {
 
       Component.onCompleted: forceActiveFocus()
 
+      property var isAutoRepeating : false // shutdown repeating key feature to let optional menu appears and do normal stuff (like accents menu)
+      Keys.onReleased: {
+		if( event.isAutoRepeat){// We begin or are currently repeating a key
+			if(!isAutoRepeating){// We start repeat. Check if this is an "ignore" character
+				if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis)// Remove the previous character if it is a printable character
+					textArea.remove(cursorPosition-1, cursorPosition)
+			}
+		}else
+			isAutoRepeating = false// We are no more repeating. Final decision is done on Releasing
+      }
       Keys.onPressed: {
-        if (event.matches(StandardKey.InsertLineSeparator)) {
-          insert(cursorPosition, '')
-        } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-          handleValidation()
-          event.accepted = true
-        }
+          if(event.isAutoRepeat){
+              isAutoRepeating = true// Where are repeating the key. Set the state.
+		if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis){// Ignore character if it is repeating and printable character
+			event.accepted = true
+		}
+          }else if (event.matches(StandardKey.InsertLineSeparator)) {
+             insert(cursorPosition, '')
+          } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+            handleValidation()
+            event.accepted = true
+          }
       }
     }
   }

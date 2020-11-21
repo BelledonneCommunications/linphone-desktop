@@ -224,6 +224,7 @@ Rectangle {
         onDropped: Logic.handleFilesDropped(files)
         onTextChanged: Logic.handleTextChanged(text)
         onValidText: Logic.sendMessage(text)
+        Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
       }
     }
   }

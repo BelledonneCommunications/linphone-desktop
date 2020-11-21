@@ -84,7 +84,7 @@ QString AccountSettingsModel::getUsedSipAddressAsStringUriOnly () const {
 }
 
 QString AccountSettingsModel::getUsedSipAddressAsString () const {
-	return Utils::coreStringToAppString(getUsedSipAddress()->asString());
+	return QString::fromStdString(getUsedSipAddress()->asString());
 }
 // -----------------------------------------------------------------------------
 
@@ -98,14 +98,14 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (const shared_ptr<linphone::Pr
   if (find(proxyConfigs.cbegin(), proxyConfigs.cend(), proxyConfig) != proxyConfigs.cend()) {
     if (proxyConfig->done() == -1) {
       qWarning() << QStringLiteral("Unable to update proxy config: `%1`.")
-        .arg(Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
+        .arg(QString::fromStdString(proxyConfig->getIdentityAddress()->asString()));
       return false;
     }
     coreManager->getSettingsModel()->configureRlsUri();
   } else {
     if (core->addProxyConfig(proxyConfig) == -1) {
       qWarning() << QStringLiteral("Unable to add proxy config: `%1`.")
-        .arg(Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()));
+        .arg(QString::fromStdString(proxyConfig->getIdentityAddress()->asString()));
       return false;
     }
     coreManager->getSettingsModel()->configureRlsUri(proxyConfig);
@@ -123,7 +123,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
   {
     const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
     map["sipAddress"] = address
-	  ? Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
+	  ? QString::fromStdString(proxyConfig->getIdentityAddress()->asString())
       : QString("");
   }
   map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
@@ -220,9 +220,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 
   // Sip address.
   {
-    shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      Utils::appStringToCoreString(literal)
-    );
+      shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(literal.toStdString());
     if (!address) {
       qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
       return false;
@@ -329,7 +327,7 @@ QString AccountSettingsModel::getUsername () const {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
   const string displayName = address->getDisplayName();
 
-  return Utils::coreStringToAppString(
+  return QString::fromStdString(
     displayName.empty() ? address->getUsername() : displayName
   );
 }
@@ -338,7 +336,7 @@ void AccountSettingsModel::setUsername (const QString &username) {
   shared_ptr<const linphone::Address> address = getUsedSipAddress();
   shared_ptr<linphone::Address> newAddress = address->clone();
 
-  if (newAddress->setDisplayName(Utils::appStringToCoreString(username))) {
+  if (newAddress->setDisplayName(username.toStdString())) {
     qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
       .arg(Utils::coreStringToAppString(newAddress->asStringUriOnly()));
   } else {
@@ -356,7 +354,7 @@ AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationSta
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getPrimaryUsername () const {
-  return Utils::coreStringToAppString(
+  return QString::fromStdString(
     CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getUsername()
   );
 }
@@ -374,23 +372,21 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
 }
 
 QString AccountSettingsModel::getPrimaryDisplayName () const {
-  return Utils::coreStringToAppString(
-    CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getDisplayName()
-  );
+  return QString::fromStdString(CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getDisplayName());
 }
 
 void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Address> primary = core->createPrimaryContactParsed();
 
-  primary->setDisplayName(Utils::appStringToCoreString(displayName));
+  primary->setDisplayName(displayName.toStdString());
   core->setPrimaryContact(primary->asString());
 
   emit accountSettingsUpdated();
 }
 
 QString AccountSettingsModel::getPrimarySipAddress () const {
-  return Utils::coreStringToAppString(
+  return QString::fromStdString(
     CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->asString()
   );
 }
@@ -404,7 +400,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
   {
     QVariantMap account;
     account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
-    account["fullSipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
+    account["fullSipAddress"] = QString::fromStdString(core->createPrimaryContactParsed()->asString());
     account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
     account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());
     account["proxyConfig"].setValue(nullptr);
@@ -414,7 +410,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
   for (const auto &proxyConfig : core->getProxyConfigList()) {
     QVariantMap account;
     account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
-    account["fullSipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString());
+    account["fullSipAddress"] = QString::fromStdString(proxyConfig->getIdentityAddress()->asString());
     account["proxyConfig"].setValue(proxyConfig);
     account["unreadMessageCount"] = proxyConfig->getUnreadChatMessageCount();
     account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());

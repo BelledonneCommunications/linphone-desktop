@@ -4,14 +4,72 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## 4.3.0 - [Undefined]
 
 ### Added
-- Let Pulseaudio to do its job when calling (eg. mute musics, switching between A2DP and HFP profiles for bluetooth headsets, etc.)
+
+- Sort contact list using System Locale
+- In fullscreen mode, the preview size can be changed by using mouse wheel
+- Echo calibration in settings view
+- In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
+- Add URI handler configuration : `linphone-config` to fetch a configuration file
+- Fetch a configuration file from a CLI command/URI Handlers : 
+    sip:user@domain?method=call&fetch-config=base64(scheme://url)
+    linphone-config://url
+    linphone-config:fetch-config=base64(scheme://url)
+    linphone --fetch-config=scheme://url
+    linphone "<method> fetch-config=scheme://url"
+- Options to audio codec can be used and stored
+- Opus can now use `packetlosspercentage` and `useinbandfec` configuration
+- A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music)
+
 
 ### Fixed
-- If the applciation is maximized, it will stay at maximized when clicking on the left panel
+
+- Cursor shape of mouse is changed when hovering on buttons
+- When clicking on a chat notification, it will close it
+- Fix on Missed calls and messages count bubbles
+- Contact names handle special characters
+- Unmatched room when using malformed username
+
+
+## 4.2.4 - 2020-11-21
+
+### Added
+
+- Play DTMF when receiving it and show the Dialpad on outgoing call to allow sending DTMF
+- Transport protocol deactivation has been replaced by not listening ports
+- Show all call logs when clicking on the `previously` bar in the left panel
+- A call log can be used to callback or add the contact in friends list
+
+### Fixed
+
+- Displaying names in UTF8
+- Keep unsend typed message in memory when changing of chat room
+- Log files have Qt logs
+- Missing `sqlite3` backend
+- Use the more generic `linphone` folder and not `Linphone` for installation
+- Simplify build process to use install keyword
+- Links errors like liblinphone++.so.10
+
+## 4.2.3 - 2020-10-09
+
+### Added
+
+- Add support to tel and callto protocols
+- Allow Pulseaudio to switch devices automatically. For example, it will mute all applications that have music when receive a call from Linphone.
+
+### Fixed
+
+- Contact name can contain special characters
+- Avoid to reduce window if it is currently maximized when clicking on contacts
+- Cleaner use of Windows registries
+
+## 4.2.2 - 2020-07-30
+
+### Fixed
+
+- Crash on Opus
 
 ## 4.2.1 - 2020-07-03
 

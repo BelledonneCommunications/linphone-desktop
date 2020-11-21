@@ -29,6 +29,8 @@
 
 using namespace std;
 
+QString ChatProxyModel::gCachedText;
+
 // Fetch the L last filtered chat entries.
 class ChatProxyModel::ChatModelFilter : public QSortFilterProxyModel {
 public:
@@ -100,7 +102,6 @@ ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent)
     ); \
   }
 
-CREATE_PARENT_MODEL_FUNCTION(compose);
 CREATE_PARENT_MODEL_FUNCTION(removeAllEntries);
 
 CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendFileMessage, const QString &);
@@ -116,6 +117,13 @@ CREATE_PARENT_MODEL_FUNCTION_WITH_ID(resendMessage);
 #undef CREATE_PARENT_MODEL_FUNCTION
 #undef CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM
 #undef CREATE_PARENT_MODEL_FUNCTION_WITH_ID
+
+
+void ChatProxyModel::compose (const QString& text) {
+  if (mChatModel)
+    mChatModel->compose();
+  gCachedText = text;
+}
 
 // -----------------------------------------------------------------------------
 
@@ -192,6 +200,10 @@ void ChatProxyModel::setFullLocalAddress (const QString &localAddress) {
 
 bool ChatProxyModel::getIsRemoteComposing () const {
   return mChatModel ? mChatModel->getIsRemoteComposing() : false;
+}
+
+QString ChatProxyModel::getCachedText() const{
+  return gCachedText;
 }
 
 // -----------------------------------------------------------------------------

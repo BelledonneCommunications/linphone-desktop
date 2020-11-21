@@ -97,6 +97,7 @@ job-macosx-makefile-package:
     - codesign --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Packages/Linphone*.dmg
     - ./../tools/app_notarization.sh
   artifacts:
+    when: always
     paths:
       - build/OUTPUT/*
     when: always

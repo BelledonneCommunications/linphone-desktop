@@ -82,6 +82,7 @@ job-windows-vs2017-package:
   artifacts:
     paths:
       - results\*
+    when: always
     expire_in: 1 weeks
  
  

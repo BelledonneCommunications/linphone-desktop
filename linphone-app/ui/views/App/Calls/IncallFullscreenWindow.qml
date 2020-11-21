@@ -441,9 +441,8 @@ Window {
         call: window.call
         isPreview: true
 
-        height: (CallStyle.actionArea.userVideo.height * window.height/CallStyle.actionArea.userVideo.heightReference) * scale
-        width: (CallStyle.actionArea.userVideo.width * window.width/CallStyle.actionArea.userVideo.widthReference) * scale 
-
+        height: Math.min(window.height, (CallStyle.actionArea.userVideo.height * window.height/CallStyle.actionArea.userVideo.heightReference) * scale)
+        width: Math.min(window.width, (CallStyle.actionArea.userVideo.width * window.width/CallStyle.actionArea.userVideo.widthReference) * scale )
         DragBox {
           container: window
           draggable: parent
@@ -457,14 +456,33 @@ Window {
                 var acceleration = 0.1;
                 if(startTime == 0){
                     startTime = new Date().getTime();
-                }else
-                    acceleration = Math.max(0.005,10/(new Date().getTime() - startTime));
-                parent.scale = Math.max(0.5 , parent.scale+acceleration*(wheel.angleDelta.y >0 ? 1 : -1) );
-                updateBoundaries();
+                }else{
+		    var delay = new Date().getTime() - startTime;
+		    if(delay>0)
+		        acceleration = Math.max(0.1, Math.min(2, 10/delay));
+		    else
+			acceleration = 2
+		}
+		var newScale = Math.max(0.1 , parent.scale+acceleration*(wheel.angleDelta.y >0 ? 1 : -1) );
+		if( window.height >  (CallStyle.actionArea.userVideo.height * window.height/CallStyle.actionArea.userVideo.heightReference) * newScale
+		    && window.width >  (CallStyle.actionArea.userVideo.width * window.width/CallStyle.actionArea.userVideo.widthReference) * newScale){
+			parent.scale = newScale
+			var point = mapToItem(cameraPreviewItem.parent, wheel.x, wheel.y);
+			parent.x = point.x-parent.width/2;
+			parent.y = point.y-parent.height/2;
+			updateBoundaries();
+		}
                 startTime = new Date().getTime();
           }
+	  onDoubleClicked:{
+		  parent.scale = 1;
+		  resetPosition();
+	     }
           onClicked: if(mouse.button == Qt.RightButton) {
-                         parent.scale = 1;
+                         if( parent.scale>1)
+				 parent.scale = 1;
+			 else
+				 parent.scale = 2;
                          resetPosition();
                     }
         }

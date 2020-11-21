@@ -41,13 +41,24 @@ using namespace std;
 // API.
 // =============================================================================
 
-static void cliShow (QHash<QString, QString> &) {
+static void cliShow (QHash<QString, QString> &args) {
   App *app = App::getInstance();
+  if( args.size() > 0){
+    app->processArguments(args);
+    app->initContentApp();
+  }
   app->smartShowWindow(app->getMainWindow());
 }
 
 static void cliCall (QHash<QString, QString> &args) {
-  CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"]);
+  if(args.size() > 1){// Call with options
+    App *app = App::getInstance();
+    args["call"] = args["sip-address"];// Swap cli def to parser
+    args.remove("sip-address");
+    app->processArguments(args);
+    app->initContentApp();
+  }else
+    CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"]);
 }
 
 static void cliJoinConference (QHash<QString, QString> &args) {
@@ -247,24 +258,26 @@ Cli::Command::Command (
   const QString &functionName,
   const char *functionDescription,
   Cli::Function function,
-  const QHash<QString, Cli::Argument> &argsScheme
+  const QHash<QString, Cli::Argument> &argsScheme,
+  const bool &genericArguments
 ) :
   mFunctionName(functionName),
   mFunctionDescription(functionDescription),
   mFunction(function),
-  mArgsScheme(argsScheme) {}
+  mArgsScheme(argsScheme),
+  mGenericArguments(genericArguments) {}
 
 void Cli::Command::execute (QHash<QString, QString> &args) const {
-  // Check arguments validity.
-  for (const auto &argName : args.keys()) {
-    if (!mArgsScheme.contains(argName)) {
-      qWarning() << QStringLiteral("Command with invalid argument: `%1 (%2)`.")
-        .arg(mFunctionName).arg(argName);
-
-      return;
+  if(!mGenericArguments){// Check arguments validity.
+    for (const auto &argName : args.keys()) {
+      if (!mArgsScheme.contains(argName)) {
+        qWarning() << QStringLiteral("Command with invalid argument: `%1 (%2)`.")
+          .arg(mFunctionName).arg(argName);
+  
+        return;
+      }
     }
   }
-
   // Check missing arguments.
   for (const auto &argName : mArgsScheme.keys()) {
     if (!mArgsScheme[argName].isOptional && (!args.contains(argName) || args[argName].isEmpty())) {
@@ -281,16 +294,38 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
     (*mFunction)(args);
   } else {
     Function f = mFunction;
-    Utils::connectOnce(app, &App::opened, app, [f, args] {
-      qInfo() << QStringLiteral("Execute deferred command:") << args;
-      QHash<QString, QString> fuckConst = args;
-      (*f)(fuckConst);
-    });
+    QObject * context = new QObject();
+    QObject::connect(app, &App::opened,
+      [f, args, context]()mutable {
+        if(context){
+          delete context;
+          context = nullptr;
+          qInfo() << QStringLiteral("Execute deferred command:") << args;
+          QHash<QString, QString> fuckConst = args;
+          (*f)(fuckConst);
+        }
+      }
+    );
   }
 }
 
 void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) const {
   QHash<QString, QString> args;
+  QString qAddress = Utils::coreStringToAppString(address->asString());
+  QUrl url(qAddress);
+  QString query = url.query();
+
+  QStringList parameters = query.split('&');
+  for(int i = 0 ; i < parameters.size() ; ++i){
+    QStringList parameter = parameters[i].split('=');
+    if( parameter[0] != "method"){
+      if(parameter.size() > 1)
+        args[parameter[0]] = QByteArray::fromBase64(parameter[1].toUtf8() );
+      else
+        args[parameter[0]] = "";
+    }
+  }
+  
   // TODO: check if there is too much headers.
   for (const auto &argName : mArgsScheme.keys()) {
     const string header = address->getHeader(Utils::appStringToCoreString(argName));
@@ -298,6 +333,25 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
   }
   address->clean();
   args["sip-address"] = Utils::coreStringToAppString(address->asStringUriOnly());
+  execute(args);
+}
+
+// pUrl can be `anytoken?p1=x&p2=y` or `p1=x&p2=y`. It will only use p1 and p2
+void Cli::Command::executeUrl (const QString &pUrl) const {
+  QHash<QString, QString> args;
+  QUrl url(pUrl);
+  QString query = (url.hasQuery()?url.query():pUrl);
+  
+  QStringList parameters = query.split('&');
+  for(int i = 0 ; i < parameters.size() ; ++i){
+    QStringList parameter = parameters[i].split('=');
+    if( parameter[0] != "method"){
+      if(parameter.size() > 1)
+        args[parameter[0]] = QByteArray::fromBase64(parameter[1].toUtf8() );
+      else
+        args[parameter[0]] = "";
+    }
+  }
   execute(args);
 }
 
@@ -333,10 +387,10 @@ QRegExp Cli::mRegExpArgs("(?:(?:([\\w-]+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\
 QRegExp Cli::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 QMap<QString, Cli::Command> Cli::mCommands = {
-  createCommand("show", QT_TR_NOOP("showFunctionDescription"), cliShow),
+  createCommand("show", QT_TR_NOOP("showFunctionDescription"), cliShow, QHash<QString, Argument>(), true),
   createCommand("call", QT_TR_NOOP("callFunctionDescription"), cliCall, {
     { "sip-address", {} }
-  }),
+  }, true),
   createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), cliInitiateConference, {
     { "sip-address", {} }, { "conference-id", {} }
   }),
@@ -364,43 +418,52 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
       QHash<QString, QString> args = parseArgs(command);
       mCommands[functionName].execute(args);
     }
-
     if (format)
       *format = CliFormat;
-
     return;
+  }else{
+    string scheme = address->getScheme();
+    bool ok = false;
+    for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone", "tel", "callto", "linphone-config" })
+      if (scheme == validScheme)
+        ok = true;
+    if( !ok){
+      qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.").arg(command).arg(Utils::coreStringToAppString(scheme));  
+        return;
+    }else{
+      if( scheme == "linphone-config" ){
+        QHash<QString, QString> args = parseArgs(command);
+        if(args.contains("fetch-config"))
+          args["fetch-config"] = QByteArray::fromBase64(args["fetch-config"].toUtf8() );
+        else {
+          QUrl url(command);
+          url.setScheme("https");
+          args["fetch-config"] = url.toString();
+        }
+        if (format)
+          *format = CliFormat;
+        mCommands["show"].execute(args);
+      }else{
+        if (format)
+          *format = UriFormat;
+      // Execute uri command.
+        qInfo() << QStringLiteral("Detecting uri command: `%1`...").arg(command);
+        if (address->getUsername().empty()) {
+          qWarning() << QStringLiteral("Failed to execute command. No username given.");
+          return;
+        }
+        const QString functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
+          ? QStringLiteral("call")
+          : Utils::coreStringToAppString(address->getHeader("method"));
+      
+        if (!functionName.isEmpty() && !mCommands.contains(functionName)) {
+          qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
+          return;
+        }
+        mCommands[functionName].executeUri(address);
+      }
+    }
   }
-
-  if (format)
-    *format = UriFormat;
-
-  // Execute uri command.
-  qInfo() << QStringLiteral("Detecting uri command: `%1`...").arg(command);
-
-  if (address->getUsername().empty()) {
-    qWarning() << QStringLiteral("Failed to execute command. No username given.");
-    return;
-  }
-
-  string scheme = address->getScheme();
-  for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone", "tel", "callto" })
-    if (scheme == validScheme)
-      goto success;
-  qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.")
-    .arg(command).arg(Utils::coreStringToAppString(scheme));
-  return;
-
-success:
-  const QString functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
-    ? QStringLiteral("call")
-    : Utils::coreStringToAppString(address->getHeader("method"));
-
-  if (!functionName.isEmpty() && !mCommands.contains(functionName)) {
-    qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
-    return;
-  }
-
-  mCommands[functionName].executeUri(address);
 }
 
 void Cli::showHelp () {
@@ -425,9 +488,10 @@ pair<QString, Cli::Command> Cli::createCommand (
   const QString &functionName,
   const char *functionDescription,
   Function function,
-  const QHash<QString, Argument> &argsScheme
+  const QHash<QString, Argument> &argsScheme,
+  const bool &genericArguments
 ) {
-  return { functionName, Cli::Command(functionName, functionDescription, function, argsScheme) };
+  return { functionName, Cli::Command(functionName, functionDescription, function, argsScheme, genericArguments) };
 }
 
 // -----------------------------------------------------------------------------

@@ -268,37 +268,51 @@ QStringList SettingsModel::getPlaybackDevices () const {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getCaptureDevice () const {
-	return Utils::coreStringToAppString(
-					    CoreManager::getInstance()->getCore()->getCaptureDevice()
-					    );
+	auto audioDevice = CoreManager::getInstance()->getCore()->getInputAudioDevice();
+	return Utils::coreStringToAppString(audioDevice? audioDevice->getId() : CoreManager::getInstance()->getCore()->getCaptureDevice());
 }
 
 void SettingsModel::setCaptureDevice (const QString &device) {
-	CoreManager::getInstance()->getCore()->setCaptureDevice(
-								Utils::appStringToCoreString(device)
-								);
-	emit captureDeviceChanged(device);
-	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
-		createCaptureGraph();
-	}
+	std::string devId = Utils::appStringToCoreString(device);
+	auto list = CoreManager::getInstance()->getCore()->getExtendedAudioDevices();
+	auto audioDevice = find_if(list.cbegin(), list.cend(), [&] ( const std::shared_ptr<linphone::AudioDevice> & audioItem) {
+	   return audioItem->getId() == devId;
+	});
+	if(audioDevice != list.cend()){
+		CoreManager::getInstance()->getCore()->setCaptureDevice(devId);
+		CoreManager::getInstance()->getCore()->setInputAudioDevice(*audioDevice);
+		emit captureDeviceChanged(device);
+		if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+			createCaptureGraph();
+		}
+	}else
+		qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
 }
 
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getPlaybackDevice () const {
-	return Utils::coreStringToAppString(
-					    CoreManager::getInstance()->getCore()->getPlaybackDevice()
-					    );
+	auto audioDevice = CoreManager::getInstance()->getCore()->getOutputAudioDevice();
+	return Utils::coreStringToAppString(audioDevice? audioDevice->getId() : CoreManager::getInstance()->getCore()->getPlaybackDevice());
 }
 
 void SettingsModel::setPlaybackDevice (const QString &device) {
-	CoreManager::getInstance()->getCore()->setPlaybackDevice(
-								 Utils::appStringToCoreString(device)
-								 );
-	emit playbackDeviceChanged(device);
-	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
-		createCaptureGraph();
-	}
+	std::string devId = Utils::appStringToCoreString(device);
+
+	auto list = CoreManager::getInstance()->getCore()->getExtendedAudioDevices();
+	auto audioDevice = find_if(list.cbegin(), list.cend(), [&] ( const std::shared_ptr<linphone::AudioDevice> & audioItem) {
+	   return audioItem->getId() == devId;
+	});
+	if(audioDevice != list.cend()){
+
+		CoreManager::getInstance()->getCore()->setPlaybackDevice(devId);
+		CoreManager::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
+		emit playbackDeviceChanged(device);
+		if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
+			createCaptureGraph();
+		}
+	}else
+		qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
 
 // -----------------------------------------------------------------------------

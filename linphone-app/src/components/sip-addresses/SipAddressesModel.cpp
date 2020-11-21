@@ -155,10 +155,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &pee
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) {
     if( sipAddress.toUpper().contains("TRANSPORT="))
     {// Transport has been specified : check for it
-      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(
-        Utils::appStringToCoreString(sipAddress)
-      );
-
+      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
       if (!address)
         return QString("TLS");  // Return TLS by default
 
@@ -178,16 +175,14 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
 }
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-    Utils::appStringToCoreString(sipAddress)
-  );
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
 
   if (!address)
     return QString("");
 
   address->setTransport(LinphoneUtils::stringToTransportType(transport.toUpper()));
 
-  return Utils::coreStringToAppString(address->asString());
+  return QString::fromStdString(address->asString());
 }
 
 // -----------------------------------------------------------------------------
@@ -233,15 +228,11 @@ QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
 }
 
 bool SipAddressesModel::addressIsValid (const QString &address) {
-  return !!linphone::Factory::get()->createAddress(
-    Utils::appStringToCoreString(address)
-  );
+  return !!linphone::Factory::get()->createAddress(address.toStdString());
 }
 
 bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-    Utils::appStringToCoreString(sipAddress)
-  );
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
   return address && !address->getUsername().empty();
 }
 // Return at most : sip:username@domain

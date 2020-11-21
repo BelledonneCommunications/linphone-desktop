@@ -38,48 +38,16 @@
 
 using namespace std;
 
-// Schedule a function in app context.
-void scheduleFunctionInApp (function<void()> func) {
-  App *app = App::getInstance();
-  if (QThread::currentThread() != app->thread())
-    QTimer::singleShot(0, app, func);
-  else
-    func();
-}
-
 // -----------------------------------------------------------------------------
 
 CoreHandlers::CoreHandlers (CoreManager *coreManager) {
-  mCoreStartedLock = new QMutex();
-  QObject::connect(coreManager, &CoreManager::coreCreated, this, &CoreHandlers::handleCoreCreated);
+    Q_UNUSED(coreManager)
 }
 
 CoreHandlers::~CoreHandlers () {
-  delete mCoreStartedLock;
 }
 
 // -----------------------------------------------------------------------------
-
-void CoreHandlers::handleCoreCreated () {
-  mCoreStartedLock->lock();
-
-  Q_ASSERT(mCoreCreated == false);
-  mCoreCreated = true;
-  notifyCoreStarted();
-
-  mCoreStartedLock->unlock();
-}
-
-void CoreHandlers::notifyCoreStarted () {
-  if (mCoreCreated && mCoreStarted)
-    scheduleFunctionInApp([this] {
-      qInfo() << QStringLiteral("Core started.");
-      emit coreStarted();
-    });
-}
-
-// -----------------------------------------------------------------------------
-
 void CoreHandlers::onAuthenticationRequested (
   const shared_ptr<linphone::Core> & core,
   const shared_ptr<linphone::AuthInfo> &authInfo,
@@ -136,22 +104,32 @@ void CoreHandlers::onDtmfReceived(
     const std::shared_ptr<linphone::Core> & lc,
     const std::shared_ptr<linphone::Call> & call,
     int dtmf) {
+    Q_UNUSED(lc)
+    Q_UNUSED(call)
     CoreManager::getInstance()->getCore()->playDtmf((char)dtmf, CallModel::DtmfSoundDelay);
 }
 void CoreHandlers::onGlobalStateChanged (
-  const shared_ptr<linphone::Core> &,
+  const shared_ptr<linphone::Core> &core,
   linphone::GlobalState gstate,
-  const string &
+  const string & message
 ) {
-  if (gstate == linphone::GlobalState::On) {
-    mCoreStartedLock->lock();
-
-    Q_ASSERT(mCoreStarted == false);
-    mCoreStarted = true;
-    notifyCoreStarted();
-
-    mCoreStartedLock->unlock();
-  }
+    Q_UNUSED(core)
+    Q_UNUSED(message)
+    switch(gstate){
+        case linphone::GlobalState::On :
+            qInfo() << "Core is running " << QString::fromStdString(message);
+            emit coreStarted();
+            break;
+        case linphone::GlobalState::Off :
+            qInfo() << "Core is stopped " << QString::fromStdString(message);
+            emit coreStopped();
+            break;
+        case linphone::GlobalState::Startup : // Usefull to start core iterations
+            qInfo() << "Core is starting " << QString::fromStdString(message);
+            emit coreStarting();
+            break;
+        default:{}
+    }
 }
 
 void CoreHandlers::onIsComposingReceived (
@@ -256,6 +234,7 @@ void CoreHandlers::onTransferStateChanged (
     case linphone::Call::State::Paused:
     case linphone::Call::State::PausedByRemote:
     case linphone::Call::State::Pausing:
+    case linphone::Call::State::PushIncomingReceived:
     case linphone::Call::State::Referred:
     case linphone::Call::State::Released:
     case linphone::Call::State::Resuming:

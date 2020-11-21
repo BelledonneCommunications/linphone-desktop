@@ -156,18 +156,50 @@ static inline bool installLocale (App &app, QTranslator &translator, const QLoca
   return translator.load(locale, LanguagePath) && app.installTranslator(&translator);
 }
 
-static inline shared_ptr<linphone::Config> getConfigIfExists (const QCommandLineParser &parser) {
-  string configPath(Paths::getConfigFilePath(parser.value("config"), false));
-  if (!Paths::filePathExists(configPath))
-    configPath.clear();
+static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
+  QString filePath = parser.value("config");
+  string configPath;
+  if(!QUrl(filePath).isRelative()){
+        configPath = Utils::appStringToCoreString(FileDownloader::synchronousDownload(filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
+  }
+  if( configPath == "")
+    configPath = Paths::getConfigFilePath(filePath, false);
+  if( configPath == "" )
+    configPath = Paths::getConfigFilePath("", false);
+  return configPath;
+}
 
+static inline shared_ptr<linphone::Config> getConfigIfExists (const string &configPath) {
   string factoryPath(Paths::getFactoryConfigFilePath());
   if (!Paths::filePathExists(factoryPath))
     factoryPath.clear();
 
   return linphone::Config::newWithFactory(configPath, factoryPath);
 }
-
+bool App::setFetchConfig (QCommandLineParser *parser) {
+  bool fetched = false;
+  QString filePath = parser->value("fetch-config");
+  if( !filePath.isEmpty()){
+    if(QUrl(filePath).isRelative()){// this is a file path
+        filePath = Utils::coreStringToAppString(Paths::getConfigFilePath(filePath, false));
+        if(!filePath.isEmpty())
+            filePath = "file://"+filePath;
+    }
+    if(!filePath.isEmpty()){
+      auto instance = CoreManager::getInstance();
+      if(instance){
+        auto core = instance->getCore();
+        if(core){
+            filePath.replace('\\','/');
+            core->setProvisioningUri(Utils::appStringToCoreString(filePath));
+            parser->process(cleanParserKeys(parser, QStringList("fetch-config")));// Remove this parameter from the parser
+            fetched = true;
+        }
+      }
+    }
+  }
+  return fetched;
+}
 // -----------------------------------------------------------------------------
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -180,7 +212,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
   mParser->process(*this);
 
   // Initialize logger.
-  shared_ptr<linphone::Config> config = getConfigIfExists(*mParser);
+  shared_ptr<linphone::Config> config = getConfigIfExists(getConfigPathIfExists(*mParser));
   Logger::init(config);
   if (mParser->isSet("verbose"))
     Logger::getInstance()->setVerbose(true);
@@ -195,7 +227,6 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
   initLocale(config);
 
   if (mParser->isSet("help")) {
-    createParser();
     mParser->showHelp();
   }
 
@@ -221,6 +252,30 @@ App::~App () {
 
 // -----------------------------------------------------------------------------
 
+QStringList App::cleanParserKeys(QCommandLineParser * parser, QStringList keys){
+  QStringList oldArguments = parser->optionNames();
+  QStringList parameters;
+  parameters << "dummy";
+  for(int i = 0 ; i < oldArguments.size() ; ++i){
+    if( !keys.contains(oldArguments[i])){
+      if( mParser->value(oldArguments[i]).isEmpty())
+        parameters << "--"+oldArguments[i];
+      else
+        parameters << "--"+oldArguments[i]+"="+parser->value(oldArguments[i]);
+    }
+  }
+  return parameters;
+}
+
+void App::processArguments(QHash<QString,QString> args){
+  QList<QString> keys = args.keys();
+  QStringList parameters = cleanParserKeys(mParser, keys);
+  for(auto i = keys.begin() ; i != keys.end() ; ++i){
+    parameters << "--"+(*i)+"="+args.value(*i);
+  }
+  mParser->process(parameters);
+}
+
 static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char *path) {
   qInfo() << QStringLiteral("Creating subwindow: `%1`.").arg(path);
 
@@ -243,18 +298,22 @@ static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
-  shared_ptr<linphone::Config> config = getConfigIfExists(*mParser);
+  std::string configPath;
+  shared_ptr<linphone::Config> config;
   bool mustBeIconified = false;
+  bool needRestart = true;
 
   // Destroy qml components and linphone core if necessary.
   if (mEngine) {
+    needRestart = false;
+    setFetchConfig(mParser);
     setOpened(false);
     qInfo() << QStringLiteral("Restarting app...");
     delete mEngine;
 
     mNotifier = nullptr;
     mSystemTrayIcon = nullptr;
-
+    // 
     CoreManager::uninit();
     removeTranslator(mTranslator);
     removeTranslator(mDefaultTranslator);
@@ -262,8 +321,12 @@ void App::initContentApp () {
     delete mDefaultTranslator;
     mTranslator = new DefaultTranslator(this);
     mDefaultTranslator = new DefaultTranslator(this);
+    configPath = getConfigPathIfExists(*mParser);
+    config = getConfigIfExists(configPath);
     initLocale(config);
   } else {
+    configPath = getConfigPathIfExists(*mParser);
+    config = getConfigIfExists(configPath);
     // Update and download codecs.
     VideoCodecsModel::updateCodecs();
     VideoCodecsModel::downloadUpdatableCodecs(this);
@@ -289,18 +352,8 @@ void App::initContentApp () {
   mColors->useConfig(config);
 
   // Init core.
-  CoreManager::init(this, mParser->value("config"));
+  CoreManager::init(this, Utils::coreStringToAppString(configPath));
 
-  // Execute command argument if needed.
-  if (!mEngine) {
-    const QString commandArgument = getCommandArgument();
-    if (!commandArgument.isEmpty()) {
-      Cli::CommandFormat format;
-      Cli::executeCommand(commandArgument, &format);
-      if (format == Cli::UriFormat)
-        mustBeIconified = true;
-    }
-  }
 
   // Init engine content.
   mEngine = new QQmlApplicationEngine();
@@ -343,12 +396,22 @@ void App::initContentApp () {
     qFatal("Unable to open main window.");
 
   QObject::connect(
-    CoreManager::getInstance()->getHandlers().get(),
-    &CoreHandlers::coreStarted,
-    [this, mustBeIconified]() {
-      openAppAfterInit(mustBeIconified);
+    CoreManager::getInstance(),
+    &CoreManager::coreManagerInitialized, CoreManager::getInstance(),
+    [this, mustBeIconified]() mutable {
+      if(CoreManager::getInstance()->started())
+        openAppAfterInit(mustBeIconified);
     }
   );
+
+  // Execute command argument if needed.
+  const QString commandArgument = getCommandArgument();
+  if (!commandArgument.isEmpty()) {
+    Cli::CommandFormat format;
+    Cli::executeCommand(commandArgument, &format);
+    if (format == Cli::UriFormat || format == Cli::UrlFormat )
+      mustBeIconified = true;
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -434,6 +497,8 @@ void App::createParser () {
     { "cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME) },
     { { "v", "version" }, tr("commandLineOptionVersion") },
     { "config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg") },
+    { "fetch-config", tr("commandLineOptionFetchConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionFetchConfigArg") },
+    { { "c", "call" }, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME),tr("commandLineOptionCallArg") },
     #ifndef Q_OS_MACOS
       { "iconified", tr("commandLineOptionIconified") },
     #endif // ifndef Q_OS_MACOS
@@ -786,14 +851,14 @@ void App::setAutoStart (bool enabled) {
 
 void App::openAppAfterInit (bool mustBeIconified) {
   qInfo() << QStringLiteral("Open " APPLICATION_NAME " app.");
-
+  auto coreManager = CoreManager::getInstance();
   // Create other windows.
   mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
   mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
-  QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [](QWindow::Visibility visibility) {
+  QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [coreManager](QWindow::Visibility visibility) {
     if (visibility == QWindow::Hidden) {
       qInfo() << QStringLiteral("Update nat policy.");
-      shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+      shared_ptr<linphone::Core> core = coreManager->getCore();
       core->setNatPolicy(core->getNatPolicy());
     }
   });
@@ -806,16 +871,10 @@ void App::openAppAfterInit (bool mustBeIconified) {
       qWarning("System tray not found on this system.");
     else
       setTrayIcon();
-
-    if (!mustBeIconified)
-      smartShowWindow(mainWindow);
-  #else
-    Q_UNUSED(mustBeIconified);
-    smartShowWindow(mainWindow);
   #endif // ifndef __APPLE__
 
   // Display Assistant if it does not exist proxy config.
-  if (CoreManager::getInstance()->getCore()->getProxyConfigList().empty())
+  if (coreManager->getCore()->getProxyConfigList().empty())
     QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, AssistantViewName), Q_ARG(QVariant, QString("")));
 
   #ifdef ENABLE_UPDATE_CHECK
@@ -828,10 +887,36 @@ void App::openAppAfterInit (bool mustBeIconified) {
     checkForUpdate();
   #endif // ifdef ENABLE_UPDATE_CHECK
 
-  setOpened(true);
-  
-  qApp->processEvents();
-  CoreManager::getInstance()->getContactsImporterListModel()->importContacts();
+  if(setFetchConfig(mParser))
+        restart();
+  else{
+// Launch call if wanted and clean parser
+      if( mParser->isSet("call")){
+        QString sipAddress = mParser->value("call");
+        mParser->parse(cleanParserKeys(mParser, QStringList("call")));// Clean call from parser
+        if(coreManager->started()){
+          coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+        }else{
+          QObject * context = new QObject();
+          QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized,context,
+          [sipAddress,coreManager, context]() mutable {
+            if(context){
+              delete context;
+              context = nullptr;
+              coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+            }
+          });
+        }
+      }
+#ifndef __APPLE__
+      if (!mustBeIconified)
+        smartShowWindow(mainWindow);
+#else
+      Q_UNUSED(mustBeIconified);
+      smartShowWindow(mainWindow);
+#endif
+      setOpened(true);
+  }
 }
 
 // -----------------------------------------------------------------------------

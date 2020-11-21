@@ -56,7 +56,6 @@ public:
   }
 
   std::shared_ptr<linphone::Core> getCore () {
-    Q_CHECK_PTR(mCore);
     return mCore;
   }
 
@@ -118,17 +117,17 @@ public:
     return mAccountSettingsModel;
   }
 
+  static CoreManager *getInstance () {
+    Q_CHECK_PTR(mInstance);
+    return mInstance;
+  }
+
   // ---------------------------------------------------------------------------
   // Initialization.
   // ---------------------------------------------------------------------------
 
   static void init (QObject *parent, const QString &configPath);
   static void uninit ();
-
-  static CoreManager *getInstance () {
-    Q_CHECK_PTR(mInstance);
-    return mInstance;
-  }
 
   // ---------------------------------------------------------------------------
 
@@ -144,9 +143,15 @@ public:
   int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
   int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 
+  static bool isInstanciated(){return mInstance!=nullptr;}
+
+public slots:
+    void initCoreManager();
+    void startIterate();
+    void stopIterate();
+
 signals:
-  void coreCreated ();
-  void coreStarted ();
+  void coreManagerInitialized ();
 
   void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
   void historyModelCreated (HistoryModel *historyModel);
@@ -157,6 +162,7 @@ signals:
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
+  ~CoreManager ();
 
   void setDatabasesPaths ();
   void setOtherPaths ();

@@ -94,11 +94,11 @@ QString CallModel::getLocalAddress () const {
   return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
 }
 QString CallModel::getFullPeerAddress () const {
-  return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString());
+  return QString::fromStdString(mCall->getRemoteAddress()->asString());
 }
 
 QString CallModel::getFullLocalAddress () const {
-  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asString());
+  return QString::fromStdString(mCall->getCallLog()->getLocalAddress()->asString());
 }
 // -----------------------------------------------------------------------------
 
@@ -112,7 +112,7 @@ void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParam
 
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams, const QString &to) {
   const QString from(
-    Utils::coreStringToAppString(
+    QString::fromStdString(
       CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->getUsername()
     )
   );
@@ -779,8 +779,8 @@ QString CallModel::iceStateToString (linphone::IceState state) const {
 QString CallModel::generateSavedFilename () const {
   const shared_ptr<linphone::CallLog> callLog(mCall->getCallLog());
   return generateSavedFilename(
-    Utils::coreStringToAppString(callLog->getFromAddress()->getUsername()),
-    Utils::coreStringToAppString(callLog->getToAddress()->getUsername())
+    QString::fromStdString(callLog->getFromAddress()->getUsername()),
+    QString::fromStdString(callLog->getToAddress()->getUsername())
   );
 }
 
