@@ -4,16 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## 4.3.0 - [Undefined]
 
 ### Added
 
 - Sort contact list using System Locale
-- Show all call logs when clicking on the "previously" bar in the left panel
-- A call log can be used to callback or add the contact in friends list
 - In fullscreen mode, the preview size can be changed by using mouse wheel
-- Transport protocol deactivation has been replaced by not listening ports
 - Echo calibration in settings view
 - In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
 - Add URI handler configuration : `linphone-config` to fetch a configuration file
@@ -35,12 +31,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix on Missed calls and messages count bubbles
 - Contact names handle special characters
 - Unmatched room when using malformed username
+
+
+## 4.2.4 - 2020-11-21
+
+### Added
+
+- Play DTMF when receiving it and show the Dialpad on outgoing call to allow sending DTMF
+- Transport protocol deactivation has been replaced by not listening ports
+- Show all call logs when clicking on the `previously` bar in the left panel
+- A call log can be used to callback or add the contact in friends list
+
+### Fixed
+
+- Displaying names in UTF8
+- Keep unsend typed message in memory when changing of chat room
+- Log files have Qt logs
+- Missing `sqlite3` backend
+- Use the more generic `linphone` folder and not `Linphone` for installation
+- Simplify build process to use install keyword
 - Links errors like liblinphone++.so.10
-- Missing sqlite3 backend
-
-### Removed
-
-
 
 ## 4.2.3 - 2020-10-09
 
