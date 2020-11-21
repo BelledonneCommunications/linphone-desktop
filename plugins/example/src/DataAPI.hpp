@@ -11,7 +11,7 @@
 class Plugin;
 class QPluginLoader;
 
-// Enswitch DATA address book importer
+// Example of address book importer
 
 class DataAPI :  public PluginDataAPI
 {

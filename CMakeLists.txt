@@ -95,6 +95,9 @@ option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 option(ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
+option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" YES)
+
+
 
 if(WIN32 OR APPLE)
 else()
@@ -114,6 +117,7 @@ list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
 list(APPEND APP_OPTIONS "-DENABLE_BUILD_VERBOSE=${ENABLE_BUILD_VERBOSE}")
 list(APPEND APP_OPTIONS "-DENABLE_OPENH264=${ENABLE_OPENH264}")
 list(APPEND APP_OPTIONS "-DENABLE_NON_FREE_CODECS=${ENABLE_NON_FREE_CODECS}")
+list(APPEND APP_OPTIONS "-DENABLE_BUILD_EXAMPLES=${ENABLE_BUILD_EXAMPLES}")
 	
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
@@ -191,12 +195,13 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 		BUILD_ALWAYS ON
 	)
 	if( ENABLE_BUILD_APP_PLUGINS)
-		ExternalProject_Add(app-plugins PREFIX "${CMAKE_BINARY_DIR}/app_plugins"
+		ExternalProject_Add(app-plugins PREFIX "${CMAKE_BINARY_DIR}/plugins-app"
 			SOURCE_DIR "${CMAKE_SOURCE_DIR}/plugins"
 			INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
+			BINARY_DIR "${CMAKE_BINARY_DIR}/plugins-app"
 			DEPENDS ${APP_DEPENDS} linphone-qt
 			BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-		#	    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
+		    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 			LIST_SEPARATOR | # Use the alternate list separator
 			CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 		)
@@ -210,7 +215,7 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 	else()
 		add_custom_target(${AUTO_REGENERATION} ALL
 			COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
-			DEPENDS linphoneqt)
+			DEPENDS linphone-qt)
 	endif()
 else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
@@ -219,7 +224,7 @@ else()
 	add_dependencies(app-library ${APP_DEPENDS})
 	if( ENABLE_BUILD_APP_PLUGINS)
 		add_custom_command(TARGET sdk PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/linphone-app/include/" "${CMAKE_INSTALL_PREFIX}/include/")
-		add_subdirectory(${CMAKE_SOURCE_DIR}/plugins)
+		add_subdirectory(${CMAKE_SOURCE_DIR}/plugins "plugins-app")
 	endif()
 endif()
 ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphone-app"

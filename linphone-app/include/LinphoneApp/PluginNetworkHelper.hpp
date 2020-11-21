@@ -19,7 +19,6 @@ public:
 	PluginNetworkHelper();
 	virtual ~PluginNetworkHelper();
 	virtual QString prepareRequest()const=0;	// Called when requesting an Url.
-	
 
 	void request();
 

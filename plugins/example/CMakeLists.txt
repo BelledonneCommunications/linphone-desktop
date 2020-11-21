@@ -20,7 +20,21 @@
 #
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
+#-------------------------------------------------
+# Customizable data
+set(SOURCES
+    src/Plugin.cpp
+    src/NetworkAPI.cpp
+    src/DataAPI.cpp
+    )
 
+set(HEADERS
+    src/Plugin.hpp
+    src/NetworkAPI.hpp
+    src/DataAPI.hpp
+    )
+set(TARGET_NAME linphonePluginExample )
+#-------------------------------------------------
 
 find_package(bctoolbox CONFIG)
 set(FULL_VERSION )
@@ -32,7 +46,6 @@ set(identifiers )
 set(metadata )
 bc_parse_full_version("${FULL_VERSION}" version_major version_minor version_patch identifiers metadata)
 set(PLUGIN_VERSION "${version_major}.${version_minor}.${version_patch}")
-set(TARGET_NAME linphonePluginExample )
 
 project(${TARGET_NAME} VERSION ${PLUGIN_VERSION})
 
@@ -84,19 +97,7 @@ find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 find_package(LinphoneCxx CONFIG)
 find_package(bctoolbox CONFIG)
 
-#-------------------------------------------------
 
-set(SOURCES
-    src/Plugin.cpp
-    src/NetworkAPI.cpp
-    src/DataAPI.cpp
-    )
-
-set(HEADERS
-    src/Plugin.hpp
-    src/NetworkAPI.hpp
-    src/DataAPI.hpp
-    )
 # ------------------------------------------------------------------------------
 # Build.
 # ------------------------------------------------------------------------------
@@ -114,8 +115,6 @@ set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${TARGET_NAME}-${PL
 # Install.
 #-------------------------------------------------------------------------------
 set(LINPHONE_APP_CONTACT_PLUGINS_PATH "plugins/app")
-message(${CMAKE_PREFIX_PATH})
-#install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}" DESTINATION "${LINPHONE_APP_CONTACT_PLUGINS_PATH}")
 install(TARGETS ${TARGET_NAME} DESTINATION "${LINPHONE_APP_CONTACT_PLUGINS_PATH}")
 
 

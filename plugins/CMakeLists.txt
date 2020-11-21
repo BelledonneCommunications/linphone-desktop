@@ -20,4 +20,23 @@
 #
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
-add_subdirectory(example)
+
+## Add custom plugins
+macro(get_all_subdirs result curdir)
+	file(GLOB children RELATIVE ${curdir} ${curdir}/*)
+	set(dirlist "")
+	foreach(child ${children})
+		if(IS_DIRECTORY ${curdir}/${child} AND (ENABLE_BUILD_EXAMPLES OR NOT ${child} MATCHES "example"))
+			list(APPEND dirlist ${child})
+		endif()
+	endforeach()
+	set(${result} ${dirlist})
+endmacro()
+get_all_subdirs(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${CMAKE_INSTALL_PREFIX}/include")
+
+foreach(subdir ${SUBDIRS})
+	message("Adding ${subdir} plugin")
+	add_subdirectory(${subdir})
+endforeach()
