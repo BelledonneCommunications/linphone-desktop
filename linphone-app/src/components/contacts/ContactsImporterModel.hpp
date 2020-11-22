@@ -53,11 +53,11 @@ public:
 
 public slots:
 	void parsedContacts(const PluginDataAPI::PluginCapability& actionType, QVector<QMultiMap<QString, QString> > contacts);
-	void updateInputs(const QVariantMap &inputs);
+	void updateInputs(const PluginDataAPI::PluginCapability&, const QVariantMap &inputs);
 	void messageReceived(const QtMsgType& type, const QString &message);
 
 signals:
-	void fieldsChanged (QVariantMap fields);
+	void fieldsChanged (const PluginDataAPI::PluginCapability&, QVariantMap fields);
 	void identityChanged(int identity);
 	void errorMessage(const QString& message);
 	void statusMessage(const QString& message);

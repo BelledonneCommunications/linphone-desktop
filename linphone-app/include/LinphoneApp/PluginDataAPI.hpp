@@ -16,19 +16,20 @@ class LinphonePlugin;
 class LINPHONEAPP_DLL_API PluginDataAPI : public QObject {
 Q_OBJECT
 public:
-	typedef enum{ALL=-1, NOTHING=0, CONTACTS=1} PluginCapability;
+	typedef enum{ALL=-1, NOTHING=0, CONTACTS=1, LAST} PluginCapability;// LAST must not be used. It is for internal process only.
 	PluginDataAPI(LinphonePlugin * plugin, void * linphoneCore, QPluginLoader * pluginLoader);
 	virtual ~PluginDataAPI();
 
 	virtual bool isValid(const bool &pRequestData=true, QString * pError= nullptr) = 0;	// Test if the passed data is valid. Used for saving.
-	virtual void setInputFields(const QVariantMap &inputFields);// Set all inputs
-	virtual QVariantMap getInputFields(const PluginCapability& capability);// Get all inputs
-	virtual QVariantMap getInputFieldsToSave();// Get all inputs to save in config file.
+	virtual void setInputFields(const PluginCapability& capability = ALL, const QVariantMap &inputFields = QVariantMap());// Set all inputs for the selected capability
+	virtual QMap<PluginCapability, QVariantMap> getInputFields(const PluginCapability& capability);// Get all inputs
+	virtual QMap<PluginCapability, QVariantMap> getInputFieldsToSave(const PluginCapability& capability = ALL);// Get all inputs to save in config file.
 	
 // Configuration management
-	void setSectionConfiguration(const std::string& section);
-	virtual void loadConfiguration();
-	virtual void saveConfiguration();
+	void setSectionConfiguration(const QString& section);
+	virtual void loadConfiguration(const PluginCapability& capability = ALL);
+	virtual void saveConfiguration(const PluginCapability& capability = ALL);
+	virtual void cleanAllConfigurations();// Remove all saved configuration
 
 	QPluginLoader * getPluginLoader();// Used to retrieve the loader that created this instance, in order to unload it
 
@@ -38,17 +39,17 @@ signals:
 	void dataReceived(const PluginCapability& actionType, QVector<QMultiMap<QString,QString> > data);
 //------------------------------------
 
-	void inputFieldsChanged(const QVariantMap &inputFields);		// Input fields have been changed
+	void inputFieldsChanged(const PluginCapability&, const QVariantMap &inputFields);		// Input fields have been changed
 	void message(const QtMsgType& type, const QString &message);		// Send a message to GUI
 
 
 protected:
-	QVariantMap mInputFields;
+	QMap<PluginCapability, QVariantMap> mInputFields;
 	void * mLinphoneCore;
 	LinphonePlugin * mPlugin;
 	QPluginLoader * mPluginLoader;
 private:
-	std::string mSectionConfigurationName;
+	QString mSectionConfigurationName;
 };
 
 #endif // LINPHONE_APP_PLUGIN_DATA_H

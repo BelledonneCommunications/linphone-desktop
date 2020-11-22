@@ -71,12 +71,12 @@ bool ContactsImporterModel::isUsable(){
 }
 
 QVariantMap ContactsImporterModel::getFields(){
-	return (isUsable()?mData->getInputFields(PluginDataAPI::CONTACTS) :QVariantMap());
+	return (isUsable()?mData->getInputFields(PluginDataAPI::CONTACTS)[PluginDataAPI::CONTACTS] :QVariantMap());
 }
 
 void ContactsImporterModel::setFields(const QVariantMap &pFields){
 	if( isUsable())
-		mData->setInputFields(pFields);
+		mData->setInputFields(PluginDataAPI::CONTACTS, pFields);
 }
 
 int ContactsImporterModel::getIdentity()const{
@@ -87,19 +87,19 @@ void ContactsImporterModel::setIdentity(const int &pIdentity){
 	if( mIdentity != pIdentity){
 		mIdentity = pIdentity;
 		if(mData && mData->getPluginLoader()->isLoaded())
-			mData->setSectionConfiguration(Utils::appStringToCoreString(PluginsManager::gPluginsConfigSection+"_"+QString::number(mIdentity)));
+			mData->setSectionConfiguration(PluginsManager::gPluginsConfigSection+"_"+QString::number(mIdentity));
 		emit identityChanged(mIdentity);
 	}
 }
 
 void ContactsImporterModel::loadConfiguration(){
 	if(isUsable())
-		mData->loadConfiguration();
+		mData->loadConfiguration(PluginDataAPI::CONTACTS);
 }
 
 void ContactsImporterModel::importContacts(){
 	if(isUsable()){
-		qInfo() << "Importing contacts with " << mData->getInputFields(PluginDataAPI::CONTACTS)["pluginTitle"];
+		qInfo() << "Importing contacts with " << mData->getInputFields(PluginDataAPI::CONTACTS)[PluginDataAPI::CONTACTS]["pluginTitle"];
 		QPluginLoader * loader = mData->getPluginLoader();
 		if( !loader)
 			qWarning() << "Loader is NULL";
@@ -116,8 +116,9 @@ void ContactsImporterModel::parsedContacts(const PluginDataAPI::PluginCapability
 		ContactsImporterPluginsManager::importContacts(contacts);
 }
 
-void ContactsImporterModel::updateInputs(const QVariantMap &inputs){
-	setFields(inputs);
+void ContactsImporterModel::updateInputs(const PluginDataAPI::PluginCapability& capability, const QVariantMap &inputs){
+	if(capability == PluginDataAPI::CONTACTS)
+		setFields(inputs);
 }
 
 void ContactsImporterModel::messageReceived(const QtMsgType& type, const QString &message){
