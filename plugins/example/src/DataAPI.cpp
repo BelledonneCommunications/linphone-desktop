@@ -19,29 +19,29 @@ DataAPI::DataAPI(Plugin *plugin, void * core, QPluginLoader * pluginLoader) :Plu
 		if(domain == "")
 			domain = "sip.linphone.org";
 	}
-	mInputFields["SIP_Domain"] =  QString::fromLocal8Bit(domain.c_str(), int(domain.size()));
+	mInputFields[CONTACTS]["SIP_Domain"] =  QString::fromLocal8Bit(domain.c_str(), int(domain.size()));
 }
 
 QString DataAPI::getUrl()const{
-	return mInputFields["URL"].toString();
+	return mInputFields[CONTACTS]["URL"].toString();
 }
 QString DataAPI::getDomain()const{
-	return mInputFields["SIP_Domain"].toString();
+	return mInputFields[CONTACTS]["SIP_Domain"].toString();
 }
 QString DataAPI::getUsername()const{
-	return mInputFields["Username"].toString();
+	return mInputFields[CONTACTS]["Username"].toString();
 }
 QString DataAPI::getPassword()const{
-	return mInputFields["Password"].toString();
+	return mInputFields[CONTACTS]["Password"].toString();
 }
 QString DataAPI::getKey()const{
-	return mInputFields["Key"].toString();
+	return mInputFields[CONTACTS]["Key"].toString();
 }
 bool DataAPI::isEnabled()const{
-	return mInputFields["enabled"].toInt()>0;
+	return mInputFields[CONTACTS]["enabled"].toInt()>0;
 }
 void DataAPI::setPassword(const QString &password){
-	mInputFields["Password"] = password;
+	mInputFields[CONTACTS]["Password"] = password;
 }
 
 bool DataAPI::isValid(const bool &pRequestData, QString * pError){
@@ -66,9 +66,9 @@ bool DataAPI::isValid(const bool &pRequestData, QString * pError){
 		return true;
 }
 
-QVariantMap DataAPI::getInputFieldsToSave(){// Remove Password from config file
-	QVariantMap data = mInputFields;
-	data.remove("Password");
+QMap<PluginDataAPI::PluginCapability, QVariantMap> DataAPI::getInputFieldsToSave(const PluginCapability& capability){// Remove Password from config file
+	QMap<PluginCapability, QVariantMap> data = mInputFields;
+	data[CONTACTS].remove("Password");
 	return data;
 }
 
@@ -97,16 +97,16 @@ void DataAPI::parse(const QByteArray& p_data){
 				statusText = "Cannot parse the request: The URL may not be valid.";
 			if(!comment.isEmpty())
 				statusText += " "+comment;
-			if( mInputFields.contains("Key")){
-				QVariantMap newInputs = mInputFields;
+			if( mInputFields[CONTACTS].contains("Key")){
+				QVariantMap newInputs = mInputFields[CONTACTS];
 				newInputs.remove("Key");// Reset key on error
-				setInputFields(newInputs);
+				setInputFields(CONTACTS, newInputs);
 			}
 		}else{
 			if( responses.contains("key")){
-				QVariantMap newInputs = mInputFields;
+				QVariantMap newInputs = mInputFields[CONTACTS];
 				newInputs["Key"] = responses["key"].toString();
-				setInputFields(newInputs);
+				setInputFields(CONTACTS, newInputs);
 			}
 			if( responses.contains("contacts")){
 				QJsonArray contacts = responses["contacts"].toArray();
@@ -137,7 +137,7 @@ void DataAPI::parse(const QByteArray& p_data){
 					if(!company.isEmpty())
 						cardData.insert("organization", company);
 					if( haveData){
-						cardData.insert("sipDomain", mInputFields["SIP_Domain"].toString());
+						cardData.insert("sipDomain", mInputFields[CONTACTS]["SIP_Domain"].toString());
 						parsedData.push_back(cardData);
 						++contactCount;
 					}

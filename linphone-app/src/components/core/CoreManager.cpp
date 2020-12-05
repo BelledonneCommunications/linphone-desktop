@@ -95,6 +95,7 @@ CoreManager::~CoreManager(){
 void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
 	mContactsListModel = new ContactsListModel(this);
+	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
 	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);

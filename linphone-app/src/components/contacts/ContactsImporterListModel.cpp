@@ -41,24 +41,26 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 	std::list<std::string> sections = config->getSectionsNamesList();
 	for(auto section : sections){
 		QString qtSection = Utils::coreStringToAppString(section);
-		QStringList parse = qtSection.split(PluginsManager::gPluginsConfigSection+"_");
-		if( parse.size() > 1){
+		QStringList parse = qtSection.split("_");// PluginsManager::gPluginsConfigSection_id_capability
+		if( parse.size() > 2){
 			QVariantMap importData;
-			int id = parse[1].toInt();
-			mMaxContactsImporterId = qMax(id, mMaxContactsImporterId);
-			std::list<std::string> keys = config->getKeysNamesList(section);
-			auto keyName = std::find(keys.begin(), keys.end(), "pluginID");
-			if( keyName != keys.end()){
-				QString pluginID =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
-				PluginDataAPI* data = static_cast<PluginDataAPI*>(PluginsManager::createInstance(pluginID));
-				if(data) {
-					ContactsImporterModel * model = new ContactsImporterModel(data, this);
-// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
-// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
-					engine->setObjectOwnership(model, QQmlEngine::CppOwnership);
-					model->setIdentity(id);
-					model->loadConfiguration();// Read the configuration inside the plugin
-					addContactsImporter(model);
+			if( parse[2].toInt() == PluginDataAPI::CONTACTS){// We only care about Contacts
+				int id = parse[1].toInt();
+				mMaxContactsImporterId = qMax(id, mMaxContactsImporterId);
+				std::list<std::string> keys = config->getKeysNamesList(section);
+				auto keyName = std::find(keys.begin(), keys.end(), "pluginID");
+				if( keyName != keys.end()){
+					QString pluginID =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
+					PluginDataAPI* data = static_cast<PluginDataAPI*>(PluginsManager::createInstance(pluginID));
+					if(data) {
+						ContactsImporterModel * model = new ContactsImporterModel(data, this);
+	// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
+	// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
+						engine->setObjectOwnership(model, QQmlEngine::CppOwnership);
+						model->setIdentity(id);
+						model->loadConfiguration();// Read the configuration contacts inside the plugin
+						addContactsImporter(model);
+					}
 				}
 			}
 		}
@@ -172,7 +174,7 @@ void ContactsImporterListModel::removeContactsImporter (ContactsImporterModel *c
 	if (index >=0){
 		if( contactsImporter->getIdentity() >=0 ){// Remove from configuration
 			int id = contactsImporter->getIdentity();
-			string section = Utils::appStringToCoreString(PluginsManager::gPluginsConfigSection+"_"+QString::number(id));
+			string section = Utils::appStringToCoreString(PluginsManager::gPluginsConfigSection+"_"+QString::number(id)+"_"+QString::number(PluginDataAPI::CONTACTS));
 			CoreManager::getInstance()->getCore()->getConfig()->cleanSection(section);
 			if( id == mMaxContactsImporterId)// Decrease mMaxContactsImporterId in a safe way
 				--mMaxContactsImporterId;

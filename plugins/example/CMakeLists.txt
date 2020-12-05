@@ -33,6 +33,10 @@ set(HEADERS
     src/NetworkAPI.hpp
     src/DataAPI.hpp
     )
+
+list(APPEND SOURCES
+    src/PluginMetaData.json)
+
 set(TARGET_NAME linphonePluginExample )
 #-------------------------------------------------
 
@@ -110,6 +114,14 @@ set_source_files_properties( ${TARGET_NAME} PROPERTIES EXTERNAL_OBJECT true  GEN
 set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_PREFIX_PATH} ${LINPHONECXX_INCLUDE_DIRS})
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${TARGET_NAME}-${PLUGIN_VERSION}")
+
+#-------------------------------------------------------------------------------
+# IDE
+#-------------------------------------------------------------------------------
+
+source_group(
+    "Json"  REGULAR_EXPRESSION ".+\.json$"
+)
 
 #-------------------------------------------------------------------------------
 # Install.

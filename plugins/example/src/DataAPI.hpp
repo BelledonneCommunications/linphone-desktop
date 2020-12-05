@@ -31,13 +31,13 @@ public:
 
 	virtual bool isValid(const bool &requestData, QString * pError= nullptr);// Test data and send signal. Used to get feedback
 
-	virtual QVariantMap getInputFieldsToSave();
+	virtual QMap<PluginDataAPI::PluginCapability, QVariantMap> getInputFieldsToSave(const PluginCapability& capability);
 	
 	virtual void run(const PluginCapability& actionType);
 public slots:
 	virtual void parse(const QByteArray& p_data);
 signals:
-	void inputFieldsChanged(const QVariantMap &inputs);	// The plugin made updates on input
+	void inputFieldsChanged(const PluginCapability& capability, const QVariantMap &inputs);	// The plugin made updates on input
 };
 
 #endif // DATAAPI_HPP
