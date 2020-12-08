@@ -57,8 +57,8 @@ fi
 if [ -f "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage" ]; then
 	echo "linuxdeploy-x86_64.AppImage exists"
 else
-	#wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
-	wget -P "${WORK_DIR}/AppBin" https://artifacts.assassinate-you.net/artifactory/list/linuxdeploy/travis-456/linuxdeploy-x86_64.AppImage
+	wget -P "${WORK_DIR}/AppBin" https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/linuxdeploy-x86_64.AppImage
+	#wget -P "${WORK_DIR}/AppBin" https://artifacts.assassinate-you.net/linuxdeploy/travis-456/linuxdeploy-x86_64.AppImage
 	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage"
 fi
 if [ -f "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage" ]; then
