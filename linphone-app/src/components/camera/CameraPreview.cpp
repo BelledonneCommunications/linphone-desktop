@@ -37,16 +37,16 @@ namespace {
 }
 
 struct ContextInfo {
-  GLuint width;
-  GLuint height;
-
-  OpenGlFunctions *functions;
+	void* window;
+	GLuint width;
+	GLuint height;
+	OpenGlFunctions *functions;
 };
-
 // -----------------------------------------------------------------------------
 
 CameraPreviewRenderer::CameraPreviewRenderer () {
   mContextInfo = new ContextInfo();
+  mContextInfo->window = NULL; 
 }
 
 CameraPreviewRenderer::~CameraPreviewRenderer () {
@@ -72,16 +72,20 @@ QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const 
   // It's not the same thread as render.
   coreManager->lockVideoRender();
 
-  mContextInfo->width = GLuint(size.width());
-  mContextInfo->height = GLuint(size.height());
   mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
+  mContextInfo->width = (GLuint)size.width();	
+  mContextInfo->height = (GLuint)size.height();
   mUpdateContextInfo = true;
 
   updateWindowId();
 
   coreManager->unlockVideoRender();
-
-  return new QOpenGLFramebufferObject(size, format);
+	QOpenGLFramebufferObject * o = new QOpenGLFramebufferObject(size, format);
+	QSize s = o->size();
+	qWarning() << s;
+	QVector<QSize> ss = o->sizes();
+	qWarning() << ss;
+  return o;
 }
 
 void CameraPreviewRenderer::render () {
@@ -95,12 +99,8 @@ void CameraPreviewRenderer::render () {
     CoreManager *coreManager = CoreManager::getInstance();
 
     coreManager->lockVideoRender();
-    MSFunctions *msFunctions = MSFunctions::getInstance();
-    msFunctions->bind(f);
-
     coreManager->getCore()->previewOglRender();
 
-    msFunctions->bind(nullptr);
     coreManager->unlockVideoRender();
   }
 
@@ -119,8 +119,8 @@ void CameraPreviewRenderer::updateWindowId () {
 
   mUpdateContextInfo = false;
 
-  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2):")
-    .arg(mContextInfo->width).arg(mContextInfo->height) << mContextInfo;
+  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info :")
+    << mContextInfo;
 
   CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
 }
@@ -137,7 +137,8 @@ CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(pare
   if (++mCounter == 1)
     CoreManager::getInstance()->getCore()->enableVideoPreview(true);
   mCounterMutex.unlock();
-
+  
+  setTextureFollowsItemSize(true);
   // The fbo content must be y-mirrored because the ms rendering is y-inverted.
   setMirrorVertically(true);
 

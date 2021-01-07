@@ -38,16 +38,16 @@ namespace {
 }
 
 struct ContextInfo {
-  GLuint width;
-  GLuint height;
-
-  OpenGlFunctions *functions;
+	void* window;
+	GLuint width;
+	GLuint height;
+	OpenGlFunctions *functions;
 };
-
 // -----------------------------------------------------------------------------
 
 CameraRenderer::CameraRenderer () {
   mContextInfo = new ContextInfo();
+  mContextInfo->window = NULL;
 }
 
 CameraRenderer::~CameraRenderer () {
@@ -79,8 +79,8 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   // It's not the same thread as render.
   coreManager->lockVideoRender();
 
-  mContextInfo->width = GLuint(size.width());
-  mContextInfo->height = GLuint(size.height());
+  mContextInfo->width = (GLuint)size.width();	
+  mContextInfo->height = (GLuint)size.height();
   mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
   mUpdateContextInfo = true;
 
@@ -102,8 +102,6 @@ void CameraRenderer::render () {
     CoreManager *coreManager = CoreManager::getInstance();
 
     coreManager->lockVideoRender();
-    MSFunctions *msFunctions = MSFunctions::getInstance();
-    msFunctions->bind(f);
 
     if (mIsPreview)
       coreManager->getCore()->previewOglRender();
@@ -113,7 +111,6 @@ void CameraRenderer::render () {
         mNotifyReceivedVideoSize = false;
     }
 
-    msFunctions->bind(nullptr);
     coreManager->unlockVideoRender();
   }
 
@@ -145,8 +142,8 @@ void CameraRenderer::updateWindowId () {
 
   mUpdateContextInfo = false;
 
-  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (width: %1, height: %2, is_preview: %3):")
-    .arg(mContextInfo->width).arg(mContextInfo->height).arg(mIsPreview) << mContextInfo;
+  qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (is_preview: %3):")
+    .arg(mIsPreview) << mContextInfo;
 
   if (mIsPreview)
     CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
