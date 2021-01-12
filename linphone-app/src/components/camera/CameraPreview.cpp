@@ -80,12 +80,7 @@ QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const 
   updateWindowId();
 
   coreManager->unlockVideoRender();
-	QOpenGLFramebufferObject * o = new QOpenGLFramebufferObject(size, format);
-	QSize s = o->size();
-	qWarning() << s;
-	QVector<QSize> ss = o->sizes();
-	qWarning() << ss;
-  return o;
+  return new QOpenGLFramebufferObject(size, format);
 }
 
 void CameraPreviewRenderer::render () {
