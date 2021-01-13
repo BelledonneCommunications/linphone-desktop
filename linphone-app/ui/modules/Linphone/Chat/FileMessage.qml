@@ -253,7 +253,7 @@ Row {
         }
 
         anchors.fill: parent
-        visible: (rectangle.isUploaded || rectangle.isRead) && !$chatEntry.isOutgoing
+        visible: ((rectangle.isUploaded || rectangle.isRead) && !$chatEntry.isOutgoing) || $chatEntry.isOutgoing
 
         onClicked: {
           if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
