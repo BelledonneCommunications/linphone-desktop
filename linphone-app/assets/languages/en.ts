@@ -478,6 +478,10 @@ Server URL not configured.</translation>
         <translation>Initiate a call to the sip-address.</translation>
     </message>
     <message>
+        <source>byeFunctionDescription</source>
+        <translation>End a specific call, all calls or current call.</translation>
+    </message>
+    <message>
         <source>initiateConferenceFunctionDescription</source>
         <translation>Initiate a conference.</translation>
     </message>

@@ -160,7 +160,22 @@ int CallsListModel::getRunningCallsNumber () const {
 void CallsListModel::terminateAllCalls () const {
   CoreManager::getInstance()->getCore()->terminateAllCalls();
 }
-
+void CallsListModel::terminateCall (const QString& sipAddress) const{
+	auto coreManager = CoreManager::getInstance();
+	shared_ptr<linphone::Address> address = coreManager->getCore()->interpretUrl(Utils::appStringToCoreString(sipAddress));
+	if (!address)
+		qWarning() << "Cannot terminate Call. The address cannot be parsed : " << sipAddress;
+	else{
+		std::shared_ptr<linphone::Call> call = coreManager->getCore()->getCallByRemoteAddress2(address);
+		if( call){
+			coreManager->lockVideoRender();
+			call->terminate();
+			coreManager->unlockVideoRender();
+		}else{
+			qWarning() << "Cannot terminate call as it doesn't exist : " << sipAddress;
+		}
+	}
+}
 // -----------------------------------------------------------------------------
 
 static void joinConference (const shared_ptr<linphone::Call> &call) {
