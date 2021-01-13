@@ -1199,6 +1199,10 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>Logs were uploaded to %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation>Address Book Connector</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

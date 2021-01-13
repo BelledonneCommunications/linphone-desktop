@@ -1183,6 +1183,10 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>Los registros se cargaron a %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Contactos</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

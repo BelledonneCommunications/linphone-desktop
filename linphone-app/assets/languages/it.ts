@@ -1183,6 +1183,10 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>I log sono stati caricati a %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Contatti</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

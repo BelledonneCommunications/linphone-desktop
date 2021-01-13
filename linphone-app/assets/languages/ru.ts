@@ -1183,6 +1183,10 @@
         <source>logsMailerSuccess</source>
         <translation>Журналы были загружены в %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Контакты</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

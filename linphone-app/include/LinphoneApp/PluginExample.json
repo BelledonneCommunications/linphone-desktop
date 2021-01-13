@@ -1,0 +1,6 @@
+{
+    "Name" : "ExamplePlugin",
+    "Version" : "1.0.0",
+    "Capabilities" : "Contacts",
+    "Description" : "This is an example for describing your plugin. Replace all fields above to be usable by the Application."
+}

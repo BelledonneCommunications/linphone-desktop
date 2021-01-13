@@ -100,5 +100,6 @@ Switch {
     anchors.fill: parent
     
     onClicked: control.enabled && control.clicked()
+    onPressed: control.enabled && control.forceActiveFocus()
   }
 }

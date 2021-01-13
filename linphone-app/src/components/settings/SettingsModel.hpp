@@ -27,6 +27,7 @@
 #include <QVariantMap>
 
 #include "components/core/CoreHandlers.hpp"
+#include "components/contacts/ContactsImporterModel.hpp"
 
 // =============================================================================
 
@@ -425,7 +426,10 @@ public:
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
 
-	// ---------------------------------------------------------------------------
+	// Advanced. ---------------------------------------------------------------------------
+	
+	
+	void accessAdvancedSettings();
 
 	QString getLogsFolder () const;
 	void setLogsFolder (const QString &folder);
@@ -456,6 +460,7 @@ public:
 	bool getIsInCall() const;
 
 	static const std::string UiSection;
+	static const std::string ContactsSection;
 
 	// ===========================================================================
 	// SIGNALS.
@@ -532,7 +537,7 @@ signals:
 	void fileTransferUrlChanged (const QString &url);
 
 	void mediaEncryptionChanged (MediaEncryption encryption);
-    void limeStateChanged (bool state);
+	void limeStateChanged (bool state);
 
 	void contactsEnabledChanged (bool status);
 
@@ -586,6 +591,8 @@ signals:
 	void logsUploadUrlChanged (const QString &url);
 	void logsEnabledChanged (bool status);
 	void logsEmailChanged (const QString &email);
+	
+	void contactImporterChanged();
 
 	bool developerSettingsEnabledChanged (bool status);
 

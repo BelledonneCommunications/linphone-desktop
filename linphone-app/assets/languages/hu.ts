@@ -1182,6 +1182,10 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
         <source>logsMailerSuccess</source>
         <translation>A naplókat feltöltötték a %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Névjegyek</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

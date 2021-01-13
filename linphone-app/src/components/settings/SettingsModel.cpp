@@ -20,6 +20,8 @@
 
 #include <QDir>
 #include <QtDebug>
+#include <QPluginLoader>
+#include <QJsonDocument>
 
 #include <cstdlib>
 #include <cmath>
@@ -27,6 +29,7 @@
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
+#include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Utils.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "SettingsModel.hpp"
@@ -41,6 +44,7 @@ namespace {
 }
 
 const string SettingsModel::UiSection("ui");
+const string SettingsModel::ContactsSection("contacts_import");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	CoreManager *coreManager = CoreManager::getInstance();
@@ -102,6 +106,7 @@ void SettingsModel::onSettingsTabChanged(int idx) {
 	case 4://ui
 		break;
 	case 5://advanced
+		accessAdvancedSettings();
 		break;
 	default:
 		break;
@@ -1187,6 +1192,12 @@ void SettingsModel::setExitOnClose (bool value) {
 // Advanced.
 // =============================================================================
 
+void SettingsModel::accessAdvancedSettings() {
+	emit contactImporterChanged();
+}
+
+//------------------------------------------------------------------------------
+
 QString SettingsModel::getLogsFolder () const {
 	return getLogsFolder(mConfig);
 }
@@ -1263,7 +1274,6 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 }
 
 // ---------------------------------------------------------------------------
-
 bool SettingsModel::getDeveloperSettingsEnabled () const {
 #ifdef DEBUG
 	return !!mConfig->getInt(UiSection, "developer_settings", 0);

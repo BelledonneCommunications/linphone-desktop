@@ -74,6 +74,7 @@ public:
 
   Q_INVOKABLE static QString interpretSipAddress (const QString &sipAddress, bool checkUsername = true);
   Q_INVOKABLE static QString interpretSipAddress (const QUrl &sipAddress);
+  Q_INVOKABLE static QString interpretSipAddress (const QString &sipAddress, const QString &domain);
 
   Q_INVOKABLE static bool addressIsValid (const QString &address);
   Q_INVOKABLE static bool sipAddressIsValid (const QString &sipAddress);

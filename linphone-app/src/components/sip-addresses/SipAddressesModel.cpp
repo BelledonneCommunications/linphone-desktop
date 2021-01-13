@@ -196,6 +196,32 @@ QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool 
     return Utils::coreStringToAppString(lAddress->asStringUriOnly());
   return QString("");
 }
+QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, const QString &domain) {
+    auto core = CoreManager::getInstance()->getCore();
+    if(!core){
+        qWarning() << "No core to interpret address";
+    }else{
+      auto proxyConfig = CoreManager::getInstance()->getCore()->createProxyConfig();
+      if( !proxyConfig) {
+      }else{
+          shared_ptr<linphone::Address> lAddressTemp = core->createPrimaryContactParsed();// Create an address
+          if( lAddressTemp ){
+              lAddressTemp->setDomain(Utils::appStringToCoreString(domain));    // Set the domain and use the address into proxy
+              proxyConfig->setIdentityAddress(lAddressTemp);
+              shared_ptr<linphone::Address> lAddress = proxyConfig->normalizeSipUri(Utils::appStringToCoreString(sipAddress));
+              if (lAddress) {
+                return Utils::coreStringToAppString(lAddress->asStringUriOnly());
+              } else {
+                  qWarning() << "Cannot normalize Sip Uri : " << sipAddress << " / " << domain;
+                return QString("");
+              }
+          }else{
+              qWarning() << "Cannot create a Primary Contact Parsed";
+          }
+       }
+    }
+  return QString("");
+}
 
 QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
   return sipAddress.toString();

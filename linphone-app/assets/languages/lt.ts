@@ -1183,6 +1183,10 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>Žurnalai buvo įkelti į %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Kontaktai</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

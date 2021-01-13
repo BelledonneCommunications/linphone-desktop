@@ -1182,6 +1182,10 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
         <source>logsMailerSuccess</source>
         <translation>Os registos foram enviados para %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Contatos</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

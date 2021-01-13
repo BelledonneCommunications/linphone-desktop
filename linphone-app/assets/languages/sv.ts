@@ -1183,6 +1183,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>Loggar laddades upp till %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Kontakter</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

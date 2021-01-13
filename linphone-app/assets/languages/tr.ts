@@ -1183,6 +1183,10 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>logsMailerSuccess</source>
         <translation>Günlükler %1 dosyasına yüklendi</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">Kişiler</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

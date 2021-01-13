@@ -583,6 +583,7 @@ void App::registerTypes () {
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
+  registerType<ContactsImporterListProxyModel>("ContactsImporterListProxyModel");
   registerType<FileDownloader>("FileDownloader");
   registerType<FileExtractor>("FileExtractor");
   registerType<HistoryProxyModel>("HistoryProxyModel");
@@ -601,6 +602,7 @@ void App::registerTypes () {
   registerUncreatableType<ChatModel>("ChatModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
+  registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
   registerUncreatableType<HistoryModel>("HistoryModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
@@ -616,6 +618,7 @@ void App::registerSharedTypes () {
   registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");
   registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");
   registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
+  registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
 }
 
 void App::registerToolTypes () {
@@ -625,6 +628,7 @@ void App::registerToolTypes () {
   registerToolType<DesktopTools>("DesktopTools");
   registerToolType<TextToSpeech>("TextToSpeech");
   registerToolType<Units>("Units");
+  registerToolType<ContactsImporterPluginsManager>("ContactsImporterPluginsManager");
 }
 
 void App::registerSharedToolTypes () {

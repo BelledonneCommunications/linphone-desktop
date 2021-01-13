@@ -1183,6 +1183,10 @@
         <source>logsMailerSuccess</source>
         <translation>ログが %1 にアップロードされました</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">連絡先</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

@@ -58,7 +58,7 @@ set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/desktop")
 
 set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
 
-set(CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
+set(CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}/include${PREFIX_PATH}")
 string(REPLACE ";" "|" PREFIX_PATH "${CMAKE_PREFIX_PATH}")
 #set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
 
@@ -95,6 +95,10 @@ option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." YES)
 option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 option(ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
+option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
+option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
+
+
 
 if(WIN32 OR APPLE)
 else()
@@ -114,6 +118,7 @@ list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
 list(APPEND APP_OPTIONS "-DENABLE_BUILD_VERBOSE=${ENABLE_BUILD_VERBOSE}")
 list(APPEND APP_OPTIONS "-DENABLE_OPENH264=${ENABLE_OPENH264}")
 list(APPEND APP_OPTIONS "-DENABLE_NON_FREE_CODECS=${ENABLE_NON_FREE_CODECS}")
+list(APPEND APP_OPTIONS "-DENABLE_BUILD_EXAMPLES=${ENABLE_BUILD_EXAMPLES}")
 	
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
@@ -176,7 +181,6 @@ find_package(belcard CONFIG QUIET)
 find_package(Mediastreamer2 CONFIG QUIET)
 find_package(ortp CONFIG QUIET)
 
-
 if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target install")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
@@ -191,16 +195,38 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 	# ${APP_OPTIONS}
 		BUILD_ALWAYS ON
 	)
+	if( ENABLE_BUILD_APP_PLUGINS)
+		ExternalProject_Add(app-plugins PREFIX "${CMAKE_BINARY_DIR}/plugins-app"
+			SOURCE_DIR "${CMAKE_SOURCE_DIR}/plugins"
+			INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
+			BINARY_DIR "${CMAKE_BINARY_DIR}/plugins-app"
+			DEPENDS ${APP_DEPENDS} linphone-qt
+			BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+		    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
+			LIST_SEPARATOR | # Use the alternate list separator
+			CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+		)
+	endif()
 	install(CODE "message(STATUS Running install)")
 	set(AUTO_REGENERATION auto_regeneration)
-	add_custom_target(${AUTO_REGENERATION} ALL
-		COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
-		DEPENDS linphone-qt)
+	if(	ENABLE_BUILD_APP_PLUGINS)
+		add_custom_target(${AUTO_REGENERATION} ALL
+			COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
+			DEPENDS app-plugins)
+	else()
+		add_custom_target(${AUTO_REGENERATION} ALL
+			COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
+			DEPENDS linphone-qt)
+	endif()
 else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
 	add_dependencies(app-library ${APP_DEPENDS})
+	if( ENABLE_BUILD_APP_PLUGINS)
+		add_custom_command(TARGET sdk PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/linphone-app/include/" "${CMAKE_INSTALL_PREFIX}/include/")
+		add_subdirectory(${CMAKE_SOURCE_DIR}/plugins "plugins-app")
+	endif()
 endif()
 ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"

@@ -41,7 +41,12 @@ namespace {
   constexpr char PathCodecs[] =  "/codecs/";
   constexpr char PathTools[] =  "/tools/";
   constexpr char PathLogs[] = "/logs/";
-  //constexpr char PathPlugins[] = "/plugins/"; // Unused
+#ifdef APPLE
+  constexpr char PathPlugins[] = "/Plugins/";
+#else
+  constexpr char PathPlugins[] = "/plugins/";
+#endif
+  constexpr char PathPluginsApp[] = "app/";
   constexpr char PathThumbnails[] = "/thumbnails/";
   constexpr char PathUserCertificates[] = "/usr-crt/";
 
@@ -159,6 +164,10 @@ static inline QString getAppPackageMsPluginsDirPath () {
   return dir.absolutePath();
 }
 
+static inline QString getAppPackagePluginsDirPath () {
+  return getAppPackageDir().absolutePath() + PathPlugins;
+}
+
 static inline QString getAppAssistantConfigDirPath () {
   return getAppPackageDataDirPath() + PathAssistantConfig;
 }
@@ -187,6 +196,9 @@ static inline QString getAppMessageHistoryFilePath () {
   return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + PathMessageHistoryList;
 }
 
+static inline QString getAppPluginsDirPath () {
+  return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)+ PathPlugins;
+}
 // -----------------------------------------------------------------------------
 
 bool Paths::filePathExists (const string &path) {
@@ -263,6 +275,21 @@ string Paths::getPackageDataDirPath () {
 
 string Paths::getPackageMsPluginsDirPath () {
   return getReadableDirPath(getAppPackageMsPluginsDirPath());
+}
+
+string Paths::getPackagePluginsAppDirPath () {
+  return getReadableDirPath(getAppPackagePluginsDirPath()+PathPluginsApp);
+}
+
+string Paths::getPluginsAppDirPath () {
+  return getWritableDirPath(getAppPluginsDirPath()+PathPluginsApp);
+}
+
+QStringList Paths::getPluginsAppFolders() {
+	QStringList pluginPaths;
+	pluginPaths << Utils::coreStringToAppString(Paths::getPluginsAppDirPath());
+	pluginPaths << Utils::coreStringToAppString(Paths::getPackagePluginsAppDirPath());
+	return pluginPaths;
 }
 
 string Paths::getRootCaFilePath () {

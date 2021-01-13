@@ -132,6 +132,10 @@ set(SOURCES
     src/components/conference/ConferenceModel.cpp
     src/components/contact/ContactModel.cpp
     src/components/contact/VcardModel.cpp
+    src/components/contacts/ContactsImporterModel.cpp
+    src/components/contacts/ContactsImporterPluginsManager.cpp
+    src/components/contacts/ContactsImporterListModel.cpp
+    src/components/contacts/ContactsImporterListProxyModel.cpp
     src/components/contacts/ContactsListModel.cpp
     src/components/contacts/ContactsListProxyModel.cpp
     src/components/core/CoreHandlers.cpp
@@ -161,6 +165,11 @@ set(SOURCES
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
+    src/utils/plugins/PluginDataAPI.cpp
+    src/utils/plugins/PluginNetworkHelper.cpp
+    src/utils/plugins/LinphonePlugin.cpp
+    src/utils/plugins/PluginsManager.cpp
+    
     )
 
 set(HEADERS
@@ -194,6 +203,10 @@ set(HEADERS
     src/components/conference/ConferenceModel.hpp
     src/components/contact/ContactModel.hpp
     src/components/contact/VcardModel.hpp
+    src/components/contacts/ContactsImporterModel.hpp
+    src/components/contacts/ContactsImporterPluginsManager.hpp
+    src/components/contacts/ContactsImporterListModel.hpp
+    src/components/contacts/ContactsImporterListProxyModel.hpp
     src/components/contacts/ContactsListModel.hpp
     src/components/contacts/ContactsListProxyModel.hpp
     src/components/core/CoreHandlers.hpp
@@ -224,8 +237,12 @@ set(HEADERS
     src/utils/MediastreamerUtils.hpp
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
+    src/utils/plugins/PluginsManager.hpp
+    include/LinphoneApp/PluginDataAPI.hpp
+    include/LinphoneApp/PluginNetworkHelper.hpp
+    include/LinphoneApp/LinphonePlugin.hpp
     )
-
+list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
@@ -336,8 +353,8 @@ list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/scripts")
 list(APPEND _QML_IMPORT_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/views")
 
 
-set(QML_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
-set(QML2_IMPORT_PATH ${_QML_IMPORT_PATHS} CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+set(QML_IMPORT_PATH "${_QML_IMPORT_PATHS}" CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
+set(QML2_IMPORT_PATH "${_QML_IMPORT_PATHS}" CACHE STRING "Path used to locate CMake modules by Qt Creator" FORCE)
 set(QML_SOURCES_PATHS "${CMAKE_CURRENT_SOURCE_DIR}/ui/")
 set(QML_MODULES_PATHS ${QML_SOURCES_PATHS})
 if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers
@@ -421,9 +438,12 @@ endif()
 
 #add_dependencies(project_b_exe project_a)
 #target_link_libraries(project_b_exe ${install_dir}/lib/alib.lib)
-
+if(ENABLE_APP_EXPORT_PLUGIN)
+	add_definitions(-DENABLE_APP_EXPORT_PLUGIN)
+endif()
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
+list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
 set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
 if(WIN32)
 	set(LIBRARIES)
@@ -438,7 +458,6 @@ if(WIN32)
 else()
 	set(LIBRARIES ${LIBRARIES_LIST})
 endif()
-
 
 if(ENABLE_BUILD_VERBOSE)
 	message("LIBRARIES : ${LIBRARIES}")
@@ -465,6 +484,9 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     endif ()
 endforeach ()
 
+#find_library(CONTACTS_PLUGIN_LIBRARY linphoneAppContacts HINTS "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+#list(APPEND LIBRARIES ${CONTACTS_PLUGIN_LIBRARY})
+
 if (APPLE)
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
     # -framework linphone") #This doesn't work yet
@@ -478,6 +500,7 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 if(WIN32)
     target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
 endif()
+target_compile_definitions(${APP_LIBRARY} PUBLIC ENABLE_APP_EXPORT_PLUGIN)
 
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version)
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
@@ -488,6 +511,10 @@ add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
 # ------------------------------------------------------------------------------
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
+add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/include/" "${CMAKE_INSTALL_PREFIX}/include/")
+#add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/LinphoneApp/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
+#configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ${CMAKE_INSTALL_PREFIX})
 
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
@@ -496,7 +523,9 @@ add_subdirectory(cmake_builder/linphone_package)
 # ------------------------------------------------------------------------------
 # To start better integration into IDE.
 # ------------------------------------------------------------------------------
-
+source_group(
+    "Json"  REGULAR_EXPRESSION ".+\.json$"
+)
 source_group(
     "Qml" REGULAR_EXPRESSION ".+\.qml$"
     )

@@ -1183,6 +1183,10 @@
         <source>logsMailerSuccess</source>
         <translation>日志已上传到 %1</translation>
     </message>
+    <message>
+        <source>contactsTitle</source>
+        <translation type="unfinished">联系人</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

@@ -35,6 +35,7 @@ class AccountSettingsModel;
 class CallsListModel;
 class ChatModel;
 class ContactsListModel;
+class ContactsImporterListModel;
 class CoreHandlers;
 class EventCountNotifier;
 class HistoryModel;
@@ -93,6 +94,13 @@ public:
     Q_CHECK_PTR(mContactsListModel);
     return mContactsListModel;
   }
+  
+  ContactsImporterListModel *getContactsImporterListModel () const {
+    Q_CHECK_PTR(mContactsImporterListModel);
+    return mContactsImporterListModel;
+  }
+  
+  
 
   SipAddressesModel *getSipAddressesModel () const {
     Q_CHECK_PTR(mSipAddressesModel);
@@ -180,6 +188,8 @@ private:
 
   CallsListModel *mCallsListModel = nullptr;
   ContactsListModel *mContactsListModel = nullptr;
+  ContactsImporterListModel *mContactsImporterListModel = nullptr;
+  
   SipAddressesModel *mSipAddressesModel = nullptr;
   SettingsModel *mSettingsModel = nullptr;
   AccountSettingsModel *mAccountSettingsModel = nullptr;
