@@ -61,6 +61,17 @@ static void cliCall (QHash<QString, QString> &args) {
     CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"]);
 }
 
+static void cliBye (QHash<QString, QString> &args) {
+	if(args.size() > 0) {
+		if( args["sip-address"] == "*")// Call with options
+			CoreManager::getInstance()->getCallsListModel()->terminateAllCalls();
+		else
+			CoreManager::getInstance()->getCallsListModel()->terminateCall(args["sip-address"]);
+	}else if( CoreManager::getInstance()->getCore()->getCurrentCall()){
+		CoreManager::getInstance()->getCore()->getCurrentCall()->terminate();
+	}
+}
+
 static void cliJoinConference (QHash<QString, QString> &args) {
   const QString sipAddress = args.take("sip-address");
 
@@ -399,7 +410,8 @@ QMap<QString, Cli::Command> Cli::mCommands = {
   }),
   createCommand("join-conference-as", QT_TR_NOOP("joinConferenceAsFunctionDescription"), cliJoinConferenceAs, {
     { "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
-  })
+  }),
+  createCommand("bye", QT_TR_NOOP("byeFunctionDescription"), cliBye, QHash<QString, Argument>(), true),
 };
 
 // -----------------------------------------------------------------------------

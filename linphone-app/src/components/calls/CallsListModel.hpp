@@ -48,6 +48,7 @@ public:
   Q_INVOKABLE int getRunningCallsNumber () const;
 
   Q_INVOKABLE void terminateAllCalls () const;
+  Q_INVOKABLE void terminateCall (const QString& sipAddress) const;
 
 signals:
   void callRunning (int index, CallModel *callModel);
