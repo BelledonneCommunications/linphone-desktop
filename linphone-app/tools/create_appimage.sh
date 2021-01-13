@@ -43,6 +43,7 @@ rm -rf "${WORK_DIR}/AppDir/usr/lib64"
 #Copy soci sqlite3 backend
 mkdir -p "${WORK_DIR}/AppDir/usr/lib"
 cp -f "${BIN_SOURCE_DIR}/lib"/libsoci_sqlite3* "${WORK_DIR}/AppDir/usr/lib/"
+cp -f "${BIN_SOURCE_DIR}/lib"/libapp-plugin* "${WORK_DIR}/AppDir/usr/lib/"
 
 if [ -d "${BIN_SOURCE_DIR}/lib64/mediastreamer" ]; then
 	mkdir -p "${WORK_DIR}/AppDir/usr/plugins/"

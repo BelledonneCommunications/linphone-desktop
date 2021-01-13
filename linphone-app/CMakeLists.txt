@@ -43,8 +43,9 @@ include(CheckCXXCompilerFlag)
 
 
 set(TARGET_NAME linphone-qt)
-
+SET_PROPERTY(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS true)
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_ENABLE_EXPORTS ON)
 
 if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -53,6 +54,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/cmake")
 
 set(APP_LIBRARY app-library)
+set(APP_PLUGIN app-plugin)
 include(application_info.cmake)
 
 if(WIN32)
@@ -165,12 +167,12 @@ set(SOURCES
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
-    src/utils/plugins/PluginDataAPI.cpp
-    src/utils/plugins/PluginNetworkHelper.cpp
-    src/utils/plugins/LinphonePlugin.cpp
-    src/utils/plugins/PluginsManager.cpp
-    
+	src/utils/plugins/PluginsManager.cpp
     )
+set(PLUGIN_SOURCES src/utils/plugins/PluginDataAPI.cpp
+	src/utils/plugins/PluginNetworkHelper.cpp
+    src/utils/plugins/LinphonePlugin.cpp
+	)
 
 set(HEADERS
     src/app/App.hpp
@@ -238,10 +240,11 @@ set(HEADERS
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
     src/utils/plugins/PluginsManager.hpp
-    include/LinphoneApp/PluginDataAPI.hpp
-    include/LinphoneApp/PluginNetworkHelper.hpp
-    include/LinphoneApp/LinphonePlugin.hpp
     )
+set(PLUGIN_HEADERS 
+	include/LinphoneApp/PluginDataAPI.hpp
+    include/LinphoneApp/PluginNetworkHelper.hpp
+	include/LinphoneApp/LinphonePlugin.hpp)
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 
@@ -310,6 +313,8 @@ endfunction ()
 # Force absolute paths.
 PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
+PREPEND(PLUGIN_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
+PREPEND(PLUGIN_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 # ------------------------------------------------------------------------------
 # Compute QML files list.
@@ -401,11 +406,12 @@ if(WIN32)
 endif()
 
 add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
+add_library(${APP_PLUGIN} SHARED ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
 #add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
 
 if (WIN32)
-    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
-    install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}") 
+    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> $<TARGET_OBJECTS:${APP_PLUGIN}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
+    install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
     if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
         install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
     endif()
@@ -438,9 +444,11 @@ endif()
 
 #add_dependencies(project_b_exe project_a)
 #target_link_libraries(project_b_exe ${install_dir}/lib/alib.lib)
-if(ENABLE_APP_EXPORT_PLUGIN)
-	add_definitions(-DENABLE_APP_EXPORT_PLUGIN)
-endif()
+
+#	add_definitions(-DENABLE_APP_EXPORT_PLUGIN)
+target_compile_definitions(${APP_PLUGIN} PUBLIC "-DENABLE_APP_EXPORT_PLUGIN")
+set_property(TARGET ${APP_PLUGIN} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS ON)   #Need by Qt
+
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
@@ -493,9 +501,13 @@ if (APPLE)
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+target_include_directories(${APP_PLUGIN} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
 
-target_link_libraries(${TARGET_NAME} ${LIBRARIES})
+target_link_libraries(${APP_PLUGIN} ${LIBRARIES})
+target_link_libraries(${APP_LIBRARY} ${APP_PLUGIN})
+
+target_link_libraries(${TARGET_NAME} ${LIBRARIES} ${APP_PLUGIN})
 
 if(WIN32)
     target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
@@ -503,7 +515,7 @@ endif()
 target_compile_definitions(${APP_LIBRARY} PUBLIC ENABLE_APP_EXPORT_PLUGIN)
 
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version)
-add_dependencies(${TARGET_NAME} ${APP_LIBRARY})
+add_dependencies(${TARGET_NAME} ${APP_LIBRARY} ${APP_PLUGIN})
 
 
 # ------------------------------------------------------------------------------
@@ -514,7 +526,8 @@ set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/include/" "${CMAKE_INSTALL_PREFIX}/include/")
 #add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/LinphoneApp/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ${CMAKE_INSTALL_PREFIX})
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")
+
 
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)

@@ -101,6 +101,7 @@ find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 find_package(LinphoneCxx CONFIG)
 find_package(bctoolbox CONFIG)
 
+find_library(APP_PLUGIN_LIBRARY NAMES "app-plugin" PATHS "${APP_PLUGIN_LIB_PATH}" REQUIRED)
 
 # ------------------------------------------------------------------------------
 # Build.
@@ -108,9 +109,10 @@ find_package(bctoolbox CONFIG)
 
 add_library(${TARGET_NAME} SHARED ${SOURCES} ${HEADERS})
 
-target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Widgets Qt5::Network ${LINPHONECXX_LIBRARIES})
+target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Widgets Qt5::Network ${LINPHONECXX_LIBRARIES} ${APP_PLUGIN_LIBRARY})
 target_compile_options(${TARGET_NAME} PRIVATE ${COMPILE_OPTIONS})
 set_source_files_properties( ${TARGET_NAME} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
+
 set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_PREFIX_PATH} ${LINPHONECXX_INCLUDE_DIRS})
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${TARGET_NAME}-${PLUGIN_VERSION}")

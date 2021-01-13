@@ -21,6 +21,8 @@
 ################################################################################
 cmake_minimum_required(VERSION 3.1)
 
+project(app-plugins)
+
 ## Add custom plugins
 macro(get_all_subdirs result curdir)
 	file(GLOB children RELATIVE ${curdir} ${curdir}/*)

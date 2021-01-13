@@ -51,6 +51,7 @@ job-macosx-makefile:
   only:
     variables:
       - $NIGHTLY_MASTER
+      - $DEPLOY_PLUGINS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -118,3 +119,16 @@ job-macosx-makefile-deploy:
        - $DEPLOY_MACOSX
   script:
     - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY
+
+
+job-macosx-makefile-plugins-deploy:
+  stage: deploy
+  tags: [ "macosx-xcode11" ]
+  dependencies:
+    - job-macosx-makefile
+  only:
+     variables:
+       - $DEPLOY_PLUGINS
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/plugins
+

@@ -5,18 +5,10 @@
 #include <QVersionNumber>
 // Overload this class to make a plugin for the address book importer
 
-#if defined(_MSC_VER)
-	#ifdef ENABLE_APP_EXPORT_PLUGIN
-		#define LINPHONEAPP_DLL_API __declspec(dllexport)
-	#else
-		#define LINPHONEAPP_DLL_API __declspec(dllimport)
-	#endif
+#ifdef ENABLE_APP_EXPORT_PLUGIN
+	#define LINPHONEAPP_DLL_API Q_DECL_EXPORT
 #else
-	#ifdef ENABLE_APP_EXPORT_PLUGIN
-		#define LINPHONEAPP_DLL_API __attribute__((visibility("default")))
-	#else
-		#define LINPHONEAPP_DLL_API
-	#endif
+	#define LINPHONEAPP_DLL_API Q_DECL_IMPORT
 #endif
 
 class QPluginLoader;

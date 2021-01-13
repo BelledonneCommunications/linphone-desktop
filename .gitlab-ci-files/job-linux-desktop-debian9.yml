@@ -75,6 +75,7 @@ job-debian9-makefile-clang:
   only:
     variables:
       - $NIGHTLY_MASTER
+      - $DEPLOY_PLUGINS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     CC: clang
@@ -123,7 +124,6 @@ job-debian9-makefile-clang-package:
     paths:
       - build/OUTPUT/Packages/*.AppImage
     expire_in: 1 week
-    
 
 #################################################
 # Deploy - Nightly
@@ -141,6 +141,18 @@ job-debian9-makefile-clang-deploy:
   script:
     - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/    
     
+
+job-debian9-makefile-clang-plugins-deploy:
+  stage: deploy
+  tags: [ "deploy" ]
+  dependencies:
+    - job-debian9-makefile-clang
+  only:
+     variables:
+       - $DEPLOY_PLUGINS
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/plugins/
+
 #################################################
 # Debug
 #################################################

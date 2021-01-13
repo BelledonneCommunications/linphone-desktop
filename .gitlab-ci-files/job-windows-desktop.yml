@@ -44,6 +44,7 @@ job-windows-vs2017:
     variables:
       - $NIGHTLY_MASTER
       - $NIGHTLY_RELEASE
+      - $DEPLOY_PLUGINS
   before_script: 
     #cache disabled on scheduled builds since we dot not need the fastest build
     - set "CLCACHE_DISABLE=1"
@@ -54,6 +55,9 @@ job-windows-vs2017-scheduled:
     
 job-windows-vs2017-novideo:
   extends: .job-windows-vs2017-scheduled
+  except:
+    variables:
+      - $DEPLOY_PLUGINS
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_VIDEO=NO
 
@@ -75,17 +79,12 @@ job-windows-vs2017-package:
   script:
     - *build_all_windows_script
     - C:\PROGRA~1\Python37\Scripts\cl -s
-    - mkdir "%CI_PROJECT_DIR%/results"
-    - cd OUTPUT
-    - cd Packages
-    - copy /B *.exe "%CI_PROJECT_DIR%/results"
   artifacts:
     paths:
-      - results\*
+      - OUTPUT\*
     when: always
     expire_in: 1 weeks
- 
- 
+  
 #################################################
 #               DEPLOY
 #################################################
@@ -100,7 +99,19 @@ job-windows-vs2017-win32-upload:
   dependencies:
     - job-windows-vs2017-package
   script:
-    - scp "results/*.exe" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%"
+    - scp "build/OUTPUT/Packages/*.exe" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%"
+
+
+job-windows-vs2017-plugins-upload:
+  stage: deploy
+  tags: [ "windows"]
+  only:
+    variables:
+      - $DEPLOY_PLUGINS
+  dependencies:
+    - job-windows-vs2017-scheduled
+  script:
+    - scp "build/OUTPUT/plugins/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
 
 
 
