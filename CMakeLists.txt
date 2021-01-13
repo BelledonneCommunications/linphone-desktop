@@ -96,7 +96,7 @@ option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 option(ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
-option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" YES)
+option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
 
 
 
