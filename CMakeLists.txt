@@ -150,6 +150,26 @@ if(UNIX AND NOT APPLE)
 	set(CMAKE_INSTALL_RPATH "$ORIGIN:$ORIGIN/lib64:$ORIGIN/../lib64:$ORIGIN/lib:$ORIGIN/../lib:${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
 	list(APPEND APP_OPTIONS "-DCMAKE_INSTALL_RPATH=${CMAKE_INSTALL_RPATH}")
 endif()
+
+
+
+if(ENABLE_BUILD_APP_PLUGINS)
+	file(GLOB children RELATIVE plugins plugins/*)
+	set(dirlist "")
+	foreach(child ${children})
+		if(IS_DIRECTORY ${curdir}/${child} AND (ENABLE_BUILD_EXAMPLES OR NOT ${child} MATCHES "example"))
+			list(APPEND dirlist ${child})
+		endif()
+	endforeach()
+	list(LENGTH dirlist count)
+	if(NOT count)
+		set(ENABLE_BUILD_APP_PLUGINS OFF)
+		message(STATUS "No plugins found for the application to build")
+	endif()
+endif()
+
+
+
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
@@ -171,8 +191,6 @@ ExternalProject_Add_Step(sdk force_build
 include(FindPkgConfig)
 
 set(APP_DEPENDS sdk)
-
-
 find_package(Qt5 5.9 COMPONENTS Core REQUIRED)
 
 if ( NOT Qt5_FOUND )
