@@ -20,8 +20,9 @@
 
 #include "PluginsManager.hpp"
 //#include "ContactsImporterModel.hpp"
-#include "include/LinphoneApp/LinphonePlugin.hpp"
-#include "include/LinphoneApp/PluginNetworkHelper.hpp"
+#include "../../../include/LinphoneApp/LinphonePlugin.hpp"
+#include "../../../include/LinphoneApp/PluginDataAPI.hpp"
+#include "../../../include/LinphoneApp/PluginNetworkHelper.hpp"
 
 #include "utils/Utils.hpp"
 #include "app/paths/Paths.hpp"

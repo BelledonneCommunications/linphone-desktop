@@ -7,7 +7,7 @@
 
 
 #ifdef ENABLE_APP_EXPORT_PLUGIN
-	#include "include/LinphoneApp/LinphonePlugin.hpp"
+	#include "LinphonePlugin.hpp"
 #else
 	#include <LinphoneApp/LinphonePlugin.hpp>
 #endif

@@ -73,6 +73,11 @@ elseif (APPLE)
   set(LIBPREFIX "lib")
   set(LIBEXT "dylib")
   set(PLUGINEXT "so")
+else()
+	set(LIBDIR ${CMAKE_INSTALL_LIBDIR})
+	set(LIBPREFIX "lib")
+	set(LIBEXT "so")
+	set(PLUGINEXT "so")
 endif ()
 
 # Removed unless it is useful to get a zip from SDK : The SDK is packaged with binaries.
@@ -93,6 +98,12 @@ endif ()
 #    WORKING_DIRECTORY ${LINPHONE_OUTPUT_DIR}
 #  )
 #endif ()
+
+install(TARGETS ${APP_PLUGIN} 
+	ARCHIVE DESTINATION "${LIBDIR}"
+	LIBRARY DESTINATION "${LIBDIR}"
+	RUNTIME DESTINATION "${LIBDIR}"
+	)
 
 # ==============================================================================
 # Specific deployment.
@@ -137,7 +148,6 @@ if (WIN32)
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/qt.conf.in" "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" @ONLY)	
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" DESTINATION "${CMAKE_INSTALL_BINDIR}")
 	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/assistant" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}" USE_SOURCE_PERMISSIONS)
-	install(TARGETS ${APP_PLUGIN} DESTINATION "${CMAKE_INSTALL_BINDIR}")
 	install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}.exe\" -qmldir=${LINPHONE_QML_DIR} --compiler-runtime)")# -verbose=2)"  COMPONENT binary_application)
 
 #  list(REMOVE_ITEM SHARE_CONTENT "${CMAKE_INSTALL_DATAROOTDIR}/belr" "${CMAKE_INSTALL_DATAROOTDIR}/Belr" "${CMAKE_INSTALL_DATAROOTDIR}/images" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/sounds")
@@ -183,7 +193,11 @@ elseif (APPLE)
       message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}' to '@executable_path/../Frameworks'")
       execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}" "@executable_path/../Frameworks" "${LIBRARY}")
   endforeach ()
-  install(TARGETS ${APP_PLUGIN} DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
+  install(TARGETS ${APP_PLUGIN} 
+	  ARCHIVE DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks"
+	  LIBRARY DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" 
+	  RUNTIME DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks"
+	  )
   install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   if(ENABLE_APP_PACKAGING)
@@ -256,8 +270,8 @@ else()# Not Windows and Apple
 	foreach (DIR ${ICON_DIRS})
 		install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/icons/hicolor/${DIR}/apps/icon.png" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/icons/hicolor/${DIR}/apps/" RENAME "${EXECUTABLE_NAME}.png")
 	endforeach ()
-	install(TARGETS ${APP_PLUGIN} DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 endif ()
+
 
 if (MSVC)
 #  string(REGEX REPLACE "Visual Studio ([0-9]+).*" "\\1" MSVC_VERSION "${CMAKE_GENERATOR}")
