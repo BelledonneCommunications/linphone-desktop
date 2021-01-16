@@ -45,7 +45,6 @@ include(CheckCXXCompilerFlag)
 set(TARGET_NAME linphone-qt)
 SET_PROPERTY(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS true)
 set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_ENABLE_EXPORTS ON)
 
 if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -405,12 +404,11 @@ if(WIN32)
 	set(RC_FILE ${CMAKE_CURRENT_BINARY_DIR}/appDetailsWindows.rc)
 endif()
 
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES})
 add_library(${APP_PLUGIN} SHARED ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
-#add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES})
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES} ${PLUGIN_HEADERS})#Need to add Headers to resolve moc Qt symbols
 
 if (WIN32)
-    add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
+    add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
     install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
     if(MSVC AND (CMAKE_BUILD_TYPE STREQUAL "Debug" OR CMAKE_BUILD_TYPE STREQUAL "RelWithDebInfo"))
         install(FILES "$<TARGET_PDB_FILE:${TARGET_NAME}>" DESTINATION ${CMAKE_INSTALL_BINDIR})
@@ -422,14 +420,16 @@ else ()
     add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
     install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
 endif ()
-set_source_files_properties( ${APP_LIBRARY} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
+
 
 set_property(TARGET ${APP_LIBRARY} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
+set_property(TARGET ${APP_PLUGIN} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 
 
 #Turn on automatic resources compilation by cmake
 #Instead of excplicitely calling qt5_add_resources
 set_property(TARGET ${APP_LIBRARY} PROPERTY AUTORCC ON)
+set_property(TARGET ${APP_PLUGIN} PROPERTY AUTORCC ON)
 
 
 
@@ -439,16 +439,9 @@ if(MSVC)
     set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")
 endif()
 
-#ExternalProject_Get_Property(project_a install_dir)
-#include_directories(${install_dir}/include)
 
-#add_dependencies(project_b_exe project_a)
-#target_link_libraries(project_b_exe ${install_dir}/lib/alib.lib)
-
-#	add_definitions(-DENABLE_APP_EXPORT_PLUGIN)
 target_compile_definitions(${APP_PLUGIN} PUBLIC "-DENABLE_APP_EXPORT_PLUGIN")
-set_property(TARGET ${APP_PLUGIN} PROPERTY WINDOWS_EXPORT_ALL_SYMBOLS ON)   #Need by Qt
-
+set_target_properties(${APP_PLUGIN} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
 set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
@@ -492,29 +485,27 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
     endif ()
 endforeach ()
 
-#find_library(CONTACTS_PLUGIN_LIBRARY linphoneAppContacts HINTS "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
-#list(APPEND LIBRARIES ${CONTACTS_PLUGIN_LIBRARY})
 
 if (APPLE)
     list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
     # -framework linphone") #This doesn't work yet
 endif ()
 
-target_include_directories(${APP_LIBRARY} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-target_include_directories(${APP_PLUGIN} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
-target_include_directories(${TARGET_NAME} SYSTEM PRIVATE ${INCLUDED_DIRECTORIES})
+target_include_directories(${APP_LIBRARY} SYSTEM PUBLIC ${INCLUDED_DIRECTORIES})
+target_include_directories(${APP_PLUGIN} SYSTEM PUBLIC ${INCLUDED_DIRECTORIES})
+target_include_directories(${TARGET_NAME} SYSTEM PUBLIC ${INCLUDED_DIRECTORIES})
 
+target_link_libraries(${APP_LIBRARY} ${LIBRARIES})
 target_link_libraries(${APP_PLUGIN} ${LIBRARIES})
 target_link_libraries(${APP_LIBRARY} ${APP_PLUGIN})
-
-target_link_libraries(${TARGET_NAME} ${LIBRARIES} ${APP_PLUGIN})
+target_link_libraries(${TARGET_NAME} ${LIBRARIES})
+target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 if(WIN32)
     target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
 endif()
-target_compile_definitions(${APP_LIBRARY} PUBLIC ENABLE_APP_EXPORT_PLUGIN)
 
-add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version)
+add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY} ${APP_PLUGIN})
 
 
