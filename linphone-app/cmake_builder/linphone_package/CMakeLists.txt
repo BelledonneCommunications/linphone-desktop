@@ -73,6 +73,11 @@ elseif (APPLE)
   set(LIBPREFIX "lib")
   set(LIBEXT "dylib")
   set(PLUGINEXT "so")
+else()
+	set(LIBDIR ${CMAKE_INSTALL_LIBDIR})
+	set(LIBPREFIX "lib")
+	set(LIBEXT "so")
+	set(PLUGINEXT "so")
 endif ()
 
 # Removed unless it is useful to get a zip from SDK : The SDK is packaged with binaries.
