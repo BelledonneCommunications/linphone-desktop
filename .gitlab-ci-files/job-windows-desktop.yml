@@ -81,7 +81,7 @@ job-windows-vs2017-package:
     - C:\PROGRA~1\Python37\Scripts\cl -s
   artifacts:
     paths:
-      - OUTPUT\*
+      - build\OUTPUT
     when: always
     expire_in: 1 weeks
   
@@ -111,7 +111,7 @@ job-windows-vs2017-plugins-upload:
   dependencies:
     - job-windows-vs2017-scheduled
   script:
-    - scp "build/OUTPUT/plugins/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
+    - scp "build/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
 
 
 
