@@ -94,7 +94,9 @@ endif ()
 #  )
 #endif ()
 
-install(TARGETS ${APP_PLUGIN} DESTINATION "${LIBDIR}")
+install(TARGETS ${APP_PLUGIN} 
+	ARCHIVE DESTINATION "${LIBDIR}"
+	LIBRARY DESTINATION "${LIBDIR}")
 
 # ==============================================================================
 # Specific deployment.
@@ -184,7 +186,9 @@ elseif (APPLE)
       message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}' to '@executable_path/../Frameworks'")
       execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}" "@executable_path/../Frameworks" "${LIBRARY}")
   endforeach ()
-  install(TARGETS ${APP_PLUGIN} DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
+  install(TARGETS ${APP_PLUGIN} 
+	  ARCHIVE DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks"
+	  LIBRARY DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" )
   install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   if(ENABLE_APP_PACKAGING)
