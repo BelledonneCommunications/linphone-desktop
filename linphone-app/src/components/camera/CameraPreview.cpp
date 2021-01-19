@@ -28,6 +28,7 @@
 
 #include "CameraPreview.hpp"
 
+
 // =============================================================================
 
 using namespace std;
@@ -35,30 +36,20 @@ using namespace std;
 namespace {
   constexpr int MaxFps = 30;
 }
-
-struct ContextInfo {
-	void* window;
-	GLuint width;
-	GLuint height;
-	OpenGlFunctions *functions;
-};
 // -----------------------------------------------------------------------------
 
 CameraPreviewRenderer::CameraPreviewRenderer () {
-  mContextInfo = new ContextInfo();
-  mContextInfo->window = NULL; 
+  mContextInfo.window = NULL; 
 }
 
 CameraPreviewRenderer::~CameraPreviewRenderer () {
-  qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
+  qInfo() << QStringLiteral("Delete context info:") << &mContextInfo;
 
   CoreManager *coreManager = CoreManager::getInstance();
 
   coreManager->lockVideoRender();
   coreManager->getCore()->setNativePreviewWindowId(nullptr);
   coreManager->unlockVideoRender();
-
-  delete mContextInfo;
 }
 
 QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const QSize &size) {
@@ -72,9 +63,9 @@ QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const 
   // It's not the same thread as render.
   coreManager->lockVideoRender();
 
-  mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
-  mContextInfo->width = (GLuint)size.width();	
-  mContextInfo->height = (GLuint)size.height();
+  mContextInfo.getProcAddress = MSFunctions::getInstance()->mGetProcAddress;
+  mContextInfo.width = (GLuint)size.width();	
+  mContextInfo.height = (GLuint)size.height();
   mUpdateContextInfo = true;
 
   updateWindowId();
@@ -85,19 +76,11 @@ QOpenGLFramebufferObject *CameraPreviewRenderer::createFramebufferObject (const 
 
 void CameraPreviewRenderer::render () {
   // Draw with ms filter.
-  {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+  CoreManager *coreManager = CoreManager::getInstance();
 
-    f->glClearColor(0.f, 0.f, 0.f, 1.f);
-    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    CoreManager *coreManager = CoreManager::getInstance();
-
-    coreManager->lockVideoRender();
-    coreManager->getCore()->previewOglRender();
-
-    coreManager->unlockVideoRender();
-  }
+  coreManager->lockVideoRender();
+  coreManager->getCore()->previewOglRender();
+  coreManager->unlockVideoRender();
 
   // Synchronize opengl calls with QML.
   if (mWindow)
@@ -115,9 +98,9 @@ void CameraPreviewRenderer::updateWindowId () {
   mUpdateContextInfo = false;
 
   qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info :")
-    << mContextInfo;
+    << &mContextInfo;
 
-  CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
+  CoreManager::getInstance()->getCore()->setNativePreviewWindowId(&mContextInfo);
 }
 
 // -----------------------------------------------------------------------------

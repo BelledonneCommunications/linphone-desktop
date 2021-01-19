@@ -37,35 +37,26 @@ namespace {
   constexpr int MaxFps = 30;
 }
 
-struct ContextInfo {
-	void* window;
-	GLuint width;
-	GLuint height;
-	OpenGlFunctions *functions;
-};
 // -----------------------------------------------------------------------------
 
 CameraRenderer::CameraRenderer () {
-  mContextInfo = new ContextInfo();
-  mContextInfo->window = NULL;
+  mContextInfo.window = NULL;
 }
 
 CameraRenderer::~CameraRenderer () {
-  qInfo() << QStringLiteral("Delete context info:") << mContextInfo;
+  qInfo() << QStringLiteral("Delete context info:") << &mContextInfo;
 
   CoreManager *coreManager = CoreManager::getInstance();
   coreManager->lockVideoRender();
 
   shared_ptr<linphone::Core> core = coreManager->getCore();
   if (mIsPreview) {
-    if (core->getNativePreviewWindowId() == mContextInfo)
+    if (core->getNativePreviewWindowId() == &mContextInfo)
       core->setNativePreviewWindowId(nullptr);
-  } else if (mCall && mCall->getNativeVideoWindowId() == mContextInfo)
+  } else if (mCall && mCall->getNativeVideoWindowId() == &mContextInfo)
     mCall->setNativeVideoWindowId(nullptr);
 
   coreManager->unlockVideoRender();
-
-  delete mContextInfo;
 }
 
 QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &size) {
@@ -79,9 +70,9 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
   // It's not the same thread as render.
   coreManager->lockVideoRender();
 
-  mContextInfo->width = (GLuint)size.width();	
-  mContextInfo->height = (GLuint)size.height();
-  mContextInfo->functions = MSFunctions::getInstance()->getFunctions();
+  mContextInfo.width = (GLuint)size.width();	
+  mContextInfo.height = (GLuint)size.height();
+  mContextInfo.getProcAddress = MSFunctions::getInstance()->mGetProcAddress;
   mUpdateContextInfo = true;
 
   updateWindowId();
@@ -93,26 +84,19 @@ QOpenGLFramebufferObject *CameraRenderer::createFramebufferObject (const QSize &
 
 void CameraRenderer::render () {
   // Draw with ms filter.
-  {
-    QOpenGLFunctions *f = QOpenGLContext::currentContext()->functions();
+  CoreManager *coreManager = CoreManager::getInstance();
 
-    f->glClearColor(0.f, 0.f, 0.f, 0.f);
-    f->glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  coreManager->lockVideoRender();
 
-    CoreManager *coreManager = CoreManager::getInstance();
-
-    coreManager->lockVideoRender();
-
-    if (mIsPreview)
-      coreManager->getCore()->previewOglRender();
-    else if (mCall) {
-      mCall->oglRender();
-      if (mNotifyReceivedVideoSize && notifyReceivedVideoSize())
-        mNotifyReceivedVideoSize = false;
-    }
-
-    coreManager->unlockVideoRender();
+  if (mIsPreview)
+    coreManager->getCore()->previewOglRender();
+  else if (mCall) {
+    mCall->oglRender();
+    if (mNotifyReceivedVideoSize && notifyReceivedVideoSize())
+      mNotifyReceivedVideoSize = false;
   }
+
+  coreManager->unlockVideoRender();
 
   // Synchronize opengl calls with QML.
   if (mWindow)
@@ -143,12 +127,12 @@ void CameraRenderer::updateWindowId () {
   mUpdateContextInfo = false;
 
   qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Set context info (is_preview: %3):")
-    .arg(mIsPreview) << mContextInfo;
+    .arg(mIsPreview) << &mContextInfo;
 
   if (mIsPreview)
-    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(mContextInfo);
+    CoreManager::getInstance()->getCore()->setNativePreviewWindowId(&mContextInfo);
   else if (mCall)
-    mCall->setNativeVideoWindowId(mContextInfo);
+    mCall->setNativeVideoWindowId(&mContextInfo);
 }
 
 bool CameraRenderer::notifyReceivedVideoSize () const {
@@ -163,7 +147,7 @@ bool CameraRenderer::notifyReceivedVideoSize () const {
 
   if (width && height) {
     qInfo() << "Thread" << QThread::currentThread() << QStringLiteral("Received video size (width: %1, height: %2):")
-      .arg(width).arg(height) << mContextInfo;
+      .arg(width).arg(height) << &mContextInfo;
 
     CallModel *callModel = &mCall->getData<CallModel>("call-model");
     QTimer::singleShot(0, callModel, [callModel, width, height] {
@@ -175,7 +159,28 @@ bool CameraRenderer::notifyReceivedVideoSize () const {
 
   return false;
 }
-
+class TestId{
+public:
+    void *getId(){
+        return (void*)mRenderer;
+    }
+    void setId(void*){
+        if( mRenderer)
+            delete mRenderer;
+        mRenderer = new CameraRenderer();
+    }
+    void *getPreviewId(){
+        return (void*)mPreviewRenderer;
+    }
+    void setPreviewId(void*){
+        if( mPreviewRenderer)
+            delete mPreviewRenderer;
+        mPreviewRenderer = new CameraRenderer();
+    }
+    CameraRenderer *mRenderer = nullptr;
+    CameraRenderer *mPreviewRenderer = nullptr;
+};
+static TestId mainId;
 // -----------------------------------------------------------------------------
 
 Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
@@ -195,7 +200,13 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 }
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
-  return new CameraRenderer();
+    if(mIsPreview){
+        mainId.setPreviewId((void*)this);// Create new instance
+        return (QQuickFramebufferObject::Renderer *) mainId.getPreviewId();
+    }else{
+        mainId.setId((void*)this);// Create new instance
+        return (QQuickFramebufferObject::Renderer *) mainId.getId();
+    }
 }
 
 // -----------------------------------------------------------------------------

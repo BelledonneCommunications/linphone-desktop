@@ -35,13 +35,11 @@ void * getProcAddress(const char * name){
 }
 
 MSFunctions::MSFunctions () {
-	mFunctions = new OpenGlFunctions();
 	set();
 }
 void MSFunctions::set () {
-  mFunctions->getProcAddress = getProcAddress;
+  mGetProcAddress = getProcAddress;
 }
 
 MSFunctions::~MSFunctions () {
-  delete mFunctions;
 }

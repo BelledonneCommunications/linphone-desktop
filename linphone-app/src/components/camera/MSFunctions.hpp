@@ -30,10 +30,8 @@ struct OpenGlFunctions;
 class MSFunctions {
 public:
   ~MSFunctions ();
-
-  OpenGlFunctions *getFunctions () {
-    return mFunctions; // Own implementation.
-  }
+    
+  void * (*mGetProcAddress)(const char * name) = nullptr;
 
   // ---------------------------------------------------------------------------
 
@@ -49,7 +47,6 @@ public:
 private:
   MSFunctions ();
 
-  OpenGlFunctions *mFunctions = nullptr;
 
   static MSFunctions *mInstance;
 };

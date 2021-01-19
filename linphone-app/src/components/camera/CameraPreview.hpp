@@ -23,6 +23,7 @@
 
 #include <QMutex>
 #include <QQuickFramebufferObject>
+#include <mediastreamer2/msogl.h>
 
 // =============================================================================
 
@@ -44,7 +45,7 @@ protected:
 private:
   void updateWindowId ();
 
-  ContextInfo *mContextInfo;
+  MSOglContextInfo mContextInfo;
   bool mUpdateContextInfo = false;
 
   QQuickWindow *mWindow = nullptr;
