@@ -33,37 +33,9 @@ namespace linphone {
 }
 
 class CallModel;
-
-class CameraRenderer : public QQuickFramebufferObject::Renderer {
-public:
-  CameraRenderer ();
-  ~CameraRenderer ();
-  
-public:
-
-protected:
-  QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override;
-  void render () override;
-  void synchronize (QQuickFramebufferObject *item) override;
-
-private:
-  void updateWindowId ();
-  bool notifyReceivedVideoSize () const;
-
-  MSOglContextInfo mContextInfo;
-  bool mUpdateContextInfo = false;
-
-  bool mNotifyReceivedVideoSize = true;
-  bool mIsPreview = false;
-  std::shared_ptr<linphone::Call> mCall;
-
-  QQuickWindow *mWindow = nullptr;
-};
-
 // -----------------------------------------------------------------------------
 
 class Camera : public QQuickFramebufferObject {
-  friend class CameraRenderer;
 
   Q_OBJECT;
 
@@ -76,7 +48,7 @@ public:
   QQuickFramebufferObject::Renderer *createRenderer () const override;
 
 signals:
-  void callChanged (CallModel *callModel);si t
+  void callChanged (CallModel *callModel);
   void isPreviewChanged (bool isPreview);
 
 private:

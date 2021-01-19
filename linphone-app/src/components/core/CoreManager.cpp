@@ -264,7 +264,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     nullptr
   );
   mCore->addListener(mHandlers);
-  mCore->setVideoDisplayFilter("MSOGL");
+  mCore->setVideoDisplayFilter("MSQOGL");
   mCore->usePreviewWindow(true);
   mCore->enableVideoPreview(false);
   mCore->setUserAgent(
