@@ -514,7 +514,11 @@ add_dependencies(${TARGET_NAME} ${APP_LIBRARY} ${APP_PLUGIN})
 # ------------------------------------------------------------------------------
 set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
+
 add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/include/" "${CMAKE_INSTALL_PREFIX}/include/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX}/lib/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/lib/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/lib/")
 #add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/LinphoneApp/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")

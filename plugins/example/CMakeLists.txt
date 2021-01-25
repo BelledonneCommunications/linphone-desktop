@@ -91,11 +91,8 @@ if( WIN32)
 endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 
-set(QT5_PACKAGES Core Widgets Network)
-
 set(CMAKE_AUTOMOC ON)
 
-find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
 
 find_package(LinphoneCxx CONFIG)
@@ -109,13 +106,30 @@ find_library(APP_PLUGIN_LIBRARY NAMES "app-plugin" PATHS "${APP_PLUGIN_LIB_PATH}
 
 add_library(${TARGET_NAME} SHARED ${SOURCES} ${HEADERS})
 
-target_link_libraries(${TARGET_NAME} PRIVATE Qt5::Widgets Qt5::Network ${LINPHONECXX_LIBRARIES} ${APP_PLUGIN_LIBRARY})
+target_link_libraries(${TARGET_NAME} PRIVATE ${LINPHONECXX_LIBRARIES} ${APP_PLUGIN_LIBRARY})
 target_compile_options(${TARGET_NAME} PRIVATE ${COMPILE_OPTIONS})
 set_source_files_properties( ${TARGET_NAME} PROPERTIES EXTERNAL_OBJECT true  GENERATED true )
 
 set_property(TARGET ${TARGET_NAME} PROPERTY POSITION_INDEPENDENT_CODE ON)   #Need by Qt
 target_include_directories(${TARGET_NAME} PRIVATE ${CMAKE_PREFIX_PATH} ${LINPHONECXX_INCLUDE_DIRS})
 set_target_properties(${TARGET_NAME} PROPERTIES OUTPUT_NAME "${TARGET_NAME}-${PLUGIN_VERSION}")
+
+# Qt stuffs
+set(QT5_PACKAGES Gui Core Widgets Network)
+find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
+foreach (package ${QT5_PACKAGES})
+	list(APPEND QT_INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
+	list(APPEND QT_ALL_LIBRARIES ${Qt5${package}_LIBRARIES})
+	if(APPLE)# On Mac, shared libs can be generated with absolute path on Qt libs. This lead to get undeployable shared library.
+		add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND install_name_tool -change "/usr/local/opt/qt/lib/Qt${package}.framework/Versions/5/Qt${package}" "@rpath/Qt${package}.framework/Versions/5/Qt${package}" $<TARGET_FILE:${TARGET_NAME}>)
+	endif()
+endforeach ()
+target_include_directories(${TARGET_NAME} SYSTEM PUBLIC ${QT_INCLUDED_DIRECTORIES})
+target_link_libraries(${TARGET_NAME} PUBLIC ${QT_ALL_LIBRARIES})
+if(APPLE)
+	add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND install_name_tool -add_rpath "@executable_path/../Frameworks/" $<TARGET_FILE:${TARGET_NAME}>)
+	add_custom_command(TARGET ${TARGET_NAME} POST_BUILD COMMAND install_name_tool -add_rpath "@executable_path/../lib/" $<TARGET_FILE:${TARGET_NAME}>)
+endif()
 
 #-------------------------------------------------------------------------------
 # IDE

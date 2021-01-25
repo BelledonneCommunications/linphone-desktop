@@ -214,6 +214,7 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 		BINARY_DIR "${CMAKE_BINARY_DIR}/linphone-app"
 		DEPENDS ${APP_DEPENDS}
 		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+		INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 		LIST_SEPARATOR | # Use the alternate list separator
 		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 	# ${APP_OPTIONS}
@@ -226,6 +227,7 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 			BINARY_DIR "${CMAKE_BINARY_DIR}/plugins-app"
 			DEPENDS linphone-qt
 			BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+			INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
 			LIST_SEPARATOR | # Use the alternate list separator
 			CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 		)

@@ -19,7 +19,7 @@
   stage: build
   tags: [ "windows" ]
   variables:
-    CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON
+    CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON -DLINPHONE_WINDOWS_SIGNING_DIR=$WINDOWS_SIGNING_DIRECTORY
   script:
    - *build_all_windows_script
   artifacts:
