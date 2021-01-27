@@ -491,6 +491,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 						functionName = "call";
 				}
 			}
+			functionName = functionName.toUpper();
 			if( functionName.isEmpty()){
 				qWarning() << QStringLiteral("There is no method set in `%1`.").arg(command);
 				return;
