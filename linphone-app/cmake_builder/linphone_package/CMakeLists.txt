@@ -384,7 +384,7 @@ if(${ENABLE_APP_PACKAGING})
 		
 		if(LINPHONE_WINDOWS_SIGNING_DIR)
 			# Sign the installer.
-			set(TIMESTAMP_URL "http://timestamp.globalsign.com/scripts/timstamp.dll")
+			set(TIMESTAMP_URL "http://timestamp.digicert.com")
 			set(PFX_FILE "${LINPHONE_WINDOWS_SIGNING_DIR}/linphone.pfx")
 			set(PASSPHRASE_FILE "${LINPHONE_WINDOWS_SIGNING_DIR}/passphrase.txt")
 			get_filename_component(WINSDK_DIR "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows;CurrentInstallFolder]" REALPATH CACHE)
