@@ -784,12 +784,18 @@ void App::setAutoStart (bool enabled) {
 
   // Check if installation is done via Flatpak, AppImage, or classic package
   // in order to rewrite a correct exec path for autostart
-  if (binPath.startsWith("/app")) //Flatpak
+  if (binPath.startsWith("/app")) { //Flatpak
     const QString exec(QStringLiteral("flatpak run " APPLICATION_ID));
-  else if (binPath.startsWith("/tmp/.mount/Linpho") //Appimage
-    const QString exec(QStringLiteral("emplacement Appimage"));
-  else //classic package
+  }
+  else if (binPath.startsWith("/tmp/.mount/Linpho") { //Appimage
+    const QString appImagePath(QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE")));
+    int pos = appImagePath.lastIndexOf(QChar('/'));
+    const QString exec(appImagePath.left(pos));
+    qDebug() << "exec path autostart=" exec;
+  }
+  else { //classic package
     const QString exec(binPath);
+  }
 
   QTextStream(&file) << QString(
     "[Desktop Entry]\n"
