@@ -145,10 +145,13 @@ public:
 
   static bool isInstanciated(){return mInstance!=nullptr;}
 
+  bool isLastRemoteProvisioningGood();
+
 public slots:
     void initCoreManager();
     void startIterate();
     void stopIterate();
+	void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
 
 signals:
   void coreManagerInitialized ();
@@ -185,6 +188,7 @@ private:
   std::shared_ptr<CoreHandlers> mHandlers;
 
   bool mStarted = false;
+  linphone::ConfiguringState mLastRemoteProvisioningState;
 
   CallsListModel *mCallsListModel = nullptr;
   ContactsListModel *mContactsListModel = nullptr;

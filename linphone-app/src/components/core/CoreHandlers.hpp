@@ -54,6 +54,7 @@ signals:
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
   void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
+  void setLastRemoteProvisioningState(const linphone::ConfiguringState &state);
 
 private:
 
@@ -91,6 +92,11 @@ private:
     const std::shared_ptr<linphone::Core> & lc,
     const std::shared_ptr<linphone::Call> & call
   ) override;
+
+  void onConfiguringStatus(
+    const std::shared_ptr<linphone::Core> & core,
+    linphone::ConfiguringState status,
+    const std::string & message) override;
 
   void onDtmfReceived(
     const std::shared_ptr<linphone::Core> & lc,

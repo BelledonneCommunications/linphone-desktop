@@ -333,7 +333,7 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
 	QStringList parameters = query.split('&');
 	for(int i = 0 ; i < parameters.size() ; ++i){
 		QStringList parameter = parameters[i].split('=');
-		if( parameter[0] != "method"){
+		if( parameter[0]!="" && parameter[0] != "method"){
 			if(parameter.size() > 1)
 				args[parameter[0]] = QByteArray::fromBase64(parameter[1].toUtf8() );
 			else

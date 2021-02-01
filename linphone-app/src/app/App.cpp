@@ -191,11 +191,17 @@ bool App::setFetchConfig (QCommandLineParser *parser) {
         auto core = instance->getCore();
         if(core){
             filePath.replace('\\','/');
-            core->setProvisioningUri(Utils::appStringToCoreString(filePath));
-            parser->process(cleanParserKeys(parser, QStringList("fetch-config")));// Remove this parameter from the parser
-            fetched = true;
+            if(core->setProvisioningUri(Utils::appStringToCoreString(filePath)) == 0){
+              parser->process(cleanParserKeys(parser, QStringList("fetch-config")));// Remove this parameter from the parser
+              fetched = true;
+            }else
+              fetched = false;
         }
       }
+    }
+    if(!fetched){
+      qWarning() <<"Remote provisionning cannot be retrieved. Command have beend cleaned";
+      createParser();
     }
   }
   return fetched;
@@ -891,7 +897,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
         restart();
   else{
 // Launch call if wanted and clean parser
-      if( mParser->isSet("call")){
+      if( mParser->isSet("call") && coreManager->isLastRemoteProvisioningGood()){
         QString sipAddress = mParser->value("call");
         mParser->parse(cleanParserKeys(mParser, QStringList("call")));// Clean call from parser
         if(coreManager->started()){

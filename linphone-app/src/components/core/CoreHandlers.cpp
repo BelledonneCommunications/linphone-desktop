@@ -100,6 +100,18 @@ void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,
   emit callCreated(call);
 }
 
+void CoreHandlers::onConfiguringStatus(
+  const std::shared_ptr<linphone::Core> & core,
+  linphone::ConfiguringState status,
+  const std::string & message){
+  Q_UNUSED(core)
+  emit setLastRemoteProvisioningState(status);
+  if(status == linphone::ConfiguringState::Failed){
+	  qWarning() << "Remote provisioning has failed and was removed : "<< QString::fromStdString(message);
+	  core->setProvisioningUri("");
+  }
+}
+
 void CoreHandlers::onDtmfReceived(
     const std::shared_ptr<linphone::Core> & lc,
     const std::shared_ptr<linphone::Call> & call,
