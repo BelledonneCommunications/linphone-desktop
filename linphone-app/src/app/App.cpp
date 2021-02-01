@@ -782,22 +782,18 @@ void App::setAutoStart (bool enabled) {
 
   const QString binPath(applicationFilePath());
 
-  /*// Check if installation is done via Flatpak, AppImage, or classic package
+  // Check if installation is done via Flatpak, AppImage, or classic package
   // in order to rewrite a correct exec path for autostart
   if (binPath.startsWith("/app")) { //Flatpak
     const QString exec(QStringLiteral("flatpak run " APPLICATION_ID));
   }
   else if (binPath.startsWith("/tmp/.mount/Linpho")) { //Appimage
-    //const QString appImagePath = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
-    const QString appImagePath = "RANDOM";
-    //int pos = appImagePath.lastIndexOf(QChar('/'));
-    //const QString exec = appImagePath.left(pos);
-    qDebug() << "exec path autostart=" << exec;
+    const QString exec = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
   }
   else { //classic package
     const QString exec = binPath;
-  }*/
-  const QString exec = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
+  }
+
   qDebug() << "exec path autostart=" << exec;
 
   QTextStream(&file) << QString(
@@ -806,7 +802,7 @@ void App::setAutoStart (bool enabled) {
     "GenericName=SIP Phone\n"
     "Comment=" APPLICATION_DESCRIPTION "\n"
     "Type=Application\n"
-    "Exec=" + exec + "--iconified\n"
+    "Exec=" + exec + " --iconified\n"
     "Icon=\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
