@@ -803,7 +803,6 @@ void App::setAutoStart (bool enabled) {
     "Comment=" APPLICATION_DESCRIPTION "\n"
     "Type=Application\n"
     "Exec=" + exec + " --iconified\n"
-    "Icon=\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
     "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
