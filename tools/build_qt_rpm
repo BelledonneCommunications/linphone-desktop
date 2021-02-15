@@ -78,4 +78,4 @@ mkdir -p ${RPM_FOLDER}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
 tar --transform "s/^${REPO_FOLDER}/${RPM_NAME}/" -c ${REPO_FOLDER}/ | pigz -p 24 > ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz 
 #tar --transform "s/^${REPO_FOLDER}/" -czvf ${RPM_FOLDER}/rpmbuild/SOURCES/${RPM_NAME}.tar.gz ${REPO_FOLDER}/
 
-rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" build/rpm/qt5.spec
+rpmbuild -bb --define "_topdir $PWD/${RPM_FOLDER}/rpmbuild" linphone-app/build/rpm/qt5.spec
