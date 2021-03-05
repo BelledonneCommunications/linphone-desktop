@@ -790,7 +790,7 @@ void App::setAutoStart (bool enabled) {
     exec = QStringLiteral("flatpak run " APPLICATION_ID);
     qDebug() << "exec path autostart set flatpak=" << exec;
   }
-  else if (binPath.startsWith("/tmp/.mount/Linpho")) { //Appimage
+  else if (binPath.startsWith("/tmp/.mount")) { //Appimage
     exec = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
     qDebug() << "exec path autostart set appimage=" << exec;
     qDebug() << "exec path autostart set appimage without exec=" << QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
