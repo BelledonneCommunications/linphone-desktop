@@ -793,14 +793,11 @@ void App::setAutoStart (bool enabled) {
   else if (binPath.startsWith("/tmp/.mount")) { //Appimage
     exec = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
     qDebug() << "exec path autostart set appimage=" << exec;
-    qDebug() << "exec path autostart set appimage without exec=" << QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
   }
   else { //classic package
     exec = binPath;
     qDebug() << "exec path autostart set classic package=" << exec;
   }
-
-  qDebug() << "exec path autostart=" << exec;
 
   QTextStream(&file) << QString(
     "[Desktop Entry]\n"
