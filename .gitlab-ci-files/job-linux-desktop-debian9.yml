@@ -12,7 +12,7 @@ job-debian9-ninja-gcc:
     CXX: g++
   extends: .job-linux-desktop
 
-  
+
 job-debian9-ninja-gcc-smallsdk:
   except:
     refs:
@@ -68,7 +68,7 @@ job-debian9-ninja-clang-novideo:
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
   extends: job-debian9-ninja-clang
-  
+
 job-debian9-makefile-clang:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
@@ -117,7 +117,7 @@ job-debian9-makefile-clang-package:
     - echo $DEFAULT_LINUX_CMAKE_OPTIONS
     - echo $CMAKE_SANITIZER_OPTIONS
     - cd build
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
     - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
   artifacts:
     paths:
@@ -139,8 +139,20 @@ job-debian9-makefile-clang-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/    
-    
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+
+
+job-debian9-makefile-clang-plugins-deploy:
+  stage: deploy
+  tags: [ "deploy" ]
+  dependencies:
+    - job-debian9-makefile-clang
+  only:
+     variables:
+       - $DEPLOY_PLUGINS
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/plugins/
+
 #################################################
 # Debug
 #################################################
@@ -156,4 +168,3 @@ job-debian9-debug:
       - $DEBUG_DEBIAN9
   script:
     - sleep 10m
-
