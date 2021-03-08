@@ -319,7 +319,7 @@ void App::initContentApp () {
 
     mNotifier = nullptr;
     mSystemTrayIcon = nullptr;
-    // 
+    //
     CoreManager::uninit();
     removeTranslator(mTranslator);
     removeTranslator(mDefaultTranslator);
@@ -709,7 +709,7 @@ void App::setTrayIcon () {
 void App::initLocale (const shared_ptr<linphone::Config> &config) {
   // Try to use preferred locale.
   QString locale;
-  
+
   // Use english. This default translator is used if there are no found translations in others loads
   mLocale = DefaultLocale;
   if (!installLocale(*this, *mDefaultTranslator, QLocale(mLocale)))
@@ -787,11 +787,23 @@ void App::setAutoStart (bool enabled) {
   }
 
   const QString binPath(applicationFilePath());
-  const QString exec(
-    binPath.startsWith("/app")
-      ? QStringLiteral("flatpak run " APPLICATION_ID)
-      : binPath
-  );
+
+  // Check if installation is done via Flatpak, AppImage, or classic package
+  // in order to rewrite a correct exec path for autostart
+  QString exec;
+  qDebug() << "binpath=" << binPath;
+  if (binPath.startsWith("/app")) { //Flatpak
+    exec = QStringLiteral("flatpak run " APPLICATION_ID);
+    qDebug() << "exec path autostart set flatpak=" << exec;
+  }
+  else if (binPath.startsWith("/tmp/.mount")) { //Appimage
+    exec = QProcessEnvironment::systemEnvironment().value(QStringLiteral("APPIMAGE"));
+    qDebug() << "exec path autostart set appimage=" << exec;
+  }
+  else { //classic package
+    exec = binPath;
+    qDebug() << "exec path autostart set classic package=" << exec;
+  }
 
   QTextStream(&file) << QString(
     "[Desktop Entry]\n"
@@ -799,8 +811,7 @@ void App::setAutoStart (bool enabled) {
     "GenericName=SIP Phone\n"
     "Comment=" APPLICATION_DESCRIPTION "\n"
     "Type=Application\n"
-    "Exec=" + exec + "\n"
-    "Icon=\n"
+    "Exec=" + exec + " --iconified\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
     "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
@@ -927,17 +938,17 @@ void App::openAppAfterInit (bool mustBeIconified) {
 
 // -----------------------------------------------------------------------------
 QString App::getStrippedApplicationVersion(){// x.y.z but if 'z-*' then x.y.z-1
-	QString currentVersion = applicationVersion();
-	QStringList versions = currentVersion.split('.');
-	if(versions.size() >=3){
-		currentVersion = versions[0]+"."+versions[1]+".";
-		QStringList patchVersions = versions[2].split('-');
-		if( patchVersions.size() > 1)
-			currentVersion += QString::number(patchVersions[0].toInt()-1);
-		else
-			currentVersion += patchVersions[0];
-	}
-	return currentVersion;
+  QString currentVersion = applicationVersion();
+  QStringList versions = currentVersion.split('.');
+  if(versions.size() >=3){
+    currentVersion = versions[0]+"."+versions[1]+".";
+    QStringList patchVersions = versions[2].split('-');
+    if( patchVersions.size() > 1)
+      currentVersion += QString::number(patchVersions[0].toInt()-1);
+    else
+      currentVersion += patchVersions[0];
+  }
+  return currentVersion;
 }
 void App::checkForUpdate () {
   CoreManager::getInstance()->getCore()->checkForUpdate(
