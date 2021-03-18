@@ -58,15 +58,18 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mIsPreview){
+		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
 		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
 		return renderer;
 	}else{
 		auto call = mCallModel->getCall();
-		if(call) renderer= (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
-		if(!call || !renderer){
+		if(call){
+			call->setNativeVideoWindowId(NULL);// Reset
+			return (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
+		}else{
+			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
 			return (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
-		}else
-			return renderer;
+		}
 	}
 }
 

@@ -71,7 +71,7 @@ namespace {
 
 // -----------------------------------------------------------------------------
 
-CoreManager *CoreManager::mInstance;
+CoreManager *CoreManager::mInstance=nullptr;
 
 CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
@@ -83,7 +83,9 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, &CoreManager::initCoreManager, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::coreStopped, this, &CoreManager::stopIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
-	createLinphoneCore(configPath);
+	QTimer::singleShot(10, [this, configPath](){// Delay the creation in order to have the CoreManager instance set before
+		createLinphoneCore(configPath);
+	});
 }
 
 CoreManager::~CoreManager(){
@@ -109,6 +111,9 @@ void CoreManager::initCoreManager(){
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
 }
+CoreManager *CoreManager::getInstance (){
+   return mInstance;
+ }
 
 shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
   if (peerAddress.isEmpty() || localAddress.isEmpty())
