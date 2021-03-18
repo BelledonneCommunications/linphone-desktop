@@ -24,6 +24,7 @@
 #include <memory>
 
 #include <QQuickFramebufferObject>
+#include <mediastreamer2/msogl.h>
 
 // =============================================================================
 
@@ -32,36 +33,9 @@ namespace linphone {
 }
 
 class CallModel;
-struct ContextInfo;
-
-class CameraRenderer : public QQuickFramebufferObject::Renderer {
-public:
-  CameraRenderer ();
-  ~CameraRenderer ();
-
-protected:
-  QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override;
-  void render () override;
-  void synchronize (QQuickFramebufferObject *item) override;
-
-private:
-  void updateWindowId ();
-  bool notifyReceivedVideoSize () const;
-
-  ContextInfo *mContextInfo;
-  bool mUpdateContextInfo = false;
-
-  bool mNotifyReceivedVideoSize = true;
-  bool mIsPreview = false;
-  std::shared_ptr<linphone::Call> mCall;
-
-  QQuickWindow *mWindow = nullptr;
-};
-
 // -----------------------------------------------------------------------------
 
 class Camera : public QQuickFramebufferObject {
-  friend class CameraRenderer;
 
   Q_OBJECT;
 

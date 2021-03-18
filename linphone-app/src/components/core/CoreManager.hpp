@@ -117,10 +117,7 @@ public:
     return mAccountSettingsModel;
   }
 
-  static CoreManager *getInstance () {
-    Q_CHECK_PTR(mInstance);
-    return mInstance;
-  }
+  static CoreManager *getInstance ();
 
   // ---------------------------------------------------------------------------
   // Initialization.
@@ -151,7 +148,8 @@ public slots:
     void initCoreManager();
     void startIterate();
     void stopIterate();
-	void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
+    void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
+    void createLinphoneCore (const QString &configPath);// In order to delay creation
 
 signals:
   void coreManagerInitialized ();
@@ -171,7 +169,6 @@ private:
   void setOtherPaths ();
   void setResourcesPaths ();
 
-  void createLinphoneCore (const QString &configPath);
   void migrate ();
 
   QString getVersion () const;
