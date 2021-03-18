@@ -122,7 +122,6 @@ set(SOURCES
     src/components/calls/CallsListProxyModel.cpp
     src/components/camera/Camera.cpp
     src/components/camera/CameraPreview.cpp
-    src/components/camera/MSFunctions.cpp
     src/components/chat/ChatModel.cpp
     src/components/chat/ChatProxyModel.cpp
     src/components/codecs/AbstractCodecsModel.cpp
@@ -192,7 +191,6 @@ set(HEADERS
     src/components/calls/CallsListProxyModel.hpp
     src/components/camera/Camera.hpp
     src/components/camera/CameraPreview.hpp
-    src/components/camera/MSFunctions.hpp
     src/components/chat/ChatModel.hpp
     src/components/chat/ChatProxyModel.hpp
     src/components/codecs/AbstractCodecsModel.hpp
@@ -380,8 +378,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-
-
+include_directories("${LINPHONE_OUTPUT_DIR}}/include/OpenGL")
 
 if (CMAKE_INSTALL_RPATH)
     #Retrieve lib path from a know QT executable
@@ -443,8 +440,9 @@ endif()
 target_compile_definitions(${APP_PLUGIN} PUBLIC "-DENABLE_APP_EXPORT_PLUGIN")
 set_target_properties(${APP_PLUGIN} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" )
+set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}")
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
+
 set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
 if(WIN32)
 	set(LIBRARIES)
