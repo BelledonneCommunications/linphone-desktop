@@ -25,7 +25,6 @@
 
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
-#include "MSFunctions.hpp"
 
 #include "Camera.hpp"
 

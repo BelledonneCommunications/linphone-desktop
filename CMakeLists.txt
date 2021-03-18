@@ -104,8 +104,7 @@ option(ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
 option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
-
-
+option(ENABLE_VIDEO "Enable Video support." YES)
 
 option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
 option(ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." NO)
@@ -132,6 +131,7 @@ list(APPEND APP_OPTIONS "-DENABLE_NON_FREE_CODECS=${ENABLE_NON_FREE_CODECS}")
 list(APPEND APP_OPTIONS "-DENABLE_BUILD_EXAMPLES=${ENABLE_BUILD_EXAMPLES}")
 list(APPEND APP_OPTIONS "-DENABLE_DAEMON=${ENABLE_DAEMON}")
 list(APPEND APP_OPTIONS "-DENABLE_CONSOLE_UI=${ENABLE_CONSOLE_UI}")
+list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
 	
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
@@ -139,7 +139,7 @@ endif()
 list(APPEND APP_OPTIONS "-DENABLE_RELATIVE_PREFIX=${ENABLE_RELATIVE_PREFIX}")
 
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
-list(APPEND APP_OPTIONS "-DENABLE_QT_GL=YES")
+list(APPEND APP_OPTIONS "-DENABLE_QT_GL=${ENABLE_VIDEO}")#Activate on video
 
 include(ExternalProject)
 set(PROJECT_BUILD_COMMAND "")

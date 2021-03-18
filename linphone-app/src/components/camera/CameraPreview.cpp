@@ -24,7 +24,6 @@
 #include <QTimer>
 
 #include "components/core/CoreManager.hpp"
-#include "MSFunctions.hpp"
 
 #include "CameraPreview.hpp"
 
