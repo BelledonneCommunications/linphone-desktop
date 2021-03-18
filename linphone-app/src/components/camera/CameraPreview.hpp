@@ -23,38 +23,11 @@
 
 #include <QMutex>
 #include <QQuickFramebufferObject>
+#include <mediastreamer2/msogl.h>
 
 // =============================================================================
 
-class CameraPreview;
-struct ContextInfo;
-
-class CameraPreviewRenderer : public QQuickFramebufferObject::Renderer {
-  friend class CameraPreview;
-
-public:
-  CameraPreviewRenderer ();
-  ~CameraPreviewRenderer ();
-
-protected:
-  QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override;
-  void render () override;
-  void synchronize (QQuickFramebufferObject *item) override;
-
-private:
-  void updateWindowId ();
-
-  ContextInfo *mContextInfo;
-  bool mUpdateContextInfo = false;
-
-  QQuickWindow *mWindow = nullptr;
-};
-
-// -----------------------------------------------------------------------------
-
 class CameraPreview : public QQuickFramebufferObject {
-  friend class CameraPreviewRenderer;
-
   Q_OBJECT;
 
 public:

@@ -17,11 +17,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
+#include <QDebug>
 #include "MSFunctions.hpp"
 
 // Do not include this header before `QOpenGLFunctions`!!!
 #include <mediastreamer2/msogl_functions.h>
+
 
 // =============================================================================
 
@@ -29,47 +30,16 @@ MSFunctions *MSFunctions::mInstance;
 
 // -----------------------------------------------------------------------------
 
-MSFunctions::MSFunctions () {
-  OpenGlFunctions *f = mFunctions = new OpenGlFunctions();
+void * getProcAddress(const char * name){
+	return (void*)QOpenGLContext::currentContext()->getProcAddress(name);
+}
 
-  f->glActiveTexture = qtResolveGlActiveTexture;
-  f->glAttachShader = qtResolveGlAttachShader;
-  f->glBindAttribLocation = qtResolveGlBindAttribLocation;
-  f->glBindTexture = qtResolveGlBindTexture;
-  f->glClear = qtResolveGlClear;
-  f->glClearColor = qtResolveGlClearColor;
-  f->glCompileShader = qtResolveGlCompileShader;
-  f->glCreateProgram = qtResolveGlCreateProgram;
-  f->glCreateShader = qtResolveGlCreateShader;
-  f->glDeleteProgram = qtResolveGlDeleteProgram;
-  f->glDeleteShader = qtResolveGlDeleteShader;
-  f->glDeleteTextures = qtResolveGlDeleteTextures;
-  f->glDisable = qtResolveGlDisable;
-  f->glDrawArrays = qtResolveGlDrawArrays;
-  f->glEnableVertexAttribArray = qtResolveGlEnableVertexAttribArray;
-  f->glGenTextures = qtResolveGlGenTextures;
-  f->glGetError = qtResolveGlGetError;
-  f->glGetProgramInfoLog = qtResolveGlGetProgramInfoLog;
-  f->glGetProgramiv = qtResolveGlGetProgramiv;
-  f->glGetShaderInfoLog = qtResolveGlGetShaderInfoLog;
-  f->glGetShaderiv = qtResolveGlGetShaderiv;
-  f->glGetString = qtResolveGlGetString;
-  f->glGetUniformLocation = qtResolveGlGetUniformLocation;
-  f->glLinkProgram = qtResolveGlLinkProgram;
-  f->glPixelStorei = qtResolveGlPixelStorei;
-  f->glShaderSource = qtResolveGlShaderSource;
-  f->glTexImage2D = qtResolveGlTexImage2D;
-  f->glTexParameteri = qtResolveGlTexParameteri;
-  f->glTexSubImage2D = qtResolveGlTexSubImage2D;
-  f->glUniform1f = qtResolveGlUniform1f;
-  f->glUniform1i = qtResolveGlUniform1i;
-  f->glUniformMatrix4fv = qtResolveGlUniformMatrix4fv;
-  f->glUseProgram = qtResolveGlUseProgram;
-  f->glValidateProgram = qtResolveGlValidateProgram;
-  f->glVertexAttribPointer = qtResolveGlVertexAttribPointer;
-  f->glViewport = qtResolveGlViewport;
+MSFunctions::MSFunctions () {
+	set();
+}
+void MSFunctions::set () {
+  mGetProcAddress = getProcAddress;
 }
 
 MSFunctions::~MSFunctions () {
-  delete mFunctions;
 }
