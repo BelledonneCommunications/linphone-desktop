@@ -1,10 +1,13 @@
-FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos7:20210217_python3
 
 MAINTAINER Peio Rigaux <peio.rigaux@belledonne-communications.com>
 
-#QT Dependenciesi (pigz is used to parallelize compression)
-RUN sudo yum install -y libxkbcommon* libxcb pigz
+# QT Dependenciesi (pigz is used to parallelize compression)
+RUN sudo yum install -y libxkbcommon* libxcb  freeglut-devel pigz icc-profiles-openicc fontconfig fontconfig-devel libfontconfig1-dev freetype-devel
+RUN scl enable devtoolset-7 bash
 
+# Configure AppImages dependencies
+RUN sudo yum install -y fuse fuse-libs wget
 
 # Build qt5.12.5
 RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
@@ -13,11 +16,9 @@ RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/li
     sudo mv ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm / && \
     sudo rm -rf ./linphone-desktop
 
-# Configure AppImages dependencies
-RUN sudo yum install -y fuse fuse-libs wget
 
 RUN echo 'source /opt/rh/devtoolset-8/enable' >> /home/bc/.bashrc
-RUN echo 'source /opt/rh/devtoolset-8/enable' >> /home/bc/.shrc
+RUN echo 'source /opt/rh/devtoolset-8/enable' >> /home/bc/.shrc; exit 0
 
 # This tells /bin/sh to load '~/.shrc' on starting
 ENV ENV=~/.shrc 
