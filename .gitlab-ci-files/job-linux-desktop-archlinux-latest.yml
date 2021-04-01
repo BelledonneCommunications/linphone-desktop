@@ -1,6 +1,6 @@
 job-archlinux-latest-ninja-clang:
   tags: [ "docker-archlinux-latest" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
   except:
     refs:
       - schedules
@@ -16,7 +16,7 @@ job-archlinux-latest-ninja-clang:
   
 job-archlinux-latest-makefile-gcc:
   tags: [ "docker-archlinux-latest" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -29,7 +29,7 @@ job-archlinux-latest-makefile-gcc:
 
 job-archlinux-latest-makefile-clang:
   tags: [ "docker-archlinux-latest" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -42,7 +42,7 @@ job-archlinux-latest-makefile-clang:
 
 job-archlinux-latest-ninja-gcc:
   tags: [ "docker-archlinux-latest" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -63,7 +63,7 @@ job-archlinux-latest-ninja-gcc-novideo:
 
 job-archlinux-latest-ninja-clang-novideo:
   tags: [ "docker-archlinux-latest" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:latest
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
   only:
     variables:
       - $NIGHTLY_MASTER
