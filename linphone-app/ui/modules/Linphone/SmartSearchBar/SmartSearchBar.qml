@@ -71,7 +71,7 @@ SearchBox {
 
     genSipAddress: searchBox.filter
 
-    model: SipAddressesProxyModel {}
+    model: SearchSipAddressesModel {}
 
     onEntryClicked: {
       searchBox.closeMenu()

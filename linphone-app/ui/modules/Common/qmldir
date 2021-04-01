@@ -47,6 +47,8 @@ TextField               1.0 Form/Fields/TextField.qml
 Form                    1.0 Form/Placements/Form.qml
 FormEmptyLine           1.0 Form/Placements/FormEmptyLine.qml
 FormGroup               1.0 Form/Placements/FormGroup.qml
+FormHGroup              1.0 Form/Placements/FormHGroup.qml
+FormVGroup              1.0 Form/Placements/FormVGroup.qml
 FormLine                1.0 Form/Placements/FormLine.qml
 FormTable               1.0 Form/Placements/FormTable.qml
 FormTableEntry          1.0 Form/Placements/FormTableEntry.qml

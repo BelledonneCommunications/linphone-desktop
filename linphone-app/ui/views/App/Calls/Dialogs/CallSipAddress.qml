@@ -75,7 +75,7 @@ DialogPlus {
 
             genSipAddress: filter.text
 
-            model: SipAddressesProxyModel {
+            model: SearchSipAddressesModel {
               id: sipAddressesModel
             }
 

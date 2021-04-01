@@ -34,6 +34,7 @@
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contacts/ContactsImporterListModel.hpp"
 #include "components/history/HistoryModel.hpp"
+#include "components/ldap/LdapListModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
@@ -101,6 +102,7 @@ void CoreManager::initCoreManager(){
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
+	mLdapListModel = new LdapListModel(this);
 	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
@@ -108,6 +110,10 @@ void CoreManager::initCoreManager(){
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
 	mStarted = true;
+	std::list<std::string> dns;
+	dns.push_back("10.0.3.50");
+	mCore->setDnsServers(dns);
+	
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
 }
