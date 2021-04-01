@@ -20,6 +20,12 @@ variables:
   #build options in CMakeBuilder
   #CMAKE_OPTIONS: -DENABLE_LIME_X3DH=YES
 
+# Docker image version
+  ARCHLINUX_IMAGE_VERSION: 20210217_init
+  CENTOS_7_QT_IMAGE_VERSION: 20210401_python3
+  DEBIAN_9_QT_IMAGE_VERSION: 20210401_python3
+  DEBIAN_10_IMAGE_VERSION: 20210217_python3
+  UBUNTU_ROLLING_IMAGE_VERSION: 20210217_python3
 
 #################################################
 # Platforms to test 
