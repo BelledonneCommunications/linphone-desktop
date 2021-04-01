@@ -2,7 +2,7 @@
 
 job-debian9-ninja-gcc:
   tags: [ "docker-debian9" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-qt-fuse-wget-gpg2:20210401_python3
   except:
     refs:
       - schedules
@@ -28,7 +28,7 @@ job-debian9-ninja-gcc-smallsdk:
 
 job-debian9-makefile-gcc:
   tags: [ "docker-debian9" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-qt-fuse-wget-gpg2:20210401_python3
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -53,7 +53,7 @@ job-debian9-ninja-clang:
   only:
     variables:
       - $NIGHTLY_MASTER
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-qt-fuse-wget-gpg2:20210401_python3
   variables:
     CMAKE_OPTIONS: -DENABLE_DOC=ON
     CMAKE_GENERATOR: Ninja
@@ -71,7 +71,7 @@ job-debian9-ninja-clang-novideo:
 
 job-debian9-makefile-clang:
   tags: [ "docker-debian9" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-qt-fuse-wget-gpg2:20210401_python3
   only:
     variables:
       - $NIGHTLY_MASTER
@@ -109,7 +109,7 @@ job-debian9-makefile-clang:
 job-debian9-makefile-clang-package:
   stage: package
   tags: [ "docker-test-debian9-liblinphone-nuc" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-qt-fuse-wget-gpg2:20210401_python3
   dependencies: []
   only:
      variables:
@@ -180,7 +180,7 @@ job-debian9-makefile-clang-plugins-deploy:
 job-debian9-debug:
   stage: deploy
   tags: [ "docker-test-debian9-liblinphone-nuc" ]
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-qt-fuse-wget-gpg2:20210401_python3
   dependencies: []
   only:
     variables:
