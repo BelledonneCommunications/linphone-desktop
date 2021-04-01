@@ -78,7 +78,7 @@ ColumnLayout  {
 
           ActionButton {
             icon: 'video_call'
-            visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled
+            visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 
             onClicked: CallsListModel.launchVideoCall(conversation.peerAddress)
           }
