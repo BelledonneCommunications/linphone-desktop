@@ -39,9 +39,11 @@ class ContactsImporterListModel;
 class CoreHandlers;
 class EventCountNotifier;
 class HistoryModel;
+class LdapListModel;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
+
 
 class CoreManager : public QObject {
   Q_OBJECT;
@@ -116,7 +118,9 @@ public:
     Q_CHECK_PTR(mAccountSettingsModel);
     return mAccountSettingsModel;
   }
-
+	LdapListModel *getLdapListModel() const{
+		return mLdapListModel;
+	}
   static CoreManager *getInstance ();
 
   // ---------------------------------------------------------------------------
@@ -199,6 +203,7 @@ private:
 
   QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
   HistoryModel * mHistoryModel = nullptr;
+  LdapListModel *mLdapListModel = nullptr;
 
   QTimer *mCbsTimer = nullptr;
 

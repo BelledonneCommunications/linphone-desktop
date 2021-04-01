@@ -145,6 +145,9 @@ set(SOURCES
     src/components/file/FileExtractor.cpp
     src/components/history/HistoryModel.cpp
     src/components/history/HistoryProxyModel.cpp
+    src/components/ldap/LdapModel.cpp
+    src/components/ldap/LdapListModel.cpp
+    src/components/ldap/LdapProxyModel.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
     src/components/other/colors/Colors.cpp
@@ -152,11 +155,13 @@ set(SOURCES
     src/components/other/units/Units.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
+    src/components/search/SearchHandler.cpp
     src/components/settings/AccountSettingsModel.cpp
     src/components/settings/SettingsModel.cpp
     src/components/sip-addresses/SipAddressesModel.cpp
     src/components/sip-addresses/SipAddressesProxyModel.cpp
     src/components/sip-addresses/SipAddressObserver.cpp
+    src/components/sip-addresses/SearchSipAddressesModel.cpp
     src/components/sound-player/SoundPlayer.cpp
     src/components/telephone-numbers/TelephoneNumbersModel.cpp
     src/components/timeline/TimelineModel.cpp
@@ -215,6 +220,9 @@ set(HEADERS
     src/components/file/FileExtractor.hpp
     src/components/history/HistoryModel.hpp
     src/components/history/HistoryProxyModel.hpp
+    src/components/ldap/LdapModel.hpp
+    src/components/ldap/LdapListModel.hpp
+    src/components/ldap/LdapProxyModel.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
     src/components/other/colors/Colors.hpp
@@ -223,11 +231,13 @@ set(HEADERS
     src/components/other/units/Units.hpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
+    src/components/search/SearchHandler.hpp
     src/components/settings/AccountSettingsModel.hpp
     src/components/settings/SettingsModel.hpp
     src/components/sip-addresses/SipAddressesModel.hpp
     src/components/sip-addresses/SipAddressesProxyModel.hpp
     src/components/sip-addresses/SipAddressObserver.hpp
+    src/components/sip-addresses/SearchSipAddressesModel.hpp
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
     src/components/timeline/TimelineModel.hpp

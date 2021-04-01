@@ -92,4 +92,22 @@ Controls.TextField {
     iconSize: parent.contentHeight
     visible: !parent.text
   }
+  bottomPadding: (statusItem.visible?statusItem.height:0)
+  TextEdit{
+	  id:statusItem
+	  selectByMouse: true
+	  readOnly:true
+	  color: TextFieldStyle.background.border.color.error
+	  width:parent.width
+	  anchors.bottom:parent.bottom
+	  anchors.right:parent.right
+	  anchors.rightMargin:10 + toolsContainer.width
+	  horizontalAlignment:Text.AlignRight
+	  font {
+		  italic: true
+		  pointSize: TextFieldStyle.text.pointSize
+	  }
+	  visible:error!= ''
+	  text:error
+  }
 }
