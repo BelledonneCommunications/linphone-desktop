@@ -1,6 +1,0 @@
-FROM gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-qt:5.12.5
-
-MAINTAINER Peio Rigaux <peio.rigaux@belledonne-communications.com>
-
-#Appimage deps
-RUN sudo yum install -y wget fuse fuse-libs
