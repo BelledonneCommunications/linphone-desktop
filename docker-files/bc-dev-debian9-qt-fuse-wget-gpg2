@@ -1,9 +1,9 @@
-FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian:9
+FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian9:20210217_python3
 
 MAINTAINER Peio Rigaux <peio.rigaux@belledonne-communications.com>
 
 #Tools for QT buid script
-RUN sudo apt-get update && sudo apt-get install -y python3 pigz
+RUN sudo apt-get update && sudo apt-get install -y pigz
 
 
 #QT Dependencies
