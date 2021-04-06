@@ -177,12 +177,22 @@ void LdapModel::testServerField(){
 		valid = "Server must not be empty";
 	else{
 		QUrl url(mServer);
+#ifdef _WIN32
+		if(!url.isValid())
+			valid = "Server is not an URL";
+		else if(url.scheme() != "")
+			valid = "On Windows, you must not specify the scheme";
+		else
+			valid = "";
+#else
 		if(!url.isValid())
 			valid = "Server is not an URL";
 		else if(url.scheme().left(4) != "ldap")
 			valid = "URL must begin by a ldap scheme";
 		else
 			valid = "";
+#endif
+		
 	}
 	if( valid != mServerFieldError){
 		mServerFieldError = valid;
