@@ -111,10 +111,10 @@ job-debian9-makefile-clang-package:
   tags: [ "docker-test-liblinphone" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-fuse-wget-gpg2-qt-release-no-debug-info:5.12.5
   dependencies: []
-  #only:
-  #   variables:
-  #     - $NIGHTLY_MASTER
-  #     - $DEPLOY_LINUX
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_LINUX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DLINPHONE_BUILDER_SIGNING_PASSPHRASE=$GPG_SIGNING_PASS
     CMAKE_GENERATOR: Unix Makefiles
