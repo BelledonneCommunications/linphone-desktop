@@ -36,12 +36,17 @@ using namespace std;
 
 LdapModel::LdapModel (const int& id,QObject *parent ) : QObject(parent), mId(id){
 	mIsValid = false;
-	mMaxResults = 5;
+	mMaxResults = 50;
+	mDebug = false;
+	mVerifyServerCertificates = -1;
+	mUseTls = true;
+	mUseSal = false;
+	mServer = "ldap://ldap.example.org";
+	mConfig["enable"] = "0";
 }
 
 void LdapModel::init(){
-    mConfig["server"] = "ldap.example.org";
-	mConfig["enable"] = "0";
+	set();
 	unset();
 }
 
@@ -71,6 +76,15 @@ void LdapModel::save(){
         lConfig->cleanSection(section);
         for(auto it = mConfig.begin() ; it != mConfig.end() ; ++it)
             lConfig->setString(section, it.key().toStdString(), it.value().toString().toStdString());
+    }
+}
+
+void LdapModel::unsave(){
+    if(mId>=0){
+        CoreManager *coreManager = CoreManager::getInstance();
+        auto lConfig = coreManager->getCore()->getConfig();
+        std::string section = ("ldap_"+QString::number(mId)).toStdString();
+        lConfig->cleanSection(section);
     }
 }
 
@@ -125,6 +139,8 @@ void LdapModel::set(){
 	mConfig["sip_attribute"] = mSipAttributes;
 	mConfig["sip_scheme"] = mSipScheme;
 	mConfig["sip_domain"] = mSipDomain;
+	mConfig["debug"] = (mDebug?"1":"0");
+	mConfig["verify_server_certificates"] = mVerifyServerCertificates;
 }
 
 void LdapModel::unset(){
@@ -141,6 +157,9 @@ void LdapModel::unset(){
 	mSipAttributes = mConfig["sip_attribute"].toString();
 	mSipScheme = mConfig["sip_scheme"].toString();
 	mSipDomain = mConfig["sip_domain"].toString();
+	mDebug = mConfig["debug"].toString() == "1";
+	mVerifyServerCertificates = mConfig["verify_server_certificates"].toInt();
+	
 	testServerField();
 	testMaxResultsField();
 	testPasswordField();

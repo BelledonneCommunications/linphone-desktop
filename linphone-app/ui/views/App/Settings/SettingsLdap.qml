@@ -45,6 +45,7 @@ Column {
 						icon: 'cancel'
 						iconSize:CallsStyle.entry.iconActionSize
 						scale:0.8
+						onClicked:LdapListModel.remove(modelData)
 					}
 					Text {
 						id: summaryTitle

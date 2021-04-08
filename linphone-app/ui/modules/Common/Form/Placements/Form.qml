@@ -25,8 +25,10 @@ Column {
     width: parent.width
 
     Row{
+		spacing:10
 	    Text {
 	      id: title
+		  anchors.verticalCenter: parent.verticalCenter
 	
 	      color: FormStyle.header.title.color
 	      font {
