@@ -45,6 +45,7 @@ public:
   
   Q_INVOKABLE void enable(int id, bool status);
   Q_INVOKABLE void add();
+  Q_INVOKABLE void remove (LdapModel *importer);
 
 
 private:

@@ -68,7 +68,10 @@ class LdapModel : public QObject {
 	
 	Q_PROPERTY(QString sipDomain MEMBER mSipDomain WRITE setSipDomain NOTIFY sipDomainChanged)
 	Q_PROPERTY(QString sipDomainFieldError MEMBER mSipDomainFieldError NOTIFY sipDomainFieldErrorChanged)
-	
+
+	Q_PROPERTY(bool debug MEMBER mDebug NOTIFY debugChanged)
+	Q_PROPERTY(int verifyServerCertificates MEMBER mVerifyServerCertificates NOTIFY verifyServerCertificatesChanged)
+
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 public:
 
@@ -132,10 +135,14 @@ public:
 	QString mSipDomainFieldError;
 	void setSipDomain(const QString& data);
 	void testSipDomainField();
+
+	bool mDebug;
+	int mVerifyServerCertificates;
     
     bool isValid();
     void init();// init by default value
     Q_INVOKABLE void save();
+	void unsave();
     bool load(const std::string& sectionName);
     void set();
     Q_INVOKABLE void unset();
@@ -163,6 +170,8 @@ signals:
     void sipAttributesChanged();
     void sipSchemeChanged();
     void sipDomainChanged();
+	void debugChanged();
+	void verifyServerCertificatesChanged();
 	
 	
 	void serverFieldErrorChanged();

@@ -130,3 +130,10 @@ void LdapListModel::add(){
 	//emit dataChanged(index(row, 0), index(row, 0));
 	resetInternalData();
 }
+void LdapListModel::remove (LdapModel *ldap) {
+	int index = mServers.indexOf(ldap);
+	if (index >=0){
+		ldap->unsave();
+		removeRow(index);
+	}
+}

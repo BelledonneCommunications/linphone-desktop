@@ -147,15 +147,29 @@ DialogPlus {
 							}
 							TooltipArea{
 								tooltipParent:useRow
-								text : 'The dns resolution is done by Linphone using Sal'
+								text : 'The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.'
 							}
 						}
 					}
 				}
-				
-				
-				
-				
+				FormLine{
+					id:useSalRow
+					
+					FormGroup {
+						label: 'Verify Certificates on TLS'
+						ComboBox {
+							id:verifyServerCertificates
+							currentIndex: ldapData.verifyServerCertificates+1
+							model: ["Auto", "Off", "On"]
+							width: parent.width
+				  
+							onActivated: ldapData.verifyServerCertificates = index-1
+							TooltipArea{
+								text : 'Specify whether the tls server certificate must be verified when connecting to a LDAP server.'
+							}
+						}
+					}
+				}
 			}
 			
 			// -----------------------------------------------------------------------
@@ -280,6 +294,34 @@ DialogPlus {
 							onTextChanged: ldapData.sipDomain = text
 							TooltipArea{
 								text : 'Add the domain to the sip address(scheme:username@domain). The default value is sip.linphone.org'
+							}
+						}
+					}
+				}
+			}
+			
+			// -----------------------------------------------------------------------
+			// Misc
+			// -----------------------------------------------------------------------
+			
+			Form {
+				title: 'Misc'
+				width: parent.width
+				
+				FormLine {
+					id:miscLine
+					FormGroup {
+						label: 'Debug'
+						Switch {
+							id: debugMode
+							anchors.verticalCenter: parent.verticalCenter
+							checked: ldapData.debug
+							onClicked: {
+								ldapData.debug = !checked
+							}
+							TooltipArea{
+								tooltipParent:miscLine
+								text : 'Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections)'
 							}
 						}
 					}

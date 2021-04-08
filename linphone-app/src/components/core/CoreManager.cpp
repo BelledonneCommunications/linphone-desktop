@@ -110,9 +110,9 @@ void CoreManager::initCoreManager(){
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
 	mStarted = true;
-	std::list<std::string> dns;
-	dns.push_back("10.0.3.50");
-	mCore->setDnsServers(dns);
+	//std::list<std::string> dns;
+	//dns.push_back("10.0.3.50");
+	//mCore->setDnsServers(dns);
 	
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
