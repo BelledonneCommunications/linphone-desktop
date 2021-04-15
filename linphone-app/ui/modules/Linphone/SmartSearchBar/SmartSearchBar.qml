@@ -46,7 +46,7 @@ SearchBox {
         searchBox.closeMenu()
         searchBox.launchVideoCall(entry.sipAddress)
       },
-      visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled
+      visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
     }, {
       icon: 'call',
       handler: function (entry) {
@@ -55,7 +55,7 @@ SearchBox {
       },
       visible: SettingsModel.outgoingCallsEnabled
     }, {
-      icon: SettingsModel.chatEnabled ? 'chat' : 'history',
+      icon: SettingsModel.chatEnabled && SettingsModel.showStartChatButton ? 'chat' : 'history',
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchChat(entry.sipAddress)
@@ -71,7 +71,7 @@ SearchBox {
 
     genSipAddress: searchBox.filter
 
-    model: SipAddressesProxyModel {}
+    model: SearchSipAddressesModel {}
 
     onEntryClicked: {
       searchBox.closeMenu()

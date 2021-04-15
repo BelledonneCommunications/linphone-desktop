@@ -23,7 +23,7 @@
 
 #include <QObject>
 #include <linphone++/linphone.hh>
-
+#include "../search/SearchHandler.hpp"
 
 // =============================================================================
 
@@ -32,7 +32,7 @@ class CallModel : public QObject {
 
   Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT);
   Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
-  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress CONSTANT);
+  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT);
 
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
@@ -132,8 +132,17 @@ public:
   Q_INVOKABLE void updateStreams ();
   
   Q_INVOKABLE void toggleSpeakerMute();
+  
+  void setRemoteDisplayName(const std::string& name);
 
   static constexpr int DtmfSoundDelay = 200;
+  
+  std::shared_ptr<linphone::Call> mCall;
+  std::shared_ptr<linphone::Address> mRemoteAddress;
+  std::shared_ptr<linphone::MagicSearch> mMagicSearch;
+  
+public slots:
+  void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
 
 signals:
   void callErrorChanged (const QString &callError);
@@ -149,10 +158,14 @@ signals:
   void microVolumeGainChanged (float volume);
 
   void cameraFirstFrameReceived (unsigned int width, unsigned int height);
+  
+  void fullPeerAddressChanged();
 
 private:
   void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
+  
+  
 
   void accept (bool withVideo);
 
@@ -230,8 +243,8 @@ private:
 
   QVariantList mAudioStats;
   QVariantList mVideoStats;
+  std::shared_ptr<SearchHandler> mSearch;
 
-  std::shared_ptr<linphone::Call> mCall;
 };
 
 #endif // CALL_MODEL_H_

@@ -5,7 +5,7 @@ import Common.Styles 1.0
 // =============================================================================
 
 Row {
-  readonly property double maxItemWidth: {
+  property double maxItemWidth: {
     var n = children.length
     var curWidth = width / n - (n - 1) * spacing
     var maxWidth = orientation === Qt.Horizontal
