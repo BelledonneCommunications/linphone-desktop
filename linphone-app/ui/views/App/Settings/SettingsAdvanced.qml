@@ -16,7 +16,9 @@ import 'SettingsAdvanced.js' as Logic
 // =============================================================================
 
 TabContainer {
-    Column {
+	color: "#00000000"
+	Column {
+		id: column
         spacing: SettingsWindowStyle.forms.spacing
         width: parent.width
         
@@ -97,7 +99,22 @@ TabContainer {
             }
         }
         onVisibleChanged: sendLogsBlock.setText('')
-        
+	
+	// -------------------------------------------------------------------------
+        // LDAP
+        // -------------------------------------------------------------------------
+	Form {
+		title: 'LDAP'
+		width: parent.width
+		addButton:true
+		onAddButtonClicked:ldapSection.add()
+		SettingsLdap{
+			id:ldapSection
+			width: parent.width
+		}
+	}
+	
+	
         // -------------------------------------------------------------------------
         // ADDRESS BOOK
         // -------------------------------------------------------------------------
@@ -173,7 +190,6 @@ TabContainer {
                                         Component{
                                             id: textComponent
                                             Text {
-                                                id: text
                                                 color: FormTableStyle.entry.text.color
                                                 elide: Text.ElideRight
                                                 horizontalAlignment: Text.AlignHCenter
@@ -300,7 +316,7 @@ TabContainer {
 
         Form {
             title: qsTr('developerSettingsTitle')
-            visible: SettingsModel.developerSettingsEnabled
+           // visible: SettingsModel.developerSettingsEnabled
             width: parent.width
             
             FormLine {
@@ -317,3 +333,9 @@ TabContainer {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/

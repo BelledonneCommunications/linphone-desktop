@@ -1,12 +1,12 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.2 as Controls
 
 import Common 1.0
 import Common.Styles 1.0
 
 // =============================================================================
 
-Switch {
+Controls.Switch {
   id: control
 
   // ---------------------------------------------------------------------------

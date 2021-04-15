@@ -33,11 +33,11 @@ Notification {
 
       Contact {
         Layout.fillWidth: true
-
-        entry: {
-          var call = notification.call
-          return SipAddressesModel.getSipAddressObserver(call ? call.fullPeerAddress : '', call ? call.fullLocalAddress : '')
-        }
+		property var peerAddress: notification.call ? notification.call.fullPeerAddress : ''
+		onPeerAddressChanged: {
+			entry=SipAddressesModel.getSipAddressObserver(peerAddress, notification.call ? notification.call.fullLocalAddress : '')
+		}
+        entry: SipAddressesModel.getSipAddressObserver(peerAddress, notification.call ? notification.call.fullLocalAddress : '')
       }
 
       // ---------------------------------------------------------------------
