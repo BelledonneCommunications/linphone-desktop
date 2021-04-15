@@ -64,7 +64,7 @@ DialogPlus {
                 CallsListModel.launchVideoCall(entry.sipAddress)
                 exit(1)
               },
-              visible: SettingsModel.videoSupported
+              visible: SettingsModel.videoSupported && SettingsModel.showStartVideoCallButton
             }, {
               icon: 'call',
               handler: function (entry) {
