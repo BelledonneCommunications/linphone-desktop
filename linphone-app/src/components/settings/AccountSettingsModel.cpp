@@ -397,7 +397,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   QVariantList accounts;
 
-  {
+  if(CoreManager::getInstance()->getSettingsModel()->getShowLocalSipAccount()) {
     QVariantMap account;
     account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
     account["fullSipAddress"] = QString::fromStdString(core->createPrimaryContactParsed()->asString());

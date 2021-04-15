@@ -388,7 +388,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-include_directories("${LINPHONE_OUTPUT_DIR}}/include/OpenGL")
+include_directories("${LINPHONE_OUTPUT_DIR}/include/OpenGL")
 
 if (CMAKE_INSTALL_RPATH)
     #Retrieve lib path from a know QT executable
@@ -510,7 +510,8 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 if(WIN32)
-    target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
+	find_library(LDAP_LIBRARIES NAMES ldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
+	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES})
 endif()
 
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
