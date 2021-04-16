@@ -103,16 +103,16 @@ TabContainer {
 // -------------------------------------------------------------------------
 //								LDAP
 // -------------------------------------------------------------------------
-	Form {
-		title: 'LDAP'
-		width: parent.width
-		addButton:true
-		onAddButtonClicked:ldapSection.add()
-		SettingsLdap{
-			id:ldapSection
-			width: parent.width
-		}
-	}
+        Form {
+            title: 'LDAP'
+            width: parent.width
+            addButton:true
+            onAddButtonClicked:ldapSection.add()
+            SettingsLdap{
+                id:ldapSection
+                width: parent.width
+            }
+        }
 
 // -------------------------------------------------------------------------
 //							ADDRESS BOOK

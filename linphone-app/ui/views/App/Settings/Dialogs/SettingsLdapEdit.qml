@@ -56,7 +56,7 @@ DialogPlus {
 							onTextChanged: ldapData.displayName = text
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							TooltipArea{
-								text : 'LDAP Server. eg: ldap:/// for a localhost server or ldap://ldap.example.org/'
+								text : 'The display name of the server to be shown in the list'
 							}
 						}
 					}
