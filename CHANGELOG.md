@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Options to audio codec can be used and stored
 - Opus can now use `packetlosspercentage` and `useinbandfec` configuration
 - A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music)
+- MSYS2 support for Windows
+- OpenLDAP support
 
 
 ### Fixed

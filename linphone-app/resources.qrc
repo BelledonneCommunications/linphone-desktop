@@ -489,5 +489,6 @@
         <file>ui/dev-modules/Colors/Colors.qml</file>
         <file>ui/dev-modules/Units/Units.qml</file>
         <file>assets/icon.ico</file>
+        <file>ui/views/App/Settings/Dialogs/SettingsLdapEdit.qml</file>
     </qresource>
 </RCC>

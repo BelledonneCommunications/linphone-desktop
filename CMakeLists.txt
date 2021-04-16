@@ -163,7 +163,7 @@ endif()
 
 
 if(ENABLE_BUILD_APP_PLUGINS)
-	file(GLOB children RELATIVE plugins plugins/*)
+	file(GLOB children "plugins/*")
 	set(dirlist "")
 	foreach(child ${children})
 		if(IS_DIRECTORY ${curdir}/${child} AND (ENABLE_BUILD_EXAMPLES OR NOT ${child} MATCHES "example"))

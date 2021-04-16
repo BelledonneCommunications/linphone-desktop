@@ -27,6 +27,12 @@
 
 // =============================================================================
 
+function editLdap (ldap) {
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/SettingsLdapEdit.qml'), {
+    ldapData: ldap
+  })
+}
+
 function cleanLogs () {
   window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('cleanLogsDescription'),

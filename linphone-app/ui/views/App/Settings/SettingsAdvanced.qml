@@ -16,7 +16,9 @@ import 'SettingsAdvanced.js' as Logic
 // =============================================================================
 
 TabContainer {
-    Column {
+	color: "#00000000"
+	Column {
+		id: column
         spacing: SettingsWindowStyle.forms.spacing
         width: parent.width
         
@@ -97,10 +99,24 @@ TabContainer {
             }
         }
         onVisibleChanged: sendLogsBlock.setText('')
-        
-        // -------------------------------------------------------------------------
-        // ADDRESS BOOK
-        // -------------------------------------------------------------------------
+	
+// -------------------------------------------------------------------------
+//								LDAP
+// -------------------------------------------------------------------------
+	Form {
+		title: 'LDAP'
+		width: parent.width
+		addButton:true
+		onAddButtonClicked:ldapSection.add()
+		SettingsLdap{
+			id:ldapSection
+			width: parent.width
+		}
+	}
+
+// -------------------------------------------------------------------------
+//							ADDRESS BOOK
+// -------------------------------------------------------------------------
         
         Form {
             title: qsTr('contactsTitle')
@@ -133,7 +149,7 @@ TabContainer {
                             id:importerLine
                             property var fields : modelData.fields
                             property int identity : modelData.identity
-			    property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginID"]) // Plugin definition
+                            property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginID"]) // Plugin definition
                             
                             FormTableEntry {
                                 Row{
@@ -173,7 +189,6 @@ TabContainer {
                                         Component{
                                             id: textComponent
                                             Text {
-                                                id: text
                                                 color: FormTableStyle.entry.text.color
                                                 elide: Text.ElideRight
                                                 horizontalAlignment: Text.AlignHCenter
@@ -257,14 +272,14 @@ TabContainer {
                     iconSize:CallsStyle.entry.iconActionSize
                     onClicked:{
                         ContactsImporterPluginsManager.openNewPlugin();
-			pluginChoice.model = ContactsImporterPluginsManager.getPlugins();
+                        pluginChoice.model = ContactsImporterPluginsManager.getPlugins();
                     }
                 }
                 ComboBox{
                     id: pluginChoice
-		    model:ContactsImporterPluginsManager.getPlugins()
+                    model:ContactsImporterPluginsManager.getPlugins()
                     textRole: "pluginTitle"
-		    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
+                    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
                     Text{// Hack, combobox show empty text when empty
                         anchors.fill:parent
                         visible:pluginChoice.currentIndex===-1
@@ -279,7 +294,7 @@ TabContainer {
                     }
                     Connections{
                         target:SettingsModel
-			onContactImporterChanged:pluginChoice.model=ContactsImporterPluginsManager.getPlugins()
+                        onContactImporterChanged:pluginChoice.model=ContactsImporterPluginsManager.getPlugins()
                     }
                 }
                 ActionButton {
@@ -288,7 +303,7 @@ TabContainer {
                     visible:pluginChoice.currentIndex>=0
                     onClicked:{
                         if( pluginChoice.currentIndex >= 0)
-			    ContactsImporterListModel.createContactsImporter({"pluginID":pluginChoice.model[pluginChoice.currentIndex]["pluginID"]})
+                            ContactsImporterListModel.createContactsImporter({"pluginID":pluginChoice.model[pluginChoice.currentIndex]["pluginID"]})
                     }
                 }
             }
@@ -317,3 +332,9 @@ TabContainer {
         }
     }
 }
+
+/*##^##
+Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+##^##*/
