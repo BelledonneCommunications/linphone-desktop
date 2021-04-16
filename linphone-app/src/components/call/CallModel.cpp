@@ -35,11 +35,7 @@
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
-//#include "linphone/api/c-magic-search.h"
 #include "linphone/api/c-search-result.h"
-//#include "linphone/api/friends.h"
-
-
 
 // =============================================================================
 
@@ -49,33 +45,10 @@ namespace {
   constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
 }
 
-void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
-	bool found = false;
-	for(auto it = results.begin() ; it != results.end() && !found ; ++it){
-		if((*it)->getFriend()){
-			if((*it)->getFriend()->getAddress()->weakEqual(mRemoteAddress)){
-				setRemoteDisplayName((*it)->getFriend()->getName());
-				found = true;
-			}
-		}else{
-			if((*it)->getAddress()->weakEqual(mRemoteAddress)){
-				setRemoteDisplayName((*it)->getAddress()->getDisplayName());
-				found = true;
-			}
-		}
-	}
-}
-
-void CallModel::setRemoteDisplayName(const std::string& name){
-	mRemoteAddress->setDisplayName(name);
-	emit fullPeerAddressChanged();
-}
-
 CallModel::CallModel (shared_ptr<linphone::Call> call){
   Q_CHECK_PTR(call);
   mCall = call;
   mCall->setData("call-model", *this);
-  
 
   updateIsInConference();
 
@@ -105,7 +78,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
     coreHandlers, &CoreHandlers::callEncryptionChanged,
     this, &CallModel::handleCallEncryptionChanged
   );
-// Update fields  
+
+// Update fields and make a search to know to who the call belong
   mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
   mSearch = std::make_shared<SearchHandler>(this);
   QObject::connect(mSearch.get(), SIGNAL(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> )), this, SLOT(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>>)));
@@ -113,8 +87,6 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
   
   mRemoteAddress = mCall->getRemoteAddress()->clone();
   mMagicSearch->getContactListFromFilterAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain());
-  
-  
 }
 
 CallModel::~CallModel () {
@@ -655,6 +627,31 @@ void CallModel::updateStreams () {
 }
 void CallModel::toggleSpeakerMute(){
   setSpeakerMuted(!getSpeakerMuted());
+}
+
+// -----------------------------------------------------------------------------
+
+// Set remote display name when a search has been done
+void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
+	bool found = false;
+	for(auto it = results.begin() ; it != results.end() && !found ; ++it){
+		if((*it)->getFriend()){
+			if((*it)->getFriend()->getAddress()->weakEqual(mRemoteAddress)){
+				setRemoteDisplayName((*it)->getFriend()->getName());
+				found = true;
+			}
+		}else{
+			if((*it)->getAddress()->weakEqual(mRemoteAddress)){
+				setRemoteDisplayName((*it)->getAddress()->getDisplayName());
+				found = true;
+			}
+		}
+	}
+}
+
+void CallModel::setRemoteDisplayName(const std::string& name){
+	mRemoteAddress->setDisplayName(name);
+	emit fullPeerAddressChanged();
 }
 // -----------------------------------------------------------------------------
 

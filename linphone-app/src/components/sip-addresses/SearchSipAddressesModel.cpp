@@ -42,16 +42,7 @@
 using namespace std;
 
 // -----------------------------------------------------------------------------
-/*
-static inline QVariantMap buildVariantMap (const SearchSipAddressesModel::SipAddressEntry &sipAddressEntry) {
-  return QVariantMap{
-    { "sipAddress", sipAddressEntry.sipAddress },
-    { "contact", QVariant::fromValue(sipAddressEntry.contact) },
-    { "presenceStatus", sipAddressEntry.presenceStatus },
-    { "__localToConferenceEntry", QVariant::fromValue(&sipAddressEntry.localAddressToConferenceEntry) }
-  };
-}
-*/
+
 SearchSipAddressesModel::SearchSipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
 	
 	mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
@@ -60,67 +51,60 @@ SearchSipAddressesModel::SearchSipAddressesModel (QObject *parent) : QAbstractLi
 	mMagicSearch->addListener(mSearch);
 	
 }
+
 SearchSipAddressesModel::~SearchSipAddressesModel(){
-	
 	mMagicSearch->removeListener(mSearch);
-	
 }
+
 // -----------------------------------------------------------------------------
 
 int SearchSipAddressesModel::rowCount (const QModelIndex &) const {
-  return mAddresses.count()-1;
+	return mAddresses.count()-1;
 }
 
 QHash<int, QByteArray> SearchSipAddressesModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$sipAddress";
-  return roles;
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "$sipAddress";
+	return roles;
 }
 
 QVariant SearchSipAddressesModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mAddresses.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return QVariantMap{{"sipAddress", mAddresses[row]}};
-
-  return QVariant();
+	int row = index.row();
+	
+	if (!index.isValid() || row < 0 || row >= mAddresses.count())
+		return QVariant();
+	
+	if (role == Qt::DisplayRole)
+		return QVariantMap{{"sipAddress", mAddresses[row]}};
+	
+	return QVariant();
 }
 
 // -----------------------------------------------------------------------------
 
 bool SearchSipAddressesModel::removeRow (int row, const QModelIndex &parent) {
-  return removeRows(row, 1, parent);
+	return removeRows(row, 1, parent);
 }
 
 bool SearchSipAddressesModel::removeRows (int row, int count, const QModelIndex &parent) {
-  int limit = row + count - 1;
-
-  if (row < 0 || count < 0 || limit >= mAddresses.count())
-    return false;
-
-  beginRemoveRows(parent, row, limit);
-
-  for (int i = 0; i < count; ++i)
-    mAddresses.removeAt(row);
-
-  endRemoveRows();
-
-  return true;
+	int limit = row + count - 1;
+	
+	if (row < 0 || count < 0 || limit >= mAddresses.count())
+		return false;
+	
+	beginRemoveRows(parent, row, limit);
+	
+	for (int i = 0; i < count; ++i)
+		mAddresses.removeAt(row);
+	
+	endRemoveRows();
+	
+	return true;
 }
-static std::list<std::pair<std::shared_ptr<linphone::MagicSearch>, std::shared_ptr<SearchHandler> > > searches;
-class DeleteMagic{
-public:
-	std::shared_ptr<linphone::MagicSearch> magic;
-	std::shared_ptr<SearchHandler> search;
-};
 
 void SearchSipAddressesModel::setFilter(const QString& filter){
 	mMagicSearch->getContactListFromFilterAsync(filter.toStdString(),"");
 	//searchReceived(mMagicSearch->getContactListFromFilter(filter.toStdString(),""));	// Just to show how to use sync method
-	
 }
 
 void SearchSipAddressesModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
@@ -128,24 +112,10 @@ void SearchSipAddressesModel::searchReceived(std::list<std::shared_ptr<linphone:
 	mAddresses.clear();
 	for(auto it = results.begin() ; it != results.end() ; ++it){
 		if((*it)->getFriend()){
-			//QString username = QString::fromStdString((*it)->getFriend()->getName());
-			//auto f = (*it)->getFriend();
-			//auto vcard = f->getVcard();
-			//if(vcard)
-			  //  qDebug() << QString::fromStdString(vcard->asVcard4String());
-			
 			mAddresses << QString::fromStdString((*it)->getFriend()->getAddress()->asString());
-			//qDebug() << username << " " << QString::fromStdString((*it)->getFriend()->getAddress()->getDisplayName());
 		}else{
-			//QString username = QString::fromStdString((*it)->getAddress()->getDisplayName());
 			mAddresses << QString::fromStdString((*it)->getAddress()->asString());
-			//qDebug() << username;
 		}
 	}
-	//invalidate();
 	endResetModel();
-	/*
-	mMagicSearch->removeListener(mSearch);
-	mMagicSearch = nullptr;
-	mSearch = nullptr;*/
 }

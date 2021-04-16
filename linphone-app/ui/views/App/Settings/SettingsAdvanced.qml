@@ -100,9 +100,9 @@ TabContainer {
         }
         onVisibleChanged: sendLogsBlock.setText('')
 	
-	// -------------------------------------------------------------------------
-        // LDAP
-        // -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+//								LDAP
+// -------------------------------------------------------------------------
 	Form {
 		title: 'LDAP'
 		width: parent.width
@@ -113,11 +113,10 @@ TabContainer {
 			width: parent.width
 		}
 	}
-	
-	
-        // -------------------------------------------------------------------------
-        // ADDRESS BOOK
-        // -------------------------------------------------------------------------
+
+// -------------------------------------------------------------------------
+//							ADDRESS BOOK
+// -------------------------------------------------------------------------
         
         Form {
             title: qsTr('contactsTitle')
@@ -150,7 +149,7 @@ TabContainer {
                             id:importerLine
                             property var fields : modelData.fields
                             property int identity : modelData.identity
-			    property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginID"]) // Plugin definition
+                            property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginID"]) // Plugin definition
                             
                             FormTableEntry {
                                 Row{
@@ -273,14 +272,14 @@ TabContainer {
                     iconSize:CallsStyle.entry.iconActionSize
                     onClicked:{
                         ContactsImporterPluginsManager.openNewPlugin();
-			pluginChoice.model = ContactsImporterPluginsManager.getPlugins();
+                        pluginChoice.model = ContactsImporterPluginsManager.getPlugins();
                     }
                 }
                 ComboBox{
                     id: pluginChoice
-		    model:ContactsImporterPluginsManager.getPlugins()
+                    model:ContactsImporterPluginsManager.getPlugins()
                     textRole: "pluginTitle"
-		    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
+                    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
                     Text{// Hack, combobox show empty text when empty
                         anchors.fill:parent
                         visible:pluginChoice.currentIndex===-1
@@ -295,7 +294,7 @@ TabContainer {
                     }
                     Connections{
                         target:SettingsModel
-			onContactImporterChanged:pluginChoice.model=ContactsImporterPluginsManager.getPlugins()
+                        onContactImporterChanged:pluginChoice.model=ContactsImporterPluginsManager.getPlugins()
                     }
                 }
                 ActionButton {
@@ -304,7 +303,7 @@ TabContainer {
                     visible:pluginChoice.currentIndex>=0
                     onClicked:{
                         if( pluginChoice.currentIndex >= 0)
-			    ContactsImporterListModel.createContactsImporter({"pluginID":pluginChoice.model[pluginChoice.currentIndex]["pluginID"]})
+                            ContactsImporterListModel.createContactsImporter({"pluginID":pluginChoice.model[pluginChoice.currentIndex]["pluginID"]})
                     }
                 }
             }
@@ -316,7 +315,7 @@ TabContainer {
 
         Form {
             title: qsTr('developerSettingsTitle')
-           // visible: SettingsModel.developerSettingsEnabled
+            visible: SettingsModel.developerSettingsEnabled
             width: parent.width
             
             FormLine {

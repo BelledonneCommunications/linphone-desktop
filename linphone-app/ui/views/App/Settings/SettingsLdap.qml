@@ -27,6 +27,7 @@ Column {
 		id: ldapList
 		model:LdapProxyModel{id:ldapProxy}
 		delegate:Item{
+// LDAP line description : Summary (remove + name + activation)
 			id: swipeView
 			anchors.left: parent.left
 			anchors.right: parent.right
@@ -69,7 +70,6 @@ Column {
 							modelData.enabled = !checked
 						}
 					}
-					
 				}
 			}
 		}

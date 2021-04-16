@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -98,6 +98,7 @@ void LdapListModel::initLdap () {
 	CoreManager *coreManager = CoreManager::getInstance();
 	auto lConfig = coreManager->getCore()->getConfig();
 	auto bcSections = lConfig->getSectionsNamesList();
+	// Loop on all sections and load configuration. If this is not a LDAP configuration, the model is discarded.
 	for(auto itSections = bcSections.begin(); itSections != bcSections.end(); ++itSections) {
 		LdapModel * ldap = new LdapModel();
 		if(ldap->load(*itSections)){
@@ -107,29 +108,28 @@ void LdapListModel::initLdap () {
 	}
 }
 
+// Save if valid
 void LdapListModel::enable(int id, bool status){
 	if( mServers[id]->isValid()){
 		QVariantMap config = mServers[id]->getConfig();
 		config["enable"] = status;
 		mServers[id]->setConfig(config);
 		mServers[id]->save();
-		
 	}
-	
 	emit dataChanged(index(id, 0), index(id, 0));
 }
 
+// Create a new LdapModel and put it in the list
 void LdapListModel::add(){
 	int row = mServers.count();
-
 	beginInsertRows(QModelIndex(), row, row);
 	auto ldap= new LdapModel(row);
 	ldap->init();
 	mServers << ldap;
 	endInsertRows();
-	//emit dataChanged(index(row, 0), index(row, 0));
 	resetInternalData();
 }
+
 void LdapListModel::remove (LdapModel *ldap) {
 	int index = mServers.indexOf(ldap);
 	if (index >=0){

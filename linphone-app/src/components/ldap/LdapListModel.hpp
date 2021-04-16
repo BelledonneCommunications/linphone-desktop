@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -30,33 +30,35 @@
 class CoreHandlers;
 
 class LdapListModel : public QAbstractListModel {
-  Q_OBJECT
-
+	Q_OBJECT
+	
 public:
-
-  LdapListModel (QObject *parent = Q_NULLPTR);
-  
-  void reset();
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-  
-  Q_INVOKABLE void enable(int id, bool status);
-  Q_INVOKABLE void add();
-  Q_INVOKABLE void remove (LdapModel *importer);
-
-
+	
+	LdapListModel (QObject *parent = Q_NULLPTR);
+	
+	void reset();
+	
+	int rowCount (const QModelIndex &index = QModelIndex()) const override;
+	
+	QHash<int, QByteArray> roleNames () const override;
+	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	
+// Enable the Server and save it if it is valid
+	Q_INVOKABLE void enable(int id, bool status);
+// Create a Server
+	Q_INVOKABLE void add();
+// Remove a Server
+	Q_INVOKABLE void remove (LdapModel *importer);
+	
 private:
-  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-
-  // ---------------------------------------------------------------------------
-
-  void initLdap ();
-
-    QList<LdapModel*> mServers;
+	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
+	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	
+	// ---------------------------------------------------------------------------
+	
+	void initLdap ();
+	
+	QList<LdapModel*> mServers;
 };
 
 #endif // LDAP_LIST_MODEL_H_

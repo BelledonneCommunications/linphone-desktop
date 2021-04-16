@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -26,14 +26,13 @@
 // =============================================================================
 
 class LdapProxyModel : public QSortFilterProxyModel {
-  Q_OBJECT
+	Q_OBJECT
 public:
-  LdapProxyModel (QObject *parent = Q_NULLPTR);
-  
+	LdapProxyModel (QObject *parent = Q_NULLPTR);
+	
 protected:
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-
+	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 };
 
 #endif // LDAP_PROXY_MODEL_H_

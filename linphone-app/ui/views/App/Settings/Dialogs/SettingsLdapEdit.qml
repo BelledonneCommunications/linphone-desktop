@@ -5,8 +5,6 @@ import Linphone 1.0
 
 import App.Styles 1.0
 
-import 'SettingsLdapEdit.js' as Logic
-
 // =============================================================================
 
 DialogPlus {
@@ -36,10 +34,6 @@ DialogPlus {
 	
 	height: SettingsSipAccountsEditStyle.height
 	width: SettingsSipAccountsEditStyle.width
-	
-	// ---------------------------------------------------------------------------
-	
-	//Component.onCompleted: Logic.initForm(ldapData)
 	
 	// ---------------------------------------------------------------------------
 	
