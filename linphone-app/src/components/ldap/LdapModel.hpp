@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -30,8 +30,8 @@
 class CoreHandlers;
 
 class LdapModel : public QObject {
-    Q_OBJECT
-    Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
+	Q_OBJECT
+	Q_PROPERTY(QVariantMap config READ getConfig WRITE setConfig NOTIFY configChanged)
 	Q_PROPERTY(bool isValid MEMBER mIsValid NOTIFY isValidChanged)
 	
 	Q_PROPERTY(QString server MEMBER mServer WRITE setServer NOTIFY serverChanged)
@@ -68,20 +68,20 @@ class LdapModel : public QObject {
 	
 	Q_PROPERTY(QString sipDomain MEMBER mSipDomain WRITE setSipDomain NOTIFY sipDomainChanged)
 	Q_PROPERTY(QString sipDomainFieldError MEMBER mSipDomainFieldError NOTIFY sipDomainFieldErrorChanged)
-
+	
 	Q_PROPERTY(bool debug MEMBER mDebug NOTIFY debugChanged)
 	Q_PROPERTY(int verifyServerCertificates MEMBER mVerifyServerCertificates NOTIFY verifyServerCertificatesChanged)
-
+	
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 public:
-
-    LdapModel (const int& id = 0,QObject *parent = nullptr);
-  
-    QVariantMap mConfig;
+	
+	LdapModel (const int& id = 0,QObject *parent = nullptr);
+	
+	QVariantMap mConfig;
 	bool mIsValid;
-    int mId; // "ldap_mId" from section name
-    
-    QString mServer;
+	int mId; // "ldap_mId" from section name
+	
+	QString mServer;
 	QString mServerFieldError;
 	void setServer(const QString& server);
 	void testServerField();
@@ -91,85 +91,86 @@ public:
 	bool mUseSal;
 	bool mUseTls;
 	
-    int mMaxResults;
+	int mMaxResults;
 	QString mMaxResultsFieldError;
 	void setMaxResults(const int& data);
 	void testMaxResultsField();
 	
-    QString mPassword;
+	QString mPassword;
 	QString mPasswordFieldError;
 	void setPassword(const QString& data);
 	void testPasswordField();
 	
-    QString mBindDn;
+	QString mBindDn;
 	QString mBindDnFieldError;
 	void setBindDn(const QString& data);
 	void testBindDnField();
 	
-    QString mBaseObject;
+	QString mBaseObject;
 	QString mBaseObjectFieldError;
 	void setBaseObject(const QString& data);
 	void testBaseObjectField();
 	
-    QString mFilter;
+	QString mFilter;
 	QString mFilterFieldError;
 	void setFilter(const QString& data);
 	void testFilterField();
 	
-    QString mNameAttributes;
+	QString mNameAttributes;
 	QString mNameAttributesFieldError;
 	void setNameAttributes(const QString& data);
 	void testNameAttributesField();
 	
-    QString mSipAttributes;
+	QString mSipAttributes;
 	QString mSipAttributesFieldError;
 	void setSipAttributes(const QString& data);
 	void testSipAttributesField();
 	
-    QString mSipScheme;
+	QString mSipScheme;
 	QString mSipSchemeFieldError;
 	void setSipScheme(const QString& data);
 	void testSipSchemeField();
 	
-    QString mSipDomain;
+	QString mSipDomain;
 	QString mSipDomainFieldError;
 	void setSipDomain(const QString& data);
 	void testSipDomainField();
-
+	
 	bool mDebug;
 	int mVerifyServerCertificates;
-    
-    bool isValid();
-    void init();// init by default value
-    Q_INVOKABLE void save();
-	void unsave();
-    bool load(const std::string& sectionName);
-    void set();
-    Q_INVOKABLE void unset();
-    
-    QVariantMap getConfig();
-    void setConfig(const QVariantMap& config);
+	
+// Test if the configuration is valid
+	bool isValid();
+	void init();// init configuration by default value
+	Q_INVOKABLE void save(); // Save configuration to linphonerc
+	void unsave();	// Remove configuration from linphonerc
+	bool load(const std::string& sectionName);// Load a configuration : ldap_x where x is a unique number
+	void set();	// Fix Configuration from variables
+	Q_INVOKABLE void unset(); // Set variables from Configuration
+	
+	QVariantMap getConfig();
+	void setConfig(const QVariantMap& config);
 	
 	bool isEnabled();
 	void setEnabled(const bool& data);
-
+	
 signals:
-    void configChanged();
+	void configChanged();
 	void isValidChanged();
-    void serverChanged();
+	void serverChanged();
 	void displayNameChanged();
 	void useTlsChanged();
 	void useSalChanged();
 	void isServerValidChanged();
-    void maxResultsChanged();
-    void passwordChanged();
-    void bindDnChanged();
-    void baseObjectChanged();
-    void filterChanged();
-    void nameAttributesChanged();
-    void sipAttributesChanged();
-    void sipSchemeChanged();
-    void sipDomainChanged();
+	void maxResultsChanged();
+	void passwordChanged();
+	void bindDnChanged();
+	void baseObjectChanged();
+	void filterChanged();
+	void nameAttributesChanged();
+	void sipAttributesChanged();
+	void sipSchemeChanged();
+	void sipDomainChanged();
 	void debugChanged();
 	void verifyServerCertificatesChanged();
 	

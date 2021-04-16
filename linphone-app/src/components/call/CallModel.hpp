@@ -142,6 +142,7 @@ public:
   std::shared_ptr<linphone::MagicSearch> mMagicSearch;
   
 public slots:
+// Set remote display name when a search has been done
   void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
 
 signals:
@@ -164,8 +165,6 @@ signals:
 private:
   void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
-  
-  
 
   void accept (bool withVideo);
 
@@ -244,7 +243,6 @@ private:
   QVariantList mAudioStats;
   QVariantList mVideoStats;
   std::shared_ptr<SearchHandler> mSearch;
-
 };
 
 #endif // CALL_MODEL_H_
