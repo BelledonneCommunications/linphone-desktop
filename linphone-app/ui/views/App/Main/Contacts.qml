@@ -132,7 +132,7 @@ ColumnLayout {
 
                 ActionButton {
                   icon: 'video_call'
-                  visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled
+                  visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 
                   onClicked: actions.itemAt(0).open()
                 }
@@ -145,7 +145,7 @@ ColumnLayout {
                 }
 
                 ActionButton {
-                  icon: SettingsModel.chatEnabled ? 'chat' : 'history'
+                  icon: SettingsModel.chatEnabled && SettingsModel.showStartChatButton ? 'chat' : 'history'
                   onClicked: actions.itemAt(2).open()
                 }
               }
