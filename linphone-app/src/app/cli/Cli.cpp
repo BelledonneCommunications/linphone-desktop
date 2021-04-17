@@ -173,7 +173,7 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 
 	qInfo() << QStringLiteral("Create conference with id: `%1`.").arg(id);
 	auto confParameters = core->createConferenceParams();
-	confParameters->enableVideo(false);// Video is not yet fully supported by the application in conference
+	confParameters->setVideoEnabled(false);// Video is not yet fully supported by the application in conference
 	conference = core->createConferenceWithParams(confParameters);
 	conference->setId(Utils::appStringToCoreString(id));
 
