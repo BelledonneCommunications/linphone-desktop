@@ -19,15 +19,15 @@ Column {
 	function add(){
 		LdapListModel.add()
 	}
-	
+
 	spacing: FormStyle.spacing
-	
+
 	// ---------------------------------------------------------------------------
 	Repeater{
 		id: ldapList
 		model:LdapProxyModel{id:ldapProxy}
 		delegate:Item{
-// LDAP line description : Summary (remove + name + activation)
+// LDAP line description : Summary (name + activation + remove)
 			id: swipeView
 			anchors.left: parent.left
 			anchors.right: parent.right
@@ -39,15 +39,7 @@ Column {
 				Row{
 					id:summaryRowItem
 					anchors.horizontalCenter: parent.horizontalCenter
-					spacing:20
-					ActionButton {
-						id:removeldap
-						anchors.verticalCenter: parent.verticalCenter
-						icon: 'cancel'
-						iconSize:CallsStyle.entry.iconActionSize
-						scale:0.8
-						onClicked:LdapListModel.remove(modelData)
-					}
+					spacing:SettingsAdvancedStyle.lists.spacing
 					Text {
 						id: summaryTitle
 						color: FormStyle.header.title.color
@@ -71,6 +63,28 @@ Column {
 						}
 					}
 				}
+				ActionButton {
+					id:removeldap
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.right:parent.right
+					anchors.rightMargin:SettingsAdvancedStyle.lists.margin
+					icon: 'cancel'
+					iconSize:CallsStyle.entry.iconActionSize
+					scale:SettingsAdvancedStyle.lists.iconScale
+					onClicked:{
+						LdapListModel.remove(modelData)
+					}
+					visible:hoveringRow.containsMouse
+				}
+			}
+			MouseArea{
+				id:hoveringRow
+				anchors.fill:parent
+				preventStealing :true
+				hoverEnabled :true
+				propagateComposedEvents:true
+				onClicked:{mouse.accepted = false}
+				onPressed:{mouse.accepted = false}
 			}
 		}
 	}
