@@ -856,7 +856,7 @@ Server URL not configured.</translation>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">Are you sure you want to clear this history?</translation>
+        <translation>Are you sure you want to clear this history?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
@@ -1372,7 +1372,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation>Show telephone keypad automatically</translation>
+        <translation>Show DTMF keypad automatically</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
@@ -1380,7 +1380,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation>Keep calls windows in background</translation>
+        <translation>Keep call windows in background</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
@@ -1388,14 +1388,198 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation>Encrytion is mandatory</translation>
+        <translation>Encryption is mandatory</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsLdap</name>
+    <message>
+        <source>newServer</source>
+        <translatorcomment>Display name of a new server</translatorcomment>
+        <translation>New server</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsLdapEdit</name>
+    <message>
+        <source>cancel</source>
+        <translatorcomment>Cancel button label</translatorcomment>
+        <translation>cancel</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translatorcomment>Confirm button label</translatorcomment>
+        <translation>confirm</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translatorcomment>Label</translatorcomment>
+        <translation>Display Name</translation>
+    </message>
+    <message>
+        <source>displayNameTooltip</source>
+        <translatorcomment>Tooltip for display name</translatorcomment>
+        <translation>The display name of the server to be shown in the list.</translation>
+    </message>
+    <message>
+        <source>connectionTitle</source>
+        <translatorcomment>Label</translatorcomment>
+        <translation>Connection</translation>
+    </message>
+    <message>
+        <source>serverLabel</source>
+        <translatorcomment>Label</translatorcomment>
+        <translation>Server URL</translation>
+    </message>
+    <message>
+        <source>serverTooltip</source>
+        <translatorcomment>Tooltip for server URL</translatorcomment>
+        <translation>LDAP Server. eg: ldap:/// for a localhost server or ldap://ldap.example.org/</translation>
+    </message>
+    <message>
+        <source>bindDNLabel</source>
+        <translatorcomment>Label for a &apos;Bind DN&apos;. &apos;Bind&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Bind DN</translation>
+    </message>
+    <message>
+        <source>bindDNTooltip</source>
+        <translatorcomment>&apos;Bind DN&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>The bind DN is the credential that is used to authenticate against an LDAP.\n eg: cn=ausername,ou=people,dc=bc,dc=com</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Password</translation>
+    </message>
+    <message>
+        <source>useTLSLabel</source>
+        <translation>Use TLS</translation>
+    </message>
+    <message>
+        <source>useTLSTooltip</source>
+        <translation>Encrypt transactions by LDAP over TLS(StartTLS). You must use \&apos;ldap\&apos; scheme. \&apos;ldaps\&apos; for LDAP over SSL is non-standardized and deprecated.\nStartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. \nIt works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.</translation>
+    </message>
+    <message>
+        <source>useSalLabel</source>
+        <translation>Use Sal</translation>
+    </message>
+    <message>
+        <source>useSalTooltip</source>
+        <translation>The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
+    </message>
+    <message>
+        <source>verifyTLSLabel</source>
+        <translation>Verify Certificates on TLS</translation>
+    </message>
+    <message>
+        <source>AutoMode</source>
+        <translatorcomment>ComboBox Label</translatorcomment>
+        <translation>Auto</translation>
+    </message>
+    <message>
+        <source>offMode</source>
+        <translatorcomment>ComboBox Label</translatorcomment>
+        <translation>Off</translation>
+    </message>
+    <message>
+        <source>onMode</source>
+        <translatorcomment>ComboBox label</translatorcomment>
+        <translation>On</translation>
+    </message>
+    <message>
+        <source>verifyTLSTooltip</source>
+        <translation>Specify whether the tls server certificate must be verified when connecting to a LDAP server.</translation>
+    </message>
+    <message>
+        <source>searchTitle</source>
+        <translation>Search</translation>
+    </message>
+    <message>
+        <source>baseObjectLabel</source>
+        <translatorcomment>&apos;Base Object&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Base Object</translation>
+    </message>
+    <message>
+        <source>baseObjectPlaceholder</source>
+        <translatorcomment>&apos;Base Object&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Base Object</translation>
+    </message>
+    <message>
+        <source>baseObjectTooltip</source>
+        <translatorcomment>&apos;Base Object&apos;and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
+        <translation>Base Object is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.\n\nNo entries below it will be considered.</translation>
+    </message>
+    <message>
+        <source>filterLabel</source>
+        <translation>Filter</translation>
+    </message>
+    <message>
+        <source>filterTooltip</source>
+        <translation>The search is base on this filter to search friends. Default value : (sn=%s)</translation>
+    </message>
+    <message>
+        <source>maxResultsLabel</source>
+        <translation>Max Results</translation>
+    </message>
+    <message>
+        <source>maxResultsTooltip</source>
+        <translation>The max results when requesting searches.</translation>
+    </message>
+    <message>
+        <source>parsingTitle</source>
+        <translation>Parsing</translation>
+    </message>
+    <message>
+        <source>nameAttributesLabel</source>
+        <translation>Name Attributes</translation>
+    </message>
+    <message>
+        <source>nameAttributesTooltip</source>
+        <translation>Check these attributes To build Name Friend, separated by a comma and the first is the highest priority. The default value is: sn</translation>
+    </message>
+    <message>
+        <source>sipAttributesLabel</source>
+        <translation>Sip Attributes</translation>
+    </message>
+    <message>
+        <source>sipAttributesTooltip</source>
+        <translatorcomment>Default values : (mobile,telephoneNumber,homePhone,sn) are keywords.</translatorcomment>
+        <translation>Check these attributes to build the SIP username in address of Friend. Attributes are separated by a comma and the first is the highest priority. The default value is: mobile,telephoneNumber,homePhone,sn</translation>
+    </message>
+    <message>
+        <source>schemeLabel</source>
+        <translation>Scheme</translation>
+    </message>
+    <message>
+        <source>schemeTooltip</source>
+        <translation>Add the scheme to the sip address(scheme:username@domain). The default value is sip</translation>
+    </message>
+    <message>
+        <source>domainLabel</source>
+        <translation>Domain</translation>
+    </message>
+    <message>
+        <source>domainTooltip</source>
+        <translation>Add the domain to the sip address(scheme:username@domain). The default value is sip.linphone.org</translation>
+    </message>
+    <message>
+        <source>miscLabel</source>
+        <translatorcomment>Miscellaneous label</translatorcomment>
+        <translation>Misc</translation>
+    </message>
+    <message>
+        <source>debugLabel</source>
+        <translation>Debug</translation>
+    </message>
+    <message>
+        <source>debugTooltip</source>
+        <translation>Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections).</translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMFs sending method</translation>
+        <translation>DTMFs send method</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>

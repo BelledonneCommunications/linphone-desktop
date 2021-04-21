@@ -43,7 +43,7 @@ Column {
 					Text {
 						id: summaryTitle
 						color: FormStyle.header.title.color
-						text: (modelData.displayName?modelData.displayName:(modelData.server?modelData.server:'New server'))
+						text: (modelData.displayName?modelData.displayName:(modelData.server?modelData.server:qsTr('newServer')))//'New server'))
 						font {
 							bold: true
 							pointSize: FormStyle.header.title.pointSize
