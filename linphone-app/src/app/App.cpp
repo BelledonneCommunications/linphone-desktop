@@ -579,6 +579,8 @@ void App::registerTypes () {
 
   qRegisterMetaType<shared_ptr<linphone::ProxyConfig>>();
   qRegisterMetaType<ChatModel::EntryType>();
+  qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
+  qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();
 
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
@@ -593,7 +595,10 @@ void App::registerTypes () {
   registerType<FileDownloader>("FileDownloader");
   registerType<FileExtractor>("FileExtractor");
   registerType<HistoryProxyModel>("HistoryProxyModel");
+  registerType<LdapProxyModel>("LdapProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
+  registerType<SearchSipAddressesModel>("SearchSipAddressesModel");
+  
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 
@@ -610,6 +615,7 @@ void App::registerTypes () {
   registerUncreatableType<ContactModel>("ContactModel");
   registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
   registerUncreatableType<HistoryModel>("HistoryModel");
+  registerUncreatableType<LdapModel>("LdapModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
 }
@@ -625,6 +631,7 @@ void App::registerSharedTypes () {
   registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");
   registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
   registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
+  registerSharedSingletonType<LdapListModel, &CoreManager::getLdapListModel>("LdapListModel");
 }
 
 void App::registerToolTypes () {
