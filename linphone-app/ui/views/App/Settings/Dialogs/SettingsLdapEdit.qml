@@ -48,7 +48,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
-						label: 'Display Name'
+						label: qsTr('displayNameLabel')//'Display Name'
 						TextField {
 							id:displayName
 							placeholderText : (serverUrl.text?serverUrl.text:serverUrl.placeholderText)
@@ -56,7 +56,7 @@ DialogPlus {
 							onTextChanged: ldapData.displayName = text
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							TooltipArea{
-								text : 'The display name of the server to be shown in the list'
+								text : qsTr('displayNameTooltip')//'The display name of the server to be shown in the list'
 							}
 						}
 					}
@@ -64,12 +64,12 @@ DialogPlus {
 			}
 			
 			Form {
-				title: 'Connection'
+				title: qsTr('connectionTitle')//'Connection'
 				width: parent.width
 				
 				FormLine {
 					FormGroup {
-						label: 'Server URL *'
+						label: qsTr('serverLabel')+' *'//'Server URL *'
 						TextField {
 							id:serverUrl
 							placeholderText :"Server"
@@ -78,7 +78,7 @@ DialogPlus {
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							error : ldapData.serverFieldError
 							TooltipArea{
-								text : 'LDAP Server. eg: ldap:/// for a localhost server or ldap://ldap.example.org/'
+								text : qsTr('serverTooltip')//'LDAP Server. eg: ldap:/// for a localhost server or ldap://ldap.example.org/'
 							}
 						}
 					}
@@ -86,7 +86,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
-						label: 'Bind DN *'
+						label: qsTr('bindDNLabel')+' *'//'Bind DN *'
 						
 						TextField {
 							id: bindDn
@@ -95,7 +95,7 @@ DialogPlus {
 							error : ldapData.bindDnFieldError
 							onTextChanged: ldapData.bindDn= text
 							TooltipArea{
-								text : 'The bindDN DN is the credential that is used to authenticate against an LDAP.\n eg: cn=ausername,ou=people,dc=bc,dc=com'
+								text : qsTr('bindDNTooltip')//'The bind DN is the credential that is used to authenticate against an LDAP.\n eg: cn=ausername,ou=people,dc=bc,dc=com'
 							}
 						}
 					}
@@ -103,7 +103,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
-						label: 'Password'
+						label: qsTr('passwordLabel')//'Password'
 						PasswordField {
 							id:password
 							text:ldapData.password
@@ -116,7 +116,7 @@ DialogPlus {
 				FormLine {
 					id:useRow
 					FormGroup {
-						label: 'Use TLS'
+						label: qsTr('useTLSLabel')//'Use TLS'
 						Switch {
 							id: useTls
 							anchors.verticalCenter: parent.verticalCenter
@@ -126,12 +126,12 @@ DialogPlus {
 							}
 							TooltipArea{
 								tooltipParent:useRow
-								text : 'Encrypt transactions by LDAP over TLS(StartTLS). You must use \'ldap\' scheme. \'ldaps\' for LDAP over SSL is non-standardized and deprecated.\nStartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. \nIt works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.'
+								text : qsTr('useTLSTooltip')//'Encrypt transactions by LDAP over TLS(StartTLS). You must use \'ldap\' scheme. \'ldaps\' for LDAP over SSL is non-standardized and deprecated.\nStartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. \nIt works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.'
 							}
 						}
 					}
 					FormGroup {
-						label: 'Use Sal'
+						label: qsTr('useSalLabel')//'Use Sal'
 						Switch {
 							id: useSal
 							anchors.verticalCenter: parent.verticalCenter
@@ -141,7 +141,7 @@ DialogPlus {
 							}
 							TooltipArea{
 								tooltipParent:useRow
-								text : 'The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.'
+								text : qsTr('useSalTooltip')//'The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.'
 							}
 						}
 					}
@@ -150,16 +150,16 @@ DialogPlus {
 					id:useSalRow
 					
 					FormGroup {
-						label: 'Verify Certificates on TLS'
+						label: qsTr('verifyTLSLabel')//'Verify Certificates on TLS'
 						ComboBox {
 							id:verifyServerCertificates
 							currentIndex: ldapData.verifyServerCertificates+1
-							model: ["Auto", "Off", "On"]
+							model: [qsTr('AutoMode'), qsTr('offMode'), qsTr('onMode')]
 							width: parent.width
 				  
 							onActivated: ldapData.verifyServerCertificates = index-1
 							TooltipArea{
-								text : 'Specify whether the tls server certificate must be verified when connecting to a LDAP server.'
+								text : qsTr('verifyTLSTooltip')//'Specify whether the tls server certificate must be verified when connecting to a LDAP server.'
 							}
 						}
 					}
@@ -171,20 +171,20 @@ DialogPlus {
 			// -----------------------------------------------------------------------
 			
 			Form {
-				title: 'Search'
+				title: qsTr('searchTitle')//'Search'
 				width: parent.width
 				
 				FormLine {
 					FormGroup {
-						label: 'Base Object *'
+						label: qsTr('baseObjectLabel')+' *'//'Base Object *'
 						TextField {
 							id:baseObject
-							placeholderText :"Base Object"
+							placeholderText :qsTr('baseObjectPlaceholder')//"Base Object"
 							text:ldapData.baseObject
 							error : ldapData.baseObjectFieldError
 							onTextChanged: ldapData.baseObject = text
 							TooltipArea{
-								text : 'BaseObject is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.\n\nNo entries below it will be considered.'
+								text : qsTr('baseObjectTooltip')//'BaseObject is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.\n\nNo entries below it will be considered.'
 							}
 						}
 					}
@@ -194,7 +194,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
-						label: 'Filter'
+						label: qsTr('filterLabel')//'Filter'
 						TextField {
 							id:filter
 							text:ldapData.filter
@@ -202,7 +202,7 @@ DialogPlus {
 							onTextChanged: ldapData.filter = text
 							placeholderText :"(sn=%s)"
 							TooltipArea{
-								text : 'The search is base on this filter to search friends. Default value : (sn=%s)'
+								text : qsTr('filterTooltip')//'The search is base on this filter to search friends. Default value : (sn=%s)'
 							}
 						}
 					}
@@ -210,7 +210,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
-						label: 'Max Results'
+						label: qsTr('maxResultsLabel')//'Max Results'
 						
 						NumericField {
 							id:maxResults
@@ -218,7 +218,7 @@ DialogPlus {
 							error : ldapData.maxResultsFieldError
 							onTextChanged: ldapData.maxResults = text
 							TooltipArea{
-								text : 'The max results when requesting searches'
+								text : qsTr('maxResultsTooltip')//'The max results when requesting searches'
 							}
 						}
 					}
@@ -229,12 +229,12 @@ DialogPlus {
 			// -----------------------------------------------------------------------
 			
 			Form {
-				title: 'Parsing'
+				title: qsTr('parsingTitle')//'Parsing'
 				width: parent.width
 				
 				FormLine {
 					FormGroup {
-						label: 'Name Attributes'
+						label: qsTr('nameAttributesLabel')//'Name Attributes'
 						TextField {
 							id:nameAttributes
 							placeholderText :'sn'
@@ -242,14 +242,14 @@ DialogPlus {
 							error : ldapData.nameAttributesFieldError
 							onTextChanged: ldapData.nameAttributes = text
 							TooltipArea{
-								text : 'Check these attributes To build Name Friend, separated by a comma and the first is the highest priority. The default value is: sn'
+								text : qsTr('nameAttributesTooltip')//'Check these attributes To build Name Friend, separated by a comma and the first is the highest priority. The default value is: sn'
 							}
 						}
 					}
 				}
 				FormLine {
 					FormGroup {
-						label: 'Sip Attributes'
+						label: qsTr('sipAttributesLabel')//'Sip Attributes'
 						TextField {
 							id:sipAttributes
 							placeholderText :'mobile,telephoneNumber,homePhone,sn'
@@ -257,14 +257,14 @@ DialogPlus {
 							error : ldapData.sipAttributesFieldError
 							onTextChanged: ldapData.sipAttributes = text
 							TooltipArea{
-								text : 'Check these attributes to build the SIP username in address of Friend. Attributes are separated by a comma and the first is the highest priority. The default value is: mobile,telephoneNumber,homePhone,sn'
+								text : qsTr('sipAttributesTooltip')//'Check these attributes to build the SIP username in address of Friend. Attributes are separated by a comma and the first is the highest priority. The default value is: mobile,telephoneNumber,homePhone,sn'
 							}
 						}
 					}
 				}
 				FormLine {
 					FormGroup {
-						label: 'Scheme'
+						label: qsTr('schemeLabel')//'Scheme'
 						TextField {
 							id:scheme
 							placeholderText :'sip'
@@ -272,14 +272,14 @@ DialogPlus {
 							error : ldapData.sipSchemeFieldError
 							onTextChanged: ldapData.sipScheme = text
 							TooltipArea{
-								text : 'Add the scheme to the sip address(scheme:username@domain). The default value is sip'
+								text : qsTr('schemeTooltip')//'Add the scheme to the sip address(scheme:username@domain). The default value is sip'
 							}
 						}
 					}
 				}
 				FormLine {
 					FormGroup {
-						label: 'Domain'
+						label: qsTr('domainLabel')//'Domain'
 						TextField {
 							id:domain
 							placeholderText :'sip.linphone.org'
@@ -287,7 +287,7 @@ DialogPlus {
 							error : ldapData.sipDomainFieldError
 							onTextChanged: ldapData.sipDomain = text
 							TooltipArea{
-								text : 'Add the domain to the sip address(scheme:username@domain). The default value is sip.linphone.org'
+								text : qsTr('domainTooltip')//'Add the domain to the sip address(scheme:username@domain). The default value is sip.linphone.org'
 							}
 						}
 					}
@@ -299,13 +299,13 @@ DialogPlus {
 			// -----------------------------------------------------------------------
 			
 			Form {
-				title: 'Misc'
+				title: qsTr('miscLabel')//'Misc'
 				width: parent.width
 				
 				FormLine {
 					id:miscLine
 					FormGroup {
-						label: 'Debug'
+						label: qsTr('debugLabel')//'Debug'
 						Switch {
 							id: debugMode
 							anchors.verticalCenter: parent.verticalCenter
@@ -315,7 +315,7 @@ DialogPlus {
 							}
 							TooltipArea{
 								tooltipParent:miscLine
-								text : 'Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections)'
+								text : qsTr('debugTooltip')//'Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections)'
 							}
 						}
 					}
