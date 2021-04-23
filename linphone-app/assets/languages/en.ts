@@ -1372,7 +1372,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation>Show telephone keypad automatically</translation>
+        <translation>Show DTMF keypad automatically</translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
@@ -1380,7 +1380,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation>Keep calls windows in background</translation>
+        <translation>Keep call windows in background</translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
@@ -1388,7 +1388,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation>Encrytion is mandatory</translation>
+        <translation>Encryption is mandatory</translation>
     </message>
 </context>
 <context>
@@ -1579,7 +1579,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMFs sending method</translation>
+        <translation>DTMFs send method</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
