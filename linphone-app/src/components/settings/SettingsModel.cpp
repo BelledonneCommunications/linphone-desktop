@@ -1188,6 +1188,20 @@ void SettingsModel::setExitOnClose (bool value) {
 	emit exitOnCloseChanged(value);
 }
 
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getShowLocalSipAccount()const{
+	return !!mConfig->getInt(UiSection, "show_local_sip_account", 1);
+}
+
+bool SettingsModel::getShowStartChatButton ()const{
+	return !!mConfig->getInt(UiSection, "show_start_chat_button", 1);
+}
+
+bool SettingsModel::getShowStartVideoCallButton ()const{
+	return !!mConfig->getInt(UiSection, "show_start_video_button", 1);
+}
+
 // =============================================================================
 // Advanced.
 // =============================================================================

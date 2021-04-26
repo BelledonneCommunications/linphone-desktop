@@ -145,6 +145,9 @@ set(SOURCES
     src/components/file/FileExtractor.cpp
     src/components/history/HistoryModel.cpp
     src/components/history/HistoryProxyModel.cpp
+    src/components/ldap/LdapModel.cpp
+    src/components/ldap/LdapListModel.cpp
+    src/components/ldap/LdapProxyModel.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
     src/components/other/colors/Colors.cpp
@@ -152,11 +155,13 @@ set(SOURCES
     src/components/other/units/Units.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
+    src/components/search/SearchHandler.cpp
     src/components/settings/AccountSettingsModel.cpp
     src/components/settings/SettingsModel.cpp
     src/components/sip-addresses/SipAddressesModel.cpp
     src/components/sip-addresses/SipAddressesProxyModel.cpp
     src/components/sip-addresses/SipAddressObserver.cpp
+    src/components/sip-addresses/SearchSipAddressesModel.cpp
     src/components/sound-player/SoundPlayer.cpp
     src/components/telephone-numbers/TelephoneNumbersModel.cpp
     src/components/timeline/TimelineModel.cpp
@@ -215,6 +220,9 @@ set(HEADERS
     src/components/file/FileExtractor.hpp
     src/components/history/HistoryModel.hpp
     src/components/history/HistoryProxyModel.hpp
+    src/components/ldap/LdapModel.hpp
+    src/components/ldap/LdapListModel.hpp
+    src/components/ldap/LdapProxyModel.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
     src/components/other/colors/Colors.hpp
@@ -223,11 +231,13 @@ set(HEADERS
     src/components/other/units/Units.hpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
+    src/components/search/SearchHandler.hpp
     src/components/settings/AccountSettingsModel.hpp
     src/components/settings/SettingsModel.hpp
     src/components/sip-addresses/SipAddressesModel.hpp
     src/components/sip-addresses/SipAddressesProxyModel.hpp
     src/components/sip-addresses/SipAddressObserver.hpp
+    src/components/sip-addresses/SearchSipAddressesModel.hpp
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
     src/components/timeline/TimelineModel.hpp
@@ -378,7 +388,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 # ------------------------------------------------------------------------------
 
 include_directories(src/)
-include_directories("${LINPHONE_OUTPUT_DIR}}/include/OpenGL")
+include_directories("${LINPHONE_OUTPUT_DIR}/include/OpenGL")
 
 if (CMAKE_INSTALL_RPATH)
     #Retrieve lib path from a know QT executable
@@ -500,7 +510,8 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 if(WIN32)
-    target_link_libraries(${TARGET_NAME} wsock32 ws2_32)
+	find_library(LDAP_LIBRARIES NAMES ldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
+	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES})
 endif()
 
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})

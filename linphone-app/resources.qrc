@@ -440,6 +440,7 @@
         <file>ui/views/App/Main/MainWindowMenuBar.qml</file>
         <file>ui/views/App/Main/MainWindow.qml</file>
         <file>ui/views/App/Main/MainWindowTopMenuBar.qml</file>
+        <file>ui/views/App/Settings/Dialogs/SettingsLdapEdit.qml</file>
         <file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.js</file>
         <file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.qml</file>
         <file>ui/views/App/Settings/Dialogs/SettingsVideoPreview.qml</file>
@@ -447,6 +448,7 @@
         <file>ui/views/App/Settings/SettingsAdvanced.qml</file>
         <file>ui/views/App/Settings/SettingsAudio.qml</file>
         <file>ui/views/App/Settings/SettingsCallsChat.qml</file>
+        <file>ui/views/App/Settings/SettingsLdap.qml</file>
         <file>ui/views/App/Settings/SettingsNetwork.qml</file>
         <file>ui/views/App/Settings/SettingsSipAccounts.js</file>
         <file>ui/views/App/Settings/SettingsSipAccounts.qml</file>

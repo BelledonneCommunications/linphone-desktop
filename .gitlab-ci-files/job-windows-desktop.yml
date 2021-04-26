@@ -2,9 +2,12 @@
 # BUILD
 #################################################
 
+#Remove MinGW of MSYS from PATH and add MINGW_TYPE for MSYS2
 .build_all_windows_script: &build_all_windows_script |
+  SET PATH_TEMP=%PATH:C:\MinGW\bin;=%
+  SET PATH_TEMP=%PATH_TEMP:C:\Strawberry\c\bin;=%
   SET Qt5_DIR=C:\Qt\5.14.2\msvc2017\lib\cmake
-  SET PATH=%PATH%;C:\Qt\5.14.2\msvc2017\bin
+  SET PATH=%PATH_TEMP%;C:\Qt\5.14.2\msvc2017\bin;C:\msys64;C:\msys64\usr\bin;C:\msys64\%MINGW_TYPE%\bin;
   IF EXIST build RMDIR /S /Q build
   mkdir build
   cd build
@@ -20,6 +23,7 @@
   tags: [ "windows" ]
   variables:
     CMAKE_OPTIONS: -DENABLE_LIME_X3DH=NO -DENABLE_UNIT_TESTS=ON -DLINPHONE_WINDOWS_SIGNING_DIR=$WINDOWS_SIGNING_DIRECTORY
+    MINGW_TYPE: mingw32
   script:
    - *build_all_windows_script
   artifacts:
@@ -76,6 +80,7 @@ job-windows-vs2017-package:
       - $DEPLOY_WINDOWS
   variables:
       CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGNING_DIR=$WINDOWS_SIGNING_DIRECTORY
+      MINGW_TYPE: mingw32
   script:
     - *build_all_windows_script
     - C:\PROGRA~1\Python37\Scripts\cl -s
