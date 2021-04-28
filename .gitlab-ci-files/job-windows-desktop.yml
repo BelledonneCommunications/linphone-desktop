@@ -6,6 +6,7 @@
 .build_all_windows_script: &build_all_windows_script |
   SET PATH_TEMP=%PATH:C:\MinGW\bin;=%
   SET PATH_TEMP=%PATH_TEMP:C:\Strawberry\c\bin;=%
+  SET PATH_TEMP=%PATH_TEMP:C:\Program Files\NASM=%
   SET Qt5_DIR=C:\Qt\5.14.2\msvc2017\lib\cmake
   SET PATH=%PATH_TEMP%;C:\Qt\5.14.2\msvc2017\bin;C:\msys64;C:\msys64\usr\bin;C:\msys64\%MINGW_TYPE%\bin;
   IF EXIST build RMDIR /S /Q build
