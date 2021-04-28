@@ -34,7 +34,7 @@ You will need the tools :
 - `yasm` : https://yasm.tortall.net/Download.html
 - `nasm` : https://www.nasm.us/pub/nasm/releasebuilds/
 - `doxygen` (required for the Cxx Wrapper)
-- `Perl` : (can be downloaded at http://strawberryperl.com/ for Windows. Set your Path to Perl binaries)
+- `Perl`
 - `Pystache` : use 'pip install pystache --user'
 - `six` : use 'pip install six --user'
 - `git`
@@ -45,7 +45,7 @@ For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 o
 
 1. It's necessary to install the `pip` command and to execute:
 
-        pip install pystache
+        pip install pystache six
 
 2. You have to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5, and the `PATH` to the Qt5 `bin`. Example:
 
@@ -167,29 +167,34 @@ OR
 
 ## Specific instructions for the Windows platform
 
-1. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). (64-bit version is not supported at this moment by Linphone Desktop.)
-  - `MinGW` : [download](https://sourceforge.net/projects/mingw/)
-    - Select all installer options except Ada and Fortran
-    - Install it in the default location (C:/Mingw), this is important as there are hard-links on it.
-    - The gcc version should be 6.3.0. It wasn't tested for other versions. It seems that MinGW from osdn.net try to install gcc 9 that breaks the build.
-  - `Yasm`
-    - download yasm-1.3.0-win32.exe
-    - copy it to a bin directory of your user directory
-    - rename yasm-1.3.0-win32.exe as yasm.exe
-  - `nasm` : [download](https://www.nasm.us/pub/nasm/releasebuilds/2.14.02/win64/)
-  - `git` : [download](https://git-scm.com/download/win)
+64-bit version is not fully supported at this moment by Linphone Desktop and wasn't tested.
+If a build for 64bits is needed, replace all `mingw32` by `mingw64`, `i686` by `x86_64`, `-A Win32` by `-A x64` or simply remove it.
 
-Visual Studio must also be properly configured with addons. Under "Tools"->"Obtain tools and features", make sure that the following components are installed:
-  - Tasks: Select Windows Universal Platform development, Desktop C++ Development, .NET Development
-  - Under "Installation details". Go to "Desktop C++ Development" and add "SDK Windows 8.1 and SDK UCRT"
-  - Individual component: Windows 8.1 SDK
+1. Install main tools:
+  - `MinGW/MSYS2` : [download](https://www.msys2.org/)
+    - Follow instructions on their "Getting Started" page.
+    - Install toolchains and prepare python:
+      - `pacman -Sy --needed base-devel mingw-w64-i686-toolchain`
+      - `pacman -S python3-pip` in `MSYS2 MSYS` console
+      - `python3 -m pip install pystache six` in `cmd`
+    - In this order, add `C:\msys64\`, `C:\msys64\usr\bin` and `C:\msys64\mingw32\bin` in your PATH (the last one is needed by cmake to know where gcc is) to the PATH environement variable from windows advanced settings.
+    
+When building the SDK, it will install automatically from MSYS2 : `perl`, `yasm`, `gawk`, `bzip2`, `nasm, `sed`, `patch`, `pkg-config`, `gettext`, `glib2` and `intltool` (if needed)
 
-2. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvc2017\bin\qtenv2.bat`
+  - `git` : use MSYS2 : `pacman -S git` or [download](https://git-scm.com/download/win)
+  
+  - Visual Studio must also be properly configured with addons. Under "Tools"->"Obtain tools and features", make sure that the following components are installed:
+    - Tasks: Select Windows Universal Platform development, Desktop C++ Development, .NET Development
+    - Under "Installation details". Go to "Desktop C++ Development" and add "SDK Windows 8.1 and SDK UCRT"
+    - Individual component: Windows 8.1 SDK
 
-3. Install msys-coreutils : `mingw-get install msys-coreutils`
+2. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). 
+
+3. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvc2017\bin\qtenv2.bat`
 
 4. Build as usual with adding `-A Win32` to `cmake ..` (General Steps) :
   - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -A Win32`
+The default build is very long. It is prefered to use the Ninja generator `-G "Ninja"`
   - `cmake --build . --target ALL_BUILD --parallel 10 --config RelWithDebInfo`
 
 5. The project folder will be in the build directory and binaries should be in the OUTPUT folder.

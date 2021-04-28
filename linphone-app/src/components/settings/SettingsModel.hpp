@@ -170,6 +170,10 @@ class SettingsModel : public QObject {
 
     Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged)
 
+	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
+	Q_PROPERTY(bool showStartChat READ getShowStartChatButton CONSTANT)
+	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
+
 	// Advanced. -----------------------------------------------------------------
 
     Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged)
@@ -425,6 +429,10 @@ public:
 
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
+
+	bool getShowLocalSipAccount () const;
+	bool getShowStartChatButton () const;
+	bool getShowStartVideoCallButton () const;
 
 	// Advanced. ---------------------------------------------------------------------------
 	
