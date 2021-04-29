@@ -38,6 +38,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 
 #include "utils/Utils.hpp"
 
@@ -106,6 +107,7 @@ void CoreManager::initCoreManager(){
 	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
+	mTimelineListModel = new TimelineListModel(this);
 	mEventCountNotifier->updateUnreadMessageCount();
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
@@ -118,12 +120,12 @@ CoreManager *CoreManager::getInstance (){
    return mInstance;
  }
 
-shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
+shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
   if (peerAddress.isEmpty() || localAddress.isEmpty())
     return nullptr;
 
   // Create a new chat model.
-  QPair<QString, QString> chatModelId{ peerAddress, localAddress };
+  QPair<bool, QPair<QString, QString>> chatModelId{isSecure,{ peerAddress, localAddress }};
   if (!mChatModels.contains(chatModelId)) {
     if (
       !mCore->createAddress(peerAddress.toStdString()) ||
@@ -140,7 +142,7 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
       delete chatModel;
     };
 
-    shared_ptr<ChatModel> chatModel(new ChatModel(peerAddress, localAddress), deleter);
+    shared_ptr<ChatModel> chatModel(new ChatModel(peerAddress, localAddress, isSecure), deleter);
     mChatModels[chatModelId] = chatModel;
 
     emit chatModelCreated(chatModel);
@@ -154,8 +156,46 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
   return chatModel;
 }
 
-bool CoreManager::chatModelExists (const QString &peerAddress, const QString &localAddress) {
-  return mChatModels.contains({ peerAddress, localAddress });
+shared_ptr<ChatModel> CoreManager::getChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom) {
+  if (!chatRoom)
+    return nullptr;
+  auto pc = chatRoom->getCurrentParams();
+	for(auto it = mChatModels.begin() ; it != mChatModels.end() ; ++it)	{
+		auto a = it->lock();
+		auto pa = a->getChatRoom()->getCurrentParams();
+		if( a->getChatRoom()->getConferenceAddress()  == chatRoom->getConferenceAddress()
+				&& a->getChatRoom()->getLocalAddress()  == chatRoom->getLocalAddress()
+				&& a->getChatRoom()->getPeerAddress()  == chatRoom->getPeerAddress()
+				&& a->getChatRoom()->getPeerAddress()  == chatRoom->getPeerAddress()
+				&& pa->encryptionEnabled() == pc->encryptionEnabled()
+				){
+		// Returns an existing chat model.
+			shared_ptr<ChatModel> chatModel = a;
+			Q_CHECK_PTR(chatModel);
+			return chatModel;
+		}
+	}
+	
+	QPair<bool, QPair<QString, QString>> chatModelId{pc->encryptionEnabled(),
+		{ QString::fromStdString(chatRoom->getPeerAddress()->asString())
+					, QString::fromStdString(chatRoom->getLocalAddress()->asString()) }};
+	
+  
+	  auto deleter = [this, chatModelId](ChatModel *chatModel) {
+		bool removed = mChatModels.remove(chatModelId);
+		Q_ASSERT(removed);
+		chatModel->deleteLater();
+	  };
+  
+	  shared_ptr<ChatModel> chatModel(new ChatModel(chatRoom), deleter);
+	  mChatModels[chatModelId] = chatModel;
+  
+	  emit chatModelCreated(chatModel);
+  
+	  return chatModel;
+}
+bool CoreManager::chatModelExists (const QString &peerAddress, const QString &localAddress, const bool &isSecure) {
+  return mChatModels.contains({isSecure, { peerAddress, localAddress}});
 }
 
 HistoryModel* CoreManager::getHistoryModel(){
@@ -275,6 +315,12 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     Paths::getFactoryConfigFilePath(),
     nullptr
   );
+  // You only need to give your LIME server URL
+  mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
+	// and enable LIME on your core to use encryption.
+  mCore->enableLimeX3Dh(true);
+					  // Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
+  
   mCore->addListener(mHandlers);
   mCore->setVideoDisplayFilter("MSQOGL");
   mCore->usePreviewWindow(true);

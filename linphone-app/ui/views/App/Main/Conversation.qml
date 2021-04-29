@@ -17,6 +17,8 @@ ColumnLayout  {
   property string localAddress
   property string fullPeerAddress
   property string fullLocalAddress
+  property int isSecure
+  property var chatRoom
 
   readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 
@@ -170,11 +172,13 @@ ColumnLayout  {
         }
         resetMessageCount()
       }
-
+	  isSecure: conversation.isSecure
+	  chatRoom: conversation.chatRoom
       peerAddress: conversation.peerAddress
-      localAddress: conversation.localAddress
       fullPeerAddress: conversation.fullPeerAddress
       fullLocalAddress: conversation.fullLocalAddress
+	  localAddress: conversation.localAddress// Reload is done on localAddress. Use this order
+	  
     }
   }
 

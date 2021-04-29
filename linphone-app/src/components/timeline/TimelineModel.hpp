@@ -23,32 +23,53 @@
 
 #include <QSortFilterProxyModel>
 // =============================================================================
+#include <QObject>
+#include <QDateTime>
 
-class TimelineModel : public QSortFilterProxyModel {
-  Q_OBJECT;
+#include <linphone++/chat_room.hh>
 
-  Q_PROPERTY(QString localAddress READ getLocalAddress NOTIFY localAddressChanged);
+#include "../contact/ContactModel.hpp"
+
+class ChatModel;
+
+class TimelineModel : public QObject {
+  Q_OBJECT
 
 public:
-  TimelineModel (QObject *parent = Q_NULLPTR);
+	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
+	
+	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress NOTIFY fullLocalAddressChanged)
+	Q_PROPERTY(std::shared_ptr<ChatModel> chatRoom READ getChatRoom CONSTANT)
+	
+// Contact
+	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
+	Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
+	Q_PROPERTY(int presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)
+	
+	
+	QString getFullPeerAddress() const;
+	QString getFullLocalAddress() const;
+	
+	QString getUsername() const;
+	QString getAvatar() const;
+	int getPresenceStatus() const;
+	
+	
+	std::shared_ptr<ChatModel> getChatRoom() const;
 
-  QHash<int, QByteArray> roleNames () const override;
+	QDateTime mTimestamp;
+	std::shared_ptr<ChatModel> mChatModel;
+	//std::shared_ptr<linphone::ChatRoom> mChatRoom;
 
 signals:
-  void localAddressChanged (const QString &localAddress);
-
-protected:
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-
-  QString getLocalAddress () const;
-  QString getCleanedLocalAddress () const;
-  void handleLocalAddressChanged (const QString &localAddress);
-
-private:
-  QString mLocalAddress;
+	void fullPeerAddressChanged();
+	void fullLocalAddressChanged();
+	void usernameChanged();
+	void avatarChanged();
+	void presenceStatusChanged();
+  
 };
 
 #endif // TIMELINE_MODEL_H_

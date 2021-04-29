@@ -309,13 +309,58 @@ private:
 
 // -----------------------------------------------------------------------------
 
-ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress) {
+ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
   CoreManager *coreManager = CoreManager::getInstance();
 
   mCoreHandlers = coreManager->getHandlers();
   mMessageHandlers = make_shared<MessageHandlers>(this);
 
-  setSipAddresses(peerAddress, localAddress);
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Factory> factory(linphone::Factory::get());
+  std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+  std::list<std::shared_ptr<linphone::Address>> participants;
+  
+  //params->enableEncryption(isSecure);
+  //if(isSecure){
+	//  params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
+//	  params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+//  }
+  
+  mChatRoom = core->searchChatRoom(params, factory->createAddress(localAddress.toStdString())
+								   , factory->createAddress(peerAddress.toStdString())
+								   , participants);
+  /*
+  mChatRoom = core->getChatRoom(
+    factory->createAddress(peerAddress.toStdString()),
+    factory->createAddress(localAddress.toStdString())
+  );*/
+  Q_ASSERT(mChatRoom);
+
+  handleIsComposingChanged(mChatRoom);
+
+  // Get messages.
+  mEntries.clear();
+
+  QElapsedTimer timer;
+  timer.start();
+
+  for (auto &message : mChatRoom->getHistory(0))
+    mEntries << qMakePair(
+      QVariantMap{
+        { "type", EntryType::MessageEntry },
+        { "timestamp", QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000) }
+      },
+      static_pointer_cast<void>(message)
+    );
+
+  // Get calls.
+  if(!getIsSecure() )
+	for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
+	    insertCall(callLog);
+
+  qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
+    .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
+  
 // Rebind lost handlers
   for(auto i = mEntries.begin() ; i != mEntries.end() ; ++i){
     if(i->first["type"] == EntryType::MessageEntry){
@@ -330,7 +375,67 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress) {
     QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
     QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
   }
+  if(!mChatRoom)
+	  qWarning("TOTO A");
+}
+
+ChatModel::ChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
+	CoreManager *coreManager = CoreManager::getInstance();
   
+	mCoreHandlers = coreManager->getHandlers();
+	mMessageHandlers = make_shared<MessageHandlers>(this);
+  
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	shared_ptr<linphone::Factory> factory(linphone::Factory::get());
+	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+	std::list<std::shared_ptr<linphone::Address>> participants;
+	
+	
+	mChatRoom = chatRoom;
+	
+	Q_ASSERT(mChatRoom);
+  
+	handleIsComposingChanged(mChatRoom);
+  
+	// Get messages.
+	mEntries.clear();
+  
+	QElapsedTimer timer;
+	timer.start();
+  
+	for (auto &message : mChatRoom->getHistory(0))
+	  mEntries << qMakePair(
+		QVariantMap{
+		  { "type", EntryType::MessageEntry },
+		  { "timestamp", QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000) }
+		},
+		static_pointer_cast<void>(message)
+	  );
+  
+	// Get calls.
+	if(!getIsSecure() )
+	  for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
+		  insertCall(callLog);
+  
+
+
+	
+  // Rebind lost handlers
+	for(auto i = mEntries.begin() ; i != mEntries.end() ; ++i){
+	  if(i->first["type"] == EntryType::MessageEntry){
+		shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(i->second);
+		message->removeListener(mMessageHandlers);// Remove old listener if already exists
+		message->addListener(mMessageHandlers);
+	  }
+	}
+	{
+	  CoreHandlers *coreHandlers = mCoreHandlers.get();
+	  QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
+	  QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
+	  QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
+	}
+	if(!mChatRoom)
+		qWarning("TOTO B");
 }
 
 ChatModel::~ChatModel () {
@@ -407,20 +512,34 @@ QString ChatModel::getLocalAddress () const {
   );
 }
 QString ChatModel::getFullPeerAddress () const {
+	if(!mChatRoom)
+		qWarning("TOTO Z");
   return QString::fromStdString(mChatRoom->getPeerAddress()->asString());
 }
 
 QString ChatModel::getFullLocalAddress () const {
   return QString::fromStdString(mChatRoom->getLocalAddress()->asString());
 }
-void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress) {
+void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());
+  std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+  std::list<std::shared_ptr<linphone::Address>> participants;
   
+  //params->enableEncryption(isSecure);
+  //if(isSecure){
+	//  params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
+//	  params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+//  }
+  
+  mChatRoom = core->searchChatRoom(params, factory->createAddress(localAddress.toStdString())
+								   , factory->createAddress(peerAddress.toStdString())
+								   , participants);
+  /*
   mChatRoom = core->getChatRoom(
     factory->createAddress(peerAddress.toStdString()),
     factory->createAddress(localAddress.toStdString())
-  );
+  );*/
   Q_ASSERT(mChatRoom);
 
   handleIsComposingChanged(mChatRoom);
@@ -441,12 +560,21 @@ void ChatModel::setSipAddresses (const QString &peerAddress, const QString &loca
     );
 
   // Get calls.
-  for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
-    insertCall(callLog);
+  if(!getIsSecure() )
+	for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
+	    insertCall(callLog);
 
   qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
     .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
+  
+  if(!mChatRoom)
+	  qWarning("TOTO C");
 
+}
+
+bool ChatModel::getIsSecure() const{
+	return mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
+			|| mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe;
 }
 
 bool ChatModel::getIsRemoteComposing () const {
@@ -637,7 +765,9 @@ void ChatModel::resetMessageCount () {
   }
   emit messageCountReset();
 }
-
+std::shared_ptr<linphone::ChatRoom> ChatModel::getChatRoom(){
+	return mChatRoom;
+}
 // -----------------------------------------------------------------------------
 
 const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {

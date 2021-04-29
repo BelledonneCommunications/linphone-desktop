@@ -21,6 +21,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/chat/ChatModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "TimelineModel.hpp"
@@ -30,73 +31,40 @@
 
 // =============================================================================
 
-TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  CoreManager *coreManager = CoreManager::getInstance();
-  AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
-
-  QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
-    handleLocalAddressChanged(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsStringUriOnly());
-  });
-  QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
-    invalidate();// Invalidate and reload GUI if the model has been reset
-  });
-  mLocalAddress = accountSettingsModel->getUsedSipAddressAsStringUriOnly();
-
-  setSourceModel(coreManager->getSipAddressesModel());
-  sort(0);
+TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent) : QObject(parent) {
+	mChatModel = CoreManager::getInstance()->getChatModel(chatRoom);
 }
 
-QHash<int, QByteArray> TimelineModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$timelineEntry";
-  return roles;
+QString TimelineModel::getFullPeerAddress() const{
+	return mChatModel->getFullPeerAddress();
+}
+QString TimelineModel::getFullLocalAddress() const{
+	return mChatModel->getLocalAddress();
 }
 
-// -----------------------------------------------------------------------------
 
-static inline const QHash<QString, SipAddressesModel::ConferenceEntry> *getLocalToConferenceEntry (const QVariantMap &map) {
-  return map.value("__localToConferenceEntry").value<decltype(getLocalToConferenceEntry({}))>();
+QString TimelineModel::getUsername() const{
+	std::string username = mChatModel->getChatRoom()->getSubject();
+	if(username != ""){
+		return QString::fromStdString(username);
+	}
+	username = mChatModel->getChatRoom()->getPeerAddress()->getDisplayName();
+	if(username != "")
+		return QString::fromStdString(username);
+	username = mChatModel->getChatRoom()->getPeerAddress()->getUsername();
+	if(username != "")
+		return QString::fromStdString(username);
+	return QString::fromStdString(mChatModel->getChatRoom()->getPeerAddress()->asStringUriOnly());
 }
 
-QVariant TimelineModel::data (const QModelIndex &index, int role) const {
-  QVariantMap map(QSortFilterProxyModel::data(index, role).toMap());
-
-  auto localToConferenceEntry = getLocalToConferenceEntry(map);
-  auto it = localToConferenceEntry->find(getCleanedLocalAddress());
-  if (it != localToConferenceEntry->end()) {
-    map["timestamp"] = it->timestamp;
-    map["isComposing"] = it->isComposing;
-    map["unreadMessageCount"] = it->unreadMessageCount;
-    map["missedCallCount"] = it->missedCallCount;
-  }
-
-  return map;
+QString TimelineModel::getAvatar() const{
+	return "";
 }
 
-bool TimelineModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	return getLocalToConferenceEntry(index.data().toMap())->contains(getCleanedLocalAddress());
+int TimelineModel::getPresenceStatus() const{
+	return 0;
 }
 
-bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-QString localAddress = getCleanedLocalAddress();
-  const QDateTime &a(getLocalToConferenceEntry(sourceModel()->data(left).toMap())->find(localAddress)->timestamp);
-  const QDateTime &b(getLocalToConferenceEntry(sourceModel()->data(right).toMap())->find(localAddress)->timestamp);
-  return a > b;
-}
-
-// -----------------------------------------------------------------------------
-QString TimelineModel::getLocalAddress () const
-{
-    return mLocalAddress;
-}
-QString TimelineModel::getCleanedLocalAddress () const
-{
-    return Utils::cleanSipAddress(mLocalAddress);
-}
-void TimelineModel::handleLocalAddressChanged (const QString &localAddress) {
-  if (mLocalAddress != localAddress) {
-    mLocalAddress = localAddress;
-    invalidate();
-  }
+std::shared_ptr<ChatModel> TimelineModel::getChatRoom() const{
+	return mChatModel;
 }

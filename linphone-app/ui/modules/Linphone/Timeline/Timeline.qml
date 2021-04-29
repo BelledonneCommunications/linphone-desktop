@@ -19,7 +19,8 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  signal entrySelected (string entry)
+  //signal entrySelected (string entry)
+  signal entrySelected (TimelineModel entry)
 
   // ---------------------------------------------------------------------------
 
@@ -62,7 +63,7 @@ Rectangle {
         anchors.fill:parent
         onClicked: {
           view.currentIndex = -1
-          timeline.entrySelected('')
+          timeline.entrySelected('',false)
           }
       }
 
@@ -117,7 +118,9 @@ Rectangle {
                 : TimelineStyle.contact.backgroundColor.b
             )
           displayUnreadMessageCount: SettingsModel.chatEnabled
-          entry: $timelineEntry
+          //entry: $timelineEntry
+		  //entry: SipAddressesModel.getSipAddressObserver(modelData.fullPeerAddress, modelData.fullLocalAddress)
+		  entry: modelData
           sipAddressColor: isSelected
             ? TimelineStyle.contact.sipAddress.color.selected
             : TimelineStyle.contact.sipAddress.color.normal
@@ -128,10 +131,11 @@ Rectangle {
           Loader {
             anchors.fill: parent
             sourceComponent: TooltipArea {
-              text: $timelineEntry.timestamp.toLocaleString(
-                Qt.locale(App.locale),
-                Locale.ShortFormat
-              )
+				
+              //text: $timelineEntry.timestamp.toLocaleString(
+                //Qt.locale(App.locale),
+                //Locale.ShortFormat
+              //)
             }
           }
         }
@@ -140,7 +144,8 @@ Rectangle {
           anchors.fill: parent
           onClicked: {
             view.currentIndex = index
-            timeline.entrySelected($timelineEntry.sipAddress)
+			  timeline.entrySelected(modelData)
+            //timeline.entrySelected($timelineEntry.sipAddress, $timelineEntry.isSecure)
           }
         }
       }

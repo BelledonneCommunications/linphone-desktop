@@ -48,6 +48,10 @@
 #include "utils/Utils.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
 
+#include "components/timeline/TimelineModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
+#include "components/timeline/TimelineProxyModel.hpp"
+
 // =============================================================================
 
 using namespace std;
@@ -581,6 +585,7 @@ void App::registerTypes () {
   qRegisterMetaType<ChatModel::EntryType>();
   qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
   qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();
+  qRegisterMetaType<std::shared_ptr<ChatModel>>();
 
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
@@ -599,13 +604,14 @@ void App::registerTypes () {
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SearchSipAddressesModel>("SearchSipAddressesModel");
   
+  registerType<TimelineProxyModel>("TimelineProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
-  registerSingletonType<TimelineModel>("TimelineModel");
+  //registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<UrlHandlers>("UrlHandlers");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
@@ -618,6 +624,7 @@ void App::registerTypes () {
   registerUncreatableType<LdapModel>("LdapModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
+  registerUncreatableType<TimelineModel>("TimelineModel");
 }
 
 void App::registerSharedTypes () {
@@ -632,6 +639,7 @@ void App::registerSharedTypes () {
   registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
   registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
   registerSharedSingletonType<LdapListModel, &CoreManager::getLdapListModel>("LdapListModel");
+  registerSharedSingletonType<TimelineListModel, &CoreManager::getTimelineListModel>("TimelineListModel");
 }
 
 void App::registerToolTypes () {

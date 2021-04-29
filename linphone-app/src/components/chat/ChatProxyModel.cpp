@@ -64,6 +64,7 @@ private:
 
 ChatProxyModel::ChatProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(new ChatModelFilter(this));
+  mIsSecure = false;
 
   App *app = App::getInstance();
   QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
@@ -168,7 +169,7 @@ QString ChatProxyModel::getPeerAddress () const {
 
 void ChatProxyModel::setPeerAddress (const QString &peerAddress) {
   mPeerAddress = peerAddress;
-  reload();
+  //reload();
 }
 
 QString ChatProxyModel::getLocalAddress () const {
@@ -177,7 +178,7 @@ QString ChatProxyModel::getLocalAddress () const {
 
 void ChatProxyModel::setLocalAddress (const QString &localAddress) {
   mLocalAddress = localAddress;
-  reload();
+  //reload();
 }
 
 QString ChatProxyModel::getFullPeerAddress () const {
@@ -196,6 +197,14 @@ QString ChatProxyModel::getFullLocalAddress () const {
 void ChatProxyModel::setFullLocalAddress (const QString &localAddress) {
   mFullLocalAddress = localAddress;
   //reload();
+}
+
+int ChatProxyModel::getIsSecure () const {
+  return mChatModel ? mChatModel->getIsSecure() : -1;
+}
+
+void ChatProxyModel::setIsSecure (const int &secure) {
+  mIsSecure = secure;
 }
 
 bool ChatProxyModel::getIsRemoteComposing () const {
@@ -218,7 +227,10 @@ void ChatProxyModel::reload () {
     QObject::disconnect(chatModel, &ChatModel::messageSent, this, &ChatProxyModel::handleMessageSent);
   }
 
-  mChatModel = CoreManager::getInstance()->getChatModel(mPeerAddress, mLocalAddress);
+  //mChatModel = CoreManager::getInstance()->getChatModel(mPeerAddress, mLocalAddress, mIsSecure);
+  //if(mChatRoom)
+		mChatModel = CoreManager::getInstance()->getChatModel(mChatRoom);
+  
 
   if (mChatModel) {
 
@@ -234,6 +246,16 @@ void ChatProxyModel::resetMessageCount(){
 	if( mChatModel){
 		mChatModel->resetMessageCount();
 	}
+}
+
+std::shared_ptr<ChatModel> ChatProxyModel::getChatRoom () const{
+	return mChatModel;
+	
+}
+void ChatProxyModel::setChatRoom (std::shared_ptr<ChatModel> chatModel){
+	mChatRoom = chatModel->getChatRoom();
+	reload();
+	emit chatRoomChanged();
 }
 // -----------------------------------------------------------------------------
 
