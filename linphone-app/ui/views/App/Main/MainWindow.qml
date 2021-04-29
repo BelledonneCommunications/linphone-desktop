@@ -160,20 +160,23 @@ ApplicationWindow {
                 window.setView('ContactEdit', { sipAddress: entry.sipAddress })
               } else {
                 window.setView('Conversation', {
+                  isSecure: entry.isSecure,
                   peerAddress: entry.sipAddress,
-                  localAddress: AccountSettingsModel.sipAddress,
                   fullPeerAddress: entry.fullSipAddress,
-                  fullLocalAddress: AccountSettingsModel.fullSipAddress
+                  fullLocalAddress: AccountSettingsModel.fullSipAddress,
+					localAddress: AccountSettingsModel.sipAddress
+								   
                 })
               }
             }
 
             onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
             onLaunchChat: window.setView('Conversation', {
+              isSecure:false,
               peerAddress: sipAddress,
-              localAddress: AccountSettingsModel.sipAddress,
               fullPeerAddress: sipAddress,
-              fullLocalAddress: AccountSettingsModel.fullSipAddress
+              fullLocalAddress: AccountSettingsModel.fullSipAddress,
+			localAddress: AccountSettingsModel.sipAddress
             })
 
             onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
@@ -259,13 +262,16 @@ ApplicationWindow {
 
             Layout.fillHeight: true
             Layout.fillWidth: true
-            model: TimelineModel
+			model: TimelineProxyModel{}
 
             onEntrySelected: (entry?setView('Conversation', {
-                 peerAddress: entry,
-                 localAddress: AccountSettingsModel.sipAddress,
-                 fullPeerAddress: entry,
-                 fullLocalAddress: AccountSettingsModel.fullSipAddress
+				isSecure:-1,			
+                 peerAddress: entry.fullPeerAddress,
+                 fullPeerAddress: entry.fullPeerAddress,
+                 fullLocalAddress: AccountSettingsModel.fullSipAddress,
+					localAddress: AccountSettingsModel.sipAddress,
+					chatRoom:entry.chatRoom
+					
                 }):
                  setView('HistoryView', {})
             )

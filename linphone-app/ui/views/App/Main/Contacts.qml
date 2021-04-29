@@ -148,6 +148,11 @@ ColumnLayout {
                   icon: SettingsModel.chatEnabled && SettingsModel.showStartChatButton ? 'chat' : 'history'
                   onClicked: actions.itemAt(2).open()
                 }
+				
+				ActionButton {
+				  icon: 'call_chat_unsecure'
+				  onClicked: {console.log("A");actions.itemAt(3).open()}
+				}
               }
 
               ActionButton {
@@ -176,8 +181,23 @@ ColumnLayout {
                   peerAddress: sipAddress,
                   localAddress: AccountSettingsModel.sipAddress,
                   fullPeerAddress: sipAddress,
-                  fullLocalAddress: AccountSettingsModel.fullSipAddress
+                  fullLocalAddress: AccountSettingsModel.fullSipAddress,
+					secure:false
                 })
+			  },
+				  function (sipAddress) {
+					  console.log("B")
+					  if(CallsListModel.launchSecureChat(sipAddress)){
+						  console.log("C")
+						window.setView('Conversation', {
+							peerAddress: sipAddress,
+							localAddress: AccountSettingsModel.sipAddress,
+							fullPeerAddress: sipAddress,
+							fullLocalAddress: AccountSettingsModel.fullSipAddress,
+							secure:true   
+						})
+					  }else
+						  console.log("D")
               }
             ]
 

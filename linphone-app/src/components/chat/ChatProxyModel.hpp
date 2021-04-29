@@ -38,7 +38,11 @@ class ChatProxyModel : public QSortFilterProxyModel {
   Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged);
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged);
+  Q_PROPERTY(int isSecure READ getIsSecure WRITE setIsSecure NOTIFY isSecureChanged);
+  Q_PROPERTY(std::shared_ptr<ChatModel> chatRoom READ getChatRoom WRITE setChatRoom NOTIFY chatRoomChanged);
+  //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
+  //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged);
   Q_PROPERTY(QString cachedText READ getCachedText);
 
 public:
@@ -62,13 +66,16 @@ public:
   Q_INVOKABLE void compose (const QString& text);
 
   Q_INVOKABLE void resetMessageCount();
-
+  
 signals:
   void peerAddressChanged (const QString &peerAddress);
   void localAddressChanged (const QString &localAddress);
   void fullPeerAddressChanged (const QString &fullPeerAddress);
   void fullLocalAddressChanged (const QString &fullLocalAddress);
   bool isRemoteComposingChanged (bool status);
+  bool isSecureChanged(bool secure);
+  
+  void chatRoomChanged();
 
   void moreEntriesLoaded (int n);
 
@@ -89,6 +96,12 @@ private:
 
   QString getFullLocalAddress () const;
   void setFullLocalAddress (const QString &localAddress);
+  
+  int getIsSecure () const;
+  void setIsSecure (const int &secure);
+  
+  std::shared_ptr<ChatModel> getChatRoom () const;
+  void setChatRoom (std::shared_ptr<ChatModel> chatRoom);
 
   bool getIsRemoteComposing () const;
   
@@ -108,7 +121,10 @@ private:
   QString mLocalAddress;
   QString mFullPeerAddress;
   QString mFullLocalAddress;
+  int mIsSecure;
   static QString gCachedText;
+  std::shared_ptr<linphone::ChatRoom> mChatRoom;
+  
 
   std::shared_ptr<ChatModel> mChatModel;
 

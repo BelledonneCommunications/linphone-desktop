@@ -59,6 +59,8 @@
 #include "sound-player/SoundPlayer.hpp"
 #include "telephone-numbers/TelephoneNumbersModel.hpp"
 #include "timeline/TimelineModel.hpp"
+#include "timeline/TimelineProxyModel.hpp"
+#include "timeline/TimelineListModel.hpp"
 #include "url-handlers/UrlHandlers.hpp"
 
 #include "other/colors/Colors.hpp"

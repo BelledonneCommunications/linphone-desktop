@@ -165,6 +165,8 @@ set(SOURCES
     src/components/sound-player/SoundPlayer.cpp
     src/components/telephone-numbers/TelephoneNumbersModel.cpp
     src/components/timeline/TimelineModel.cpp
+    src/components/timeline/TimelineListModel.cpp
+    src/components/timeline/TimelineProxyModel.cpp
     src/components/url-handlers/UrlHandlers.cpp
     src/utils/LinphoneUtils.cpp
     src/utils/MediastreamerUtils.cpp
@@ -241,6 +243,8 @@ set(HEADERS
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
     src/components/timeline/TimelineModel.hpp
+    src/components/timeline/TimelineListModel.hpp
+    src/components/timeline/TimelineProxyModel.hpp
     src/components/url-handlers/UrlHandlers.hpp
     src/utils/LinphoneUtils.hpp
     src/utils/MediastreamerUtils.hpp

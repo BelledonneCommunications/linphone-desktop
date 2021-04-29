@@ -73,7 +73,8 @@ public:
   };
   Q_ENUM(MessageStatus);
 
-  ChatModel (const QString &peerAddress, const QString &localAddress);
+  ChatModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure);
+  ChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom);
   ~ChatModel ();
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
@@ -88,6 +89,8 @@ public:
   QString getLocalAddress () const;
   QString getFullPeerAddress () const;
   QString getFullLocalAddress () const;
+  
+  bool getIsSecure() const;
 
   bool getIsRemoteComposing () const;
 
@@ -111,6 +114,8 @@ public:
   void compose ();
 
   void resetMessageCount ();
+  
+  std::shared_ptr<linphone::ChatRoom> getChatRoom();
 
 signals:
   bool isRemoteComposingChanged (bool status);
@@ -128,7 +133,7 @@ signals:
 private:
   typedef QPair<QVariantMap, std::shared_ptr<void>> ChatEntryData;
 
-  void setSipAddresses (const QString &peerAddress, const QString &localAddress);
+  void setSipAddresses (const QString &peerAddress, const QString &localAddress, const bool& isSecure);
 
   const ChatEntryData getFileMessageEntry (int id);
 
@@ -144,10 +149,13 @@ private:
   bool mIsRemoteComposing = false;
 
   mutable QList<ChatEntryData> mEntries;
-  std::shared_ptr<linphone::ChatRoom> mChatRoom;
 
   std::shared_ptr<CoreHandlers> mCoreHandlers;
   std::shared_ptr<MessageHandlers> mMessageHandlers;
+  
+  std::shared_ptr<linphone::ChatRoom> mChatRoom;
 };
+
+Q_DECLARE_METATYPE(std::shared_ptr<ChatModel>);
 
 #endif // CHAT_MODEL_H_

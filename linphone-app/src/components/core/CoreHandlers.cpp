@@ -196,7 +196,9 @@ void CoreHandlers::onMessageReceived (
       !app->hasFocus() ||
       !CoreManager::getInstance()->chatModelExists(
         Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()),
-        Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())
+        Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()),
+				chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
+						   || chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe
       )
     )
       core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));

@@ -19,8 +19,9 @@ Rectangle {
 
   // A entry from `SipAddressesModel` or an `SipAddressObserver`.
   property var entry
+  // entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
 
-  readonly property var _contact: entry.contact
+  //readonly property var _contact: entry.contact
 
   // ---------------------------------------------------------------------------
 
@@ -41,13 +42,15 @@ Rectangle {
       Layout.preferredHeight: ContactStyle.contentHeight
       Layout.preferredWidth: ContactStyle.contentHeight
 
-      image: _contact && _contact.vcard.avatar
+      //image: _contact && _contact.vcard.avatar
+	  image: entry.avatar
 
       presenceLevel: entry.presenceStatus != null
         ? Presence.getPresenceLevel(entry.presenceStatus)
         : -1
 
-      username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+      //username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+	  username: entry.username
     }
 
     ContactDescription {
@@ -57,7 +60,8 @@ Rectangle {
       Layout.fillWidth: true
       Layout.leftMargin: ContactStyle.spacing
 
-      sipAddress: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+      //sipAddress: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+	  sipAddress: entry.sipAddress
       username: avatar.username
     }
 

@@ -151,6 +151,38 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
   core->inviteAddressWithParams(address, params);
 }
 
+bool CallsListModel::launchSecureChat (const QString &sipAddress) const {
+  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+  shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
+  if (!address)
+    return false;
+  
+  std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+  std::list <shared_ptr<linphone::Address> > participants;
+  std::shared_ptr<const linphone::Address> localAddress;
+  participants.push_back(address);
+  auto proxy = core->getDefaultProxyConfig();
+  params->enableEncryption(true);
+  
+  params->setSubject("This is Desktop test");
+  params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
+  params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+
+  std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
+  /*
+  if( chatRoom!=nullptr){
+	  auto search = core->searchChatRoom(params, localAddress
+								, address
+								, participants);
+	  if(search != chatRoom)
+		  qWarning("toto");
+  }
+  
+  
+  return chatRoom!=nullptr;
+  */
+  return false;
+}
 // -----------------------------------------------------------------------------
 
 int CallsListModel::getRunningCallsNumber () const {

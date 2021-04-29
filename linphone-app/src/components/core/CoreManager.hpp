@@ -43,6 +43,7 @@ class LdapListModel;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
+class TimelineListModel;
 
 
 class CoreManager : public QObject {
@@ -66,8 +67,9 @@ public:
     return mHandlers;
   }
 
-  std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress);
-  bool chatModelExists (const QString &sipAddress, const QString &localAddress);
+  std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress, const bool &isSecure);
+  std::shared_ptr<ChatModel> getChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom);
+  bool chatModelExists (const QString &sipAddress, const QString &localAddress, const bool &isSecure);
   
   HistoryModel* getHistoryModel();
 
@@ -101,8 +103,11 @@ public:
     Q_CHECK_PTR(mContactsImporterListModel);
     return mContactsImporterListModel;
   }
-  
-  
+
+  TimelineListModel *getTimelineListModel () const {
+	  Q_CHECK_PTR(mTimelineListModel);
+	  return mTimelineListModel;
+  }
 
   SipAddressesModel *getSipAddressesModel () const {
     Q_CHECK_PTR(mSipAddressesModel);
@@ -194,6 +199,7 @@ private:
   CallsListModel *mCallsListModel = nullptr;
   ContactsListModel *mContactsListModel = nullptr;
   ContactsImporterListModel *mContactsImporterListModel = nullptr;
+  TimelineListModel *mTimelineListModel = nullptr;
   
   SipAddressesModel *mSipAddressesModel = nullptr;
   SettingsModel *mSettingsModel = nullptr;
@@ -201,7 +207,7 @@ private:
 
   EventCountNotifier *mEventCountNotifier = nullptr;
 
-  QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
+  QHash<QPair<bool, QPair<QString, QString> >, std::weak_ptr<ChatModel>> mChatModels;
   HistoryModel * mHistoryModel = nullptr;
   LdapListModel *mLdapListModel = nullptr;
 
