@@ -149,6 +149,12 @@ if (WIN32)
 		)
 
 	install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}.exe\" -qmldir=${LINPHONE_QML_DIR} --compiler-runtime)")# -verbose=2)"  COMPONENT binary_application)
+#On Windows, OpenLDAP couldn't be build with static libraries. Add them in installation for deployment.
+	find_file (LDAP_SSL_DLL NAMES "libssl.dll" "libssl-1_1.dll")
+	find_file (LDAP_CRYPTO_DLL NAMES "libcrypto.dll" "libcrypto-1_1.dll")
+	find_file (LDAP_GCC_DLL NAMES "libgcc.dll" "libgcc_s_dw2-1.dll")
+	find_file (LDAP_WINTHREAD_DLL NAMES "libwinpthread.dll" "libwinpthread-1.dll")
+	install(FILES ${LDAP_SSL_DLL} ${LDAP_CRYPTO_DLL} ${LDAP_GCC_DLL} ${LDAP_WINTHREAD_DLL} DESTINATION "${CMAKE_INSTALL_BINDIR}/" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 
 #  list(REMOVE_ITEM SHARE_CONTENT "${CMAKE_INSTALL_DATAROOTDIR}/belr" "${CMAKE_INSTALL_DATAROOTDIR}/Belr" "${CMAKE_INSTALL_DATAROOTDIR}/images" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/sounds")
 #  foreach (ITEM IN LISTS SHARE_CONTENT)

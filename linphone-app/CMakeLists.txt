@@ -510,8 +510,9 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 if(WIN32)
-	find_library(LDAP_LIBRARIES NAMES ldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
-	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES})
+	find_library(LDAP_LIBRARIES NAMES ldap libldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
+	find_library(LBER_LIBRARIES NAMES lber liblber HINTS "${LINPHONE_OUTPUT_DIR}/lib")
+	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES} ${LBER_LIBRARIES})
 endif()
 
 add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
