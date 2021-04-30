@@ -110,6 +110,8 @@ option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
 option(ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." NO)
 
 
+
+
 if(WIN32 OR APPLE)
 else()
 	option(ENABLE_V4L "Ability to capture and display video using libv4l2 or libv4l." YES)
@@ -132,6 +134,7 @@ list(APPEND APP_OPTIONS "-DENABLE_BUILD_EXAMPLES=${ENABLE_BUILD_EXAMPLES}")
 list(APPEND APP_OPTIONS "-DENABLE_DAEMON=${ENABLE_DAEMON}")
 list(APPEND APP_OPTIONS "-DENABLE_CONSOLE_UI=${ENABLE_CONSOLE_UI}")
 list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
+
 	
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
