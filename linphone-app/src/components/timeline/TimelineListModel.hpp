@@ -22,6 +22,7 @@
 #define TIMELINE_LIST_MODEL_H_
 
 #include <QSortFilterProxyModel>
+#include "components/chat/ChatModel.hpp"
 
 class TimelineModel;
 // =============================================================================
@@ -33,6 +34,9 @@ public:
     TimelineListModel (QObject *parent = Q_NULLPTR);
     
     void reset();
+	void update();
+	TimelineModel * getAt(const int& index);
+	TimelineModel * getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
   
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
   
@@ -46,7 +50,10 @@ private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
 	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	
+	
+	
 	void initTimeline ();
+	void updateTimelines();
 
 	QList<TimelineModel*> mTimelines;
 };

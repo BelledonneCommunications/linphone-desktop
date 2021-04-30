@@ -117,12 +117,12 @@ function updateSelectedEntry (view, props) {
     timeline.resetSelectedEntry()
   } else {
     menu.resetSelectedEntry()
-
+/*
     if (view === 'Conversation') {
       timeline.setSelectedEntry(props.peerAddress, props.localAddress)
     } else if (view === 'ContactEdit') {
       timeline.resetSelectedEntry()
-    }
+    }*/
   }
 }
 

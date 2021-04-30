@@ -36,10 +36,18 @@ TimelineListModel::TimelineListModel (QObject *parent) : QAbstractListModel(pare
 }
 
 // -----------------------------------------------------------------------------
+
+TimelineModel * TimelineListModel::getAt(const int& index){
+	return mTimelines[index];
+}
+
 void TimelineListModel::reset(){
   initTimeline();
 }
 
+void TimelineListModel::update(){
+	
+}
 int TimelineListModel::rowCount (const QModelIndex &) const {
   return mTimelines.count();
 }
@@ -125,6 +133,36 @@ void TimelineListModel::initTimeline () {
 			delete model;
 	}
 	*/
+}
+
+TimelineModel * TimelineListModel::getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create){
+	if(chatRoom){
+		for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it){
+			if( (*it)->getChatModel()->getChatRoom() == chatRoom){
+				return *it;
+			}
+		}
+		if(create)
+			return new TimelineModel(chatRoom);
+	}
+	return nullptr;
+}
+
+void TimelineListModel::updateTimelines () {
+	CoreManager *coreManager = CoreManager::getInstance();
+	auto currentAddress = coreManager->getAccountSettingsModel()->getUsedSipAddress();
+			
+	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
+	QList<TimelineModel*> models;
+	for(auto itAllChatRooms = allChatRooms.begin() ; itAllChatRooms != allChatRooms.end() ; ++itAllChatRooms){
+		if((*itAllChatRooms)->getMe()->getAddress()->weakEqual(currentAddress)){
+			models << getTimeline(*itAllChatRooms, true);
+			//models << new TimelineModel(*itAllChatRooms);
+		}
+	}
+	//beginInsertRows(QModelIndex(), 0, models.count()-1);
+	
+	mTimelines = models;
 }
 /*
 // Create a new TimelineModel and put it in the list

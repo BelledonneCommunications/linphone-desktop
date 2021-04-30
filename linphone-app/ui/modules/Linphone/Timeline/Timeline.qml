@@ -23,7 +23,7 @@ Rectangle {
   signal entrySelected (TimelineModel entry)
 
   // ---------------------------------------------------------------------------
-
+/*
   function setSelectedEntry (peerAddress, localAddress) {
     Logic.setSelectedEntry(peerAddress, localAddress)
   }
@@ -31,7 +31,7 @@ Rectangle {
   function resetSelectedEntry () {
     Logic.resetSelectedEntry()
   }
-
+*/
   // ---------------------------------------------------------------------------
 
   color: TimelineStyle.color
@@ -41,14 +41,20 @@ Rectangle {
     spacing: 0
 
     // -------------------------------------------------------------------------
+	
+	Connections {
+      target: model
 
+      onCurrentTimelineChanged:entrySelected(currentTimeline)
+	}
+/*
     Connections {
       target: model
 
       onDataChanged: Logic.handleDataChanged(topLeft, bottomRight, roles)
       onRowsAboutToBeRemoved: Logic.handleRowsAboutToBeRemoved(parent, first, last)
     }
-
+*/
     // -------------------------------------------------------------------------
     // Legend.
     // -------------------------------------------------------------------------
@@ -144,13 +150,15 @@ Rectangle {
           anchors.fill: parent
           onClicked: {
             view.currentIndex = index
-			  timeline.entrySelected(modelData)
+			  //timeline.model.setCurrentChatModel(modelData.getChatModel())// using member doesn't work
+			  timeline.model.currentChatModel = modelData.chatModel
+			  //timeline.entrySelected(modelData)
             //timeline.entrySelected($timelineEntry.sipAddress, $timelineEntry.isSecure)
           }
         }
       }
 
-      onCountChanged: Logic.handleCountChanged(count)
+     // onCountChanged: Logic.handleCountChanged(count)
     }
   }
 }
