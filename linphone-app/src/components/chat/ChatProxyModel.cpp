@@ -248,14 +248,14 @@ void ChatProxyModel::resetMessageCount(){
 	}
 }
 
-std::shared_ptr<ChatModel> ChatProxyModel::getChatRoom () const{
+std::shared_ptr<ChatModel> ChatProxyModel::getChatModel () const{
 	return mChatModel;
 	
 }
-void ChatProxyModel::setChatRoom (std::shared_ptr<ChatModel> chatModel){
+void ChatProxyModel::setChatModel (std::shared_ptr<ChatModel> chatModel){
 	mChatRoom = chatModel->getChatRoom();
 	reload();
-	emit chatRoomChanged();
+	emit chatModelChanged();
 }
 // -----------------------------------------------------------------------------
 

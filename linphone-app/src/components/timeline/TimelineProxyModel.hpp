@@ -24,12 +24,28 @@
 #include <QSortFilterProxyModel>
 // =============================================================================
 
+#include "../chat/ChatModel.hpp"
+
+class TimelineModel;
+
 class TimelineProxyModel : public QSortFilterProxyModel {
-  Q_OBJECT;
+  Q_OBJECT
 
 
 public:
   TimelineProxyModel (QObject *parent = Q_NULLPTR);
+  
+  Q_PROPERTY(std::shared_ptr<ChatModel> currentChatModel WRITE setCurrentChatModel READ getCurrentChatModel NOTIFY currentChatModelChanged)
+  
+  void updateCurrentSelection();
+  
+  Q_INVOKABLE void setCurrentChatModel(std::shared_ptr<ChatModel> data);
+  std::shared_ptr<ChatModel> getCurrentChatModel() const;
+    
+signals:
+  void currentChatModelChanged(std::shared_ptr<ChatModel> currentChatModel);
+  void currentTimelineChanged(TimelineModel * currentTimeline);
+  
 
 protected:
 
@@ -39,6 +55,9 @@ protected:
   QString getLocalAddress () const;
   QString getCleanedLocalAddress () const;
   void handleLocalAddressChanged (const QString &localAddress);
+  
+  
+  std::shared_ptr<ChatModel> mCurrentChatModel;
 
 };
 

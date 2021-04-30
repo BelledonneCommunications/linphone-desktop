@@ -35,8 +35,39 @@
 // -----------------------------------------------------------------------------
 
 TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  setSourceModel(CoreManager::getInstance()->getTimelineListModel());
+	CoreManager *coreManager = CoreManager::getInstance();
+	AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
+	setSourceModel(CoreManager::getInstance()->getTimelineListModel());
+	
+	QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
+		dynamic_cast<TimelineListModel*>(sourceModel())->update();
+	  invalidate();
+	  updateCurrentSelection();
+	});
+	QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
+		dynamic_cast<TimelineListModel*>(sourceModel())->reset();
+	  invalidate();// Invalidate and reload GUI if the model has been reset
+	  updateCurrentSelection();
+	});
   sort(0);
+}
+
+// -----------------------------------------------------------------------------
+void TimelineProxyModel::setCurrentChatModel(std::shared_ptr<ChatModel> data){
+	mCurrentChatModel = data;
+	emit currentChatModelChanged(mCurrentChatModel);
+	emit currentTimelineChanged(dynamic_cast<TimelineListModel*>(sourceModel())->getTimeline(mCurrentChatModel->getChatRoom(), false));
+}
+
+std::shared_ptr<ChatModel> TimelineProxyModel::getCurrentChatModel()const{
+	return mCurrentChatModel;
+}
+
+void TimelineProxyModel::updateCurrentSelection(){
+	auto currentAddress = CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress();
+	if(mCurrentChatModel && !mCurrentChatModel->getChatRoom()->getMe()->getAddress()->weakEqual(currentAddress) ){
+		setCurrentChatModel(nullptr);
+	}
 }
 
 // -----------------------------------------------------------------------------

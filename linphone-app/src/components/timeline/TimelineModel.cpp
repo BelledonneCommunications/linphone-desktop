@@ -65,6 +65,6 @@ int TimelineModel::getPresenceStatus() const{
 	return 0;
 }
 
-std::shared_ptr<ChatModel> TimelineModel::getChatRoom() const{
+std::shared_ptr<ChatModel> TimelineModel::getChatModel() const{
 	return mChatModel;
 }

@@ -270,7 +270,7 @@ ApplicationWindow {
                  fullPeerAddress: entry.fullPeerAddress,
                  fullLocalAddress: AccountSettingsModel.fullSipAddress,
 					localAddress: AccountSettingsModel.sipAddress,
-					chatRoom:entry.chatRoom
+					chatModel:entry.chatModel
 					
                 }):
                  setView('HistoryView', {})

@@ -40,7 +40,7 @@ public:
 	
 	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress NOTIFY fullLocalAddressChanged)
-	Q_PROPERTY(std::shared_ptr<ChatModel> chatRoom READ getChatRoom CONSTANT)
+	Q_PROPERTY(std::shared_ptr<ChatModel> chatModel READ getChatModel CONSTANT)
 	
 // Contact
 	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
@@ -57,7 +57,7 @@ public:
 	int getPresenceStatus() const;
 	
 	
-	std::shared_ptr<ChatModel> getChatRoom() const;
+	Q_INVOKABLE std::shared_ptr<ChatModel> getChatModel() const;
 
 	QDateTime mTimestamp;
 	std::shared_ptr<ChatModel> mChatModel;

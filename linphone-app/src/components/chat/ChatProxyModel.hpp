@@ -39,7 +39,7 @@ class ChatProxyModel : public QSortFilterProxyModel {
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged);
   Q_PROPERTY(int isSecure READ getIsSecure WRITE setIsSecure NOTIFY isSecureChanged);
-  Q_PROPERTY(std::shared_ptr<ChatModel> chatRoom READ getChatRoom WRITE setChatRoom NOTIFY chatRoomChanged);
+  Q_PROPERTY(std::shared_ptr<ChatModel> chatModel READ getChatModel WRITE setChatModel NOTIFY chatModelChanged);
   //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
   //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged);
@@ -75,7 +75,7 @@ signals:
   bool isRemoteComposingChanged (bool status);
   bool isSecureChanged(bool secure);
   
-  void chatRoomChanged();
+  void chatModelChanged();
 
   void moreEntriesLoaded (int n);
 
@@ -100,8 +100,8 @@ private:
   int getIsSecure () const;
   void setIsSecure (const int &secure);
   
-  std::shared_ptr<ChatModel> getChatRoom () const;
-  void setChatRoom (std::shared_ptr<ChatModel> chatRoom);
+  std::shared_ptr<ChatModel> getChatModel() const;
+  void setChatModel (std::shared_ptr<ChatModel> chatModel);
 
   bool getIsRemoteComposing () const;
   

@@ -18,7 +18,7 @@ ColumnLayout  {
   property string fullPeerAddress
   property string fullLocalAddress
   property int isSecure
-  property var chatRoom
+  property var chatModel
 
   readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 
@@ -173,7 +173,7 @@ ColumnLayout  {
         resetMessageCount()
       }
 	  isSecure: conversation.isSecure
-	  chatRoom: conversation.chatRoom
+	  chatModel: conversation.chatModel
       peerAddress: conversation.peerAddress
       fullPeerAddress: conversation.fullPeerAddress
       fullLocalAddress: conversation.fullLocalAddress
