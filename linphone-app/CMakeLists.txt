@@ -514,7 +514,7 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 if(WIN32)
-	find_library(LDAP_LIBRARIES NAMES ldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
+	find_library(LDAP_LIBRARIES NAMES ldap libldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
 	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES})
 endif()
 
