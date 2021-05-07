@@ -151,7 +151,7 @@ ColumnLayout {
 				
 				ActionButton {
 				  icon: 'call_chat_unsecure'
-				  onClicked: {console.log("A");actions.itemAt(3).open()}
+				  onClicked: {actions.itemAt(3).open()}
 				}
               }
 
@@ -181,23 +181,15 @@ ColumnLayout {
                   peerAddress: sipAddress,
                   localAddress: AccountSettingsModel.sipAddress,
                   fullPeerAddress: sipAddress,
-                  fullLocalAddress: AccountSettingsModel.fullSipAddress,
-					secure:false
+                  fullLocalAddress: AccountSettingsModel.fullSipAddress
                 })
 			  },
 				  function (sipAddress) {
-					  console.log("B")
-					  if(CallsListModel.launchSecureChat(sipAddress)){
-						  console.log("C")
-						window.setView('Conversation', {
-							peerAddress: sipAddress,
-							localAddress: AccountSettingsModel.sipAddress,
-							fullPeerAddress: sipAddress,
-							fullLocalAddress: AccountSettingsModel.fullSipAddress,
-							secure:true   
+					   //Logic.manageAccounts()
+					  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ManageChatRoom.qml'), {
+						//window.setView('Dialogs/ManageChatRoom', {
+							participantAddress: sipAddress
 						})
-					  }else
-						  console.log("D")
               }
             ]
 

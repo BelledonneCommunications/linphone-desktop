@@ -12,13 +12,17 @@ import 'Conversation.js' as Logic
 
 ColumnLayout  {
   id: conversation
-
+/*
   property string peerAddress
   property string localAddress
   property string fullPeerAddress
   property string fullLocalAddress
-  property int isSecure
-  property var chatModel
+  property int isSecure*/
+  property ChatRoomModel chatRoomModel
+  property string peerAddress : chatRoomModel.getPeerAddress()
+  property string localAddress : chatRoomModel.getLocalAddress()
+  property string fullPeerAddress : chatRoomModel.getFullPeerAddress()
+  property string fullLocalAddress : chatRoomModel.getFullLocalAddress()
 
   readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 
@@ -56,7 +60,8 @@ ColumnLayout  {
           conversation._sipAddressObserver.presenceStatus
         )
 
-        username: Logic.getUsername()
+        //username: Logic.getUsername()
+		username: chatRoomModel.username
       }
 
       ContactDescription {
@@ -91,6 +96,14 @@ ColumnLayout  {
 
             onClicked: CallsListModel.launchAudioCall(conversation.peerAddress)
           }
+		  ActionButton {
+			icon: 'call_chat_unsecure'
+			onClicked: {
+				window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ManageChatRoom.qml'), {
+				//window.setView('Dialogs/ManageChatRoom', {
+										   chatRoomModel:conversation.chatRoomModel
+									   })}
+		  }
         }
 
         ActionBar {
@@ -163,17 +176,16 @@ ColumnLayout  {
     Layout.fillHeight: true
     Layout.fillWidth: true
 
-    proxyModel: ChatProxyModel {
-      id: chatProxyModel
+    proxyModel: ChatRoomProxyModel {
+      id: chatRoomProxyModel
 
       Component.onCompleted: {
         if (!SettingsModel.chatEnabled) {
-          setEntryTypeFilter(ChatModel.CallEntry)
+          setEntryTypeFilter(ChatRoomModel.CallEntry)
         }
         resetMessageCount()
       }
-	  isSecure: conversation.isSecure
-	  chatModel: conversation.chatModel
+	  chatRoomModel: conversation.chatRoomModel
       peerAddress: conversation.peerAddress
       fullPeerAddress: conversation.fullPeerAddress
       fullLocalAddress: conversation.fullLocalAddress
@@ -184,7 +196,7 @@ ColumnLayout  {
 
   Connections {
     target: SettingsModel
-    onChatEnabledChanged: chatProxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
+    onChatEnabledChanged: chatRoomProxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry)
   }
 
   Connections {

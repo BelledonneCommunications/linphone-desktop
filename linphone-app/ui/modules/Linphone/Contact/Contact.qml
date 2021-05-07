@@ -43,14 +43,17 @@ Rectangle {
       Layout.preferredWidth: ContactStyle.contentHeight
 
       //image: _contact && _contact.vcard.avatar
-	  image: entry.avatar
+	  image: (entry.contactModel?entry.contactModel.vcard.avatar:entry.avatar?entry.avatar: '')
 
-      presenceLevel: entry.presenceStatus != null
-        ? Presence.getPresenceLevel(entry.presenceStatus)
-        : -1
+	  presenceLevel: (entry.contactModel ? Presence.getPresenceLevel(entry.contactModel.presenceStatus)
+										: entry.presenceStatus ? Presence.getPresenceLevel(entry.presenceStatus)
+															   :-1)
 
       //username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
-	  username: entry.username
+	  username: (entry.contactModel ? entry.contactModel.vcard.username
+								   :entry.username?entry.username:
+													LinphoneUtils.getContactUsername(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+													)
     }
 
     ContactDescription {
@@ -61,17 +64,18 @@ Rectangle {
       Layout.leftMargin: ContactStyle.spacing
 
       //sipAddress: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-	  sipAddress: entry.sipAddress
+	  sipAddress: (entry.contactModel ? entry.contactModel.vcard.sipAddress 
+														   :entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || '')
       username: avatar.username
     }
 
     ContactMessageCounter {
       Layout.alignment: Qt.AlignTop
 
-      count: Number(entry.unreadMessageCount) + Number(entry.missedCallCount)
+      count: Number(entry.unreadMessagesCount) + Number(entry.missedCallsCount)
       isComposing: Boolean(entry.isComposing)
 
-      visible: item.displayUnreadMessageCount
+      visible: (entry.unreadMessagesCount !== null || entry.missedCallsCount !== null) && item.displayUnreadMessageCount
     }
   }
 }

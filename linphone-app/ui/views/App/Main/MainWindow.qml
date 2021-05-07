@@ -264,13 +264,13 @@ ApplicationWindow {
             Layout.fillWidth: true
 			model: TimelineProxyModel{}
 
-            onEntrySelected: (entry?setView('Conversation', {
+            onEntrySelected: (entry?setView('Conversation', {/*
 				isSecure:-1,			
                  peerAddress: entry.fullPeerAddress,
                  fullPeerAddress: entry.fullPeerAddress,
                  fullLocalAddress: AccountSettingsModel.fullSipAddress,
-					localAddress: AccountSettingsModel.sipAddress,
-					chatModel:entry.chatModel
+					localAddress: AccountSettingsModel.sipAddress,*/
+					chatRoomModel:entry.chatRoomModel
 					
                 }):
                  setView('HistoryView', {})

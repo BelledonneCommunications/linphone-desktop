@@ -11,28 +11,28 @@ Row {
   property string _type: {
     var status = $chatEntry.status
 
-    if (status === ChatModel.CallStatusSuccess) {
+    if (status === ChatRoomModel.CallStatusSuccess) {
       if (!$chatEntry.isStart) {
         return 'ended_call'
       }
       return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
     }
-    if (status === ChatModel.CallStatusDeclined) {
+    if (status === ChatRoomModel.CallStatusDeclined) {
       return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
     }
-    if (status === ChatModel.CallStatusMissed) {
+    if (status === ChatRoomModel.CallStatusMissed) {
       return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
     }
-    if (status === ChatModel.CallStatusAborted) {
+    if (status === ChatRoomModel.CallStatusAborted) {
       return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
     }
-    if (status === ChatModel.CallStatusEarlyAborted) {
+    if (status === ChatRoomModel.CallStatusEarlyAborted) {
       return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
     }
-    if (status === ChatModel.CallStatusAcceptedElsewhere) {
+    if (status === ChatRoomModel.CallStatusAcceptedElsewhere) {
       return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
     }
-    if (status === ChatModel.CallStatusDeclinedElsewhere) {
+    if (status === ChatRoomModel.CallStatusDeclinedElsewhere) {
       return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
     }
 

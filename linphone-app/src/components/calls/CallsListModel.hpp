@@ -45,6 +45,7 @@ public:
   Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers = {}) const;
   Q_INVOKABLE void launchVideoCall (const QString &sipAddress) const;
   Q_INVOKABLE bool launchSecureChat (const QString &sipAddress) const;
+  Q_INVOKABLE bool createSecureChat (const QString& subject, const QString &participantAddress) const;
 
   Q_INVOKABLE int getRunningCallsNumber () const;
 

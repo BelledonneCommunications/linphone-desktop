@@ -44,8 +44,8 @@ Rectangle {
 	
 	Connections {
       target: model
-
-      onCurrentTimelineChanged:entrySelected(currentTimeline)
+		onSelectedCountChanged:if(selectedCount<=0) view.currentIndex = -1
+     // onCurrentTimelineChanged:entrySelected(currentTimeline)
 	}
 /*
     Connections {
@@ -113,7 +113,7 @@ Rectangle {
         width: parent ? parent.width : 0
 
         Contact {
-          readonly property bool isSelected: view.currentIndex === index
+          property bool isSelected: modelData.selected	//view.currentIndex === index
 
           anchors.fill: parent
           color: isSelected
@@ -126,7 +126,7 @@ Rectangle {
           displayUnreadMessageCount: SettingsModel.chatEnabled
           //entry: $timelineEntry
 		  //entry: SipAddressesModel.getSipAddressObserver(modelData.fullPeerAddress, modelData.fullLocalAddress)
-		  entry: modelData
+		  entry: modelData.chatRoomModel
           sipAddressColor: isSelected
             ? TimelineStyle.contact.sipAddress.color.selected
             : TimelineStyle.contact.sipAddress.color.normal
@@ -149,15 +149,14 @@ Rectangle {
         MouseArea {
           anchors.fill: parent
           onClicked: {
-            view.currentIndex = index
-			  //timeline.model.setCurrentChatModel(modelData.getChatModel())// using member doesn't work
-			  timeline.model.currentChatModel = modelData.chatModel
-			  //timeline.entrySelected(modelData)
+			  //timeline.model.unselectAll()
+			  modelData.selected = true
+			  view.currentIndex = index;
+			  timeline.entrySelected(modelData)
             //timeline.entrySelected($timelineEntry.sipAddress, $timelineEntry.isSecure)
           }
         }
       }
-
      // onCountChanged: Logic.handleCountChanged(count)
     }
   }

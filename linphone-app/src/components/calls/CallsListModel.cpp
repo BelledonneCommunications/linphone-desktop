@@ -183,6 +183,29 @@ bool CallsListModel::launchSecureChat (const QString &sipAddress) const {
   */
   return false;
 }
+
+bool CallsListModel::createSecureChat (const QString& subject, const QString &participantAddress) const{
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(participantAddress));
+	if (!address)
+	  return false;
+	
+	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+	std::list <shared_ptr<linphone::Address> > participants;
+	std::shared_ptr<const linphone::Address> localAddress;
+	participants.push_back(address);
+	auto proxy = core->getDefaultProxyConfig();
+	params->enableEncryption(true);
+	
+	params->setSubject(subject.toStdString());
+	params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
+	params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+	params->enableGroup(true);
+  
+	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
+	return chatRoom != nullptr;
+}
+
 // -----------------------------------------------------------------------------
 
 int CallsListModel::getRunningCallsNumber () const {

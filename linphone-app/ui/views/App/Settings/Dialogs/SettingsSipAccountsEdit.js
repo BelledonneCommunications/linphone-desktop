@@ -50,6 +50,7 @@ function initForm (account) {
   )
 
   route.text = config.route
+  conferenceUri.text = config.conferenceUri
   contactParams.text = config.contactParams
   avpfInterval.text = config.avpfInterval
   registerEnabled.checked = config.registerEnabled
@@ -70,7 +71,7 @@ function initForm (account) {
 }
 
 function formIsValid () {
-  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk
+  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk && dialog._conferenceUriOk
 }
 
 // -----------------------------------------------------------------------------
@@ -82,6 +83,7 @@ function validProxyConfig () {
     registrationDuration: registrationDuration.text,
     transport: transport.currentText,
     route: route.text,
+    conferenceUri: conferenceUri.text,
     contactParams: contactParams.text,
     avpfInterval: avpfInterval.text,
     registerEnabled: registerEnabled.checked,
@@ -103,6 +105,9 @@ function validProxyConfig () {
 
 function handleRouteChanged (route) {
   dialog._routeOk = route.length === 0 || Linphone.SipAddressesModel.addressIsValid(route)
+}
+function handleConferenceUriChanged (uri) {
+  dialog._conferenceUriOk = route.length === 0 || Linphone.SipAddressesModel.addressIsValid(uri)	
 }
 
 function handleServerAddressChanged (address) {

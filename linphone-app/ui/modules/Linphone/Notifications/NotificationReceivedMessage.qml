@@ -13,7 +13,8 @@ Notification {
   icon: 'message_sign'
 
   // ---------------------------------------------------------------------------
-
+  
+  readonly property TimelineModel timelineModel: notificationData && notificationData.timelineModel 
   readonly property string peerAddress: notificationData && notificationData.peerAddress ||  ''
   readonly property string localAddress: notificationData && notificationData.localAddress || ''
   readonly property string fullPeerAddress: notificationData && notificationData.fullPeerAddress ||  ''
@@ -22,7 +23,7 @@ Notification {
   // ---------------------------------------------------------------------------
 
   Loader {
-    active: Boolean(notification.peerAddress) && Boolean(notification.localAddress)
+    active: timelineModel//Boolean(notification.peerAddress) && Boolean(notification.localAddress)
     anchors {
       fill: parent
 
@@ -37,7 +38,8 @@ Notification {
       Contact {
         Layout.fillWidth: true
 
-        entry: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)
+        //entry: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)
+		entry:notification.timelineModel.getChatRoomModel()
       }
 
       Rectangle {
@@ -75,10 +77,11 @@ Notification {
     onClicked: notification._close(function () {
       AccountSettingsModel.setDefaultProxyConfigFromSipAddress(notification.localAddress)
       notification.notificationData.window.setView('Conversation', {
+		chatRoomModel:notification.timelineModel.getChatRoomModel()/*,
         peerAddress: notification.peerAddress,
         localAddress: notification.localAddress,
         fullPeerAddress: notification.fullPeerAddress,
-        fullLocalAddress: notification.fullLocalAddress
+        fullLocalAddress: notification.fullLocalAddress*/
       })
     })
   }

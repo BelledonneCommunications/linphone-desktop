@@ -194,7 +194,7 @@ void CoreHandlers::onMessageReceived (
 
     if (
       !app->hasFocus() ||
-      !CoreManager::getInstance()->chatModelExists(
+      !CoreManager::getInstance()->chatRoomModelExists(
         Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()),
         Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()),
 				chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted

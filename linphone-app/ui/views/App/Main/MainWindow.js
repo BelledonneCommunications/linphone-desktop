@@ -114,7 +114,7 @@ function updateSelectedEntry (view, props) {
     timeline.resetSelectedEntry()
   } else if (view === 'Contacts') {
     item.contactsEntry.select()
-    timeline.resetSelectedEntry()
+    //timeline.resetSelectedEntry()
   } else {
     menu.resetSelectedEntry()
 /*

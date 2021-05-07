@@ -28,7 +28,7 @@
 #include "calls/CallsListProxyModel.hpp"
 #include "camera/Camera.hpp"
 #include "camera/CameraPreview.hpp"
-#include "chat/ChatProxyModel.hpp"
+#include "chat-room/ChatRoomProxyModel.hpp"
 #include "codecs/AudioCodecsModel.hpp"
 #include "codecs/VideoCodecsModel.hpp"
 #include "conference/ConferenceAddModel.hpp"

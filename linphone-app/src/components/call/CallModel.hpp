@@ -26,6 +26,7 @@
 #include "../search/SearchHandler.hpp"
 
 // =============================================================================
+class ContactModel;
 
 class CallModel : public QObject {
   Q_OBJECT;
@@ -34,6 +35,12 @@ class CallModel : public QObject {
   Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT);
+	
+	Q_PROPERTY(ContactModel *contact READ getContactModel CONSTANT )/*
+	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
+	Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
+	Q_PROPERTY(int presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)*/
 
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
   Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged);
@@ -98,6 +105,8 @@ public:
   QString getLocalAddress () const;
   QString getFullPeerAddress () const;
   QString getFullLocalAddress () const;
+  
+  ContactModel *getContactModel() const;
 
   bool isInConference () const {
     return mIsInConference;

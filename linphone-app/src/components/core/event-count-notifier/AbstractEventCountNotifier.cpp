@@ -22,7 +22,7 @@
 
 #include "components/call/CallModel.hpp"
 #include "components/calls/CallsListModel.hpp"
-#include "components/chat/ChatModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/history/HistoryModel.hpp"
@@ -38,8 +38,8 @@ using namespace std;
 AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObject(parent) {
   CoreManager *coreManager = CoreManager::getInstance();
   QObject::connect(
-    coreManager, &CoreManager::chatModelCreated,
-    this, &AbstractEventCountNotifier::handleChatModelCreated
+    coreManager, &CoreManager::chatRoomModelCreated,
+    this, &AbstractEventCountNotifier::handleChatRoomModelCreated
   );
   QObject::connect(
     coreManager, &CoreManager::historyModelCreated,
@@ -95,19 +95,19 @@ int AbstractEventCountNotifier::getMissedCallCountFromLocal(const QString &local
 }
 // -----------------------------------------------------------------------------
 
-void AbstractEventCountNotifier::handleChatModelCreated (const shared_ptr<ChatModel> &chatModel) {
-  ChatModel *chatModelPtr = chatModel.get();
+void AbstractEventCountNotifier::handleChatRoomModelCreated (const shared_ptr<ChatRoomModel> &chatRoomModel) {
+  ChatRoomModel *chatRoomModelPtr = chatRoomModel.get();
   QObject::connect(
-    chatModelPtr, &ChatModel::messageCountReset,
+    chatRoomModelPtr, &ChatRoomModel::messageCountReset,
     this, &AbstractEventCountNotifier::updateUnreadMessageCount
   );
   QObject::connect(
-    chatModelPtr, &ChatModel::focused,
-    this, [this, chatModelPtr]() { handleResetMissedCalls(chatModelPtr); }
+    chatRoomModelPtr, &ChatRoomModel::focused,
+    this, [this, chatRoomModelPtr]() { handleResetMissedCalls(chatRoomModelPtr); }
   );
   QObject::connect(
-    chatModelPtr, &ChatModel::messageCountReset,
-    this, [this, chatModelPtr]() { handleResetMissedCalls(chatModelPtr); }
+    chatRoomModelPtr, &ChatRoomModel::messageCountReset,
+    this, [this, chatRoomModelPtr]() { handleResetMissedCalls(chatRoomModelPtr); }
   );
 }
 
@@ -122,8 +122,8 @@ void AbstractEventCountNotifier::handleResetAllMissedCalls () {
 }
 
 
-void AbstractEventCountNotifier::handleResetMissedCalls (ChatModel *chatModel) {
-  auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatModel->getPeerAddress()), Utils::cleanSipAddress(chatModel->getLocalAddress()) });
+void AbstractEventCountNotifier::handleResetMissedCalls (ChatRoomModel *chatRoomModel) {
+  auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatRoomModel->getPeerAddress()), Utils::cleanSipAddress(chatRoomModel->getLocalAddress()) });
   if (it != mMissedCalls.cend()) {
     mMissedCalls.erase(it);
     internalnotifyEventCount();

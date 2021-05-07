@@ -189,10 +189,10 @@ Window {
         id: chat
 
         Chat {
-          proxyModel: ChatProxyModel {
+          proxyModel: ChatRoomProxyModel {
             Component.onCompleted: {
               if (!SettingsModel.chatEnabled) {
-                setEntryTypeFilter(ChatModel.CallEntry)
+                setEntryTypeFilter(ChatRoomModel.CallEntry)
               }
             }
 
@@ -205,7 +205,7 @@ Window {
 
           Connections {
             target: SettingsModel
-            onChatEnabledChanged: proxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
+            onChatEnabledChanged: proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry)
           }
         }
       }

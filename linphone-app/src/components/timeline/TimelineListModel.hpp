@@ -22,7 +22,7 @@
 #define TIMELINE_LIST_MODEL_H_
 
 #include <QSortFilterProxyModel>
-#include "components/chat/ChatModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
 
 class TimelineModel;
 // =============================================================================
@@ -30,13 +30,16 @@ class TimelineModel;
 class TimelineListModel : public QAbstractListModel {
   Q_OBJECT
 public:
+	
+	Q_PROPERTY(int selectedCount MEMBER mSelectedCount WRITE setSelectedCount NOTIFY selectedCountChanged)
     
     TimelineListModel (QObject *parent = Q_NULLPTR);
     
     void reset();
 	void update();
+	void selectAll(const bool& selected);
 	TimelineModel * getAt(const int& index);
-	TimelineModel * getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+	std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
   
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
   
@@ -45,6 +48,14 @@ public:
   
 // Remove a chatroom
 	Q_INVOKABLE void remove (TimelineModel *importer);
+	int mSelectedCount;
+	
+	void setSelectedCount(int selectedCount);
+public slots:
+	void selectedHasChanged(bool selected);
+	
+signals:
+	void selectedCountChanged(int selectedCount);
 
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
@@ -55,7 +66,7 @@ private:
 	void initTimeline ();
 	void updateTimelines();
 
-	QList<TimelineModel*> mTimelines;
+	QList<std::shared_ptr<TimelineModel>> mTimelines;
 };
 
 #endif // TIMELINE_LIST_MODEL_H_

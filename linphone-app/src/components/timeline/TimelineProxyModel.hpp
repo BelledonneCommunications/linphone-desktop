@@ -24,7 +24,7 @@
 #include <QSortFilterProxyModel>
 // =============================================================================
 
-#include "../chat/ChatModel.hpp"
+#include "../chat-room/ChatRoomModel.hpp"
 
 class TimelineModel;
 
@@ -35,17 +35,19 @@ class TimelineProxyModel : public QSortFilterProxyModel {
 public:
   TimelineProxyModel (QObject *parent = Q_NULLPTR);
   
-  Q_PROPERTY(std::shared_ptr<ChatModel> currentChatModel WRITE setCurrentChatModel READ getCurrentChatModel NOTIFY currentChatModelChanged)
+  //Q_PROPERTY(ChatRoomModel *currentChatRoomModel WRITE setCurrentChatRoomModel READ getCurrentChatRoomModel NOTIFY currentChatRoomModelChanged)
   
-  void updateCurrentSelection();
+  //void updateCurrentSelection();
   
-  Q_INVOKABLE void setCurrentChatModel(std::shared_ptr<ChatModel> data);
-  std::shared_ptr<ChatModel> getCurrentChatModel() const;
+  //Q_INVOKABLE void setCurrentChatRoomModel(ChatRoomModel *data);
+  //ChatRoomModel *getCurrentChatRoomModel() const;
+  Q_INVOKABLE void unselectAll();
+  //Q_INVOKABLE TimelineModel * getTimeline();
     
 signals:
-  void currentChatModelChanged(std::shared_ptr<ChatModel> currentChatModel);
-  void currentTimelineChanged(TimelineModel * currentTimeline);
-  
+  void selectedCountChanged(int selectedCount);
+//  void currentChatRoomModelChanged(std::shared_ptr<ChatRoomModel> currentChatRoomModel);
+//  void currentTimelineChanged(TimelineModel * currentTimeline);
 
 protected:
 
@@ -57,7 +59,7 @@ protected:
   void handleLocalAddressChanged (const QString &localAddress);
   
   
-  std::shared_ptr<ChatModel> mCurrentChatModel;
+  //std::shared_ptr<ChatRoomModel> mCurrentChatRoomModel;
 
 };
 
