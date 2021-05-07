@@ -16,6 +16,7 @@ DialogPlus {
   property bool _sipAddressOk: false
   property bool _serverAddressOk: false
   property bool _routeOk: false
+  property bool _conferenceUriOk: false
 
   buttons: [
     TextButtonA {
@@ -119,6 +120,21 @@ DialogPlus {
               error: dialog._routeOk ? '' : qsTr('invalidRoute')
 
               onTextChanged: Logic.handleRouteChanged(text)
+              Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
+            }
+          }
+        }
+		
+		FormLine {
+          FormGroup {
+            label: 'Conference URI'
+
+            TextField {
+              id: conferenceUri
+
+              error: dialog._conferenceUriOk ? '' : 'invalid conference uri'
+
+              onTextChanged: Logic.handleConferenceUriChanged(text)
               Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
             }
           }

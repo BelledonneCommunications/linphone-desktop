@@ -35,12 +35,12 @@ Item {
         Icon {
           id: iconId
           readonly property var isError: Utils.includes([
-                ChatModel.MessageStatusFileTransferError,
-                ChatModel.MessageStatusNotDelivered,
+                ChatRoomModel.MessageStatusFileTransferError,
+                ChatRoomModel.MessageStatusNotDelivered,
                 ], $chatEntry.status)
-          readonly property bool isUploaded: $chatEntry.status === ChatModel.MessageStatusDelivered
-          readonly property bool isDelivered: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
-          readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
+          readonly property bool isUploaded: $chatEntry.status === ChatRoomModel.MessageStatusDelivered
+          readonly property bool isDelivered: $chatEntry.status === ChatRoomModel.MessageStatusDeliveredToUser
+          readonly property bool isRead: $chatEntry.status === ChatRoomModel.MessageStatusDisplayed
 
           icon: isError
             ? 'chat_error'
@@ -50,7 +50,7 @@ Item {
           MouseArea {
             id:retryAction
             anchors.fill: parent
-            visible: iconId.isError || $chatEntry.status === ChatModel.MessageStatusIdle
+            visible: iconId.isError || $chatEntry.status === ChatRoomModel.MessageStatusIdle
             onClicked: proxyModel.resendMessage(index)
           }
 
@@ -83,7 +83,7 @@ Item {
         height: ChatStyle.entry.lineHeight
         width: ChatStyle.entry.message.outgoing.areaSize
 
-        sourceComponent: $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
+        sourceComponent: $chatEntry.status === ChatRoomModel.MessageStatusInProgress || $chatEntry.status === ChatRoomModel.MessageStatusFileTransferInProgress
           ? indicator
           : iconComponent
       }

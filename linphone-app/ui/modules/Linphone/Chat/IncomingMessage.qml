@@ -38,7 +38,7 @@ RowLayout {
         // 2. Previous entry is a call event. => Visible.
         // 3. I have sent a message before my contact. => Visible.
         // 4. One hour between two incoming messages. => Visible.
-        return previousEntry.type !== ChatModel.MessageEntry ||
+        return previousEntry.type !== ChatRoomModel.MessageEntry ||
           previousEntry.isOutgoing ||
           $chatEntry.timestamp.getTime() - previousEntry.timestamp.getTime() > 3600
       }

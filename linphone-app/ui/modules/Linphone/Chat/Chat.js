@@ -47,7 +47,7 @@ function getComponentFromEntry (chatEntry) {
     return 'FileMessage.qml'
   }
 
-  if (chatEntry.type === Linphone.ChatModel.CallEntry) {
+  if (chatEntry.type === Linphone.ChatRoomModel.CallEntry) {
     return 'Event.qml'
   }
 

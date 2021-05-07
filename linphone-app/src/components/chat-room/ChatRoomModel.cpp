@@ -34,14 +34,19 @@
 #include "app/App.hpp"
 #include "app/paths/Paths.hpp"
 #include "app/providers/ThumbnailProvider.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contact/VcardModel.hpp"
+#include "components/contacts/ContactsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "components/participant/ParticipantModel.hpp"
+#include "components/presence/Presence.hpp"
 #include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
 
-#include "ChatModel.hpp"
+#include "ChatRoomModel.hpp"
 
 // =============================================================================
 
@@ -204,9 +209,9 @@ static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphon
   // It can exist messages with a not delivered status. It's a linphone core bug.
   linphone::ChatMessage::State state = message->getState();
   if (state == linphone::ChatMessage::State::InProgress)
-    dest["status"] = ChatModel::MessageStatusNotDelivered;
+    dest["status"] = ChatRoomModel::MessageStatusNotDelivered;
   else
-    dest["status"] = static_cast<ChatModel::MessageStatus>(message->getState());	
+    dest["status"] = static_cast<ChatRoomModel::MessageStatus>(message->getState());	
 
   shared_ptr<const linphone::Content> content = message->getFileTransferInformation();
   if (content) {
@@ -220,39 +225,39 @@ static inline void fillMessageEntry (QVariantMap &dest, const shared_ptr<linphon
 }
 
 static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
-  dest["type"] = ChatModel::CallEntry;
+  dest["type"] = ChatRoomModel::CallEntry;
   dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
   dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
-  dest["status"] = static_cast<ChatModel::CallStatus>(callLog->getStatus());
+  dest["status"] = static_cast<ChatRoomModel::CallStatus>(callLog->getStatus());
   dest["isStart"] = true;
 }
 
 static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
-  dest["type"] = ChatModel::CallEntry;
+  dest["type"] = ChatRoomModel::CallEntry;
   dest["timestamp"] = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
   dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
-  dest["status"] = static_cast<ChatModel::CallStatus>(callLog->getStatus());
+  dest["status"] = static_cast<ChatRoomModel::CallStatus>(callLog->getStatus());
   dest["isStart"] = false;
 }
 
 // -----------------------------------------------------------------------------
 
-class ChatModel::MessageHandlers : public linphone::ChatMessageListener {
-  friend class ChatModel;
+class ChatRoomModel::MessageHandlers : public linphone::ChatMessageListener {
+  friend class ChatRoomModel;
 
 public:
-  MessageHandlers (ChatModel *chatModel) : mChatModel(chatModel) {}
+  MessageHandlers (ChatRoomModel *ChatRoomModel) : mChatRoomModel(ChatRoomModel) {}
 
 private:
   QList<ChatEntryData>::iterator findMessageEntry (const shared_ptr<linphone::ChatMessage> &message) {
-    return find_if(mChatModel->mEntries.begin(), mChatModel->mEntries.end(), [&message](const ChatEntryData &entry) {
+    return find_if(mChatRoomModel->mEntries.begin(), mChatRoomModel->mEntries.end(), [&message](const ChatEntryData &entry) {
       return entry.second == message;
     });
   }
 
   void signalDataChanged (const QList<ChatEntryData>::iterator &it) {
-    int row = int(distance(mChatModel->mEntries.begin(), it));
-    emit mChatModel->dataChanged(mChatModel->index(row, 0), mChatModel->index(row, 0));
+    int row = int(distance(mChatRoomModel->mEntries.begin(), it));
+    emit mChatRoomModel->dataChanged(mChatRoomModel->index(row, 0), mChatRoomModel->index(row, 0));
   }
 
   shared_ptr<linphone::Buffer> onFileTransferSend (
@@ -271,11 +276,11 @@ private:
     size_t offset,
     size_t
   ) override {
-    if (!mChatModel)
+    if (!mChatRoomModel)
       return;
 
     auto it = findMessageEntry(message);
-    if (it == mChatModel->mEntries.end())
+    if (it == mChatRoomModel->mEntries.end())
       return;
 
     (*it).first["fileOffset"] = quint64(offset);
@@ -284,11 +289,11 @@ private:
   }
 
   void onMsgStateChanged (const shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) override {
-    if (!mChatModel)
+    if (!mChatRoomModel)
       return;
 
     auto it = findMessageEntry(message);
-    if (it == mChatModel->mEntries.end())
+    if (it == mChatRoomModel->mEntries.end())
       return;
 
     // File message downloaded.
@@ -304,12 +309,12 @@ private:
     signalDataChanged(it);
   }
 
-  ChatModel *mChatModel;
+  ChatRoomModel *mChatRoomModel;
 };
 
 // -----------------------------------------------------------------------------
-
-ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
+/*
+ChatRoomModel::ChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
   CoreManager *coreManager = CoreManager::getInstance();
 
   mCoreHandlers = coreManager->getHandlers();
@@ -319,21 +324,10 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress, c
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());
   std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
   std::list<std::shared_ptr<linphone::Address>> participants;
-  
-  //params->enableEncryption(isSecure);
-  //if(isSecure){
-	//  params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
-//	  params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
-//  }
-  
+    
   mChatRoom = core->searchChatRoom(params, factory->createAddress(localAddress.toStdString())
 								   , factory->createAddress(peerAddress.toStdString())
 								   , participants);
-  /*
-  mChatRoom = core->getChatRoom(
-    factory->createAddress(peerAddress.toStdString()),
-    factory->createAddress(localAddress.toStdString())
-  );*/
   Q_ASSERT(mChatRoom);
 
   handleIsComposingChanged(mChatRoom);
@@ -358,7 +352,7 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress, c
 	for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
 	    insertCall(callLog);
 
-  qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
+  qInfo() << QStringLiteral("ChatRoomModel (%1, %2) loaded in %3 milliseconds.")
     .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
   
 // Rebind lost handlers
@@ -371,15 +365,16 @@ ChatModel::ChatModel (const QString &peerAddress, const QString &localAddress, c
   }
   {
     CoreHandlers *coreHandlers = mCoreHandlers.get();
-    QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
-    QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
-    QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
+    QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatRoomModel::handleMessageReceived);
+    QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatRoomModel::handleCallStateChanged);
+    QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatRoomModel::handleIsComposingChanged);
   }
   if(!mChatRoom)
 	  qWarning("TOTO A");
 }
+*/
 
-ChatModel::ChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
+ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
 	CoreManager *coreManager = CoreManager::getInstance();
   
 	mCoreHandlers = coreManager->getHandlers();
@@ -394,8 +389,12 @@ ChatModel::ChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
 	mChatRoom = chatRoom;
 	
 	Q_ASSERT(mChatRoom);
+	
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
+	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
+	mMissedCallsCount = 0;
   
-	handleIsComposingChanged(mChatRoom);
+	//handleIsComposingChanged(mChatRoom);
   
 	// Get messages.
 	mEntries.clear();
@@ -430,30 +429,35 @@ ChatModel::ChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
 	}
 	{
 	  CoreHandlers *coreHandlers = mCoreHandlers.get();
-	  QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatModel::handleMessageReceived);
-	  QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatModel::handleCallStateChanged);
-	  QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatModel::handleIsComposingChanged);
+	  //QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatRoomModel::handleMessageReceived);
+	  QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &ChatRoomModel::handleCallCreated);
+	  QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatRoomModel::handleCallStateChanged);
+	  //QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatRoomModel::handleIsComposingChanged);
 	}
-	if(!mChatRoom)
-		qWarning("TOTO B");
+	if(mChatRoom){
+		std::list<std::shared_ptr<linphone::Participant>>  participants = mChatRoom->getParticipants();
+		for(auto it = participants.begin() ; it != participants.end() ; ++it){
+			mParticipants << new ParticipantModel(*it, this);
+		}
+	}
 }
 
-ChatModel::~ChatModel () {
-  mMessageHandlers->mChatModel = nullptr;
+ChatRoomModel::~ChatRoomModel () {
+  mMessageHandlers->mChatRoomModel = nullptr;
 }
 
-QHash<int, QByteArray> ChatModel::roleNames () const {
+QHash<int, QByteArray> ChatRoomModel::roleNames () const {
   QHash<int, QByteArray> roles;
   roles[Roles::ChatEntry] = "$chatEntry";
   roles[Roles::SectionDate] = "$sectionDate";
   return roles;
 }
 
-int ChatModel::rowCount (const QModelIndex &) const {
+int ChatRoomModel::rowCount (const QModelIndex &) const {
   return mEntries.count();
 }
 
-QVariant ChatModel::data (const QModelIndex &index, int role) const {
+QVariant ChatRoomModel::data (const QModelIndex &index, int role) const {
   int row = index.row();
 
   if (!index.isValid() || row < 0 || row >= mEntries.count())
@@ -473,11 +477,11 @@ QVariant ChatModel::data (const QModelIndex &index, int role) const {
   return QVariant();
 }
 
-bool ChatModel::removeRow (int row, const QModelIndex &) {
+bool ChatRoomModel::removeRow (int row, const QModelIndex &) {
   return removeRows(row, 1);
 }
 
-bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
+bool ChatRoomModel::removeRows (int row, int count, const QModelIndex &parent) {
   int limit = row + count - 1;
 
   if (row < 0 || count < 0 || limit >= mEntries.count())
@@ -500,46 +504,111 @@ bool ChatModel::removeRows (int row, int count, const QModelIndex &parent) {
   return true;
 }
 
-QString ChatModel::getPeerAddress () const {
+QString ChatRoomModel::getPeerAddress () const {
   return Utils::coreStringToAppString(
     mChatRoom->getPeerAddress()->asStringUriOnly()
   );
 }
 
-QString ChatModel::getLocalAddress () const {
+QString ChatRoomModel::getLocalAddress () const {
   return Utils::coreStringToAppString(
     mChatRoom->getLocalAddress()->asStringUriOnly()
   );
 }
-QString ChatModel::getFullPeerAddress () const {
+QString ChatRoomModel::getFullPeerAddress () const {
 	if(!mChatRoom)
 		qWarning("TOTO Z");
   return QString::fromStdString(mChatRoom->getPeerAddress()->asString());
 }
 
-QString ChatModel::getFullLocalAddress () const {
+QString ChatRoomModel::getFullLocalAddress () const {
   return QString::fromStdString(mChatRoom->getLocalAddress()->asString());
 }
-void ChatModel::setSipAddresses (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
+
+QString ChatRoomModel::getSubject () const {
+  return QString::fromStdString(mChatRoom->getSubject());
+}
+
+QString ChatRoomModel::getUsername () const {
+	std::string username = mChatRoom->getSubject();
+	if(username != ""){
+		return QString::fromStdString(username);
+	}
+	if( mChatRoom->getNbParticipants() == 1){
+		auto participants = mChatRoom->getParticipants();	
+		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((*participants.begin())->getAddress()->asString()));
+		if(contact)
+			return contact->getVcardModel()->getUsername();
+	}
+	username = mChatRoom->getPeerAddress()->getDisplayName();
+	if(username != "")
+		return QString::fromStdString(username);
+	username = mChatRoom->getPeerAddress()->getUsername();
+	if(username != "")
+		return QString::fromStdString(username);
+	return QString::fromStdString(mChatRoom->getPeerAddress()->asStringUriOnly());
+}
+
+QString ChatRoomModel::getAvatar () const {
+	if( mChatRoom->getNbParticipants() == 1){
+		auto participants = mChatRoom->getParticipants();	
+		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((*participants.begin())->getAddress()->asString()));
+		if(contact)
+			return contact->getVcardModel()->getAvatar();
+	}
+	return "";
+}
+
+int ChatRoomModel::getPresenceStatus() const {
+	if( mChatRoom->getNbParticipants() == 1){
+		auto participants = mChatRoom->getParticipants();	
+		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((*participants.begin())->getAddress()->asString()));
+		if(contact)
+			return contact->getPresenceLevel();
+		else
+			return 0;
+	}else
+		return 0;
+	//return Presence::getPresenceLevel(1);
+	//return mChatRoom->getConsolidatedPresence();
+}
+
+void ChatRoomModel::setLastUpdateTime(const QDateTime& lastUpdateDate) {
+	if(mLastUpdateTime != lastUpdateDate ) {
+		mLastUpdateTime = lastUpdateDate;
+		emit lastUpdateTimeChanged();
+	}	
+}
+
+void ChatRoomModel::setUnreadMessagesCount(const int& count){
+	if(count != mUnreadMessagesCount){
+		mUnreadMessagesCount = count;
+		emit unreadMessagesCountChanged();
+	}
+}
+
+void ChatRoomModel::setMissedCallsCount(const int& count){
+	if(count != mMissedCallsCount){
+		mMissedCallsCount = count;
+		emit missedCallsCountChanged();
+	}
+}
+
+
+void ChatRoomModel::leaveChatRoom (){
+	mChatRoom->leave();
+	mChatRoom->getCore()->deleteChatRoom(mChatRoom);
+}
+/*
+void ChatRoomModel::setSipAddresses (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   shared_ptr<linphone::Factory> factory(linphone::Factory::get());
   std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
   std::list<std::shared_ptr<linphone::Address>> participants;
-  
-  //params->enableEncryption(isSecure);
-  //if(isSecure){
-	//  params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
-//	  params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
-//  }
-  
+    
   mChatRoom = core->searchChatRoom(params, factory->createAddress(localAddress.toStdString())
 								   , factory->createAddress(peerAddress.toStdString())
 								   , participants);
-  /*
-  mChatRoom = core->getChatRoom(
-    factory->createAddress(peerAddress.toStdString()),
-    factory->createAddress(localAddress.toStdString())
-  );*/
   Q_ASSERT(mChatRoom);
 
   handleIsComposingChanged(mChatRoom);
@@ -564,26 +633,36 @@ void ChatModel::setSipAddresses (const QString &peerAddress, const QString &loca
 	for (auto &callLog : core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress()))
 	    insertCall(callLog);
 
-  qInfo() << QStringLiteral("ChatModel (%1, %2) loaded in %3 milliseconds.")
+  qInfo() << QStringLiteral("ChatRoomModel (%1, %2) loaded in %3 milliseconds.")
     .arg(peerAddress).arg(localAddress).arg(timer.elapsed());
   
   if(!mChatRoom)
 	  qWarning("TOTO C");
 
 }
+*/
 
-bool ChatModel::getIsSecure() const{
+bool ChatRoomModel::getIsSecure() const{
 	return mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
 			|| mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe;
 }
 
-bool ChatModel::getIsRemoteComposing () const {
+bool ChatRoomModel::getIsRemoteComposing () const {
   return mIsRemoteComposing;
+}
+
+//QList<ParticipantModel *> ChatRoomModel::getParticipants() const{
+QString ChatRoomModel::getParticipants() const{
+	QStringList participants;
+	for(auto it = mParticipants.begin() ; it != mParticipants.end() ; ++it)
+		participants << (*it)->getAddress();
+	
+	return participants.join(",");
 }
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::removeEntry (int id) {
+void ChatRoomModel::removeEntry (int id) {
   qInfo() << QStringLiteral("Removing chat entry: %1 of (%2, %3).")
     .arg(id).arg(getPeerAddress()).arg(getLocalAddress());
 
@@ -591,7 +670,7 @@ void ChatModel::removeEntry (int id) {
     qWarning() << QStringLiteral("Unable to remove chat entry: %1").arg(id);
 }
 
-void ChatModel::removeAllEntries () {
+void ChatRoomModel::removeAllEntries () {
   qInfo() << QStringLiteral("Removing all chat entries of: (%1, %2).")
     .arg(getPeerAddress()).arg(getLocalAddress());
 
@@ -610,19 +689,18 @@ void ChatModel::removeAllEntries () {
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::sendMessage (const QString &message) {
-  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessage("");
-  _message->getContents().begin()->get()->setStringBuffer(message.toUtf8().toStdString());
+void ChatRoomModel::sendMessage (const QString &message) {
+  shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessageFromUtf8("");
+  _message->getContents().begin()->get()->setUtf8Text(message.toUtf8().toStdString());
   _message->removeListener(mMessageHandlers);// Remove old listener if already exists
   _message->addListener(mMessageHandlers);
 
-  insertMessageAtEnd(_message);
   _message->send();
 
   emit messageSent(_message);
 }
 
-void ChatModel::resendMessage (int id) {
+void ChatRoomModel::resendMessage (int id) {
   if (id < 0 || id > mEntries.count()) {
     qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
     return;
@@ -652,7 +730,7 @@ void ChatModel::resendMessage (int id) {
   }
 }
 
-void ChatModel::sendFileMessage (const QString &path) {
+void ChatRoomModel::sendFileMessage (const QString &path) {
   QFile file(path);
   if (!file.exists())
     return;
@@ -682,7 +760,6 @@ void ChatModel::sendFileMessage (const QString &path) {
 
   createThumbnail(message);
 
-  insertMessageAtEnd(message);
   message->send();
 
   emit messageSent(message);
@@ -690,7 +767,7 @@ void ChatModel::sendFileMessage (const QString &path) {
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::downloadFile (int id) {
+void ChatRoomModel::downloadFile (int id) {
   const ChatEntryData entry = getFileMessageEntry(id);
   if (!entry.second)
     return;
@@ -734,7 +811,7 @@ void ChatModel::downloadFile (int id) {
   }
 }
 
-void ChatModel::openFile (int id, bool showDirectory) {
+void ChatRoomModel::openFile (int id, bool showDirectory) {
   const ChatEntryData entry = getFileMessageEntry(id);
   if (!entry.second)
     return;
@@ -750,27 +827,29 @@ void ChatModel::openFile (int id, bool showDirectory) {
   }
 }
 
-bool ChatModel::fileWasDownloaded (int id) {
+bool ChatRoomModel::fileWasDownloaded (int id) {
   const ChatEntryData entry = getFileMessageEntry(id);
   return entry.second && ::fileWasDownloaded(static_pointer_cast<linphone::ChatMessage>(entry.second));
 }
 
-void ChatModel::compose () {
+void ChatRoomModel::compose () {
   mChatRoom->compose();
 }
 
-void ChatModel::resetMessageCount () {
+void ChatRoomModel::resetMessageCount () {
   if (mChatRoom->getUnreadMessagesCount() > 0){
     mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
+	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
   }
+  mMissedCallsCount = 0;
   emit messageCountReset();
 }
-std::shared_ptr<linphone::ChatRoom> ChatModel::getChatRoom(){
+std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){
 	return mChatRoom;
 }
 // -----------------------------------------------------------------------------
 
-const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
+const ChatRoomModel::ChatEntryData ChatRoomModel::getFileMessageEntry (int id) {
   if (id < 0 || id > mEntries.count()) {
     qWarning() << QStringLiteral("Entry %1 not exists.").arg(id);
     return ChatEntryData();
@@ -793,18 +872,18 @@ const ChatModel::ChatEntryData ChatModel::getFileMessageEntry (int id) {
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::removeEntry (ChatEntryData &entry) {
+void ChatRoomModel::removeEntry (ChatEntryData &entry) {
   int type = entry.first["type"].toInt();
 
   switch (type) {
-    case ChatModel::MessageEntry: {
+    case ChatRoomModel::MessageEntry: {
       shared_ptr<linphone::ChatMessage> message = static_pointer_cast<linphone::ChatMessage>(entry.second);
       removeFileMessageThumbnail(message);
       mChatRoom->deleteMessage(message);
       break;
     }
 
-    case ChatModel::CallEntry: {
+    case ChatRoomModel::CallEntry: {
       if (entry.first["status"].toInt() == CallStatusSuccess) {
         // WARNING: Unable to remove symmetric call here. (start/end)
         // We are between `beginRemoveRows` and `endRemoveRows`.
@@ -829,7 +908,7 @@ void ChatModel::removeEntry (ChatEntryData &entry) {
   }
 }
 
-void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
+void ChatRoomModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   linphone::Call::Status status = callLog->getStatus();
 
   auto insertEntry = [this](
@@ -862,7 +941,7 @@ void ChatModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
   }
 }
 
-void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &message) {
+void ChatRoomModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &message) {
   int row = mEntries.count();
 
   beginInsertRows(QModelIndex(), row, row);
@@ -879,27 +958,95 @@ void ChatModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &mes
 
 // -----------------------------------------------------------------------------
 
-void ChatModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
-  if (
-    (state == linphone::Call::State::End || state == linphone::Call::State::Error) &&
-    mChatRoom == CoreManager::getInstance()->getCore()->findChatRoom(call->getRemoteAddress(), mChatRoom->getLocalAddress())
-  )
-    insertCall(call->getCallLog());
+void ChatRoomModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
+  if (state == linphone::Call::State::End || state == linphone::Call::State::Error){
+	  shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	  std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+	  std::list<std::shared_ptr<linphone::Address>> participants;
+		
+	  auto chatRoom = core->searchChatRoom(params, mChatRoom->getLocalAddress()
+									   , call->getRemoteAddress()
+									   , participants);
+	  if( mChatRoom == chatRoom){
+		  insertCall(call->getCallLog());
+		  setMissedCallsCount(mMissedCallsCount+1);
+	  }
+    //mChatRoom == CoreManager::getInstance()->getCore()->findChatRoom(call->getRemoteAddress(), mChatRoom->getLocalAddress())
+  }
 }
 
-void ChatModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {
-  if (mChatRoom == chatRoom) {
-    bool isRemoteComposing = mChatRoom->isRemoteComposing();
-    if (isRemoteComposing != mIsRemoteComposing) {
-      mIsRemoteComposing = isRemoteComposing;
+void ChatRoomModel::handleCallCreated(const shared_ptr<linphone::Call> &call){
+}
+//----------------------------------------------------------
+//------				CHAT ROOM HANDLERS
+//----------------------------------------------------------
+
+void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing){
+	if (isComposing != mIsRemoteComposing) {
+      mIsRemoteComposing = isComposing;
       emit isRemoteComposingChanged(mIsRemoteComposing);
     }
-  }
 }
-
-void ChatModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
-  if (mChatRoom == message->getChatRoom()) {
-    insertMessageAtEnd(message);
-    emit messageReceived(message);
-  }
+void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
+	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
+	/*
+	insertMessageAtEnd(message);
+    emit messageReceived(message);*/
 }
+void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	qWarning() << "New Event" <<(int) eventLog->getType();
+	if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnd ){
+		setMissedCallsCount(mMissedCallsCount+1);
+	}
+	/*auto message = eventLog->getChatMessage();
+	if(message){
+		insertMessageAtEnd(message);
+		emit messageReceived(message);
+	}*/
+}
+void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
+	
+	auto message = eventLog->getChatMessage();
+	if(message){
+		insertMessageAtEnd(message);
+		emit messageReceived(message);
+		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
+	}
+}
+void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	auto message = eventLog->getChatMessage();
+	if(message){
+		insertMessageAtEnd(message);
+	    emit messageReceived(message);
+		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
+	}
+}
+void ChatRoomModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	/*auto message = eventLog->getChatMessage();
+	if(message){
+		insertMessageAtEnd(message);
+	    emit messageReceived(message);
+	}*/
+}
+void ChatRoomModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){}
+void ChatRoomModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
+	emit subjectChanged(getSubject());
+	emit usernameChanged(getUsername());
+}
+void ChatRoomModel::onUndecryptableMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
+void ChatRoomModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onParticipantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onEphemeralEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void ChatRoomModel::onConferenceAddressGeneration(const std::shared_ptr<linphone::ChatRoom> & chatRoom){}
+void ChatRoomModel::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){}
+void ChatRoomModel::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){}
+void ChatRoomModel::onChatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
+void ChatRoomModel::onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){}

@@ -26,6 +26,8 @@
 
 #include "app/App.hpp"
 #include "components/calls/CallsListModel.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contacts/ContactsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
@@ -112,6 +114,13 @@ QString CallModel::getFullLocalAddress () const {
 }
 // -----------------------------------------------------------------------------
 
+ContactModel *CallModel::getContactModel() const{
+	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString(mCall->getRemoteAddress()->asString()));
+	return contact;
+}
+
+
+// -----------------------------------------------------------------------------
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(Utils::appStringToCoreString(
     CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder()

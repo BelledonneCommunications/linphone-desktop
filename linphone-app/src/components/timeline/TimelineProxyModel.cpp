@@ -37,39 +37,50 @@
 TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
 	CoreManager *coreManager = CoreManager::getInstance();
 	AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
-	setSourceModel(CoreManager::getInstance()->getTimelineListModel());
+	TimelineListModel * model = CoreManager::getInstance()->getTimelineListModel();
+	
+	connect(model, SIGNAL(selectedCountChanged(int)), this, SIGNAL(selectedCountChanged(int)));
+
+	setSourceModel(model);
 	
 	QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->update();
 	  invalidate();
-	  updateCurrentSelection();
+	  //updateCurrentSelection();
 	});
 	QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->reset();
 	  invalidate();// Invalidate and reload GUI if the model has been reset
-	  updateCurrentSelection();
+	  //updateCurrentSelection();
 	});
   sort(0);
 }
 
 // -----------------------------------------------------------------------------
-void TimelineProxyModel::setCurrentChatModel(std::shared_ptr<ChatModel> data){
-	mCurrentChatModel = data;
-	emit currentChatModelChanged(mCurrentChatModel);
-	emit currentTimelineChanged(dynamic_cast<TimelineListModel*>(sourceModel())->getTimeline(mCurrentChatModel->getChatRoom(), false));
+/*
+void TimelineProxyModel::setCurrentChatRoomModel(ChatRoomModel *data){
+	mCurrentChatRoomModel = CoreManager::getInstance()->getChatRoomModel(data);
+	emit currentChatRoomModelChanged(mCurrentChatRoomModel);
+	if(mCurrentChatRoomModel)
+		emit currentTimelineChanged(dynamic_cast<TimelineListModel*>(sourceModel())->getTimeline(mCurrentChatRoomModel->getChatRoom(), false).get());
+	else
+		emit currentTimelineChanged(nullptr);
 }
 
-std::shared_ptr<ChatModel> TimelineProxyModel::getCurrentChatModel()const{
-	return mCurrentChatModel;
+ChatRoomModel *TimelineProxyModel::getCurrentChatRoomModel()const{
+	return mCurrentChatRoomModel.get();
 }
 
 void TimelineProxyModel::updateCurrentSelection(){
 	auto currentAddress = CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress();
-	if(mCurrentChatModel && !mCurrentChatModel->getChatRoom()->getMe()->getAddress()->weakEqual(currentAddress) ){
-		setCurrentChatModel(nullptr);
+	if(mCurrentChatRoomModel && !mCurrentChatRoomModel->getChatRoom()->getMe()->getAddress()->weakEqual(currentAddress) ){
+		setCurrentChatRoomModel(nullptr);
 	}
 }
-
+*/
+void TimelineProxyModel::unselectAll(){
+	dynamic_cast<TimelineListModel*>(sourceModel())->selectAll(false);
+}
 // -----------------------------------------------------------------------------
 
 bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
@@ -81,5 +92,5 @@ bool TimelineProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
     const TimelineModel* a = sourceModel()->data(left).value<TimelineModel*>();
     const TimelineModel* b = sourceModel()->data(right).value<TimelineModel*>();
   
-    return a->mTimestamp <= b->mTimestamp;
+    return a->getChatRoomModel()->mLastUpdateTime >= b->getChatRoomModel()->mLastUpdateTime ;
 }

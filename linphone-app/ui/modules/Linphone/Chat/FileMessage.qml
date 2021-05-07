@@ -48,12 +48,12 @@ Row {
       id: rectangle
 
       readonly property bool isError: Utils.includes([
-        ChatModel.MessageStatusFileTransferError,
-        ChatModel.MessageStatusNotDelivered,
+        ChatRoomModel.MessageStatusFileTransferError,
+        ChatRoomModel.MessageStatusNotDelivered,
        ], $chatEntry.status)
-      readonly property bool isUploaded: $chatEntry.status === ChatModel.MessageStatusDelivered
-      readonly property bool isDelivered: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
-      readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
+      readonly property bool isUploaded: $chatEntry.status === ChatRoomModel.MessageStatusDelivered
+      readonly property bool isDelivered: $chatEntry.status === ChatRoomModel.MessageStatusDeliveredToUser
+      readonly property bool isRead: $chatEntry.status === ChatRoomModel.MessageStatusDisplayed
 
       color: $chatEntry.isOutgoing
         ? ChatStyle.entry.message.outgoing.backgroundColor
@@ -200,7 +200,7 @@ Row {
 
             to: $chatEntry.fileSize
             value: $chatEntry.fileOffset || 0
-            visible: $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
+            visible: $chatEntry.status === ChatRoomModel.MessageStatusInProgress || $chatEntry.status === ChatRoomModel.MessageStatusFileTransferInProgress
 
             background: Rectangle {
               color: ChatStyle.entry.message.file.status.bar.background.color
@@ -292,7 +292,7 @@ Row {
 
           MouseArea {
             anchors.fill: parent
-            visible: (rectangle.isError || $chatEntry.status === ChatModel.MessageStatusIdle) && $chatEntry.isOutgoing
+            visible: (rectangle.isError || $chatEntry.status === ChatRoomModel.MessageStatusIdle) && $chatEntry.isOutgoing
             onClicked: proxyModel.resendMessage(index)
           }
         }
@@ -319,7 +319,7 @@ Row {
 
         sourceComponent: $chatEntry.isOutgoing
           ? (
-            $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
+            $chatEntry.status === ChatRoomModel.MessageStatusInProgress || $chatEntry.status === ChatRoomModel.MessageStatusFileTransferInProgress
               ? indicator
               : icon
           ) : undefined

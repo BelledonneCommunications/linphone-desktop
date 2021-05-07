@@ -582,17 +582,17 @@ void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
 
   qRegisterMetaType<shared_ptr<linphone::ProxyConfig>>();
-  qRegisterMetaType<ChatModel::EntryType>();
+  qRegisterMetaType<ChatRoomModel::EntryType>();
   qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
   qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();
-  qRegisterMetaType<std::shared_ptr<ChatModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatRoomModel>>();
 
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
   registerType<CallsListProxyModel>("CallsListProxyModel");
   registerType<Camera>("Camera");
   registerType<CameraPreview>("CameraPreview");
-  registerType<ChatProxyModel>("ChatProxyModel");
+  registerType<ChatRoomProxyModel>("ChatRoomProxyModel");
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
@@ -616,7 +616,7 @@ void App::registerTypes () {
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerUncreatableType<CallModel>("CallModel");
-  registerUncreatableType<ChatModel>("ChatModel");
+  registerUncreatableType<ChatRoomModel>("ChatRoomModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
   registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");

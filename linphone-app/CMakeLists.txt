@@ -122,8 +122,9 @@ set(SOURCES
     src/components/calls/CallsListProxyModel.cpp
     src/components/camera/Camera.cpp
     src/components/camera/CameraPreview.cpp
-    src/components/chat/ChatModel.cpp
-    src/components/chat/ChatProxyModel.cpp
+    src/components/chat-room/ChatRoomModel.cpp
+    src/components/chat-room/ChatRoomListModel.cpp
+    src/components/chat-room/ChatRoomProxyModel.cpp
     src/components/codecs/AbstractCodecsModel.cpp
     src/components/codecs/AudioCodecsModel.cpp
     src/components/codecs/VideoCodecsModel.cpp
@@ -153,6 +154,7 @@ set(SOURCES
     src/components/other/colors/Colors.cpp
     src/components/other/text-to-speech/TextToSpeech.cpp
     src/components/other/units/Units.cpp
+    src/components/participant/ParticipantModel.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
     src/components/search/SearchHandler.cpp
@@ -198,8 +200,9 @@ set(HEADERS
     src/components/calls/CallsListProxyModel.hpp
     src/components/camera/Camera.hpp
     src/components/camera/CameraPreview.hpp
-    src/components/chat/ChatModel.hpp
-    src/components/chat/ChatProxyModel.hpp
+    src/components/chat-room/ChatRoomModel.hpp
+    src/components/chat-room/ChatRoomListModel.hpp
+    src/components/chat-room/ChatRoomProxyModel.hpp
     src/components/codecs/AbstractCodecsModel.hpp
     src/components/codecs/AudioCodecsModel.hpp
     src/components/codecs/VideoCodecsModel.hpp
@@ -231,6 +234,7 @@ set(HEADERS
     src/components/other/desktop-tools/DesktopTools.hpp
     src/components/other/text-to-speech/TextToSpeech.hpp
     src/components/other/units/Units.hpp
+    src/components/participant/ParticipantModel.hpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
     src/components/search/SearchHandler.hpp

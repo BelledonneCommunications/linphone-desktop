@@ -33,7 +33,8 @@ class QTimer;
 
 class AccountSettingsModel;
 class CallsListModel;
-class ChatModel;
+class ChatRoomModel;
+class ChatRoomListModel;
 class ContactsListModel;
 class ContactsImporterListModel;
 class CoreHandlers;
@@ -67,9 +68,10 @@ public:
     return mHandlers;
   }
 
-  std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress, const bool &isSecure);
-  std::shared_ptr<ChatModel> getChatModel (std::shared_ptr<linphone::ChatRoom> chatRoom);
-  bool chatModelExists (const QString &sipAddress, const QString &localAddress, const bool &isSecure);
+  //std::shared_ptr<ChatRoomModel> getChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool &isSecure);
+  std::shared_ptr<ChatRoomModel> getChatRoomModel (ChatRoomModel * data);// Get the shared pointer. This can be done becuase of unicity of ChatRoomModel
+  std::shared_ptr<ChatRoomModel> getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom);
+  bool chatRoomModelExists (const QString &sipAddress, const QString &localAddress, const bool &isSecure);
   
   HistoryModel* getHistoryModel();
 
@@ -93,6 +95,12 @@ public:
     Q_CHECK_PTR(mCallsListModel);
     return mCallsListModel;
   }
+  
+  ChatRoomListModel *getChatRoomListModel () const {
+    Q_CHECK_PTR(mChatRoomListModel);
+    return mChatRoomListModel;
+  }
+  
 
   ContactsListModel *getContactsListModel () const {
     Q_CHECK_PTR(mContactsListModel);
@@ -163,7 +171,7 @@ public slots:
 signals:
   void coreManagerInitialized ();
 
-  void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
+  void chatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
   void historyModelCreated (HistoryModel *historyModel);
 
   void logsUploaded (const QString &url);
@@ -200,6 +208,7 @@ private:
   ContactsListModel *mContactsListModel = nullptr;
   ContactsImporterListModel *mContactsImporterListModel = nullptr;
   TimelineListModel *mTimelineListModel = nullptr;
+  ChatRoomListModel *mChatRoomListModel = nullptr;
   
   SipAddressesModel *mSipAddressesModel = nullptr;
   SettingsModel *mSettingsModel = nullptr;
@@ -207,7 +216,7 @@ private:
 
   EventCountNotifier *mEventCountNotifier = nullptr;
 
-  QHash<QPair<bool, QPair<QString, QString> >, std::weak_ptr<ChatModel>> mChatModels;
+  QHash<QPair<bool, QPair<QString, QString> >, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
   HistoryModel * mHistoryModel = nullptr;
   LdapListModel *mLdapListModel = nullptr;
 

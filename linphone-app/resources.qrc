@@ -432,6 +432,7 @@
         <file>ui/views/App/Main/Dialogs/AuthenticationRequest.qml</file>
         <file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
         <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
+        <file>ui/views/App/Main/Dialogs/ManageChatRoom.qml</file>
         <file>ui/views/App/Main/Home.qml</file>
         <file>ui/views/App/Main/HistoryView.qml</file>
         <file>ui/views/App/Main/HistoryView.js</file>

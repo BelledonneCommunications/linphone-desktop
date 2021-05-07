@@ -137,6 +137,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 	map["route"] = Utils::coreStringToAppString(proxyConfig->getRoutes().front());
   else
     map["route"] = "";
+  map["conferenceUri"] = Utils::coreStringToAppString(proxyConfig->getConferenceFactoryUri());
   map["contactParams"] = Utils::coreStringToAppString(proxyConfig->getContactParameters());
   map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
   map["registerEnabled"] = proxyConfig->registerEnabled();
@@ -245,6 +246,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 
   proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
   proxyConfig->setRoute(Utils::appStringToCoreString(data["route"].toString()));
+  proxyConfig->setConferenceFactoryUri(Utils::appStringToCoreString(data["conferenceUri"].toString()));
   proxyConfig->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
   proxyConfig->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
   proxyConfig->enableRegister(data["registerEnabled"].toBool());

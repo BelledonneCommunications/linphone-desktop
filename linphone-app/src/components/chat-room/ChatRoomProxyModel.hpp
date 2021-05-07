@@ -18,19 +18,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHAT_PROXY_MODEL_H_
-#define CHAT_PROXY_MODEL_H_
+#ifndef CHAT_ROOM_PROXY_MODEL_H_
+#define CHAT_ROOM_PROXY_MODEL_H_
 
 #include <QSortFilterProxyModel>
 
-#include "ChatModel.hpp"
+#include "ChatRoomModel.hpp"
 
 // =============================================================================
 
 class QWindow;
 
-class ChatProxyModel : public QSortFilterProxyModel {
-  class ChatModelFilter;
+class ChatRoomProxyModel : public QSortFilterProxyModel {
+  class ChatRoomModelFilter;
 
   Q_OBJECT;
 
@@ -39,17 +39,17 @@ class ChatProxyModel : public QSortFilterProxyModel {
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged);
   Q_PROPERTY(int isSecure READ getIsSecure WRITE setIsSecure NOTIFY isSecureChanged);
-  Q_PROPERTY(std::shared_ptr<ChatModel> chatModel READ getChatModel WRITE setChatModel NOTIFY chatModelChanged);
+  Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged);
   //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged);
   Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
   //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged);
   Q_PROPERTY(QString cachedText READ getCachedText);
 
 public:
-  ChatProxyModel (QObject *parent = Q_NULLPTR);
+  ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
 
   Q_INVOKABLE void loadMoreEntries ();
-  Q_INVOKABLE void setEntryTypeFilter (ChatModel::EntryType type);
+  Q_INVOKABLE void setEntryTypeFilter (ChatRoomModel::EntryType type);
   Q_INVOKABLE void removeEntry (int id);
 
   Q_INVOKABLE void removeAllEntries ();
@@ -75,11 +75,11 @@ signals:
   bool isRemoteComposingChanged (bool status);
   bool isSecureChanged(bool secure);
   
-  void chatModelChanged();
+  void chatRoomModelChanged();
 
   void moreEntriesLoaded (int n);
 
-  void entryTypeFilterChanged (ChatModel::EntryType type);
+  void entryTypeFilterChanged (ChatRoomModel::EntryType type);
 
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
@@ -100,8 +100,8 @@ private:
   int getIsSecure () const;
   void setIsSecure (const int &secure);
   
-  std::shared_ptr<ChatModel> getChatModel() const;
-  void setChatModel (std::shared_ptr<ChatModel> chatModel);
+  ChatRoomModel *getChatRoomModel() const;
+  void setChatRoomModel (ChatRoomModel *chatRoomModel);
 
   bool getIsRemoteComposing () const;
   
@@ -126,9 +126,9 @@ private:
   std::shared_ptr<linphone::ChatRoom> mChatRoom;
   
 
-  std::shared_ptr<ChatModel> mChatModel;
+  std::shared_ptr<ChatRoomModel> mChatRoomModel;
 
   static constexpr int EntriesChunkSize = 50;
 };
 
-#endif // CHAT_PROXY_MODEL_H_
+#endif // CHAT_ROOM_PROXY_MODEL_H_

@@ -51,6 +51,7 @@ public:
   void mergeVcardModel (VcardModel *vcardModel);
 
   Q_INVOKABLE VcardModel *cloneVcardModel () const;
+  Presence::PresenceLevel getPresenceLevel () const;
 
 signals:
   void contactUpdated ();
@@ -65,7 +66,7 @@ private:
   void updateSipAddresses (VcardModel *oldVcardModel);
 
   Presence::PresenceStatus getPresenceStatus () const;
-  Presence::PresenceLevel getPresenceLevel () const;
+  
 
   VcardModel *mVcardModel = nullptr;
   std::shared_ptr<linphone::Friend> mLinphoneFriend;
