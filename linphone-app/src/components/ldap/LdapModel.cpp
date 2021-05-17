@@ -37,6 +37,7 @@ using namespace std;
 LdapModel::LdapModel (const int& id,QObject *parent ) : QObject(parent), mId(id){
 	mIsValid = false;
 	mMaxResults = 50;
+	mTimeout = 5;
 	mDebug = false;
 	mVerifyServerCertificates = -1;
 	mUseTls = true;
@@ -53,13 +54,13 @@ void LdapModel::init(){
 bool LdapModel::isValid(){
 	bool valid = mServerFieldError=="" 
 			&& mMaxResultsFieldError==""
+			&& mTimeoutFieldError==""
 			&& mPasswordFieldError==""
 			&& mBindDnFieldError==""
 			&& mBaseObjectFieldError==""
 			&& mFilterFieldError==""
 			&& mNameAttributesFieldError==""
 			&& mSipAttributesFieldError==""
-			&& mSipSchemeFieldError==""
 			&& mSipDomainFieldError=="";
 	if( valid != mIsValid){
 		mIsValid = valid;
@@ -131,13 +132,13 @@ void LdapModel::set(){
 	mConfig["use_tls"] = (mUseTls?"1":"0");
 	mConfig["server"] = mServer;
 	mConfig["max_results"] = mMaxResults;
+	mConfig["timeout"] = mTimeout;
 	mConfig["password"] = mPassword;
 	mConfig["bind_dn"] = mBindDn;
 	mConfig["base_object"] = mBaseObject;
 	mConfig["filter"] = mFilter;
 	mConfig["name_attribute"] = mNameAttributes;
 	mConfig["sip_attribute"] = mSipAttributes;
-	mConfig["sip_scheme"] = mSipScheme;
 	mConfig["sip_domain"] = mSipDomain;
 	mConfig["debug"] = (mDebug?"1":"0");
 	mConfig["verify_server_certificates"] = mVerifyServerCertificates;
@@ -149,26 +150,26 @@ void LdapModel::unset(){
 	mUseTls = mConfig["use_tls"].toString() == "1";
 	mUseSal = mConfig["use_sal"].toString() == "1";
 	mMaxResults = mConfig["max_results"].toInt();
+	mTimeout = mConfig["timeout"].toInt();
 	mPassword = mConfig["password"].toString();
 	mBindDn = mConfig["bind_dn"].toString();
 	mBaseObject = mConfig["base_object"].toString();
 	mFilter = mConfig["filter"].toString();
 	mNameAttributes = mConfig["name_attribute"].toString();
 	mSipAttributes = mConfig["sip_attribute"].toString();
-	mSipScheme = mConfig["sip_scheme"].toString();
 	mSipDomain = mConfig["sip_domain"].toString();
 	mDebug = mConfig["debug"].toString() == "1";
 	mVerifyServerCertificates = mConfig["verify_server_certificates"].toInt();
 	
 	testServerField();
 	testMaxResultsField();
+	testTimeoutField();
 	testPasswordField();
 	testBindDnField();
 	testBaseObjectField();
 	testFilterField();
 	testNameAttributesField();
 	testSipAttributesField();
-	testSipSchemeField();
 	testSipDomainField();
 	isValid();
 }
@@ -228,6 +229,24 @@ void LdapModel::testMaxResultsField(){
 	}
 }
 
+void LdapModel::setTimeout(const int& data){
+	mTimeout = data;
+	testTimeoutField();
+	emit timeoutChanged();
+}
+void LdapModel::testTimeoutField(){
+	QString valid;
+	if(mTimeout < 0)
+		valid = "Timeout must be positive in seconds.";
+	else
+		valid = "";
+	if( valid != mTimeoutFieldError){
+		mTimeoutFieldError = valid;
+		emit timeoutFieldErrorChanged();
+		isValid();
+	}
+}
+
 void LdapModel::setPassword(const QString& data){
 	mPassword = data;
 	testPasswordField();
@@ -249,10 +268,11 @@ void LdapModel::setBindDn(const QString& data){
 }
 void LdapModel::testBindDnField(){
 	QString valid;
+	/*
 	if(mBindDn == "")
 		valid = "Bind DN must not be empty";
 	else
-		valid = "";
+		valid = "";*/
 	if( valid != mBindDnFieldError){
 		mBindDnFieldError = valid;
 		emit bindDnFieldErrorChanged();
@@ -316,20 +336,6 @@ void LdapModel::testSipAttributesField(){
 	if( valid != mSipAttributesFieldError){
 		mSipAttributesFieldError = valid;
 		emit sipAttributesFieldErrorChanged();
-		isValid();
-	}
-}
-
-void LdapModel::setSipScheme(const QString& data){
-	mSipScheme = data;
-	testSipSchemeField();
-	emit sipSchemeChanged();
-}
-void LdapModel::testSipSchemeField(){
-	QString valid = "";
-	if( valid != mSipSchemeFieldError){
-		mSipSchemeFieldError = valid;
-		emit sipSchemeFieldErrorChanged();
 		isValid();
 	}
 }
