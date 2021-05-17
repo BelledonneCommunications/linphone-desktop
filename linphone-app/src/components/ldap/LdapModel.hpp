@@ -45,6 +45,10 @@ class LdapModel : public QObject {
 	Q_PROPERTY(int maxResults MEMBER mMaxResults WRITE setMaxResults NOTIFY maxResultsChanged)
 	Q_PROPERTY(QString maxResultsFieldError MEMBER mMaxResultsFieldError NOTIFY maxResultsFieldErrorChanged)
 	
+	Q_PROPERTY(int timeout MEMBER mTimeout WRITE setTimeout NOTIFY timeoutChanged)
+	Q_PROPERTY(QString timeoutFieldError MEMBER mTimeoutFieldError NOTIFY timeoutFieldErrorChanged)
+	
+	
 	Q_PROPERTY(QString password MEMBER mPassword WRITE setPassword NOTIFY passwordChanged)
 	Q_PROPERTY(QString passwordFieldError MEMBER mPasswordFieldError NOTIFY passwordFieldErrorChanged)
 	
@@ -62,9 +66,6 @@ class LdapModel : public QObject {
 	
 	Q_PROPERTY(QString sipAttributes MEMBER mSipAttributes WRITE setSipAttributes NOTIFY sipAttributesChanged)
 	Q_PROPERTY(QString sipAttributesFieldError MEMBER mSipAttributesFieldError NOTIFY sipAttributesFieldErrorChanged)
-	
-	Q_PROPERTY(QString sipScheme MEMBER mSipScheme WRITE setSipScheme NOTIFY sipSchemeChanged)
-	Q_PROPERTY(QString sipSchemeFieldError MEMBER mSipSchemeFieldError NOTIFY sipSchemeFieldErrorChanged)
 	
 	Q_PROPERTY(QString sipDomain MEMBER mSipDomain WRITE setSipDomain NOTIFY sipDomainChanged)
 	Q_PROPERTY(QString sipDomainFieldError MEMBER mSipDomainFieldError NOTIFY sipDomainFieldErrorChanged)
@@ -95,7 +96,12 @@ public:
 	QString mMaxResultsFieldError;
 	void setMaxResults(const int& data);
 	void testMaxResultsField();
-	
+
+	int mTimeout;
+	QString mTimeoutFieldError;
+	void setTimeout(const int& data);
+	void testTimeoutField();
+
 	QString mPassword;
 	QString mPasswordFieldError;
 	void setPassword(const QString& data);
@@ -125,11 +131,6 @@ public:
 	QString mSipAttributesFieldError;
 	void setSipAttributes(const QString& data);
 	void testSipAttributesField();
-	
-	QString mSipScheme;
-	QString mSipSchemeFieldError;
-	void setSipScheme(const QString& data);
-	void testSipSchemeField();
 	
 	QString mSipDomain;
 	QString mSipDomainFieldError;
@@ -163,13 +164,13 @@ signals:
 	void useSalChanged();
 	void isServerValidChanged();
 	void maxResultsChanged();
+	void timeoutChanged();
 	void passwordChanged();
 	void bindDnChanged();
 	void baseObjectChanged();
 	void filterChanged();
 	void nameAttributesChanged();
 	void sipAttributesChanged();
-	void sipSchemeChanged();
 	void sipDomainChanged();
 	void debugChanged();
 	void verifyServerCertificatesChanged();
@@ -177,13 +178,13 @@ signals:
 	
 	void serverFieldErrorChanged();
 	void maxResultsFieldErrorChanged();
+	void timeoutFieldErrorChanged();
 	void passwordFieldErrorChanged();
 	void bindDnFieldErrorChanged();
 	void baseObjectFieldErrorChanged();
 	void filterFieldErrorChanged();
 	void nameAttributesFieldErrorChanged();
 	void sipAttributesFieldErrorChanged();
-	void sipSchemeFieldErrorChanged();
 	void sipDomainFieldErrorChanged();
 	
 	void enabledChanged();

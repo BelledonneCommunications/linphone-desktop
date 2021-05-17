@@ -1444,7 +1444,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>bindDNTooltip</source>
         <translatorcomment>&apos;Bind DN&apos; can be a keyword. Check LDAP documentations</translatorcomment>
-        <translation>The bind DN is the credential that is used to authenticate against an LDAP.\n eg: cn=ausername,ou=people,dc=bc,dc=com</translation>
+        <translation>The bind DN is the credential that is used to authenticate against an LDAP.&lt;br&gt; eg: cn=ausername,ou=people,dc=bc,dc=com</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1456,7 +1456,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useTLSTooltip</source>
-        <translation>Encrypt transactions by LDAP over TLS(StartTLS). You must use \&apos;ldap\&apos; scheme. \&apos;ldaps\&apos; for LDAP over SSL is non-standardized and deprecated.\nStartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. \nIt works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.</translation>
+        <translation>Encrypt transactions by LDAP over TLS(StartTLS). You must use \&apos;ldap\&apos; scheme. \&apos;ldaps\&apos; for LDAP over SSL is non-standardized and deprecated.&lt;br&gt;StartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. &lt;br&gt;It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.</translation>
     </message>
     <message>
         <source>useSalLabel</source>
@@ -1495,18 +1495,18 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>baseObjectLabel</source>
-        <translatorcomment>&apos;Base Object&apos; can be a keyword. Check LDAP documentations</translatorcomment>
-        <translation>Base Object</translation>
+        <translatorcomment>&apos;Base Object&apos;/&apos;Search Base&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Search Base</translation>
     </message>
     <message>
         <source>baseObjectPlaceholder</source>
-        <translatorcomment>&apos;Base Object&apos; can be a keyword. Check LDAP documentations</translatorcomment>
-        <translation>Base Object</translation>
+        <translatorcomment>&apos;Base Object&apos;/&apos;Search Base&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Search Base</translation>
     </message>
     <message>
         <source>baseObjectTooltip</source>
-        <translatorcomment>&apos;Base Object&apos;and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
-        <translation>Base Object is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.\n\nNo entries below it will be considered.</translation>
+        <translatorcomment>&apos;Base Object&apos;, &apos;Search Base&apos; and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
+        <translation>Base Object/Search Base is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.&lt;br&gt;No entries above it will be considered.</translation>
     </message>
     <message>
         <source>filterLabel</source>
@@ -1514,7 +1514,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation>The search is base on this filter to search friends. Default value : (sn=%s)</translation>
+        <translation>The search is base on this filter to search contacts.&lt;br&gt;Default value : (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
@@ -1534,7 +1534,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation>Check these attributes To build Name Friend, separated by a comma and the first is the highest priority. The default value is: sn</translation>
+        <translation>Check these attributes To build Name Contact, separated by a comma and the first is the highest priority.&lt;br&gt;The default value is: sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
@@ -1543,15 +1543,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>sipAttributesTooltip</source>
         <translatorcomment>Default values : (mobile,telephoneNumber,homePhone,sn) are keywords.</translatorcomment>
-        <translation>Check these attributes to build the SIP username in address of Friend. Attributes are separated by a comma and the first is the highest priority. The default value is: mobile,telephoneNumber,homePhone,sn</translation>
-    </message>
-    <message>
-        <source>schemeLabel</source>
-        <translation>Scheme</translation>
-    </message>
-    <message>
-        <source>schemeTooltip</source>
-        <translation>Add the scheme to the sip address(scheme:username@domain). The default value is sip</translation>
+        <translation>Check these attributes to build the SIP username in address of Contact. Attributes are separated by a comma and the first is the highest priority.&lt;br&gt;The default value is: mobile,telephoneNumber,homePhone,sn</translation>
     </message>
     <message>
         <source>domainLabel</source>
@@ -1559,7 +1551,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation>Add the domain to the sip address(scheme:username@domain). The default value is sip.linphone.org</translation>
+        <translation>Add the domain to the sip address(sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -1573,6 +1565,14 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>debugTooltip</source>
         <translation>Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections).</translation>
+    </message>
+    <message>
+        <source>timeoutLabel</source>
+        <translation>Timeout</translation>
+    </message>
+    <message>
+        <source>timeoutTooltip</source>
+        <translation>The connection and search timeout in seconds. It must be positive.&lt;br&gt;Default is 5s.</translation>
     </message>
 </context>
 <context>
