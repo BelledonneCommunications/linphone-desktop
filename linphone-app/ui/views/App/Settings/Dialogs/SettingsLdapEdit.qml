@@ -103,6 +103,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
+						id:passwordGroup
 						label: qsTr('passwordLabel')//'Password'
 						PasswordField {
 							id:password
@@ -115,6 +116,7 @@ DialogPlus {
 				}
 				FormLine {
 					id:useRow
+					width:passwordGroup.width
 					FormGroup {
 						label: qsTr('useTLSLabel')//'Use TLS'
 						Switch {
@@ -194,6 +196,7 @@ DialogPlus {
 				
 				FormLine {
 					FormGroup {
+						id:filterGroup
 						label: qsTr('filterLabel')//'Filter'
 						TextField {
 							id:filter
@@ -208,7 +211,10 @@ DialogPlus {
 					}
 				}
 				
+				
 				FormLine {
+					id:connectionRow
+					width:filterGroup.width
 					FormGroup {
 						label: qsTr('maxResultsLabel')//'Max Results'
 						
@@ -218,7 +224,21 @@ DialogPlus {
 							error : ldapData.maxResultsFieldError
 							onTextChanged: ldapData.maxResults = text
 							TooltipArea{
+								tooltipParent:connectionRow
 								text : qsTr('maxResultsTooltip')//'The max results when requesting searches'
+							}
+						}
+					}
+					FormGroup {
+						label: qsTr('timeoutLabel')
+						NumericField {
+							id:timeout
+							text:ldapData.timeout
+							error : ldapData.timeoutFieldError
+							onTextChanged: ldapData.timeout = text
+							TooltipArea{
+								tooltipParent:connectionRow
+								text : qsTr('timeoutTooltip')//'The connection and search timeout in seconds. Default is 5'
 							}
 						}
 					}
@@ -264,21 +284,6 @@ DialogPlus {
 				}
 				FormLine {
 					FormGroup {
-						label: qsTr('schemeLabel')//'Scheme'
-						TextField {
-							id:scheme
-							placeholderText :'sip'
-							text:ldapData.sipScheme
-							error : ldapData.sipSchemeFieldError
-							onTextChanged: ldapData.sipScheme = text
-							TooltipArea{
-								text : qsTr('schemeTooltip')//'Add the scheme to the sip address(scheme:username@domain). The default value is sip'
-							}
-						}
-					}
-				}
-				FormLine {
-					FormGroup {
 						label: qsTr('domainLabel')//'Domain'
 						TextField {
 							id:domain
@@ -287,7 +292,7 @@ DialogPlus {
 							error : ldapData.sipDomainFieldError
 							onTextChanged: ldapData.sipDomain = text
 							TooltipArea{
-								text : qsTr('domainTooltip')//'Add the domain to the sip address(scheme:username@domain). The default value is sip.linphone.org'
+								text : qsTr('domainTooltip')//'Add the domain to the sip address(username@domain). The default value is sip.linphone.org'
 							}
 						}
 					}
