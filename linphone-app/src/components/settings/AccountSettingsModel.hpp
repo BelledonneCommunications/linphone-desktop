@@ -74,9 +74,10 @@ public:
   Q_INVOKABLE void setDefaultProxyConfigFromSipAddress (const QString &sipAddress);
 
   Q_INVOKABLE bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, const QVariantMap &data);
+  Q_INVOKABLE bool addOrUpdateProxyConfig (const QVariantMap &data);// Create default proxy config and apply data
   Q_INVOKABLE void removeProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
-  Q_INVOKABLE std::shared_ptr<linphone::ProxyConfig> createProxyConfig ();
+  Q_INVOKABLE std::shared_ptr<linphone::ProxyConfig> createProxyConfig (const QString& assistantFile);
 
   Q_INVOKABLE void addAuthInfo (
     const std::shared_ptr<linphone::AuthInfo> &authInfo,

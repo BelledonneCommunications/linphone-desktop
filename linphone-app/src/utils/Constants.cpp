@@ -67,6 +67,9 @@ constexpr char Constants::DefaultXmlrpcUri[];
 constexpr char Constants::DefaultConferenceURI[];
 constexpr char Constants::DefaultLimeServerURL[];
 constexpr char Constants::RemoteProvisioningURL[];
+constexpr char Constants::DefaultAssistantRegistrationUrl[];
+constexpr char Constants::DefaultAssistantLoginUrl[];
+constexpr char Constants::DefaultAssistantLogoutUrl[];
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 constexpr char Constants::H264Description[];

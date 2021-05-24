@@ -163,6 +163,33 @@ void SettingsModel::setAssistantSupportsPhoneNumbers (bool status) {
 	emit assistantSupportsPhoneNumbersChanged(status);
 }
 
+QString SettingsModel::getAssistantRegistrationUrl () const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "assistant_registration_url", Constants::DefaultAssistantRegistrationUrl));
+}
+
+void SettingsModel::setAssistantRegistrationUrl (QString url) {
+	mConfig->setString(UiSection, "assistant_registration_url", Utils::appStringToCoreString(url));
+	emit assistantRegistrationUrlChanged(url);
+}
+
+QString SettingsModel::getAssistantLoginUrl () const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "assistant_login_url", Constants::DefaultAssistantLoginUrl));
+}
+
+void SettingsModel::setAssistantLoginUrl (QString url) {
+	mConfig->setString(UiSection, "assistant_login_url", Utils::appStringToCoreString(url));
+	emit assistantLoginUrlChanged(url);
+}
+
+QString SettingsModel::getAssistantLogoutUrl () const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "assistant_logout_url", Constants::DefaultAssistantLogoutUrl));
+}
+
+void SettingsModel::setAssistantLogoutUrl (QString url) {
+	mConfig->setString(UiSection, "assistant_logout_url", Utils::appStringToCoreString(url));
+	emit assistantLogoutUrlChanged(url);
+}
+
 // =============================================================================
 // Audio.
 // =============================================================================

@@ -9,11 +9,11 @@ RUN scl enable devtoolset-7 bash
 # Configure AppImages dependencies
 RUN sudo yum install -y fuse fuse-libs wget
 
-# Build qt5.12.5
+# Build qt5.12
 RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
-    sudo rpm -i ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm && \
-    sudo mv ./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/*.rpm / && \
+    sudo rpm -i ./linphone-desktop/rpm-linphone-qt-5.12/rpmbuild/RPMS/x86_64/*.rpm && \
+    sudo mv ./linphone-desktop/rpm-linphone-qt-5.12/rpmbuild/RPMS/x86_64/*.rpm / && \
     sudo rm -rf ./linphone-desktop
 
 

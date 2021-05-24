@@ -13,7 +13,7 @@ QtObject {
 	}
 	
 	property QtObject content: QtObject {
-		property int height: 375
+		property int height: 375+60//+button bar
 		property int width: 400
 	}
 	

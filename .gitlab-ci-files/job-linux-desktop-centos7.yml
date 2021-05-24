@@ -16,7 +16,7 @@
 #job-centos7-makefile-clang:
 
 #  tags: [ "docker-centos7" ]
-#  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos:7
+#  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-centos7-fuse-qt-wget:$CENTOS_7_QT_IMAGE_VERSION
 #  only:
 #    variables:
 #      - $NIGHTLY_MASTER

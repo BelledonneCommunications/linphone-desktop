@@ -67,6 +67,9 @@ public:
 	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/flexiapi/provisioning";
 		
 	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
+	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
+	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
+	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
 	
 	// Max image size in bytes. (100Kb)
 	static constexpr qint64 MaxImageSize = 102400;// In Bytes.

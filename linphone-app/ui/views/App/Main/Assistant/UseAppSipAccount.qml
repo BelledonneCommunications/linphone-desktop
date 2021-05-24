@@ -11,7 +11,6 @@ import App.Styles 1.0
 
 AssistantAbstractView {
 	id: view
-	
 	readonly property bool usePhoneNumber: SettingsModel.assistantSupportsPhoneNumbers && !checkBox.checked
 	
 	mainAction: requestBlock.execute
