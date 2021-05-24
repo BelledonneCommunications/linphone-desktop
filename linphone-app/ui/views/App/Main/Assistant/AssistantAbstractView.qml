@@ -20,6 +20,7 @@ Item {
   property alias title: title.text
 
   property bool backEnabled: true
+  property bool maximized: false	// Used to stretch content to fit all the view (the title will be set to top)
 
   default property alias _content: content.data
 
@@ -33,6 +34,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   Column {
+	  id:titleBar
     anchors.centerIn: parent
 
     spacing: AssistantAbstractViewStyle.info.spacing
@@ -75,7 +77,7 @@ Item {
       id: content
 
       anchors.horizontalCenter: parent.horizontalCenter
-      height: AssistantAbstractViewStyle.content.height
+	  height: (maximized?view.height - description.height - title.height - buttons.height -titleBar.spacing*3 : AssistantAbstractViewStyle.content.height)
       width: AssistantAbstractViewStyle.content.width
     }
   }
