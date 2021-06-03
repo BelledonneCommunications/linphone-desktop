@@ -46,6 +46,8 @@ class SettingsModel : public QObject {
     Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged)
 
     Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged)
+	Q_PROPERTY(QString assistantRegistrationUrl READ getAssistantRegistrationUrl WRITE setAssistantRegistrationUrl NOTIFY assistantRegistrationUrlChanged)
+	Q_PROPERTY(QString assistantLoginUrl READ getAssistantLoginUrl WRITE setAssistantLoginUrl NOTIFY assistantLoginUrlChanged)
 
 	// Audio. --------------------------------------------------------------------
 
@@ -221,6 +223,12 @@ public:
 
 	bool getAssistantSupportsPhoneNumbers () const;
 	void setAssistantSupportsPhoneNumbers (bool status);
+
+	QString getAssistantRegistrationUrl () const;
+	void setAssistantRegistrationUrl (QString url);
+
+	QString getAssistantLoginUrl () const;
+	void setAssistantLoginUrl (QString url);
 
 	// Audio. --------------------------------------------------------------------
 
@@ -483,6 +491,9 @@ signals:
 	void useOtherSipAccountEnabledChanged (bool status);
 
 	void assistantSupportsPhoneNumbersChanged (bool status);
+
+	void assistantRegistrationUrlChanged (QString url);
+	void assistantLoginUrlChanged (QString url);
 
 	// Audio. --------------------------------------------------------------------
 
