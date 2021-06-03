@@ -10,7 +10,7 @@ import App.Styles 1.0
 
 ColumnLayout {
   spacing: 0
-
+  
   // ---------------------------------------------------------------------------
   // Info.
   // ---------------------------------------------------------------------------
@@ -79,6 +79,12 @@ ColumnLayout {
 
     cellHeight: height / 2
     cellWidth: width / 2
+	anchors.bottom:parent.bottom
+	anchors.bottomMargin: AssistantStyle.bottomMargin
+	anchors.left:parent.left
+	anchors.leftMargin: AssistantStyle.leftMargin
+	anchors.right:parent.right
+	anchors.rightMargin: AssistantStyle.rightMargin
 
     delegate: Item {
       height: buttons.cellHeight
@@ -93,7 +99,7 @@ ColumnLayout {
         enabled: SettingsModel[$viewType.charAt(0).toLowerCase() + $viewType.slice(1) + "Enabled"]
         text: $text.replace('%1', Qt.application.name.toUpperCase())
 
-        onClicked: assistant.pushView($view)
+		onClicked:{ assistant.pushView($view, $props) }
       }
     }
 
@@ -101,43 +107,29 @@ ColumnLayout {
       Component.onCompleted: {
         insert(0, {
           $text: qsTr('createAppSipAccount'),
-          $view: SettingsModel.assistantSupportsPhoneNumbers
-            ? 'CreateAppSipAccount'
-            : 'CreateAppSipAccountWithEmail',
-          $viewType: 'CreateAppSipAccount'
+          $view: 'CreateAppSipAccount',
+          $viewType: 'CreateAppSipAccount',
+		  $props:{url: SettingsModel.assistantRegistrationUrl}
         })
-      }
-
-      ListElement {
-        $text: qsTr('useAppSipAccount')
-        $view: 'UseAppSipAccount'
-        $viewType: 'UseAppSipAccount'
-      }
-
-      ListElement {
-        $text: qsTr('useOtherSipAccount')
-        $view: 'UseOtherSipAccount'
-        $viewType: 'UseOtherSipAccount'
-      }
-
-      ListElement {
-        $text: qsTr('fetchRemoteConfiguration')
-        $view: 'FetchRemoteConfiguration'
-        $viewType: 'FetchRemoteConfiguration'
+        append({
+                $text: qsTr('useAppSipAccount'),
+                $view: 'CreateAppSipAccount',
+                $viewType: 'UseAppSipAccount',
+                $props:{url: SettingsModel.assistantLoginUrl}
+        })
+        append({
+                $text: qsTr('useOtherSipAccount'),
+                $view: 'UseOtherSipAccount',
+                $viewType: 'UseOtherSipAccount'
+        })
+        append( {
+                $text: qsTr('fetchRemoteConfiguration'),
+                $view: 'FetchRemoteConfiguration',
+                $viewType: 'FetchRemoteConfiguration'
+        })
       }
     }
 
     interactive: false
-
-    Connections {
-      target: SettingsModel
-      onAssistantSupportsPhoneNumbersChanged: buttons.model.setProperty(
-        0,
-        '$view',
-        SettingsModel.assistantSupportsPhoneNumbers ?
-          'CreateAppSipAccount' :
-          'CreateAppSipAccountWithEmail'
-      )
-    }
   }
 }

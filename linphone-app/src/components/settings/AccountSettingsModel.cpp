@@ -220,9 +220,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 
   // Sip address.
   {
-    shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(
-      Utils::appStringToCoreString(literal)
-    );
+      shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(literal.toStdString());
     if (!address) {
       qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
       return false;
@@ -233,6 +231,8 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
         .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
       return false;
     }
+	qWarning() << QStringLiteral("Set identity address: `%1`.")
+	  .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
   }
 
   // Server address.
@@ -244,15 +244,22 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
       return false;
     }
   }
-
-  proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
-  proxyConfig->setRoute(Utils::appStringToCoreString(data["route"].toString()));
-  proxyConfig->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
-  proxyConfig->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
-  proxyConfig->enableRegister(data["registerEnabled"].toBool());
-  newPublishPresence = proxyConfig->publishEnabled() != data["publishPresence"].toBool();
-  proxyConfig->enablePublish(data["publishPresence"].toBool());
-  proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
+  if(data.count("registrationDuration") >0)
+	proxyConfig->setPublishExpires(data["registrationDuration"].toInt());
+  if(data.count("route") >0)
+	proxyConfig->setRoute(Utils::appStringToCoreString(data["route"].toString()));
+  if(data.count("contactParams") >0)
+	proxyConfig->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
+  if(data.count("avpfInterval") >0)
+	proxyConfig->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
+  if(data.count("registerEnabled") >0)
+	proxyConfig->enableRegister(data["registerEnabled"].toBool());
+  if(data.count("publishPresence") >0) {
+	newPublishPresence = proxyConfig->publishEnabled() != data["publishPresence"].toBool();
+	proxyConfig->enablePublish(data["publishPresence"].toBool());
+  }
+  if(data.count("avpfEnabled") >0)
+	proxyConfig->setAvpfMode(data["avpfEnabled"].toBool()
     ? linphone::AVPFMode::Enabled
     : linphone::AVPFMode::Default
   );
@@ -261,16 +268,26 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   bool createdNat = !natPolicy;
   if (createdNat)
     natPolicy = proxyConfig->getCore()->createNatPolicy();
-  natPolicy->enableIce(data["iceEnabled"].toBool());
-  natPolicy->enableStun(data["iceEnabled"].toBool());
-
-  const string turnUser(Utils::appStringToCoreString(data["turnUser"].toString()));
-  const string stunServer(Utils::appStringToCoreString(data["stunServer"].toString()));
-
-  natPolicy->enableTurn(data["turnEnabled"].toBool());
-  natPolicy->setStunServerUsername(turnUser);
-  natPolicy->setStunServer(stunServer);
-
+  if(data.count("iceEnabled") >0) {
+	natPolicy->enableIce(data["iceEnabled"].toBool());
+	natPolicy->enableStun(data["iceEnabled"].toBool());
+  }
+  string turnUser;
+  string stunServer;
+  string turnPassword;
+  if(data.count("turnUser") >0) {
+	turnUser = Utils::appStringToCoreString(data["turnUser"].toString());
+	natPolicy->setStunServerUsername(turnUser);
+  }
+  if(data.count("stunServer") >0) {
+	stunServer = Utils::appStringToCoreString(data["stunServer"].toString());
+	natPolicy->setStunServer(stunServer);
+  }
+  if(data.count("turnPassword") >0) {
+	  turnPassword = Utils::appStringToCoreString(data["turnPassword"].toString());
+  }
+  if(data.count("turnEnabled") >0)
+	natPolicy->enableTurn(data["turnEnabled"].toBool());
   if( createdNat)
       proxyConfig->setNatPolicy(natPolicy);
 
@@ -280,7 +297,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     shared_ptr<linphone::AuthInfo> clonedAuthInfo(authInfo->clone());
     clonedAuthInfo->setUserid(turnUser);
     clonedAuthInfo->setUsername(turnUser);
-	clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
+    clonedAuthInfo->setPassword(turnPassword);
 
     core->addAuthInfo(clonedAuthInfo);
     core->removeAuthInfo(authInfo);
@@ -288,7 +305,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
     core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
       turnUser,
       turnUser,
-	  Utils::appStringToCoreString(data["turnPassword"].toString()),
+	  turnPassword,
       "",
       stunServer,
       ""
@@ -298,6 +315,22 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
   return addOrUpdateProxyConfig(proxyConfig);
 }
 
+bool AccountSettingsModel::addOrUpdateProxyConfig (
+  const QVariantMap &data
+) {
+	shared_ptr<linphone::ProxyConfig> proxyConfig;
+	QString sipAddress = data["sipAddress"].toString();
+	shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(sipAddress.toStdString());
+	
+	for (const auto &databaseProxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
+	  if (databaseProxyConfig->getIdentityAddress()->weakEqual(address)) {
+		proxyConfig = databaseProxyConfig;
+	  }
+	if(!proxyConfig)
+		proxyConfig = createProxyConfig();
+	return addOrUpdateProxyConfig(proxyConfig, data);
+}
+
 shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
@@ -305,7 +338,7 @@ shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
     Paths::getAssistantConfigDirPath() + "create-app-sip-account.rc"
   );
 
-  return core->createProxyConfig();
+  return core->createProxyConfig();	
 }
 
 void AccountSettingsModel::addAuthInfo (

@@ -42,14 +42,10 @@ Item {
 
   StackView {
     id: stack
+	clip:true
 
     anchors {
-      fill: parent
-
-      bottomMargin: AssistantStyle.bottomMargin
-      leftMargin: AssistantStyle.leftMargin
-      rightMargin: AssistantStyle.rightMargin
-      topMargin: AssistantStyle.topMargin
+      fill: parent      
     }
 
     initialItem: assistant.viewsPath + 'AssistantHome.qml'

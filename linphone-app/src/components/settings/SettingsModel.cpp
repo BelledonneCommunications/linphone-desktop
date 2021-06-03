@@ -38,6 +38,8 @@ using namespace std;
 namespace {
 	constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
+	constexpr char DefaultAssistantRegistrationUrl[] = "http://fs-test.linphone.org/flexiapi/register";
+	constexpr char DefaultAssistantLoginUrl[] = "http://fs-test.linphone.org/flexiapi/login";
 }
 
 const string SettingsModel::UiSection("ui");
@@ -154,6 +156,24 @@ bool SettingsModel::getAssistantSupportsPhoneNumbers () const {
 void SettingsModel::setAssistantSupportsPhoneNumbers (bool status) {
 	mConfig->setInt(UiSection, "assistant_supports_phone_numbers", status);
 	emit assistantSupportsPhoneNumbersChanged(status);
+}
+
+QString SettingsModel::getAssistantRegistrationUrl () const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "assistant_registration_url", DefaultAssistantRegistrationUrl));
+}
+
+void SettingsModel::setAssistantRegistrationUrl (QString url) {
+	mConfig->setString(UiSection, "assistant_registration_url", Utils::appStringToCoreString(url));
+	emit assistantRegistrationUrlChanged(url);
+}
+
+QString SettingsModel::getAssistantLoginUrl () const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "assistant_login_url", DefaultAssistantLoginUrl));
+}
+
+void SettingsModel::setAssistantLoginUrl (QString url) {
+	mConfig->setString(UiSection, "assistant_login_url", Utils::appStringToCoreString(url));
+	emit assistantLoginUrlChanged(url);
 }
 
 // =============================================================================
