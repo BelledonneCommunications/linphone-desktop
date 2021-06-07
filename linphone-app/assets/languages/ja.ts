@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>コマンドラインに向かってアプリケーションに注文を送る</translation>
+        <translation>CLIからアプリケーションを操作する</translation>
     </message>
     <message>
         <source>restore</source>
@@ -1028,7 +1028,7 @@
     </message>
     <message>
         <source>quit</source>
-        <translation>やめろ</translation>
+        <translation>終了</translation>
     </message>
 </context>
 <context>
@@ -1054,7 +1054,7 @@
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>俺をプレイしろ！</translation>
+        <translation>再生する</translation>
     </message>
 </context>
 <context>
@@ -1363,7 +1363,7 @@
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation>凍結は必須です</translation>
+        <translation>暗号化を必須にする</translation>
     </message>
 </context>
 <context>
@@ -1478,7 +1478,7 @@
     </message>
     <message>
         <source>generalTitle</source>
-        <translation>将軍</translation>
+        <translation>一般</translation>
     </message>
 </context>
 <context>
@@ -1517,11 +1517,11 @@
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>あなたのアカウントを削除してもよろしいですか？</translation>
+        <translation>アカウントを削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>あなたのパスワードを消してもよろしいですか？</translation>
+        <translation>パスワードを消してもよろしいですか？</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1675,7 +1675,7 @@
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>あなたのアバターを削除してもよろしいですか？</translation>
+        <translation>アバターを削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>downloadLabel</source>
