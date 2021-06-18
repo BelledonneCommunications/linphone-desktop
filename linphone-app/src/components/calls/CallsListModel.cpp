@@ -94,14 +94,27 @@ void CallsListModel::askForTransfer (CallModel *callModel) {
   emit callTransferAsked(callModel);
 }
 
+void CallsListModel::askForAttendedTransfer (CallModel *callModel) {
+  emit callAttendedTransferAsked(callModel);
+}
+
 // -----------------------------------------------------------------------------
 
-void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
+CallModel *CallsListModel::findCallModelFromPeerAddress (const QString &peerAddress) const {
+  auto it = find_if(mList.begin(), mList.end(), [&peerAddress](CallModel *callModel) {
+    return (callModel->getPeerAddress().compare(peerAddress) == 0);
+  });
+  return it != mList.end() ? *it : nullptr;
+}
+
+// -----------------------------------------------------------------------------
+
+CallModel *CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 
   shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
   if (!address)
-    return;
+    return nullptr;
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableVideo(false);
@@ -113,10 +126,11 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
   }
   params->setProxyConfig(core->getDefaultProxyConfig());
   CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
+  shared_ptr<linphone::Call> call;
   shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
   if(currentProxyConfig){
     if(currentProxyConfig->getState() == linphone::RegistrationState::Ok)
-      core->inviteAddressWithParams(address, params);
+      call = core->inviteAddressWithParams(address, params);
     else{
             QObject * context = new QObject();
             QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,context,
@@ -129,26 +143,31 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
             });
     }
   }else
-    core->inviteAddressWithParams(address, params);
+    call = core->inviteAddressWithParams(address, params);
+  if (call != nullptr)
+    return &call->getData<CallModel>("call-model");
+  return nullptr;
 }
 
-void CallsListModel::launchVideoCall (const QString &sipAddress) const {
+CallModel *CallsListModel::launchVideoCall (const QString &sipAddress) const {
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   if (!core->videoSupported()) {
     qWarning() << QStringLiteral("Unable to launch video call. (Video not supported.) Launching audio call...");
-    launchAudioCall(sipAddress);
-    return;
+    return launchAudioCall(sipAddress);
   }
 
   shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
   if (!address)
-    return;
+    return nullptr;
 
   shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
   params->enableVideo(true);
   params->setProxyConfig(core->getDefaultProxyConfig());
   CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
-  core->inviteAddressWithParams(address, params);
+  shared_ptr<linphone::Call> call = core->inviteAddressWithParams(address, params);
+  if (call != nullptr)
+    return &call->getData<CallModel>("call-model");
+  return nullptr;
 }
 
 // -----------------------------------------------------------------------------

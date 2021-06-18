@@ -241,6 +241,7 @@ Window {
   Connections {
     target: CallsListModel
     onCallTransferAsked: Logic.handleCallTransferAsked(callModel)
+    onCallAttendedTransferAsked: Logic.handleCallAttendedTransferAsked(callModel)
     onRowsRemoved: Logic.tryToCloseWindow()
   }
 }

@@ -41,9 +41,12 @@ public:
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
   void askForTransfer (CallModel *callModel);
+  void askForAttendedTransfer (CallModel *callModel);
 
-  Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers = {}) const;
-  Q_INVOKABLE void launchVideoCall (const QString &sipAddress) const;
+  CallModel *findCallModelFromPeerAddress (const QString &peerAddress) const;
+
+  Q_INVOKABLE CallModel *launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers = {}) const;
+  Q_INVOKABLE CallModel *launchVideoCall (const QString &sipAddress) const;
 
   Q_INVOKABLE int getRunningCallsNumber () const;
 
@@ -53,6 +56,7 @@ public:
 signals:
   void callRunning (int index, CallModel *callModel);
   void callTransferAsked (CallModel *callModel);
+  void callAttendedTransferAsked (CallModel *callModel);
 
   void callMissed (CallModel *callModel);
 

@@ -68,6 +68,8 @@ class CallModel : public QObject {
   Q_PROPERTY(float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged);
   Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged);
 
+  Q_PROPERTY(QString transferAddress READ getTransferAddress WRITE setTransferAddress NOTIFY transferAddressChanged);
+
 public:
   enum CallStatus {
     CallStatusConnected,
@@ -115,7 +117,9 @@ public:
   Q_INVOKABLE void terminate ();
 
   Q_INVOKABLE void askForTransfer ();
+  Q_INVOKABLE void askForAttendedTransfer ();
   Q_INVOKABLE bool transferTo (const QString &sipAddress);
+  Q_INVOKABLE bool transferToAnother (const QString &peerAddress);
 
   Q_INVOKABLE void acceptVideoRequest ();
   Q_INVOKABLE void rejectVideoRequest ();
@@ -135,12 +139,20 @@ public:
   
   void setRemoteDisplayName(const std::string& name);
 
+  QString getTransferAddress () const {
+    return mTransferAddress;
+  }
+  void setTransferAddress (const QString &transferAddress) {
+    mTransferAddress = transferAddress;
+    emit transferAddressChanged(mTransferAddress);
+  }
+
   static constexpr int DtmfSoundDelay = 200;
   
   std::shared_ptr<linphone::Call> mCall;
   std::shared_ptr<linphone::Address> mRemoteAddress;
   std::shared_ptr<linphone::MagicSearch> mMagicSearch;
-  
+
 public slots:
 // Set remote display name when a search has been done
   void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
@@ -157,6 +169,7 @@ signals:
   void securityUpdated ();
   void speakerVolumeGainChanged (float volume);
   void microVolumeGainChanged (float volume);
+  void transferAddressChanged (const QString &transferAddress);
 
   void cameraFirstFrameReceived (unsigned int width, unsigned int height);
   
@@ -243,6 +256,8 @@ private:
   QVariantList mAudioStats;
   QVariantList mVideoStats;
   std::shared_ptr<SearchHandler> mSearch;
+
+  QString mTransferAddress;
 };
 
 #endif // CALL_MODEL_H_

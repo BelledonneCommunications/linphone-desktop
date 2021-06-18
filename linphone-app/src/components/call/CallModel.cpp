@@ -207,11 +207,32 @@ void CallModel::askForTransfer () {
   CoreManager::getInstance()->getCallsListModel()->askForTransfer(this);
 }
 
+void CallModel::askForAttendedTransfer () {
+  CoreManager::getInstance()->getCallsListModel()->askForAttendedTransfer(this);
+}
+
 bool CallModel::transferTo (const QString &sipAddress) {
   bool status = !!mCall->transfer(Utils::appStringToCoreString(sipAddress));
-  if (status)
+  if (status) {
     qWarning() << QStringLiteral("Unable to transfer: `%1`.").arg(sipAddress);
-  return status;
+    return false;
+  }
+  return true;
+}
+
+bool CallModel::transferToAnother (const QString &peerAddress) {
+  qInfo() << QStringLiteral("Transferring to another: `%1`.").arg(peerAddress);
+  CallModel *transferCallModel = CoreManager::getInstance()->getCallsListModel()->findCallModelFromPeerAddress(peerAddress);
+  if (transferCallModel == nullptr) {
+    qWarning() << QStringLiteral("Unable to transfer to another: `%1` (peer not found)").arg(peerAddress);
+    return false;
+  }
+  bool status = !!transferCallModel->mCall->transferToAnother(mCall);
+  if (status) {
+    qWarning() << QStringLiteral("Unable to transfer to another: `%1` (transfer failed)").arg(peerAddress);
+    return false;
+  }
+  return true;
 }
 
 // -----------------------------------------------------------------------------

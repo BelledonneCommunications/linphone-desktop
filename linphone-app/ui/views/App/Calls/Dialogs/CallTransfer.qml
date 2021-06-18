@@ -14,6 +14,7 @@ DialogPlus {
   // ---------------------------------------------------------------------------
 
   property var call
+  property bool attended: false
 
   // ---------------------------------------------------------------------------
 
@@ -81,7 +82,13 @@ DialogPlus {
             actions: [{
               icon: 'transfer',
               handler: function (entry) {
-                callTransfer.call.transferTo(entry.sipAddress)
+                if (attended) {
+                  var call = CallsListModel.launchAudioCall(entry.sipAddress)
+                  call.transferAddress = callTransfer.call.peerAddress
+                }
+                else {
+                  callTransfer.call.transferTo(entry.sipAddress)
+                }
                 exit(1)
               }
             }]

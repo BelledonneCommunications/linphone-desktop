@@ -94,9 +94,34 @@ function handleCallTransferAsked (call) {
     return
   }
 
+  if (call.transferAddress !== '') {
+    console.debug('RucActiveCall.js: attended transfer to call ' + call.transferAddress)
+    call.transferToAnother(call.transferAddress)
+    return
+  }
+
   window.detachVirtualWindow()
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/CallTransfer.qml'), {
-    call: call
+    call: call,
+    attended: false
+  })
+}
+
+function handleCallAttendedTransferAsked (call) {
+  if (!call) {
+    return
+  }
+
+  if (call.transferAddress !== '') {
+    console.debug('RucActiveCall.js: attended transfer to call ' + call.transferAddress)
+    call.transferToAnother(call.transferAddress)
+    return
+  }
+
+  window.detachVirtualWindow()
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/CallTransfer.qml'), {
+    call: call,
+    attended: true
   })
 }
 

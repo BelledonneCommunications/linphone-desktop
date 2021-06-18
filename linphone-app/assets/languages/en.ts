@@ -423,6 +423,14 @@
         <source>callPause</source>
         <translation>HOLD CALL</translation>
     </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <translation>ATTENDED TRANSFER CALL</translation>
+    </message>
+    <message>
+        <source>attendedTransferComplete</source>
+        <translation>COMPLETE ATTENDED TRANSFER</translation>
+    </message>
 </context>
 <context>
     <name>CallsWindow</name>

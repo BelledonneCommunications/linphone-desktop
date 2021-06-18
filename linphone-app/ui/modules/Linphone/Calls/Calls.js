@@ -46,11 +46,25 @@ function getParams (call) {
       })
     }
 
-    return {
-      actions: optActions.concat([{
+    if (call.transferAddress !== '') {
+      optActions.push({
+        handler: call.askForTransfer,
+        name: qsTr('attendedTransferComplete')
+      })
+    }
+    else {
+      optActions.push({
         handler: call.askForTransfer,
         name: qsTr('transferCall')
-      }, {
+      })
+      optActions.push({
+        handler: call.askForAttendedTransfer,
+        name: qsTr('attendedTransferCall')
+      })
+    }
+
+    return {
+      actions: optActions.concat([{
         handler: call.terminate,
         name: qsTr('terminateCall')
       }]),
@@ -110,11 +124,25 @@ function getParams (call) {
       })
     }
 
-    return {
-      actions: optActions.concat([{
+    if (call.transferAddress !== '') {
+      optActions.push({
+        handler: call.askForTransfer,
+        name: qsTr('attendedTransferComplete')
+      })
+    }
+    else {
+      optActions.push({
         handler: call.askForTransfer,
         name: qsTr('transferCall')
-      }, {
+      })
+      optActions.push({
+        handler: call.askForAttendedTransfer,
+        name: qsTr('attendedTransferCall')
+      })
+    }
+
+    return {
+      actions: optActions.concat([{
         handler: call.terminate,
         name: qsTr('terminateCall')
       }]),
