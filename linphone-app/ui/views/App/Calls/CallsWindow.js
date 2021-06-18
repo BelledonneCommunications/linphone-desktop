@@ -95,7 +95,7 @@ function handleCallTransferAsked (call) {
   }
 
   if (call.transferAddress !== '') {
-    console.debug('RucActiveCall.js: attended transfer to call ' + call.transferAddress)
+    console.debug('Attended transfer to call ' + call.transferAddress)
     call.transferToAnother(call.transferAddress)
     return
   }
@@ -113,7 +113,7 @@ function handleCallAttendedTransferAsked (call) {
   }
 
   if (call.transferAddress !== '') {
-    console.debug('RucActiveCall.js: attended transfer to call ' + call.transferAddress)
+    console.debug('Attended transfer to call ' + call.transferAddress)
     call.transferToAnother(call.transferAddress)
     return
   }
