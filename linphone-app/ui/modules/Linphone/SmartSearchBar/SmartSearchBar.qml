@@ -14,6 +14,21 @@ SearchBox {
 
   readonly property alias isOpen: searchBox._isOpen
   property alias header : view.headerItem
+  property alias actions : view.actions
+  property alias showHeader : view.showHeader
+  
+  function addAddressToIgnore(entry){
+	  searchModel.addAddressToIgnore(entry)
+  }
+  
+  function removeAddressToIgnore(entry){
+	  searchModel.removeAddressToIgnore(entry)
+  }
+  
+  function isIgnored(address){
+	  return searchModel.isIgnored(address)
+  }
+  property var resultExceptions : []
 
   // ---------------------------------------------------------------------------
 
@@ -42,6 +57,7 @@ SearchBox {
 
     actions: [{
       icon: 'video_call',
+			secure:0,
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchVideoCall(entry.sipAddress)
@@ -49,18 +65,29 @@ SearchBox {
       visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
     }, {
       icon: 'call',
+			secure:0,
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchCall(entry.sipAddress)
       },
       visible: SettingsModel.outgoingCallsEnabled
     }, {
-      icon: SettingsModel.chatEnabled && SettingsModel.showStartChatButton ? 'chat' : 'history',
+      icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
+			secure:0,
       handler: function (entry) {
         searchBox.closeMenu()
         searchBox.launchChat(entry.sipAddress)
       }
-    }]
+    }, {
+			icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
+			secure:1,
+			handler: function (entry) {
+			  searchBox.closeMenu()
+			  searchBox.launchChat(entry.sipAddress)
+			}
+		  }
+	
+	]
 
     headerButtonDescription: qsTr('addContact')
     headerButtonIcon: 'contact_add'
@@ -71,7 +98,9 @@ SearchBox {
 
     genSipAddress: searchBox.filter
 
-    model: SearchSipAddressesModel {}
+    model: SearchSipAddressesProxyModel {
+		id:searchModel
+	}
 
     onEntryClicked: {
       searchBox.closeMenu()

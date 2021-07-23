@@ -64,7 +64,7 @@ private:
 
 ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
   setSourceModel(new ChatRoomModelFilter(this));
-  mIsSecure = false;
+  //mIsSecure = false;
 
   App *app = App::getInstance();
   QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
@@ -76,6 +76,7 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
     QObject::connect(callsWindow, &QWindow::activeChanged, this, [this, callsWindow]() {
       handleIsActiveChanged(callsWindow);
     });
+  sort(0);
 }
 
 // -----------------------------------------------------------------------------
@@ -160,53 +161,63 @@ void ChatRoomProxyModel::setEntryTypeFilter (ChatRoomModel::EntryType type) {
 bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const {
   return sourceModel()->rowCount() - sourceRow <= mMaxDisplayedEntries;
 }
-
+bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+	const QVariantMap l = sourceModel()->data(left).value<QVariantMap>();
+	const QVariantMap r = sourceModel()->data(right).value<QVariantMap>();
+	
+	return l["timestamp"].toDateTime() < r["timestamp"].toDateTime();
+}
 // -----------------------------------------------------------------------------
 
 QString ChatRoomProxyModel::getPeerAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getPeerAddress() : QString("");
+  return mChatRoomModel ? mChatRoomModel->getPeerAddress() : mPeerAddress;//QString("");
 }
 
 void ChatRoomProxyModel::setPeerAddress (const QString &peerAddress) {
   mPeerAddress = peerAddress;
+  emit peerAddressChanged(mPeerAddress);
   //reload();
 }
 
 QString ChatRoomProxyModel::getLocalAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getLocalAddress() : QString("");
+  return mChatRoomModel ? mChatRoomModel->getLocalAddress() : mLocalAddress;//QString("");
 }
 
 void ChatRoomProxyModel::setLocalAddress (const QString &localAddress) {
   mLocalAddress = localAddress;
+  emit localAddressChanged(mLocalAddress);
   //reload();
 }
 
 QString ChatRoomProxyModel::getFullPeerAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getFullPeerAddress() : QString("");
+  return mChatRoomModel ? mChatRoomModel->getFullPeerAddress() : mFullPeerAddress;//QString("");
 }
 
 void ChatRoomProxyModel::setFullPeerAddress (const QString &peerAddress) {
   mFullPeerAddress = peerAddress;
+  emit fullPeerAddressChanged(mFullPeerAddress);
   //reload();
 }
 
 QString ChatRoomProxyModel::getFullLocalAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getFullLocalAddress() : QString("");
+  return mChatRoomModel ? mChatRoomModel->getFullLocalAddress() : mFullLocalAddress;//QString("");
 }
 
 void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
   mFullLocalAddress = localAddress;
+  emit fullLocalAddressChanged(mFullLocalAddress);
   //reload();
 }
-
-int ChatRoomProxyModel::getIsSecure () const {
-  return mChatRoomModel ? mChatRoomModel->getIsSecure() : -1;
+/*
+bool ChatRoomProxyModel::isSecure () const {
+  return mChatRoomModel ? mChatRoomModel->isSecure() : false;
 }
 
 void ChatRoomProxyModel::setIsSecure (const int &secure) {
   mIsSecure = secure;
+  emit isSecureChanged(mIsSecure);
 }
-
+*/
 bool ChatRoomProxyModel::getIsRemoteComposing () const {
   return mChatRoomModel ? mChatRoomModel->getIsRemoteComposing() : false;
 }
@@ -252,8 +263,11 @@ ChatRoomModel *ChatRoomProxyModel::getChatRoomModel () const{
 	return mChatRoomModel.get();
 	
 }
-void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *ChatRoomModel){
-	mChatRoom = ChatRoomModel->getChatRoom();
+void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *chatRoomModel){
+	if(chatRoomModel)
+		mChatRoom = chatRoomModel->getChatRoom();
+	else
+		mChatRoom = nullptr;
 	reload();
 	emit chatRoomModelChanged();
 }

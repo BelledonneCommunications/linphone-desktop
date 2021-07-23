@@ -60,6 +60,8 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+  
+  //Q_PROPERTY(QList<QVariant> resultExceptions READ getResultExceptions WRITE setResultExceptions NOTIFY resultExceptionsChanged)
 
   Q_INVOKABLE QVariantMap find (const QString &sipAddress) const;
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sipAddress) const;

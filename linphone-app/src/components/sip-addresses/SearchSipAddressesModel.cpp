@@ -32,7 +32,6 @@
 #include "components/core/CoreManager.hpp"
 #include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "SearchSipAddressesModel.hpp"

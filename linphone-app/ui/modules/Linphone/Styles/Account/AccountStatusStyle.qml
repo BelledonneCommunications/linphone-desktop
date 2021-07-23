@@ -7,10 +7,11 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property int horizontalSpacing: 6
+  property int horizontalSpacing: 8
+  property int verticalSpacing: 2
 
   property QtObject presenceLevel: QtObject {
-    property int bottomMargin: 2
+    property int bottomMargin: 1
     property int size: 16
   }
 
@@ -23,4 +24,8 @@ QtObject {
     property color color: Colors.j
     property int pointSize: Units.dp * 11
   }
+    property QtObject messageCounter: QtObject {
+      property int bottomMargin: 4
+        property int size: 16
+    }
 }

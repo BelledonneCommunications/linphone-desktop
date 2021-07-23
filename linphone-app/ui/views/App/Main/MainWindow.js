@@ -110,13 +110,12 @@ function updateSelectedEntry (view, props) {
   var timeline = item.timeline
 
   if (view === 'Home') {
-    item.homeEntry.select()
-    timeline.resetSelectedEntry()
+    menu.resetSelectedEntry()
   } else if (view === 'Contacts') {
     item.contactsEntry.select()
     //timeline.resetSelectedEntry()
   } else {
-    menu.resetSelectedEntry()
+    //menu.resetSelectedEntry()
 /*
     if (view === 'Conversation') {
       timeline.setSelectedEntry(props.peerAddress, props.localAddress)

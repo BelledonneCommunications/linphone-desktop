@@ -17,7 +17,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('callSipAddressDescription')
 
   height: CallSipAddressStyle.height

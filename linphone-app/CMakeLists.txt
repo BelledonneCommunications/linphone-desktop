@@ -122,6 +122,7 @@ set(SOURCES
     src/components/calls/CallsListProxyModel.cpp
     src/components/camera/Camera.cpp
     src/components/camera/CameraPreview.cpp
+	src/components/chat-message/ChatMessageModel.cpp
     src/components/chat-room/ChatRoomModel.cpp
     src/components/chat-room/ChatRoomListModel.cpp
     src/components/chat-room/ChatRoomProxyModel.cpp
@@ -155,6 +156,11 @@ set(SOURCES
     src/components/other/text-to-speech/TextToSpeech.cpp
     src/components/other/units/Units.cpp
     src/components/participant/ParticipantModel.cpp
+	src/components/participant/ParticipantListModel.cpp
+	src/components/participant/ParticipantProxyModel.cpp
+	src/components/participant/ParticipantDeviceModel.cpp
+	src/components/participant/ParticipantDeviceListModel.cpp
+	src/components/participant/ParticipantDeviceProxyModel.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
     src/components/search/SearchHandler.cpp
@@ -162,18 +168,21 @@ set(SOURCES
     src/components/settings/SettingsModel.cpp
     src/components/sip-addresses/SipAddressesModel.cpp
     src/components/sip-addresses/SipAddressesProxyModel.cpp
+	src/components/sip-addresses/SipAddressesSorter.cpp
     src/components/sip-addresses/SipAddressObserver.cpp
     src/components/sip-addresses/SearchSipAddressesModel.cpp
+	src/components/sip-addresses/SearchSipAddressesProxyModel.cpp
     src/components/sound-player/SoundPlayer.cpp
     src/components/telephone-numbers/TelephoneNumbersModel.cpp
     src/components/timeline/TimelineModel.cpp
     src/components/timeline/TimelineListModel.cpp
     src/components/timeline/TimelineProxyModel.cpp
     src/components/url-handlers/UrlHandlers.cpp
-    src/utils/LinphoneUtils.cpp
+	src/utils/LinphoneEnums.cpp
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
+	src/utils/Tools.cpp
 	src/utils/plugins/PluginsManager.cpp
     )
 set(PLUGIN_SOURCES src/utils/plugins/PluginDataAPI.cpp
@@ -200,6 +209,7 @@ set(HEADERS
     src/components/calls/CallsListProxyModel.hpp
     src/components/camera/Camera.hpp
     src/components/camera/CameraPreview.hpp
+	src/components/chat-message/ChatMessageModel.hpp
     src/components/chat-room/ChatRoomModel.hpp
     src/components/chat-room/ChatRoomListModel.hpp
     src/components/chat-room/ChatRoomProxyModel.hpp
@@ -235,6 +245,11 @@ set(HEADERS
     src/components/other/text-to-speech/TextToSpeech.hpp
     src/components/other/units/Units.hpp
     src/components/participant/ParticipantModel.hpp
+	src/components/participant/ParticipantListModel.hpp
+	src/components/participant/ParticipantProxyModel.hpp
+	src/components/participant/ParticipantDeviceModel.hpp
+	src/components/participant/ParticipantDeviceListModel.hpp
+	src/components/participant/ParticipantDeviceProxyModel.hpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
     src/components/search/SearchHandler.hpp
@@ -242,18 +257,21 @@ set(HEADERS
     src/components/settings/SettingsModel.hpp
     src/components/sip-addresses/SipAddressesModel.hpp
     src/components/sip-addresses/SipAddressesProxyModel.hpp
+	src/components/sip-addresses/SipAddressesSorter.hpp
     src/components/sip-addresses/SipAddressObserver.hpp
     src/components/sip-addresses/SearchSipAddressesModel.hpp
+	src/components/sip-addresses/SearchSipAddressesProxyModel.hpp
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
     src/components/timeline/TimelineModel.hpp
     src/components/timeline/TimelineListModel.hpp
     src/components/timeline/TimelineProxyModel.hpp
     src/components/url-handlers/UrlHandlers.hpp
-    src/utils/LinphoneUtils.hpp
+	src/utils/LinphoneEnums.hpp
     src/utils/MediastreamerUtils.hpp
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
+	src/utils/Tools.hpp
     src/utils/plugins/PluginsManager.hpp
     )
 set(PLUGIN_HEADERS 

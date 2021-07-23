@@ -14,7 +14,7 @@ MouseArea {
   property var tooltipParent: parent
 
   property bool _visible: false
-  property int hoveringCursor : Qt.ArrowCursor
+  property int hoveringCursor : Qt.PointingHandCursor
 
   anchors.fill:parent
 

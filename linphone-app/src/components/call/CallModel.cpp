@@ -33,7 +33,6 @@
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 

@@ -13,7 +13,7 @@ import 'Chat.js' as Logic
 Rectangle {
   id: container
 
-  property alias proxyModel: chat.model
+  property alias proxyModel: chat.model	// ChatRoomProxyModel
 
   // ---------------------------------------------------------------------------
 
@@ -67,6 +67,7 @@ Rectangle {
         // more entries.
         onEntryTypeFilterChanged: Logic.initView()
         onMoreEntriesLoaded: Logic.handleMoreEntriesLoaded(n)
+		onPeerAddressChanged:console.log("connection : "+proxyModel.peerAddress)
       }
 
       // -----------------------------------------------------------------------
@@ -119,6 +120,7 @@ Rectangle {
 
       delegate: Rectangle {
         id: entry
+		property bool isNotice : $chatEntry.type === ChatRoomModel.NoticeEntry
 
         function isHoverEntry () {
           return mouseArea.containsMouse
@@ -130,10 +132,10 @@ Rectangle {
 
         anchors {
           left: parent ? parent.left : undefined
-          leftMargin: ChatStyle.entry.leftMargin
+		  leftMargin: isNotice?0:ChatStyle.entry.leftMargin
           right: parent ? parent.right : undefined
 
-          rightMargin: ChatStyle.entry.deleteIconSize +
+		  rightMargin: isNotice?0:ChatStyle.entry.deleteIconSize +
             ChatStyle.entry.message.extraContent.spacing +
             ChatStyle.entry.message.extraContent.rightMargin +
             ChatStyle.entry.message.extraContent.leftMargin +
@@ -178,6 +180,7 @@ Rectangle {
               TooltipArea {
                 text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
               }
+			  visible:!isNotice
             }
 
             // Display content.
@@ -206,7 +209,7 @@ Rectangle {
 
     Borders {
       Layout.fillWidth: true
-      Layout.preferredHeight: ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+      Layout.preferredHeight: textArea.height
 
       borderColor: ChatStyle.sendArea.border.color
       topWidth: ChatStyle.sendArea.border.width
@@ -214,8 +217,16 @@ Rectangle {
 
       DroppableTextArea {
         id: textArea
+		
+		enabled:!proxyModel.chatRoomModel.hasBeenLeft
 
-        anchors.fill: parent
+        anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		
+		height:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+		minimumHeight:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+		maximumHeight:container.height/2
 
         dropEnabled: SettingsModel.fileTransferUrl.length > 0
         dropDisabledReason: qsTr('noFileTransferUrl')
@@ -223,8 +234,24 @@ Rectangle {
 
         onDropped: Logic.handleFilesDropped(files)
         onTextChanged: Logic.handleTextChanged(text)
-        onValidText: Logic.sendMessage(text)
+		onValidText: {
+			textArea.text = ''
+			chat.bindToEnd = true
+			if(proxyModel.chatRoomModel)
+				proxyModel.sendMessage(text)
+			else{
+				console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
+				proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
+				proxyModel.sendMessage(text)
+			}
+		}
         Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+		Rectangle{
+			anchors.fill:parent
+			color:'white'
+			opacity: 0.5
+			visible:!textArea.enabled
+		}
       }
     }
   }

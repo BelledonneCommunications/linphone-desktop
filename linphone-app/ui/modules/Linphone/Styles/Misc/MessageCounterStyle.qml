@@ -8,12 +8,12 @@ import Units 1.0
 
 QtObject {
   property QtObject iconSize: QtObject {
-    property int amount: 16
+    property int amount: 12
     property int message: 18
   }
 
   property QtObject text: QtObject {
     property color color: Colors.q
-    property int pointSize: Units.dp * 7
+    property int pointSize: Units.dp * 6
   }
 }

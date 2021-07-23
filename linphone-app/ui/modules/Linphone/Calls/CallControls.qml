@@ -66,7 +66,7 @@ Rectangle {
 
       displayUnreadMessageCount: true
 
-      entry: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
+      //entry: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
     }
 
     Item {

@@ -33,7 +33,7 @@
 
 
 class SearchSipAddressesModel : public QAbstractListModel {
-	Q_OBJECT;
+	Q_OBJECT
 	
 public:
 	SearchSipAddressesModel (QObject *parent = Q_NULLPTR);

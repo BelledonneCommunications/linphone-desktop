@@ -22,9 +22,11 @@
 #define PARTICIPANT_PROXY_MODEL_H_
 
 #include <QSortFilterProxyModel>
+#include <memory>
 
-#include "ParticipantModel.hpp"
-
+class ParticipantModel;
+class ChatRoomModel;
+class ParticipantListModel;
 // =============================================================================
 
 class QWindow;
@@ -35,30 +37,35 @@ class ParticipantProxyModel : public QSortFilterProxyModel {
 
 
 public:
-  ParticipantProxyModel (QObject *parent = Q_NULLPTR);
+  ParticipantProxyModel ( QObject *parent = Q_NULLPTR);
   
-  void reset();
-  void update();
-  std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+  Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
 
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-// Remove a chatroom
-  Q_INVOKABLE void remove (TimelineModel *importer);
-
+  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+  
+  ChatRoomModel *getChatRoomModel() const;
+  Q_INVOKABLE QStringList getSipAddresses() const;
+  Q_INVOKABLE QVariantList getParticipants() const;
+  Q_INVOKABLE int count();
+  
+  void setChatRoomModel(ChatRoomModel * chatRoomModel);
+  
+  Q_INVOKABLE void add(const QString& address);
+  Q_INVOKABLE void remove(ParticipantModel * participant);
+  
+  
+  
+signals:
+  void chatRoomModelChanged();
+  
 private:
+  /*
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-  
-  
-  
-  void initTimeline ();
-  void updateTimelines();
+  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;*/
 
-  QList<std::shared_ptr<ParticipantModel>> mParticipantlines;
+  //std::shared_ptr<ParticipantListModel> mParticipantListModel;
+  ChatRoomModel *mChatRoomModel;
 };
 
 #endif // PARTICIPANT_PROXY_MODEL_H_

@@ -44,13 +44,16 @@
 #include "providers/ExternalImageProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
 
 #include "components/timeline/TimelineModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
 #include "components/timeline/TimelineProxyModel.hpp"
+
+#include "components/participant/ParticipantModel.hpp"
+#include "components/participant/ParticipantListModel.hpp"
+#include "components/participant/ParticipantProxyModel.hpp"
 
 // =============================================================================
 
@@ -216,7 +219,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
 
-  setWindowIcon(QIcon(LinphoneUtils::WindowIconPath));
+  setWindowIcon(QIcon(Utils::WindowIconPath));
 
   createParser();
   mParser->process(*this);
@@ -585,7 +588,11 @@ void App::registerTypes () {
   qRegisterMetaType<ChatRoomModel::EntryType>();
   qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
   qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();
+  qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
   qRegisterMetaType<std::shared_ptr<ChatRoomModel>>();
+  qRegisterMetaType<std::shared_ptr<ParticipantListModel>>();
+  qRegisterMetaType<std::shared_ptr<ParticipantDeviceModel>>();
+  LinphoneEnums::registerMetaTypes();
 
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
@@ -603,8 +610,11 @@ void App::registerTypes () {
   registerType<LdapProxyModel>("LdapProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SearchSipAddressesModel>("SearchSipAddressesModel");
+  registerType<SearchSipAddressesProxyModel>("SearchSipAddressesProxyModel");
+  
   
   registerType<TimelineProxyModel>("TimelineProxyModel");
+  registerType<ParticipantProxyModel>("ParticipantProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 
@@ -616,6 +626,7 @@ void App::registerTypes () {
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerUncreatableType<CallModel>("CallModel");
+  registerUncreatableType<ChatMessageModel>("ChatMessageModel");
   registerUncreatableType<ChatRoomModel>("ChatRoomModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
@@ -625,6 +636,13 @@ void App::registerTypes () {
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
   registerUncreatableType<TimelineModel>("TimelineModel");
+  registerUncreatableType<ParticipantModel>("ParticipantModel");
+  registerUncreatableType<ParticipantListModel>("ParticipantListModel");
+  registerUncreatableType<ParticipantDeviceModel>("ParticipantDeviceModel");
+  registerUncreatableType<ParticipantDeviceListModel>("ParticipantDeviceListModel");
+  registerUncreatableType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
+  
+  qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, "LinphoneEnums", 1, 0, "LinphoneEnums", "Only enums");
 }
 
 void App::registerSharedTypes () {
@@ -634,7 +652,7 @@ void App::registerSharedTypes () {
   registerSharedSingletonType<CoreManager, &CoreManager::getInstance>("CoreManager");
   registerSharedSingletonType<SettingsModel, &CoreManager::getSettingsModel>("SettingsModel");
   registerSharedSingletonType<AccountSettingsModel, &CoreManager::getAccountSettingsModel>("AccountSettingsModel");
-  registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");
+  registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");  
   registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");
   registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
   registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
@@ -650,6 +668,7 @@ void App::registerToolTypes () {
   registerToolType<TextToSpeech>("TextToSpeech");
   registerToolType<Units>("Units");
   registerToolType<ContactsImporterPluginsManager>("ContactsImporterPluginsManager");
+  registerToolType<Utils>("Utils");
 }
 
 void App::registerSharedToolTypes () {
@@ -711,7 +730,7 @@ void App::setTrayIcon () {
 
 
   systemTrayIcon->setContextMenu(menu);
-  systemTrayIcon->setIcon(QIcon(LinphoneUtils::WindowIconPath));
+  systemTrayIcon->setIcon(QIcon(Utils::WindowIconPath));
   systemTrayIcon->setToolTip(APPLICATION_NAME);
   systemTrayIcon->show();
   mSystemTrayIcon = systemTrayIcon;

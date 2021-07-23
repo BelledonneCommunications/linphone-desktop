@@ -36,26 +36,33 @@ public:
     TimelineListModel (QObject *parent = Q_NULLPTR);
     
     void reset();
-	void update();
 	void selectAll(const bool& selected);
 	TimelineModel * getAt(const int& index);
 	std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+	Q_INVOKABLE QVariantList getLastChatRooms(const int& maxCount) const;
   
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
   
 	QHash<int, QByteArray> roleNames () const override;
 	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
   
+	void add (std::shared_ptr<TimelineModel> timeline);	// Use to add a timeline that is not in Linphone list (like empty chat rooms that were hide by configuration)
 // Remove a chatroom
 	Q_INVOKABLE void remove (TimelineModel *importer);
+	void remove(std::shared_ptr<TimelineModel> model);
 	int mSelectedCount;
 	
 	void setSelectedCount(int selectedCount);
 public slots:
+	void update();
 	void selectedHasChanged(bool selected);
+	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
+	//void onConferenceLeft();
+	
 	
 signals:
 	void selectedCountChanged(int selectedCount);
+	void updated();
 
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());

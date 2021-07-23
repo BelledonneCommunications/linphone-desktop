@@ -31,7 +31,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('conferenceManagerDescription')
 
   height: ConferenceManagerStyle.height

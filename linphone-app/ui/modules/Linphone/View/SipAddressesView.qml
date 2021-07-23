@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Common.Styles 1.0
 
 // =============================================================================
 
@@ -24,6 +25,15 @@ ScrollableListView {
   property string headerButtonDescription
   property string headerButtonIcon
   property var headerButtonAction
+  property bool showHeader : true
+  property bool showContactAddress : true
+  property bool showSwitch : false
+  property bool showSeparator : true
+  property bool isSelectable : true
+  
+  property var switchHandler : function(checked, index){
+  }
+  
 
   readonly property string interpretableSipAddress: SipAddressesModel.interpretSipAddress(
     genSipAddress, false
@@ -31,7 +41,7 @@ ScrollableListView {
 
   // ---------------------------------------------------------------------------
 
-  signal entryClicked (var entry)
+  signal entryClicked (var entry, var index)
 
   // ---------------------------------------------------------------------------
   // Header.
@@ -87,7 +97,9 @@ ScrollableListView {
               Layout.fillWidth: true
 
               entry: ({
-                sipAddress: sipAddressesView.interpretableSipAddress
+                sipAddress: sipAddressesView.interpretableSipAddress,
+						  groupEnabled:false,
+						  haveEncryption:false
               })
             }
 
@@ -126,7 +138,7 @@ ScrollableListView {
         height: SipAddressesViewStyle.header.button.height
         width: parent.width
 
-        visible: !!sipAddressesView.headerButtonAction
+        visible: sipAddressesView.showHeader && !!sipAddressesView.headerButtonAction
 
         onClicked: sipAddressesView.headerButtonAction(sipAddressesView.interpretableSipAddress)
 
@@ -211,33 +223,61 @@ ScrollableListView {
         Contact {
           Layout.fillHeight: true
           Layout.fillWidth: true
+		  showContactAddress: sipAddressesView.showContactAddress
 
-          entry: $sipAddress
+          entry:  $sipAddress
 
           MouseArea {
             anchors.fill: parent
-            onClicked: sipAddressesView.entryClicked($sipAddress)
+            onClicked: sipAddressesView.entryClicked($sipAddress, )
           }
         }
-
+		
+		
         // ---------------------------------------------------------------------
         // Actions
         // ---------------------------------------------------------------------
 
         ActionBar {
           iconSize: SipAddressesViewStyle.entry.iconSize
+		  
+		  Switch{
+			  anchors.verticalCenter: parent.verticalCenter
+			  width:50
+			  //Layout.preferredWidth: 50							  
+			  indicatorStyle: SwitchStyle.aux
+			  
+			  visible: sipAddressesView.showSwitch
+			  
+			  enabled:true
+			  checked: false
+			  onClicked: {
+				  //checked = !checked
+				  switchHandler(!checked, index)
+			  }
+				  
+		  }
 
           Repeater {
             model: sipAddressesView.actions
 
             ActionButton {
               icon: modelData.icon
+			  tooltipText:modelData.tooltipText?modelData.tooltipText:''
               visible: {
                 var visible = sipAddressesView.actions[index].visible
                 return visible === undefined || visible
               }
 
               onClicked: sipAddressesView.actions[index].handler($sipAddress)
+			  Icon{
+				  visible: modelData.secure>0
+				  icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+				  iconSize:15
+				  anchors.right:parent.right
+				  anchors.top:parent.top
+				  anchors.topMargin: -3
+			  }
             }
           }
         }
@@ -249,12 +289,13 @@ ScrollableListView {
       color: SipAddressesViewStyle.entry.separator.color
       height: SipAddressesViewStyle.entry.separator.height
       width: parent.width
+	  visible: sipAddressesView.showSeparator
     }
 
     // -------------------------------------------------------------------------
 
     states: State {
-      when: mouseArea.containsMouse
+      when: mouseArea.containsMouse && sipAddressesView.isSelectable
 
       PropertyChanges {
         color: SipAddressesViewStyle.entry.color.hovered

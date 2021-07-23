@@ -25,7 +25,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('callTransferDescription')
 
   height: CallTransferStyle.height

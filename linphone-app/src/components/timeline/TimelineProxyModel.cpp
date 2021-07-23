@@ -40,10 +40,11 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 	TimelineListModel * model = CoreManager::getInstance()->getTimelineListModel();
 	
 	connect(model, SIGNAL(selectedCountChanged(int)), this, SIGNAL(selectedCountChanged(int)));
+	connect(model, &TimelineListModel::updated, this, &TimelineProxyModel::invalidate);
 
 	setSourceModel(model);
 	
-	QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
+	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultProxyChanged, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->update();
 	  invalidate();
 	  //updateCurrentSelection();

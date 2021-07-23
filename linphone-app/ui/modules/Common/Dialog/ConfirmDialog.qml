@@ -19,7 +19,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
 
   height: DialogStyle.confirmDialog.height
   width: DialogStyle.confirmDialog.width

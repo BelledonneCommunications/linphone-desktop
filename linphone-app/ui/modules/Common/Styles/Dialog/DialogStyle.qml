@@ -12,6 +12,7 @@ QtObject {
   property QtObject buttons: QtObject {
     property int bottomMargin: 15
     property int leftMargin: 50
+	property int rightMargin: 50
     property int spacing: 20
     property int topMargin: 15
   }
