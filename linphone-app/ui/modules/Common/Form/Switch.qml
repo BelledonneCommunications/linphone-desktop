@@ -12,6 +12,7 @@ Controls.Switch {
   // ---------------------------------------------------------------------------
 
   property bool enabled: true
+  property QtObject indicatorStyle : SwitchStyle.normal
 
   // ---------------------------------------------------------------------------
 
@@ -22,32 +23,32 @@ Controls.Switch {
   checked: false
 
   indicator: Rectangle {
-    implicitHeight: SwitchStyle.indicator.height
-    implicitWidth: SwitchStyle.indicator.width
+    implicitHeight: indicatorStyle.indicator.height
+    implicitWidth: indicatorStyle.indicator.width
 
     border.color: control.enabled
       ? (
         control.checked
-          ? SwitchStyle.indicator.border.color.checked
-          : SwitchStyle.indicator.border.color.normal
-      ) : SwitchStyle.indicator.border.color.disabled
+          ? indicatorStyle.indicator.border.color.checked
+          : indicatorStyle.indicator.border.color.normal
+      ) : indicatorStyle.indicator.border.color.disabled
 
     color: control.enabled
       ? (
         control.checked
-          ? SwitchStyle.indicator.color.checked
-          : SwitchStyle.indicator.color.normal
-      ) : SwitchStyle.indicator.color.disabled
+          ? indicatorStyle.indicator.color.checked
+          : indicatorStyle.indicator.color.normal
+      ) : indicatorStyle.indicator.color.disabled
 
-    radius: SwitchStyle.indicator.radius
+    radius: indicatorStyle.indicator.radius
     x: control.leftPadding
     y: parent.height / 2 - height / 2
 
     Rectangle {
       id: sphere
 
-      height: SwitchStyle.sphere.size
-      width: SwitchStyle.sphere.size
+      height: indicatorStyle.sphere.size
+      width: indicatorStyle.sphere.size
 
       anchors.verticalCenter: parent.verticalCenter
 
@@ -57,18 +58,18 @@ Controls.Switch {
           control.checked
             ? (
               control.down
-                ? SwitchStyle.sphere.border.color.pressed
-                : SwitchStyle.sphere.border.color.checked
-            ) : SwitchStyle.sphere.border.color.normal
-        ) : SwitchStyle.sphere.border.color.disabled
+                ? indicatorStyle.sphere.border.color.pressed
+                : indicatorStyle.sphere.border.color.checked
+            ) : indicatorStyle.sphere.border.color.normal
+        ) : indicatorStyle.sphere.border.color.disabled
 
       color: control.enabled
         ?
           (
           control.down
-            ? SwitchStyle.sphere.color.pressed
-            : SwitchStyle.sphere.color.normal
-        ) : SwitchStyle.sphere.color.disabled
+            ? indicatorStyle.sphere.color.pressed
+            : indicatorStyle.sphere.color.normal
+        ) : indicatorStyle.sphere.color.disabled
 
       radius: width / 2
 
@@ -87,7 +88,7 @@ Controls.Switch {
         NumberAnimation {
           properties: 'x'
 
-          duration: SwitchStyle.animation.duration
+          duration: indicatorStyle.animation.duration
           easing.type: Easing.InOutQuad
         }
       }
@@ -99,7 +100,7 @@ Controls.Switch {
   MouseArea {
     anchors.fill: parent
     
-    onClicked: control.enabled && control.clicked()
+	onClicked: control.enabled && control.clicked()
     onPressed: control.enabled && control.forceActiveFocus()
   }
 }

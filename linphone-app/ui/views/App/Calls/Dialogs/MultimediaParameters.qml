@@ -27,7 +27,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
 
   height: MultimediaParametersStyle.height
   width: MultimediaParametersStyle.width

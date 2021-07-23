@@ -32,7 +32,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
 
   height: SettingsSipAccountsEditStyle.height
   width: SettingsSipAccountsEditStyle.width

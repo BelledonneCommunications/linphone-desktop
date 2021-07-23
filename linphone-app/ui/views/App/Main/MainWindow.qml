@@ -71,7 +71,7 @@ ApplicationWindow {
       // Workaround to get these properties in `MainWindow.js`.
       readonly property alias contactsEntry: contactsEntry
       readonly property alias contentLoader: contentLoader
-      readonly property alias homeEntry: homeEntry
+      readonly property alias conferencesEntry: conferencesEntry
       readonly property alias menu: menu
 
       readonly property alias timeline: timeline
@@ -91,6 +91,7 @@ ApplicationWindow {
       ToolBar {
         Layout.fillWidth: true
         Layout.preferredHeight: MainWindowStyle.toolBar.height
+        hoverEnabled : true
 
         background: MainWindowStyle.toolBar.background
 
@@ -101,12 +102,30 @@ ApplicationWindow {
             rightMargin: MainWindowStyle.toolBar.rightMargin
           }
           spacing: MainWindowStyle.toolBar.spacing
+          
+          ActionButton {
+            icon: 'panel_shown'
+            tooltipText : 'Open Timeline'
+            iconSize: MainWindowStyle.panelButtonSize
+            //autoIcon: true
+            onClicked: Logic.openTimeline()
+          }
+          ActionButton {
+            icon: 'home'
+            tooltipText : 'Open Home'
+            iconSize: MainWindowStyle.homeButtonSize
+            //autoIcon: true
+            onClicked: setView('Home')
+          }
 
           AccountStatus {
             id: accountStatus
-
-            Layout.fillHeight: parent.height
+            betterIcon:true
+            Layout.preferredHeight: parent.height
             Layout.preferredWidth: MainWindowStyle.accountStatus.width
+            Layout.fillWidth: false
+            //height: parent.height
+            //width: MainWindowStyle.accountStatus.width
 
             TooltipArea {
               text: AccountSettingsModel.sipAddress
@@ -119,8 +138,9 @@ ApplicationWindow {
                         }
           }
 
-          Column {
+          ColumnLayout {
             Layout.preferredWidth: MainWindowStyle.autoAnswerStatus.width
+            visible: SettingsModel.autoAnswerStatus
 
             Icon {
               icon: SettingsModel.autoAnswerStatus
@@ -181,19 +201,30 @@ ApplicationWindow {
 
             onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
           }
+          
+          
+          ActionButton {
+            icon: 'new_chat_group'
+            tooltipText : 'Open Conference'
+            iconSize: MainWindowStyle.newConferenceSize
+            //autoIcon: true
+			onClicked: {
+				window.detachVirtualWindow()
+				window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/NewChatRoom.qml')
+										   ,{})
+			}
+          }
 
           ActionButton {
             icon: 'new_conference'
             iconSize: MainWindowStyle.newConferenceSize
             visible: SettingsModel.conferenceEnabled
+            tooltipText:qsTr('newConferenceButton')
+            //autoIcon: true
 
             onClicked: Logic.openConferenceManager()
-
-            TooltipArea {
-              text: qsTr('newConferenceButton')
-            }
           }
-
+/*
           ActionButton {
             icon: 'burger_menu'
             iconSize: MainWindowStyle.menuBurgerSize
@@ -205,6 +236,7 @@ ApplicationWindow {
             }
 
           }
+          */
         }
       }
       Loader{
@@ -231,19 +263,10 @@ ApplicationWindow {
           ApplicationMenu {
             id: menu
 
-            defaultSelectedEntry: homeEntry
+            defaultSelectedEntry: null
 
             entryHeight: MainWindowStyle.menu.height
             entryWidth: MainWindowStyle.menu.width
-
-            ApplicationMenuEntry {
-              id: homeEntry
-
-              icon: 'home'
-              name: qsTr('homeEntry')
-
-              onSelected: setView('Home')
-            }
 
             ApplicationMenuEntry {
               id: contactsEntry
@@ -253,6 +276,16 @@ ApplicationWindow {
               visible: SettingsModel.contactsEnabled
 
               onSelected: setView('Contacts')
+            }
+            
+            ApplicationMenuEntry {
+              id: conferencesEntry
+
+              icon: 'conferences'
+			  iconSize: 32
+              name: 'MES CONFERENCES'
+
+              onSelected: setView('HistoryView')
             }
           }
 

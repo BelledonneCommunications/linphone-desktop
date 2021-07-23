@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="13"
+   height="15"
+   viewBox="0 0 13 15"
+   version="1.1"
+   id="svg16"
+   sodipodi:docname="secure_level_1.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     id="namedview18"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="58.2"
+     inkscape:cx="6.5034364"
+     inkscape:cy="7.5"
+     inkscape:window-width="1920"
+     inkscape:window-height="1092"
+     inkscape:window-x="1920"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg16" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g14">
+    <g
+       id="g12">
+      <g
+         id="g10">
+        <g
+           id="g8">
+          <path
+             fill="#96C11F"
+             d="M6.478 14.72c-.008.006-.016.012-.025.016-.042.025-.09.038-.136.038-.045 0-.089-.012-.129-.035-.068-.038-1.68-.973-3.257-2.894C1.474 10.07-.214 7.087.022 2.96c.007-.12.095-.22.213-.245C3.521 2.057 6.055.178 6.161.098L6.173.09l.065-.043c.095-.064.22-.061.311.01.025.02 2.554 1.953 5.856 2.615.118.023.206.124.213.245.447 7.827-5.615 11.502-6.14 11.804"
+             transform="translate(-637.000000, -296.000000) translate(609.000000, 196.000000) translate(0.000000, 90.000000) translate(28.153846, 10.000000)"
+             id="path2" />
+          <path
+             fill="#FEFEFE"
+             d="M3.652 3.681L3.033 4.934 1.65 5.135 2.651 6.111 2.415 7.488 3.652 6.838 4.889 7.488 4.653 6.111 5.654 5.135 4.27 4.934z"
+             transform="translate(-637.000000, -296.000000) translate(609.000000, 196.000000) translate(0.000000, 90.000000) translate(28.153846, 10.000000)"
+             id="path4" />
+          <path
+             fill="#FEFEFE"
+             d="M8.856 3.681L8.237 4.934 6.854 5.135 7.855 6.111 7.619 7.488 8.856 6.838 10.093 7.488 9.857 6.111 10.858 5.135 9.474 4.934z"
+             opacity=".35"
+             transform="translate(-637.000000, -296.000000) translate(609.000000, 196.000000) translate(0.000000, 90.000000) translate(28.153846, 10.000000)"
+             id="path6" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

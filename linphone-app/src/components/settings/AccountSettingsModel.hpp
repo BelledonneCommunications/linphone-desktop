@@ -84,6 +84,7 @@ public:
 
 signals:
   void accountSettingsUpdated ();
+  void defaultProxyChanged();
   void publishPresenceChanged();
 
 private:

@@ -9,7 +9,7 @@ QtObject {
   property QtObject backgroundColor: QtObject {
     property color disabled: Colors.o
     property color hovered: Colors.j
-    property color normal: Colors.g
+    property color normal: Colors.r
     property color pressed: Colors.i
   }
 

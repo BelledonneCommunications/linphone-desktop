@@ -23,7 +23,6 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "AssistantModel.hpp"
@@ -222,7 +221,7 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
 
     const QString &transport(map["transport"].toString());
     if (!transport.isEmpty())
-      address->setTransport(LinphoneUtils::stringToTransportType(transport));
+      address->setTransport(Utils::stringToTransportType(transport));
 
     if (proxyConfig->setServerAddr(address->asString())) {
       qWarning() << QStringLiteral("Unable to add server address: `%1`.")

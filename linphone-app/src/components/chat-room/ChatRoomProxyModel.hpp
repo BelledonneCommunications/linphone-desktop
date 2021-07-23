@@ -32,18 +32,18 @@ class QWindow;
 class ChatRoomProxyModel : public QSortFilterProxyModel {
   class ChatRoomModelFilter;
 
-  Q_OBJECT;
+  Q_OBJECT
 
-  Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged);
-  Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged);
-  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged);
-  Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged);
-  Q_PROPERTY(int isSecure READ getIsSecure WRITE setIsSecure NOTIFY isSecureChanged);
-  Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged);
-  //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged);
-  Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged);
-  //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged);
-  Q_PROPERTY(QString cachedText READ getCachedText);
+  Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged)
+  Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged)
+  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged)
+  Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged)
+  //Q_PROPERTY(int isSecure READ isSecure WRITE setIsSecure NOTIFY isSecureChanged)
+  Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
+  //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged)
+  Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
+  //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged)
+  Q_PROPERTY(QString cachedText READ getCachedText)
 
 public:
   ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
@@ -73,7 +73,7 @@ signals:
   void fullPeerAddressChanged (const QString &fullPeerAddress);
   void fullLocalAddressChanged (const QString &fullLocalAddress);
   bool isRemoteComposingChanged (bool status);
-  bool isSecureChanged(bool secure);
+  //bool isSecureChanged(bool secure);
   
   void chatRoomModelChanged();
 
@@ -83,6 +83,7 @@ signals:
 
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 
 private:
   QString getPeerAddress () const;
@@ -97,8 +98,8 @@ private:
   QString getFullLocalAddress () const;
   void setFullLocalAddress (const QString &localAddress);
   
-  int getIsSecure () const;
-  void setIsSecure (const int &secure);
+  //bool isSecure () const;
+  //void setIsSecure (const int &secure);
   
   ChatRoomModel *getChatRoomModel() const;
   void setChatRoomModel (ChatRoomModel *chatRoomModel);
@@ -121,7 +122,7 @@ private:
   QString mLocalAddress;
   QString mFullPeerAddress;
   QString mFullLocalAddress;
-  int mIsSecure;
+  //int mIsSecure;
   static QString gCachedText;
   std::shared_ptr<linphone::ChatRoom> mChatRoom;
   

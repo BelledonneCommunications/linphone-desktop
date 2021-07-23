@@ -105,6 +105,7 @@ signals:
 	void avatarChanged();
 	void presenceStatusChanged();
 	void selectedChanged(bool selected);
+	void conferenceLeft();
   
 };
 

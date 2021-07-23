@@ -163,7 +163,7 @@ shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (const QString &peerAddr
 shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (ChatRoomModel * data) {
 	if(data){
 		for(auto it = mChatRoomModels.begin() ; it != mChatRoomModels.end() ; ++it){
-			auto a = it->lock();
+			auto a = it->second.lock();
 			if(a.get() == data)
 				return a;
 		}
@@ -171,16 +171,15 @@ shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (ChatRoomModel * data) {
 	return nullptr;
 }
 
-shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom) {
+shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create) {
   if (!chatRoom)
     return nullptr;
   auto pc = chatRoom->getCurrentParams();
 	for(auto it = mChatRoomModels.begin() ; it != mChatRoomModels.end() ; ++it)	{
-		auto a = it->lock();
+		auto a = it->second.lock();
 		auto pa = a->getChatRoom()->getCurrentParams();
 		if( a->getChatRoom()->getConferenceAddress()  == chatRoom->getConferenceAddress()
 				&& a->getChatRoom()->getLocalAddress()  == chatRoom->getLocalAddress()
-				&& a->getChatRoom()->getPeerAddress()  == chatRoom->getPeerAddress()
 				&& a->getChatRoom()->getPeerAddress()  == chatRoom->getPeerAddress()
 				&& pa->encryptionEnabled() == pc->encryptionEnabled()
 				){
@@ -190,30 +189,52 @@ shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (std::shared_ptr<linphon
 			return chatRoomModel;
 		}
 	}
-	
-	QPair<bool, QPair<QString, QString>> chatRoomModelId{pc->encryptionEnabled(),
-		{ QString::fromStdString(chatRoom->getPeerAddress()->asString())
-					, QString::fromStdString(chatRoom->getLocalAddress()->asString()) }};
-	
-  
-	  auto deleter = [this, chatRoomModelId](ChatRoomModel *chatRoomModel) {
-		bool removed = mChatRoomModels.remove(chatRoomModelId);
-		Q_ASSERT(removed);
-		chatRoomModel->deleteLater();
-	  };
-  
-	  shared_ptr<ChatRoomModel> chatRoomModel(new ChatRoomModel(chatRoom), deleter);
-	  chatRoom->addListener(chatRoomModel);
-	  mChatRoomModels[chatRoomModelId] = chatRoomModel;
-  
-	  emit chatRoomModelCreated(chatRoomModel);
-  
-	  return chatRoomModel;
+	if(!create){
+		return nullptr;
+	}else{
+		/*
+		bool isEncrypted = pc->encryptionEnabled();
+		auto peerAddress = chatRoom->getPeerAddress();
+		auto localAddress = chatRoom->getLocalAddress();
+		auto conferenceAddress = chatRoom->getConferenceAddress();
+		if(!peerAddress)
+			peerAddress = conferenceAddress;
+		
+		QPair<bool, QPair<QString, QString>> chatRoomModelId{isEncrypted,
+			{ QString::fromStdString(peerAddress->asString())
+						, QString::fromStdString(localAddress->asString()) }};
+		
+	  */
+		  //auto deleter = [this, chatRoomModelId](ChatRoomModel *chatRoomModel) {
+		auto deleter = [this, chatRoom](ChatRoomModel *chatRoomModel) {
+			//bool removed = mChatRoomModels.remove(chatRoomModelId);
+			auto iterator = mChatRoomModels.begin();
+			while(iterator != mChatRoomModels.end()) {
+				if(iterator->first != chatRoom)
+					++iterator;
+				else{
+					mChatRoomModels.erase(iterator);
+					iterator = mChatRoomModels.end();
+				}
+			}
+			chatRoomModel->deleteLater();
+		  };
+	  
+		  shared_ptr<ChatRoomModel> chatRoomModel(new ChatRoomModel(chatRoom), deleter);
+		  chatRoom->addListener(chatRoomModel);
+		  mChatRoomModels.append({chatRoom, chatRoomModel});
+	  
+		  emit chatRoomModelCreated(chatRoomModel);
+	  
+		  return chatRoomModel;
+	}
 }
-
-bool CoreManager::chatRoomModelExists (const QString &peerAddress, const QString &localAddress, const bool &isSecure) {
-  return mChatRoomModels.contains({isSecure, { peerAddress, localAddress}});
-}
+/*
+//bool CoreManager::chatRoomModelExists (const QString &peerAddress, const QString &localAddress, const bool &isSecure) {
+bool CoreManager::chatRoomModelExists (std::shared_ptr<linphone::ChatRoom> chatRoom) {
+  //return mChatRoomModels.contains({isSecure, { peerAddress, localAddress}});
+	return mChatRoomModels.contains(chatRoom);
+}*/
 
 HistoryModel* CoreManager::getHistoryModel(){
   if(!mHistoryModel){

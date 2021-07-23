@@ -18,276 +18,92 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QQuickWindow>
+#include "ParticipantProxyModel.hpp"
 
-#include "app/App.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
+#include "utils/Utils.hpp"
 
-#include "ChatRoomProxyModel.hpp"
+#include "ParticipantListModel.hpp"
+#include "ParticipantModel.hpp"
+
+#include <QDebug>
+
 
 // =============================================================================
 
-using namespace std;
+// -----------------------------------------------------------------------------
 
-QString ChatRoomProxyModel::gCachedText;
-
-// Fetch the L last filtered chat entries.
-class ChatRoomProxyModel::ChatRoomModelFilter : public QSortFilterProxyModel {
-public:
-  ChatRoomModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {}
-
-  ChatRoomModel::EntryType getEntryTypeFilter () {
-    return mEntryTypeFilter;
-  }
-
-  void setEntryTypeFilter (ChatRoomModel::EntryType type) {
-    mEntryTypeFilter = type;
-    invalidate();
-  }
-
-protected:
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &) const override {
-    if (mEntryTypeFilter == ChatRoomModel::EntryType::GenericEntry)
-      return true;
-
-    QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-    const QVariantMap data = index.data().toMap();
-
-    return data["type"].toInt() == mEntryTypeFilter;
-  }
-
-private:
-  ChatRoomModel::EntryType mEntryTypeFilter = ChatRoomModel::EntryType::GenericEntry;
-};
-
-// =============================================================================
-
-ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  setSourceModel(new ChatRoomModelFilter(this));
-  mIsSecure = false;
-
-  App *app = App::getInstance();
-  QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
-    handleIsActiveChanged(App::getInstance()->getMainWindow());
-  });
-
-  QQuickWindow *callsWindow = app->getCallsWindow();
-  if (callsWindow)
-    QObject::connect(callsWindow, &QWindow::activeChanged, this, [this, callsWindow]() {
-      handleIsActiveChanged(callsWindow);
-    });
+ParticipantProxyModel::ParticipantProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+	mChatRoomModel = nullptr;
 }
 
 // -----------------------------------------------------------------------------
 
-#define GET_CHAT_MODEL() \
-  if (!mChatRoomModel) \
-    return; \
-  mChatRoomModel
+ChatRoomModel *ParticipantProxyModel::getChatRoomModel() const{
+	return mChatRoomModel;
+}
 
-#define CREATE_PARENT_MODEL_FUNCTION(METHOD) \
-  void ChatRoomProxyModel::METHOD () { \
-    GET_CHAT_MODEL()->METHOD(); \
-  }
+QStringList ParticipantProxyModel::getSipAddresses() const{
+	QStringList participants;
+	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
+	for(int i = 0 ; i < list->rowCount() ; ++i)
+			participants << list->getAt(i)->getSipAddress();
+	return participants;
+}
 
-#define CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(METHOD, ARG_TYPE) \
-  void ChatRoomProxyModel::METHOD (ARG_TYPE value) { \
-    GET_CHAT_MODEL()->METHOD(value); \
-  }
+QVariantList ParticipantProxyModel::getParticipants() const{
+	QVariantList participants;
+	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
+	for(int i = 0 ; i < list->rowCount() ; ++i)
+			participants << QVariant::fromValue(list->getAt(i));
+	return participants;
+}
 
-#define CREATE_PARENT_MODEL_FUNCTION_WITH_ID(METHOD) \
-  void ChatRoomProxyModel::METHOD (int id) { \
-    QModelIndex sourceIndex = mapToSource(index(id, 0)); \
-    GET_CHAT_MODEL()->METHOD( \
-      static_cast<ChatRoomModelFilter *>(sourceModel())->mapToSource(sourceIndex).row() \
-    ); \
-  }
-
-CREATE_PARENT_MODEL_FUNCTION(removeAllEntries);
-
-CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendFileMessage, const QString &);
-CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendMessage, const QString &);
-
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(downloadFile);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFile);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFileDirectory);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(removeEntry);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(resendMessage);
-
-#undef GET_CHAT_MODEL
-#undef CREATE_PARENT_MODEL_FUNCTION
-#undef CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM
-#undef CREATE_PARENT_MODEL_FUNCTION_WITH_ID
-
-
-void ChatRoomProxyModel::compose (const QString& text) {
-  if (mChatRoomModel)
-    mChatRoomModel->compose();
-  gCachedText = text;
+int ParticipantProxyModel::count(){
+	return dynamic_cast<ParticipantListModel*>(sourceModel())->rowCount();
 }
 
 // -----------------------------------------------------------------------------
 
-void ChatRoomProxyModel::loadMoreEntries () {
-  int count = rowCount();
-  int parentCount = sourceModel()->rowCount();
-
-  if (count < parentCount) {
-    // Do not increase `mMaxDisplayedEntries` if it's not necessary...
-    // Limit qml calls.
-    if (count == mMaxDisplayedEntries)
-      mMaxDisplayedEntries += EntriesChunkSize;
-
-    invalidateFilter();
-
-    count = rowCount() - count;
-    if (count > 0)
-      emit moreEntriesLoaded(count);
-  }
-}
-
-void ChatRoomProxyModel::setEntryTypeFilter (ChatRoomModel::EntryType type) {
-  ChatRoomModelFilter *chatRoomModelFilter = static_cast<ChatRoomModelFilter *>(sourceModel());
-
-  if (chatRoomModelFilter->getEntryTypeFilter() != type) {
-    chatRoomModelFilter->setEntryTypeFilter(type);
-    emit entryTypeFilterChanged(type);
-  }
-}
-
-// -----------------------------------------------------------------------------
-
-bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const {
-  return sourceModel()->rowCount() - sourceRow <= mMaxDisplayedEntries;
-}
-
-// -----------------------------------------------------------------------------
-
-QString ChatRoomProxyModel::getPeerAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getPeerAddress() : QString("");
-}
-
-void ChatRoomProxyModel::setPeerAddress (const QString &peerAddress) {
-  mPeerAddress = peerAddress;
-  //reload();
-}
-
-QString ChatRoomProxyModel::getLocalAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getLocalAddress() : QString("");
-}
-
-void ChatRoomProxyModel::setLocalAddress (const QString &localAddress) {
-  mLocalAddress = localAddress;
-  //reload();
-}
-
-QString ChatRoomProxyModel::getFullPeerAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getFullPeerAddress() : QString("");
-}
-
-void ChatRoomProxyModel::setFullPeerAddress (const QString &peerAddress) {
-  mFullPeerAddress = peerAddress;
-  //reload();
-}
-
-QString ChatRoomProxyModel::getFullLocalAddress () const {
-  return mChatRoomModel ? mChatRoomModel->getFullLocalAddress() : QString("");
-}
-
-void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
-  mFullLocalAddress = localAddress;
-  //reload();
-}
-
-int ChatRoomProxyModel::getIsSecure () const {
-  return mChatRoomModel ? mChatRoomModel->getIsSecure() : -1;
-}
-
-void ChatRoomProxyModel::setIsSecure (const int &secure) {
-  mIsSecure = secure;
-}
-
-bool ChatRoomProxyModel::getIsRemoteComposing () const {
-  return mChatRoomModel ? mChatRoomModel->getIsRemoteComposing() : false;
-}
-
-QString ChatRoomProxyModel::getCachedText() const{
-  return gCachedText;
-}
-
-// -----------------------------------------------------------------------------
-
-void ChatRoomProxyModel::reload () {
-  mMaxDisplayedEntries = EntriesChunkSize;
-
-  if (mChatRoomModel) {
-    ChatRoomModel *chatRoomModel = mChatRoomModel.get();
-    QObject::disconnect(chatRoomModel, &ChatRoomModel::isRemoteComposingChanged, this, &ChatRoomProxyModel::handleIsRemoteComposingChanged);
-    QObject::disconnect(chatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
-    QObject::disconnect(chatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
-  }
-
-  //mChatRoomModel = CoreManager::getInstance()->getChatRoomModel(mPeerAddress, mLocalAddress, mIsSecure);
-  //if(mChatRoom)
-		mChatRoomModel = CoreManager::getInstance()->getChatRoomModel(mChatRoom);
-  
-
-  if (mChatRoomModel) {
-
-    ChatRoomModel *chatRoomModel = mChatRoomModel.get();
-    QObject::connect(chatRoomModel, &ChatRoomModel::isRemoteComposingChanged, this, &ChatRoomProxyModel::handleIsRemoteComposingChanged);
-    QObject::connect(chatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
-    QObject::connect(chatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
-  }
-
-  static_cast<ChatRoomModelFilter *>(sourceModel())->setSourceModel(mChatRoomModel.get());
-}
-void ChatRoomProxyModel::resetMessageCount(){
-	if( mChatRoomModel){
-		mChatRoomModel->resetMessageCount();
+void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
+	if(!mChatRoomModel || mChatRoomModel != chatRoomModel){
+		mChatRoomModel = chatRoomModel;
+		if(mChatRoomModel)
+			setSourceModel(mChatRoomModel->getParticipants());
+		else {
+			setSourceModel(new ParticipantListModel(nullptr, this));
+		}
+		sort(0);
+		emit chatRoomModelChanged();
 	}
 }
 
-std::shared_ptr<ChatRoomModel> ChatRoomProxyModel::getChatRoomModel () const{
-	return mChatRoomModel;
-	
+void ParticipantProxyModel::add(const QString& address){
+	ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
+	if(!participantsModel->contains(address)){
+		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr, this);
+		participant->setSipAddress(address);
+		participantsModel->add(participant);
+	}
 }
-void ChatRoomProxyModel::setChatRoomModel (std::shared_ptr<ChatRoomModel> chatRoomModel){
-	mChatRoom = chatRoomModel->getChatRoom();
-	reload();
-	emit chatRoomModelChanged();
+
+void ParticipantProxyModel::remove(ParticipantModel * participant){
+	if(participant)
+		dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
 }
+
 // -----------------------------------------------------------------------------
 
-static inline QWindow *getParentWindow (QObject *object) {
-  App *app = App::getInstance();
-  const QWindow *mainWindow = app->getMainWindow();
-  const QWindow *callsWindow = app->getCallsWindow();
-  for (QObject *parent = object->parent(); parent; parent = parent->parent())
-    if (parent == mainWindow || parent == callsWindow)
-      return static_cast<QWindow *>(parent);
-  return nullptr;
+bool ParticipantProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+  //const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+  return true;
 }
 
-void ChatRoomProxyModel::handleIsActiveChanged (QWindow *window) {
-  if (mChatRoomModel && window->isActive() && getParentWindow(this) == window) {
-    mChatRoomModel->resetMessageCount();
-    mChatRoomModel->focused();
-  }
-}
-
-void ChatRoomProxyModel::handleIsRemoteComposingChanged (bool status) {
-  emit isRemoteComposingChanged(status);
-}
-
-void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
-  mMaxDisplayedEntries++;
-
-  QWindow *window = getParentWindow(this);
-  if (window && window->isActive())
-    mChatRoomModel->resetMessageCount();
-}
-
-void ChatRoomProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {
-  mMaxDisplayedEntries++;
+bool ParticipantProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+    const ParticipantModel* a = sourceModel()->data(left).value<ParticipantModel*>();
+    const ParticipantModel* b = sourceModel()->data(right).value<ParticipantModel*>();
+  
+    return a->getCreationTime() >= b->getCreationTime();
 }

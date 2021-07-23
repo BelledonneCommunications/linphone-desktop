@@ -40,7 +40,7 @@ DialogPlus {
 					  }
 				  ]
 	   
-	   centeredButtons: true
+	   buttonsAlignment: Qt.AlignCenter
 	   
 	   height: ManageAccountsStyle.height
 	   width: ManageAccountsStyle.width

@@ -178,7 +178,7 @@ if(ENABLE_BUILD_APP_PLUGINS)
 endif()
 
 
-
+if(NOT LINPHONE_QT_ONLY)
 ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
     INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
@@ -189,7 +189,7 @@ ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
     INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-    #BUILD_ALWAYS NO #${DO_BUILD}
+    BUILD_ALWAYS NO #${DO_BUILD}
 )
 ExternalProject_Add_Step(sdk force_build
 	COMMENT "Forcing build for 'desktop'"
@@ -197,6 +197,7 @@ ExternalProject_Add_Step(sdk force_build
 	DEPENDERS build
 	ALWAYS 1
 )
+endif()
 include(FindPkgConfig)
 
 set(APP_DEPENDS sdk)
@@ -254,7 +255,9 @@ else()
 	message("Adding Linphone Desktop in an IDE-friendly state")
 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
-	add_dependencies(app-library ${APP_DEPENDS})
+	if(NOT LINPHONE_QT_ONLY)
+		add_dependencies(app-library ${APP_DEPENDS})
+	endif()
 	if( ENABLE_BUILD_APP_PLUGINS)
 		add_subdirectory(${CMAKE_SOURCE_DIR}/plugins "plugins-app")
 	endif()
@@ -268,5 +271,5 @@ ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
     LIST_SEPARATOR | # Use the alternate list separator
     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
     EXCLUDE_FROM_ALL ON
-    BUILD_ALWAYS ON
+    #BUILD_ALWAYS ON
 )

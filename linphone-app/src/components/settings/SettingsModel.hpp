@@ -430,9 +430,9 @@ public:
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
 
-	bool getShowLocalSipAccount () const;
-	bool getShowStartChatButton () const;
-	bool getShowStartVideoCallButton () const;
+	Q_INVOKABLE bool getShowLocalSipAccount () const;
+	Q_INVOKABLE bool getShowStartChatButton () const;
+	Q_INVOKABLE bool getShowStartVideoCallButton () const;
 
 	// Advanced. ---------------------------------------------------------------------------
 	

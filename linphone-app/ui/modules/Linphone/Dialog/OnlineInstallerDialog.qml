@@ -55,7 +55,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   descriptionText: {
     var str
 

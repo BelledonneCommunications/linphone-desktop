@@ -18,7 +18,7 @@ Item {
     mipmap: Qt.platform.os === 'osx'
     function getIconSize () {
       Utils.assert(
-        iconSize != null && iconSize >= 0,
+        (icon == null ||  icon == '' || iconSize != null && iconSize >= 0),
         '`iconSize` must be defined and must be positive. (icon=`' +
           icon + '`, iconSize=' + iconSize + ')'
       )

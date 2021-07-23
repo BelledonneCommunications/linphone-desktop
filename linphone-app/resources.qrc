@@ -12,6 +12,9 @@
         <file>assets/images/add_hovered.svg</file>
         <file>assets/images/add_normal.svg</file>
         <file>assets/images/add_pressed.svg</file>
+		<file>assets/images/add_participant_hovered.svg</file>
+        <file>assets/images/add_participant_normal.svg</file>
+        <file>assets/images/add_participant_pressed.svg</file>
         <file>assets/images/attachment_disabled.svg</file>
         <file>assets/images/attachment_hovered.svg</file>
         <file>assets/images/attachment_normal.svg</file>
@@ -68,7 +71,12 @@
         <file>assets/images/chat_normal.svg</file>
         <file>assets/images/chat_pressed.svg</file>
         <file>assets/images/chat_read.svg</file>
+		<file>assets/images/chat_room.svg</file>
+		<file>assets/images/close.svg</file>
         <file>assets/images/collapse.svg</file>
+		<file>assets/images/collapsed.svg</file>
+		<file>assets/images/conferences_normal.svg</file>
+		<file>assets/images/conferences_selected.svg</file>
         <file>assets/images/contact_add_hovered.svg</file>
         <file>assets/images/contact_add_normal.svg</file>
         <file>assets/images/contact_add_pressed.svg</file>
@@ -82,6 +90,7 @@
         <file>assets/images/contact_edit_pressed.svg</file>
         <file>assets/images/contact_normal.svg</file>
         <file>assets/images/contact_selected.svg</file>
+		<file>assets/images/current_account_status_available.svg</file>
         <file>assets/images/declined_incoming_call.svg</file>
         <file>assets/images/declined_outgoing_call.svg</file>
         <file>assets/images/delete_hovered.svg</file>
@@ -93,6 +102,7 @@
         <file>assets/images/edit_normal.svg</file>
         <file>assets/images/edit_pressed.svg</file>
         <file>assets/images/ended_call.svg</file>
+		<file>assets/images/expanded.svg</file>
         <file>assets/images/file_hovered.svg</file>
         <file>assets/images/file_normal.svg</file>
         <file>assets/images/file_pressed.svg</file>
@@ -118,13 +128,21 @@
         <file>assets/images/home_account_assistant.svg</file>
         <file>assets/images/home_invite_friends.svg</file>
         <file>assets/images/home_normal.svg</file>
-        <file>assets/images/home_selected.svg</file>
+        <file>assets/images/home_pressed.svg</file>
+		<file>assets/images/home_hovered.svg</file>
+		<file>assets/images/home_disabled.svg</file>
         <file>assets/images/home_use_linphone.svg</file>
         <file>assets/images/incoming_call.svg</file>
         <file>assets/images/led_green.svg</file>
         <file>assets/images/led_orange.svg</file>
         <file>assets/images/led_red.svg</file>
         <file>assets/images/led_white.svg</file>
+		<file>assets/images/menu_vdots_normal.svg</file>
+		<file>assets/images/menu_vdots_hovered.svg</file>
+		<file>assets/images/menu_vdots_pressed.svg</file>
+		<file>assets/images/menu_infos.svg</file>
+		<file>assets/images/menu_devices.svg</file>
+		<file>assets/images/menu_ephemeral.svg</file>
         <file>assets/images/message_sign.svg</file>
         <file>assets/images/micro_off_hovered.svg</file>
         <file>assets/images/micro_off_normal.svg</file>
@@ -138,6 +156,12 @@
         <file>assets/images/new_call_hovered.svg</file>
         <file>assets/images/new_call_normal.svg</file>
         <file>assets/images/new_call_pressed.svg</file>
+		<file>assets/images/new_chat_hovered.svg</file>
+        <file>assets/images/new_chat_normal.svg</file>
+        <file>assets/images/new_chat_pressed.svg</file>
+		<file>assets/images/new_chat_group_hovered.svg</file>
+        <file>assets/images/new_chat_group_normal.svg</file>
+        <file>assets/images/new_chat_group_pressed.svg</file>
         <file>assets/images/new_conference_hovered.svg</file>
         <file>assets/images/new_conference_normal.svg</file>
         <file>assets/images/new_conference_pressed.svg</file>
@@ -145,6 +169,12 @@
         <file>assets/images/options_normal.svg</file>
         <file>assets/images/options_pressed.svg</file>
         <file>assets/images/outgoing_call.svg</file>
+		<file>assets/images/panel_hidden_normal.svg</file>
+		<file>assets/images/panel_hidden_hovered.svg</file>
+		<file>assets/images/panel_hidden_pressed.svg</file>
+		<file>assets/images/panel_shown_normal.svg</file>
+		<file>assets/images/panel_shown_hovered.svg</file>
+		<file>assets/images/panel_shown_pressed.svg</file>
         <file>assets/images/pause_off_hovered.svg</file>
         <file>assets/images/pause_off_normal.svg</file>
         <file>assets/images/pause_off_pressed.svg</file>
@@ -153,13 +183,26 @@
         <file>assets/images/pause_on_normal.svg</file>
         <file>assets/images/pause_on_pressed.svg</file>
         <file>assets/images/pause_on_updating.svg</file>
+		<file>assets/images/plus_disabled.svg</file>
+        <file>assets/images/plus_hovered.svg</file>
+        <file>assets/images/plus_normal.svg</file>
+        <file>assets/images/plus_pressed.svg</file>
         <file>assets/images/recording_sign.svg</file>
         <file>assets/images/record_off.svg</file>
         <file>assets/images/record_on.svg</file>
+		<file>assets/images/remove_participant_hovered.svg</file>
+        <file>assets/images/remove_participant_normal.svg</file>
+        <file>assets/images/remove_participant_pressed.svg</file>
         <file>assets/images/screenshot_hovered.svg</file>
         <file>assets/images/screenshot_normal.svg</file>
         <file>assets/images/screenshot_pressed.svg</file>
         <file>assets/images/search.svg</file>
+		<file>assets/images/secure_level_unsafe.svg</file>
+		<file>assets/images/secure_level_1.svg</file>
+		<file>assets/images/secure_level_2.svg</file>
+		<file>assets/images/secure_off.svg</file>
+		<file>assets/images/secure_on.svg</file>
+		<file>assets/images/send.svg</file>
         <file>assets/images/settings_advanced_normal.svg</file>
         <file>assets/images/settings_advanced_selected.svg</file>
         <file>assets/images/settings_audio_normal.svg</file>
@@ -180,10 +223,14 @@
         <file>assets/images/speaker_on_normal.svg</file>
         <file>assets/images/speaker_on_pressed.svg</file>
         <file>assets/images/speaker.svg</file>
+		<file>assets/images/timer.svg</file>
         <file>assets/images/tel_keypad_hovered.svg</file>
         <file>assets/images/tel_keypad_normal.svg</file>
         <file>assets/images/tel_keypad_pressed.svg</file>
         <file>assets/images/timeline_history.svg</file>
+		<file>assets/images/timeline_filter.svg</file>
+		<file>assets/images/timeline_search.svg</file>
+		<file>assets/images/timeline_close.svg</file>
         <file>assets/images/tooltip_arrow_bottom.svg</file>
         <file>assets/images/tooltip_arrow_left.svg</file>
         <file>assets/images/tooltip_arrow_right.svg</file>
@@ -204,6 +251,7 @@
         <file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>
         <file>ui/modules/Common/Dialog/DialogDescription.qml</file>
         <file>ui/modules/Common/Dialog/DialogPlus.qml</file>
+		<file>ui/modules/Common/Dialog/DialogTitle.qml</file>
         <file>ui/modules/Common/Form/ActionBar.qml</file>
         <file>ui/modules/Common/Form/ActionButton.qml</file>
         <file>ui/modules/Common/Form/ActionSwitch.qml</file>
@@ -330,6 +378,7 @@
         <file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
         <file>ui/modules/Linphone/Chat/Message.js</file>
         <file>ui/modules/Linphone/Chat/Message.qml</file>
+		<file>ui/modules/Linphone/Chat/Notice.qml</file>
         <file>ui/modules/Linphone/Chat/OutgoingMessage.qml</file>
         <file>ui/modules/Linphone/Codecs/CodecAttribute.qml</file>
         <file>ui/modules/Linphone/Codecs/CodecLegend.qml</file>
@@ -386,6 +435,7 @@
         <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
         <file>ui/modules/Linphone/Timeline/Timeline.js</file>
         <file>ui/modules/Linphone/Timeline/Timeline.qml</file>
+		<file>ui/modules/Linphone/View/ParticipantsView.qml</file>
         <file>ui/modules/Linphone/View/SipAddressesView.qml</file>
         <file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
         <file>ui/scripts/LinphoneUtils/qmldir</file>
@@ -430,9 +480,13 @@
         <file>ui/views/App/Main/Dialogs/About.qml</file>
         <file>ui/views/App/Main/Dialogs/AuthenticationRequest.js</file>
         <file>ui/views/App/Main/Dialogs/AuthenticationRequest.qml</file>
+		<file>ui/views/App/Main/Dialogs/EphemeralChatRoom.qml</file>
+		<file>ui/views/App/Main/Dialogs/InfoChatRoom.qml</file>
         <file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
         <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
         <file>ui/views/App/Main/Dialogs/ManageChatRoom.qml</file>
+		<file>ui/views/App/Main/Dialogs/NewChatRoom.qml</file>
+		<file>ui/views/App/Main/Dialogs/ParticipantsDevices.qml</file>
         <file>ui/views/App/Main/Home.qml</file>
         <file>ui/views/App/Main/HistoryView.qml</file>
         <file>ui/views/App/Main/HistoryView.js</file>
@@ -491,6 +545,7 @@
         <file>assets/images/linphone_logo.svg</file>
         <file>ui/dev-modules/Colors/Colors.qml</file>
         <file>ui/dev-modules/Units/Units.qml</file>
+		<file>ui/dev-modules/Tools/Tools.qml</file>
         <file>assets/icon.ico</file>
     </qresource>
 </RCC>

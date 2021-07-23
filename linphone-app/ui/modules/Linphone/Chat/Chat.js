@@ -50,6 +50,10 @@ function getComponentFromEntry (chatEntry) {
   if (chatEntry.type === Linphone.ChatRoomModel.CallEntry) {
     return 'Event.qml'
   }
+  
+  if (chatEntry.type === Linphone.ChatRoomModel.NoticeEntry) {
+    return 'Notice.qml'
+  }
 
   return chatEntry.isOutgoing ? 'OutgoingMessage.qml' : 'IncomingMessage.qml'
 }
@@ -93,5 +97,10 @@ function handleTextChanged (text) {
 function sendMessage (text) {
   textArea.text = ''
   chat.bindToEnd = true
-  container.proxyModel.sendMessage(text)
+  if(container.proxyModel)
+	container.proxyModel.sendMessage(text)
+  /*
+	else{// Create a chat room
+		CallsListModel.createChat()
+	}*/
 }

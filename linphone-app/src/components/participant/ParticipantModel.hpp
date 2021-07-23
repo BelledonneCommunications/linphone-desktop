@@ -28,35 +28,69 @@
 #include <QDateTime>
 #include <QString>
 
+class ContactModel;
+class ParticipantDeviceProxyModel;
+class ParticipantDeviceListModel;
+
 class ParticipantModel : public QObject {
-
-    Q_OBJECT;
-
-    Q_PROPERTY(QString address READ getAddress CONSTANT);
-    Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT);
-    Q_PROPERTY(bool admin READ isAdmin CONSTANT);
-    Q_PROPERTY(bool focus READ isFocus CONSTANT);
+    Q_OBJECT
 
 public:
     ParticipantModel (std::shared_ptr<linphone::Participant> linphoneParticipant, QObject *parent = nullptr);
+	
+	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT)
+	Q_PROPERTY(QString sipAddress MEMBER mSipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
+	Q_PROPERTY(bool adminStatus MEMBER mAdminStatus READ getAdminStatus WRITE setAdminStatus NOTIFY adminStatusChanged)
+    Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
+    Q_PROPERTY(bool focus READ isFocus CONSTANT)
+	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
+	Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY deviceCountChanged)
   
-    QString getAddress() const;
+	ContactModel *getContactModel() const;
+    QString getSipAddress() const;
     QDateTime getCreationTime() const;
     //std::list<std::shared_ptr<linphone::ParticipantDevice>> getDevices() const;
-    bool isAdmin() const;
+    bool getAdminStatus() const;
     bool isFocus() const;
+	int getSecurityLevel() const;
+	int getDeviceCount() const;
+	
+	void setSipAddress(const QString& address);
+	void setAdminStatus(const bool& status);
+	
+	std::shared_ptr<linphone::Participant>  getParticipant();
+	Q_INVOKABLE ParticipantDeviceProxyModel * getProxyDevices();	// Reminder : Q_INVOKABLE change the ownership of the proxy to QML
+	std::shared_ptr<ParticipantDeviceListModel> getParticipantDevices();
     //linphone::ChatRoomSecurityLevel getSecurityLevel() const;
     //std::shared_ptr<linphone::ParticipantDevice> findDevice(const std::shared_ptr<const linphone::Address> & address) const;
-
-//signals:
+	
+	
+	
+public slots:
+	void onSecurityLevelChanged();	
+	void onDeviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	
+signals:
+	void securityLevelChanged();
+	void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	void sipAddressChanged();
+	void adminStatusChanged();
+	void deviceCountChanged();
+	
 //    void contactUpdated ();
 
 
 private:
 
-    std::shared_ptr<linphone::Participant> mLinphoneParticipant;
+    std::shared_ptr<linphone::Participant> mParticipant;
+	std::shared_ptr<ParticipantDeviceListModel> mParticipantDevices;
+	
+// Variables when Linphone Participant has not been created
+	QString mSipAddress;
+	bool mAdminStatus;
 };
 
-Q_DECLARE_METATYPE(ParticipantModel *);
+//Q_DECLARE_METATYPE(ParticipantModel *);
+Q_DECLARE_METATYPE(std::shared_ptr<ParticipantModel>);
 
 #endif // PARTICIPANT_MODEL_H_

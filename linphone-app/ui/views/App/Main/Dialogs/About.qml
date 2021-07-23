@@ -17,7 +17,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   objectName: '__about'
 
   height: AboutStyle.height

@@ -16,29 +16,30 @@ Controls.TextField {
   property alias icon: icon.icon
   property string error: ''
   property var tools
+  property QtObject textFieldStyle : TextFieldStyle.normal
 
   // ---------------------------------------------------------------------------
 
   background: Rectangle {
     border {
       color: textField.error.length > 0
-        ? TextFieldStyle.background.border.color.error
+        ? textFieldStyle.background.border.color.error
         : (
           textField.activeFocus && !textField.readOnly
-            ? TextFieldStyle.background.border.color.selected
-            : TextFieldStyle.background.border.color.normal
+            ? textFieldStyle.background.border.color.selected
+            : textFieldStyle.background.border.color.normal
         )
-      width: TextFieldStyle.background.border.width
+      width: textFieldStyle.background.border.width
     }
 
     color: textField.readOnly
-      ? TextFieldStyle.background.color.readOnly
-      : TextFieldStyle.background.color.normal
+      ? textFieldStyle.background.color.readOnly
+      : textFieldStyle.background.color.normal
 
-    implicitHeight: TextFieldStyle.background.height
-    implicitWidth: TextFieldStyle.background.width
+    implicitHeight: textFieldStyle.background.height
+    implicitWidth: textFieldStyle.background.width
 
-    radius: TextFieldStyle.background.radius
+    radius: textFieldStyle.background.radius
 
     MouseArea {
       anchors.right: parent.right
@@ -51,9 +52,9 @@ Controls.TextField {
 
         border {
           color: textField.error.length > 0
-            ? TextFieldStyle.background.border.color.error
-            : TextFieldStyle.background.border.color.normal
-          width: TextFieldStyle.background.border.width
+            ? textFieldStyle.background.border.color.error
+            : textFieldStyle.background.border.color.normal
+          width: textFieldStyle.background.border.width
         }
 
         anchors.fill: parent
@@ -63,20 +64,10 @@ Controls.TextField {
     }
   }
 
-  color: TextFieldStyle.text.color
-  font.pointSize: TextFieldStyle.text.pointSize
-  rightPadding: TextFieldStyle.text.rightPadding + toolsContainer.width
+  color: textFieldStyle.text.color
+  font.pointSize: textFieldStyle.text.pointSize
+  rightPadding: textFieldStyle.text.rightPadding + toolsContainer.width
   selectByMouse: true
-
-  // ---------------------------------------------------------------------------
-
-  onEditingFinished: cursorPosition = 0
-
-  onTextChanged: {
-    if (!focus) {
-      cursorPosition = 0
-    }
-  }
 
   // ---------------------------------------------------------------------------
 
@@ -92,20 +83,22 @@ Controls.TextField {
     iconSize: parent.contentHeight
     visible: !parent.text
   }
-  bottomPadding: (statusItem.visible?statusItem.height:0)
+  bottomPadding: (statusItem.visible?statusItem.height:2)
   TextEdit{
 	  id:statusItem
 	  selectByMouse: true
 	  readOnly:true
-	  color: TextFieldStyle.background.border.color.error
+	  color: textFieldStyle.background.border.color.error
 	  width:parent.width
 	  anchors.bottom:parent.bottom
+	  anchors.bottomMargin: 2
 	  anchors.right:parent.right
 	  anchors.rightMargin:10 + toolsContainer.width
 	  horizontalAlignment:Text.AlignRight
+	  verticalAlignment: Text.AlignVCenter
 	  font {
 		  italic: true
-		  pointSize: TextFieldStyle.text.pointSize
+		  pointSize: textFieldStyle.text.pointSize
 	  }
 	  visible:error!= ''
 	  text:error

@@ -65,13 +65,13 @@ class Colors : public QObject {
   ADD_COLOR(d, "#5A585B")
   ADD_COLOR(e, "#F3F3F3")
   ADD_COLOR(f, "#E8E8E8")
-  ADD_COLOR(g, "#6B7A86")
+  ADD_COLOR(g, "#6B7A86")// SipAddress
   ADD_COLOR(h, "#687680")
 
   // Primary color.
   ADD_COLOR(i, "#FE5E00")
 
-  ADD_COLOR(j, "#4B5964")
+  ADD_COLOR(j, "#4B5964")// Username
 
   // Popups, home, call, assistant and settings background.
   ADD_COLOR(k, "#FFFFFF")
@@ -89,6 +89,8 @@ class Colors : public QObject {
 
   // Fields, backgrounds and text color on some items.
   ADD_COLOR(q, "#FFFFFF")
+  
+  ADD_COLOR(r, "#909fab")//Background button
 
   // Field error.
   ADD_COLOR(error, "#FF0000")
@@ -124,6 +126,7 @@ signals:
   void colorToChanged (const QColor &color);
   void colorTpChanged (const QColor &color);
   void colorTqChanged (const QColor &color);
+  void colorTrChanged (const QColor &color);
 
   void colorTerrorChanged (const QColor &color);
 

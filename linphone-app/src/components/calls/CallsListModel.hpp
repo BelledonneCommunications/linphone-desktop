@@ -24,13 +24,16 @@
 #include <linphone++/linphone.hh>
 #include <QAbstractListModel>
 
+#include "components/call/CallModel.hpp"
+#include "utils/LinphoneEnums.hpp"
+
 // =============================================================================
 
-class CallModel;
+class ChatRoomModel;
 class CoreHandlers;
 
 class CallsListModel : public QAbstractListModel {
-  Q_OBJECT;
+  Q_OBJECT
 
 public:
   CallsListModel (QObject *parent = Q_NULLPTR);
@@ -43,9 +46,13 @@ public:
   void askForTransfer (CallModel *callModel);
 
   Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers = {}) const;
+  Q_INVOKABLE void launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers = {}) const;
   Q_INVOKABLE void launchVideoCall (const QString &sipAddress) const;
-  Q_INVOKABLE bool launchSecureChat (const QString &sipAddress) const;
+  Q_INVOKABLE ChatRoomModel* launchSecureChat (const QString &sipAddress) const;
+  Q_INVOKABLE ChatRoomModel* createChat (const QString &participantAddress) const;
   Q_INVOKABLE bool createSecureChat (const QString& subject, const QString &participantAddress) const;
+  
+  Q_INVOKABLE bool createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants) const;
 
   Q_INVOKABLE int getRunningCallsNumber () const;
 

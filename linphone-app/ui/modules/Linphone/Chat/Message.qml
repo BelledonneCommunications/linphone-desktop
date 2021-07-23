@@ -67,7 +67,18 @@ Item {
     onLinkActivated: Qt.openUrlExternally(link)
 
     onActiveFocusChanged: deselect()
-
+	Row{
+		anchors.right:parent.right
+		anchors.bottom:parent.bottom
+		visible:$chatEntry.chatMessageModel.isEphemeral
+		Text{
+			text: $chatEntry.chatMessageModel.ephemeralExpireTime			
+		}
+		Icon{
+			icon:'timer'
+			iconSize: 15
+		}
+	}
     Menu {
       id: messageMenu
 
@@ -83,6 +94,7 @@ Item {
         onTriggered: TextToSpeech.say($chatEntry.content)
       }
     }
+
 
     // Handle hovered link.
     MouseArea {

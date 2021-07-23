@@ -38,8 +38,8 @@
 using namespace std;
 
 namespace {
-  // Delay before removing call in ms.
-  constexpr int DelayBeforeRemoveCall = 3000;
+// Delay before removing call in ms.
+constexpr int DelayBeforeRemoveCall = 3000;
 }
 
 
@@ -49,48 +49,48 @@ ChatRoomListModel::ChatRoomListModel (QObject *parent) : QAbstractListModel(pare
 }
 
 int ChatRoomListModel::rowCount (const QModelIndex &) const {
-  return mList.count();
+	return mList.count();
 }
 
 QHash<int, QByteArray> ChatRoomListModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$chatRoom";
-  return roles;
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "$chatRoom";
+	return roles;
 }
 
 QVariant ChatRoomListModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mList.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return QVariant::fromValue(mList[row]);
-
-  return QVariant();
+	int row = index.row();
+	
+	if (!index.isValid() || row < 0 || row >= mList.count())
+		return QVariant();
+	
+	if (role == Qt::DisplayRole)
+		return QVariant::fromValue(mList[row]);
+	
+	return QVariant();
 }
 
 // -----------------------------------------------------------------------------
 
 
 bool ChatRoomListModel::removeRow (int row, const QModelIndex &parent) {
-  return removeRows(row, 1, parent);
+	return removeRows(row, 1, parent);
 }
 
 bool ChatRoomListModel::removeRows (int row, int count, const QModelIndex &parent) {
-  int limit = row + count - 1;
-
-  if (row < 0 || count < 0 || limit >= mList.count())
-    return false;
-
-  beginRemoveRows(parent, row, limit);
-
-  for (int i = 0; i < count; ++i)
-    mList.takeAt(row)->deleteLater();
-
-  endRemoveRows();
-
-  return true;
+	int limit = row + count - 1;
+	
+	if (row < 0 || count < 0 || limit >= mList.count())
+		return false;
+	
+	beginRemoveRows(parent, row, limit);
+	
+	for (int i = 0; i < count; ++i)
+		mList.takeAt(row)->deleteLater();
+	
+	endRemoveRows();
+	
+	return true;
 }
 
 // -----------------------------------------------------------------------------

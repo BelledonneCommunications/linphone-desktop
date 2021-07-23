@@ -12,6 +12,8 @@ QtObject {
   property int minimumHeight: 610
   property int minimumWidth: 950
   property int width: 950
+  property int panelButtonSize : 20
+  property int homeButtonSize: 40
 
   property QtObject accountStatus: QtObject {
     property int width: 200
@@ -38,9 +40,9 @@ QtObject {
 
   property QtObject toolBar: QtObject {
     property int height: 70
-    property int leftMargin: 20
-    property int rightMargin: 20
-    property int spacing: 20
+    property int leftMargin: 18
+    property int rightMargin: 18
+    property int spacing: 16
 
     property var background: Rectangle {
       color: Colors.f

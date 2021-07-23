@@ -49,8 +49,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  height: AbstractTextButtonStyle.background.height
-  width: AbstractTextButtonStyle.background.width
+  height: button.contentItem.implicitHeight + 20//AbstractTextButtonStyle.background.height
+  width: button.contentItem.implicitWidth +60 //AbstractTextButtonStyle.background.width
 
   // ---------------------------------------------------------------------------
 
@@ -68,8 +68,8 @@ Item {
         bold: true
         pointSize: AbstractTextButtonStyle.text.pointSize
       }
-
-      elide: Text.ElideRight
+		wrapMode: Text.WordWrap
+      //elide: Text.ElideRight
       horizontalAlignment: Text.AlignHCenter
       text: button.text
       verticalAlignment: Text.AlignVCenter

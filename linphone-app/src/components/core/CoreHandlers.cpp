@@ -100,6 +100,15 @@ void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,
   emit callCreated(call);
 }
 
+void CoreHandlers::onChatRoomStateChanged(
+  const std::shared_ptr<linphone::Core> & core, 
+  const std::shared_ptr<linphone::ChatRoom> & chatRoom,
+  linphone::ChatRoom::State state
+) {
+	qWarning() << "ChatRoomState : " << (int)state;
+	emit chatRoomStateChanged(chatRoom, state);
+}
+
 void CoreHandlers::onConfiguringStatus(
   const std::shared_ptr<linphone::Core> & core,
   linphone::ConfiguringState status,
@@ -194,12 +203,15 @@ void CoreHandlers::onMessageReceived (
 
     if (
       !app->hasFocus() ||
+		!CoreManager::getInstance()->getChatRoomModel(chatRoom, false)	
+			/*
       !CoreManager::getInstance()->chatRoomModelExists(
         Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()),
         Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()),
 				chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
 						   || chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe
-      )
+								   
+      )*/
     )
       core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));
   }
@@ -221,6 +233,7 @@ void CoreHandlers::onNotifyPresenceReceived (
   // Ignore friend without vcard because the `contact-model` data doesn't exist.
   if (linphoneFriend->getVcard() && linphoneFriend->dataExists("contact-model"))
     linphoneFriend->getData<ContactModel>("contact-model").refreshPresence();
+  emit presenceStatusReceived(linphoneFriend);
 }
 
 void CoreHandlers::onRegistrationStateChanged (

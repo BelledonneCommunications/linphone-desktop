@@ -32,7 +32,6 @@
 #include "components/core/CoreManager.hpp"
 #include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "SipAddressesModel.hpp"
@@ -46,7 +45,7 @@ using namespace std;
 static inline QVariantMap buildVariantMap (const SipAddressesModel::SipAddressEntry &sipAddressEntry) {
   return QVariantMap{
     { "sipAddress", sipAddressEntry.sipAddress },
-    { "contact", QVariant::fromValue(sipAddressEntry.contact) },
+    { "contactModel", QVariant::fromValue(sipAddressEntry.contact) },
     { "presenceStatus", sipAddressEntry.presenceStatus },
     { "__localToConferenceEntry", QVariant::fromValue(&sipAddressEntry.localAddressToConferenceEntry) }
   };
@@ -180,7 +179,7 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
   if (!address)
     return QString("");
 
-  address->setTransport(LinphoneUtils::stringToTransportType(transport.toUpper()));
+  address->setTransport(Utils::stringToTransportType(transport.toUpper()));
 
   return QString::fromStdString(address->asString());
 }
@@ -286,8 +285,10 @@ void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
   });
 }
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
-  for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses())
-    addOrUpdateSipAddress(sipAddress.toString(), contact);
+  for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses()) {
+	qWarning() << "handleContactAdded " << sipAddress.toString();
+	addOrUpdateSipAddress(sipAddress.toString(), contact);
+  }
 }
 
 void SipAddressesModel::handleContactRemoved (const ContactModel *contact) {
@@ -301,7 +302,7 @@ void SipAddressesModel::handleSipAddressAdded (ContactModel *contact, const QStr
     qWarning() << "Unable to map sip address" << sipAddress << "to" << contact << "- already used by" << mappedContact;
     return;
   }
-
+	qWarning() << "handleSipAddressAdded " << sipAddress;
   addOrUpdateSipAddress(sipAddress, contact);
 }
 
