@@ -59,7 +59,7 @@ public:
 	void setAdminStatus(const bool& status);
 	
 	std::shared_ptr<linphone::Participant>  getParticipant();
-	Q_INVOKABLE ParticipantDeviceProxyModel * getProxyDevices();	// Reminder : Q_INVOKABLE change the ownership of the proxy to QML
+	Q_INVOKABLE ParticipantDeviceProxyModel * getProxyDevices();
 	std::shared_ptr<ParticipantDeviceListModel> getParticipantDevices();
     //linphone::ChatRoomSecurityLevel getSecurityLevel() const;
     //std::shared_ptr<linphone::ParticipantDevice> findDevice(const std::shared_ptr<const linphone::Address> & address) const;

@@ -10,6 +10,7 @@ import LinphoneEnums 1.0
 import App.Styles 1.0
 import Units 1.0
 
+import '../Conversation.js' as Logic
 
 // =============================================================================
 
@@ -19,11 +20,14 @@ DialogPlus {
 	flat : true
 	
 	title: "Conversation's devices"
+	showCloseCross:true
+	
 	
 	property ChatRoomModel chatRoomModel
+	property var window
 	buttonsAlignment: Qt.AlignCenter
 	
-	height: ManageAccountsStyle.height
+	height: ManageAccountsStyle.height + 30
 	width: ManageAccountsStyle.width
 	
 	// ---------------------------------------------------------------------------
@@ -56,7 +60,6 @@ DialogPlus {
 																	:modelData.username?modelData.username:
 																						 LinphoneUtils.getContactUsername(modelData.sipAddress)
 											 ):''
-						onUsernameChanged: console.log(username)
 						Icon{
 							anchors.right: parent.right
 							anchors.top:parent.top
@@ -79,10 +82,10 @@ DialogPlus {
 						Layout.leftMargin: 14
 						Layout.rightMargin: 14
 						icon: modelData.deviceCount > 1?
-											 (participantDevices.visible ? 'expanded' : 'collapsed')
-										   : (modelData.securityLevel === 2?'secure_level_1': 
-																			 (modelData.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe')
-											)
+								  (participantDevices.visible ? 'expanded' : 'collapsed')
+								: (modelData.securityLevel === 2?'secure_level_1': 
+																  (modelData.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe')
+								   )
 						iconSize: 20
 						visible:true
 						useStates: false
@@ -97,6 +100,8 @@ DialogPlus {
 				ListView{
 					id:participantDevices
 					
+					property var window : dialog.window
+					
 					Layout.fillWidth: true
 					Layout.preferredHeight: item.height * count
 					
@@ -104,6 +109,12 @@ DialogPlus {
 					model: modelData.getProxyDevices()
 					
 					delegate: Rectangle{
+						id:mainRectangle
+						
+						property var window : ListView.view.window
+						property int securityLevel : modelData.securityLevel
+						property string addressToCall : modelData.address
+						
 						width:parent.width
 						height:50
 						color: '#f5f5f5'
@@ -123,7 +134,13 @@ DialogPlus {
 								
 								MouseArea{
 									anchors.fill:parent
-									onClicked: CallsListModel.launchSecureAudioCall(modelData.address, LinphoneEnums.MediaEncryptionZrtp)
+									onClicked: {
+										mainRectangle.window.detachVirtualWindow()
+										mainRectangle.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
+																   ,{securityLevel : mainRectangle.securityLevel
+																   , addressToCall : mainRectangle.addressToCall}
+																   )
+									}
 								}
 							}
 							Icon{

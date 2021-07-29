@@ -77,6 +77,17 @@ bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCap
 		return false;
 }
 
+QString Utils::toDateTimeString(QDateTime date){
+	return date.toString("yyyy/MM/dd hh:mm:ss");
+}
+
+QString Utils::toTimeString(QDateTime date){
+	return date.toString("hh:mm:ss");
+}
+
+QString Utils::toDateString(QDateTime date){
+	return date.toString("yyyy/MM/dd");
+}
 
 QImage Utils::getImage(const QString &pUri) {
 	QImage image(pUri);
@@ -453,7 +464,7 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 	if(model && model->getVcardModel())
 		displayName = model->getVcardModel()->getUsername();
 	else{
-		QString displayName = Utils::coreStringToAppString(address->getDisplayName());
+		displayName = Utils::coreStringToAppString(address->getDisplayName());
 		if(displayName == "")
 			displayName = Utils::coreStringToAppString(address->getUsername());
 	}

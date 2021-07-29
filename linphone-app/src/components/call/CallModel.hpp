@@ -27,6 +27,7 @@
 
 // =============================================================================
 class ContactModel;
+class ChatRoomModel;
 
 class CallModel : public QObject {
   Q_OBJECT;
@@ -36,7 +37,10 @@ class CallModel : public QObject {
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT);
 	
-	Q_PROPERTY(ContactModel *contact READ getContactModel CONSTANT )/*
+	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT )
+	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel CONSTANT)
+	
+	/*
 	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
 	Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
@@ -74,6 +78,8 @@ class CallModel : public QObject {
 
   Q_PROPERTY(float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged);
   Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged);
+  
+  
 
 public:
   enum CallStatus {
@@ -107,6 +113,8 @@ public:
   QString getFullLocalAddress () const;
   
   ContactModel *getContactModel() const;
+  
+  ChatRoomModel * getChatRoomModel() const;
 
   bool isInConference () const {
     return mIsInConference;

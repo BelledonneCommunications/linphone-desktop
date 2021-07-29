@@ -29,6 +29,7 @@
 
 
 #include "TimelineModel.hpp"
+#include "TimelineListModel.hpp"
 
 #include <QDebug>
 
@@ -36,7 +37,6 @@
 // =============================================================================
 
 TimelineListModel::TimelineListModel (QObject *parent) : QAbstractListModel(parent) {
-  //initTimeline();
 	mSelectedCount = 0;
 	CoreHandlers* coreHandlers= CoreManager::getInstance()->getHandlers().get();
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
@@ -53,7 +53,6 @@ TimelineModel * TimelineListModel::getAt(const int& index){
 }
 
 void TimelineListModel::reset(){
-  //initTimeline();
 	updateTimelines ();
 }
 
@@ -66,25 +65,25 @@ void TimelineListModel::selectAll(const bool& selected){
 		(*it)->mSelected = selected;
 }
 int TimelineListModel::rowCount (const QModelIndex &) const {
-  return mTimelines.count();
+	return mTimelines.count();
 }
 
 QHash<int, QByteArray> TimelineListModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$timelines";
-  return roles;
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "$timelines";
+	return roles;
 }
 
 QVariant TimelineListModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mTimelines.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return QVariant::fromValue(mTimelines[row].get());
-
-  return QVariant();
+	int row = index.row();
+	
+	if (!index.isValid() || row < 0 || row >= mTimelines.count())
+		return QVariant();
+	
+	if (role == Qt::DisplayRole)// && !mTimelines[row]->getChatRoomModel()->mDeleteChatRoom)
+		return QVariant::fromValue(mTimelines[row].get());
+	
+	return QVariant();
 }
 
 // -----------------------------------------------------------------------------
@@ -94,66 +93,36 @@ QVariant TimelineListModel::data (const QModelIndex &index, int role) const {
 // -----------------------------------------------------------------------------
 
 bool TimelineListModel::removeRow (int row, const QModelIndex &parent) {
-  return removeRows(row, 1, parent);
+	return removeRows(row, 1, parent);
 }
 
 bool TimelineListModel::removeRows (int row, int count, const QModelIndex &parent) {
-  int limit = row + count - 1;
-
-  if (row < 0 || count < 0 || limit >= mTimelines.count())
-    return false;
-
-  beginRemoveRows(parent, row, limit);
-
-  for (int i = 0; i < count; ++i){
-	auto timeline = mTimelines.takeAt(row);
-	timeline->getChatRoomModel()->getChatRoom()->removeListener(timeline);
-  }
-
-  endRemoveRows();
-
-  return true;
+	QVector<std::shared_ptr<TimelineModel> > oldTimelines;
+	oldTimelines.reserve(count);
+	int limit = row + count - 1;
+	
+	if (row < 0 || count < 0 || limit >= mTimelines.count())
+		return false;
+	
+	beginRemoveRows(parent, row, limit);
+	
+	for (int i = 0; i < count; ++i){
+		auto timeline = mTimelines.takeAt(row);
+		timeline->getChatRoomModel()->getChatRoom()->removeListener(timeline);
+		oldTimelines.push_back(timeline);
+	}
+	
+	endRemoveRows();
+	
+	for(auto timeline : oldTimelines)
+		if(timeline->mSelected)
+			timeline->setSelected(false);
+	
+	return true;
 }
 
 
 // -----------------------------------------------------------------------------
-
-void TimelineListModel::initTimeline () {
-	/*
-	CoreManager *coreManager = CoreManager::getInstance();
-	auto currentAddress = coreManager->getAccountSettingsModel()->getUsedSipAddress();
-			
-	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
-	QList<std::shared_ptr<TimelineModel>> models;
-	for(auto itAllChatRooms = allChatRooms.begin() ; itAllChatRooms != allChatRooms.end() ; ++itAllChatRooms){
-		if((*itAllChatRooms)->getMe()->getAddress()->weakEqual(currentAddress)){
-			models << new TimelineModel(*itAllChatRooms);
-		}
-	}
-	//beginInsertRows(QModelIndex(), 0, models.count()-1);
-	
-	mTimelines = models;
-	
-	//endInsertRows();
-	*/
-	/*
-	initSipAddressesFromChat();
-	initSipAddressesFromCalls();
-	initRefs();
-	initSipAddressesFromContacts();*/
-	
-	/*
-	auto bcSections = lConfig->getSectionsNamesList();
-	// Loop on all sections and load configuration. If this is not a LDAP configuration, the model is discarded.
-	for(auto itSections = bcSections.begin(); itSections != bcSections.end(); ++itSections) {
-		TimelineModel * model = new TimelineModel();
-		if(model->load(*itSections)){
-			mTimelines.append(model);
-		}else
-			delete model;
-	}
-	*/
-}
 
 std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create){
 	if(chatRoom){
@@ -163,9 +132,11 @@ std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<li
 			}
 		}
 		if(create){
-			std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
-			chatRoom->addListener(model);
+			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
 			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+			add(model);
 			//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
 			return model;
 		}
@@ -179,14 +150,11 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	int count = 0;
 	
 	QDateTime currentDateTime = QDateTime::currentDateTime();
-	auto contactList = CoreManager::getInstance()->getContactsListModel();
 	
 	for(auto timeline : mTimelines){
 		auto chatRoom = timeline->getChatRoomModel();
 		if(chatRoom && !chatRoom->isGroupEnabled() && !chatRoom->haveEncryption()) {
-			//ContactModel * contact = contactList->findContactModelFromSipAddress(chatRoom->getPeerAddress());
-			//if(contact)
-				sortedData.insert(chatRoom->mLastUpdateTime.secsTo(currentDateTime),chatRoom);
+			sortedData.insert(chatRoom->mLastUpdateTime.secsTo(currentDateTime),chatRoom);
 		}
 	}
 	for(auto contact : sortedData){
@@ -198,6 +166,36 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	
 	return contacts;
 }
+
+std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create){
+	if(chatRoom ){
+		for(auto timeline : mTimelines){
+			if(timeline->mChatRoomModel->getChatRoom() == chatRoom)
+				return timeline->mChatRoomModel;
+		}
+		if(create){
+			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+			if(model){
+				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+				
+				//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
+				add(model);
+				return model->mChatRoomModel;
+			}
+		}
+	}
+	return nullptr;
+}
+
+std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(ChatRoomModel * chatRoom){
+	for(auto timeline : mTimelines){
+		if(timeline->mChatRoomModel.get() == chatRoom)
+			return timeline->mChatRoomModel;
+	}
+	return nullptr;
+}
+
 
 //-------------------------------------------------------------------------------------------------
 
@@ -223,63 +221,54 @@ void TimelineListModel::selectedHasChanged(bool selected){
 }
 
 void TimelineListModel::updateTimelines () {
-	//CoreManager *coreManager = CoreManager::getInstance();
-	//auto currentAddress = coreManager->getAccountSettingsModel()->getUsedSipAddress();
-			/*
-	//std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
-	QList<std::shared_ptr<TimelineModel> > models;
-	for(auto itAllChatRooms = allChatRooms.begin() ; itAllChatRooms != allChatRooms.end() ; ++itAllChatRooms){
-		if((*itAllChatRooms)->getMe()->getAddress()->weakEqual(currentAddress)){
-			models << getTimeline(*itAllChatRooms, true);
-						  ;
-		}
-	}
-	//beginInsertRows(QModelIndex(), 0, models.count()-1);
-	
-	mTimelines = models;
-	*/
 	CoreManager *coreManager = CoreManager::getInstance();
-	auto currentAddress = coreManager->getAccountSettingsModel()->getUsedSipAddress();
 	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
 	
-//Remove left participants
+	//Remove no more chat rooms
 	auto itTimeline = mTimelines.begin();
 	while(itTimeline != mTimelines.end()) {
 		auto itDbTimeline = allChatRooms.begin();
-		auto timeline = (*itTimeline)->getChatRoomModel()->getChatRoom();
-		while(itDbTimeline != allChatRooms.end() && *itDbTimeline != timeline ){
-			++itDbTimeline;
-		}
+		if(*itTimeline) {
+			auto chatRoomModel = (*itTimeline)->getChatRoomModel();
+			if(chatRoomModel) {
+				auto timeline = chatRoomModel->getChatRoom();
+				if( timeline ) {
+					while(itDbTimeline != allChatRooms.end() && *itDbTimeline != timeline ){
+						++itDbTimeline;
+					}
+				}else
+					itDbTimeline = allChatRooms.end();
+			}else
+				itDbTimeline = allChatRooms.end();
+		}else
+			itDbTimeline = allChatRooms.end();
 		if( itDbTimeline == allChatRooms.end()){
 			int index = itTimeline - mTimelines.begin();
-			removeRow(index);
-			++itTimeline;
-			//itTimeline = mTimelines.erase(itTimeline);
+			if(index>0){
+				--itTimeline;
+				removeRow(index);
+				++itTimeline;
+			}else{
+				removeRow(0);
+				itTimeline = mTimelines.begin();
+			}
 		}else
 			++itTimeline;
 	}
-// Add new
+	// Add new
 	for(auto dbChatRoom : allChatRooms){
-		if(!getTimeline(dbChatRoom, false)){// Create a new Timeline if needed
-			std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(dbChatRoom);
-			dbChatRoom->addListener(model);
-			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
-			add(model);
+		auto haveTimeline = getTimeline(dbChatRoom, false);
+		if(!haveTimeline){// Create a new Timeline if needed
+			
+			std::shared_ptr<TimelineModel> model = TimelineModel::create(dbChatRoom);
+			if( model){
+				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+				add(model);
+			}
 		}
 	}
 }
-/*
-// Create a new TimelineModel and put it in the list
-void TimelineListModel::add(){
-	int row = mTimelines.count();
-	beginInsertRows(QModelIndex(), row, row);
-	auto model = new TimelineModel();
-	model->init();
-	mTimelines << model;
-	endInsertRows();
-	resetInternalData();
-}
-*/
 
 void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
 	int row = mTimelines.count();
@@ -290,12 +279,6 @@ void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
 }
 
 void TimelineListModel::remove (TimelineModel* model) {
-	/*
-	int index = mTimelines.indexOf(model);
-	if (index >=0){
-		ldap->unsave();
-		removeRow(index);
-	}*/
 }
 void TimelineListModel::remove(std::shared_ptr<TimelineModel> model){
 	int index = mTimelines.indexOf(model);
@@ -303,16 +286,30 @@ void TimelineListModel::remove(std::shared_ptr<TimelineModel> model){
 		removeRow(index);
 	}
 }
+void TimelineListModel::removeChatRoomModel(std::shared_ptr<ChatRoomModel> model){
+	if(model->getChatRoom()->isEmpty() && model->hasBeenLeft()){
+		auto itTimeline = mTimelines.begin();
+		while(itTimeline != mTimelines.end()) {
+			if((*itTimeline)->mChatRoomModel == model){
+				model->deleteChatRoom();
+				remove(*itTimeline);
+				return;
+			}else
+				++itTimeline;
+		}
+	}
+}
 
 void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state){
 	if( state == linphone::ChatRoom::State::Created
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed
-		std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
-		chatRoom->addListener(model);
-		connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
-		add(model);
+		std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+		if(model){
+			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+			add(model);			
+		}
 	}else if(state == linphone::ChatRoom::State::Deleted){
-		updateTimelines();
 	}
 }
 /*

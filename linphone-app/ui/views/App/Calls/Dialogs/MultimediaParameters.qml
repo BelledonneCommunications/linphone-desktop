@@ -29,7 +29,7 @@ DialogPlus {
 
   buttonsAlignment: Qt.AlignCenter
 
-  height: MultimediaParametersStyle.height
+  height: MultimediaParametersStyle.height+30
   width: MultimediaParametersStyle.width
 
   onCallChanged: !call && exit(0)

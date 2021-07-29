@@ -64,14 +64,22 @@ ColumnLayout  {
 				Layout.preferredWidth: ConversationStyle.bar.avatarSize
 				
 				image: Logic.getAvatar()
-				/*
-				presenceLevel: Presence.getPresenceLevel(
-								   conversation._sipAddressObserver.presenceStatus
-								   )*/
 				presenceLevel: chatRoomModel.presenceStatus
 				
 				//username: Logic.getUsername()
 				username: chatRoomModel?chatRoomModel.username:Logic.getUsername()
+				visible: !groupChat.visible
+			}
+			
+			Icon {
+				id: groupChat
+				
+				Layout.preferredHeight: ConversationStyle.bar.avatarSize
+				Layout.preferredWidth: ConversationStyle.bar.avatarSize
+				
+				icon:'chat_room'
+				iconSize: ConversationStyle.bar.avatarSize
+				visible: chatRoomModel.groupEnabled
 			}
 			RowLayout{
 				Layout.fillHeight: true
@@ -87,17 +95,42 @@ ColumnLayout  {
 					username: avatar.username
 					usernameColor: ConversationStyle.bar.description.usernameColor
 					
-					sipAddress: (chatRoomModel?
-										  (chatRoomModel.groupEnabled || chatRoomModel.isSecure()?
-											  chatRoomModel.participants.usernamesToString()
-										: chatRoomModel.sipAddress
-									 ):conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '')
+					sipAddress: {
+						if(chatRoomModel) {
+							if(chatRoomModel.groupEnabled) {
+								return chatRoomModel.participants.displayNamesToString();
+							}else if(chatRoomModel.isSecure()) {
+								return chatRoomModel.participants.addressesToString();
+							}else {
+								return chatRoomModel.sipAddress;
+							}
+						}else {
+							return conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '';
+						}
+						
+					}
 				}
 				Icon{
 					Layout.alignment: Qt.AlignVCenter
 					visible: securityLevel != 1
 					icon: securityLevel === 2?'secure_level_1': securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'
 					iconSize:30
+					MouseArea{
+						anchors.fill:parent
+						onClicked : {
+							window.detachVirtualWindow()
+							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
+													   ,{securityLevel:securityLevel}
+													   , function (status) {
+														   if(status){
+															   window.detachVirtualWindow()
+															   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
+																						  ,{chatRoomModel:chatRoomModel
+																							  , window:window})		
+														   }
+													   })
+						}
+					}
 				}
 				Item{//Spacer
 					Layout.fillWidth: true
@@ -116,25 +149,25 @@ ColumnLayout  {
 					
 					ActionButton {
 						icon: 'video_call'
-						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
+						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.chatRoomModel.groupEnabled
 						
 						onClicked: CallsListModel.launchVideoCall(conversation.peerAddress)
 					}
 					
 					ActionButton {
 						icon: 'call'
-						visible: SettingsModel.outgoingCallsEnabled
+						visible: SettingsModel.outgoingCallsEnabled && !conversation.chatRoomModel.groupEnabled
 						
 						onClicked: CallsListModel.launchAudioCall(conversation.peerAddress)
-					}/*
-		  ActionButton {
-			icon: 'call_chat_unsecure'
-			onClicked: {
-				window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ManageChatRoom.qml'), {
-				//window.setView('Dialogs/ManageChatRoom', {
-										   chatRoomModel:conversation.chatRoomModel
-									   })}
-		  }*/
+					}
+					
+					ActionButton {
+						icon: 'group_chat'
+						visible: SettingsModel.outgoingCallsEnabled && conversation.chatRoomModel.groupEnabled
+						
+						//onClicked: CallsListModel.launchAudioCall(conversation.chatRoomModel)
+						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel})
+					}
 				}
 				
 				ActionBar {
@@ -144,7 +177,7 @@ ColumnLayout  {
 					ActionButton {
 						icon: Logic.getEditIcon()
 						iconSize: ConversationStyle.bar.actions.edit.iconSize
-						visible: SettingsModel.contactsEnabled
+						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
 						
 						onClicked: window.setView('ContactEdit', {
 													  sipAddress: conversation.peerAddress
@@ -198,7 +231,7 @@ ColumnLayout  {
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
-													   ,{chatRoomModel:chatRoomModel})
+													   ,{chatRoomModel:chatRoomModel, window:window})
 						}
 					}
 					MenuItem{

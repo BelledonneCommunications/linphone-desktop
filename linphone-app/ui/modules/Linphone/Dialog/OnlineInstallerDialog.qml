@@ -71,7 +71,7 @@ DialogPlus {
 
     return str.replace('%1', dialog.mime)
   }
-  height: OnlineInstallerDialogStyle.height
+  height: OnlineInstallerDialogStyle.height + 30
   width: OnlineInstallerDialogStyle.width
 
   Column {

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   width="71"
-   height="82"
-   viewBox="0 0 71 82"
+   width="15"
+   height="15"
+   viewBox="0 0 15 15"
    version="1.1"
    id="svg10"
-   sodipodi:docname="menu_chatroom_devices.svg"
+   sodipodi:docname="menu_devices.svg"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -23,30 +23,32 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:zoom="10.646341"
-     inkscape:cx="35.45819"
-     inkscape:cy="41.046964"
+     inkscape:cx="35.458192"
+     inkscape:cy="41.000002"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
+     inkscape:window-height="1092"
+     inkscape:window-x="1920"
+     inkscape:window-y="33"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg10" />
+     inkscape:current-layer="svg10"
+     width="13px" />
   <g
      fill="none"
      fill-rule="evenodd"
-     id="g8">
+     id="g8"
+     transform="matrix(0.18571633,0,0,0.1875043,0.90699082,-0.28142708)">
     <g
        id="g6">
       <path
-         stroke="#444"
+         stroke="#444444"
          stroke-width="5"
-         d="M33.308 74.729c-.042.027-.083.059-.13.081-.214.123-.457.19-.7.19-.23 0-.453-.058-.66-.176-.348-.195-8.638-4.942-16.75-14.693C7.58 51.118-1.1 35.978.115 15.028c.036-.61.485-1.122 1.094-1.244C18.102 10.444 31.131.906 31.676.5c.019-.014.041-.033.065-.047l.334-.221c.486-.325 1.132-.308 1.599.05.128.1 13.13 9.919 30.109 13.276.61.118 1.058.633 1.096 1.244 2.3 39.737-28.873 58.393-31.571 59.927"
-         transform="translate(3.000000, 4.000000)"
+         d="m 33.308,74.729 c -0.042,0.027 -0.083,0.059 -0.13,0.081 -0.214,0.123 -0.457,0.19 -0.7,0.19 -0.23,0 -0.453,-0.058 -0.66,-0.176 C 31.47,74.629 23.18,69.882 15.068,60.131 7.58,51.118 -1.1,35.978 0.115,15.028 0.151,14.418 0.6,13.906 1.209,13.784 18.102,10.444 31.131,0.906 31.676,0.5 31.695,0.486 31.717,0.467 31.741,0.453 l 0.334,-0.221 c 0.486,-0.325 1.132,-0.308 1.599,0.05 0.128,0.1 13.13,9.919 30.109,13.276 0.61,0.118 1.058,0.633 1.096,1.244 2.3,39.737 -28.873,58.393 -31.571,59.927"
+         transform="translate(3,4)"
          id="path2" />
       <path
-         fill="#444"
-         d="M18.5 19L15.255 25.255 8 26.257 13.25 31.126 12.011 38 18.5 34.754 24.989 38 23.75 31.126 29 26.257 21.745 25.255zM45.5 19L42.255 25.255 35 26.257 40.25 31.126 39.011 38 45.5 34.754 51.989 38 50.75 31.126 56 26.257 48.745 25.255z"
-         transform="translate(3.000000, 4.000000)"
+         fill="#444444"
+         d="M 18.5,19 15.255,25.255 8,26.257 13.25,31.126 12.011,38 18.5,34.754 24.989,38 23.75,31.126 29,26.257 21.745,25.255 Z m 27,0 -3.245,6.255 L 35,26.257 40.25,31.126 39.011,38 45.5,34.754 51.989,38 50.75,31.126 56,26.257 48.745,25.255 Z"
+         transform="translate(3,4)"
          id="path4" />
     </g>
   </g>

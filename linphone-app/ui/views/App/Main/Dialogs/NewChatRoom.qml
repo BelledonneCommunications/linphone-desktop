@@ -10,7 +10,7 @@ import App.Styles 1.0
 import Common.Styles 1.0
 import Colors 1.0
 import Units 1.0
-import Tools 1.0
+import UtilsCpp 1.0
 
 // =============================================================================
 
@@ -183,7 +183,7 @@ DialogPlus {
 											anchors.right: parent.right
 											anchors.top:parent.top
 											anchors.topMargin: -5
-											visible: Tools.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
+											visible: UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
 											icon: 'secure_on'
 											iconSize:20
 											Rectangle{

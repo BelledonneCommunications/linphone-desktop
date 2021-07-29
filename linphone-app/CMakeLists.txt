@@ -122,7 +122,10 @@ set(SOURCES
     src/components/calls/CallsListProxyModel.cpp
     src/components/camera/Camera.cpp
     src/components/camera/CameraPreview.cpp
-	src/components/chat-message/ChatMessageModel.cpp
+	src/components/chat-events/ChatCallModel.cpp
+	src/components/chat-events/ChatEvent.cpp
+	src/components/chat-events/ChatMessageModel.cpp
+	src/components/chat-events/ChatNoticeModel.cpp
     src/components/chat-room/ChatRoomModel.cpp
     src/components/chat-room/ChatRoomListModel.cpp
     src/components/chat-room/ChatRoomProxyModel.cpp
@@ -161,17 +164,21 @@ set(SOURCES
 	src/components/participant/ParticipantDeviceModel.cpp
 	src/components/participant/ParticipantDeviceListModel.cpp
 	src/components/participant/ParticipantDeviceProxyModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateListModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateProxyModel.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
     src/components/search/SearchHandler.cpp
+    src/components/search/SearchResultModel.cpp
+    src/components/search/SearchSipAddressesModel.cpp
+	src/components/search/SearchSipAddressesProxyModel.cpp
     src/components/settings/AccountSettingsModel.cpp
     src/components/settings/SettingsModel.cpp
     src/components/sip-addresses/SipAddressesModel.cpp
     src/components/sip-addresses/SipAddressesProxyModel.cpp
 	src/components/sip-addresses/SipAddressesSorter.cpp
     src/components/sip-addresses/SipAddressObserver.cpp
-    src/components/sip-addresses/SearchSipAddressesModel.cpp
-	src/components/sip-addresses/SearchSipAddressesProxyModel.cpp
     src/components/sound-player/SoundPlayer.cpp
     src/components/telephone-numbers/TelephoneNumbersModel.cpp
     src/components/timeline/TimelineModel.cpp
@@ -182,7 +189,7 @@ set(SOURCES
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
-	src/utils/Tools.cpp
+	src/utils/hacks/ChatRoomInitializer.cpp
 	src/utils/plugins/PluginsManager.cpp
     )
 set(PLUGIN_SOURCES src/utils/plugins/PluginDataAPI.cpp
@@ -209,7 +216,10 @@ set(HEADERS
     src/components/calls/CallsListProxyModel.hpp
     src/components/camera/Camera.hpp
     src/components/camera/CameraPreview.hpp
-	src/components/chat-message/ChatMessageModel.hpp
+	src/components/chat-events/ChatCallModel.hpp
+	src/components/chat-events/ChatEvent.hpp
+	src/components/chat-events/ChatMessageModel.hpp
+	src/components/chat-events/ChatNoticeModel.hpp
     src/components/chat-room/ChatRoomModel.hpp
     src/components/chat-room/ChatRoomListModel.hpp
     src/components/chat-room/ChatRoomProxyModel.hpp
@@ -250,17 +260,21 @@ set(HEADERS
 	src/components/participant/ParticipantDeviceModel.hpp
 	src/components/participant/ParticipantDeviceListModel.hpp
 	src/components/participant/ParticipantDeviceProxyModel.hpp
+	src/components/participant-imdn/ParticipantImdnStateModel.hpp
+	src/components/participant-imdn/ParticipantImdnStateListModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateProxyModel.cpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
     src/components/search/SearchHandler.hpp
+    src/components/search/SearchResultModel.hpp
+    src/components/search/SearchSipAddressesModel.hpp
+	src/components/search/SearchSipAddressesProxyModel.hpp
     src/components/settings/AccountSettingsModel.hpp
     src/components/settings/SettingsModel.hpp
     src/components/sip-addresses/SipAddressesModel.hpp
     src/components/sip-addresses/SipAddressesProxyModel.hpp
 	src/components/sip-addresses/SipAddressesSorter.hpp
     src/components/sip-addresses/SipAddressObserver.hpp
-    src/components/sip-addresses/SearchSipAddressesModel.hpp
-	src/components/sip-addresses/SearchSipAddressesProxyModel.hpp
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
     src/components/timeline/TimelineModel.hpp
@@ -271,7 +285,7 @@ set(HEADERS
     src/utils/MediastreamerUtils.hpp
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
-	src/utils/Tools.hpp
+	src/utils/hacks/ChatRoomInitializer.hpp
     src/utils/plugins/PluginsManager.hpp
     )
 set(PLUGIN_HEADERS 

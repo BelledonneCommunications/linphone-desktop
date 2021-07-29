@@ -29,6 +29,7 @@ DialogPlus {
 			text: 'OK'
 			
 			onClicked: {
+				chatRoomModel.updateParticipants(selectedParticipants.getParticipants()) // Remove/New
 				exit(1)
 			}
 		}
@@ -68,7 +69,7 @@ DialogPlus {
 					handler: function (entry) {
 						selectedParticipants.add(entry.sipAddress)
 						smartSearchBar.addAddressToIgnore(entry.sipAddress);
-						++lastContacts.reloadCount
+						//++lastContacts.reloadCount;
 					},
 				}]
 			
@@ -114,7 +115,7 @@ DialogPlus {
 						handler: function (entry) {
 							smartSearchBar.removeAddressToIgnore(entry.sipAddress)
 							selectedParticipants.remove(entry)
-							++lastContacts.reloadCount
+//							++lastContacts.reloadCount
 						}
 					}]
 				

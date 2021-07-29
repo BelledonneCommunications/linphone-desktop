@@ -25,6 +25,7 @@
 #include <QString>
 #include <QLocale>
 #include <QImage>
+#include <QDateTime>
 
 #include <linphone++/address.hh>
 
@@ -52,7 +53,9 @@ public:
 	Utils(QObject * parent = nullptr) : QObject(parent){}
 	// Qt interfaces	
 	Q_INVOKABLE static bool hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability);
-	
+	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
+	Q_INVOKABLE static QString toTimeString(QDateTime date);
+	Q_INVOKABLE static QString toDateString(QDateTime date);
 //----------------------------------------------------------------------------------	
 	
 	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";

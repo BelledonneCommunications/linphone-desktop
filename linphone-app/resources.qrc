@@ -68,6 +68,7 @@
         <file>assets/images/chat_is_composing_1.svg</file>
         <file>assets/images/chat_is_composing_2.svg</file>
         <file>assets/images/chat_is_composing_3.svg</file>
+        <file>assets/images/chat_micro.svg</file>
         <file>assets/images/chat_normal.svg</file>
         <file>assets/images/chat_pressed.svg</file>
         <file>assets/images/chat_read.svg</file>
@@ -88,9 +89,13 @@
         <file>assets/images/contact_edit_hovered.svg</file>
         <file>assets/images/contact_edit_normal.svg</file>
         <file>assets/images/contact_edit_pressed.svg</file>
+        <file>assets/images/contact_disabled.svg</file>
         <file>assets/images/contact_normal.svg</file>
         <file>assets/images/contact_selected.svg</file>
-		<file>assets/images/current_account_status_available.svg</file>
+		<file>assets/images/current_account_status_online.svg</file>
+		<file>assets/images/current_account_status_offline.svg</file>
+		<file>assets/images/current_account_status_dnd.svg</file>
+		<file>assets/images/current_account_status_busy.svg</file>
         <file>assets/images/declined_incoming_call.svg</file>
         <file>assets/images/declined_outgoing_call.svg</file>
         <file>assets/images/delete_hovered.svg</file>
@@ -118,6 +123,9 @@
         <file>assets/images/generic_error_normal.svg</file>
         <file>assets/images/generic_error_pressed.svg</file>
         <file>assets/images/generic_error.svg</file>
+        <file>assets/images/group_chat_hovered.svg</file>
+        <file>assets/images/group_chat_normal.svg</file>
+        <file>assets/images/group_chat_pressed.svg</file>
         <file>assets/images/hangup_hovered.svg</file>
         <file>assets/images/hangup_normal.svg</file>
         <file>assets/images/hangup_pressed.svg</file>
@@ -169,6 +177,7 @@
         <file>assets/images/options_normal.svg</file>
         <file>assets/images/options_pressed.svg</file>
         <file>assets/images/outgoing_call.svg</file>
+        <file>assets/images/panel_arrow.svg</file>
 		<file>assets/images/panel_hidden_normal.svg</file>
 		<file>assets/images/panel_hidden_hovered.svg</file>
 		<file>assets/images/panel_hidden_pressed.svg</file>
@@ -482,6 +491,7 @@
         <file>ui/views/App/Main/Dialogs/AuthenticationRequest.qml</file>
 		<file>ui/views/App/Main/Dialogs/EphemeralChatRoom.qml</file>
 		<file>ui/views/App/Main/Dialogs/InfoChatRoom.qml</file>
+		<file>ui/views/App/Main/Dialogs/InfoEncryption.qml</file>
         <file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
         <file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
         <file>ui/views/App/Main/Dialogs/ManageChatRoom.qml</file>
@@ -531,6 +541,7 @@
         <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/AboutStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/AuthenticationRequestStyle.qml</file>
+        <file>ui/views/App/Styles/Main/Dialogs/InfoEncryptionStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>
         <file>ui/views/App/Styles/Main/HomeStyle.qml</file>
         <file>ui/views/App/Styles/Main/InviteFriendsStyle.qml</file>

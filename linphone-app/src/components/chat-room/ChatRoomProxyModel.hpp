@@ -41,27 +41,25 @@ class ChatRoomProxyModel : public QSortFilterProxyModel {
   //Q_PROPERTY(int isSecure READ isSecure WRITE setIsSecure NOTIFY isSecureChanged)
   Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
   //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged)
-  Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
+  //Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
+  Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
   //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged)
   Q_PROPERTY(QString cachedText READ getCachedText)
 
 public:
   ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
+  
+  Q_INVOKABLE QString getDisplayNameComposers()const;
 
   Q_INVOKABLE void loadMoreEntries ();
-  Q_INVOKABLE void setEntryTypeFilter (ChatRoomModel::EntryType type);
-  Q_INVOKABLE void removeEntry (int id);
+  Q_INVOKABLE void setEntryTypeFilter (int type);
 
   Q_INVOKABLE void removeAllEntries ();
+  Q_INVOKABLE void removeRow (int index);
 
   Q_INVOKABLE void sendMessage (const QString &message);
-  Q_INVOKABLE void resendMessage (int id);
 
   Q_INVOKABLE void sendFileMessage (const QString &path);
-
-  Q_INVOKABLE void downloadFile (int id);
-  Q_INVOKABLE void openFile (int id);
-  Q_INVOKABLE void openFileDirectory (int id);
 
   Q_INVOKABLE void compose (const QString& text);
 
@@ -72,14 +70,14 @@ signals:
   void localAddressChanged (const QString &localAddress);
   void fullPeerAddressChanged (const QString &fullPeerAddress);
   void fullLocalAddressChanged (const QString &fullLocalAddress);
-  bool isRemoteComposingChanged (bool status);
+  bool isRemoteComposingChanged ();
   //bool isSecureChanged(bool secure);
   
   void chatRoomModelChanged();
 
   void moreEntriesLoaded (int n);
 
-  void entryTypeFilterChanged (ChatRoomModel::EntryType type);
+  void entryTypeFilterChanged (int type);
 
 protected:
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
@@ -104,15 +102,15 @@ private:
   ChatRoomModel *getChatRoomModel() const;
   void setChatRoomModel (ChatRoomModel *chatRoomModel);
 
-  bool getIsRemoteComposing () const;
+  QList<QString> getComposers () const;
   
   QString getCachedText() const;
 
-  void reload ();
+  void reload (ChatRoomModel *chatRoomModel);
 
   void handleIsActiveChanged (QWindow *window);
 
-  void handleIsRemoteComposingChanged (bool status);
+  void handleIsRemoteComposingChanged ();
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
@@ -124,7 +122,7 @@ private:
   QString mFullLocalAddress;
   //int mIsSecure;
   static QString gCachedText;
-  std::shared_ptr<linphone::ChatRoom> mChatRoom;
+  //std::shared_ptr<linphone::ChatRoom> mChatRoom;
   
 
   std::shared_ptr<ChatRoomModel> mChatRoomModel;

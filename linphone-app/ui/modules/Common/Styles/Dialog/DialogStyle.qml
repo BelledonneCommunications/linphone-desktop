@@ -10,7 +10,7 @@ QtObject {
   property color color: Colors.k
 
   property QtObject buttons: QtObject {
-    property int bottomMargin: 15
+    property int bottomMargin: 30
     property int leftMargin: 50
 	property int rightMargin: 50
     property int spacing: 20

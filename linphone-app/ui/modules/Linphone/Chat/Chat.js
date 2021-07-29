@@ -43,7 +43,7 @@ function loadMoreEntries () {
 }
 
 function getComponentFromEntry (chatEntry) {
-  if (chatEntry.fileName) {
+  if (chatEntry.fileContentModel && chatEntry.fileContentModel.name) {
     return 'FileMessage.qml'
   }
 

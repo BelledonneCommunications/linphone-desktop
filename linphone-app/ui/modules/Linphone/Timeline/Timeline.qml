@@ -46,7 +46,12 @@ Rectangle {
 		
 		Connections {
 			target: model
-			onSelectedCountChanged:if(selectedCount<=0) view.currentIndex = -1
+			onSelectedCountChanged:{
+				if(selectedCount<=0) {
+					view.currentIndex = -1
+					timeline.entrySelected('',false)
+				}
+			}
 			// onCurrentTimelineChanged:entrySelected(currentTimeline)
 		}
 		/*
@@ -67,12 +72,13 @@ Rectangle {
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
 			
-			MouseArea{
+			MouseArea{// no more showing history
 				id:showHistory
 				anchors.fill:parent
 				onClicked: {
-					view.currentIndex = -1
-					timeline.entrySelected('',false)
+					//view.currentIndex = -1
+					//timeline.entrySelected('',false)
+					filterView.visible = !filterView.visible
 				}
 			}
 			RowLayout{
@@ -85,7 +91,7 @@ Rectangle {
 					color: TimelineStyle.legend.color
 					font.pointSize: TimelineStyle.legend.pointSize
 					//height: parent.height
-					text: 'Filter : All'
+					text: 'Filter : ' +(timeline.model.filterFlags == 0 || timeline.model.filterFlags == TimelineProxyModel.AllChatRooms?'All' : 'Custom')
 					verticalAlignment: Text.AlignVCenter
 				}
 				
@@ -135,18 +141,40 @@ Rectangle {
 				anchors.left:parent.left
 				anchors.right:parent.right
 				spacing:-4
-				CheckBoxText {
-					text:'Appels Simples'
+				function getFilterFlags(){
+					return simpleFilter.value | secureFilter.value | groupFilter.value | secureGroupFilter.value | ephemeralsFilter.value;
 				}
 				CheckBoxText {
-					text:'Conférences'
+					id:simpleFilter
+					text:'Simple rooms'
+					property var value : (checked?TimelineProxyModel.SimpleChatRoom:0)
+					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				CheckBoxText {
-					text:'Messages Simples'
+					id:secureFilter
+					text:'Secure rooms'
+					property var value : (checked?TimelineProxyModel.SecureChatRoom:0)
+					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				CheckBoxText {
-					text:'Chat de groupe'
+					id:groupFilter
+					text:'Chat groups'
+					property var value : (checked?TimelineProxyModel.GroupChatRoom:0)
+					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
+				CheckBoxText {
+					id:secureGroupFilter
+					text:'Secure Chat Groups'
+					property var value : (checked?TimelineProxyModel.SecureGroupChatRoom:0)
+					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+				}
+				CheckBoxText {
+					id:ephemeralsFilter
+					text:'Ephemerals'
+					property var value : (checked?TimelineProxyModel.EphemeralChatRoom:0)
+					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+				}
+				
 			}
 		}
 		// -------------------------------------------------------------------------
@@ -161,6 +189,7 @@ Rectangle {
 			border.width: 2
 			visible:false
 			//color: ContactsStyle.bar.backgroundColor
+			onVisibleChanged: timeline.model.filterText = (visible?searchBar.text : '')
 		
 			  TextField {
 				  id:searchBar
@@ -172,7 +201,7 @@ Rectangle {
 				icon: 'search'
 				placeholderText: 'Search in the list'
 				
-				onTextChanged: console.log(text)
+				onTextChanged: timeline.model.filterText = text
 			  }
 			
 		}
@@ -227,11 +256,11 @@ Rectangle {
 					}
 					Icon{
 						icon:'timer'
-						iconSize: 10
+						iconSize: 15
 						anchors.right:parent.right
 						anchors.bottom:parent.bottom
-						anchors.bottomMargin: 5
-						anchors.rightMargin: 5
+						anchors.bottomMargin: 7
+						anchors.rightMargin: 7
 						visible: modelData.chatRoomModel.ephemeralEnabled
 					}
 				}
@@ -242,8 +271,14 @@ Rectangle {
 						//timeline.model.unselectAll()
 						modelData.selected = true
 						view.currentIndex = index;
-						timeline.entrySelected(modelData)
 						//timeline.entrySelected($timelineEntry.sipAddress, $timelineEntry.isSecure)
+					}
+				}
+				Connections{
+					target:modelData
+					onSelectedChanged:{
+						if(selected)
+							timeline.entrySelected(modelData)
 					}
 				}
 			}

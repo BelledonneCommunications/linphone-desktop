@@ -52,7 +52,8 @@ public:
 	Q_INVOKABLE void remove (ParticipantModel *importer);
 	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;
 	
-	Q_INVOKABLE QString addressesToString()const;
+	Q_INVOKABLE QString addressesToString()const;	
+	Q_INVOKABLE QString displayNamesToString()const;
 	Q_INVOKABLE QString usernamesToString()const;
 	
 	bool contains(const QString& address) const;
@@ -61,6 +62,7 @@ public:
 	
 public slots:
 	void onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
 	void onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
 	void onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
 	void onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
@@ -72,6 +74,7 @@ public slots:
 signals:
 	void securityLevelChanged();
 	void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	void participantsChanged();
 
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());

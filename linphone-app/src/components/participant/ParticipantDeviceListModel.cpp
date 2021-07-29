@@ -50,13 +50,13 @@ QHash<int, QByteArray> ParticipantDeviceListModel::roleNames () const {
 
 QVariant ParticipantDeviceListModel::data (const QModelIndex &index, int role) const {
 	int row = index.row();
-  
+	
 	if (!index.isValid() || row < 0 || row >= mList.count())
-	  return QVariant();
-  
+		return QVariant();
+	
 	if (role == Qt::DisplayRole)
-	  return QVariant::fromValue(mList[row].get());
-  
+		return QVariant::fromValue(mList[row].get());
+	
 	return QVariant();
 }
 
@@ -66,17 +66,17 @@ bool ParticipantDeviceListModel::removeRow (int row, const QModelIndex &parent){
 
 bool ParticipantDeviceListModel::removeRows (int row, int count, const QModelIndex &parent) {
 	int limit = row + count - 1;
-  
+	
 	if (row < 0 || count < 0 || limit >= mList.count())
-	  return false;
-  
+		return false;
+	
 	beginRemoveRows(parent, row, limit);
-  
+	
 	for (int i = 0; i < count; ++i)
-	  mList.takeAt(row)->deleteLater();
-  
+		mList.takeAt(row);
+	
 	endRemoveRows();
-  
+	
 	return true;
 }
 

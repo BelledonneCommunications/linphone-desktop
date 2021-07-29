@@ -42,12 +42,13 @@ DialogPlus {
 	flat : true
 	
 	title: "Ephemeral messages"
+	showCloseCross:false
 	
 	property ChatRoomModel chatRoomModel
 	property int timer : 0
 	buttonsAlignment: Qt.AlignCenter
 	
-	height: ManageAccountsStyle.height
+	height: 320
 	width: ManageAccountsStyle.width
 	
 	// ---------------------------------------------------------------------------
@@ -61,18 +62,45 @@ DialogPlus {
 		Layout.alignment: Qt.AlignCenter
 		Icon{
 			icon:'timer'
-			iconSize:50
+			iconSize:40
 			Layout.preferredHeight: 50
 			Layout.preferredWidth: 50
+			Layout.alignment: Qt.AlignCenter
 		}
 		Text{
 			Layout.fillWidth: true
-			maximumLineCount: 2
-			text: 'New messages will be deleted on both ends once it has been read by your contact. Select a timeout.'			
+			Layout.alignment: Qt.AlignCenter
+			Layout.leftMargin: 10
+			Layout.rightMargin: 10
+			
+			maximumLineCount: 4
+			wrapMode: Text.Wrap
+			text: 'New messages will be deleted on both ends once it has been read by your contact. Select a timeout.'
+				+(!chatRoomModel.canBeEphemeral?'\nEphemeral message is only supported in conference based chat room!':'')
+			verticalAlignment: Text.AlignVCenter
+			horizontalAlignment: Text.AlignHCenter
+			font.pointSize: Units.dp * 11
+			color: Colors.d
 		}
 		ComboBox{
+			Layout.alignment: Qt.AlignCenter
+			Layout.preferredWidth: 150
+			Layout.topMargin:10
+			Layout.bottomMargin:10
 			id:timerPicker
 			textRole: "text"
+			currentIndex:	if( chatRoomModel.ephemeralLifetime == 0 || !chatRoomModel.ephemeralEnabled)
+								return 0;
+							else if(  chatRoomModel.ephemeralLifetime <= 60 )
+								return 1;
+							else if(  chatRoomModel.ephemeralLifetime <= 3600 )
+								return 2;
+							else if(  chatRoomModel.ephemeralLifetime <= 86400 )
+								return 3;
+							else if(  chatRoomModel.ephemeralLifetime <= 259200 )
+								return 4;
+							else if(  chatRoomModel.ephemeralLifetime <= 604800 )
+								return 5;
 			model:ListModel{
 				ListElement{ text:'Disabled'
 					value:0}
@@ -89,7 +117,7 @@ DialogPlus {
 			}
 			
 			onActivated: dialog.timer = model.get(index).value
-			
+			visible: chatRoomModel.canBeEphemeral
 		}
 		
 	}

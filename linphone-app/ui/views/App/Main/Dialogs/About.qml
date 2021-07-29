@@ -20,7 +20,7 @@ DialogPlus {
   buttonsAlignment: Qt.AlignCenter
   objectName: '__about'
 
-  height: AboutStyle.height
+  height: AboutStyle.height + 30
   width: AboutStyle.width
 
   Column {

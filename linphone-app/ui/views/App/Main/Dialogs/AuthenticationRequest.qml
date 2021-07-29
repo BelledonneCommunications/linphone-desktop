@@ -37,7 +37,7 @@ DialogPlus {
   buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('authenticationRequestDescription')
 
-  height: AuthenticationRequestStyle.height
+  height: AuthenticationRequestStyle.height + 30
   width: AuthenticationRequestStyle.width
 
   // ---------------------------------------------------------------------------

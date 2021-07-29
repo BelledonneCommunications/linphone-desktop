@@ -32,6 +32,7 @@
 using namespace std;
 
 ParticipantModel::ParticipantModel (shared_ptr<linphone::Participant> linphoneParticipant, QObject *parent) : QObject(parent) {
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mAdminStatus = false;
 	mParticipant = linphoneParticipant;
 	if(mParticipant){

@@ -91,6 +91,8 @@ class Colors : public QObject {
   ADD_COLOR(q, "#FFFFFF")
   
   ADD_COLOR(r, "#909fab")//Background button
+  
+  ADD_COLOR(s, "#96be64")// Security
 
   // Field error.
   ADD_COLOR(error, "#FF0000")
@@ -127,6 +129,7 @@ signals:
   void colorTpChanged (const QColor &color);
   void colorTqChanged (const QColor &color);
   void colorTrChanged (const QColor &color);
+  void colorTsChanged (const QColor &color);
 
   void colorTerrorChanged (const QColor &color);
 

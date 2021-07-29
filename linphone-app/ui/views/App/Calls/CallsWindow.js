@@ -54,8 +54,8 @@ function openCallSipAddress () {
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/CallSipAddress.qml'))
 }
 
-function openConferenceManager () {
-  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ConferenceManager.qml'))
+function openConferenceManager (params) {
+  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ConferenceManager.qml'), params)
 }
 
 // -----------------------------------------------------------------------------

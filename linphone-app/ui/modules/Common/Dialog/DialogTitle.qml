@@ -11,43 +11,49 @@ import Units 1.0
 // =============================================================================
 
 Item {
-  property alias text: title.text
+	id:mainItem
+	property alias text: title.text
+	property bool showBar : text != ''
+	property bool showCloseCross: showBar
 	signal close()
-
-  height: text ? 30 : undefined
-  
+	
+	height: 30
+	
 	Rectangle{
 		anchors.fill:parent
 		gradient: Gradient {
-				 GradientStop { position: 0.0; color: "white" }
-				 GradientStop { position: 1.0; color: "#E2E2E2" }
-			 }
+			GradientStop { position: 0.0; color: "white" }
+			GradientStop { position: 1.0; color: "#E2E2E2" }
+		}
+		visible:showBar
 	}
-  Text {
-    id: title
-
-    anchors {
-      fill: parent
-      leftMargin: DialogStyle.description.leftMargin
-      rightMargin: DialogStyle.description.rightMargin
-    }
-
-    color: DialogStyle.description.color
-    //font.pointSize: DialogStyle.description.pointSize
-	font.pointSize: Units.dp * 10
-    horizontalAlignment: Text.AlignHCenter
-    verticalAlignment: Text.AlignVCenter
-    wrapMode: Text.WordWrap
-  }
-  ActionButton{
-	  anchors.right:parent.right
-	  anchors.rightMargin: 14
-	  anchors.top:parent.top
-	  anchors.bottom:parent.bottom
-	  icon: 'close'
-	  iconSize: 12
-	  useStates: false
-	  
-	  onClicked: close()
-  }
+	Text {
+		id: title
+		
+		anchors {
+			fill: parent
+			leftMargin: DialogStyle.description.leftMargin
+			rightMargin: DialogStyle.description.rightMargin
+		}
+		
+		color: DialogStyle.description.color
+		//font.pointSize: DialogStyle.description.pointSize
+		font.pointSize: Units.dp * 10
+		horizontalAlignment: Text.AlignHCenter
+		verticalAlignment: Text.AlignVCenter
+		wrapMode: Text.WordWrap
+		visible: showBar
+	}
+	ActionButton{
+		anchors.right:parent.right
+		anchors.rightMargin: 14
+		anchors.top:parent.top
+		anchors.bottom:parent.bottom
+		icon: 'close'
+		iconSize: 12
+		useStates: false
+		visible:mainItem.showCloseCross
+		
+		onClicked: close()
+	}
 }

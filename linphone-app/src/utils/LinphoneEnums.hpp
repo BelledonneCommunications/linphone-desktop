@@ -24,6 +24,8 @@
 #include <linphone++/linphone.hh>
 #include <QObject>
 
+// This namespace is used to pass Linphone enumerators to QML
+
 // =============================================================================
 
 namespace LinphoneEnums {
@@ -78,10 +80,45 @@ enum EventLogType {
 Q_ENUM_NS(EventLogType)
 
 linphone::EventLog::Type toLinphone(const LinphoneEnums::EventLogType& capability);
-LinphoneEnums::EventLogType fromLinphone(const linphone::EventLog::Type& capability);
+LinphoneEnums::EventLogType fromLinphone(const linphone::EventLog::Type& data);
+
+enum ChatMessageState {
+	ChatMessageStateIdle = int(linphone::ChatMessage::State::Idle),
+	ChatMessageStateInProgress = int(linphone::ChatMessage::State::InProgress),
+	ChatMessageStateDelivered = int(linphone::ChatMessage::State::Delivered),
+	ChatMessageStateNotDelivered = int(linphone::ChatMessage::State::NotDelivered),
+	ChatMessageStateFileTransferError = int(linphone::ChatMessage::State::FileTransferError),
+	ChatMessageStateFileTransferDone = int(linphone::ChatMessage::State::FileTransferDone),
+	ChatMessageStateDeliveredToUser = int(linphone::ChatMessage::State::DeliveredToUser),
+	ChatMessageStateDisplayed = int(linphone::ChatMessage::State::Displayed),
+	ChatMessageStateFileTransferInProgress = int(linphone::ChatMessage::State::FileTransferInProgress)
+};
+Q_ENUM_NS(ChatMessageState)
+
+linphone::ChatMessage::State toLinphone(const LinphoneEnums::ChatMessageState& capability);
+LinphoneEnums::ChatMessageState fromLinphone(const linphone::ChatMessage::State& capability);
+
+enum CallStatus {
+		CallStatusDeclined = int(linphone::Call::Status::Declined),
+		CallStatusMissed = int(linphone::Call::Status::Missed),
+		CallStatusSuccess = int(linphone::Call::Status::Success),
+		CallStatusAborted = int(linphone::Call::Status::Aborted),
+		CallStatusEarlyAborted = int(linphone::Call::Status::EarlyAborted),
+		CallStatusAcceptedElsewhere = int(linphone::Call::Status::AcceptedElsewhere),
+		CallStatusDeclinedElsewhere = int(linphone::Call::Status::DeclinedElsewhere)
+	};
+Q_ENUM_NS(CallStatus)
+
+linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus& capability);
+LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status& capability);
+
+
 }
 
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)
 Q_DECLARE_METATYPE(LinphoneEnums::FriendCapability)
+Q_DECLARE_METATYPE(LinphoneEnums::EventLogType)
+Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
+Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
 
 #endif

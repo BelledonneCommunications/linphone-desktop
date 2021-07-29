@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "SearchSipAddressesModel.hpp"
+
 #include <QDateTime>
 #include <QElapsedTimer>
 #include <QUrl>
@@ -34,7 +36,9 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "utils/Utils.hpp"
 
-#include "SearchSipAddressesModel.hpp"
+#include "SearchResultModel.hpp"
+
+
 
 // =============================================================================
 
@@ -74,7 +78,7 @@ QVariant SearchSipAddressesModel::data (const QModelIndex &index, int role) cons
 		return QVariant();
 	
 	if (role == Qt::DisplayRole)
-		return QVariantMap{{"sipAddress", mAddresses[row]}};
+		return QVariant::fromValue(mAddresses[row].get());
 	
 	return QVariant();
 }
@@ -109,12 +113,7 @@ void SearchSipAddressesModel::setFilter(const QString& filter){
 void SearchSipAddressesModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
 	beginResetModel();
 	mAddresses.clear();
-	for(auto it = results.begin() ; it != results.end() ; ++it){
-		if((*it)->getFriend()){
-			mAddresses << QString::fromStdString((*it)->getFriend()->getAddress()->asString());
-		}else{
-			mAddresses << QString::fromStdString((*it)->getAddress()->asString());
-		}
-	}
+	for(auto it = results.begin() ; it != results.end() ; ++it)
+		mAddresses << std::make_shared<SearchResultModel>((*it)->getFriend(), (*it)->getAddress());
 	endResetModel();
 }

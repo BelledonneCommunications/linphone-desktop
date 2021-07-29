@@ -36,6 +36,7 @@ class TimelineModel : public QObject, public linphone::ChatRoomListener {
   Q_OBJECT
 
 public:
+	static std::shared_ptr<TimelineModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
 	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
 	virtual ~TimelineModel();
 	
@@ -97,6 +98,7 @@ public:
 	
 public slots:
 	void updateUnreadCount();
+	//void chatRoomDeleted();
 	
 signals:
 	void fullPeerAddressChanged();
@@ -106,6 +108,10 @@ signals:
 	void presenceStatusChanged();
 	void selectedChanged(bool selected);
 	void conferenceLeft();
+	
+private:
+
+	std::weak_ptr<TimelineModel> mSelf;
   
 };
 

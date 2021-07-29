@@ -49,7 +49,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  height: button.contentItem.implicitHeight + 20//AbstractTextButtonStyle.background.height
+  height: button.contentItem.implicitHeight + 25//AbstractTextButtonStyle.background.height
   width: button.contentItem.implicitWidth +60 //AbstractTextButtonStyle.background.width
 
   // ---------------------------------------------------------------------------
