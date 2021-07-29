@@ -74,6 +74,7 @@ Rectangle {
         ? ApplicationMenuStyle.entry.text.color.selected
         : ApplicationMenuStyle.entry.text.color.normal
       font.pointSize: ApplicationMenuStyle.entry.text.pointSize
+      font.weight: Font.DemiBold
       height: parent.height
       text: entry.name
       verticalAlignment: Text.AlignVCenter

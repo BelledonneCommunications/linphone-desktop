@@ -59,14 +59,14 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: '#96be64'
+			property color checked: Colors.s
 			property color disabled: Colors.c
 			property color normal: Colors.c
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: '#96be64'
+		  property color checked: Colors.s
 		  property color disabled: Colors.e
 		  property color normal: Colors.q
 		}
@@ -77,7 +77,7 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: '#96be64'
+			property color checked: Colors.s
 			property color disabled: Colors.c
 			property color normal: Colors.n
 			property color pressed: Colors.n

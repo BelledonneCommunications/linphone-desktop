@@ -23,25 +23,46 @@
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "utils/Utils.hpp"
+#include "app/App.hpp"
 
 #include "TimelineModel.hpp"
+#include "TimelineListModel.hpp"
 
 #include <QDebug>
+#include <qqmlapplicationengine.h>
+#include <QTimer>
 
 
 // =============================================================================
+std::shared_ptr<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent){
+	if(!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) {
+		std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom, parent);
+		if(model && model->getChatRoomModel()){
+			model->mSelf = model;
+			chatRoom->addListener(model);
+			return model;
+		}
+	}
+	return nullptr;
+}
 
 TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent) : QObject(parent) {
-	mChatRoomModel = CoreManager::getInstance()->getChatRoomModel(chatRoom);
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
+	mChatRoomModel = ChatRoomModel::create(chatRoom);
+//	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom);
+	if( mChatRoomModel ){
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::unreadMessagesCountChanged, this, &TimelineModel::updateUnreadCount);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::missedCallsCountChanged, this, &TimelineModel::updateUnreadCount);
+	}
 	
-	QObject::connect(mChatRoomModel.get(), &ChatRoomModel::unreadMessagesCountChanged, this, &TimelineModel::updateUnreadCount);
-	QObject::connect(mChatRoomModel.get(), &ChatRoomModel::missedCallsCountChanged, this, &TimelineModel::updateUnreadCount);
-	QObject::connect(mChatRoomModel.get(), &ChatRoomModel::conferenceLeft, this, &TimelineModel::onConferenceLeft);
+	//QObject::connect(mChatRoomModel.get(), &ChatRoomModel::conferenceLeft, this, &TimelineModel::onConferenceLeft);
 	//mTimestamp = QDateTime::fromMSecsSinceEpoch(mChatRoomModel->getChatRoom()->getLastUpdateTime());
 	mSelected = false;
 }
 
 TimelineModel::~TimelineModel(){
+	mChatRoomModel->getChatRoom()->removeListener(mChatRoomModel);
+	qWarning() << "Destroying Timeline";
 }
 
 QString TimelineModel::getFullPeerAddress() const{
@@ -53,17 +74,7 @@ QString TimelineModel::getFullLocalAddress() const{
 
 
 QString TimelineModel::getUsername() const{
-	std::string username = mChatRoomModel->getChatRoom()->getSubject();
-	if(username != ""){
-		return QString::fromStdString(username);
-	}
-	username = mChatRoomModel->getChatRoom()->getPeerAddress()->getDisplayName();
-	if(username != "")
-		return QString::fromStdString(username);
-	username = mChatRoomModel->getChatRoom()->getPeerAddress()->getUsername();
-	if(username != "")
-		return QString::fromStdString(username);
-	return QString::fromStdString(mChatRoomModel->getChatRoom()->getPeerAddress()->asStringUriOnly());
+	return mChatRoomModel->getUsername();
 }
 
 QString TimelineModel::getAvatar() const{
@@ -81,6 +92,8 @@ ChatRoomModel *TimelineModel::getChatRoomModel() const{
 void TimelineModel::setSelected(const bool& selected){
 	if(selected != mSelected){
 		mSelected = selected;
+		if(mSelected)
+			mChatRoomModel->initEntries();
 		emit selectedChanged(mSelected);
 	}
 }
@@ -104,7 +117,12 @@ void TimelineModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> 
 void TimelineModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
-void TimelineModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){}
+void TimelineModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
+	if(newState == linphone::ChatRoom::State::Created)
+		QTimer::singleShot(200, [=](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
+				setSelected(true);
+			});
+}
 void TimelineModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog)
 {

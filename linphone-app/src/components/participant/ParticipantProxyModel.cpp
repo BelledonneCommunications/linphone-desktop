@@ -83,7 +83,7 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 void ParticipantProxyModel::add(const QString& address){
 	ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
-		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr, this);
+		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
 		participant->setSipAddress(address);
 		participantsModel->add(participant);
 	}

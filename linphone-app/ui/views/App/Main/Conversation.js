@@ -65,3 +65,11 @@ function updateChatFilter (button) {
     chatRoomProxyModel.setEntryTypeFilter(ChatRoomModel.MessageEntry)
   }
 }
+
+function openConferenceManager (params) {
+  var App = Linphone.App
+  var callsWindow = App.getCallsWindow()
+
+  App.smartShowWindow(callsWindow)
+  callsWindow.openConferenceManager(params)
+}

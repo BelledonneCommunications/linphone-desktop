@@ -69,8 +69,8 @@ public:
   }
 
   //std::shared_ptr<ChatRoomModel> getChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool &isSecure);
-  std::shared_ptr<ChatRoomModel> getChatRoomModel (ChatRoomModel * data);// Get the shared pointer. This can be done becuase of unicity of ChatRoomModel
-  std::shared_ptr<ChatRoomModel> getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create = true);
+  //std::shared_ptr<ChatRoomModel> getChatRoomModel (ChatRoomModel * data);// Get the shared pointer. This can be done becuase of unicity of ChatRoomModel
+  //std::shared_ptr<ChatRoomModel> getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create = true);
   //bool chatRoomModelExists (const QString &sipAddress, const QString &localAddress, const bool &isSecure);
   //bool chatRoomModelExists (std::shared_ptr<linphone::ChatRoom> chatRoom);
   
@@ -96,11 +96,11 @@ public:
     Q_CHECK_PTR(mCallsListModel);
     return mCallsListModel;
   }
-  
+  /* Timelines
   ChatRoomListModel *getChatRoomListModel () const {
     Q_CHECK_PTR(mChatRoomListModel);
     return mChatRoomListModel;
-  }
+  }*/
   
 
   ContactsListModel *getContactsListModel () const {
@@ -114,7 +114,6 @@ public:
   }
 
   TimelineListModel *getTimelineListModel () const {
-	  Q_CHECK_PTR(mTimelineListModel);
 	  return mTimelineListModel;
   }
 
@@ -219,7 +218,7 @@ private:
 
   //QHash<QPair<bool, QPair<QString, QString> >, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
   //QHash<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
-  QList<QPair<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>>> mChatRoomModels;
+  //QList<QPair<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>>> mChatRoomModels;
   HistoryModel * mHistoryModel = nullptr;
   LdapListModel *mLdapListModel = nullptr;
 

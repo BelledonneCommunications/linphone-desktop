@@ -34,7 +34,7 @@ Rectangle {
 
       property bool bindToEnd: false
       property bool tryToLoadMoreEntries: true
-      property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
+      //property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
 
       // -----------------------------------------------------------------------
 
@@ -67,7 +67,6 @@ Rectangle {
         // more entries.
         onEntryTypeFilterChanged: Logic.initView()
         onMoreEntriesLoaded: Logic.handleMoreEntriesLoaded(n)
-		onPeerAddressChanged:console.log("connection : "+proxyModel.peerAddress)
       }
 
       // -----------------------------------------------------------------------
@@ -96,7 +95,8 @@ Rectangle {
               id: text
 
               anchors.fill: parent
-              color: ChatStyle.sectionHeading.text.color
+              //color: ChatStyle.sectionHeading.text.color
+              color: '#979797'
               font {
                 bold: true
                 pointSize: ChatStyle.sectionHeading.text.pointSize
@@ -127,7 +127,7 @@ Rectangle {
         }
 
         function removeEntry () {
-          proxyModel.removeEntry(index)
+          proxyModel.removeRow(index)
         }
 
         anchors {
@@ -167,7 +167,7 @@ Rectangle {
               Layout.preferredHeight: ChatStyle.entry.lineHeight
               Layout.preferredWidth: ChatStyle.entry.time.width
 
-              color: ChatStyle.entry.time.color
+              color: '#B1B1B1'
               font.pointSize: ChatStyle.entry.time.pointSize
 
               text: $chatEntry.timestamp.toLocaleString(
@@ -193,14 +193,91 @@ Rectangle {
       }
 
       footer: Text {
-        color: ChatStyle.composingText.color
-        font.pointSize: ChatStyle.composingText.pointSize
-        height: visible ? ChatStyle.composingText.height : 0
-        leftPadding: ChatStyle.composingText.leftPadding
-        visible: text.length > 0
+					property var composers : container.proxyModel.composers
+					color: ChatStyle.composingText.color
+					font.pointSize: ChatStyle.composingText.pointSize
+					height: visible ? undefined : 0
+					leftPadding: ChatStyle.composingText.leftPadding
+					visible: composers.length > 0 && SettingsModel.chatEnabled
+					wrapMode: Text.Wrap
 
-        text: Logic.getIsComposingMessage()
-      }
+					text:(composers.length==0?'':(composers.length>1 ? '%1 are typing...' : '%1 is typing...').arg(container.proxyModel.getDisplayNameComposers()))
+				}
+      
+      
+      /* GridView{
+			height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
+			width:parent.width
+			cellWidth: parent.width; cellHeight: ChatStyle.composingText.height
+			
+			property var composersLength : container.proxyModel.composers.length
+			onComposersLengthChanged:{
+				model.clear()
+				console.log(container.proxyModel.composers)
+				for(var j  = 0 ; j < container.proxyModel.composers.length ; ++j) {
+					console.log(container.proxyModel.composers[j])
+					model.append({text:container.proxyModel.composers[j]})
+				}
+			}
+			model: ListModel{}
+			delegate:Rectangle{
+			height:ChatStyle.composingText.height
+			width:parent.width
+			color:"red"
+			}
+      }*/
+      
+      
+      /*
+       Column{
+			height: 100 *container.proxyModel.composers.length
+			width:parent.width
+			onHeightChanged: {
+				composerRepeater.model = []
+				composerRepeater.model = container.proxyModel.composers
+			}
+		Repeater{
+		id:composerRepeater
+			model:["toto"]
+			Rectangle{
+			height:100
+			width:parent.width
+			color:"red"
+			}
+		}
+      }*/
+      
+      
+      /*
+      Column{
+			height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
+			width:parent.width
+			visible:SettingsModel.chatEnabled
+			onHeightChanged: {
+				composers.clear()
+				composerRepeater.model = []
+				composerRepeater.model = container.proxyModel.composers
+			}
+			Repeater{
+				id:composerRepeater
+				model:ListModel{
+					id:composers
+				}
+				onModelChanged: console.log(container.proxyModel.composers.length)
+				
+				Text {
+					color: ChatStyle.composingText.color
+					font.pointSize: ChatStyle.composingText.pointSize
+					height: visible ? ChatStyle.composingText.height : 0
+					
+					leftPadding: ChatStyle.composingText.leftPadding
+					visible: text.length > 0 && SettingsModel.chatEnabled
+	
+					text: modelData + ' ' +'is typing...'
+					Component.onCompleted: console.log(text + "=>" +width+"/"+height+" : "+visible)
+				}
+			}
+		  }*/
     }
 
     // -------------------------------------------------------------------------
@@ -218,7 +295,8 @@ Rectangle {
       DroppableTextArea {
         id: textArea
 		
-		enabled:!proxyModel.chatRoomModel.hasBeenLeft
+		enabled:proxyModel && proxyModel.chatRoomModel ? !proxyModel.chatRoomModel.hasBeenLeft:false
+		isEphemeral : proxyModel && proxyModel.chatRoomModel ? proxyModel.chatRoomModel.ephemeralEnabled:false
 
         anchors.left: parent.left
 		anchors.right: parent.right

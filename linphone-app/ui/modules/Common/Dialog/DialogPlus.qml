@@ -16,6 +16,7 @@ Rectangle {
   property alias descriptionText: description.text // Optionnal.
   property int buttonsAlignment : Qt.AlignLeft
   property bool flat : false	// Remove margins
+  property alias showCloseCross : titleBar.showCloseCross
 
   default property alias _content: content.data
   property bool _disableExitStatus
@@ -62,6 +63,7 @@ Rectangle {
 	DialogTitle{
 		id:titleBar
 		//Layout.fillHeight: dialog.contentIsEmpty
+		showCloseCross:dialog.showCloseCross
 		Layout.fillWidth: true
 		onClose: exitStatus(0)
 		
@@ -83,16 +85,16 @@ Rectangle {
 	  Layout.rightMargin: (flat ? 0 : DialogStyle.content.rightMargin)
     }
 
-    Row {
+    RowLayout {
       id: buttons
 
       Layout.alignment: buttonsAlignment
       Layout.bottomMargin: DialogStyle.buttons.bottomMargin
-      Layout.leftMargin: buttonsAlignment == Qt.AlignLeft
+      Layout.leftMargin: (buttonsAlignment & Qt.AlignLeft )== Qt.AlignLeft
         ? DialogStyle.buttons.leftMargin
-        : buttonsAlignment == Qt.AlignRight
+        : (buttonsAlignment & Qt.AlignRight) == Qt.AlignRight
 			? DialogStyle.buttons.rightMargin
-			: undefined
+			: DialogStyle.buttons.leftMargin
 	  Layout.rightMargin: DialogStyle.buttons.rightMargin
       Layout.topMargin: DialogStyle.buttons.topMargin
       spacing: DialogStyle.buttons.spacing

@@ -13,6 +13,6 @@ QtObject {
   }
 
   property QtObject text: QtObject {
-    property int pointSize: Units.dp * 8
+    property int pointSize: Units.dp * 9
   }
 }

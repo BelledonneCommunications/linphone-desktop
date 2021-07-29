@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
+import LinphoneEnums 1.0
 
 import App.Styles 1.0
 
@@ -151,7 +152,7 @@ ColumnLayout {
 								
 								ActionButton {
 									icon: 'chat'
-									visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton()
+									visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && $contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
 									Icon{
 										icon:'secure_level_1'
 										iconSize:15
@@ -194,19 +195,8 @@ ColumnLayout {
 						readonly property var handlers: [
 							CallsListModel.launchVideoCall,
 							CallsListModel.launchAudioCall,
-							function (sipAddress) {
-								window.setView('Conversation', {
-												   peerAddress: sipAddress,
-												   localAddress: AccountSettingsModel.sipAddress,
-												   fullPeerAddress: sipAddress,
-												   fullLocalAddress: AccountSettingsModel.fullSipAddress
-											   })
-							},
-							function(sipAddress){
-								lastChatRoom = CallsListModel.launchSecureChat(sipAddress);
-								if( !lastChatRoom)
-									console.log("Cannot create Secure Chat with "+sipAddress);
-							}
+							function (sipAddress) {CallsListModel.launchChat( sipAddress,0 )},
+							function (sipAddress) {CallsListModel.launchChat( sipAddress,1 )}
 							/*
 							function (sipAddress) {
 								CallsListModel.launchSecureChat(sipAddress)

@@ -37,6 +37,8 @@ ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObje
 		
 		connect(mChatRoomModel, &ChatRoomModel::securityEvent, this, &ParticipantListModel::onSecurityEvent);
 		
+		connect(mChatRoomModel, &ChatRoomModel::conferenceJoined, this, &ParticipantListModel::onConferenceJoined);
+		
 		connect(mChatRoomModel, &ChatRoomModel::participantAdded, this, &ParticipantListModel::onParticipantAdded);
 		connect(mChatRoomModel, &ChatRoomModel::participantRemoved, this, &ParticipantListModel::onParticipantRemoved);
 		connect(mChatRoomModel, &ChatRoomModel::participantDeviceAdded, this, &ParticipantListModel::onParticipantDeviceAdded);
@@ -67,7 +69,22 @@ ChatRoomModel *ParticipantListModel::getChatRoomModel() const{
 QString ParticipantListModel::addressesToString()const{
 	QStringList txt;
 	for(auto participant : mParticipants){
-		txt << Utils::coreStringToAppString(participant->getParticipant()->getAddress()->asStringUriOnly());
+		if( participant->getParticipant())// is Participant. We test it because this participant is not accepted by chat room yet.
+			txt << Utils::coreStringToAppString(participant->getParticipant()->getAddress()->asStringUriOnly());
+	}
+	txt.removeFirst();// Remove me
+	return txt.join(", ");
+}
+
+QString ParticipantListModel::displayNamesToString()const{
+	QStringList txt;
+	for(auto participant : mParticipants){
+		auto p = participant->getParticipant();
+		if(p){
+			QString displayName = Utils::getDisplayName(p->getAddress());
+			if(displayName != "")
+				txt << displayName;
+		}
 	}
 	txt.removeFirst();// Remove me
 	return txt.join(", ");
@@ -148,6 +165,7 @@ bool ParticipantListModel::removeRows (int row, int count, const QModelIndex &pa
 
 void ParticipantListModel::updateParticipants () {
 	if( mChatRoomModel) {
+	bool changed = false;
 		CoreManager *coreManager = CoreManager::getInstance();
 		auto dbParticipants = mChatRoomModel->getChatRoom()->getParticipants();
 		auto me = mChatRoomModel->getChatRoom()->getMe();
@@ -163,8 +181,8 @@ void ParticipantListModel::updateParticipants () {
 				++itDbParticipant;
 			}
 			if( itDbParticipant == dbParticipants.end()){
-				
 				itParticipant = mParticipants.erase(itParticipant);
+				changed = true;
 			}else
 				++itParticipant;
 		}
@@ -179,8 +197,11 @@ void ParticipantListModel::updateParticipants () {
 				connect(this, &ParticipantListModel::deviceSecurityLevelChanged, participant.get(), &ParticipantModel::onDeviceSecurityLevelChanged);
 				connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
 				mParticipants << participant;
+				changed = true;
 			}
 		}
+		if( changed)
+			emit participantsChanged();
 	}
 }
 
@@ -190,6 +211,7 @@ void ParticipantListModel::add (std::shared_ptr<ParticipantModel> participant){
 	mParticipants << participant;
 	endInsertRows();
 	resetInternalData();
+	emit participantsChanged();
 }
 
 void ParticipantListModel::remove (ParticipantModel *model) {
@@ -209,6 +231,7 @@ void ParticipantListModel::remove (ParticipantModel *model) {
 		beginRemoveRows(QModelIndex(), index, index);
 		mParticipants.erase(itParticipant);
 		endRemoveRows();
+		emit participantsChanged();
 	}
 }
 
@@ -241,6 +264,9 @@ void ParticipantListModel::onSecurityEvent(const std::shared_ptr<linphone::ChatR
 	}
 }
 
+void ParticipantListModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	updateParticipants();
+}
 void ParticipantListModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	updateParticipants();
 }

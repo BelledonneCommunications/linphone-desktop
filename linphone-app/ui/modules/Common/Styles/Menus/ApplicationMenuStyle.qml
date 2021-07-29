@@ -29,10 +29,10 @@ QtObject {
     }
 
     property QtObject text: QtObject {
-      property int pointSize: Units.dp * 11
+      property int pointSize: Units.dp * 10
 
       property QtObject color: QtObject {
-        property color normal: Colors.q50
+        property color normal: Colors.q	//q50
         property color selected: Colors.q
       }
     }

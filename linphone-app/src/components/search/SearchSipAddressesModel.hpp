@@ -27,10 +27,11 @@
 
 #include <linphone++/linphone.hh>
 
-#include "../search/SearchHandler.hpp"
+#include "SearchHandler.hpp"
 
 // =============================================================================
 
+class SearchResultModel;
 
 class SearchSipAddressesModel : public QAbstractListModel {
 	Q_OBJECT
@@ -46,7 +47,7 @@ public:
 	
 	Q_INVOKABLE void setFilter (const QString &pattern);
 	
-	QStringList mAddresses;
+	QList<std::shared_ptr<SearchResultModel> > mAddresses;
 	// And instance of Magic search
 	std::shared_ptr<linphone::MagicSearch> mMagicSearch;
 	// Callback when searching

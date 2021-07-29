@@ -89,12 +89,12 @@ function setView (view, props) {
 
 // -----------------------------------------------------------------------------
 
-function openConferenceManager () {
+function openConferenceManager (params) {
   var App = Linphone.App
   var callsWindow = App.getCallsWindow()
 
   App.smartShowWindow(callsWindow)
-  callsWindow.openConferenceManager()
+  callsWindow.openConferenceManager(params)
 }
 
 function manageAccounts () {

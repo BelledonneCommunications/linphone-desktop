@@ -13,7 +13,8 @@ Column {
 	property color sipAddressColor: ContactDescriptionStyle.sipAddress.color
 	property color usernameColor: ContactDescriptionStyle.username.color
 	property int horizontalTextAlignment
-	property int contentWidth : username.contentWidth + address.contentWidth
+	property int contentWidth : Math.max(username.implicitWidth, address.implicitWidth)+10
+	
 	
 	// ---------------------------------------------------------------------------
 	

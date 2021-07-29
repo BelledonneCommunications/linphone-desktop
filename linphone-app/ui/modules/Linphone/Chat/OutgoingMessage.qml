@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneEnums 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -35,12 +36,12 @@ Item {
         Icon {
           id: iconId
           readonly property var isError: Utils.includes([
-                ChatRoomModel.MessageStatusFileTransferError,
-                ChatRoomModel.MessageStatusNotDelivered,
-                ], $chatEntry.status)
-          readonly property bool isUploaded: $chatEntry.status === ChatRoomModel.MessageStatusDelivered
-          readonly property bool isDelivered: $chatEntry.status === ChatRoomModel.MessageStatusDeliveredToUser
-          readonly property bool isRead: $chatEntry.status === ChatRoomModel.MessageStatusDisplayed
+                LinphoneEnums.ChatMessageStateFileTransferError,
+                LinphoneEnums.ChatMessageStateNotDelivered,
+                ], $chatEntry.state)
+          readonly property bool isUploaded: $chatEntry.state == LinphoneEnums.ChatMessageStateDelivered
+          readonly property bool isDelivered: $chatEntry.state == LinphoneEnums.ChatMessageStateDeliveredToUser
+          readonly property bool isRead: $chatEntry.state == LinphoneEnums.ChatMessageStateDisplayed
 
           icon: isError
             ? 'chat_error'
@@ -50,7 +51,7 @@ Item {
           MouseArea {
             id:retryAction
             anchors.fill: parent
-            visible: iconId.isError || $chatEntry.status === ChatRoomModel.MessageStatusIdle
+            visible: iconId.isError || $chatEntry.state == LinphoneEnums.ChatMessageStateIdle
             onClicked: proxyModel.resendMessage(index)
           }
 
@@ -83,7 +84,7 @@ Item {
         height: ChatStyle.entry.lineHeight
         width: ChatStyle.entry.message.outgoing.areaSize
 
-        sourceComponent: $chatEntry.status === ChatRoomModel.MessageStatusInProgress || $chatEntry.status === ChatRoomModel.MessageStatusFileTransferInProgress
+        sourceComponent: $chatEntry.state == LinphoneEnums.ChatMessageStateInProgress || $chatEntry.state == LinphoneEnums.ChatMessageStateFileTransferInProgress
           ? indicator
           : iconComponent
       }

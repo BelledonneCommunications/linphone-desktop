@@ -29,6 +29,7 @@
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "CoreHandlers.hpp"
@@ -203,7 +204,7 @@ void CoreHandlers::onMessageReceived (
 
     if (
       !app->hasFocus() ||
-		!CoreManager::getInstance()->getChatRoomModel(chatRoom, false)	
+		!CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false)	
 			/*
       !CoreManager::getInstance()->chatRoomModelExists(
         Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()),

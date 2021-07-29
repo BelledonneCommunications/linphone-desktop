@@ -24,6 +24,11 @@
 #include "components/core/CoreManager.hpp"
 
 #include "ChatRoomProxyModel.hpp"
+#include "components/chat-events/ChatEvent.hpp"
+#include "components/chat-events/ChatMessageModel.hpp"
+#include "components/chat-events/ChatNoticeModel.hpp"
+#include "components/chat-events/ChatCallModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 
 // =============================================================================
 
@@ -36,11 +41,11 @@ class ChatRoomProxyModel::ChatRoomModelFilter : public QSortFilterProxyModel {
 public:
   ChatRoomModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {}
 
-  ChatRoomModel::EntryType getEntryTypeFilter () {
+  int getEntryTypeFilter () {
     return mEntryTypeFilter;
   }
 
-  void setEntryTypeFilter (ChatRoomModel::EntryType type) {
+  void setEntryTypeFilter (int type) {
     mEntryTypeFilter = type;
     invalidate();
   }
@@ -53,11 +58,11 @@ protected:
     QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
     const QVariantMap data = index.data().toMap();
 
-    return data["type"].toInt() == mEntryTypeFilter;
+    return (data["type"].toInt() & mEntryTypeFilter) > 0;
   }
 
 private:
-  ChatRoomModel::EntryType mEntryTypeFilter = ChatRoomModel::EntryType::GenericEntry;
+  int mEntryTypeFilter = ChatRoomModel::EntryType::GenericEntry;
 };
 
 // =============================================================================
@@ -104,16 +109,13 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
     ); \
   }
 
-CREATE_PARENT_MODEL_FUNCTION(removeAllEntries);
+CREATE_PARENT_MODEL_FUNCTION(removeAllEntries)
 
-CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendFileMessage, const QString &);
-CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendMessage, const QString &);
+CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendFileMessage, const QString &)
+CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendMessage, const QString &)
 
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(downloadFile);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFile);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(openFileDirectory);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(removeEntry);
-CREATE_PARENT_MODEL_FUNCTION_WITH_ID(resendMessage);
+CREATE_PARENT_MODEL_FUNCTION_WITH_ID(removeRow)
+
 
 #undef GET_CHAT_MODEL
 #undef CREATE_PARENT_MODEL_FUNCTION
@@ -147,7 +149,7 @@ void ChatRoomProxyModel::loadMoreEntries () {
   }
 }
 
-void ChatRoomProxyModel::setEntryTypeFilter (ChatRoomModel::EntryType type) {
+void ChatRoomProxyModel::setEntryTypeFilter (int type) {
   ChatRoomModelFilter *ChatRoomModelFilter = static_cast<ChatRoomProxyModel::ChatRoomModelFilter *>(sourceModel());
 
   if (ChatRoomModelFilter->getEntryTypeFilter() != type) {
@@ -162,10 +164,21 @@ bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) c
   return sourceModel()->rowCount() - sourceRow <= mMaxDisplayedEntries;
 }
 bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-	const QVariantMap l = sourceModel()->data(left).value<QVariantMap>();
-	const QVariantMap r = sourceModel()->data(right).value<QVariantMap>();
+	auto l = sourceModel()->data(left);
+	auto r = sourceModel()->data(right);
 	
-	return l["timestamp"].toDateTime() < r["timestamp"].toDateTime();
+	ChatEvent * a = l.value<ChatMessageModel*>();// l.value<ChatEvent*>() cannot be used
+	if(!a)
+		a = l.value<ChatNoticeModel*>();
+	if(!a)
+		a = l.value<ChatCallModel*>();
+	ChatEvent * b = r.value<ChatMessageModel*>();
+	if(!b)
+		b = r.value<ChatNoticeModel*>();
+	if(!b)
+		b = r.value<ChatCallModel*>();
+	
+	return a->mTimestamp < b->mTimestamp;
 }
 // -----------------------------------------------------------------------------
 
@@ -218,8 +231,18 @@ void ChatRoomProxyModel::setIsSecure (const int &secure) {
   emit isSecureChanged(mIsSecure);
 }
 */
+
+/*
 bool ChatRoomProxyModel::getIsRemoteComposing () const {
   return mChatRoomModel ? mChatRoomModel->getIsRemoteComposing() : false;
+}*/
+
+QList<QString> ChatRoomProxyModel::getComposers() const{
+	return (mChatRoomModel?mChatRoomModel->getComposers():QList<QString>());
+}
+
+QString ChatRoomProxyModel::getDisplayNameComposers()const{
+	return getComposers().join(", ");
 }
 
 QString ChatRoomProxyModel::getCachedText() const{
@@ -228,7 +251,7 @@ QString ChatRoomProxyModel::getCachedText() const{
 
 // -----------------------------------------------------------------------------
 
-void ChatRoomProxyModel::reload () {
+void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
   mMaxDisplayedEntries = EntriesChunkSize;
 
   if (mChatRoomModel) {
@@ -240,8 +263,10 @@ void ChatRoomProxyModel::reload () {
 
   //mChatRoomModel = CoreManager::getInstance()->getChatRoomModel(mPeerAddress, mLocalAddress, mIsSecure);
   //if(mChatRoom)
-		mChatRoomModel = CoreManager::getInstance()->getChatRoomModel(mChatRoom);
+	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoomModel);
   
+  if(!mChatRoomModel)
+	qWarning() << "mChatRoomModel is null!";
 
   if (mChatRoomModel) {
 
@@ -252,6 +277,7 @@ void ChatRoomProxyModel::reload () {
   }
 
   static_cast<ChatRoomModelFilter *>(sourceModel())->setSourceModel(mChatRoomModel.get());
+  invalidate();
 }
 void ChatRoomProxyModel::resetMessageCount(){
 	if( mChatRoomModel){
@@ -263,13 +289,11 @@ ChatRoomModel *ChatRoomProxyModel::getChatRoomModel () const{
 	return mChatRoomModel.get();
 	
 }
+
 void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *chatRoomModel){
-	if(chatRoomModel)
-		mChatRoom = chatRoomModel->getChatRoom();
-	else
-		mChatRoom = nullptr;
-	reload();
+	reload(chatRoomModel);
 	emit chatRoomModelChanged();
+	emit isRemoteComposingChanged();
 }
 // -----------------------------------------------------------------------------
 
@@ -290,8 +314,8 @@ void ChatRoomProxyModel::handleIsActiveChanged (QWindow *window) {
   }
 }
 
-void ChatRoomProxyModel::handleIsRemoteComposingChanged (bool status) {
-  emit isRemoteComposingChanged(status);
+void ChatRoomProxyModel::handleIsRemoteComposingChanged () {
+  emit isRemoteComposingChanged();
 }
 
 void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {

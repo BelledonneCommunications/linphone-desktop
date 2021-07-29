@@ -21,6 +21,7 @@ Item {
 	
 	property bool dropEnabled: true
 	property string dropDisabledReason
+	property bool isEphemeral : false
 	
 	// ---------------------------------------------------------------------------
 	
@@ -90,7 +91,7 @@ Item {
 				Layout.alignment: Qt.AlignVCenter
 
 				enabled: droppableTextArea.dropEnabled
-				icon: 'micro'
+				icon: 'chat_micro'
 				iconSize: DroppableTextAreaStyle.fileChooserButton.size
 				useStates:false
 				
@@ -188,7 +189,8 @@ Item {
 			// Handle click to select files.
 			ActionButton {
 				id: sendButton
-				Layout.rightMargin: DroppableTextAreaStyle.fileChooserButton.margins
+				Layout.rightMargin: DroppableTextAreaStyle.fileChooserButton.margins+15
+				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignVCenter
 				//anchors.verticalCenter: parent.verticalCenter
 				/*{
@@ -202,6 +204,14 @@ Item {
 				iconSize: DroppableTextAreaStyle.fileChooserButton.size
 				useStates:false
 				onClicked: handleValidation()
+				Icon{
+					visible:droppableTextArea.isEphemeral
+					icon:'timer'
+					iconSize:15
+					anchors.right:parent.right
+					anchors.bottom : parent.bottom
+					anchors.rightMargin:-15
+				}
 			}
 		}/*
 		MouseArea{

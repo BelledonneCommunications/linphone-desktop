@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
-   width="14"
-   height="14"
-   viewBox="0 0 14 14"
    version="1.1"
-   id="svg15"
+   id="svg2"
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
    sodipodi:docname="timeline_search.svg"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
   <sodipodi:namedview
-     id="namedview17"
+     id="namedview4"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -20,47 +25,33 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="54.5625"
-     inkscape:cx="8"
-     inkscape:cy="8"
+     inkscape:zoom="27.28125"
+     inkscape:cx="16"
+     inkscape:cy="16"
      inkscape:window-width="1920"
      inkscape:window-height="1092"
      inkscape:window-x="1920"
      inkscape:window-y="33"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg15" />
-  <defs
-     id="defs5">
-    <filter
-       id="15qdh5dl2a"
-       color-interpolation-filters="auto"
-       x="0"
-       y="0"
-       width="1"
-       height="1">
-      <feColorMatrix
-         in="SourceGraphic"
-         values="0 0 0 0 0.294118 0 0 0 0 0.349020 0 0 0 0 0.392157 0 0 0 1.000000 0"
-         id="feColorMatrix2" />
-    </filter>
-  </defs>
+     inkscape:current-layer="g8" />
   <g
-     fill="none"
-     fill-rule="evenodd"
-     id="g13"
-     transform="matrix(0.88339223,0,0,0.88339223,-0.06713781,-0.02650177)">
-    <g
-       id="g11">
-      <g
-         filter="url(#15qdh5dl2a)"
-         transform="translate(-210,-7)"
-         id="g9">
-        <path
-           fill="#cbcbcb"
-           d="M 0.605,4.13 C 0.957,3.302 1.433,2.588 2.033,1.988 2.633,1.388 3.348,0.911 4.176,0.559 5.005,0.207 5.873,0.03 6.781,0.03 c 0.908,0 1.776,0.177 2.605,0.529 0.828,0.352 1.543,0.829 2.143,1.429 0.6,0.6 1.076,1.314 1.428,2.142 0.353,0.83 0.529,1.697 0.529,2.605 0,1.397 -0.394,2.664 -1.181,3.8 l 3.266,3.267 c 0.235,0.235 0.353,0.52 0.353,0.857 0,0.33 -0.12,0.616 -0.362,0.857 -0.241,0.241 -0.527,0.362 -0.857,0.362 -0.343,0 -0.629,-0.12 -0.857,-0.362 L 10.58,12.26 c -1.137,0.787 -2.403,1.181 -3.8,1.181 -0.908,0 -1.776,-0.176 -2.605,-0.529 C 3.347,12.56 2.632,12.084 2.032,11.484 1.432,10.884 0.956,10.17 0.604,9.341 0.252,8.511 0.076,7.643 0.076,6.735 0.076,5.827 0.252,4.959 0.605,4.13 Z m 1.91,2.605 c 0,1.175 0.417,2.18 1.252,3.015 0.835,0.834 1.84,1.252 3.014,1.252 1.175,0 2.18,-0.418 3.014,-1.252 C 10.63,8.915 11.048,7.91 11.048,6.735 11.048,5.561 10.63,4.555 9.795,3.721 8.96,2.886 7.955,2.469 6.781,2.469 5.606,2.469 4.601,2.886 3.767,3.721 2.932,4.556 2.514,5.561 2.514,6.735 Z"
-           transform="translate(210,7)"
-           id="path7" />
-      </g>
-    </g>
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g8">
+    <image
+       width="32"
+       height="32"
+       preserveAspectRatio="none"
+       style="image-rendering:optimizeQuality"
+       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAABGdBTUEAALGPC/xhBQAAAAFzUkdC
+AK7OHOkAAAA8UExURUdwTExaZEtaZE1cZ0xaZUtaZU1bZ0xZZVNia1pqckxbZkxaZExaZU1bZUtZ
+ZEtZZUtZZExaZExZZUtZZHcCA00AAAATdFJOUwDI9S6BlCLlEQhC23RS7dK5p2DG16tEAAAA5klE
+QVQ4y42S67bEEAyFU6JELxjv/66zGjVDOKezfxHfkp0LQJU3MdgtGk8w025z1Ykj4rfcyh7i/aWy
+EPbvn7iaElrdqTUB6WqmyRI4kNx9JVN41yfAIeUnwgWkzhSyn7tYzRfXAWQbF0wb2bYmmK6zF8B6
+BZdyjtd5la3lfjZFOgmcl7Eff5h64NLCaHhaRenD+ncfisvYATyNs67NkWWSXUynTDPWUl2ZpiW5
+D8p4R87jea9dY+vIM3WEeiJ06J62MBDw+i6+RXLLSIDGtGwhIrd9SnT6mUjwQCzwQOz/AEAYd3gD
+nfob8h+L4UQAAAAASUVORK5CYII=
+"
+       id="image10" />
   </g>
 </svg>

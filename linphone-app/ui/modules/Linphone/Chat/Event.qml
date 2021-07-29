@@ -9,7 +9,7 @@ import Utils 1.0
 
 Row {
   property string _type: {
-    var status = $chatEntry.status
+    var status = $chatEntry.state
 
     if (status === ChatRoomModel.CallStatusSuccess) {
       if (!$chatEntry.isStart) {

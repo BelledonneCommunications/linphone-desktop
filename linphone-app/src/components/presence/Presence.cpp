@@ -61,13 +61,13 @@ QString Presence::getPresenceStatusAsString (const linphone::ConsolidatedPresenc
 QString Presence::getBetterPresenceLevelIconName (const PresenceLevel &level) {
   switch (level) {
     case Green:
-      return QStringLiteral("current_account_status_available");
+      return QStringLiteral("current_account_status_online");
     case Orange:
-      return QStringLiteral("led_orange");
+      return QStringLiteral("current_account_status_busy");
     case Red:
-      return QStringLiteral("led_red");
+      return QStringLiteral("current_account_status_dnd");
     case White:
-      return QStringLiteral("led_white");
+      return QStringLiteral("current_account_status_offline");
   }
 
   return QString("");

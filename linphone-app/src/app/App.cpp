@@ -215,6 +215,8 @@ bool App::setFetchConfig (QCommandLineParser *parser) {
 }
 // -----------------------------------------------------------------------------
 
+
+
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 
   connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
@@ -592,8 +594,12 @@ void App::registerTypes () {
   qRegisterMetaType<std::shared_ptr<ChatRoomModel>>();
   qRegisterMetaType<std::shared_ptr<ParticipantListModel>>();
   qRegisterMetaType<std::shared_ptr<ParticipantDeviceModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatNoticeModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatCallModel>>();
+  //qRegisterMetaType<std::shared_ptr<ChatEvent>>();
   LinphoneEnums::registerMetaTypes();
-
+  
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
   registerType<CallsListProxyModel>("CallsListProxyModel");
@@ -626,13 +632,17 @@ void App::registerTypes () {
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerUncreatableType<CallModel>("CallModel");
+  registerUncreatableType<ChatCallModel>("ChatCallModel");
   registerUncreatableType<ChatMessageModel>("ChatMessageModel");
+  registerUncreatableType<ChatNoticeModel>("ChatNoticeModel");
   registerUncreatableType<ChatRoomModel>("ChatRoomModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
   registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
+  registerUncreatableType<ContentModel>("ContentModel");
   registerUncreatableType<HistoryModel>("HistoryModel");
   registerUncreatableType<LdapModel>("LdapModel");
+  registerUncreatableType<SearchResultModel>("SearchResultModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
   registerUncreatableType<TimelineModel>("TimelineModel");
@@ -641,6 +651,11 @@ void App::registerTypes () {
   registerUncreatableType<ParticipantDeviceModel>("ParticipantDeviceModel");
   registerUncreatableType<ParticipantDeviceListModel>("ParticipantDeviceListModel");
   registerUncreatableType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
+  registerUncreatableType<ParticipantImdnStateModel>("ParticipantImdnStateModel");
+  registerUncreatableType<ParticipantImdnStateListModel>("ParticipantImdnStateListModel");
+  registerUncreatableType<ParticipantImdnStateProxyModel>("ParticipantImdnStateProxyModel");
+  
+  
   
   qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, "LinphoneEnums", 1, 0, "LinphoneEnums", "Only enums");
 }
@@ -668,7 +683,7 @@ void App::registerToolTypes () {
   registerToolType<TextToSpeech>("TextToSpeech");
   registerToolType<Units>("Units");
   registerToolType<ContactsImporterPluginsManager>("ContactsImporterPluginsManager");
-  registerToolType<Utils>("Utils");
+  registerToolType<Utils>("UtilsCpp");
 }
 
 void App::registerSharedToolTypes () {

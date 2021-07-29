@@ -40,6 +40,8 @@ public:
 	TimelineModel * getAt(const int& index);
 	std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
 	Q_INVOKABLE QVariantList getLastChatRooms(const int& maxCount) const;
+	std::shared_ptr<ChatRoomModel> getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+	std::shared_ptr<ChatRoomModel> getChatRoomModel(ChatRoomModel * chatRoom);
   
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
   
@@ -55,9 +57,11 @@ public:
 	void setSelectedCount(int selectedCount);
 public slots:
 	void update();
+	void removeChatRoomModel(std::shared_ptr<ChatRoomModel> model);
 	void selectedHasChanged(bool selected);
 	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
 	//void onConferenceLeft();
+	
 	
 	
 signals:
@@ -68,9 +72,6 @@ private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
 	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	
-	
-	
-	void initTimeline ();
 	void updateTimelines();
 
 	QList<std::shared_ptr<TimelineModel>> mTimelines;

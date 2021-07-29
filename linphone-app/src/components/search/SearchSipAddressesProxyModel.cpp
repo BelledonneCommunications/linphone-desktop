@@ -18,17 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "SearchSipAddressesProxyModel.hpp"
+
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/sip-addresses/SipAddressesSorter.hpp"
 
-#include "SipAddressesModel.hpp"
-#include "SearchSipAddressesProxyModel.hpp"
 #include "SearchSipAddressesModel.hpp"
-#include "SipAddressesSorter.hpp"
-
+#include "SearchResultModel.hpp"
 #include "utils/Utils.hpp"
-
 #include <QVariantMap>
 
 
@@ -72,11 +72,9 @@ bool SearchSipAddressesProxyModel::isIgnored(const QString& address) const{
 
 bool SearchSipAddressesProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	const QVariantMap data = sourceModel()->data(index).toMap();
-	
-	std::shared_ptr<linphone::Address> a = Utils::interpretUrl(data["sipAddress"].toString());
-	
-	return !mResultsToIgnore.contains(Utils::coreStringToAppString(a->asStringUriOnly()));
+	const SearchResultModel * model = sourceModel()->data(index).value<SearchResultModel*>();
+
+	return !mResultsToIgnore.contains(Utils::coreStringToAppString(model->getAddress()->asStringUriOnly()));
 }
 
 bool SearchSipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {

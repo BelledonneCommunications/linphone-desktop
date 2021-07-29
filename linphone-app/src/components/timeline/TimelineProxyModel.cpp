@@ -41,20 +41,20 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 	
 	connect(model, SIGNAL(selectedCountChanged(int)), this, SIGNAL(selectedCountChanged(int)));
 	connect(model, &TimelineListModel::updated, this, &TimelineProxyModel::invalidate);
-
+	
 	setSourceModel(model);
 	
 	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultProxyChanged, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->update();
-	  invalidate();
-	  //updateCurrentSelection();
+		invalidate();
+		//updateCurrentSelection();
 	});
 	QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->reset();
-	  invalidate();// Invalidate and reload GUI if the model has been reset
-	  //updateCurrentSelection();
+		invalidate();// Invalidate and reload GUI if the model has been reset
+		//updateCurrentSelection();
 	});
-  sort(0);
+	sort(0);
 }
 
 // -----------------------------------------------------------------------------
@@ -82,16 +82,49 @@ void TimelineProxyModel::updateCurrentSelection(){
 void TimelineProxyModel::unselectAll(){
 	dynamic_cast<TimelineListModel*>(sourceModel())->selectAll(false);
 }
+
+void TimelineProxyModel::setFilterFlags(const int& filterFlags){
+	if( mFilterFlags != filterFlags){
+		mFilterFlags = filterFlags;
+		invalidate();
+		emit filterFlagsChanged();
+	}
+}
+void TimelineProxyModel::setFilterText(const QString& text){
+	if( mFilterText != text){
+		mFilterText = text;
+		invalidate();
+		emit filterTextChanged();
+	}
+}
 // -----------------------------------------------------------------------------
 
 bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  return true;
+	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	auto timeline = sourceModel()->data(index).value<TimelineModel*>();
+	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
+	if( !show && ( (mFilterFlags & TimelineFilter::SimpleChatRoom) == TimelineFilter::SimpleChatRoom))
+		show = !timeline->getChatRoomModel()->isGroupEnabled() && !timeline->getChatRoomModel()->haveEncryption();
+	if( !show && ( (mFilterFlags & TimelineFilter::SecureChatRoom) == TimelineFilter::SecureChatRoom))
+		show = !timeline->getChatRoomModel()->isGroupEnabled() && timeline->getChatRoomModel()->haveEncryption();
+	if( !show && ( (mFilterFlags & TimelineFilter::GroupChatRoom) == TimelineFilter::GroupChatRoom))
+		show = timeline->getChatRoomModel()->isGroupEnabled() && !timeline->getChatRoomModel()->haveEncryption();
+	if( !show && ( (mFilterFlags & TimelineFilter::SecureGroupChatRoom) == TimelineFilter::SecureGroupChatRoom))
+		show = timeline->getChatRoomModel()->isGroupEnabled() && timeline->getChatRoomModel()->haveEncryption();
+	if( !show && ( (mFilterFlags & TimelineFilter::EphemeralChatRoom) == TimelineFilter::EphemeralChatRoom))
+		show = timeline->getChatRoomModel()->isEphemeralEnabled();
+	if(show && mFilterText != ""){
+		QRegularExpression search(mFilterText, QRegularExpression::CaseInsensitiveOption);
+		show = timeline->getChatRoomModel()->getSubject().contains(search) 
+			|| timeline->getChatRoomModel()->getUsername().contains(search);
+			//|| timeline->getChatRoomModel()->getFullPeerAddress().contains(search); not enough significant?
+	}
+	return show;
 }
 
 bool TimelineProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-    const TimelineModel* a = sourceModel()->data(left).value<TimelineModel*>();
-    const TimelineModel* b = sourceModel()->data(right).value<TimelineModel*>();
-  
-    return a->getChatRoomModel()->mLastUpdateTime >= b->getChatRoomModel()->mLastUpdateTime ;
+	const TimelineModel* a = sourceModel()->data(left).value<TimelineModel*>();
+	const TimelineModel* b = sourceModel()->data(right).value<TimelineModel*>();
+	
+	return a->getChatRoomModel()->mLastUpdateTime >= b->getChatRoomModel()->mLastUpdateTime ;
 }

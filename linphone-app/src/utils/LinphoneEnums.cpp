@@ -28,26 +28,41 @@ void LinphoneEnums::registerMetaTypes(){
 	qRegisterMetaType<LinphoneEnums::MediaEncryption>();
 	qRegisterMetaType<LinphoneEnums::FriendCapability>();
 	qRegisterMetaType<LinphoneEnums::EventLogType>();
+	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
 }
 
 
-linphone::MediaEncryption LinphoneEnums::toLinphone(const LinphoneEnums::MediaEncryption& encryption){
-	return static_cast<linphone::MediaEncryption>(encryption);
+linphone::MediaEncryption LinphoneEnums::toLinphone(const LinphoneEnums::MediaEncryption& data){
+	return static_cast<linphone::MediaEncryption>(data);
 }
-LinphoneEnums::MediaEncryption LinphoneEnums::fromLinphone(const linphone::MediaEncryption& encryption){
-	return static_cast<LinphoneEnums::MediaEncryption>(encryption); 
-}
-
-linphone::FriendCapability LinphoneEnums::toLinphone(const LinphoneEnums::FriendCapability& capability){
-	return static_cast<linphone::FriendCapability>(capability);
-}
-LinphoneEnums::FriendCapability LinphoneEnums::fromLinphone(const linphone::FriendCapability& capability){
-	return static_cast<LinphoneEnums::FriendCapability>(capability); 
+LinphoneEnums::MediaEncryption LinphoneEnums::fromLinphone(const linphone::MediaEncryption& data){
+	return static_cast<LinphoneEnums::MediaEncryption>(data); 
 }
 
-linphone::EventLog::Type LinphoneEnums::toLinphone(const LinphoneEnums::EventLogType& capability){
-	return static_cast<linphone::EventLog::Type>(capability);
+linphone::FriendCapability LinphoneEnums::toLinphone(const LinphoneEnums::FriendCapability& data){
+	return static_cast<linphone::FriendCapability>(data);
 }
-LinphoneEnums::EventLogType LinphoneEnums::fromLinphone(const linphone::EventLog::Type& capability){
-	return static_cast<LinphoneEnums::EventLogType>(capability); 
+LinphoneEnums::FriendCapability LinphoneEnums::fromLinphone(const linphone::FriendCapability& data){
+	return static_cast<LinphoneEnums::FriendCapability>(data); 
+}
+
+linphone::EventLog::Type LinphoneEnums::toLinphone(const LinphoneEnums::EventLogType& data){
+	return static_cast<linphone::EventLog::Type>(data);
+}
+LinphoneEnums::EventLogType LinphoneEnums::fromLinphone(const linphone::EventLog::Type& data){
+	return static_cast<LinphoneEnums::EventLogType>(data); 
+}
+
+linphone::ChatMessage::State LinphoneEnums::toLinphone(const LinphoneEnums::ChatMessageState& data){
+	return static_cast<linphone::ChatMessage::State>(data);
+}
+LinphoneEnums::ChatMessageState LinphoneEnums::fromLinphone(const linphone::ChatMessage::State& data){
+	return static_cast<LinphoneEnums::ChatMessageState>(data); 
+}
+
+linphone::Call::Status LinphoneEnums::toLinphone(const LinphoneEnums::CallStatus& data){
+	return static_cast<linphone::Call::Status>(data);
+}
+LinphoneEnums::CallStatus LinphoneEnums::fromLinphone(const linphone::Call::Status& data){
+	return static_cast<LinphoneEnums::CallStatus>(data); 
 }

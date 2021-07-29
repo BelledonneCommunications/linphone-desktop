@@ -171,7 +171,7 @@ class SettingsModel : public QObject {
     Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged)
 
 	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
-	Q_PROPERTY(bool showStartChat READ getShowStartChatButton CONSTANT)
+	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
 
 	// Advanced. -----------------------------------------------------------------
