@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="15"
+   height="15"
+   viewBox="0 0 15 15"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="menu_devices_selected.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="10.646341"
+     inkscape:cx="35.458192"
+     inkscape:cy="41.000002"
+     inkscape:window-width="1920"
+     inkscape:window-height="1092"
+     inkscape:window-x="1920"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10"
+     width="13px" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g8"
+     transform="matrix(0.18571633,0,0,0.1875043,0.90699082,-0.28142708)">
+    <g
+       id="g6">
+      <path
+         stroke="#ff8600"
+         stroke-width="5"
+         d="m 33.308,74.729 c -0.042,0.027 -0.083,0.059 -0.13,0.081 -0.214,0.123 -0.457,0.19 -0.7,0.19 -0.23,0 -0.453,-0.058 -0.66,-0.176 C 31.47,74.629 23.18,69.882 15.068,60.131 7.58,51.118 -1.1,35.978 0.115,15.028 0.151,14.418 0.6,13.906 1.209,13.784 18.102,10.444 31.131,0.906 31.676,0.5 31.695,0.486 31.717,0.467 31.741,0.453 l 0.334,-0.221 c 0.486,-0.325 1.132,-0.308 1.599,0.05 0.128,0.1 13.13,9.919 30.109,13.276 0.61,0.118 1.058,0.633 1.096,1.244 2.3,39.737 -28.873,58.393 -31.571,59.927"
+         transform="translate(3,4)"
+         id="path2" />
+      <path
+         fill="#ff8600"
+         d="M 18.5,19 15.255,25.255 8,26.257 13.25,31.126 12.011,38 18.5,34.754 24.989,38 23.75,31.126 29,26.257 21.745,25.255 Z m 27,0 -3.245,6.255 L 35,26.257 40.25,31.126 39.011,38 45.5,34.754 51.989,38 50.75,31.126 56,26.257 48.745,25.255 Z"
+         transform="translate(3,4)"
+         id="path4" />
+    </g>
+  </g>
+</svg>

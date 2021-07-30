@@ -33,9 +33,10 @@ using namespace std;
 
 ParticipantModel::ParticipantModel (shared_ptr<linphone::Participant> linphoneParticipant, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
-	mAdminStatus = false;
 	mParticipant = linphoneParticipant;
+	mAdminStatus = false;
 	if(mParticipant){
+		mAdminStatus = mParticipant->isAdmin();
 		mParticipantDevices = std::make_shared<ParticipantDeviceListModel>(mParticipant);
 		connect(this, &ParticipantModel::deviceSecurityLevelChanged, mParticipantDevices.get(), &ParticipantDeviceListModel::securityLevelChanged);
 	}
@@ -55,6 +56,11 @@ int ParticipantModel::getDeviceCount() const{
 	return (mParticipant ? mParticipant->getDevices().size() : 0);
 }
 
+bool ParticipantModel::getInviting() const{
+	bool is = !mParticipant;
+	return is;
+}
+
 QString ParticipantModel::getSipAddress() const{
     return (mParticipant ? Utils::coreStringToAppString(mParticipant->getAddress()->asString()) : mSipAddress);
 }
@@ -72,7 +78,6 @@ bool ParticipantModel::isFocus() const{
     return (mParticipant ? mParticipant->isFocus() : false);
 }
 
-
 //------------------------------------------------------------------------
 
 void ParticipantModel::setSipAddress(const QString& address){
@@ -85,10 +90,22 @@ void ParticipantModel::setSipAddress(const QString& address){
 void ParticipantModel::setAdminStatus(const bool& status){	
 	if(status != mAdminStatus){
 		mAdminStatus = status;
-		emit adminStatusChanged();
+		if(mParticipant)
+			emit updateAdminStatus(mParticipant, mAdminStatus);
+		else
+			emit adminStatusChanged();
 	}
 }
 
+void ParticipantModel::setParticipant(std::shared_ptr<linphone::Participant> participant){
+	mParticipant = participant;
+	if(mParticipant){
+		mAdminStatus = mParticipant->isAdmin();
+		mParticipantDevices = std::make_shared<ParticipantDeviceListModel>(mParticipant);
+		connect(this, &ParticipantModel::deviceSecurityLevelChanged, mParticipantDevices.get(), &ParticipantDeviceListModel::securityLevelChanged);
+	}
+	emit invitingChanged();
+}
 //------------------------------------------------------------------------
 
 void ParticipantModel::onSecurityLevelChanged(){

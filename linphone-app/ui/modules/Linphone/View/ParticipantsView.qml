@@ -21,7 +21,7 @@ ScrollableListView {
 	
 	property string genSipAddress
 	
-	// Optional parameters.
+	// Optional parameters.chatRoomModel.isMeAdmin
 	property string headerButtonDescription
 	property string headerButtonIcon
 	property var headerButtonAction
@@ -29,6 +29,7 @@ ScrollableListView {
 	property bool showContactAddress : true
 	property bool showSwitch : false
 	property bool showSeparator : true
+	property bool showAdminStatus : false
 	property bool isSelectable : true
 	
 	property var switchHandler : function(checked, index){
@@ -226,14 +227,23 @@ ScrollableListView {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					showContactAddress: sipAddressesView.showContactAddress
+					statusText : showAdminStatus && modelData.adminStatus ? '(Admin)' : ''
 					
 					entry:  modelData
 					
 					MouseArea {
 						anchors.fill: parent
-						onClicked: sipAddressesView.entryClicked(entry)
+						onClicked: sipAddressesView.entryClicked(parent.entry, index)
+					}
+					BusyIndicator{
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.horizontalCenter: parent.horizontalCenter
+						width:15
+						height:15
+						running: modelData.inviting
 					}
 				}
+				
 				
 				
 				// ---------------------------------------------------------------------

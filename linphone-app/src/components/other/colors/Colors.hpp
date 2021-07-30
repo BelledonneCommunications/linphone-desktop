@@ -61,17 +61,17 @@ class Colors : public QObject {
   // Primary color for hovered items.
   ADD_COLOR(b, "#D64D00")
 
-  ADD_COLOR(c, "#CBCBCB")
+  ADD_COLOR(c, "#CBCBCB")	// Button pressed / separators / fields
   ADD_COLOR(d, "#5A585B")
   ADD_COLOR(e, "#F3F3F3")
   ADD_COLOR(f, "#E8E8E8")
-  ADD_COLOR(g, "#6B7A86")// SipAddress
+  ADD_COLOR(g, "#6B7A86")// SipAddress / Contact Text
   ADD_COLOR(h, "#687680")
 
   // Primary color.
   ADD_COLOR(i, "#FE5E00")
 
-  ADD_COLOR(j, "#4B5964")// Username
+  ADD_COLOR(j, "#4B5964")// Username, Background cancel button hovered
 
   // Popups, home, call, assistant and settings background.
   ADD_COLOR(k, "#FFFFFF")
@@ -82,7 +82,7 @@ class Colors : public QObject {
   ADD_COLOR(m, "#FF8600")
 
   ADD_COLOR(n, "#A1A1A1")
-  ADD_COLOR(o, "#D0D8DE")
+  ADD_COLOR(o, "#D0D8DE")// Disabled button
 
   // Progress bar.
   ADD_COLOR(p, "#17A81A")
@@ -90,9 +90,14 @@ class Colors : public QObject {
   // Fields, backgrounds and text color on some items.
   ADD_COLOR(q, "#FFFFFF")
   
-  ADD_COLOR(r, "#909fab")//Background button
+  ADD_COLOR(r, "#909fab")//Background button normal
   
   ADD_COLOR(s, "#96be64")// Security
+  
+  ADD_COLOR(t, "#C2C2C2")// Title Header
+  ADD_COLOR(u, "#D2D2D2")// Menu border (message)
+  ADD_COLOR(v, "#E7E7E7")// Menu pressed (message)
+  ADD_COLOR(w, "#EDEDED")// Menu background (conversation)
 
   // Field error.
   ADD_COLOR(error, "#FF0000")
@@ -130,7 +135,11 @@ signals:
   void colorTqChanged (const QColor &color);
   void colorTrChanged (const QColor &color);
   void colorTsChanged (const QColor &color);
-
+  void colorTtChanged (const QColor &color);
+  void colorTuChanged (const QColor &color);
+  void colorTvChanged (const QColor &color);
+  void colorTwChanged (const QColor &color);
+	
   void colorTerrorChanged (const QColor &color);
 
 private:

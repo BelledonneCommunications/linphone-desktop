@@ -352,7 +352,13 @@ int ChatRoomModel::getSecurityLevel() const{
 bool ChatRoomModel::isGroupEnabled() const{
 	return mChatRoom && mChatRoom->getCurrentParams()->groupEnabled(); 
 }
+bool ChatRoomModel::isMeAdmin() const{
+	return mChatRoom->getMe()->isAdmin();
+}
 
+bool ChatRoomModel::canHandleParticipants() const{
+	return mChatRoom->canHandleParticipants();
+}
 /*
 bool ChatRoomModel::getIsRemoteComposing () const {
 	return mIsRemoteComposing;
@@ -687,7 +693,7 @@ void ChatRoomModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> 
 void ChatRoomModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	auto events = chatRoom->getHistoryEvents(0);
 	auto e = std::find(events.begin(), events.end(), eventLog);
-	if( e == events.end() )
+	if( e != events.end() )
 		insertNotice(*e);
 	emit participantAdded(chatRoom, eventLog);
 	emit fullPeerAddressChanged();
@@ -704,6 +710,7 @@ void ChatRoomModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoo
 
 void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	emit participantAdminStatusChanged(chatRoom, eventLog);
+	emit isMeAdminChanged();	// It is not the case all the time but calling getters is not a heavy request
 }
 
 void ChatRoomModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){

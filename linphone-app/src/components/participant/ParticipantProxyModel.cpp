@@ -83,15 +83,20 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 void ParticipantProxyModel::add(const QString& address){
 	ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
-		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
+	std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
 		participant->setSipAddress(address);
 		participantsModel->add(participant);
+		if(mChatRoomModel && mChatRoomModel->getChatRoom())// Invite and wait for its creation
+			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
 	}
 }
 
 void ParticipantProxyModel::remove(ParticipantModel * participant){
-	if(participant)
-		dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
+	if(participant) {
+		if(mChatRoomModel && mChatRoomModel->getChatRoom() && participant->getParticipant() )
+			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());			
+		//dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
+	}
 }
 
 // -----------------------------------------------------------------------------

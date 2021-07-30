@@ -20,4 +20,5 @@ QtObject {
     property color normal: Colors.q
     property color pressed: Colors.q
   }
+  property QtObject borderColor : backgroundColor
 }

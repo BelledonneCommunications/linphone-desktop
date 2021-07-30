@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2  as Controls
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 
@@ -14,48 +15,76 @@ Controls.MenuItem {
 	id: button
 	property alias iconMenu : iconArea.icon
 	property alias iconSizeMenu : iconArea.iconSize
+	property alias iconLayoutDirection : rowArea.layoutDirection
+	property var menuItemStyle : MenuItemStyle.normal
 	
-	background: Rectangle {
+	property alias textWeight : rowText.font.bold
+	property int offsetTopMargin : 0
+	property int offsetBottomMargin : 0
+	
+	height:visible?undefined:0
+	
+	background: Rectangle {	
 		color: button.down
-			   ? MenuItemStyle.background.color.pressed
+			   ? menuItemStyle.background.color.pressed
 			   : (
 					 button.hovered
-					 ? MenuItemStyle.background.color.hovered
-					 : MenuItemStyle.background.color.normal
+					 ? menuItemStyle.background.color.hovered
+					 : menuItemStyle.background.color.normal
 					 )
-		implicitHeight: MenuItemStyle.background.height
+		implicitHeight: button.menuItemStyle.background.height
 	}
-	contentItem:Row{
-		leftPadding: MenuItemStyle.leftPadding
-		rightPadding: MenuItemStyle.rightPadding
+	contentItem:RowLayout{
+		id:rowArea		
 		spacing:20
 		Icon{
 			id: iconArea
 			visible: icon
 			width: icon?iconSize:0
+			Layout.leftMargin:(iconLayoutDirection == Qt.LeftToRight ? menuItemStyle.leftMargin : 0)
+			Layout.rightMargin:(iconLayoutDirection == Qt.LeftToRight ? 0 : menuItemStyle.rightMargin)
 		}
 		Text {
+			id:rowText
+			Layout.fillWidth: true
+			Layout.fillHeight: true
+			Layout.leftMargin:(iconLayoutDirection == Qt.LeftToRight ? 0 : menuItemStyle.leftMargin)
+			Layout.rightMargin:(iconLayoutDirection == Qt.LeftToRight ? menuItemStyle.rightMargin : 0)
 			color: button.enabled
-				   ? MenuItemStyle.text.color.enabled
-				   : MenuItemStyle.text.color.disabled
+				   ? (button.down
+					   ? menuItemStyle.text.color.pressed
+					   : (
+							 button.hovered
+							 ? menuItemStyle.text.color.hovered
+							 : menuItemStyle.text.color.normal
+							 ))
+				   : menuItemStyle.text.color.disabled
 			
 			elide: Text.ElideRight
 			
 			font {
-				bold: true
-				pointSize: MenuItemStyle.text.pointSize
+				weight: menuItemStyle.text.weight
+				pointSize: menuItemStyle.text.pointSize
 			}
 			
 			text: button.text
 			
-			//leftPadding: MenuItemStyle.leftPadding
-			//rightPadding: MenuItemStyle.rightPadding
-			
+			//leftPadding: menuItemStyle.leftPadding
+			//rightPadding: menuItemStyle.rightPadding
+			horizontalAlignment: Text.AlignLeft
 			verticalAlignment: Text.AlignVCenter
-			anchors.top: parent.top
-			anchors.bottom : parent.bottom
+			//anchors.top: parent.top
+			//anchors.bottom : parent.bottom
 		}
 	}
 	
 	hoverEnabled: true
+	MouseArea{
+		anchors.fill:parent
+		propagateComposedEvents:true
+		acceptedButtons: Qt.NoButton
+		cursorShape: parent.hovered
+						 ? Qt.PointingHandCursor
+						 : Qt.ArrowCursor
+	}
 }

@@ -18,6 +18,7 @@ Rectangle {
 	
 	property alias sipAddressColor: description.sipAddressColor
 	property alias usernameColor: description.usernameColor
+	property alias statusText : description.statusText
 	
 	property bool displayUnreadMessageCount: false
 	property bool showContactAddress : true

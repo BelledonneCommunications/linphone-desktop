@@ -45,6 +45,8 @@ public:
     Q_PROPERTY(bool focus READ isFocus CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY deviceCountChanged)
+	
+	Q_PROPERTY(bool inviting READ getInviting NOTIFY invitingChanged)
   
 	ContactModel *getContactModel() const;
     QString getSipAddress() const;
@@ -54,9 +56,11 @@ public:
     bool isFocus() const;
 	int getSecurityLevel() const;
 	int getDeviceCount() const;
+	bool getInviting() const;
 	
 	void setSipAddress(const QString& address);
 	void setAdminStatus(const bool& status);
+	void setParticipant(std::shared_ptr<linphone::Participant> participant);
 	
 	std::shared_ptr<linphone::Participant>  getParticipant();
 	Q_INVOKABLE ParticipantDeviceProxyModel * getProxyDevices();
@@ -74,8 +78,10 @@ signals:
 	void securityLevelChanged();
 	void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void sipAddressChanged();
+	void updateAdminStatus(const std::shared_ptr<linphone::Participant> participant, const bool& isAdmin);// Split in two signals in order to sequancialize execution between SDK and GUI
 	void adminStatusChanged();
 	void deviceCountChanged();
+	void invitingChanged();
 	
 //    void contactUpdated ();
 
