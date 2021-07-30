@@ -6,6 +6,9 @@ import Linphone 1.0
 import Utils 1.0
 
 import App.Styles 1.0
+import Common.Styles 1.0
+import Units 1.0
+import Colors 1.0
 
 import 'Conversation.js' as Logic
 
@@ -74,40 +77,71 @@ ColumnLayout  {
 			Icon {
 				id: groupChat
 				
-				Layout.preferredHeight: ConversationStyle.bar.avatarSize
-				Layout.preferredWidth: ConversationStyle.bar.avatarSize
+				Layout.preferredHeight: ConversationStyle.bar.groupChatSize
+				Layout.preferredWidth: ConversationStyle.bar.groupChatSize
 				
 				icon:'chat_room'
-				iconSize: ConversationStyle.bar.avatarSize
+				iconSize: ConversationStyle.bar.groupChatSize
 				visible: chatRoomModel.groupEnabled
 			}
 			RowLayout{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				spacing:0
-				ContactDescription {
+				
+				ColumnLayout{
 					Layout.fillHeight: true
 					Layout.minimumWidth: 20
 					Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
-					Layout.preferredWidth: contentWidth
-					//sipAddress: conversation.peerAddress
-					sipAddressColor: ConversationStyle.bar.description.sipAddressColor
-					username: avatar.username
-					usernameColor: ConversationStyle.bar.description.usernameColor
-					
-					sipAddress: {
-						if(chatRoomModel) {
-							if(chatRoomModel.groupEnabled) {
-								return chatRoomModel.participants.displayNamesToString();
-							}else if(chatRoomModel.isSecure()) {
-								return chatRoomModel.participants.addressesToString();
-							}else {
-								return chatRoomModel.sipAddress;
-							}
-						}else {
-							return conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '';
-						}
+					Layout.preferredWidth: contactDescription.contentWidth
+					spacing: 5
+					Row{
+						Layout.topMargin: 15
+						Layout.preferredHeight: implicitHeight
+						Layout.alignment: Qt.AlignBottom
+						visible:chatRoomModel.isMeAdmin
 						
+						Icon{
+							id:adminIcon
+							icon : 'admin_selected'
+							iconSize:14
+						}
+						Text{
+							anchors.verticalCenter: parent.verticalCenter
+							text:'Admin'
+							color:"#9FA6AB"
+							font.pointSize: Units.dp * 8
+						}
+					}
+					
+					ContactDescription {
+						id:contactDescription
+						Layout.minimumWidth: 20
+						Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
+						Layout.preferredWidth: contentWidth
+						Layout.preferredHeight: contentHeight
+						Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+						contactDescriptionStyle: ConversationStyle.bar.contactDescription
+						username: avatar.username
+						sipAddress: {
+							if(chatRoomModel) {
+								if(chatRoomModel.groupEnabled) {
+									return chatRoomModel.participants.displayNamesToString();
+								}else if(chatRoomModel.isSecure()) {
+									return chatRoomModel.participants.addressesToString();
+								}else {
+									return chatRoomModel.sipAddress;
+								}
+							}else {
+								return conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '';
+							}
+							
+						}
+					}
+					Item{
+						Layout.fillHeight: true
+						Layout.fillWidth: true
+						visible: chatRoomModel.isMeAdmin
 					}
 				}
 				Icon{
@@ -213,31 +247,44 @@ ColumnLayout  {
 					id:conversationMenu
 					x:mainBar.width-width
 					y:mainBar.height
-					width:250
+					menuStyle : MenuStyle.aux2
 					MenuItem{
 						text:'Groupe informations'
-						iconMenu: 'menu_infos'
-						iconSizeMenu: 20
+						iconMenu: (hovered ? 'menu_infos_selected' : 'menu_infos')
+						iconSizeMenu: 25
+						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoChatRoom.qml')
 													   ,{chatRoomModel:chatRoomModel})
 						}
 					}
+					Rectangle{
+						height:1
+						width:parent.width
+						color:Colors.u
+					}
 					MenuItem{
 						text:"Conversation's devices"
-						iconMenu: 'menu_devices'
-						iconSizeMenu: 20
+						iconMenu: (hovered ? 'menu_devices_selected' : 'menu_devices' )
+						iconSizeMenu: 25
+						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
 													   ,{chatRoomModel:chatRoomModel, window:window})
 						}
 					}
+					Rectangle{
+						height:1
+						width:parent.width
+						color:Colors.u
+					}
 					MenuItem{
 						text:'Ephemeral messages'
-						iconMenu: 'menu_ephemeral'
-						iconSizeMenu: 20
+						iconMenu: (hovered ? 'menu_ephemeral_selected' : 'menu_ephemeral')
+						iconSizeMenu: 25
+						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/EphemeralChatRoom.qml')

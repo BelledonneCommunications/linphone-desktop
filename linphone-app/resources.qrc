@@ -15,6 +15,7 @@
 		<file>assets/images/add_participant_hovered.svg</file>
         <file>assets/images/add_participant_normal.svg</file>
         <file>assets/images/add_participant_pressed.svg</file>
+        <file>assets/images/admin_selected.svg</file>
         <file>assets/images/attachment_disabled.svg</file>
         <file>assets/images/attachment_hovered.svg</file>
         <file>assets/images/attachment_normal.svg</file>
@@ -145,12 +146,18 @@
         <file>assets/images/led_orange.svg</file>
         <file>assets/images/led_red.svg</file>
         <file>assets/images/led_white.svg</file>
+        <file>assets/images/menu_copy_text.svg</file>
+        <file>assets/images/menu_delete.svg</file>
+        <file>assets/images/menu_imdn_info.svg</file>
 		<file>assets/images/menu_vdots_normal.svg</file>
 		<file>assets/images/menu_vdots_hovered.svg</file>
 		<file>assets/images/menu_vdots_pressed.svg</file>
 		<file>assets/images/menu_infos.svg</file>
+		<file>assets/images/menu_infos_selected.svg</file>
 		<file>assets/images/menu_devices.svg</file>
+		<file>assets/images/menu_devices_selected.svg</file>
 		<file>assets/images/menu_ephemeral.svg</file>
+		<file>assets/images/menu_ephemeral_selected.svg</file>
         <file>assets/images/message_sign.svg</file>
         <file>assets/images/micro_off_hovered.svg</file>
         <file>assets/images/micro_off_normal.svg</file>
@@ -439,6 +446,7 @@
         <file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>
         <file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
         <file>ui/modules/Linphone/Styles/View/SipAddressesViewStyle.qml</file>
+        <file>ui/modules/Linphone/Styles/View/ParticipantsViewStyle.qml</file>
         <file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
         <file>ui/modules/Linphone/TelKeypad/TelKeypad.js</file>
         <file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
@@ -541,6 +549,7 @@
         <file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/AboutStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/AuthenticationRequestStyle.qml</file>
+        <file>ui/views/App/Styles/Main/Dialogs/InfoChatRoomStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/InfoEncryptionStyle.qml</file>
         <file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>
         <file>ui/views/App/Styles/Main/HomeStyle.qml</file>

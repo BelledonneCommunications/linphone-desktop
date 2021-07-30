@@ -177,27 +177,43 @@ void ParticipantListModel::updateParticipants () {
 		while(itParticipant != mParticipants.end()) {
 			auto itDbParticipant = dbParticipants.begin();
 			while(itDbParticipant != dbParticipants.end() 
-				  && !(*itDbParticipant)->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())){
+				  && ((*itParticipant)->getParticipant() &&  !(*itDbParticipant)->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())
+						|| !(*itParticipant)->getParticipant() && !(*itDbParticipant)->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress()))
+					)
+				  ){
 				++itDbParticipant;
 			}
 			if( itDbParticipant == dbParticipants.end()){
+				int row = itParticipant - mParticipants.begin();
+				beginRemoveRows(QModelIndex(), row, row);
 				itParticipant = mParticipants.erase(itParticipant);
+				endRemoveRows();
 				changed = true;
 			}else
 				++itParticipant;
 		}
 	// Add new
 		for(auto dbParticipant : dbParticipants){
-			auto itParticipant = mParticipants.begin();
-			while(itParticipant != mParticipants.end() && !dbParticipant->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())){
+			auto itParticipant = mParticipants.begin();			
+			while(itParticipant != mParticipants.end() && ( (*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())
+								|| (!(*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress())))
+								)
+			){
+			
 				++itParticipant;
 			}
 			if( itParticipant == mParticipants.end()){
 				auto participant = std::make_shared<ParticipantModel>(dbParticipant);
 				connect(this, &ParticipantListModel::deviceSecurityLevelChanged, participant.get(), &ParticipantModel::onDeviceSecurityLevelChanged);
 				connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
+				connect(participant.get(),&ParticipantModel::updateAdminStatus, this, &ParticipantListModel::setAdminStatus);
+				int row = mParticipants.count();
+				beginInsertRows(QModelIndex(), row, row);
 				mParticipants << participant;
+				endInsertRows();
 				changed = true;
+			}else if(!(*itParticipant)->getParticipant()){
+				(*itParticipant)->setParticipant(dbParticipant);
 			}
 		}
 		if( changed)
@@ -249,6 +265,12 @@ const std::shared_ptr<ParticipantModel> ParticipantListModel::getParticipant(con
 }
 
 //-------------------------------------------------------------
+
+
+void ParticipantListModel::setAdminStatus(const std::shared_ptr<linphone::Participant> participant, const bool& isAdmin){
+	mChatRoomModel->getChatRoom()->setParticipantAdminStatus(participant, isAdmin);
+}
+
 void ParticipantListModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
 	auto address = eventLog->getParticipantAddress();
 	if(address) {

@@ -65,6 +65,8 @@ public:
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(bool groupEnabled READ isGroupEnabled NOTIFY groupEnabledChanged)
 	Q_PROPERTY(bool haveEncryption READ haveEncryption CONSTANT)
+	Q_PROPERTY(bool isMeAdmin READ isMeAdmin NOTIFY isMeAdminChanged)
+	Q_PROPERTY(bool canHandleParticipants READ canHandleParticipants CONSTANT)
 	
 	//Q_PROPERTY(bool isComposing MEMBER mIsRemoteComposing NOTIFY isRemoteComposingChanged)
 	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
@@ -120,11 +122,13 @@ public:
 	Q_INVOKABLE bool isSecure() const;
 	int getSecurityLevel() const;
 	bool isGroupEnabled() const;
+	bool isMeAdmin() const;
+	bool canHandleParticipants() const;
 	bool getIsRemoteComposing () const;
 	ParticipantListModel* getParticipants() const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
-	
+		
 //---- Setters	
 	void setLastUpdateTime(const QDateTime& lastUpdateDate);
 	
@@ -209,6 +213,7 @@ signals:
 	
 	void securityLevelChanged(int securityLevel);
 	void groupEnabledChanged(bool groupEnabled);
+	void isMeAdminChanged();
 	void stateChanged(int state);
 	void hasBeenLeftChanged();
 	void ephemeralEnabledChanged();

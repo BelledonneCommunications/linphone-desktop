@@ -3,11 +3,13 @@ import QtQuick.Layouts 1.3
 
 import Clipboard 1.0
 import Common 1.0
+import Common.Styles 1.0
 import Linphone.Styles 1.0
 import TextToSpeech 1.0
 import Utils 1.0
 import Units 1.0
 import UtilsCpp 1.0
+import LinphoneEnums 1.0
 
 import 'Message.js' as Logic
 
@@ -102,24 +104,44 @@ Item {
 		
 		Menu {
 			id: messageMenu
-			
+			menuStyle : MenuStyle.aux
 			MenuItem {
 				text: qsTr('menuCopy')
+				iconMenu: 'menu_copy_text'
+				iconSizeMenu: 17
+				iconLayoutDirection: Qt.RightToLeft
+				menuItemStyle : MenuItemStyle.aux
 				onTriggered: Clipboard.text = $chatEntry.content
 			}
 			
 			MenuItem {
 				enabled: TextToSpeech.available
 				text: qsTr('menuPlayMe')
-				
+				iconMenu: 'speaker'
+				iconSizeMenu: 17
+				iconLayoutDirection: Qt.RightToLeft
+				menuItemStyle : MenuItemStyle.aux
 				onTriggered: TextToSpeech.say($chatEntry.content)
 			}
 			MenuItem {
 				text: 'Delivery Status'
-				
+				iconMenu: 'menu_imdn_info'
+				iconSizeMenu: 17
+				iconLayoutDirection: Qt.RightToLeft
+				menuItemStyle : MenuItemStyle.aux
+				visible: deliveryLayout.model.rowCount() > 0
+				onTriggered: deliveryLayout.visible = !deliveryLayout.visible
+			}
+			MenuItem {
+				text: 'Delete'
+				iconMenu: 'menu_delete'
+				iconSizeMenu: 17
+				iconLayoutDirection: Qt.RightToLeft
+				menuItemStyle : MenuItemStyle.auxRed
 				onTriggered: deliveryLayout.visible = !deliveryLayout.visible
 			}
 		}
+
 		
 		
 		// Handle hovered link.
@@ -169,10 +191,27 @@ Item {
 			}
 		}*/
 		model: $chatEntry.getProxyImdnStates()
+			property var i18n: [
+				'Envoyé à %1 - %2',	// LinphoneEnums.ChatMessageStateDelivered
+				'Reçu par %1 - %2',	// LinphoneEnums.ChatMessageStateDeliveredToUser
+				'Lu par %1 - %2' ,	// LinphoneEnums.ChatMessageStateDisplayed
+				"%1 n'a encore rien reçu"	// LinphoneEnums.ChatMessageStateNotDelivered
+			]
+		function getText(state){
+			if(state == LinphoneEnums.ChatMessageStateDelivered)
+				return i18n[0]
+			else if(state == LinphoneEnums.ChatMessageStateDeliveredToUser)
+				return i18n[1]
+			else if(state == LinphoneEnums.ChatMessageStateDisplayed)
+				return i18n[2]
+			else if(state == LinphoneEnums.ChatMessageStateNotDelivered)
+				return i18n[3]
+			else return ''
+		}
 		delegate:Text{
 			height:ChatStyle.composingText.height-5
 			width:parent.width
-			text:'Vu par %1 le %2'.arg(modelData.displayName).arg(UtilsCpp.toDateTimeString(modelData.stateChangeTime))
+			text:deliveryLayout.getText(modelData.state).arg(modelData.displayName).arg(UtilsCpp.toDateTimeString(modelData.stateChangeTime))
 			color:"#B1B1B1"
 			font.pointSize: Units.dp * 8
 			elide: Text.ElideMiddle

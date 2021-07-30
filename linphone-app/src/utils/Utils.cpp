@@ -78,7 +78,10 @@ bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCap
 }
 
 QString Utils::toDateTimeString(QDateTime date){
-	return date.toString("yyyy/MM/dd hh:mm:ss");
+	if(date.date() == QDate::currentDate())
+		return toTimeString(date);
+	else
+		return date.toString("yyyy/MM/dd hh:mm:ss");
 }
 
 QString Utils::toTimeString(QDateTime date){

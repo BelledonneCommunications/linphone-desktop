@@ -19,9 +19,15 @@ Item {
   property color textColorHovered: textColorNormal
   property color textColorNormal
   property color textColorPressed: textColorNormal
+  
+  property color borderColorDisabled
+  property color borderColorHovered
+  property color borderColorNormal
+  property color borderColorPressed
 
   property alias text: button.text
   property bool enabled: true
+  property bool showBorder : false
 
   signal clicked
 
@@ -35,6 +41,16 @@ Item {
     return button.down
       ? colorPressed
       : (button.hovered ? colorHovered : colorNormal)
+  }
+  
+  function _getBorderColor () {
+    if (!wrappedButton.enabled) {
+      return borderColorDisabled
+    }
+
+    return button.down
+      ? borderColorPressed
+      : (button.hovered ? borderColorHovered : borderColorNormal)
   }
 
   function _getTextColor () {
@@ -60,6 +76,8 @@ Item {
     background: Rectangle {
       color: _getBackgroundColor()
       radius: AbstractTextButtonStyle.background.radius
+      border.color: _getBorderColor()
+      border.width: (showBorder ? 1 : 0)
     }
 
     contentItem: Text {

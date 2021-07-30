@@ -85,6 +85,7 @@ Item {
 			}
 			// Record audio
 			ActionButton {
+				visible:false	// TODO
 				id: recordAudioButton
 				
 				//anchors.verticalCenter: parent.verticalCenter
