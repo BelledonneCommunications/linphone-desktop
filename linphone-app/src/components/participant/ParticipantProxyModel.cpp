@@ -93,7 +93,10 @@ void ParticipantProxyModel::add(const QString& address){
 
 void ParticipantProxyModel::remove(ParticipantModel * participant){
 	if(participant) {
-		if(mChatRoomModel && mChatRoomModel->getChatRoom() && participant->getParticipant() )
+		if( !mChatRoomModel){
+			ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
+			participantsModel->remove(participant);
+		}else if(mChatRoomModel->getChatRoom() && participant->getParticipant() )
 			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());			
 		//dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
 	}

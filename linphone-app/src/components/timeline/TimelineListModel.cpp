@@ -23,6 +23,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "utils/Utils.hpp"
@@ -43,6 +44,8 @@ TimelineListModel::TimelineListModel (QObject *parent) : QAbstractListModel(pare
 	connect(coreHandlers, &CoreHandlers::messageReceived, this, &TimelineListModel::update);
 	connect(coreHandlers, &CoreHandlers::messageReceived, this, &TimelineListModel::updated);
 	
+	connect(CoreManager::getInstance()->getSettingsModel(), &SettingsModel::hideEmptyChatRoomsChanged, this, &TimelineListModel::update);
+	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultRegistrationChanged, this, &TimelineListModel::update);
 	updateTimelines ();
 }
 
@@ -153,7 +156,7 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	
 	for(auto timeline : mTimelines){
 		auto chatRoom = timeline->getChatRoomModel();
-		if(chatRoom && !chatRoom->isGroupEnabled() && !chatRoom->haveEncryption()) {
+		if(chatRoom && chatRoom->isCurrentProxy() && !chatRoom->isGroupEnabled() && !chatRoom->haveEncryption()) {
 			sortedData.insert(chatRoom->mLastUpdateTime.secsTo(currentDateTime),chatRoom);
 		}
 	}
@@ -223,6 +226,7 @@ void TimelineListModel::selectedHasChanged(bool selected){
 void TimelineListModel::updateTimelines () {
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
+
 	
 	//Remove no more chat rooms
 	auto itTimeline = mTimelines.begin();
@@ -287,7 +291,7 @@ void TimelineListModel::remove(std::shared_ptr<TimelineModel> model){
 	}
 }
 void TimelineListModel::removeChatRoomModel(std::shared_ptr<ChatRoomModel> model){
-	if(model->getChatRoom()->isEmpty() && model->hasBeenLeft()){
+	if(model->getChatRoom()->isEmpty() && (model->hasBeenLeft() || !model->isGroupEnabled())){
 		auto itTimeline = mTimelines.begin();
 		while(itTimeline != mTimelines.end()) {
 			if((*itTimeline)->mChatRoomModel == model){

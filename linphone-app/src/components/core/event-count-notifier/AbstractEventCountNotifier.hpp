@@ -57,7 +57,7 @@ public:
   int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 
 signals:
-  void eventCountChanged (int count);
+  void eventCountChanged ();
 
 protected:
   virtual void notifyEventCount (int n) = 0;

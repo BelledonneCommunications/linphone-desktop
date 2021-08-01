@@ -21,6 +21,7 @@
 #include <QQmlApplicationEngine>
 
 #include "app/App.hpp"
+#include "components/core/CoreManager.hpp"
 
 #include "ChatCallModel.hpp"
 
@@ -78,4 +79,7 @@ void ChatCallModel::setIsOutgoing(const bool& data){
 bool ChatCallModel::update(){
 	setIsOutgoing(mCallLog->getDir() == linphone::Call::Dir::Outgoing);
 	setStatus(LinphoneEnums::fromLinphone(mCallLog->getStatus()));
+}
+void ChatCallModel::deleteEvent(){
+	CoreManager::getInstance()->getCore()->removeCallLog(mCallLog);
 }

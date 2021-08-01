@@ -29,7 +29,7 @@ Column {
 	
 	Text {
 		id: username
-		
+		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
 		color: usernameColor
 		elide: Text.ElideRight
 		font.weight: contactDescriptionStyle.username.weight
@@ -55,6 +55,7 @@ Column {
 	
 	Text {
 		id:address
+		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
 		text: SipAddressesModel.cleanSipAddress(sipAddress)
 		color: sipAddressColor
 		elide: Text.ElideRight

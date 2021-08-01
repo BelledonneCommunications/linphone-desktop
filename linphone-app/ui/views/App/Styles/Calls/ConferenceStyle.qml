@@ -1,14 +1,13 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
 
 QtObject {
   property QtObject description: QtObject {
-    property color color: Colors.j
+    property color color: Colors.j.color
     property int pointSize: Units.dp * 12
     property int height: 60
     property int width: 150

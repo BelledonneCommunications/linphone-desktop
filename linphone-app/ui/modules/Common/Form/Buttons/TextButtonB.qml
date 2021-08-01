@@ -15,8 +15,8 @@ AbstractTextButton {
 	textColorNormal: textButtonStyle.textColor.normal
 	textColorPressed: textButtonStyle.textColor.pressed
 	
-	borderColorDisabled: textButtonStyle.borderColor.disabled
-	borderColorHovered: textButtonStyle.borderColor.hovered
-	borderColorNormal: textButtonStyle.borderColor.normal
-	borderColorPressed: textButtonStyle.borderColor.pressed
+	borderColorDisabled: (textButtonStyle.borderColor?textButtonStyle.borderColor.disabled:colorDisabled)
+	borderColorHovered: (textButtonStyle.borderColor?textButtonStyle.borderColor.hovered:colorHovered)
+	borderColorNormal: (textButtonStyle.borderColor?textButtonStyle.borderColor.normal:colorNormal)
+	borderColorPressed: (textButtonStyle.borderColor?textButtonStyle.borderColor.pressed:colorPressed)
 }

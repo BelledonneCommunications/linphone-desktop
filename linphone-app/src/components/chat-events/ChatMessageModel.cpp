@@ -147,13 +147,7 @@ void ContentModel::createThumbnail () {
 	auto chatMessageFileContentModel = mChatMessageModel->getFileContentModel();
 	if( chatMessageFileContentModel && chatMessageFileContentModel->getContent() == mContent){
 		QString id;
-		auto a = chatMessageFileContentModel->getContent();
-		auto b = mChatMessageModel->getChatMessage()->getFileTransferInformation();
-		if( a == b)
-			qWarning() << "OK";
-		else
-			qWarning() << "NOOOOOOOOOO";
-		QString path = Utils::coreStringToAppString(b->getFilePath());
+		QString path = Utils::coreStringToAppString(mChatMessageModel->getChatMessage()->getFileTransferInformation()->getFilePath());
 		
 		auto appdata = ChatMessageModel::AppDataManager(Utils::coreStringToAppString(mChatMessageModel->getChatMessage()->getAppdata()));
 		

@@ -33,6 +33,8 @@ Item {
   // ---------------------------------------------------------------------------
 
   function _getIcon () {
+	if(wrappedButton.icon == '')
+		return wrappedButton.icon;
     if (wrappedButton.updating) {
       return wrappedButton.icon + '_updating'
     }
@@ -74,7 +76,7 @@ Item {
       id: icon
 
       anchors.centerIn: parent
-      icon: _getIcon()
+      icon: Images[_getIcon()].id
       iconSize: wrappedButton.iconSize || (
         parent.width > parent.height ? parent.height : parent.width
       )

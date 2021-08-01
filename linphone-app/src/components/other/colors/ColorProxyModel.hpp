@@ -18,26 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QQmlApplicationEngine>
+#ifndef COLOR_PROXY_MODEL_H_
+#define COLOR_PROXY_MODEL_H_
 
-#include "app/App.hpp"
 
-#include "ChatMessageModel.hpp"
-
+#include <linphone++/linphone.hh>
 // =============================================================================
+#include <QObject>
+#include <QDateTime>
+#include <QString>
+#include <QSortFilterProxyModel>
 
-ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : QObject(parent) {
-  mChatMessage = chatMessage;
-}
+class ColorListModel;
+class ChatMessageModel;
 
-std::shared_ptr<linphone::ChatMessage> ChatMessageModel::getChatMessage(){
-	return mChatMessage;
-}
+class ColorProxyModel : public QSortFilterProxyModel {
+	Q_OBJECT
+	
+public:
+	ColorProxyModel (QObject *parent = nullptr);
+	
+	
+protected:
+	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
+};
 
-bool ChatMessageModel::isEphemeral() const{
-	return mChatMessage->isEphemeral();
-}
-
-qint64 ChatMessageModel::getEphemeralExpireTime() const{
-	return 	mChatMessage->getEphemeralExpireTime();
-}
+#endif

@@ -58,7 +58,6 @@ ApplicationWindow {
 		sequence: StandardKey.Close
 		onActivated: window.hide()
 	}
-	
 	// ---------------------------------------------------------------------------
 	
 	Loader {
@@ -307,7 +306,8 @@ ApplicationWindow {
 															chatRoomModel:entry.chatRoomModel
 															
 														}):
-												 setView('HistoryView', {}))
+												 //setView('HistoryView', {}))
+												 setView('Home', {}))
 												menu.resetSelectedEntry() 
 										}
 					}

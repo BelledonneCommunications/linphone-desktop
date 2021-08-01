@@ -38,6 +38,7 @@ DialogPlus {
 		
 		ScrollableListView {
 			id: view
+			property var window : dialog.window
 			anchors.fill: parent
 			model: ParticipantProxyModel{
 				chatRoomModel : dialog.chatRoomModel
@@ -45,6 +46,11 @@ DialogPlus {
 			
 			delegate: 
 				ColumnLayout{
+				id:mainHeader
+				property var window : ListView.view.window
+				property int securityLevel : modelData.securityLevel
+				property string addressToCall : modelData.sipAddress
+						
 				width:parent.width
 				spacing: 0
 				RowLayout {
@@ -61,19 +67,40 @@ DialogPlus {
 																						 LinphoneUtils.getContactUsername(modelData.sipAddress)
 											 ):''
 						Icon{
+							property int securityLevel : modelData.securityLevel
 							anchors.right: parent.right
 							anchors.top:parent.top
 							anchors.topMargin: -5
-							visible: modelData && modelData.securityLevel !== 1
-							icon: modelData?(modelData.securityLevel === 2?'secure_level_1': modelData.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'):'secure_level_unsafe'
+							visible: modelData && securityLevel !== 1
+							icon: modelData?(securityLevel === 2?'secure_level_1': securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'):'secure_level_unsafe'
 							iconSize:15
+							Timer{// Workaround : no security events are send when device's security change.
+									onTriggered: parent.securityLevel = modelData.securityLevel
+									repeat:true
+									running:true
+									interval:500
+								}
 						}
 					}
-					ContactDescription{
+					Item{
 						Layout.fillHeight: true
 						Layout.fillWidth: true
 						Layout.leftMargin: 14
-						username: avatar.username
+						ContactDescription{
+							id:contactDescription
+							anchors.fill:parent
+							username: avatar.username
+						}
+						MouseArea{
+									anchors.fill:contactDescription
+									onClicked: {
+										//mainHeader.window.detachVirtualWindow()
+										mainHeader.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
+																   ,{securityLevel : mainHeader.securityLevel
+																   , addressToCall : mainHeader.addressToCall}
+																   )
+									}
+								}						
 					}
 					
 					ActionButton {
@@ -81,7 +108,7 @@ DialogPlus {
 						Layout.preferredWidth: 20
 						Layout.leftMargin: 14
 						Layout.rightMargin: 14
-						icon: modelData.deviceCount > 1?
+						icon: modelData.deviceCount > 0?
 								  (participantDevices.visible ? 'expanded' : 'collapsed')
 								: (modelData.securityLevel === 2?'secure_level_1': 
 																  (modelData.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe')
@@ -101,6 +128,8 @@ DialogPlus {
 					id:participantDevices
 					
 					property var window : dialog.window
+					
+					visible: view.count < 4
 					
 					Layout.fillWidth: true
 					Layout.preferredHeight: item.height * count
@@ -135,7 +164,7 @@ DialogPlus {
 								MouseArea{
 									anchors.fill:parent
 									onClicked: {
-										mainRectangle.window.detachVirtualWindow()
+										//mainRectangle.window.detachVirtualWindow()
 										mainRectangle.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
 																   ,{securityLevel : mainRectangle.securityLevel
 																   , addressToCall : mainRectangle.addressToCall}
@@ -168,7 +197,6 @@ DialogPlus {
 							visible: (index !== (model.count - 1))
 						}
 					}
-					visible:true
 				}
 			}
 		}

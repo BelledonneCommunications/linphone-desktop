@@ -50,6 +50,8 @@ public:
 	
 	bool update();
 	
+	virtual void deleteEvent() override;
+	
 	bool mIsStart;
 	LinphoneEnums::CallStatus mStatus;
 	bool mIsOutgoing;

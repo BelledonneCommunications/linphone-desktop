@@ -8,7 +8,6 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 import Common.Styles 1.0
-import Colors 1.0
 import Units 1.0
 import UtilsCpp 1.0
 
@@ -72,7 +71,7 @@ DialogPlus {
 					Text {
 						Layout.fillWidth: true
 						text:'Would you like to encrypt your chat?'
-						color: Colors.g
+						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
 					}
@@ -123,7 +122,7 @@ DialogPlus {
 					Text{
 						textFormat: Text.RichText
 						text :'Nom du groupe' +'<span style="color:red">*</span>'
-						color: Colors.g
+						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
 					}
@@ -151,7 +150,7 @@ DialogPlus {
 					spacing:20
 					Text{
 						text :'Contacts récents'
-						color: Colors.g
+						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
 					}
@@ -185,7 +184,7 @@ DialogPlus {
 											anchors.topMargin: -5
 											visible: UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
 											icon: 'secure_on'
-											iconSize:20
+											iconSize:20/*
 											Rectangle{
 												id:secureMask
 												anchors.fill:parent
@@ -198,7 +197,7 @@ DialogPlus {
 														secureMask.visible=smartSearchBar.isIgnored(modelData.sipAddress) 
 													}
 												}
-											}
+											}*/
 										}
 									}
 									Text{
@@ -214,7 +213,7 @@ DialogPlus {
 										
 										font.weight: Font.DemiBold
 										lineHeight: 0.8
-										color: Colors.g
+										color: Colors.g.color
 										font.pointSize: Units.dp * 9
 										clip:false
 									}
@@ -223,6 +222,7 @@ DialogPlus {
 								Rectangle{
 									id:mask
 									anchors.fill:parent
+									anchors.topMargin: -5
 									color:'white'
 									opacity: 0.5
 									visible: smartSearchBar.isIgnored(modelData.sipAddress)
@@ -337,7 +337,10 @@ DialogPlus {
 							}]
 						
 						onEntryClicked: {
-							selectedParticipants.append({$sipAddress:entry})
+							selectedParticipants.add(entry)
+							smartSearchBar.addAddressToIgnore(entry);
+							++lastContacts.reloadCount
+							//selectedParticipants.append({$sipAddress:entry})
 						}
 						//resultExceptions: selectedParticipants
 					}
@@ -360,7 +363,7 @@ DialogPlus {
 						Layout.topMargin: ConferenceManagerStyle.columns.selector.spacing
 						text : 'Admin'
 						
-						color: Colors.g
+						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.Light
 						visible: participantView.count > 0
@@ -382,6 +385,7 @@ DialogPlus {
 							showSwitch : true
 							showSeparator: false
 							isSelectable: false
+							showInvitingIndicator: false
 							
 							
 							actions: [{
@@ -477,7 +481,7 @@ DialogPlus {
 					textFormat: Text.RichText
 					text : '<span style="color:red">*</span> Obligatoire'
 					//font.weight: Font.DemiBold
-					color: Colors.g
+					color: Colors.g.color
 					font.pointSize: Units.dp * 8
 				}
 			}

@@ -1,17 +1,16 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.k
+  property color backgroundColor: Colors.k.color
   property int spacing: 20
 
   property QtObject bar: QtObject {
-    property color backgroundColor: Colors.e
+    property color backgroundColor: Colors.e.color
     property int height: 60
     property int leftMargin: 18
     property int rightMargin: 18
@@ -28,27 +27,27 @@ QtObject {
     property int spacing: 15
 
     property QtObject backgroundColor: QtObject {
-      property color normal: Colors.k
-      property color hovered: Colors.g10
+      property color normal: Colors.k.color
+      property color hovered: Colors.g10.color
     }
 
     property QtObject border: QtObject {
-      property color color: Colors.f
+      property color color: Colors.f.color
       property int width: 1
     }
 
     property QtObject indicator: QtObject {
-      property color color: Colors.i
+      property color color: Colors.i.color
       property int width: 5
     }
 
     property QtObject presence: QtObject {
       property int pointSize: Units.dp * 10
-      property color color: Colors.n
+      property color color: Colors.n.color
     }
 
     property QtObject username: QtObject {
-      property color color: Colors.j
+      property color color: Colors.j.color
       property int pointSize: Units.dp * 10
       property int width: 220
     }

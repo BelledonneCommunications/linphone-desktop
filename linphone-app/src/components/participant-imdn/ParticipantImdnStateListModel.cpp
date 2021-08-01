@@ -98,10 +98,14 @@ bool ParticipantImdnStateListModel::removeRows (int row, int count, const QModel
 
 std::shared_ptr<ParticipantImdnStateModel> ParticipantImdnStateListModel::getImdnState(const std::shared_ptr<const linphone::ParticipantImdnState> & state){
 	std::shared_ptr<ParticipantImdnStateModel> imdn;
-	auto imdnAddress = state->getParticipant()->getAddress();
+	auto participant = state->getParticipant();
 	auto it = mList.begin();
-	while(it != mList.end() && !(*it)->getAddress()->equal(imdnAddress))
-		++it;
+	if( participant){
+		auto imdnAddress = state->getParticipant()->getAddress();
+		while(it != mList.end() && !(*it)->getAddress()->equal(imdnAddress))
+			++it;
+	}else
+		it = mList.end();
 	if(it != mList.end())
 		imdn = *it;
 	else{// Create the new one

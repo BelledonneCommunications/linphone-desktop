@@ -72,7 +72,7 @@ void AbstractEventCountNotifier::internalnotifyEventCount () {
   n = n > 99 ? 99 : n;
 
   notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
-  emit eventCountChanged(n);
+  emit eventCountChanged();
 }
 
 // Get missed call from a chat (useful for showing bubbles on Timelines)

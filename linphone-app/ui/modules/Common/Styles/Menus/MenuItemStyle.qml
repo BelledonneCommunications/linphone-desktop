@@ -2,7 +2,6 @@ pragma Singleton
 import QtQml 2.2
 import QtQuick 2.3
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -16,9 +15,9 @@ QtObject {
 			property int height: 30
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.o
-				property color normal: Colors.q
-				property color pressed: Colors.o
+				property color hovered: Colors.o.color
+				property color normal: Colors.q.color
+				property color pressed: Colors.o.color
 			}
 		}
 		
@@ -27,10 +26,10 @@ QtObject {
 			property int weight : Font.Bold
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.j
-				property color normal: Colors.j
-				property color pressed: Colors.j
-				property color disabled: Colors.l50
+				property color hovered: Colors.j.color
+				property color normal: Colors.j.color
+				property color pressed: Colors.j.color
+				property color disabled: Colors.l50.color
 			}
 		}
 	}
@@ -42,9 +41,9 @@ QtObject {
 			property int height: 40
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.v
-				property color normal: Colors.a
-				property color pressed: Colors.v
+				property color hovered: Colors.v.color
+				property color normal: Colors.a.color
+				property color pressed: Colors.v.color
 			}
 		}
 		
@@ -53,10 +52,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.j
-				property color normal: Colors.j
-				property color pressed: Colors.j
-				property color disabled: Colors.l50
+				property color hovered: Colors.j.color
+				property color normal: Colors.j.color
+				property color pressed: Colors.j.color
+				property color disabled: Colors.l50.color
 			}
 		}
 	}
@@ -68,9 +67,9 @@ QtObject {
 			property int height: 40
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.v
-				property color normal: Colors.a
-				property color pressed: Colors.v
+				property color hovered: Colors.v.color
+				property color normal: Colors.a.color
+				property color pressed: Colors.v.color
 			}
 		}
 		
@@ -79,10 +78,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.error
-				property color normal: Colors.error
-				property color pressed: Colors.error
-				property color disabled: Colors.l50
+				property color hovered: Colors.error.color
+				property color normal: Colors.error.color
+				property color pressed: Colors.error.color
+				property color disabled: Colors.l50.color
 			}
 		}
 	}
@@ -94,9 +93,9 @@ QtObject {
 			property int height: 50
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.w
-				property color normal: Colors.w
-				property color pressed: Colors.w
+				property color hovered: Colors.w.color
+				property color normal: Colors.w.color
+				property color pressed: Colors.w.color
 			}
 		}
 		
@@ -105,10 +104,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: Colors.m
-				property color normal: Colors.j
-				property color pressed: Colors.m
-				property color disabled: Colors.l50
+				property color hovered: Colors.m.color
+				property color normal: Colors.j.color
+				property color pressed: Colors.m.color
+				property color disabled: Colors.l50.color
 			}
 		}
 	}

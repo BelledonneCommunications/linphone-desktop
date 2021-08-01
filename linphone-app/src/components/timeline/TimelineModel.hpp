@@ -98,6 +98,7 @@ public:
 	
 public slots:
 	void updateUnreadCount();
+	void onDefaultProxyChanged();
 	//void chatRoomDeleted();
 	
 signals:

@@ -77,9 +77,14 @@
 #include "timeline/TimelineListModel.hpp"
 #include "url-handlers/UrlHandlers.hpp"
 
-#include "other/colors/Colors.hpp"
+#include "other/colors/ColorModel.hpp"
+#include "other/colors/ColorListModel.hpp"
+#include "other/colors/ColorProxyModel.hpp"
 #include "other/clipboard/Clipboard.hpp"
 #include "other/desktop-tools/DesktopTools.hpp"
+#include "other/images/ImageModel.hpp"
+#include "other/images/ImageListModel.hpp"
+#include "other/images/ImageProxyModel.hpp"
 #include "other/text-to-speech/TextToSpeech.hpp"
 #include "other/units/Units.hpp"
 

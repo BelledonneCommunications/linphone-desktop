@@ -6,7 +6,6 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 import LinphoneEnums 1.0
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================

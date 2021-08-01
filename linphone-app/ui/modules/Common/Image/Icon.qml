@@ -15,7 +15,9 @@ Item {
   width: iconSize
 
   Image {
+	id:image
     mipmap: Qt.platform.os === 'osx'
+    cache: Images.areReadOnlyImages
     function getIconSize () {
       Utils.assert(
         (icon == null ||  icon == '' || iconSize != null && iconSize >= 0),

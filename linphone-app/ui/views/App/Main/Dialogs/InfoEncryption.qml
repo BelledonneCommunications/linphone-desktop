@@ -8,7 +8,6 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 import Common.Styles 1.0
-import Colors 1.0
 import Units 1.0
 
 
@@ -74,7 +73,7 @@ DialogPlus {
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
 			font.pointSize: Units.dp * 11
-			color: Colors.d
+			color: Colors.d.color
 			
 			wrapMode: Text.Wrap
 			
@@ -89,7 +88,7 @@ DialogPlus {
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
 			font.pointSize: Units.dp * 11
-			color: Colors.d
+			color: Colors.d.color
 			
 			wrapMode: Text.Wrap
 			text :"To do so, call the contact and follow the authentification process."

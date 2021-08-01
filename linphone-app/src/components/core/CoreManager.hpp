@@ -150,6 +150,7 @@ public:
   Q_INVOKABLE VcardModel *createDetachedVcardModel () const;
 
   Q_INVOKABLE void forceRefreshRegisters ();
+  void updateUnreadMessageCount();
 
   Q_INVOKABLE void sendLogs () const;
   Q_INVOKABLE void cleanLogs () const;
@@ -176,7 +177,7 @@ signals:
 
   void logsUploaded (const QString &url);
 
-  void eventCountChanged (int count);
+  void eventCountChanged ();
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
