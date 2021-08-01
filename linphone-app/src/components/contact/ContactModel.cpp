@@ -67,6 +67,7 @@ VcardModel *ContactModel::getVcardModel () const {
   return mVcardModel;
 }
 
+// -----------------------------------------------------------------------------
 void ContactModel::setVcardModel (VcardModel *vcardModel) {
   VcardModel *oldVcardModel = mVcardModel;
 
@@ -205,4 +206,8 @@ Presence::PresenceStatus ContactModel::getPresenceStatus () const {
 
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(getPresenceStatus());
+}
+
+bool ContactModel::hasCapability(const LinphoneEnums::FriendCapability& capability){
+	return mLinphoneFriend->hasCapability(LinphoneEnums::toLinphone(capability));
 }

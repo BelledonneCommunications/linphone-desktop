@@ -48,7 +48,7 @@ Item {
   // ---------------------------------------------------------------------------
 
   implicitHeight: textField.height
-  width: TextFieldStyle.background.width
+  width: TextFieldStyle.normal.background.width
 
   // ---------------------------------------------------------------------------
 

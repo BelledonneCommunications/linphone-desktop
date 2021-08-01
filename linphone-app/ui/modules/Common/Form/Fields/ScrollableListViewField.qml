@@ -11,9 +11,11 @@ Rectangle {
   property bool readOnly: false
 
   default property alias _content: content.data
+  
+  property QtObject textFieldStyle : TextFieldStyle.normal
 
-  color: TextFieldStyle.background.color.normal
-  radius: TextFieldStyle.background.radius
+  color: textFieldStyle.background.color.normal
+  radius: textFieldStyle.background.radius
 
   Item {
     id: content
@@ -25,8 +27,8 @@ Rectangle {
     anchors.fill: parent
 
     border {
-      color: TextFieldStyle.background.border.color.normal
-      width: TextFieldStyle.background.border.width
+      color: textFieldStyle.background.border.color.normal
+      width: textFieldStyle.background.border.width
     }
 
     color: 'transparent'
@@ -35,7 +37,7 @@ Rectangle {
 
   Rectangle {
     anchors.fill: parent
-    color: TextFieldStyle.background.color.readOnly
+    color: textFieldStyle.background.color.readOnly
     opacity: 0.8
     visible: field.readOnly
   }

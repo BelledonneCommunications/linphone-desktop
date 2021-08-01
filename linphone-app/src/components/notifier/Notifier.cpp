@@ -29,6 +29,8 @@
 #include "app/App.hpp"
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/timeline/TimelineModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "Notifier.hpp"
@@ -267,12 +269,13 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
   if(! message->getFileTransferInformation() ){
 	  foreach(auto content, message->getContents()){
 		  if(content->isText())
-			  txt += content->getStringBuffer().c_str();
+			  txt += content->getUtf8Text().c_str();
 	  }
   }else
 	  txt = tr("newFileMessage");
   map["message"] = txt;
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+  map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
   map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
   map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
   map["fullPeerAddress"] = QString::fromStdString(chatRoom->getPeerAddress()->asString());
@@ -283,6 +286,8 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
 
 void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
   QVariantMap map;
+  shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+  map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
   map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferInformation()->getFilePath());
   if( Utils::getImage(map["fileUri"].toString()).isNull())
     map["imageUri"] = "";
