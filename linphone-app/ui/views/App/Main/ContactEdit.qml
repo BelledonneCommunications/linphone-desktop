@@ -170,6 +170,7 @@ ColumnLayout  {
     sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
 
     onSipAddressClicked: window.setView('Conversation', {
+		
       peerAddress: sipAddress,
       localAddress: AccountSettingsModel.sipAddress,
       fullPeerAddress: sipAddress,

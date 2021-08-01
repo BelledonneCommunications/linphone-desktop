@@ -29,7 +29,8 @@
 
 #include "app/paths/Paths.hpp"
 #include "components/calls/CallsListModel.hpp"
-#include "components/chat/ChatModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
+#include "components/chat-room/ChatRoomListModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contacts/ContactsImporterListModel.hpp"
@@ -38,6 +39,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 
 #include "utils/Utils.hpp"
 
@@ -99,6 +101,7 @@ CoreManager::~CoreManager(){
 
 void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
+	mChatRoomListModel = new ChatRoomListModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
@@ -106,6 +109,7 @@ void CoreManager::initCoreManager(){
 	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
+	mTimelineListModel = new TimelineListModel(this);
 	mEventCountNotifier->updateUnreadMessageCount();
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
@@ -118,13 +122,14 @@ CoreManager *CoreManager::getInstance (){
    return mInstance;
  }
 
-shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
+/*
+shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure) {
   if (peerAddress.isEmpty() || localAddress.isEmpty())
     return nullptr;
 
   // Create a new chat model.
-  QPair<QString, QString> chatModelId{ peerAddress, localAddress };
-  if (!mChatModels.contains(chatModelId)) {
+  QPair<bool, QPair<QString, QString>> chatRoomModelId{isSecure,{ peerAddress, localAddress }};
+  if (!mChatRoomModels.contains(chatRoomModelId)) {
     if (
       !mCore->createAddress(peerAddress.toStdString()) ||
       !mCore->createAddress(localAddress.toStdString())
@@ -134,29 +139,112 @@ shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, con
       return nullptr;
     }
 
-    auto deleter = [this, chatModelId](ChatModel *chatModel) {
-      bool removed = mChatModels.remove(chatModelId);
+    auto deleter = [this, chatRoomModelId](ChatRoomModel *chatRoomModel) {
+      bool removed = mChatRoomModels.remove(chatRoomModelId);
       Q_ASSERT(removed);
-      delete chatModel;
+      delete chatRoomModel;
     };
 
-    shared_ptr<ChatModel> chatModel(new ChatModel(peerAddress, localAddress), deleter);
-    mChatModels[chatModelId] = chatModel;
+    shared_ptr<ChatRoomModel> chatRoomModel(new ChatRoomModel(peerAddress, localAddress, isSecure), deleter);
+    mChatRoomModels[chatRoomModelId] = chatRoomModel;
 
-    emit chatModelCreated(chatModel);
+    emit chatRoomModelCreated(chatRoomModel);
 
-    return chatModel;
+    return chatRoomModel;
   }
 
   // Returns an existing chat model.
-  shared_ptr<ChatModel> chatModel = mChatModels[chatModelId].lock();
-  Q_CHECK_PTR(chatModel);
-  return chatModel;
+  shared_ptr<ChatRoomModel> chatRoomModel = mChatRoomModels[chatRoomModelId].lock();
+  Q_CHECK_PTR(chatRoomModel);
+  return chatRoomModel;
 }
-
-bool CoreManager::chatModelExists (const QString &peerAddress, const QString &localAddress) {
-  return mChatModels.contains({ peerAddress, localAddress });
+*/
+/*
+shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (ChatRoomModel * data) {
+	if(data){
+		return getChatRoomListModel()->getChatRoomModel(data);
+		
+		//for(auto it = mChatRoomModels.begin() ; it != mChatRoomModels.end() ; ++it){
+		//	auto a = it->second.lock();
+		//	if(a.get() == data)
+		//		return a;
+		//}
+	}
+	return nullptr;
+}*/
+/*
+shared_ptr<ChatRoomModel> CoreManager::getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create) {
+  if (!chatRoom)
+    return nullptr;
+  auto pc = chatRoom->getCurrentParams();
+	for(auto it = mChatRoomModels.begin() ; it != mChatRoomModels.end() ; ++it)	{
+		auto a = it->second.lock();
+		auto pa = a->getChatRoom()->getCurrentParams();
+		if( a->getChatRoom()->getConferenceAddress()  == chatRoom->getConferenceAddress()
+				&& a->getChatRoom()->getLocalAddress()  == chatRoom->getLocalAddress()
+				&& a->getChatRoom()->getPeerAddress()  == chatRoom->getPeerAddress()
+				&& pa->encryptionEnabled() == pc->encryptionEnabled()
+				){
+		// Returns an existing chat model.
+			if(a->mDeleteChatRoom)
+				return nullptr;
+			shared_ptr<ChatRoomModel> chatRoomModel = a;
+			Q_CHECK_PTR(chatRoomModel);
+			return chatRoomModel;
+		}
+	}
+	if(!create){
+		return nullptr;
+	}else{
+		  //auto deleter = [this, chatRoomModelId](ChatRoomModel *chatRoomModel) {
+		shared_ptr<ChatRoomModel> chatRoomModel = ChatRoomModel::create(chatRoom);
+		auto deleter = [this](QObject * obj) {
+			//bool removed = mChatRoomModels.remove(chatRoomModelId);
+			ChatRoomModel * chatRoomModel = (ChatRoomModel*)obj;
+			auto c = chatRoomModel->getChatRoom();
+			auto iterator = mChatRoomModels.begin();
+			qWarning() << c.use_count();
+			while(iterator != mChatRoomModels.end()) {
+				if(iterator->first != chatRoomModel->getChatRoom())
+					++iterator;
+				else{
+					//iterator->first->removeListener(iterator->second.lock());
+					auto i = *iterator;
+					qWarning() << c.use_count();
+					mChatRoomModels.erase(iterator);
+					qWarning() << c.use_count();
+					iterator = mChatRoomModels.end();
+				}
+			}
+			qWarning() << c.use_count();
+			if(chatRoomModel->mDeleteChatRoom){
+				CoreManager::getInstance()->getCore()->deleteChatRoom(c);
+			}
+			qWarning() << c.use_count();
+		  };
+		  
+//		    shared_ptr<ChatRoomModel> chatRoomModel = ChatRoomModel::create(chatRoom);
+		    connect(chatRoomModel.get(), &QObject::destroyed, deleter);
+			mChatRoomModels.append({chatRoom, chatRoomModel});
+			qWarning() << chatRoom.use_count();
+	
+		  //shared_ptr<ChatRoomModel> chatRoomModel = ChatRoomModel::create(chatRoom);
+		  //(new ChatRoomModel(chatRoom), deleter);
+		  //chatRoom->addListener(chatRoomModel);
+		  //mChatRoomModels.append({chatRoom, chatRoomModel});
+	  
+		  emit chatRoomModelCreated(chatRoomModel);
+	  
+		  return chatRoomModel;
+	}
 }
+*/
+/*
+//bool CoreManager::chatRoomModelExists (const QString &peerAddress, const QString &localAddress, const bool &isSecure) {
+bool CoreManager::chatRoomModelExists (std::shared_ptr<linphone::ChatRoom> chatRoom) {
+  //return mChatRoomModels.contains({isSecure, { peerAddress, localAddress}});
+	return mChatRoomModels.contains(chatRoom);
+}*/
 
 HistoryModel* CoreManager::getHistoryModel(){
   if(!mHistoryModel){
@@ -206,7 +294,9 @@ void CoreManager::forceRefreshRegisters () {
   qInfo() << QStringLiteral("Refresh registers.");
   mCore->refreshRegisters();
 }
-
+void CoreManager::updateUnreadMessageCount(){
+	mEventCountNotifier->updateUnreadMessageCount();
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::sendLogs () const {
@@ -275,6 +365,12 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     Paths::getFactoryConfigFilePath(),
     nullptr
   );
+  // You only need to give your LIME server URL
+  mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
+	// and enable LIME on your core to use encryption.
+  mCore->enableLimeX3Dh(true);
+					  // Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
+  
   mCore->addListener(mHandlers);
   mCore->setVideoDisplayFilter("MSQOGL");
   mCore->usePreviewWindow(true);
