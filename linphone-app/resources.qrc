@@ -563,9 +563,7 @@
         <file>ui/views/App/Styles/Settings/SettingsAudioStyle.qml</file>
         <file>ui/views/App/Styles/Settings/SettingsWindowStyle.qml</file>
         <file>assets/images/linphone_logo.svg</file>
-        <file>ui/dev-modules/Colors/Colors.qml</file>
         <file>ui/dev-modules/Units/Units.qml</file>
-		<file>ui/dev-modules/Tools/Tools.qml</file>
         <file>assets/icon.ico</file>
     </qresource>
 </RCC>
