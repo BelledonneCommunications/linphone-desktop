@@ -48,7 +48,7 @@ public:
 	void setStatus(const LinphoneEnums::CallStatus& status);
 	void setIsOutgoing(const bool& isOutgoing);
 	
-	bool update();
+	void update();
 	
 	virtual void deleteEvent() override;
 	

@@ -44,7 +44,8 @@ ChatCallModel::~ChatCallModel(){
 
 std::shared_ptr<ChatCallModel> ChatCallModel::create(std::shared_ptr<linphone::CallLog> callLog, const bool& isStart,  QObject * parent){
 	auto model = std::make_shared<ChatCallModel>(callLog, isStart, parent);
-	if(model && model->update()){
+	if(model ){
+		model->update();
 		model->mSelf = model;
 		return model;
 	}else
@@ -76,10 +77,11 @@ void ChatCallModel::setIsOutgoing(const bool& data){
 }
 	
 	
-bool ChatCallModel::update(){
+void ChatCallModel::update(){
 	setIsOutgoing(mCallLog->getDir() == linphone::Call::Dir::Outgoing);
 	setStatus(LinphoneEnums::fromLinphone(mCallLog->getStatus()));
 }
+
 void ChatCallModel::deleteEvent(){
 	CoreManager::getInstance()->getCore()->removeCallLog(mCallLog);
 }
