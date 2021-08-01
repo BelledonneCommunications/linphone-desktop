@@ -8,7 +8,6 @@ import Utils 1.0
 import App.Styles 1.0
 import Common.Styles 1.0
 import Units 1.0
-import Colors 1.0
 
 import 'Conversation.js' as Logic
 
@@ -262,7 +261,7 @@ ColumnLayout  {
 					Rectangle{
 						height:1
 						width:parent.width
-						color:Colors.u
+						color:Colors.u.color
 					}
 					MenuItem{
 						text:"Conversation's devices"
@@ -278,7 +277,7 @@ ColumnLayout  {
 					Rectangle{
 						height:1
 						width:parent.width
-						color:Colors.u
+						color:Colors.u.color
 					}
 					MenuItem{
 						text:'Ephemeral messages'

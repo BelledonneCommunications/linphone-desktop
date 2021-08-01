@@ -1,26 +1,25 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
 
 QtObject {
-  property color color: Colors.q
+  property color color: Colors.q.color
 
   property QtObject sectionHeading: QtObject {
     property int padding: 5
     property int bottomMargin: 20
 
     property QtObject border: QtObject {
-      property color color: Colors.g10
+      property color color: Colors.g10.color
       property int width: 1
     }
 
     property QtObject text: QtObject {
       property int pointSize: Units.dp * 10
-      property color color: Colors.g
+      property color color: Colors.g.color
     }
   }
 
@@ -28,13 +27,13 @@ QtObject {
     property int height: 80
 
     property QtObject border: QtObject {
-      property color color: Colors.f
+      property color color: Colors.f.color
       property int width: 1
     }
   }
 
   property QtObject composingText: QtObject {
-    property color color: Colors.d
+    property color color: Colors.d.color
     property int height: 25
     property int leftPadding: 20
     property int pointSize: Units.dp * 9
@@ -51,7 +50,7 @@ QtObject {
       property int iconSize: 18
 
       property QtObject text: QtObject {
-        property color color: Colors.d
+        property color color: Colors.d.color
         property int pointSize: Units.dp * 10
       }
     }
@@ -80,11 +79,11 @@ QtObject {
 
         property QtObject extension: QtObject {
           property QtObject background: QtObject {
-            property color color: Colors.l50
+            property color color: Colors.l50.color
           }
 
           property QtObject text: QtObject {
-            property color color: Colors.q
+            property color color: Colors.q.color
           }
         }
 
@@ -96,11 +95,11 @@ QtObject {
             property int radius: 3
 
             property QtObject background: QtObject {
-              property color color: Colors.f
+              property color color: Colors.f.color
             }
 
             property QtObject contentItem: QtObject {
-              property color color: Colors.p
+              property color color: Colors.p.color
             }
           }
         }
@@ -111,30 +110,30 @@ QtObject {
       }
 
       property QtObject incoming: QtObject {
-        property color backgroundColor: Colors.o
+        property color backgroundColor: Colors.o.color
         property int avatarSize: 20
 
         property QtObject text: QtObject {
-          property color color: Colors.d
+          property color color: Colors.d.color
           property int pointSize: Units.dp * 10
         }
       }
 
       property QtObject outgoing: QtObject {
-        property color backgroundColor: Colors.e
+        property color backgroundColor: Colors.e.color
         property int areaSize: 16
         property int busyIndicatorSize: 16
         property int sendIconSize: 12
 
         property QtObject text: QtObject {
-          property color color: Colors.d
+          property color color: Colors.d.color
           property int pointSize: Units.dp * 10
         }
       }
     }
 
     property QtObject time: QtObject {
-      property color color: Colors.d
+      property color color: Colors.d.color
       property int pointSize: Units.dp * 10
       property int width: 44
     }

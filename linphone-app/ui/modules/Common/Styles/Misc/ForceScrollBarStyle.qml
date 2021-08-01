@@ -1,13 +1,11 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
-
 // =============================================================================
 
 QtObject {
 	property QtObject background : QtObject {
-		property color color: Colors.g20
+		property color color: Colors.g20.color
 		property int radius : 10
 	}
 	
@@ -18,8 +16,8 @@ QtObject {
 	}
 	
 	property QtObject color: QtObject {
-		property color hovered: Colors.h
-		property color normal: Colors.g20
-		property color pressed: Colors.d
+		property color hovered: Colors.h.color
+		property color normal: Colors.g20.color
+		property color pressed: Colors.d.color
 	}
 }

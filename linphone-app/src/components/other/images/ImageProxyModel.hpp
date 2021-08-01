@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -18,37 +18,30 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CHAT_MESSAGE_MODEL_H
-#define CHAT_MESSAGE_MODEL_H
+#ifndef IMAGE_PROXY_MODEL_H_
+#define IMAGE_PROXY_MODEL_H_
 
-#include "utils/LinphoneEnums.hpp"
 
+#include <linphone++/linphone.hh>
 // =============================================================================
+#include <QObject>
+#include <QDateTime>
+#include <QString>
+#include <QSortFilterProxyModel>
 
+class ImageListModel;
 
-class ChatMessageModel : public QObject {
-  Q_OBJECT
-
+class ImageProxyModel : public QSortFilterProxyModel {
+	Q_OBJECT
+	
 public:
-  ChatMessageModel (std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);
-  
-  Q_PROPERTY(bool isEphemeral READ isEphemeral NOTIFY isEphemeralChanged)
-  Q_PROPERTY(qint64 ephemeralExpireTime READ getEphemeralExpireTime NOTIFY ephemeralExpireTimeChanged)
-  
-  std::shared_ptr<linphone::ChatMessage> getChatMessage();
-  
-  bool isEphemeral() const;
-  qint64 getEphemeralExpireTime() const;
-  
-signals:
-  void isEphemeralChanged();
-  void ephemeralExpireTimeChanged();
-  
-
-private:
-  std::shared_ptr<linphone::ChatMessage> mChatMessage;
+	ImageProxyModel (QObject *parent = nullptr);
+	
+	
+protected:
+	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
 };
-
-Q_DECLARE_METATYPE(std::shared_ptr<ChatMessageModel>)
 
 #endif

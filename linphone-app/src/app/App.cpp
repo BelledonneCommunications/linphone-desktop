@@ -359,12 +359,13 @@ void App::initContentApp () {
     #ifndef Q_OS_MACOS
       mustBeIconified = mParser->isSet("iconified");
     #endif // ifndef Q_OS_MACOS
-
-    mColors = new Colors(this);
+    mColorListModel = new ColorListModel();
+    mImageListModel = new ImageListModel();
   }
 
   // Change colors if necessary.
-  mColors->useConfig(config);
+  mColorListModel->useConfig(config);
+  mImageListModel->useConfig(config);
 
   // Init core.
   CoreManager::init(this, Utils::coreStringToAppString(configPath));
@@ -395,6 +396,8 @@ void App::initContentApp () {
   mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 
   mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
+  mEngine->rootContext()->setContextProperty("Colors", mColorListModel->getQmlData());
+  mEngine->rootContext()->setContextProperty("Images", mImageListModel->getQmlData());
 
   registerTypes();
   registerSharedTypes();
@@ -619,6 +622,8 @@ void App::registerTypes () {
   registerType<SearchSipAddressesProxyModel>("SearchSipAddressesProxyModel");
   
   
+  registerType<ColorProxyModel>("ColorProxyModel");
+  registerType<ImageProxyModel>("ImageProxyModel");
   registerType<TimelineProxyModel>("TimelineProxyModel");
   registerType<ParticipantProxyModel>("ParticipantProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
@@ -636,6 +641,8 @@ void App::registerTypes () {
   registerUncreatableType<ChatMessageModel>("ChatMessageModel");
   registerUncreatableType<ChatNoticeModel>("ChatNoticeModel");
   registerUncreatableType<ChatRoomModel>("ChatRoomModel");
+  registerUncreatableType<ColorModel>("ColorModel");
+  registerUncreatableType<ImageModel>("ImageModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
   registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
@@ -673,6 +680,7 @@ void App::registerSharedTypes () {
   registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
   registerSharedSingletonType<LdapListModel, &CoreManager::getLdapListModel>("LdapListModel");
   registerSharedSingletonType<TimelineListModel, &CoreManager::getTimelineListModel>("TimelineListModel");
+//  registerSharedSingletonType<ColorListModel, &App::getColorListModel>("ColorCpp");
 }
 
 void App::registerToolTypes () {
@@ -684,12 +692,14 @@ void App::registerToolTypes () {
   registerToolType<Units>("Units");
   registerToolType<ContactsImporterPluginsManager>("ContactsImporterPluginsManager");
   registerToolType<Utils>("UtilsCpp");
+  //registerToolType<Colors>("ColorsCpp");
 }
 
 void App::registerSharedToolTypes () {
   qInfo() << QStringLiteral("Registering shared tool types...");
 
-  registerSharedToolType<Colors, App, &App::getColors>("Colors");
+  //registerSharedToolType<Colors, App, &App::getColors>("Colors");
+  //registerSharedToolType<ColorListModel,App,  &App::getColorListModel>("ColorsCpp");
 }
 
 // -----------------------------------------------------------------------------

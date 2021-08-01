@@ -138,3 +138,7 @@ void ChatNoticeModel::setEventLogType(const LinphoneEnums::EventLogType& data){
 		emit eventLogTypeChanged();
 	}
 }
+
+void ChatNoticeModel::deleteEvent(){
+	mEventLog->deleteFromDatabase();
+}

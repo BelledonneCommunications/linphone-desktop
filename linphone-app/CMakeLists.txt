@@ -155,7 +155,12 @@ set(SOURCES
     src/components/ldap/LdapProxyModel.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
-    src/components/other/colors/Colors.cpp
+    src/components/other/colors/ColorModel.cpp
+    src/components/other/colors/ColorListModel.cpp
+    src/components/other/colors/ColorProxyModel.cpp
+    src/components/other/images/ImageModel.cpp
+    src/components/other/images/ImageListModel.cpp
+    src/components/other/images/ImageProxyModel.cpp
     src/components/other/text-to-speech/TextToSpeech.cpp
     src/components/other/units/Units.cpp
     src/components/participant/ParticipantModel.cpp
@@ -250,7 +255,12 @@ set(HEADERS
     src/components/ldap/LdapProxyModel.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
-    src/components/other/colors/Colors.hpp
+    src/components/other/colors/ColorModel.hpp
+    src/components/other/colors/ColorListModel.hpp
+    src/components/other/colors/ColorProxyModel.hpp
+    src/components/other/images/ImageModel.hpp
+    src/components/other/images/ImageListModel.hpp
+    src/components/other/images/ImageProxyModel.hpp
     src/components/other/desktop-tools/DesktopTools.hpp
     src/components/other/text-to-speech/TextToSpeech.hpp
     src/components/other/units/Units.hpp

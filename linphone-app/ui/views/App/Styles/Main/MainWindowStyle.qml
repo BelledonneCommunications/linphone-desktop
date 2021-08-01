@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQuick 2.7
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -25,7 +24,7 @@ QtObject {
 
     property QtObject text: QtObject {
       property int pointSize: Units.dp * 8
-      property color color: Colors.i
+      property color color: Colors.i.color
     }
   }
 
@@ -45,7 +44,7 @@ QtObject {
     property int spacing: 16
 
     property var background: Rectangle {
-      color: Colors.f
+      color: Colors.f.color
     }
   }
 }

@@ -103,6 +103,8 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 	auto timeline = sourceModel()->data(index).value<TimelineModel*>();
 	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
+	auto currentAddress = Utils::interpretUrl(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsStringUriOnly());
+	
 	if( !show && ( (mFilterFlags & TimelineFilter::SimpleChatRoom) == TimelineFilter::SimpleChatRoom))
 		show = !timeline->getChatRoomModel()->isGroupEnabled() && !timeline->getChatRoomModel()->haveEncryption();
 	if( !show && ( (mFilterFlags & TimelineFilter::SecureChatRoom) == TimelineFilter::SecureChatRoom))
@@ -119,6 +121,8 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 			|| timeline->getChatRoomModel()->getUsername().contains(search);
 			//|| timeline->getChatRoomModel()->getFullPeerAddress().contains(search); not enough significant?
 	}
+	if(show)
+		show = timeline->getChatRoomModel()->isCurrentProxy();
 	return show;
 }
 

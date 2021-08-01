@@ -36,9 +36,11 @@ namespace linphone {
   class Config;
 }
 
-class Colors;
+class ColorListModel;
 class DefaultTranslator;
+class ImageListModel;
 class Notifier;
+
 
 class App : public SingleApplication {
   Q_OBJECT;
@@ -74,9 +76,16 @@ public:
     return mNotifier;
   }
 
-  Colors *getColors () const {
-    return mColors;
-  }
+  ColorListModel *getColorListModel () const {
+	return mColorListModel;
+	}
+	ImageListModel *getImageListModel () const {
+	return mImageListModel;
+	}
+	
+   //static ColorListModel *getColorListModel () const {
+    //return App::getInstance()-getColorListModel();
+  //}
 
   QSystemTrayIcon *getSystemTrayIcon () const {
     return mSystemTrayIcon;
@@ -174,7 +183,8 @@ private:
   QQuickWindow *mCallsWindow = nullptr;
   QQuickWindow *mSettingsWindow = nullptr;
 
-  Colors *mColors = nullptr;
+  ColorListModel * mColorListModel;
+  ImageListModel * mImageListModel;
 
   QSystemTrayIcon *mSystemTrayIcon = nullptr;
 

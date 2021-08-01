@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import LinphoneEnums 1.0
+import UtilsCpp 1.0
 
 import Linphone.Styles 1.0
 import Common.Styles 1.0
@@ -117,7 +118,7 @@ ScrollableListView {
 									icon: modelData.icon
 									visible: {
 										var visible = sipAddressesView.actions[index].visible
-										return (visible === undefined || visible) && (modelData.secure==0 || !$sipAddress.contactModel || $sipAddress.contactModel.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh))
+										return (visible === undefined || visible) && (modelData.secure==0 || UtilsCpp.hasCapability(sipAddressesView.interpretableSipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh))
 									}
 									
 									onClicked: sipAddressesView.actions[index].handler({
@@ -239,7 +240,7 @@ ScrollableListView {
 					
 					MouseArea {
 						anchors.fill: parent
-						onClicked: sipAddressesView.entryClicked($sipAddress.sipAddress, )
+						onClicked: sipAddressesView.entryClicked($sipAddress.sipAddress, index)
 					}
 				}
 				
@@ -280,8 +281,6 @@ ScrollableListView {
 							}
 							
 							onClicked: {
-							console.log($sipAddress)
-							console.log($sipAddress.sipAddress)
 								sipAddressesView.actions[index].handler($sipAddress)
 							}
 							Icon{

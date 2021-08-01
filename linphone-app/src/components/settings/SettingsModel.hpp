@@ -103,6 +103,8 @@ class SettingsModel : public QObject {
     Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged)
 
     Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged)
+    Q_PROPERTY(bool hideEmptyChatRooms READ getHideEmptyChatRooms WRITE setHideEmptyChatRooms NOTIFY hideEmptyChatRoomsChanged)
+    
 
     Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
 
@@ -320,6 +322,9 @@ public:
 
 	bool getChatEnabled () const;
 	void setChatEnabled (bool status);
+	
+	bool getHideEmptyChatRooms() const;
+	void setHideEmptyChatRooms(const bool& data);
 
 	bool getConferenceEnabled () const;
 	void setConferenceEnabled (bool status);
@@ -536,6 +541,7 @@ signals:
 	void muteMicrophoneEnabledChanged (bool status);
 
 	void chatEnabledChanged (bool status);
+	void hideEmptyChatRoomsChanged (bool status);
 
 	void conferenceEnabledChanged (bool status);
 

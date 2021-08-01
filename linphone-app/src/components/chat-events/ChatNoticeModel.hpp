@@ -55,6 +55,7 @@ public:
 	void setEventLogType(const LinphoneEnums::EventLogType& data);
 	
 	bool update();	// Update data from eventLog
+	virtual void deleteEvent() override;
 	
 	QString mName;
 	NoticeType mStatus;

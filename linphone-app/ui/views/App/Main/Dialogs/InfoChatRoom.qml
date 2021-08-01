@@ -8,7 +8,6 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 import Common.Styles 1.0
-import Colors 1.0
 import Units 1.0
 
 
@@ -135,6 +134,7 @@ DialogPlus {
 					showSeparator: false
 					showAdminStatus:!dialog.adminMode
 					isSelectable: false
+					hoveredCursor:Qt.WhatsThisCursor
 					
 					
 					actions:  dialog.adminMode ? [{

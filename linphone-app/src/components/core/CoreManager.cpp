@@ -294,7 +294,9 @@ void CoreManager::forceRefreshRegisters () {
   qInfo() << QStringLiteral("Refresh registers.");
   mCore->refreshRegisters();
 }
-
+void CoreManager::updateUnreadMessageCount(){
+	mEventCountNotifier->updateUnreadMessageCount();
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::sendLogs () const {

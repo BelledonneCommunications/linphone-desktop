@@ -286,6 +286,8 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
 
 void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
   QVariantMap map;
+  shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+  map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
   map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferInformation()->getFilePath());
   if( Utils::getImage(map["fileUri"].toString()).isNull())
     map["imageUri"] = "";

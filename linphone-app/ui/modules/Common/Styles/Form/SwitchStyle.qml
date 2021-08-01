@@ -1,8 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
-
 // =============================================================================
 QtObject{
 	property QtObject normal :QtObject {
@@ -16,16 +14,16 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.i
-			property color disabled: Colors.c
-			property color normal: Colors.c
+			property color checked: Colors.i.color
+			property color disabled: Colors.c.color
+			property color normal: Colors.c.color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: Colors.i
-		  property color disabled: Colors.e
-		  property color normal: Colors.q
+		  property color checked: Colors.i.color
+		  property color disabled: Colors.e.color
+		  property color normal: Colors.q.color
 		}
 	  }
 	
@@ -34,17 +32,17 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.i
-			property color disabled: Colors.c
-			property color normal: Colors.n
-			property color pressed: Colors.n
+			property color checked: Colors.i.color
+			property color disabled: Colors.c.color
+			property color normal: Colors.n.color
+			property color pressed: Colors.n.color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color pressed: Colors.c
-		  property color disabled: Colors.e
-		  property color normal: Colors.q
+		  property color pressed: Colors.c.color
+		  property color disabled: Colors.e.color
+		  property color normal: Colors.q.color
 		}
 	  }
 	}
@@ -59,16 +57,16 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.s
-			property color disabled: Colors.c
-			property color normal: Colors.c
+			property color checked: Colors.s.color
+			property color disabled: Colors.c.color
+			property color normal: Colors.c.color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: Colors.s
-		  property color disabled: Colors.e
-		  property color normal: Colors.q
+		  property color checked: Colors.s.color
+		  property color disabled: Colors.e.color
+		  property color normal: Colors.q.color
 		}
 	  }
 	
@@ -77,17 +75,17 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.s
-			property color disabled: Colors.c
-			property color normal: Colors.n
-			property color pressed: Colors.n
+			property color checked: Colors.s.color
+			property color disabled: Colors.c.color
+			property color normal: Colors.n.color
+			property color pressed: Colors.n.color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color pressed: Colors.c
-		  property color disabled: Colors.e
-		  property color normal: Colors.q
+		  property color pressed: Colors.c.color
+		  property color disabled: Colors.e.color
+		  property color normal: Colors.q.color
 		}
 	  }
 	}

@@ -223,7 +223,7 @@ Rectangle {
 				width: parent ? parent.width : 0
 				
 				Contact {
-					property bool isSelected: modelData.selected	//view.currentIndex === index
+					property bool isSelected: modelData != undefined && modelData.selected	//view.currentIndex === index
 					
 					anchors.fill: parent
 					color: isSelected

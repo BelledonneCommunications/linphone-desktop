@@ -31,6 +31,8 @@ ScrollableListView {
 	property bool showSeparator : true
 	property bool showAdminStatus : false
 	property bool isSelectable : true
+	property bool showInvitingIndicator : true
+	property int hoveredCursor : Qt.PointingHandCursor
 	
 	property var switchHandler : function(checked, index){
 	}
@@ -234,13 +236,14 @@ ScrollableListView {
 					MouseArea {
 						anchors.fill: parent
 						onClicked: sipAddressesView.entryClicked(parent.entry, index)
+						cursorShape: sipAddressesView.hoveredCursor
 					}
 					BusyIndicator{
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.horizontalCenter: parent.horizontalCenter
 						width:15
 						height:15
-						running: modelData.inviting
+						running: sipAddressesView.showInvitingIndicator && modelData.inviting
 					}
 				}
 				
@@ -277,7 +280,7 @@ ScrollableListView {
 							visible: {
 								var visible = sipAddressesView.actions[index].visible
 								return visible === undefined || visible
-							}
+							}							
 							
 							onClicked: {
 								sipAddressesView.actions[index].handler(contactView.entry)

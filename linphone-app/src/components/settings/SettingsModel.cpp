@@ -614,6 +614,17 @@ void SettingsModel::setChatEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getHideEmptyChatRooms() const{
+	return !!mConfig->getInt("misc", "hide_empty_chat_rooms", 1);
+}
+
+void SettingsModel::setHideEmptyChatRooms(const bool& status){
+	mConfig->setInt("misc", "hide_empty_chat_rooms", status);
+	emit hideEmptyChatRoomsChanged(status);
+}
+	
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getConferenceEnabled () const {
 	return !!mConfig->getInt(UiSection, "conference_enabled", 1);
 }

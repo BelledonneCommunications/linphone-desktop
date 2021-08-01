@@ -211,7 +211,8 @@ function openWindow (window, parent, options, fullscreen) {
 
 function resolveImageUri (name) {
   return name
-    ? 'image://internal/' + removeScheme(Qt.resolvedUrl('/assets/images/' + name + '.svg'))
+    //? 'image://internal/' + removeScheme(Qt.resolvedUrl('/assets/images/' + name + '.svg'))
+    ? 'image://internal/' + name
     : ''
 }
 

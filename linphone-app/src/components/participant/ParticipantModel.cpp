@@ -57,8 +57,7 @@ int ParticipantModel::getDeviceCount() const{
 }
 
 bool ParticipantModel::getInviting() const{
-	bool is = !mParticipant;
-	return is;
+	return !mParticipant;
 }
 
 QString ParticipantModel::getSipAddress() const{

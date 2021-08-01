@@ -106,7 +106,6 @@ void CoreHandlers::onChatRoomStateChanged(
   const std::shared_ptr<linphone::ChatRoom> & chatRoom,
   linphone::ChatRoom::State state
 ) {
-	qWarning() << "ChatRoomState : " << (int)state;
 	emit chatRoomStateChanged(chatRoom, state);
 }
 

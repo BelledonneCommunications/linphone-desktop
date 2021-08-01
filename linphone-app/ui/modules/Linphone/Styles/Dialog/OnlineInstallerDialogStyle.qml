@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -18,19 +17,19 @@ QtObject {
       property int radius: 6
 
       property QtObject background: QtObject {
-        property color color: Colors.f
+        property color color: Colors.f.color
       }
 
       property QtObject contentItem: QtObject {
         property QtObject color: QtObject {
-          property color failed: Colors.error
-          property color normal: Colors.p
+          property color failed: Colors.error.color
+          property color normal: Colors.p.color
       }
     }
   }
 
     property QtObject text: QtObject {
-      property color color: Colors.d
+      property color color: Colors.d.color
       property int pointSize: Units.dp * 11
     }
   }

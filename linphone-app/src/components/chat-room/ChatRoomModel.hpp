@@ -123,6 +123,7 @@ public:
 	int getSecurityLevel() const;
 	bool isGroupEnabled() const;
 	bool isMeAdmin() const;
+	bool isCurrentProxy() const;						// Return true if this chat room is Me() is the current proxy
 	bool canHandleParticipants() const;
 	bool getIsRemoteComposing () const;
 	ParticipantListModel* getParticipants() const;

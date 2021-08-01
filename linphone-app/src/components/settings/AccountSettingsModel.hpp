@@ -86,6 +86,7 @@ signals:
   void accountSettingsUpdated ();
   void defaultProxyChanged();
   void publishPresenceChanged();
+  void defaultRegistrationChanged();
 
 private:
   QString getUsername () const;
