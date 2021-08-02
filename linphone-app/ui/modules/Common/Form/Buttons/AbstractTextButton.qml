@@ -28,6 +28,8 @@ Item {
   property alias text: button.text
   property bool enabled: true
   property bool showBorder : false
+  
+  property alias capitalization : button.capitalization
 
   signal clicked
 
@@ -72,6 +74,7 @@ Item {
 
   Button {
     id: button
+    property int capitalization
 
     background: Rectangle {
       color: _getBackgroundColor()
@@ -85,6 +88,7 @@ Item {
       font {
         bold: true
         pointSize: AbstractTextButtonStyle.text.pointSize
+        capitalization: button.capitalization
       }
 		wrapMode: Text.WordWrap
       //elide: Text.ElideRight

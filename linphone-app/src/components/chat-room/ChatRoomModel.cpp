@@ -654,19 +654,21 @@ void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRo
 	}else
 		mComposers[remoteAddress] = Utils::getDisplayName(remoteAddress);
 	emit isRemoteComposingChanged();
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
 	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnd ){
 		setMissedCallsCount(mMissedCallsCount+1);
-		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	}else if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated ){
 		emit fullPeerAddressChanged();
 	}
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
@@ -688,6 +690,7 @@ void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoo
 }
 
 void ChatRoomModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
@@ -695,6 +698,7 @@ void ChatRoomModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom>
 	auto e = std::find(events.begin(), events.end(), eventLog);
 	if( e != events.end() )
 		insertNotice(*e);
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantAdded(chatRoom, eventLog);
 	emit fullPeerAddressChanged();
 }
@@ -704,16 +708,19 @@ void ChatRoomModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoo
 	auto e = std::find(events.begin(), events.end(), eventLog);
 	if( e != events.end() )
 		insertNotice(*e);
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantRemoved(chatRoom, eventLog);
 	emit fullPeerAddressChanged();
 }
 
 void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantAdminStatusChanged(chatRoom, eventLog);
 	emit isMeAdminChanged();	// It is not the case all the time but calling getters is not a heavy request
 }
 
 void ChatRoomModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit stateChanged(getState());
 }
 
@@ -722,21 +729,26 @@ void ChatRoomModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & 
 	auto e = std::find(events.begin(), events.end(), eventLog);
 	if( e != events.end() )
 		insertNotice(*e);
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit securityLevelChanged((int)chatRoom->getSecurityLevel());
 }
 void ChatRoomModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit subjectChanged(getSubject());
 	emit usernameChanged();
 }
 
 void ChatRoomModel::onUndecryptableMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantDeviceAdded(chatRoom, eventLog);
 }
 
 void ChatRoomModel::onParticipantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantDeviceRemoved(chatRoom, eventLog);	
 }
 
@@ -752,6 +764,7 @@ void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom>
 			insertNotice(*e);
 	}
 	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());	// Update message count. In the case of joining conference, the conference id was not valid thus, the missing count was not about the chat room but a global one.
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit usernameChanged();
 	emit conferenceJoined(chatRoom, eventLog);
 	emit hasBeenLeftChanged();
@@ -769,6 +782,7 @@ void ChatRoomModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> &
 			if(e != events.end() )
 				insertNotice(*e);
 		}
+		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 		emit conferenceLeft(chatRoom, eventLog);
 		emit hasBeenLeftChanged();
 	}
@@ -779,18 +793,23 @@ void ChatRoomModel::onEphemeralEvent(const std::shared_ptr<linphone::ChatRoom> &
 	auto e = std::find(events.begin(), events.end(), eventLog);
 	if(e != events.end() )
 		insertNotice(*e);
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onConferenceAddressGeneration(const std::shared_ptr<linphone::ChatRoom> & chatRoom){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 }
 
 void ChatRoomModel::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
+	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantRegistrationSubscriptionRequested(chatRoom, participantAddress);
 }
 

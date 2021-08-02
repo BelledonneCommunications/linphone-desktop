@@ -124,7 +124,8 @@ Item {
 				onTriggered: TextToSpeech.say($chatEntry.content)
 			}
 			MenuItem {
-				text: 'Delivery Status'
+				//: 'Delivery status' : Item menu that lead to IMDN of a message
+				text: qsTr('menuDeliveryStatus')
 				iconMenu: 'menu_imdn_info'
 				iconSizeMenu: 17
 				iconLayoutDirection: Qt.RightToLeft
@@ -133,7 +134,8 @@ Item {
 				onTriggered: deliveryLayout.visible = !deliveryLayout.visible
 			}
 			MenuItem {
-				text: 'Delete'
+				//: 'Delete' : Item menu to delete a message
+				text: qsTr('menuDelete')
 				iconMenu: 'menu_delete'
 				iconSizeMenu: 17
 				iconLayoutDirection: Qt.RightToLeft
@@ -191,21 +193,23 @@ Item {
 			}
 		}*/
 		model: $chatEntry.getProxyImdnStates()
-			property var i18n: [
-				'Envoyé à %1 - %2',	// LinphoneEnums.ChatMessageStateDelivered
-				'Reçu par %1 - %2',	// LinphoneEnums.ChatMessageStateDeliveredToUser
-				'Lu par %1 - %2' ,	// LinphoneEnums.ChatMessageStateDisplayed
-				"%1 n'a encore rien reçu"	// LinphoneEnums.ChatMessageStateNotDelivered
-			]
 		function getText(state){
 			if(state == LinphoneEnums.ChatMessageStateDelivered)
-				return i18n[0]
+				//: 'Send to %1 - %2' Little message to indicate the state of a message
+				//~ Context %1 is someone, %2 is a date/time. The state is that the message has been sent but not received.
+				return qsTr('deliveryDelivered')
 			else if(state == LinphoneEnums.ChatMessageStateDeliveredToUser)
-				return i18n[1]
+				//: 'Retrieved by %1 - %2' Little message to indicate the state of a message
+				//~ Context %1 is someone, %2 is a date/time. The state is that the message has been retrieved
+				return qsTr('deliveryDeliveredToUser')
 			else if(state == LinphoneEnums.ChatMessageStateDisplayed)
-				return i18n[2]
+				//: 'Read by %1 - %2' Little message to indicate the state of a message
+				//~ Context %1 is someone, %2 is a date/time. The state that the message has been read.
+				return qsTr('deliveryDisplayed')
 			else if(state == LinphoneEnums.ChatMessageStateNotDelivered)
-				return i18n[3]
+				//: "%1 have nothing received" Little message to indicate the state of a message
+				//~ Context %1 is someone. The state is that the message hasn't been delivered.
+				return qsTr('deliveryNotDelivered')
 			else return ''
 		}
 		delegate:Text{

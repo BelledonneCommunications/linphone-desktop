@@ -229,7 +229,9 @@ ScrollableListView {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					showContactAddress: sipAddressesView.showContactAddress
-					statusText : showAdminStatus && modelData.adminStatus ? '(Admin)' : ''
+					//: '(Admin)' : One word for Admin(istrator) 
+					//~ Context Little Header in one word for a column in participant 
+					statusText : showAdminStatus && modelData.adminStatus ? qsTr('participantsAdminHeader') : ''
 					
 					entry:  modelData
 					

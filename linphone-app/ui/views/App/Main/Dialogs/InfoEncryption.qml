@@ -17,14 +17,19 @@ DialogPlus {
 	id:dialog
 	buttons: [
 		TextButtonA {
-			text: 'CANCEL'
-			//visible: addressToCall != ''
+			//: 'CANCEL' : button text for cancelling operation
+			text: qsTr('cancelButton')
+			capitalization: Font.AllUppercase
 			onClicked:{
 				exit(0)
 			}
 		},
 		TextButtonB {
-			text: (addressToCall != '' ? 'CALL' : 'OK')
+			//: 'CALL' : Button that lead to a call
+			text: (addressToCall != '' ? qsTr('callButton') 
+				//: 'OK' : Button that validate the popup to be redirected to the device list
+				: qsTr('okButton')
+			)
 			textButtonStyle: InfoEncryptionStyle.okButton
 			onClicked: {
 				if(addressToCall != ''){
@@ -35,8 +40,8 @@ DialogPlus {
 		}
 	]
 	flat : true
-	
-	title: "End-to-end encrypted"
+	//: 'End-to-end encrypted' Popup title about encryption information.
+	title: qsTr('infoEncryptionTitle')
 	showCloseCross:false
 	
 	property int securityLevel
@@ -76,11 +81,12 @@ DialogPlus {
 			color: Colors.d.color
 			
 			wrapMode: Text.Wrap
-			
-			text: "Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants."
+			//: "Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants."
+			//~ Context Explanation of Encryption
+			text: qsTr('encryptionExplanation')
 		}
 		Text{
-		Layout.fillWidth: true
+			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
 			Layout.leftMargin: 10
 			Layout.rightMargin: 10
@@ -91,7 +97,9 @@ DialogPlus {
 			color: Colors.d.color
 			
 			wrapMode: Text.Wrap
-			text :"To do so, call the contact and follow the authentification process."
+			//: "To do so, call the contact and follow the authentification process."
+			//~ Context Explanation process
+			text:  qsTr('encryptionProcessExplanation')
 		}
 	}
 }

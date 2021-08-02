@@ -22,13 +22,17 @@ DialogPlus {
 	
 	buttons: [
 		TextButtonA {
-			text: 'CANCEL'
+			//: 'Cancel' : Cancel button
+			text: qsTr('cancelButton')
+			capitalization: Font.AllUppercase
 			
 			onClicked: exit(0)
 		},
 		TextButtonB {
 			//enabled: toAddView.count >= conferenceManager.minParticipants
-			text: 'LANCER'
+			//: 'Launch' : Start button
+			text: qsTr('startButton')
+			capitalization: Font.AllUppercase
 			
 			onClicked: {
 				if(CallsListModel.createChatRoom(subject.text, secureSwitch.checked, selectedParticipants.getParticipants() ))
@@ -38,7 +42,8 @@ DialogPlus {
 	]
 	
 	buttonsAlignment: Qt.AlignRight
-	title:'Lancer un chat de groupe'
+	//: 'Start a chat room' : Title of a popup about creation of a chat room
+	title:qsTr('newChatRoomTitle')
 	
 	height: 500
 	width: 800
@@ -70,7 +75,8 @@ DialogPlus {
 					spacing:4
 					Text {
 						Layout.fillWidth: true
-						text:'Would you like to encrypt your chat?'
+						//: 'Would you like to encrypt your chat?' : Ask about setting the chat room as secured.
+						text:qsTr('askEncryption')
 						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
@@ -94,7 +100,6 @@ DialogPlus {
 							anchors.leftMargin : 5
 							anchors.verticalCenter: parent.verticalCenter
 							width:50
-							//Layout.preferredWidth: 50
 							enabled:true
 							onClicked: checked = !checked
 							indicatorStyle: SwitchStyle.aux
@@ -121,7 +126,8 @@ DialogPlus {
 					spacing:10
 					Text{
 						textFormat: Text.RichText
-						text :'Nom du groupe' +'<span style="color:red">*</span>'
+						//: 'Subject' : Label of a text field about the subject of the chat room
+						text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
 						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
@@ -130,12 +136,14 @@ DialogPlus {
 						id:subject
 						Layout.fillWidth: true
 						Layout.rightMargin: 15
-						placeholderText :"Nommer le groupe"
+						//: 'Give a subject' : Placeholder in a form about setting a subject
+						placeholderText :'Give a subject'
 						text:(chatRoomModel?chatRoomModel.getSubject():'')
 						Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
-						//error : text == ''
 						TooltipArea{
-							text : 'Current subject of the ChatRoom. It cannot be empty'
+							//: 'Current subject of the Chat Room. It cannot be empty'
+							//~ Tooltip Explanation about the subject of the chat room
+							text : qsTr('subjectTooltip')
 						}
 					}
 					
@@ -146,10 +154,10 @@ DialogPlus {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					//Layout.preferredHeight: 200
 					spacing:20
 					Text{
-						text :'Contacts récents'
+						//: 'Last contacts' : Header for showing last contacts
+						text :'Last contacts'
 						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
@@ -163,7 +171,6 @@ DialogPlus {
 							id:lastContacts
 							property int reloadCount : 0
 							model:TimelineListModel.getLastChatRooms(5)
-							//[{username:'Danyl Robertson'}, {username:'Toto harrytop'}]
 							delegate :
 								Item{
 								Layout.fillHeight: true
@@ -184,25 +191,11 @@ DialogPlus {
 											anchors.topMargin: -5
 											visible: UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
 											icon: 'secure_on'
-											iconSize:20/*
-											Rectangle{
-												id:secureMask
-												anchors.fill:parent
-												color:'white'
-												opacity: 0.5
-												visible: smartSearchBar.isIgnored(modelData.sipAddress)
-												Connections{// Workaround for refreshing data on events
-													target:lastContacts
-													onReloadCountChanged: {
-														secureMask.visible=smartSearchBar.isIgnored(modelData.sipAddress) 
-													}
-												}
-											}*/
+											iconSize:20
 										}
 									}
 									Text{
 										Layout.fillHeight: true
-										//Layout.maximumHeight: 100
 										Layout.preferredWidth: 60
 										Layout.alignment: Qt.AlignVCenter | Qt.AlignTop
 										maximumLineCount: 5
@@ -252,48 +245,6 @@ DialogPlus {
 				}
 			}
 		}
-		/*
-		ScrollableListViewField {
-		  Layout.fillHeight: true
-		  Layout.fillWidth: true
-		  
-		  readOnly: toAddView.count >= conferenceManager.maxParticipants
-		  
-		  SipAddressesView {
-			anchors.fill: parent
-			
-			actions: [{
-			  icon: 'transfer',
-			  handler: function (entry) {
-				conferenceHelperModel.toAdd.addToConference(entry.sipAddress)
-			  }
-			}]
-			
-			genSipAddress: filter.text
-			
-			model: ConferenceHelperModel {
-			  id: conferenceHelperModel
-			}
-			
-			onEntryClicked: actions[0].handler(entry)
-		  }
-		}
-	  }
-	}
-*/
-		// -------------------------------------------------------------------------
-		// Separator.
-		// -------------------------------------------------------------------------
-		/*
-	Rectangle {
-	  Layout.fillHeight: true
-	  Layout.leftMargin: ConferenceManagerStyle.columns.separator.leftMargin
-	  Layout.preferredWidth: ConferenceManagerStyle.columns.separator.width
-	  Layout.rightMargin: ConferenceManagerStyle.columns.separator.rightMargin
-	  
-	  color: ConferenceManagerStyle.columns.separator.color
-	}
-*/
 		// -------------------------------------------------------------------------
 		// See and remove selected addresses.
 		// -------------------------------------------------------------------------
@@ -324,8 +275,10 @@ DialogPlus {
 						showHeader:false
 						
 						maxMenuHeight: MainWindowStyle.searchBox.maxHeight
-						placeholderText: 'toto'
-						tooltipText: 'tooltip'
+						//: 'Select participants' : Placeholder for a search on participant to add them in selection.
+						placeholderText: qsTr('participantSelectionPlaceholder')
+						//: 'Search in your contacts or add a custom one to the chat room.'
+						tooltipText: qsTr('participantSelectionTooltip')
 						actions:[{
 								icon: 'add_participant',
 								secure:0,
@@ -340,28 +293,16 @@ DialogPlus {
 							selectedParticipants.add(entry)
 							smartSearchBar.addAddressToIgnore(entry);
 							++lastContacts.reloadCount
-							//selectedParticipants.append({$sipAddress:entry})
 						}
-						//resultExceptions: selectedParticipants
 					}
-					
-					/*
-				  TextField {
-					id: filter
-					
-					Layout.fillWidth: true
-					
-					icon: 'search'
-					
-					onTextChanged: conferenceHelperModel.setFilter(text)
-				  }
-		  */
 					Text{
 						Layout.preferredHeight: 20
 						Layout.rightMargin: 65
 						Layout.alignment: Qt.AlignRight | Qt.AlignBottom
 						Layout.topMargin: ConferenceManagerStyle.columns.selector.spacing
-						text : 'Admin'
+						//: 'Admin' : Admin(istrator)
+						//~ one word for admin status
+						text : qsTr('adminStatus')
 						
 						color: Colors.g.color
 						font.pointSize: Units.dp * 11
@@ -390,7 +331,9 @@ DialogPlus {
 							
 							actions: [{
 									icon: 'remove_participant',
-									tooltipText: 'Remove this participant from the selection',
+									//: 'Remove this participant from the selection' : Explanation abo^ut removing participant from a selection
+									//~ Tooltip This is a tooltip
+									tooltipText: qsTr('removeParticipantSelection'),
 									handler: function (entry) {
 										smartSearchBar.removeAddressToIgnore(entry.sipAddress)
 										selectedParticipants.remove(entry)
@@ -405,81 +348,19 @@ DialogPlus {
 								chatRoomModel:null
 								
 							}
-							
 							onEntryClicked: actions[0].handler(entry)
-							
 						}
 					}
-					
 				}
-				
 			}
-			
-			/*
-				SearchBox{
-					id: searchBox
-					anchors.left:parent.left
-					anchors.right:parent.right
-					anchors.top:parent.top
-					anchors.topMargin: 30
-					anchors.leftMargin:15
-					anchors.rightMargin: 15
-					
-					placeholderText:'Search contact or enter SIP address'
-					
-					entryHeight: 200
-					SipAddressesView {
-					  id: view
-					  actions: [{
-						icon: 'add',
-							  secure:0,
-								handler: function (entry) {
-						  //searchBox.closeMenu()
-						  //searchBox.launchVideoCall(entry.sipAddress)
-						},
-						visible: true
-					  }]
-					  genSipAddress: searchBox.filter
-					  
-					  model: SearchSipAddressesModel {}
-					}
-					
-				}
-				ScrollableListViewField {
-					anchors.top:search.bottom
-					anchors.bottom:parent.bottom
-					anchors.left:parent.left
-					anchors.right:parent.right
-					anchors.leftMargin:15
-					anchors.rightMargin: 15
-					anchors.topMargin: 15
-					
-					
-					SipAddressesView {
-						id: toAddView
-						
-						anchors.fill: parent
-						
-						actions: [{
-								icon: 'cancel',
-								handler: function (entry) {
-									//model.removeFromConference(entry.sipAddress)
-								}
-							}]
-							
-						//model: conferenceHelperModel.toAdd
-						
-						//onEntryClicked: actions[0].handler(entry)
-					}
-				}
-			}*/
 			Item{
 				Layout.fillWidth: true
 				Layout.preferredHeight: 20
 				Text{
 					anchors.fill:parent
 					textFormat: Text.RichText
-					text : '<span style="color:red">*</span> Obligatoire'
+					//: 'Required' : Word relative to a star to explain that it is a requirement (Field form)
+					text : '<span style="color:red">*</span> '+qsTr('requiredField')
 					//font.weight: Font.DemiBold
 					color: Colors.g.color
 					font.pointSize: Units.dp * 8

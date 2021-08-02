@@ -17,17 +17,18 @@ DialogPlus {
 	id:dialog
 	buttons: [
 		TextButtonA {
-			text: 'CANCEL'
-			
+			//: 'cancel' : button text for cancelling operation
+			text: qsTr('cancelButton')
+			capitalization: Font.AllUppercase
 			onClicked:{
 				exit(0)
 			}
 		},
 		TextButtonB {
-			text: 'START'
+			//: 'start' : button text to start ephemeral mode
+			text: qsTr('startButton')
 			
 			onClicked: {
-				console.log("Timer selected : " +dialog.timer)
 				if(dialog.timer=== 0)					
 					chatRoomModel.ephemeralEnabled = false
 				else {
@@ -39,8 +40,8 @@ DialogPlus {
 		}
 	]
 	flat : true
-	
-	title: "Ephemeral messages"
+	//: "Ephemeral messages" : Popup title for ephemerals
+	title: qsTr('ephemeralTitle')
 	showCloseCross:false
 	
 	property ChatRoomModel chatRoomModel
@@ -74,8 +75,12 @@ DialogPlus {
 			
 			maximumLineCount: 4
 			wrapMode: Text.Wrap
-			text: 'New messages will be deleted on both ends once it has been read by your contact. Select a timeout.'
-				+(!chatRoomModel.canBeEphemeral?'\nEphemeral message is only supported in conference based chat room!':'')
+			//: 'New messages will be deleted on both ends once it has been read by your contact. Select a timeout.'
+			//~ Context Explanation for ephemerals
+			text: qsTr('ephemeralText')
+			//: '\nEphemeral message is only supported in conference based chat room!'
+			//~ Context Warning about not being in conference based chat room.
+				+(!chatRoomModel.canBeEphemeral?'\n'+qsTr('ephemeralNotInConference!'):'')
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
 			font.pointSize: Units.dp * 11
@@ -100,22 +105,40 @@ DialogPlus {
 								return 4;
 							else if(  chatRoomModel.ephemeralLifetime <= 604800 )
 								return 5;
-			model:ListModel{
-				ListElement{ text:'Disabled'
-					value:0}
-				ListElement{ text:'1 minute'
-					value:60}
-				ListElement{ text:'1 heure'
-					value:3600}
-				ListElement{ text:'1 jour'
-					value:86400}
-				ListElement{ text:'3 jours'
-					value:259200}
-				ListElement{ text:'1 semaine'
-					value:604800}
-			}
+							else
+								return 5;
+								/*
+			property var fields : [
+			//: 'Disabled'
+			qsTr('disabled'),
+			//: '%1 minute'
+			qsTr('nMinute', '', 1).arg(1),
+			//: '%1 hour'
+			qsTr('nHour', '', 1).arg(1),
+			//: '%1 day'
+			qsTr('nDay', '', 1).arg(1),
+			//: '%1 days'
+			qsTr('nDay', '', 3).arg(3),
+			//: '%1 week'
+			qsTr('nWeek', '', 1).arg(1)
+			]
+			*/
+			model:[
+				//: 'Disabled'
+				{text:qsTr('disabled'), value:0},
+				//: '%1 minute'
+				{ text:qsTr('nMinute', '', 1).arg(1), value:60},
+				//: '%1 hour'
+				{ text:qsTr('nHour', '', 1).arg(1), value:3600},
+				//: '%1 day'
+				{ text:qsTr('nDay', '', 1).arg(1), value:86400},
+				//: '%1 days'
+				{ text:qsTr('nDay', '', 3).arg(3), value:259200},
+				//: '%1 week'
+				{ text:qsTr('nWeek', '', 1).arg(1), value:604800}
+			]
 			
-			onActivated: dialog.timer = model.get(index).value
+			onActivated: dialog.timer = model[index].value
 			visible: chatRoomModel.canBeEphemeral
 		}
 		

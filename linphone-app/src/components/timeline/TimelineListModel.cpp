@@ -65,7 +65,7 @@ void TimelineListModel::update(){
 
 void TimelineListModel::selectAll(const bool& selected){
 	for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it)
-		(*it)->mSelected = selected;
+		(*it)->setSelected(selected);
 }
 int TimelineListModel::rowCount (const QModelIndex &) const {
 	return mTimelines.count();
@@ -275,6 +275,7 @@ void TimelineListModel::updateTimelines () {
 }
 
 void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
+	connect(timeline->getChatRoomModel(), &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
 	int row = mTimelines.count();
 	beginInsertRows(QModelIndex(), row, row);
 	mTimelines << timeline;

@@ -386,6 +386,10 @@ QString ChatMessageModel::getFromDisplayName() const{
 	return Utils::getDisplayName(mChatMessage->getFromAddress());	
 }
 
+QString ChatMessageModel::getFromSipAddress() const{
+	return Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asStringUriOnly()));
+}
+
 QString ChatMessageModel::getToDisplayName() const{
 	return Utils::getDisplayName(mChatMessage->getToAddress());
 }

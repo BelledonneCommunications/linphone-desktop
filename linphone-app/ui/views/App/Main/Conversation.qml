@@ -70,7 +70,7 @@ ColumnLayout  {
 				
 				//username: Logic.getUsername()
 				username: chatRoomModel?chatRoomModel.username:Logic.getUsername()
-				visible: !groupChat.visible
+				visible: !groupChat.visible				
 			}
 			
 			Icon {
@@ -107,7 +107,9 @@ ColumnLayout  {
 						}
 						Text{
 							anchors.verticalCenter: parent.verticalCenter
-							text:'Admin'
+							//: 'Admin' : Admin(istrator)
+							//~ Context One word title for describing the current admin status
+							text: qsTr('adminStatus')
 							color:"#9FA6AB"
 							font.pointSize: Units.dp * 8
 						}
@@ -248,7 +250,8 @@ ColumnLayout  {
 					y:mainBar.height
 					menuStyle : MenuStyle.aux2
 					MenuItem{
-						text:'Groupe informations'
+						//: 'Group informations' : Item menu to get information about the chat room
+						text: qsTr('conversationMenuGroupInformations')
 						iconMenu: (hovered ? 'menu_infos_selected' : 'menu_infos')
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
@@ -264,7 +267,8 @@ ColumnLayout  {
 						color:Colors.u.color
 					}
 					MenuItem{
-						text:"Conversation's devices"
+						//: "Conversation's devices" : Item menu to get all participant devices of the chat room
+						text: qsTr('conversationMenuDevices')
 						iconMenu: (hovered ? 'menu_devices_selected' : 'menu_devices' )
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
@@ -280,7 +284,8 @@ ColumnLayout  {
 						color:Colors.u.color
 					}
 					MenuItem{
-						text:'Ephemeral messages'
+						//: 'Ephemeral messages' : Item menu to enable ephemeral mode
+						text: qsTr('conversationMenuEphemeral')
 						iconMenu: (hovered ? 'menu_ephemeral_selected' : 'menu_ephemeral')
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2

@@ -17,7 +17,9 @@ DialogPlus {
 	id:dialog
 	buttons: [
 		TextButtonA {
-			text: 'QUITTER LE GROUPE'
+			//: 'Exit group' : Button label
+			text: qsTr('quitGroupButton')
+			capitalization: Font.AllUppercase
 			textButtonStyle: InfoChatRoomStyle.leaveButton
 			showBorder: true
 			onClicked:{
@@ -29,7 +31,9 @@ DialogPlus {
 			Layout.fillWidth: true
 		},
 		TextButtonB {
-			text: 'OK'
+			//: 'OK' : Button label
+			text: qsTr('ok')
+			capitalization: Font.AllUppercase
 			
 			onClicked: {
 				if(!chatRoomModel.hasBeenLeft)
@@ -40,7 +44,8 @@ DialogPlus {
 	]
 	flat : true
 	showCloseCross: true
-	
+	//: "Group information" : Popup title.
+	//~ This popup display data about the current chat room
 	title: "Group information"
 	
 	property ChatRoomModel chatRoomModel
@@ -73,8 +78,11 @@ DialogPlus {
 			visible: dialog.adminMode && chatRoomModel.canHandleParticipants
 			
 			maxMenuHeight: MainWindowStyle.searchBox.maxHeight
-			placeholderText: 'Ajouter des participants'
-			tooltipText: "Rechercher des participants dans votre liste de contact pour les inviter dans le groupe. L'ajout est effectif une fois le formulaire validé."
+			//: 'Add Participants' : Placeholder in a search bar for adding participant to the chat room
+			placeholderText: qsTr('addParticipantPlaceholder')
+			//: 'Search participants in your contact list in order to invite them into the chat room.'
+			//~ Tooltip Explanation for inviting the selected participants into chat room 
+			tooltipText: qsTr('addParticipantTooltip')
 			actions:[{
 					icon: 'add_participant',
 					secure:0,
@@ -104,7 +112,8 @@ DialogPlus {
 				Text{
 					Layout.topMargin: InfoChatRoomStyle.results.title.topMargin
 					Layout.leftMargin: InfoChatRoomStyle.results.title.leftMargin
-					text:'Liste des participants'
+					//: 'Participant list'
+					text:qsTr('participantList')
 					color: InfoChatRoomStyle.results.title.color
 					font.pointSize:InfoChatRoomStyle.results.title.pointSize
 					font.weight: InfoChatRoomStyle.results.title.weight
@@ -114,7 +123,9 @@ DialogPlus {
 					Layout.rightMargin: InfoChatRoomStyle.results.header.rightMargin
 					Layout.alignment: Qt.AlignRight | Qt.AlignBottom
 					//Layout.topMargin: InfoChatRoomStyle.results.topMargin
-					text : 'Admin'
+					//: 'Admin' : Admin(istrator)
+					//~ one word for admin status
+					text : qsTr('adminStatus')
 					
 					color: InfoChatRoomStyle.results.header.color
 					font.pointSize: InfoChatRoomStyle.results.header.pointSize

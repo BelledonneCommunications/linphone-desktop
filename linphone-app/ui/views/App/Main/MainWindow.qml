@@ -271,7 +271,10 @@ ApplicationWindow {
 							name: qsTr('contactsEntry')
 							visible: SettingsModel.contactsEnabled
 							
-							onSelected: setView('Contacts')
+							onSelected: {
+											timeline.model.unselectAll() 
+											setView('Contacts')
+										}
 							Icon{
 								anchors.right:parent.right
 								anchors.verticalCenter: parent.verticalCenter

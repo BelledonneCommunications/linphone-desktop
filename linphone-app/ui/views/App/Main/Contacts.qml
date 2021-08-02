@@ -197,24 +197,6 @@ ColumnLayout {
 							CallsListModel.launchAudioCall,
 							function (sipAddress) {CallsListModel.launchChat( sipAddress,0 )},
 							function (sipAddress) {CallsListModel.launchChat( sipAddress,1 )}
-							/*
-							function (sipAddress) {
-								CallsListModel.launchSecureChat(sipAddress)
-								window.setView('Conversation', {
-												   chatRoomModel: CallsListModel.createSecureChat("", sipAddress),
-												   //peerAddress: sipAddress,
-												   //localAddress: AccountSettingsModel.sipAddress,
-												   //fullPeerAddress: sipAddress,
-												   //fullLocalAddress: AccountSettingsModel.fullSipAddress,
-												   isSecure:1
-											   })
-								
-								//Logic.manageAccounts()
-								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ManageChatRoom.qml'), {
-															   //window.setView('Dialogs/ManageChatRoom', {
-															   participantAddress: sipAddress
-														   })
-							}*/
 						]
 						
 						model: handlers

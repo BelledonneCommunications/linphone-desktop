@@ -90,8 +90,13 @@ Rectangle {
 					Layout.leftMargin: TimelineStyle.legend.leftMargin
 					color: TimelineStyle.legend.color
 					font.pointSize: TimelineStyle.legend.pointSize
-					//height: parent.height
-					text: 'Filter : ' +(timeline.model.filterFlags == 0 || timeline.model.filterFlags == TimelineProxyModel.AllChatRooms?'All' : 'Custom')
+					//: A title for filtering mode.
+					text: qsTr('timelineFilter')+' : ' 
+						  +(timeline.model.filterFlags == 0 || timeline.model.filterFlags == TimelineProxyModel.AllChatRooms
+							//: 'All' The mode for timelines filtering. 
+							? qsTr('timelineFilterAll')
+							  //: 'Custom' The mode for timelines filtering. 
+							: qsTr('timelineFilterCustom'))
 					verticalAlignment: Text.AlignVCenter
 				}
 				
@@ -146,31 +151,41 @@ Rectangle {
 				}
 				CheckBoxText {
 					id:simpleFilter
-					text:'Simple rooms'
+					//: 'Simple rooms' : Filter item
+					//~ Mode Selecting it will show all simple romms
+					text:qsTr('timelineFilterSimpleRooms')
 					property var value : (checked?TimelineProxyModel.SimpleChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				CheckBoxText {
 					id:secureFilter
-					text:'Secure rooms'
+					//: 'Secure rooms' : Filter item
+					//~ Mode Selecting it will show all secure rooms
+					text:qsTr('timelineFilterSecureRooms')
 					property var value : (checked?TimelineProxyModel.SecureChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				CheckBoxText {
 					id:groupFilter
-					text:'Chat groups'
+					//: 'Chat groups' : Filter item
+					//~ Mode Selecting it will show all chat groups (with more than one participant)
+					text:qsTr('timelineFilterChatGroups')
 					property var value : (checked?TimelineProxyModel.GroupChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				CheckBoxText {
 					id:secureGroupFilter
-					text:'Secure Chat Groups'
+					//: 'Secure Chat Groups' : Filter item
+					//~ Mode Selecting it will show all secure chat groups (with more than one participant)
+					text:qsTr('timelineFilterSecureChatGroups')
 					property var value : (checked?TimelineProxyModel.SecureGroupChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				CheckBoxText {
 					id:ephemeralsFilter
-					text:'Ephemerals'
+					//: 'Ephemerals' : Filter item
+					//~ Mode Selecting it will show all chat rooms where the ephemeral mode has been enabled.
+					text:qsTr('timelineFilterEphemerals')
 					property var value : (checked?TimelineProxyModel.EphemeralChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
@@ -190,19 +205,20 @@ Rectangle {
 			visible:false
 			//color: ContactsStyle.bar.backgroundColor
 			onVisibleChanged: timeline.model.filterText = (visible?searchBar.text : '')
-		
-			  TextField {
-				  id:searchBar
-				  anchors {
+			
+			TextField {
+				id:searchBar
+				anchors {
 					fill: parent
 					margins: 7
-				  }
+				}
 				Layout.fillWidth: true
 				icon: 'search'
-				placeholderText: 'Search in the list'
+				//: 'Search in the list' : ths is a placeholder when searching something in the timeline list
+				placeholderText: qsTr('timelineSearchPlaceholderText')
 				
 				onTextChanged: timeline.model.filterText = text
-			  }
+			}
 			
 		}
 		// -------------------------------------------------------------------------
@@ -213,9 +229,6 @@ Rectangle {
 			id: view
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			//anchors.left:parent.left
-			//anchors.right:parent.right
-			//anchors.bottom:parent.bottom
 			currentIndex: -1
 			
 			delegate: Item {
@@ -234,8 +247,6 @@ Rectangle {
 								 : TimelineStyle.contact.backgroundColor.b
 								 )
 					displayUnreadMessageCount: SettingsModel.chatEnabled
-					//entry: $timelineEntry
-					//entry: SipAddressesModel.getSipAddressObserver(modelData.fullPeerAddress, modelData.fullLocalAddress)
 					entry: modelData.chatRoomModel
 					sipAddressColor: isSelected
 									 ? TimelineStyle.contact.sipAddress.color.selected
@@ -271,7 +282,6 @@ Rectangle {
 						//timeline.model.unselectAll()
 						modelData.selected = true
 						view.currentIndex = index;
-						//timeline.entrySelected($timelineEntry.sipAddress, $timelineEntry.isSecure)
 					}
 				}
 				Connections{
@@ -282,7 +292,6 @@ Rectangle {
 					}
 				}
 			}
-			// onCountChanged: Logic.handleCountChanged(count)
 		}
 	}
 }

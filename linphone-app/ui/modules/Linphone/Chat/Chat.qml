@@ -200,84 +200,9 @@ Rectangle {
 					leftPadding: ChatStyle.composingText.leftPadding
 					visible: composers.length > 0 && SettingsModel.chatEnabled
 					wrapMode: Text.Wrap
-
-					text:(composers.length==0?'':(composers.length>1 ? '%1 are typing...' : '%1 is typing...').arg(container.proxyModel.getDisplayNameComposers()))
+					//: '%1 is typing...' indicate that someone is composing in chat
+					text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
 				}
-      
-      
-      /* GridView{
-			height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
-			width:parent.width
-			cellWidth: parent.width; cellHeight: ChatStyle.composingText.height
-			
-			property var composersLength : container.proxyModel.composers.length
-			onComposersLengthChanged:{
-				model.clear()
-				console.log(container.proxyModel.composers)
-				for(var j  = 0 ; j < container.proxyModel.composers.length ; ++j) {
-					console.log(container.proxyModel.composers[j])
-					model.append({text:container.proxyModel.composers[j]})
-				}
-			}
-			model: ListModel{}
-			delegate:Rectangle{
-			height:ChatStyle.composingText.height
-			width:parent.width
-			color:"red"
-			}
-      }*/
-      
-      
-      /*
-       Column{
-			height: 100 *container.proxyModel.composers.length
-			width:parent.width
-			onHeightChanged: {
-				composerRepeater.model = []
-				composerRepeater.model = container.proxyModel.composers
-			}
-		Repeater{
-		id:composerRepeater
-			model:["toto"]
-			Rectangle{
-			height:100
-			width:parent.width
-			color:"red"
-			}
-		}
-      }*/
-      
-      
-      /*
-      Column{
-			height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
-			width:parent.width
-			visible:SettingsModel.chatEnabled
-			onHeightChanged: {
-				composers.clear()
-				composerRepeater.model = []
-				composerRepeater.model = container.proxyModel.composers
-			}
-			Repeater{
-				id:composerRepeater
-				model:ListModel{
-					id:composers
-				}
-				onModelChanged: console.log(container.proxyModel.composers.length)
-				
-				Text {
-					color: ChatStyle.composingText.color
-					font.pointSize: ChatStyle.composingText.pointSize
-					height: visible ? ChatStyle.composingText.height : 0
-					
-					leftPadding: ChatStyle.composingText.leftPadding
-					visible: text.length > 0 && SettingsModel.chatEnabled
-	
-					text: modelData + ' ' +'is typing...'
-					Component.onCompleted: console.log(text + "=>" +width+"/"+height+" : "+visible)
-				}
-			}
-		  }*/
     }
 
     // -------------------------------------------------------------------------
