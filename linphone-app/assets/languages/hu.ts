@@ -116,7 +116,7 @@
     </message>
     <message>
         <source>homeTitle</source>
-        <translation>Isten hozott!</translation>
+        <translation>Isten hozott</translation>
     </message>
     <message>
         <source>homeDescription</source>
@@ -2811,6 +2811,21 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>downloadCodecDescription</source>
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>timeoutLabel</source>
+        <translation>Határidő</translation>
+    </message>
+    <message>
+        <source>timeoutTooltip</source>
+        <translation>A kapcsolat és a keresés időtúllépése másodpercek alatt. Pozitívnak kell lennie.&lt;br&gt;Az alapértelmezett érték 5 másodperc.</translation>
+    </message>
+    <message>
+        <source>useSalLabel</source>
+        <translation>SAL  használata</translation>
     </message>
 </context>
 </TS>
