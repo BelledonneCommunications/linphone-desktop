@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation>specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
+        <translation>Specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation>url, path or file</translation>
+        <translation>URL, path or file</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation>sip address</translation>
+        <translation>SIP address</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>Server error: cannot send sms.</translation>
+        <translation>Server error: cannot send SMS.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
@@ -448,14 +448,14 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 is typing...</translation>
+        <translation>%1 is typing…</translation>
     </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation>
-            <numerusform>%1 is typing...</numerusform>
-            <numerusform>%1 are typing...</numerusform>
+            <numerusform>%1 is typing…</numerusform>
+            <numerusform>%1 are typing…</numerusform>
         </translation>
     </message>
 </context>
@@ -1167,7 +1167,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Search contact, start a call or a chat...</translation>
+        <translation>Search contact, start a call or a chat…</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -1363,11 +1363,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>Extracting %1...</translation>
+        <translation>Extracting %1…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>Downloading %1...</translation>
+        <translation>Downloading %1…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
@@ -1540,7 +1540,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>calibratingEchoCancellationInProgress</source>
         <translatorcomment>Message while calibrating</translatorcomment>
-        <translation>...calibrating...</translation>
+        <translation>…calibrating…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
@@ -1678,12 +1678,12 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancel</source>
         <translatorcomment>Cancel button label</translatorcomment>
-        <translation>cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>confirm</source>
         <translatorcomment>Confirm button label</translatorcomment>
-        <translation>confirm</translation>
+        <translation>Confirm</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -1734,11 +1734,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalLabel</source>
-        <translation>Use Sal</translation>
+        <translation>Use SAL</translation>
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation>The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
+        <translation>The DNS resolution is done by Linphone using SAL. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -1761,7 +1761,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation>Specify whether the tls server certificate must be verified when connecting to a LDAP server.</translation>
+        <translation>Specify whether the TLS server certificate must be verified when connecting to a LDAP server.</translation>
     </message>
     <message>
         <source>searchTitle</source>
@@ -1780,7 +1780,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>baseObjectTooltip</source>
         <translatorcomment>&apos;Base Object&apos;, &apos;Search Base&apos; and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
-        <translation>Base Object/Search Base is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.&lt;br&gt;No entries above it will be considered.</translation>
+        <translation>Base Object/Search Base is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search Base DN.&lt;br&gt;No entries above it will be considered.</translation>
     </message>
     <message>
         <source>filterLabel</source>
@@ -1788,7 +1788,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation>The search is base on this filter to search contacts.&lt;br&gt;Default value : (sn=%s)</translation>
+        <translation>The search is base on this filter to search contacts.&lt;br&gt;Default value: (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
@@ -1808,7 +1808,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation>Check these attributes To build Name Contact, separated by a comma and the first is the highest priority.&lt;br&gt;The default value is: sn</translation>
+        <translation>Check these attributes to build name contact, separated by a comma and the first is the highest priority.&lt;br&gt;The default value is: sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
@@ -1825,7 +1825,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation>Add the domain to the sip address(sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
+        <translation>Add the domain to the SIP address(sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -1853,7 +1853,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMFs send method</translation>
+        <translation>DTMF send method</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
