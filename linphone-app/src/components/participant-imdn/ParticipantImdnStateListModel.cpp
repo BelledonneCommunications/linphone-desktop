@@ -40,9 +40,11 @@ ParticipantImdnStateListModel::ParticipantImdnStateListModel (std::shared_ptr<li
 	for(int i = 0 ; i < states.size() ; ++i){
 		std::list<std::shared_ptr<linphone::ParticipantImdnState>> imdns = message->getParticipantsByImdnState(states[i]);
 		for(auto imdn : imdns){
-			auto deviceModel = std::make_shared<ParticipantImdnStateModel>(imdn);
+			if(imdn->getParticipant()){
+				auto deviceModel = std::make_shared<ParticipantImdnStateModel>(imdn);
 			//connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
-			mList << deviceModel;
+				mList << deviceModel;
+			}
 		}
 	}
 }
@@ -118,7 +120,8 @@ std::shared_ptr<ParticipantImdnStateModel> ParticipantImdnStateListModel::getImd
 //--------------------------------------------------------------------------------
 
 void ParticipantImdnStateListModel::updateState(const std::shared_ptr<const linphone::ParticipantImdnState> & state){
-	getImdnState(state)->update(state);
+	if(state->getParticipant())
+		getImdnState(state)->update(state);
 }
 
 //--------------------------------------------------------------------------------

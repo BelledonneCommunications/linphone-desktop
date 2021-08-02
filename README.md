@@ -244,8 +244,9 @@ Please note that we don't offer free support and these contributions will be add
 
 ### Languages
 
-Linphone is getting a full internationalization support, using Transifex platform.
-If you want you can contribute at: https://www.transifex.com/belledonne-communications/linphone-desktop/languages/
+Linphone is getting a full internationalization support.
+We no longer use transifex for the translation process, instead we have deployed our own instance of [Weblate](https://weblate.linphone.org).
+If you want you can contribute at: https://weblate.linphone.org/projects/linphone-desktop/
 
 ### Feedback or bug reporting
 

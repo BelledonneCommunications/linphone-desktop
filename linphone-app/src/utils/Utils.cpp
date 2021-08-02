@@ -461,15 +461,17 @@ void Utils::copyDir(QString from, QString to) {
 }
 
 QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& address){
-	QString qtAddress = Utils::coreStringToAppString(address->asString());
 	QString displayName;
-	ContactModel * model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
-	if(model && model->getVcardModel())
-		displayName = model->getVcardModel()->getUsername();
-	else{
-		displayName = Utils::coreStringToAppString(address->getDisplayName());
-		if(displayName == "")
-			displayName = Utils::coreStringToAppString(address->getUsername());
+	if(address){
+		QString qtAddress = Utils::coreStringToAppString(address->asString());
+		ContactModel * model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
+		if(model && model->getVcardModel())
+			displayName = model->getVcardModel()->getUsername();
+		else{
+			displayName = Utils::coreStringToAppString(address->getDisplayName());
+			if(displayName == "")
+				displayName = Utils::coreStringToAppString(address->getUsername());
+		}
 	}
 	return displayName;
 }
