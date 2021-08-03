@@ -447,7 +447,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;módszer&gt; ([&lt;argumentum&gt;=&lt;érték&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -836,19 +836,19 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">Biztosan törölni kívánja ezt az előzményt?</translation>
+        <translation>Biztosan törölni kívánja ezt az előzményt?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">Kapcsolat szerkesztése</translation>
+        <translation>Kapcsolat szerkesztése</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">Kapcsolat hozzáadása</translation>
+        <translation>Kapcsolat hozzáadása</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">Előzmények törlése</translation>
+        <translation>Előzmények törlése</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Keressen névjegyet, indítson hívást vagy csevegést…</translation>
+        <translation>Névjegy keresése, hívás indítása vagy csevegés kezdése…</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -1185,7 +1185,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished">Névjegyek</translation>
+        <translation>Névjegyek-összekötő</translation>
     </message>
 </context>
 <context>
@@ -1240,7 +1240,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visszhangtörlő kalibrálása</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
@@ -1248,15 +1248,15 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1ezredmásodperc értékre kalibrálva</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikertelen kalibrálás</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem észlelt visszhang</translation>
     </message>
 </context>
 <context>
@@ -2827,6 +2827,275 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>useSalLabel</source>
         <translation>SAL  használata</translation>
+    </message>
+    <message>
+        <source>commandLineOptionFetchConfigArg</source>
+        <translation>URL-cím, elérési út vagy fájl</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCall</source>
+        <translation>hívás kezdeményezése</translation>
+    </message>
+    <message>
+        <source>byeFunctionDescription</source>
+        <translation>Egy adott hívás, az összes hívás vagy az jelenlegi hívás befejezése.</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Felügyelet</translation>
+        <extra-Context>One word title for describing the current admin status</extra-Context>
+    </message>
+    <message>
+        <source>disabled</source>
+        <extracomment>&apos;Disabled&apos;</extracomment>
+        <translation>Letiltva</translation>
+    </message>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
+        <translation>Indítás</translation>
+    </message>
+    <message>
+        <source>conversationMenuGroupInformations</source>
+        <extracomment>&apos;Group informations&apos; : Item menu to get information about the chat room</extracomment>
+        <translation>Csoportadatok</translation>
+    </message>
+    <message>
+        <source>conversationMenuDevices</source>
+        <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
+        <translation>Beszélgetés eszközei</translation>
+    </message>
+    <message>
+        <source>quitGroupButton</source>
+        <extracomment>&apos;Exit group&apos; : Button label</extracomment>
+        <translation>Csoport elhagyása</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <extracomment>&apos;OK&apos; : Button label</extracomment>
+        <translation>Rendben</translation>
+    </message>
+    <message>
+        <source>newServer</source>
+        <translatorcomment>Display name of a new server</translatorcomment>
+        <translation>Új kiszolgáló</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translatorcomment>Cancel button label</translatorcomment>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translatorcomment>Confirm button label</translatorcomment>
+        <translation>Megerősít</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translatorcomment>Label</translatorcomment>
+        <translation>Megjelenítendő név</translation>
+    </message>
+    <message>
+        <source>displayNameTooltip</source>
+        <translatorcomment>Tooltip for display name</translatorcomment>
+        <translation>A listában megjelenítendő kiszolgáló megjelenített neve.</translation>
+    </message>
+    <message>
+        <source>connectionTitle</source>
+        <translatorcomment>Label</translatorcomment>
+        <translation>Kapcsolat</translation>
+    </message>
+    <message>
+        <source>serverLabel</source>
+        <translatorcomment>Label</translatorcomment>
+        <translation>Kiszolgáló URL-címe</translation>
+    </message>
+    <message>
+        <source>serverTooltip</source>
+        <translatorcomment>Tooltip for server URL</translatorcomment>
+        <translation>LDAP-kiszolgáló. Például: ldap:/// helyi állomás kiszolgálóhoz vagy ldap://ldap.example.org/</translation>
+    </message>
+    <message>
+        <source>bindDNLabel</source>
+        <translatorcomment>Label for a &apos;Bind DN&apos;. &apos;Bind&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Kötési DN</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Jelszó</translation>
+    </message>
+    <message>
+        <source>useTLSLabel</source>
+        <translation>TLS használata</translation>
+    </message>
+    <message>
+        <source>verifyTLSLabel</source>
+        <translation>Tanúsítványok ellenőrzése a TLS használatával</translation>
+    </message>
+    <message>
+        <source>AutoMode</source>
+        <translatorcomment>ComboBox Label</translatorcomment>
+        <translation>Önműködő</translation>
+    </message>
+    <message>
+        <source>offMode</source>
+        <translatorcomment>ComboBox Label</translatorcomment>
+        <translation>Ki</translation>
+    </message>
+    <message>
+        <source>onMode</source>
+        <translatorcomment>ComboBox label</translatorcomment>
+        <translation>Be</translation>
+    </message>
+    <message>
+        <source>verifyTLSTooltip</source>
+        <translation>Adja meg, hogy az LDAP-kiszolgálóhoz való csatlakozáskor ellenőrizni kell-e a TLS-kiszolgáló tanúsítványát.</translation>
+    </message>
+    <message>
+        <source>searchTitle</source>
+        <translation>Keresés</translation>
+    </message>
+    <message>
+        <source>baseObjectLabel</source>
+        <translatorcomment>&apos;Base Object&apos;/&apos;Search Base&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Keresési bázis</translation>
+    </message>
+    <message>
+        <source>baseObjectPlaceholder</source>
+        <translatorcomment>&apos;Base Object&apos;/&apos;Search Base&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>Keresési bázis</translation>
+    </message>
+    <message>
+        <source>filterLabel</source>
+        <translation>Szűrő</translation>
+    </message>
+    <message>
+        <source>maxResultsLabel</source>
+        <translation>Eredmények legfeljebb száma</translation>
+    </message>
+    <message>
+        <source>maxResultsTooltip</source>
+        <translation>A keresési kérelmek eredmények legfeljebb száma.</translation>
+    </message>
+    <message>
+        <source>parsingTitle</source>
+        <translation>Elemzés</translation>
+    </message>
+    <message>
+        <source>nameAttributesLabel</source>
+        <translation>Névattribútumok</translation>
+    </message>
+    <message>
+        <source>nameAttributesTooltip</source>
+        <translation>Ellenőrizze ezeket az attribútumokat: To, build, Name, Contact. Ezeket vesszők választják el egymástól, amelyek első sorban a legmagasabb prioritással szerepelnek.&lt;br&gt;Az alapértelmezett érték: sn</translation>
+    </message>
+    <message>
+        <source>sipAttributesLabel</source>
+        <translation>SIP-attribútumok</translation>
+    </message>
+    <message>
+        <source>domainLabel</source>
+        <translation>Tartomány</translation>
+    </message>
+    <message>
+        <source>miscLabel</source>
+        <translatorcomment>Miscellaneous label</translatorcomment>
+        <translation>Egyéb</translation>
+    </message>
+    <message>
+        <source>debugLabel</source>
+        <translation>Hibakeresés</translation>
+    </message>
+    <message>
+        <source>debugTooltip</source>
+        <translation>Részletes naplófájlok beszerzése a Linphone naplófájljába tranzakciók során (hasznos a TLS-kapcsolatok hibakereséséhez).</translation>
+    </message>
+    <message>
+        <source>timeoutLabel</source>
+        <translation>Időkorlát</translation>
+    </message>
+    <message>
+        <source>domainTooltip</source>
+        <translation>Tartomány hozzáadása a SIP-címhez (sip:felhasználónév@tartomány).&lt;br&gt;Az alapértelmezett érték a sip.linphone.org</translation>
+    </message>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
+        <translation>
+            <numerusform>%1 perc</numerusform>
+            <numerusform>%1 perc</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
+        <translation>
+            <numerusform>%1 óra</numerusform>
+            <numerusform>%1 óra</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <extracomment>&apos;%1 day&apos;
+----------
+&apos;%1 days&apos;</extracomment>
+        <translation>
+            <numerusform>%1 nap</numerusform>
+            <numerusform>%1 nap</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <extracomment>&apos;%1 week&apos;</extracomment>
+        <translation>
+            <numerusform>%1 hét</numerusform>
+            <numerusform>%1 hét</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>chatTyping</source>
+        <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
+        <translation>
+            <numerusform>%1 éppen gépel…</numerusform>
+            <numerusform>%1 éppen gépel…</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>useSalLabel</source>
+        <translation>SAL használata</translation>
+    </message>
+    <message>
+        <source>commandLineOptionFetchConfig</source>
+        <translation>Adja meg a beolvasandó %1 beállítási fájlt. Összevonásra kerül a jelenlegi konfigurációval.</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCallArg</source>
+        <translation>SIP-cím</translation>
+    </message>
+    <message>
+        <source>bindDNTooltip</source>
+        <translatorcomment>&apos;Bind DN&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation>A kötési DN az a hitelesítő adat, amelyet LDAP-kiszolgálóval való hitelesítésre használnak.&lt;br&gt;például: cn=felhasználónév,ou=emberek,dc=bc,dc=com</translation>
+    </message>
+    <message>
+        <source>baseObjectTooltip</source>
+        <translatorcomment>&apos;Base Object&apos;, &apos;Search Base&apos; and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
+        <translation>Az Base Object/Search Base az LDAP keresési hatókörök specifikációja, amely meghatározza, hogy a keresési kérelmet csak a keresési bázis DN-ként megadott bejegyzéssel kell végrehajtani.&lt;br&gt;A feletti bejegyzéseket nem vesszük figyelembe.</translation>
+    </message>
+    <message>
+        <source>sipAttributesTooltip</source>
+        <translatorcomment>Default values : (mobile,telephoneNumber,homePhone,sn) are keywords.</translatorcomment>
+        <translation>Ellenőrizze ezeket az attribútumokat a SIP felhasználónév felépítéséhez a kapcsolattartó címében. Az attribútumokat vessző választja el, és az első a legfontosabb.&lt;br&gt;Az alapértelmezett érték: mobile,telephoneNumber,homePhone,sn</translation>
+    </message>
+    <message>
+        <source>filterTooltip</source>
+        <translation>A keresés a szűrőn alapul a névjegyek kereséséhez.&lt;br&gt;Alapértelmezett érték: (sn=%s)</translation>
     </message>
 </context>
 </TS>
