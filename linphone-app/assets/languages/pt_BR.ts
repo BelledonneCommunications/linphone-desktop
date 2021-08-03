@@ -432,7 +432,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 está a escrever...</translation>
+        <translation>%1 está a escrever…</translation>
     </message>
 </context>
 <context>
@@ -443,11 +443,11 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt; = &lt;value&gt;] *)”</translation>
+        <translation></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -970,14 +970,15 @@ URL do servidor não configurado.</translation>
         <source>forcedMessage</source>
         <translation>Baixe o aplicativo no seu computador e comece a ligar e conversar com os usuários gratuitamente.
 
-Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;</translation>
+Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Pesquisar contato, iniciar uma chamada ou um bate-papo...</translation>
+        <translation>Pesquisar contato, iniciar uma chamada ou um bate-papo…</translation>
     </message>
     <message>
         <source>homeEntry</source>
