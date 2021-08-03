@@ -1812,7 +1812,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation>Sip Attributes</translation>
+        <translation>SIP Attributes</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
