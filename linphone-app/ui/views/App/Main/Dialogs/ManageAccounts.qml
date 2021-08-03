@@ -19,10 +19,10 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   objectName: '__manageAccounts'
 
-  height: SettingsModel.rlsUriEnabled ? ManageAccountsStyle.height : ManageAccountsStyle.heightWithoutPresence
+  height: SettingsModel.rlsUriEnabled ? ManageAccountsStyle.height +30 : ManageAccountsStyle.heightWithoutPresence + 30
   width: ManageAccountsStyle.width
 
   // ---------------------------------------------------------------------------

@@ -1,8 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
-
 // =============================================================================
 
 QtObject {
@@ -12,26 +10,26 @@ QtObject {
   property QtObject high: QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color disabled: Colors.o
-        property color enabled: Colors.n
+        property color disabled: Colors.o.color
+        property color enabled: Colors.n.color
       }
     }
 
     property QtObject contentItem: QtObject {
-      property color color: Colors.b
+      property color color: Colors.b.color
     }
   }
 
   property QtObject low: QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color disabled: Colors.o
-        property color enabled: Colors.n
+        property color disabled: Colors.o.color
+        property color enabled: Colors.n.color
       }
     }
 
     property QtObject contentItem: QtObject {
-      property color color: Colors.j
+      property color color: Colors.j.color
     }
   }
 }

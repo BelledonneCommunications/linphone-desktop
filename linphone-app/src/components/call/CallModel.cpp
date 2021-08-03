@@ -26,12 +26,15 @@
 
 #include "app/App.hpp"
 #include "components/calls/CallsListModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contacts/ContactsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "utils/LinphoneUtils.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
@@ -87,6 +90,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
   
   mRemoteAddress = mCall->getRemoteAddress()->clone();
   mMagicSearch->getContactListFromFilterAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain());
+  qWarning() << getFullPeerAddress();
 }
 
 CallModel::~CallModel () {
@@ -112,6 +116,19 @@ QString CallModel::getFullLocalAddress () const {
 }
 // -----------------------------------------------------------------------------
 
+ContactModel *CallModel::getContactModel() const{
+	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString(mCall->getRemoteAddress()->asString()));
+	return contact;
+}
+
+ChatRoomModel * CallModel::getChatRoomModel() const{
+	if(mCall->getCallLog()->getCallId() != "")
+		return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(mCall->getChatRoom(), true).get();
+	else
+		return nullptr;
+}
+
+// -----------------------------------------------------------------------------
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(Utils::appStringToCoreString(
     CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder()

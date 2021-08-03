@@ -36,6 +36,8 @@ singleton MainWindowStyle                                1.0 Main/MainWindowStyl
 singleton AboutStyle                                     1.0 Main/Dialogs/AboutStyle.qml
 singleton AuthenticationRequestStyle                     1.0 Main/Dialogs/AuthenticationRequestStyle.qml
 singleton ManageAccountsStyle                            1.0 Main/Dialogs/ManageAccountsStyle.qml
+singleton InfoChatRoomStyle                              1.0 Main/Dialogs/InfoChatRoomStyle.qml
+singleton InfoEncryptionStyle                            1.0 Main/Dialogs/InfoEncryptionStyle.qml
 
 # Settings Window --------------------------------------------------------------
 

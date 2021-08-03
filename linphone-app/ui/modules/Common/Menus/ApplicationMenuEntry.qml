@@ -15,6 +15,7 @@ Rectangle {
   property alias name: text.text
 
   readonly property bool isSelected: parent.parent._selected === this
+  property alias iconSize : mainIcon.iconSize
 
   // ---------------------------------------------------------------------------
 
@@ -56,6 +57,7 @@ Rectangle {
     spacing: ApplicationMenuStyle.entry.spacing
 
     Icon {
+		id:mainIcon
       icon: entry.icon + (
         entry.isSelected
           ? '_selected'
@@ -72,6 +74,7 @@ Rectangle {
         ? ApplicationMenuStyle.entry.text.color.selected
         : ApplicationMenuStyle.entry.text.color.normal
       font.pointSize: ApplicationMenuStyle.entry.text.pointSize
+      font.weight: Font.DemiBold
       height: parent.height
       text: entry.name
       verticalAlignment: Text.AlignVCenter

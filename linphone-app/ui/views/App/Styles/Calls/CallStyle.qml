@@ -1,13 +1,12 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.f
+  property color backgroundColor: Colors.f.color
 
   property QtObject actionArea: QtObject {
     property int height: 100
@@ -28,7 +27,7 @@ QtObject {
     }
 
     property QtObject callError: QtObject {
-      property color color: Colors.i
+      property color color: Colors.i.color
       property int pointSize: Units.dp * 12
     }
   }
@@ -37,15 +36,15 @@ QtObject {
     property int margins: 15
 
     property QtObject avatar: QtObject {
-      property color backgroundColor: Colors.n
+      property color backgroundColor: Colors.n.color
       property int maxSize: 300
     }
 
     property QtObject pause: QtObject {
-      property color color: Colors.g90
+      property color color: Colors.g90.color
 
       property QtObject text: QtObject {
-        property color color: Colors.q
+        property color color: Colors.q.color
         property int pointSizeFactor: 10
       }
     }
@@ -60,7 +59,7 @@ QtObject {
     property int topMargin: 26
 
     property QtObject busyIndicator: QtObject {
-      property color color: Colors.g
+      property color color: Colors.g.color
       property int height: 30
       property int width: 30
     }
@@ -71,7 +70,7 @@ QtObject {
     }
 
     property QtObject elapsedTime: QtObject {
-      property color color: Colors.j
+      property color color: Colors.j.color
       property int pointSize: Units.dp * 10
 
       property QtObject fullscreen: QtObject {
@@ -92,8 +91,8 @@ QtObject {
     }
 
     property QtObject text: QtObject {
-      property color colorA: Colors.j
-      property color colorB: Colors.i
+      property color colorA: Colors.j.color
+      property color colorB: Colors.i.color
       property int pointSize: Units.dp * 10
       property int wordsSpacing: 5
     }

@@ -19,8 +19,14 @@
  */
 
 #include <QString>
+#include <QQmlEngine>
 
 #include "LinphoneUtils.hpp"
+#include "utils/Utils.hpp"
+#include "components/core/CoreManager.hpp"
+
+#include "components/contacts/ContactsListModel.hpp"
+#include "components/contact/ContactModel.hpp"
 
 // =============================================================================
 
@@ -34,3 +40,16 @@ linphone::TransportType LinphoneUtils::stringToTransportType (const QString &tra
 
   return linphone::TransportType::Dtls;
 }
+
+std::shared_ptr<linphone::Address> LinphoneUtils::interpretUrl(const QString& address){
+	return CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address));
+}
+/*
+bool LinphoneUtils::hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability){
+	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(address);
+	if(contact)
+		return contact->hasCapability(capability);
+	else
+		return false;
+}
+*/

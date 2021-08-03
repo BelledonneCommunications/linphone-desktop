@@ -14,7 +14,7 @@ MouseArea {
   property var tooltipParent: parent
 
   property bool _visible: false
-  property int hoveringCursor : Qt.ArrowCursor
+  property int hoveringCursor : Qt.PointingHandCursor
 
   anchors.fill:parent
 
@@ -36,7 +36,9 @@ MouseArea {
     delay: tooltipArea.delay
     parent: tooltipParent
     visible: _visible || force
-    width: tooltipParent.width>TooltipStyle.minWidth?tooltipParent.width:TooltipStyle.minWidth
+    width: Math.min(tooltip.implicitWidth, Math.max(tooltipParent.width, TooltipStyle.minWidth))
+    
+    //tooltipParent.width>TooltipStyle.minWidth?tooltipParent.width:TooltipStyle.minWidth
 
     timeout: -1
 

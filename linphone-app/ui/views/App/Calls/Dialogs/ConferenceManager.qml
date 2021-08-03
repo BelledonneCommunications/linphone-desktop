@@ -13,6 +13,8 @@ DialogPlus {
 
   readonly property int maxParticipants: 20
   readonly property int minParticipants: 1
+  
+  property ChatRoomModel chatRoomModel	// Used to initialize participants
 
   buttons: [
     TextButtonA {
@@ -31,12 +33,15 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('conferenceManagerDescription')
 
-  height: ConferenceManagerStyle.height
+  height: ConferenceManagerStyle.height + 30
   width: ConferenceManagerStyle.width
 
+	Component.onCompleted: if(chatRoomModel){
+		conferenceHelperModel.toAdd.addParticipants(chatRoomModel)
+	}
   // ---------------------------------------------------------------------------
 
   RowLayout {

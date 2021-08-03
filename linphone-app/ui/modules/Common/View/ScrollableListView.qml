@@ -14,13 +14,14 @@ ListView {
     id: vScrollBar
 
     onPressedChanged: pressed ? view.movementStarted() : view.movementEnded()
+	visible:view.contentHeight > view.height
   }
 
   // ---------------------------------------------------------------------------
 
   boundsBehavior: Flickable.StopAtBounds
   clip: true
-  contentWidth: width - vScrollBar.width
+  contentWidth: width - (vScrollBar.visible?vScrollBar.width:0)
   spacing: 0
 
   // ---------------------------------------------------------------------------

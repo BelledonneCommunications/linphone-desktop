@@ -23,6 +23,7 @@
 #include <QDateTime>
 #include <QThread>
 #include <QMessageBox>
+#include <QLoggingCategory>
 
 #include "config.h"
 
@@ -192,7 +193,7 @@ void Logger::enable (bool status) {
 void Logger::init (const shared_ptr<linphone::Config> &config) {
   if (mInstance)
     return;
-
+  QLoggingCategory::setFilterRules("qt.qml.connections.warning=false");
   const QString folder = SettingsModel::getLogsFolder(config);
   Q_ASSERT(!folder.isEmpty());
 
