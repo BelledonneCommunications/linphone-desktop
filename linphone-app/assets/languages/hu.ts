@@ -1054,7 +1054,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>Lejátszás</translation>
+        <translation>Lejátszás!</translation>
     </message>
 </context>
 <context>
