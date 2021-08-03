@@ -443,7 +443,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation>%1 &lt;sip-cím&gt;?method=&lt;módszer&gt;([&amp;&lt;argumentum&gt;=&lt;base64-érték&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
@@ -970,7 +970,8 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>forcedMessage</source>
         <translation>Töltse le az alkalmazást a számítógépén, és kezdje el ingyen hívni és csevegni a felhasználókkal.
 
-Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
+Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
@@ -2575,7 +2576,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Reunion</source>
-        <translation>Reunion</translation>
+        <translation>Réunion</translation>
     </message>
     <message>
         <source>Romania</source>
@@ -2791,7 +2792,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation>Wallis- és Futuna-szigetek </translation>
+        <translation>Wallis- és Futuna-szigetek</translation>
     </message>
     <message>
         <source>Yemen</source>
