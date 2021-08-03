@@ -704,7 +704,7 @@ Server URL not configured.</translation>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group informations&apos; : Item menu to get information about the chat room</extracomment>
-        <translation>Group informations</translation>
+        <translation>Group information</translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
@@ -1825,7 +1825,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation>Add the domain to the SIP address(sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
+        <translation>Add the domain to the SIP address (sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
