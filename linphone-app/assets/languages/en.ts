@@ -1070,7 +1070,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation>Add Participants</translation>
+        <translation>Add participants</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
@@ -1788,7 +1788,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation>The search is base on this filter to search contacts.&lt;br&gt;Default value: (sn=%s)</translation>
+        <translation>The search is based on this filter to search contacts.&lt;br&gt;Default value: (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
