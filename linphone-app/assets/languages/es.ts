@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>Un software libre de videollamadas SIP</translation>
+        <translation>Un software libre de videollamadas SIP.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -448,7 +448,7 @@ URL del servidor no configurada.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 está escribiendo...</translation>
+        <translation>%1 está escribiendo…</translation>
     </message>
     <message numerus="yes">
         <source>chatTyping</source>
@@ -479,15 +479,15 @@ URL del servidor no configurada.</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>Mostrar la pantalla principal de la aplicación</translation>
+        <translation>Mostrar la pantalla principal de la aplicación.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Inicializar una llamada a la dirección sip</translation>
+        <translation>Inicializar una llamada a la dirección sip.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Inicia una conferencia</translation>
+        <translation>Inicia una conferencia.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -547,7 +547,7 @@ URL del servidor no configurada.</translation>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Administrar participantes para tu conferencia</translation>
+        <translation>Administrar participantes para tu conferencia.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -990,7 +990,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>Crear o administrar su cuenta %1</translation>
+        <translation>Crear o administrar su cuenta %1.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -1167,7 +1167,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Buscar contacto, empezar una llamada o un chat</translation>
+        <translation>Buscar contacto, empezar una llamada o un chat…</translation>
     </message>
     <message>
         <source>contactsEntry</source>
