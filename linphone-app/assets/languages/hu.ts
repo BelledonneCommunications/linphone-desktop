@@ -3335,5 +3335,13 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <translation>Biztonságos szobák</translation>
         <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
     </message>
+    <message>
+        <source>timeoutTooltip</source>
+        <translation>A kapcsolat és a keresés időtúllépése másodpercek alatt. Pozitívnak kell lennie.&lt;br&gt;Az alapértelmezett érték 5 másodperc.</translation>
+    </message>
+    <message>
+        <source>timeoutLabel</source>
+        <translation>Időkorlát</translation>
+    </message>
 </context>
 </TS>
