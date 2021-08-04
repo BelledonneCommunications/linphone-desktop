@@ -80,6 +80,12 @@ Item {
       iconSize: wrappedButton.iconSize || (
         parent.width > parent.height ? parent.height : parent.width
       )
+      MouseArea{
+		anchors.fill:parent
+		hoverEnabled: true
+		acceptedButtons: Qt.NoButton
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+      }
 	  
 	  
 	  /*

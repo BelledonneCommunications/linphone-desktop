@@ -62,7 +62,7 @@ SearchSipAddressesModel::~SearchSipAddressesModel(){
 // -----------------------------------------------------------------------------
 
 int SearchSipAddressesModel::rowCount (const QModelIndex &) const {
-	return mAddresses.count()-1;
+	return std::max(mAddresses.count()-1,0);
 }
 
 QHash<int, QByteArray> SearchSipAddressesModel::roleNames () const {

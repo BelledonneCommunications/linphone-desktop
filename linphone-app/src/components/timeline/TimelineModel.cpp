@@ -62,7 +62,7 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 }
 
 TimelineModel::~TimelineModel(){
-	mChatRoomModel->getChatRoom()->removeListener(mChatRoomModel);
+	//mChatRoomModel->getChatRoom()->removeListener(mChatRoomModel);
 }
 
 QString TimelineModel::getFullPeerAddress() const{

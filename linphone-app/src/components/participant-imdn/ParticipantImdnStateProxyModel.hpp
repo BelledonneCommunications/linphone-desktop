@@ -36,11 +36,13 @@ class ParticipantImdnStateProxyModel : public QSortFilterProxyModel {
 	Q_OBJECT
 	
 public:
-	Q_PROPERTY(ChatMessageModel * chatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
+	Q_PROPERTY(ChatMessageModel * chatMessageModel READ getChatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	ParticipantImdnStateProxyModel (QObject *parent = nullptr);
 	
+	ChatMessageModel * getChatMessageModel();
 	void setChatMessageModel(ChatMessageModel* message);
+	
 	int getCount();
 	
 signals:

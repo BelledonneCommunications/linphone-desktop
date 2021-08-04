@@ -74,23 +74,131 @@ constexpr qint64 FileSizeLimit = 524288000;
 
 // -----------------------------------------------------------------------------
 
+
+ChatRoomModelListener::ChatRoomModelListener(ChatRoomModel * model, QObject* parent) : QObject(parent){
+	connect(this, &ChatRoomModelListener::isComposingReceived, model, &ChatRoomModel::onIsComposingReceived);
+	connect(this, &ChatRoomModelListener::messageReceived, model, &ChatRoomModel::onMessageReceived);
+	connect(this, &ChatRoomModelListener::newEvent, model, &ChatRoomModel::onNewEvent);
+	connect(this, &ChatRoomModelListener::chatMessageReceived, model, &ChatRoomModel::onChatMessageReceived);
+	connect(this, &ChatRoomModelListener::chatMessageSending, model, &ChatRoomModel::onChatMessageSending);
+	connect(this, &ChatRoomModelListener::chatMessageSent, model, &ChatRoomModel::onChatMessageSent);
+	connect(this, &ChatRoomModelListener::participantAdded, model, &ChatRoomModel::onParticipantAdded);
+	connect(this, &ChatRoomModelListener::participantRemoved, model, &ChatRoomModel::onParticipantRemoved);
+	connect(this, &ChatRoomModelListener::participantAdminStatusChanged, model, &ChatRoomModel::onParticipantAdminStatusChanged);
+	connect(this, &ChatRoomModelListener::stateChanged, model, &ChatRoomModel::onStateChanged);
+	connect(this, &ChatRoomModelListener::securityEvent, model, &ChatRoomModel::onSecurityEvent);
+	connect(this, &ChatRoomModelListener::subjectChanged, model, &ChatRoomModel::onSubjectChanged);
+	connect(this, &ChatRoomModelListener::undecryptableMessageReceived, model, &ChatRoomModel::onUndecryptableMessageReceived);
+	connect(this, &ChatRoomModelListener::participantDeviceAdded, model, &ChatRoomModel::onParticipantDeviceAdded);
+	connect(this, &ChatRoomModelListener::participantDeviceRemoved, model, &ChatRoomModel::onParticipantDeviceRemoved);
+	connect(this, &ChatRoomModelListener::conferenceJoined, model, &ChatRoomModel::onConferenceJoined);
+	connect(this, &ChatRoomModelListener::conferenceLeft, model, &ChatRoomModel::onConferenceLeft);
+	connect(this, &ChatRoomModelListener::ephemeralEvent, model, &ChatRoomModel::onEphemeralEvent);
+	connect(this, &ChatRoomModelListener::ephemeralMessageTimerStarted, model, &ChatRoomModel::onEphemeralMessageTimerStarted);
+	connect(this, &ChatRoomModelListener::ephemeralMessageDeleted, model, &ChatRoomModel::onEphemeralMessageDeleted);
+	connect(this, &ChatRoomModelListener::conferenceAddressGeneration, model, &ChatRoomModel::onConferenceAddressGeneration);
+	connect(this, &ChatRoomModelListener::participantRegistrationSubscriptionRequested, model, &ChatRoomModel::onParticipantRegistrationSubscriptionRequested);
+	connect(this, &ChatRoomModelListener::participantRegistrationUnsubscriptionRequested, model, &ChatRoomModel::onParticipantRegistrationUnsubscriptionRequested);
+	connect(this, &ChatRoomModelListener::chatMessageShouldBeStored, model, &ChatRoomModel::onChatMessageShouldBeStored);
+	connect(this, &ChatRoomModelListener::chatMessageParticipantImdnStateChanged, model, &ChatRoomModel::onChatMessageParticipantImdnStateChanged);
+}
+
+void ChatRoomModelListener::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing){
+	emit isComposingReceived(chatRoom, remoteAddress, isComposing);
+}
+void ChatRoomModelListener::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
+	emit messageReceived(chatRoom, message);
+}
+void ChatRoomModelListener::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit newEvent(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit chatMessageReceived(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit chatMessageSending(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit chatMessageSent(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit participantAdded(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit participantRemoved(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit participantAdminStatusChanged(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
+	emit stateChanged(chatRoom, newState);
+}
+void ChatRoomModelListener::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit securityEvent(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit subjectChanged(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onUndecryptableMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
+	emit undecryptableMessageReceived(chatRoom, message);
+}
+void ChatRoomModelListener::onParticipantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit participantDeviceAdded(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onParticipantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit participantDeviceRemoved(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit conferenceJoined(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit conferenceLeft(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onEphemeralEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit ephemeralEvent(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit ephemeralMessageTimerStarted(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	emit ephemeralMessageDeleted(chatRoom, eventLog);
+}
+void ChatRoomModelListener::onConferenceAddressGeneration(const std::shared_ptr<linphone::ChatRoom> & chatRoom){
+	emit conferenceAddressGeneration(chatRoom);
+}
+void ChatRoomModelListener::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
+	emit participantRegistrationSubscriptionRequested(chatRoom, participantAddress);
+}
+void ChatRoomModelListener::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
+	emit participantRegistrationUnsubscriptionRequested(chatRoom, participantAddress);
+}
+void ChatRoomModelListener::onChatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
+	emit chatMessageShouldBeStored(chatRoom, message);
+}
+void ChatRoomModelListener::onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
+	emit chatMessageParticipantImdnStateChanged(chatRoom, message, state);
+}
+
 // -----------------------------------------------------------------------------
 std::shared_ptr<ChatRoomModel> ChatRoomModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom){
 	std::shared_ptr<ChatRoomModel> model = std::make_shared<ChatRoomModel>(chatRoom);
 	if(model){
 		model->mSelf = model;
-		 chatRoom->addListener(model);
+		 //chatRoom->addListener(model);
 		return model;
 	}else
 		return nullptr;
 }
 
-ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
+ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject * parent) : QAbstractListModel(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	CoreManager *coreManager = CoreManager::getInstance();
+	
 	mCoreHandlers = coreManager->getHandlers();
 	
 	mChatRoom = chatRoom;
+	mChatRoomModelListener = std::make_shared<ChatRoomModelListener>(this, parent);
+	mChatRoom->addListener(mChatRoomModelListener);
 		
 	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(mChatRoom->getLastUpdateTime()));
 	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
@@ -127,8 +235,19 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom){
 
 ChatRoomModel::~ChatRoomModel () {
 	mParticipantListModel = nullptr;
-	if(mChatRoom && mDeleteChatRoom)
-		CoreManager::getInstance()->getCore()->deleteChatRoom(mChatRoom);
+	if(mChatRoom){
+		mChatRoom->removeListener(mChatRoomModelListener);
+		if(mDeleteChatRoom){
+			mDeleteChatRoom = false;
+			auto participants = mChatRoom->getParticipants();
+			std::list<std::shared_ptr<linphone::Address>> participantsAddress;
+			for(auto p : participants)
+				participantsAddress.push_back(p->getAddress()->clone());
+			auto internalChatRoom = CoreManager::getInstance()->getCore()->searchChatRoom(mChatRoom->getCurrentParams(), mChatRoom->getLocalAddress(), mChatRoom->getPeerAddress(), participantsAddress);
+			if( internalChatRoom)
+				CoreManager::getInstance()->getCore()->deleteChatRoom(internalChatRoom);
+		}
+	}
 	mChatRoom = nullptr;
 }
 

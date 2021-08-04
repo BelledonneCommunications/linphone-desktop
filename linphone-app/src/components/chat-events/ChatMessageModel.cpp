@@ -318,7 +318,7 @@ QString ChatMessageModel::AppDataManager::toString(){
 ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : QObject(parent), ChatEvent(ChatRoomModel::EntryType::MessageEntry) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it
 	mParticipantImdnStateListModel = std::make_shared<ParticipantImdnStateListModel>(chatMessage);
-	mChatMessageListener = std::make_shared<ChatMessageListener>(this, parent);	
+	mChatMessageListener = std::make_shared<ChatMessageListener>(this, parent);
 	mChatMessage = chatMessage;
 	mWasDownloaded = false;
 	mChatMessage->addListener(mChatMessageListener);

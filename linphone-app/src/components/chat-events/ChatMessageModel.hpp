@@ -97,7 +97,7 @@ class ChatMessageListener : public QObject, public linphone::ChatMessageListener
 Q_OBJECT
 public:
 	ChatMessageListener(ChatMessageModel * model, QObject * parent = nullptr);
-	virtual ~ChatMessageListener(){};
+	virtual ~ChatMessageListener(){}
 	
 	virtual void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer) override;
 	virtual void onFileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size, const std::shared_ptr<linphone::Buffer> & buffer) override;

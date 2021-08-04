@@ -200,11 +200,11 @@ Item {
 								 DroppableTextAreaStyle.fileChooserButton.margins
 					verticalCenter: parent.verticalCenter
 				}*/
-				enabled: droppableTextArea.dropEnabled
+				//enabled: droppableTextArea.dropEnabled
 				icon: 'send'
 				iconSize: DroppableTextAreaStyle.fileChooserButton.size
 				useStates:false
-				onClicked: handleValidation()
+				onClicked: textArea.handleValidation()
 				Icon{
 					visible:droppableTextArea.isEphemeral
 					icon:'timer'

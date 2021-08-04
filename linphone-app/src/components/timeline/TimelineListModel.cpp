@@ -292,11 +292,12 @@ void TimelineListModel::remove(std::shared_ptr<TimelineModel> model){
 	}
 }
 void TimelineListModel::removeChatRoomModel(std::shared_ptr<ChatRoomModel> model){
-	if(model->getChatRoom()->isEmpty() && (model->hasBeenLeft() || !model->isGroupEnabled())){
+	if(!model || (model->getChatRoom()->isEmpty() && (model->hasBeenLeft() || !model->isGroupEnabled()))){
 		auto itTimeline = mTimelines.begin();
 		while(itTimeline != mTimelines.end()) {
 			if((*itTimeline)->mChatRoomModel == model){
-				model->deleteChatRoom();
+				if(model)
+					model->deleteChatRoom();
 				remove(*itTimeline);
 				return;
 			}else

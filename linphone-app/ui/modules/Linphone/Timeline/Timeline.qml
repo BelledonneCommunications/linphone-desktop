@@ -76,8 +76,6 @@ Rectangle {
 				id:showHistory
 				anchors.fill:parent
 				onClicked: {
-					//view.currentIndex = -1
-					//timeline.entrySelected('',false)
 					filterView.visible = !filterView.visible
 				}
 			}
@@ -280,6 +278,8 @@ Rectangle {
 					anchors.fill: parent
 					onClicked: {
 						//timeline.model.unselectAll()
+						if(modelData.selected)
+							timeline.entrySelected(modelData)
 						modelData.selected = true
 						view.currentIndex = index;
 					}

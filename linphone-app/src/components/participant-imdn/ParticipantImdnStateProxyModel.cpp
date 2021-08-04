@@ -56,6 +56,10 @@ int ParticipantImdnStateProxyModel::getCount(){
 	return rowCount();
 }
 
+ChatMessageModel * ParticipantImdnStateProxyModel::getChatMessageModel(){
+	return nullptr;
+}
+
 void ParticipantImdnStateProxyModel::setChatMessageModel(ChatMessageModel * message){
 	ParticipantImdnStateListModel *model = static_cast<ParticipantImdnStateListModel*>(sourceModel());
 	ParticipantImdnStateListModel *messageModel = message->getParticipantImdnStates().get();

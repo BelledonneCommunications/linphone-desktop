@@ -360,6 +360,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 		}
 	}
 	result["created"] = (chatRoom != nullptr);
+	
 	return result;
 }
 

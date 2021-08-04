@@ -179,15 +179,6 @@ ApplicationWindow {
 								window.setView('ContactEdit', { sipAddress: entry.sipAddress })
 							} else {
 								CallsListModel.createChatRoom( "", false, sipAddress )
-							/*
-								window.setView('Conversation', {
-												   isSecure: entry.isSecure,
-												   peerAddress: entry.sipAddress,
-												   fullPeerAddress: entry.fullSipAddress,
-												   fullLocalAddress: AccountSettingsModel.fullSipAddress,
-												   localAddress: AccountSettingsModel.sipAddress
-												   
-											   })*/
 							}
 						}
 						
