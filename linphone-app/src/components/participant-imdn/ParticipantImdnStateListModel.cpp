@@ -76,7 +76,8 @@ void ParticipantImdnStateListModel::add(std::shared_ptr<ParticipantImdnStateMode
 	beginInsertRows(QModelIndex(), row, row);
 	mList << imdn;
 	endInsertRows();
-	resetInternalData();	
+	emit countChanged();
+	//resetInternalData();	
 }
 
 bool ParticipantImdnStateListModel::removeRow (int row, const QModelIndex &parent){
@@ -93,6 +94,7 @@ bool ParticipantImdnStateListModel::removeRows (int row, int count, const QModel
 		mList.takeAt(row);
 	
 	endRemoveRows();
+	emit countChanged();
 	return true;
 }
 

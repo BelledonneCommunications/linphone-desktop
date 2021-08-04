@@ -103,4 +103,8 @@ Controls.TextField {
 	  visible:error!= ''
 	  text:error
   }
+	Keys.onPressed:{
+		if( event.key == Qt.Key_Escape)
+			focus = false
+	}
 }

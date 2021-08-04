@@ -7,6 +7,7 @@ import Common 1.0
 // =============================================================================
 
 Column {
+	id:mainItem
 	property alias username: username.text
 	property string sipAddress
 	property alias statusText : status.text
@@ -22,6 +23,11 @@ Column {
 	property int contentHeight : Math.max(username.implicitHeight, address.implicitHeight)+10
 	
 	readonly property int statusWidth : (status.visible ? status.width + 5 : 0)
+	
+	property bool usernameDoubleClickable: false
+	
+	signal usernameDoubleClicked()
+
 	
 	
 	
@@ -50,6 +56,11 @@ Column {
 			color: contactDescriptionStyle.username.status.color
 			font.pointSize: contactDescriptionStyle.username.status.pointSize
 			font.italic : true
+		}
+		MouseArea{
+			anchors.fill:parent
+			visible: usernameDoubleClickable
+			onDoubleClicked: usernameDoubleClicked()
 		}
 	}
 	

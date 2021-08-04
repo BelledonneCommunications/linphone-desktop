@@ -36,10 +36,16 @@ class ParticipantImdnStateProxyModel : public QSortFilterProxyModel {
 	Q_OBJECT
 	
 public:
+	Q_PROPERTY(ChatMessageModel * chatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	ParticipantImdnStateProxyModel (QObject *parent = nullptr);
 	
 	void setChatMessageModel(ChatMessageModel* message);
+	int getCount();
 	
+signals:
+	void chatMessageModelChanged();
+	void countChanged();
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
@@ -47,5 +53,4 @@ protected:
 	std::shared_ptr<ParticipantImdnStateListModel> mImdns;
 	
 };
-
 #endif

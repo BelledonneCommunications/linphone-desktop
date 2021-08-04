@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.3
 
 import Clipboard 1.0
 import Common 1.0
+import Linphone 1.0
+
 import Common.Styles 1.0
 import Linphone.Styles 1.0
 import TextToSpeech 1.0
@@ -130,7 +132,7 @@ Item {
 				iconSizeMenu: 17
 				iconLayoutDirection: Qt.RightToLeft
 				menuItemStyle : MenuItemStyle.aux
-				visible: deliveryLayout.model.rowCount() > 0
+				visible: deliveryLayout.model.count > 0
 				onTriggered: deliveryLayout.visible = !deliveryLayout.visible
 			}
 			MenuItem {
@@ -140,7 +142,7 @@ Item {
 				iconSizeMenu: 17
 				iconLayoutDirection: Qt.RightToLeft
 				menuItemStyle : MenuItemStyle.auxRed
-				onTriggered: deliveryLayout.visible = !deliveryLayout.visible
+				onTriggered: removeEntry()
 			}
 		}
 
@@ -179,20 +181,13 @@ Item {
 		anchors.right:parent.right
 		anchors.rightMargin: 50
 		//height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
-		height: visible ? (ChatStyle.composingText.height-5)*deliveryLayout.model.rowCount() : 0
+		height: visible ? (ChatStyle.composingText.height-5)*deliveryLayout.model.count : 0
 		cellWidth: parent.width; cellHeight: ChatStyle.composingText.height-5
 		visible:false
-		/*
-		property var composersLength : container.proxyModel.composers.length
-		onComposersLengthChanged:{
-			model.clear()
-			console.log(container.proxyModel.composers)
-			for(var j  = 0 ; j < container.proxyModel.composers.length ; ++j) {
-				console.log(container.proxyModel.composers[j])
-				model.append({text:container.proxyModel.composers[j]})
-			}
-		}*/
-		model: $chatEntry.getProxyImdnStates()
+		model: ParticipantImdnStateProxyModel{
+			id: imdnStatesModel
+			chatMessageModel: $chatEntry
+		}
 		function getText(state){
 			if(state == LinphoneEnums.ChatMessageStateDelivered)
 				//: 'Send to %1 - %2' Little message to indicate the state of a message

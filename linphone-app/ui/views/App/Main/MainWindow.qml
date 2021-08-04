@@ -200,7 +200,8 @@ ApplicationWindow {
 					
 					ActionButton {
 						icon: 'new_chat_group'
-						tooltipText : 'Open Conference'
+						//: 'Open Conference' : Tooltip to illustrate a button
+						tooltipText : qsTr('newChatRoom')
 						iconSize: MainWindowStyle.newConferenceSize
 						//autoIcon: true
 						onClicked: {

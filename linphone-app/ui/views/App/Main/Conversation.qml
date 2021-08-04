@@ -83,93 +83,116 @@ ColumnLayout  {
 				iconSize: ConversationStyle.bar.groupChatSize
 				visible: chatRoomModel.groupEnabled
 			}
-			RowLayout{
+			Item{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				spacing:0
-				
-				ColumnLayout{
-					Layout.fillHeight: true
-					Layout.minimumWidth: 20
-					Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
-					Layout.preferredWidth: contactDescription.contentWidth
-					spacing: 5
-					Row{
-						Layout.topMargin: 15
-						Layout.preferredHeight: implicitHeight
-						Layout.alignment: Qt.AlignBottom
-						visible:chatRoomModel.isMeAdmin
-						
-						Icon{
-							id:adminIcon
-							icon : 'admin_selected'
-							iconSize:14
-						}
-						Text{
-							anchors.verticalCenter: parent.verticalCenter
-							//: 'Admin' : Admin(istrator)
-							//~ Context One word title for describing the current admin status
-							text: qsTr('adminStatus')
-							color:"#9FA6AB"
-							font.pointSize: Units.dp * 8
-						}
-					}
+				RowLayout{
+					anchors.fill: parent
+					spacing:0
 					
-					ContactDescription {
-						id:contactDescription
+					ColumnLayout{
+						Layout.fillHeight: true
 						Layout.minimumWidth: 20
 						Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
-						Layout.preferredWidth: contentWidth
-						Layout.preferredHeight: contentHeight
-						Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-						contactDescriptionStyle: ConversationStyle.bar.contactDescription
-						username: avatar.username
-						sipAddress: {
-							if(chatRoomModel) {
-								if(chatRoomModel.groupEnabled) {
-									return chatRoomModel.participants.displayNamesToString();
-								}else if(chatRoomModel.isSecure()) {
-									return chatRoomModel.participants.addressesToString();
-								}else {
-									return chatRoomModel.sipAddress;
-								}
-							}else {
-								return conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '';
-							}
+						Layout.preferredWidth: contactDescription.contentWidth
+						spacing: 5
+						Row{
+							Layout.topMargin: 15
+							Layout.preferredHeight: implicitHeight
+							Layout.alignment: Qt.AlignBottom
+							visible:chatRoomModel.isMeAdmin
 							
+							Icon{
+								id:adminIcon
+								icon : 'admin_selected'
+								iconSize:14
+							}
+							Text{
+								anchors.verticalCenter: parent.verticalCenter
+								//: 'Admin' : Admin(istrator)
+								//~ Context One word title for describing the current admin status
+								text: qsTr('adminStatus')
+								color:"#9FA6AB"
+								font.pointSize: Units.dp * 8
+							}
+						}
+						
+						ContactDescription {
+							id:contactDescription
+							Layout.minimumWidth: 20
+							Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
+							Layout.preferredWidth: contentWidth
+							Layout.preferredHeight: contentHeight
+							Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+							contactDescriptionStyle: ConversationStyle.bar.contactDescription
+							username: avatar.username
+							usernameDoubleClickable: chatRoomModel.isMeAdmin
+							sipAddress: {
+								if(chatRoomModel) {
+									if(chatRoomModel.groupEnabled) {
+										return chatRoomModel.participants.displayNamesToString();
+									}else if(chatRoomModel.isSecure()) {
+										return chatRoomModel.participants.addressesToString();
+									}else {
+										return chatRoomModel.sipAddress;
+									}
+								}else {
+									return conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '';
+								}
+								
+							}
+							onUsernameDoubleClicked: {
+														usernameEdit.visible = !usernameEdit.visible
+														usernameEdit.forceActiveFocus()
+													}
+						}
+						Item{
+							Layout.fillHeight: true
+							Layout.fillWidth: true
+							visible: chatRoomModel.isMeAdmin
 						}
 					}
-					Item{
-						Layout.fillHeight: true
+					Icon{
+						Layout.alignment: Qt.AlignVCenter
+						visible: securityLevel != 1
+						icon: securityLevel === 2?'secure_level_1': securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'
+						iconSize:30
+						MouseArea{
+							anchors.fill:parent
+							onClicked : {
+								window.detachVirtualWindow()
+								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
+														   ,{securityLevel:securityLevel}
+														   , function (status) {
+															   if(status){
+																   window.detachVirtualWindow()
+																   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
+																							  ,{chatRoomModel:chatRoomModel
+																								  , window:window})		
+															   }
+														   })
+							}
+						}
+					}
+					Item{//Spacer
 						Layout.fillWidth: true
-						visible: chatRoomModel.isMeAdmin
 					}
 				}
-				Icon{
-					Layout.alignment: Qt.AlignVCenter
-					visible: securityLevel != 1
-					icon: securityLevel === 2?'secure_level_1': securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'
-					iconSize:30
-					MouseArea{
-						anchors.fill:parent
-						onClicked : {
-							window.detachVirtualWindow()
-							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
-													   ,{securityLevel:securityLevel}
-													   , function (status) {
-														   if(status){
-															   window.detachVirtualWindow()
-															   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
-																						  ,{chatRoomModel:chatRoomModel
-																							  , window:window})		
-														   }
-													   })
+				
+				TextField{
+							id: usernameEdit
+							anchors.fill: parent
+							//anchors.margins: -1
+							//textFieldStyle : TextFieldStyle.flat
+							text: avatar.username
+							visible: false
+							onEditingFinished: {
+								chatRoomModel.subject = text
+								visible = false
+							}
+							font.bold: true
+							onFocusChanged: if(!focus) visible=false
 						}
-					}
-				}
-				Item{//Spacer
-					Layout.fillWidth: true
-				}
 			}
 			
 			Row {

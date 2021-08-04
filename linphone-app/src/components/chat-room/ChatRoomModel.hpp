@@ -57,7 +57,7 @@ public:
 	
 	//Q_PROPERTY(QString participants READ getParticipants NOTIFY participantsChanged);
 	//Q_PROPERTY(ParticipantProxyModel participants READ getParticipants NOTIFY participantsChanged);
-	Q_PROPERTY(QString subject READ getSubject NOTIFY subjectChanged)
+	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime lastUpdateTime MEMBER mLastUpdateTime WRITE setLastUpdateTime NOTIFY lastUpdateTimeChanged)
 	Q_PROPERTY(int unreadMessagesCount MEMBER mUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY unreadMessagesCountChanged)
 	Q_PROPERTY(int missedCallsCount MEMBER mMissedCallsCount WRITE setMissedCallsCount NOTIFY missedCallsCountChanged)
@@ -130,7 +130,8 @@ public:
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
 		
-//---- Setters	
+//---- Setters
+	void setSubject(QString& subject);
 	void setLastUpdateTime(const QDateTime& lastUpdateDate);
 	
 	void setUnreadMessagesCount(const int& count);

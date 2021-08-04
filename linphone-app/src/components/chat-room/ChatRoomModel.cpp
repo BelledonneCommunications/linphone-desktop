@@ -377,6 +377,13 @@ QList<QString> ChatRoomModel::getComposers(){
 
 //------------------------------------------------------------------------------------------------
 
+void ChatRoomModel::setSubject(QString& subject){
+	if(mChatRoom && getSubject() != subject){
+		mChatRoom->setSubject(Utils::appStringToCoreString(subject));
+		emit subjectChanged(subject);
+	}
+}
+
 void ChatRoomModel::setLastUpdateTime(const QDateTime& lastUpdateDate) {
 	if(mLastUpdateTime != lastUpdateDate ) {
 		mLastUpdateTime = lastUpdateDate;
@@ -822,5 +829,6 @@ void ChatRoomModel::onChatMessageShouldBeStored(const std::shared_ptr<linphone::
 }
 
 void ChatRoomModel::onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
+	qWarning() << "ChatRoom Imdn received :" << (state->getParticipant() != nullptr);
 }
 

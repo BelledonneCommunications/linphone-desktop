@@ -617,6 +617,7 @@ void App::registerTypes () {
   registerType<FileExtractor>("FileExtractor");
   registerType<HistoryProxyModel>("HistoryProxyModel");
   registerType<LdapProxyModel>("LdapProxyModel");
+  registerType<ParticipantImdnStateProxyModel>("ParticipantImdnStateProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SearchSipAddressesModel>("SearchSipAddressesModel");
   registerType<SearchSipAddressesProxyModel>("SearchSipAddressesProxyModel");
@@ -660,7 +661,6 @@ void App::registerTypes () {
   registerUncreatableType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
   registerUncreatableType<ParticipantImdnStateModel>("ParticipantImdnStateModel");
   registerUncreatableType<ParticipantImdnStateListModel>("ParticipantImdnStateListModel");
-  registerUncreatableType<ParticipantImdnStateProxyModel>("ParticipantImdnStateProxyModel");
   
   
   

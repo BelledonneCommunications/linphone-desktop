@@ -51,6 +51,7 @@ public slots:
 
 signals:
 	void imdnStateChanged();
+	void countChanged();
 	
 private:
 	void add(std::shared_ptr<ParticipantImdnStateModel> imdn);
