@@ -432,7 +432,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 rašo...</translation>
+        <translation>%1 rašo…</translation>
     </message>
 </context>
 <context>
@@ -463,7 +463,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Inicijuoti konferenciją</translation>
+        <translation>Inicijuoti konferenciją.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -883,7 +883,7 @@ Nesukonfigūruotas serverio url.</translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation>Rodyti paaiškinimus.</translation>
+        <translation>Rodyti paaiškinimus</translation>
     </message>
     <message>
         <source>inviteButton</source>
@@ -978,7 +978,7 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Ieškoti kontaktų, pradėti skambutį ar pokalbį...</translation>
+        <translation>Ieškoti kontaktų, pradėti skambutį ar pokalbį…</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -2812,6 +2812,13 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>downloadCodecDescription</source>
         <translation>Ar norite atsisiųsti %1 (%2)?</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>commandLineOptionFetchConfigArg</source>
+        <translation>URL, Keliai or failas</translation>
     </message>
 </context>
 </TS>
