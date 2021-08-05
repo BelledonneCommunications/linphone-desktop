@@ -79,6 +79,7 @@ Item {
 	
 	TextEdit {
 		id: message
+		property string lastTextSelected : ''
 		
 		anchors {
 			left: container.left
@@ -101,19 +102,27 @@ Item {
 		
 		onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
 		onLinkActivated: Qt.openUrlExternally(link)
+		onSelectedTextChanged:if(selectedText != '') lastTextSelected = selectedText
+		onActiveFocusChanged: {
+			if(activeFocus)
+				lastTextSelected = ''
+			deselect()
+		}
 		
-		onActiveFocusChanged: deselect()
 		
 		Menu {
 			id: messageMenu
 			menuStyle : MenuStyle.aux
 			MenuItem {
-				text: qsTr('menuCopy')
+				//: 'Copy all' : Text menu to copy all message text into clipboard
+				text: (message.lastTextSelected == '' ? qsTr('menuCopyAll')
+				//: 'Copy' : Text menu to copy selected text in message into clipboard
+				:  qsTr('menuCopy'))
 				iconMenu: 'menu_copy_text'
 				iconSizeMenu: 17
 				iconLayoutDirection: Qt.RightToLeft
 				menuItemStyle : MenuItemStyle.aux
-				onTriggered: Clipboard.text = $chatEntry.content
+				onTriggered: Clipboard.text = (message.lastTextSelected == '' ? $chatEntry.content : message.lastTextSelected)
 			}
 			
 			MenuItem {

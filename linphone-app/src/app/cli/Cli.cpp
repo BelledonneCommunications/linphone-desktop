@@ -96,14 +96,21 @@ static void cliJoinConferenceAs (QHash<QString, QString> &args) {
 	const QString fromSipAddress = args.take("guest-sip-address");
 	const QString toSipAddress = args.take("sip-address");
 	CoreManager *coreManager = CoreManager::getInstance();
-	shared_ptr<linphone::ProxyConfig> proxyConfig = coreManager->getCore()->getDefaultProxyConfig();
-
+	/*shared_ptr<linphone::ProxyConfig> proxyConfig = coreManager->getCore()->getDefaultProxyConfig();
 	if (!proxyConfig) {
 		qWarning() << QStringLiteral("You have no proxy config.");
 		return;
 	}
 
 	const shared_ptr<const linphone::Address> currentSipAddress = proxyConfig->getIdentityAddress();
+	*/
+	shared_ptr<linphone::Account> account = coreManager->getCore()->getDefaultAccount();
+	if (!account) {
+		qWarning() << QStringLiteral("You have no account.");
+		return;
+	}
+
+	const shared_ptr<const linphone::Address> currentSipAddress = account->getParams()->getIdentityAddress();
 	const shared_ptr<const linphone::Address> askedSipAddress = linphone::Factory::get()->createAddress(
 				Utils::appStringToCoreString(fromSipAddress)
 				);

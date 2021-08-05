@@ -413,13 +413,24 @@ void CoreManager::migrate () {
     .arg(rcVersion).arg(RcVersionCurrent);
 
   // Add message_expires param on old proxy configs.
+  /*
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
     if (proxyConfig->getDomain() == LinphoneDomain) {
       proxyConfig->setContactParameters(DefaultContactParameters);
       proxyConfig->setExpires(DefaultExpires);
       proxyConfig->done();
     }
+  }*/
+  for(const auto &account : mCore->getAccountList()){
+	auto params = account->getParams();
+	if( params->getDomain() == LinphoneDomain) {
+		auto newParams = params->clone();
+		newParams->setContactParameters(DefaultContactParameters);
+		newParams->setExpires(DefaultExpires);
+		account->setParams(newParams);
+	}
   }
+  
   config->setInt(SettingsModel::UiSection, RcVersionName, RcVersionCurrent);
 }
 
