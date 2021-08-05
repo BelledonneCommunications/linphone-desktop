@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>按照我们发往 %1 的指示来激活账户，然后点击下面</translation>
+        <translation>按照我们发往 %1 的指示来激活账户，然后点击下面.</translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>我们发送了一条短信至 %1 ，要完成手机号码验证，请输入短信中的 4 位验证码</translation>
+        <translation>我们发送了一条短信至 %1 ，要完成手机号码验证，请输入短信中的 4 位验证码.</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>一个免费（且自由）的 SIP 网络电话</translation>
+        <translation>一个免费（且自由）的 SIP 网络电话.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>该助手会帮助你配置并使用你的 SIP 账户</translation>
+        <translation>该助手会帮助你配置并使用你的 SIP 账户.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>无效的用户名</translation>
+        <translation>无效的用户名.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -179,11 +179,11 @@
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>服务器错误：无法发送短信</translation>
+        <translation>服务器错误：无法发送短信.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation>这个账户已存在</translation>
+        <translation>这个账户已存在.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
@@ -191,7 +191,7 @@
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation>请确保您已经验证了您的账户或重试</translation>
+        <translation>请确保您已经验证了您的账户或重试.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
@@ -207,7 +207,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation>无效的国家号码</translation>
+        <translation>无效的国家号码!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
@@ -356,7 +356,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>开始新的通话</translation>
+        <translation>开始新的通话.</translation>
     </message>
 </context>
 <context>
@@ -432,7 +432,7 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 正在输入</translation>
+        <translation>%1 正在输入…</translation>
     </message>
 </context>
 <context>
@@ -443,11 +443,11 @@
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -455,15 +455,15 @@
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>显示应用程序的主窗口</translation>
+        <translation>显示应用程序的主窗口.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>向这个 SIP 地址拨号</translation>
+        <translation>向这个 SIP 地址拨号.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>开始一个会议</translation>
+        <translation>开始一个会议.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -471,7 +471,7 @@
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>以访客身份加入此 SIP 地址创建的会议。如果你未连接到代理，请参阅“加入会议”</translation>
+        <translation>以访客身份加入此 SIP 地址创建的会议。如果你未连接到代理，请参阅“join-conference”.</translation>
     </message>
 </context>
 <context>
@@ -519,7 +519,7 @@
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>管理会议参与者</translation>
+        <translation>管理会议参与者.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -721,7 +721,7 @@
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>两次输入的密码不一致</translation>
+        <translation>两次输入的密码不一致.</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -863,7 +863,7 @@
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>在 %1 上邀请您的朋友</translation>
+        <translation>在 %1 上邀请您的朋友.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -871,7 +871,7 @@
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>创建或管理您的 %1 账户</translation>
+        <translation>创建或管理您的 %1 账户.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -902,7 +902,7 @@
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation>通话使用 %1 加密</translation>
+        <translation>通话使用 %1 加密.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
@@ -910,30 +910,30 @@
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>截取快照</translation>
+        <translation>截取快照.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>开始录制</translation>
+        <translation>开始录制.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>停止录制</translation>
+        <translation>停止录制.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>截取快照</translation>
+        <translation>截取快照.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>开始录制</translation>
+        <translation>开始录制.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>停止录制</translation>
+        <translation>停止录制.</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>搜索联系人，并开始通话或聊天</translation>
+        <translation>搜索联系人，并开始通话或聊天…</translation>
     </message>
     <message>
         <source>homeEntry</source>

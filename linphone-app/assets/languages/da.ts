@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>For at aktivere din konto, følg vejledningen sendt til %1 og klik hernede</translation>
+        <translation>For at aktivere din konto, følg vejledningen sendt til %1 og klik hernede.</translation>
     </message>
 </context>
 <context>
@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Vi har sendt en SMS med valideringskoden til %1. For at kunne fuldføre valideringen, indtast den 4-cifrede kode hernede</translation>
+        <translation>Vi har sendt en SMS med valideringskoden til %1. For at kunne fuldføre valideringen, indtast den 4-cifrede kode hernede.</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>En gratis SIP video telefon</translation>
+        <translation>En gratis SIP video telefon.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Assistenten vil hjælpe dig med konfigurationen af din sip konto</translation>
+        <translation>Assistenten vil hjælpe dig med konfigurationen af din sip konto.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation>Fejlet SMS aktivering! </translation>
+        <translation>Fejlet SMS aktivering!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -285,7 +285,7 @@
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation>Jitter buffer</translation>
+        <translation>Jitterbuffer</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
@@ -432,7 +432,7 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 indtaster...</translation>
+        <translation>%1 indtaster…</translation>
     </message>
 </context>
 <context>
@@ -443,11 +443,11 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1&quot; &lt;method&gt;([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -467,11 +467,11 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation>Deltag i konferencen startet af sip-adressen som navnet viser. Hvis du er forbundet til en proxy, se &quot;deltag konferencen som&quot;. </translation>
+        <translation>Deltag i konferencen startet af sip-adressen som navnet viser. Hvis du er forbundet til en proxy, se &quot;deltag konferencen som&quot;.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>Deltag i konferencen startet af sip-adressen som har gæstens sip-adresse. Hvis du ikke er forbundet til en proxy, se &quot;deltag konferencen&quot;. </translation>
+        <translation>Deltag i konferencen startet af sip-adressen som har gæstens sip-adresse. Hvis du ikke er forbundet til en proxy, se &quot;deltag konferencen&quot;.</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Søg en kontakt, start en samtale eller en chat...</translation>
+        <translation>Søg en kontakt, start en samtale eller en chat…</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -994,7 +994,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Brug den smarte søgefunktion for at starte audio og video opkald, sende en besked eller oprette en ny kontakt. Indtast din vens SIP-adresse eller brugernavn. </translation>
+        <translation>Brug den smarte søgefunktion for at starte audio og video opkald, sende en besked eller oprette en ny kontakt. Indtast din vens SIP-adresse eller brugernavn.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>

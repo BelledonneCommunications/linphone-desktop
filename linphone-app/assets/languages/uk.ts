@@ -432,7 +432,7 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 друкує...</translation>
+        <translation>%1 друкує…</translation>
     </message>
 </context>
 <context>
@@ -721,7 +721,7 @@
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>Уведені паролі не збігаються</translation>
+        <translation>Уведені паролі не збігаються.</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -767,7 +767,7 @@
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation>Будь ласка, оберіть один або декілька файлів.</translation>
+        <translation>Будь ласка, оберіть один або декілька файлів</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
