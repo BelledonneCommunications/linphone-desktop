@@ -154,7 +154,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &pee
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) {
     if( sipAddress.toUpper().contains("TRANSPORT="))
     {// Transport has been specified : check for it
-      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
+      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
       if (!address)
         return QString("TLS");  // Return TLS by default
 
@@ -174,14 +174,14 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
 }
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
 
   if (!address)
     return QString("");
 
   address->setTransport(Utils::stringToTransportType(transport.toUpper()));
 
-  return QString::fromStdString(address->asString());
+  return Utils::coreStringToAppString(address->asString());
 }
 
 // -----------------------------------------------------------------------------
@@ -227,11 +227,11 @@ QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
 }
 
 bool SipAddressesModel::addressIsValid (const QString &address) {
-  return !!linphone::Factory::get()->createAddress(address.toStdString());
+  return !!linphone::Factory::get()->createAddress(Utils::appStringToCoreString(address));
 }
 
 bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
   return address && !address->getUsername().empty();
 }
 // Return at most : sip:username@domain
@@ -286,7 +286,6 @@ void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
 }
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
   for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses()) {
-	qWarning() << "handleContactAdded " << sipAddress.toString();
 	addOrUpdateSipAddress(sipAddress.toString(), contact);
   }
 }
@@ -302,7 +301,6 @@ void SipAddressesModel::handleSipAddressAdded (ContactModel *contact, const QStr
     qWarning() << "Unable to map sip address" << sipAddress << "to" << contact << "- already used by" << mappedContact;
     return;
   }
-	qWarning() << "handleSipAddressAdded " << sipAddress;
   addOrUpdateSipAddress(sipAddress, contact);
 }
 
@@ -317,7 +315,6 @@ void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QS
 }
 
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
-  qInfo() << "Handle message received.";
   const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
   addOrUpdateSipAddress(peerAddress, message);
 }
@@ -442,7 +439,6 @@ void SipAddressesModel::handleMessageCountReset (ChatRoomModel *chatRoomModel) {
 }
 
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
-  qInfo() << "Handle message sent.";
   const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
   addOrUpdateSipAddress(peerAddress, message);
 }

@@ -92,8 +92,17 @@ ChatRoomModel *TimelineModel::getChatRoomModel() const{
 void TimelineModel::setSelected(const bool& selected){
 	if(selected != mSelected){
 		mSelected = selected;
-		if(mSelected)
+		if(mSelected){
+			qInfo() << "Chat room selected : Subject :" << mChatRoomModel->getSubject()
+				<< ", Username:" << mChatRoomModel->getUsername()
+				<< ", GroupEnabled:"<< mChatRoomModel->isGroupEnabled()
+				<< ", Encrypted:"<< mChatRoomModel->haveEncryption()
+				<< ", ephemeralEnabled:" << mChatRoomModel->haveEncryption()
+				<< ", isAdmin:"<< mChatRoomModel->isMeAdmin()
+				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
+				<< ", hasBeenLeft:" << mChatRoomModel->hasBeenLeft();
 			mChatRoomModel->initEntries();
+		}
 		emit selectedChanged(mSelected);
 	}
 }

@@ -84,7 +84,7 @@ QString AccountSettingsModel::getUsedSipAddressAsStringUriOnly () const {
 }
 
 QString AccountSettingsModel::getUsedSipAddressAsString () const {
-	return QString::fromStdString(getUsedSipAddress()->asString());
+	return Utils::coreStringToAppString(getUsedSipAddress()->asString());
 }
 // -----------------------------------------------------------------------------
 
@@ -123,7 +123,7 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 	{
 		const shared_ptr<const linphone::Address> address = proxyConfig->getIdentityAddress();
 		map["sipAddress"] = address
-				? QString::fromStdString(proxyConfig->getIdentityAddress()->asString())
+				? Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString())
 				: QString("");
 	}
 	map["serverAddress"] = Utils::coreStringToAppString(proxyConfig->getServerAddr());
@@ -223,7 +223,7 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 	
 	// Sip address.
 	{
-		shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(literal.toStdString());
+		shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(literal));
 		if (!address) {
 			qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
 			return false;
@@ -331,7 +331,7 @@ QString AccountSettingsModel::getUsername () const {
 	shared_ptr<const linphone::Address> address = getUsedSipAddress();
 	const string displayName = address->getDisplayName();
 	
-	return QString::fromStdString(
+	return Utils::coreStringToAppString(
 				displayName.empty() ? address->getUsername() : displayName
 									  );
 }
@@ -341,7 +341,7 @@ void AccountSettingsModel::setUsername (const QString &username) {
 	shared_ptr<linphone::Address> newAddress = address->clone();
 	QString oldUsername = Utils::coreStringToAppString(newAddress->getUsername());
 	if( oldUsername != username) {
-		if (newAddress->setDisplayName(username.toStdString())) {
+		if (newAddress->setDisplayName(Utils::appStringToCoreString(username))) {
 			qWarning() << QStringLiteral("Unable to set displayName on sip address: `%1`.")
 						  .arg(Utils::coreStringToAppString(newAddress->asStringUriOnly()));
 		} else {
@@ -359,7 +359,7 @@ AccountSettingsModel::RegistrationState AccountSettingsModel::getRegistrationSta
 // -----------------------------------------------------------------------------
 
 QString AccountSettingsModel::getPrimaryUsername () const {
-	return QString::fromStdString(
+	return Utils::coreStringToAppString(
 				CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getUsername()
 				);
 }
@@ -379,7 +379,7 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
 }
 
 QString AccountSettingsModel::getPrimaryDisplayName () const {
-	return QString::fromStdString(CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getDisplayName());
+	return Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->getDisplayName());
 }
 
 void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
@@ -388,14 +388,14 @@ void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
 	
 	QString oldDisplayName = Utils::coreStringToAppString(primary->getDisplayName());
 	if(oldDisplayName != displayName){
-		primary->setDisplayName(displayName.toStdString());
+		primary->setDisplayName(Utils::appStringToCoreString(displayName));
 		core->setPrimaryContact(primary->asString());
 		emit accountSettingsUpdated();
 	}
 }
 
 QString AccountSettingsModel::getPrimarySipAddress () const {
-	return QString::fromStdString(
+	return Utils::coreStringToAppString(
 				CoreManager::getInstance()->getCore()->createPrimaryContactParsed()->asString()
 				);
 }
@@ -409,7 +409,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 	if(CoreManager::getInstance()->getSettingsModel()->getShowLocalSipAccount()) {
 		QVariantMap account;
 		account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
-		account["fullSipAddress"] = QString::fromStdString(core->createPrimaryContactParsed()->asString());
+		account["fullSipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
 		account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
 		account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());
 		account["proxyConfig"].setValue(nullptr);
@@ -419,7 +419,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 	for (const auto &proxyConfig : core->getProxyConfigList()) {
 		QVariantMap account;
 		account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
-		account["fullSipAddress"] = QString::fromStdString(proxyConfig->getIdentityAddress()->asString());
+		account["fullSipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString());
 		account["proxyConfig"].setValue(proxyConfig);
 		account["unreadMessageCount"] = proxyConfig->getUnreadChatMessageCount();
 		account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());

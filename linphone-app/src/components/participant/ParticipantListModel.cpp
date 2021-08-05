@@ -317,8 +317,6 @@ void ParticipantListModel::onParticipantDeviceRemoved(const std::shared_ptr<linp
 	}
 }
 void ParticipantListModel::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
-	qWarning() << "Toto";
 }
 void ParticipantListModel::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
-	qWarning() << "Toto";
 }

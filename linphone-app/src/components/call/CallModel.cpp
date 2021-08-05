@@ -90,7 +90,6 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
   
   mRemoteAddress = mCall->getRemoteAddress()->clone();
   mMagicSearch->getContactListFromFilterAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain());
-  qWarning() << getFullPeerAddress();
 }
 
 CallModel::~CallModel () {
@@ -108,16 +107,16 @@ QString CallModel::getLocalAddress () const {
   return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
 }
 QString CallModel::getFullPeerAddress () const {
-  return QString::fromStdString(mRemoteAddress->asString());
+  return Utils::coreStringToAppString(mRemoteAddress->asString());
 }
 
 QString CallModel::getFullLocalAddress () const {
-  return QString::fromStdString(mCall->getCallLog()->getLocalAddress()->asString());
+  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asString());
 }
 // -----------------------------------------------------------------------------
 
 ContactModel *CallModel::getContactModel() const{
-	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString(mCall->getRemoteAddress()->asString()));
+	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()));
 	return contact;
 }
 
@@ -139,7 +138,7 @@ void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParam
 
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams, const QString &to) {
   const QString from(
-    QString::fromStdString(
+    Utils::coreStringToAppString(
       CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->getUsername()
     )
   );
@@ -831,8 +830,8 @@ QString CallModel::iceStateToString (linphone::IceState state) const {
 QString CallModel::generateSavedFilename () const {
   const shared_ptr<linphone::CallLog> callLog(mCall->getCallLog());
   return generateSavedFilename(
-    QString::fromStdString(callLog->getFromAddress()->getUsername()),
-    QString::fromStdString(callLog->getToAddress()->getUsername())
+    Utils::coreStringToAppString(callLog->getFromAddress()->getUsername()),
+    Utils::coreStringToAppString(callLog->getToAddress()->getUsername())
   );
 }
 

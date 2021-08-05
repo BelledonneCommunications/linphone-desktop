@@ -117,7 +117,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
 		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
 	}
 	params->setProxyConfig(core->getDefaultProxyConfig());
-	CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
+	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
 	if(currentProxyConfig){
 		if(currentProxyConfig->getState() == linphone::RegistrationState::Ok)
@@ -153,7 +153,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
 	}
 	params->setProxyConfig(core->getDefaultProxyConfig());
-	CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
+	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
 	params->setMediaEncryption(LinphoneEnums::toLinphone(encryption));
 	if(currentProxyConfig){
@@ -189,7 +189,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(true);
 	params->setProxyConfig(core->getDefaultProxyConfig());
-	CallModel::setRecordFile(params, QString::fromStdString(address->getUsername()));
+	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	core->inviteAddressWithParams(address, params);
 }
 
@@ -240,23 +240,11 @@ ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) co
 	std::list <shared_ptr<linphone::Address> > participants;
 	std::shared_ptr<const linphone::Address> localAddress;
 	participants.push_back(address);
-	auto proxy = core->getDefaultProxyConfig();
 	
 	params->setBackend(linphone::ChatRoomBackend::Basic);
 	
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
-	/*
-	if( chatRoom!=nullptr){
-		auto search = core->searchChatRoom(params, localAddress
-								  , address
-								  , participants);
-		if(search != chatRoom)
-			qWarning("toto");
-	}
-	
-	
-	return chatRoom!=nullptr;
-	*/
+
 	if( chatRoom != nullptr){
 		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 		auto timeline = timelineList->getTimeline(chatRoom, true);
@@ -286,7 +274,7 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	auto proxy = core->getDefaultProxyConfig();
 	params->enableEncryption(true);
 	
-	params->setSubject(subject.toStdString());
+	params->setSubject(Utils::appStringToCoreString(subject));
 	params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
 	params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
 	params->enableGroup(true);
@@ -336,13 +324,13 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			chatRoom = core->searchChatRoom(params, localAddress
 											, localAddress
 											, chatRoomParticipants);
-			params->setSubject(subject != ""?subject.toStdString():"Dummy Subject");
+			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
 			if(!chatRoom)
 				chatRoom = core->searchChatRoom(params, localAddress
 												, localAddress
 												, chatRoomParticipants);
 		}else
-			params->setSubject(subject != ""?subject.toStdString():"Dummy Subject");
+			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
 		if( !chatRoom) {
 			chatRoom = core->createChatRoom(params, localAddress, chatRoomParticipants);
 			if(chatRoom != nullptr && admins.size() > 0)

@@ -99,7 +99,7 @@ quint64 ContentModel::getFileSize() const{
 }
 
 QString ContentModel::getName() const{
-	return QString::fromStdString(mContent->getName());
+	return Utils::coreStringToAppString(mContent->getName());
 }
 
 QString ContentModel::getThumbnail() const{
@@ -329,7 +329,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	QString txt;
 	for(auto content : contents){
 		if(content->isText())
-			txt += QString::fromStdString(content->getUtf8Text());
+			txt += Utils::coreStringToAppString(content->getUtf8Text());
 	}
 	mContent = txt;
 	//mIsOutgoing = chatMessage->isOutgoing() || chatMessage->getState() == linphone::ChatMessage::State::Idle;

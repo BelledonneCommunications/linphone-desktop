@@ -107,7 +107,6 @@ void ColorListModel::useConfig (const std::shared_ptr<linphone::Config> &config)
 
 QString ColorListModel::getNames(){
 	QStringList names;
-	qWarning() << "A";
 	const QMetaObject *info = metaObject();
 
   for (int i = info->propertyOffset(); i < info->propertyCount(); ++i) {

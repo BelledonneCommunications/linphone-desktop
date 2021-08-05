@@ -223,7 +223,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 		connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ChatRoomModel::usernameChanged);
 		auto participants = mChatRoom->getParticipants();	
 		for(auto participant : participants){
-			auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((participant)->getAddress()->asString()));
+			auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((participant)->getAddress()->asString()));
 			if(contact) {
 				connect(contact, &ContactModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
 				connect(contact, &ContactModel::contactUpdated, this, &ChatRoomModel::usernameChanged);
@@ -368,7 +368,7 @@ QString ChatRoomModel::getFullPeerAddress () const {
 }
 
 QString ChatRoomModel::getFullLocalAddress () const {
-	return mChatRoom ? QString::fromStdString(mChatRoom->getLocalAddress()->asString()) : "";
+	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asString()) : "";
 }
 
 QString ChatRoomModel::getConferenceAddress () const {
@@ -376,12 +376,12 @@ QString ChatRoomModel::getConferenceAddress () const {
 		return "";
 	else {
 		auto address = mChatRoom->getConferenceAddress();
-		return address?QString::fromStdString(address->asString()):"";
+		return address?Utils::coreStringToAppString(address->asString()):"";
 	}
 }
 
 QString ChatRoomModel::getSubject () const {
-	return mChatRoom ? QString::fromStdString(mChatRoom->getSubject()) : "";
+	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getSubject()) : "";
 }
 
 QString ChatRoomModel::getUsername () const {
@@ -389,7 +389,7 @@ QString ChatRoomModel::getUsername () const {
 	if( !mChatRoom)
 		return "";
 	if( isGroupEnabled())
-		username = QString::fromStdString(mChatRoom->getSubject());
+		username = Utils::coreStringToAppString(mChatRoom->getSubject());
 	
 	if(username != "")
 		return username;
@@ -402,13 +402,13 @@ QString ChatRoomModel::getUsername () const {
 	username = Utils::getDisplayName(mChatRoom->getPeerAddress());
 	if(username != "")
 		return username;
-	return QString::fromStdString(mChatRoom->getPeerAddress()->asStringUriOnly());
+	return Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asStringUriOnly());
 }
 
 QString ChatRoomModel::getAvatar () const {
 	if( mChatRoom && mChatRoom->getNbParticipants() == 1){
 		auto participants = mChatRoom->getParticipants();	
-		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((*participants.begin())->getAddress()->asString()));
+		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 		if(contact)
 			return contact->getVcardModel()->getAvatar();
 	}
@@ -418,7 +418,7 @@ QString ChatRoomModel::getAvatar () const {
 int ChatRoomModel::getPresenceStatus() const {
 	if( mChatRoom && mChatRoom->getNbParticipants() == 1 && !isGroupEnabled()){
 		auto participants = mChatRoom->getParticipants();	
-		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((*participants.begin())->getAddress()->asString()));
+		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 		if(contact) {
 			int p = contact->getPresenceLevel();
 			return p;
@@ -747,7 +747,7 @@ void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Frien
 			canUpdatePresence = mChatRoom->getLocalAddress()->weakEqual(*itContactAddress);
 			if(!canUpdatePresence && !isGroupEnabled() && mChatRoom->getNbParticipants() == 1){
 				auto participants = mChatRoom->getParticipants();	
-				auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(QString::fromStdString((*participants.begin())->getAddress()->asString()));
+				auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 				if(contact){
 					auto friendsAddresses = contact->getVcardModel()->getSipAddresses();
 					for(auto friendAddress = friendsAddresses.begin() ; !canUpdatePresence && friendAddress != friendsAddresses.end() ; ++friendAddress){
@@ -948,6 +948,5 @@ void ChatRoomModel::onChatMessageShouldBeStored(const std::shared_ptr<linphone::
 }
 
 void ChatRoomModel::onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
-	qWarning() << "ChatRoom Imdn received :" << (state->getParticipant() != nullptr);
 }
 

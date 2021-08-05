@@ -261,13 +261,9 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
     QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
   }
 
-  //mChatRoomModel = CoreManager::getInstance()->getChatRoomModel(mPeerAddress, mLocalAddress, mIsSecure);
-  //if(mChatRoom)
+
 	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoomModel);
   
-  if(!mChatRoomModel)
-	qWarning() << "mChatRoomModel is null!";
-
   if (mChatRoomModel) {
 
     ChatRoomModel *ChatRoomModel = mChatRoomModel.get();

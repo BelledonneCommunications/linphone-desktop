@@ -23,6 +23,8 @@
 #include "components/contact/ContactModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 
+#include "utils/Utils.hpp"
+
 // =============================================================================
 
 SearchResultModel::SearchResultModel(std::shared_ptr<const linphone::Friend> linphoneFriend, std::shared_ptr<const linphone::Address> address, QObject * parent) : QObject(parent){
@@ -34,11 +36,11 @@ SearchResultModel::SearchResultModel(std::shared_ptr<const linphone::Friend> lin
 }
 
 QString SearchResultModel::getAddressString() const{
-	return QString::fromStdString(mAddress->asString());
+	return Utils::coreStringToAppString(mAddress->asString());
 }
 
 QString SearchResultModel::getAddressStringUriOnly() const{
-	return QString::fromStdString(mAddress->asStringUriOnly());
+	return Utils::coreStringToAppString(mAddress->asStringUriOnly());
 }
 
 std::shared_ptr<linphone::Address> SearchResultModel::getAddress() const{

@@ -278,8 +278,8 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
   map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
   map["peerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly());
   map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
-  map["fullPeerAddress"] = QString::fromStdString(chatRoom->getPeerAddress()->asString());
-  map["fullLocalAddress"] = QString::fromStdString(chatRoom->getLocalAddress()->asString());
+  map["fullPeerAddress"] = Utils::coreStringToAppString(chatRoom->getPeerAddress()->asString());
+  map["fullLocalAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asString());
   map["window"].setValue(App::getInstance()->getMainWindow());
   CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 }

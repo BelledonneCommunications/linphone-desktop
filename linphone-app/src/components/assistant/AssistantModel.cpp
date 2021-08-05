@@ -231,13 +231,13 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
   }
 
   // Sip Address.
-  shared_ptr<linphone::Address> address = factory->createAddress(sipAddress.toStdString());
+  shared_ptr<linphone::Address> address = factory->createAddress(Utils::appStringToCoreString(sipAddress));
   if (!address) {
     qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(sipAddress);
     return false;
   }
 
-  address->setDisplayName(map["displayName"].toString().toStdString());
+  address->setDisplayName(Utils::appStringToCoreString(map["displayName"].toString()));
   proxyConfig->setIdentityAddress(address);
 
   // AuthInfo.
@@ -364,7 +364,7 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getUsername () const {
-  return QString::fromStdString(mAccountCreator->getUsername());
+  return Utils::coreStringToAppString(mAccountCreator->getUsername());
 }
 
 void AssistantModel::setUsername (const QString &username) {
@@ -379,14 +379,14 @@ void AssistantModel::setUsername (const QString &username) {
 // -----------------------------------------------------------------------------
 
 QString AssistantModel::getDisplayName () const {
-  return QString::fromStdString(mAccountCreator->getDisplayName());
+  return Utils::coreStringToAppString(mAccountCreator->getDisplayName());
 }
 
 void AssistantModel::setDisplayName (const QString &displayName) {
   emit displayNameChanged(
     displayName,
     mapAccountCreatorUsernameStatusToString(
-      mAccountCreator->setDisplayName(displayName.toStdString())
+      mAccountCreator->setDisplayName(Utils::appStringToCoreString(displayName))
     )
   );
 }
