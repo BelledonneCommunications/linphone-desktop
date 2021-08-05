@@ -85,7 +85,7 @@ SearchBox {
 			}, {
 				icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
 				secure:1,
-				visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton(),
+				visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && AccountSettingsModel.conferenceURI != '',
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchSecureChat(entry.sipAddress)

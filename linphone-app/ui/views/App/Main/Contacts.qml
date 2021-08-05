@@ -125,6 +125,7 @@ ColumnLayout {
 						
 						Item {
 							ActionBar {
+								id:actionBar
 								anchors {
 									left: parent.left
 									verticalCenter: parent.verticalCenter
@@ -152,7 +153,8 @@ ColumnLayout {
 								
 								ActionButton {
 									icon: 'chat'
-									visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && $contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
+									visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && $contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
+									enabled: AccountSettingsModel.conferenceURI != ''
 									Icon{
 										icon:'secure_level_1'
 										iconSize:15
@@ -161,6 +163,13 @@ ColumnLayout {
 										anchors.topMargin: -3
 									}
 									onClicked: {actions.itemAt(3).open()}
+									TooltipArea{
+										maxWidth: actionBar.width
+										visible: AccountSettingsModel.conferenceURI == ''
+										//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
+										text: '- ' + qsTr('missingConferenceURI') + '\n'
+										
+									}
 								}
 							}
 							

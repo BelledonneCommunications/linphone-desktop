@@ -169,6 +169,12 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 	return map;
 }
 
+QString AccountSettingsModel::getConferenceURI() const{
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
+	return proxyConfig ? Utils::coreStringToAppString(proxyConfig->getConferenceFactoryUri()) : "";
+}
+
 void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	if (core->getDefaultProxyConfig() != proxyConfig) {

@@ -43,8 +43,14 @@ Window {
     rightPaned.close()
   }
 
+  
+  function conferenceManagerResult(exitValue){
+	if(exitValue == 0 && calls.count == 0)
+		close();
+  }
+  
   function openConferenceManager (params) {
-    Logic.openConferenceManager(params)
+    Logic.openConferenceManager(params, conferenceManagerResult)
   }
 
   function setHeight (height) {
@@ -122,7 +128,9 @@ Window {
               icon: 'new_conference'
               visible: SettingsModel.conferenceEnabled
 
-              onClicked: Logic.openConferenceManager()
+              onClicked: {
+				Logic.openConferenceManager()
+              }
             }
           }
         }

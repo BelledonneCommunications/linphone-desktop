@@ -19,6 +19,7 @@
  */
 
 #include "components/core/CoreManager.hpp"
+#include "components/participant/ParticipantListModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
@@ -104,15 +105,15 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 	auto timeline = sourceModel()->data(index).value<TimelineModel*>();
 	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
 	auto currentAddress = Utils::interpretUrl(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsStringUriOnly());
-	
+	bool isGroup = timeline->getChatRoomModel()->isGroupEnabled() && timeline->getChatRoomModel()->getParticipants()->getCount() > 2;
 	if( !show && ( (mFilterFlags & TimelineFilter::SimpleChatRoom) == TimelineFilter::SimpleChatRoom))
-		show = !timeline->getChatRoomModel()->isGroupEnabled() && !timeline->getChatRoomModel()->haveEncryption();
+		show = !isGroup && !timeline->getChatRoomModel()->haveEncryption();
 	if( !show && ( (mFilterFlags & TimelineFilter::SecureChatRoom) == TimelineFilter::SecureChatRoom))
-		show = !timeline->getChatRoomModel()->isGroupEnabled() && timeline->getChatRoomModel()->haveEncryption();
+		show = !isGroup && timeline->getChatRoomModel()->haveEncryption();
 	if( !show && ( (mFilterFlags & TimelineFilter::GroupChatRoom) == TimelineFilter::GroupChatRoom))
-		show = timeline->getChatRoomModel()->isGroupEnabled() && !timeline->getChatRoomModel()->haveEncryption();
+		show = isGroup && !timeline->getChatRoomModel()->haveEncryption();
 	if( !show && ( (mFilterFlags & TimelineFilter::SecureGroupChatRoom) == TimelineFilter::SecureGroupChatRoom))
-		show = timeline->getChatRoomModel()->isGroupEnabled() && timeline->getChatRoomModel()->haveEncryption();
+		show = isGroup && timeline->getChatRoomModel()->haveEncryption();
 	if( !show && ( (mFilterFlags & TimelineFilter::EphemeralChatRoom) == TimelineFilter::EphemeralChatRoom))
 		show = timeline->getChatRoomModel()->isEphemeralEnabled();
 	if(show && mFilterText != ""){

@@ -34,6 +34,7 @@ public:
 	virtual ~ParticipantListModel();
 	
 	Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel CONSTANT)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
     
     void reset();
 	void update();
@@ -51,6 +52,7 @@ public:
 // Remove a chatroom
 	Q_INVOKABLE void remove (ParticipantModel *importer);
 	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;
+	int getCount() const;
 	
 	Q_INVOKABLE QString addressesToString()const;	
 	Q_INVOKABLE QString displayNamesToString()const;
@@ -77,6 +79,7 @@ signals:
 	void securityLevelChanged();
 	void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void participantsChanged();
+	void countChanged();
 
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());

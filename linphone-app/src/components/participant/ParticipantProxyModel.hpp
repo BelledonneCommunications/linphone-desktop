@@ -40,6 +40,7 @@ public:
   ParticipantProxyModel ( QObject *parent = Q_NULLPTR);
   
   Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
+  Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
@@ -47,7 +48,7 @@ public:
   ChatRoomModel *getChatRoomModel() const;
   Q_INVOKABLE QStringList getSipAddresses() const;
   Q_INVOKABLE QVariantList getParticipants() const;
-  Q_INVOKABLE int count();
+  Q_INVOKABLE int getCount() const;
   
   void setChatRoomModel(ChatRoomModel * chatRoomModel);
   
@@ -58,6 +59,7 @@ public:
   
 signals:
   void chatRoomModelChanged();
+  void countChanged();
   
 private:
   /*

@@ -57,8 +57,16 @@ protected:
 
     QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
     const QVariantMap data = index.data().toMap();
-
-    return (data["type"].toInt() & mEntryTypeFilter) > 0;
+    
+    auto eventModel = sourceModel()->data(index);
+    
+    if( mEntryTypeFilter == ChatRoomModel::EntryType::CallEntry && eventModel.value<ChatCallModel*>() != nullptr)
+		return true;
+	if( mEntryTypeFilter == ChatRoomModel::EntryType::MessageEntry && eventModel.value<ChatMessageModel*>() != nullptr)
+		return true;
+    if( mEntryTypeFilter == ChatRoomModel::EntryType::NoticeEntry && eventModel.value<ChatNoticeModel*>() != nullptr)
+		return true;
+	return false;
   }
 
 private:

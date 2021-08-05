@@ -98,7 +98,7 @@ Rectangle {
 			
 			icon:'chat_room'
 			iconSize: ContactStyle.contentHeight
-			visible: entry!=undefined && entry.groupEnabled != undefined && entry.groupEnabled
+			visible: entry!=undefined && entry.groupEnabled != undefined && entry.groupEnabled && entry.participants.count > 2
 			
 			Icon{
 				anchors.right: parent.right

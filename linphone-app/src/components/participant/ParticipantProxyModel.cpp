@@ -61,7 +61,7 @@ QVariantList ParticipantProxyModel::getParticipants() const{
 	return participants;
 }
 
-int ParticipantProxyModel::count(){
+int ParticipantProxyModel::getCount() const{
 	return dynamic_cast<ParticipantListModel*>(sourceModel())->rowCount();
 }
 
@@ -88,6 +88,7 @@ void ParticipantProxyModel::add(const QString& address){
 		participantsModel->add(participant);
 		if(mChatRoomModel && mChatRoomModel->getChatRoom())// Invite and wait for its creation
 			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
+		emit countChanged();
 	}
 }
 
@@ -99,6 +100,7 @@ void ParticipantProxyModel::remove(ParticipantModel * participant){
 		}else if(mChatRoomModel->getChatRoom() && participant->getParticipant() )
 			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());			
 		//dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
+		emit countChanged();
 	}
 }
 

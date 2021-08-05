@@ -29,7 +29,7 @@ DialogPlus {
 			onClicked: exit(0)
 		},
 		TextButtonB {
-			//enabled: toAddView.count >= conferenceManager.minParticipants
+			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
 			//: 'Launch' : Start button
 			text: qsTr('startButton')
 			capitalization: Font.AllUppercase
@@ -37,6 +37,23 @@ DialogPlus {
 			onClicked: {
 				if(CallsListModel.createChatRoom(subject.text, secureSwitch.checked, selectedParticipants.getParticipants() ))
 					exit(1)
+			}
+			TooltipArea{
+				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
+				maxWidth: participantView.width
+				text: {
+						var txt = '\n';
+						if( subject.text == '')
+							//: 'You need to fill a subject.' : Tooltip to warn a user on missing field.
+							txt ='- ' + qsTr('missingSubject') + '\n'
+						if( selectedParticipants.count < conferenceManager.minParticipants)
+						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the chat creation.
+							txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants) + '\n'
+						if( AccountSettingsModel.conferenceURI == '')
+						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missong in its configuration.
+							txt += '- ' + qsTr('missingConferenceURI') + '\n'
+						return txt;
+					}
 			}
 		}
 	]

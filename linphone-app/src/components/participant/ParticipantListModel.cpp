@@ -47,7 +47,7 @@ ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObje
 		connect(mChatRoomModel, &ChatRoomModel::participantAdminStatusChanged, this, &ParticipantListModel::onParticipantAdminStatusChanged);
 		connect(mChatRoomModel, &ChatRoomModel::participantRegistrationSubscriptionRequested, this, &ParticipantListModel::onParticipantRegistrationSubscriptionRequested);
 		connect(mChatRoomModel, &ChatRoomModel::participantRegistrationUnsubscriptionRequested, this, &ParticipantListModel::onParticipantRegistrationUnsubscriptionRequested);
-	
+		
 		updateParticipants();
 	}
 }
@@ -64,6 +64,10 @@ ParticipantModel * ParticipantListModel::getAt(const int& index){
 
 ChatRoomModel *ParticipantListModel::getChatRoomModel() const{
 	return mChatRoomModel;
+}
+
+int ParticipantListModel::getCount() const{
+	return mParticipants.size();
 }
 
 QString ParticipantListModel::addressesToString()const{
@@ -112,25 +116,25 @@ bool ParticipantListModel::contains(const QString& address) const{
 
 //----------------------------------------------------------------------------
 int ParticipantListModel::rowCount (const QModelIndex &) const {
-  return mParticipants.count();
+	return mParticipants.count();
 }
 
 QHash<int, QByteArray> ParticipantListModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$participant";
-  return roles;
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "$participant";
+	return roles;
 }
 
 QVariant ParticipantListModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mParticipants.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return QVariant::fromValue(mParticipants[row].get());
-
-  return QVariant();
+	int row = index.row();
+	
+	if (!index.isValid() || row < 0 || row >= mParticipants.count())
+		return QVariant();
+	
+	if (role == Qt::DisplayRole)
+		return QVariant::fromValue(mParticipants[row].get());
+	
+	return QVariant();
 }
 
 // -----------------------------------------------------------------------------
@@ -140,24 +144,24 @@ QVariant ParticipantListModel::data (const QModelIndex &index, int role) const {
 // -----------------------------------------------------------------------------
 
 bool ParticipantListModel::removeRow (int row, const QModelIndex &parent) {
-  return removeRows(row, 1, parent);
+	return removeRows(row, 1, parent);
 }
 
 bool ParticipantListModel::removeRows (int row, int count, const QModelIndex &parent) {
-  int limit = row + count - 1;
-
-  if (row < 0 || count < 0 || limit >= mParticipants.count())
-    return false;
-
-  beginRemoveRows(parent, row, limit);
-
-  for (int i = 0; i < count; ++i){
-	  mParticipants.takeAt(row);
-  }
-
-  endRemoveRows();
-
-  return true;
+	int limit = row + count - 1;
+	
+	if (row < 0 || count < 0 || limit >= mParticipants.count())
+		return false;
+	
+	beginRemoveRows(parent, row, limit);
+	
+	for (int i = 0; i < count; ++i){
+		mParticipants.takeAt(row);
+	}
+	
+	endRemoveRows();
+	emit countChanged();
+	return true;
 }
 
 
@@ -165,21 +169,21 @@ bool ParticipantListModel::removeRows (int row, int count, const QModelIndex &pa
 
 void ParticipantListModel::updateParticipants () {
 	if( mChatRoomModel) {
-	bool changed = false;
+		bool changed = false;
 		CoreManager *coreManager = CoreManager::getInstance();
 		auto dbParticipants = mChatRoomModel->getChatRoom()->getParticipants();
 		auto me = mChatRoomModel->getChatRoom()->getMe();
 		dbParticipants.push_front(me);
 		
-	//Remove left participants
+		//Remove left participants
 		//for(auto participant : mParticipants){
 		auto itParticipant = mParticipants.begin();
 		while(itParticipant != mParticipants.end()) {
 			auto itDbParticipant = dbParticipants.begin();
 			while(itDbParticipant != dbParticipants.end() 
 				  && ((*itParticipant)->getParticipant() &&  !(*itDbParticipant)->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())
-						|| !(*itParticipant)->getParticipant() && !(*itDbParticipant)->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress()))
-					)
+					  || !(*itParticipant)->getParticipant() && !(*itDbParticipant)->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress()))
+					  )
 				  ){
 				++itDbParticipant;
 			}
@@ -192,14 +196,14 @@ void ParticipantListModel::updateParticipants () {
 			}else
 				++itParticipant;
 		}
-	// Add new
+		// Add new
 		for(auto dbParticipant : dbParticipants){
 			auto itParticipant = mParticipants.begin();			
 			while(itParticipant != mParticipants.end() && ( (*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())
-								|| (!(*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress())))
-								)
-			){
-			
+															|| (!(*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress())))
+															)
+				  ){
+				
 				++itParticipant;
 			}
 			if( itParticipant == mParticipants.end()){
@@ -216,8 +220,10 @@ void ParticipantListModel::updateParticipants () {
 				(*itParticipant)->setParticipant(dbParticipant);
 			}
 		}
-		if( changed)
+		if( changed){
 			emit participantsChanged();
+			emit countChanged();
+		}
 	}
 }
 
@@ -228,6 +234,7 @@ void ParticipantListModel::add (std::shared_ptr<ParticipantModel> participant){
 	endInsertRows();
 	resetInternalData();
 	emit participantsChanged();
+	emit countChanged();
 }
 
 void ParticipantListModel::remove (ParticipantModel *model) {
@@ -248,6 +255,7 @@ void ParticipantListModel::remove (ParticipantModel *model) {
 		mParticipants.erase(itParticipant);
 		endRemoveRows();
 		emit participantsChanged();
+		emit countChanged();
 	}
 }
 
@@ -280,7 +288,7 @@ void ParticipantListModel::onSecurityEvent(const std::shared_ptr<linphone::ChatR
 		}	
 	}else{
 		address = eventLog->getDeviceAddress();
-// Looping on all participant ensure to get all devices. Can be optimized if Device address is unique :  Gain 2n operations.
+		// Looping on all participant ensure to get all devices. Can be optimized if Device address is unique :  Gain 2n operations.
 		if(address)
 			emit deviceSecurityLevelChanged(address);
 	}

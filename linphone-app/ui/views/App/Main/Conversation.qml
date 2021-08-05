@@ -81,7 +81,7 @@ ColumnLayout  {
 				
 				icon:'chat_room'
 				iconSize: ConversationStyle.bar.groupChatSize
-				visible: chatRoomModel.groupEnabled
+				visible: chatRoomModel.groupEnabled && chatRoomModel.participants.count > 2
 			}
 			Item{
 				Layout.fillHeight: true

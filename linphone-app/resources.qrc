@@ -62,7 +62,8 @@
 		<file>assets/images/cancel_pressed.svg</file>
 		<file>assets/images/chat_amount.svg</file>
 		<file>assets/images/chat_count.svg</file>
-		<file>assets/images/chat_delivered.svg</file>
+		<file>assets/images/chat_disabled.svg</file>
+		<file>assets/images/chat_delivered.svg</file>		
 		<file>assets/images/chat_error.svg</file>
 		<file>assets/images/chat_hovered.svg</file>
 		<file>assets/images/chat_is_composing_0.svg</file>
