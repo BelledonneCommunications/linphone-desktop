@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Um Ihr Konto zu aktivieren, folgen Sie den Anweisungen, die wir an %1 gesendet haben. Anschließend klicken Sie hier:</translation>
+        <translation>Um Ihr Konto zu aktivieren, folgen Sie den Anweisungen, die wir an %1 gesendet haben. Anschließend klicken Sie hier.</translation>
     </message>
 </context>
 <context>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>Ein freies (gratis) Video-Telefon</translation>
+        <translation>Ein freies (gratis) Video-Telefon.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -120,7 +120,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Der Assistent hilft Ihnen das %1 Konto zu konfigurieren und zu nutzen</translation>
+        <translation>Der Assistent hilft Ihnen das %1 Konto zu konfigurieren und zu nutzen.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
@@ -423,7 +423,7 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>Geben Sie ihre Nachricht ein.</translation>
+        <translation>Geben Sie ihre Nachricht ein</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -432,7 +432,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 schreibt gerade...</translation>
+        <translation>%1 schreibt gerade…</translation>
     </message>
 </context>
 <context>
@@ -443,11 +443,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -467,11 +467,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation>Tritt der Konferenz auf dem Host sip-address als display-name bei. Wenn Sie über einen Proxy verbunden sind beachten Sie join-conference-as</translation>
+        <translation>Tritt der Konferenz auf dem Host sip-address als display-name bei. Wenn Sie über einen Proxy verbunden sind beachten Sie join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>Tritt der Konferenz auf dem Host sip-address als guest-sip-address bei. Wenn Sie nicht über einen Proxy verbunden sind beachten Sie join-conference</translation>
+        <translation>Tritt der Konferenz auf dem Host sip-address als guest-sip-address bei. Wenn Sie nicht über einen Proxy verbunden sind beachten Sie join-conference.</translation>
     </message>
 </context>
 <context>
@@ -565,7 +565,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation>Wählen Sie ihr Avatar.</translation>
+        <translation>Wählen Sie ihr Avatar</translation>
     </message>
     <message>
         <source>companies</source>
@@ -771,7 +771,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation>Anhang fallen lassen.</translation>
+        <translation>Anhang fallen lassen</translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
@@ -978,7 +978,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Suche Kontakte, starte einen Anruf oder Chat...</translation>
+        <translation>Suche Kontakte, starte einen Anruf oder Chat…</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -994,7 +994,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Verwenden das intelligente Suchfeld um Audio-  und Videocalls zu starten, Nachrichten zu senden oder Kontakt hinzuzufügen. Geben Sie die SIP-Adresse oder Username Ihres Kontaktes ein.</translation>
+        <translation>Verwenden das intelligente Suchfeld um Audio- und Videocalls zu starten, Nachrichten zu senden oder Kontakt hinzuzufügen. Geben Sie die SIP-Adresse oder Username Ihres Kontaktes ein.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>

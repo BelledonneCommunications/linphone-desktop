@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>コマンドラインに向かってアプリケーションに注文を送る</translation>
+        <translation>CLIからアプリケーションを操作する</translation>
     </message>
     <message>
         <source>restore</source>
@@ -147,7 +147,7 @@
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>無効なユーザ名</translation>
+        <translation>無効なユーザ名.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -187,7 +187,7 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation>SMS認証に失敗しました。</translation>
+        <translation>SMS認証に失敗しました。!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation>無効な電話番号</translation>
+        <translation>無効な電話番号!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
@@ -207,7 +207,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation>無効な国番号</translation>
+        <translation>無効な国番号!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
@@ -356,7 +356,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>新しい通話を始める</translation>
+        <translation>新しい通話を始める.</translation>
     </message>
 </context>
 <context>
@@ -423,7 +423,7 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>メッセージを入力してください。</translation>
+        <translation>メッセージを入力してください</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -432,7 +432,7 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation>入力中: %1</translation>
+        <translation>入力中: %1…</translation>
     </message>
 </context>
 <context>
@@ -455,7 +455,7 @@
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>アプリケーションのメイン画面を表示する</translation>
+        <translation>アプリケーションのメイン画面を表示する.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
@@ -463,7 +463,7 @@
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>会議を開始する</translation>
+        <translation>会議を開始する.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -565,7 +565,7 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation>アバターを選択してください。</translation>
+        <translation>アバターを選択してください</translation>
     </message>
     <message>
         <source>companies</source>
@@ -863,7 +863,7 @@
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>あなたの友達に%1を紹介</translation>
+        <translation>あなたの友達に%1を紹介.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -871,7 +871,7 @@
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>%1アカウントを作成/管理する</translation>
+        <translation>%1アカウントを作成/管理する.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -910,30 +910,30 @@
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>スナップショットを撮る</translation>
+        <translation>スナップショットを撮る.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>録音開始</translation>
+        <translation>録音開始.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>録音停止</translation>
+        <translation>録音停止.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>スナップショットを撮る</translation>
+        <translation>スナップショットを撮る.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>録音開始</translation>
+        <translation>録音開始.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>録音停止</translation>
+        <translation>録音停止.</translation>
     </message>
 </context>
 <context>
@@ -960,7 +960,7 @@
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 があなたを%2に招待しています。</translation>
+        <translation>%1 があなたを%2に招待しています!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
@@ -978,7 +978,7 @@
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>連絡先を検索するか、通話もしくはチャットを始める</translation>
+        <translation>連絡先を検索するか、通話もしくはチャットを始める…</translation>
     </message>
     <message>
         <source>homeEntry</source>
@@ -1054,7 +1054,7 @@
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>俺をプレイしろ！</translation>
+        <translation>再生する!</translation>
     </message>
 </context>
 <context>
@@ -1363,7 +1363,7 @@
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation>凍結は必須です</translation>
+        <translation>暗号化を必須にする</translation>
     </message>
 </context>
 <context>
@@ -1478,7 +1478,7 @@
     </message>
     <message>
         <source>generalTitle</source>
-        <translation>将軍</translation>
+        <translation>一般</translation>
     </message>
 </context>
 <context>
@@ -1517,11 +1517,11 @@
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>あなたのアカウントを削除してもよろしいですか？</translation>
+        <translation>アカウントを削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>あなたのパスワードを消してもよろしいですか？</translation>
+        <translation>パスワードを消してもよろしいですか？</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1675,7 +1675,7 @@
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>あなたのアバターを削除してもよろしいですか？</translation>
+        <translation>アバターを削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>downloadLabel</source>

@@ -20,7 +20,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>per attivare il tuo account segui le istruzioni cliccando sul link: %1</translation>
+        <translation>per attivare il tuo account segui le istruzioni cliccando sul link: %1.</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation>Numero di telefono non valido</translation>
+        <translation>Numero di telefono non valido!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
@@ -356,7 +356,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Avvia una nuova chiamata</translation>
+        <translation>Avvia una nuova chiamata.</translation>
     </message>
 </context>
 <context>
@@ -432,7 +432,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 sta scrivendo...</translation>
+        <translation>%1 sta scrivendo…</translation>
     </message>
 </context>
 <context>
@@ -443,11 +443,11 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -467,11 +467,11 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation>Partecipa alla conferenza dell&apos;indirizzo SIP con il tuo nome. Se sei connesso a un proxy, vedi &apos;Partecipa a conferenza come...&apos;</translation>
+        <translation>Partecipa alla conferenza dell&apos;indirizzo SIP con il tuo nome. Se sei connesso a un proxy, vedi &apos;join-conference-as&apos;.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>Partecipa alla conferenza dell&apos;indirizzo SIP con il tuo nome. Se non sei connesso a un proxy, vedi &apos;Partecipa a conferenza&apos;</translation>
+        <translation>Partecipa alla conferenza dell&apos;indirizzo SIP con il tuo nome. Se non sei connesso a un proxy, vedi &apos;join-conference&apos;.</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Cerca un contatto, avvia una chiamata o una chat...</translation>
+        <translation>Cerca un contatto, avvia una chiamata o una chat…</translation>
     </message>
     <message>
         <source>homeEntry</source>

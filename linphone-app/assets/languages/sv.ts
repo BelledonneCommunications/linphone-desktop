@@ -432,7 +432,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 skriver...</translation>
+        <translation>%1 skriver…</translation>
     </message>
 </context>
 <context>
@@ -978,7 +978,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Sök kontakt, starta ett samtal eller en chatt...</translation>
+        <translation>Sök kontakt, starta ett samtal eller en chatt…</translation>
     </message>
     <message>
         <source>homeEntry</source>
