@@ -48,7 +48,7 @@ DialogPlus {
 							txt ='- ' + qsTr('missingSubject') + '\n'
 						if( selectedParticipants.count < conferenceManager.minParticipants)
 						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the chat creation.
-							txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants) + '\n'
+							txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants).arg(conferenceManager.minParticipants) + '\n'
 						if( AccountSettingsModel.conferenceURI == '')
 						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missong in its configuration.
 							txt += '- ' + qsTr('missingConferenceURI') + '\n'
