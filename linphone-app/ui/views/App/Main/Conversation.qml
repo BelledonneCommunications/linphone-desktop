@@ -273,7 +273,7 @@ ColumnLayout  {
 					y:mainBar.height
 					menuStyle : MenuStyle.aux2
 					MenuItem{
-						//: 'Group informations' : Item menu to get information about the chat room
+						//: 'Group information' : Item menu to get information about the chat room
 						text: qsTr('conversationMenuGroupInformations')
 						iconMenu: (hovered ? 'menu_infos_selected' : 'menu_infos')
 						iconSizeMenu: 25

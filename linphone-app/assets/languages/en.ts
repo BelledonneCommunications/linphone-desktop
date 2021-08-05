@@ -670,6 +670,11 @@ Server URL not configured.</translation>
         <source>removeContactDescription</source>
         <translation>Do you really want to remove this contact from your address book?</translation>
     </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <translation>You need to set the conference URI in your account settings to create a conference based chat room.</translation>
+    </message>
 </context>
 <context>
     <name>Conversation</name>
@@ -703,7 +708,7 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>conversationMenuGroupInformations</source>
-        <extracomment>&apos;Group informations&apos; : Item menu to get information about the chat room</extracomment>
+        <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
         <translation>Group information</translation>
     </message>
     <message>
@@ -1185,6 +1190,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>newConferenceButton</source>
         <translation>Start conference call</translation>
     </message>
+    <message>
+        <source>newChatRoom</source>
+        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>Open Conference</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1235,6 +1245,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>Message</name>
     <message>
         <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
         <translation>Copy</translation>
     </message>
     <message>
@@ -1274,6 +1285,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
         <translation>%1 received nothing</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation>Copy all</translation>
     </message>
 </context>
 <context>
@@ -1342,6 +1358,24 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
         <translation>Required</translation>
+    </message>
+    <message>
+        <source>missingSubject</source>
+        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
+        <translation>You need to fill a subject.</translation>
+    </message>
+    <message numerus="yes">
+        <source>missingParticipants</source>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <translation>
+            <numerusform>You need at least %1 participant.</numerusform>
+            <numerusform>You need at least %1 participants.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation>You need to set the conference URI in your account settings to create a conference based chat room.</translation>
     </message>
 </context>
 <context>
