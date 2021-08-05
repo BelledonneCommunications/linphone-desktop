@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished">Adja meg a beolvasandó %1 beállítási fájlt. Összevonásra kerül a jelenlegi konfigurációval.</translation>
+        <translation>Adja meg a beolvasandó %1 beállítási fájlt. Összevonásra kerül a jelenlegi konfigurációval.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
