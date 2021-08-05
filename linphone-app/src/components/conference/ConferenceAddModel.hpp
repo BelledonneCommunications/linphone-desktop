@@ -30,7 +30,7 @@
 namespace linphone {
   class Address;
 }
-
+class ChatRoomModel;
 class ConferenceHelperModel::ConferenceAddModel : public QAbstractListModel {
   Q_OBJECT;
 
@@ -46,6 +46,7 @@ public:
 
   Q_INVOKABLE bool addToConference (const QString &sipAddress);
   Q_INVOKABLE bool removeFromConference (const QString &sipAddress);
+  Q_INVOKABLE void addParticipants(ChatRoomModel * model);
 
   Q_INVOKABLE void update ();
 

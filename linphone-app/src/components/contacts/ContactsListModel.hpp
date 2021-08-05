@@ -70,6 +70,7 @@ private:
   void addContact (ContactModel *contact);
 
   QList<ContactModel *> mList;
+  QMap<QString, ContactModel*>	mOptimizedSearch;
   std::shared_ptr<linphone::FriendList> mLinphoneFriends;
 };
 

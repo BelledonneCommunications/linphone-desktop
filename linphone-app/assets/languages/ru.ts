@@ -432,7 +432,7 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 печатает...</translation>
+        <translation>%1 печатает…</translation>
     </message>
 </context>
 <context>
@@ -721,7 +721,7 @@
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>Введённые пароли не совпадают</translation>
+        <translation>Введённые пароли не совпадают.</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -767,7 +767,7 @@
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation>Пожалуйста, выберите один или несколько файлов.</translation>
+        <translation>Пожалуйста, выберите один или несколько файлов</translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
@@ -968,7 +968,7 @@
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Загрузите приложение на ваш компьютер и начните звонить и общаться  бесплатно.
+        <translation>Загрузите приложение на ваш компьютер и начните звонить и общаться бесплатно.
 
 Ссылка для загрузки: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 </translation>

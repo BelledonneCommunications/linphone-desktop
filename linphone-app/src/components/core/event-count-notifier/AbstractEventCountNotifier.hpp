@@ -34,7 +34,7 @@ namespace linphone {
 }
 
 class CallModel;
-class ChatModel;
+class ChatRoomModel;
 class HistoryModel;
 
 class AbstractEventCountNotifier : public QObject {
@@ -57,7 +57,7 @@ public:
   int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 
 signals:
-  void eventCountChanged (int count);
+  void eventCountChanged ();
 
 protected:
   virtual void notifyEventCount (int n) = 0;
@@ -67,12 +67,12 @@ private:
 
   void internalnotifyEventCount ();
 
-  void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
+  void handleChatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
   void handleHistoryModelCreated (HistoryModel *historyModel);
   
   
   void handleResetAllMissedCalls ();
-  void handleResetMissedCalls (ChatModel *chatModel);
+  void handleResetMissedCalls (ChatRoomModel *chatRoomModel);
   void handleCallMissed (CallModel *callModel);
 
   QHash<ConferenceId, int> mMissedCalls;

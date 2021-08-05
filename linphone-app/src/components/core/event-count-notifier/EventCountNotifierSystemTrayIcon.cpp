@@ -26,7 +26,6 @@
 #include <QWindow>
 
 #include "app/App.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "EventCountNotifierSystemTrayIcon.hpp"
@@ -45,7 +44,7 @@ namespace {
 }
 
 EventCountNotifier::EventCountNotifier (QObject *parent) : AbstractEventCountNotifier(parent) {
-  QSvgRenderer renderer((QString(LinphoneUtils::WindowIconPath)));
+  QSvgRenderer renderer((QString(Utils::WindowIconPath)));
   if (!renderer.isValid())
     qFatal("Invalid SVG Image.");
 

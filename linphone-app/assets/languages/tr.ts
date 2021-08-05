@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>Sunucu hatası: sms gönderilemedi</translation>
+        <translation>Sunucu hatası: sms gönderilemedi.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
@@ -432,7 +432,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 yazıyor...</translation>
+        <translation>%1 yazıyor…</translation>
     </message>
 </context>
 <context>
@@ -443,11 +443,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation></translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -978,7 +978,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Kişi ara, çağrı veya sohbet başlat...</translation>
+        <translation>Kişi ara, çağrı veya sohbet başlat…</translation>
     </message>
     <message>
         <source>homeEntry</source>

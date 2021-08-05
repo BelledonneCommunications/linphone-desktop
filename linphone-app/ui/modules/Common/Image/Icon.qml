@@ -15,10 +15,12 @@ Item {
   width: iconSize
 
   Image {
+	id:image
     mipmap: Qt.platform.os === 'osx'
+    cache: Images.areReadOnlyImages
     function getIconSize () {
       Utils.assert(
-        iconSize != null && iconSize >= 0,
+        (icon == null ||  icon == '' || iconSize != null && iconSize >= 0),
         '`iconSize` must be defined and must be positive. (icon=`' +
           icon + '`, iconSize=' + iconSize + ')'
       )

@@ -96,6 +96,9 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 
   for (int i = 0; i < count; ++i) {
     ContactModel *contact = mList.takeAt(row);
+    for(auto address : contact->getVcardModel()->getSipAddresses()){
+		mOptimizedSearch.remove(address.toString());
+	}
 
     mLinphoneFriends->removeFriend(contact->mLinphoneFriend);
 
@@ -111,10 +114,16 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 // -----------------------------------------------------------------------------
 
 ContactModel *ContactsListModel::findContactModelFromSipAddress (const QString &sipAddress) const {
+	if(mOptimizedSearch.contains(sipAddress))
+		return mOptimizedSearch[sipAddress];
+	else
+		return nullptr;
+/*
   auto it = find_if(mList.begin(), mList.end(), [&sipAddress](ContactModel *contactModel) {
     return contactModel->getVcardModel()->getSipAddresses().contains(sipAddress);
   });
   return it != mList.end() ? *it : nullptr;
+  */
 }
 
 ContactModel *ContactsListModel::findContactModelFromUsername (const QString &username) const {
@@ -186,11 +195,16 @@ void ContactsListModel::addContact (ContactModel *contact) {
     emit contactUpdated(contact);
   });
   QObject::connect(contact, &ContactModel::sipAddressAdded, this, [this, contact](const QString &sipAddress) {
+	mOptimizedSearch[sipAddress] = contact;
     emit sipAddressAdded(contact, sipAddress);
   });
   QObject::connect(contact, &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sipAddress) {
+	mOptimizedSearch.remove(sipAddress);
     emit sipAddressRemoved(contact, sipAddress);
   });
 
   mList << contact;
+  for(auto address : contact->getVcardModel()->getSipAddresses()){
+		mOptimizedSearch[address.toString()] = contact;
+	}
 }

@@ -52,9 +52,12 @@ public:
   Presence (QObject *parent = Q_NULLPTR) : QObject(parent) {}
 
   Q_INVOKABLE static PresenceLevel getPresenceLevel (const PresenceStatus &status);
+  static Presence::PresenceLevel getPresenceLevel (const linphone::ConsolidatedPresence &status);
 
   Q_INVOKABLE static QString getPresenceStatusAsString (const PresenceStatus &status);
-  Q_INVOKABLE static QString getPresenceLevelIconName (const PresenceLevel &level);
+  static QString getPresenceStatusAsString (const linphone::ConsolidatedPresence  &status);
+  Q_INVOKABLE static QString getBetterPresenceLevelIconName (const PresenceLevel &level);// Get a better set of icons
+  Q_INVOKABLE static QString getPresenceLevelIconName (const PresenceLevel &level);// Get a "background" icons (not very visible)
 };
 
 #endif // PRESENCE_H_
