@@ -33,7 +33,7 @@ function removeAllEntries () {
     descriptionText: qsTr('removeAllEntriesDescription'),
   }, function (status) {
     if (status) {
-      chatProxyModel.removeAllEntries()
+      chatRoomProxyModel.removeAllEntries()
     }
   })
 }
@@ -56,12 +56,20 @@ function getUsername () {
 }
 
 function updateChatFilter (button) {
-  var ChatModel = Linphone.ChatModel
+  var ChatRoomModel = Linphone.ChatRoomModel
   if (button === 0) {
-    chatProxyModel.setEntryTypeFilter(ChatModel.GenericEntry)
+    chatRoomProxyModel.setEntryTypeFilter(ChatRoomModel.GenericEntry)
   } else if (button === 1) {
-    chatProxyModel.setEntryTypeFilter(ChatModel.CallEntry)
+    chatRoomProxyModel.setEntryTypeFilter(ChatRoomModel.CallEntry)
   } else {
-    chatProxyModel.setEntryTypeFilter(ChatModel.MessageEntry)
+    chatRoomProxyModel.setEntryTypeFilter(ChatRoomModel.MessageEntry)
   }
+}
+
+function openConferenceManager (params) {
+  var App = Linphone.App
+  var callsWindow = App.getCallsWindow()
+
+  App.smartShowWindow(callsWindow)
+  callsWindow.openConferenceManager(params)
 }

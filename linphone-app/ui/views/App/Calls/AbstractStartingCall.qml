@@ -38,12 +38,12 @@ Rectangle {
 
       ContactDescription {
         id: contactDescription
-
+        anchors.horizontalCenter: parent.horizontalCenter
         height: CallStyle.header.contactDescription.height
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.peerAddress
         username: LinphoneUtils.getContactUsername(_sipAddressObserver)
-        width: parent.width
+        width: contentWidth
       }
 
       BusyIndicator {

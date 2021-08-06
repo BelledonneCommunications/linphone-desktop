@@ -26,6 +26,7 @@ on run argv
         set the bounds to { 300, 100, 1000, 520 }
         set position of item "@APPLICATION_NAME@.app" to { 200, 280 }
         set position of item "Applications" to { 500, 280 }
+        set position of item "include" to { 200, 1000 }
       end tell
       update without registering applications
       delay 1

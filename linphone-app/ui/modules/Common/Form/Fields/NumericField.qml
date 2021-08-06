@@ -52,7 +52,7 @@ TextField {
 
       anchors {
         fill: parent
-        margins: TextFieldStyle.background.border.width
+        margins: TextFieldStyle.normal.background.border.width
       }
 
       // -----------------------------------------------------------------------

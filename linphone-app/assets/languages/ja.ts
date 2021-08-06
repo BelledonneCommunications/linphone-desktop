@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>コマンドラインに向かってアプリケーションに注文を送る</translation>
+        <translation>CLIからアプリケーションを操作する</translation>
     </message>
     <message>
         <source>restore</source>
@@ -91,6 +91,22 @@
     <message>
         <source>about</source>
         <translation>バージョン情報</translation>
+    </message>
+    <message>
+        <source>commandLineOptionFetchConfig</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>commandLineOptionFetchConfigArg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>commandLineOptionCall</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>commandLineOptionCallArg</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -147,7 +163,7 @@
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>無効なユーザ名</translation>
+        <translation>無効なユーザ名.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
@@ -187,7 +203,7 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation>SMS認証に失敗しました。</translation>
+        <translation>SMS認証に失敗しました。!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -195,7 +211,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation>無効な電話番号</translation>
+        <translation>無効な電話番号!</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
@@ -207,7 +223,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation>無効な国番号</translation>
+        <translation>無効な国番号!</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
@@ -356,7 +372,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>新しい通話を始める</translation>
+        <translation>新しい通話を始める.</translation>
     </message>
 </context>
 <context>
@@ -423,7 +439,7 @@
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>メッセージを入力してください。</translation>
+        <translation>メッセージを入力してください</translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
@@ -432,7 +448,14 @@
     </message>
     <message>
         <source>isComposing</source>
-        <translation>入力中: %1</translation>
+        <translation>入力中: %1…</translation>
+    </message>
+    <message numerus="yes">
+        <source>chatTyping</source>
+        <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -455,7 +478,7 @@
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>アプリケーションのメイン画面を表示する</translation>
+        <translation>アプリケーションのメイン画面を表示する.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
@@ -463,7 +486,7 @@
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>会議を開始する</translation>
+        <translation>会議を開始する.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -472,6 +495,10 @@
     <message>
         <source>joinConferenceAsFunctionDescription</source>
         <translation>ゲスト-sip-address と同様に、sip-address が主催する会議に参加します。 プロキシ設定に接続していない場合は、「参加会議」を参照してください。</translation>
+    </message>
+    <message>
+        <source>byeFunctionDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -565,7 +592,7 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation>アバターを選択してください。</translation>
+        <translation>アバターを選択してください</translation>
     </message>
     <message>
         <source>companies</source>
@@ -642,6 +669,11 @@
         <source>removeContactDescription</source>
         <translation>あなたのアドレス帳からこの連絡先を削除してもよろしいですか？</translation>
     </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Conversation</name>
@@ -672,6 +704,27 @@
     <message>
         <source>cleanHistory</source>
         <translation>履歴の削除</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>One word title for describing the current admin status</extra-Context>
+    </message>
+    <message>
+        <source>conversationMenuGroupInformations</source>
+        <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conversationMenuDevices</source>
+        <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conversationMenuEphemeral</source>
+        <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -779,6 +832,72 @@
     </message>
 </context>
 <context>
+    <name>EphemeralChatRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ephemeralTitle</source>
+        <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ephemeralText</source>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>Explanation for ephemerals</extra-Context>
+    </message>
+    <message>
+        <source>ephemeralNotInConference!</source>
+        <extracomment>&apos;
+Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>Warning about not being in conference based chat room.</extra-Context>
+    </message>
+    <message>
+        <source>disabled</source>
+        <extracomment>&apos;Disabled&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <extracomment>&apos;%1 day&apos;
+----------
+&apos;%1 days&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <extracomment>&apos;%1 week&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
@@ -863,7 +982,7 @@
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>あなたの友達に%1を紹介</translation>
+        <translation>あなたの友達に%1を紹介.</translation>
     </message>
     <message>
         <source>inviteTitle</source>
@@ -871,7 +990,7 @@
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>%1アカウントを作成/管理する</translation>
+        <translation>%1アカウントを作成/管理する.</translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
@@ -910,30 +1029,100 @@
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>スナップショットを撮る</translation>
+        <translation>スナップショットを撮る.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>録音開始</translation>
+        <translation>録音開始.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>録音停止</translation>
+        <translation>録音停止.</translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>スナップショットを撮る</translation>
+        <translation>スナップショットを撮る.</translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>録音開始</translation>
+        <translation>録音開始.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>録音停止</translation>
+        <translation>録音停止.</translation>
+    </message>
+</context>
+<context>
+    <name>InfoChatRoom</name>
+    <message>
+        <source>quitGroupButton</source>
+        <extracomment>&apos;Exit group&apos; : Button label</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <extracomment>&apos;OK&apos; : Button label</extracomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>addParticipantPlaceholder</source>
+        <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>addParticipantTooltip</source>
+        <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantList</source>
+        <extracomment>&apos;Participant list&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+</context>
+<context>
+    <name>InfoEncryption</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;CANCEL&apos; : button text for cancelling operation</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callButton</source>
+        <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <extracomment>&apos;OK&apos; : Button that validate the popup to be redirected to the device list</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>infoEncryptionTitle</source>
+        <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>encryptionExplanation</source>
+        <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>Explanation of Encryption</extra-Context>
+    </message>
+    <message>
+        <source>encryptionProcessExplanation</source>
+        <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>Explanation process</extra-Context>
     </message>
 </context>
 <context>
@@ -960,7 +1149,7 @@
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 があなたを%2に招待しています。</translation>
+        <translation>%1 があなたを%2に招待しています!</translation>
     </message>
     <message>
         <source>defaultSubject</source>
@@ -978,11 +1167,7 @@
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>連絡先を検索するか、通話もしくはチャットを始める</translation>
-    </message>
-    <message>
-        <source>homeEntry</source>
-        <translation>ホーム</translation>
+        <translation>連絡先を検索するか、通話もしくはチャットを始める…</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -999,6 +1184,11 @@
     <message>
         <source>newConferenceButton</source>
         <translation>電話会議の開始</translation>
+    </message>
+    <message>
+        <source>newChatRoom</source>
+        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1050,11 +1240,51 @@
     <name>Message</name>
     <message>
         <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
         <translation>-了解</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>俺をプレイしろ！</translation>
+        <translation>再生する!</translation>
+    </message>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
 </context>
 <context>
@@ -1062,6 +1292,84 @@
     <message>
         <source>ok</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>NewChatRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Launch&apos; : Start button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missingSubject</source>
+        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>missingParticipants</source>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newChatRoomTitle</source>
+        <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>askEncryption</source>
+        <extracomment>&apos;Would you like to encrypt your chat?&apos; : Ask about setting the chat room as secured.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subjectLabel</source>
+        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subjectTooltip</source>
+        <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantSelectionPlaceholder</source>
+        <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>participantSelectionTooltip</source>
+        <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>removeParticipantSelection</source>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Tooltip>This is a tooltip</extra-Tooltip>
+    </message>
+    <message>
+        <source>requiredField</source>
+        <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1111,6 +1419,15 @@
     <message>
         <source>messageDelivered</source>
         <translation>配信済</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsView</name>
+    <message>
+        <source>participantsAdminHeader</source>
+        <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
 </context>
 <context>
@@ -1186,6 +1503,11 @@
     <message>
         <source>contactsTitle</source>
         <translation type="unfinished">連絡先</translation>
+    </message>
+    <message>
+        <source>noPlugin</source>
+        <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1363,7 +1685,173 @@
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation>凍結は必須です</translation>
+        <translation>暗号化を必須にする</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsLdap</name>
+    <message>
+        <source>newServer</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SettingsLdapEdit</name>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">キャンセル</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">表示名(オプション)</translation>
+    </message>
+    <message>
+        <source>displayNameTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>connectionTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bindDNLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>bindDNTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation type="unfinished">パスワード</translation>
+    </message>
+    <message>
+        <source>useTLSLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useTLSTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useSalLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>useSalTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verifyTLSLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AutoMode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>offMode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>onMode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>verifyTLSTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>searchTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>baseObjectLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>baseObjectPlaceholder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>baseObjectTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filterLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>filterTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maxResultsLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>maxResultsTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timeoutLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timeoutTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>parsingTitle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nameAttributesLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>nameAttributesTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sipAttributesLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sipAttributesTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>domainLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>domainTooltip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>miscLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>debugLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>debugTooltip</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1478,7 +1966,7 @@
     </message>
     <message>
         <source>generalTitle</source>
-        <translation>将軍</translation>
+        <translation>一般</translation>
     </message>
 </context>
 <context>
@@ -1517,11 +2005,11 @@
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>あなたのアカウントを削除してもよろしいですか？</translation>
+        <translation>アカウントを削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>あなたのパスワードを消してもよろしいですか？</translation>
+        <translation>パスワードを消してもよろしいですか？</translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
@@ -1675,7 +2163,7 @@
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>あなたのアバターを削除してもよろしいですか？</translation>
+        <translation>アバターを削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>downloadLabel</source>
@@ -1809,8 +2297,54 @@
 <context>
     <name>Timeline</name>
     <message>
-        <source>timelineTitle</source>
-        <translation>以前</translation>
+        <source>timelineFilter</source>
+        <extracomment>A title for filtering mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterAll</source>
+        <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterCustom</source>
+        <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterSimpleRooms</source>
+        <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Mode>Selecting it will show all simple romms</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterSecureRooms</source>
+        <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterChatGroups</source>
+        <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterSecureChatGroups</source>
+        <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterEphemerals</source>
+        <extracomment>&apos;Ephemerals&apos; : Filter item</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Mode>Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extra-Mode>
+    </message>
+    <message>
+        <source>timelineSearchPlaceholderText</source>
+        <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

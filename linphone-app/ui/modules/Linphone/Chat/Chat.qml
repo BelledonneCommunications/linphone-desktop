@@ -13,7 +13,7 @@ import 'Chat.js' as Logic
 Rectangle {
   id: container
 
-  property alias proxyModel: chat.model
+  property alias proxyModel: chat.model	// ChatRoomProxyModel
 
   // ---------------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ Rectangle {
 
       property bool bindToEnd: false
       property bool tryToLoadMoreEntries: true
-      property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
+      //property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
 
       // -----------------------------------------------------------------------
 
@@ -95,7 +95,8 @@ Rectangle {
               id: text
 
               anchors.fill: parent
-              color: ChatStyle.sectionHeading.text.color
+              //color: ChatStyle.sectionHeading.text.color
+              color: '#979797'
               font {
                 bold: true
                 pointSize: ChatStyle.sectionHeading.text.pointSize
@@ -119,21 +120,22 @@ Rectangle {
 
       delegate: Rectangle {
         id: entry
+		property bool isNotice : $chatEntry.type === ChatRoomModel.NoticeEntry
 
         function isHoverEntry () {
           return mouseArea.containsMouse
         }
 
         function removeEntry () {
-          proxyModel.removeEntry(index)
+          proxyModel.removeRow(index)
         }
 
         anchors {
           left: parent ? parent.left : undefined
-          leftMargin: ChatStyle.entry.leftMargin
+		  leftMargin: isNotice?0:ChatStyle.entry.leftMargin
           right: parent ? parent.right : undefined
 
-          rightMargin: ChatStyle.entry.deleteIconSize +
+		  rightMargin: isNotice?0:ChatStyle.entry.deleteIconSize +
             ChatStyle.entry.message.extraContent.spacing +
             ChatStyle.entry.message.extraContent.rightMargin +
             ChatStyle.entry.message.extraContent.leftMargin +
@@ -165,7 +167,7 @@ Rectangle {
               Layout.preferredHeight: ChatStyle.entry.lineHeight
               Layout.preferredWidth: ChatStyle.entry.time.width
 
-              color: ChatStyle.entry.time.color
+              color: '#B1B1B1'
               font.pointSize: ChatStyle.entry.time.pointSize
 
               text: $chatEntry.timestamp.toLocaleString(
@@ -178,6 +180,7 @@ Rectangle {
               TooltipArea {
                 text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
               }
+			  visible:!isNotice
             }
 
             // Display content.
@@ -190,14 +193,16 @@ Rectangle {
       }
 
       footer: Text {
-        color: ChatStyle.composingText.color
-        font.pointSize: ChatStyle.composingText.pointSize
-        height: visible ? ChatStyle.composingText.height : 0
-        leftPadding: ChatStyle.composingText.leftPadding
-        visible: text.length > 0
-
-        text: Logic.getIsComposingMessage()
-      }
+					property var composers : container.proxyModel.composers
+					color: ChatStyle.composingText.color
+					font.pointSize: ChatStyle.composingText.pointSize
+					height: visible ? undefined : 0
+					leftPadding: ChatStyle.composingText.leftPadding
+					visible: composers.length > 0 && SettingsModel.chatEnabled
+					wrapMode: Text.Wrap
+					//: '%1 is typing...' indicate that someone is composing in chat
+					text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
+				}
     }
 
     // -------------------------------------------------------------------------
@@ -206,7 +211,7 @@ Rectangle {
 
     Borders {
       Layout.fillWidth: true
-      Layout.preferredHeight: ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+      Layout.preferredHeight: textArea.height
 
       borderColor: ChatStyle.sendArea.border.color
       topWidth: ChatStyle.sendArea.border.width
@@ -214,8 +219,17 @@ Rectangle {
 
       DroppableTextArea {
         id: textArea
+		
+		enabled:proxyModel && proxyModel.chatRoomModel ? !proxyModel.chatRoomModel.hasBeenLeft:false
+		isEphemeral : proxyModel && proxyModel.chatRoomModel ? proxyModel.chatRoomModel.ephemeralEnabled:false
 
-        anchors.fill: parent
+        anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		
+		height:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+		minimumHeight:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+		maximumHeight:container.height/2
 
         dropEnabled: SettingsModel.fileTransferUrl.length > 0
         dropDisabledReason: qsTr('noFileTransferUrl')
@@ -223,8 +237,24 @@ Rectangle {
 
         onDropped: Logic.handleFilesDropped(files)
         onTextChanged: Logic.handleTextChanged(text)
-        onValidText: Logic.sendMessage(text)
+		onValidText: {
+			textArea.text = ''
+			chat.bindToEnd = true
+			if(proxyModel.chatRoomModel)
+				proxyModel.sendMessage(text)
+			else{
+				console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
+				proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
+				proxyModel.sendMessage(text)
+			}
+		}
         Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+		Rectangle{
+			anchors.fill:parent
+			color:'white'
+			opacity: 0.5
+			visible:!textArea.enabled
+		}
       }
     }
   }

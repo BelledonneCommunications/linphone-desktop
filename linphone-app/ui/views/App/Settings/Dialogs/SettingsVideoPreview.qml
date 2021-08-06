@@ -18,7 +18,7 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   height: SettingsVideoPreviewStyle.height
   width: SettingsVideoPreviewStyle.width
 
