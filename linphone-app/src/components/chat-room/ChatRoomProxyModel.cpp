@@ -142,19 +142,15 @@ void ChatRoomProxyModel::compose (const QString& text) {
 void ChatRoomProxyModel::loadMoreEntries () {
   int count = rowCount();
   int parentCount = sourceModel()->rowCount();
-
-  if (count < parentCount) {
-    // Do not increase `mMaxDisplayedEntries` if it's not necessary...
-    // Limit qml calls.
-    if (count == mMaxDisplayedEntries)
+ if (count == mMaxDisplayedEntries)
       mMaxDisplayedEntries += EntriesChunkSize;
-
-    invalidateFilter();
-
-    count = rowCount() - count;
+      
+  if (count + 10 >= parentCount) // Magic number : try to load more entries if near to max event count
+		mChatRoomModel->loadMoreEntries();
+	invalidateFilter();
+	count = rowCount() - count;
     if (count > 0)
       emit moreEntriesLoaded(count);
-  }
 }
 
 void ChatRoomProxyModel::setEntryTypeFilter (int type) {

@@ -638,10 +638,10 @@ void ChatRoomModel::initEntries(){
 	if(!mIsInitialized){
 		QList<std::shared_ptr<ChatEvent> > entries;
 // Get chat messages
-		for (auto &message : mChatRoom->getHistory(0))
+		for (auto &message : mChatRoom->getHistory(mLastEntriesCount))
 			entries << ChatMessageModel::create(message, this);
 // Get events
-		for(auto &eventLog : mChatRoom->getHistoryEvents(0)){
+		for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesCount)){
 			 auto entry = ChatNoticeModel::create(eventLog, this);
 			 if(entry)
 				entries << entry;
@@ -664,6 +664,43 @@ void ChatRoomModel::initEntries(){
 		mEntries = entries;
 		endInsertRows();
 	}
+}
+
+void ChatRoomModel::loadMoreEntries(){
+	mLastEntriesCount += mLastEntriesStep;
+// Messages
+	QList<std::shared_ptr<linphone::ChatMessage>> messagesToAdd;
+	for (auto &message : mChatRoom->getHistory(mLastEntriesCount)){
+		auto itEntries = mEntries.begin();
+		bool haveEntry = false;
+		while(!haveEntry && itEntries != mEntries.end()){
+			auto entry = dynamic_cast<ChatMessageModel*>(itEntries->get());
+			haveEntry = (entry && entry->getChatMessage() == message);
+			++itEntries;
+		}
+		if(!haveEntry)
+			messagesToAdd << message;
+	}
+	
+// Notices
+	QList<std::shared_ptr<linphone::EventLog>> noticesToAdd;
+	for (auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesCount)){
+		auto itEntries = mEntries.begin();
+		bool haveEntry = false;
+		while(!haveEntry && itEntries != mEntries.end()){
+			auto entry = dynamic_cast<ChatNoticeModel*>(itEntries->get());
+			haveEntry = (entry && entry->getEventLog() == eventLog);
+			++itEntries;
+		}
+		if(!haveEntry)
+			noticesToAdd << eventLog;
+	}
+	if(messagesToAdd.size() > 0)
+		insertMessages(messagesToAdd);
+	if(noticesToAdd.size() > 0)
+		insertNotices(noticesToAdd);
+	if( messagesToAdd.size() == 0 && noticesToAdd.size() == 0)
+		mLastEntriesCount = mEntries.size();	// We reset last antries count to current events size to avoid overflow count
 }
 
 
@@ -704,9 +741,27 @@ void ChatRoomModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> 
 	}
 }
 
-void ChatRoomModel::insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog) {
+void ChatRoomModel::insertMessages (const QList<shared_ptr<linphone::ChatMessage> > &messages) {
 	if(mIsInitialized){
-		std::shared_ptr<ChatNoticeModel> model = ChatNoticeModel::create(enventLog, this);
+		QList<std::shared_ptr<ChatEvent> > entries;
+		for(auto message : messages) {
+			std::shared_ptr<ChatMessageModel> model = ChatMessageModel::create(message, this);
+			if(model)
+				entries << model;
+		}
+		if(entries.size() > 0){
+			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
+			beginInsertRows(QModelIndex(), 0, entries.size()-1);
+			entries << mEntries;
+			mEntries = entries;
+			endInsertRows();
+		}
+	}
+}
+
+void ChatRoomModel::insertNotice (const std::shared_ptr<linphone::EventLog> &eventLog) {
+	if(mIsInitialized){
+		std::shared_ptr<ChatNoticeModel> model = ChatNoticeModel::create(eventLog, this);
 		if(model){
 			int row = mEntries.count();
 			beginInsertRows(QModelIndex(), row, row);
@@ -716,6 +771,24 @@ void ChatRoomModel::insertNotice (const std::shared_ptr<linphone::EventLog> &env
 	}
 }
 
+void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs) {
+	if(mIsInitialized){
+		QList<std::shared_ptr<ChatEvent> > entries;
+		
+		for(auto eventLog : eventLogs) {
+			std::shared_ptr<ChatNoticeModel> model = ChatNoticeModel::create(eventLog, this);
+			if(model)
+				entries << model;
+		}
+		
+		if(entries.size() > 0){
+			beginInsertRows(QModelIndex(), 0, entries.size()-1);
+			entries << mEntries;
+			mEntries = entries;
+			endInsertRows();
+		}
+	}
+}
 // -----------------------------------------------------------------------------
 
 void ChatRoomModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {

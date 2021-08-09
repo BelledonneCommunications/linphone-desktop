@@ -212,13 +212,16 @@ public:
 	void compose ();
 	void resetMessageCount ();
 	Q_INVOKABLE void initEntries();
+	Q_INVOKABLE void loadMoreEntries();
 	
 	QDateTime mLastUpdateTime;
 	int mUnreadMessagesCount = 0;
 	int mMissedCallsCount = 0;
 	bool mIsInitialized = false;
 	
-	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor
+	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor	
+	int mLastEntriesCount = 50;		// Retrieve a part of the history to avoid too much processing
+	int mLastEntriesStep = 50;		// Message loading Step
 	
 	
 	//--------------------		CHAT ROOM HANDLER
@@ -302,7 +305,9 @@ signals:
 private:
 	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
 	void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
+	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
+	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);
 	
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 	void handleCallCreated(const std::shared_ptr<linphone::Call> &call);// Count an event call
