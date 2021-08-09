@@ -4,10 +4,13 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
+import UtilsCpp 1.0
+import LinphoneEnums 1.0
 
 import App.Styles 1.0
 import Common.Styles 1.0
 import Units 1.0
+
 
 import 'Conversation.js' as Logic
 
@@ -223,6 +226,19 @@ ColumnLayout  {
 						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.chatRoomModel.groupEnabled && conversation.securityLevel != 1
 						
 						onClicked: CallsListModel.launchChat(conversation.peerAddress, 0)
+					}
+					ActionButton {
+						icon: 'chat'
+						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.chatRoomModel.groupEnabled && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+						
+						onClicked: CallsListModel.launchChat(conversation.peerAddress, 1)
+						Icon{
+								icon:'secure_level_1'
+								iconSize:15
+								anchors.right:parent.right
+								anchors.top:parent.top
+								anchors.topMargin: -3
+						}
 					}
 					
 					ActionButton {

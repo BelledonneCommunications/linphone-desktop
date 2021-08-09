@@ -199,7 +199,7 @@ void ContentModel::createThumbnail () {
 		
 		if( path != ""){
 			setWasDownloaded( !path.isEmpty() && QFileInfo(path).isFile());
-			if(appdata.mData.contains(path))
+			if(appdata.mData.contains(path) && !appdata.mData[path].isEmpty())
 				setThumbnail(QStringLiteral("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(appdata.mData[path]));
 		}
 	}
