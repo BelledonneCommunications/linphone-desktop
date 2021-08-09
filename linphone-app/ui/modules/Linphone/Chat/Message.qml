@@ -197,29 +197,29 @@ Item {
 			id: imdnStatesModel
 			chatMessageModel: $chatEntry
 		}
-		function getText(state){
+		function getText(state, displayName, stateChangeTime){
 			if(state == LinphoneEnums.ChatMessageStateDelivered)
 				//: 'Send to %1 - %2' Little message to indicate the state of a message
 				//~ Context %1 is someone, %2 is a date/time. The state is that the message has been sent but not received.
-				return qsTr('deliveryDelivered')
+				return qsTr('deliveryDelivered').arg(displayName).arg(stateChangeTime)
 			else if(state == LinphoneEnums.ChatMessageStateDeliveredToUser)
 				//: 'Retrieved by %1 - %2' Little message to indicate the state of a message
 				//~ Context %1 is someone, %2 is a date/time. The state is that the message has been retrieved
-				return qsTr('deliveryDeliveredToUser')
+				return qsTr('deliveryDeliveredToUser').arg(displayName).arg(stateChangeTime)
 			else if(state == LinphoneEnums.ChatMessageStateDisplayed)
 				//: 'Read by %1 - %2' Little message to indicate the state of a message
 				//~ Context %1 is someone, %2 is a date/time. The state that the message has been read.
-				return qsTr('deliveryDisplayed')
+				return qsTr('deliveryDisplayed').arg(displayName).arg(stateChangeTime)
 			else if(state == LinphoneEnums.ChatMessageStateNotDelivered)
 				//: "%1 have nothing received" Little message to indicate the state of a message
 				//~ Context %1 is someone. The state is that the message hasn't been delivered.
-				return qsTr('deliveryNotDelivered')
+				return qsTr('deliveryNotDelivered').arg(displayName)
 			else return ''
 		}
 		delegate:Text{
 			height:ChatStyle.composingText.height-5
 			width:parent.width
-			text:deliveryLayout.getText(modelData.state).arg(modelData.displayName).arg(UtilsCpp.toDateTimeString(modelData.stateChangeTime))
+			text:deliveryLayout.getText(modelData.state, modelData.displayName, UtilsCpp.toDateTimeString(modelData.stateChangeTime))
 			color:"#B1B1B1"
 			font.pointSize: Units.dp * 8
 			elide: Text.ElideMiddle
