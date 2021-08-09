@@ -622,6 +622,17 @@ void SettingsModel::setHideEmptyChatRooms(const bool& status){
 	mConfig->setInt("misc", "hide_empty_chat_rooms", status);
 	emit hideEmptyChatRoomsChanged(status);
 }
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getWaitRegistrationForCall() const{
+	return !!mConfig->getInt(UiSection, "call_wait_registration", 0);
+}
+
+void SettingsModel::setWaitRegistrationForCall(const bool& status){
+	mConfig->setInt(UiSection, "call_wait_registration", status);
+	emit waitRegistrationForCallChanged(status);
+}
 	
 // -----------------------------------------------------------------------------
 

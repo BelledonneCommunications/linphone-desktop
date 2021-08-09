@@ -13,6 +13,7 @@ Controls.Switch {
 
   property bool enabled: true
   property QtObject indicatorStyle : SwitchStyle.normal
+  onIndicatorStyleChanged: if( !indicatorStyle) indicatorStyle = SwitchStyle.normal
 
   // ---------------------------------------------------------------------------
 

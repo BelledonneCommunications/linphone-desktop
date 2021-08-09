@@ -1687,6 +1687,16 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <source>encryptionMandatoryLabel</source>
         <translation>硬化是强制性的</translation>
     </message>
+    <message>
+        <source>hideEmptyChatRoomsLabel</source>
+        <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waitRegistrationForCallLabel</source>
+        <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>

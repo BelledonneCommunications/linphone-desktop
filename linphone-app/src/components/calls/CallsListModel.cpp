@@ -120,7 +120,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
 	if(currentProxyConfig){
-		if(currentProxyConfig->getState() == linphone::RegistrationState::Ok)
+		if(!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() || currentProxyConfig->getState() == linphone::RegistrationState::Ok)
 			core->inviteAddressWithParams(address, params);
 		else{
 			QObject * context = new QObject();
@@ -157,7 +157,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 	shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
 	params->setMediaEncryption(LinphoneEnums::toLinphone(encryption));
 	if(currentProxyConfig){
-		if(currentProxyConfig->getState() == linphone::RegistrationState::Ok)
+		if(!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() || currentProxyConfig->getState() == linphone::RegistrationState::Ok)
 			core->inviteAddressWithParams(address, params);
 		else{
 			QObject * context = new QObject();

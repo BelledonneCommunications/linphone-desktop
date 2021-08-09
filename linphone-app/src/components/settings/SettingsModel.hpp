@@ -105,7 +105,8 @@ class SettingsModel : public QObject {
     Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged)
     Q_PROPERTY(bool hideEmptyChatRooms READ getHideEmptyChatRooms WRITE setHideEmptyChatRooms NOTIFY hideEmptyChatRoomsChanged)
     
-
+    Q_PROPERTY(bool waitRegistrationForCall READ getWaitRegistrationForCall WRITE setWaitRegistrationForCall NOTIFY waitRegistrationForCallChanged)// Allow call only if the current proxy has been registered
+    
     Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
 
     Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged)
@@ -325,6 +326,9 @@ public:
 	
 	bool getHideEmptyChatRooms() const;
 	void setHideEmptyChatRooms(const bool& data);
+	
+	bool getWaitRegistrationForCall() const;
+	void setWaitRegistrationForCall(const bool& data);
 
 	bool getConferenceEnabled () const;
 	void setConferenceEnabled (bool status);
@@ -542,6 +546,7 @@ signals:
 
 	void chatEnabledChanged (bool status);
 	void hideEmptyChatRoomsChanged (bool status);
+	void waitRegistrationForCallChanged (bool status);
 
 	void conferenceEnabledChanged (bool status);
 

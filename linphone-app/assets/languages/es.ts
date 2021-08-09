@@ -1693,6 +1693,16 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <source>encryptionMandatoryLabel</source>
         <translation>El cifrado es obligatorio</translation>
     </message>
+    <message>
+        <source>hideEmptyChatRoomsLabel</source>
+        <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waitRegistrationForCallLabel</source>
+        <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>

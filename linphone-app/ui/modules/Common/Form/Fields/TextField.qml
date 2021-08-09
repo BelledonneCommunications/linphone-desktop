@@ -17,6 +17,7 @@ Controls.TextField {
   property string error: ''
   property var tools
   property QtObject textFieldStyle : TextFieldStyle.normal
+  onTextFieldStyleChanged: if( !textFieldStyle) textFieldStyle = TextFieldStyle.normal
 
   // ---------------------------------------------------------------------------
 

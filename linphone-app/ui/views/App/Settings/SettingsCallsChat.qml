@@ -187,9 +187,21 @@ TabContainer {
 			}
 			
 			FormLine {
-				visible: SettingsModel.callRecorderEnabled || SettingsModel.developerSettingsEnabled
+				FormGroup {
+					//: 'Call when registered' : Label on switch to choose if calls are make when the current proxy is registered
+					label: qsTr('waitRegistrationForCallLabel')
+					
+					Switch {
+						id: waitRegistrationForCall
+						
+						checked: SettingsModel.waitRegistrationForCall
+						
+						onClicked: SettingsModel.waitRegistrationForCall = !checked
+					}
+				}
 				
 				FormGroup {
+					visible: SettingsModel.callRecorderEnabled || SettingsModel.developerSettingsEnabled
 					label: qsTr('automaticallyRecordCallsLabel')
 					
 					Switch {
@@ -198,6 +210,7 @@ TabContainer {
 						onClicked: SettingsModel.automaticallyRecordCalls = !checked
 					}
 				}
+				
 			}
 		}
 		
@@ -268,7 +281,8 @@ TabContainer {
 			}
 			FormLine {
 				FormGroup {
-					label: 'Hide empty chat rooms'
+					//: 'Hide empty chat rooms' : Label for a switch to choose if Linphone hide empty chat rooms
+					label: qsTr('hideEmptyChatRoomsLabel')
 					
 					Switch {
 						id: hideEmptyChatRooms
@@ -278,6 +292,7 @@ TabContainer {
 						onClicked: SettingsModel.hideEmptyChatRooms = !checked
 					}
 				}
+				
 			}
 			
 			FormLine {
