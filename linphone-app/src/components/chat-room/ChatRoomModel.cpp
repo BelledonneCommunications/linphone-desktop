@@ -771,13 +771,12 @@ void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Frien
 //----------------------------------------------------------
 
 void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing){
-	if(!isComposing) {
-		auto it = mComposers.begin();
-		while(it != mComposers.end() && !it.key()->weakEqual(remoteAddress))
-			++it;
-		if(it != mComposers.end())
-			mComposers.erase(it);
-	}else
+	auto it = mComposers.begin();
+	while(it != mComposers.end() && !it.key()->weakEqual(remoteAddress))
+		++it;
+	if(it != mComposers.end())
+		mComposers.erase(it);
+	if(isComposing)
 		mComposers[remoteAddress] = Utils::getDisplayName(remoteAddress);
 	emit isRemoteComposingChanged();
 	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
