@@ -448,14 +448,14 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 est en train d&apos;écrire…</translation>
+        <translation>%1 est entrain d&apos;écrire…</translation>
     </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
-            <numerusform>%1 est en train d&apos;écrire…</numerusform>
-            <numerusform>%1 sont en train d&apos;écrire…</numerusform>
+        <translation>
+            <numerusform>%1 est entrain d&apos;écrire…</numerusform>
+            <numerusform>%1 sont entrain d&apos;écrire…</numerusform>
         </translation>
     </message>
 </context>
@@ -1739,7 +1739,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished">Serveur LDAP. ie: ldap&#x202f;:// pour un serveur local ou ldap&#x202f;://ldap.example.org/</translation>
+        <translation type="unfinished">Serveur LDAP. ie: ldap :// pour un serveur local ou ldap ://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
