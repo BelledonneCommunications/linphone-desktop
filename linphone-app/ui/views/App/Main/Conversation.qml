@@ -218,6 +218,12 @@ ColumnLayout  {
 						
 						onClicked: CallsListModel.launchAudioCall(conversation.peerAddress)
 					}
+					ActionButton {
+						icon: 'chat'
+						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.chatRoomModel.groupEnabled && conversation.securityLevel != 1
+						
+						onClicked: CallsListModel.launchChat(conversation.peerAddress, 0)
+					}
 					
 					ActionButton {
 						icon: 'group_chat'

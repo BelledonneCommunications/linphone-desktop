@@ -51,7 +51,7 @@ DialogPlus {
 				property int securityLevel : modelData.securityLevel
 				property string addressToCall : modelData.sipAddress
 						
-				width:parent.width
+				width: parent ? parent.width : undefined
 				spacing: 0
 				RowLayout {
 					id: item
