@@ -24,16 +24,6 @@ Rectangle {
 	signal entrySelected (TimelineModel entry)
 	
 	// ---------------------------------------------------------------------------
-	/*
-  function setSelectedEntry (peerAddress, localAddress) {
-	Logic.setSelectedEntry(peerAddress, localAddress)
-  }
-  
-  function resetSelectedEntry () {
-	Logic.resetSelectedEntry()
-  }
-*/
-	// ---------------------------------------------------------------------------
 	
 	color: TimelineStyle.color
 	
@@ -49,9 +39,10 @@ Rectangle {
 			onSelectedCountChanged:{
 				if(selectedCount<=0) {
 					view.currentIndex = -1
-					timeline.entrySelected('',false)
+					timeline.entrySelected('')
 				}
 			}
+			onSelectedChanged : if(timelineModel) timeline.entrySelected(timelineModel)
 			// onCurrentTimelineChanged:entrySelected(currentTimeline)
 		}
 		/*
@@ -71,6 +62,7 @@ Rectangle {
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
+			visible:view.count > 0
 			
 			MouseArea{// no more showing history
 				id:showHistory
@@ -278,17 +270,19 @@ Rectangle {
 					anchors.fill: parent
 					onClicked: {
 						//timeline.model.unselectAll()
-						if(modelData.selected)
+						if(modelData.selected)// Update selection
 							timeline.entrySelected(modelData)
 						modelData.selected = true
 						view.currentIndex = index;
 					}
 				}
+				
 				Connections{
 					target:modelData
 					onSelectedChanged:{
-						if(selected)
-							timeline.entrySelected(modelData)
+						if(selected) {
+							view.currentIndex = index;
+						}
 					}
 				}
 			}

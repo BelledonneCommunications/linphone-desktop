@@ -120,7 +120,7 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 	for(auto timeline : oldTimelines)
 		if(timeline->mSelected)
 			timeline->setSelected(false);
-	
+	emit countChanged();
 	return true;
 }
 
@@ -137,7 +137,7 @@ std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<li
 		if(create){
 			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
 			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
-			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 			add(model);
 			//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
@@ -179,7 +179,7 @@ std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_p
 		if(create){
 			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
 			if(model){
-				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 				
 				//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
@@ -199,6 +199,9 @@ std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(ChatRoomModel
 	return nullptr;
 }
 
+int TimelineListModel::getCount() const{
+	return mTimelines.size();
+}
 
 //-------------------------------------------------------------------------------------------------
 
@@ -210,7 +213,7 @@ void TimelineListModel::setSelectedCount(int selectedCount){
 	}
 }
 
-void TimelineListModel::selectedHasChanged(bool selected){
+void TimelineListModel::onSelectedHasChanged(bool selected){
 	if(selected) {
 		if(mSelectedCount >= 1){// We have more selection than wanted : count select first and unselect after : the final signal will be send only on limit
 			setSelectedCount(mSelectedCount+1);// It will not send a change signal
@@ -219,6 +222,7 @@ void TimelineListModel::selectedHasChanged(bool selected){
 					(*it)->setSelected(false);
 		}else
 			setSelectedCount(mSelectedCount+1);
+		emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
 	} else
 		setSelectedCount(mSelectedCount-1);
 }
@@ -266,7 +270,7 @@ void TimelineListModel::updateTimelines () {
 			
 			std::shared_ptr<TimelineModel> model = TimelineModel::create(dbChatRoom);
 			if( model){
-				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 				add(model);
 			}
@@ -281,6 +285,7 @@ void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
 	mTimelines << timeline;
 	endInsertRows();
 	resetInternalData();
+	emit countChanged();
 }
 
 void TimelineListModel::remove (TimelineModel* model) {
@@ -311,7 +316,7 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed
 		std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
 		if(model){
-			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(selectedHasChanged(bool)));
+			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 			add(model);			
 		}

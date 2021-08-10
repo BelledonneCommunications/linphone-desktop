@@ -264,9 +264,9 @@ ApplicationWindow {
 							visible: SettingsModel.contactsEnabled
 							
 							onSelected: {
-											timeline.model.unselectAll() 
-											setView('Contacts')
-										}
+								timeline.model.unselectAll() 
+								setView('Contacts')
+							}
 							Icon{
 								anchors.right:parent.right
 								anchors.verticalCenter: parent.verticalCenter
@@ -285,7 +285,7 @@ ApplicationWindow {
 							iconSize: 32
 							name: 'MES CONFERENCES'
 							
-							onSelected: setView('HistoryView')
+							onSelected: window.setView('HistoryView')
 						}
 					}
 					
@@ -297,14 +297,18 @@ ApplicationWindow {
 						Layout.fillWidth: true
 						model: TimelineProxyModel{}
 						
-						onEntrySelected:{ (entry?setView('Conversation', {
-															chatRoomModel:entry.chatRoomModel
-															
-														}):
-												 //setView('HistoryView', {}))
-												 setView('Home', {}))
-												menu.resetSelectedEntry() 
-										}
+						onEntrySelected:{ 
+							if( entry ) {
+								window.setView('Conversation', {
+												   chatRoomModel:entry.chatRoomModel
+												   
+											   })
+							}else{
+								
+								window.setView('Home', {})
+							}
+							menu.resetSelectedEntry()
+						}
 					}
 				}
 				
@@ -318,6 +322,7 @@ ApplicationWindow {
 					Layout.fillWidth: true
 					
 					source: 'Home.qml'
+					Component.onCompleted: if (AccountSettingsModel.accounts.length < 2) source= 'Assistant.qml' // default proxy = 1. Do not use this set diretly in source because of bindings that will override next setSource
 				}
 			}
 		}
