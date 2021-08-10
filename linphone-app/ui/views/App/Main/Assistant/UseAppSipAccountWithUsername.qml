@@ -11,7 +11,6 @@ Form {
     !passwordError.length &&
     !usernameError.length
 
-  dealWithErrors: true
   orientation: Qt.Vertical
 
   FormLine {
