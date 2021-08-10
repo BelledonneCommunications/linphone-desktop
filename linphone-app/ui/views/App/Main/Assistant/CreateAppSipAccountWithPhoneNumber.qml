@@ -20,7 +20,6 @@ AssistantAbstractView {
 
   mainAction: requestBlock.execute
   mainActionEnabled: phoneNumber.text.length
-    && username.text.length
     && !phoneNumberError.length
     && !usernameError.length
     && !requestBlock.loading
@@ -76,8 +75,8 @@ AssistantAbstractView {
 
           TextField {
             id: username
-
-            onTextChanged: assistantModel.username = text
+			placeholderText: phoneNumber.text
+			onTextChanged: assistantModel.username = text
           }
         }
       }
