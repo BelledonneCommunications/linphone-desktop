@@ -35,6 +35,7 @@ ColumnLayout  {
 	property int securityLevel : chatRoomModel ? chatRoomModel.securityLevel : 1
 	
 	readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
+	property bool haveMoreThanOneParticipants: chatRoomModel ? chatRoomModel.participants.count > 2 : false
 	
 	// ---------------------------------------------------------------------------
 	
@@ -84,7 +85,7 @@ ColumnLayout  {
 				
 				icon:'chat_room'
 				iconSize: ConversationStyle.bar.groupChatSize
-				visible: chatRoomModel.groupEnabled && chatRoomModel.participants.count > 2
+				visible: conversation.haveMoreThanOneParticipants
 			}
 			Item{
 				Layout.fillHeight: true
@@ -210,26 +211,26 @@ ColumnLayout  {
 					
 					ActionButton {
 						icon: 'video_call'
-						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.chatRoomModel.groupEnabled
+						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.haveMoreThanOneParticipants
 						
 						onClicked: CallsListModel.launchVideoCall(conversation.peerAddress)
 					}
 					
 					ActionButton {
 						icon: 'call'
-						visible: SettingsModel.outgoingCallsEnabled && !conversation.chatRoomModel.groupEnabled
+						visible: SettingsModel.outgoingCallsEnabled && !conversation.haveMoreThanOneParticipants
 						
 						onClicked: CallsListModel.launchAudioCall(conversation.peerAddress)
 					}
 					ActionButton {
 						icon: 'chat'
-						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.chatRoomModel.groupEnabled && conversation.securityLevel != 1
+						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel != 1
 						
 						onClicked: CallsListModel.launchChat(conversation.peerAddress, 0)
 					}
 					ActionButton {
 						icon: 'chat'
-						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.chatRoomModel.groupEnabled && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
 						
 						onClicked: CallsListModel.launchChat(conversation.peerAddress, 1)
 						Icon{
@@ -243,7 +244,7 @@ ColumnLayout  {
 					
 					ActionButton {
 						icon: 'group_chat'
-						visible: SettingsModel.outgoingCallsEnabled && conversation.chatRoomModel.groupEnabled
+						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants
 						
 						//onClicked: CallsListModel.launchAudioCall(conversation.chatRoomModel)
 						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel})
