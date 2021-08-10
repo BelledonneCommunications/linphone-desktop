@@ -29,9 +29,9 @@
 class TimelineModel;
 
 class TimelineProxyModel : public QSortFilterProxyModel {
-  Q_OBJECT
-
-
+	Q_OBJECT
+	
+	
 public:
 	enum TimelineFilter {
 		SimpleChatRoom=1,
@@ -44,44 +44,41 @@ public:
 	};
 	Q_ENUM(TimelineFilter)
 	
-  TimelineProxyModel (QObject *parent = Q_NULLPTR);
-  
-  Q_PROPERTY(int filterFlags MEMBER mFilterFlags WRITE setFilterFlags NOTIFY filterFlagsChanged)
-  Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
-  
-  //Q_PROPERTY(ChatRoomModel *currentChatRoomModel WRITE setCurrentChatRoomModel READ getCurrentChatRoomModel NOTIFY currentChatRoomModelChanged)
-  
-  //void updateCurrentSelection();
-  
-  //Q_INVOKABLE void setCurrentChatRoomModel(ChatRoomModel *data);
-  //ChatRoomModel *getCurrentChatRoomModel() const;
-  Q_INVOKABLE void unselectAll();
-  Q_INVOKABLE void setFilterFlags(const int& filterFlags);
-  Q_INVOKABLE void setFilterText(const QString& text);
-  //Q_INVOKABLE TimelineModel * getTimeline();
-    
+	TimelineProxyModel (QObject *parent = Q_NULLPTR);
+	
+	Q_PROPERTY(int filterFlags MEMBER mFilterFlags WRITE setFilterFlags NOTIFY filterFlagsChanged)
+	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+		
+	int getCount() const;
+	
+	Q_INVOKABLE void unselectAll();
+	Q_INVOKABLE void setFilterFlags(const int& filterFlags);
+	Q_INVOKABLE void setFilterText(const QString& text);
+	//Q_INVOKABLE TimelineModel * getTimeline();
+	
 signals:
-  void selectedCountChanged(int selectedCount);
-  void filterFlagsChanged();
-  void filterTextChanged();
-//  void currentChatRoomModelChanged(std::shared_ptr<ChatRoomModel> currentChatRoomModel);
-//  void currentTimelineChanged(TimelineModel * currentTimeline);
-
+	void countChanged();
+	void selectedCountChanged(int selectedCount);
+	void selectedChanged(TimelineModel * timelineModel);
+	void filterFlagsChanged();
+	void filterTextChanged();
+	
 protected:
-
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-
-  QString getLocalAddress () const;
-  QString getCleanedLocalAddress () const;
-  void handleLocalAddressChanged (const QString &localAddress);
-  
+	
+	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
+	QString getLocalAddress () const;
+	QString getCleanedLocalAddress () const;
+	void handleLocalAddressChanged (const QString &localAddress);
+	
 private:
 	int mFilterFlags = 0;
 	QString mFilterText;
 	
-  //std::shared_ptr<ChatRoomModel> mCurrentChatRoomModel;
-
+	//std::shared_ptr<ChatRoomModel> mCurrentChatRoomModel;
+	
 };
 
 #endif // TIMELINE_PROXY_MODEL_H_

@@ -317,7 +317,7 @@ ApplicationWindow {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					
-					source: 'Home.qml'
+					source: (AccountSettingsModel.accounts.length < 2 ? 'Assistant.qml' : 'Home.qml')// default proxy = 1
 				}
 			}
 		}
