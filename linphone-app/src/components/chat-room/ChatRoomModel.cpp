@@ -420,13 +420,12 @@ int ChatRoomModel::getPresenceStatus() const {
 		auto participants = mChatRoom->getParticipants();	
 		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 		if(contact) {
-			int p = contact->getPresenceLevel();
-			return p;
+			return contact->getPresenceLevel();
 		}
 		else
-			return 0;
+			return -1;
 	}else
-		return 0;
+		return -1;
 }
 
 ParticipantListModel* ChatRoomModel::getParticipants() const{

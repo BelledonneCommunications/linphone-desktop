@@ -52,25 +52,10 @@ Rectangle {
 			//image: _contact && _contact.vcard.avatar
 			image: entry?(entry.contactModel?entry.contactModel.vcard.avatar:entry.avatar?entry.avatar: ''):''
 			
-			presenceLevel: entry?(entry.contactModel ? Presence.getPresenceLevel(entry.contactModel.presenceStatus)
-													 : Presence.getPresenceLevel(entry.presenceStatus)
+			presenceLevel: entry?(entry.contactModel ? (entry.contactModel.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.contactModel.presenceStatus) : -1)
+													 : (entry.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.presenceStatus) : -1)
 								  )
 								:-1
-			/*
-	  Connections{
-		  target: entry.contactModel?entry.contactModel:entry
-		  onPresenceStatusChanged:{
-			  if(entry){
-				  if(entry.contactModel){
-					  avatar.presenceLevel = Presence.getPresenceLevel(entry.contactModel.presenceStatus);
-				  }else {
-					  avatar.presenceLevel = Presence.getPresenceLevel(entry.presenceStatus);
-				  }
-			  }else {
-				  avatar.presenceLevel =  -1;
-			  }
-		  }
-	  }*/
 			
 			//username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 			//username: UtilsCpp.getDisplayName(entry.sipAddress || entry.peerAddress )

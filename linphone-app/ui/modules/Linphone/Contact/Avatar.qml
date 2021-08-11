@@ -71,6 +71,7 @@ Item {
 
   PresenceLevel {
     id: presenceLevelIcon
+    visible: level >= 0
 
     anchors {
       bottom: parent.bottom
