@@ -46,6 +46,7 @@ RowLayout {
 						$chatEntry.timestamp.getTime() - previousEntry.timestamp.getTime() > 3600
 			}
 			TooltipArea{
+				delay:0
 				text:avatar.username+'\n'+$chatEntry.fromSipAddress
 				tooltipParent:mainRow
 			}

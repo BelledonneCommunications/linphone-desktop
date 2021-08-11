@@ -154,6 +154,7 @@ Rectangle {
           hoverEnabled: true
           implicitHeight: layout.height
           width: parent.width + parent.anchors.rightMargin
+          acceptedButtons: Qt.NoButton
 
           RowLayout {
             id: layout
