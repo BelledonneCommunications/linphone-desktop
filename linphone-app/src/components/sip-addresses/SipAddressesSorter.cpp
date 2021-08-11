@@ -24,6 +24,8 @@
 
 #include "SipAddressesSorter.hpp"
 
+#include "../search/SearchResultModel.hpp"
+
 // =============================================================================
 
 namespace {
@@ -43,9 +45,10 @@ SipAddressesSorter::SipAddressesSorter (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
-bool SipAddressesSorter::lessThan (const QString& filter, const QVariantMap &left, const QVariantMap &right) {
-  const QString sipAddressA = left["sipAddress"].toString();
-  const QString sipAddressB = right["sipAddress"].toString();
+//bool SipAddressesSorter::lessThan (const QString& filter, const QVariantMap &left, const QVariantMap &right) {
+bool SipAddressesSorter::lessThan (const QString& filter, const SearchResultModel *left, const SearchResultModel *right) {
+  const QString sipAddressA = left->getAddressString();
+  const QString sipAddressB = right->getAddressString();
 
   // TODO: Use a cache, do not compute the same value as `filterAcceptsRow`.
   int weightA = computeEntryWeight(filter, left);
@@ -55,8 +58,8 @@ bool SipAddressesSorter::lessThan (const QString& filter, const QVariantMap &lef
   if (weightA != weightB)
     return weightA > weightB;
 
-  const ContactModel *contactA = left.value("contact").value<ContactModel *>();
-  const ContactModel *contactB = right.value("contact").value<ContactModel *>();
+  const ContactModel *contactA = left->getContactModel();
+  const ContactModel *contactB = right->getContactModel();
 
   // 2. No contacts.
   if (!contactA && !contactB)
@@ -79,10 +82,10 @@ bool SipAddressesSorter::lessThan (const QString& filter, const QVariantMap &lef
   return sipAddressA <= sipAddressB;
 }
 
-int SipAddressesSorter::computeEntryWeight (const QString& filter, const QVariantMap &entry) {
-  int weight = computeStringWeight(filter, entry["sipAddress"].toString().mid(4));
+int SipAddressesSorter::computeEntryWeight (const QString& filter, const SearchResultModel *entry) {
+  int weight = computeStringWeight(filter, entry->getAddressString().mid(4));
 
-  const ContactModel *contact = entry.value("contact").value<ContactModel *>();
+  const ContactModel *contact = entry->getContactModel();
   if (contact)
     weight += computeStringWeight(filter, contact->getVcardModel()->getUsername());
 

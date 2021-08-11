@@ -26,6 +26,7 @@
 #include <QVariantMap>
 
 // =============================================================================
+class SearchResultModel;
 
 class SipAddressesSorter : public QObject{
 	Q_OBJECT
@@ -33,10 +34,11 @@ class SipAddressesSorter : public QObject{
 public:
 	SipAddressesSorter (QObject *parent = Q_NULLPTR);
 	
-	static bool lessThan( const QString& filter, const QVariantMap &left, const QVariantMap &right);
+	//static bool lessThan( const QString& filter, const QVariantMap &left, const QVariantMap &right);
+	static bool lessThan (const QString& filter, const SearchResultModel *left, const SearchResultModel *right);
 	
 private:
-	static int computeEntryWeight (const QString& filter, const QVariantMap &entry);
+	static int computeEntryWeight (const QString& filter, const SearchResultModel *entry);
 	static int computeStringWeight (const QString& filter, const QString &string);
 	
 	static const QRegExp SearchSeparators;

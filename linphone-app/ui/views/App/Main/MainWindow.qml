@@ -178,7 +178,7 @@ ApplicationWindow {
 							if (entry.contact && SettingsModel.contactsEnabled) {
 								window.setView('ContactEdit', { sipAddress: entry.sipAddress })
 							} else {
-								CallsListModel.createChatRoom( "", false, sipAddress )
+								CallsListModel.createChatRoom( "", false, [entry] )
 							}
 						}
 						

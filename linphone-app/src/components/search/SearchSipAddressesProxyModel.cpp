@@ -78,8 +78,8 @@ bool SearchSipAddressesProxyModel::filterAcceptsRow (int sourceRow, const QModel
 }
 
 bool SearchSipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-	const QVariantMap mapA = sourceModel()->data(left).toMap();
-	const QVariantMap mapB = sourceModel()->data(right).toMap();
-	return SipAddressesSorter::lessThan(mFilter, mapA, mapB);
+	const SearchResultModel * modelA = sourceModel()->data(left).value<SearchResultModel*>();
+	const SearchResultModel * modelB = sourceModel()->data(right).value<SearchResultModel*>();
+	return SipAddressesSorter::lessThan(mFilter, modelA, modelB);
 }
 
