@@ -137,6 +137,7 @@ public:
 	Q_PROPERTY(QString fromDisplayName READ getFromDisplayName CONSTANT)
 	Q_PROPERTY(QString fromSipAddress READ getFromSipAddress CONSTANT)
 	Q_PROPERTY(QString toDisplayName READ getToDisplayName CONSTANT)
+	Q_PROPERTY(QString toSipAddress READ getToSipAddress CONSTANT)
 	Q_PROPERTY(ContactModel * contactModel READ getContactModel CONSTANT)
 	
 	Q_PROPERTY(bool isEphemeral READ isEphemeral NOTIFY isEphemeralChanged)
@@ -162,6 +163,7 @@ public:
 	QString getFromDisplayName() const;
 	QString getFromSipAddress() const;
 	QString getToDisplayName() const;
+	QString getToSipAddress() const;
 	ContactModel * getContactModel() const;
 	bool isEphemeral() const;
 	Q_INVOKABLE qint64 getEphemeralExpireTime() const;

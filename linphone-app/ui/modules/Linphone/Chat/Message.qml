@@ -217,10 +217,10 @@ Item {
 			else return ''
 		}
 		delegate:Text{
-			height:ChatStyle.composingText.height-5
-			width:parent.width
-			text:deliveryLayout.getText(modelData.state, modelData.displayName, UtilsCpp.toDateTimeString(modelData.stateChangeTime))
-			color:"#B1B1B1"
+			height: ChatStyle.composingText.height-5
+			width: GridView.width
+			text: deliveryLayout.getText(modelData.state, modelData.displayName, UtilsCpp.toDateTimeString(modelData.stateChangeTime))
+			color: "#B1B1B1"
 			font.pointSize: Units.dp * 8
 			elide: Text.ElideMiddle
 		}

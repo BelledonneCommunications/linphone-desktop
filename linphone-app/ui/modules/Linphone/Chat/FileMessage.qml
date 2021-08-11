@@ -12,6 +12,7 @@ import Utils 1.0
 // =============================================================================
 
 Row {
+	id:mainRow
   // ---------------------------------------------------------------------------
   // Avatar if it's an incoming message.
   // ---------------------------------------------------------------------------
@@ -30,7 +31,13 @@ Row {
         width: ChatStyle.entry.message.incoming.avatarSize
 
         image: $chatEntry.contactModel? $chatEntry.contactModel.vcard.avatar : '' //chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.vcard.avatar : ''
-        username: isOutgoing? $chatEntry.fromDisplayName : $chatEntry.toDisplayName
+        username: isOutgoing? $chatEntry.toDisplayName : $chatEntry.fromDisplayName
+        
+		TooltipArea{
+			delay:0
+			text:parent.username+'\n'+ (isOutgoing ? $chatEntry.toSipAddress : $chatEntry.fromSipAddress)
+			tooltipParent:mainRow
+		}
       }
     }
 

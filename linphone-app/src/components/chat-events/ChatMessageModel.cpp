@@ -397,6 +397,10 @@ QString ChatMessageModel::getToDisplayName() const{
 	return Utils::getDisplayName(mChatMessage->getToAddress());
 }
 
+QString ChatMessageModel::getToSipAddress() const{
+	return Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getToAddress()->asStringUriOnly()));
+}
+
 ContactModel * ChatMessageModel::getContactModel() const{
 	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asString()));
 }

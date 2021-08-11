@@ -45,7 +45,7 @@ Item {
 
           icon: isError
             ? 'chat_error'
-            : (isRead ? 'chat_read' : isDelivered ? 'chat_delivered' : '')
+            : (isRead ? 'chat_read' : (isDelivered  ? 'chat_delivered' : '' ) )
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
